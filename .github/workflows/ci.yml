@@ -8,8 +8,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Install requirements
-      run: pip3 install -r requirements.txt
-    - name: Build documentation
-      run: sphinx -E -W source build
+      run: |
+        pip3 install virtualenv
+        python3 -m virtualenv .venv --python=python3
+        .venv/bin/pip install -r requirements.txt
+    - name: Trial build documentation
+      run: |
+        .venv/bin/python -m sphinx.cmd.build -E -W source _build

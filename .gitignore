@@ -1,0 +1,6 @@
+/_build
+*~
+.*.swp
+.DS.Store
+.DS_Store
+*.html
