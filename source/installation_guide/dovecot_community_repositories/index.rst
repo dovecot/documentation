@@ -1,6 +1,6 @@
 .. _dovecot_community_repositories:
 
-.. image:: ../_static/dovecot.png
+.. image:: ../../_static/dovecot.png
 
 ===============================
 Dovecot community repositories
@@ -16,11 +16,6 @@ You are also encouraged to use https instead of http in repository URLs where su
 
 .. toctree::
    :maxdepth: 1
+   :glob:
 
-   debian_packages
-
-   centos_packages
-
-   ubuntu_packages
-
-   source_tarballs
+   *

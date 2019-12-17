@@ -80,6 +80,3 @@ This is a basic init script that should work in all operating systems. Place it 
    esac
 
    exit 0
-   DovecotInit (last edited 2010-07-09 22:51:31 by PascalVolk)
-   Edit (Text)Edit (GUI)InfoAttachments  
-   MoinMoin PoweredPython PoweredGPL licensedValid HTML 4.01

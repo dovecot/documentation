@@ -6,6 +6,7 @@ Installation guide
    :maxdepth: 1
    :glob:
 
-   *
+   dovecot_pro_releases/index
+   dovecot_community_repositories/index
    upgrading/index
-   dovecot_pro_releases/*
+   startup_scripts/index
