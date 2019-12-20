@@ -1,6 +1,6 @@
 name: CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -9,11 +9,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install requirements
-      run: |
-        pip3 install virtualenv
-        python3 -m virtualenv .venv --python=python3
-        .venv/bin/pip install -r requirements.txt
-    - name: Trial build documentation
-      run: |
-        .venv/bin/python -m sphinx.cmd.build -E -W source _build
+    - uses: ammaraskar/sphinx-action@0.1
+      with:
+         repo-token: "${{ secrets.GITHUB_TOKEN }}"
+         args: "."
