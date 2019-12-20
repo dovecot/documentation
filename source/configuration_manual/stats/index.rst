@@ -36,6 +36,11 @@ Currently there are no statistics logged by default (but this might change). You
      #filter {
      #  field_key = wildcard
      #}
+
+     # v2.3.10+
+     # List of fields to split statistics for (group by)
+     # This generates sub-metrics for this metric based on this field.
+     #group_by = field another-field
    }
 
 Listing Statistics
@@ -109,4 +114,13 @@ Examples:
      filter {
        method = get
      }
+   }
+
+   # generate per-command metrics on successful commands
+   metric imap_command {
+     event_name = imap_command_finished
+     filter {
+       tagged_reply_state = OK
+     }
+     group_by = cmd_name
    }
