@@ -11,7 +11,7 @@ enabled=1
 # Please contact to support@open-xchange.com to get access
 [dovecot-2.3.9.2-rev1-kuromoji]
 name=CentOS 6 - Atilika Kuromoji Library
-baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-kuromoji/20191205/CentOS6
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-kuromoji/stable/20191205/CentOS6
 gpgkey=http://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
