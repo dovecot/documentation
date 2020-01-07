@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ammaraskar/sphinx-action@0.3
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        DOCS-FOLDER: "."
+        build-command: make dirhtml
+    - uses: dovecot/rsync-deployments@master
+      with:
+        RSYNC_OPTIONS: -azr --delete
+        RSYNC_TARGET: docs@talvi.dovecot.org:public_html/.
+        RSYNC_BASEDIR: /_build/.
+      env:
+        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}

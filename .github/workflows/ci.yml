@@ -1,15 +1,13 @@
 name: CI
 
-on: [push, pull_request]
+on: pull_request
 
 jobs:
+
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
-    - uses: ammaraskar/sphinx-action@0.1
+    - uses: ammaraskar/sphinx-action@0.3
       with:
-         repo-token: "${{ secrets.GITHUB_TOKEN }}"
-         args: "."
+         DOCS-FOLDER: "."
