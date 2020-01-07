@@ -12,7 +12,7 @@ You can find the log file locations by running:
 
    doveadm log find
 
-Dovecot log configuration is found in the ``conf.d/10-logging.conf`` file in the dovecot configuration folder (usually ``/etc/dovecot``but may also be ``/usr/local/etc/dovecot``).
+Dovecot log configuration is found in the ``conf.d/10-logging.conf`` file in the dovecot configuration folder (usually ``/etc/dovecot`` but may also be ``/usr/local/etc/dovecot``).
 
 By default Dovecot logs to syslog using mail facility. You can change the facility from ``syslog_facility`` setting. The syslog configuration is often in /etc/syslog.conf or /etc/rsyslog* files. You can also configure Dovecot to write to log files directly, see below.
 
