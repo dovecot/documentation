@@ -41,7 +41,59 @@ Currently there are no statistics logged by default (but this might change). You
      # List of fields to split statistics for (group by)
      # This generates sub-metrics for this metric based on this field.
      #group_by = field another-field
+
+     # v2.3.10+
+     # List of buckets to split last group_by field into
+     #buckets = bucket-spec
    }
+
+Group by and buckets
+^^^^^^^^^^^^^^^^^^^^
+
+``group_by`` and ``buckets`` allow dynamic sub-metric generation based on event fields.
+You can use ``group_by`` to generate discrete sub-metrics per each value seen in hierarchical manner.
+Each field listed in ``group_by`` generates one level of sub-metric.
+
+The ``buckets`` setting permits you to specify buckets for the last ``group_by`` value.
+
+.. code-block:: none
+
+   bucket-spec     ::= bucket-type:bucket-value bucket-spec
+   bucket-type     ::= "time"|"int"|"mask"
+   bucket-value    ::= time-value|int-value|mask-value
+   mask-value      ::= STRING
+   int-value       ::= NUMBER size-specifier
+   size-specifier  ::= "k" | "m" | "g"
+   time-value      ::= NUMBER time-specifier
+   time-specifier  ::= "s" | "m" | "h" | "d" | "w"
+
+.. warning::
+
+   Current way the buckets are configured means that the interval is always open at one end.
+   This should be taken into consideration when configuring buckets.
+
+
+Example::
+
+   metric {
+     name = imap_command
+     event_name = imap_command_finished
+     group_by = cmd_name tagged_reply_state duration
+     buckets = time:<10ms time:<100ms time:<1s time:>=1s
+   }
+
+The example configuration will generate statistics for each imap command.
+The first level of sub-metric is IMAP command name, the next level is the tagged reply, and finally the duration is split into buckets.
+This will generate metrics that look like ``imap_command_select_ok_lt_10ms``.
+Additionally, it will generate metrics for each level, so you will get
+
+ - ``imap_command``
+ - ``imap_command_select``
+ - ``imap_command_select_ok``
+ - ``imap_command_select_ok_lt_10ms``
+
+Statistics for ``group_by`` are generated dynamically when first observed.
+For ``buckets`` the metrics are all generated on first use.
 
 Listing Statistics
 ^^^^^^^^^^^^^^^^^^
