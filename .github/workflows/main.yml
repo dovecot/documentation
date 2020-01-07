@@ -19,6 +19,6 @@ jobs:
       with:
         RSYNC_OPTIONS: -azr --delete
         RSYNC_TARGET: docs@talvi.dovecot.org:public_html/.
-        RSYNC_BASEDIR: _build/.
+        RSYNC_BASEDIR: /_build/.
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
