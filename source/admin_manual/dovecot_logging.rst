@@ -14,7 +14,7 @@ You can find the log file locations by running:
 
 Dovecot log configuration is found in the ``conf.d/10-logging.conf`` file in the dovecot configuration folder (usually ``/etc/dovecot`` but may also be ``/usr/local/etc/dovecot``).
 
-By default Dovecot logs to syslog using mail facility. You can change the facility from ``syslog_facility`` setting. The syslog configuration is often in /etc/syslog.conf or /etc/rsyslog* files. You can also configure Dovecot to write to log files directly, see below.
+By default Dovecot logs to syslog using mail facility. You can change the facility from :ref:`setting-syslog_facility` setting. The syslog configuration is often in ``/etc/syslog.conf`` or ``/etc/rsyslog*`` files. You can also configure Dovecot to write to log files directly, see below.
 
 When using syslog, Dovecot uses 5 different logging levels:
 
@@ -28,7 +28,7 @@ When using syslog, Dovecot uses 5 different logging levels:
 
  * **crit**: Fatal errors that cause the process to die.
 
-Where exactly these messages are logged depends entirely on your syslog configuration. Often everything is logged to /var/log/mail.log or /var/log/maillog, and err and crit are logged to ``/var/log/mail.err``. This is not necessarily true for your configuration though.
+Where exactly these messages are logged depends entirely on your syslog configuration. Often everything is logged to ``/var/log/mail.log`` or ``/var/log/maillog``, and err and crit are logged to ``/var/log/mail.err``. This is not necessarily true for your configuration though.
 
 In an ideal configuration the errors would be logged to a separate file than non-errors. For example you could set ``syslog_facility=local5`` and set:
 
@@ -37,7 +37,7 @@ In an ideal configuration the errors would be logged to a separate file than non
    local5.*        -/var/log/dovecot.log
    local5.warning;local5.error;local5.crit -/var/log/dovecot-errors.log
 
-Here all the Dovecot messages get logged into dovecot.log, while all the important error/warning messages get logged into dovecot-errors.log.
+Here all the Dovecot messages get logged into ``dovecot.log``, while all the important error/warning messages get logged into ``dovecot-errors.log``.
 
 Internal Errors
 ^^^^^^^^^^^^^^^^
@@ -66,12 +66,12 @@ If you don't want to use syslog, or if you just can't find the Dovecot's error l
    # Leave empty in order to send debug-level messages to info_log_path
    debug_log_path = /var/log/dovecot-debug.log
 
-The warning and error messages will go to file specified by log_path, while informative messages goes to info_log_path and debug messages goes to debug_log_path. If you do this, make sure you're really looking at the log_path file for error messages, since the "Starting up" message is written to info_log_path file.
+The warning and error messages will go to file specified by :ref:`setting-log_path`, while informative messages goes to :ref:`setting-info_log_path` and debug messages goes to :ref:`setting-debug_log_path`. If you do this, make sure you're really looking at the :ref:`setting-log_path` file for error messages, since the "Starting up" message is written to :ref:`setting-info_log_path` file.
 
 Syslog Example
 ^^^^^^^^^^^^^^^
 
-Dovecot logging asynchronously via syslog_facility = local5 with basic rules:
+Dovecot logging asynchronously via ``syslog_facility = local5`` with basic rules:
 
 .. code-block:: none
 
@@ -85,7 +85,7 @@ Dovecot logging asynchronously via syslog_facility = local5 with basic rules:
 Rotating Logs
 ^^^^^^^^^^^^^^
 
-If you change from syslog to an external log file, you can use logrotate (available on most recent linux distros) to maintain the Dovecot logfile so it doesn't grow beyond a manageable size. Save the below scriptlet as /etc/logrotate.d/dovecot:
+If you change from syslog to an external log file, you can use `logrotate <https://github.com/logrotate/logrotate>`_ (available on most recent linux distros) to maintain the Dovecot logfile so it doesn't grow beyond a manageable size. Save the below scriptlet as ``/etc/logrotate.d/dovecot``:
 
 .. code-block:: none
 
@@ -110,21 +110,21 @@ If you change from syslog to an external log file, you can use logrotate (availa
    kill -s 0 `cat /var/run/dovecot/master.pid` || kill -s USR1 `cat /var/run/dovecot/master.pid`
    endscript
 
-.. Note:: When syslog_facility = local5 is used for logging (example above), the line "/var/log/dovecot.log" should be added to the /etc/logrotate.d/syslog file to enable rotation (no /etc/logrotate.d/dovecot in this case!).
+.. Note:: When ``syslog_facility = local5`` is used for logging (example above), the line ``/var/log/dovecot.log`` should be added to the ``/etc/logrotate.d/syslog`` file to enable rotation (no ``/etc/logrotate.d/dovecot`` in this case!).
 
 Logging verbosity
 ^^^^^^^^^^^^^^^^^^
 
 There are several settings that control logging verbosity. By default they're all disabled, but they may be useful for debugging.
 
-* ``auth_verbose=yes`` enables logging all failed authentication attempts.
+* :ref:`auth_verbose=yes <setting-auth_verbose>` enables logging all failed authentication attempts.
 
-* ``auth_debug=yes`` enables all authentication debug logging (also enables auth_verbose). Passwords are logged as <hidden>.
+* :ref:`auth_debug=yes <setting-auth_debug>` enables all authentication debug logging (also enables :ref:`setting-auth_verbose`). Passwords are logged as `<hidden>`.
 
-* ``auth_debug_passwords=yes`` does everything that auth_debug=yes does, but it also removes password hiding (but only if you are not using PAM, since PAM errors aren't written to Dovecot's own logs).
+* :ref:`auth_debug_passwords=yes <setting-auth_debug_passwords>` does everything that ``auth_debug=yes`` does, but it also removes password hiding (but only if you are not using PAM, since PAM errors aren't written to Dovecot's own logs).
 
-* ``mail_debug=yes`` enables all kinds of mail related debug logging, such as showing where Dovecot is looking for mails.
+* :ref:`mail_debug=yes <setting-mail_debug>` enables all kinds of mail related debug logging, such as showing where Dovecot is looking for mails.
 
-* ``verbose_ssl=yes`` enables logging SSL errors and warnings. Even without this setting if connection is closed because of an SSL error, the error is logged as the disconnection reason.
+* :ref:`verbose_ssl=yes <setting-verbose_ssl>` enables logging SSL errors and warnings. Even without this setting if connection is closed because of an SSL error, the error is logged as the disconnection reason.
 
-* ``auth_verbose_passwords=no|plain|sha1`` If authentication fails, this setting logs the used password. If you don't really need to know what the password itself was, but are more interested in knowing if the user is simply trying to use the wrong password every single time or if it's a brute force attack, you can set this to "sha1" and only the SHA1 of the password is logged. That's enough to know if the password is same or different between login attempts.
+* :ref:`auth_verbose_passwords=no|plain|sha1 <setting-auth_verbose_passwords>` If authentication fails, this setting logs the used password. If you don't really need to know what the password itself was, but are more interested in knowing if the user is simply trying to use the wrong password every single time or if it's a brute force attack, you can set this to ``sha1`` and only the SHA1 of the password is logged. That's enough to know if the password is same or different between login attempts.
