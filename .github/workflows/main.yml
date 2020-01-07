@@ -15,6 +15,7 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         DOCS-FOLDER: "."
+        build-command: make dirhtml
     - uses: dovecot/rsync-deployments@master
       with:
         RSYNC_OPTIONS: -azr --delete
