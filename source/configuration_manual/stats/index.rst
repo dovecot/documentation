@@ -1,12 +1,12 @@
 .. _statistics:
 
-=============
+==========
 Statistics
-=============
+==========
 
 This page is about the statistics support for Dovecot:
 
-.. versionadded:: v2.3 
+.. versionadded:: v2.3
 
 For v2.1 and v2.2 see :ref:`old_statistics`.
 
@@ -26,11 +26,11 @@ Currently there are no statistics logged by default (but this might change). You
      #source_location = example.c:123
 
      # Space-separated list of categories that must match the event (e.g. "mail" or "storage")
-     #categories = 
+     #categories =
 
      # List of fields in event parameters that are included in the metrics.
      # All events have a default "duration" field that doesn't need to be listed here.
-     #fields = 
+     #fields =
 
      # List of key=value pairs that must match the event. The value can contain '?' and '*' wildcards.
      #filter {
@@ -44,7 +44,7 @@ Currently there are no statistics logged by default (but this might change). You
    }
 
 Listing Statistics
-^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 The gathered statistics are available by running:
 
@@ -99,7 +99,7 @@ Examples:
        tagged_reply_state = NO
      }
    }
-   
+
    metric imap_select_no_notfound {
      event_name = imap_command_finished
      filter {
