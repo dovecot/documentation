@@ -38,10 +38,44 @@ Currently there are no statistics logged by default (but this might change). You
      #}
 
      # v2.3.10+
-     # List of fields to split statistics for (group by)
-     # This generates sub-metrics for this metric based on this field.
+     # List of fields to group events by into automatically generated
+     # metrics.
      #group_by = field another-field
    }
+
+Group by
+^^^^^^^^
+
+The ``group_by`` metric setting allows dynamic hierarchical metric
+generation based on event fields' values.  Each field listed in the
+``group_by`` generates one level of "sub-metrics".  These automatically
+generated metrics are indistinguishable from those statically defined
+in the config file.
+
+Example::
+
+   metric imap_command {
+     event_name = imap_command_finished
+     group_by = cmd_name tagged_reply_state
+   }
+
+This example configuration will generate statistics for each IMAP command.
+The first "sub-metric" level is based on the IMAP command name, and the
+second (and in this example final) level is based on the tagged reply.  For
+example, a ``SELECT`` IMAP command that succeeded (in other words, it had an
+``OK`` reply) will generate the metric ``imap_command_select_ok``.
+
+In addition to the final level metric, all intermediate level metrics are
+generated as well.  For example, the same ``SELECT`` IMAP command will
+generate all of the following metrics:
+
+ - ``imap_command``
+ - ``imap_command_select``
+ - ``imap_command_select_ok``
+
+Note: While the top level metrics (e.g., ``imap_command`` above) are
+generated at start up, all ``group_by`` metrics are generated dynamically
+when first observed.
 
 Listing Statistics
 ^^^^^^^^^^^^^^^^^^
