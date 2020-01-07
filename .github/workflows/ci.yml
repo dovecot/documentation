@@ -3,13 +3,29 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - uses: ammaraskar/sphinx-action@0.1
       with:
          repo-token: "${{ secrets.GITHUB_TOKEN }}"
          args: "."
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ammaraskar/sphinx-action@0.1
+      with:
+        args: "."
+    - uses: dovecot/rsync-deployments@master
+      with:
+        RSYNC_OPTIONS: -azr --delete
+        RSYNC_TARGET: docs@talvi.dovecot.org:public_html/.
+        RSYNC_BASEDIR: _build/.
+      env:
+        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
