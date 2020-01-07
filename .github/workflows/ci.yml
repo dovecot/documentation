@@ -1,6 +1,6 @@
 name: CI
 
-on: [push, pull_request]
+on: pull_request
 
 jobs:
 
@@ -11,20 +11,3 @@ jobs:
     - uses: ammaraskar/sphinx-action@0.3
       with:
          DOCS-FOLDER: "."
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-    steps:
-    - uses: actions/checkout@v2
-    - uses: ammaraskar/sphinx-action@0.3
-      with:
-        DOCS-FOLDER: "."
-    - uses: dovecot/rsync-deployments@master
-      with:
-        RSYNC_OPTIONS: -azr --delete
-        RSYNC_TARGET: docs@talvi.dovecot.org:public_html/.
-        RSYNC_BASEDIR: _build/.
-      env:
-        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
