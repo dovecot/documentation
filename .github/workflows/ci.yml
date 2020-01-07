@@ -8,10 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: ammaraskar/sphinx-action@0.1
+    - uses: ammaraskar/sphinx-action@0.3
       with:
-         repo-token: "${{ secrets.GITHUB_TOKEN }}"
-         args: "."
+         DOCS-FOLDER: "."
 
   release:
     needs: build
@@ -19,9 +18,9 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
     - uses: actions/checkout@v2
-    - uses: ammaraskar/sphinx-action@0.1
+    - uses: ammaraskar/sphinx-action@0.3
       with:
-        args: "."
+        DOCS-FOLDER: "."
     - uses: dovecot/rsync-deployments@master
       with:
         RSYNC_OPTIONS: -azr --delete
