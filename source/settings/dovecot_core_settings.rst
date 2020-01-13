@@ -1459,6 +1459,11 @@ There are currently defaults for the following fields:
 * ``os-version``
 * ``support-url``
 * ``support-email``
+* ``revision``
+
+  .. versionadded:: 2.3.10
+     ``revision`` field.
+
 
 .. todo:: explain fields
 .. todo:: Indicate imap setting
