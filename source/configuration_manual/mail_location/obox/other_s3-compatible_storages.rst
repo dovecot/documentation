@@ -4,8 +4,12 @@
 Other S3-compatible Storages
 ==================================
 
-The configuration is likely to be similar to Amazon S3, but often the bucket
-name needs to be specified explicitly via the bucket parameter:
+This document covers the S3 compatible storage services. In case you want to
+use AWS S3 please refer to :ref:`amazon_s3`.
+
+The configuration for ``s3`` is likely to be similar to Amazon S3 ``aws-s3``,
+but generally the bucket name must be specified explicitly via the bucket
+parameter:
 
 .. code-block:: none
 
@@ -28,4 +32,4 @@ that 6 characters of dispersion prefix is "enough distribution to ensure access
 to pretty massive resources on our side without gymnastics on our end."
 
 The example ``mail_location`` setting used for Amazon S3 should be used for
-GCS.
+GCS (see :ref:`amazon_s3`).
