@@ -384,6 +384,10 @@ Mailbox settings
 One can assign SPECIAL-USE `RFC 6154 <http://www.faqs.org/rfcs/rfc6154.html>`_
 tags and specify, which mailboxes to create and/or subscribe to automatically.
 
+Support for IMAP \Important SPECIAL-USE flag `RFC 8457 <http://www.faqs.org/rfcs/rfc8457.html>`_
+
+  .. versionadded:: v2.3.10
+
 The autocreated mailboxes are created lazily to disk only when accessed for the
 first time. The autosubscribed mailboxes aren't written to subscriptions file,
 unless SUBSCRIBE command is explicitly used for them.
