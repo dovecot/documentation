@@ -35,7 +35,14 @@ The parameters common to all object storages include:
 |                                 |                                                                                                                               |              |
 |                                 |.. deprecated:: 2.3.0                                                                                                          |              |
 +---------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
-| addhdr=<name>:<value>           |Add the specified header to all HTTP requests. This can only be specified once. This may be useful for load balancing          | none         |
+| addhdr=<name>:<value>           |Add the specified header to all HTTP requests.                                                                                 | none         |
+|                                 |                                                                                                                               |              |
+|                                 |.. versionadded:: 2.3.10 Can be specified multiple times.                                                                      |              |
++---------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
+| addhdrvar=<name>:<variable>     |Add the specified header to all HTTP requests and set the value to the expanded variables value.                               | none         |
+|                                 |                                                                                                                               |              |
+|                                 |                                                                                                                               |              |
+|                                 |.. versionadded:: 2.3.10                                                                                                       |              |
 +---------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | bucket=<n>                      |Used by some backends to specify the bucket to save the data into                                                              | none         |
 +---------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
@@ -66,6 +73,11 @@ The parameters common to all object storages include:
 | delete_timeout_msecs=<ms>       |Timeout for sending a delete HTTP response                                                                                     | timeout_msecs|
 |                                 |                                                                                                                               |              |
 |                                 |.. deprecated:: 2.3.0                                                                                                          |              |
++---------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
+| loghdr=<name>                   |Headers with the given name in HTTP responses are logged as part of any error, debug or warning messages related to the HTTP   | none         |
+|                                 |request. These headers are also included in the http_request_finished event as fields prefixed with ``http_hdr_``.             |              |
+|                                 |Can be specified multiple times.                                                                                               |              |
+|                                 |.. versionadded:: 2.3.10                                                                                                       |              |
 +---------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | max_connect_retries=<n>         |Number of connect retries                                                                                                      | 2            |
 +---------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
