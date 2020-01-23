@@ -857,7 +857,7 @@ If using Cassandra, this is needed::
 
 An example using mysql as dict::
 
-  fts_dovecot_fs = fts-cache:fscache:1G:/tmp/cache/mails: compress:gz:6:dictmap:proxy:dict-async:mysql ; sproxyd:http://localhost:801/?class=2&slow_warn_msecs=60000 ; dict-prefix=%u/fts/
+  fts_dovecot_fs = fts-cache:fscache:1G:/tmp/cache/mails: compress:gz:6:dictmap:proxy::mysql ; sproxyd:http://localhost:801/?class=2&slow_warn_msecs=60000 ; dict-prefix=%u/fts/
 
 
 .. _setting-plugin-fts_dovecot_prefix:
