@@ -21,7 +21,7 @@ sys.setrecursionlimit(10000)
 # -- Project information -----------------------------------------------------
 
 project = u'Dovecot'
-copyright = u'2002-2019, Dovecot Authors'
+copyright = u'Dovecot Authors'
 author = u'Dovecot Authors'
 
 # The short X.Y version
