@@ -1242,18 +1242,23 @@ Finished the message submission.
 Push notifications
 ==================
 
-+-----------------------+------------------------------------------------------+
-| Field                 | Description                                          |
-+=======================+======================================================+
-| Inherits from mail user                                                      |
-+-----------------------+------------------------------------------------------+
-| *No event specific fields defined*                                           |
-+---------------------+--------------------------------------------------------+
+.. versionadded:: 2.3.10
+
+   ``mailbox`` and ``push_notification_event`` were added.
+
++-------------------------+------------------------------------------------------+
+| Field                   | Description                                          |
++=========================+======================================================+
+| Inherits from mail user                                                        |
++-------------------------+------------------------------------------------------+
+| mailbox                 | Mailbox for event                                    |
+| error                   | Set to ``yes`` on failure.                           |
++---------------------+----------------------------------------------------------+
 
 push_notification_finished
 --------------------------
 
-Push notification event was sent.
+Push notification event was sent. See :ref:`stats_push_notifications`
 
 **********
 Pigeonhole
