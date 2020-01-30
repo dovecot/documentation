@@ -92,6 +92,42 @@ by adding the bucket region parameter to the S3 URL:
     obox_index_fs = compress:gz:6:aws-s3:https://ACCESSKEY:SECRET@host/?bucket=BUCKETNAME&region=eu-central-1
   }
 
+Configuration using AWS IAM
+"""""""""""""""""""""""""""
+
+Dovecot supports AWS Identity and Access Management (IAM) for authenticating
+requests to AWS S3 using the AWS EC2 Instance Metadata Service (IMDS), solely
+version 2 of IMDS (IMDSv2) is supported.
+
+Using IAM allows running Dovecot with S3 Storage while not keeping the
+credentials in the configuration.
+
+A requirement for using IMDSv2 is that Dovecot is running on an AWS EC2
+instance, otherwise the IMDS will not be reachable. Additionally an IAM role
+must be configured which allows trusted entities, EC2 in this case, to
+assume that role. The role (for example ``s3access``) that will be assumed must
+have the ``AmazonS3FullAccess`` policy attached.
+
+The ``auth_role`` can be configured as a URL parameter which specifies the IAM
+role to be assumed. If no ``auth_role`` is configured, no IAM lookup will be
+done. The IAM requests are targeted by default to the IMDSv2 service in EC2
+(``169.254.169.25:80``). It is possible to override this default by appending
+``auth_host=NEWHOST:NEWPORT`` to the URL, this is mainly used for testing
+purposes.
+
+.. code-block:: none
+
+  plugin {
+    obox_fs = aws-s3:https://BUCKETNAME.s3.amazonaws.com/?auth_role=s3access&region=eu-central-1
+  }
+
+.. versionadded:: 2.3.10
+
+For more information about IAM roles for EC2 please refer to:
+`IAM roles for Amazon EC2 <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html>`_
+
+For general information about IAM:
+`IAM UserGuide <https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html>`_
 
 Deleting multiple objects per Request
 """""""""""""""""""""""""""""""""""""
