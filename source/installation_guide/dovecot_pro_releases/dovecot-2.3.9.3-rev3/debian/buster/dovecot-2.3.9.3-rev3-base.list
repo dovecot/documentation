@@ -1,0 +1,2 @@
+# dovecot-2.3.9.3-rev3 Debian Buster (10.0) - OX Dovecot Pro Mail Server
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-base/stable/2.3.9.3/DebianBuster ./
