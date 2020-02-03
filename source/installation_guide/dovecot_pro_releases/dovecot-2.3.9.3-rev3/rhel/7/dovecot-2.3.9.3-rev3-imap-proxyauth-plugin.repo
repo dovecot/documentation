@@ -1,0 +1,9 @@
+# imap-proxyauth-plugin component requires separate OX License
+# Please contact to support@open-xchange.com to get access
+[dovecot-2.3.9.3-rev3-imap-proxyauth-plugin]
+name=RedHat Enterprise Linux 7 - OX Dovecot Pro IMAP Proxy Authentication plug-in
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-imap-proxyauth-plugin/stable/2.3.9.3/RHEL7
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
