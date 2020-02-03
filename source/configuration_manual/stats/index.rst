@@ -128,3 +128,20 @@ IMAP command statistics
      }
      group_by = cmd_name
    }
+
+.. _stats_push_notifications:
+
+Push notifications
+^^^^^^^^^^^^^^^^^^
+
+.. code-block:: none
+
+   metric push_notifications {
+     event_name = push_notification_finished
+   }
+
+   # for OX driver
+   metric push_notification_http_finished {
+     event_name = http_request_finished
+     categories = push_notification
+   }
