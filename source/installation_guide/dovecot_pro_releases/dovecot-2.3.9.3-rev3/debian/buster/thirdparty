@@ -1,0 +1,2 @@
+# dovecot-2.3.9.3-rev3 Debian Buster (10.0) - DataStax C/C++ Driver for Apache Cassandra
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-cassandra-cpp-driver/stable/2.13.0/DebianBuster ./
