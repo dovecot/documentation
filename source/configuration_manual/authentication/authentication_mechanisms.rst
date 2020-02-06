@@ -46,39 +46,50 @@ plaintext password.
 Dovecot supports the following non-plaintext mechanisms:
 ********************************************************
 
-* CRAM-MD5: Protects the password in transit against eavesdroppers. Somewhat
-  good support in clients.
-* `DIGEST-MD5 <https://wiki.dovecot.org/Authentication/Mechanisms/DigestMD5>`_:
-  Somewhat stronger cryptographically than CRAM-MD5, but clients rarely support
-  it.
-* SCRAM-SHA-1: Salted Challenge Response Authentication Mechanism (SCRAM) SASL
-  and GSS-API Mechanisms. Intended as DIGEST-MD5 replacement.
-* APOP: This is a POP3-specific authentication. Similar to CRAM-MD5, but
-  requires storing password in plaintext.
-* `NTLM <https://wiki.dovecot.org/Authentication/Mechanisms/NTLM>`_: Mechanism
-  created by Microsoft and supported by their clients.
-
- * Optionally supported using `Samba's winbind
-   <https://wiki.dovecot.org/Authentication/Mechanisms/Winbind>`_.
-
-* GSS-SPNEGO: A wrapper mechanism defined by `RFC 4178
-  <https://tools.ietf.org/html/rfc4178>`_. Can be accessed via either GSSAPI or
-  `Winbind <https://wiki.dovecot.org/Authentication/Mechanisms/Winbind>`_.
-* `GSSAPI <https://wiki.dovecot.org/Authentication/Kerberos>`_: Kerberos v5
-  support.
-* RPA: Compuserve RPA authentication mechanism. Similar to DIGEST-MD5, but
-  client support is rare.
-* ANONYMOUS: Support for logging in anonymously. This may be useful if you're
-  intending to provide publicly accessible IMAP archive.
-* OTP and SKEY: One time password mechanisms.
-* EXTERNAL: EXTERNAL SASL mechanism.
-* OAUTBEARER: OAuth2 bearer authentication https://tools.ietf.org/html/rfc7628.
-  See :ref:`authentication-oauth2`.
-
-  .. versionadded:: v2.2.29
-
-* XOAUTH2: `Google flavor OAUTHBEARER
-  <https://developers.google.com/gmail/imap/xoauth2-protocol>`_
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| Mechanism                                                                    | Summary                                                                  | Added in version         |
++==============================================================================+==========================================================================+==========================+
+| CRAM-MD5                                                                     | Protects the password in transit against eavesdroppers.                  |                          |
+|                                                                              | Somewhat good support in clients.                                        |                          |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| `DIGEST-MD5 <https://wiki.dovecot.org/Authentication/Mechanisms/DigestMD5>`_ |  Somewhat stronger cryptographically than CRAM-MD5,                      |                          |
+|                                                                              |  but clients rarely support it.                                          |                          |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| SCRAM-SHA-1                                                                  | Salted Challenge Response Authentication Mechanism                       |                          |
+|                                                                              | (SCRAM) SAS and GSS-API Mechanisms.                                      |                          |
+|                                                                              | Intended as DIGEST-MD5 replacement.                                      |                          |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| SCRAM-SHA-256                                                                | Stronger replacement for SCRAM-SHA-1. https://tools.ietf.org/html/rfc7677| .. versionadded:: 2.3.10 |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| APOP                                                                         | This is a POP3-specific authentication. Similar to                       |                          |
+|                                                                              | CRAM-MD5, but requires storing password in plaintext                     |                          |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| `NTLM <https://wiki.dovecot.org/Authentication/Mechanisms/NTLM>`_            | Mechanism created by Microsoft and supported by their                    |                          |
+|                                                                              | clients                                                                  |                          |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| GSS-SPNEGO                                                                   | A wrapper mechanism defined by                                           |                          |
+|                                                                              | `RFC 4178 <https://tools.ietf.org/html/rfc4178>`_.                       |                          |
+|                                                                              | Can be accessed via either GSSAPI or                                     |                          |
+|                                                                              | `Winbind <https://wiki.dovecot.org/Authentication/Mechanisms/Winbind>`_. |                          |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| `GSSAPI <https://wiki.dovecot.org/Authentication/Kerberos>`_                 | Kerberos v5 support.                                                     |                          |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| RPA                                                                          | Compuserve RPA authentication mechanism.                                 |                          |
+|                                                                              | Similar to DIGEST-MD5, but client support is rare.                       |                          | 
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| ANONYMOUS                                                                    | Support for logging in anonymously. This may be useful if you're         |                          |
+|                                                                              | intending to provide publicly accessible IMAP archive.                   |                          |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| OTP and SKEY                                                                 | One time password mechanisms.                                            |                          |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| EXTERNAL                                                                     | EXTERNAL SASL mechanism.                                                 |                          |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| OAUTBEARER                                                                   | OAuth2 bearer authentication https://tools.ietf.org/html/rfc7628.        | .. versionadded:: 2.2.29 |
+|                                                                              | See :ref:`authentication-oauth2`.                                        |                          |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
+| XOAUTH2                                                                      | `Google flavor OAUTHBEARER                                               | .. versionadded:: 2.2.29 |
+|                                                                              | <https://developers.google.com/gmail/imap/xoauth2-protocol>`_            |                          |
++------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
 
 Configuration
 =============
