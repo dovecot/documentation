@@ -89,6 +89,10 @@ It's also possible to specify other percentiles than just 95%, for example:
 The stats counters are reset whenever the stats process is started, which also means a dovecot reload will reset statistics. Using ``doveadm stats -r`` parameter will also reset the statistics atomically after they're dumped.
 
 Examples:
+---------
+
+IMAP command statistics
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: none
 
@@ -123,4 +127,21 @@ Examples:
        tagged_reply_state = OK
      }
      group_by = cmd_name
+   }
+
+.. _stats_push_notifications:
+
+Push notifications
+^^^^^^^^^^^^^^^^^^
+
+.. code-block:: none
+
+   metric push_notifications {
+     event_name = push_notification_finished
+   }
+
+   # for OX driver
+   metric push_notification_http_finished {
+     event_name = http_request_finished
+     categories = push_notification
    }

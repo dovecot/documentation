@@ -60,6 +60,12 @@ Webpush imap capability needs to be enabled manually:
 
    imap_capability = +WEBPUSH
 
+Note that the '+' is added only once even if you have multiple capabilities added:
+
+.. code-block:: none
+
+   imap_capability = +IDLE WEBPUSH
+
 Webpush plugin can be configured with the plugin settings:
 
 - ``webpush_subscription_expire`` sets how fast subscriptions have to be
