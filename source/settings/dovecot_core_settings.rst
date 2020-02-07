@@ -1453,14 +1453,17 @@ Using * as the value makes Dovecot use the default value.
 
 There are currently defaults for the following fields:
 
-* ``name``
-* ``version``
-* ``os``
-* ``os-version``
-* ``support-url``
-* ``support-email``
+* ``name``: Name of distributed package (Default: ``Dovecot``)
+* ``version``: Dovecot version
+* ``os``: OS name reported by uname syscall (similar to ``uname -s`` output)
+* ``os-version``: OS version reported by uname syscall (similar to ``uname -r`` output)
+* ``support-url``: Support webpage set in Dovecot distribution (Default: ``http://www.dovecot.org/``)
+* ``support-email``: Support email set in Dovecot distribution (Default: ``dovecot@dovecot.org``)
+* ``revision``: Short commit hash of Dovecot git source tree HEAD (same as the commit hash reported in ``dovecot --version``)
 
-.. todo:: explain fields
+  .. versionadded:: 2.3.10
+     ``revision`` field.
+
 .. todo:: Indicate imap setting
 
 Example Setting:
