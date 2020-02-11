@@ -4745,7 +4745,12 @@ See: https://wiki.dovecot.org/SSL
 
 - Default: <empty>
 
-Specifies CAs to verify outgoing connections from dovecot.
+Specifies CAs to verify outgoing connections from dovecot. Note that this
+setting isn't recommended to be used with large CA bundles, because all the
+certificates are read into memory. This leads to excessive memory usage,
+because it gets multiplied by the number of imap processes. It's better to
+either use ``ssl_client_ca_dir`` setting or use a CA bundle that only
+contains the CAs that are actually necessary.
 
 See :ref:`setting-ssl`
 
