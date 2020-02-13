@@ -1244,7 +1244,7 @@ Push notifications
 
 .. versionadded:: 2.3.10
 
-   ``mailbox`` and ``push_notification_event`` were added.
+   ``mailbox`` was added.
 
 +-------------------------+------------------------------------------------------+
 | Field                   | Description                                          |
