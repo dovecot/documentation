@@ -211,7 +211,7 @@ Full config file
   ## Validation key dictionary, turns on local validation
   # local_validation_key_dict =
 
-  ## A single wanted scope of validity (optional)
+  ## A space separated list of scopes of validity (optional)
   # scope = something
 
   ## username attribute in response (default: email)
