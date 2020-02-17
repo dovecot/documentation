@@ -1,3 +1,5 @@
+.. _administrative_manual:
+
 =======================
 Administrative Manual
 =======================
