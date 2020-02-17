@@ -2777,6 +2777,18 @@ With a setting other than ``0``, you can optimize behavior for fewer disk
 writes at the cost of more disk reads.
 
 
+.. _setting-mail_cache_max_size:
+
+``mail_cache_max_size``
+-------------------------------------
+
+- Default: ``1G``
+- Values:  :ref:`size`
+
+If dovecot.index.cache becomes becomes larger than this, it's truncated to
+empty size. The maximum value is 1 GB because the cache file format can't
+currently support large sizes.
+
 .. _setting-mail_cache_record_max_size:
 
 ``mail_cache_record_max_size``
