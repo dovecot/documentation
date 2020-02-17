@@ -25,6 +25,8 @@ Categories
 +----------------+------------------------------------------------------------+
 | storage        |                                                            |
 +----------------+------------------------------------------------------------+
+| metacache      | Metacache library                                          |
++----------------+------------------------------------------------------------+
 | sieve          |                                                            |
 +----------------+------------------------------------------------------------+
 | sieve-execute  | Relates to (several) Sieve scripts being                   |
@@ -1574,6 +1576,179 @@ renumbering was done after all.
 +=======================+======================================================+
 | renumber_count        | Number of UIDs that should have been renumbered      |
 +-----------------------+------------------------------------------------------+
+
+lib-metacache
+-------------
+
+.. versionadded:: 2.3.11
+
+Events emitted by the metacache library.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| Inherits from user or mailbox                                                |
++-----------------------+------------------------------------------------------+
+| *No event specific fields defined*                                           |
++-----------------------+------------------------------------------------------+
+
+metacache_user_refresh_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_user_refresh_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_refresh_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_refresh_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Metacache is being refreshed when user or mailbox is being accessed. These
+events are sent only when a storage operation is done to perform the refresh.
+These events aren't sent if the metacache is used without refreshing.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| metacache_status      | Status of the refresh operation:                     |
+|                       |                                                      |
+|                       | * refresh_changed: Bundles were listed in storage.   |
+|                       |   New bundles were found and downloaded.             |
+|                       | * refresh_unchanged: Bundles were listed in storage, |
+|                       |   but no new changes were found.                     |
+|                       | * kept: Local metacache was used without any storage |
+|                       |   operations.                                        |
+|                       | * created: A new user or mailbox is being created.   |
++-----------------------+------------------------------------------------------+
+| rescan                | yes, if mailbox is going to be rescanned             |
++-----------------------+------------------------------------------------------+
+| error                 | Error message if the refresh failed                  |
++-----------------------+------------------------------------------------------+
+
+metacache_user_bundle_download_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_user_bundle_download_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_bundle_download_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_bundle_download_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+User or mailbox index bundle file is downloaded. These events can happen while
+the user or mailbox is being refreshed.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| filename              | Bundle filename                                      |
++-----------------------+------------------------------------------------------+
+| bundle_type           | Bundle type: diff, base or self                      |
++-----------------------+------------------------------------------------------+
+| bundle_size           | Size of the bundle file in bytes (uncompressed)      |
++-----------------------+------------------------------------------------------+
+| error                 | Error message if the download failed                 |
++-----------------------+------------------------------------------------------+
+
+metacache_upload_started
+^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_upload_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Changes in metacache are being uploaded to storage.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| error                 | Error message if the upload failed                   |
++-----------------------+------------------------------------------------------+
+
+metacache_user_bundle_upload_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_user_bundle_upload_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_bundle_upload_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_bundle_upload_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+User or mailbox index bundle file is uploaded. These events can happen while
+the user or mailbox is being uploaded. Note that the ``metacache_user_*``
+events can also be inherited from a mailbox event and include the mailbox
+fields if the user upload was triggered by a mailbox upload.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| filename              | Bundle filename                                      |
++-----------------------+------------------------------------------------------+
+| bundle_type           | Bundle type: diff, base or self                      |
++-----------------------+------------------------------------------------------+
+| bundle_size           | Size of the bundle file in bytes (uncompressed)      |
++-----------------------+------------------------------------------------------+
+| mailbox_guid          | GUID of the mailbox being uploaded. Note that the    |
+|                       | mailbox name field may or may not exist in this      |
+|                       | event depending on whether a single mailbox or the   |
+|                       | whole user is being uploaded.                        |
++-----------------------+------------------------------------------------------+
+| reason                | Reason for what changed in the indexes to cause this |
+|                       | bundle to be created and uploaded.                   |
++-----------------------+------------------------------------------------------+
+| error                 | Error message if the upload failed                   |
++-----------------------+------------------------------------------------------+
+
+metacache_user_clean_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_user_clean_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| min_priority          | Which priority indexes are being cleaned             |
++-----------------------+------------------------------------------------------+
+| error                 | Error message if the upload failed                   |
++-----------------------+------------------------------------------------------+
+
+obox_mailbox_rescan_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+obox_mailbox_rescan_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+obox_mailbox_rebuild_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+obox_mailbox_rebuild_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Mailbox is being rescanned or rebuilt. The rescan happens when a mailbox is
+opened for the first time in this backend (or after it was cleaned away).
+The rebuild happens after some kind of corruption had been detected. In both
+cases all the mails in the storage are listed and synced against the local
+indexes in metacache.
+
++--------------------------+------------------------------------------------------+
+| Field                    | Description                                          |
++==========================+======================================================+
+| mails_new                | Number of new mails found                            |
++--------------------------+------------------------------------------------------+
+| mails_temp_lost          | Number of mails temporarily lost due to "Object      |
+|                          | exists in dict, but not in storage".                 |
++--------------------------+------------------------------------------------------+
+| mails_lost               | Number of mails that existed in index, but no longer |
+|                          | exists in storage.                                   |
++--------------------------+------------------------------------------------------+
+| mails_lost_during_resync | Number of new mails found, but when doing GUID       |
+|                          | the mail no longer existed.                          |
++--------------------------+------------------------------------------------------+
+| mails_kept               | Number of mails found in both the index and in       |
+|                          | storage.                                             |
++--------------------------+------------------------------------------------------+
+| mails_total              | Number of mails that exists in the mailbox now.      |
++--------------------------+------------------------------------------------------+
+| guid_lookups             | Number of mails whose GUIDs were looked up from the  |
+|                          | email metadata.                                      |
++--------------------------+------------------------------------------------------+
+| guid_lookups_skipped     | Number of mails whose GUIDs were not looked up due   |
+|                          | to reaching the GUID lookup limit.                   |
++--------------------------+------------------------------------------------------+
+| error                    | Error message if the rescan/rebuild failed           |
++--------------------------+------------------------------------------------------+
 
 fs-dictmap
 ----------
