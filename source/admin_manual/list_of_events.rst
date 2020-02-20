@@ -632,6 +632,8 @@ Emitted when a server connection is terminated.
 Storage
 =======
 
+.. _event_mail_storage_service_user:
+
 Mail storage service user
 -------------------------
 
@@ -643,16 +645,20 @@ Mail storage service user
 | session             | Session ID for the storage sesssion                  |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail_user:
+
 Mail user
 ---------
 
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from mail storage service user                                    |
+| Inherits from :ref:`event_mail_storage_service_user`                       |
 +---------------------+------------------------------------------------------+
 | user                | Username of the user                                 |
 +---------------------+------------------------------------------------------+
+
+.. _event_mailbox:
 
 Mailbox
 -------
@@ -660,7 +666,7 @@ Mailbox
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from mail user                                                    |
+| Inherits from :ref:`event_mail_user`                                       |
 +---------------------+------------------------------------------------------+
 | mailbox             | Full mailbox name in UTF-8                           |
 |                     |                                                      |
@@ -671,13 +677,15 @@ Mailbox
 |                     | .. versionadded:: v2.3.10                            |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail:
+
 Mail
 ----
 
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from mailbox                                                      |
+| Inherits from :ref:`event_mailbox`                                         |
 +---------------------+------------------------------------------------------+
 | seq                 | Mail sequence number                                 |
 +---------------------+------------------------------------------------------+
@@ -762,6 +770,8 @@ The ``http_request_finished`` event is still sent at the end of the request.
 IMAP
 ====
 
+.. _event_imap_client:
+
 IMAP client
 -----------
 
@@ -796,7 +806,7 @@ IMAP command
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from IMAP client                                                  |
+| Inherits from :ref:`event_imap_client`                                     |
 +---------------------+------------------------------------------------------+
 | cmd_tag             | IMAP command tag                                     |
 |                     |                                                      |
@@ -1030,6 +1040,8 @@ SMTP Server
 
 These events are emitted by Dovecot's internal lib-smtp library.
 
+.. _event_connection:
+
 Connection
 ----------
 
@@ -1051,7 +1063,7 @@ Common fields:
 +---------------------+--------------------------------+
 | Field               | Description                    |
 +=====================+================================+
-| Inherits from connection                             |
+| Inherits from :ref:`event_connection`                |
 +---------------------+--------------------------------+
 | cmd_name            | name of the command            |
 |                     |                                |
@@ -1084,6 +1096,8 @@ failed somehow.
 |                     | success message.                                       |
 +---------------------+--------------------------------------------------------+
 
+.. _event_smtp_transaction:
+
 Transaction
 -----------
 
@@ -1092,7 +1106,7 @@ Common fields:
 +------------------+----------------------------------------------------------+
 | Field            | Description                                              |
 +==================+==========================================================+
-| Normally inherits from connection                                           |
+| Normally inherits from :ref:`event_connection`                              |
 +------------------+----------------------------------------------------------+
 | transaction_id   | Transaction ID used by the server for this transaction   |
 |                  | (this ID is logged, mentioned in the DATA reply and      |
@@ -1171,7 +1185,7 @@ Common fields:
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
 +=======================+======================================================+
-| Inherits from transaction                                                    |
+| Inherits from :ref:`event_smtp_transaction`                                  |
 +-----------------------+------------------------------------------------------+
 | rcpt_to               | Recipient address                                    |
 +-----------------------+------------------------------------------------------+
@@ -1251,7 +1265,7 @@ Push notifications
 +-------------------------+------------------------------------------------------+
 | Field                   | Description                                          |
 +=========================+======================================================+
-| Inherits from mail user                                                        |
+| Inherits from :ref:`event_mail_user`                                           |
 +-------------------------+------------------------------------------------------+
 | mailbox                 | Mailbox for event                                    |
 |                         |                                                      |
@@ -1266,6 +1280,8 @@ Push notification event was sent. See :ref:`stats_push_notifications`
 **********
 Pigeonhole
 **********
+
+.. _event_sieve:
 
 Sieve
 =====
@@ -1286,6 +1302,7 @@ Common fields
 | user                | Username of the user                                 |
 +---------------------+------------------------------------------------------+
 
+.. _event_sieve_execute:
 
 Sieve execute
 =============
@@ -1297,7 +1314,7 @@ Common fields
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from sieve                                                        |
+| Inherits from :ref:`event_sieve`                                           |
 +---------------------+------------------------------------------------------+
 | message_id          | The message-id of the message being filtered.        |
 +---------------------+------------------------------------------------------+
@@ -1315,7 +1332,7 @@ Common fields
 +-----------------+------------------------------------------------------+
 | Field           | Description                                          |
 +=================+======================================================+
-| Inherits from sieve-execute                                            |
+| Inherits from :ref:`event_sieve_execute`                               |
 +-----------------+------------------------------------------------------+
 | script_name     | The name of the Sieve script as it is visible to the |
 |                 | user.                                                |
@@ -1347,7 +1364,7 @@ Sieve action
 +------------------------+------------------------------------------------------+
 | Field                  | Description                                          |
 +========================+======================================================+
-| Inherits from sieve-execute                                                   |
+| Inherits from :ref:`event_sieve_execute`                                      |
 +------------------------+------------------------------------------------------+
 | action_name            | The name of the Sieve action.                        |
 +------------------------+------------------------------------------------------+
@@ -1412,7 +1429,7 @@ Common fields
 +------------------+------------------------------------------------------+
 | Field            | Description                                          |
 +==================+======================================================+
-| Inherits from sieve                                                     |
+| Inherits from :ref:`event_sieve`                                        |
 +------------------+------------------------------------------------------+
 | storage_driver   | The driver name of the Sieve storage ('file', 'ldap' |
 |                  | or 'dict')                                           |
@@ -1535,7 +1552,7 @@ Events emitted by the new index merging (metacache_index_merging=v2).
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
 +=======================+======================================================+
-| Inherits from mailbox                                                        |
+| Inherits from :ref:`event_mailbox`                                           |
 +-----------------------+------------------------------------------------------+
 | *No event specific fields defined*                                           |
 +-----------------------+------------------------------------------------------+
@@ -1590,7 +1607,7 @@ Events emitted by the metacache library.
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
 +=======================+======================================================+
-| Inherits from user or mailbox                                                |
+| Inherits from :ref:`event_mail_user` or :ref:`event_mailbox`                 |
 +-----------------------+------------------------------------------------------+
 | *No event specific fields defined*                                           |
 +-----------------------+------------------------------------------------------+
