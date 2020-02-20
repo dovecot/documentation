@@ -178,7 +178,7 @@ auth-worker
 ^^^^^^^^^^^
 Auth master process connects to auth worker processes. It is mainly used by passdbs and userdbs that do potentially long running lookups. For example MySQL supports only synchronous lookups, so each query is run in a separate auth worker process that does nothing else during the query. PostgreSQL and LDAP supports asynchronous lookups, so those don't use worker processes at all. With some passdbs and userdbs you can select if worker processes should be used.
 
-    * **client_limit=1**, because only the master auth process connects to auth worker.
+   * **client_limit=1**, because only the master auth process connects to auth worker.
 
    * **service_count=1**, because auth master stops extra idling workers by disconnecting from them.
 
@@ -201,7 +201,7 @@ dict
 Dovecot has a `lib-dict"` API for doing simple key-value lookups/updates in various backends (SQL, file, others in future). This is optionally used by things like quota, expire plugin and other things in future. It would be wasteful for each mail process to separately create a connection to SQL, so usually they go through the `proxy` dict backend. These proxy connections are the client connections of dict processes.
 
    * dict / Synchronous lookups (e.g. mysql):
-      * ``lient_limit=1``, because dict lookups are synchronous and the client is supposed to disconnect immediately after the lookup.
+      * ``client_limit=1``, because dict lookups are synchronous and the client is supposed to disconnect immediately after the lookup.
 
    * dict-async / Asynchronous lookups (e.g. pgsql, cassandra, ldap):
      * ``process_limit`` should commonly be the same as number of CPU cores. Although with Cassandra this may not be true, because Cassandra library can use multiple threads.
