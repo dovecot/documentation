@@ -144,6 +144,47 @@ put into ``dovecot-oauth2.plain.conf.ext``
   username_attribute = username
   pass_attrs = host=127.0.0.1 proxy=y proxy_mech=xoauth2 pass=%{oauth2:access_token}
 
+Local validation
+****************
+
+.. versionadded:: 2.3.11
+
+Local validation allows validating tokens without connecting to an oauth2 server.
+This requires that key issuer supports `JWT tokens (RFC 7519) <https://tools.ietf.org/html/rfc7519>`_.
+
+You can put the validation keys into any `dictionary <https://wiki.dovecot.org/Dictionary>`.
+The lookup key used is ``/shared/keyid``. If there is no ``kid`` element in token, ``default`` is used.
+Keys are cached into memory when they are fetched, to evict them from cache youu need to restart dovecot.
+If you want to do key rotation, it is recommended to use a new key id.
+
+Local validation can be enabled with other oauth2 options,
+so that if key validation fails for non-JWT keys,
+then online validation is performed.
+
+To use local validation, put into ``dovecot-oauth2.conf.ext``
+
+.. code-block:: none
+
+  local_validation_key_dict = fs:posix:prefix=/etc/dovecot/keys/
+
+Currently dovecot oauth2 library implements the following features of JWT tokens:
+
+ * IAT checking
+ * NBF checking
+ * EXP checking
+ * SUB support
+ * AUD support (this is checked against scope, if provided)
+
+The following algorithms are supported
+
+  * HS256, HS384, HS512
+  * RS256, RS384, RS512
+  * PS256, PS384, PS512
+  * ES256, ES384, ES512
+
+There is currently no support for EdDSA algorithms.
+ES supports any curve supported by OpenSSL for this purpose.
+
 Full config file
 ******************
 
@@ -166,6 +207,9 @@ Full config file
   ## Force introspection even if tokeninfo contains wanted fields
   ## Set this to yes if you are using active_attribute
   # force_introspection = no
+
+  ## Validation key dictionary, turns on local validation
+  # local_validation_key_dict =
 
   ## A single wanted scope of validity (optional)
   # scope = something
