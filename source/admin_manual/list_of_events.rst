@@ -1574,7 +1574,7 @@ renumbering was done after all.
 | renumber_count        | Number of UIDs that should have been renumbered      |
 +-----------------------+------------------------------------------------------+
 
-fs-fictmap
+fs-dictmap
 ----------
 
 fs_dictmap_object_lost
