@@ -98,8 +98,10 @@ First we have the settings that provide content for the userdb lookup:
 * ``default_fields``: Userdb fields (and :ref:`authentication-user_database_extra_fields`)
   that are used, unless overwritten by the userdb backend. They are in format
   ``key=value key2=value2 ....`` The values can contain :ref:`config_variables`.
+  All %variables used here reflect the state BEFORE the userdb lookup.
 * ``override_fields``: Same as default_fields, but instead of providing the
   default values, these values override what the userdb backend returned.
+  All %variables used here reflect the state AFTER the userdb lookup.
 
 For example useful with userdb passwd for overriding e.g. home directory or the
 ``uid`` or ``gid``. See :ref:`authentication-passwd`.
