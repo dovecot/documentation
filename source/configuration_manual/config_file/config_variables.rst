@@ -118,7 +118,7 @@ Variable Long name      Description
 -        orig_username  Same as %{username}, except using the original username (v2.2.6+, v2.2.13+ for auth)
 -        orig_domain    Same as %{domain}, except using the original username (v2.2.6+, v2.2.13+ for auth)
 -        passdb:<name>  Return passdb extra field "name". %{passdb:name:default} returns "default" if "name" doesn't exist (not returned if name exists but is empty) (v2.2.19+)
--        userdb:<name>  Return userdb extra field "name". %{userdb:name:default} returns "default" if "name" doesn't exist (not returned if name exists but is empty) (v2.2.19+)
+-        userdb:<name>  Return userdb extra field "name". Note that this can also be used in passdbs to access any userdb_* extra fields added by previous passdb lookups. %{userdb:name:default} returns "default" if "name" doesn't exist (not returned if name exists but is empty) (v2.2.19+)
 -        client_id      Expands to client ID request as IMAP arglist (v2.2.29+). Needs imap_id_retain=yes
 -        forward_<name> Used by proxies to pass on extra fields to the next hop, see `PasswordDatabase/ExtraFields/Proxy <https://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy>`_ (v2.2.29+)
 %!       -              Internal ID number of the current passdb/userdb.
