@@ -167,9 +167,11 @@ First we have the settings that provide content for the passdb lookup:
 * **default_fields**: Passdb fields (and :ref:`authentication-password_database_extra_fields`
   ) that are used, unless overwritten by the passdb backend. They are in format
   ``key=value key2=value2 ....`` The values can contain :ref:`%variables
-  <config_variables>`.
+  <config_variables>`. All %variables used here reflect the state BEFORE the
+  passdb lookup.
 * **override_fields**: Same as default_fields, but instead of providing the
   default values, these values override what the passdb backend returned.
+  All %variables used here reflect the state AFTER the passdb lookup.
 * **auth_verbose**: If this is explicitly set to yes or no, it overrides the
   :ref:`setting-auth_verbose` setting. (However, ``auth_debug=yes`` overrides the
   :ref:`setting-auth_verbose`.)
