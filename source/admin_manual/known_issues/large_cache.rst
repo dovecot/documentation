@@ -32,7 +32,13 @@ A similar problem is also:
 
    Fatal: master: service(imap): child ... returned error 83 (Out of memory (service imap { vsz_limit=1024 MB }, you may need to increase it))
 
-This usually also happens because the dovecot.index.cache file is so large
+and:
+
+.. code-block:: none
+
+   Error: mmap(size=...) failed with file .../dovecot.index.cache: Cannot allocate memory
+
+These usually happen because the dovecot.index.cache file is so large
 that it can't fit into the memory. The solution is usually to either the
 imap service's vsz_limit or default_vsz_limit to somewhat higher than the
 maximum cache file size (1 GB by default). For example to 1500M.
