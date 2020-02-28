@@ -227,3 +227,10 @@ lockdir setting and enabling the ``obox_track_copy_flags`` setting.
   }
 
 See :ref:`plugin-obox-setting_obox_track_copy_flags`.
+
+========
+Dumpster
+========
+
+See :ref:`dumpster_config` for information on how to configure lazy_expunge
+with the OX Dumpster module.
