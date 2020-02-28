@@ -155,8 +155,8 @@ Append the following to the ``dovecot-dict-cql.conf.ext`` file as described in
   map {
     pattern = shared/dictrevmap/$object_id/$object_name
     table = user_mailbox_objects_reverse
-    value_field = g
-    value_type = hexblob
+    value_field = u,g
+    value_type = string,hexblob
     fields {
       i = ${hexblob:object_id}
       n = ${hexblob:object_name}
