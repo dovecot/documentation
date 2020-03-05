@@ -4,13 +4,13 @@
 dovecot.index.cache is too large
 ================================
 
-Before v2.3.10 this shows up as:
+Before v2.3.11 this shows up as:
 
 .. code-block:: none
 
    Panic: file mail-index-util.c: line 37 (mail_index_uint32_to_offset): assertion failed: (offset < 0x40000000)
 
-In v2.3.10 this assert-crash was changed into:
+In v2.3.11 this assert-crash was changed into:
 
 .. code-block:: none
 
@@ -18,7 +18,7 @@ In v2.3.10 this assert-crash was changed into:
 
 The problem in these cases is that the user has a folder with a large number of
 messages. The only solution for now is to delete the dovecot.index.cache for
-that folder. Since v2.3.10 this is done automatically.
+that folder. Since v2.3.11 this is done automatically.
 
 The cache files generally are useful to reduce disk IO by being able to read
 commonly accessed data from the cache instead of opening the individual emails.
