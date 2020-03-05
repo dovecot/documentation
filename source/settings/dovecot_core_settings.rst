@@ -2780,6 +2780,8 @@ writes at the cost of more disk reads.
 ``mail_cache_max_size``
 -------------------------------------
 
+.. versionadded:: v2.3.11
+
 - Default: ``1G``
 - Values:  :ref:`size`
 
