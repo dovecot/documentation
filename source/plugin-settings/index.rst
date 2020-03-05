@@ -1,8 +1,8 @@
 .. _setting-plugins:
 
-=======================
-Core Plugin Settings
-=======================
+===============
+Plugin Settings
+===============
 
 .. toctree::
    :maxdepth: 1
