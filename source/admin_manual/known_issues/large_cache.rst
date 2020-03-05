@@ -4,6 +4,9 @@
 dovecot.index.cache is too large
 ================================
 
+Problem type 1.
+---------------
+
 Before v2.3.11 this shows up as:
 
 .. code-block:: none
@@ -26,7 +29,11 @@ However, usually these kind of huge folders are some kind of system accounts
 which just gather a lot of mails which are periodically deleted. In these
 cases the cache file usually isn't very useful.
 
-A similar problem is also:
+
+Problem type 2.
+---------------
+
+Alternatively you can encounter
 
 .. code-block:: none
 
