@@ -401,8 +401,6 @@ Example Setting:
 
    auth_policy_server_url = http://example.com:4001/
 
-See :ref:`setting-auth_policy_server_url`
-
 
 .. _setting-auth_proxy_self:
 
