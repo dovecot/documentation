@@ -97,6 +97,7 @@ html_theme_options = {
 #  'github_repo': 'core',
   'github_banner': False,
   'extra_nav_links': {
+    'Edit Documentation': 'https://github.com/dovecot/documentation/pulls/',
     'Repositories' : 'https://repo.dovecot.org/',
     'Download'     : 'https://dovecot.org/download.html',
   },
