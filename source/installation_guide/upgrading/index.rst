@@ -14,6 +14,7 @@ And that may be a good thing, since it can expose problems which could otherwise
 .. toctree::
    :maxdepth: 1
 
+   from-2.3.10-to-2.3.11
    from-2.3-to-2.3.10
    from-2.2-to-2.3
    from-2.1-to-2.2
