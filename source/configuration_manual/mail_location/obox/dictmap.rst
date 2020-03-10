@@ -80,11 +80,11 @@ creates more connections to Cassandra, so again it's better not to creates too
 many threads unnecessarily. If all the IO threads are full of pending requests,
 queries start failing with "All connections on all I/O threads are busy" error.
 
-Dictmap Settings
-----------------
+Dictmap Parameters
+------------------
 
 +---------------------------------+------------------------------------------------------------------------------+
-| Setting                         | Description                                                                  |
+| Parameter                       | Description                                                                  |
 +---------------------------------+------------------------------------------------------------------------------+
 | refcounting-table	          | Enable reference counted objects. Reference counting allows a single mail    |
 |                                 | object to be stored in multiple mailboxes, without the need to create a new  |
