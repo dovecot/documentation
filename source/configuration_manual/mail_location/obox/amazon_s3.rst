@@ -89,7 +89,7 @@ by adding the bucket region parameter to the S3 URL:
 .. code-block:: none
 
   plugin {
-    obox_index_fs = compress:gz:6:aws-s3:https://ACCESSKEY:SECRET@host/?bucket=BUCKETNAME&region=eu-central-1
+    obox_index_fs = compress:gz:6:aws-s3:https://ACCESSKEY:SECRET@BUCKETNAME.s3.amazonaws.com/?region=eu-central-1
   }
 
 Configuration using AWS IAM
