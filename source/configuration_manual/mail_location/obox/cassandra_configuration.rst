@@ -1,13 +1,10 @@
-.. _dovecot_configuration:
+.. _dictmap_cassandra_configuration:
 
-============================
-Dovecot Configuration
-============================
+==================================
+fs-dictmap/Cassandra Configuration
+==================================
 
-To use obox with Cassandra, the dovecot-ee-cassandra-plugin package must be installed. This package relies on several dependent packages stored in the Dovecot 3rd party repository, so that repository must be available.
-
-See Repository Configuration for further details on how to configure this 3rd party repository.
-
+To use obox with Cassandra, the dovecot-ee-cassandra-plugin package must be installed. This package relies on several dependent packages stored in the Dovecot 3rd party repository, so that repository must be available. See :ref:`ox_dovecot_pro_releases` for further details.
 
 The username part in mail_location must not use any username hashing or the dict mapping doesn't work correctly. So use:
 
