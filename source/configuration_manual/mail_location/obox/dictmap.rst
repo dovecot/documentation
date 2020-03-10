@@ -60,6 +60,16 @@ minutes should be a rather safe minimum.
      }
    }
 
+If lazy_expunge is enabled, Dovecot can avoid Cassandra SELECTs when expunging
+mails by using:
+
+.. code-block:: none
+
+   plugin {
+     # Enable only if lazy_expunge is enabled:
+     obox_track_copy_flags = yes
+   }
+
 The Cassandra cpp-driver library requires a lot of VSZ memory. Make sure dict
 process doesn't immediately die out of memory (it may also be visible as
 strange crashes at startup) by disabling VSZ limits:
