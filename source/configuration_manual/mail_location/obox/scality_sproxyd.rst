@@ -4,8 +4,8 @@
  Scality sproxyd
 ======================
 
-sproxy driver requires Cassandra.  Cassandra portions of the configuration
-(``dictmap/refcounting``) is explained in the Cassandra section.
+Using the sproxy driver requires using fs-dictmap/Cassandra. See
+:ref:`dictmap_cassandra_configuration` for details.
 
 Example sproxyd configuration:
 
