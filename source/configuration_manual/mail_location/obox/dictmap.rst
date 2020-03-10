@@ -24,7 +24,7 @@ The fs-dictmap syntax is:
 
 .. Note:: Cassandra support is done via SQL dict, because Cassandra CQL is implemented as a lib-sql driver.
 
-Obox should work with Cassandra v2.x or v3.x.  Obox is internally tested with v2.1 and v2.2, so those are the recommended version(s) to use.
+Obox should work with Cassandra v2.1, v2.2 or v3.x. A recent v3.x release is recommended.
 
 Configuration
 -------------
