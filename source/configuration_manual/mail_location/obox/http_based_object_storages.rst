@@ -137,8 +137,6 @@ See also
 .. toctree::
   :maxdepth: 1
 
-  obox_background
-
   oboxdrivers
 
   obox_settings_cassandra
