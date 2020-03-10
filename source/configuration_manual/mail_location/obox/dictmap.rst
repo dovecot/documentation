@@ -1,10 +1,18 @@
-.. _dictmap:
+.. _dictmap_cassandra_configuration:
 
-=============
-Dictmap
-=============
+==================================
+fs-dictmap/Cassandra Configuration
+==================================
 
-The “dictmap” fs driver implements the main part of this mapping functionality. Its syntax is:
+Using obox with Cassandra is done via the fs-dictmap wrapper, which translates
+internal "lib-fs paths" into dict API. The dict API paths in turn are
+translated to SQL/CQL queries via dict-sql.
+
+Cassandra requires installing dovecot-ee-cassandra-plugin package and the
+cpp-driver from 3rdparty repository. See :ref:`ox_dovecot_pro_releases`
+for further details.
+
+The fs-dictmap syntax is:
 
   .. code-block:: none
 
@@ -18,7 +26,62 @@ The “dictmap” fs driver implements the main part of this mapping functionali
 
 Obox should work with Cassandra v2.x or v3.x.  Obox is internally tested with v2.1 and v2.2, so those are the recommended version(s) to use.
 
-The dictmap settings are:
+Configuration
+-------------
+
+.. code-block:: none
+
+   mail_location = obox:%u:INDEX=~/:CONTROL=~/
+   plugin {
+     # Without lazy_expunge plugin:
+     obox_fs = fscache:1G:/var/cache/mails:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; refcounting-table:lockdir=/tmp:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11
+     # With lazy_expunge plugin:
+     #obox_fs = fscache:1G:/var/cache/mails:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; refcounting-table:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11
+
+     obox_index_fs = compress:gz:6:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; diff-table
+     fts_dovecot_fs = fts-cache:fscache:1G:/var/cache/mails:compress:gz:6:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=1&reason_header_max_length=200 ; dict-prefix=%u/fts/
+   }
+
+It's highly recommended to use :ref:`lazy_expunge_plugin` with dictmap.
+This allows enabling various optimizations, which otherwise wouldn't be safe.
+Note that if autoexpunging is done on the lazy_expunge folder, it must be
+larger than any potentially slow object storage operation. For example 15
+minutes should be a rather safe minimum.
+
+.. code-block:: none
+
+   mail_plugins = $mail_plugins lazy_expunge
+   plugin {
+     lazy_expunge = DUMPSTER
+   }
+   namespace inbox {
+     mailbox DUMPSTER {
+       autoexpunge = 7 days
+     }
+   }
+
+The Cassandra cpp-driver library requires a lot of VSZ memory. Make sure dict
+process doesn't immediately die out of memory (it may also be visible as
+strange crashes at startup) by disabling VSZ limits:
+
+.. code-block:: none
+
+   service dict-async {
+     vsz_limit = 0
+   }
+
+Usually there should be only a single dict-async process running, because each
+process creates its own connections to the Cassandra cluster increasing its
+load. The Cassandra cpp-driver can use multiple IO threads as well. This is
+controlled by the num_threads parameter in the connect setting in
+``dovecot-dict-cql.conf.ext``. Each IO thread can handle 32k requests
+simultaneously, so usually 1 IO thread is enough. Note that each IO thread
+creates more connections to Cassandra, so again it's better not to creates too
+many threads unnecessarily. If all the IO threads are full of pending requests,
+queries start failing with "All connections on all I/O threads are busy" error.
+
+Dictmap Settings
+----------------
 
 +---------------------------------+------------------------------------------------------------------------------+
 | Setting                         | Description                                                                  |
@@ -79,6 +142,9 @@ The dictmap settings are:
 |                                 |                                                                              |
 |                                 | .. versionadded:: v2.3.10                                                    |
 +---------------------------------+------------------------------------------------------------------------------+
+
+Dict paths
+----------
 
 The fs-dictmap uses the following dict paths:
 
