@@ -63,6 +63,12 @@ The dictmap settings are:
 |                                 | This path should be located under the obox indexes directory (on the SSD     |
 |                                 | backed cache mount point; e.g. %h/buckets.cache)                             |
 +---------------------------------+------------------------------------------------------------------------------+
+| nlinks-limit=<n>                | Defines the maximum number of results returned from a dictionary iteration   |
+|                                 | lookup (i.e. Cassandra CQL query) when checking the number of links to an    |
+|                                 | object. Limiting this may improve performance. Currently Dovecot only cares  |
+|                                 | whether the link count is 0, 1 or "more than 1" so for a bit of extra safety |
+|                                 | we recommend nlinks-limit=3.                                                 |
++---------------------------------+------------------------------------------------------------------------------+
 | max-parallel-iter=<n>           | Describes how many parallel dict iterations can be created internally. The   |
 |                                 | default value is 1. Parallel iterations can especially help speed up reading |
 |                                 | huge folders.                                                                |
