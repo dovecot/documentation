@@ -69,6 +69,10 @@ The dictmap settings are:
 |                                 | whether the link count is 0, 1 or "more than 1" so for a bit of extra safety |
 |                                 | we recommend nlinks-limit=3.                                                 |
 +---------------------------------+------------------------------------------------------------------------------+
+| delete-timestamp=+<:ref:`time`> | Increase Cassandra's DELETE timestamp by this much. This is useful to        |
+|                                 | make sure the DELETE isn't ignored because Dovecot backends' times are       |
+|                                 | slightly different. Recommendation is to use delete-timestamp=+10s           |
++---------------------------------+------------------------------------------------------------------------------+
 | max-parallel-iter=<n>           | Describes how many parallel dict iterations can be created internally. The   |
 |                                 | default value is 1. Parallel iterations can especially help speed up reading |
 |                                 | huge folders.                                                                |
