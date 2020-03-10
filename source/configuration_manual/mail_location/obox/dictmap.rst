@@ -24,10 +24,6 @@ The dictmap settings are:
        Setting                                   Description
 ===============================   ====================================================================================================================================================================================================================
   refcounting-table	                 Enable reference counted objects. Reference counting allows a single mail object to be stored in multiple mailboxes, without the need to create a new copy of the message data in object storage.
-  reason_header_max_length=<n>         Include the reason why object is being GET in the sproxyd X-Dovecot-Reason header. 
-                                       This can be useful for debugging or statistics.
-                                       The reason header length is truncated to <n>. 
-                                       (This setting will later on be implemented for other object storage backends also.)
   lockdir=<path>                       If refcounting is enabled, use this directory for creating lock files to objects
                                        while they're being copied or deleted.
                                        This attempts to prevent race conditions where an object copy and delete runs 
