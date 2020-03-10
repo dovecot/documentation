@@ -20,44 +20,55 @@ Obox should work with Cassandra v2.x or v3.x.  Obox is internally tested with v2
 
 The dictmap settings are:
 
-===============================   ====================================================================================================================================================================================================================
-       Setting                                   Description
-===============================   ====================================================================================================================================================================================================================
-  refcounting-table	                 Enable reference counted objects. Reference counting allows a single mail object to be stored in multiple mailboxes, without the need to create a new copy of the message data in object storage.
-  lockdir=<path>                       If refcounting is enabled, use this directory for creating lock files to objects
-                                       while they're being copied or deleted.
-                                       This attempts to prevent race conditions where an object copy and delete runs 
-                                       simultaneously and both succeed, but the copied object no longer exists.
-                                       This can't be fully prevented if different servers do this concurrently.
-                                       If lazy_expunge is used, this setting isn't really needed, because such race conditions
-                                       are practically nonexistent.
-                                       Not using the setting will improve performance by avoiding a 
-                                       Cassandra SELECT when copying mails.
-  diff-table	                       Store diff & self index bundle objects to a separate table. 
-                                       This is a Cassandra-backend optimization.
-  delete-dangling-links	               If an object exists in dict, but not in storage, delete it automatically from dict when it's noticed. 
-                                       This setting isn't safe to use by default, because storage may return 
-                                       "object doesn't exist" errors only temporarily during split brain.
-  bucket-size=<n>	                  Separate email objects into buckets, where each bucket can have a maximum of <n> emails. This should be set to 10000 with Cassandra to avoid the partition becoming too large when there are a lot of emails.
-  bucket-deleted-days=<days>	       Track Cassandra's tombstones in buckets.cache file to avoid creating excessively large buckets 
-                                       when a lot of mails are saved and deleted in a folder.The <days> should be one day longer than 
-                                       gc_grace_seconds for the user_mailbox_objects table.By default this is 10 days, so in that case 
-                                       bucket-deleted-days=11 should be used.When determining whether bucket-size is reached and a new one needs 
-                                       to be created, with this setting the tombstones are also taken into account.
-                                       This tracking is preserved only as long as the buckets.cache exists. 
-                                       It's also not attempted to be preserved when moving users between backends. 
-                                       This means that it doesn't work perfectly in all situations, 
-                                       but it should still be good enough to prevent the worst offenses.
- bucket-cache=<path>	               Required when bucket-size is set. Bucket counters are cached in this file.
-                                       This path should be located under the obox indexes directory 
-                                       (on the SSD backed cache mount point; e.g. %h/buckets.cache)
- max-parallel-iter=<n>                 .. versionadded:: v2.3.10
-
-                                       Describes how many parallel dict iterations can be created internally. The
-                                       default value is 1. Parallel iterations can especially help speed up reading
-                                       huge folders.
-
-===============================   ====================================================================================================================================================================================================================
++---------------------------------+------------------------------------------------------------------------------+
+| Setting                         | Description                                                                  |
++---------------------------------+------------------------------------------------------------------------------+
+| refcounting-table	          | Enable reference counted objects. Reference counting allows a single mail    |
+|                                 | object to be stored in multiple mailboxes, without the need to create a new  |
+|                                 | copy of the message data in object storage.                                  |
++---------------------------------+------------------------------------------------------------------------------+
+| lockdir=<path>                  | If refcounting is enabled, use this directory for creating lock files to     |
+|                                 | objects while they're being copied or deleted. This attempts to prevent race |
+|                                 | conditions where an object copy and delete runs simultaneously and both      |
+|                                 | succeed, but the copied object no longer exists. This can't be fully         |
+|                                 | prevented if different servers do this concurrently. If lazy_expunge is used,|
+|                                 | this setting isn't really needed, because such race conditions are           |
+|                                 | practically nonexistent. Not using the setting will improve performance by   |
+|                                 | avoiding a Cassandra SELECT when copying mails.                              |
++---------------------------------+------------------------------------------------------------------------------+
+| diff-table	                  | Store diff & self index bundle objects to a separate table. This is a        |
+|                                 | Cassandra-backend optimization.                                              |
++---------------------------------+------------------------------------------------------------------------------+
+| delete-dangling-links	          | If an object exists in dict, but not in storage, delete it automatically from|
+|                                 | dict when it's noticed. This setting isn't safe to use by default, because   |
+|                                 | storage may return "object doesn't exist" errors only temporarily during     |
+|                                 | split brain.                                                                 |
++---------------------------------+------------------------------------------------------------------------------+
+| bucket-size=<n>	          | Separate email objects into buckets, where each bucket can have a maximum of |
+|                                 | <n> emails. This should be set to 10000 with Cassandra to avoid the partition|
+|                                 | becoming too large when there are a lot of emails.                           |
++---------------------------------+------------------------------------------------------------------------------+
+| bucket-deleted-days=<days>      | Track Cassandra's tombstones in buckets.cache file to avoid creating         |
+|                                 | excessively large buckets when a lot of mails are saved and deleted in a     |
+|                                 | folder. The <days> should be one day longer than gc_grace_seconds for the    |
+|                                 | user_mailbox_objects table.By default this is 10 days, so in that case       |
+|                                 | bucket-deleted-days=11 should be used.When determining whether bucket-size is|
+|                                 | reached and a new one needs to be created, with this setting the tombstones  |
+|                                 | are also taken into account. This tracking is preserved only as long as the  |
+|                                 | buckets.cache exists. It's also not attempted to be preserved when moving    |
+|                                 | users between backends. This means that it doesn't work perfectly in all     |
+|                                 | situations, but it should still be good enough to prevent the worst offenses.|
++---------------------------------+------------------------------------------------------------------------------+
+| bucket-cache=<path>	          | Required when bucket-size is set. Bucket counters are cached in this file.   |
+|                                 | This path should be located under the obox indexes directory (on the SSD     |
+|                                 | backed cache mount point; e.g. %h/buckets.cache)                             |
++---------------------------------+------------------------------------------------------------------------------+
+| max-parallel-iter=<n>           | Describes how many parallel dict iterations can be created internally. The   |
+|                                 | default value is 1. Parallel iterations can especially help speed up reading |
+|                                 | huge folders.                                                                |
+|                                 |                                                                              |
+|                                 | .. versionadded:: v2.3.10                                                    |
++---------------------------------+------------------------------------------------------------------------------+
 
 The fs-dictmap uses the following dict paths:
 
