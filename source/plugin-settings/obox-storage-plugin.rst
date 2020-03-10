@@ -113,6 +113,15 @@ This setting handles the object storage configuration for index bundles.
 
 .. WARNING:: obox_index_fs is currently not compatible with fs-posix driver.
 
+.. _plugin-obox-storage-setting_obox_max_rescan_mail_count:
+
+``obox_max_rescan_mail_count``
+------------------------------
+
+Upload indexes after this many mails have been saved since the last upload.
+A higher value reduces the number of uploads, but increases the number of
+mail downloads to fill the caches after a backend crash.
+
 
 .. _plugin-obox-storage-setting_obox_lost_mailbox_prefix:
 
@@ -136,4 +145,3 @@ There are no migrated POP3 UIDLs. Don't try to look them up in any situation. No
 -----------------------------
 
 By default doing changes to folders (e.g. creating or renaming) uploads changes immediately to object storage. If this setting is enabled, the upload happens sometimes later (within metacache_upload_interval).
-

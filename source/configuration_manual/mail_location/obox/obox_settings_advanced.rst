@@ -22,6 +22,33 @@ the object storage.
 .. code-block:: none
 
    plugin {
+     obox_max_rescan_mail_count = 10
+   }
+
+Upload indexes after this many mails have been saved since the last upload.
+A higher value reduces the number of uploads, but increases the number of
+mail downloads to fill the caches after a backend crash.
+
+.. code-block:: none
+
+   plugin {
+     obox_size_missing_action = warn-read|read|stat
+   }
+
+This setting controls what should be done when the mail object is missing the
+size metadata.
+
+Options:
+
+:``warn-read``: (DEFAULT) Log a warning and fallback to reading the email to
+                calculate its size.
+:``read``: Same as ``warn-read``, but doesn't log a warning.
+:``stat``: Use fs_stat() to get the size, which is the fastest but doesn't
+           work if mails are compressed or encrypted.
+
+.. code-block:: none
+
+   plugin {
      obox_mailbox_list_quick_lookups = yes
    }
 
