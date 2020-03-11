@@ -4,6 +4,34 @@
 Obox Advanced Settings
 ======================
 
+.. _plugin-obox-setting_obox_avoid_cached_vsize:
+
+``obox_avoid_cached_vsize``
+----------------------------
+
+- Default: ``no``
+- Values: :ref:`boolean`
+
+Avoid getting the email's size from the cache whenever the email body is
+opened anyway. This avoid unnecessary errors if a lot of the vsizes are wrong.
+The vsize in dovecot.index is also automatically updated to the fixes value
+with or without this setting. This setting was mainly useful due to earlier
+bugs that caused the vsize to be wrong in many cases.
+
+
+.. _plugin-obox-setting_obox_dont_use_object_ids:
+
+``obox_dont_use_object_ids``
+----------------------------
+
+- Default: ``no``
+- Values: :ref:`boolean`
+
+.. versionadded:: v2.3.0
+
+This is the reverse of :ref:`plugin-obox-setting_obox_use_object_ids` with
+newer Dovecot versions. See its description for more details.
+
 .. _plugin-obox-setting_obox_allow_inconsistency:
 
 ``obox_allow_inconsistency``
@@ -42,8 +70,11 @@ enabled. This setting may be removed in a future version.
 - Default: ``no``
 - Values: :ref:`boolean`
 
- Cassandra: "Object exists in dict, but not in storage" errors will be handled by returning empty emails to the IMAP client. The tagged FETCH response will be OK instead of NO.
+Cassandra: `Object exists in dict, but not in storage` errors will be handled
+by returning empty emails to the IMAP client. The tagged FETCH response will
+be ``OK`` instead of ``NO``.
 
+See :ref:`storage_workarounds` for more details.
 
 .. _plugin-obox-setting_obox_disable_fast_copy:
 
@@ -108,7 +139,9 @@ There are no migrated POP3 UIDLs. Don't try to look them up in any situation. No
 - Default: ``no``
 - Values: :ref:`boolean`
 
-By default doing changes to folders (e.g. creating or renaming) uploads changes immediately to object storage. If this setting is enabled, the upload happens sometimes later (within metacache_upload_interval).
+By default doing changes to folders (e.g. creating or renaming) uploads changes
+immediately to object storage. If this setting is enabled, the upload happens
+sometimes later (within :ref:`plugin-obox-setting_metacache_upload_interval`).
 
 
 .. _plugin-obox-setting_obox_autofix_storage:
@@ -185,6 +218,62 @@ could be wrong.
              change this so that if user appears to be over quota, the quota
              is strictly calculated before returning over quota failures or
              executing any quota warning/over scripts.
+
+
+.. _plugin-obox-setting_metacache_disable_bundle_list_cache:
+
+``metacache_disable_bundle_list_cache``
+---------------------------------------
+
+- Default: ``no``
+- Values: :ref:`boolean`
+
+Disable caching bundle list. This setting was added to disable it in case there
+were bugs in it. This setting is likely to become removed entirely.
+
+
+.. _plugin-obox-setting_metacache_disable_merging:
+
+``metacache_disable_merging``
+-----------------------------
+
+- Default: ``no``
+- Values: :ref:`boolean`
+
+Disable index merging when opening root or mailbox indexes. This can be used
+to work around bugs in the merging code that cause crashes. Usually this
+setting isn't set in dovecot.conf, but set via doveadm call:
+
+.. code-block:: none
+
+    doveadm -o plugin/metacache_disable_merging=yes force-resync -u user@example '*'
+
+
+.. _plugin-obox-setting_metacache_max_parallel_requests:
+
+``metacache_max_parallel_requests``
+-----------------------------------
+
+- Default: ``10``
+- Values: :ref:`uint`
+
+Maximum number of metacache read/write operations to do in parallel.
+
+
+.. _plugin-obox-setting_metacache_merge_max_uid_renumbers:
+
+``metacache_merge_max_uid_renumbers``
+-------------------------------------
+
+- Default: ``100``
+- Values: :ref:`uint`
+
+This is used only with metacache_index_merging=v2. If the merging detects that
+there are more than this many UIDs that are conflicting and would have to be
+renumbered, don't renumber any of them. This situation isn't expected to happen
+normally, and renumbering too many UIDs can cause unnecessary extra disk IO.
+The downside is that a caching IMAP client might become confused if it had
+previously seen different UIDs.
 
 .. _plugin-obox-setting_metacache_priority_weights:
 .. _plugin-obox-setting_metacache_size_weights:
