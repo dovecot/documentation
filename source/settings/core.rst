@@ -1,4 +1,4 @@
-.. _dovecot_core_settings:
+.. _core_settings:
 
 ========================
 Dovecot Core Settings
