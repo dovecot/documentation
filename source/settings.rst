@@ -7,7 +7,7 @@ Settings
 .. toctree::
    :maxdepth: 1
 
-   settings/dovecot_core_settings
+   settings/core
 
    plugin-settings/index
 
