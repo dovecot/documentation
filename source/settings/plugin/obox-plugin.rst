@@ -54,16 +54,6 @@ Enable only if Cassandra & lazy_expunge plugin are used: Try to avoid Cassandra 
 Workaround for object storages with a broken copy operation. Instead perform copying by reading and writing the full object.
 
 
-.. _plugin-obox-setting_obox_size_missing_action:
-
-``obox_size_missing_action``
-----------------------------
-
-This setting controls what should be done when the mail object is missing the size metadata. 
-Default (warn-read) is to log a warning and fallback to reading the email to calculate its size. 
-read is the same but doesn't log a warning. stat uses fs_stat() to get the size, which is the fastest but doesn't work if mails are e.g. compressed or encrypted.
-
-
 .. _plugin-obox-setting_obox_username:
 
 ``obox_username``
@@ -112,16 +102,6 @@ This setting handles the basic Object Storage configuration, typically via the p
 This setting handles the object storage configuration for index bundles.
 
 .. WARNING:: obox_index_fs is currently not compatible with fs-posix driver.
-
-.. _plugin-obox-setting_obox_max_rescan_mail_count:
-
-``obox_max_rescan_mail_count``
-------------------------------
-
-Upload indexes after this many mails have been saved since the last upload.
-A higher value reduces the number of uploads, but increases the number of
-mail downloads to fill the caches after a backend crash.
-
 
 .. _plugin-obox-setting_obox_lost_mailbox_prefix:
 
