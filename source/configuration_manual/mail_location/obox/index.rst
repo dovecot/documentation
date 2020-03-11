@@ -92,7 +92,7 @@ by multiple backends. Default is 2 seconds.
 
 Must be less than :ref:`setting-director_user_expire` (Default: 15min).
 
-See :ref:`plugin-obox-storage` for additional plugin options.
+See :ref:`plugin-obox` for additional plugin options.
 
 See :ref:`obox_settings_advanced` for additional, advanced obox settings.
 

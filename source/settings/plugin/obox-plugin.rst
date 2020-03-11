@@ -1,13 +1,13 @@
-.. _plugin-obox-storage:
+.. _plugin-obox:
 
-====================
-obox-storage plugin
-====================
+===========
+obox plugin
+===========
 
-``obox-storage-plugin``
-^^^^^^^^^^^^^^^^^^^^^^^
+``obox-plugin``
+^^^^^^^^^^^^^^^
 
-.. _plugin-obox-storage-setting_obox_allow_inconsistency:
+.. _plugin-obox-setting_obox_allow_inconsistency:
 
 ``obox_allow_inconsistency``
 ----------------------------
@@ -15,7 +15,7 @@ obox-storage plugin
 Even in case of object storage errors, try to allow accessing the emails as well as possible. This especially means that if the local metacache already has a copy of the indexes, they can be used to provide access to user's emails even if the object storage is unavailable.
 
 
-.. _plugin-obox-storage-setting_obox_allow_nonreproducible_uids:
+.. _plugin-obox-setting_obox_allow_nonreproducible_uids:
 
 ``obox_allow_nonreproducible_uids``
 -----------------------------------
@@ -30,7 +30,7 @@ upload at the cost of potentially changing IMAP UIDs. Normally it should not be
 enabled. This setting may be removed in a future version.
 
 
-.. _plugin-obox-storage-setting_obox_fetch_lost_mails_as_empty:
+.. _plugin-obox-setting_obox_fetch_lost_mails_as_empty:
 
 ``obox_fetch_lost_mails_as_empty``
 ----------------------------------
@@ -38,7 +38,7 @@ enabled. This setting may be removed in a future version.
  Cassandra: "Object exists in dict, but not in storage" errors will be handled by returning empty emails to the IMAP client. The tagged FETCH response will be OK instead of NO.
 
 
-.. _plugin-obox-storage-setting_obox_track_copy_flags:
+.. _plugin-obox-setting_obox_track_copy_flags:
 
 ``obox_track_copy_flags``
 -------------------------
@@ -46,7 +46,7 @@ enabled. This setting may be removed in a future version.
 Enable only if Cassandra & lazy_expunge plugin are used: Try to avoid Cassandra SELECTs when expunging mails. 
 
 
-.. _plugin-obox-storage-setting_obox_disable_fast_copy:
+.. _plugin-obox-setting_obox_disable_fast_copy:
 
 ``obox_disable_fast_copy``
 --------------------------
@@ -54,7 +54,7 @@ Enable only if Cassandra & lazy_expunge plugin are used: Try to avoid Cassandra 
 Workaround for object storages with a broken copy operation. Instead perform copying by reading and writing the full object.
 
 
-.. _plugin-obox-storage-setting_obox_size_missing_action:
+.. _plugin-obox-setting_obox_size_missing_action:
 
 ``obox_size_missing_action``
 ----------------------------
@@ -64,7 +64,7 @@ Default (warn-read) is to log a warning and fallback to reading the email to cal
 read is the same but doesn't log a warning. stat uses fs_stat() to get the size, which is the fastest but doesn't work if mails are e.g. compressed or encrypted.
 
 
-.. _plugin-obox-storage-setting_obox_username:
+.. _plugin-obox-setting_obox_username:
 
 ``obox_username``
 -----------------
@@ -72,7 +72,7 @@ read is the same but doesn't log a warning. stat uses fs_stat() to get the size,
 Overrides the obox username in storage. Normally the username is taken from the mail_location setting.
 
 
-.. _plugin-obox-storage-setting_obox_refresh_index_once_after:
+.. _plugin-obox-setting_obox_refresh_index_once_after:
 
 ``obox_refresh_index_once_after``
 ---------------------------------
@@ -80,7 +80,7 @@ Overrides the obox username in storage. Normally the username is taken from the 
 This forces the next mailbox open after the specified UNIX timestamp to refresh locally cached indexes to see if other backends have modified the user's indexes simultaneously.
 
 
-.. _plugin-obox-storage-setting_obox_rescan_mails_once_after:
+.. _plugin-obox-setting_obox_rescan_mails_once_after:
 
 ``obox_rescan_mails_once_after``
 --------------------------------
@@ -88,7 +88,7 @@ This forces the next mailbox open after the specified UNIX timestamp to refresh 
 This forces the next mailbox open after the specified UNIX timestamp to rescan the mails to make sure there aren't any unindexed mails.
 
 
-.. _plugin-obox-storage-setting_metacache_socket_path:
+.. _plugin-obox-setting_metacache_socket_path:
 
 ``metacache_socket_path``
 -------------------------
@@ -96,7 +96,7 @@ This forces the next mailbox open after the specified UNIX timestamp to rescan t
 Path to communicate with metacache process. Shouldn't be changed normally.
 
 
-.. _plugin-obox-storage-setting_obox_fs:
+.. _plugin-obox-setting_obox_fs:
 
 ``obox_fs``
 -----------
@@ -104,7 +104,7 @@ Path to communicate with metacache process. Shouldn't be changed normally.
 This setting handles the basic Object Storage configuration, typically via the plugin block of 90-plugin.conf.
 
 
-.. _plugin-obox-storage-setting_obox_index_fs:
+.. _plugin-obox-setting_obox_index_fs:
 
 ``obox_index_fs``
 -----------------
@@ -113,7 +113,7 @@ This setting handles the object storage configuration for index bundles.
 
 .. WARNING:: obox_index_fs is currently not compatible with fs-posix driver.
 
-.. _plugin-obox-storage-setting_obox_max_rescan_mail_count:
+.. _plugin-obox-setting_obox_max_rescan_mail_count:
 
 ``obox_max_rescan_mail_count``
 ------------------------------
@@ -123,7 +123,7 @@ A higher value reduces the number of uploads, but increases the number of
 mail downloads to fill the caches after a backend crash.
 
 
-.. _plugin-obox-storage-setting_obox_lost_mailbox_prefix:
+.. _plugin-obox-setting_obox_lost_mailbox_prefix:
 
 ``obox_lost_mailbox_prefix``
 ----------------------------
@@ -131,7 +131,7 @@ mail downloads to fill the caches after a backend crash.
 If folder name is lost entirely due to lost index files, generate a name for the folder using this prefix. The default is "recovered-lost-folder-".
 
 
-.. _plugin-obox-storage-setting_obox_no_pop3_backend_uidls:
+.. _plugin-obox-setting_obox_no_pop3_backend_uidls:
 
 ``obox_no_pop3_backend_uidls``
 ------------------------------
@@ -139,7 +139,7 @@ If folder name is lost entirely due to lost index files, generate a name for the
 There are no migrated POP3 UIDLs. Don't try to look them up in any situation. Normally this shouldn't be necessary to use.
 
 
-.. _plugin-obox-storage-setting_metacache_bg_root_uploads:
+.. _plugin-obox-setting_metacache_bg_root_uploads:
 
 ``metacache_bg_root_uploads``
 -----------------------------
