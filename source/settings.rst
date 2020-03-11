@@ -9,6 +9,6 @@ Settings
 
    settings/core
 
-   plugin-settings/index
+   settings/plugin/index
 
    configuration_manual/config_file/config_types.rst
