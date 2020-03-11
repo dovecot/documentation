@@ -4,11 +4,13 @@
 Obox Advanced Settings
 ======================
 
-.. code-block:: none
+.. _plugin-obox-setting_obox_autofix_storage:
 
-   plugin {
-     obox_autofix_storage = no
-   }
+``obox_autofix_storage``
+------------------------
+
+- Default: ``no``
+- Values: :ref:`boolean`
 
 If activated, when an unexpected 404 is found when retrieving a message from
 object storage, Dovecot will rescan the mailbox by listing its objects. If
@@ -19,21 +21,25 @@ the object storage.
 
 **THIS SHOULD NORMALLY NOT BE SET**
 
-.. code-block:: none
+.. _plugin-obox-setting_obox_max_rescan_mail_count:
 
-   plugin {
-     obox_max_rescan_mail_count = 10
-   }
+``obox_max_rescan_mail_count``
+------------------------------
+
+- Default: ``10``
+- Values: :ref:`uint`
 
 Upload indexes after this many mails have been saved since the last upload.
 A higher value reduces the number of uploads, but increases the number of
 mail downloads to fill the caches after a backend crash.
 
-.. code-block:: none
+.. _plugin-obox-setting_obox_size_missing_action:
 
-   plugin {
-     obox_size_missing_action = warn-read|read|stat
-   }
+``obox_size_missing_action``
+----------------------------
+
+- Default: ``warn-read``
+- Values: ``warn-read``, ``read`` or ``stat``
 
 This setting controls what should be done when the mail object is missing the
 size metadata.
@@ -46,11 +52,13 @@ Options:
 :``stat``: Use fs_stat() to get the size, which is the fastest but doesn't
            work if mails are compressed or encrypted.
 
-.. code-block:: none
+.. _plugin-obox-setting_obox_mailbox_list_quick_lookups:
 
-   plugin {
-     obox_mailbox_list_quick_lookups = yes
-   }
+``obox_mailbox_list_quick_lookups``
+-----------------------------------
+
+- Default: ``no``
+- Values: :ref:`boolean`
 
 This setting avoids downloading mailboxes to metacache if the mailbox already
 exists in dovecot.list.index, even though it's not known whether it's
@@ -70,6 +78,15 @@ could be wrong.
              change this so that if user appears to be over quota, the quota
              is strictly calculated before returning over quota failures or
              executing any quota warning/over scripts.
+
+.. _plugin-obox-setting_metacache_priority_weights:
+.. _plugin-obox-setting_metacache_size_weights:
+
+``metacache_priority_weights``
+------------------------------
+
+``metacache_size_weights``
+------------------------------
 
 .. code-block:: none
 
