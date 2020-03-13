@@ -7,8 +7,8 @@ Settings
 .. toctree::
    :maxdepth: 1
 
-   settings/dovecot_core_settings
+   settings/core
 
-   plugin-settings/index
+   settings/plugin/index
 
    configuration_manual/config_file/config_types.rst

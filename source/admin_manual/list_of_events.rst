@@ -25,6 +25,8 @@ Categories
 +----------------+------------------------------------------------------------+
 | storage        |                                                            |
 +----------------+------------------------------------------------------------+
+| metacache      | Metacache library                                          |
++----------------+------------------------------------------------------------+
 | sieve          |                                                            |
 +----------------+------------------------------------------------------------+
 | sieve-execute  | Relates to (several) Sieve scripts being                   |
@@ -630,6 +632,8 @@ Emitted when a server connection is terminated.
 Storage
 =======
 
+.. _event_mail_storage_service_user:
+
 Mail storage service user
 -------------------------
 
@@ -641,16 +645,20 @@ Mail storage service user
 | session             | Session ID for the storage sesssion                  |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail_user:
+
 Mail user
 ---------
 
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from mail storage service user                                    |
+| Inherits from :ref:`event_mail_storage_service_user`                       |
 +---------------------+------------------------------------------------------+
 | user                | Username of the user                                 |
 +---------------------+------------------------------------------------------+
+
+.. _event_mailbox:
 
 Mailbox
 -------
@@ -658,12 +666,18 @@ Mailbox
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from mail user                                                    |
+| Inherits from :ref:`event_mail_user`                                       |
 +---------------------+------------------------------------------------------+
 | mailbox             | Full mailbox name in UTF-8                           |
 |                     |                                                      |
 |                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
+| mailbox_guid        | Mailbox GUID with obox storage                       |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.10                            |
++---------------------+------------------------------------------------------+
+
+.. _event_mail:
 
 Mail
 ----
@@ -671,7 +685,7 @@ Mail
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from mailbox                                                      |
+| Inherits from :ref:`event_mailbox`                                         |
 +---------------------+------------------------------------------------------+
 | seq                 | Mail sequence number                                 |
 +---------------------+------------------------------------------------------+
@@ -756,6 +770,8 @@ The ``http_request_finished`` event is still sent at the end of the request.
 IMAP
 ====
 
+.. _event_imap_client:
+
 IMAP client
 -----------
 
@@ -790,7 +806,7 @@ IMAP command
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from IMAP client                                                  |
+| Inherits from :ref:`event_imap_client`                                     |
 +---------------------+------------------------------------------------------+
 | cmd_tag             | IMAP command tag                                     |
 |                     |                                                      |
@@ -1024,6 +1040,8 @@ SMTP Server
 
 These events are emitted by Dovecot's internal lib-smtp library.
 
+.. _event_connection:
+
 Connection
 ----------
 
@@ -1045,7 +1063,7 @@ Common fields:
 +---------------------+--------------------------------+
 | Field               | Description                    |
 +=====================+================================+
-| Inherits from connection                             |
+| Inherits from :ref:`event_connection`                |
 +---------------------+--------------------------------+
 | cmd_name            | name of the command            |
 |                     |                                |
@@ -1078,6 +1096,8 @@ failed somehow.
 |                     | success message.                                       |
 +---------------------+--------------------------------------------------------+
 
+.. _event_smtp_transaction:
+
 Transaction
 -----------
 
@@ -1086,7 +1106,7 @@ Common fields:
 +------------------+----------------------------------------------------------+
 | Field            | Description                                              |
 +==================+==========================================================+
-| Normally inherits from connection                                           |
+| Normally inherits from :ref:`event_connection`                              |
 +------------------+----------------------------------------------------------+
 | transaction_id   | Transaction ID used by the server for this transaction   |
 |                  | (this ID is logged, mentioned in the DATA reply and      |
@@ -1165,7 +1185,7 @@ Common fields:
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
 +=======================+======================================================+
-| Inherits from transaction                                                    |
+| Inherits from :ref:`event_smtp_transaction`                                  |
 +-----------------------+------------------------------------------------------+
 | rcpt_to               | Recipient address                                    |
 +-----------------------+------------------------------------------------------+
@@ -1245,7 +1265,7 @@ Push notifications
 +-------------------------+------------------------------------------------------+
 | Field                   | Description                                          |
 +=========================+======================================================+
-| Inherits from mail user                                                        |
+| Inherits from :ref:`event_mail_user`                                           |
 +-------------------------+------------------------------------------------------+
 | mailbox                 | Mailbox for event                                    |
 |                         |                                                      |
@@ -1260,6 +1280,8 @@ Push notification event was sent. See :ref:`stats_push_notifications`
 **********
 Pigeonhole
 **********
+
+.. _event_sieve:
 
 Sieve
 =====
@@ -1280,6 +1302,7 @@ Common fields
 | user                | Username of the user                                 |
 +---------------------+------------------------------------------------------+
 
+.. _event_sieve_execute:
 
 Sieve execute
 =============
@@ -1291,7 +1314,7 @@ Common fields
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from sieve                                                        |
+| Inherits from :ref:`event_sieve`                                           |
 +---------------------+------------------------------------------------------+
 | message_id          | The message-id of the message being filtered.        |
 +---------------------+------------------------------------------------------+
@@ -1309,7 +1332,7 @@ Common fields
 +-----------------+------------------------------------------------------+
 | Field           | Description                                          |
 +=================+======================================================+
-| Inherits from sieve-execute                                            |
+| Inherits from :ref:`event_sieve_execute`                               |
 +-----------------+------------------------------------------------------+
 | script_name     | The name of the Sieve script as it is visible to the |
 |                 | user.                                                |
@@ -1341,7 +1364,7 @@ Sieve action
 +------------------------+------------------------------------------------------+
 | Field                  | Description                                          |
 +========================+======================================================+
-| Inherits from sieve-execute                                                   |
+| Inherits from :ref:`event_sieve_execute`                                      |
 +------------------------+------------------------------------------------------+
 | action_name            | The name of the Sieve action.                        |
 +------------------------+------------------------------------------------------+
@@ -1406,7 +1429,7 @@ Common fields
 +------------------+------------------------------------------------------+
 | Field            | Description                                          |
 +==================+======================================================+
-| Inherits from sieve                                                     |
+| Inherits from :ref:`event_sieve`                                        |
 +------------------+------------------------------------------------------+
 | storage_driver   | The driver name of the Sieve storage ('file', 'ldap' |
 |                  | or 'dict')                                           |
@@ -1529,7 +1552,7 @@ Events emitted by the new index merging (metacache_index_merging=v2).
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
 +=======================+======================================================+
-| Inherits from mailbox                                                        |
+| Inherits from :ref:`event_mailbox`                                           |
 +-----------------------+------------------------------------------------------+
 | *No event specific fields defined*                                           |
 +-----------------------+------------------------------------------------------+
@@ -1565,7 +1588,8 @@ obox_index_merge_skip_uid_renumbering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Index merging should have renumbered UIDs due to conflicts, but there were
-too many of them (more than metacache_merge_max_uid_renumbers), so no
+too many of them (more than
+:ref:`plugin-obox-setting_metacache_merge_max_uid_renumbers`), so no
 renumbering was done after all.
 
 +-----------------------+------------------------------------------------------+
@@ -1573,6 +1597,179 @@ renumbering was done after all.
 +=======================+======================================================+
 | renumber_count        | Number of UIDs that should have been renumbered      |
 +-----------------------+------------------------------------------------------+
+
+lib-metacache
+-------------
+
+.. versionadded:: 2.3.11
+
+Events emitted by the metacache library.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| Inherits from :ref:`event_mail_user` or :ref:`event_mailbox`                 |
++-----------------------+------------------------------------------------------+
+| *No event specific fields defined*                                           |
++-----------------------+------------------------------------------------------+
+
+metacache_user_refresh_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_user_refresh_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_refresh_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_refresh_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Metacache is being refreshed when user or mailbox is being accessed. These
+events are sent only when a storage operation is done to perform the refresh.
+These events aren't sent if the metacache is used without refreshing.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| metacache_status      | Status of the refresh operation:                     |
+|                       |                                                      |
+|                       | * refresh_changed: Bundles were listed in storage.   |
+|                       |   New bundles were found and downloaded.             |
+|                       | * refresh_unchanged: Bundles were listed in storage, |
+|                       |   but no new changes were found.                     |
+|                       | * kept: Local metacache was used without any storage |
+|                       |   operations.                                        |
+|                       | * created: A new user or mailbox is being created.   |
++-----------------------+------------------------------------------------------+
+| rescan                | yes, if mailbox is going to be rescanned             |
++-----------------------+------------------------------------------------------+
+| error                 | Error message if the refresh failed                  |
++-----------------------+------------------------------------------------------+
+
+metacache_user_bundle_download_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_user_bundle_download_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_bundle_download_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_bundle_download_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+User or mailbox index bundle file is downloaded. These events can happen while
+the user or mailbox is being refreshed.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| filename              | Bundle filename                                      |
++-----------------------+------------------------------------------------------+
+| bundle_type           | Bundle type: diff, base or self                      |
++-----------------------+------------------------------------------------------+
+| bundle_size           | Size of the bundle file in bytes (uncompressed)      |
++-----------------------+------------------------------------------------------+
+| error                 | Error message if the download failed                 |
++-----------------------+------------------------------------------------------+
+
+metacache_upload_started
+^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_upload_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Changes in metacache are being uploaded to storage.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| error                 | Error message if the upload failed                   |
++-----------------------+------------------------------------------------------+
+
+metacache_user_bundle_upload_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_user_bundle_upload_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_bundle_upload_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_bundle_upload_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+User or mailbox index bundle file is uploaded. These events can happen while
+the user or mailbox is being uploaded. Note that the ``metacache_user_*``
+events can also be inherited from a mailbox event and include the mailbox
+fields if the user upload was triggered by a mailbox upload.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| filename              | Bundle filename                                      |
++-----------------------+------------------------------------------------------+
+| bundle_type           | Bundle type: diff, base or self                      |
++-----------------------+------------------------------------------------------+
+| bundle_size           | Size of the bundle file in bytes (uncompressed)      |
++-----------------------+------------------------------------------------------+
+| mailbox_guid          | GUID of the mailbox being uploaded. Note that the    |
+|                       | mailbox name field may or may not exist in this      |
+|                       | event depending on whether a single mailbox or the   |
+|                       | whole user is being uploaded.                        |
++-----------------------+------------------------------------------------------+
+| reason                | Reason for what changed in the indexes to cause this |
+|                       | bundle to be created and uploaded.                   |
++-----------------------+------------------------------------------------------+
+| error                 | Error message if the upload failed                   |
++-----------------------+------------------------------------------------------+
+
+metacache_user_clean_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_user_clean_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| min_priority          | Which priority indexes are being cleaned             |
++-----------------------+------------------------------------------------------+
+| error                 | Error message if the upload failed                   |
++-----------------------+------------------------------------------------------+
+
+obox_mailbox_rescan_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+obox_mailbox_rescan_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+obox_mailbox_rebuild_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+obox_mailbox_rebuild_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Mailbox is being rescanned or rebuilt. The rescan happens when a mailbox is
+opened for the first time in this backend (or after it was cleaned away).
+The rebuild happens after some kind of corruption had been detected. In both
+cases all the mails in the storage are listed and synced against the local
+indexes in metacache.
+
++--------------------------+------------------------------------------------------+
+| Field                    | Description                                          |
++==========================+======================================================+
+| mails_new                | Number of new mails found                            |
++--------------------------+------------------------------------------------------+
+| mails_temp_lost          | Number of mails temporarily lost due to "Object      |
+|                          | exists in dict, but not in storage".                 |
++--------------------------+------------------------------------------------------+
+| mails_lost               | Number of mails that existed in index, but no longer |
+|                          | exists in storage.                                   |
++--------------------------+------------------------------------------------------+
+| mails_lost_during_resync | Number of new mails found, but when doing GUID       |
+|                          | the mail no longer existed.                          |
++--------------------------+------------------------------------------------------+
+| mails_kept               | Number of mails found in both the index and in       |
+|                          | storage.                                             |
++--------------------------+------------------------------------------------------+
+| mails_total              | Number of mails that exists in the mailbox now.      |
++--------------------------+------------------------------------------------------+
+| guid_lookups             | Number of mails whose GUIDs were looked up from the  |
+|                          | email metadata.                                      |
++--------------------------+------------------------------------------------------+
+| guid_lookups_skipped     | Number of mails whose GUIDs were not looked up due   |
+|                          | to reaching the GUID lookup limit.                   |
++--------------------------+------------------------------------------------------+
+| error                    | Error message if the rescan/rebuild failed           |
++--------------------------+------------------------------------------------------+
 
 fs-dictmap
 ----------

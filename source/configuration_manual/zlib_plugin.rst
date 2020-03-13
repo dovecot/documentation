@@ -9,7 +9,7 @@ be also used to write (via IMAP, `LDA <https://wiki.dovecot.org/LDA>`_ and/or
 :ref:`lmtp_server`) compressed messages to `dbox
 <https://wiki.dovecot.org/MailboxFormat/dbox>`_ or Maildir mailboxes. Zlib
 plugin supports compression using zlib/gzip, bzlib/bzip2, liblzma/xz (v2.2.9+)
-and liblz4/lz4 (v2.2.11+).
+liblz4/lz4 (v2.2.11+), and `Zstandard <https://facebook.github.io/zstd/>`_ (2.3.11+)
 
 Configuration:
 
@@ -21,7 +21,7 @@ Configuration:
   # Enable these only if you want compression while saving:
   plugin {
     zlib_save_level = 6 # 1..9; default is 6
-    zlib_save = gz # or bz2, xz or lz4
+    zlib_save = gz # or bz2, xz, lz4 or zstd
   }
 
 mbox
