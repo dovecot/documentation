@@ -1,4 +1,4 @@
-.. _dovecot_core_settings:
+.. _core_settings:
 
 ========================
 Dovecot Core Settings
@@ -290,7 +290,7 @@ See :ref:`setting-auth_policy_server_url`
 -------------------------------------
 
 - Default: ``12``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 How many bits to use from password hash when reporting to policy server.
 
@@ -377,7 +377,7 @@ See :ref:`setting-auth_policy_server_url`
 --------------------------------------
 
 - Default: ``2000``
-- Values:  :ref:`time`
+- Values: :ref:`uint`
 
 Request timeout, in milliseconds.
 
@@ -624,7 +624,7 @@ Example Setting:
 ---------------------------
 
 - Default: ``30``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 Maximum number of dovecot-auth worker processes active.
 
@@ -671,7 +671,7 @@ This indicates the log file to use for debug messages. The default is to use
 ---------------------------------
 
 - Default: ``1000``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 The maximum number of simultaneous client connections per process for a service.
 
@@ -748,7 +748,7 @@ have access to anything at all.
 ---------------------------------
 
 - Default: ``100``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 The maximum number of processes that may exist for a service.
 
@@ -849,7 +849,7 @@ dynamically added to a running ring via the doveadm commands.
 ---------------------------------
 
 - Default: ``100``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 The maximum number of concurrent kicks allowed in the Director ring.
 
@@ -862,7 +862,7 @@ The maximum number of concurrent kicks allowed in the Director ring.
 ---------------------------------
 
 - Default: ``100``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 How many concurrent user moves are allowed in the Director ring?
 
@@ -1113,7 +1113,7 @@ The username for authentication to the doveadm service.
 ---------------------------------
 
 - Default: ``0``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 If the worker count set here is non-zero, mail commands are run via
 this many connections to the doveadm service.
@@ -1144,7 +1144,7 @@ character indicated here.
 .. versionadded:: v2.2.30
 
 - Default: ``100``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 Dsync will commit this number of messages incrementally, to avoid huge
 transactions that fail.
@@ -1218,7 +1218,7 @@ Variables that can be used for this setting:
 ---------------------------------
 
 - Default: ``1``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 This setting and ``last_valid_gid`` specify the valid GID range for users.
 
@@ -1236,7 +1236,7 @@ See also :ref:`setting-last_valid_gid`.
 ---------------------------------
 
 - Default: ``500``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 This setting and ``last_valid_uid`` specify the valid UID range for users.
 
@@ -1671,8 +1671,8 @@ This parameter is used in dsync-based migration of mail from the remote system.
 ``imapc_connection_retry_count``
 -------------------------------------------
 
-- Default: ``5mins``
-- Values:  :ref:`time`
+- Default: ``1``
+- Values: :ref:`uint`
 
 How many times to retry connection against a remote IMAP server?
 
@@ -1977,6 +1977,7 @@ the config path, you can use the ``-i`` flag with the relevant instance name.
 -------------------------------------------
 
 - Default: ``0``
+- Values: :ref:`uint`
 
 This setting and ``first_valid_gid`` specify the valid GID range for users.
 
@@ -1996,6 +1997,7 @@ See also :ref:`setting-first_valid_gid`.
 -------------------------------------------
 
 - Default: ``0``
+- Values: :ref:`uint`
 
 This setting and ``first_valid_uid`` specify the valid UID range for users.
 
@@ -2220,6 +2222,7 @@ user+detail format), save the message to the detail mailbox.
 ----------------------------------
 
 - Default: ``0``
+- Values: :ref:`uint`
 
 Limit the number of concurrent deliveries to a single user to this maximum
 value.
@@ -2681,7 +2684,7 @@ See :ref:`setting-imap_metadata`
 -------------------------------------------------------------
 
 - Default: ``200``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 Compress the cache file when n% of rows contain continued rows.
 
@@ -2699,6 +2702,7 @@ The default is OK and doesn't need to be change.
 ------------------------------------------------------
 
 - Default: ``20``
+- Values: :ref:`uint`
 
 Compress the cache file when n% of records are deleted (by count, not by
 size).
@@ -2714,6 +2718,7 @@ The default is OK and doesn't need to be change.
 ----------------------------------------------------------
 
 - Default: ``4``
+- Values: :ref:`uint`
 
 Compress the cache file when we need to follow more than n next_offsets to
 find the latest cache header.
@@ -2767,7 +2772,7 @@ See :ref:`setting-mail_never_cache_fields`
 ---------------------------------------------
 
 - Default: ``0``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 Only update cache file when the mailbox contains at least this many messages.
 
@@ -3070,6 +3075,7 @@ Example setting:
 -------------------------------------
 
 - Default: ``50``
+- Values: :ref:`uint`
 
 The maximum length allowed for a mail keyword name.
 
@@ -3099,6 +3105,7 @@ tolerate tempfailing less well.
 -------------------------------------
 
 - Default: ``10``
+- Values: :ref:`uint`
 
 The maximum number of IMAP connections allowed for a user from each IP
 address.
@@ -3185,6 +3192,7 @@ See :ref:`setting-mail_plugin_dir`
 -------------------------------------
 
 - Default: ``0``
+- Values: :ref:`uint`
 
 The maximum number of messages to keep open and prefetch to memory.
 
@@ -3294,6 +3302,7 @@ This setting determines whether a shared INBOX should be visible as
 -------------------------------------
 
 - Default: ``0``
+- Values: :ref:`uint`
 
 The number of slow mail accesses an IMAP SORT can perform before it returns
 failure to the client.
@@ -3363,6 +3372,7 @@ See :ref:`setting-mail_gid`
 -------------------------------------
 
 - Default: ``0``
+- Values: :ref:`uint`
 
 Controls transitioning mail size determination to the background instead of
 synchronously during the delivery process.
@@ -4497,7 +4507,7 @@ See :ref:`setting-replicator`
 -------------------------------------
 
 - Default:``10``
-- Values:  :ref:`size`
+- Values: :ref:`uint`
 
 How many dsyncs may be run in parallel for replicator.
 
@@ -5166,6 +5176,7 @@ unknown limit exists there, which will be passed back to the client.
 -------------------------------------
 
 - Default: ``0``
+- Values: :ref:`uint`
 
 Maximum number of recipients accepted per connection.
 

@@ -829,7 +829,7 @@ The possible values are:
 
 Define the location for the fts cache and indexes path on remote filesystems.
 
-It must be somewhat synchronized with :ref:`plugin-obox-storage-setting_obox_fs` and ``mail_location``, see also :ref:`mail_location_settings`.
+It must be somewhat synchronized with :ref:`plugin-obox-setting_obox_fs` and ``mail_location``, see also :ref:`mail_location_settings`.
 
 
 

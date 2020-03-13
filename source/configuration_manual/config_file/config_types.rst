@@ -12,3 +12,4 @@ Dovecot Config Types
    time
    boolean
    string
+   uint

@@ -1588,7 +1588,8 @@ obox_index_merge_skip_uid_renumbering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Index merging should have renumbered UIDs due to conflicts, but there were
-too many of them (more than metacache_merge_max_uid_renumbers), so no
+too many of them (more than
+:ref:`plugin-obox-setting_metacache_merge_max_uid_renumbers`), so no
 renumbering was done after all.
 
 +-----------------------+------------------------------------------------------+
