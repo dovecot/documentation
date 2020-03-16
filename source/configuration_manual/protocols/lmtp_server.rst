@@ -28,14 +28,14 @@ You can configure LMTP to be listening on TCP or UNIX sockets:
 
    service lmtp {
       inet_listener lmtp {
-      address = 192.168.0.24 127.0.0.1 ::1
-      port = 24
-  }
+         address = 192.168.0.24 127.0.0.1 ::1
+         port = 24
+      }
 
-  unix_listener lmtp {
-    #mode = 0666
+      unix_listener lmtp {
+         #mode = 0666
+      }
    }
- }
 
 The UNIX listener on ``$base_dir/lmtp`` is enabled by default when protocols setting contains lmtp.
 
@@ -78,10 +78,10 @@ If you want to store LMTP delivery logs to a different file, you can do it with:
 
    service lmtp {
       executable = lmtp -L
-  }
+   }
    protocol lmtp {
       info_log_path = /var/log/dovecot-lmtp.log
-  }
+   }
 
 For rawlogs, please see :ref:`debugging_rawlog`
 
