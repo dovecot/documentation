@@ -115,6 +115,11 @@ For example:
      push_notification_driver = webpush:max_retries=0:rawlog_dir=/tmp/webpush-rawlog/%u
    }
 
+
+For more details on Webpush please refer to:
+`IMAP WebPush Extension v1.0 <https://github.com/coi-dev/coi-specs/blob/master/webpush-spec.md>`_
+
+
 COI configuration
 =================
 
