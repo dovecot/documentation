@@ -812,9 +812,17 @@ IMAP command
 |                     |                                                      |
 |                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
-| cmd_name            | IMAP command name (e.g. ``FETCH``)                   |
+| cmd_name            | IMAP command name uppercased (e.g. ``FETCH``).       |
 |                     |                                                      |
 |                     | .. versionadded:: v2.3.9                             |
+|                     |                                                      |
+|                     | .. versionchanged:: v2.3.11 Contains ``unknown`` for |
+|                     |                     unknown command names.           |
++---------------------+------------------------------------------------------+
+| cmd_input_name      | IMAP command name exactly as sent (e.g. ``fetcH``)   |
+|                     | regardless of whether or not it is valid.            |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.11                            |
 +---------------------+------------------------------------------------------+
 | cmd_args            | IMAP command's full parameters (e.g. ``1:* FLAGS``)  |
 |                     |                                                      |
