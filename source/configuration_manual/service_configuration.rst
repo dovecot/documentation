@@ -136,6 +136,9 @@ ssl
 If yes, the listener does an immediate SSL/TLS handshake after accepting a connection. This is needed for the legacy imaps and pop3s ports.
 
 .. Note:: All listeners with ssl=yes will be removed if global ssl is turned off
+.. Note:: Regardless of the value for listener's ssl setting, some services will still try to initialize encryption if global ssl is on.
+          This is for example done to accommodate STARTTLS commands for IMAP/SUBMISSION/LMTP protocols. In other words, ssl is truly disabled
+          only when global ssl is turned off.
 
 haproxy (v2.2.19+)
 ^^^^^^^^^^^^^^^^^^
