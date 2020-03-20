@@ -28,14 +28,14 @@ You can configure LMTP to be listening on TCP or UNIX sockets:
 
    service lmtp {
       inet_listener lmtp {
-      address = 192.168.0.24 127.0.0.1 ::1
-      port = 24
-  }
+         address = 192.168.0.24 127.0.0.1 ::1
+         port = 24
+      }
 
-  unix_listener lmtp {
-    #mode = 0666
+      unix_listener lmtp {
+         #mode = 0666
+      }
    }
- }
 
 The UNIX listener on ``$base_dir/lmtp`` is enabled by default when protocols setting contains lmtp.
 
@@ -52,11 +52,11 @@ Unfortunately LMTP process currently needs to run as root, and only temporarily 
 LMTP Proxying
 =============
 
-It's possible to use Dovecot LMTP server as a proxy to remote LMTP or SMTP servers. The configuration is similar to `IMAP/POP3 proxying <https://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy>`_, but you'll need to tell Dovecot LMTP to issue passdb lookups:
+It's possible to use Dovecot LMTP server as a proxy to remote LMTP or SMTP servers. The configuration is similar to :ref:`IMAP/POP3 proxying <authentication-proxies>` , but you'll need to tell Dovecot LMTP to issue passdb lookups:
 
-.. code-block:: none
+.. parsed-literal::
 
-   lmtp_proxy = yes
+   :ref:`lmtp_proxy <setting-lmtp_proxy>` = yes
 
 Performance
 ===========
@@ -78,10 +78,10 @@ If you want to store LMTP delivery logs to a different file, you can do it with:
 
    service lmtp {
       executable = lmtp -L
-  }
+   }
    protocol lmtp {
       info_log_path = /var/log/dovecot-lmtp.log
-  }
+   }
 
 For rawlogs, please see :ref:`debugging_rawlog`
 
@@ -90,9 +90,9 @@ Plugins
 
 * Most of the `Dovecot plugins <https://wiki.dovecot.org/Plugins>`_ work with LMTP.
 
-* Virtual quota can be enforced using `Quota plugin <https://wiki.dovecot.org/Quota>`_.
+* Virtual quota can be enforced using :ref:`Quota plugin <quota>`.
 
-   * ``lmtp_rcpt_check_quota=yes`` enables quota checking already at RCPT TO stage. This check isn't done for proxied connections.
+   * :ref:`lmtp_rcpt_check_quota <setting-lmtp_rcpt_check_quota>` ``= yes`` enables quota checking already at RCPT TO stage. This check isn't done for proxied connections.
 
 * Sieve language support can be added with the `Pigeonhole Sieve plugin <https://wiki.dovecot.org/Pigeonhole/Sieve>`_.
 
@@ -101,8 +101,8 @@ Address extension delivery
 
 To make address extension work with LMTP you must check these variables are set
 
-* lmtp_save_to_detail_mailbox=yes
-* recipient_delimiter=+
+* :ref:`lmtp_save_to_detail_mailbox <setting-lmtp_save_to_detail_mailbox>` ``= yes``
+* :ref:`recipient_delimiter <setting-recipient_delimiter>` ``= +``
 
 Using LMTP with different MTAs
 ==============================
