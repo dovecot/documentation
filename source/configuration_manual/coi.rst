@@ -13,10 +13,11 @@ UNDER NO CIRCUMSTANCES SHALL OPEN-XCHANGE BE LIABLE TO YOU OR TO ANY OTHER PERSO
 
 
 
-Version requirements
-====================
+Requirements
+============
 
-Dovecot version v2.3.8 or higher is required for Chat Over IMAP.
+Dovecot version v2.3.8 or higher is required for Chat Over IMAP. Mail
+deliveries must be done via Dovecot LMTP service (dovecot-lda is not supported).
 
 
 
@@ -135,3 +136,11 @@ plugin creates Chat and Contacts folders. The default is:
 
 So it is better to just not set this at all. If it is set, it needs to
 contain the namespace prefix explicitly.
+
+Sieve interaction
+=================
+
+The COI message filtering works before the Sieve script is run. So currently if
+COI message filtering is enabled, the chat messages are delivered to the Chats
+folder and the Sieve script isn't run at all. This behavior may change in a
+future version.
