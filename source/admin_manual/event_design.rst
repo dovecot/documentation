@@ -10,8 +10,13 @@ Dovecot introduces events, which improves both logging and statistics.
 
 See :ref:`list_of_events` for list of all events.
 
-Each logging call can be attached to a specific event, which can provide more metadata and context than just the log message string. This will eventually allow implementing things like ``machine-parseable`` (e.g. ``JSON``)
- log lines containing key=value pairs, while still keeping the human readable text available. Each logging event can also be captured and sent to stats, even if it's not actually logged. Commonly statistics-related events are logged with debug level.
+Each logging call can be attached to a specific event, which can provide more
+metadata and context than just the log message string. This will eventually
+allow implementing things like machine-parsable (e.g. ``JSON``) log lines
+containing key=value pairs, while still keeping the human readable text
+available. Each logging event can also be captured and sent to stats, even if
+it's not actually logged. Commonly statistics-related events are logged with
+debug level.
 
 Events have:
 
@@ -20,11 +25,17 @@ Events have:
 * Creation timestamp with microsecond precision.
 * Source code file and line number location when sending the event.
 * It may have an easy human-readable name. This is important for events that are expected to be used for statistics, so they can be easily referred to.
-* ``Forced debug``-flag. Debug logging is enabled for this event regardless of the global debug log filters. A child event will inherit this flag.
+* Forced debug-flag. Debug logging is enabled for this event regardless of the global debug log filters. A child event will inherit this flag.
 
 Events are hierarchical, so they can have parent events. The events always inherit all of their parents' categories and fields. A child event can replace a parent's field, and it can also remove a parent's field with ``event_field_clear()``. Ideally most events would have a parent hierarchy that reaches the top event that was created for the current user/session. This allows statistics to track which events happened due to which users. In some cases this may not really be possible, such as an HTTP connection that is shared across multiple users in the same process. Generic libraries should take the parent event in function parameters or in a settings struct or similar.
 
-An event's lifetime is usually the same as the "object" it attaches to.For example an IMAP client connection should have a single event created at the beginning of the connection and destroyed at disconnection. The IMAP client connection event could be used for logging things like ``Client connected`` and ``Client disconnected`` and perhaps some other ``connection-specific`` events. However, most of the logging should be done by new events that have the IMAP client connection event as their parent. 
+An event's lifetime is usually the same as the "object" it attaches to. For
+example an IMAP client connection should have a single event created at the
+beginning of the connection and destroyed at disconnection. The IMAP client
+connection event could be used for logging things like "Client connected" and
+"Client disconnected" and perhaps some other connection-specific events.
+However, most of the logging should be done by new events that have the IMAP
+client connection event as their parent.
 
 Example:
 
@@ -32,7 +43,11 @@ Example:
 
 .. Note:: There's an automatic "duration" statistics field that is calculated from the creation of the event to the (last) sending of the event, so for it to make sense the event lifetime and its logging also needs to make sense. So for example if the IMAP client connection event was used for logging many things throughout the session, the "duration" field would make little sense for most of those events.
 
-Events are ``sent`` by logging it. Any ``e_debug()``, ``e_info()``, ``e_warning()`` or ``e_error()`` call will also send the event, which may be redirected to the stats process. Often events that are intended for statistics are sent using the ``e_debug() call``. The event can be sent to statistics even if it's not actually logged. Avoid sending events excessively. 
+Events are sent by logging it. Any ``e_debug()``, ``e_info()``, ``e_warning()``
+or ``e_error()`` call will also send the event, which may be redirected to the
+stats process. Often events that are intended for statistics are sent using the
+``e_debug()`` call. The event can be sent to statistics even if it's not
+actually logged. Avoid sending events excessively.
 
 Example:
 
@@ -44,9 +59,7 @@ Events that are expected to be used in statistics should have a name. Be consist
 
 Example:
 
-.. code-block:: none
-
-   imap related events should begin with imap_ and mailbox related events begin with mailbox_.
+   imap related events should begin with ``imap_`` and mailbox related events begin with ``mailbox_``.
 
 
 The name should consist of only ``[a-z]``, ``[0-9]`` and ``_`` characters.
@@ -68,7 +81,7 @@ Example:
 
    ``mail`` category has parent ``mailbox``, which has parent ``storage``. If an event filter contains ``category:storage``, it will match the ``mail`` and ``mailbox`` child categories as well.
 
-.. Note:: A category isn't the same as a service/process name. 
+.. Note:: A category isn't the same as a service/process name, but there is a ``service:<name>`` category.
 
 So for example imap process has an ``imap`` category for its ``IMAP-related`` events, such as IMAP client connection and IMAP command related events. Because most events would be child events under these IMAP events, they would all inherit the ``imap`` category. So it would appear that using ``category:imap`` filter would match most of the logging from imap process. However, there would likely be some events that wouldn't have the IMAP client as their parent event, so these wouldn't match the imap category.
 
