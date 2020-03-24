@@ -129,7 +129,9 @@ plugin creates Chat and Contacts folders. The default is:
 .. code-block:: none
 
    plugin {
-     coi_mailbox_root = COI
+     # Usually unnecessary to set this
+     #coi_mailbox_root = <INBOX namespace prefix>COI
    }
 
-
+So it is better to just not set this at all. If it is set, it needs to
+contain the namespace prefix explicitly.
