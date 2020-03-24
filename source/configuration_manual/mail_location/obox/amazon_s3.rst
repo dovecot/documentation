@@ -67,15 +67,6 @@ Get ACCESSKEY and SECRET from `www.aws.amazon.com <https://aws.amazon.com/>`_
 If the ``ACCESSKEY`` or ``SECRET`` contains any special characters, they can be
 %hex-encoded.
 
-If the ``aws-s3`` scheme is used Dovecot defaults to prepend the following URL
-parameters, refer to :ref:`http_based_object_storages` for details. The same
-setup can be achieved by using the ``s3`` scheme and adding the parameters
-manually.
-
-.. code-block:: none
-
-  addhdrvar=x-amz-security-token:%{auth:token}&loghdr=x-amz-request-id&loghdr=x-amz-id-2
-
 .. Note::
 
   dovecot.conf handles %variable expansion internally as well, so % needs to be
@@ -93,6 +84,33 @@ by adding the bucket region parameter to the S3 URL:
   plugin {
     obox_index_fs = compress:gz:6:aws-s3:https://ACCESSKEY:SECRET@BUCKETNAME.s3.amazonaws.com/?region=eu-central-1
   }
+
+``aws-s3`` scheme
+"""""""""""""""""
+
+If the ``aws-s3`` scheme is used Dovecot defaults to prepend the following URL
+parameters, refer to :ref:`http_based_object_storages` for details. The same
+setup can be achieved by using the ``s3`` scheme and adding the parameters
+manually.
+
+.. code-block:: none
+
+  addhdrvar=x-amz-security-token:%{auth:token}&loghdr=x-amz-request-id&loghdr=x-amz-id-2
+
+Configuring ``loghdr`` for ``x-amz-request-id`` and ``x-amz-id-2`` tells Dovecot to
+include this information in any error, debug or warning message. This additional
+information helps when Troubleshooting Amazon S3 (https://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonResponseHeaders.html).
+You can also add multiple other ``loghdr`` parameters if needed.
+
+Debug Output Example:
+
+.. code-block:: none
+
+        doveadm(user): Debug: http-client: conn 1.2.3.4:443 [1]: Got 200 response for request [Req1: GET https://test-mails.s3-service.com/?prefix=user%2Fidx%2F]: OK (x-amz-request-id:AABBCC22BB7798869, x-amz-id-2:DeadBeefanXBapRucWGAD1+aWwYMfwmXydlI0mHSuh4ic/j8Ji7gicTsP7xpMQz1IR9eydzeVI=) (took 63 ms + 140 ms in queue)
+
+The ``addhdrvar`` parameter with ``x-amz-security-token`` adds the ``%{auth:token}``
+expanded variable's value to all HTTP requests if the value is defined. This
+variable gets set by Dovecot internally in case AWS IAM is in use.
 
 Configuration using AWS IAM
 """""""""""""""""""""""""""
@@ -122,6 +140,18 @@ purposes.
   plugin {
     obox_fs = aws-s3:https://BUCKETNAME.s3.amazonaws.com/?auth_role=s3access&region=eu-central-1
   }
+
+When using IAM you must ensure that the ``fs-auth`` service has proper
+permissions/owner. Configure the user for the fs-auth listener to be the same
+as for the metacache listener (Example below assuming ``vmail``).
+
+.. code-block:: none
+
+        service fs-auth {
+          unix_listener fs-auth {
+           user = vmail
+          }
+        }
 
 .. versionadded:: 2.3.10
 
