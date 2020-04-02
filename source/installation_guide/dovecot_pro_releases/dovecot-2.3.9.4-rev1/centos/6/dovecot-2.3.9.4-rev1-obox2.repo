@@ -1,0 +1,9 @@
+# obox2 component requires separate OX License
+# Please contact to support@open-xchange.com to get access
+[dovecot-2.3.9.4-rev1-obox2]
+name=CentOS 6 - OX Dovecot Pro Object Storage plug-in
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.9.4/obox2/CentOS6
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
