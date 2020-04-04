@@ -27,6 +27,10 @@ Categories
 +----------------+------------------------------------------------------------+
 | metacache      | Metacache library                                          |
 +----------------+------------------------------------------------------------+
+| mail-index     | dovecot.index* file handling events                        |
++----------------+------------------------------------------------------------+
+| mail-cache     | dovecot.index.cache file handling events                   |
++----------------+------------------------------------------------------------+
 | sieve          |                                                            |
 +----------------+------------------------------------------------------------+
 | sieve-execute  | Relates to (several) Sieve scripts being                   |
@@ -658,6 +662,17 @@ Mail user
 | user                | Username of the user                                 |
 +---------------------+------------------------------------------------------+
 
+.. _event_storage:
+
+Storage
+-------
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_mail_user`                                       |
++---------------------+------------------------------------------------------+
+
 .. _event_mailbox:
 
 Mailbox
@@ -666,7 +681,7 @@ Mailbox
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from :ref:`event_mail_user`                                       |
+| Inherits from :ref:`event_storage`                                         |
 +---------------------+------------------------------------------------------+
 | mailbox             | Full mailbox name in UTF-8                           |
 |                     |                                                      |
@@ -692,6 +707,160 @@ Mail
 | uid                 | Mail IMAP UID number                                 |
 +---------------------+------------------------------------------------------+
 
+
+Mail index
+==========
+
+.. _event_mail_index:
+
+Mail index
+----------
+
+Index file handling for dovecot.index*, dovecot.map.index*,
+dovecot.list.index* and similar indexes.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_mailbox`, :ref:`event_storage` or                |
+| :ref:`event_mail_user` depending on what the index is used for.            |
++---------------------+------------------------------------------------------+
+
+Mail cache
+----------
+
+.. versionadded:: 2.3.11
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_mail_index`                                      |
++---------------------+------------------------------------------------------+
+
+mail_cache_decision_changed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A field's caching decision changed. The decisions are:
+
+ * no: The field is not cached.
+ * temp: The field is cached for 1 week and dropped on the next purge.
+ * yes: The field is cached permanently. If the field isn't accessed for 30
+   days it's dropped.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| field               | Cache field name (e.g. ``imap.body`` or ``hdr.from``)  |
++---------------------+--------------------------------------------------------+
+| last_used           | UNIX timestamp of when the field was accessed the last |
+|                     | time. This is updated only once per 24 hours.          |
++---------------------+--------------------------------------------------------+
+| reason              | Reason why the caching decision changed:               |
+|                     |                                                        |
+|                     | * add: no -> temp decision change, because a new field |
+|                     |   was added to cache.                                  |
+|                     | * old_mail: temp -> yes decision change, because a     |
+|                     |   mail older than 1 week was accessed.                 |
+|                     | * unordered_access: temp -> yes decision change,       |
+|                     |   because mails weren't accessed in ascending order    |
+|                     | * Other values indicate a reason for cache purging,    |
+|                     |   which changes the caching decision yes -> temp.      |
++---------------------+--------------------------------------------------------+
+| uid                 | IMAP UID number that caused the decision change. This  |
+|                     | is set only for some reasons, not all.                 |
++---------------------+--------------------------------------------------------+
+| old_decision        | Old cache decision: no, temp, yes                      |
++---------------------+--------------------------------------------------------+
+| new_decision        | New cache decision: no, temp, yes                      |
++---------------------+--------------------------------------------------------+
+
+.. _event_mail_cache_purge_started:
+
+mail_cache_purge_started
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cache file purging is started.
+
++----------------------+-------------------------------------------------------+
+| Field                | Description                                           |
++======================+=======================================================+
+| file_seq             | Sequence of the new cache file that is created.       |
++----------------------+-------------------------------------------------------+
+| prev_file_seq        | Sequence of the cache file that is to be purged.      |
++----------------------+-------------------------------------------------------+
+| prev_file_size       | Size of the cache file that is to be purged.          |
++----------------------+-------------------------------------------------------+
+| prev_deleted_records | Number of records (mails) marked as deleted in the    |
+|                      | cache file that is to be purged.                      |
++----------------------+-------------------------------------------------------+
+| reason               | Reason string for purging the cache file:             |
+|                      |                                                       |
+|                      | * doveadm mailbox cache purge                         |
+|                      | * copy cache decisions                                |
+|                      | * creating cache                                      |
+|                      | * cache is too large                                  |
+|                      | * syncing                                             |
+|                      | * rebuilding index                                    |
++----------------------+-------------------------------------------------------+
+
+mail_cache_purge_drop_field
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Existing field is dropped from the cache file because it hadn't been accessed
+for 30 days.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| All the same fields as in :ref:`event_mail_cache_purge_started`              |
++---------------------+--------------------------------------------------------+
+| field               | Cache field name (e.g. ``imap.body`` or ``hdr.from``)  |
++---------------------+--------------------------------------------------------+
+| decision            | Old caching decision: temp, yes                        |
++---------------------+--------------------------------------------------------+
+| last_used           | UNIX timestamp of when the field was accessed the last |
+|                     | time. This is updated only once per 24 hours.          |
++---------------------+--------------------------------------------------------+
+
+mail_cache_purge_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cache file purging is finished.
+
++----------------------+-------------------------------------------------------+
+| Field                | Description                                           |
++======================+=======================================================+
+| All the same fields as in :ref:`event_mail_cache_purge_started`              |
++----------------------+-------------------------------------------------------+
+| file_size            | Size of the new cache file.                           |
++----------------------+-------------------------------------------------------+
+| max_uid              | IMAP UID of the last mail in the cache file.          |
++----------------------+-------------------------------------------------------+
+
+mail_cache_corrupted
+^^^^^^^^^^^^^^^^^^^^
+
+Cache file was found to be corrupted and the whole file is deleted.
+
++----------------------+-------------------------------------------------------+
+| Field                | Description                                           |
++======================+=======================================================+
+| reason               | Reason string why cache was found to be corrupted.    |
++----------------------+-------------------------------------------------------+
+
+mail_cache_record_corrupted
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cache record for a specific mail was found to be corrupted and the record is
+deleted.
+
++----------------------+-------------------------------------------------------+
+| Field                | Description                                           |
++======================+=======================================================+
+| uid                  | IMAP UID of the mail whose cache record is corrupted. |
++----------------------+-------------------------------------------------------+
+| reason               | Reason string why cache was found to be corrupted.    |
++----------------------+-------------------------------------------------------+
 
 HTTP
 ====
