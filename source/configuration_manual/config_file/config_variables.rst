@@ -31,7 +31,7 @@ If var_expand_crypt plugin is loaded (see `Plugins/VarExpandCrypt <https://wiki.
 ============================= ========================
 Long name                     Description
 encrypt; <parameters>:<field> Encrypt field (v2.2.29+)
-decrypt; <parameters<:<field> Decrypt field (v2.2.29+)
+decrypt; <parameters>:<field> Decrypt field (v2.2.29+)
 ============================= ========================
 
 .. _variables-mail_service_user:
@@ -71,13 +71,14 @@ Variable Long name Description
 
 Login variables:
 
-======== ========== ======================================================
-Variable Long name  Description
-%l       lip        local IP address
-%r       rip        remote IP address
-%s       service    imap, pop3, smtp, lda (and doveadm, dsync, etc.)
-         local_name TLS SNI hostname, if given (v2.2.26+)
-======== ========== ======================================================
+======== ============ ======================================================
+Variable Long name    Description
+%l       lip          local IP address
+%r       rip          remote IP address
+%s       service      imap, pop3, smtp, lda (and doveadm, dsync, etc.)
+-        local_name   TLS SNI hostname, if given (v2.2.26+)
+%k       ssl_security TLS session security string. If HAProxy is configured and it terminated the TLS connection, contains "(proxied)".
+======== ============ ======================================================
 
 .. _variables-auth:
 
@@ -104,7 +105,7 @@ Variable Long name      Description
 -        session_pid    For user logins: The PID of the IMAP/POP3 process handling the session. (v2.2.7+)
 %m       mech           `authentication mechanism <https://wiki.dovecot.org/Authentication/Mechanisms>`_ e.g. PLAIN
 %w       password       plaintext password from plaintext authentication mechanism
-%c       secured        "secured" string with SSL, TLS and localhost connections. Otherwise empty.
+%c       secured        "TLS" with established SSL/TLS connections, "TLS handshaking", or "TLS [handshaking]: error text" if disconnecting due to TLS error. "secured" with localhost connections. Otherwise empty.
 %k       cert           "valid" if client had sent a valid client certificate, otherwise empty.
 -        session        session ID for this client connection (unique for 9 years)
 -        auth_user      SASL authentication ID (e.g. if master user login is done, this contains the master username). If username changes during authentication, this value contains the original username. Otherwise the same as %{user}. (v2.2.11+)
