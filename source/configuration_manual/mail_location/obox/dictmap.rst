@@ -98,7 +98,8 @@ Dictmap Parameters
 +---------------------------------+------------------------------------------------------------------------------+
 | refcounting-table	          | Enable reference counted objects. Reference counting allows a single mail    |
 |                                 | object to be stored in multiple mailboxes, without the need to create a new  |
-|                                 | copy of the message data in object storage.                                  |
+|                                 | copy of the message data in object storage. See                              |
+|                                 | :ref:`dictmap_cassandra_refcounting_table`                                   |
 +---------------------------------+------------------------------------------------------------------------------+
 | lockdir=<path>                  | If refcounting is enabled, use this directory for creating lock files to     |
 |                                 | objects while they're being copied or deleted. This attempts to prevent race |
