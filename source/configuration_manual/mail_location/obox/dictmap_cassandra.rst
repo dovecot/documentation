@@ -85,62 +85,16 @@ dovecot-dict-cql.conf.ext:
    # Format of data can be found at the end of this document.
    # metrics=/tmp/dovecot-cassandra.metrics.%{pid}
 
-Append dict mappings to the resulting dovecot-dict-cql.conf.ext as described in 4.3.2.4.1 SWIFT dict map or 4.3.2.1.1 Scality sproxyd dict map.
+The details of how to create the Cassandra tables and the dict mappings that
+need to be appended to ``dovecot-dict-cql.conf.ext`` are described in:
 
-Cassandra Keyspace
+ * :ref:`dictmap_cassandra_objectid`
+ * :ref:`dictmap_cassandra_path`
 
-The Cassandra keyspace is created/initialized with the following CQL commands: 
+The following base tables are always needed by fs-dictmap:
 
-.. code-block:: none
-
-   create keyspace if not exists mails
-   WITH REPLICATION = {
-   'class':'SimpleStrategy',
-   'replication_factor':3 };
-   use mails;
-   drop table user_index_objects;
-   drop table user_mailbox_index_objects;
-   drop table user_mailbox_objects;
-   drop table user_mailbox_buckets;
-   drop table user_fts_objects;
-   drop table user_index_diff_objects;
-   drop table user_mailbox_index_diff_objects;
-   drop table user_mailbox_objects_reverse;
-
-SWIFT / S3 Table Creation
-
-.. code-block:: none
-
-   use mails;
-   create table user_index_objects (u text, n text, i text, primary key (u, n));
-   create table user_mailbox_index_objects (u text, g blob, n text, i text, primary key ((u, g), n));
-   create table user_mailbox_objects (u text, g blob, b int, n blob, i text, primary key ((u, g, b), n));
-   create table user_mailbox_buckets (u text, g blob, b int, primary key ((u, g)));
-   create table user_fts_objects (u text, n text, i text, primary key (u, n));
-   create table user_index_diff_objects (u text, h text, m text, primary key (u, h));
-   create table user_mailbox_index_diff_objects (u text, g blob, h text, m text, primary key (u, g, h));
-   create table user_mailbox_objects_reverse (u text, g blob, n blob, i text, primary key (i, n));
-
-Scality sproxyd Table Creation
-
-.. code-block:: none
-
-   use mails;
-   create table if not exists user_index_objects (u text,n text,i blob,primary key (u, n));
-   create table if not exists user_mailbox_index_objects (u text,g blob,n text,i blob,primary key ((u, g), n));
-   create table if not exists user_mailbox_objects (u text,g blob,b int,n blob,i blob,primary key ((u, g, b), n));
-   create table if not exists user_mailbox_buckets (u text,g blob,b int,primary key ((u, g)));
-   create table if not exists user_fts_objects (u text,n text,i blob,primary key (u, n));
-   create table if not exists user_index_diff_objects (u text,h text,m text,primary key (u, h));
-   create table if not exists user_mailbox_index_diff_objects (u text,g blob,h text,m text,primary key (u, g, h));
-    create table if not exists user_mailbox_objects_reverse (u text,g blob,n blob,i blob,primary key (i, n));
-
-The following base tables are always needed:
-  
  * user_index_objects
  * user_mailbox_index_objects
  * user_mailbox_objects
  * user_mailbox_buckets
  * user_fts_objects
-
-These use the username as the partition key, which means that data distribution across Cassandra nodes are done per-user. As long as there are a lot of users this should work fine. Additionally, each user's entire data must fit into a single Cassandra node, but since the amount of data is quite small this isn't a practical problem.
