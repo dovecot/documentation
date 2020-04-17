@@ -38,6 +38,6 @@ See also
 
   dictmap
 
-  scality_sproxyd_dictmap
+  dictmap_cassandra_objectid
 
   key_format
