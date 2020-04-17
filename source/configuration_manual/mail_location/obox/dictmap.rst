@@ -179,4 +179,4 @@ If diff-table is used:
 
    replication_factor
 
-   simple_mapping
+   dictmap_cassandra
