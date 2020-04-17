@@ -42,9 +42,9 @@ Root Categories
 +--------------------+---------------------------------------------------------+
 | lua                | Lua script                                              |
 +--------------------+---------------------------------------------------------+
-| mail-cache         | dovecot.index.cache file handling                       |
+| mail-cache         | ``dovecot.index.cache`` file handling                   |
 +--------------------+---------------------------------------------------------+
-| mail-index         | dovecot.index* file handling                            |
+| mail-index         | ``dovecot.index*`` file handling                        |
 +--------------------+---------------------------------------------------------+
 | managesieve        | Managesieve                                             |
 +--------------------+---------------------------------------------------------+
@@ -808,8 +808,8 @@ Mail index
 Mail index
 ----------
 
-Index file handling for dovecot.index*, dovecot.map.index*,
-dovecot.list.index* and similar indexes.
+Index file handling for ``dovecot.index*``, ``dovecot.map.index*``,
+``dovecot.list.index*`` and similar indexes.
 
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
