@@ -8,8 +8,8 @@ These mappings can be used with:
  * :ref:`scality_sproxyd`
  * Any other object storage when using "storage-objectid-prefix" option
 
-Append the following to the ``dovecot-dict-cql.conf.ext`` file as described See
-:ref:`simple_mapping`.
+Append the following to the ``dovecot-dict-cql.conf.ext`` file as described in
+:ref:`dictmap_cassandra`.
 
 .. code-block:: none
 

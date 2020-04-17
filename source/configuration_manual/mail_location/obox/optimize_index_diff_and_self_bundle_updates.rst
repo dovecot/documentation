@@ -24,5 +24,5 @@ Diff-table requires these additional tables:
   user_mailbox_index_diff_objects
 
 Creation of these tables (and the corresponding dictmap settings required) are
-described See :ref:`simple_mapping`. and See :ref:`dictmap_cassandra_objectid`
+described See :ref:`dictmap_cassandra`. and See :ref:`dictmap_cassandra_objectid`
 respectively.

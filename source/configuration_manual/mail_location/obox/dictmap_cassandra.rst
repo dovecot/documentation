@@ -1,8 +1,8 @@
-.. _simple_mapping:
+.. _dictmap_cassandra:
 
-====================
- Simple Mapping
-====================
+=========================
+fs-dictmap with Cassandra
+=========================
 
 dovecot.conf:
 

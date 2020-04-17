@@ -16,6 +16,6 @@ Reference counting requires these additional tables:
 
 
 Creation of these tables (and the corresponding dictmap settings required)
-are described in :ref:`simple_mapping`, :ref:`scality_sproxyd` or
+are described in :ref:`dictmap_cassandra`, :ref:`scality_sproxyd` or
 :ref:`dictmap_cassandra_path` pages respectively.
 
