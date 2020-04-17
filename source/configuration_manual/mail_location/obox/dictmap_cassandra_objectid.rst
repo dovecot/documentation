@@ -1,8 +1,12 @@
-.. _scality_sproxyd_dict_map:
+.. _dictmap_cassandra_objectid:
 
-===============================
-Scality sproxyd dict map
-===============================
+==========================================================
+fs-dictmap/Cassandra mappings for Object ID based storages
+==========================================================
+
+These mappings can be used with:
+ * :ref:`scality_sproxyd`
+ * Any other object storage when using "storage-objectid-prefix" option
 
 Append the following to the ``dovecot-dict-cql.conf.ext`` file as described See
 :ref:`simple_mapping`.
