@@ -52,9 +52,8 @@ Root Categories
 +--------------------+---------------------------------------------------------+
 | push-notification  | push-notification plugin                                |
 |                    |                                                         |
-|                    | .. versionadded:: v2.3.11 changes this from             |
-|                    |                   push_notification to                  |
-|                    |                   push-notification.                    |
+|                    | .. versionchanged:: v2.3.11 This was previously named   |
+|                    |                     push_notification.                  |
 +--------------------+---------------------------------------------------------+
 | quota-status       | quota-status process                                    |
 +--------------------+---------------------------------------------------------+
