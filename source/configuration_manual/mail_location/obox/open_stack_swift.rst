@@ -7,6 +7,6 @@ OpenStack SWIFT
 .. toctree::
    :maxdepth: 1
 
-   swift_dictmap
+   dictmap_cassandra_path
 
    swift_api_url_calls
