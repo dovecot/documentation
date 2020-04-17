@@ -15,5 +15,7 @@ Reference counting requires these additional tables:
    user_mailbox_objects_reverse
 
 
-Creation of these tables (and the corresponding dictmap settings required) are described in :ref:`simple_mapping`, :ref:`scality_sproxyd` or :ref:`swift_dict_map` pages respectively.
+Creation of these tables (and the corresponding dictmap settings required)
+are described in :ref:`simple_mapping`, :ref:`scality_sproxyd` or
+:ref:`dictmap_cassandra_path` pages respectively.
 
