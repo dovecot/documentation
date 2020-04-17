@@ -98,3 +98,8 @@ The following base tables are always needed by fs-dictmap:
  * user_mailbox_objects
  * user_mailbox_buckets
  * user_fts_objects
+
+For more Cassandra details, see:
+
+ * :ref:`cassandra`
+ * :ref:`cassandra_replication_factor`
