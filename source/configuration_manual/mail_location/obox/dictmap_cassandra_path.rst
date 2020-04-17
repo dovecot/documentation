@@ -1,8 +1,12 @@
-.. _swift_dict_map:
+.. _dictmap_cassandra_path:
 
-====================
-SWIFT dict map
-====================
+=====================================================
+fs-dictmap/Cassandra mappings for path based storages
+=====================================================
+
+:ref:`dictmap_cassandra_objectid` should always be preferred, since it avoids
+most of the Cassandra lookups related to emails. These path-based mappings
+mainly exist for legacy reasons and for testing.
 
 Append the following to the dovecot-dict-cql.conf.ext file as described in :ref:`simple_mapping`.
 
