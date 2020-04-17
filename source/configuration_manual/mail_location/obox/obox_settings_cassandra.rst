@@ -11,8 +11,6 @@ Cassandra (Obox Settings-HTTP Based Object Storages)
 
    quorum_configuration
 
-   reference_counted_mapping
-
    sizing_information
 
    disaster_recovery

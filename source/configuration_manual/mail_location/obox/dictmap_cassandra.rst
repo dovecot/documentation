@@ -125,3 +125,24 @@ Diff-table requires these additional tables to exist in Cassandra:
 
  * user_index_diff_objects
  * user_mailbox_index_diff_objects
+
+.. _dictmap_cassandra_refcounting_table:
+
+Reference Counting table
+------------------------
+
+Reference counting allows a single mail object to be stored in multiple
+mailboxes, without the need to create a new copy of the message data in object
+storage. There are two downsides to it though:
+
+The fs-dictmap ``refcounting-table`` parameter enables this behavior.
+
+ * It requires an additional large Cassandra table that keeps track of the
+   references.
+ * It requires listing objects in Cassandra to find out if we just deleted the
+   last reference or not. Only on the last reference deletion we want to delete
+   the actual object from object storage.
+
+Reference counting requires an additional table:
+
+ * user_mailbox_objects_reverse
