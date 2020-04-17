@@ -177,6 +177,4 @@ If diff-table is used:
 .. toctree::
    :maxdepth: 1
 
-   replication_factor
-
    dictmap_cassandra
