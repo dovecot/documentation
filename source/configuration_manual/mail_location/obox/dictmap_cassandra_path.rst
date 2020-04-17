@@ -8,7 +8,8 @@ fs-dictmap/Cassandra mappings for path based storages
 most of the Cassandra lookups related to emails. These path-based mappings
 mainly exist for legacy reasons and for testing.
 
-Append the following to the dovecot-dict-cql.conf.ext file as described in :ref:`simple_mapping`.
+Append the following to the ``dovecot-dict-cql.conf.ext`` file as described in
+:ref:`dictmap_cassandra`.
 
 .. code-block:: none
 
