@@ -110,7 +110,7 @@ Dictmap Parameters
 |                                 | avoiding a Cassandra SELECT when copying mails.                              |
 +---------------------------------+------------------------------------------------------------------------------+
 | diff-table	                  | Store diff & self index bundle objects to a separate table. This is a        |
-|                                 | Cassandra-backend optimization.                                              |
+|                                 | Cassandra-backend optimization. See :ref:`dictmap_cassandra_diff_table`      |
 +---------------------------------+------------------------------------------------------------------------------+
 | delete-dangling-links	          | If an object exists in dict, but not in storage, delete it automatically from|
 |                                 | dict when it's noticed. This setting isn't safe to use by default, because   |
