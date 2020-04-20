@@ -1,8 +1,8 @@
 .. _authentication-dict:
 
-=================================
-Key-value authentication database
-=================================
+========================================
+Key-value authentication (dict) database
+========================================
 
 Key-value databases can be used as auth backends. They probably should be used
 only for caching in front of e.g. SQL auth backends. Iteration is supported if
@@ -25,8 +25,8 @@ Auth configuration
     args = /etc/dovecot/dovecot-dict-auth.conf
   }
 
-Dict configuration
-==================
+Dict base configuration
+=======================
 
 .. code-block:: none
 
@@ -45,9 +45,24 @@ Dict configuration
   # cache there's no reason to try to iterate the (partial & duplicate) users.
   #iterate_disable = no
 
-  # The example here shows how to do multiple dict lookups and merge the replies.
-  # The "passdb" and "userdb" keys are JSON objects containing key/value pairs,
-  # for example: { "uid": 1000, "gid": 1000, "home": "/home/user" }
+There are two ways to access the dict (although they can also be mixed):
+
+ * JSON string object lookups (passdb_objects, userdb_objects)
+ * Individual value lookups (passdb_fields, userdb_fields)
+
+Note that all the key lookups must either find the value or have a
+default_value setting specified. Otherwise the entire passdb or userdb lookup
+will fail as "user not found" - even if some of the keys were found.
+
+JSON object lookups
+===================
+
+JSON object is looked up from the dict. Its contents are added to
+passdb/userdb fields. Note that only the first object is automatically used.
+More objects can be specified, but their fields need to be explicitly referred
+to by passdb_fields or userdb_fields.
+
+.. code-block:: none
 
   key passdb {
     key = passdb/%u
@@ -57,43 +72,69 @@ Dict configuration
     key = userdb/%u
     format = json
   }
-  key quota {
-    key = userdb/%u/quota # or e.g. quota/%{userdb:quota_class}
-    #format = value
-    # The default_value is used if the key isn't found. If default_value
-    # setting isn't specified at all (even as empty), the passdb/userdb
-    # lookup fails with "user doesn't exist".
-    default_value = 100M
-  }
 
-  # Space separated list of keys whose values contain key/value paired objects.
-  # All the key/value pairs inside the object are added as passdb fields.
-  # This can only be used for JSON formatted values.
+  # key used for passdb lookup
   passdb_objects = passdb
-
-  #passdb_fields {
-  #}
-
-  # Userdb key/value object list.
+  # key used for userdb lookup
   userdb_objects = userdb
 
-  userdb_fields {
-    # dict:<key> refers to key names
-    quota_rule = *:storage=%{dict:quota}
+Individual value lookups
+========================
 
-    # dict:<key>.<objkey> refers to the objkey inside (JSON) object
-    mail = maildir:%{dict:userdb.home}/Maildir
-  }
-
-Example values
-==============
-
-The value formats are either ``value`` that contains a direct value, or
-``json``. For example userdb lookup should return something like:
+Each %{dict:key} variable expansion does a dict lookup for the key. The value
+is used exactly as it is in the database without any kind of parsing.
 
 .. code-block:: none
 
-  { "uid": 123, "gid": 123, "home": "/home/username" }
+  key password {
+    key = passwords/%u
+    #format = value # value is the default
+  }
+  key proxy_host {
+    key = proxy-hosts/%u
+    default_value = default.example.com
+  }
+  passdb_fields {
+    proxy = yes
+    host = %{dict:proxy_host}
+    password = %{dict:password}
+  }
+
+  key quota {
+    # Assumes quota_class was already set by previous userdb lookup
+    key = quota/%{userdb:quota_class}
+    default_value = 100M
+  }
+  userdb_fields {
+    quota_rule = *:storage=%{dict:quota}
+  }
+
+Mixing fields and JSON objects
+==============================
+
+It's possible to also refer to JSON objects in the passdb_fields and
+userdb_fields. Although due to a bug the objects must currently be listed in
+passdb_objects or userdb_objects as well, which causes all of their fields
+to be imported.
+
+.. code-block:: none
+
+  key passdb {
+    key = passdb/%u
+    format = json
+  }
+  key domaindb {
+    key = domaindb/%d
+    format = json
+    default_value = {"host": "default-backend.example.com"}
+  }
+  passdb_objects = passdb domaindb
+
+  passdb_fields {
+    # password is imported from the passdb key automatically
+    proxy = yes
+    host = %{dict:domaindb.proxy_host} # assumes domaindb returns "proxy_host"
+  }
 
 dict proxying
 =============
