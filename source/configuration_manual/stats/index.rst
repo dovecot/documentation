@@ -43,6 +43,8 @@ Currently there are no statistics logged by default (but this might change). You
      #group_by = field another-field
    }
 
+.. _statistics_group_by:
+
 Group by
 ^^^^^^^^
 
