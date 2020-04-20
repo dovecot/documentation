@@ -51,25 +51,6 @@ tracking is wrong for whatever reason, it will soon become fixed automatically.
 The rescan is a fast operation and works correctly even if fscache is being
 modified simultaneously.
 
-Caching Efficiency
-^^^^^^^^^^^^^^^^^^^
-
-A series of tests were performed to compare performance with and without the
-fscache, as well as with the metacache optimizations.
-
-The results show that enabling the fscache results in a 14% reduction in
-storage operations.
-
-The metacache optimizations produce a further reduction of 11%, resulting in a
-total savings of 25%.
-
-With FTS enabled, the fts fscache reduces the storage operations by 35%.
-
-In all of these tests, Cassandra was used because this was against a Scality
-backend.  In a non-Scality environment, my expectation would be that the
-fscache and metacache produce even larger gains due to the relative increase in
-the volume of storage accesses.
-
 Multiple fscache directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
