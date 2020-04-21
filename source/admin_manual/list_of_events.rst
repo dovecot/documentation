@@ -2086,6 +2086,8 @@ Common fields
 | error          | Error, if one occured                                |
 +----------------+------------------------------------------------------+
 
+.. _dict_lookup_finished:
+
 dict_lookup_finished
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -2098,6 +2100,8 @@ Event emitted when lookup finishes.
 +-----------------+------------------------------------------------------+
 | key_not_found   | Set to ``yes`` if key not found                      |
 +-----------------+------------------------------------------------------+
+
+.. _dict_iteration_finished:
 
 dict_iteration_finished
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -2112,6 +2116,8 @@ dict_iteration_finished
 | rows            | Number of rows returned                              |
 +-----------------+------------------------------------------------------+
 
+.. _dict_transaction_finished:
+
 dict_transaction_finished
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2123,19 +2129,22 @@ Event emitted when transaction has been committed or rolled back.
 | rollback        | Set to ``yes`` when transaction was rolled back      |
 +-----------------+------------------------------------------------------+
 | write_uncertain | Set to ``yes`` if write was not confirmed            |
-+----------------+-------------------------------------------------------+
++-----------------+------------------------------------------------------+
 
 dict_server_lookup_finished
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Event emitted when dict server finishes lookup. Same fields as ref:`dict_lookup_finished`.
+Event emitted when dict server finishes lookup. Same fields as
+:ref:`dict_lookup_finished`.
 
 dict_server_iteration_finished
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Event emitted when dict server finishes iteration. Same fields as ref:`dict_iteration_finished`.
+Event emitted when dict server finishes iteration. Same fields as
+:ref:`dict_iteration_finished`.
 
 dict_server_transaction_finished
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Event emitted when dict server finishes transaction. Same fields as ref:`dict_transaction_finished`.
+Event emitted when dict server finishes transaction. Same fields as
+:ref:`dict_transaction_finished`.
