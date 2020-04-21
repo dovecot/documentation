@@ -24,6 +24,10 @@ Root Categories
 +--------------------+---------------------------------------------------------+
 | auth-client        | Authentication client library                           |
 +--------------------+---------------------------------------------------------+
+| dict               | Dictionary library and drivers                          |
++--------------------+---------------------------------------------------------+
+| dict-server        | Dictionary server/proxy (dict process)                  |
++--------------------+---------------------------------------------------------+
 | dns                | DNS client library                                      |
 +--------------------+---------------------------------------------------------+
 | dns-worker         | dns-client process                                      |
@@ -2059,3 +2063,87 @@ happens.
 +-----------------------+------------------------------------------------------+
 | object_id             | Object ID in the storage                             |
 +-----------------------+------------------------------------------------------+
+
+Dictionaries
+============
+
+.. versionadded:: 2.3.11
+
+Events emitted by dictionary library and dictionary server.
+
+.. _event_dict:
+
+Common fields
+-------------
+
++----------------+------------------------------------------------------+
+| Field          | Description                                          |
++================+======================================================+
+| driver         | Name of the dictionary driver,                       |
+|                | e.g. ``sql`` or ``proxy``.                           |
++----------------+------------------------------------------------------+
+| error          | Error, if one occured                                |
++----------------+------------------------------------------------------+
+
+.. _dict_lookup_finished:
+
+dict_lookup_finished
+^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when lookup finishes.
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| key             | Key name, starts with ``priv/`` or ``shared/``       |
++-----------------+------------------------------------------------------+
+| key_not_found   | Set to ``yes`` if key not found                      |
++-----------------+------------------------------------------------------+
+
+.. _dict_iteration_finished:
+
+dict_iteration_finished
+^^^^^^^^^^^^^^^^^^^^^^^
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| key             | Used prefix, starts with ``priv/`` or ``shared/``    |
++-----------------+------------------------------------------------------+
+| key_not_found   | Set to ``yes`` if key not found                      |
++-----------------+------------------------------------------------------+
+| rows            | Number of rows returned                              |
++-----------------+------------------------------------------------------+
+
+.. _dict_transaction_finished:
+
+dict_transaction_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when transaction has been committed or rolled back.
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| rollback        | Set to ``yes`` when transaction was rolled back      |
++-----------------+------------------------------------------------------+
+| write_uncertain | Set to ``yes`` if write was not confirmed            |
++-----------------+------------------------------------------------------+
+
+dict_server_lookup_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when dict server finishes lookup. Same fields as
+:ref:`dict_lookup_finished`.
+
+dict_server_iteration_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when dict server finishes iteration. Same fields as
+:ref:`dict_iteration_finished`.
+
+dict_server_transaction_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when dict server finishes transaction. Same fields as
+:ref:`dict_transaction_finished`.
