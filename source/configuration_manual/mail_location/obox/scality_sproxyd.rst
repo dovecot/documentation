@@ -5,13 +5,22 @@
 ======================
 
 Using the sproxy driver requires using fs-dictmap/Cassandra. See
-:ref:`dictmap_configuration` for details and an example
-configuration.
+:ref:`dictmap_configuration` and :ref:`dictmap_cassandra` for details and an
+example configuration.
 
-The parameters specific to Scality sproxyd are:
+.. code-block:: none
+
+   plugin {
+     # Basic configuration:
+     obox_fs = sproxyd:http://scality.example.com/?parameters
+   }
+
+The parameters are:
 
 +-------------------+----------------------------------------------------------+
 | Parameter         | Description                                              |
++===================+==========================================================+
+| See :ref:`http_storages` for common parameters                               |
 +-------------------+----------------------------------------------------------+
 | class             | Scality Class of Service. 2 means that the objects are   |
 |                   | written to the Scality RING 3 times in total. This is    |
@@ -28,12 +37,10 @@ The parameters specific to Scality sproxyd are:
 +-------------------+----------------------------------------------------------+
 
 Dovecot uses its own Scality key format, which encodes the object type also to
-the key itself.
+the key itself. See :ref:`scality_key_format`.
 
 See also
 ********
-
- * :ref:`scality_key_format`
 
 .. toctree::
   :maxdepth: 1
