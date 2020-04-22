@@ -8,6 +8,17 @@ Obox Settings
 
    These settings are assuming that message data is being stored in object storage (obox mailbox). These settings should not be used if a block storage driver (e.g. mdbox) is being used. 
 
+obox drivers
+------------
+
+ * :ref:`scality_sproxyd`
+ * :ref:`microsoft_azure`
+ * :ref:`scality_cdmi`
+ * :ref:`openstack_swift`
+ * :ref:`amazon_s3`
+ * :ref:`other_s3_compatible_storages`
+
+
 obox plugin settings
 --------------------
 
@@ -95,11 +106,6 @@ Must be less than :ref:`setting-director_user_expire` (Default: 15min).
 See :ref:`plugin-obox` for additional plugin options.
 
 See :ref:`obox_settings_advanced` for additional, advanced obox settings.
-
-Obox Drivers
-------------
-
-See :ref:`obox_drivers`.
 
 Obox Metacache Maintenance
 --------------------------
