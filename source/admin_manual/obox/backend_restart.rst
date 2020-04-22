@@ -63,21 +63,36 @@ minimal user impact.
 
 #. Modify dovecot config file to match the proposed config.
 
-#. Remove old metacache database files.
+#. Synchronize metacache
 
-   As metacache service is now reduced to just one file the old 4 files
-   need to be removed.
+   Metacache database may not be fully synchronized with the index files that
+   actually exist on filesystem. It's recommended at this stage to either
+   delete the metacache or rescan it.
 
-   .. code-block:: none
+   * Rescan metacache:
 
-      rm -f /var/lib/dovecot/metacache/metacache-users*
+     .. versionadded:: v2.3.7
 
-#. Clean up metacache as the tracking files are removed so that no data is
-   left untracked.
+     .. code-block:: none
 
-   .. code-block:: none
+        doveadm metacache rescan
 
-      rm -rf /var/dovecot/vmail/*
+   * Delete metacache:
+
+     #. Remove old metacache database files.
+
+	As metacache service is now reduced to just one file the old 4 files
+	need to be removed.
+
+        .. code-block:: none
+
+           rm -f /var/lib/dovecot/metacache/metacache-users*
+
+     #. Remove metacache from filesystem:
+
+        .. code-block:: none
+
+           rm -rf /var/dovecot/vmail/*
 
 #. Start dovecot again.
 
