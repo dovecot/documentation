@@ -195,3 +195,4 @@ If multiple backends do changes to the same mailbox at the same time, Dovecot wi
    design
    user_delete
    backend_restart
+   storage_side_metadata
