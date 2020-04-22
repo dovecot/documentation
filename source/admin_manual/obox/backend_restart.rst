@@ -1,74 +1,109 @@
-.. _upgrading_backend_with_minimal_user_impact:
+.. _obox_backend_restart:
 
-===========================================
-Upgrading backend with minimal user impact
-===========================================
+================================================
+Restarting obox backend with minimal user impact
+================================================
 
-This procedure is generic procedure to perform backend maintenance with minimal user impact
+This procedure is generic procedure to perform backend maintenance with
+minimal user impact.
 
-1. do this procedure 1 backend at a time 
-- this is to minimize the user impact
+#. Do this procedure 1 backend at a time.
 
-2. in director set vhost count on that backend to 0
-- this is to stop director process from mapping new user sessions to this backend and to notify dovemon that the backend is under maintenance
+   This is to minimize the user impact.
 
-``doveadm director update <backend ip> 0``
+#. In director set vhost count on that backend to 0.
 
-3. wait 15mins for disconnected user session hashes to expire
+   This is to stop director process from mapping new user sessions to this
+   backend and to notify dovemon that the backend is under maintenance.
 
-4. in director check how many users still mapped to backend
+   .. code-block:: none
 
-``doveadm director status``
+      doveadm director update <backend ip> 0
 
-5. disable service lmtp on the selected backend
-- this is to minimize metacache changes while doing metacache flush
+#. Wait 15mins for disconnected user session hashes to expire.
 
-``doveadm service stop lmtp``
+#. In director check how many users still mapped to backend.
 
-6. shut down dovecot on the selected backend
-- this will also flush metacache as long as dovecot-metacache-flush service is not disabled
+   .. code-block:: none
 
-``systemctl dovecot stop``
+      doveadm director status
 
-6. in director flush all user sessions in backend
-- backend is now shut down, we need to tell director layer to rehash the sessions to remaining backends
+#. Disable service lmtp on the selected backend.
 
-``doveadm director down <backend ip>``
-``doveadm director flush <backend ip>``
+   This is to minimize metacache changes while doing metacache flush.
 
-7. backend has now been removed from director ring and all user sessions are rehashed to remaining backends
-- now all sessions are gone and backend is ready for upgrade or major config change
+   .. code-block:: none
 
-8. modify dovecot config file to match the proposed config
-- as discussed previously in the config review workshop
+      doveadm service stop lmtp
 
-9. remove old metacache database files
-- as metacache service is now reduced to just one file the old 4 files need to be removed
+#. Shut down dovecot on the selected backend
 
-``rm -f /var/lib/dovecot/metacache/metacache-users*``
+   This will also flush metacache as long as dovecot-metacache-flush service
+   is not disabled.
 
-10. clean up metacache as the tracking files are removed so that no data is left untracked
+   .. code-block:: none
 
-``rm -rf /var/dovecot/vmail/*``
+      systemctl dovecot stop
 
-11. start dovecot again
+#. In director flush all user sessions in backend.
 
-``systemctl start dovecot``
+   Backend is now shut down, we need to tell director layer to rehash the
+   sessions to remaining backends.
 
-12. verify with test user that backend is useable
+   .. code-block:: none
 
-``doveadm mailbox list -u <uid>``
-``doveadm mailbox status -u <uid> messages "*"``
-``doveadm fetch -u <uid> text all > /dev/null``
+      doveadm director down <backend ip>
+      doveadm director flush <backend ip>
 
-- first command fetches mailbox list from metacache. this is fetched from storage now as metacache is reset
-- second command fetches more info from metacache
-- last command verifies that dovecot can fetch mail objects from storage
+#. Backend has now been removed from director ring and all user sessions are
+   rehashed to remaining backends.
 
-13. if all of the above commands succeed, backend can be put back to production
+   Now all sessions are gone and backend is ready for upgrade or major config
+   change.
 
-14. in director ring update backend status
+#. Modify dovecot config file to match the proposed config.
 
-``doveadm director update <backend ip> 100``
+#. Remove old metacache database files.
 
-``doveadm director up <backend ip>``
+   As metacache service is now reduced to just one file the old 4 files
+   need to be removed.
+
+   .. code-block:: none
+
+      rm -f /var/lib/dovecot/metacache/metacache-users*
+
+#. Clean up metacache as the tracking files are removed so that no data is
+   left untracked.
+
+   .. code-block:: none
+
+      rm -rf /var/dovecot/vmail/*
+
+#. Start dovecot again.
+
+   .. code-block:: none
+
+      systemctl start dovecot
+
+#. Verify with test user that backend is usable.
+
+   .. code-block:: none
+
+      doveadm mailbox list -u <uid>
+      doveadm mailbox status -u <uid> messages "*"
+      doveadm fetch -u <uid> text all > /dev/null
+
+   * The first command fetches mailbox list from metacache. This is fetched
+     from storage now as metacache is reset.
+   * The second command fetches more info from metacache.
+   * The last command verifies that dovecot can fetch mail objects from
+     storage.
+
+#. If all of the above commands succeed, backend can be put back to production.
+
+#. In director ring update backend status
+
+   .. code-block:: none
+
+      doveadm director update <backend ip> 100
+      doveadm director up <backend ip>
