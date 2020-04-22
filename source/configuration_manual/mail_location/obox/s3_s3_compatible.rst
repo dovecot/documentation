@@ -12,6 +12,4 @@ S3 / S3 Compatible
 
    other_s3-compatible_storages
 
-   s3_api_url_calls
-
    s3_object_id_format
