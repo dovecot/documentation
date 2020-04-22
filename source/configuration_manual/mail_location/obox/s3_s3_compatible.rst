@@ -11,5 +11,4 @@ S3 / S3 Compatible
    amazon_s3
 
    other_s3-compatible_storages
-
-   s3_object_id_format
+   
