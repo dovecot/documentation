@@ -201,3 +201,4 @@ If multiple backends do changes to the same mailbox at the same time, Dovecot wi
    file_system_to_dict_mapping
    scality_key_format
    sizing_information
+   swift_api_url_calls

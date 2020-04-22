@@ -8,5 +8,4 @@ OpenStack SWIFT
    :maxdepth: 1
 
    dictmap_cassandra_path
-
-   swift_api_url_calls
+   
