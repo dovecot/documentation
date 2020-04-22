@@ -138,5 +138,3 @@ See also
   :maxdepth: 1
 
   oboxdrivers
-
-  obox_settings_cassandra

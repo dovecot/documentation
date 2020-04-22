@@ -146,3 +146,9 @@ The fs-dictmap ``refcounting-table`` parameter enables this behavior.
 Reference counting requires an additional table:
 
  * user_mailbox_objects_reverse
+
+See also
+--------
+
+ * :ref:`quorum_configuration`
+ * :ref:`cassandra_administration`
