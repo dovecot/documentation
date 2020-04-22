@@ -140,5 +140,3 @@ See also
   oboxdrivers
 
   obox_settings_cassandra
-
-  storage_side_metadata
