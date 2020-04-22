@@ -11,8 +11,6 @@ Cassandra (Obox Settings-HTTP Based Object Storages)
 
    quorum_configuration
 
-   sizing_information
-
    last_login_plugin
 
 See :ref:`cassandra_administration`
