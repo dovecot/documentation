@@ -16,6 +16,6 @@ Obox Drivers
 
    open_stack_swift
 
-   s3_s3_compatible
+   amazon_s3
 
- 
+   other_s3-compatible_storages
