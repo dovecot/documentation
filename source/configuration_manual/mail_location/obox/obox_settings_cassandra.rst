@@ -11,10 +11,6 @@ Cassandra (Obox Settings-HTTP Based Object Storages)
 
    quorum_configuration
 
-   optimize_index_diff_and_self_bundle_updates
-
-   reference_counted_mapping
-
    sizing_information
 
    disaster_recovery
