@@ -16,5 +16,5 @@ Mailbox Administration
 
    obox/user_delete
 
-   upgrading_backend_with_minimal_user_impact
+   obox/backend_restart
 
