@@ -196,3 +196,4 @@ If multiple backends do changes to the same mailbox at the same time, Dovecot wi
    user_delete
    backend_restart
    storage_side_metadata
+   data_access_patterns

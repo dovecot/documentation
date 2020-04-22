@@ -15,8 +15,6 @@ Cassandra (Obox Settings-HTTP Based Object Storages)
 
    disaster_recovery
 
-   data_access_patterns
-
    file_system_to_dict_mapping
 
    last_login_plugin
