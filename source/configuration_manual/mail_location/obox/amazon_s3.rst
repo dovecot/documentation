@@ -89,7 +89,7 @@ by adding the bucket region parameter to the S3 URL:
 """""""""""""""""
 
 If the ``aws-s3`` scheme is used Dovecot defaults to prepend the following URL
-parameters, refer to :ref:`http_based_object_storages` for details. The same
+parameters, refer to :ref:`http_storages` for details. The same
 setup can be achieved by using the ``s3`` scheme and adding the parameters
 manually.
 
@@ -167,7 +167,7 @@ Deleting multiple objects per Request
 The ``aws-s3`` and ``s3`` drivers support bulk-deletion. The ``bulk-delete``
 option is enabled by default to delete up to 1000 keys with one request.
 To change this behaviour refer to ``bulk_delete_limit`` at
-:ref:`http_based_object_storages`. Bulk delete can only efficiently run on
+:ref:`http_storages`. Bulk delete can only efficiently run on
 multiple objects if configured to do so, via setting
 ``obox_max_parallel_deletes`` greater one (refer to :ref:`obox_settings`).
 
