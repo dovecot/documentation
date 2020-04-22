@@ -198,3 +198,4 @@ If multiple backends do changes to the same mailbox at the same time, Dovecot wi
    storage_side_metadata
    data_access_patterns
    disaster_recovery
+   file_system_to_dict_mapping
