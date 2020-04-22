@@ -160,15 +160,3 @@ For more information about IAM roles for EC2 please refer to:
 
 For general information about IAM:
 `IAM UserGuide <https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html>`_
-
-Deleting multiple objects per Request
-"""""""""""""""""""""""""""""""""""""
-
-The ``aws-s3`` and ``s3`` drivers support bulk-deletion. The ``bulk-delete``
-option is enabled by default to delete up to 1000 keys with one request.
-To change this behaviour refer to ``bulk_delete_limit`` at
-:ref:`http_storages`. Bulk delete can only efficiently run on
-multiple objects if configured to do so, via setting
-``obox_max_parallel_deletes`` greater one (refer to :ref:`obox_settings`).
-
-  .. versionadded:: 2.3.10
