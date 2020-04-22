@@ -10,7 +10,7 @@ Mailbox Administration
 
    doveadm_mailbox_commands
 
-   object_storage_mailbox_format_administration
+   obox/index
 
    importing_mailboxes_converting_exporting_moving_migrating
 
