@@ -14,7 +14,7 @@ Mailbox Administration
 
    importing_mailboxes_converting_exporting_moving_migrating
 
-   delete_user_mailbox_in_obox
+   obox/user_delete
 
    upgrading_backend_with_minimal_user_impact
 
