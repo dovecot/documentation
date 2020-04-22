@@ -1,4 +1,4 @@
-.. _http_based_object_storages:
+.. _http_storages:
 
 ===============================================
 HTTP-Based Object Storages
