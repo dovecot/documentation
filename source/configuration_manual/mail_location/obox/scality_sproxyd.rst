@@ -5,7 +5,7 @@
 ======================
 
 Using the sproxy driver requires using fs-dictmap/Cassandra. See
-:ref:`dictmap_cassandra_configuration` for details and an example
+:ref:`dictmap_configuration` for details and an example
 configuration.
 
 The parameters specific to Scality sproxyd are:

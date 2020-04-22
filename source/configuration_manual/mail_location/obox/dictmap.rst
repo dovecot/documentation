@@ -1,8 +1,8 @@
-.. _dictmap_cassandra_configuration:
+.. _dictmap_configuration:
 
-==================================
-fs-dictmap/Cassandra Configuration
-==================================
+========================
+fs-dictmap Configuration
+========================
 
 Using obox with Cassandra is done via the fs-dictmap wrapper, which translates
 internal "lib-fs paths" into dict API. The dict API paths in turn are
