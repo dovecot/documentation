@@ -109,7 +109,7 @@ https://vincent.bernat.ch/en/blog/2014-tcp-time-wait-state-linux explains these 
 Domain Name System lookups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In some configurations, in particular with :ref:`object_storage_plugin`, Dovecot nodes need to do frequent Domain Name System (DNS) lookups. It is recommended that the underlying platform provides either a performant DNS service or deploys a local DNS cache on the Dovecot nodes.
+In some configurations, in particular with :ref:`obox_settings`, Dovecot nodes need to do frequent Domain Name System (DNS) lookups. It is recommended that the underlying platform provides either a performant DNS service or deploys a local DNS cache on the Dovecot nodes.
 
 Software that is known to work in this regard is `PowerDNS <https://www.powerdns.com/>`_  for a performant service and `nscd <https://www.gnu.org/software/libc/libc.html>`_  for local caching.
 
