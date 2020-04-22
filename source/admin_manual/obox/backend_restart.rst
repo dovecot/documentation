@@ -7,6 +7,21 @@ Restarting obox backend with minimal user impact
 This procedure is generic procedure to perform backend maintenance with
 minimal user impact.
 
+.. note:: The best way to avoid any user impact is to avoid having to use this
+          procedure in the first place:
+
+	  * Upgrading can be simply done with installing new Dovecot deb/rpm
+	    packages.
+	  * Configuration changes can be done by modifying the config file and
+	    running ``doveadm reload``. If there are configuration mistakes,
+	    the reload will fail and preserve the original configuration.
+	    Although this only happens for syntax mistakes and other mistakes
+	    that can ``doveconf`` can catch - not mistakes that are detected
+	    only at runtime.
+
+Shutting down backend
+---------------------
+
 #. Do this procedure 1 backend at a time.
 
    This is to minimize the user impact.
@@ -58,10 +73,11 @@ minimal user impact.
 #. Backend has now been removed from director ring and all user sessions are
    rehashed to remaining backends.
 
-   Now all sessions are gone and backend is ready for upgrade or major config
-   change.
+Now all sessions are gone and backend is ready for upgrade or major config
+change.
 
-#. Modify dovecot config file to match the proposed config.
+Starting up backend
+-------------------
 
 #. Synchronize metacache
 
