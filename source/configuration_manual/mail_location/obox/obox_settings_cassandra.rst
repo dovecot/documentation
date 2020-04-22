@@ -13,8 +13,6 @@ Cassandra (Obox Settings-HTTP Based Object Storages)
 
    sizing_information
 
-   file_system_to_dict_mapping
-
    last_login_plugin
 
 See :ref:`cassandra_administration`
