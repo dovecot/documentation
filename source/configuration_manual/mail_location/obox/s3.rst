@@ -1,8 +1,8 @@
-.. _other_s3_compatible_storages:
+.. _s3_storages:
 
-==================================
-Other S3-compatible Storages
-==================================
+======================
+S3-compatible Storages
+======================
 
 This document covers the S3 compatible storage services. In case you want to
 use AWS S3 please refer to :ref:`amazon_s3`.

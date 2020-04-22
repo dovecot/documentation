@@ -16,7 +16,7 @@ obox drivers
  * :ref:`scality_cdmi`
  * :ref:`openstack_swift`
  * :ref:`amazon_s3`
- * :ref:`other_s3_compatible_storages`
+ * :ref:`s3_storages`
 
 
 obox plugin settings
