@@ -33,11 +33,11 @@ the key itself.
 See also
 ********
 
+ * :ref:`scality_key_format`
+
 .. toctree::
   :maxdepth: 1
 
   dictmap
 
   dictmap_cassandra_objectid
-
-  key_format
