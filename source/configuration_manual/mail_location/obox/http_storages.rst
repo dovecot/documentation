@@ -1,4 +1,4 @@
-.. _http_based_object_storages:
+.. _http_storages:
 
 ===============================================
 HTTP-Based Object Storages
@@ -130,15 +130,3 @@ Dovecot sends the following HTTP headers towards storage. They should be logged 
 * X-Dovecot-Username
 * X-Dovecot-Session-Id
 * X-Dovecot-Reason (v2.2.36.1+ and v2.3.5+)
-
-See also
-********
-
-.. toctree::
-  :maxdepth: 1
-
-  oboxdrivers
-
-  obox_settings_cassandra
-
-  storage_side_metadata

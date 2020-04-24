@@ -72,7 +72,7 @@ All commands sent to the API needs to be posted in json format using ``Content-T
                "parameter2": "value",
                "parameter3": "value"
            },
-           "identifier"
+           "tag1"
        ]
    ]
 
@@ -86,7 +86,7 @@ Multiple commands can be submitted in one json payload::
                "parameter1": "value",
                "parameter2": "value"
            },
-           "identifier1"
+           "tag1"
        ],
        [
               "command2",
@@ -94,7 +94,7 @@ Multiple commands can be submitted in one json payload::
                "parameter1": "value",
                "parameter2": "value"
            },
-           "identifier2"
+           "tag2"
        ]
    ]
 
@@ -118,14 +118,14 @@ In the example we ask dovecot to reload configuration using following JSON paylo
        [
            "reload",
            {},
-           "a2"
+           "tag1"
        ]
    ]
 
 
 Then we execute it with curl::
 
-   curl -v -u doveadm:secretpassword -X POST http://localhost:8080/doveadm/v1 -H "Content-Type: application/json" -d '[["reload",{},"a2"]]'
+   curl -v -u doveadm:secretpassword -X POST http://localhost:8080/doveadm/v1 -H "Content-Type: application/json" -d '[["reload",{},"tag1"]]'
 
 This is equivalent to the command ``doveadm reload``.
 
@@ -135,7 +135,7 @@ Successful Response::
        [
            "doveadmResponse",
            [],
-           "a2"
+           "tag1"
        ]
    ]
 
@@ -149,7 +149,7 @@ Failure Response::
                "exitCode": 68,
                "type": "exitCode"
            },
-           "a2"
+           "tag1"
        ]
    ]
 
@@ -258,14 +258,14 @@ example::
                 "reverse": 0,
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
     curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" \
-      -d '[["altmove",{"user":"samik","reverse":0,"query":["mailbox","INBOX/myfoldertoo","savedbefore","since","30d"]},"bb"]] ' \
+      -d '[["altmove",{"user":"samik","reverse":0,"query":["mailbox","INBOX/myfoldertoo","savedbefore","since","30d"]},"tag1"]] ' \
       http://localhost:8080/doveadm/v1
 
 
@@ -312,13 +312,13 @@ example::
                     "samik"
                 ]
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["authCacheFlush",{"user":["samik"]},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["authCacheFlush",{"user":["samik"]},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 .. code::
 
@@ -332,7 +332,7 @@ example::
                     "entries": "0"
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -729,13 +729,13 @@ example::
             {
                 "host": "10.0.234"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorAdd",{"host":"10.0.234"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorAdd",{"host":"10.0.234"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 
@@ -803,13 +803,13 @@ example::
         [
             "directorDump",
             {},
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorDump",{},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorDump",{},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -830,7 +830,7 @@ response::
                     "vhost_count": "100"
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -884,13 +884,13 @@ example::
             {
                 "host": "10.0.0.234"
             },
-            "aa"
+            "tag1"
         ]
     ]
 
 .. code::
 
-     curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorFlush",{"host":"10.0.0.234"},"aa"]] ' http://localhost:8080/doveadm/v1
+     curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorFlush",{"host":"10.0.0.234"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -899,7 +899,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "aa"
+            "tag1"
         ]
     ]
 
@@ -943,13 +943,13 @@ example::
             {
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorKick",{"user":"samik"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorKick",{"user":"samik"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -958,7 +958,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -1020,13 +1020,13 @@ example::
         [
             "directorMap",
             {},
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorMap",{},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorMap",{},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -1041,7 +1041,7 @@ response::
                     "user": "samik"
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -1096,13 +1096,13 @@ example::
                 "host": "10.0.234",
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorMove",{"user":"samik","host":"10.0.234"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorMove",{"user":"samik","host":"10.0.234"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -1111,7 +1111,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -1157,13 +1157,13 @@ example::
             {
                 "host": "10.0.0.234"
             },
-            "aa"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorRemove",{"host":"10.0.0.234"},"aa"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorRemove",{"host":"10.0.0.234"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -1172,7 +1172,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "aa"
+            "tag1"
         ]
     ]
 
@@ -1223,13 +1223,13 @@ example::
             {
                 "ip": "10.0.0.233"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorRingAdd",{"ip":"10.0.0.233"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorRingAdd",{"ip":"10.0.0.233"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -1237,7 +1237,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -1288,13 +1288,13 @@ example::
             {
                 "ip": "10.0.0.233"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorRingRemove",{"ip":"10.0.0.233"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorRingRemove",{"ip":"10.0.0.233"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -1302,7 +1302,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -1339,13 +1339,13 @@ example::
         [
             "directorRingStatus",
             {},
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorRingStatus",{},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorRingStatus",{},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -1368,7 +1368,7 @@ response::
                     "type": ""
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -1420,13 +1420,13 @@ example::
         [
             "directorStatus",
             {},
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorStatus",{},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["directorStatus",{},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -1452,7 +1452,7 @@ response::
                     "vhosts": "100"
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -1670,13 +1670,13 @@ example::
                 ],
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["fetch",{"user":"samik","field":["text"],"query":["mailbox","INBOX/myfoldertoo"]},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["fetch",{"user":"samik","field":["text"],"query":["mailbox","INBOX/myfoldertoo"]},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -1689,7 +1689,7 @@ response::
                     "text": "From: Joulu Pukki <joulu.pukki@korvatunturi.fi>\nSubject: plaa\n\nmail body\n"
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -1933,13 +1933,13 @@ example::
                 "mailboxMask": "INBOX*",
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["forceResync",{"user":"samik","mailboxMask":"INBOX*"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["forceResync",{"user":"samik","mailboxMask":"INBOX*"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -1948,7 +1948,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -2709,13 +2709,13 @@ example::
                 "mailboxMask": "INBOX*",
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["index",{"user":"samik","mailboxMask":"INBOX*"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["index",{"user":"samik","mailboxMask":"INBOX*"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -2723,7 +2723,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -2775,13 +2775,13 @@ example::
                 "force": 0,
                 "mask": "testuser001"
             },
-            "aa"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -v -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["kick", {"mask":"testuser001"}, "aa"]] ' http://localhost:8080/doveadm/v1
+    curl  -v -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["kick", {"mask":"testuser001"}, "tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -2794,7 +2794,7 @@ response::
                     "result": "testuser001"
                 }
             ],
-            "aa"
+            "tag1"
         ]
     ]
 
@@ -2808,7 +2808,7 @@ response::
                 "exitCode": 68,
                 "type": "exitCode"
             },
-            "aa"
+            "tag1"
         ]
     ]
 
@@ -2848,13 +2848,13 @@ example::
         [
             "logErrors",
             {},
-            "a2"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl -v -u doveadm:secretpassword -X POST -H "Content-Type: application/json" -d '[["logErrors",{},"a2"]] ' http://localhost:8080/doveadm/v1
+    curl -v -u doveadm:secretpassword -X POST -H "Content-Type: application/json" -d '[["logErrors",{},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -2899,7 +2899,7 @@ response::
                     "type": "Fatal"
                 }
             ],
-            "a2"
+            "tag1"
         ]
      ]
 
@@ -2977,13 +2977,13 @@ example::
                 ],
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxCreate",{"user":"samik","mailbox":["INBOX/myfolder"]},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxCreate",{"user":"samik","mailbox":["INBOX/myfolder"]},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -2992,7 +2992,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -3083,13 +3083,13 @@ example::
                 ],
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxDelete",{"user":"samik","mailbox":["INBOX/myfolder"]},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxDelete",{"user":"samik","mailbox":["INBOX/myfolder"]},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -3098,7 +3098,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -3180,13 +3180,13 @@ example::
             {
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxList",{"user":"samik"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxList",{"user":"samik"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -3202,7 +3202,7 @@ response::
                     "mailbox": "INBOX"
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -3271,13 +3271,13 @@ example::
                 "mailbox": "INBOX",
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxMetadataGet",{"user":"samik","mailbox":"INBOX","key":"/private/comment"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxMetadataGet",{"user":"samik","mailbox":"INBOX","key":"/private/comment"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -3290,7 +3290,7 @@ response::
                     "value": "plaa"
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -3365,13 +3365,13 @@ example::
                 "mailbox": "INBOX",
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxMetadataList",{"user":"samik","mailbox":"INBOX"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxMetadataList",{"user":"samik","mailbox":"INBOX"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -3387,7 +3387,7 @@ response::
                     "key": "specialuse"
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -3465,13 +3465,13 @@ example::
                 "user": "samik",
                 "value": "test"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxMetadataSet",{"user":"samik","mailbox":"INBOX","key":"/private/comment","value":"test"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxMetadataSet",{"user":"samik","mailbox":"INBOX","key":"/private/comment","value":"test"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -3480,7 +3480,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -3551,13 +3551,13 @@ example::
                 "mailbox": "INBOX",
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxMetadataUnset",{"user":"samik","mailbox":"INBOX","key":"/private/comment"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxMetadataUnset",{"user":"samik","mailbox":"INBOX","key":"/private/comment"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -3565,7 +3565,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -3644,13 +3644,13 @@ example::
                 "newName": "INBOX/myfoldertoo",
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxRename",{"user":"samik","mailbox":"INBOX/myfolder","newName":"INBOX/myfoldertoo"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxRename",{"user":"samik","mailbox":"INBOX/myfolder","newName":"INBOX/myfoldertoo"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -3658,7 +3658,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -3732,13 +3732,13 @@ example::
                 "mailbox": "INBOX/myfoldertoo",
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["save",{"user":"samik","mailbox":"INBOX/myfoldertoo","file":"From: Joulu Pukki <joulu.pukki@korvatunturi.fi>\nSubject: plaa\n\nmail body\n"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["save",{"user":"samik","mailbox":"INBOX/myfoldertoo","file":"From: Joulu Pukki <joulu.pukki@korvatunturi.fi>\nSubject: plaa\n\nmail body\n"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -3746,7 +3746,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -3830,13 +3830,13 @@ example::
                 ],
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxStatus",{"user":"samik","field":["all"],"mailboxMask":["INBOX","INBOX/*","*"]},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxStatus",{"user":"samik","field":["all"],"mailboxMask":["INBOX","INBOX/*","*"]},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -3868,7 +3868,7 @@ response::
                     "vsize": "0"
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -3933,13 +3933,13 @@ example::
                 "mailbox": "INBOX/myfoldertoo",
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxSubscribe",{"user":"samik","mailbox":"INBOX/myfoldertoo"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxSubscribe",{"user":"samik","mailbox":"INBOX/myfoldertoo"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -3948,7 +3948,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -4014,13 +4014,13 @@ example::
                 "mailbox": "INBOX/myfoldertoo",
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxUnsubscribe",{"user":"samik","mailbox":"INBOX/myfoldertoo"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["mailboxUnsubscribe",{"user":"samik","mailbox":"INBOX/myfoldertoo"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -4029,7 +4029,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -4441,13 +4441,13 @@ example::
                 "user": "testuser003",
                 "userFile": ""
             },
-            "aa"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -v -u doveadm:secretpassword -X POST http://localhost:ype: application/json" -d '[["oboxUserDelete", {"allUsers":0,"user":"testuser003"}, "aa"]] '
+    curl  -v -u doveadm:secretpassword -X POST http://localhost:ype: application/json" -d '[["oboxUserDelete", {"allUsers":0,"user":"testuser003"}, "tag1"]] '
 
 
 response::
@@ -4456,7 +4456,7 @@ response::
         [
             "doveadmResponse",
             [],
-            "aa"
+            "tag1"
         ]
     ]
 
@@ -4502,13 +4502,13 @@ example::
         [
             "penalty",
             {},
-            "aa"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["penalty",{},"aa"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["penalty",{},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 
@@ -4550,13 +4550,13 @@ example::
             {
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["proxyKick",{"user":"samik"},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["proxyKick",{"user":"samik"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -4568,7 +4568,7 @@ response::
                     "count": "1"
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -4606,13 +4606,13 @@ example::
         [
             "proxyList",
             {},
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["proxyList",{},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["proxyList",{},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -4628,7 +4628,7 @@ response::
                     "username": "samik"
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -4697,13 +4697,13 @@ example::
         [
             "reload",
             {},
-            "a2"
+            "tag1"
         ]
     ]
 
 .. code::
 
- curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["reload",{},"aa"]]' http://localhost:8080/doveadm/v1
+ curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["reload",{},"tag1"]]' http://localhost:8080/doveadm/v1
 
 
 doveadm search
@@ -4768,13 +4768,13 @@ example::
                 ],
                 "user": "samik"
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["search",{"user":"samik","query":["mailbox","INBOX*","all"]},"bb"]] ' http://localhost:8080/doveadm/v1 
+    curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["search",{"user":"samik","query":["mailbox","INBOX*","all"]},"tag1"]] ' http://localhost:8080/doveadm/v1 
 
 
 response::
@@ -4788,7 +4788,7 @@ response::
                     "uid": "1"
                 }
             ],
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -4830,13 +4830,13 @@ example::
                     "imap-hibernate"
                 ]
             },
-            "aa"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["serviceStop",{"service":["imap","imap-hibernate"]},"aa"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["serviceStop",{"service":["imap","imap-hibernate"]},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 doveadm sieve activate
@@ -5192,13 +5192,13 @@ example::
             {
                 "type": "global"
             },
-            "aa"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["oldStatsDump",{"type":"global"},"aa"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["oldStatsDump",{"type":"global"},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -5262,7 +5262,7 @@ response::
                     "write_count": "0"
                 }
             ],
-            "aa"
+            "tag1"
         ]
     ]
 
@@ -5299,13 +5299,13 @@ example::
         [
             "oldStatsReset",
             {},
-            "aa"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl -v -u doveadm:secretpassword -X POST http://localhost:8080/doveadm/v1 -H "Content-Type: application/json" -d '[["oldStatsReset",{},"aa"]] ' http://localhost:8080/doveadm/v1
+    curl -v -u doveadm:secretpassword -X POST http://localhost:8080/doveadm/v1 -H "Content-Type: application/json" -d '[["oldStatsReset",{},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 
@@ -5327,13 +5327,13 @@ example::
         [
             "stop",
             {},
-            "a2"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["stop",{},"aa"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["stop",{},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 
@@ -5427,13 +5427,13 @@ example::
                     "samik"
                 ]
             },
-            "bb"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["user",{"userMask":["samik"]},"bb"]] ' http://localhost:8080/doveadm/v1
+    curl  -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '[["user",{"userMask":["samik"]},"tag1"]] ' http://localhost:8080/doveadm/v1
 
 response::
 
@@ -5451,7 +5451,7 @@ response::
                     "uid": "1000"
                 }
             },
-            "bb"
+            "tag1"
         ]
     ]
 
@@ -5503,13 +5503,13 @@ example::
                 "separateConnections": 0,
                 "socketPath": ""
             },
-            "aa"
+            "tag1"
         ]
     ]
 
 .. code::
 
-    curl  -v -u doveadm:secretpassword -X POST http://localhost:ype: application/json" -d '[["who", {}, "aa"]] ' http://localhost:8080/doveadm/v1
+    curl  -v -u doveadm:secretpassword -X POST http://localhost:ype: application/json" -d '[["who", {}, "tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -5526,7 +5526,7 @@ response::
                     "username": "testuser001"
                 }
             ],
-            "aa"
+            "tag1"
         ]
     ]
 
