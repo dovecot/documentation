@@ -1141,18 +1141,13 @@ Mail Delivery
 
 Events emitted on mail delivery.
 
-
-mail_delivery_started
----------------------
-.. versionadded:: 2.3.8
-
-Event emitted when message delivery is started.
-
-This event is useful for debugging mail delivery flow.
+Common fields:
 
 +-----------------------+----------------------------------------------------+
 | Field                 | Description                                        |
 +=======================+====================================================+
+| Inherits from environment (LDA, LMTP :ref:`event_smtp_recipient`)          |
++-----------------------+----------------------------------------------------+
 | message_id            | Message-ID header value (truncated to 200 bytes)   |
 +-----------------------+----------------------------------------------------+
 | message_subject       | Subject header value, in UTF-8 (truncated to 80    |
@@ -1167,15 +1162,15 @@ This event is useful for debugging mail delivery flow.
 +-----------------------+----------------------------------------------------+
 | rcpt_to               | The envelope recipient for the message             |
 +-----------------------+----------------------------------------------------+
-| rcpt_param_notify     | The value of the NOTIFY parameter from the LMTP    |
-|                       | RCPT command                                       |
-+-----------------------+----------------------------------------------------+
-| rcpt_param_orcpt      | The value of the ORCPT parameter from the LMTP     |
-|                       | RCPT command                                       |
-+-----------------------+----------------------------------------------------+
-| rcpt_param_orcpt_type | The address type, typically ``rfc822``, of the     |
-|                       | ORCPT parameter for the LMTP RCPT command          |
-+-----------------------+----------------------------------------------------+
+
+
+mail_delivery_started
+---------------------
+.. versionadded:: 2.3.8
+
+Event emitted when message delivery is started.
+
+This event is useful for debugging mail delivery flow.
 
 
 mail_delivery_finished
@@ -1189,30 +1184,8 @@ This event is useful for logging and tracking mail deliveries.
 +-----------------------+----------------------------------------------------+
 | Field                 | Description                                        |
 +=======================+====================================================+
-| message_id            | Message-ID header value (truncated to 200 bytes)   |
+| error                 | Error message if the delivery failed               |
 +-----------------------+----------------------------------------------------+
-| message_subject       | Subject header value, in UTF-8 (truncated to 80    |
-|                       | bytes)                                             |
-+-----------------------+----------------------------------------------------+
-| message_from          | Email address in the From header (e.g.             |
-|                       | ``user@example.com``)                              |
-+-----------------------+----------------------------------------------------+
-| message_size          | Size of the message, in bytes                      |
-+-----------------------+----------------------------------------------------+
-| message_vsize         | Size of the message with CRLF linefeeds, in bytes  |
-+-----------------------+----------------------------------------------------+
-| rcpt_to               | The envelope recipient for the message             |
-+-----------------------+----------------------------------------------------+
-| rcpt_param_notify     | The value of the NOTIFY parameter from the LMTP    |
-|                       | RCPT command                                       |
-+-----------------------+----------------------------------------------------+
-| rcpt_param_orcpt      | The value of the ORCPT parameter from the LMTP     |
-|                       | RCPT command                                       |
-+-----------------------+----------------------------------------------------+
-| rcpt_param_orcpt_type | The address type, typically ``rfc822``, of the     |
-|                       | ORCPT parameter for the LMTP RCPT command          |
-+-----------------------+----------------------------------------------------+
-
 
 DNS
 ===
@@ -1448,6 +1421,8 @@ Transaction is finished or failed.
 |                      | command. Note that a reset event is a success (no     |
 |                      | error field is present).                              |
 +----------------------+-------------------------------------------------------+
+
+.. _event_smtp_recipient:
 
 Recipient
 ---------
