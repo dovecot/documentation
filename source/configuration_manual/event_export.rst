@@ -191,8 +191,8 @@ a datalake having a HTTP API, one could use config such as:
    }
 
 
-When debugging, it is sometimes useful to dump information to the log.  To
-accomplish this, one could use config such as:
+When debugging, it is sometimes useful to dump information to the log.
+For example, to output all named events from the IMAP service:
 
 .. code-block:: none
 
@@ -204,5 +204,6 @@ accomplish this, one could use config such as:
    
    metric imap_commands {
      exporter = log
-     event_name = imap_command_finished
+     event_name = *
+     categories = service:imap
    }

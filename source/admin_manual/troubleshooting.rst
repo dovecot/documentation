@@ -19,3 +19,4 @@ Some of the known issues and workarounds:
    :maxdepth: 1
 
    known_issues/large_cache
+   known_issues/centos8_mailhome

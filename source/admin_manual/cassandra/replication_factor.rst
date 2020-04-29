@@ -1,4 +1,4 @@
-.. _replication_factor:
+.. _cassandra_replication_factor:
 
 =========================
 Replication Factor

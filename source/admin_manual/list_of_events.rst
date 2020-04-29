@@ -14,39 +14,138 @@ See :ref:`event_design` for technical implementation details.
 Categories
 **********
 
-.. TODO: Compile complete list of categories
+Root Categories
+===============
 
-+----------------+------------------------------------------------------------+
-| Category       | Description                                                |
-+================+============================================================+
-| auth           |                                                            |
-+----------------+------------------------------------------------------------+
-| mailbox        |                                                            |
-+----------------+------------------------------------------------------------+
-| storage        |                                                            |
-+----------------+------------------------------------------------------------+
-| metacache      | Metacache library                                          |
-+----------------+------------------------------------------------------------+
-| sieve          |                                                            |
-+----------------+------------------------------------------------------------+
-| sieve-execute  | Relates to (several) Sieve scripts being                   |
-|                | executed for a particular message.  This envelops all of   |
-|                | Sieve execution; both runtime and action execution.        |
-+----------------+------------------------------------------------------------+
-| sieve-runtime  | Relates to the evaluation of individual scripts.           |
-+----------------+------------------------------------------------------------+
-| sieve-action   | Relates to individual actions executed.                    |
-+----------------+------------------------------------------------------------+
-| sieve-storage  | Sieve storage events                                       |
-+----------------+------------------------------------------------------------+
-| managesieve    | Managesieve action events                                  |
-+----------------+------------------------------------------------------------+
-| smtp-server    | SMTP/LMTP server events                                    |
-+----------------+------------------------------------------------------------+
-| smtp-submit    | SMTP submission client events                              |
-+----------------+------------------------------------------------------------+
-| service:<name> | Event was sent by the named service, e.g. service:imap     |
-+----------------+------------------------------------------------------------+
++--------------------+---------------------------------------------------------+
+| Category           | Description                                             |
++====================+=========================================================+
+| auth               | Authentication (server mainly)                          |
++--------------------+---------------------------------------------------------+
+| auth-client        | Authentication client library                           |
++--------------------+---------------------------------------------------------+
+| dict               | Dictionary library and drivers                          |
++--------------------+---------------------------------------------------------+
+| dict-server        | Dictionary server/proxy (dict process)                  |
++--------------------+---------------------------------------------------------+
+| dns                | DNS client library                                      |
++--------------------+---------------------------------------------------------+
+| dns-worker         | dns-client process                                      |
++--------------------+---------------------------------------------------------+
+| fs                 | FS library                                              |
++--------------------+---------------------------------------------------------+
+| imap               | imap process                                            |
++--------------------+---------------------------------------------------------+
+| imap-urlauth       | imap-urlauth process                                    |
++--------------------+---------------------------------------------------------+
+| lda                | dovecot-lda process                                     |
++--------------------+---------------------------------------------------------+
+| local-delivery     | LDA/LMTP local delivery                                 |
++--------------------+---------------------------------------------------------+
+| lmtp               | LMTP process                                            |
++--------------------+---------------------------------------------------------+
+| lua                | Lua script                                              |
++--------------------+---------------------------------------------------------+
+| mail-cache         | ``dovecot.index.cache`` file handling                   |
++--------------------+---------------------------------------------------------+
+| mail-index         | ``dovecot.index*`` file handling                        |
++--------------------+---------------------------------------------------------+
+| managesieve        | Managesieve                                             |
++--------------------+---------------------------------------------------------+
+| metacache          | obox metacache                                          |
++--------------------+---------------------------------------------------------+
+| push-notification  | push-notification plugin                                |
+|                    |                                                         |
+|                    | .. versionchanged:: v2.3.11 This was previously named   |
+|                    |                     push_notification.                  |
++--------------------+---------------------------------------------------------+
+| quota-status       | quota-status process                                    |
++--------------------+---------------------------------------------------------+
+| service:<name>     | Named service, e.g. service:imap or service:auth        |
++--------------------+---------------------------------------------------------+
+| smtp-client        | SMTP/LMTP client                                        |
++--------------------+---------------------------------------------------------+
+| smtp-server        | SMTP/LMTP server                                        |
++--------------------+---------------------------------------------------------+
+| smtp-submit        | SMTP submission client                                  |
++--------------------+---------------------------------------------------------+
+
+Storage Categories
+==================
+
++--------------------+---------------------------------------------------------+
+| Category           | Description                                             |
++====================+=========================================================+
+| storage            | Mail storage parent category                            |
++--------------------+---------------------------------------------------------+
+| cydir              | cydir storage                                           |
++--------------------+---------------------------------------------------------+
+| mdbox              | mdbox storage                                           |
++--------------------+---------------------------------------------------------+
+| sdbox              | sdbox storage                                           |
++--------------------+---------------------------------------------------------+
+| imapc              | imapc storage                                           |
++--------------------+---------------------------------------------------------+
+| maildir            | maildir storage                                         |
++--------------------+---------------------------------------------------------+
+| mbox               | mbox storage                                            |
++--------------------+---------------------------------------------------------+
+| pop3c              | pop3c storage                                           |
++--------------------+---------------------------------------------------------+
+| mailbox            | Mailbox (folder)                                        |
++--------------------+---------------------------------------------------------+
+
+Mailbox Categories
+==================
+
++--------------------+---------------------------------------------------------+
+| Category           | Description                                             |
++====================+=========================================================+
+| storage            | Mailbox (folder) parent category                        |
++--------------------+---------------------------------------------------------+
+| mail               | Mail                                                    |
++--------------------+---------------------------------------------------------+
+
+Sieve Categories
+================
+
+.. versionadded:: v2.3.11 makes the "sieve" category parent for the other
+                  sieve-* categories.
+
++--------------------+---------------------------------------------------------+
+| Category           | Description                                             |
++====================+=========================================================+
+| sieve              | Sieve parent category                                   |
++--------------------+---------------------------------------------------------+
+| sieve-action       | Individual Sieve actions executed.                      |
++--------------------+---------------------------------------------------------+
+| sieve-execute      | Sieve script(s) being executed for a particular         |
+|                    | message. This envelops all of Sieve execution; both     |
+|                    | runtime and action execution.                           |
++--------------------+---------------------------------------------------------+
+| sieve-runtime      | Evaluation of individual Sieve scripts.                 |
++--------------------+---------------------------------------------------------+
+| sieve-storage      | Sieve storage                                           |
++--------------------+---------------------------------------------------------+
+
+SQL Categories
+==============
+
++--------------------+---------------------------------------------------------+
+| Category           | Description                                             |
++====================+=========================================================+
+| sql                | SQL parent category                                     |
++--------------------+---------------------------------------------------------+
+| cassandra          | Cassandra CQL events.                                   |
++--------------------+---------------------------------------------------------+
+| mysql              | MySQL events.                                           |
++--------------------+---------------------------------------------------------+
+| pgsql              | PostgreSQL events.                                      |
++--------------------+---------------------------------------------------------+
+| sqlite             | SQLite events.                                          |
++--------------------+---------------------------------------------------------+
+| sqlpool            | SQL is used internally via "SQL connection pools"       |
++--------------------+---------------------------------------------------------+
 
 
 *************
@@ -658,6 +757,17 @@ Mail user
 | user                | Username of the user                                 |
 +---------------------+------------------------------------------------------+
 
+.. _event_storage:
+
+Storage
+-------
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_mail_user`                                       |
++---------------------+------------------------------------------------------+
+
 .. _event_mailbox:
 
 Mailbox
@@ -666,7 +776,7 @@ Mailbox
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from :ref:`event_mail_user`                                       |
+| Inherits from :ref:`event_storage`                                         |
 +---------------------+------------------------------------------------------+
 | mailbox             | Full mailbox name in UTF-8                           |
 |                     |                                                      |
@@ -692,6 +802,160 @@ Mail
 | uid                 | Mail IMAP UID number                                 |
 +---------------------+------------------------------------------------------+
 
+
+Mail index
+==========
+
+.. _event_mail_index:
+
+Mail index
+----------
+
+Index file handling for ``dovecot.index*``, ``dovecot.map.index*``,
+``dovecot.list.index*`` and similar indexes.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_mailbox`, :ref:`event_storage` or                |
+| :ref:`event_mail_user` depending on what the index is used for.            |
++---------------------+------------------------------------------------------+
+
+Mail cache
+----------
+
+.. versionadded:: 2.3.11
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_mail_index`                                      |
++---------------------+------------------------------------------------------+
+
+mail_cache_decision_changed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A field's caching decision changed. The decisions are:
+
+ * no: The field is not cached.
+ * temp: The field is cached for 1 week and dropped on the next purge.
+ * yes: The field is cached permanently. If the field isn't accessed for 30
+   days it's dropped.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| field               | Cache field name (e.g. ``imap.body`` or ``hdr.from``)  |
++---------------------+--------------------------------------------------------+
+| last_used           | UNIX timestamp of when the field was accessed the last |
+|                     | time. This is updated only once per 24 hours.          |
++---------------------+--------------------------------------------------------+
+| reason              | Reason why the caching decision changed:               |
+|                     |                                                        |
+|                     | * add: no -> temp decision change, because a new field |
+|                     |   was added to cache.                                  |
+|                     | * old_mail: temp -> yes decision change, because a     |
+|                     |   mail older than 1 week was accessed.                 |
+|                     | * unordered_access: temp -> yes decision change,       |
+|                     |   because mails weren't accessed in ascending order    |
+|                     | * Other values indicate a reason for cache purging,    |
+|                     |   which changes the caching decision yes -> temp.      |
++---------------------+--------------------------------------------------------+
+| uid                 | IMAP UID number that caused the decision change. This  |
+|                     | is set only for some reasons, not all.                 |
++---------------------+--------------------------------------------------------+
+| old_decision        | Old cache decision: no, temp, yes                      |
++---------------------+--------------------------------------------------------+
+| new_decision        | New cache decision: no, temp, yes                      |
++---------------------+--------------------------------------------------------+
+
+.. _event_mail_cache_purge_started:
+
+mail_cache_purge_started
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cache file purging is started.
+
++----------------------+-------------------------------------------------------+
+| Field                | Description                                           |
++======================+=======================================================+
+| file_seq             | Sequence of the new cache file that is created.       |
++----------------------+-------------------------------------------------------+
+| prev_file_seq        | Sequence of the cache file that is to be purged.      |
++----------------------+-------------------------------------------------------+
+| prev_file_size       | Size of the cache file that is to be purged.          |
++----------------------+-------------------------------------------------------+
+| prev_deleted_records | Number of records (mails) marked as deleted in the    |
+|                      | cache file that is to be purged.                      |
++----------------------+-------------------------------------------------------+
+| reason               | Reason string for purging the cache file:             |
+|                      |                                                       |
+|                      | * doveadm mailbox cache purge                         |
+|                      | * copy cache decisions                                |
+|                      | * creating cache                                      |
+|                      | * cache is too large                                  |
+|                      | * syncing                                             |
+|                      | * rebuilding index                                    |
++----------------------+-------------------------------------------------------+
+
+mail_cache_purge_drop_field
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Existing field is dropped from the cache file because it hadn't been accessed
+for 30 days.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| All the same fields as in :ref:`event_mail_cache_purge_started`              |
++---------------------+--------------------------------------------------------+
+| field               | Cache field name (e.g. ``imap.body`` or ``hdr.from``)  |
++---------------------+--------------------------------------------------------+
+| decision            | Old caching decision: temp, yes                        |
++---------------------+--------------------------------------------------------+
+| last_used           | UNIX timestamp of when the field was accessed the last |
+|                     | time. This is updated only once per 24 hours.          |
++---------------------+--------------------------------------------------------+
+
+mail_cache_purge_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cache file purging is finished.
+
++----------------------+-------------------------------------------------------+
+| Field                | Description                                           |
++======================+=======================================================+
+| All the same fields as in :ref:`event_mail_cache_purge_started`              |
++----------------------+-------------------------------------------------------+
+| file_size            | Size of the new cache file.                           |
++----------------------+-------------------------------------------------------+
+| max_uid              | IMAP UID of the last mail in the cache file.          |
++----------------------+-------------------------------------------------------+
+
+mail_cache_corrupted
+^^^^^^^^^^^^^^^^^^^^
+
+Cache file was found to be corrupted and the whole file is deleted.
+
++----------------------+-------------------------------------------------------+
+| Field                | Description                                           |
++======================+=======================================================+
+| reason               | Reason string why cache was found to be corrupted.    |
++----------------------+-------------------------------------------------------+
+
+mail_cache_record_corrupted
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cache record for a specific mail was found to be corrupted and the record is
+deleted.
+
++----------------------+-------------------------------------------------------+
+| Field                | Description                                           |
++======================+=======================================================+
+| uid                  | IMAP UID of the mail whose cache record is corrupted. |
++----------------------+-------------------------------------------------------+
+| reason               | Reason string why cache was found to be corrupted.    |
++----------------------+-------------------------------------------------------+
 
 HTTP
 ====
@@ -1799,3 +2063,87 @@ happens.
 +-----------------------+------------------------------------------------------+
 | object_id             | Object ID in the storage                             |
 +-----------------------+------------------------------------------------------+
+
+Dictionaries
+============
+
+.. versionadded:: 2.3.11
+
+Events emitted by dictionary library and dictionary server.
+
+.. _event_dict:
+
+Common fields
+-------------
+
++----------------+------------------------------------------------------+
+| Field          | Description                                          |
++================+======================================================+
+| driver         | Name of the dictionary driver,                       |
+|                | e.g. ``sql`` or ``proxy``.                           |
++----------------+------------------------------------------------------+
+| error          | Error, if one occured                                |
++----------------+------------------------------------------------------+
+
+.. _dict_lookup_finished:
+
+dict_lookup_finished
+^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when lookup finishes.
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| key             | Key name, starts with ``priv/`` or ``shared/``       |
++-----------------+------------------------------------------------------+
+| key_not_found   | Set to ``yes`` if key not found                      |
++-----------------+------------------------------------------------------+
+
+.. _dict_iteration_finished:
+
+dict_iteration_finished
+^^^^^^^^^^^^^^^^^^^^^^^
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| key             | Used prefix, starts with ``priv/`` or ``shared/``    |
++-----------------+------------------------------------------------------+
+| key_not_found   | Set to ``yes`` if key not found                      |
++-----------------+------------------------------------------------------+
+| rows            | Number of rows returned                              |
++-----------------+------------------------------------------------------+
+
+.. _dict_transaction_finished:
+
+dict_transaction_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when transaction has been committed or rolled back.
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| rollback        | Set to ``yes`` when transaction was rolled back      |
++-----------------+------------------------------------------------------+
+| write_uncertain | Set to ``yes`` if write was not confirmed            |
++-----------------+------------------------------------------------------+
+
+dict_server_lookup_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when dict server finishes lookup. Same fields as
+:ref:`dict_lookup_finished`.
+
+dict_server_iteration_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when dict server finishes iteration. Same fields as
+:ref:`dict_iteration_finished`.
+
+dict_server_transaction_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when dict server finishes transaction. Same fields as
+:ref:`dict_transaction_finished`.

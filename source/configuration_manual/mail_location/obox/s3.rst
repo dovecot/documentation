@@ -1,0 +1,103 @@
+.. _s3_storages:
+
+======================
+S3-compatible Storages
+======================
+
+This document covers the S3 compatible storage services. In case you want to
+use AWS S3 please also refer to :ref:`amazon_s3`.
+
+.. code-block:: none
+
+   plugin {
+     # Basic configuration:
+     obox_fs = s3:https://ACCESSKEY:SECRET@s3.example.com/?parameters
+   }
+
+The parameters are:
+
++-------------------------+----------------------------------------------------+
+| Parameter               | Description                                        |
++=========================+====================================================+
+| See :ref:`http_storages` for common parameters                               |
++-------------------------+----------------------------------------------------+
+| region                  | Specify region name for AWS S3 bucket. When this   |
+|                         | is specified, Dovecot starts using v4 signatures.  |
+|                         | (The default is to use v2 signatures.)             |
++-------------------------+----------------------------------------------------+
+| auth_role               | Perform AWS IAM lookup using this role name. See   |
+|                         | :ref:`amazon_s3` for details.                      |
++-------------------------+----------------------------------------------------+
+| auth_host               | IAM hostname and port. The default is              |
+|                         | 169.254.169.254:80. Normally there is no reason to |
+|                         | change this. This is mainly intended for testing.  |
++-------------------------+----------------------------------------------------+
+
+Bucket name
+-----------
+
+There are two ways to specify the bucket name:
+
+ * path-style: S3 requests' path begins with the bucket parameter. This is
+   configured with the bucket parameter. For example:
+   ``https://s3.example.com/?bucket=BUCKETNAME`` will result in requests looking
+   like ``https://s3.example.com/BUCKETNAME/object-path``
+ * virtual-hosted-style: The first subdomain in the URL specifies the bucket.
+   AWS supports only this style for new buckets. For example
+   For example ``https://BUCKETNAME.s3.example.com``
+
+Example configuration
+---------------------
+
+Below is the configuration for a generic S3 storage. See :ref:`amazon_s3` for
+AWS S3 specific example configurations.
+
+.. code-block:: none
+
+   mail_location = obox:%8Mu/%u:INDEX=~/:CONTROL=~/
+   plugin {
+     obox_fs = fscache:1G:/var/cache/mails:compress:gz:6:s3:https://ACCESSKEY:SECRET@s3.example.com/?bucket=mails
+     obox_index_fs = compress:gz:6:s3:https://ACCESSKEY:SECRET@s3.example.com/?bucket=mails
+     fts_dovecot_fs = fts-cache:fscache:1G:/var/cache/fts:compress:gz:6:s3:https://s3.example.com/%8Mu/%u/fts/?bucket=mails
+     obox_max_parallel_deletes = 1000
+   }
+
+We'll use the first 8 characters of the hex representation of the MD5 hash of
+the username at the beginning of each object path. This is called *dispersion
+prefix* and is used by (at least) AWS S3 and GCS S3 to internally perform
+sharding and allow disk IO to scale.
+
+S3 storage requirements
+-----------------------
+
+It's important that the S3 storage has an efficient way to list objects with
+a given prefix. Copying performance is also important. Many S3 storages either
+don't implement the listing at all, or it's only used for disaster recovery
+type of purposes to list all objects. If this is the case, you can still use
+the storage together with :ref:`dictmap_configuration`. See especially the
+``storage-objectid-prefix`` and ``storage-passthrough-paths`` parameters.
+
+Google Cloud Storage
+--------------------
+
+GCS is similar to AWS in that a "dispersion prefix" is required to properly
+shard among the Google Cloud storage nodes. Google has provided verification
+that 6 characters of dispersion prefix is "enough distribution to ensure access
+to pretty massive resources on our side without gymnastics on our end."
+
+Deleting multiple objects per request
+-------------------------------------
+
+  .. versionadded:: 2.3.10
+
+The S3 drivers support bulk-delete requests. The ``bulk-delete`` option is
+enabled by default to delete up to 1000 keys with one request. To change this
+behaviour refer to ``bulk_delete_limit`` at :ref:`http_storages`. To actually
+delete that many mails in a single request, you must also set
+:ref:`plugin-obox-setting_obox_max_parallel_deletes`:
+
+.. code-block:: none
+
+     obox_max_parallel_deletes = 1000
+
+This value should be the same as ``bulk_delete_limit`` or lower.

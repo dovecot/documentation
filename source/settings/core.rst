@@ -2555,11 +2555,11 @@ others' mail).
 The fields specified here are always added to cache when saving mails, even
 if the client never accesses these fields.
 
-See :ref:`setting-mail_cache_fields` for the list of fields.
+See :ref:`mail_cache_settings` for details and for the list of fields.
+
+See :ref:`setting-mail_cache_fields`
 
 See :ref:`setting-mail_never_cache_fields`
-
-.. todo:: Link to list of cache fields.
 
 
 .. _setting-mail_attachment_detection_options:
@@ -2749,15 +2749,12 @@ The default is OK and doesn't need to be change.
 -------------------------------------
 
 - Default: ``flags``
-- Values: ``flags, date.sent, date.received, size.virtual, size.physical, imap.body, imap.bodystructure, imap.envelope, pop3.uidl, pop3.order, guid, mime.parts, binary.parts, body.snippet``
 
 The default list of fields that are added to cache if no other caching
 decisions exist yet. This setting is used only when creating the initial
 INBOX for the user. Other folders get their defaults from the INBOX.
-If user's clients don't access some of the specified fields for
-:ref:`setting-mail_cache_unaccessed_field_drop` days, they'll be dropped.
 
-See :ref:`mail_cache_settings` for recommended fields.
+See :ref:`mail_cache_settings` for details and for the list of fields.
 
 See :ref:`setting-mail_always_cache_fields`
 
@@ -2817,7 +2814,17 @@ The default is OK and doesn't need to be change.
 - Default: ``30days``
 - Values:  :ref:`time`
 
-Drop cache fields that haven't been accessed for this time.
+Specifies when cache decisions are downgraded.
+
+.. versionchanged:: v2.3.11 Change caching decision from YES to TEMP after this
+                    much time has passed. Drop the field entirely after twice
+                    this much time has passed (i.e. 60 days by default),
+                    regardless of whether the cache decision was YES or TEMP
+                    previously. Older versions used this setting only for
+                    dropping the field after it hadn't been accessed for this
+                    long.
+
+See :ref:`mail_cache_settings` for details.
 
 
 .. _setting-mail_chroot:
@@ -3125,7 +3132,9 @@ List of fields that should never be cached.
 This should generally never include anything other than ``imap.envelope``,
 which isn't needed because it can be generated from the cached header fields.
 
-See :ref:`setting-mail_cache_fields` for the list of fields.
+See :ref:`mail_cache_settings` for details and for the list of fields.
+
+See :ref:`setting-mail_cache_fields`
 
 See :ref:`setting-mail_always_cache_fields`
 

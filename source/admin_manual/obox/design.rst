@@ -1,12 +1,12 @@
-.. _object_storage_plugin:
+.. _obox_format_design:
 
-=======================
-Object Storage Plugin
-=======================
+==================
+obox format design
+==================
 
 Dovecot obox format is split into two main categories: mail object handling and index object handling.
 
-.. image:: ../_static/ObjectStoragePlugin.png
+.. image:: ../../_static/ObjectStoragePlugin.png
 
 
 Mail Objects

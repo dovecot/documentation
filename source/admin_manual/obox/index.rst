@@ -188,3 +188,19 @@ If multiple backends do changes to the same mailbox at the same time, Dovecot wi
 .. code-block:: none
    
    doveadm -o plugin/metacache_disable_merging=yes force-resync -u user@domain INBOX
+
+.. toctree::
+   :maxdepth: 1
+
+   design
+   user_delete
+   backend_restart
+   storage_side_metadata
+   data_access_patterns
+   disaster_recovery
+   file_system_to_dict_mapping
+   scality_key_format
+   sizing_information
+   s3_object_id_format
+   s3_api_url_calls
+   swift_api_url_calls
