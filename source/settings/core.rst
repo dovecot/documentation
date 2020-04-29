@@ -66,6 +66,10 @@ database look-up returns internal failure.
 - Default: ``no``
 - Values:  :ref:`boolean`
 
+.. Warning:: This feature doesn't currently work correctly when the passdb
+             lookup is done via auth-workers. The password is checked correctly,
+             but all the passdb extra fields are lost.
+
 The auth master process by default is responsible for the hash verifications.
 Setting this to yes moves the verification to auth-worker processes.
 This allows distributing the hash calculations to multiple CPU cores, which could make sense if strong hashes are used.
