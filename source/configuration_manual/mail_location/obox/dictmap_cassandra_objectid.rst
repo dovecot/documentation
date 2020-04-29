@@ -1,11 +1,39 @@
-.. _scality_sproxyd_dict_map:
+.. _dictmap_cassandra_objectid:
 
-===============================
-Scality sproxyd dict map
-===============================
+==========================================================
+fs-dictmap/Cassandra mappings for Object ID based storages
+==========================================================
 
-Append the following to the ``dovecot-dict-cql.conf.ext`` file as described See
-:ref:`simple_mapping`.
+These mappings can be used with:
+ * :ref:`scality_sproxyd`
+ * Any other object storage when using "storage-objectid-prefix" option
+
+Cassandra keyspace
+------------------
+
+.. code-block:: none
+
+   create keyspace if not exists mails
+   with replication = {
+     'class': 'SimpleStrategy',
+     'replication_factor': 3
+   };
+
+   use mails;
+   create table if not exists user_index_objects (u text,n text,i blob,primary key (u, n));
+   create table if not exists user_mailbox_index_objects (u text,g blob,n text,i blob,primary key ((u, g), n));
+   create table if not exists user_mailbox_objects (u text,g blob,b int,n blob,i blob,primary key ((u, g, b), n));
+   create table if not exists user_mailbox_buckets (u text,g blob,b int,primary key ((u, g)));
+   create table if not exists user_fts_objects (u text,n text,i blob,primary key (u, n));
+   create table if not exists user_index_diff_objects (u text,h text,m text,primary key (u, h));
+   create table if not exists user_mailbox_index_diff_objects (u text,g blob,h text,m text,primary key (u, g, h));
+   create table if not exists user_mailbox_objects_reverse (u text,g blob,n blob,i blob,primary key (i, n));
+
+Mapping
+-------
+
+Append the following to the ``dovecot-dict-cql.conf.ext`` file as described in
+:ref:`dictmap_cassandra`.
 
 .. code-block:: none
 

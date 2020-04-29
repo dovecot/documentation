@@ -20,9 +20,9 @@ Root Categories
 +--------------------+---------------------------------------------------------+
 | Category           | Description                                             |
 +====================+=========================================================+
-| auth               | Authentication events.                                  |
+| auth               | Authentication (server mainly)                          |
 +--------------------+---------------------------------------------------------+
-| auth-client        | Authentication client library events.                   |
+| auth-client        | Authentication client library                           |
 +--------------------+---------------------------------------------------------+
 | dict               | Dictionary library and drivers                          |
 +--------------------+---------------------------------------------------------+
@@ -46,9 +46,9 @@ Root Categories
 +--------------------+---------------------------------------------------------+
 | lua                | Lua script                                              |
 +--------------------+---------------------------------------------------------+
-| mail-cache         | dovecot.index.cache file handling                       |
+| mail-cache         | ``dovecot.index.cache`` file handling                   |
 +--------------------+---------------------------------------------------------+
-| mail-index         | dovecot.index* file handling                            |
+| mail-index         | ``dovecot.index*`` file handling                        |
 +--------------------+---------------------------------------------------------+
 | managesieve        | Managesieve                                             |
 +--------------------+---------------------------------------------------------+
@@ -56,9 +56,8 @@ Root Categories
 +--------------------+---------------------------------------------------------+
 | push-notification  | push-notification plugin                                |
 |                    |                                                         |
-|                    | .. versionadded:: v2.3.11 changes this from             |
-|                    |                   push_notification to                  |
-|                    |                   push-notification.                    |
+|                    | .. versionchanged:: v2.3.11 This was previously named   |
+|                    |                     push_notification.                  |
 +--------------------+---------------------------------------------------------+
 | quota-status       | quota-status process                                    |
 +--------------------+---------------------------------------------------------+
@@ -812,8 +811,8 @@ Mail index
 Mail index
 ----------
 
-Index file handling for dovecot.index*, dovecot.map.index*,
-dovecot.list.index* and similar indexes.
+Index file handling for ``dovecot.index*``, ``dovecot.map.index*``,
+``dovecot.list.index*`` and similar indexes.
 
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |

@@ -43,6 +43,8 @@ Currently there are no statistics logged by default (but this might change). You
      #group_by = field another-field
    }
 
+.. _statistics_group_by:
+
 Group by
 ^^^^^^^^
 
@@ -246,7 +248,7 @@ IMAP command statistics
    metric imap_select_no {
      event_name = imap_command_finished
      filter {
-       name = SELECT
+       cmd_name = SELECT
        tagged_reply_state = NO
      }
    }
@@ -254,7 +256,7 @@ IMAP command statistics
    metric imap_select_no_notfound {
      event_name = imap_command_finished
      filter {
-       name = SELECT
+       cmd_name = SELECT
        tagged_reply = NO*Mailbox doesn't exist:*
      }
    }

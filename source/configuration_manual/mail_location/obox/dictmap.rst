@@ -1,8 +1,8 @@
-.. _dictmap_cassandra_configuration:
+.. _dictmap_configuration:
 
-==================================
-fs-dictmap/Cassandra Configuration
-==================================
+========================
+fs-dictmap Configuration
+========================
 
 Using obox with Cassandra is done via the fs-dictmap wrapper, which translates
 internal "lib-fs paths" into dict API. The dict API paths in turn are
@@ -98,7 +98,8 @@ Dictmap Parameters
 +---------------------------------+------------------------------------------------------------------------------+
 | refcounting-table	          | Enable reference counted objects. Reference counting allows a single mail    |
 |                                 | object to be stored in multiple mailboxes, without the need to create a new  |
-|                                 | copy of the message data in object storage.                                  |
+|                                 | copy of the message data in object storage. See                              |
+|                                 | :ref:`dictmap_cassandra_refcounting_table`                                   |
 +---------------------------------+------------------------------------------------------------------------------+
 | lockdir=<path>                  | If refcounting is enabled, use this directory for creating lock files to     |
 |                                 | objects while they're being copied or deleted. This attempts to prevent race |
@@ -110,7 +111,7 @@ Dictmap Parameters
 |                                 | avoiding a Cassandra SELECT when copying mails.                              |
 +---------------------------------+------------------------------------------------------------------------------+
 | diff-table	                  | Store diff & self index bundle objects to a separate table. This is a        |
-|                                 | Cassandra-backend optimization.                                              |
+|                                 | Cassandra-backend optimization. See :ref:`dictmap_cassandra_diff_table`      |
 +---------------------------------+------------------------------------------------------------------------------+
 | delete-dangling-links	          | If an object exists in dict, but not in storage, delete it automatically from|
 |                                 | dict when it's noticed. This setting isn't safe to use by default, because   |
@@ -146,6 +147,37 @@ Dictmap Parameters
 |                                 | make sure the DELETE isn't ignored because Dovecot backends' times are       |
 |                                 | slightly different. Recommendation is to use delete-timestamp=+10s           |
 +---------------------------------+------------------------------------------------------------------------------+
+| storage-objectid-prefix=<prefix>| Use fake object IDs with object storage that internally uses paths. This     |
+|                                 | makes their performance much better, since it allows caching object IDs in   |
+|                                 | Dovecot index files and copying them via dict. This works by storing objects |
+|                                 | in <prefix>/<objectid>. This setting should be used in obox_fs for storing   |
+|                                 | mails under <prefix>. For example storage-objectid-prefix=%u/mails/          |
+|                                 |                                                                              |
+|                                 | .. versionadded:: v2.3.2.1                                                   |
++---------------------------------+------------------------------------------------------------------------------+
+| storage-passthrough-paths=      | Use fake object IDs with object storage that internally uses path. Assume    |
+| full|read-only                  | that object ID is the same as the path. Objects can't be copied within the   |
+|                                 | dict. This setting should be used for obox_index_fs and fts_dovecot_fs,      |
+|                                 | because they don't need to support copying objects.                          |
+|                                 |                                                                              |
+|                                 | * With "full" the object ID is written to dict as an empty value (because    |
+|                                 |   it's not used).                                                            |
+|                                 | * The "read-only" can be used for backwards compatibility so that the path   |
+|                                 |   is still written to the dict as the object ID, even though it's not used   |
+|                                 |   (except potentially by an older Dovecot version).                          |
+|                                 |                                                                              |
+|                                 | .. versionadded:: v2.3.2.1                                                   |
++---------------------------------+------------------------------------------------------------------------------+
+| storage-objectid-migrate        | This is expected to be used with storage-objectid-prefix when adding         |
+|                                 | fs-dictmap for an existing installation. The newly created object IDs have   |
+|                                 | <storage-objectid-prefix>/<object-id> path while the migrated object IDs     |
+|                                 | have <user>/mailboxes/<mailbox-guid>/<oid> path. The newly created object    |
+|                                 | IDs can be detected from the 0x80 bit in the object ID's extra-data.         |
+|                                 | Migrated object IDs can't be copied directly within dict - they'll be first  |
+|                                 | copied to a new object ID using the parent fs.                               |
+|                                 |                                                                              |
+|                                 | .. versionadded:: v2.3.2.1                                                   |
++---------------------------------+------------------------------------------------------------------------------+
 | max-parallel-iter=<n>           | Describes how many parallel dict iterations can be created internally. The   |
 |                                 | default value is 1. Parallel iterations can especially help speed up reading |
 |                                 | huge folders.                                                                |
@@ -177,6 +209,4 @@ If diff-table is used:
 .. toctree::
    :maxdepth: 1
 
-   replication_factor
-
-   simple_mapping
+   dictmap_cassandra

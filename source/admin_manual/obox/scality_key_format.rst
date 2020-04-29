@@ -1,7 +1,7 @@
-.. _key_format:
+.. _scality_key_format:
 
 ===================
-Key Format
+Scality Key Format
 ===================
 
 Scality key format (160 bits):
