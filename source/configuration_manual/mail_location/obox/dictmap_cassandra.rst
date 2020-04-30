@@ -250,6 +250,8 @@ While fallback consistency is being used, the queries are periodically still
 retried with primary consistency level. The initial retry happens after 50 ms
 and the retries are doubled until they reach the maximum of 60 seconds.
 
+.. _dictmap_cassandra_uncertain_writes:
+
 Uncertain writes
 ----------------
 
