@@ -105,7 +105,7 @@ VOLATILEDIR         Specifies the location of volatile files. This includes lock
 
 SUBSCRIPTIONS       Specifies the file used for storing subscriptions. The default is `subscriptions`. If you're trying to avoid name collisions with a mailbox named `subscriptions`, then also consider setting ``MAILBOXDIR``.
 
-MAILBOXDIR          Specifies directory name under which all mailbox directories are stored. With `dbox formats <https://wiki.dovecot.org/MailboxFormat/dbox>`_ the default is ``mailboxes/`` while with other mailbox formats the default is empty. Typically this should be changed only for :ref:`lazy_expunge` and :ref:`namespaces` with mdbox.
+MAILBOXDIR          Specifies directory name under which all mailbox directories are stored. With `dbox formats <https://wiki.dovecot.org/MailboxFormat/dbox>`_ the default is ``mailboxes/`` while with other mailbox formats the default is empty. Typically this should be changed only for :ref:`lazy_expunge_plugin` and :ref:`namespaces` with mdbox.
 
 DIRNAME             Specifies the directory name used for mailbox directories, or in the case of mbox specifies the mailbox message file name. With `dbox formats <https://wiki.dovecot.org/MailboxFormat/dbox>`_ the default is ``dbox-Mails/`` while with other mailbox formats the default is empty. Can be used under either `mbox <https://wiki.dovecot.org/MailLocation/mbox#Message_file_name>`__ , `Maildir <https://wiki.dovecot.org/MailLocation/Maildir#Mailbox_directory_name>`_ , or `dbox <https://wiki.dovecot.org/MailLocation/dbox#Mailbox_directory_name>`__ formats. 
 

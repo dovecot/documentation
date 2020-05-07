@@ -95,7 +95,9 @@ Example:
    
 So a statistics filter could end up counting each DNS lookup twice. Since it's more difficult to remember to check for event naming conflicts, it would be safer to use different category names entirely.
 
-The category name should consist of only ``[a-z]``, ``[0-9]`` and ``_`` characters.
+The category name should consist of only ``[a-z]``, ``[0-9]`` and ``-``
+characters. ``:`` is also used as a special case in ``service:<name>``, but it
+shouldn't be used for naming new categories.
 
 Fields
 ^^^^^^^
@@ -126,11 +128,11 @@ Current naming conventions:
 * Timestamps should have ``_time`` suffix
 * Durations should have ``_usecs`` suffix and be in microseconds.
    * Try to avoid adding extra duration fields for most events. There's the automatic ``duration`` field already that contains how long the event has existed. So usually the event lifetime should be the same as the wanted duration field.
-* Incoming TCP/IP connections should have ``remote_ip``, ``remote_port``, ``local_ip" and ``local_port`` fields
+* Incoming TCP/IP connections should have ``remote_ip``, ``remote_port``, ``local_ip`` and ``local_port`` fields
 * Outgoing TCP/IP connections should have ``ip`` and ``port`` for the remote side.
-   * For local side ``client_ip`` and ``client_port`` may optionally be used
+   * For local side (bind address) ``client_ip`` and ``client_port`` may optionally be used
 
-.. NOTE:: These are all different from incoming connection's IP/port fields. This is because often everything starts from an incoming connection, which will be used as the root event. So we may want to filter e.g. outgoing HTTP events going to port 80 which were initiated from IMAP clients that connected to ``port 993`` ``(port=80 local_port=993)``
+     .. NOTE:: These are all different from incoming connection's IP/port fields. This is because often everything starts from an incoming connection, which will be used as the root event. So we may want to filter e.g. outgoing HTTP events going to port 80 which were initiated from IMAP clients that connected to ``port 993`` ``(port=80 local_port=993)``
 
 * Connection reads/writes should be counted in ``bytes_in`` and ``bytes_out`` fields
    * These fields were chosen over e.g. ``network_in/out`` because a lot of code is rather generic and can work over TCP/IP or UNIX sockets, or maybe even any other kind of iostreams. Using a generic ``bytes_in/out`` makes it simpler to count these. If further differentiation is wanted on statistics side, networking events can be filtered out with ``ip``.
@@ -145,9 +147,9 @@ Current naming conventions:
 
 * error_code=<value> : Machine-readable error code for a failed operation. If set, the ``error`` field must also be set.
 
-.. Note:: the events shouldn't be sent every time when receiving/sending network traffic. Instead, the ``bytes_in/out`` fields should be updated internally so that whenever the next event is sent it will have an updated traffic number.
+.. Note:: Events shouldn't be sent every time when receiving/sending network traffic. Instead, the ``bytes_in/out`` fields should be updated internally so that whenever the next event is sent it will have an updated traffic number.
 
-Generally it's not useful for events to be counting operations. Rather each operation should be a separate event, and the statistics code should be the one counting them. This way statistics can only be counting e.g. operations with ``duration > 1 sec``. If the statistics code was seeing only bulk operation counts this wouldn't be possible. The ``bytes_in/out`` and such fields are more of an exception, because it would be too inefficient to send individual events each time those were updated.
+          Generally it's not useful for events to be counting operations. Rather each operation should be a separate event, and the statistics code should be the one counting them. This way statistics can only be counting e.g. operations with ``duration > 1 sec``. If the statistics code was seeing only bulk operation counts this wouldn't be possible. The ``bytes_in/out`` and such fields are more of an exception, because it would be too inefficient to send individual events each time those were updated.
 
 .. Note:: Even though internally updating a field for an event's parent will be immediately visible to its children, the update won't be automatically sent to the stats process. We may need to fix this if it becomes a problem.
 
