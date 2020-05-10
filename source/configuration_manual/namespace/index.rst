@@ -65,9 +65,9 @@ Example:
 ===================================  ===============  =============  ================ =========================
    mail_location                        Layout sep      NS sep          Mailbox name      Directory
    maildir:~/Maildir                        .              .             foo.bar         ~/Maildir/.foo.bar/
-   maildir:~/Maildir                        .              /             foo.bar         ~/Maildir/.foo.bar/
-   maildir:~/Maildir:LAYOUT=fs              /              .             foo.bar         ~/Maildir/.foo.bar/
-   maildir:~/Maildir:LAYOUT=fs              /              /             foo.bar         ~/Maildir/.foo.bar/
+   maildir:~/Maildir                        .              /             foo/bar         ~/Maildir/.foo.bar/
+   maildir:~/Maildir:LAYOUT=fs              /              .             foo.bar         ~/Maildir/foo/bar/
+   maildir:~/Maildir:LAYOUT=fs              /              /             foo/bar         ~/Maildir/foo/bar/
 ===================================  ===============  =============  ================ =========================
 
 .. Note::
