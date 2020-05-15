@@ -3120,6 +3120,8 @@ tolerate tempfailing less well.
 
 The maximum number of IMAP connections allowed for a user from each IP
 address.
+This setting is checked only by backends, not proxies.
+Note that for this to work, any username changes must be done already by passdb lookup (not by userdb lookup).
 
 Unique users are identified via case-sensitive comparison.
 
