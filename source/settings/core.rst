@@ -2454,6 +2454,35 @@ Location of the login plugin directory.
 List of plugins to load for IMAP and POP3 login processes.
 
 
+.. _setting-login_proxy_timeout:
+
+``login_proxy_timeout``
+----------------------------------------
+
+.. versionadded:: v2.3.12
+
+- Default:``30 secs``
+
+Timeout for login proxy failures.
+The timeout covers everything from the time connection is started until a successful login reply is received.
+This can be overwritten by proxy_timeout passdb extra field.
+
+
+.. _setting-login_proxy_max_reconnects:
+
+``login_proxy_max_reconnects``
+----------------------------------------
+
+.. versionadded:: v2.3.12
+
+- Default:``3``
+
+How many times login proxy will attempt to reconnect to destination server on connection failures (3 reconnects = total 4 connection attempts).
+Reconnecting is done for most types of failures, except for regular authentication failures.
+There is a 1 second delay between each reconnection attempt.
+If :ref:`setting-login_proxy_timeout` is reached, further reconnects aren't attempted.
+
+
 .. _setting-login_proxy_max_disconnect_delay:
 
 ``login_proxy_max_disconnect_delay``
