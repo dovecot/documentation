@@ -15,6 +15,9 @@ Define the location for the fts cache and indexes path on remote filesystems.
 
 It must be somewhat synchronized with :ref:`plugin-obox-setting_obox_fs` and ``mail_location``, see also :ref:`mail_location_settings`.
 
+It is strongly recommended to use fscache to speed up Obox and Dovecot FTS operation.
+It is recommended that the FTS and email fscaches point to DIFFERENT locations.
+
 A simple example with local storage for FTS::
 
   mail_plugins = $mail_plugins fts fts_dovecot
@@ -24,27 +27,10 @@ A simple example with local storage for FTS::
     fts_dovecot_fs = posix:prefix=/var/fts/%u/
   }
 
-A simple example when using obox with Scality sproxyd::
+Example configurations for different object storage backends:
 
-  mail_location = obox:%2Mu/%2.3Mu/%u:INDEX=~/:CONTROL=~/
-  obox_fs = s3:http://192.168.0.1/
-  fts_dovecot_fs = s3:http://192.168.0.1/%2Mu/%2.3Mu/%u/fts/
-
-It is strongly recommended to use fscache to speed up Obox and Dovecot FTS
-operation. It is recommended that the FTS and email fscaches point to
-DIFFERENT locations. Adding cache to the previous example::
-
-  mail_location = obox:%2Mu/%2.3Mu/%u:INDEX=~/:CONTROL=~/
-  obox_fs = fscache:1G:/tmp/fscache:s3:http://192.168.0.1/
-  fts_dovecot_fs = fts-cache:fscache:1G:/tmp/fts-cache:s3:http://192.168.0.1/%2Mu/%2.3Mu/%u/fts/
-
-If using Cassandra, this is needed::
-
-  fts_dovecot_fs = fts-cache:fscache:1G:/tmp/fts-cache:dictmap:proxy:idle_msecs=10000:dict-async:cassandra ; s3:http://192.168.0.1/%2Mu/%2.3Mu/%u/fts/ ; dict-prefix=%u/fts/
-
-An example using mysql as dict::
-
-  fts_dovecot_fs = fts-cache:fscache:1G:/tmp/cache/mails: compress:gz:6:dictmap:proxy::mysql ; sproxyd:http://localhost:801/?class=2&slow_warn_msecs=60000 ; dict-prefix=%u/fts/
+ * :ref:`dictmap_example_configuration`
+ * :ref:`s3_example_configuration`
 
 
 .. _plugin-fts-dovecot-setting-fts_dovecot_filename_sizes:
