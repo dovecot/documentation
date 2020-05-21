@@ -46,8 +46,10 @@ There are two ways to specify the bucket name:
    AWS supports only this style for new buckets. For example
    For example ``https://BUCKETNAME.s3.example.com``
 
-Example configuration
----------------------
+.. _s3_example_configuration:
+
+S3 Example Configuration
+------------------------
 
 Below is the configuration for a generic S3 storage. See :ref:`amazon_s3` for
 AWS S3 specific example configurations.
