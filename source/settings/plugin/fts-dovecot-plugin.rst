@@ -26,16 +26,3 @@ example:
     fts_dovecot_fs = fts-cache:fscache:500M:/tmp/fscache:scality:http://.../?timeout_msecs=50000&addhdr=...
   }
 
-
-.. _plugin-fts-dovecot-setting_license_checksum:
-
-``license_checksum``
------------------------
-
-This setting points to the license checksum for Dovecot Pro.
-
-.. code-block:: none
-
-  plugin {
-    license_checksum = </var/lib/dovecot/dovecot-license.txt
-  }
