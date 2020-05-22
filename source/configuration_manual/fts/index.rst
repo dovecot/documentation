@@ -8,6 +8,7 @@ FTS (Full Text Search)
   :maxdepth: 1
 
   dovecot
+  solr
   tokenization
 
 Introduction
@@ -32,7 +33,7 @@ too large, especially in mailboxes with large messages.
 
 Dovecot supports the following FTS indexing engines:
 
-* `Solr <https://wiki.dovecot.org/Plugins/FTS/Solr>`_ communicates with
+* :ref:`fts_backend_solr` communicates with
   Lucene's `Solr server <http://lucene.apache.org/solr/>`_.
 * `Lucene <https://wiki.dovecot.org/Plugins/FTS/Lucene>`_ uses Lucene's C++
   library.
