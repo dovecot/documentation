@@ -109,6 +109,15 @@ are supported:
       The host name reported by the SMTP service (and other parts of Dovecot),
       for example to the client in the initial greeting and to the relay server
       in the HELO/EHLO command. Default is the system's real hostname@domain.
+**submission_client_workarounds**
+      Configures the list of active workarounds for Submission client bugs. The 
+      list is space-separated. Supported workaround identifiers are:
+   **whitespace-before-path:**
+      Allow one or more spaces or tabs between `MAIL FROM:' and path and between
+      `RCPT TO:' and path.
+   **mailbox-for-path:**
+      Allow using bare Mailbox syntax (i.e., without <...>) instead of full path
+      syntax.
 **submission_max_mail_size**
       The maximum size of messages accepted for relay. This announced in the
       SMTP SIZE capability. If not configured, this is either determined from
@@ -144,11 +153,11 @@ the SMTP relay configured with the following settings:
 **submission_relay_ssl = no**
       Indicates whether TLS is used for the connection to the relay server. The
       following values are defined for this setting:
-**no**
+   **no**
       No SSL is used.
-**smtps**
+   **smtps**
       An SMTPS connection (immediate SSL) is used.
-**starttls**
+   **starttls**
       The STARTTLS command is used to establish the TLS layer.
 **submission_relay_ssl_verify = yes**
       Configures whether the TLS certificate of the relay server is to be
