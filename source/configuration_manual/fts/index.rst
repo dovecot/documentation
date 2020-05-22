@@ -9,6 +9,7 @@ FTS (Full Text Search)
 
   dovecot
   solr
+  lucene
   tokenization
 
 Introduction
@@ -35,8 +36,7 @@ Dovecot supports the following FTS indexing engines:
 
 * :ref:`fts_backend_solr` communicates with
   Lucene's `Solr server <http://lucene.apache.org/solr/>`_.
-* `Lucene <https://wiki.dovecot.org/Plugins/FTS/Lucene>`_ uses Lucene's C++
-  library.
+* :ref:`fts_backend_lucene` uses Lucene's C++ library.
 * :ref:`fts_backend_dovecot` is currently only available as part of the OX Dovecot Pro product.
 * `Squat <https://wiki.dovecot.org/Plugins/FTS/Squat>`_ is Dovecot's own search
   index. (Obsolete in v2.1+)
