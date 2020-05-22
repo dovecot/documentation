@@ -127,7 +127,7 @@ for large mailboxes and/or slow storage.
 
 The list of filters to apply.
 
-Language specific filter chains can be specified with ``fts_filters_<lang>``.
+Language specific filter chains can be specified with ``fts_filters_<lang>`` (e.g. ``fts_filters_en``).
 
 List of available filters:
 
@@ -247,6 +247,19 @@ List of available filters:
 See also :ref:`fts_tokenization`
 
 
+.. _plugin-fts-setting-fts_language_config:
+
+``fts_language_config``
+-----------------------
+
+- Default: <textcat dir>
+
+Path to the textcat/exttextcat configuration file, which lists the supported languages.
+For example ``/usr/share/libexttextcat/fpdb.conf``.
+This is recommended to be changed to point to a minimal version of a configuration that supports only the languages listed in :ref:`plugin-fts-setting-fts_languages`.
+Doing this improves language detection performance during indexing and also makes the detection more accurate.
+
+
 .. _plugin-fts-setting-fts_languages:
 
 ``fts_languages``
@@ -258,9 +271,11 @@ A space-separated list of languages that the full text search should detect.
 At least one language must be specified.
 The language listed first is the default and is used when language recognition fails.
 
+For better performance it's recommended to synchronize this setting with the textcat configuration file, see :ref:`plugin-fts-setting-fts_language_config`.
+
 The filters used for stemming and stopwords are language dependent.
 
-Example Setting:
+Example setting:
 
 .. code-block:: none
 
@@ -315,6 +330,7 @@ See also :ref:`fts_tokenization`
 - Default: ``generic email-address``
 
 The list of tokenizers to use.
+This setting can be overridden for specific languages by using ``fts_tokenizers_<lang>`` (e.g. ``fts_tokenizers_en``).
 
 List of tokenizers:
 
