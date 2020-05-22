@@ -51,7 +51,7 @@ The possible values are:
 
   * ``yes``: Include sizes in new triplets' filenames (recommended for fresh installations)
   * ``no``: Do not include sizes in new triplets' filenames
-  * ``"yes-force``: like ``yes``, but running ``doveadm fts optimize`` will replace all triplets with new ones using sizes in the filenames
+  * ``yes-force``: like ``yes``, but running ``doveadm fts optimize`` will replace all triplets with new ones using sizes in the filenames
   * ``no-force``: like ``no``, but running ``doveadm fts optimize`` will replace all triplets with new ones not using sizes in the filenames
 
 
