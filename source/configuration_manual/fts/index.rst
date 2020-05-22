@@ -153,33 +153,20 @@ FTS Configuration
 FTS Indexing Triggers
 ^^^^^^^^^^^^^^^^^^^^^
 
-FTS indexing can be triggered by new mail delivery or IMAP SEARCH command.
-Indexing can also be triggered manually using doveadm commands.
+Missing mails are always added to FTS indexes when using IMAP SEARCH command that attempts to access the FTS indexes.
+Automatic FTS indexing can also be done during mail delivery, IMAP APPEND and other ways of adding mails to mailboxes using :ref:`plugin-fts-setting-fts_autoindex`.
+
+Indexing can also be triggered manually::
+
+  doveadm index -u user@domain -q INBOX
 
 
 Enforce FTS
 ^^^^^^^^^^^
 
-When FTS indexing fails, Dovecot falls back on using the built in search,
-which does not have indexes for mail bodies. To disable this functionality,
-enable :ref:`plugin-fts-setting-fts_enforced`.
-
-
-Automatic Indexing
-^^^^^^^^^^^^^^^^^^
-
-Proactive, automatic indexing, which can be triggered when mail is delivered
-or appended to the users mailbox, is enabled via the
-:ref:`plugin-fts-setting-fts_autoindex` plugin setting.
-
-Manual Indexing
-^^^^^^^^^^^^^^^
-
-The indexing can be done manually by running:
-
-.. code-block:: none
-
-  doveadm index -u user@domain -q INBOX
+When FTS indexing fails, Dovecot falls back on using the built-in search, which does not have indexes for mail bodies.
+This could end up opening all the mails in the mailbox, which often isn't wanted.
+To disable this functionality, enable :ref:`plugin-fts-setting-fts_enforced`.
 
 
 Indexing attachments
@@ -188,14 +175,8 @@ Indexing attachments
 Attachments can be indexed either via a script that translates the attachment
 to UTF-8 plaintext or Apache Tika server.
 
-* ``fts_decoder=<service>``: Decode attachments to plaintext using this service
-  and index the resulting plaintext. See the ``decode2text.sh`` script included
-  in Dovecot for how to use this.
-* ``fts_tika=http://tikahost:9998/tika/``: This URL needs to be running Apache
-  Tika server (e.g. started with ``java -jar
-  tika-server/target/tika-server-1.5.jar``)
-
-  .. versionadded:: v2.2.13
+* :ref:`plugin-fts-setting-fts_decoder`: Use decoder script.
+* :ref:`plugin-fts-setting-fts_tika`: Use Apache Tika server.
 
 
 Rescan

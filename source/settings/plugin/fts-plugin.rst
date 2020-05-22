@@ -123,9 +123,7 @@ for large mailboxes and/or slow storage.
 ``fts_filters``
 -----------------
 
-- Default: 
-
-.. todo:: What is default?
+- Default: <none>
 
 The list of filters to apply.
 
@@ -405,7 +403,7 @@ See also :ref:`fts_tokenization`
 .. versionadded:: 2.2.13
 
 ``http://tikahost:9998/tika/``: This URL needs to be running Apache Tika server
-(e.g. started with java -jar tika-server/target/tika-server-1.5.jar)
+(e.g. started with ``java -jar tika-server/target/tika-server-1.5.jar``)
 
 URL for TIKA decoder for attachments.
 
@@ -417,9 +415,8 @@ URL for TIKA decoder for attachments.
 
 .. versionadded:: 2.1
 
-Decode attachments to plaintext using this service and index the resulting
-plaintext. See the decode2text.sh script included in Dovecot for how to use
-this.
+Decode attachments to plaintext using this service and index the resulting plaintext.
+See the ``decode2text.sh`` script included in Dovecot for how to use this.
 
 Example on both:
 
