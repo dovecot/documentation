@@ -46,29 +46,19 @@ Features
 The following SMTP capabilities are supported by the Dovecot submission
 service:
 
-`8BITMIME <https://tools.ietf.org/html/rfc6152>`_ - Only if relay MTA provides
-support
-
-`AUTH <https://tools.ietf.org/html/rfc4954>`_
-
-`BURL <https://tools.ietf.org/html/rfc4468>`_
-
-`CHUNKING <https://tools.ietf.org/html/rfc3030>`_
-
-`DSN <https://tools.ietf.org/html/rfc3461>`_ - Only if relay MTA provides
-support
-
-`ENHANCEDSTATUSCODES <https://tools.ietf.org/html/rfc2034>`_
-
-`PIPELINING <https://tools.ietf.org/html/rfc2920>`_
-
-`SIZE <https://tools.ietf.org/html/rfc1870>`_
-
-`STARTTLS <https://tools.ietf.org/html/rfc3207>`_
-
-`VRFY <https://tools.ietf.org/html/rfc5321>`_
-
-`XCLIENT <http://www.postfix.org/XCLIENT_README.html>`_
+ * `8BITMIME <https://tools.ietf.org/html/rfc6152>`_ - Only if relay MTA provides
+   support
+ * `AUTH <https://tools.ietf.org/html/rfc4954>`_
+ * `BURL <https://tools.ietf.org/html/rfc4468>`_
+ * `CHUNKING <https://tools.ietf.org/html/rfc3030>`_
+ * `DSN <https://tools.ietf.org/html/rfc3461>`_ - Only if relay MTA provides
+   support
+ * `ENHANCEDSTATUSCODES <https://tools.ietf.org/html/rfc2034>`_
+ * `PIPELINING <https://tools.ietf.org/html/rfc2920>`_
+ * `SIZE <https://tools.ietf.org/html/rfc1870>`_
+ * `STARTTLS <https://tools.ietf.org/html/rfc3207>`_
+ * `VRFY <https://tools.ietf.org/html/rfc5321>`_
+ * `XCLIENT <http://www.postfix.org/XCLIENT_README.html>`_
 
 Configuration
 =============
@@ -110,13 +100,14 @@ are supported:
       for example to the client in the initial greeting and to the relay server
       in the HELO/EHLO command. Default is the system's real hostname@domain.
 **submission_client_workarounds**
-      Configures the list of active workarounds for Submission client bugs. The 
-      list is space-separated. Supported workaround identifiers are:
-   **whitespace-before-path:**
-      Allow one or more spaces or tabs between `MAIL FROM:' and path and between
-      `RCPT TO:' and path.
-   **mailbox-for-path:**
-      Allow using bare Mailbox syntax (i.e., without <...>) instead of full path
+   Configures the list of active workarounds for Submission client bugs. The 
+   list is space-separated. Supported workaround identifiers are:
+   
+   **whitespace-before-path**
+      Allow one or more spaces or tabs between ``MAIL FROM:`` and path and between
+      ``RCPT TO:`` and path.
+   **mailbox-for-path**
+      Allow using bare Mailbox syntax (i.e., without ``<...>``) instead of full path
       syntax.
 **submission_max_mail_size**
       The maximum size of messages accepted for relay. This announced in the
@@ -151,8 +142,9 @@ the SMTP relay configured with the following settings:
       Password for authentication to the relay MTA if authentication is
       required there.
 **submission_relay_ssl = no**
-      Indicates whether TLS is used for the connection to the relay server. The
-      following values are defined for this setting:
+   Indicates whether TLS is used for the connection to the relay server. The
+   following values are defined for this setting:
+
    **no**
       No SSL is used.
    **smtps**
