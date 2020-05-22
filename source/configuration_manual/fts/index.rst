@@ -10,6 +10,7 @@ FTS (Full Text Search)
   dovecot
   solr
   lucene
+  squat
   tokenization
 
 Introduction
@@ -38,8 +39,7 @@ Dovecot supports the following FTS indexing engines:
   Lucene's `Solr server <http://lucene.apache.org/solr/>`_.
 * :ref:`fts_backend_lucene` uses Lucene's C++ library.
 * :ref:`fts_backend_dovecot` is currently only available as part of the OX Dovecot Pro product.
-* `Squat <https://wiki.dovecot.org/Plugins/FTS/Squat>`_ is Dovecot's own search
-  index. (Obsolete in v2.1+)
+* :ref:`fts_backend_squat` is Dovecot's own search index. (Obsolete in v2.1+)
 * `fts-xapian <https://github.com/grosjo/fts-xapian>`_ is `Xapian <https://xapian.org/>`_ based plugin. (Requires v2.3+)
 * `fts-elastic <https://github.com/filiphanes/fts-elastic>`_ is `ElasticSearch <https://www.elastic.co>`_ based plugin.
 * `fts-elasticsearch <https://github.com/atkinsj/fts-elasticsearch>`_ is another `ElasticSearch <https://www.elastic.co>`_ based plugin.
