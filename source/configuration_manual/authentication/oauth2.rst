@@ -161,10 +161,14 @@ Local validation can be enabled with other oauth2 options,
 so that if key validation fails for non-JWT keys,
 then online validation is performed.
 
+You can use local validation with password grants too.
+This will save you introspection round to oauth2 server.
+
 To use local validation, put into ``dovecot-oauth2.conf.ext``
 
 .. code-block:: none
 
+  introspection_mode = local
   local_validation_key_dict = fs:posix:prefix=/etc/dovecot/keys/
 
 Currently dovecot oauth2 library implements the following features of JWT tokens:
@@ -202,6 +206,7 @@ Full config file
   ##   auth = GET request with Bearer authentication
   ##   get  = GET request with token appended to URL
   ##   post = POST request with token=bearer_token as content
+  ##   local = Attempt to locally validate and decode JWT token
   # introspection_mode = auth
 
   ## Force introspection even if tokeninfo contains wanted fields
