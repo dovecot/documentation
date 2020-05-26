@@ -72,6 +72,13 @@ For more information about IAM roles for EC2 please refer to:
 For general information about IAM:
 `IAM UserGuide <https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html>`_
 
+Known Issues
+^^^^^^^^^^^^
+
+.. versionchanged:: v2.3.11 In earlier versions of Dovecot ``403 Forbidden``
+   errors can occur around key rotation, approximately every 6 hours.
+   If the session that has these errors is terminated and reestablished
+   the authentication works as expected again.
 
 Manual authentication
 ---------------------
