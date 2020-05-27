@@ -57,7 +57,7 @@ generation based on event fields' values.  Each field listed in the
 generated metrics are indistinguishable from those statically defined
 in the config file.
 
-Dovecot supports a number of aggregate functions that can be used to
+Dovecot supports a number of aggregation functions that can be used to
 quantize a field's value before it is used to generate a metric.
 
 The format is always the same: the field name, a colon, the aggregation
