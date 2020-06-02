@@ -3330,7 +3330,9 @@ The IMAP reply returned to the client is:
 
    NO [LIMIT] Requested sort would have taken too long.
 
-.. todo:: Indicate imap setting
+As a special case with the obox format when doing a ``SORT (ARRIVAL)``, the SORT will always return OK.
+When it reaches the slow access limit, it falls back to using the save-date (instead of received-date) for the rest of the mails.
+Often this produces mostly the same result, especially in the INBOX.
 
 
 .. _setting-mail_temp_dir:
