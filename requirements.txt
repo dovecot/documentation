@@ -1,2 +1,2 @@
-Sphinx==2.2.2
-sphinx-copybutton==0.2.5
+Sphinx==3.0.4
+sphinx-copybutton==0.2.11
