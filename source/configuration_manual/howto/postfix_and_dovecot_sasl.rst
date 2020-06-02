@@ -1,4 +1,4 @@
-.. howto-postfix_and_dovecot_sasl:
+.. _howto-postfix_and_dovecot_sasl:
 
 ########################
 Postfix and Dovecot SASL

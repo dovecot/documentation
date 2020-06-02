@@ -2,11 +2,11 @@
 Simple Virtual User Installation
 ================================
 
--  Virtual users configured in `/etc/dovecot/passwd <authentication-passwd_file>` file
+-  Virtual users configured in :ref:`/etc/dovecot/passwd <authentication-passwd_file>` file
 
 -  Assuming an unmodified Dovecot v2.x installation
 
--  Assuming you're not using NFS. See `NFS <nfs>`__  for problems related to it.
+-  Assuming you're not using NFS. See :ref:`NFS <nfs>` for problems related to it.
 
 System configuration
 ====================
@@ -27,7 +27,7 @@ Below is a fully working ``dovecot.conf`` file. You can use it directly,
 but it might be better to instead use the included example-config as the
 base and make the same modifications to it.
 
-If you want to configure SSL, see `SSL <ssl>`.
+If you want to configure SSL, see :ref:`SSL <ssl>`.
 
 ::
 
@@ -63,7 +63,7 @@ If you want to configure SSL, see `SSL <ssl>`.
 /etc/dovecot/passwd
 ===================
 
-See `AuthDatabase/PasswdFile <authentication-passwd_file>` for the full file format.
+See :ref:`AuthDatabase/PasswdFile <authentication-passwd_file>` for the full file format.
 Here we're interested only having usernames and passwords in it.
 Below's an example file:
 
@@ -78,7 +78,7 @@ Below's an example file:
 
 As you can see, you can use multiple domains in the file, or no domains at all.
 Dovecot doesn't care about domains.
-The extra colons are needed for `userdb <authentication-user_database>` passwd-file format, and can be omitted if you are using the static user database in the example above.
+The extra colons are needed for :ref:`userdb <authentication-user_database>` passwd-file format, and can be omitted if you are using the static user database in the example above.
 
 Users can be added by editing this file.
 Dovecot automatically notices the new users immediately after they're added.
@@ -88,7 +88,7 @@ Passwords
 ---------
 
 The passwords in the example passwd file are listed using plaintext scheme.
-It's possible to use other `password schemes <authentication-password_schemes>` as well.
+It's possible to use other :ref:`password schemes <authentication-password_schemes>` as well.
 For example sha256-crypt would be a pretty strong scheme.
 You can create them using ``doveadm pw`` utility, for example:
 
@@ -119,7 +119,7 @@ Delivering mails
 You can configure the SMTP server to deliver mails internally, or you can use `dovecot-lda <https://wiki2.dovecot.org/LDA>`__.
 Using dovecot-lda gives you better performance because it updates Dovecot's index files while saving the mails.
 See`LDA <https://wiki2.dovecot.org/LDA>`__ for how to configure this.
-Alternatively you can also use `LMTP <lmtp_server>`.
+Alternatively you can also use :ref:`LMTP <lmtp_server>`.
 In config you should have:
 
 ::
@@ -134,7 +134,7 @@ SMTP AUTH
 If you're using one of these MTAs, you can use Dovecot SASL to
 authenticate SMTP.
 
--  `Postfix (v2.3+) configuration <howto-postfix_and_dovecot_sasl>`
+-  :ref:`Postfix (v2.3+) configuration <howto-postfix_and_dovecot_sasl>`
 
 -  `Exim (v4.64+)
    configuration <https://wiki2.dovecot.org/HowTo/EximAndDovecotSASL>`__
@@ -145,7 +145,7 @@ authenticate SMTP.
 Quota
 =====
 
-If you need to have `quota <quota>`, add this to ``dovecot.conf``:
+If you need to have :ref:`quota <quota>`, add this to ``dovecot.conf``:
 
 ::
 
@@ -157,7 +157,7 @@ If you need to have `quota <quota>`, add this to ``dovecot.conf``:
      quota = maildir
    }
 
-Then configure quota by adding ``userdb_quota_rule`` `extra field <authentication-user_database_extra_fields>` to ``/etc/dovecot/passwd``, for example:
+Then configure quota by adding ``userdb_quota_rule`` :ref:`extra field <authentication-user_database_extra_fields>` to ``/etc/dovecot/passwd``, for example:
 
 ::
 

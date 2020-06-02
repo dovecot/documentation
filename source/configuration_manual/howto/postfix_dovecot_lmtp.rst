@@ -2,7 +2,7 @@
 Postfix and Dovecot LMTP
 ========================
 
-Starting with Dovecot 2.x a `LMTP-Server <lmtp-server>` has been added.
+Starting with Dovecot 2.x a :ref:`LMTP-Server <lmtp_server>` has been added.
 
 Basic Configuration
 ===================
@@ -40,7 +40,7 @@ Plugin Support
 
 Plugin support can be enabled at protocol level via
 ``/etc/dovecot/conf.d/20-lmtp.conf``, for
-`Quota <quota>`
+:ref:`Quota <quota>`
 and
 `Sieve <https://wiki2.dovecot.org/Pigeonhole/Sieve#>`__
 here:
