@@ -32,6 +32,13 @@ Metric filter syntax
 
 .. versionadded:: v2.3
 
+.. note::
+
+   In the v2.3.12 release of Dovecot the event filtering will be completely
+   rewritten and used consistently throughout the configuration files.  The
+   new filtering language will be more expressive, and therefore any filters
+   created using the current syntax will be translatable to the new syntax.
+
 Events can be filtered inside the ``metric`` blocks (see :ref:`statistics`)
 based on the event name, source location, the categories present, and field
 values.
@@ -74,6 +81,13 @@ Global filter syntax
 ^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: v2.3
+
+.. note::
+
+   In the v2.3.12 release of Dovecot the event filtering will be completely
+   rewritten and used consistently throughout the configuration files.  The
+   new filtering language will be more expressive, and therefore any filters
+   created using the current syntax will be translatable to the new syntax.
 
 The global filter syntax is used by a handful of global settings.  In
 general, it is a boolean expression following the "OR of ANDs" pattern where
