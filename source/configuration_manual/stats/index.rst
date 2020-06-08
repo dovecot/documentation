@@ -12,35 +12,43 @@ For v2.1 and v2.2 see :ref:`old_statistics`.
 
 See :ref:`list_of_events` for list of all events that can be used in statistics.
 
-Dovecot supports gathering statistics from "Events Design". Eventually all of the log messages should be events, so it will be possible to configure Dovecot to get statistics for anything that is logged. For debug messages it's possible to get statistics even if the message itself isn't logged.
+Dovecot supports gathering statistics from events (see :ref:`event_design`).
+Currently there are no statistics logged by default, and therefore they must
+be explicitly added using the ``metric`` configuration blocks.
 
-Currently there are no statistics logged by default (but this might change). You'll need to add some metrics:
+The event filter settings are the only required settings in a metric block.
+The filter specifies which events should be used when calculating the
+statistics for a given metric block.  Event filtering is described in detail
+in :ref:`event_filter_metric`.
+
+In addition to the event filter, a list of fields that are included in the
+metrics can be specified using the ``fields`` setting.  All events have a
+default "duration" field that doesn't need to be listed explicitly.
+
+Finally, the ``group_by`` metric setting can be used to dynamically generate
+sub-metrics based on fields' values.
+
+In general, the metric block has the form:
 
 .. code-block:: none
 
    metric name {
-     # Individual events can be identified either by their name or source file:line location.
-     # The source location of course can change between Dovecot versions, so it should be
-     # avoided.
-     event_name = example_event_name
-     #source_location = example.c:123
-
-     # Space-separated list of categories that must match the event (e.g. "mail" or "storage")
-     #categories =
+     ...filter related settings...
 
      # List of fields in event parameters that are included in the metrics.
-     # All events have a default "duration" field that doesn't need to be listed here.
-     #fields =
+     fields = abc def
 
-     # List of key=value pairs that must match the event. The value can contain '?' and '*' wildcards.
-     #filter {
-     #  field_key = wildcard
-     #}
+     # List of fields to group events by into auto-generated sub-metrics.
+     group_by = field another-field
+   }
 
-     # v2.3.10+
-     # List of fields to group events by into automatically generated
-     # metrics.
-     #group_by = field another-field
+For example::
+
+   metric imap_command {
+     event_name = imap_command_finished
+
+     fields = bytes_in bytes_out
+     group_by = cmd_name tagged_reply_state
    }
 
 .. _statistics_group_by:
