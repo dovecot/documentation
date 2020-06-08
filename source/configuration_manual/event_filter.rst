@@ -25,23 +25,80 @@ Regardless of the syntax used, matching is performed the same way:
 * Event fields are compared using a case-insensitive wildcard match.  The
   wildcards supported are ``?`` and ``*``.
 
+.. _event_filter_new_lang:
+
+Unified Filter Language
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: v2.3.12
+
+The unified event filtering language is a SQL-like boolean expression that
+supports the ``AND``, ``OR``, and ``NOT`` boolean operators, the ``=``,
+``<``. ``>``, ``<=``, and ``>=`` comparison operators, and parentheses to
+clarify evaluation order.
+
+The key-value comparisons are of the form: ``<key> <operator> <value>``
+
+Where the key is one of:
+
+1. ``event``
+2. ``category``
+3. ``source_location``
+4. a field name
+
+The operator is one of:
+
+1. ``=``
+2. ``>``
+3. ``<``
+4. ``>=``
+5. ``<=``
+
+And the value is either:
+
+1. a single word token, or
+2. a quoted string
+
+The value may contain wildcards if the comparison operator is ``=``.
+
+For example, to match events with the event name ``abc``, one would use one of
+the following expressions.  Note that white space is not significant between
+tokens, and therefore the following are all equivalent::
+
+  event=abc
+  event="abc"
+  event = abc
+  event = "abc"
+
+A more complicated example::
+
+  event=abc OR (event=def AND (category=imap OR category=lmtp) AND \
+    NOT category=debug AND NOT (bytes_in<1024 OR bytes_out<1024))
+
 .. _event_filter_metric:
 
 Metric filter syntax
 ^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: v2.3
-
-.. note::
-
-   In the v2.3.12 release of Dovecot the event filtering will be completely
-   rewritten and used consistently throughout the configuration files.  The
-   new filtering language will be more expressive, and therefore any filters
-   created using the current syntax will be translatable to the new syntax.
+.. versionchanged:: v2.3.12 filtering changed to use the common filter language
+  (see :ref:`event_filter_new_lang`)
 
 Events can be filtered inside the ``metric`` blocks (see :ref:`statistics`)
 based on the event name, source location, the categories present, and field
 values.
+
+Since v2.3.12, the ``filter`` metric key is set to the desired common filter
+language expression.  For example::
+
+   metric example_http_metric {
+     filter = event=http_request_finished AND \
+         source_location=http-client.c:123 AND category=storage AND \
+         category=imap AND user=testuser* AND status_code=200
+   }
+
+Prior to v2.3.12, metric blocks used the filtering syntax described in the
+remainder of this section.
 
 All four use the same ``key=value`` syntax, however the semantics of each
 are slightly different.
@@ -81,17 +138,20 @@ Global filter syntax
 ^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: v2.3
+.. versionchanged:: v2.3.12 filtering changed to use the common filter language
+  (see :ref:`event_filter_new_lang`)
 
-.. note::
+Since v2.3.12, settings such as :ref:`setting-log_debug` use the common
+filtering languge.  For example::
 
-   In the v2.3.12 release of Dovecot the event filtering will be completely
-   rewritten and used consistently throughout the configuration files.  The
-   new filtering language will be more expressive, and therefore any filters
-   created using the current syntax will be translatable to the new syntax.
+  log_debug = (event=http_request_finished AND category=imap) OR \
+              (event=imap_command_finished AND user=testuser)
 
-The global filter syntax is used by a handful of global settings.  In
-general, it is a boolean expression following the "OR of ANDs" pattern where
-the "OR" and "AND" operators are implied.
+Prior to v2.3.12, these settings used the filtering syntax described in the
+remainder of this section.
+
+In general, the setting's value is a boolean expression following the "OR of
+ANDs" pattern where the "OR" and "AND" operators are implied.
 
 The entire expression is a disjunction (OR) of sub-expressions separated by
 spaces.  Each sub-expression is either a comparison (see below) or a

@@ -45,7 +45,7 @@ In general, the metric block has the form:
 For example::
 
    metric imap_command {
-     event_name = imap_command_finished
+     filter = event=imap_command_finished
 
      fields = bytes_in bytes_out
      group_by = cmd_name tagged_reply_state
@@ -83,7 +83,7 @@ as an alias for discrete aggregation.  In other words, ``field`` and
 Example::
 
    metric imap_command {
-     event_name = imap_command_finished
+     filter = event=imap_command_finished
      group_by = cmd_name tagged_reply_state
    }
 
@@ -146,7 +146,7 @@ upper bounds for the range.
 Example::
 
    metric imap_command {
-     event_name = imap_command_finished
+     filter = event=imap_command_finished
      group_by = cmd_name duration:exponential:1:5:10
    }
 
@@ -257,35 +257,24 @@ IMAP command statistics
 .. code-block:: none
 
    metric imap_select_no {
-     event_name = imap_command_finished
-     filter {
-       cmd_name = SELECT
-       tagged_reply_state = NO
-     }
+     filter = event=imap_command_finished AND cmd_name=SELECT AND \
+       tagged_reply_state=NO
    }
 
    metric imap_select_no_notfound {
-     event_name = imap_command_finished
-     filter {
-       cmd_name = SELECT
-       tagged_reply = NO*Mailbox doesn't exist:*
-     }
+     filter = event=imap_command_finished AND cmd_name=SELECT AND \
+       tagged_reply="NO*Mailbox doesn't exist:*"
    }
 
    metric storage_http_gets {
-     event_name = http_request_finished
-     categories = storage
-     filter {
-       method = get
-     }
+     filter = event=http_request_finished AND category=storage AND \
+       method=get
    }
 
    # generate per-command metrics on successful commands
    metric imap_command {
-     event_name = imap_command_finished
-     filter {
-       tagged_reply_state = OK
-     }
+     filter = event=imap_command_finished AND \
+       tagged_reply_state=OK
      group_by = cmd_name
    }
 
@@ -297,11 +286,10 @@ Push notifications
 .. code-block:: none
 
    metric push_notifications {
-     event_name = push_notification_finished
+     filter = event=push_notification_finished
    }
 
    # for OX driver
    metric push_notification_http_finished {
-     event_name = http_request_finished
-     categories = push_notification
+     filter = event=http_request_finished AND category=push_notification
    }

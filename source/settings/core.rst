@@ -2269,7 +2269,7 @@ For example
 
 .. code-block:: none
 
-   log_core_filter = category:error
+   log_core_filter = category=error
 
 will crash any time an error is logged, which can be useful for debugging.
 
