@@ -97,7 +97,7 @@ Example configuration using OBOX::
 
   #These are assumed below, 
   #mail_location = obox:%2Mu/%2.3Mu/%u:INDEX=~/:CONTROL=~/
-  #obox_fs = fscache:1G:/tmp/fscache:s3:http://mails.s3.example.com/
+  #obox_fs = fscache:512M:/var/cache/mails/%4Nu:s3:http://mails.s3.example.com/
 
   mail_plugins = $mail_plugins fts fts_dovecot
 
@@ -115,7 +115,7 @@ Example configuration using OBOX::
     # Keep this the same as obox_fs plus the root "directory" in mail_location
     # setting. Then append e.g. /fts/
     # Example: s3:http://<ip.address.>/%2Mu/%2.3Mu/%u/fts/
-    fts_dovecot_fs = fts-cache:fscache:1G:/tmp/fts-cache:s3:http://fts.s3.example.com/%2Mu/%2.3Mu/%u/fts/
+    fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:s3:http://fts.s3.example.com/%2Mu/%2.3Mu/%u/fts/
 
     # Detected languages. Languages that are not recognized, default to the
     # first enumerated language, i.e. en.
