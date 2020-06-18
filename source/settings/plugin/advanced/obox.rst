@@ -192,33 +192,6 @@ Options:
 :``stat``: Use fs_stat() to get the size, which is the fastest but doesn't
            work if mails are compressed or encrypted.
 
-.. _plugin-obox-setting_obox_mailbox_list_quick_lookups:
-
-``obox_mailbox_list_quick_lookups``
------------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
-
-This setting avoids downloading mailboxes to metacache if the mailbox already
-exists in dovecot.list.index, even though it's not known whether it's
-up-to-date or not. Any mailboxes with special use flags will be fully
-refreshed though.
-
-The most useful use case for this is with LMTP to avoid quota checks from
-opening many mailboxes. In theory it could be used also with IMAP to give
-quick STATUS replies, but that might cause more problems since the counters
-could be wrong.
-
-.. Warning:: This setting may still be slightly dangerous to use. If the
-             user has gone above quota and afterwards deleted some mails from
-             non-INBOX, non-specialuse folders and subsequently was moved to
-             another backend without flushing the indexes, Dovecot may not
-             realize that the user is now below quota. There are plans to
-             change this so that if user appears to be over quota, the quota
-             is strictly calculated before returning over quota failures or
-             executing any quota warning/over scripts.
-
 
 .. _plugin-obox-setting_metacache_disable_bundle_list_cache:
 
