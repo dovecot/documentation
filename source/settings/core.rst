@@ -2262,7 +2262,8 @@ lock_method to one of the above values.
 
 - Default: <empty>
 
-Crash after logging a matching event.
+Crash after logging a matching event.  The syntax of the filter is described
+in :ref:`event_filter_global`.
 
 For example
 
@@ -2272,8 +2273,6 @@ For example
 
 will crash any time an error is logged, which can be useful for debugging.
 
-.. todo:: Better description
-
 
 .. _setting-log_debug:
 
@@ -2282,15 +2281,14 @@ will crash any time an error is logged, which can be useful for debugging.
 
 - Default: <empty>
 
-Filter to specify what debug logging to enable.
+Filter to specify what debug logging to enable.  The syntax of the filter is
+described in :ref:`event_filter_global`.
 
 This will eventually replace ``mail_debug`` and ``auth_debug`` settings.
 
 See :ref:`setting-auth_debug`
 
 See :ref:`setting-mail_debug`
-
-.. todo:: Better description
 
 
 .. _setting-log_path:
