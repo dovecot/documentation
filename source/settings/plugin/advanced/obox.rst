@@ -286,7 +286,7 @@ list`` output):
  * 2 = INBOX and \Junk folder indexes ("special" folders)
  * 3 = Non-special folder indexes (lowest priority)
 
-The ``metacache_size_weights`` contains ``<percentage> <weight adjustment>``
+The ``metacache_priority_weights`` contains ``<percentage> <weight adjustment>``
 pairs for each of these priorities. So, for example, the first ``10% +1d``
 applies to the user root priority and the last ``100% 0`` applies to other
 folders' priority.
