@@ -39,25 +39,25 @@ Pushes an Dovecot Event to stack.
 Lua API
 ^^^^^^^^
 
-.. py:function i_debug(text)
+.. py:function:: i_debug(text)
 
    Log debug level message
 
    :param str text: Message to log
 
-.. py:function i_info(text)
+.. py:function:: i_info(text)
 
    Log info level message
 
    :param str text: Message to log
 
-.. py:function  i_warning(text)
+.. py:function::  i_warning(text)
 
    Log warning level message
 
    :param str text: Message to log
 
-.. py:function  i_error(text)
+.. py:function::  i_error(text)
 
    Log error level message
 
@@ -67,11 +67,12 @@ Event functions are available from
 
 .. versionadded:: v2.3.4
 
-.. py:function dovecot.event()
+.. py:function:: dovecot.event()
 
    Generate new event with lua script as parent.
 
-.. py:function dovecot.event(parent)
+.. py:function:: dovecot.event(parent)
+   :noindex:
 
    Generate new event with given parent event.
 
@@ -86,77 +87,77 @@ object event
 Functions:
 ------------
 
-.. py:function  append_log_prefix(prefix)
+.. py:function::  append_log_prefix(prefix)
 
    set prefix to append into log messages
 
    :param str prefix: Prefix to append
 
-.. py:function  replace_log_prefix(prefix)
+.. py:function::  replace_log_prefix(prefix)
 
    replace append prefix for messages
 
    :param str prefix: Prefix to append
 
-.. py:function  set_name(name)
+.. py:function::  set_name(name)
 
    set name for event
 
    :param str name: Event name
 
-.. py:function  add_str(key,value)
+.. py:function::  add_str(key,value)
 
    Add a key-value pair to event
 
    :param str key: Key name
    :param str value: A value
 
-.. py:function  add_int(key,value)
+.. py:function::  add_int(key,value)
 
    Add a key-value pair to event
 
    :param str key: Key name
    :param int value: Integer value
 
-.. py:function  add_timeval(key,seconds)
+.. py:function::  add_timeval(key,seconds)
 
    add a key-value pair to event
 
    :param str key: Key name
    :param int value: Unix timestamp
 
-.. py:function  inc_int(key,diff)
+.. py:function::  inc_int(key,diff)
 
    increment key-value pair
 
    :param str key: Key name
    :param int diff: Difference to add, can be negative
 
-.. py:function  log_debug(message)
+.. py:function::  log_debug(message)
 
    Emit debug message
 
    :param str message: Message to log
 
-.. py:function  log_info(message)
+.. py:function::  log_info(message)
 
    Emit info message
 
    :param str message: Message to log
 
-.. py:function  log_warning(message)
+.. py:function::  log_warning(message)
 
    Emit warning message
 
    :param str message: Message to log
 
-.. py:function  log_error("message")
+.. py:function::  log_error("message")
 
    Emit error message
 
    :param str message: Message to log
 
-.. py:function  passthrough_event()
+.. py:function::  passthrough_event()
 
    Returns an passthrough event. A log message *must be* logged or else a panic will occur.
 
@@ -271,6 +272,8 @@ Following constants are specified:
 object mail_user
 ^^^^^^^^^^^^^^^^^
 
+.. py:currentmodule:: mail_user
+
 Meta
 ----
 
@@ -280,26 +283,26 @@ Meta
 Functions
 ---------
 
-.. py:function  plugin_getenv(key)
+.. py:function::  plugin_getenv(key)
 
    Returns key from user plugin settings or userdb environment
 
    :param str key: Setting name
 
-.. py:function  var_expand(template)
+.. py:function::  var_expand(template)
 
    Expands mail user variables (see `Variables <https://wiki.dovecot.org/Variables>`_ )
 
    :param str template: Variable template string
 
-.. py:function  mailbox(name, flags)
+.. py:function::  mailbox(name, flags)
 
    Allocates a mailbox, flags optional
 
    :param str name: Mailbox name
    :param flags int: Flags, see :ref:`dovecot.storage`
 
-.. py:function metadata_get(key)
+.. py:function:: metadata_get(key)
 
    Returns given metadata key for the user.
 
@@ -307,7 +310,7 @@ Functions
 
 .. versionadded:: 2.3.7
 
-.. py:function metadata_set(key, value)
+.. py:function:: metadata_set(key, value)
 
    Sets user metadata key to value. Setting value to nil unsets value.
 
@@ -316,7 +319,7 @@ Functions
 
 .. versionadded:: 2.3.7
 
-.. py:function metadata_unset(key)
+.. py:function:: metadata_unset(key)
 
    Unsets value, same as calling :c:func:`metadata_set` with nil.
 
@@ -324,7 +327,7 @@ Functions
 
 .. versionadded:: 2.3.7
 
-.. py:function metadata_list(prefix, prefix, prefix...)
+.. py:function:: metadata_list(prefix, prefix, prefix...)
 
    Lists all keys for the user metadata under prefix.
 
@@ -394,6 +397,8 @@ Variables
 object mailbox
 ^^^^^^^^^^^^^^^
 
+.. py:currentmodule:: mailbox
+
 Meta
 ----
 
@@ -403,31 +408,32 @@ Meta
 Functions
 ---------
 
-.. py:function open()
+.. py:function:: open()
 
    Opens the mailbox
 
-.. py:function close()
+.. py:function:: close()
 
    Closes the mailbox
 
-.. py:function free()
+.. py:function:: free()
 
    Releases mailbox (must be done)
 
-.. py:function sync(flags)
+.. py:function:: sync(flags)
 
    Synchronizes the mailbox (should usually be done, flags optional)
 
    :param int flags: See :ref:`dovecot.storage`
 
-.. py:function status(item,item,item...)
+.. py:function:: status(item,item,item...)
 
    Returns requested mailbox status items as table
 
    :param str item: Item name
 
-.. py:function metadata_get(key)
+.. py:function:: metadata_get(key)
+   :noindex:
 
    Returns given metadata key for the mailbox.
 
@@ -435,7 +441,8 @@ Functions
 
 .. versionadded:: 2.3.7
 
-.. py:function metadata_set(key, value)
+.. py:function:: metadata_set(key, value)
+   :noindex:
 
    Sets mailbox metadata key to value. Setting value to nil unsets value.
 
@@ -444,7 +451,8 @@ Functions
 
 .. versionadded:: 2.3.7
 
-.. py:function metadata_unset(key)
+.. py:function:: metadata_unset(key)
+   :noindex:
 
    Unsets value, same as calling :c:func:`metadata_set` with nil.
 
@@ -452,7 +460,8 @@ Functions
 
 .. versionadded:: 2.3.7
 
-.. py:function metadata_list(prefix, prefix, prefix...)
+.. py:function:: metadata_list(prefix, prefix, prefix...)
+   :noindex:
 
    Lists all keys for the mailbox metadata under prefix.
 
@@ -473,6 +482,8 @@ Variables
 
 table mailbox status
 ^^^^^^^^^^^^^^^^^^^^^
+
+.. py:currentmodule:: mailbox_status
 
 Variables
 ---------
