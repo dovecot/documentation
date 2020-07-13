@@ -1,0 +1,6 @@
+# dovecot-2.3.11.2-rev2 Ubuntu 16.04 LTS (Xenial Xerus) - UV library
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.11.2/3rdparty/libuv/Ubuntu_16.04 ./
+# dovecot-2.3.11.2-rev2 Ubuntu 16.04 LTS (Xenial Xerus) - DataStax C/C++ Driver for Apache Cassandra
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.11.2/3rdparty/cassandra-cpp-driver/Ubuntu_16.04 ./
+# dovecot-2.3.11.2-rev2 Ubuntu 16.04 LTS (Xenial Xerus) - Sodium library
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.11.2/3rdparty/libsodium/Ubuntu_16.04 ./
