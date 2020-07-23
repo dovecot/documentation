@@ -1,0 +1,9 @@
+# promotionalmail component requires separate OX License
+# Please contact to support@open-xchange.com to get access
+[dovecot-2.3.11.1-rev1-promotionalmail]
+name=Amazon Linux 2 - OX Engage Dovecot plug-in
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.11.1/promotionalmail/AmazonLinux2
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+

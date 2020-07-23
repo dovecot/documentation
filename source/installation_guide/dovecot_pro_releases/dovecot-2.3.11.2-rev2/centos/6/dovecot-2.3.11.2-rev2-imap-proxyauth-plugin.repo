@@ -1,0 +1,9 @@
+# imap-proxyauth-plugin component requires separate OX License
+# Please contact to support@open-xchange.com to get access
+[dovecot-2.3.11.2-rev2-imap-proxyauth-plugin]
+name=CentOS 6 - OX Dovecot Pro IMAP Proxy Authentication plug-in
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.11.2/plugin/imap-proxyauth-plugin/CentOS6
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+

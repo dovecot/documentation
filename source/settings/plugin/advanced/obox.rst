@@ -58,8 +58,10 @@ Normally Dovecot attempts to make sure that IMAP UIDs aren't lost even if
 a backend crashes (or if user is moved to another backend without indexes first
 being uploaded). This requires uploading index bundles whenever expunging
 recently saved mails. Setting this to "yes" avoids this extra index bundle
-upload at the cost of potentially changing IMAP UIDs. Normally it should not be
-enabled. This setting may be removed in a future version.
+upload at the cost of potentially changing IMAP UIDs. This could cause caching
+IMAP clients to become confused, possibly even causing it delete wrong mails.
+Also FTS indexes may become inconsistent since they also rely on UIDs.
+Normally this setting should not be enabled and it may be removed in a future version.
 
 
 .. _plugin-obox-setting_obox_fetch_lost_mails_as_empty:
