@@ -4831,7 +4831,7 @@ Client certificate private key used in outgoing SSL connections.
 
 Example Setting:
 
-   ssl_client_cert = </etc/dovecot/dovecot-client.crt
+   ssl_client_key = </etc/dovecot/dovecot-client.key
 
 See :ref:`setting-ssl`
 
