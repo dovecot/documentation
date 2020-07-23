@@ -276,7 +276,8 @@ Port used for encrypted IMAP connection.
 - Default: ``True``
 - Values: :ref:`dovemon_boolean`
 
-Perform IMAP list check in polls.
+Perform IMAP list check in polls. If enabled, dovemon performs an IMAP ``LIST``
+command on the top-level mail folder and checks command success/failure.
 (applicable when :ref:`setting-dovemon_poll_imap` is enabled)
 
 
@@ -289,7 +290,8 @@ Perform IMAP list check in polls.
 - Default: ``False``
 - Values: :ref:`dovemon_boolean`
 
-Perform IMAP select check in polls.
+Perform IMAP select check in polls. If enabled, inbox folder is selected and
+command success/failure is checked.
 (applicable when :ref:`setting-dovemon_poll_imap` is enabled)
 
 
@@ -301,8 +303,14 @@ Perform IMAP select check in polls.
 - Default: ``False``
 - Values: :ref:`dovemon_boolean`
 
-Perform IMAP append check in polls.
+Perform IMAP append check in polls. If enabled, a test message containing
+``INTERNALDATE`` representation of timestamp (at time of append) will be
+appended to inbox.
 (applicable when :ref:`setting-dovemon_poll_imap` is enabled)
+
+.. Warning:: Enabling this option without expunging messages can consume
+             all of disk space over time. It is strongly recommended to enable
+             :ref:`setting-dovemon_poll_imap_expunge` along with this option.
 
 
 .. _setting-dovemon_poll_imap_expunge:
@@ -313,7 +321,9 @@ Perform IMAP append check in polls.
 - Default: ``False``
 - Values: :ref:`dovemon_boolean`
 
-Perform IMAP expunge check in polls.
+Perform IMAP expunge check in polls. If enabled, all messages in inbox are
+flagged ``\Deleted`` and expunged. This option implicitly enables
+:ref:`setting-dovemon_poll_imap_select`.
 (applicable when :ref:`setting-dovemon_poll_imap` is enabled)
 
 
@@ -370,7 +380,8 @@ Port used for encrypted POP3 connection.
 - Default: ``False``
 - Values: :ref:`dovemon_boolean`
 
-Perform POP3 stat check in polls.
+Perform POP3 stat check in polls. If enabled, a ``STAT`` command is performed
+and command success/failure is checked.
 (applicable when :ref:`setting-dovemon_poll_pop3` is enabled)
 
 
@@ -382,7 +393,9 @@ Perform POP3 stat check in polls.
 - Default: ``False``
 - Values: :ref:`dovemon_boolean`
 
-Perform POP3 delete check in polls.
+Perform POP3 delete check in polls. If enabled, all messages in ``STAT`` command
+response will be deleted. This option implicitly enables
+:ref:`setting-dovemon_poll_pop3_stat`.
 (applicable when :ref:`setting-dovemon_poll_pop3` is enabled)
 
 
@@ -428,8 +441,14 @@ Port used for LMTP connection.
 - Default: ``False``
 - Values: :ref:`dovemon_boolean`
 
-Include LMTP deliver check in polls.
+Include LMTP deliver check in polls. If enabled, a test message is delivered
+on LMTP (using a series of ``LHLO``, ``MAIL``, ``RCPT``, ``DATA`` commands)
+and command responses are checked.
 (applicable when :ref:`setting-dovemon_poll_lmtp` is enabled)
+
+.. Warning:: Enabling this option without expunging messages can consume
+             all of disk space over time. It is strongly recommended to enable
+             :ref:`setting-dovemon_poll_imap_expunge` along with this option.
 
 
 .. _setting-dovemon_poll_unknown_backends:
