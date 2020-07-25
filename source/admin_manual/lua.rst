@@ -27,37 +27,37 @@ return non-zero to indicate that the script has a problem.
 C API
 ^^^^^^
 
-.. c:function:: dlua_register_dovecot(script)
+.. c:function:: void dlua_register_dovecot(struct dlua_script *script)
 
 Register dovecot variable. This item can also be extended by context specific
 tables, like authentication database adds dovecot.auth.
 
-.. c:function:: dlua_push_event(event)
+.. c:function:: void dlua_push_event(struct event *event)
 
 Pushes an Dovecot Event to stack.
 
 Lua API
 ^^^^^^^^
 
-.. function:: i_debug(text)
+.. py:function:: i_debug(text)
 
    Log debug level message
 
    :param str text: Message to log
 
-.. function:: i_info(text)
+.. py:function:: i_info(text)
 
    Log info level message
 
    :param str text: Message to log
 
-.. function::  i_warning(text)
+.. py:function::  i_warning(text)
 
    Log warning level message
 
    :param str text: Message to log
 
-.. function::  i_error(text)
+.. py:function::  i_error(text)
 
    Log error level message
 
@@ -67,11 +67,12 @@ Event functions are available from
 
 .. versionadded:: v2.3.4
 
-.. function:: dovecot.event()
+.. py:function:: dovecot.event()
 
    Generate new event with lua script as parent.
 
-.. function:: dovecot.event(parent)
+.. py:function:: dovecot.event(parent)
+   :noindex:
 
    Generate new event with given parent event.
 
@@ -86,77 +87,77 @@ object event
 Functions:
 ------------
 
-.. function::  append_log_prefix(prefix)
+.. py:function::  append_log_prefix(prefix)
 
    set prefix to append into log messages
 
    :param str prefix: Prefix to append
 
-.. function::  replace_log_prefix(prefix)
+.. py:function::  replace_log_prefix(prefix)
 
    replace append prefix for messages
 
    :param str prefix: Prefix to append
 
-.. function::  set_name(name)
+.. py:function::  set_name(name)
 
    set name for event
 
    :param str name: Event name
 
-.. function::  add_str(key,value)
+.. py:function::  add_str(key,value)
 
    Add a key-value pair to event
 
    :param str key: Key name
    :param str value: A value
 
-.. function::  add_int(key,value)
+.. py:function::  add_int(key,value)
 
    Add a key-value pair to event
 
    :param str key: Key name
    :param int value: Integer value
 
-.. function::  add_timeval(key,seconds)
+.. py:function::  add_timeval(key,seconds)
 
    add a key-value pair to event
 
    :param str key: Key name
    :param int value: Unix timestamp
 
-.. function::  inc_int(key,diff)
+.. py:function::  inc_int(key,diff)
 
    increment key-value pair
 
    :param str key: Key name
    :param int diff: Difference to add, can be negative
 
-.. function::  log_debug(message)
+.. py:function::  log_debug(message)
 
    Emit debug message
 
    :param str message: Message to log
 
-.. function::  log_info(message)
+.. py:function::  log_info(message)
 
    Emit info message
 
    :param str message: Message to log
 
-.. function::  log_warning(message)
+.. py:function::  log_warning(message)
 
    Emit warning message
 
    :param str message: Message to log
 
-.. function::  log_error("message")
+.. py:function::  log_error("message")
 
    Emit error message
 
    :param str message: Message to log
 
-.. function::  passthrough_event()
+.. py:function::  passthrough_event()
 
    Returns an passthrough event. A log message *must be* logged or else a panic will occur.
 
@@ -172,13 +173,13 @@ of per-plugin scripts.
 C API
 ^^^^^^
 
-.. c:function:: dlua_register_mail_storage(script)
+.. c:function:: void dlua_register_mail_storage(struct dlua_script *script)
 
    Register storage Lua interface to script context
 
    :param script: :c:type:`dlua_script` to add mail storage
 
-.. c:function:: bool mail_lua_plugin_get_script(user, script_r)
+.. c:function:: bool mail_lua_plugin_get_script(struct mail_user *user, struct dlua_script **script_r)
 
    Returns script context if available. If FALSE is returned, no Lua script has
    been loaded, and you should optionally deal this yourself.
@@ -186,21 +187,21 @@ C API
    :param user: :c:type:`mail_user`
    :param script: :c:type:`dlua_script`
 
-.. c:function:: dlua_push_mail_user(script, user)
+.. c:function:: void dlua_push_mail_user(struct dlua_script *script, struct mail_user *user)
 
    Pushes a mail user on top of stack.
 
    :param script: :c:type:`dlua_script`
    :param user: :c:type:`mail_user`
 
-.. c:function:: dlua_push_mailbox(script, box)
+.. c:function:: void dlua_push_mailbox(struct dlua_script *script, struct mailbox *box)
 
    Pushes a mailbox on top of stack.
 
    :param script: :c:type:`dlua_script`
    :param box: :c:type:`mailbox`
 
-.. c:function:: dlua_push_mail(script, mail)
+.. c:function:: void dlua_push_mail(struct dlua_script *script, struct mail* mail)
 
    Pushes a mail on top of stack.
 
@@ -223,45 +224,45 @@ dovecot.storage
 
 Following constants are specified:
 
-.. c:member::  STATUS_MESSAGES
-.. c:member::  STATUS_RECENT
-.. c:member::  STATUS_UIDNEXT
-.. c:member::  STATUS_UIDVALIDITY
-.. c:member::  STATUS_UNSEEN
-.. c:member::  STATUS_FIRST_UNSEEN_SEQ
-.. c:member::  STATUS_KEYWORDS
-.. c:member::  STATUS_HIGHESTMODSEQ
-.. c:member::  STATUS_PERMANENT_FLAGS
-.. c:member::  STATUS_FIRST_RECENT_UID
-.. c:member::  STATUS_HIGHESTPVTMODSEQ
-.. c:member::  MAILBOX_FLAG_READONLY
-.. c:member::  MAILBOX_FLAG_SAVEONLY
-.. c:member::  MAILBOX_FLAG_DROP_RECENT
-.. c:member::  MAILBOX_FLAG_NO_INDEX_FILES
-.. c:member::  MAILBOX_FLAG_KEEP_LOCKED
-.. c:member::  MAILBOX_FLAG_IGNORE_ACLS
-.. c:member::  MAILBOX_FLAG_AUTO_CREATE
-.. c:member::  MAILBOX_FLAG_AUTO_SUBSCRIBE
-.. c:member::  MAILBOX_SYNC_FLAG_FULL_READ
-.. c:member::  MAILBOX_SYNC_FLAG_FULL_WRITE
-.. c:member::  MAILBOX_SYNC_FLAG_FAST
-.. c:member::  MAILBOX_SYNC_FLAG_NO_EXPUNGES
-.. c:member::  MAILBOX_SYNC_FLAG_FIX_INCONSISTENT
-.. c:member::  MAILBOX_SYNC_FLAG_EXPUNGE
-.. c:member::  MAILBOX_SYNC_FLAG_FORCE_RESYNC
-.. c:member::  MAILBOX_ATTRIBUTE_PREFIX_DOVECOT
+.. c:enum::  STATUS_MESSAGES
+.. c:enum::  STATUS_RECENT
+.. c:enum::  STATUS_UIDNEXT
+.. c:enum::  STATUS_UIDVALIDITY
+.. c:enum::  STATUS_UNSEEN
+.. c:enum::  STATUS_FIRST_UNSEEN_SEQ
+.. c:enum::  STATUS_KEYWORDS
+.. c:enum::  STATUS_HIGHESTMODSEQ
+.. c:enum::  STATUS_PERMANENT_FLAGS
+.. c:enum::  STATUS_FIRST_RECENT_UID
+.. c:enum::  STATUS_HIGHESTPVTMODSEQ
+.. c:enum::  MAILBOX_FLAG_READONLY
+.. c:enum::  MAILBOX_FLAG_SAVEONLY
+.. c:enum::  MAILBOX_FLAG_DROP_RECENT
+.. c:enum::  MAILBOX_FLAG_NO_INDEX_FILES
+.. c:enum::  MAILBOX_FLAG_KEEP_LOCKED
+.. c:enum::  MAILBOX_FLAG_IGNORE_ACLS
+.. c:enum::  MAILBOX_FLAG_AUTO_CREATE
+.. c:enum::  MAILBOX_FLAG_AUTO_SUBSCRIBE
+.. c:enum::  MAILBOX_SYNC_FLAG_FULL_READ
+.. c:enum::  MAILBOX_SYNC_FLAG_FULL_WRITE
+.. c:enum::  MAILBOX_SYNC_FLAG_FAST
+.. c:enum::  MAILBOX_SYNC_FLAG_NO_EXPUNGES
+.. c:enum::  MAILBOX_SYNC_FLAG_FIX_INCONSISTENT
+.. c:enum::  MAILBOX_SYNC_FLAG_EXPUNGE
+.. c:enum::  MAILBOX_SYNC_FLAG_FORCE_RESYNC
+.. c:enum::  MAILBOX_ATTRIBUTE_PREFIX_DOVECOT
 
    String constant ``vendor/vendor.dovecot/``
 
 .. versionadded:: 2.3.7
 
-.. c:member::  MAILBOX_ATTRIBUTE_PREFIX_DOVECOT_PVT
+.. c:enum::  MAILBOX_ATTRIBUTE_PREFIX_DOVECOT_PVT
 
     String constant ``vendor/vendor.dovecot/pvt/``
 
 .. versionadded:: 2.3.7
 
-.. c:member::  MAILBOX_ATTRIBUTE_PREFIX_DOVECOT_PVT_SERVER
+.. c:enum::  MAILBOX_ATTRIBUTE_PREFIX_DOVECOT_PVT_SERVER
 
     String constant ``vendor/vendor.dovecot/pvt/server/``
 
@@ -270,6 +271,8 @@ Following constants are specified:
 
 object mail_user
 ^^^^^^^^^^^^^^^^^
+
+.. py:currentmodule:: mail_user
 
 Meta
 ----
@@ -280,26 +283,26 @@ Meta
 Functions
 ---------
 
-.. function::  plugin_getenv(key)
+.. py:function::  plugin_getenv(key)
 
    Returns key from user plugin settings or userdb environment
 
    :param str key: Setting name
 
-.. function::  var_expand(template)
+.. py:function::  var_expand(template)
 
    Expands mail user variables (see `Variables <https://wiki.dovecot.org/Variables>`_ )
 
    :param str template: Variable template string
 
-.. function::  mailbox(name, flags)
+.. py:function::  mailbox(name, flags)
 
    Allocates a mailbox, flags optional
 
    :param str name: Mailbox name
    :param flags int: Flags, see :ref:`dovecot.storage`
 
-.. function:: metadata_get(key)
+.. py:function:: metadata_get(key)
 
    Returns given metadata key for the user.
 
@@ -307,7 +310,7 @@ Functions
 
 .. versionadded:: 2.3.7
 
-.. function:: metadata_set(key, value)
+.. py:function:: metadata_set(key, value)
 
    Sets user metadata key to value. Setting value to nil unsets value.
 
@@ -316,7 +319,7 @@ Functions
 
 .. versionadded:: 2.3.7
 
-.. function:: metadata_unset(key)
+.. py:function:: metadata_unset(key)
 
    Unsets value, same as calling :c:func:`metadata_set` with nil.
 
@@ -324,7 +327,7 @@ Functions
 
 .. versionadded:: 2.3.7
 
-.. function:: metadata_list(prefix, prefix, prefix...)
+.. py:function:: metadata_list(prefix, prefix, prefix...)
 
    Lists all keys for the user metadata under prefix.
 
@@ -335,64 +338,66 @@ Functions
 Variables
 ---------
 
-.. c:var:: home
+.. py:attribute:: home
 
    home directory (if available)
 
-.. c:var:: username
+.. py:attribute:: username
 
    user's name
 
-.. c:var:: uid
+.. py:attribute:: uid
 
    system uid
 
-.. c:var:: gid
+.. py:attribute:: gid
 
    system gid
 
-.. c:var:: service
+.. py:attribute:: service
 
    IMAP/POP3/LMTP/LDA/...
 
-.. c:var:: session_id
+.. py:attribute:: session_id
 
    Current session ID
 
-.. c:var:: session_create_time
+.. py:attribute:: session_create_time
 
    When session was created
 
-.. c:var:: nonexistent
+.. py:attribute:: nonexistent
 
    If user does not really exist
 
-.. c:var:: anonymous
+.. py:attribute:: anonymous
 
    If user is anonymous
 
-.. c:var:: autocreated
+.. py:attribute:: autocreated
 
    If user was automatically created internally for some operation
 
-.. c:var:: mail_debug
+.. py:attribute:: mail_debug
 
    If debugging is turned on
 
-.. c:var:: fuzzy_search
+.. py:attribute:: fuzzy_search
 
    .. todo:: undocumented
 
-.. c:var:: dsyncing
+.. py:attribute:: dsyncing
 
    If user is being dsync'd
 
-.. c:var:: session_restored
+.. py:attribute:: session_restored
 
    If this is a restored session
 
 object mailbox
 ^^^^^^^^^^^^^^^
+
+.. py:currentmodule:: mailbox
 
 Meta
 ----
@@ -403,31 +408,32 @@ Meta
 Functions
 ---------
 
-.. function:: open()
+.. py:function:: open()
 
    Opens the mailbox
 
-.. function:: close()
+.. py:function:: close()
 
    Closes the mailbox
 
-.. function:: free()
+.. py:function:: free()
 
    Releases mailbox (must be done)
 
-.. function:: sync(flags)
+.. py:function:: sync(flags)
 
    Synchronizes the mailbox (should usually be done, flags optional)
 
    :param int flags: See :ref:`dovecot.storage`
 
-.. function:: status(item,item,item...)
+.. py:function:: status(item,item,item...)
 
    Returns requested mailbox status items as table
 
    :param str item: Item name
 
-.. function:: metadata_get(key)
+.. py:function:: metadata_get(key)
+   :noindex:
 
    Returns given metadata key for the mailbox.
 
@@ -435,7 +441,8 @@ Functions
 
 .. versionadded:: 2.3.7
 
-.. function:: metadata_set(key, value)
+.. py:function:: metadata_set(key, value)
+   :noindex:
 
    Sets mailbox metadata key to value. Setting value to nil unsets value.
 
@@ -444,7 +451,8 @@ Functions
 
 .. versionadded:: 2.3.7
 
-.. function:: metadata_unset(key)
+.. py:function:: metadata_unset(key)
+   :noindex:
 
    Unsets value, same as calling :c:func:`metadata_set` with nil.
 
@@ -452,7 +460,8 @@ Functions
 
 .. versionadded:: 2.3.7
 
-.. function:: metadata_list(prefix, prefix, prefix...)
+.. py:function:: metadata_list(prefix, prefix, prefix...)
+   :noindex:
 
    Lists all keys for the mailbox metadata under prefix.
 
@@ -463,97 +472,99 @@ Functions
 Variables
 ---------
 
-.. c:var:: vname
+.. py:attribute:: vname
 
    Full mailbox name
 
-.. c:var:: Mailbox name
+.. py:attribute:: Mailbox name
 
     Mailbox name
 
 table mailbox status
 ^^^^^^^^^^^^^^^^^^^^^
 
+.. py:currentmodule:: mailbox_status
+
 Variables
 ---------
 
-.. c:var:: mailbox
+.. py:attribute:: mailbox
 
    full name of mailbox
 
-.. c:var:: messages
+.. py:attribute:: messages
 
    number of messages
 
-.. c:var:: recent
+.. py:attribute:: recent
 
    number of \Recent messages
 
-.. c:var:: unseen
+.. py:attribute:: unseen
 
    number of \Unseen messages
 
-.. c:var:: uidvalidity
+.. py:attribute:: uidvalidity
 
    current UID validity
 
-.. c:var:: uidnext
+.. py:attribute:: uidnext
 
    next UID
 
-.. c:var:: first_unseen_seq
+.. py:attribute:: first_unseen_seq
 
    first seqno of unseen mail
 
-.. c:var:: first_recent_uid
+.. py:attribute:: first_recent_uid
 
    first UID of unseen mail
 
-.. c:var:: highest_modseq
+.. py:attribute:: highest_modseq
 
    highest modification sequence
 
-.. c:var:: highest_pvt_modseq
+.. py:attribute:: highest_pvt_modseq
 
    highest private modification sequence
 
-.. c:var:: permanent_flags
+.. py:attribute:: permanent_flags
 
    supported permanent flags as a bitmask
 
-.. c:var:: flags
+.. py:attribute:: flags
 
    supported flags as a bitmask
 
-.. c:var:: permanent_keywords
+.. py:attribute:: permanent_keywords
 
    if permanent keywords are supported
 
-.. c:var:: allow_new_keywords
+.. py:attribute:: allow_new_keywords
 
    if new keywords can be added
 
-.. c:var:: nonpermanent_modseqs
+.. py:attribute:: nonpermanent_modseqs
 
    whether non-permanent keywords are allowed
 
-.. c:var:: no_modseq_tracking
+.. py:attribute:: no_modseq_tracking
 
    no modification sequence tracking
 
-.. c:var:: have_guids
+.. py:attribute:: have_guids
 
    whether GUIDs exist
 
-.. c:var:: have_save_guids
+.. py:attribute:: have_save_guids
 
    whether GUIDs can be saved
 
-.. c:var:: have_only_guid128
+.. py:attribute:: have_only_guid128
 
    whether GUIDs are 128 bit always
 
-.. c:var:: keywords
+.. py:attribute:: keywords
 
    table of current keywords
 
@@ -574,15 +585,17 @@ None yet
 Variables
 ---------
 
-.. c:var:: mailbox
+.. py:attribute:: mailbox
+   :noindex:
 
    mailbox object
 
-.. c:var:: seq
+.. py:attribute:: seq
 
    Sequence number (can change)
 
-.. c:var:: uid
+.. py:attribute:: uid
+   :noindex:
 
    UID number (immutable)
 

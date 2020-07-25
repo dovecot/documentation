@@ -21,8 +21,8 @@ Configure the first and fourth nodes in each data center to be your seed nodes: 
    - seeds: "172.16.0.1,172.16.0.4,172.16.1.1,172.16.1.4"
 
 
-concurrent_* 
-Configure the following Concurrent_* values:
+``concurrent_*``
+Configure the following ``concurrent_*`` values:
 
 .. code-block:: none
 
@@ -41,8 +41,8 @@ Configure the following Concurrent_* values:
    concurrent_writes: 32  ← 8 cores set to 64
    concurrent_counter_writes: 32
 
-concurrent_compactors 
-Configure the concurrent_compactors values:
+``concurrent_compactors``
+Configure the ``concurrent_compactors`` values:
 
 .. code-block:: none
 
@@ -53,8 +53,8 @@ Configure the concurrent_compactors values:
    # to the number of cores.
    concurrent_compactors: 1 ← 8 cores set to 8
 
-compaction_throughput_mb_per_sec 
-Adjust based on actual sstable monitoring ratios:
+``compaction_throughput_mb_per_sec``
+Adjust based on actual ``sstable`` monitoring ratios:
 
 .. code-block:: none
 
@@ -66,8 +66,8 @@ Adjust based on actual sstable monitoring ratios:
    # of compaction, including validation compaction.
    compaction_throughput_mb_per_sec: 16
 
-inter_dc_stream_throughput_magabits_per_sec
-Adjust based on wan capacity: 
+``inter_dc_stream_throughput_magabits_per_sec``
+Adjust based on wan capacity:
 
 .. code-block:: none
 
@@ -79,7 +79,8 @@ Adjust based on wan capacity:
    # inter_dc_stream_throughput_outbound_megabits_per_sec: 200
 
 
-'*'_timeout
+``*_timeout``
+
 Adjust timeouts:
 
 .. code-block:: none
@@ -94,7 +95,7 @@ Adjust timeouts:
    slow_query_log_timeout_in_ms: 500
 
 
-internode_compression
+``internode_compression``
 
 .. code-block:: none
 
@@ -112,8 +113,8 @@ internode_compression
    internode_compression: dc
 
 
-gc_warn_threshold_in_ms
-Long stop the world gc pauses are bad, may want to adjust:
+``gc_warn_threshold_in_ms``
+Long stop the world ``gc`` pauses are bad, may want to adjust:
 
 .. code-block:: none
 

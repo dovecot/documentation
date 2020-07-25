@@ -53,9 +53,9 @@ Example configuration
 
    mail_location = obox:%2Mu/%2.3Mu/%u:INDEX=~/:CONTROL=~/
    plugin {
-     obox_fs = fscache:1G:/var/cache/mails:compress:gz:6:scality:http://scality.example.com/?addhdr=X-Dovecot-Hash:%2Mu/%2.3Mu&use_listing&timeout_msecs=65000
+     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:gz:6:scality:http://scality.example.com/?addhdr=X-Dovecot-Hash:%2Mu/%2.3Mu&use_listing&timeout_msecs=65000
      obox_index_fs = compress:gz:6:scality:http://scality.example.com/?addhdr=X-Dovecot-Hash:%2Mu/%2.3Mu&use_listing&timeout_msecs=65000
-     fts_dovecot_fs = fts-cache:fscache:1G:/var/cache/fts:compress:gz:6:scality:http://scality.example.com/%2Mu/%2.3Mu/%u/fts/?addhdr=X-Dovecot-Hash:%2Mu/%2.3Mu&use_listing&timeout_msecs=65000
+     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:gz:6:scality:http://scality.example.com/%2Mu/%2.3Mu/%u/fts/?addhdr=X-Dovecot-Hash:%2Mu/%2.3Mu&use_listing&timeout_msecs=65000
 
      # With bulk-delete and bulk-link enabled, parallel operations can be large.
      # They should not be larger than bulk_delete_limit and bulk_link_limit.
