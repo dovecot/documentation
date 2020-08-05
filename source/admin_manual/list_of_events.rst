@@ -172,6 +172,91 @@ Authentication Server
 These events are generated in authentication process(es) and can be used
 to track and log individual authentication actions.
 
+Common fields
+-------------
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| user                | Full username. This can change during authentication,|
+|                     | for example due to passdb lookups.                   |
++---------------------+------------------------------------------------------+
+| original_user       | Original username exactly as provided by the client. |
++---------------------+------------------------------------------------------+
+| translated_user     | Similar to original_user, except after               |
+|                     | :ref:`setting-auth_username_translation`             |
+|                     | translations are applied.                            |
++---------------------+------------------------------------------------------+
+| login_user          | When doing a master user login, the user we are      |
+|                     | logging in as. Otherwise not set.                    |
++---------------------+------------------------------------------------------+
+| master_user         | When doing a master user login, the master username. |
+|                     | Otherwise not set.                                   |
++---------------------+------------------------------------------------------+
+| mechanism           | Name of used SASL mechanism (e.g. PLAIN)             |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| service             | Service doing the lookup (e.g. imap, pop3)           |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| session             | Session ID                                           |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| client_id           | Expands to client ID request as IMAP arglist. Needs  |
+|                     | imap_id_retain=yes                                   |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| remote_ip           | Remote IP address of the client connection           |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| local_ip            | Local IP address where client connected to           |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| remote_port         | Remote port of the client connection                 |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| local_port          | Local port where the client connected to             |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| real_remote_ip      | Same as remote_ip, except if the connection was      |
+|                     | proxied, this is the proxy's IP adderss.             |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| real_local_ip       | Same as local_ip, except if the connection was       |
+|                     | proxied, this is the IP where proxy connected to.    |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| real_remote_port    | Same as remote_port, except if the connection was    |
+|                     | proxied, this is the proxy connection's port.        |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| real_local_port     | Same as remote_port, except if the connection was    |
+|                     | proxied, this is the local port where the proxy      |
+|                     | connected to.                                        |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| local_name          | TLS SNI hostname, if given                           |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| transport           | Client connection's transport security. Values:      |
+|                     |  * ``insecure``                                      |
+|                     |  * ``trusted``                                       |
+|                     |  * ``TLS``                                           |
++---------------------+------------------------------------------------------+
+
 
 auth_request_finished
 ---------------------
@@ -183,29 +268,9 @@ of authentication/login attempts.
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| user                | Full username                                        |
-+---------------------+------------------------------------------------------+
-| original_username   | Original username used                               |
-+---------------------+------------------------------------------------------+
-| translated_username | Username after                                       |
-|                     | :ref:`setting-auth_username_translation`             |
-|                     | translations are applied                             |
-+---------------------+------------------------------------------------------+
-| login_user          | When doing login using ``master_user``, the user we  |
-|                     | are logging in as                                    |
-+---------------------+------------------------------------------------------+
-| master_user         | Master username                                      |
-+---------------------+------------------------------------------------------+
 | error               | Set when error happens                               |
 +---------------------+------------------------------------------------------+
 | success             | ``yes``, when authentication succeeded               |
-+---------------------+------------------------------------------------------+
-| transport           | Values:                                              |
-|                     |  * ``insecure``                                      |
-|                     |  * ``trusted``                                       |
-|                     |  * ``TLS``                                           |
-+---------------------+------------------------------------------------------+
-| mechanism           | Name of used mechanism                               |
 +---------------------+------------------------------------------------------+
 | policy_penalty      | Time of penalty added by policy server               |
 +---------------------+------------------------------------------------------+
@@ -254,9 +319,9 @@ Most useful for debugging authentication flow.
 | passdb_name         | ``passdb { name }``, if it is configured.            |
 |                     | Otherwise, the driver name.                          |
 +---------------------+------------------------------------------------------+
-| user                | Full username                                        |
-+---------------------+------------------------------------------------------+
-| master_user         | Master username                                      |
+| passdb_id           | ID number of the passdb username                     |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
 | result              | Values:                                              |
 |                     |  * ``ok``                                            |
@@ -267,10 +332,6 @@ Most useful for debugging authentication flow.
 |                     |  * ``scheme_not_available``                          |
 |                     |  * ``internal_failure``                              |
 |                     |  * ``next``                                          |
-+---------------------+------------------------------------------------------+
-| passdb_id           | ID number of the passdb username                     |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
 
 
@@ -312,18 +373,14 @@ Most useful for debugging authentication flow.
 | userdb_name         | ``userdb { name }``, if it is configured.            |
 |                     | Otherwise, the driver name.                          |
 +---------------------+------------------------------------------------------+
-| user                | Full username                                        |
-+---------------------+------------------------------------------------------+
-| master_user         | Master username                                      |
+| userdb_id           | ID number of the userdb username                     |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
 | result              | Values:                                              |
 |                     |  * ``ok``                                            |
 |                     |  * ``user_unknown``                                  |
 |                     |  * ``internal_failure``                              |
-+---------------------+------------------------------------------------------+
-| userdb_id           | ID number of the userdb username                     |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
 
 
