@@ -103,7 +103,7 @@ Variable Long name      Description
 -        real_lport     Similar to %{real_lip} except for port instead of IP (v2.2+)
 %p       pid            process ID of the authentication client
 -        session_pid    For user logins: The PID of the IMAP/POP3 process handling the session. (v2.2.7+)
-%m       mech           `authentication mechanism <https://wiki.dovecot.org/Authentication/Mechanisms>`_ e.g. PLAIN
+%m       mech           :ref:`authentication-authentication_mechanisms` e.g. PLAIN
 %w       password       plaintext password from plaintext authentication mechanism
 %c       secured        "TLS" with established SSL/TLS connections, "TLS handshaking", or "TLS [handshaking]: error text" if disconnecting due to TLS error. "secured" with localhost connections. Otherwise empty.
 %k       cert           "valid" if client had sent a valid client certificate, otherwise empty.
@@ -121,7 +121,7 @@ Variable Long name      Description
 -        passdb:<name>  Return passdb extra field "name". %{passdb:name:default} returns "default" if "name" doesn't exist (not returned if name exists but is empty). Note that this doesn't work in passdb/userdb ldap's pass_attrs or user_attrs. (v2.2.19+)
 -        userdb:<name>  Return userdb extra field "name". Note that this can also be used in passdbs to access any userdb_* extra fields added by previous passdb lookups. %{userdb:name:default} returns "default" if "name" doesn't exist (not returned if name exists but is empty). Note that this doesn't work in passdb/userdb ldap's pass_attrs or user_attrs. (v2.2.19+)
 -        client_id      Expands to client ID request as IMAP arglist (v2.2.29+). Needs imap_id_retain=yes
--        forward_<name> Used by proxies to pass on extra fields to the next hop, see `PasswordDatabase/ExtraFields/Proxy <https://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy>`_ (v2.2.29+)
+-        forward_<name> Used by proxies to pass on extra fields to the next hop, see :ref:`authentication-proxies` (v2.2.29+)
 %!       -              Internal ID number of the current passdb/userdb.
 ======== ============== ==========================================================================================================================================
 
