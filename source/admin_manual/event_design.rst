@@ -79,11 +79,11 @@ The event categories are hierarchical.
 
 Example:
 
-   ``mail`` category has parent ``mailbox``, which has parent ``storage``. If an event filter contains ``category:storage``, it will match the ``mail`` and ``mailbox`` child categories as well.
+   ``mail`` category has parent ``mailbox``, which has parent ``storage``. If an event filter contains ``category=storage``, it will match the ``mail`` and ``mailbox`` child categories as well.
 
 .. Note:: A category isn't the same as a service/process name, but there is a ``service:<name>`` category.
 
-So for example imap process has an ``imap`` category for its ``IMAP-related`` events, such as IMAP client connection and IMAP command related events. Because most events would be child events under these IMAP events, they would all inherit the ``imap`` category. So it would appear that using ``category:imap`` filter would match most of the logging from imap process. However, there would likely be some events that wouldn't have the IMAP client as their parent event, so these wouldn't match the imap category.
+So for example imap process has an ``imap`` category for its ``IMAP-related`` events, such as IMAP client connection and IMAP command related events. Because most events would be child events under these IMAP events, they would all inherit the ``imap`` category. So it would appear that using ``category=imap`` filter would match most of the logging from imap process. However, there would likely be some events that wouldn't have the IMAP client as their parent event, so these wouldn't match the imap category.
 
 The same category name must not be duplicated within the process. This is because event handling is optimized and performs category checking by comparing the categories' pointers, not names' strings. (Then again, if the struct ``event_category`` variable names were consistent, you'd get duplicate symbol errors from linker as well.)
 
