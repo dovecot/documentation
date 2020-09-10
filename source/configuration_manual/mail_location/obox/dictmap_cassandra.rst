@@ -83,7 +83,30 @@ dovecot-dict-cql.conf.ext:
    
    # DEBUG: Output internal metrics in JSON format to this file.
    # Format of data can be found at the end of this document.
-   # metrics=/tmp/dovecot-cassandra.metrics.%{pid}
+   # metrics=/tmp/dovecot-cassandra.metrics.%{pid} \
+   
+   # TLS settings (setting any of these will enable TLS)
+   # You should use at least driver version 2.15 for reliable TLS support.
+   
+   # Trusted CA certificates
+   # ssl_ca=/path/to/ca-certificate \
+   
+   # Level of verification:
+   #  * none = don't verify
+   #  * cert = verify certificate
+   #  * cert-ip = verify IP from CN or SubjectAltName
+   #  * cert-dns = verify hostname from CN or SubjectAltName as determined by reverse lookup of the IP.
+   # ssl_verify=none
+   
+   # TLS client certificate
+   # ssl_cert=<path>
+   
+   # TLS client private key
+   # ssl_key=<path>
+   
+   # TLS client private key password
+   # ssl_key_password=<string>
+
 
 The details of how to create the Cassandra tables and the dict mappings that
 need to be appended to ``dovecot-dict-cql.conf.ext`` are described in:
