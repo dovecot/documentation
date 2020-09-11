@@ -3869,6 +3869,13 @@ This must be disabled if you store indexes to shared filesystems (i.e., if you
 use NFS or a clustered filesystem).
 
 
+.. _setting-namespace:
+
+``namespace``
+-------------
+
+Declares new namespace, see :ref:`namespaces` for more details.
+
 .. _setting-old_stats_carbon_interval:
 
 ``old_stats_carbon_interval``
