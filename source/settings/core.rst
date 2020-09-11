@@ -2118,6 +2118,25 @@ Example:
 Controls if "Received:" header should be added to delivered mails.
 
 
+.. _setting-lmtp_address_translate:
+
+``lmtp_address_translate``
+--------------------------
+
+.. versionremoved:: 2.3.0
+
+- Default: <empty>
+- Values: :ref:`string`
+
+Allows rewriting LMTP recipient address. Supports only %u, %d, %n variables.
+
+Example:
+
+.. code-block:: none
+
+   lmtp_address_translate = %n@otherdomain.com
+
+
 .. _setting-lmtp_client_workarounds:
 
 ``lmtp_client_workarounds``
