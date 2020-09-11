@@ -111,7 +111,7 @@ Active directory allows binding with username@domain.
 
 .. code-block:: none
 
-  auth_bind_dn = %u
+  auth_bind_userdn = %u
   auth_bind = yes
 
 Use LDAP authentication binding for verifying users' passwords.

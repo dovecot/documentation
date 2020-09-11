@@ -186,6 +186,18 @@ Dictmap Parameters
 |                                 |                                                                              |
 |                                 | .. versionadded:: v2.3.10                                                    |
 +---------------------------------+------------------------------------------------------------------------------+
+| cleanup-uncertain               | When enabled: If a write to Cassandra fails with uncertainty                 |
+|                                 | (:ref:`dictmap_cassandra_uncertain_writes`) Dovecot attempts to clean up.    |
+|                                 | First it tries to delete the uncertainly written dict key. If that succeeded |
+|                                 | the deletion of the corresponding storage object is also attempted.          |
+|                                 |                                                                              |
+|                                 | If a Cassandra write during copying a file fails uncertainly, a cleanup of   |
+|                                 | the uncertainly written Cassandra keys is also attempted.                    |
+|                                 | Copying never attempts to delete anything from object storage.               |
+|                                 |                                                                              |
+|                                 | .. versionadded:: v2.3.12                                                    |
++---------------------------------+------------------------------------------------------------------------------+
+
 
 Dict paths
 ----------
