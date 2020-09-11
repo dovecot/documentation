@@ -24,7 +24,6 @@ Statistics format
 By default, Dovecot exposes all configured metrics.
 If the metric name does not conform with OpenMetrics requirements, it is not exported.
 All metric names are prefixed with ``dovecot_`` and each metric is exported as ``dovecot_<metric_name>_count`` and ``dovecot_<metric_name>_duration_usecs_sum``.
-Filters are added as labels for the metric, such as ``{success="yes"}``.
 
 Dynamically generated statistics with :ref:`group_by <statistics_group_by>` will be exported too.
 The name of the base metric is used as above, and any dynamically generated sub-metrics are exported using labels.

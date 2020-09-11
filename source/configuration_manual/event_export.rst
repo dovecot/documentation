@@ -187,7 +187,7 @@ a datalake having a HTTP API, one could use config such as:
    metric imap_commands {
      exporter = datalake
      exporter_include = name hostname timestamps
-     event_name = imap_command_finished
+     filter = event=imap_command_finished
    }
 
 
@@ -204,6 +204,5 @@ For example, to output all named events from the IMAP service:
    
    metric imap_commands {
      exporter = log
-     event_name = *
-     categories = service:imap
+     filter = event=* AND category=service:imap
    }
