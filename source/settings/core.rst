@@ -4612,6 +4612,21 @@ The replicator host to be used in dsync operation.
 .. todo:: Is this correct value?
 
 
+.. _setting-replicator_host:
+
+``replicator_host``
+-------------------
+
+- Default: <empty>
+- Values: ref:`string`
+
+Specifies remote hostname or UNIX socket to connect for replicator process.
+If :ref:`setting-replicator_port` is set to ``0``, then it will be treated
+as UNIX socket.
+
+See :ref:`setting-replicator`
+
+
 .. _setting-replicator_port:
 
 ``replicator_port``
@@ -4620,7 +4635,7 @@ The replicator host to be used in dsync operation.
 - Default: ``0``
 - Values: ref:`uint`
 
-The port indicated here is used by dsync for replication. If set to 0,
+The port indicated here is used by dsync for replication. If set to ``0``,
 :ref:`setting-replicator_host` is interpreted as UNIX socket path.
 
 See :ref:`setting-replicator`
