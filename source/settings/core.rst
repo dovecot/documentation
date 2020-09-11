@@ -2262,17 +2262,16 @@ lock_method to one of the above values.
 
 - Default: <empty>
 
-Crash after logging a matching event.
+Crash after logging a matching event.  The syntax of the filter is described
+in :ref:`event_filter_global`.
 
 For example
 
 .. code-block:: none
 
-   log_core_filter = category:error
+   log_core_filter = category=error
 
 will crash any time an error is logged, which can be useful for debugging.
-
-.. todo:: Better description
 
 
 .. _setting-log_debug:
@@ -2282,15 +2281,14 @@ will crash any time an error is logged, which can be useful for debugging.
 
 - Default: <empty>
 
-Filter to specify what debug logging to enable.
+Filter to specify what debug logging to enable.  The syntax of the filter is
+described in :ref:`event_filter_global`.
 
 This will eventually replace ``mail_debug`` and ``auth_debug`` settings.
 
 See :ref:`setting-auth_debug`
 
 See :ref:`setting-mail_debug`
-
-.. todo:: Better description
 
 
 .. _setting-log_path:
@@ -2452,6 +2450,35 @@ Location of the login plugin directory.
 - Default: <empty>
 
 List of plugins to load for IMAP and POP3 login processes.
+
+
+.. _setting-login_proxy_timeout:
+
+``login_proxy_timeout``
+----------------------------------------
+
+.. versionadded:: v2.3.12
+
+- Default:``30 secs``
+
+Timeout for login proxy failures.
+The timeout covers everything from the time connection is started until a successful login reply is received.
+This can be overwritten by proxy_timeout passdb extra field.
+
+
+.. _setting-login_proxy_max_reconnects:
+
+``login_proxy_max_reconnects``
+----------------------------------------
+
+.. versionadded:: v2.3.12
+
+- Default:``3``
+
+How many times login proxy will attempt to reconnect to destination server on connection failures (3 reconnects = total 4 connection attempts).
+Reconnecting is done for most types of failures, except for regular authentication failures.
+There is a 1 second delay between each reconnection attempt.
+If :ref:`setting-login_proxy_timeout` is reached, further reconnects aren't attempted.
 
 
 .. _setting-login_proxy_max_disconnect_delay:
@@ -4831,7 +4858,7 @@ Client certificate private key used in outgoing SSL connections.
 
 Example Setting:
 
-   ssl_client_cert = </etc/dovecot/dovecot-client.crt
+   ssl_client_key = </etc/dovecot/dovecot-client.key
 
 See :ref:`setting-ssl`
 

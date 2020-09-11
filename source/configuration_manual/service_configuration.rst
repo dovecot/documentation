@@ -71,11 +71,17 @@ Number of client connections to handle until the process kills itself. ``0`` mea
 
 process_limit
 ^^^^^^^^^^^^^
-Maximum number of processes that can exist for this service. If set to`` 0``, ``default_process_limit`` is used instead.
+Maximum number of processes that can exist for this service.
+If set to ``0``, ``default_process_limit`` is used instead.
 
 process_min_avail
 ^^^^^^^^^^^^^^^^^
-Minimum number of processes that always should be available to accept more client connections. For ``service_count=1`` processes this decreases the latency for handling new connections. For service_count!=1 processes it could be set to the number of CPU cores on the system to balance the load among them.
+Minimum number of processes that always should be available to accept more client connections.
+
+ * For ``service_count=1`` processes this decreases the latency for handling new connections.
+   This is usually not necessary to to be set.
+   Large values might be useful in some special cases, like if there are a lot of POP3 users logging in exactly at the same time to check mails.
+ * For ``service_count!=1`` processes it could be set to the number of CPU cores on the system to balance the load among them.
 
 vsz_limit
 ^^^^^^^^^

@@ -53,11 +53,10 @@ to work. To activate this feature, you need to configure it.
 
    -  *Default*: ``auth_policy_hash_mech = sha256``
 
--  :ref:`setting-auth_policy_hash_nonce`: Cluster-wide nonce to add to hash
+-  :ref:`setting-auth_policy_hash_nonce`: Cluster-wide nonce to add to hash.
+   This should contain a secret randomly generated string, which is the same for each Dovecot server within the cluster.
 
    -  *Default*: None (**REQUIRED** configuration)
-
-   -  Example: ``auth_policy_hash_nonce = localized_random_string``
 
 -  :ref:`setting-auth_policy_request_attributes`: Request attributes specification
    (see attributes section below)
