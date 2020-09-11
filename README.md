@@ -6,10 +6,10 @@ This repository contains documentation maintained at https://doc.dovecot.org.
 Prerequisites
 -------------
 
-Initialize your python virtualenv environment
+Initialize your python 3 virtualenv environment
 
 ```
- $ virtualenv venv/sphinx
+ $ python3 -m venv venv/sphinx
  $ . venv/sphinx/bin/activate
  $ pip install -r requirements.txt
 ```

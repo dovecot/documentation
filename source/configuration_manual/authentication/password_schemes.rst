@@ -194,7 +194,9 @@ Other schemes
 
 * **ARGON2I**: ARGON2i password scheme, needs libsodium
 * **ARGON2ID**: ARGON2id password scheme, needs libsodium
-* **PBKDF2**: PKCS5 Password hashing algortihm
+* **PBKDF2**: PKCS5 Password hashing algortihm.
+  Note that there is no standard encoding for this format, so this scheme may not be interoperable with other software.
+  Dovecot implements it as "$1$salt$rounds$hash".
 
 For some schemes (e.g. PLAIN-MD5, SHA) Dovecot is able to detect if the
 password hash is base64 or hex encoded, so both can be used. doveadm pw anyway

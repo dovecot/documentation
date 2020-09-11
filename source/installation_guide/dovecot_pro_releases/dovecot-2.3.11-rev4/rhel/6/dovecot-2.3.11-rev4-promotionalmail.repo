@@ -1,9 +1,0 @@
-# promotionalmail component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-[dovecot-2.3.11-rev4-promotionalmail]
-name=RedHat Enterprise Linux 6 - OX Engage Dovecot plug-in
-baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.11/promotionalmail/RHEL6
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
-gpgcheck=1
-enabled=1
-
