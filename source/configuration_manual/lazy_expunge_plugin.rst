@@ -35,8 +35,10 @@ There are two plugin configuration options:
 Storage Locations
 -----------------
 
-mailbox (v2.2.24+)
-^^^^^^^^^^^^^^^^^^
+mailbox
+^^^^^^^
+
+.. versionadded:: v2.2.24
 
 Messages that are expunged are moved to a single mailbox.
 
@@ -51,6 +53,13 @@ To move to a mailbox, do NOT add a trailing delimiter to the
 Example configuration:
 
 .. code-block:: none
+
+  namespace inbox {
+    mailbox .EXPUNGED {
+      autoexpunge = 7days
+      autoexpunge_max_mails = 100000
+    }
+  }
 
   mail_plugins = $mail_plugins lazy_expunge acl
   plugin {
@@ -75,6 +84,8 @@ to access it at all.
 
 namespace
 ^^^^^^^^^
+
+.. deprecated:: v2.3.0
 
 Expunged messages are moved to mailbox(es) within a defined namespace
 

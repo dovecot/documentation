@@ -44,8 +44,8 @@ Example configuration
 
    mail_location = obox:%u:INDEX=~/:CONTROL=~/
    plugin {
-     obox_fs = fscache:1G:/var/cache/mails:compress:gz:6:swift:https://USER:APIKEY@swift.example.com:5000/v3/auth/?auth_protocol=swift-keystone3&container=mails&project=dovecot&region=RegionOne
+     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:gz:6:swift:https://USER:APIKEY@swift.example.com:5000/v3/auth/?auth_protocol=swift-keystone3&container=mails&project=dovecot&region=RegionOne
      obox_index_fs = compress:gz:6:swift:https://USER:APIKEY@swift.example.com:5000/v3/auth/?auth_protocol=swift-keystone3&container=mails&project=dovecot&region=RegionOne
-     fts_dovecot_fs = fts-cache:fscache:1G:/var/cache/fts:compress:gz:6:swift:https://USER:APIKEY@swift.example.com:5000/v3/auth/?auth_protocol=swift-keystone3&container=mails&project=dovecot&region=RegionOne&key_prefix=%u/fts/
+     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:gz:6:swift:https://USER:APIKEY@swift.example.com:5000/v3/auth/?auth_protocol=swift-keystone3&container=mails&project=dovecot&region=RegionOne&key_prefix=%u/fts/
      obox_max_parallel_deletes = 10000
    }

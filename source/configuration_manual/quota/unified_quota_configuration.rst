@@ -86,10 +86,6 @@ with the ``dovecot-dict-cql.conf.ext`` path like below:
 
 .. code-block:: none
 
-   # Valid Dovecot Pro License is required for the quota_unified plugin to work
-   #
-   license_checksum = </var/lib/dovecot/dovecot-license.txt
-
    # Add dict-async socket which provides access to cassandra
    #
    service dict-async {
