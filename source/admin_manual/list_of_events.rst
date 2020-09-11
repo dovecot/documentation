@@ -38,6 +38,8 @@ Root Categories
 +--------------------+---------------------------------------------------------+
 | imap-urlauth       | imap-urlauth process                                    |
 +--------------------+---------------------------------------------------------+
+| imap-hibernate     | imap-hibernate process                                  |
++--------------------+---------------------------------------------------------+
 | lda                | dovecot-lda process                                     |
 +--------------------+---------------------------------------------------------+
 | local-delivery     | LDA/LMTP local delivery                                 |
@@ -1130,6 +1132,52 @@ IMAP client
 |                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
 
+imap_client_hibernated
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: v2.3.13
+
+Event emitted when an IMAP client is hibernated or when the hibernation attempt failed.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| mailbox             | Mailbox name where hibernation was started in.       |
++---------------------+------------------------------------------------------+
+| error               | Reason why hibernation attempt failed.               |
++---------------------+------------------------------------------------------+
+
+
+.. _imap_client_unhibernated:
+
+imap_client_unhibernated
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: v2.3.13
+
+Event emitted when an IMAP client is hibernated or when the hibernation attempt failed.
+Note that for failures this event can be logged by either imap or imap-hibernate process depending on which side the error was detected in.
+
+See also imap process's :ref:`imap_hibernate_client_unhibernated` event.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| reason              | Reason why client was unhibernated:                  |
+|                     |                                                      |
+|                     | * idle_done: IDLE command was stopped with DONE.     |
+|                     | * idle_bad_reply: IDLE command was stopped with some |
+|                     |   other command than DONE.                           |
+|                     | * mailbox_changes: Mailbox change notifications need |
+|                     |   to be sent to the client.                          |
++---------------------+------------------------------------------------------+
+| hibernation_usecs   | Number of microseconds how long the client was       |
+|                     | hibernated.                                          |
++---------------------+------------------------------------------------------+
+| mailbox             | Mailbox name where hibernation was started in.       |
++---------------------+------------------------------------------------------+
+| error               | Reason why unhibernation failed.                     |
++---------------------+------------------------------------------------------+
 
 IMAP command
 ------------
@@ -1202,6 +1250,61 @@ sessions, and/or detect broken clients.
 | bytes_out           | Amount of data written, in bytes                     |
 +---------------------+------------------------------------------------------+
 
+
+IMAP Hibernate
+==============
+
+.. versionadded:: v2.3.13
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| user                | Username of the user                                 |
++---------------------+------------------------------------------------------+
+| session             | Session ID of the IMAP connection                    |
++---------------------+------------------------------------------------------+
+| mailbox             | Mailbox name where hibernation was started in.       |
++---------------------+------------------------------------------------------+
+| local_ip            | IMAP connection's local (server) IP                  |
++---------------------+------------------------------------------------------+
+| local_port          | IMAP connection's local (server) port                |
++---------------------+------------------------------------------------------+
+| remote_ip           | IMAP connection's remote (client) IP                 |
++---------------------+------------------------------------------------------+
+| remote_port         | IMAP connection's remote (client) port               |
++---------------------+------------------------------------------------------+
+
+.. _imap_hibernate_client_unhibernated:
+
+imap_client_unhibernated
+------------------------
+
+Event emitted when an IMAP client is unhibernated or when the unhibernation attempt failed.
+Note that for failures this event can be logged by either imap or imap-hibernate process depending on which side the error was detected in.
+
+See also imap process's :ref:`imap_client_unhibernated` event.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| hibernation_usecs   | Number of microseconds how long the client was       |
+|                     | hibernated.                                          |
++---------------------+------------------------------------------------------+
+| error               | Reason why unhibernation failed.                     |
++---------------------+------------------------------------------------------+
+
+imap_client_unhibernate_retried
+-------------------------------
+
+Event emitted when an IMAP client is attempted to be unhibernated, but imap processes are busy and the unhibernation attempt is retried.
+This event is sent each time when retrying is done.
+The :ref:`imap_client_unhibernated` event is always still sent when unhibernation either succeeds or fails permanently.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| error               | Reason why unhibernation attempt failed.             |
++---------------------+------------------------------------------------------+
 
 Mail Delivery
 =============
