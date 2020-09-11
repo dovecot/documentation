@@ -4618,13 +4618,12 @@ The replicator host to be used in dsync operation.
 -------------------
 
 - Default: ``0``
+- Values: ref:`uint`
 
-The port indicated here is used by dsync for replication.
+The port indicated here is used by dsync for replication. If set to 0,
+:ref:`setting-replicator_host` is interpreted as UNIX socket path.
 
 See :ref:`setting-replicator`
-
-.. todo:: Indicate replicator setting
-.. todo:: What does 0 (default value) mean?
 
 
 .. _setting-sendmail_path:
