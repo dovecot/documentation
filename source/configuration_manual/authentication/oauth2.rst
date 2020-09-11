@@ -153,18 +153,41 @@ Local validation allows validating tokens without connecting to an oauth2 server
 This requires that key issuer supports `JWT tokens (RFC 7519) <https://tools.ietf.org/html/rfc7519>`_.
 
 You can put the validation keys into any `dictionary <https://wiki.dovecot.org/Dictionary>`.
-The lookup key used is ``/shared/keyid``. If there is no ``kid`` element in token, ``default`` is used.
-Keys are cached into memory when they are fetched, to evict them from cache youu need to restart dovecot.
+The lookup key used is ``/shared/<azp:default>/<alg>/<keyid:default>``.
+If there is no ``azp`` element in token body, then default is used.
+The ``alg`` field is always uppercased by dovecot.
+If there is no ``kid`` element in token header, ``default`` is used.
+Keys are cached into memory when they are fetched, to evict them from cache you need to restart dovecot.
 If you want to do key rotation, it is recommended to use a new key id.
+
+Example:
+
+.. code::javascript
+
+   {"kid":"Zm9vb2Jhcgo","alg":"ES256","typ":"JWT"}.{"sub":"testuser@example.org","azp":"issuer.net-dovecot"}
+
+Would turn into
+
+::
+   /shared/issuer.net-dovecot/ES256/Zm9vb2Jhcgo
+
+And would expect, when using fs posix, key at
+
+::
+   /etc/dovecot/keys/issuer.net-dovecot/ES256/Zm9vb2Jhcgo
 
 Local validation can be enabled with other oauth2 options,
 so that if key validation fails for non-JWT keys,
 then online validation is performed.
 
+You can use local validation with password grants too.
+This will save you introspection round to oauth2 server.
+
 To use local validation, put into ``dovecot-oauth2.conf.ext``
 
 .. code-block:: none
 
+  introspection_mode = local
   local_validation_key_dict = fs:posix:prefix=/etc/dovecot/keys/
 
 Currently dovecot oauth2 library implements the following features of JWT tokens:
@@ -172,8 +195,11 @@ Currently dovecot oauth2 library implements the following features of JWT tokens
  * IAT checking
  * NBF checking
  * EXP checking
+ * ISS checking
+ * ALG checking
  * SUB support
  * AUD support (this is checked against scope, if provided)
+ * AZP support
 
 The following algorithms are supported
 
@@ -202,6 +228,7 @@ Full config file
   ##   auth = GET request with Bearer authentication
   ##   get  = GET request with token appended to URL
   ##   post = POST request with token=bearer_token as content
+  ##   local = Attempt to locally validate and decode JWT token
   # introspection_mode = auth
 
   ## Force introspection even if tokeninfo contains wanted fields
@@ -226,6 +253,9 @@ Full config file
   ## Expected value in active_attribute (empty = require present, but anything goes)
   # active_value =
 
+  ## Expected issuer(s) for the token (space separated list)
+  # issuers =
+
   ## Extra fields to set in passdb response (in passdb static style)
   # pass_attrs =
 
@@ -235,8 +265,9 @@ Full config file
   ## Enable debug logging
   # debug = no
 
-  ## Max parallel connections (how many simultaneous connections to open)
-  # max_parallel_connections = 1
+  ## Max parallel connections (how many simultaneous connections to open, increase this to
+  ## increase performance)
+  # max_parallel_connections = 10
 
   ## Max pipelined requests (how many requests to send per connection, requires server-side support)
   # max_pipelined_requests = 1

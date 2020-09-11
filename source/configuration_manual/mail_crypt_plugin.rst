@@ -339,6 +339,8 @@ You can use `decrypt.rb
 <https://gist.github.com/cmouse/882f2e2a60c1e49b7d343f5a6a2721de>`_ to decrypt
 encrypted files.
 
+.. _fs_crypt:
+
 fs-crypt and fs-mail-crypt
 ==========================
 
