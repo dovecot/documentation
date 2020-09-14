@@ -11,4 +11,8 @@ Settings
 
    settings/plugin/index
 
+   settings/pigeonhole
+
+   settings/pigeonhole-ext/index
+
    configuration_manual/config_file/config_types.rst
