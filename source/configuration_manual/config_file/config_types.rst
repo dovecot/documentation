@@ -13,3 +13,4 @@ Dovecot Config Types
    boolean
    string
    uint
+   url
