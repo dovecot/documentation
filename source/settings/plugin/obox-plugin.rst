@@ -175,3 +175,34 @@ How often to upload important index changes to object storage? This mainly
 means that if a backend crashes during this time, message flag changes within
 this time may be lost. A longer time can however reduce the number of index
 bundle uploads.
+
+.. _plugin-obox-setting_fs_auth_cache_dict:
+
+``fs_auth_cache_dict``
+----------------------
+
+- Default: <empty>
+- Values: :ref:`string`
+
+Dictionary URI where fs-auth process keeps authentication cache.
+This allows sharing the cache between multiple servers.
+
+.. _plugin-obox-setting_fs_auth_request_max_retries:
+
+``fs_auth_request_max_retries``
+-------------------------------
+
+- Default: 1
+- Values: :ref:`uint`
+
+If fs-auth fails to perform authentication lookup, retry the HTTP request this many times.
+
+.. _plugin-obox-setting_fs_auth_request_timeout:
+
+``fs_auth_request_timeout``
+-------------------------------
+
+- Default: 10s
+- Values: :ref:`time_msecs`
+
+Absolute HTTP request timeout for authentication lookups.

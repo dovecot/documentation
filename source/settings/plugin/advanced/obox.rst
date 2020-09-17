@@ -110,6 +110,18 @@ Overrides the obox username in storage. Normally the username is taken from the 
 
 Path to communicate with metacache process. Shouldn't be changed normally.
 
+.. _plugin-obox-setting_metacache_userdb:
+
+``metacache_userdb``
+--------------------
+
+- Default: ``metacache/metacache-users.db``
+- Values: :ref:`string`
+
+Path to a database which metacache process periodically writes to.
+This database is read by metacache at startup to get the latest state.
+The path is relative to :ref:`setting-state_dir`.
+This setting shouldn't be changed normally.
 
 .. _plugin-obox-setting_obox_lost_mailbox_prefix:
 
