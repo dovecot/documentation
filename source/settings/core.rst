@@ -1708,7 +1708,7 @@ How many times to retry connection against a remote IMAP server?
 -----------------------------------
 
 - Default: ``1secs``
-- Values:  :ref:`time`
+- Values:  :ref:`time_msecs`
 
 How long to wait between retries against a remote IMAP server?
 
@@ -2499,6 +2499,7 @@ List of plugins to load for IMAP and POP3 login processes.
 .. versionadded:: v2.3.12
 
 - Default:``30 secs``
+- Values: :ref:`time_msecs`
 
 Timeout for login proxy failures.
 The timeout covers everything from the time connection is started until a successful login reply is received.
@@ -5293,7 +5294,7 @@ Maximum number of recipients accepted per connection.
 ------------------------------------
 
 - Default: ``5mins``
-- Values:  :ref:`time`
+- Values:  :ref:`time_msecs`
 
 Timeout for SMTP commands issued to the submission service's relay server.
 
@@ -5308,7 +5309,7 @@ The timeout is reset every time more data is being sent or received.
 ------------------------------------
 
 - Default: ``30secs``
-- Values:  :ref:`time`
+- Values:  :ref:`time_msecs`
 
 Timeout for connecting to and logging into the submission service's relay
 server.

@@ -1,8 +1,8 @@
 .. _time:
 
-========
+====
 Time
-========
+====
 
 The Time value is used in Dovecot configuration to define the amount of Time
 taken by something or for doing something, such as a sending or downloading
@@ -26,3 +26,11 @@ For example:
 .. code-block:: none
 
    since 1w, since 1weeks or since 7days.
+
+.. _time_msecs:
+
+================
+Millisecond Time
+================
+
+Same as :ref:`time`, but support milliseconds precision.
