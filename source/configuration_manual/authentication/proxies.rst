@@ -51,8 +51,11 @@ addition of proxy field. The common fields to use for both proxying ways are:
 * ``destuser=s``: Tell client to use a different username when logging in.
 * ``proxy_mech=s``: Tell client to use this SASL authentication mechanism when
   logging in.
-* ``proxy_timeout``: Abort connection after this many seconds.
+* ``proxy_timeout=`` <:ref:`time_msecs`>: Abort connection after this much time has passed.
   This overrides the default :ref:`setting-login_proxy_timeout`.
+
+  .. versionchanged:: v2.3 Added support for milliseconds.
+
 * ``proxy_nopipelining``: Don't pipeline IMAP commands. This is a workaround
   for broken IMAP servers that hang otherwise.
 
