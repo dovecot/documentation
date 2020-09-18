@@ -1,3 +1,5 @@
+.. _howto-antispam_with_imapsieve:
+
 ========================================
 Replacing antispam plugin with IMAPSieve
 ========================================
