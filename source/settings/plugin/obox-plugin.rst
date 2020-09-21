@@ -206,3 +206,37 @@ If fs-auth fails to perform authentication lookup, retry the HTTP request this m
 - Values: :ref:`time_msecs`
 
 Absolute HTTP request timeout for authentication lookups.
+
+.. _plugin-obox-setting_metacache_roots:
+
+``metacache_roots``
+-------------------
+
+- Default: <parsed from :ref:`setting-mail_home` and :ref:`setting-mail_chroot` settings>
+- Values: :ref:`string`
+
+List of metacache root directories, separated with ``:``.
+Usually this is automatically parsed directly from :ref:`setting-mail_home` setting.
+Accessing a metacache directory outside these roots will result in a warning: "Index directory is outside metacache_roots".
+It's possible to disable this check entirely by setting the value to ``:``.
+
+This setting is required for :ref:`plugin-obox-setting_metacache_rescan_interval`.
+
+.. _plugin-obox-setting_metacache_rescan_interval:
+
+``metacache_rescan_interval``
+-----------------------------
+
+- Default: 1 day
+- Values: :ref:`time`
+
+How often to run a background metacache rescan, which makes sure that the disk space usage tracked by metacache process matches what really exists on filesystem.
+The desync may happen for example because the metacache process (or the whole backend) crashes.
+The rescanning helps with two issues:
+
+ * If metacache filesystem uses more disk space than metacache process thinks, it may run out of disk space.
+
+ * If metacache filesystem uses less disk space than metacache process thinks, metacache runs non-optimally since it's not filling it out as much as it could.
+
+Setting this to 0 disables the rescan.
+It's also possible to do this manually by running the ``doveadm metacache rescan`` command.
