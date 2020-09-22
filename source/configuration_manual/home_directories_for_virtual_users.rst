@@ -11,7 +11,7 @@ files**.
   directories.
 * It's irrelevant if it's under ``/home/`` or ``/var/mail/`` or wherever.
 * If you have trouble understanding this, mentally replace all occurrences of
-  `home directory` with `mail user's private state directory`.
+  home directory with mail user's private state directory.
 
 And in particular:
 
@@ -22,7 +22,7 @@ And in particular:
 
 Some uses for home directory are:
 
-* By default `Sieve <https://wiki.dovecot.org/Pigeonhole/Sieve>`_ scripts are
+* By default :ref:`Sieve <sieve>` scripts are
   in user's home directory.
 * Duplicate mail check database is in user's home directory. Suppression of
   duplicate rejects/vacations won't work if home directory isn't specified.
@@ -44,12 +44,12 @@ run into trouble with it sooner or later. Some problems with this are:
   there already exists a conflicting file
 
  * e.g. with Maildir if you have ``.dovecot.sieve`` file, user can't create a
-   mailbox called `dovecot.sieve` (i.e. `dovecot` mailbox that has a `sieve`
+   mailbox called ``dovecot.sieve`` (i.e. dovecot mailbox that has a sieve
    child)
 
 * And vice versa: If user creates ``dovecot.sieve`` mailbox, Dovecot will
   probably start logging all kinds of errors because the mailbox directory
-  isn't a valid `Sieve <https://wiki.dovecot.org/Pigeonhole/Sieve>`_ script.
+  isn't a valid :ref:`Sieve <sieve>` script.
 * If you ever intend to migrate to another mailbox format, it's much easier to
   do if you can have both old and new mail directories under the user's home
   directory.
