@@ -74,16 +74,16 @@ where:
 
 * mailbox-format is a tag identifying one of the formats described at `Mailbox formats <https://wiki.dovecot.org/MailboxFormat>`_ 
 
-* path is the path to a directory where the mail is stored. This must be an absolute path, not a relative path. Even if relative paths appear to work, this usage is deprecated and will likely stop working at some point. Do not use the home directory, for reasons see `Home vs. mail directory <https://wiki.dovecot.org/VirtualUsers/Home>`_
+* path is the path to a directory where the mail is stored. This must be an absolute path, not a relative path. Even if relative paths appear to work, this usage is deprecated and will likely stop working at some point. Do not use the home directory, for reasons see :ref:`Home vs. mail directory <home_directories_for_virtual_users>`.
 
 * key = value can appear zero or more times to set various optional parameters. Possible values for key are:
 
 ================= ==============================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
-INDEX               specifies the location of `Index files`_.
+INDEX               specifies the location of ``Index files``.
 
                     * ITERINDEX: Perform mailbox listing using the INDEX directories instead of the mail root directories. Mainly useful when the INDEX storage is on a faster storage. It takes no value. (v2.2.32+)
 
-INBOX               specifies the location of the `INBOX path`_.
+INBOX               specifies the location of the ``INBOX path``.
 
 LAYOUT              specifies the directory layout to use:
 
@@ -103,7 +103,7 @@ CONTROL             Specifies the location of control files under the `mbox <htt
 
 VOLATILEDIR         Specifies the location of volatile files. This includes lock files and potentially other files that don't need to exist permanently. This is especially useful to avoid creating lock files to NFS or other remote filesystems. (v2.2.32+)
 
-SUBSCRIPTIONS       Specifies the file used for storing subscriptions. The default is `subscriptions`. If you're trying to avoid name collisions with a mailbox named `subscriptions`, then also consider setting ``MAILBOXDIR``.
+SUBSCRIPTIONS       Specifies the file used for storing subscriptions. The default is ``subscriptions``. If you're trying to avoid name collisions with a mailbox named ``subscriptions``, then also consider setting ``MAILBOXDIR``.
 
 MAILBOXDIR          Specifies directory name under which all mailbox directories are stored. With `dbox formats <https://wiki.dovecot.org/MailboxFormat/dbox>`_ the default is ``mailboxes/`` while with other mailbox formats the default is empty. Typically this should be changed only for :ref:`lazy_expunge_plugin` and :ref:`namespaces` with mdbox.
 
@@ -118,7 +118,7 @@ ALT                 specifies the `Alternate storage <https://wiki.dovecot.org/M
 
 Variables
 ^^^^^^^^^^
-You can use several variables in the ``mail_location`` setting. See :ref:`config_variables` for a full list, but the most commonly used ones are:
+You can use several variables in the :ref:`setting-mail_location` setting. See :ref:`config_variables` for a full list, but the most commonly used ones are:
 
 ======= =====================================================================
    %u     Full username.
@@ -216,7 +216,7 @@ Example:
 
 Homeless users
 ^^^^^^^^^^^^^^^
-Having a home directory for users is highly recommended. The `Pigeonhole <https://wiki.dovecot.org/Pigeonhole>`_ `Sieve plugin <https://wiki.dovecot.org/Pigeonhole/Sieve>`_ already requires a home directory to work, and it probably won't be the last feature to require a home. See `VirtualUsers#homedirs <https://wiki.dovecot.org/VirtualUsers#homedirs>`_ for more reasons why it's a good idea, and how to give Dovecot a home directory even if you don't have a "real home directory".
+Having a home directory for users is highly recommended. The :ref:`Pigeonhole Sieve plugin <sieve>` already requires a home directory to work, and it probably won't be the last feature to require a home. See :ref:`home_directories_for_virtual_users` for more reasons why it's a good idea, and how to give Dovecot a home directory even if you don't have a "real home directory".
 
 If you really don't want to set any home directory, you can use something like:
 
