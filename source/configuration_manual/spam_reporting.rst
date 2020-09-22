@@ -17,7 +17,7 @@ The Spam mailbox is defined and reported to the MUA via a Special-Use flag:
      }
    }
 
-Spam reporting messages are handled via imapsieve plugin.  A global configuration script is used to capture the event of moving messages in/out of the Spam mailbox; the script sends the message (via RFC 5965 compliant spam reporting format) to an external reporting e-mail address.
+Spam reporting messages are handled via :ref:`imapsieve plugin <pigeonhole_plugin_imapsieve>`.  A global configuration script is used to capture the event of moving messages in/out of the Spam mailbox; the script sends the message (via `RFC 5965 <https://tools.ietf.org/html/rfc5965>`_ compliant spam reporting format) to an external reporting e-mail address, using the `report extension <https://raw.githubusercontent.com/dovecot/pigeonhole/master/doc/rfc/spec-bosch-sieve-report.txt>`_.
 
 .. code-block:: none
 
@@ -48,7 +48,7 @@ report-spam.sieve:
 .. code-block:: none
 
    require "vnd.dovecot.report";
- 
+   
    report "abuse" "User added this message to the Spam folder." "spam-report@example.com";
 
 report-ham.sieve:
@@ -63,12 +63,12 @@ report-ham.sieve:
       # Putting spam in Trash mailbox is not significant
       stop;
    }
- 
+   
    if environment "imap.mailbox" "Spam" {
       # Copying mail inside Spam mailbox is not significant
       stop;
    }
- 
+   
    report "not-spam" "User removed this message from the Spam folder." "ham-report@example.com";
 
-Additional configuration information: https://wiki.dovecot.org/HowTo/AntispamWithSieve
+.. seealso:: :ref:`howto-antispam_with_imapsieve`
