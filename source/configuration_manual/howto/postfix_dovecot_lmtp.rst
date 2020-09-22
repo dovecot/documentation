@@ -42,7 +42,7 @@ Plugin support can be enabled at protocol level via
 ``/etc/dovecot/conf.d/20-lmtp.conf``, for
 :ref:`Quota <quota>`
 and
-`Sieve <https://wiki2.dovecot.org/Pigeonhole/Sieve#>`__
+:ref:`Sieve <sieve>`
 here:
 
 ::
