@@ -167,7 +167,7 @@ exists and get other extra fields.
    # master password passdb
    passdb {
       driver = static
-      default_fields = password=master-password
+      args = password=master-password
       result_success = continue
    }
    # primary passdb
