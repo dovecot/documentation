@@ -1,3 +1,5 @@
+.. _howto-antispam_with_imapsieve:
+
 ========================================
 Replacing antispam plugin with IMAPSieve
 ========================================
@@ -10,10 +12,10 @@ Caveats and possible pitfalls
 
 -  INBOX name is case-sensitive
 
--  `IMAP Sieve <https://wiki2.dovecot.org/Pigeonhole/Sieve/Plugins/IMAPSieve#>`__
+-  :ref:`IMAP Sieve <pigeonhole_plugin_imapsieve>`
    will **only** apply to IMAP. It **will not** apply to LDA or LMTP.
    Use
-   `Sieve <https://wiki2.dovecot.org/Pigeonhole/Sieve#>`__
+   :ref:`Sieve <sieve>`
    normally for LDA/LMTP.
 
 -  With this configuration, moving mails will slow down due to learn
@@ -21,14 +23,11 @@ Caveats and possible pitfalls
    something else. Probably piping things into a FIFO or perhaps using a
    socket based worker might work better.
 
--  Please read
-   `Pigeonhole/Sieve <https://wiki2.dovecot.org/Pigeonhole/Sieve#>`__
-   and
-   `Pigeonhole/Sieve/Configuration <https://wiki2.dovecot.org/Pigeonhole/Sieve/Configuration#>`__
+-  Please read :ref:`Sieve <sieve>` and :ref:`sieve configuration <sieve_configuration>`
    to understand sieve configuration better.
 
 -  Please read
-   `Pigeonhole/Sieve/Plugins <https://wiki2.dovecot.org/Pigeonhole/Sieve/Plugins#>`__
+   :ref:`sieve_plugins`
    for more information about sieve extensions.
 
 -  If you run Spamassassin trough Amavis and you use a virtual users

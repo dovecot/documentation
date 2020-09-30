@@ -94,7 +94,7 @@ Plugins
 
    * :ref:`lmtp_rcpt_check_quota <setting-lmtp_rcpt_check_quota>` ``= yes`` enables quota checking already at RCPT TO stage. This check isn't done for proxied connections.
 
-* Sieve language support can be added with the `Pigeonhole Sieve plugin <https://wiki.dovecot.org/Pigeonhole/Sieve>`_.
+* Sieve language support can be added with the :ref:`Pigeonhole Sieve plugin <sieve>`.
 
 Address extension delivery
 ==========================
