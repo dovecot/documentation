@@ -812,7 +812,7 @@ Example Setting:
  .. _setting-dict_db_config:
 
 ``dict_db_config``
-----------------------
+------------------
 
  - Default: <empty>
  - Values: :ref:`string`
