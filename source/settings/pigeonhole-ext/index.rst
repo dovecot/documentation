@@ -7,6 +7,7 @@ Pigeonhole extensions and plugins
 
    duplicate
    editheader
+   enotify
    extprograms
    imapsieve
    include
