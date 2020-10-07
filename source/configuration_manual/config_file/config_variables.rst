@@ -382,7 +382,7 @@ You can apply a modifiers for each variable (e.g. %Us or %U{service} = POP3):
 
    .. code-block:: none
 
-   %{sha256:user} or %{md5;truncate=32:user}.
+     %{sha256:user} or %{md5;truncate=32:user}.
 
    .. versionadded:: v2.2.27
 
