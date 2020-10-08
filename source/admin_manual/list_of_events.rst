@@ -2315,6 +2315,32 @@ indexes in metacache.
 fs-dictmap
 ----------
 
+
+fs_dictmap_dict_write_uncertain
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.13
+
+The event is sent whenever a dict write is uncertain.
+E.g. writes to Cassandra may eventually succeed even if the write initially appeared to fail.
+
++-----------------------+-------------------------------------------------------+
+| Field                 | Description                                           |
++=======================+=======================================================+
+| Inherits from fs_file                                                         |
++-----------------------+-------------------------------------------------------+
+| path                  | Virtual FS path to the object (based on dict)         |
++-----------------------+-------------------------------------------------------+
+| object_id             | Object ID in the storage                              |
++-----------------------+-------------------------------------------------------+
+| cleanup               | ``success``, ``failed`` or ``disabled``. Indicates if |
+|                       | uncertain write was attempted to be cleaned (deleted) |
+|                       | and whether it was successful.                        |
+|                       | See :ref:`dictmap_configuration_parameters`.          |
++-----------------------+-------------------------------------------------------+
+| error                 | Error message why the write initially failed          |
++-----------------------+-------------------------------------------------------+
+
 fs_dictmap_object_lost
 ^^^^^^^^^^^^^^^^^^^^^^
 
