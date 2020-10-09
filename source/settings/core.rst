@@ -2940,14 +2940,14 @@ This setting doesn't apply to object storage operations.
 Options:
 
 * ``always``: Use fsync after all disk writes.
-              Recommended for NFS to make sure there aren't any delayed write()s.
+  Recommended for NFS to make sure there aren't any delayed write()s.
 * ``optimized``: Use fsync after important disk writes.
-                 For example cache file writes aren't fsynced, because they can be regenerated if necessary.
+  For example cache file writes aren't fsynced, because they can be regenerated if necessary.
 * ``never``: Never fsync any disk writes.
-             This provides the best performance, but risks losing recently saved emails in case of a crash with most mailbox formats.
+  This provides the best performance, but risks losing recently saved emails in case of a crash with most mailbox formats.
 
-	     With obox format this option is recommended to be used, because it affects only the local metacache operations.
-	     If a server crashes, the existing metacache is treated as potentially corrupted and isn't used.
+  With obox format this option is recommended to be used, because it affects only the local metacache operations.
+  If a server crashes, the existing metacache is treated as potentially corrupted and isn't used.
 
 
 .. _setting-mail_full_filesystem_access:
