@@ -125,7 +125,9 @@ Global ACL file path is specified as a parameter to vfile backend in ``acl``
 setting (``/etc/dovecot/dovecot-acl`` in the above example). The file contains
 otherwise the same data as regular per-mailbox ``dovecot-acl`` files, except
 each line is prefixed by the mailbox name pattern. The pattern may contain
-``*`` and ``?`` wildcards.
+``*`` and ``?`` wildcards that do the shell-string matching, not stopping
+at any boundaries.
+
 
 Example:
 
@@ -134,6 +136,10 @@ Example:
   * user=foo lrw
   Public user=bar lrwstipekxa
   Public/* user=bar lrwstipekxa
+
+The first line shares every mailbox of every user to the user ``foo`` with a
+limited set of rights, and the last line shares every folder below ``Public``
+of every user to the user ``bar``.
 
 Global ACL directory (obsolete)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -254,3 +260,18 @@ List cache
 ``dovecot-acl-list`` file lists all mailboxes that have ``l`` rights assigned.
 If you manually add/edit ``dovecot-acl`` files, you may need to delete the
 ``dovecot-acl-list`` to get the mailboxes visible.
+
+Dictionaries
+^^^^^^^^^^^^
+
+In order for an ACL to be fully useful, it has to be communicated to IMAP clients.
+For example, if you use ACL to share a mailbox to another user, the client has to
+be explicitly told to check out the other user's mailbox too, as that one is shared.
+Placing the ACL file makes the ACL effective, but ``dovecot`` doesn't take care of
+the user->shared mailboxes mapping out of the box, and as a result, it won't publish
+shared mailboxes to clients if this is not set up.
+You have to configure this manually by defining an appropriate
+`dictionary <https://wiki.dovecot.org/Dictionary>`_ to store the share map.
+
+Certain dictionary backends are writable by ``dovecot``, so when you establish
+an ACL using ``doveadm``, a dictionary entry is added along to the ACL.
