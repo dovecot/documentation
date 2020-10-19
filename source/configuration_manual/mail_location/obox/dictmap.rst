@@ -92,6 +92,8 @@ creates more connections to Cassandra, so again it's better not to creates too
 many threads unnecessarily. If all the IO threads are full of pending requests,
 queries start failing with "All connections on all I/O threads are busy" error.
 
+.. _dictmap_configuration_parameters:
+
 Dictmap Parameters
 ------------------
 
