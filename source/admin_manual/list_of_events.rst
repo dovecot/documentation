@@ -2333,6 +2333,37 @@ happens.
 | object_id             | Object ID in the storage                             |
 +-----------------------+------------------------------------------------------+
 
+fs_dictmap_max_bucket_changed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.13
+
+This event is sent whenever the ``max_bucket`` value for a mailbox changes.
+There can be two situations when this happens: Either a new mail is added to a
+mailbox, where the current bucket is found to be filled and the next bucket is
+started to be filled (``reason = file``).
+
+Besides the expected situation, Dovecot emits this event if it encounters a
+bucket with a higher index then the current max_bucket while
+iterating a mailbox (``reason = iter``).
+
+The ``error`` field is only set if setting the new ``max_bucket`` value
+failed.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| reason                | Either ``file`` or ``iter`` depending on the source  |
+|                       | of the event as explained above.                     |
++-----------------------+------------------------------------------------------+
+| old_max_bucket        | The ``max_bucket`` value for the current mailbox,    |
+|                       | before the event was emitted.                        |
++-----------------------+------------------------------------------------------+
+| max_bucket            | The newly set ``max_bucket`` value.                  |
++-----------------------+------------------------------------------------------+
+| error                 | Error string if error occurred.                      |
++-----------------------+------------------------------------------------------+
+
 Dictionaries
 ============
 
