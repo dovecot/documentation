@@ -2933,12 +2933,21 @@ isn't finding certain mail messages.
 - Default: ``optimized``
 
 Specify when to use fsync() or fdatasync() calls.
+Using fsync waits until the data is written to disk before it continues, which is used to prevent corruption or data loss in case of server crashes.
+This setting applies to mail files and index files on the filesystem.
+This setting doesn't apply to object storage operations.
 
 Options:
 
-* ``always``: Useful for NFS, when write()s are delayed
-* ``never``: Better performance, but risk of data loss in a crash
-* ``optimized``: Recommended for avoiding loss of important data
+* ``always``: Use fsync after all disk writes.
+  Recommended for NFS to make sure there aren't any delayed write()s.
+* ``optimized``: Use fsync after important disk writes.
+  For example cache file writes aren't fsynced, because they can be regenerated if necessary.
+* ``never``: Never fsync any disk writes.
+  This provides the best performance, but risks losing recently saved emails in case of a crash with most mailbox formats.
+
+  With obox format this option is recommended to be used, because it affects only the local metacache operations.
+  If a server crashes, the existing metacache is treated as potentially corrupted and isn't used.
 
 
 .. _setting-mail_full_filesystem_access:
