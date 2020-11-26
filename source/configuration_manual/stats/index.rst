@@ -91,15 +91,15 @@ This example configuration will generate statistics for each IMAP command.
 The first "sub-metric" level is based on the IMAP command name, and the
 second (and in this example final) level is based on the tagged reply.  For
 example, a ``SELECT`` IMAP command that succeeded (in other words, it had an
-``OK`` reply) will generate the metric ``imap_command_select_ok``.
+``OK`` reply) will generate the metric ``imap_command_SELECT_ok``.
 
 In addition to the final level metric, all intermediate level metrics are
 generated as well.  For example, the same ``SELECT`` IMAP command will
 generate all of the following metrics:
 
  - ``imap_command``
- - ``imap_command_select``
- - ``imap_command_select_ok``
+ - ``imap_command_SELECT``
+ - ``imap_command_SELECT_ok``
 
 Note: While the top level metrics (e.g., ``imap_command`` above) are
 generated at start up, all ``group_by`` metrics are generated dynamically
@@ -155,12 +155,12 @@ This will generate metric names of the format
 command name, and ``{min}`` and ``{max}`` are the range bounds.  Therefore,
 for a ``SELECT`` IMAP command, the possible generated metric names are:
 
-* ``imap_command_select_ninf_10``
-* ``imap_command_select_11_100``
-* ``imap_command_select_101_1000``
-* ``imap_command_select_1001_10000``
-* ``imap_command_select_10001_100000``
-* ``imap_command_select_100001_inf``
+* ``imap_command_SELECT_ninf_10``
+* ``imap_command_SELECT_11_100``
+* ``imap_command_SELECT_101_1000``
+* ``imap_command_SELECT_1001_10000``
+* ``imap_command_SELECT_10001_100000``
+* ``imap_command_SELECT_100001_inf``
 
 Note: Since the metric names cannot contain -, the string ``ninf`` is used
 to denote negative infinity.
@@ -172,7 +172,7 @@ Finally, because all intermediate level metrics are generated as well.  The
 above example, will also generate all of the following metrics:
 
  - ``imap_command``
- - ``imap_command_select``
+ - ``imap_command_SELECT``
 
 `linear`
 --------
