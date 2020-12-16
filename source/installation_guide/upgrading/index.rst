@@ -15,6 +15,7 @@ And that may be a good thing, since it can expose problems which could otherwise
    :maxdepth: 1
 
    from-2.3-to-2.4
+   from-2.3-to-2.3.14
    from-2.3-to-2.3.12
    from-2.2-to-2.3
    from-2.1-to-2.2
