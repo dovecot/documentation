@@ -4,6 +4,13 @@
 Event Filtering
 ===============
 
+See also:
+
+ * :ref:`list_of_events` for list of all events.
+ * :ref:`statistics`
+ * :ref:`event_export`
+ * :ref:`event_design` for technical implementation details
+
 Dovecot's event support includes the ability to narrow down which events are
 processed by filtering them based on the administrator-supplied predicate.
 
