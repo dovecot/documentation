@@ -4,11 +4,14 @@
 Events
 ######
 
-List of all events emitted by Dovecot.
+List of all events emitted by Dovecot for statistics, exporting and filtering.
 
-These events can be used in :ref:`statistics` and :ref:`event_export`.
+See also:
 
-See :ref:`event_design` for technical implementation details.
+ * :ref:`statistics`
+ * :ref:`event_export`
+ * :ref:`event_filter`
+ * :ref:`event_design` for technical implementation details
 
 **********
 Categories
