@@ -76,7 +76,7 @@ Fields
  * ``mime.parts``: MIME parts' sizes.
  * ``binary.parts``: MIME parts' sizes after decoding Content-Transfer-Encoding
    to binary. Used by IMAP BINARY extension.
- * ``body.snippet``: A short snippet (IMAP PREVIEW) of the message body.
+ * ``body.snippet``: A short snippet (:ref:`imap_preview`) of the message body.
  * ``hdr.*``: Message headers listed individually, e.g. ``hdr.date``,
    ``hdr.from``
 
