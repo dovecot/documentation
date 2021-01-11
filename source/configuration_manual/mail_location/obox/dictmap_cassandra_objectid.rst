@@ -75,8 +75,10 @@ Append the following to the ``dovecot-dict-cql.conf.ext`` file as described in
   map {
     pattern = shared/dictmap/$user/mailboxes/$mailbox_guid/max_bucket
     table = user_mailbox_buckets
-    value_field = b
-    value_type = uint
+    #value_field = b # for v2.3.13 and older
+    value_field = b,writetime(b) # for v2.3.14 and newer
+    #value_type = uint # for v2.3.13 and older
+    value_type = uint,uint # for v2.3.14 and newer
     fields {
       u = $user
       g = ${hexblob:mailbox_guid}
