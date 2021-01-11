@@ -40,17 +40,17 @@ Global variables that work everywhere are:
 
 If var_expand_crypt plugin is loaded (see `Plugins/VarExpandCrypt <https://wiki.dovecot.org/Plugins/VarExpandCrypt>`_):
 
-+-------------------------------+-----------------------------------------------------------+
-| Long name                     | Description                                               |
-+===============================+===========================================================+
-| encrypt; <parameters>:<field> | Encrypt field (v2.2.29+)                                  |
-|                               |                                                           |
-|                               | .. versionadded:: v2.2.29                                 |
-+-------------------------------+-----------------------------------------------------------+
-| decrypt; <parameters>:<field> | Decrypt field                                             |
-|                               |                                                           |
-|                               | .. versionadded:: v2.2.29                                 |
-+-------------------------------+-----------------------------------------------------------+
++-------------------------------+-----------------------------+
+| Long name                     | Description                 |
++===============================+=============================+
+| encrypt; <parameters>:<field> | Encrypt field (v2.2.29+)    |
+|                               |                             |
+|                               | .. versionadded:: v2.2.29   |
++-------------------------------+-----------------------------+
+| decrypt; <parameters>:<field> | Decrypt field               |
+|                               |                             |
+|                               | .. versionadded:: v2.2.29   |
++-------------------------------+-----------------------------+
 
 .. _variables-mail_service_user:
 
@@ -144,8 +144,8 @@ Login variables:
 | %s       | service      | imap, pop3, smtp, lda (and doveadm, dsync, etc.)                |
 +----------+--------------+-----------------------------------------------------------------+
 |          | local_name   | TLS SNI hostname, if given                                      |
-|          |                |                                                               |
-|          |                | .. versionadded:: v2.2.26                                     |
+|          |              |                                                                 |
+|          |              | .. versionadded:: v2.2.26                                       |
 +----------+--------------+-----------------------------------------------------------------+
 | %k       | ssl_security | TLS session security string. If HAProxy is configured and it    |
 |          |              | terminated the TLS connection, contains "(proxied)".            |
@@ -406,7 +406,7 @@ You can apply a modifiers for each variable (e.g. %Us or %U{service} = POP3):
 
    .. code-block:: none
 
-   %{sha256:user} or %{md5;truncate=32:user}.
+     %{sha256:user} or %{md5;truncate=32:user}.
 
    .. versionadded:: v2.2.27
 
