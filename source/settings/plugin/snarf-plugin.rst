@@ -4,6 +4,8 @@
 snarf plugin
 =============
 
+.. versionremoved:: 2.3.14
+
 ``snarf-plugin``
 ^^^^^^^^^^^^^^^^^
 .. _plugin-snarf-setting_mbox_snarf:

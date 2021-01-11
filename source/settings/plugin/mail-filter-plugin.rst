@@ -4,6 +4,8 @@
 mail-filter plugin
 ========================
 
+.. versionremoved:: 2.3.14
+
 Mail filter plugin can be used to filter written and/or read mails via a script, for example to encrypt/decrypt mails. Currently the filtering must not modify the message in any way: mail -> write filter -> read filter -> must produce exactly the original mail back. 
 
 .. todo:: Modifying the mail during writing would be possible with some code changes.

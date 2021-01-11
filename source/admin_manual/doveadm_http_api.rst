@@ -4447,7 +4447,7 @@ example::
 
 .. code::
 
-    curl  -v -u doveadm:secretpassword -X POST http://localhost:ype: application/json" -d '[["oboxUserDelete", {"allUsers":0,"user":"testuser003"}, "tag1"]] '
+    curl -v -u doveadm:secretpassword -X POST -H "Content-Type: application/json" -d '[["oboxUserDelete", {"allUsers":0,"user":"testuser003"}, "tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -4460,6 +4460,11 @@ response::
         ]
     ]
 
+.. note::
+
+   .. versionadded:: v2.3.12.1 This command returns a specific exit code (65)
+        in the failure response, if the deletion is not possible as the index
+        is still open in another process.
 
 
 doveadm penalty
