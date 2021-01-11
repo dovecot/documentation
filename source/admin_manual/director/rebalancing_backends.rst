@@ -1,8 +1,8 @@
-.. _rebalancing_director:
+.. _rebalancing_director_backends:
 
-======================
-Rebalancing Directors
-======================
+====================
+Rebalancing Backends
+====================
 
 Sometimes with long lasting IMAP connections you might end up in situation where you need to increase the amount of backends due to increased load. 
 

@@ -141,7 +141,7 @@ imported into auth request. The string must be in key=value format, except if
 return code indicates internal error, the second parameter can be used as error
 string.
 
-If **auth_verify_password** is found, it's always used.
+If **auth_password_verify** is found, it's always used.
 
 To configure passdb in dovecot, use
 

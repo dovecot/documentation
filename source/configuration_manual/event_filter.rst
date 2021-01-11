@@ -97,6 +97,10 @@ language expression.  For example::
          category=imap AND user=testuser* AND status_code=200
    }
 
+
+Old metric filter syntax
+~~~~~~~~~~~~~~~~~~~~~~~~
+
 Prior to v2.3.12, metric blocks used the filtering syntax described in the
 remainder of this section.
 
@@ -146,6 +150,9 @@ filtering languge.  For example::
 
   log_debug = (event=http_request_finished AND category=imap) OR \
               (event=imap_command_finished AND user=testuser)
+
+Old global filter syntax
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Prior to v2.3.12, these settings used the filtering syntax described in the
 remainder of this section.
