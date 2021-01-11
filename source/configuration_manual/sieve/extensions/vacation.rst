@@ -13,7 +13,7 @@ contact. In the original vacation extension, this interval is specified
 in days with a minimum of one day. When more granularity is necessary
 and particularly when replies must be sent more frequently than one day,
 the vacation-seconds extension
-(`RFC6131 <http://tools.ietf.org/html/rfc5230/>`__) can be used. This
+(`RFC6131 <http://tools.ietf.org/html/rfc6131/>`__) can be used. This
 allows specifying the minimum reply interval in seconds with a minimum
 of zero (a reply is then always sent), depending on administrator
 configuration.
