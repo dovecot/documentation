@@ -2588,13 +2588,73 @@ Example Setting:
 
 A space-separated list of trusted network ranges.
 
-Typically used for IMAP proxy servers, allowing them to
-report a different IP address and port as the connection's origin for
-purposes of logging and authentication checks.
+This setting is used for a few different purposes, but most importantly it allows the client connection to tell the server what the original client's IP address was.
+This original client IP address is then used for logging and authentication checks.
 
-The ``disable_plaintext_auth setting`` is ignored for these networks.
+Plaintext authentication is always allowed for trusted networks (:ref:`setting-disable_plaintext_auth` is ignored).
 
-See :ref:`setting-disable_plaintext_auth`
+The details of how this setting works depends on the used protocol:
+
+IMAP:
+
+ * ID command can be used to override:
+
+   * Session ID
+   * Client IP and port (``%{rip}``, ``%{rport}``)
+   * Server IP and port (``%{lip}``, ``%{lport}``)
+
+ * ``forward_*`` fields can be sent to auth process's passdb lookup
+ * The trust is always checked against the connecting IP address.
+   Except if HAProxy is used, then the original client IP address is used.
+
+POP3:
+
+ * XCLIENT command can be used to override:
+
+   * Session ID
+   * Client IP and port (``%{rip}``, ``%{rport}``)
+
+ * ``forward_*`` fields can be sent to auth process's passdb lookup
+ * The trust is always checked against the connecting IP address.
+   Except if HAProxy is used, then the original client IP address is used.
+
+ManageSieve:
+
+ * XCLIENT command can be used to override:
+
+   * Session ID
+   * Client IP and port (``%{rip}``, ``%{rport}``)
+
+ * The trust is always checked against the connecting IP address.
+   Except if HAProxy is used, then the original client IP address is used.
+
+Submission:
+
+ * XCLIENT command can be used to override:
+
+   * Session ID
+   * Client IP and port (``%{rip}``, ``%{rport}``)
+   * HELO - Overrides what the client sent earlier in the EHLO command
+   * LOGIN - Currently unused
+   * PROTO - Currently unused
+
+ * ``forward_*`` fields can be sent to auth process's passdb lookup
+ * The trust is always checked against the connecting IP address.
+   Except if HAProxy is used, then the original client IP address is used.
+
+LMTP:
+
+ * XCLIENT command can be used to override:
+
+   * Session ID
+   * Client IP and port (``%{rip}``, ``%{rport}``)
+   * HELO - Overrides what the client sent earlier in the LHLO command
+   * LOGIN - Currently unused
+   * PROTO - Currently unused
+   * TIMEOUT (overrides :ref:`setting-mail_max_lock_timeout`)
+
+ * The trust is always checked against the connecting IP address.
+   Except if HAProxy is used, then the original client IP address is used.
 
 
 .. _setting-mail_access_groups:
