@@ -1,3 +1,4 @@
 Sphinx==3.0.4
 sphinx-copybutton==0.2.11
 sphinx-removed-in==0.2.1
+pygments>=2.7.4
