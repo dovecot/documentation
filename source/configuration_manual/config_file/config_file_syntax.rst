@@ -265,3 +265,13 @@ For example this is a common problem:
 This is because the second mail_plugins change that added `quota` globally didn't update anything inside the existing `protocol { .. }` or other filters.
 
 Some variables exist in the plugin section only, such as `sieve_extensions`. Those variables cannot be referred to, that is `$sieve_extensions` won't work.
+
+Environment variables
+^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: v2.3.14
+
+It is possible use ``$ENV:name`` to expand values from environment.
+Expansion only works when it's surrounded by spaces, and is not inside ``"quotes"`` or ``'quotes'``.
+Note that these are also Case Sensitive.
+These can also be used for external config files, but you need to list them in :ref:`setting-import_environment` so that processes can see them.
