@@ -72,7 +72,7 @@ This setting configures the LMTP port to use.
     process_limit = 4
    }
 
-These 3 settings configure the imap-login process to be in "high performance mode" as explained in http://wiki.dovecot.org/LoginProcess. The 4 should be changed to the number of CPU cores on the server. 
+These 3 settings configure the imap-login process to be in "high performance mode" as explained in :ref:`login_processes`. The 4 should be changed to the number of CPU cores on the server.
 
 The ``client_limit`` setting should be increased to be as high as needed. The max number of connections per server is ``client_limit * process_limit``, so 40k connections in the above configuration.
 
