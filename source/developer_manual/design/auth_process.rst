@@ -5,7 +5,7 @@ Authentication process design
 =============================
 
 See :ref:`Design/Processes <dovecot_processes>`
-for an overview of how the authentication process works.
+for an overview of how the Dovecot processes work.
 
 There are four major classes in the code:
 
@@ -18,49 +18,45 @@ There are four major classes in the code:
 -  ``struct userdb_module``: User database
 
 There are many implementations for each of these, and it's simple to add
-more of them. They can also be added as plugins, although the current
-plugin loading code doesn't allow loading authentication mechanisms
-cleanly, and it's not possible to add new credentials (see below).
+more of them. They can also be added as plugins.
 
 The code flow usually goes like:
 
--  Dovecot-auth listens for new authentication client connections (the
-   listener socket is created by master process and passed in
-   MASTER_SOCKET_FD -> ``main.c:main_init()`` ->
-   ``auth-master-connection.c:auth_master_listener_add()``)
-
--  A new authentication client connects via UNIX socket
-   (``auth-master-connection.c:auth_master_listener_accept()`` ->
-   ``auth-client-connection.c:auth_client_connection_create()``)
-
--  Authentication client begins an authentication
-   (``auth-client-connection.c:auth_client_input()`` ->
-   ``auth_client_handle_line()`` ->
-   ``auth-request-handler.c:auth_request_handler_auth_begin()`` [ ->
-   ``auth-request.c:auth_request_new()``])
-
+-  The auth process listens for new authentication client connections.
+-  A new authentication client (e.g. login process) connects to the ``login``
+   or ``auth-client`` UNIX socket.
+-  Authentication client sends a request to begin a SASL authentication.
 -  Authentication mechanism backend handles it (``mech->auth_initial()``
    and ``mech->auth_continue()`` in ``mech-*.c``)
+-  The mechanism either asks the passdbs to verify a username/password pair
+   (``auth_request_verify_plain()``), or it looks up the credentials itself
+   (``auth_request_lookup_credentials()``) and verifies that they are valid.
+-  Success reply is sent to the authentication client.
+-  If this is a login from login process, it creates a mail process by
+   connects to the process type-specific socket (e.g. ``imap`` or ``pop3``)
+   and sending the authentication reply information to it.
+-  The mail process connects to the ``auth-master`` UNIX socket and finishes
+   the authentication request. This includes doing a userdb lookup, which is
+   returned back to the mail process.
 
--  The mechanism looks up the password from passdb
-   (``auth-request.c:auth_request_verify_plain()`` and
-   ``auth_request_lookup_credentials()``) and the password scheme code
-   to verifies it (``password-scheme.c:password_verify()`` and
-   ``password_generate()``)
+The authentication client is fully asynchronous and it supports handling
+multiple requests in parallel.
 
--  If user is logging in, the user information is looked up from the
-   userdb (``auth-master-connection.c:master_input()`` ->
-   ``master_input_request()`` ->
-   ``auth-request-handler.c:auth_request_handler_master_request()`` ->
-   ``auth-request.c:auth_request_lookup_user()``)
+It's also possible to do passdb and userdb lookups directly without full
+authentication.
 
--  The authentication may begin new authentication requests even before
-   the existing ones are finished.
+The login socket is mostly treated as untrusted. It's not possible for it
+to authenticate users without actually providing the proper credentials.
+However, there are some fields that need to be trusted:
 
-It's also possible to request a userdb lookup directly, for example
-Dovecot's :ref:`deliver <lda>` needs that. The code path for that goes
-``auth-master-connection.c:master_input()`` -> ``master_input_user()``
--> ``auth-request.c:auth_request_lookup_user()``.
+ * Client IP address and port
+ * Local server IP address and port
+ * Connecting proxy's IP address and port
+ * Client TLS certificate's username and trust status. This means that if
+   authentication is done via client TLS certificates, the auth process simply
+   trusts the login process to verify the certificate. This breaks the trust
+   model and should be fixed some day.
+
 
 Authentication mechanisms
 -------------------------
