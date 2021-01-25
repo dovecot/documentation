@@ -10,57 +10,107 @@ because it allows setting up different privileges for each process. The
 most important processes are:
 
 -  Master process (dovecot)
+-  Log process (log)
+-  Config process (config)
+-  Authentication process (auth)
 -  Login processes (imap-login, pop3-login)
--  Authentication process (dovecot-auth)
--  Mail processes (imap, pop3)
+-  Mail processes (imap, pop3, lmtp)
+
+.. image:: _static/auth.png
 
 
 Master process
 --------------
 
 This process keeps all the other processes running. If a child process
-dies, another one is restarted automatically. It always runs as root,
-unless you're specifically running everything under a single normal UID.
+dies, another one is restarted automatically if necessary. The master
+process runs as root, so its functionality is attempted to be kept minimal.
 
-The master process reads the configuration file and exports the settings
-to other processes via environment variables.
+The master process is the only process that opens all inet, unix socket and
+fifo listeners. These listener fds are then passed to child processes that
+it forks.
 
-All logging also goes through master process. This avoids problems with
-rotating log files, as there's only a single process to send a signal to
-reopen the log file. Also writing to the same log file (if not using
-syslog) isn't necessarily safe to do in multiple processes concurrently.
+Each service has a pipe that is used by the service's processes to send status
+updates to master about how many client connections it can still accept.
+If the master process sees that the service is completely full and can't
+accept any more client connections, it logs a warning and eventually starts
+rejecting the client connections for the service.
 
-Making the logging go through master process also gives a couple of
-advantages from security and reliability point of view: All log lines
-can be prefixed with the process's name and the username of the user who
-was logged in, without the possibility for the process itself to forge
-them. Flooding logs can also be prevented. By default Dovecot allows
-non-privileged processes to write 10 lines per second before it begins
-to delay reading their input, which finally causes the badly behaving
-process to start blocking on writing to stderr instead of eating all the
-CPU and disk space.
+The login processes are special however: When master process notices that
+all login processes are full, it instead notifies them about it. The login
+processes then start closing their oldest connections in order to make space
+for more client connections. This prevent DoSing the login services by simply
+opening many idling connections.
 
-In the Dovecot 2.0 design, the master process is split to three parts:
-the Master process which does nothing more than keep the processes
-running, the config process which handles reading the configuration file
-(supporting also eg. SQL storages!) and the log process which handles
-the logging.
+Log process
+-----------
 
+Most of the logging is done via the log process. Only the master process
+and processes that start up standalone (e.g. ``dovecot-lda``) bypass the log
+process.
+
+The Dovecot master process sets up a separate pipe for each service, which is
+shared by all the processses of that service. The write side of the pipe
+becomes the processes' stderr fd, while the read side is read by the log
+process.
+
+Log process has a few benefits over direct logging:
+
+ * Log process can start throttling a service that logs too rapidly.
+ * All stderr output logged by processes will be caught by the log process,
+   so any errors printed by libraries will not be lost. These errors will
+   also always have a log prefix showing which service caused the error.
+ * Avoids duplicate log lines about crashes. If a panic is logged before a
+   process crashes, there's no unnecessary line logged about process dying
+   with signal 6.
+
+Config process
+--------------
+
+The config processes parse the configuration file and feed the parsed output
+in a simplified format to all the other processes via UNIX socket connections.
+
+The master process reads its configuration in a different way: It first
+executes the ``doveconf`` binary, which reads the configuration into
+environment variables and then executes back the dovecot master binary.
+
+Standalone tools like ``dovecot-lda`` and ``doveadm`` first try to read the
+configuration via UNIX socket connection, but if that fails they do it by
+executing ``doveconf``.
+
+Authentication process
+----------------------
+
+The auth process handles everything related to the actual authentication:
+SASL authentication mechanisms, looking up and verifying the passwords and
+looking up user information.
+
+There is only a single auth master process, which accepts all incoming
+connections. This means that the auth process needs to be very efficient in
+what it does and must not block for long or it will cause all the
+authentications to hang.
+
+To handle potentially long-running blocking operations there are auth worker
+processes. These are often used for passdb and userdb lookups. The auth worker
+processes can also be used for verifying password hashes, which may be
+necessary if strong hashing algorithms are used.
 
 Login processes
 ---------------
 
-The login processes implement the required minimum of the IMAP and POP3
-protocols before a user logs in successfully. There are separate
-processes (and binaries) to handle IMAP and POP3 protocols.
+The login processes implement the required minimum of the IMAP, POP3,
+ManageSieve or Submission protocols before a user logs in successfully.
+Each protocol is handled by a separate process (and binary).
 
 These processes are run with least possible privileges. Unfortunately
 the default UNIX security model still allows them to do much more than
 they would have to: Accept new connections on a socket, connect to new
 UNIX sockets and read and write to existing file descriptors. Still, the
 login process is by default run under a user account that has no special
-access to anything, and inside a non-writable chroot where only a couple
-of files exist. Doing any damage inside there should be difficult.
+access to anything, and runs inside a non-writable chroot where only a couple
+of UNIX sockets exist. Doing any damage inside there to the server itself
+should be difficult. It could of course still create connections to other
+services that would normally be unavailable from external IP addresses.
 
 When a new connection comes, one of the login processes accept()s it.
 After that the client typically does nothing more than ask the server's
@@ -68,22 +118,20 @@ capability list and then log in. The client may also start TLS session
 before logging in.
 
 Authentication is done by talking to the authentication process. The
-login process is completely untrusted by the authentication process, so
+login process is untrusted by the authentication process, so
 even if an attacker is able to execute arbitrary code inside a login
 process, they won't be able to log in without a valid username and
 password.
 
 After receiving a successful authentication reply from the
-authentication process, the login process sends the file descriptor to
-the master process which creates a new mail process and transfers the fd
-into it. Before doing that, the master process verifies from the
-authentication process that the authentication really was successful.
+authentication process, the login process connects to the mail process via
+UNIX socket and sends the file descriptor it. The mail process verifies from
+the auth process that the authentication really was successful.
 
 By default each login process will handle only a single connection and
 afterwards kill itself (but see SSL proxying below). This way attacker
-can't see other people's connections. This can however be disabled
-(``login_process_per_connection=no``), in which case the security of the
-design suffers greatly.
+can't see other people's connections. This can however be disabled, in which
+case the security of the design suffers greatly.
 
 The login processes handle SSL/TLS connections themselves completely.
 They keep proxying the connection to mail processes for the entire
@@ -94,53 +142,21 @@ the login process.
 See :ref:`login_processes` for more information about different settings related to login
 processes.
 
-Authentication process
-----------------------
-
-The authentication process handles everything related to the actual
-authentication: SASL authentication mechanisms, looking up and verifying
-the passwords and looking up user information.
-
-It listens for two different kinds of connections: untrusted
-authentication client connections (from login processes) and master
-connections (from master process, but also from Dovecot LDA). The client
-connections are only allowed to try to authenticate. The master
-connections are allowed to ask if an authentication request with a given
-ID was successful, and also to look up user information based on a
-username. This user lookup feature is used by Dovecot LDA.
-
-Each client connection tells their process ID to the authentication
-process in a handshake. If a connection with the same PID already
-exists, an error is logged and the new connection is refused. Although
-this makes DoS attacks possible, it won't go unnoticed for long and I
-don't see this as a real issue for now.
-
-Having the authentication process know the PID of the client connection
-allows all authentication requests to be mapped to one specific client
-connection. Since the master process knows the login process's real PID,
-it's used when asking from authentication process if the request was
-successful. This makes it impossible for a login process to try to fake
-another login process's login requests. Faking PIDs will also be quite
-pointless.
-
-Once the master process has done the verification request for a
-successful authentication request, the request is freed from memory. The
-requests are also freed about 2 minutes after their creation, regardless
-of the state they currently are in.
-
-For blocking password and user database backends (eg. MySQL) separate
-"worker processes" are used. Initially only one of them exists, but more
-are created as needed.
-:ref:`PAM <authentication-pam>`
-can be configured to use worker processes instead of doing the forking
-itself, but this isn't currently done by default and there may be
-problems related to it. Also
-:ref:`checkpassword <authentication-checkpassword>`
-currently does the forking itself.
-
 Mail processes
 --------------
 
 These processes handle the actual post-login mail handling using the
-privileges of the logged in user. It's possible to chroot these
-processes, but practically it's usually more trouble than worth.
+privileges of the logged in user.
+
+Other processes
+---------------
+
+There are also various other processes commonly used:
+
+ * anvil: Keep track of which mail processes handle which users
+ * dict: Proxy process for dict lookups
+ * dns-client: Asynchronous DNS lookups
+ * imap-hibernate: IDLEing imap connections can be moved to hibernation processes.
+ * indexer and indexer-worker: For full text search indexing
+ * ipc: For communicating to login processes (a bit ugly, hopefully could be removed some day)
+ * stats: Tracking statistics
