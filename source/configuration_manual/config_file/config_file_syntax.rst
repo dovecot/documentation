@@ -52,14 +52,14 @@ Example:
 .. code-block:: none
 
    namespace inbox {
-   inbox = yes
+      inbox = yes
    }
    # ...
    # possibly included from another file:
    namespace inbox {
-   mailbox Trash {
-   special_use = \Trash
-   }
+      mailbox Trash {
+        special_use = \Trash
+      }
    }
    # The namespaces get merged into the same inbox namespace.
 
@@ -70,9 +70,9 @@ Example:
 .. code-block:: none
 
    service auth {
-   unix_listener auth-master {
-   # ..
-   }
+      unix_listener auth-master {
+         # ..
+      }
    }
 
 Above the "auth-master" both uniquely identifies the section name, but also it names the UNIX socket path.
@@ -93,16 +93,16 @@ There are a few different filters that can be used to apply settings conditional
 
 These filters work for most of the settings, but most importantly auth settings currently only support the protocol filter. Some of the other settings are also global and can't be filtered, such as log_path.
 
-An example, which uses all of the filters:
+An example, which uses all of the filters::
 
    local 127.0.0.1 {
-   local_name imap.example.com {
-   remote 10.0.0.0/24 {
-   protocol imap {
-   # ...
-   }
-   }
-   }
+      local_name imap.example.com {
+         remote 10.0.0.0/24 {
+            protocol imap {
+               # ...
+            }
+         }
+      }
    }
 
 The nesting of the filters must be exactly in that order or the config parsing will fail.
@@ -114,13 +114,13 @@ Example:
 .. code-block:: none
 
    local 127.0.0.2 {
-   key = 127.0.0.2
+      key = 127.0.0.2
    }
    local 127.0.0.0/24 {
-   key = 127.0.0.0/24
+      key = 127.0.0.0/24
    }
    local 127.0.0.1 {
-   key = 127.0.0.1
+      key = 127.0.0.1
    }
    # The order of the above blocks doesn't matter:
    # If local IP=127.0.0.1, key=127.0.0.1
@@ -165,9 +165,9 @@ Example:
 .. code-block:: none
 
    protocol imap {
-   plugin {
-   !include imap-plugin-settings.conf
-   }
+      plugin {
+         !include imap-plugin-settings.conf
+      }
    }
 
 External config files
@@ -234,7 +234,7 @@ This is commonly used with `mail_plugins` settings to easily add more plugins e.
 
    mail_plugins = acl quota
    protocol imap {
-   mail_plugins = $mail_plugins imap_acl imap_quota
+      mail_plugins = $mail_plugins imap_acl imap_quota
    }
 
 However, you must be careful with the ordering of these in the configuration file, because the `$variables` are expanded immediately while parsing the config file and they're not updated later. 
@@ -247,12 +247,12 @@ For example this is a common problem:
    # Enable ACL plugin:
    mail_plugins = $mail_plugins acl
    protocol imap {
-   mail_plugins = $mail_plugins imap_acl
+      mail_plugins = $mail_plugins imap_acl
    }
    # Enable quota plugin:
    mail_plugins = $mail_plugins quota
    protocol imap {
-    mail_plugins = $mail_plugins imap_quota
+     mail_plugins = $mail_plugins imap_quota
    }
    # The end result is:
    # mail_plugins = " acl quota" - OK
