@@ -4,7 +4,7 @@
 Dovecot Design
 ====================
 - :ref:`Overview of Dovecot processes <dovecot_processes>`
-- :ref:`Design of index files <dovecot_index_files>`
+- :ref:`Design of index files <mail_index_file_format>`
    -  :ref:`API for accessing the indexfiles <dovecot_mail_index_api>`
 - :ref:`Design of authentication process <dovecot_auth_process>`
    -  :ref:`Authentication protocol <dovecot_auth_protocol>`
