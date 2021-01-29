@@ -77,6 +77,7 @@ The parameters common to all object storages include:
 | loghdr=<name>                         |Headers with the given name in HTTP responses are logged as part of any error, debug or warning messages related to the HTTP   | none         |
 |                                       |request. These headers are also included in the http_request_finished event as fields prefixed with ``http_hdr_``.             |              |
 |                                       |Can be specified multiple times.                                                                                               |              |
+|                                       |                                                                                                                               |              |
 |                                       |.. versionadded:: 2.3.10                                                                                                       |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | max_connect_retries=<n>               |Number of connect retries                                                                                                      | 2            |
