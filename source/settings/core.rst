@@ -2113,6 +2113,8 @@ Example:
 ``lmtp_add_received_header``
 ----------------------------
 
+.. versionadded:: v2.3.9
+
 - Default: ``yes``
 - Values: :ref:`boolean`
 
