@@ -18,10 +18,9 @@ Example Setting:
 
 .. code-block:: none
 
-  plugin
-     {
-      acl_shared_dict = file:/var/lib/dovecot/shared-mailboxes
-     }
+  plugin {
+    acl_shared_dict = file:/var/lib/dovecot/shared-mailboxes
+  }
 
 
 ``acl-storage-plugin``
@@ -92,9 +91,8 @@ Example Setting:
 
 .. code-block:: none
 
-   plugin 
-   { 
-    acl_defaults_from_inbox = yes
+   plugin {
+     acl_defaults_from_inbox = yes
    }
 
 As mentioned above in the plugin setting, If the default ACLs for private and shared namespaces (but not public namespaces) are taken from the INBOX. 
