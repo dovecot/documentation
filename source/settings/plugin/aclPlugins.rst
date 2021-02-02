@@ -4,6 +4,25 @@
 acl plugin
 ===============
 
+.. _plugin-acl-setting-acl_ignore_namespace:
+
+``acl_ignore_namespace``
+------------------------
+
+This parameter is used to igore ACLs entirely for the listed namespaces.
+
+.. versionadded:: 2.3.15
+
+Example Setting:
+
+.. code-block:: none
+
+    plugin {
+      acl_ignore_namespace = virtual/
+      # Ignore shared/ and all its (autocreated) child namespaces
+      acl_ignore_namespace2 = shared/*
+    }
+
 ``acl-lookup-dict-plugin``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
