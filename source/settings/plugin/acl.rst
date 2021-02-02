@@ -56,7 +56,7 @@ Master users
 
 Master users have their own ACLs. They're not the the mailbox owners, so by
 default they have no permissions to any of the mailboxes. See
-Authentication/MasterUsers#ACLs for more information.
+:ref:`ACLs at Master users <authentication-master_users_acls>` for more information.
 
 ACL vfile backend
 ^^^^^^^^^^^^^^^^^
@@ -106,9 +106,7 @@ mailboxes. They are used mainly for two purposes:
 1. Removing some permissions from users' personal mailboxes. For example each
    user might have an `Invoices` mailbox which will be read-only.
 2. Giving permissions to master user logins. See
-   `Authentication/MasterUsers#ACLs
-   <https://wiki.dovecot.org/Authentication/MasterUsers#ACLs>`_ for more
-   information.
+   :ref:`ACLs at Master users <authentication-master_users_acls>` for more information.
 
 If a mailbox has both global ACLs and the per-mailbox ACL file, both of them
 are read and the ACLs are merged. If there are any conflicts, the global ACL
