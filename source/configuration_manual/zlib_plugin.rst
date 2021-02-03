@@ -12,7 +12,7 @@ plugin supports compression and decompression using the following libraries:
 
 * zlib/gzip
 * bzlib/bzip2
-* liblzma/xz (v2.2.9+)
+* liblzma/xz (v2.2.9+ reading, v2.2.9-v2.3.13 writing)
 * liblz4/lz4 (v2.2.11+)
 * `Zstandard <https://facebook.github.io/zstd/>`_ (2.3.12+)
 
@@ -26,7 +26,7 @@ Configuration:
   # Enable these only if you want compression while saving:
   plugin {
     zlib_save_level = 6 # 1..9; default is 6
-    zlib_save = gz # or bz2, xz, lz4 or zstd
+    zlib_save = gz # or bz2, lz4 or zstd
   }
 
 mbox
