@@ -50,23 +50,59 @@ user=<username>
    Overrides the user name used for the lookup. Normally, the name of
    the user running the Sieve interpreter is used.
 
+
 If the name of the Script is left unspecified and not otherwise provided
 by the Sieve interpreter, the name defaults to \`\ ``default``'.
 
-The configuration file is based on the `auth userdb/passdb LDAP configuration
-<authentication_ldap>`. The
-following options are specific to the Sieve ldap location type:
+The configuration file is based on the :ref:`LDAP Authenticaion
+configuration <authentication-ldap_settings_common>`. The
+following parameters are specific to the Sieve ldap configuration:
 
-``sieve_ldap_filter = (&(objectClass=posixAccount)(uid=%u))``
-   The LDAP search filter that is used to find the entry containing the
-   Sieve script.
 
-``sieve_ldap_script_attr = mailSieveRuleSource``
-   The name of the attribute containing the Sieve script itself.
+.. _pigeonhole_ldap-sieve_ldap_filter:
 
-``sieve_ldap_mod_attr = modifyTimestamp``
-   The name of the attribute used to detect modifications to the LDAP
-   entry.
+``sieve_ldap_filter``
+---------------------
+
+- Default: ``(&(objectClass=posixAccount)(uid=%u))``
+- Values:  :ref:`string`
+
+The LDAP search filter that is used to find the entry containing the
+Sieve script.
+Below variables can be used:
+
+======== =============  ==================================================================
+Variable Long name      Description
+======== =============  ==================================================================
+%u       %{user}        username
+%n       %{username}    user part in user@domain, same as %u if there's no domain
+%d       %{domain}      domain part in user@domain, empty if user there's no domain
+N/A      %{home}        user's home directory
+N/A      %{name}        name of the Sieve script
+======== =============  ==================================================================
+
+.. _pigeonhole_ldap-sieve_ldap_script_attr:
+
+``sieve_ldap_script_attr``
+--------------------------
+
+- Default: ``mailSieveRuleSource``
+- Values:  :ref:`string`
+
+The name of the attribute containing the Sieve script.
+
+.. _pigeonhole_ldap-sieve_ldap_mod_attr:
+
+``sieve_ldap_mod_attr``
+-----------------------
+
+- Default: ``modifyTimestamp``
+- Values:  :ref:`string`
+
+The name of the attribute used to detect modifications to the LDAP
+entry.
+
+
 
 Example
 -------
