@@ -812,6 +812,7 @@ Example Setting:
  .. _setting-dict_db_config:
 
 ``dict_db_config``
+------------------
 
  - Default: <empty>
  - Values: :ref:`string`
@@ -2587,13 +2588,73 @@ Example Setting:
 
 A space-separated list of trusted network ranges.
 
-Typically used for IMAP proxy servers, allowing them to
-report a different IP address and port as the connection's origin for
-purposes of logging and authentication checks.
+This setting is used for a few different purposes, but most importantly it allows the client connection to tell the server what the original client's IP address was.
+This original client IP address is then used for logging and authentication checks.
 
-The ``disable_plaintext_auth setting`` is ignored for these networks.
+Plaintext authentication is always allowed for trusted networks (:ref:`setting-disable_plaintext_auth` is ignored).
 
-See :ref:`setting-disable_plaintext_auth`
+The details of how this setting works depends on the used protocol:
+
+IMAP:
+
+ * ID command can be used to override:
+
+   * Session ID
+   * Client IP and port (``%{rip}``, ``%{rport}``)
+   * Server IP and port (``%{lip}``, ``%{lport}``)
+
+ * ``forward_*`` fields can be sent to auth process's passdb lookup
+ * The trust is always checked against the connecting IP address.
+   Except if HAProxy is used, then the original client IP address is used.
+
+POP3:
+
+ * XCLIENT command can be used to override:
+
+   * Session ID
+   * Client IP and port (``%{rip}``, ``%{rport}``)
+
+ * ``forward_*`` fields can be sent to auth process's passdb lookup
+ * The trust is always checked against the connecting IP address.
+   Except if HAProxy is used, then the original client IP address is used.
+
+ManageSieve:
+
+ * XCLIENT command can be used to override:
+
+   * Session ID
+   * Client IP and port (``%{rip}``, ``%{rport}``)
+
+ * The trust is always checked against the connecting IP address.
+   Except if HAProxy is used, then the original client IP address is used.
+
+Submission:
+
+ * XCLIENT command can be used to override:
+
+   * Session ID
+   * Client IP and port (``%{rip}``, ``%{rport}``)
+   * HELO - Overrides what the client sent earlier in the EHLO command
+   * LOGIN - Currently unused
+   * PROTO - Currently unused
+
+ * ``forward_*`` fields can be sent to auth process's passdb lookup
+ * The trust is always checked against the connecting IP address.
+   Except if HAProxy is used, then the original client IP address is used.
+
+LMTP:
+
+ * XCLIENT command can be used to override:
+
+   * Session ID
+   * Client IP and port (``%{rip}``, ``%{rport}``)
+   * HELO - Overrides what the client sent earlier in the LHLO command
+   * LOGIN - Currently unused
+   * PROTO - Currently unused
+   * TIMEOUT (overrides :ref:`setting-mail_max_lock_timeout`)
+
+ * The trust is always checked against the connecting IP address.
+   Except if HAProxy is used, then the original client IP address is used.
 
 
 .. _setting-mail_access_groups:
@@ -2647,7 +2708,20 @@ To enable this feature, you can set mail_attachment_detection_options.
 
 It supports following options
 
-* **add-flags-on-save** - Enables the feature, attachments are detected and marked during save
+* **add-flags** - Enables the feature, attachments are detected and marked during save.
+  Detection is done also during fetch if it can be done without extra disk IO and with minimal CPU cost.
+  This means that either both mime.parts and imap.bodystructure has to be in cache already, or if mail body is opened in any case.
+
+  .. versionadded:: v2.3.13
+* **add-flags-on-save** - Deprecated alias for **add-flags**.
+  Before v2.3.13 the detection was done only during save, not during fetch.
+
+  .. deprecated:: v2.3.13
+* **add-flags no-flags-on-fetch** - Flags are added during save, but not during fetch.
+  This option was added in case the change causes unexpected performance problems, so it could be disabled.
+  This option will likely be removed in a later release.
+
+  .. versionadded:: v2.3.13
 * **content-type=type|!type** - Include or exclude given content type. Including will only negate an exclusion (e.g. content-type=!foo/* content-type=foo/bar).
 * **exclude-inlined** - Do not consider any attachment with disposition inlined.
 
@@ -2933,12 +3007,21 @@ isn't finding certain mail messages.
 - Default: ``optimized``
 
 Specify when to use fsync() or fdatasync() calls.
+Using fsync waits until the data is written to disk before it continues, which is used to prevent corruption or data loss in case of server crashes.
+This setting applies to mail files and index files on the filesystem.
+This setting doesn't apply to object storage operations.
 
 Options:
 
-* ``always``: Useful for NFS, when write()s are delayed
-* ``never``: Better performance, but risk of data loss in a crash
-* ``optimized``: Recommended for avoiding loss of important data
+* ``always``: Use fsync after all disk writes.
+  Recommended for NFS to make sure there aren't any delayed write()s.
+* ``optimized``: Use fsync after important disk writes.
+  For example cache file writes aren't fsynced, because they can be regenerated if necessary.
+* ``never``: Never fsync any disk writes.
+  This provides the best performance, but risks losing recently saved emails in case of a crash with most mailbox formats.
+
+  With obox format this option is recommended to be used, because it affects only the local metacache operations.
+  If a server crashes, the existing metacache is treated as potentially corrupted and isn't used.
 
 
 .. _setting-mail_full_filesystem_access:

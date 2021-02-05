@@ -4,11 +4,14 @@
 Events
 ######
 
-List of all events emitted by Dovecot.
+List of all events emitted by Dovecot for statistics, exporting and filtering.
 
-These events can be used in :ref:`statistics` and :ref:`event_export`.
+See also:
 
-See :ref:`event_design` for technical implementation details.
+ * :ref:`statistics`
+ * :ref:`event_export`
+ * :ref:`event_filter`
+ * :ref:`event_design` for technical implementation details
 
 **********
 Categories
@@ -899,6 +902,56 @@ Emitted when a server connection is terminated.
 | reason              | Disconnection reason                                 |
 +---------------------+------------------------------------------------------+
 
+FS
+==
+
+.. _event_fs:
+
+fs
+--
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from environment (e.g. :ref:`event_mail_user`)                    |
++---------------------+------------------------------------------------------+
+
+.. _event_fs_file:
+
+fs_file
+-------
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_fs` or any other specified event                 |
+| (e.g. :ref:`event_mail`)                                                   |
++---------------------+------------------------------------------------------+
+
+.. _event_fs_iter:
+
+fs_file
+-------
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_fs` or any other specified event                 |
+| (e.g. :ref:`event_mailbox`)                                                |
++---------------------+------------------------------------------------------+
+
+If the file was created for obox, it has also fields:
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| file_type           | * mail: Email file                                   |
+|                     | * index: Index bundle                                |
+|                     | * box: Mailbox directory (for creating/deleting it,  |
+|                     |   if used by the storage driver)                     |
++---------------------+------------------------------------------------------+
+| reason              | Reason for accessing the file                        |
++---------------------+------------------------------------------------------+
 
 Storage
 =======
@@ -2315,6 +2368,32 @@ indexes in metacache.
 fs-dictmap
 ----------
 
+
+fs_dictmap_dict_write_uncertain
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.13
+
+The event is sent whenever a dict write is uncertain.
+E.g. writes to Cassandra may eventually succeed even if the write initially appeared to fail.
+
++-----------------------+-------------------------------------------------------+
+| Field                 | Description                                           |
++=======================+=======================================================+
+| Inherits from :ref:`event_fs_file`                                            |
++-----------------------+-------------------------------------------------------+
+| path                  | Virtual FS path to the object (based on dict)         |
++-----------------------+-------------------------------------------------------+
+| object_id             | Object ID in the storage                              |
++-----------------------+-------------------------------------------------------+
+| cleanup               | ``success``, ``failed`` or ``disabled``. Indicates if |
+|                       | uncertain write was attempted to be cleaned (deleted) |
+|                       | and whether it was successful.                        |
+|                       | See :ref:`dictmap_configuration_parameters`.          |
++-----------------------+-------------------------------------------------------+
+| error                 | Error message why the write initially failed          |
++-----------------------+-------------------------------------------------------+
+
 fs_dictmap_object_lost
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2326,12 +2405,71 @@ happens.
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
 +=======================+======================================================+
-| Inherits from fs_file                                                        |
+| Inherits from :ref:`event_fs_file`                                           |
 +-----------------------+------------------------------------------------------+
 | path                  | Virtual FS path to the object (based on dict)        |
 +-----------------------+------------------------------------------------------+
 | object_id             | Object ID in the storage                             |
 +-----------------------+------------------------------------------------------+
+
+fs_dictmap_max_bucket_changed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.13
+
+This event is sent whenever the ``max_bucket`` value for a mailbox changes.
+There can be three situations when this happens: Either a new mail is added to a
+mailbox, where the current bucket is found to be filled and the next bucket is
+started to be filled (``reason = file``).
+
+Besides the expected situation, Dovecot emits this event if it encounters a
+bucket with a higher index then the current max_bucket while
+iterating a mailbox (``reason = iter``).
+
+.. versionchanged:: 2.3.14
+        In addition ``max_bucket`` can be shrunk in case an iteration discovers empty
+        buckets before the current ``max_bucket`` value (``reason = iter``).
+
+The ``error`` field is only set if setting the new ``max_bucket`` value
+failed.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| Inherits either from :ref:`event_fs_file` or :ref:`event_fs_iter`            |
++-----------------------+------------------------------------------------------+
+| reason                | Either ``file`` or ``iter`` depending on the source  |
+|                       | of the event as explained above.                     |
++-----------------------+------------------------------------------------------+
+| old_max_bucket        | The ``max_bucket`` value for the current mailbox,    |
+|                       | before the event was emitted.                        |
++-----------------------+------------------------------------------------------+
+| max_bucket            | The newly set ``max_bucket`` value.                  |
++-----------------------+------------------------------------------------------+
+| error                 | Error string if error occurred.                      |
++-----------------------+------------------------------------------------------+
+
+
+fs_dictmap_empty_bucket_iterated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.14
+
+In case an empty bucket is found while iterating which is not the last bucket
+emit an event.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| Inherits from :ref:`event_fs_iter`                                           |
++-----------------------+------------------------------------------------------+
+| empty_bucket          | Index of the empty bucket that was just discovered   |
++-----------------------+------------------------------------------------------+
+| max_bucket            | The current ``max_bucket`` value.                    |
++-----------------------+------------------------------------------------------+
+| deleted_count         | The count of deleted keys for the empty bucket.      |
++-----------------------+------------------------------------------------------+
+
 
 Dictionaries
 ============
