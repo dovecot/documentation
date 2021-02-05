@@ -17,7 +17,7 @@ The syntax generally looks like this:
 
 If Dovecot doesn't seem to be reading your configuration correctly, use `doveconf -n` to check how Dovecot actually parses it. You can also check more complex configurations by providing filters,
 
-Example: 
+Example:
 
 .. code-block:: none
 
@@ -37,7 +37,7 @@ Sections look like this:
       }
    }
 
-.. Note:: The sections must be currently written with the linefeeds as shown above. 
+.. Note:: The sections must be currently written with the linefeeds as shown above.
 
 So for example this doesn't work:
 
@@ -45,34 +45,34 @@ So for example this doesn't work:
 
    section optional_name { key = value } # DOES NOT WORK
 
-The sections can be optionally named. This is especially useful if you want to update the same section later on in the config. 
+The sections can be optionally named. This is especially useful if you want to update the same section later on in the config.
 
 Example:
 
 .. code-block:: none
 
    namespace inbox {
-   inbox = yes
+      inbox = yes
    }
    # ...
    # possibly included from another file:
    namespace inbox {
-   mailbox Trash {
-   special_use = \Trash
-   }
+      mailbox Trash {
+        special_use = \Trash
+      }
    }
    # The namespaces get merged into the same inbox namespace.
 
-Without naming the namespace it would have created a new namespace. The section name may also sometimes be used as part of the settings instead of simply a name. 
+Without naming the namespace it would have created a new namespace. The section name may also sometimes be used as part of the settings instead of simply a name.
 
 Example:
 
 .. code-block:: none
 
    service auth {
-   unix_listener auth-master {
-   # ..
-   }
+      unix_listener auth-master {
+         # ..
+      }
    }
 
 Above the "auth-master" both uniquely identifies the section name, but also it names the UNIX socket path.
@@ -93,34 +93,34 @@ There are a few different filters that can be used to apply settings conditional
 
 These filters work for most of the settings, but most importantly auth settings currently only support the protocol filter. Some of the other settings are also global and can't be filtered, such as log_path.
 
-An example, which uses all of the filters:
+An example, which uses all of the filters::
 
    local 127.0.0.1 {
-   local_name imap.example.com {
-   remote 10.0.0.0/24 {
-   protocol imap {
-   # ...
-   }
-   }
-   }
+      local_name imap.example.com {
+         remote 10.0.0.0/24 {
+            protocol imap {
+               # ...
+            }
+         }
+      }
    }
 
 The nesting of the filters must be exactly in that order or the config parsing will fail.
 
-When applying the settings, the settings within the most-specific filters override the less-specific filter's settings, so the order of the filters in config file doesn't matter. 
+When applying the settings, the settings within the most-specific filters override the less-specific filter's settings, so the order of the filters in config file doesn't matter.
 
 Example:
 
 .. code-block:: none
 
    local 127.0.0.2 {
-   key = 127.0.0.2
+      key = 127.0.0.2
    }
    local 127.0.0.0/24 {
-   key = 127.0.0.0/24
+      key = 127.0.0.0/24
    }
    local 127.0.0.1 {
-   key = 127.0.0.1
+      key = 127.0.0.1
    }
    # The order of the above blocks doesn't matter:
    # If local IP=127.0.0.1, key=127.0.0.1
@@ -140,7 +140,7 @@ The main dovecot.conf file can also include other config files:
    !include /path/to/another.conf
    !include conf.d/*.conf
 
-The paths are relative to the currently parsed config file's directory. 
+The paths are relative to the currently parsed config file's directory.
 
 Example:
 
@@ -158,21 +158,21 @@ If any of the includes fail (e.g. file doesn't exist or permission denied), it r
 
    !include_try passwords.conf
 
-Including a file preserves the context where it's included from. 
+Including a file preserves the context where it's included from.
 
 Example:
 
 .. code-block:: none
 
    protocol imap {
-   plugin {
-   !include imap-plugin-settings.conf
-   }
+      plugin {
+         !include imap-plugin-settings.conf
+      }
    }
 
 External config files
 ^^^^^^^^^^^^^^^^^^^^^^
-Due to historical reasons there are still some config files that are external to the main `dovecot.conf`, which are typically named `*.conf.ext`. 
+Due to historical reasons there are still some config files that are external to the main `dovecot.conf`, which are typically named `*.conf.ext`.
 
 Example:
 
@@ -190,7 +190,7 @@ Eventually these external config files will hopefully be removed.
 
 Long lines
 ^^^^^^^^^^^^
-It's possible to split the setting values into multiple lines. Unfortunately this was broken for a long time, so outside `*.conf.ext` files this works only in 
+It's possible to split the setting values into multiple lines. Unfortunately this was broken for a long time, so outside `*.conf.ext` files this works only in
 
 .. versionadded:: v2.2.22
 
@@ -218,7 +218,7 @@ The value is read exactly as the entire contents of the file. This includes all 
 Variable expansion
 ^^^^^^^^^^^^^^^^^^^
 
-It's possible to refer to other earlier settings as $name. 
+It's possible to refer to other earlier settings as $name.
 
 Example:
 
@@ -234,10 +234,10 @@ This is commonly used with `mail_plugins` settings to easily add more plugins e.
 
    mail_plugins = acl quota
    protocol imap {
-   mail_plugins = $mail_plugins imap_acl imap_quota
+      mail_plugins = $mail_plugins imap_acl imap_quota
    }
 
-However, you must be careful with the ordering of these in the configuration file, because the `$variables` are expanded immediately while parsing the config file and they're not updated later. 
+However, you must be careful with the ordering of these in the configuration file, because the `$variables` are expanded immediately while parsing the config file and they're not updated later.
 
 For example this is a common problem:
 
@@ -247,12 +247,12 @@ For example this is a common problem:
    # Enable ACL plugin:
    mail_plugins = $mail_plugins acl
    protocol imap {
-   mail_plugins = $mail_plugins imap_acl
+      mail_plugins = $mail_plugins imap_acl
    }
    # Enable quota plugin:
    mail_plugins = $mail_plugins quota
    protocol imap {
-    mail_plugins = $mail_plugins imap_quota
+     mail_plugins = $mail_plugins imap_quota
    }
    # The end result is:
    # mail_plugins = " acl quota" - OK
@@ -265,3 +265,13 @@ For example this is a common problem:
 This is because the second mail_plugins change that added `quota` globally didn't update anything inside the existing `protocol { .. }` or other filters.
 
 Some variables exist in the plugin section only, such as `sieve_extensions`. Those variables cannot be referred to, that is `$sieve_extensions` won't work.
+
+Environment variables
+^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: v2.3.14
+
+It is possible use ``$ENV:name`` to expand values from environment.
+Expansion only works when it's surrounded by spaces, and is not inside ``"quotes"`` or ``'quotes'``.
+Note that these are also Case Sensitive.
+These can also be used for external config files, but you need to list them in :ref:`setting-import_environment` so that processes can see them.

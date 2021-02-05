@@ -1,0 +1,2 @@
+# dovecot-2.3.13-rev4 Ubuntu 16.04 LTS (Xenial Xerus) - OX Dovecot Pro Full Text Search plug-in
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.13/fts/Ubuntu_16.04 ./

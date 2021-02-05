@@ -40,17 +40,17 @@ Global variables that work everywhere are:
 
 If var_expand_crypt plugin is loaded (see `Plugins/VarExpandCrypt <https://wiki.dovecot.org/Plugins/VarExpandCrypt>`_):
 
-+-------------------------------+-----------------------------------------------------------+
-| Long name                     | Description                                               |
-+===============================+===========================================================+
-| encrypt; <parameters>:<field> | Encrypt field (v2.2.29+)                                  |
-|                               |                                                           |
-|                               | .. versionadded:: v2.2.29                                 |
-+-------------------------------+-----------------------------------------------------------+
-| decrypt; <parameters>:<field> | Decrypt field                                             |
-|                               |                                                           |
-|                               | .. versionadded:: v2.2.29                                 |
-+-------------------------------+-----------------------------------------------------------+
++-------------------------------+-----------------------------+
+| Long name                     | Description                 |
++===============================+=============================+
+| encrypt; <parameters>:<field> | Encrypt field (v2.2.29+)    |
+|                               |                             |
+|                               | .. versionadded:: v2.2.29   |
++-------------------------------+-----------------------------+
+| decrypt; <parameters>:<field> | Decrypt field               |
+|                               |                             |
+|                               | .. versionadded:: v2.2.29   |
++-------------------------------+-----------------------------+
 
 .. _variables-mail_service_user:
 
@@ -69,9 +69,13 @@ Mail service user variables:
 +----------+----------------+---------------------------------------------------------------+
 | %p       | pid            | PID of the current process                                    |
 +----------+----------------+---------------------------------------------------------------+
-| %l       | lip            | local IP address                                              |
+| %l       | local_ip       | local IP address                                              |
+|          |                |                                                               |
+|          |                | .. versionchanged:: v2.3.14 variable long name changed        |
 +----------+----------------+---------------------------------------------------------------+
-| %r       | rip            | remote IP address                                             |
+| %r       | remote_ip      | remote IP address                                             |
+|          |                |                                                               |
+|          |                | .. versionchanged:: v2.3.14 variable long name changed        |
 +----------+----------------+---------------------------------------------------------------+
 | %i       | uid            | UNIX user identifier of the user                              |
 +----------+----------------+---------------------------------------------------------------+
@@ -100,6 +104,14 @@ Mail service user variables:
 |          |                |                                                               |
 |          |                | .. versionadded:: v2.2.19                                     |
 +----------+----------------+---------------------------------------------------------------+
+|          | lip            | Deprecated version of %{local_ip}                             |
+|          |                |                                                               |
+|          |                | .. deprecated:: v2.3.14                                       |
++----------+----------------+---------------------------------------------------------------+
+|          | rip            | Deprecated version of %{rip}                                  |
+|          |                |                                                               |
+|          |                | .. deprecated:: v2.3.14                                       |
++----------+----------------+---------------------------------------------------------------+
 
 .. _variables-mail_user:
 
@@ -121,18 +133,30 @@ Login variables:
 +----------+--------------+-----------------------------------------------------------------+
 | Variable | Long name    | Description                                                     |
 +==========+==============+=================================================================+
-| %l       | lip          | local IP address                                                |
+| %l       | local_ip     | local IP address                                                |
+|          |              |                                                                 |
+|          |              | .. versionchanged:: v2.3.14 variable long name changed          |
 +----------+--------------+-----------------------------------------------------------------+
-| %r       | rip          | remote IP address                                               |
+| %r       | remote_ip    | remote IP address                                               |
+|          |              |                                                                 |
+|          |              | .. versionchanged:: v2.3.14 variable long name changed          |
 +----------+--------------+-----------------------------------------------------------------+
 | %s       | service      | imap, pop3, smtp, lda (and doveadm, dsync, etc.)                |
 +----------+--------------+-----------------------------------------------------------------+
 |          | local_name   | TLS SNI hostname, if given                                      |
-|          |                |                                                               |
-|          |                | .. versionadded:: v2.2.26                                     |
+|          |              |                                                                 |
+|          |              | .. versionadded:: v2.2.26                                       |
 +----------+--------------+-----------------------------------------------------------------+
 | %k       | ssl_security | TLS session security string. If HAProxy is configured and it    |
 |          |              | terminated the TLS connection, contains "(proxied)".            |
++----------+--------------+-----------------------------------------------------------------+
+|          | lip          | Deprecated version of %{local_ip}                               |
+|          |              |                                                                 |
+|          |              | .. deprecated:: v2.3.14                                         |
++----------+--------------+-----------------------------------------------------------------+
+|          | rip          | Deprecated version of %{remote_ip}                              |
+|          |              |                                                                 |
+|          |              | .. deprecated:: v2.3.14                                         |
 +----------+--------------+-----------------------------------------------------------------+
 
 .. _variables-auth:
@@ -164,72 +188,72 @@ Authentication variables:
 +----------+---------------------+---------------------------------------------------------------+
 | %l       | local_ip            | local IP address                                              |
 |          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.12 For older versions use %{lip}       |
+|          |                     | .. versionadded:: v2.3.13 For older versions use %{lip}       |
 +----------+---------------------+---------------------------------------------------------------+
 | %r       | remote_ip           | remote IP address                                             |
 |          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.12 For older versions use %{rip}       |
+|          |                     | .. versionadded:: v2.3.13 For older versions use %{rip}       |
 +----------+---------------------+---------------------------------------------------------------+
 | %a       | local_port          | local port                                                    |
 |          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.12 For older versions use %{lport}     |
+|          |                     | .. versionadded:: v2.3.13 For older versions use %{lport}     |
 +----------+---------------------+---------------------------------------------------------------+
 | %b       | remote_port         | remote port                                                   |
 |          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.12 For older versions use %{rport}     |
+|          |                     | .. versionadded:: v2.3.13 For older versions use %{rport}     |
 +----------+---------------------+---------------------------------------------------------------+
 |          | real_remote_ip      | Same as %{remote_ip}, except in proxy setups contains the     |
 |          |                     | remote proxy's IP instead of the client's IP                  |
 |          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.12 For older versions use %{real_rip}  |
+|          |                     | .. versionadded:: v2.3.13 For older versions use %{real_rip}  |
 +----------+---------------------+---------------------------------------------------------------+
 |          | real_local_ip       | Same as %{local_ip}, except in proxy setups contains the local|
 |          |                     | proxy's IP instead of the remote proxy's IP                   |
 |          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.12 For older versions use %{real_lip}  |
+|          |                     | .. versionadded:: v2.3.13 For older versions use %{real_lip}  |
 +----------+---------------------+---------------------------------------------------------------+
 |          | real_remote_port    | Similar to %{real_rip} except for port instead of IP          |
 |          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.12 For older versions use %{real_rport}|
+|          |                     | .. versionadded:: v2.3.13 For older versions use %{real_rport}|
 +----------+---------------------+---------------------------------------------------------------+
 |          | real_local_port     | Similar to %{real_lip} except for port instead of IP          |
 |          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.12 For older versions use %{real_lport}|
+|          |                     | .. versionadded:: v2.3.13 For older versions use %{real_lport}|
 +----------+---------------------+---------------------------------------------------------------+
 |          | rip                 | Deprecated version of %{remote_ip}                            |
 |          |                     |                                                               |
-|          |                     | .. deprecated:: v2.3.12                                       |
+|          |                     | .. deprecated:: v2.3.13                                       |
 +----------+---------------------+---------------------------------------------------------------+
 |          | lip                 | Deprecated version of %{local_ip}                             |
 |          |                     |                                                               |
-|          |                     | .. deprecated:: v2.3.12                                       |
+|          |                     | .. deprecated:: v2.3.13                                       |
 +----------+---------------------+---------------------------------------------------------------+
 |          | rport               | Deprecated version of %{remote_port}                          |
 |          |                     |                                                               |
-|          |                     | .. deprecated:: v2.3.12                                       |
+|          |                     | .. deprecated:: v2.3.13                                       |
 +----------+---------------------+---------------------------------------------------------------+
 |          | lport               | Deprecated version of %{local_port}                           |
 |          |                     |                                                               |
-|          |                     | .. deprecated:: v2.3.12                                       |
+|          |                     | .. deprecated:: v2.3.13                                       |
 +----------+---------------------+---------------------------------------------------------------+
 |          | real_rip            | Deprecated version of %{real_remote_ip}                       |
 |          |                     |                                                               |
-|          |                     | .. deprecated:: v2.3.12                                       |
+|          |                     | .. deprecated:: v2.3.13                                       |
 +----------+---------------------+---------------------------------------------------------------+
 |          | real_lip            | Deprecated version of %{real_local_ip}                        |
 |          |                     |                                                               |
 |          |                     | .. versionadded:: v2.2.0                                      |
-|          |                     | .. deprecated:: v2.3.12                                       |
+|          |                     | .. deprecated:: v2.3.13                                       |
 +----------+---------------------+---------------------------------------------------------------+
 |          | real_rport          | Deprecated version of %{real_remote_port}                     |
 |          |                     |                                                               |
 |          |                     | .. versionadded:: v2.2.0                                      |
-|          |                     | .. deprecated:: v2.3.12                                       |
+|          |                     | .. deprecated:: v2.3.13                                       |
 +----------+---------------------+---------------------------------------------------------------+
 |          | real_lport          | Deprecated version of %{real_local_port}                      |
 |          |                     |                                                               |
 |          |                     | .. versionadded:: v2.2.0                                      |
-|          |                     | .. deprecated:: v2.3.12                                       |
+|          |                     | .. deprecated:: v2.3.13                                       |
 +----------+---------------------+---------------------------------------------------------------+
 | %p       | pid                 | process ID of the authentication client                       |
 +----------+---------------------+---------------------------------------------------------------+
@@ -240,11 +264,11 @@ Authentication variables:
 +----------+---------------------+---------------------------------------------------------------+
 | %m       | mechanism           | :ref:`authentication-authentication_mechanisms` e.g. PLAIN    |
 |          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.12                                     |
+|          |                     | .. versionadded:: v2.3.13                                     |
 +----------+---------------------+---------------------------------------------------------------+
 |          | mech                | Deprecated version of %{mechanism}                            |
 |          |                     |                                                               |
-|          |                     | .. deprecated:: v2.3.12                                       |
+|          |                     | .. deprecated:: v2.3.13                                       |
 +----------+---------------------+---------------------------------------------------------------+
 | %w       | password            | plaintext password from plaintext authentication mechanism    |
 +----------+---------------------+---------------------------------------------------------------+
@@ -285,33 +309,33 @@ Authentication variables:
 |          | original_user       | Same as %{user}, except using the original username the client|
 |          |                     | sent before any changes by auth process                       |
 |          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.12                                     |
+|          |                     | .. versionadded:: v2.3.13                                     |
 +----------+---------------------+---------------------------------------------------------------+
 |          | original_username   | Same as %{username}, except using the original username       |
 |          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.12                                     |
+|          |                     | .. versionadded:: v2.3.13                                     |
 +----------+---------------------+---------------------------------------------------------------+
 |          | original_domain     | Same as %{domain}, except using the original username         |
 |          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.12                                     |
+|          |                     | .. versionadded:: v2.3.13                                     |
 +----------+---------------------+---------------------------------------------------------------+
 |          | orig_user           | Deprecated version of %{original_user}                        |
 |          |                     |                                                               |
 |          |                     | .. versionadded:: v2.2.6                                      |
 |          |                     | .. versionadded:: v2.2.13 Works in auth process.              |
-|          |                     | .. deprecated:: v2.3.12                                       |
+|          |                     | .. deprecated:: v2.3.13                                       |
 +----------+---------------------+---------------------------------------------------------------+
 |          | orig_username       | Deprecated version of %{original_username}                    |
 |          |                     |                                                               |
 |          |                     | .. versionadded:: v2.2.6                                      |
 |          |                     | .. versionadded:: v2.2.13 Works in auth process.              |
-|          |                     | .. deprecated:: v2.3.12                                       |
+|          |                     | .. deprecated:: v2.3.13                                       |
 +----------+---------------------+---------------------------------------------------------------+
 |          | orig_username       | Deprecated version of %{original_domain}                      |
 |          |                     |                                                               |
 |          |                     | .. versionadded:: v2.2.6                                      |
 |          |                     | .. versionadded:: v2.2.13 Works in auth process.              |
-|          |                     | .. deprecated:: v2.3.12                                       |
+|          |                     | .. deprecated:: v2.3.13                                       |
 +----------+---------------------+---------------------------------------------------------------+
 |          | passdb:<name>       | Return passdb extra field "name". %{passdb:name:default}      |
 |          |                     | returns "default" if "name" doesn't exist (not returned if    |
@@ -382,7 +406,7 @@ You can apply a modifiers for each variable (e.g. %Us or %U{service} = POP3):
 
    .. code-block:: none
 
-   %{sha256:user} or %{md5;truncate=32:user}.
+     %{sha256:user} or %{md5;truncate=32:user}.
 
    .. versionadded:: v2.2.27
 

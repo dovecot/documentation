@@ -13,6 +13,13 @@ There are two parts to the configuration:
 
 (2) event definition.
 
+See also:
+
+ * :ref:`list_of_events` for list of all events.
+ * :ref:`event_filter`
+ * :ref:`statistics`
+ * :ref:`event_design` for technical implementation details
+
 Exporter Definition
 ===================
 
