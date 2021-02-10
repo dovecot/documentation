@@ -4,7 +4,7 @@
 Buffers
 =======
 
-``lib/buffers.h`` describes Dovecot's buffer API. Unless your code
+``lib/buffer.h`` describes Dovecot's buffer API. Unless your code
 happens to be VERY performance critical, you shouldn't handle writing to
 buffers/arrays manually, but instead use the buffer API's safe functions
 to guarantee that your code can't write past the buffer and cause a
@@ -22,31 +22,31 @@ Static buffers
 
 You can create statically allocated buffers with
 ``buffer_create_data()``. Trying to write past the given buffer size
-will panic. The code to initialize this looks like:
+will panic. Static buffers don't need to be freed.
 
-::
+The code to initialize static buffers looks like::
 
    unsigned char buf_data[1024];
    buffer_t buf;
 
-   buffer_create_data(&buf, buf_data, sizeof(buf_data));
+   buffer_create_from_data(&buf, buf_data, sizeof(buf_data));
 
 Trying to write more than 1024 bytes to the buffer will cause an
 assert-crash, so these buffers shouldn't be used unless you know exactly
 what the maximum buffer size is.
 
-To avoid accidental buffer overflows, don't use any more complex
-calculations in the size parameter of ``buffer_create_data()``. It
+To avoid accidental buffer overflows, don't use complex
+calculations in the size parameter of ``buffer_create_from_data()``. It
 should always be ``sizeof(data_buffer)``.
 
 You can also create non-writable buffers with
-``buffer_create_const_data()``. Static buffers don't need to be freed.
+``buffer_create_from_const_data()``.
 
 Dynamic buffers
 ---------------
 
 Dynamically growing buffers can be created with
-``buffer_create_dynamic(pool, init_size)``. Memory for buffer is
+``buffer_create_dynamic(pool, init_size)``. Memory for the buffer is
 allocated from the given pool. When memory needs to be grown, it's grown
 exponentially (2^n), with some exceptions to avoid growing the given
 memory pool unless necessary. The initial buffer size is always a guess
