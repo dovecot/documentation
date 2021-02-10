@@ -13,12 +13,16 @@ Declaring
 
 Arrays can be declared in two ways:
 
-1. Directly: ``ARRAY_DEFINE(array_name, array_type);``. For example:
-   ``ARRAY_DEFINE(numbers, int);`` or
-   ``ARRAY_DEFINE(foos, struct foo);``
+#. Directly::
 
-2. Via predefined type:
-   ``ARRAY_DEFINE_TYPE(foo, struct foo); ... ARRAY_TYPE(foo) foos;``
+       ARRAY(int) numbers;
+       ARRAY(struct foo) foos;
+
+#. Via predefined type::
+
+       ARRAY_DEFINE_TYPE(foo, struct foo);
+       ...
+       ARRAY_TYPE(foo) foos;
 
 The main reason to define a type for an array is to be able to pass the
 array as a function parameter, like:
@@ -27,8 +31,8 @@ array as a function parameter, like:
 
    void func(ARRAY_TYPE(foo) *foos) { .. }
 
-Trying to do the same with ``ARRAY_DEFINE()`` will generate a compiler
-warning. ``lib/array-decl.h`` defines several commonly used types.
+Trying to do the same with ``ARRAY()`` will generate a compiler warning about
+type mismatch. ``lib/array-decl.h`` defines several commonly used types.
 
 Initializing
 ------------
@@ -44,7 +48,7 @@ Example:
 
 ::
 
-   ARRAY_DEFINE(foo, struct foo *);
+   ARRAY(struct foo *) foo;
 
    i_array_init(&foo, 32); /* initialize array with 32 elements until it needs to be grown */
 
@@ -55,47 +59,77 @@ alloconly-pool or data stack).
 Writing
 -------
 
--  ``array_append(array, data, count)`` is the most common way to add
-   data to arrays
-
--  ``array_append_array(dest, src)``
-
--  ``array_insert(array, idx, data, count)``
-
--  ``array_delete(array, idx, count)``
-
--  ``array_idx_set(array, idx, data)`` replaces (or adds) data to given
-   index
-
--  ``array_idx_clear(array, idx)`` clears given index by writing NULs to
-   it
-
--  ``array_append_space(array, count)``
+ * ``array_push_back(array, data)`` - Append one element to the end of the array.
+ * ``array_push_front(array, data)`` - Prepend one element to the begininng of the array.
+ * ``array_append(array, data, count)`` - Append multiple elements to the end of the array.
+ * ``array_append_zero(array)`` - Append a zero-filled element to the end of the array.
+ * ``array_append_array(dest, src)`` - Append src array to the end of the dest array.
+ * ``array_copy(dest, dest_idx, src, src_idx, count)`` - Copy (overwrite) a slice of the src array over the dest array.
+ * ``array_insert(array, idx, data, count)`` - Insert element at the specified index (0 = first)
+ * ``array_idx_set(array, idx, data)`` - Replace data at the specified index.
+   If index points after the end of the array, the other newly added elements are zero-filled.
+ * ``array_idx_clear(array, idx)`` - Zero-fill the data at the specified index.
+   If index points after the end of the array, the other newly added elements are zero-filled.
+ * ``array_delete(array, idx, count)`` - Delete the specified slice of the array.
+ * ``array_pop_back(array)`` - Delete the last element of the array.
+ * ``array_pop_front(array)`` - Delete the first element of the array.
+ * ``array_clear(array)`` - Delete all elements in the array.
 
 Reading
 -------
 
-``array_idx(array, idx)`` returns pointer to given index in array. The
-index must already exist, otherwise the call assert-crashes. This call
-adds extra overhead for accessing arrays though, so usually it's better
-to just get list of all elements and access them directly:
+Usually array is read by going through all of its elements. This can be
+done by returning all the elements::
 
-::
+   unsigned int count;
 
-   data = array_get(&array, &count);
+   const struct foo *foo = array_get(&array, &count);
+   struct foo *foo = array_get_modifiable(&array, &count);
 
-You can also iterate through the whole array easily:
+or the array can also be iterated easily::
 
-::
-
-   const char *str;
-
-   array_foreach(&string_array, str) {
-     /* str changes in each iteration */
+   const struct foo *foo;
+   array_foreach(&foo_array, foo) {
+     /* foo changes in each iteration */
    }
 
-There's also ``array_foreach_modifiable()`` to get the data without
-const.
+   struct foo *foo;
+   array_foreach_modifiable(&foo_array, foo) {
+     ...
+   }
+
+The ``_modifiable()`` versions return a non-const pointer.
+
+Arrays that are pointers-to-pointers can be iterated like::
+
+   ARRAY(struct foo *) foo_array;
+   struct foo *const *foop;
+   array_foreach(&foo_array, foop) {
+     struct foo *foo = foop;
+   }
+
+Or more simply using ``array_foreach_elem()``::
+
+   ARRAY(struct foo *) foo_array;
+   struct foo *foo;
+   array_foreach_elem(&foo_array, foo) {
+     ...
+   }
+
+It's a bug to attempt to use the read functions before the array is
+initialized. Use ``array_is_created()`` to check if it's initialized.
+
+There are also other functions for reading:
+
+ * ``array_idx(array, idx)`` - Return a const pointer to the specified index.
+   Assert-crashes if the index doesn't already exist.
+ * ``array_front(array)`` - Return a const pointer to the first element in the array.
+   Assert-crashes if the array is empty.
+ * ``array_back(array)`` - Return a const pointer to the last element in the array.
+   Assert-crashes if the array is empty.
+ * ``array_count(array)`` - Return the number of elements in an array.
+ * ``array_is_empty(array)`` - Return TRUE if array has zero elements.
+ * ``array_not_empty(array)`` - Return TRUE if array has more than zero elements.
 
 Unsafe Read/Write
 -----------------
@@ -105,24 +139,32 @@ Functions below have similar problems to [[Design/Buffer|buffer]'s
 after calls to other ``array_*()`` modifying functions, because they may
 reallocate the array elsewhere in memory.
 
--  ``array_append_space(array)``
-
--  ``array_insert_space(array, idx)``
-
--  ``array_get_modifiable(array, &count)``
-
--  ``array_idx_modifiable(array, idx)``
+ * ``array_append_space(array)`` - Append a new element into the array and return a writable pointer to it.
+ * ``array_insert_space(array, idx)`` - Insert a new element into the array and return a writable pointer to it.
+ * ``array_idx_get_space(array, idx)`` - Return a writable pointer to the specified index in the array.
+   If index points after the end of the array, the newly added elements are zero-filled.
+ * ``array_get_modifiable(array, &count)`` - Return a non-const pointer to all the elements in the array and the number of elements in the array.
+ * ``array_idx_modifiable(array, idx)`` - Return a non-const pointer to the specified index.
+   Assert-crashes if the index doesn't already exist.
+   See also ``array_idx_get_space()``.
+ * ``array_front_modifiabe(array)`` - Return a non-const pointer to the first element in the array.
+   Assert-crashes if the array is empty.
+ * ``array_back_modifiable(array)`` - Return a non-const pointer to the last element in the array.
+   Assert-crashes if the array is empty.
 
 Others
 ------
 
--  ``array_cmp(array1, array2)`` compares two arrays
-
--  ``array_reverse(array)`` reverses all elements in an array
-
--  ``array_sort(array, cmp_func)`` is a wrapper for ``qsort()`` adding
-   also type safety. The parameters in cmp_func should be the same type
-   as the array, instead of ``const void *``.
-
--  ``array_bsearch(array, key, cmp_func)`` is a wrapper for
-   ``bsearch()`` also adding type safety, just like ``array_sort()``.
+ * ``array_cmp(array1, array2)`` - Return TRUE if the arrays contain exactly the same content.
+ * ``array_reverse(array)`` - Reverse all elements in the array.
+ * ``array_sort(array, cmp_func)`` - Type-safe wrapper for ``qsort()``.
+   The parameters in the ``cmp_func`` should be the same type as the array
+   instead of ``const void *``.
+ * ``array_bsearch(array, key, cmp_func)`` - Type-safe wrapper for
+   ``bsearch()``, similar to ``array_sort()``.
+ * ``array_equal_fn(array1, array2, cmp_func)`` - Return TRUE if arrays are equal.
+   Each element in the array is compared with the ``cmp_func``.
+ * ``array_equal_fn_ctx(array1, array2, cmp_func, context)`` -
+   Like ``array_equal_fn()``, except ``cmp_func`` has a context parameter.
+ * ``array_lsearch(array, key, cmp_func)`` - Returns a const pointer to the first element where ``cmp_func(key, element)==0``.
+ * ``array_lsearch_modifiable(array, key, cmp_func)`` - Returns a non-const pointer to the first element where ``cmp_func(key, element)==0``.
