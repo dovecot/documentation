@@ -7,11 +7,10 @@ Lib-storage Error Handling
 ``src/lib-storage/mail-error.h`` describes different types of errors and
 has some other error-related functions and macros.
 
-Only errors returning "int" can actually return a failure.
+Only functions returning "int" can actually return a failure.
 
--  Functions that return a pointer will never return failure with NULL.
-   Only "find" type of functions can return NULL, which means "not
-   found".
+-  Functions that return a pointer will never use NULL as a failure.
+   Only "find" type of functions can return NULL, which means "not found".
 -  Iterators usually work by the init() returning iterator pointer and
    next() returning a boolean. If there were any errors in either init()
    or next(), deinit() finally returns a failure.
@@ -19,12 +18,21 @@ Only errors returning "int" can actually return a failure.
 Getting lib-storage errors
 --------------------------
 
+There are two types of errors: Errors that can safely be sent to clients,
+and internal errors which may contain sensitive information. Try to name
+the client-safe error variables clearly, preferably ``client_error``.
+
 -  ``mailbox_list_*()`` functions set their errors to the given
    mailbox_list structure. You can get these errors with
-   ``mailbox_list_get_last_error()``.
+   ``mailbox_list_get_last_error()`` (client-safe error) or
+   ``mailbox_list_get_last_internal_error()``.
 -  All other functions that have some way of accessing mail_storage
    (mailbox, mail, transactions, etc.) set their errors to the storage.
-   You can get these errors with ``mail_storage_get_last_error()``.
+   You can get these errors with ``mail_storage_get_last_error()``
+   (client-safe error) or ``mail_storage_get_last_internal_error()``.
+   There are also ``mailbox_get_last_error()`` and
+   ``mailbox_get_last_internal_error()``, which are simply convenience
+   wrappers to the ``mail_storage_get_last_*error()`` functions.
 
    - Mail user and namespace functions have their own error handling,
      typically by returning error strings as parameters.
@@ -32,29 +40,30 @@ Getting lib-storage errors
    error is noticed, before other failing lib-storage calls overwrite
    the error.
 
-   -  In deinit failures it usually doesn't matter if you get the first
-      or the last error, so it's easier to just call all the different
-      deinit functions and finally look up what the last failure was.
+-  If there are multiple errors, it's best to always log at least the first
+   one. It's usually the first error that is the most relevant while the
+   other errors are caused by the first one.
 
 Setting lib-storage errors
 --------------------------
 
 Errors can be set with two calls:
 
--  ``mail_storage_set_error()`` and ``mailbox_list_set_error()`` should
+-  ``mailbox_list_set_error()`` and ``mail_storage_set_error()`` should
    be used when the error is user's fault in some way. For example
    invalid mailbox name, out of quota, etc. The error string will be
    shown to user. It won't be written to a log file.
--  ``mail_storage_set_critical()`` and ``mailbox_list_set_critical()``
-   should be used when the error is a problem in the system and sysadmin
-   should be notified. For example out of disk space or just in general
-   an unexpected syscall failure. The error string that will be shown to
-   user is the "Internal error occurred", but it will be logged as an
-   error.
--  The reason for the separation of these two is:
+-  ``mailbox_list_set_critical()``, ``mail_storage_set_critical()``,
+   ``mailbox_set_critical()`` and ``mail_set_critical()`` should be used when
+   the error is a problem in the system and sysadmin should be notified.
+   Try to use the most specific object (mail, mailbox, storage) to get the
+   most accurate event and log prefix. The critical errors could be for example
+   out of disk space or just in general an unexpected syscall failure.
+   The client-visible error string is "Internal error occurred" followed by
+   a timestamp, which can be used to try to find the error from the log files.
 
-   1. Only log errors that sysadmin can do something about.
-   2. Never show user anything even potentially sensitive about the
+   #. Only log errors that sysadmin can do something about.
+   #. Never show user anything even potentially sensitive about the
       system, such as path names.
 
 There are also a few other calls that aren't used as often, but can be
@@ -72,3 +81,8 @@ helpful:
    - ``ENOSPC``, ``EDQUOT``: Not enough disk space
    - ``ENOENT``, ``ENOTDIR``: Not found
    - ``ELOOP``: Directory structure is broken
+- ``mail_storage_copy_list_error()`` copies the error from ``mailbox_list``
+  into ``mail_storage``.
+- ``mail_storage_copy_error()`` copies the error from one storage to another.
+- ``mailbox_set_index_error()`` and ``mail_storage_set_index_error()`` copies
+  the internal error from ``mail_index``.
