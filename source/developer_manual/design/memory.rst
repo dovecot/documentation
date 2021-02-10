@@ -7,17 +7,17 @@ Memory Allocations
 C language requires explicitly allocating and freeing memory. The main
 two problems with this are:
 
-1. A lot of allocations and frees cause memory fragmentation. The longer
+#. A lot of allocations and frees cause memory fragmentation. The longer
    a process runs, the more it could have leaked memory because there
    are tiny unused free spots all around in heap.
 
-2. Freeing memory is easy to forget, causing memory leaks. Sometimes it
+#. Freeing memory is easy to forget, causing memory leaks. Sometimes it
    can be accidentally done multiple times, causing a potential security
-   hole. A lot of free() calls all around in the code also makes the
+   hole. A lot of ``free()`` calls all around in the code also makes the
    code more difficult to read and write.
 
 The second problem could be solved with Boehm garbage collector, which
-Dovecot can use optionally (prior to 2.3), but it's not very efficient.
+Dovecot used to support, but it wasn't very efficient.
 It also doesn't help with the first problem.
 
 To reduce the problems caused by these issues, Dovecot has several ways
@@ -30,10 +30,9 @@ All memory allocations (with some exceptions in data stack) return
 memory filled with NULs. This is also true for new memory when growing
 an allocated memory with realloc. The zeroing reduces accidental use of
 uninitialized memory and makes the code simpler since there is no need
-to explicitly set all fields in allocated structs to zero/NULL. (I guess
-assuming that this works correctly for NULLs isn't strictly ANSI-C
-compliant, but I don't see this assumption breaking in any system anyone
-would really use Dovecot.) The zeroing is cheap anyway.
+to explicitly set all fields in allocated structs to zero/NULL. Note the
+C standard doesn't require that NULL is zero, but this is practically
+true everywhere and appears to be a (future) requirement for POSIX as well.
 
 In out-of-memory situations memory allocation functions die internally
 by calling ``i_fatal_status(FATAL_OUTOFMEM, ..)``. There are several
@@ -80,10 +79,8 @@ functions:
 -  etc.
 
 All memory allocation functions that begin with ``i_`` prefix require
-that the memory is later freed with ``i_free()``. If you actually want
-the freed pointer to be set to NULL, use ``i_free_and_null()``.
-Currently ``i_free()`` also changes the pointer to NULL, but in future
-it might change to something else.
+that the memory is later freed with ``i_free()``. This is a macro that
+is guaranteed to set the freed pointer to NULL afterwards.
 
 Memory Pools
 ------------
@@ -96,8 +93,8 @@ All memory allocation functions that begin with ``p_`` prefix have a
 memory pool parameter, which it uses to allocate the memory.
 
 Dovecot has many APIs that require you to specify a memory pool. Usually
-(but not always) they don't bother freeing any memory from the pool,
-instead they assume that more memory can be just allocated from the pool
+(but not always) they don't bother freeing any memory from the pool.
+Instead, they assume that more memory can be just allocated from the pool
 and the whole pool is freed later. These pools are usually
 alloconly-pools, but can also be data stack pools. See below.
 
@@ -115,19 +112,19 @@ there.
 
 Initial memory pool sizes are often optimized in Dovecot to be set large
 enough that in most situations the pool doesn't need to be grown. To
-make this easier, when Dovecot is configured with --enable-devel-checks,
+make this easier, when Dovecot is configured with ``--enable-devel-checks``,
 it logs a warning each time a memory pool is grown. The initial pool
-size shouldn't of course be made too large, so usually I just pick some
-small initial guessed value and later if I get too many "growing memory
-pool" warnings I start growing the pool sizes. Sometimes there's just no
+size shouldn't of course be made too large, so usually it's best to just pick
+some small initial guessed size and if there are too many "growing memory
+pool" warnings start growing the pool sizes. Sometimes there's just no
 good way to set the initial pool size and avoid the warnings, in that
-situation you can prefix the pool's name with MEMPOOL_GROWING and it
-doesn't log warnings.
+situation you can prefix the pool's name with ``MEMPOOL_GROWING`` which
+prevents logging warnings about the pool.
 
 Alloconly-pools are commonly used for an object that builds its state
-from many memory allocations, but doesn't change (much of) its state.
+from many memory allocations, but doesn't modify (much of) its state.
 It's a lot easier when you can do a lot of small memory allocations and
-when destroying the object you'll just free the memory pool.
+in object destroy you simply free the memory pool.
 
 Data Stack
 ----------
@@ -138,17 +135,17 @@ what it does, but there's one major difference: In data stack the stack
 frames are explicitly defined, so functions can return values allocated
 from data stack. ``t_strdup_printf()`` call is an excellent example of
 why this is useful. Rather than creating some arbitrary sized buffer and
-using snprintf(), which might truncate the value, you can just use
-t_strdup_printf() without worrying about buffer sizes being large
+using ``snprintf()``, which might truncate the value, you can just use
+``t_strdup_printf()`` without worrying about buffer sizes being large
 enough.
 
 Try to keep the allocations from data stack small, since the data
 stack's highest memory usage size is kept for the rest of the process's
 lifetime. The initial data stack size is 32kB, which should be enough in
-normal use. If Dovecot is configured with --enable-devel-checks, it logs
+normal use. If Dovecot is configured with ``--enable-devel-checks``, it logs
 a warning each time the data stack needs to be grown.
 
-Stack frames are preferably created using T_BEGIN/T_END block, for
+Stack frames are preferably created using a ``T_BEGIN``/``T_END`` block, for
 example:
 
 ::
@@ -159,20 +156,21 @@ example:
      /* .. */
    } T_END;
 
-In the above example two strings are allocated from data stack. They get
-freed once the code goes past T_END, that's why the variables are
-preferably declared inside the T_BEGIN/T_END block so they won't
+In the above example the two strings are allocated from data stack. They get
+freed once the code goes past ``T_END``. That's why the variables are
+preferably declared inside the ``T_BEGIN``/``T_END`` block so they won't
 accidentally be used after they're freed.
 
-T_BEGIN and T_END expand to ``t_push()`` and ``t_pop()`` calls and they
+``T_BEGIN`` and ``T_END`` expand to ``t_push()`` and ``t_pop()`` calls and they
 must be synchronized. Returning from the block without going past T_END
-is going to cause Dovecot to panic in next T_END call with "Leaked
+is going to cause Dovecot to panic in next ``T_END`` call with "Leaked
 t_pop() call" error.
 
-Memory allocations have similar disadvantages to alloc-only memory
+Data stack allocations have similar disadvantages to alloc-only memory
 pools. Allocations can't be grown, so with the above example if str1
 grows past 256 characters, it needs to be reallocated, which will cause
 it to forget about the original 256 bytes and allocate 512 bytes more.
+However, as with alloc-only pools, the last allocation can be grown.
 
 Memory allocations from data stack often begin with ``t_`` prefix,
 meaning "temporary". There are however many other functions that
@@ -180,22 +178,24 @@ allocate memory from data stack without mentioning it. Memory allocated
 from data stack is usually returned as a const pointer, so that the
 caller doesn't try to free it (which would cause a compiler warning).
 
-When should T_BEGIN/T_END used and when not? This is kind of black
+When should ``T_BEGIN``/``T_END`` used and when not? This is kind of black
 magic. In general they shouldn't be used unless it's really necessary,
 because they make the code more complex. But if the code is going
 through loops with many iterations, where each iteration is allocating
 memory from data stack, running each iteration inside its own stack
 frame would be a good idea to avoid excessive memory usage. It's also
-difficult to guess how public APIs are being used, so I've tried to make
-such API functions use their own private stack frames. Dovecot's ioloop
+difficult to guess how public APIs are being used, so it's often good
+for such API functions use their own private stack frames. Dovecot's ioloop
 code also wraps all I/O callbacks and timeout callbacks into their own
-stack frames, so you don't need to worry about them.
+stack frames, so you don't need to worry about them. It's actually a good
+idea for any callback to be called with its own data stack frame.
 
-You can create temporary memory pools from data stack too. Usually you
+You can create memory pools from data stack too. Usually you
 should be calling ``pool_datastack_create()`` to generate a new pool,
 which also tries to track that it's not being used unsafely across
-different stack frames. Some low-level functions can also use
-``unsafe_data_stack_pool`` as the pool, which doesn't do such tracking.
+different stack frames. Some low-level functions can also use the slightly
+more efficient ``unsafe_data_stack_pool`` as the pool, which doesn't do
+such tracking.
 
 Data stack's advantages over malloc():
 
