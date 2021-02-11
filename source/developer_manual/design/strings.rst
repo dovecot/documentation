@@ -9,15 +9,15 @@ are actually only a simple wrapper on top of
 :ref:`buffers <liblib_buffers>`.
 Even the ``string_t`` type is only a typedef of ``buffer_t``, so it's
 possible to use ``buffer_*()`` functions with strings (although it's
-ugly so it should be avoided). The decision of whether to use a string_t
-or a buffer_t is mainly for human readability: if the buffer's contents
-are (ASCII/UTF8) text use string_t, otherwise for binary data use
-buffer_t.
+ugly so it should be avoided). The decision of whether to use a ``string_t``
+or a ``buffer_t`` is mainly for human readability: If the buffer's contents
+are (ASCII/UTF8) text use ``string_t``, otherwise for binary data use
+``buffer_t``.
 
-Once you're done modifying a string with ``str_*()`` functions, you can
+Once you've finished modifying a string with ``str_*()`` functions, you can
 get it out as a NUL-terminated string with ``str_c()`` or
 ``str_c_modifiable()``. These pointers shouldn't be accessed after
-modifying the string again, they could have moved elsewhere in memory
+modifying the string again, since they could have moved elsewhere in memory
 and they're no longer guaranteed to be NUL-terminated.
 
 Example:
@@ -28,7 +28,7 @@ Example:
      string_t *str = t_str_new(64);
 
      str_append(str, "hello world");
-     str_printfa(str, "\nand %u", str_len(str));
+     str_printfa(str, "\nand %zu", str_len(str));
 
      printf("%s\n", str_c(str));
    } T_END;
@@ -40,7 +40,7 @@ String Handling Functions
 handling easier. They use C's NUL-terminated strings instead of
 Dovecot's dynamic strings.
 
--  ``[pt]_strdup_printf()`` and ``[pt]_strconcat()`` are the most
+-  ``[ipt]_strdup_printf()`` and ``[ipt]_strconcat()`` are the most
    commonly used functions. ``*_strconcat`` is slightly faster than
    ``*_strdup_printf()``, so use it if you simply need to concatenate
    strings.
@@ -48,7 +48,7 @@ Dovecot's dynamic strings.
 -  Various functions for doing a ``strdup()`` from wanted input.
 
 -  ``i_snprintf()`` is a wrapper to ``snprintf()`` that makes it easier
-   to check if result was truncated. It also adds few other safety
+   to check if result was truncated. It also adds a few other safety
    checks. This should be avoided in general, except in situations where
    you just don't want to use data stack and there's no way for the
    result to get truncated.
@@ -67,19 +67,19 @@ Dovecot's dynamic strings.
 
    -  ``t_strarray_join()`` reverses this.
 
-   -  There are also some other functions to handle array of strings,
+   -  There are also some other functions to handle an array of strings,
       like getting its length or finding a given string.
 
--  ``dec2str()`` can be used to convert a number to a string. This can
-   be useful if you don't know the correct type and don't want to add
-   casting (that could potentially truncate the string). For example:
-   ``print("pid = %s\n", dec2str(getpid()));``
+-  ``dec2str()`` can be used to convert a number to a string allocated from
+   data stack. This can be useful if you don't know the correct type and don't
+   want to add casting (that could potentially truncate the string).
+   For example: ``print("pid = %s\n", dec2str(getpid()));``
 
 String Escaping
 ===============
 
-``lib/strescape.h`` contains functions to escape and unescape <">. <'>
-and <\> characters in strings using <\> character.\\
+``lib/strescape.h`` contains functions to escape and unescape ``"``, ``'``
+and ``\`` characters in strings using the ``\`` character.
 
 Dovecot's internal protocols are often line-based with TAB as the field
 separator. This file also contains functions to escape and unescape such
