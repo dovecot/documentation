@@ -2701,13 +2701,13 @@ See :ref:`setting-mail_never_cache_fields`
 
 - Default: <empty>
 
-Settings to control adding ``$HasAttachment`` or ``$HasNoAttachment`` keywords. By default, all MIME parts with ``Content-Disposition=attachment``, or inlines with filename parameter are consired attachments.
+Settings to control adding ``$HasAttachment`` or ``$HasNoAttachment`` keywords. By default, all MIME parts with ``Content-Disposition=attachment``, or inlines with filename parameter are considered attachments.
 
-To enable this feature, you can set mail_attachment_detection_options.
+To enable this feature, this setting needs at least one option specified.
 
-It supports following options
+Options:
 
-* **add-flags** - Enables the feature, attachments are detected and marked during save.
+* **add-flags** - Attachments are detected and marked during save.
   Detection is done also during fetch if it can be done without extra disk IO and with minimal CPU cost.
   This means that either both ``mime.parts`` and ``imap.bodystructure`` has to be in cache already, or if mail body is opened in any case.
 
