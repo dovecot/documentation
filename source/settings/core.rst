@@ -2729,13 +2729,6 @@ It supports following options
 .. todo:: Explain value format: comma-separate list?
 
 
-Options:
-
-* ``add-flags-on-save``: Attachments are detected and marked during save
-* ``content-type=<type>|!<type~``: Include or exclude given content type. Including will only negate an exclusion (e.g. ``content-type = !foo/* content-type = foo/bar``).
-* ``exclude-inlined``: Ignore any attachment marked as inline disposition
-
-
 .. _setting-mail_attachment_dir:
 
 ``mail_attachment_dir``
