@@ -2701,8 +2701,7 @@ See :ref:`setting-mail_never_cache_fields`
 
 - Default: <empty>
 
-Settings to control adding $HasAttachment or $HasNoAttachment keywords.
-By default, all MIME parts with Content-Disposition=attachment, or inlines with filename parameter are consired attachments.
+Settings to control adding ``$HasAttachment`` or ``$HasNoAttachment`` keywords. By default, all MIME parts with ``Content-Disposition=attachment``, or inlines with filename parameter are consired attachments.
 
 To enable this feature, you can set mail_attachment_detection_options.
 
@@ -2710,7 +2709,7 @@ It supports following options
 
 * **add-flags** - Enables the feature, attachments are detected and marked during save.
   Detection is done also during fetch if it can be done without extra disk IO and with minimal CPU cost.
-  This means that either both mime.parts and imap.bodystructure has to be in cache already, or if mail body is opened in any case.
+  This means that either both ``mime.parts`` and ``imap.bodystructure`` has to be in cache already, or if mail body is opened in any case.
 
   .. versionadded:: v2.3.13
 * **add-flags-on-save** - Deprecated alias for **add-flags**.
@@ -2718,11 +2717,10 @@ It supports following options
 
   .. deprecated:: v2.3.13
 * **add-flags no-flags-on-fetch** - Flags are added during save, but not during fetch.
-  This option was added in case the change causes unexpected performance problems, so it could be disabled.
   This option will likely be removed in a later release.
 
   .. versionadded:: v2.3.13
-* **content-type=type|!type** - Include or exclude given content type. Including will only negate an exclusion (e.g. content-type=!foo/* content-type=foo/bar).
+* **content-type=type|!type** - Include or exclude given content type. Including will only negate an exclusion (e.g. ``content-type=!foo/* content-type=foo/bar``).
 * **exclude-inlined** - Do not consider any attachment with disposition inlined.
 
 .. todo:: Description
