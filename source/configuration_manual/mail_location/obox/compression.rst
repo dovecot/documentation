@@ -15,9 +15,9 @@ objects. This commonly shrinks the indexes down to ``20-30``% of the original
 size with ``gzip -6`` compression. It's possible to use also other compression
 algorithms.
 
-The level parameter must be between 1..9. See
-http://wiki.dovecot.org/Plugins/Zlib for the current list of supported
-algorithms.
+See the :ref:`plugin-fs-compress` fs-compress and :ref:`plugin-zlib` plugin
+documentation for supported algorithms and the meaning of the level
+parameter.
 
 .. Note:: Compression auto-detection for index bundles became available (via
           ``maybe-gz``) as of v2.2.34+.
@@ -41,10 +41,10 @@ compressed to fscache. On one hand this increases the fscache's file, but on
 the other hand it requres Dovecot to always uncompress the files before
 accessing them.
 
-This uncompression means that the file is temporarily written to
-``mail_temp_dir``. By using the ``compress`` fs wrapper in ``obox_fs`` line the
-mails are stored uncompressed in fscache, and reading the mails from there
-doesn't require writing to ``mail_temp_dir``.
+This decompression uses a temporary file that is written to
+``mail_temp_dir``. By using the ``compress`` fs wrapper after ``fscache`` in
+``obox_fs`` line the mails are stored uncompressed in fscache, and reading
+the mails from there doesn't require writing to ``mail_temp_dir``.
 
 Compression status of email object data is auto-detected. Therefore,
 ``zlib_save`` may safely be added to a currently existing system; existing

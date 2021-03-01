@@ -11,7 +11,12 @@ zlib plugin
 ``zlib_save``
 ---------------
 
-All of the object storage back ends should be set up to compress index-bundle objects. Typically, gzip -6 compression is used, though other compression algorithms are possible. The :ref:`zlib_plugin` configuration documentation gives a list of the algorithms that are currently supported.
+All of the object storage back ends should be set up to compress
+index-bundle objects. Typically, gzip -6 compression is used, though other
+compression algorithms are possible.
+
+The :ref:`zlib_plugin` configuration documentation gives a list of the
+algorithms that are currently supported.
 
 Example Setting:
 
@@ -25,7 +30,11 @@ Example Setting:
 ``zlib_save_level``
 -------------------
 
-All of the object storage back ends should be set up to compress index-bundle objects. Typically, gzip -6 compression is used. The level parameter must always be from 1 to 9.  
+All of the object storage back ends should be set up to compress
+index-bundle objects. Typically, gzip -6 compression is used.
+
+The :ref:`zlib_plugin` configuration documentation describes the limits
+imposed on the compression level parameter.
 
 Example Setting:
 

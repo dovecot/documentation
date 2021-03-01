@@ -25,9 +25,19 @@ Configuration:
 
   # Enable these only if you want compression while saving:
   plugin {
-    zlib_save_level = 6 # 1..9; default is 6
-    zlib_save = gz # or bz2, lz4 or zstd
+    zlib_save = gz
+    zlib_save_level = 6
   }
+
+The ``zlib_save`` setting selects the compression algorithm (currently
+supported values are: gz, bz2, lz4, zstd) to use when saving a new mail.
+The ``zlib_save_level`` setting sets the compression level used.
+
+.. note::
+   Currently, the compression level must be an integer in the range 1 to 9
+   regardless of the algorithm selected.  The default level is 6.  These
+   values may not be sensical with compression algorithms other than gz and
+   bz2.
 
 mbox
 ====
@@ -51,13 +61,16 @@ Maildir
 =======
 
 When this plugin is loaded Dovecot can read both compressed and uncompressed
-files from Maildir. If you've enabled both gzip and bzip2 support you can have
-files compressed with either one of them in the Maildir. The compression is
-detected by reading the first few bytes from the file and figuring out if it's
-a valid gzip or bzip2 header. The file name doesn't matter. This means that an
-IMAP client could also try to exploit security holes in zlib/bzlib by writing
-specially crafted mails using IMAP's APPEND command. This is prevented by
-Dovecot not allowing clients to save mails that are detected as compressed.
+files from Maildir. The files within a Maildir can use any supported
+compression algorithm (e.g., some can be compressed uzing gzip, while others
+are compressed using zstd). The algorithm is detected by reading the first
+few bytes from the file and figuring out if it's a valid gzip or bzip2 header.
+The file name doesn't matter.
+
+To avoid IMAP clients attempting to exploit security holes in the compression
+algorithm libraries (e.g., bzlib) by writing specially crafted mails using
+IMAP's APPEND command, Dovecot will not allow clients to save mails that are
+detected as compressed.
 
 All mails must have , ``S=<size>`` in their filename where <size> contains the
 original uncompressed mail size, otherwise there will be problems with quota
