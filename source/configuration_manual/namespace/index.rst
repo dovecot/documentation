@@ -15,7 +15,7 @@ Dovecot namespaces can be used for several other purposes too:
 * Changing the hierarchy separator
 * Providing backwards compatibility when switching from another IMAP server
 * Provides support for `public
-  <https://wiki.dovecot.org/SharedMailboxes/Public>`_ and `shared
+  <public_shared_mailboxes>`_ and `shared
   <https://wiki.dovecot.org/SharedMailboxes/Shared>`_ mailboxes
 * Allows having mails in multiple different locations with possibly different formats
 
