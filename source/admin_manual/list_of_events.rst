@@ -1046,6 +1046,9 @@ Index file handling for ``dovecot.index*``, ``dovecot.map.index*``,
 | :ref:`event_mail_user` depending on what the index is used for.            |
 +---------------------+------------------------------------------------------+
 
+
+.. _event_mail_index_recreated:
+
 mail_index_recreated
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -1062,9 +1065,6 @@ A mail index file was recreated.
 +---------------------+--------------------------------------------------------+
 | reason              | Reason why the mail index was recreated                |
 +---------------------+--------------------------------------------------------+
-
-
-.. _event_mail_index_recreated:
 
 
 Mail cache
