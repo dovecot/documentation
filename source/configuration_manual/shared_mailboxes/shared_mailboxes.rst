@@ -5,7 +5,7 @@ Mailbox sharing between users
 =============================
 
 To enable mailbox sharing, you'll need to create a shared namespace. See
-ref:`ACL <acl>` for more information about ACL-specific settings.
+:ref:`ACL <acl>` for more information about ACL-specific settings.
 
 ::
 
@@ -100,7 +100,7 @@ dbox
 ----
 
 With dbox the index files are a very important part of the mailboxes.
-You must not try to ``:INDEX=`` to have copies of index files. This will
+You must not try to change ``:INDEX=`` to a user-specific location. This will
 only result in mailbox corruption. (INDEXPVT can be used though.)
 
 Filesystem permissions
@@ -109,9 +109,11 @@ Filesystem permissions
 Dovecot assumes that it can access the other users' mailboxes. If you
 use multiple UNIX UIDs, you may have problems setting up the permissions
 so that the mailbox sharing works. Dovecot never modifies existing
-files' permissions. See
-:ref:`Permissions <admin_manual_permissions_in_shared_mailboxes>`
+files' permissions. See :ref:`admin_manual_permissions_in_shared_mailboxes`
 for more information.
+
+
+.. _user_shared_mailboxes_shared_mailbox_listing:
 
 Shared mailbox listing
 ----------------------
@@ -131,8 +133,8 @@ rebuild this dictionary, so make sure it doesn't get lost. If it does,
 each user having shared mailboxes must use the IMAP SETACL command (see
 below) to get the dictionary updated for themselves.
 
-You could use any dictionary backend, including SQL, but a simple flat
-file should work pretty well too:
+You could use any dictionary backend, including SQL or Cassandra, but a
+simple flat file should work pretty well too:
 
 ::
 

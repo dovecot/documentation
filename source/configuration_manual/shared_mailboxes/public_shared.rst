@@ -36,29 +36,12 @@ For example to create a public Maildir mailboxes, use:
    }
 
 In the above example, you would then create Maildir mailboxes under the
-``/var/mail/public/`` directory. For example:
+``/var/mail/public/`` directory.
 
-::
-
-   # ls -la /var/mail/public/
-   drwxr-s--- 1 root mail 0 2007-03-19 03:12 .
-   drwxrws--- 1 root mail 0 2007-03-19 03:12 .lkml
-   drwxrws--- 1 root mail 0 2007-03-19 03:12 .bugtraq
-   -rw-rw---- 1 root mail 0 2007-03-19 03:12 dovecot-shared
-
-Note that there are no ``cur/``, ``new/`` or ``tmp/`` directories
-directly under the ``/var/mail/public/``, because the Public/ namespace
-isn't a mailbox itself. (If you create them manually, it does become a
-selectable mailbox. )
-
-The ``dovecot-shared`` file isn't directly used for either lkml or
-bugtraq mailboxes, but if you create a new public mailbox via Dovecot
-it's automatically copied there.
-
-Note that Dovecot uses Maildir++ layout by default for folders, where
-the folder names must begin with a "." or Dovecot will ignore them. You
-can also optionally use the `"fs"
-layout <https://wiki.dovecot.org/SharedMailboxes/Public/MailboxFormat/Maildir#Directory_Structure>`__
+Note that with Maildir format Dovecot uses Maildir++ layout by default for
+folders, where the folder names must begin with a "." or Dovecot will ignore
+them. You can also optionally use the `"fs"
+layout <https://wiki.dovecot.org/MailboxFormat/Maildir#Directory_Structure>`__
 if you want the directory structure to look like:
 
 -  ``/var/mail/public/`` (root dir)
@@ -100,9 +83,21 @@ Subscriptions
 Typically you want each user to have control over their own
 subscriptions for mailboxes in public namespaces. This is why you should
 set ``subscriptions=no`` to the namespace. Dovecot will then use the
-parent namespace's subscriptions file. Note that this practically means
-you must have a namespace with empty prefix, otherwise there is no
-"parent namespace".
+parent namespace's subscriptions file. If you don't otherwise have a
+namespace with empty prefix, create one:
+
+::
+
+        namespace subscriptions {
+          prefix =
+          separator = /
+          subscriptions = yes
+          hidden = yes
+          list = no
+          alias_for = INBOX/ # the INBOX namespace's prefix
+          location = <same as mail_location>:SUBSCRIPTIONS=subscriptions-shared
+        }
+
 
 Read-only mailboxes
 -------------------
