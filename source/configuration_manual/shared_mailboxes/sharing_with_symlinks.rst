@@ -5,7 +5,7 @@ Mailbox sharing with symlinks
 =============================
 
 It's possible to share mailboxes simply by symlinking them among user's
-private mailboxes. See ref:`admin_manual_permissions_in_shared_mailboxes`
+private mailboxes. See :ref:`admin_manual_permissions_in_shared_mailboxes`
 for issues related to filesystem permissions.
 
 Maildir
@@ -21,8 +21,7 @@ mailboxes, which point to those users' "Work" mailbox.
 
 With Maildir++ layout it's not possible to automatically share "mailbox
 and its children". You'll need to symlink each mailbox separately. With
-v1.1+ you could do this by using "fs" layout for mailboxes (requires
-converting existing maildirs from Maildir++).
+the "fs" layout this is possible though.
 
 mbox
 ----

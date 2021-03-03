@@ -1,8 +1,8 @@
 .. _admin_manual_permissions_in_shared_mailboxes:
 
-==========================================
-Filesystem permissions in shared mailboxes
-==========================================
+============================================
+Filesystem permissions (in shared mailboxes)
+============================================
 
 IMAP processes need filesystem level permissions to access shared/public
 mailboxes. This means that:
@@ -151,8 +151,8 @@ explicit format with %variables. Using ``maildir:~/Maildir`` won't work,
 because Dovecot can't really know how far down it should copy the
 permissions from.
 
-Permissions to new user home directories (v2.2+)
-------------------------------------------------
+Permissions to new user home directories
+----------------------------------------
 
 When mail_location begins with ``%h`` or ``~/``, its permissions are
 copied from the first existing parent directory if it has setgid-bit
