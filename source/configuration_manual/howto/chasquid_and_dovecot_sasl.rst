@@ -4,8 +4,8 @@
 chasquid and Dovecot SASL
 =========================
 
-`chasquid <https://blitiri.com.ar/p/chasquid>`__ users can use :ref:`Dovecot
-SASL <sasl>` authenticating SMTP clients.
+`chasquid <https://blitiri.com.ar/p/chasquid>`__ users can use Dovecot
+SASL authenticating SMTP clients.
 
 This is supported from version 0.04 and later, and uses the *PLAIN*
 mechanism (only).

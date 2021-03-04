@@ -61,7 +61,7 @@ However, there are some fields that need to be trusted:
 Authentication (SASL) mechanisms
 --------------------------------
 
-These are :ref:`SASL <sasl>` authentication mechanism implementations. See
+These are SASL authentication mechanism implementations. See
 :ref:`authentication-authentication_mechanisms`
 for a list of mechanisms supported by Dovecot.
 
