@@ -32,12 +32,14 @@ Output stream filters:
 -  failure-at: Insert a failure at the specified offset. This can be
    useful for testing.
 
--  lib-mail/ostream-dot: Write SMTP-style DATA input where the output
-   ends with an empty "." line.
-
 -  lib-dcrypt/encrypt: Write encrypted data.
 
--  ``lib-compression/*``: Write zlib/bzlib/lz4/lzma compressed data.
+-  wrapper: Can be used to implement other ostreams where data can be
+   coming from any form of activity.
+
+-  ``lib-compression/*``: Write zlib/bzlib/lz4/zstd compressed data.
+
+There are also various other less generic ostreams.
 
 A typical life cycle for an ostream can look like:
 
@@ -106,8 +108,9 @@ stop/flush. When output buffer gets full, it's automatically flushed
 even while the stream is corked. The term "cork" is used because with
 TCP connections the call actually sets/removes TCP cork option. It's
 quite easy to forget to enable the corking with files, making the
-performance worse. The corking/uncorking is done automatically when
-flush callbacks are called. Using ``o_stream_uncork()`` will trigger an
+performance worse. The corking/uncorking is done automatically while
+running a flush callback (set via ``o_stream_set_flush_callback()``).
+Using ``o_stream_uncork()`` will trigger an
 automatic ``o_stream_flush()`` but the error is ignored. This is why it
 acts similarly to ``o_stream_nsend*()``, i.e. it requires another
 explicit ``o_stream_flush()``, ``o_stream_finish()`` or error ignoring
