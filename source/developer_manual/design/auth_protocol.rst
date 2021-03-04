@@ -1,15 +1,15 @@
 .. _dovecot_auth_protocol:
 
-====================================
-Dovecot Authentication Protocol v1.1
-====================================
+===============================
+Dovecot Authentication Protocol
+===============================
 
 General
 -------
 
 This is a line based protocol. Each line is a command which ends with an
 LF character. The maximum line length isn't defined, but it's currently
-expected to fit into 8192 bytes. Authentication mechanism specific data
+expected to fit into 16384 bytes. Authentication mechanism specific data
 transfers are the largest single parameters.
 
 Each command is in format:
@@ -29,16 +29,24 @@ Typical command looks like (without spaces):
 
    command TAB param1 TAB param2 TAB optname=value TAB optboolean
 
-There is no way to have TABs or LFs in parameters.
+The parameters use Dovecot's generic "tab-escaping", where ``\001`` is used
+as the escape character. After it follows:
+
+ * 0: NUL chracter
+ * 1: ``\001`` character
+ * t: TAB
+ * r: CR
+ * l: LF
+ * anything else writes the character itself (skipping the ``\001``)
 
 Client <-> Server
 -----------------
 
-Client is an untrusted authentication client process. It can serve one
-or more users, so from user's point of view it's usually eg. IMAP or
-SMTP server process.
+Client is an untrusted authentication client process. For example in
+Dovecot the imap-login process is an auth client. The same auth client
+can perform multiple authentications against different users.
 
-Server is an authentication server process.
+Server is the auth process.
 
 The connection starts by both client and server sending handshakes:
 
@@ -56,7 +64,7 @@ The connection starts by both client and server sending handshakes:
 Both client and server should check that they support the same major
 version number. If they don't, the other side isn't expected to be
 talking the same protocol and should be disconnected. Minor version can
-be ignored. This document is version number 1.1.
+be ignored. This document specifies the version number 1.2.
 
 -  CPID and SPID specify client and server Process Identifiers (PIDs).
    They should be unique identifiers for the specific process. UNIX
@@ -84,26 +92,13 @@ Authentication Mechanisms
 MECH command announces an available authentication SASL mechanism.
 Mechanisms may have parameters giving some details about them:
 
-anonymous
-   Anonymous authentication
-
-plaintext
-   Transfers plaintext passwords
-
-dictionary
-   Subject to passive (dictionary) attack
-
-active
-   Subject to active (non-dictionary) attack
-
-forward-secrecy
-   Provides forward secrecy between sessions
-
-mutual-auth
-   Provides mutual authentication
-
-private
-   Don't advertise this as available SASL mechanism (eg. APOP)
+ * anonymous: Anonymous authentication
+ * plaintext: Transfers plaintext passwords
+ * dictionary: Subject to passive (dictionary) attack
+ * active: Subject to active (non-dictionary) attack
+ * forward-secrecy: Provides forward secrecy between sessions
+ * mutual-auth: Provides mutual authentication
+ * private: Don't advertise this as available SASL mechanism (eg. APOP)
 
 Authentication Request
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -118,63 +113,61 @@ Authentication Request
 ID is a connection-specific unique request identifier. It must be a
 32bit number, so typically you'd just increment it by one.
 
-Service is the service requesting authentication, eg. POP3, IMAP, SMTP.
+Service is the service requesting authentication, eg. pop3, imap, smtp.
 
 AUTH and USER (see below) common parameters are:
 
-lip=<ip>
-   Local IP - in standard string format,
-
-rip=<ip>
-   Remote IP - ie. for IPv4 127.0.0.1 and for IPv6 ::1
-
-lport=<port>
-   Local port
-
-rport=<port>
-   Remote port
+ * session=<id>: Unique session ID. Mainly used for logging.
+ * lip=<ip>: Local IP connected to by the client. In standard string format, e.g. ``127.0.0.1`` or ``::1``.
+ * rip=<ip>: Remote client IP
+ * lport=<port>: Local port connected to by the client.
+ * rport=<port>: Remote client port
+ * real_rip, real_lip, real_lport, real_rport: When Dovecot proxy is used,
+   the real_rip/real_port are the proxy's IP/port and real_lip/real_lport are
+   the backend's IP/port where the proxy was connected to.
+ * local_name=<name>: TLS SNI name
+ * debug: Enable debugging for this lookup.
+ * forward_fields: List of fields that will become available via
+   ``%{forward_*}`` variables. The list is double-tab-escaped, like:
+   tab_escaped[tab_escaped(key=value)[<TAB>...]
 
 AUTH-only parameters are:
 
-secured
-   Remote user has secured transport to auth client] (e.g. localhost,
-   SSL, TLS)
-
-valid-client-cert
-   Remote user has presented a valid SSL certificate.
-
-no-penalty
-   Ignore auth penalty tracking for this request
-
-cert_username
-   Username taken from client's SSL certificate.
-
-resp=<base64>
-   Initial response for authentication mechanism. NOTE: This must be the
+ * secured[=tls]: Remote user has secured transport to auth client
+   (e.g. localhost, SSL, TLS).
+ * transport=<value>: The value can be "insecure", "trusted" or "TLS".
+ * tls_cipher=<cipher>: TLS cipher being used.
+ * tls_cipher_bits=<bits>: The number of bits in the TLS cipher.
+ * tls_pfs=<string>: TLS perfect forward secrecy algorithm (e.g. DH, ECDH)
+ * tls_protocol=<name>: TLS protocol name (e.g. SSLv3, TLSv1.2)
+ * valid-client-cert: Remote user has presented a valid SSL certificate.
+ * no-penalty: Ignore auth penalty tracking for this request
+ * cert_username: Username taken from client's SSL certificate.
+ * client_id: IMAP ID string
+ * resp=<base64>: Initial response for authentication mechanism. NOTE: This must be the
    last parameter. Everything after it is ignored. This is to avoid
    accidental security holes if user-given data is directly put to
    base64 string without filtering out tabs.
 
 FAIL parameters may contain:
 
-reason=<str>
-   <str> should be sent to remote user instead of the standard
+ * reason=<str>: <str> should be sent to remote user instead of the standard
    "Authentication failed" messages. For example "invalid base64 data".
    It must NOT be used to give exact reason for authentication failure
    (i.e. "user not found" vs. "password mismatch").
 
-code=temp_fail (v2.3+), temp (<v2.2)
+ * code=temp_fail (v2.3+), temp (<=v2.2):
    This is a temporary internal failure, e.g. connection was lost to SQL
    database.
 
-code=authz_fail (v2.3+), authz (v1.2..v2.2)
+ * code=authz_fail (v2.3+), authz (v1.2..v2.2):
    Authentication succeeded, but authorization failed (master user's
    password was ok, but destination user was not ok).
 
-code=user_disabled (v2.3+), user_disabled (v2.2)
+ * code=user_disabled (v2.3+), user_disabled (v2.2):
    User is disabled (password may or may not have been correct)
 
-code=pass_expired (v2.3+), pass_expired (v2.2)
+ * code=pass_expired (v2.3+), pass_expired (v2.2):
    User's password has expired.
 
 A CONT response means that the authentication continues, and more data
@@ -236,27 +229,14 @@ NOTFOUND reply means that the user wasn't found. (v1.x also reported
 unknown request IDs with NOTFOUND.)
 
 FAIL reply means an internal error occurred. Usually either a
-configuration mistake or temporary error caused by lost resource (eg.
+configuration mistake or temporary error caused by lost resource (e.g.
 database down). Also unknown request IDs are reported as FAILs (since
 v2.0).
 
 USER reply is sent if request succeeded. It can return parameters:
 
-uid=<uid>
-   System user ID.
-
-gid=<gid>
-   System group ID.
-
-home=<dir>
-   Home directory.
-
-chroot=<dir>
-   Chroot directory.
-
-mail=<data>
-   Mail location.
-
-system_user=<user>
-   System user name which can be used to get extra groups. This will
-   probably be replaced later by giving just multiple gid fields.
+ * uid=<uid>: System user ID.
+ * gid=<gid>: System group ID.
+ * home=<dir>: Home directory.
+ * chroot=<dir>: Chroot directory.
+ * Other extra fields
