@@ -61,16 +61,10 @@ Input stream filters:
 
 -  hash: Calculate hash of the istream while it's being read.
 
--  lib-mail/dot: Read SMTP-style DATA input where the input ends with an
-   empty "." line.
+-  ``lib-compression/*``: Read zlib/bzlib/lz4/zstd compressed data.
 
--  lib-mail/qp-encoder,lib-mail/qp-decoder: Encode/decode quoted-printable.
-
--  lib-mail/header-filter: Add/remove/modify email headers.
-
--  lib-mail/non-nuls: Translate all NUL characters to specified replacement..
-
--  ``lib-compression/*``: Read zlib/bzlib/lz4/lzma compressed data.
+There are also various other less generic istreams. Especially lib-mail
+has many mail-related istreams.
 
 Reading
 -------
@@ -78,14 +72,14 @@ Reading
 ``i_stream_read()`` tries to read more data into the stream's buffer. It
 returns:
 
--  -2: Nothing was read, because buffer is full.
+-  -2: Nothing was read, because the buffer is full.
 
 -  -1: Either input reached EOF, or read failed and stream_errno was
    set.
 
 -  0: Input stream is non-blocking, and no more input is available now.
 
--  >0: Number of bytes read.
+-  >0: Number of new bytes read.
 
 Reading from a stream doesn't actually go forward in the stream, that
 needs to be done manually with ``i_stream_skip()``. This makes it easy
@@ -99,20 +93,23 @@ a read to try to get the data.
 
 Because more and more data can be read into the buffer, the buffer size
 is typically limited, and once this limit is reached read returns -2.
-The buffer size is usually given as parameter to the
-``i_stream_create_*()``, filters use their parent stream's buffer size.
+The buffer size is given as parameter to the ``i_stream_create_*()``,
+but filters often use their parent stream's buffer size.
 The buffer size can be also changed with
 ``i_stream_set_max_buffer_size()``. Figuring out what the buffer size
 should be depends on the situation. It should be large enough to contain
 all valid input, but small enough that users can't cause a DoS by
 sending a too large record and having Dovecot eat up all the memory.
+If there's no specific buffer size requirement, ``IO_BLOCK_SIZE`` is
+a good value to use.
 
 Once read returns -1, the stream has reached EOF. ``stream->eof=TRUE``
 is also set. In this situation it's important to remember that there may
 still be data available in the buffer. If ``i_stream_have_bytes_left()``
-returns FALSE, there really isn't anything left to read.
+returns FALSE, there really isn't anything left to read. Also at EOF it's
+important to check ``stream->stream_errno`` to see if the read failed.
 
-Whenever i_stream_read() returns >0, all the existing pointers are
+Whenever ``i_stream_read()`` returns >0, all the existing pointers are
 potentially invalidated. v2.3+: When i_stream_read() returns <= 0, the
 data previously returned by i_stream_get_data() are still valid,
 preserved in "snapshots". (<v2.3 may or may not have invalidated them.)
@@ -121,12 +118,12 @@ Example:
 
 .. code-block:: C
 
-   /* read line-based data from file_fd, buffer size has no limits */
-   struct istream *input = i_stream_create_fd(file_fd, (size_t)-1, FALSE);
+   /* Read line-based data from file_fd. The buffer size has no limits. */
+   struct istream *input = i_stream_create_fd(file_fd, SIZE_MAX, FALSE);
    const char *line;
 
-   /* return the last line also even if it doesn't end with LF.
-      this is generally a good idea when reading files (but not a good idea
+   /* Return the last line also even if it doesn't end with LF.
+      This is generally a good idea when reading files (but not a good idea
       when reading commands from e.g. socket). */
    i_stream_set_return_partial_line(input, TRUE);
    while ((line = i_stream_read_next_line(input)) != NULL) {
@@ -175,14 +172,12 @@ need to implement. The methods that need to be implemented are:
    prev_snapshot (if any) and returns the merged snapshot (see below
    more more details).
 
-There are some variables available, this just lists most important ones
-for a complete overview please checkout `istream-private.h`:
+There are some fields available. Below is a list of the most important ones.
+For a complete overview please see `istream-private.h`.
 
--  ``fd`` file descriptor getting read by stream.
+-  ``fd`` file descriptor being read by the stream.
 
 -  ``buffer`` contains pointer to the data.
-
--  ``io`` input/output related to the stream.
 
 - ``parent`` parent istream - for filter streams.
 
@@ -215,11 +210,6 @@ common helper functions and variables:
 
 -  Lower-level memory allocation functions:
 
-   -  ``i_stream_w_buffer_realloc(old_size)`` reallocates ``w_buffer``
-      to the current ``buffer_size``. If memarea's refcount is 1, this
-      can be done with ``i_realloc()``, otherwise new memory is
-      allocated.
-
    -  ``i_stream_grow_buffer(bytes)`` grows the ``w_buffer`` by the
       given number of bytes, if possible. It won't reach the stream's
       current max buffer size. The caller must verify from
@@ -232,7 +222,7 @@ common helper functions and variables:
       not be called if ``memarea`` has refcount>1. Otherwise that could
       be modifying a snapshotted memarea.
 
-The snapshots have made implementing slightly more complicated than
+The snapshots have made implementing istreams slightly more complicated than
 earlier. There are a few different ways to implement istreams:
 
 -  Always point ``buffer=w_buffer`` and use ``i_stream_try_alloc()``
