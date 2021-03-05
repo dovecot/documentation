@@ -1208,6 +1208,34 @@ HTTP
 
 These events are emitted by Dovecot's internal HTTP library.
 
+Common fields
+-------------
+
+Fields present in all HTTP events.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| attempts            | Amount of individual HTTP request attempts. (number  |
+|                     | of retries after failures + 1)                       |
++---------------------+------------------------------------------------------+
+| bytes_in            | Amount of data read, in bytes.                       |
++---------------------+------------------------------------------------------+
+| bytes_out           | Amount of data written, in bytes.                    |
++---------------------+------------------------------------------------------+
+| dest_host           | Destination host.                                    |
++---------------------+------------------------------------------------------+
+| dest_port           | Destination port.                                    |
++---------------------+------------------------------------------------------+
+| method              | HTTP verb used uppercased, e.g. ``GET``.             |
++---------------------+------------------------------------------------------+
+| redirects           | Number of redirects done while processing request.   |
++---------------------+------------------------------------------------------+
+| status_code         | HTTP result status code (integer).                   |
++---------------------+------------------------------------------------------+
+| target              | Request path with parameters, e.g.                   |
+|                     | ``/path/?delimiter=%2F&prefix=test%2F``.             |
++---------------------+------------------------------------------------------+
 
 http_request_finished
 ---------------------
@@ -1216,22 +1244,6 @@ Emitted when an HTTP request is complete.
 
 This event is useful to track and monitor external services.
 
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| status_code         | HTTP result status code (integer)                    |
-+---------------------+------------------------------------------------------+
-| attempts            | Amount of individual HTTP request attempts (number   |
-|                     | (of retries after failures + 1)                      |
-+---------------------+------------------------------------------------------+
-| redirects           | Number of redirects done while processing request    |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
-
-
 http_request_redirected
 -----------------------
 
@@ -1239,43 +1251,12 @@ Intermediate event emitted when an HTTP request is being redirected.
 
 The ``http_request_finished`` event is still sent at the end of the request.
 
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| status_code         | HTTP result status code (integer)                    |
-+---------------------+------------------------------------------------------+
-| attempts            | Amount of individual HTTP request attempts (number   |
-|                     | (of retries after failures + 1)                      |
-+---------------------+------------------------------------------------------+
-| redirects           | Number of redirects done while processing request    |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
-
 http_request_retried
 --------------------
 
 Intermediate event emitted when an HTTP request is being retried.
 
 The ``http_request_finished`` event is still sent at the end of the request.
-
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| status_code         | HTTP result status code (integer)                    |
-+---------------------+------------------------------------------------------+
-| attempts            | Amount of individual HTTP request attempts (number   |
-|                     | (of retries after failures + 1)                      |
-+---------------------+------------------------------------------------------+
-| redirects           | Number of redirects done while processing request    |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
-
 
 IMAP
 ====
