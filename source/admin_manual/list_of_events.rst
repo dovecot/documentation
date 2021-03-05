@@ -2556,3 +2556,26 @@ dict_server_transaction_finished
 
 Event emitted when dict server finishes transaction. Same fields as
 :ref:`dict_transaction_finished`.
+
+
+***********
+FTS-Dovecot
+***********
+
+lib-fts-index
+=============
+
+fts_dovecot_too_many_triplets
+-----------------------------
+
+.. versionadded:: 2.3.15
+
+Event emitted when number of triplets exceeds the limit defined by :ref:`plugin-fts-dovecot-setting-fts_dovecot_max_triplets`.
+
++---------------+--------------------------------------------------+
+| Field         | Description                                      |
++===============+==================================================+
+| Inherits from :ref:`event_mail_user`                             |
++---------------+--------------------------------------------------+
+| triplet_count | Number of triplets found                         |
++---------------+--------------------------------------------------+
