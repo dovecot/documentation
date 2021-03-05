@@ -16,3 +16,4 @@ Upgrading Dovecot v2.3.x to v2.3.14
  * Removed mail_filter plugin. It was mainly intended as an example plugin.
  * Removed autocreate plugin. Use `mailbox { auto }` :ref:`mailbox_settings` instead.
  * Removed expire plugin. Use `mailbox { autoexpunge }` :ref:`mailbox_settings` instead.
+ * Removed xz write support from zlib plugin. (Reading xz compressed mails is still supported.) Use another compression algorithm.
