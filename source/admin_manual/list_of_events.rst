@@ -2406,7 +2406,10 @@ fs_dictmap_object_lost
 .. versionadded:: 2.3.10
 
 The event is sent whenever "Object exists in dict, but not in storage" error
-happens.
+happens. Normally this shouldn't happen, because the writes and deletes are
+done in such an order that Dovecot prefers to rather leak objects in storage
+than cause this error. A likely source of this error can be resurrected
+deleted data see :ref:`cassandra` for more details.
 
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
@@ -2416,6 +2419,13 @@ happens.
 | path                  | Virtual FS path to the object (based on dict)        |
 +-----------------------+------------------------------------------------------+
 | object_id             | Object ID in the storage                             |
++-----------------------+------------------------------------------------------+
+| deleted               | Set to ``yes``, if the corresponding entry in dict   |
+|                       | has been deleted as the ``delete-dangling-links``    |
+|                       | option was set                                       |
+|                       | (:ref:`dictmap_configuration_parameters`).           |
+|                       |                                                      |
+|                       | .. versionadded:: 2.3.15                             |
 +-----------------------+------------------------------------------------------+
 
 fs_dictmap_max_bucket_changed
