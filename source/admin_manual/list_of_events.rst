@@ -1046,6 +1046,9 @@ Index file handling for ``dovecot.index*``, ``dovecot.map.index*``,
 | :ref:`event_mail_user` depending on what the index is used for.            |
 +---------------------+------------------------------------------------------+
 
+
+.. _event_mail_index_recreated:
+
 mail_index_recreated
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -1064,7 +1067,29 @@ A mail index file was recreated.
 +---------------------+--------------------------------------------------------+
 
 
-.. _event_mail_index_recreated:
+.. _event_indexer_worker_indexing_finished:
+
+indexer_worker_indexing_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+Indexer worker process completed an indexing transaction.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| Inherits from :ref:`event_mailbox`                                           |
++---------------------+--------------------------------------------------------+
+| message_count       | Number of messages indexed                             |
++---------------------+--------------------------------------------------------+
+| first_uid           | UID of the first indexed message                       |
++---------------------+--------------------------------------------------------+
+| last_uid            | UID of the last indexed message                        |
++---------------------+--------------------------------------------------------+
+| user_cpu_usecs      | Total user CPU spent on the indexing transaction in    |
+|                     | microseconds.                                          |
++---------------------+--------------------------------------------------------+
 
 
 Mail cache

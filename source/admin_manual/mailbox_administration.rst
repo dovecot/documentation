@@ -7,9 +7,9 @@ Mailbox Administration
 .. toctree::
    :maxdepth: 1
 
+   migrating_mailboxes
+   importing_mailboxes
 
    doveadm_mailbox_commands
 
    obox/index
-
-   importing_mailboxes_converting_exporting_moving_migrating
