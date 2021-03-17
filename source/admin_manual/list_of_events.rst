@@ -9,6 +9,7 @@ List of all events emitted by Dovecot for statistics, exporting and filtering.
 See also:
 
  * :ref:`statistics`
+ * :ref:`event_reasons`
  * :ref:`event_export`
  * :ref:`event_filter`
  * :ref:`event_design` for technical implementation details
@@ -167,12 +168,15 @@ SQL Categories
 Global Fields
 *************
 
-**ALL events have the following fields**:
+**ALL events may have the following fields**:
 
 +--------------+------------------------------------------------------------+
 | Field        | Description                                                |
 +==============+============================================================+
 | duration     | Duration of the event (in microseconds)                    |
++--------------+------------------------------------------------------------+
+| reason_code  | List of reason code strings why the event happened. See    |
+|              | :ref:`event_reasons` for possible values.                  |
 +--------------+------------------------------------------------------------+
 
 
