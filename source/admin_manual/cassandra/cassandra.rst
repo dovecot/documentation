@@ -26,7 +26,7 @@ Cassandra Administration
 
 ``Apache Cassandra`` is a distributed database with tunable consistency.  Normally our Dovecot configuration implements ``quorum`` consistency.
 Quorum provides strong consistency with failure toleration.
-With a ``replication factor of 3``, ``quorum`` is :math:`2*((sum_of_replication/2)+1)`.
+With a ``replication factor of 3``, ``quorum`` is :math:`2*((sum\_of\_replication/2)+1)`.
 This means it is entirely possible for the data to be inconsistent on one node.
 
 Cassandra ``nodetool repair`` is the ``AntEntropy`` service that uses Merkle trees to detect and repair inconsistencies in data between replicas.

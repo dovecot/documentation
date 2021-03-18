@@ -5,16 +5,15 @@ Access Control Lists
 ====================
 
 This page talks mainly about how ACLs work, for more general description of how
-shared mailboxes work, see `SharedMailboxes
-<https://wiki.dovecot.org/SharedMailboxes>`_.
+shared mailboxes work, see :ref:`SharedMailboxes <shared_mailboxes>`.
 
 Dovecot v1.0 and v1.1 supports administrator-configured ACL files. v1.2+
 supports also IMAP ACL extension, which allows users to change ACLs themselves.
 The ACL code was written to allow multiple ACL backends, but currently Dovecot
 supports only virtual ACL files. Note that using ACLs doesn't grant mail
-processes any extra filesystem permissions that they already don't have. `You
-must make sure that the processes have enough permissions
-<https://wiki.dovecot.org/SharedMailboxes/Permissions>`_ to be able to access
+processes any extra filesystem permissions that they already don't have.
+:ref:`You must make sure that the processes have enough permissions
+<admin_manual_permissions_in_shared_mailboxes>` to be able to access
 the mailboxes. When testing you could first try accessing shared/public
 mailboxes without ACL plugin even enabled.
 
