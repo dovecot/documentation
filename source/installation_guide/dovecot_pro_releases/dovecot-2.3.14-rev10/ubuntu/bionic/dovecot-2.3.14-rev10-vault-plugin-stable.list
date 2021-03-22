@@ -1,0 +1,4 @@
+# vault-plugin component requires separate OX License
+# Please contact to support@open-xchange.com to get access
+# dovecot-2.3.14-rev10 Ubuntu 18.04 LTS (Bionic Beaver) - OX Dovecot Pro Vault plug-in
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/plugin/vault-plugin/Ubuntu_18.04 ./
