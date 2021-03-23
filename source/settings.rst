@@ -9,6 +9,8 @@ Settings
 
    settings/core
 
+   settings/advanced
+
    settings/plugin/index
 
    settings/pigeonhole
