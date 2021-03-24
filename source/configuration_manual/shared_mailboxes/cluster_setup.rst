@@ -49,7 +49,10 @@ in this mailbox ``someone1`` would access a mailbox with the name
     type = shared
     prefix = shared/%%u/
     list = children
-    location = imapc:
+    # Use INDEXPVT to enable per-user \Seen flags.
+    # If running earlier versions than 2.3.15, or if using obox storage
+    # INDEXPVT is not supported.
+    location = imapc:~/shared/%%u:INDEXPVT=~/shared-pvt/%%u
    }
 
 Additionally imapc must be configured accordingly on the backends:
@@ -58,7 +61,11 @@ Additionally imapc must be configured accordingly on the backends:
  * :ref:`setting-imapc_password` must be set to the master password which is
    configured on all backends and directors
  * :ref:`setting-imapc_host` must point to a load balancer's address that
-    connects to Dovecot director/proxy
+   connects to Dovecot director/proxy
+
+.. versionadded:: 2.3.15 INDEXPVT for imapc is supported from 2.3.15 onwards.
+                  In general INDEXPVT with imapc is only supported for non-obox
+                  storages.
 
 ::
 
