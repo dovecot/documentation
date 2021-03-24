@@ -1,8 +1,8 @@
 .. _plugin-fs-compress:
 
-========================
+==================
 fs-compress plugin
-========================
+==================
 
 ``fs-compress`` has no settings in dovecot.conf
 
@@ -24,10 +24,14 @@ Examples:
 
 Note that these both work and don't have any practical difference, because fs-dictmap doesn't modify the object contents in any way:
 
+.. code-block:: none
+
   obox_index_fs = compress:gz:6:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; diff-table
   obox_index_fs = dictmap:proxy:dict-async:cassandra ; compress:gz:6:sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; diff-table
 
 With encryption enabled:
+
+.. code-block:: none
 
   obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:gz:6:mail-crypt:s3:https://ACCESSKEY:SECRET@s3.example.com/?bucket=mails
 
