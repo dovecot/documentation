@@ -10,6 +10,15 @@ See also:
  * :ref:`settings_types`
  * :ref:`config_variables`
 
+Example configuration
+^^^^^^^^^^^^^^^^^^^^^
+
+The example configuration files are split into multiple files in ``conf.d/``
+directory for grouping the settings. This is just for human readability though.
+Dovecot doesn't care which settings are in which files. They could all be put
+into a single ``dovecot.conf`` if preferred (except for
+:ref:`external_config_files`).
+
 Basic syntax
 ^^^^^^^^^^^^
 
@@ -175,6 +184,8 @@ Example:
          !include imap-plugin-settings.conf
       }
    }
+
+.. _external_config_files:
 
 External config files
 ^^^^^^^^^^^^^^^^^^^^^
