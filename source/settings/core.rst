@@ -4,6 +4,8 @@
 Dovecot Core Settings
 ========================
 
+See :ref:`settings` for list of all setting groups.
+
 .. _setting-auth_anonymous_username:
 
 ``auth_anonymous_username``

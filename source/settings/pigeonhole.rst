@@ -4,6 +4,8 @@
 Pigeonhole settings
 ===================
 
+See :ref:`settings` for list of all setting groups.
+
 Global settings
 ^^^^^^^^^^^^^^^
 
