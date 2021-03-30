@@ -24,5 +24,5 @@ See also
 
    settings/types
 
-   configuration_manual/config_file/config_file_syntax
+   configuration_manual/config_file/index
    configuration_manual/config_file/config_variables
