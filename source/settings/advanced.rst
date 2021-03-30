@@ -8,6 +8,8 @@ Core Advanced Settings
 
   These settings should not normally be changed.
 
+See :ref:`settings` for list of all setting groups.
+
 .. _setting-mail_cache_unaccessed_field_drop:
 
 ``mail_cache_unaccessed_field_drop``
