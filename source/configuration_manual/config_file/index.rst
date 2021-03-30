@@ -8,4 +8,3 @@ Configuration file
 
    config_file_syntax
    config_variables
-   config_types
