@@ -15,6 +15,14 @@ The important rules are:
  * Should be set after fscache (you generally don't want fscache to be compressed for performance reasons).
  * Must be set before :ref:`fs_crypt`, because encrypted data compresses poorly.
 
+.. versionchanged:: 2.3.15
+
+You can use per-algorithm compression levels, and defaults. Prior to v2.3.15,
+the compression level must be an integer in the range 1 to 9 regardless of the
+algorithm selected. The default level is 6. These values may not make sense
+with compression algorithms other than gz and bz2. For example, zstd supports
+levels from -1 to 22 in latest Zstandard version.
+
 Examples:
 
 .. code-block:: none
