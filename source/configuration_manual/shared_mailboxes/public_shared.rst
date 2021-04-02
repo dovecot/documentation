@@ -40,8 +40,7 @@ In the above example, you would then create Maildir mailboxes under the
 
 Note that with Maildir format Dovecot uses Maildir++ layout by default for
 folders, where the folder names must begin with a "." or Dovecot will ignore
-them. You can also optionally use the `"fs"
-layout <https://wiki.dovecot.org/MailboxFormat/Maildir#Directory_Structure>`__
+them. You can also optionally use the `"fs" layout <maildir_mbox_format>`_
 if you want the directory structure to look like:
 
 -  ``/var/mail/public/`` (root dir)

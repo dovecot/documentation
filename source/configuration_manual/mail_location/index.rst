@@ -8,10 +8,9 @@ Mail Location Settings
    :maxdepth: 1
    :glob:
 
+   Maildir/*
    mbox/*
    obox/index
-
-* For Maildir-specific settings, see `MailLocation/Maildir <https://wiki.dovecot.org/MailLocation/Maildir>`_
 
 * For dbox-specific settings, see `MailLocation/dbox mailbox format <https://wiki.dovecot.org/MailLocation/dbox>`_
 
@@ -101,7 +100,7 @@ BROKENCHAR          Specifies an escape character that is used for broken or oth
 
 		    .. versionchanged:: v2.3.14 Conflicting separators are also escaped.
 
-CONTROL             Specifies the location of control files under the `mbox <https://wiki.dovecot.org/MailLocation/mbox#Control_files>`__ or `Maildir formats <https://wiki.dovecot.org/MailLocation/Maildir#Control_files>`_
+CONTROL             Specifies the location of control files under the `mbox <https://wiki.dovecot.org/MailLocation/mbox#Control_files>`__ or `Maildir <maildir_settings_control_files>` formats.
 
 VOLATILEDIR         Specifies the location of volatile files. This includes lock files and potentially other files that don't need to exist permanently. This is especially useful to avoid creating lock files to NFS or other remote filesystems. (v2.2.32+)
 
@@ -109,7 +108,7 @@ SUBSCRIPTIONS       Specifies the file used for storing subscriptions. The defau
 
 MAILBOXDIR          Specifies directory name under which all mailbox directories are stored. With `dbox formats <https://wiki.dovecot.org/MailboxFormat/dbox>`_ the default is ``mailboxes/`` while with other mailbox formats the default is empty. Typically this should be changed only for :ref:`lazy_expunge_plugin` and :ref:`namespaces` with mdbox.
 
-DIRNAME             Specifies the directory name used for mailbox directories, or in the case of mbox specifies the mailbox message file name. With `dbox formats <https://wiki.dovecot.org/MailboxFormat/dbox>`_ the default is ``dbox-Mails/`` while with other mailbox formats the default is empty. Can be used under either `mbox <https://wiki.dovecot.org/MailLocation/mbox#Message_file_name>`__ , `Maildir <https://wiki.dovecot.org/MailLocation/Maildir#Mailbox_directory_name>`_ , or `dbox <https://wiki.dovecot.org/MailLocation/dbox#Mailbox_directory_name>`__ formats. 
+DIRNAME             Specifies the directory name used for mailbox directories, or in the case of mbox specifies the mailbox message file name. With `dbox formats <https://wiki.dovecot.org/MailboxFormat/dbox>`_ the default is ``dbox-Mails/`` while with other mailbox formats the default is empty. Can be used under either `mbox <https://wiki.dovecot.org/MailLocation/mbox#Message_file_name>`__ , `Maildir <maildir_settings_mailbox_directory_name>`_ , or `dbox <https://wiki.dovecot.org/MailLocation/dbox#Mailbox_directory_name>`__ formats. 
 
 FULLDIRNAME         Same as ``DIRNAME``, but use the directory name also for index and control directory paths. This should be used instead of ``DIRNAME`` for new installations. (v2.2.8+)
 
@@ -181,8 +180,10 @@ Example:
 
    %1Mu/%2.1Mu/%u returns directories from 0/0/user to f/f/user.
 
+.. _Mail Location Index Files:
+
 Index files
-^^^^^^^^^^^^^^
+^^^^^^^^^^^
 Index files are by default stored under the same directory as mails. With maildir they are stored in the actual maildirs, with mbox they are stored under ``.imap/`` directory. You may want to change the index file location if you're using `NFS <https://wiki.dovecot.org/NFS>`_ or if you're setting up `shared mailboxes <https://wiki.dovecot.org/SharedMailboxes>`_.
 
 You can change the index file location by adding ``:INDEX=<path>`` to mail_location. For example:

@@ -18,8 +18,8 @@ Mailbox formats supported by Dovecot:
 |                        |             | ``/var/mail`` directory. Single file  |
 |                        |             | contains multiple messages.           |
 +------------------------+-------------+---------------------------------------+
-| Maildir_               | ``maildir`` | One file contains one message. A      |
-|                        |             | reliable choice since files are never |
+| :ref:`Maildir          | ``maildir`` | One file contains one message. A      |
+| <maildir_mbox_format>` |             | reliable choice since files are never |
 |                        |             | modified and all operations are       |
 |                        |             | atomic. The top-level Maildir         |
 |                        |             | directory contains the                |
@@ -45,6 +45,11 @@ Mailbox formats supported by Dovecot:
 The Tag column indicates the tag which is used at the beginning of a
 :ref:`mailbox location specification <mail_location_settings>`.
 
-.. _Maildir: https://wiki.dovecot.org/MailboxFormat/Maildir
 .. _dbox: https://wiki.dovecot.org/MailboxFormat/dbox
 .. _imapc: https://wiki.dovecot.org/MailboxFormat/imapc
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   mailbox_formats/*
