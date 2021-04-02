@@ -3387,78 +3387,34 @@ If enabled, assume that the mailbox list index is fully updated so that
 stat() will not be run for mailbox files/directories.
 
 
-.. _setting-maildir_broken_filename_sizes:
-
 ``maildir_broken_filename_sizes``
 ---------------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-maildir_broken_filename_sizes`
 
-Maildir only: If enabled, do not obtain a mail message's physical size from
-the ``S=<size>`` data in the Maildir filename except when recalculating the
-Maildir++ quota.
-
-.. todo:: Indicate Maildir-only setting
-
-
-.. _setting-maildir_copy_with_hardlinks:
 
 ``maildir_copy_with_hardlinks``
 -------------------------------
 
-- Default: ``yes``
-- Values: :ref:`boolean`
+See :ref:`setting-maildir_copy_with_hardlinks`
 
-Maildir only: If enabled, copying of a message is done with hard links
-whenever possible.
-
-This greatly improves performance, and no negative effects are likely.
-
-.. todo:: Indicate Maildir-only setting
-
-
-.. _setting-maildir_empty_new:
 
 ``maildir_empty_new``
 ---------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-maildir_empty_new`
 
-Maildir only: Should mail messages always be moved from the ``new/`` directory
-to ``cur/``, even when the ``\Recent`` flags aren't being reset?
-
-.. todo:: Indicate Maildir-only setting
-
-
-.. _setting-maildir_stat_dirs:
 
 ``maildir_stat_dirs``
 ---------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-maildir_stat_dirs`
 
-Maildir only: If enabled, don't include directories in a LIST response that
-begin with a dot.
-
-.. todo:: Indicate Maildir-only setting
-
-
-.. _setting-maildir_very_dirty_syncs:
 
 ``maildir_very_dirty_syncs``
 ----------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
-
-Maildir: If disabled, Dovecot is assumed to be the only MUA that accesses
-Maildir directly, so the ``cur/`` directory is scanned only when its mtime
-changes unexpectedly or when the mail cannot otherwise be found.
-
-.. todo:: Indicate Maildir-only setting
+See :ref:`setting-maildir_very_dirty_syncs`
 
 
 .. _setting-master_user_separator:
