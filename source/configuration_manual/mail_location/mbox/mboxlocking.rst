@@ -8,7 +8,7 @@ The only standard way to lock an mbox is using a method called "dotlock". This m
 
 It's important that all software that's reading or writing to mboxes use the same locking settings. If they use different methods, they might read/write to an mbox while another process is modifying it, and see corrupted mails. If they use the same methods but in a different order, they can both end up in a deadlock.
 
-If you want to know more details about locking, see :ref:`mbox_mailbox_format`.
+If you want to know more details about locking, see :ref:`mbox_mbox_format`.
 
 For Dovecot you can configure locking using the mbox_read_locks and mbox_write_locks settings. The defaults are:
 

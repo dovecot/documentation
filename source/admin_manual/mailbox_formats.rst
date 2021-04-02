@@ -13,7 +13,7 @@ Mailbox formats supported by Dovecot:
 | <obox_settings>`       |             | format. (Pro only)                    |
 +------------------------+-------------+---------------------------------------+
 | :ref:`mbox             | ``mbox``    | Traditional UNIX mailbox format.      |
-| <mbox_mailbox_format>` |             | Users' INBOX mailboxes are commonly   |
+| <mbox_mbox_format>`    |             | Users' INBOX mailboxes are commonly   |
 |                        |             | stored in ``/var/spool/mail`` or      |
 |                        |             | ``/var/mail`` directory. Single file  |
 |                        |             | contains multiple messages.           |

@@ -378,7 +378,7 @@ about.
 Maildir and Mail Header Metadata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Unlike when using :ref:`mbox <mbox_mailbox_format>` as
+Unlike when using :ref:`mbox <mbox_mbox_format>` as
 :ref:`mailbox format <mailbox_formats>`, where mail headers (for example
 ``Status``, ``X-UID``, etc.) are used to determine and store metadata, the
 mail headers within Maildir files are (usually) **not** used for this purpose
@@ -388,7 +388,7 @@ location (and then "imported" by dovecot).
 
 Therefore, it is (usually) **not** necessary, to strip any such mail headers
 at the MTA, MDA, or LDA (as is recommended with
-:ref:`mbox <mbox_mailbox_format>`).
+:ref:`mbox <mbox_mbox_format>`).
 
 There is one exception, though, namely when
 :ref:`pop3_reuse_xuidl = yes <setting-pop3_reuse_xuidl>` (which
