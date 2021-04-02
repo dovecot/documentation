@@ -68,11 +68,11 @@ Format
 ^^^^^^^
 The format of the mailbox location specification is as follows:
 
-`mailbox-format <https://wiki.dovecot.org/MailboxFormat>`_ : path [ : key = value … ]
+`mailbox-format <mailbox_formats>`_ : path [ : key = value … ]
 
 where:
 
-* mailbox-format is a tag identifying one of the formats described at `Mailbox formats <https://wiki.dovecot.org/MailboxFormat>`_ 
+* mailbox-format is a tag identifying one of the formats described at `Mailbox formats <mailbox_formats>`_
 
 * path is the path to a directory where the mail is stored. This must be an absolute path, not a relative path. Even if relative paths appear to work, this usage is deprecated and will likely stop working at some point. Do not use the home directory, for reasons see :ref:`Home vs. mail directory <home_directories_for_virtual_users>`.
 
