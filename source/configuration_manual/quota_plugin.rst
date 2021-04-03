@@ -160,8 +160,8 @@ because user is over quota. The possible solutions for this are:
   quota limit (but not unlimited).
 
 To make sure users don't start keeping messages permanently in Trash you can
-use a nightly `cronjob <https://wiki.dovecot.org/Plugins/Expire>`_ to expunge
-old messages from Trash mailbox.
+use `autoexpunge <namespaces_autoexpunge>` to expunge old messages from Trash
+mailbox.
 
 Debugging Quota
 ================

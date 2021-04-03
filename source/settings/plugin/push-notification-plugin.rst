@@ -4,4 +4,4 @@
 push-notification
 =============================
 
-`Push notification framework <https://wiki.dovecot.org/Plugins/PushNotification>`_
+:ref:`push_notification`

@@ -24,10 +24,9 @@ directory properly (i.e. virtual users' ``home=/var/vmail/%d/%n``) and then set
 ``mail_location = maildir:~/Maildir``.
 
 If it's not possible to have a home directory for virtual users (avoid that if
-possible), you can do this by pointing `Multiple Authentication Databases
-<https://wiki.dovecot.org/Authentication/MultipleDatabases>`_ to system users'
-mail location and have the virtual userdb override it by returning mail
-:ref:`authentication-password_database_extra_fields`.
+possible), you can do this by pointing multiple authentication databases
+to system users' mail location and have the virtual userdb override it by
+returning mail :ref:`authentication-password_database_extra_fields`.
 
 Example with home dirs
 ======================

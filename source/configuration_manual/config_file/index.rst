@@ -101,7 +101,7 @@ There are a few different filters that can be used to apply settings conditional
 
 * remote <ip/network>: Remote client's IP/network. For non-TCP connections this will never match. For example 10.0.0.1 or 10.0.0.0/16.
 
-* local_name <name>: Matches TLS connection's SNI name, if it's sent by the client. Commonly used to `configure multiple TLS certificates <https://wiki.dovecot.org/SSL/DovecotConfiguration>`_
+* local_name <name>: Matches TLS connection's SNI name, if it's sent by the client. Commonly used to `configure multiple TLS certificates <dovecot_ssl_configuration>`
 
 * local <ip/range>: Locally connected IP/network. For non-TCP connections this will never match. For example 127.0.0.1 or 10.0.0.0/16.
 

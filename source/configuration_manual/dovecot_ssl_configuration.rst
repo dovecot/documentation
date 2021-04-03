@@ -270,7 +270,7 @@ You may also force the username to be taken from the certificate by setting ``au
 
 * You can change the field with ``ssl_cert_username_field=name`` setting (parsed using OpenSSL's ``OBJ_txt2nid()`` function). ``x500UniqueIdentifier`` is a common choice.
 
-You may also want to disable the password checking completely. Doing this currently circumvents Dovecot's security model so it's not recommended to use it, but it is possible by making the passdb allow logins using any password (typically requiring `nopassword extra field to be returned <https://wiki.dovecot.org/PasswordDatabase/ExtraFields>`_).
+You may also want to disable the password checking completely. Doing this currently circumvents Dovecot's security model so it's not recommended to use it, but it is possible by making the passdb allow logins using any password (typically requiring `nopassword extra field to be returned <authentication-password_database_extra_fields>`).
 
 Testing
 ^^^^^^^
