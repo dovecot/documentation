@@ -3250,182 +3250,58 @@ Example:
    master_user_separator = *
 
 
-.. _setting-mbox_dirty_syncs:
-
 ``mbox_dirty_syncs``
 --------------------
 
-- Default: ``yes``
-- Values: :ref:`boolean`
+See :ref:`setting-mbox_dirty_syncs`
 
-mbox only: Enable optimized mbox syncing?
-
-For larger mbox files, it can take a long time to determine what has
-changed when the file is altered unexpectedly. Since the change in
-most cases consists solely of newly appended mail, Dovecot can
-operate more quickly if it starts off by simply reading the new
-messages, then falls back to reading the entire mbox file if
-something elsewhere in it isn't as expected.
-
-See :ref:`setting-mbox_very_dirty_syncs`
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_dotlock_change_timeout:
 
 ``mbox_dotlock_change_timeout``
 -------------------------------
 
-- Default: ``2 mins``
-- Values:  :ref:`time`
+See :ref:`setting-mbox_dotlock_change_timeout`
 
-mbox only: Override a lockfile after this amount of time if a dot-lock exists
-but the mailbox hasn't been modified in any way.
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_lazy_writes:
 
 ``mbox_lazy_writes``
 --------------------
 
-- Default: ``yes``
-- Values: :ref:`boolean`
+See :ref:`setting-mbox_lazy_writes`
 
-mbox only: If enabled, mbox headers are not written until a
-full write sync is performed (with the EXPUNGE and CHECK commands and
-during closing of the mailbox).
-
-Enabling this setting is especially useful with POP3, in which clients often
-delete all mail messages.
-
-One negative consequence of enabling this setting is that the changes aren't
-immediately visible to other MUAs.
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_lock_timeout:
 
 ``mbox_lock_timeout``
 ---------------------
 
-- Default: ``5mins``
-- Values:  :ref:`time`
+See :ref:`setting-mbox_lock_timeout`
 
-mbox only: The maximum time to wait for all locks to be released before
-aborting.
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_md5:
 
 ``mbox_md5``
 ------------
 
-- Default: ``apop3d``
+See: :ref:`setting-mbox_md5`
 
-mbox only: The mail-header selection algorithm to use for MD5 POP3 UIDLs when
-the setting ``pop3_uidl_format=%m`` is applied.
-
-See :ref:`setting-pop3_uidl_format`
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_min_index_size:
 
 ``mbox_min_index_size``
 -----------------------
 
-- Default: ``0``
+See :ref:`setting-mbox_min_index_size`
 
-mbox only: For mboxes smaller than this size, index files are not
-written.
-
-If an index file already exists, it gets read but not updated.
-
-The default is OK and doesn't need to be change. 
-
-.. todo:: Indicate mbox-only setting
-.. todo:: Should not be changed
-
-
-.. _setting-mbox_read_locks:
 
 ``mbox_read_locks``
 -------------------
 
-- Default: ``fcntl``
-- Values: ``dotlock, dotlock_try, fcntl, flock, lockf``
+See :ref:`setting-mbox_read_locks`
 
-mbox only: Specify which locking method(s) to use for locking the mbox files
-during reading.
-
-To use multiple values, separate them with spaces.
-
-There are at least four different ways to lock a mbox:
-
-* **dotlock**: mailboxname.lock file created by almost all software when writing to mboxes. This grants the writer an exclusive lock over the mbox, so it's usually not used while reading the mbox so that other processes can also read it at the same time. So while using a dotlock typically prevents actual mailbox corruption, it doesn't protect against read errors if mailbox is modified while a process is reading.
-
-* **flock**: flock() system call is quite commonly used for both read and write locking. The read lock allows multiple processes to obtain a read lock for the mbox, so it works well for reading as well. The one downside to it is that it doesn't work if mailboxes are stored in NFS.
-
-* **fcntl**: Very similar to flock, also commonly used by software. In some systems this fcntl() system call is compatible with flock(), but in other systems it's not, so you shouldn't rely on it. fcntl works with NFS if you're using lockd daemon in both NFS server and client.
-
-* **lockf**: POSIX lockf() locking. Because it allows creating only exclusive locks, it's somewhat useless so Dovecot doesn't support it. With Linux lockf() is internally compatible with fcntl() locks, but again you shouldn't rely on this.
-
-
-.. todo:: Explain differences between values
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_very_dirty_syncs:
 
 ``mbox_very_dirty_syncs``
 -------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-mbox_very_dirty_syncs`
 
-mbox only: If enabled, Dovecot performs the optimizations from
-``mbox_dirty_syncs`` also for the IMAP SELECT, EXAMINE, EXPUNGE, and CHECK
-commands.
-
-If set, this option overrides ``mbox_dirty_syncs``.
-
-See :ref:`setting-mbox_dirty_syncs`
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_write_locks:
 
 ``mbox_write_locks``
 --------------------
 
-- Default: ``dotlock fcntl``
-- Values: ``dotlock, dotlock_try, fcntl, flock, lockf``
-
-mbox only: Specify which locking method(s) to use for locking the mbox files
-during writing.
-
-To use multiple values, separate them with spaces.
-
-There are at least four different ways to lock a mbox:
-
-* **dotlock**: mailboxname.lock file created by almost all software when writing to mboxes. This grants the writer an exclusive lock over the mbox, so it's usually not used while reading the mbox so that other processes can also read it at the same time. So while using a dotlock typically prevents actual mailbox corruption, it doesn't protect against read errors if mailbox is modified while a process is reading.
-
-* **flock**: flock() system call is quite commonly used for both read and write locking. The read lock allows multiple processes to obtain a read lock for the mbox, so it works well for reading as well. The one downside to it is that it doesn't work if mailboxes are stored in NFS.
-
-* **fcntl**: Very similar to flock, also commonly used by software. In some systems this fcntl() system call is compatible with flock(), but in other systems it's not, so you shouldn't rely on it. fcntl works with NFS if you're using lockd daemon in both NFS server and client.
-
-* **lockf**: POSIX lockf() locking. Because it allows creating only exclusive locks, it's somewhat useless so Dovecot doesn't support it. With Linux lockf() is internally compatible with fcntl() locks, but again you shouldn't rely on this.
-
-.. todo:: Explain differences between values
-.. todo:: Indicate mbox-only setting
+See :ref:`setting-mbox_write_locks`
 
 
 ``mdbox_preallocate_space``
