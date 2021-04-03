@@ -3428,53 +3428,22 @@ There are at least four different ways to lock a mbox:
 .. todo:: Indicate mbox-only setting
 
 
-.. _setting-mdbox_preallocate_space:
-
 ``mdbox_preallocate_space``
 ---------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-mdbox_preallocate_space`
 
-mdbox only: If enabled, preallocate space for newly created files.
-
-In creation of new mdbox files, their size is immediately
-preallocated as ``mdbox_rotate_size``.
-
-This setting currently works only in Linux with certain filesystems (ext4
-and xfs).
-
-See :ref:`setting-mdbox_rotate_size`
-
-.. todo:: Indicate mdbox-only setting
-
-
-.. _setting-mdbox_rotate_interval:
 
 ``mdbox_rotate_interval``
 -------------------------
 
-- Default: ``0``
-- Values:  :ref:`size`
+See :ref:`setting-mdbox_rotate_interval`
 
-mdbox only: The maximum age the dbox file may reach before it's rotated.
-
-``0`` means there is no age-based rotation.
-
-.. todo:: Indicate mdbox-only setting
-
-
-.. _setting-mdbox_rotate_size:
 
 ``mdbox_rotate_size``
 ---------------------
 
-- Default: ``10M``
-- Values:  :ref:`size`
-
-mdbox only: The maximum size the dbox file may reach before it is rotated.
-
-.. todo:: Indicate mdbox-only setting
+See :ref:`setting-mdbox_rotate_size`
 
 
 .. _setting-mmap_disable:

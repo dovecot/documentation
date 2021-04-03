@@ -26,8 +26,8 @@ Mailbox formats supported by Dovecot:
 |                        |             | ``Maildir/cur``, ``Maildir/new``, and |
 |                        |             | ``Maildir/tmp`` subdirectories.       |
 +------------------------+-------------+------------------+--------------------+
-| dbox_                  | ``sdbox``   | **single-dbox**, | Dovecot's own high |
-|                        |             | one message per  | performance        |
+| :ref:`dbox             | ``sdbox``   | **single-dbox**, | Dovecot's own high |
+| <dbox_mbox_format>`    |             | one message per  | performance        |
 |                        |             | file.            | mailbox format.    |
 |                        +-------------+------------------+ Messages are       |
 |                        | ``mdbox``   | **multi-dbox**,  | stored in one or   |
@@ -44,8 +44,6 @@ Mailbox formats supported by Dovecot:
 
 The Tag column indicates the tag which is used at the beginning of a
 :ref:`mailbox location specification <mail_location_settings>`.
-
-.. _dbox: https://wiki.dovecot.org/MailboxFormat/dbox
 
 .. toctree::
    :maxdepth: 1
