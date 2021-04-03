@@ -637,6 +637,8 @@ General Dovecot 2.0 changes
    you need to add the Sieve plugin to the :ref:`setting-mail_plugins` setting
    there too when you decide to use :ref:`LMTP <lmtp_server>`.
 
+.. _sieve_configuration_from_cmusieve:
+
 From CMUSieve (Dovecot v1.0/v1.1)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

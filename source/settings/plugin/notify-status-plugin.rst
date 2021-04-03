@@ -10,4 +10,4 @@ This plugin updates a dict every time a mailbox changes. The status can contain 
 
 See: `Dictionary <https://wiki.dovecot.org/Dictionary>`_ for how to configure dict.
 
-See: `notify_status plugin <https://wiki.dovecot.org/Plugins/NotifyStatus>`_
+See: :ref:`notify_status_plugin`

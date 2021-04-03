@@ -68,8 +68,8 @@ Submission Service
 
 Just add ``submission`` to the ``protocols=`` setting and configure the relay
 MTA server. The submission service is a login service, just like IMAP, POP3 and :ref:`pigeonhole_managesieve_server`, so clients
-are required to authenticate. The same `authentication configuration
-<https://wiki.dovecot.org/Authentication>`_ swill also apply to submission,
+are required to authenticate. The same :ref:`authentication configuration
+<authentication-authentication>` shall also apply to submission,
 unless you're doing protocol-specific things, in which case you may need to
 amend your configuration for the new protocol. BURL support requires a working
 IMAP URLAUTH implementation.

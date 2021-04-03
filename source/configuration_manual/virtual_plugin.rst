@@ -16,8 +16,7 @@ First, you'll have to load the plugin:
 Namespace configuration
 =======================
 
-Then, you'll have to create a `namespace
-<https://wiki.dovecot.org/Namespaces>`_ for the virtual mailboxes, for example:
+Then, you'll have to create a :ref:`namespaces` for the virtual mailboxes, for example:
 
 .. code-block:: none
 
