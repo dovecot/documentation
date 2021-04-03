@@ -1676,286 +1676,99 @@ Example Setting:
 .. todo:: Indicate imap setting
 
 
-.. _setting-imapc_cmd_timeout:
-
 ``imapc_cmd_timeout``
 ---------------------
 
-- Default: ``5mins``
-- Values:  :ref:`time`
+See :ref:`setting-imapc_cmd_timeout`
 
-How long to wait for a reply to an IMAP command sent to a remote IMAP server
-before disconnecting and retrying.
-
-This parameter is used in dsync-based migration of mail from the remote system.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_connection_retry_count:
 
 ``imapc_connection_retry_count``
 --------------------------------
 
-- Default: ``1``
-- Values: :ref:`uint`
+See :ref:`setting-imapc_connection_retry_count`
 
-How many times to retry connection against a remote IMAP server?
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_connection_retry_interval:
 
 ``imapc_connection_retry_interval``
 -----------------------------------
 
-- Default: ``1secs``
-- Values:  :ref:`time_msecs`
+See :ref:`setting-imapc_connection_retry_interval`
 
-How long to wait between retries against a remote IMAP server?
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_features:
 
 ``imapc_features``
 ------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_features`
 
-This setting provides a space-separated list of features and workarounds that
-can be enabled for dsync-based migration of mail from a remote IMAP server.
-
-Supported imapc_features:
-
-* ``rfc822.size`` - Allow passing through message sizes using FETCH RFC822.SIZE
-* ``fetch-headers`` - Allow fetching specific message headers using FETCH
-  BODY.PEEK[HEADER.FIELDS (..)], may give a significant performance improvement
-
-.. todo:: Import imapc_features list from wiki
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_host:
 
 ``imapc_host``
 --------------
 
-- Default: <empty>
-
-The remote IMAP server to use for dsync-based migration of mail (which allows
-preservation of the IMAP UIDs etc.).
-
-Example:
-
-.. code-block:: none
-
-   imapc_host = imap.example.com
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_list_prefix:
+See :ref:`setting-imapc_host`
 
 ``imapc_list_prefix``
 ---------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_list_prefix`
 
-In dsync-based migration, only mailboxes under this prefix on the
-remote system are accessed.
-
-Example, for a source IMAP server that uses an INBOX namespace prefix:
-
-.. code-block:: none
-
-   imapc_list_prefix = INBOX/
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_master_user:
 
 ``imapc_master_user``
 ---------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_master_user`
 
-If you are using master users for dsync-based migration of mail,
-this is the master user for the source IMAP server.
-
-To authenticate as a master user but use a separate login user, the
-following configuration should be employed, where the credentials are
-represented by masteruser and masteruser-secret:
-
-.. code-block:: none
-
-   imapc_user = %u
-   imapc_master_user = masteruser
-   imapc_password = masteruser-secret
-
-:ref:`Mail user variables <variables-mail_user>` can be used.
-
-See also :ref:`setting-imapc_password`.
-See also :ref:`setting-imapc_user`.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_max_idle_time:
 
 ``imapc_max_idle_time``
 -----------------------
 
-- Default: ``29mins``
-- Values:  :ref:`time`
+See :ref:`setting-imapc_max_idle_time`
 
-Send a command to the source IMAP server as a keepalove after no other command
-has been sent for this amount of time.
-
-Dovecot will send either "NOOP" or "DONE" to the source IMAP server.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_max_line_length:
 
 ``imapc_max_line_length``
 -------------------------
 
-- Default: ``0``
-- Values:  :ref:`size`
+See :ref:`setting-imapc_max_line_length`
 
-The maximum line length to accept from the remote IMAP server.
-
-This setting is used to limit maximum memory usage.
-
-A value of ``0`` indicates no maximum.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_password:
 
 ``imapc_password``
 ------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_password`
 
-The password used in the login to the source IMAP server for migration of mail
-via dsync.
-
-If using master users, this setting will be the password of the master user.
-
-See also :ref:`setting-imapc_master_user`.
-
-See also :ref:`setting-imapc_user`.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_port:
 
 ``imapc_port``
 --------------
 
-- Default: ``143``
+See :ref:`setting-imapc_port`
 
-Port used for connection to the source IMAP server in dsync-based migration of
-mail.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_rawlog_dir:
 
 ``imapc_rawlog_dir``
 --------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_rawlog_dir`
 
-Directory location to store raw IMAP protocol traffic logs used in
-dsync-based migration of mail..
-
-See: https://wiki.dovecot.org/Debugging/Rawlog
-
-.. todo:: Link to rawlog documentation
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_sasl_mechanisms:
 
 ``imapc_sasl_mechanisms``
 -------------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_sasl_mechanisms`
 
-The SASL mechanisms to use for authentication when connection to a remote
-IMAP server during dsync-based migration of mail.
-
-The first one advertised by the IMAP sever is used.
-
-PLAIN authentication will be used by default.
-
-Example value:
-
-.. code-block:: none
-
-   imapc_sasl_mechanisms = external plain login
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_ssl:
 
 ``imapc_ssl``
 -------------
 
-- Default: ``no``
-- Values: ``yes``, ``no``, or ``imaps``
+See :ref:`setting-imapc_ssl`
 
-To enable SSL for dsync-based migration of mail, use ``imapc_ssl = imaps``
-to specify the protocol for connection to the source IMAP server.
-
-.. todo:: Values are incorrect?  At least "imaps" is also supported.
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_ssl_verify:
 
 ``imapc_ssl_verify``
 --------------------
 
-- Default: ``yes``
-- Values: :ref:`boolean`
+See :ref:`setting-imapc_ssl_verify`
 
-Require SSL verification of remote IMAP account certificate during dsync-based
-migration of mail.
-
-Verification may be disabled during testing, but should be enabled during
-production use.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_user:
 
 ``imapc_user``
 --------------
 
-- Default: <empty>
-
-The user identity to be used for performing a regular IMAP LOGIN to the
-source IMAP server in dsync-based migration of mail.
-
-:ref:`Mail user variables <variables-mail_user>` can be used.
-
-See also :ref:`setting-imapc_master_user`.
-See also :ref:`setting-imapc_password`.
-
-.. todo:: Indicate dsync setting
+See :ref:`setting-imapc_user`
 
 
 .. _setting-import_environment:
@@ -1972,7 +1785,6 @@ The list is space-separated, and it can include key = value pairs for
 assigning variables the desired value upon Dovecot startup.
 
 .. todo:: Explain default variables
-
 
 
 .. _setting-info_log_path:
