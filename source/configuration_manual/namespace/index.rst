@@ -65,7 +65,7 @@ Giving name is optional, but doing so enables referencing the configuration late
 ----------------------
 
  - Default: ``no``
- - Values: ref:`boolean`
+ - Values: :ref:`boolean`
 
 When ``yes`` namespace is disabled, and cannot be accessed by user in any way.
 
@@ -76,7 +76,7 @@ When ``yes`` namespace is disabled, and cannot be accessed by user in any way.
 --------------------
 
  - Default: ``no``
- - Values: ref:`boolean`
+ - Values: :ref:`boolean`
 
 When ``yes`` namespace will be hidden from IMAP ``NAMESPACE`` command.
 
@@ -87,7 +87,7 @@ When ``yes`` namespace will be hidden from IMAP ``NAMESPACE`` command.
 -------------------------------
 
  - Default: ``no``
- - Values: ref:`boolean`
+ - Values: :ref:`boolean`
 
 If namespace :ref:`setting-namespace_location` fails to load, this namespace will not be included.
 Otherwise the whole sessio will fail to start.
@@ -99,7 +99,7 @@ Otherwise the whole sessio will fail to start.
 -------------------
 
  - Default: ``no``
- - Values: ref:`boolean`
+ - Values: :ref:`boolean`
 
 When ``yes`` this namespace will be considered the one holding the ``INBOX`` folder.
 There can be only one namespace like this.
@@ -111,7 +111,7 @@ There can be only one namespace like this.
 ------------------
 
  - Default: `yes`
- - Values: ref:`boolean`
+ - Values: :ref:`boolean`
 
 Whether to include this namespace in LIST output, when listing it's parent's folders.
 It is still possible to list the namespace's folders by explicitly asking for them.
@@ -127,7 +127,7 @@ See also :ref:`setting-namespace_hidden`.
 ----------------------
 
  - Default: :ref:`setting-mail_location`
- - Values: ref:`string`
+ - Values: :ref:`string`
 
 Specifies driver and parameters for physical mailbox storage.
 
@@ -144,7 +144,7 @@ Example::
 -------------------
 
  - Default: `0`
- - Values: ref:`uint`
+ - Values: :ref:`uint`
 
 Sets display order in IMAP ``NAMESPACE`` command.
 Automatically numbered when untouched.
@@ -156,7 +156,7 @@ Automatically numbered when untouched.
 --------------------
 
  - Default: <empty>
- - Values: ref:`string`
+ - Values: :ref:`string`
 
 Specifies prefix for namespace.
 Must end with :ref:`hierarchy separator <setting-namespace_separator>`.
@@ -175,7 +175,7 @@ Example::
 -----------------------
 
  - Default: ``.`` for maildir, ``/`` others.
- - Values: ref:`string`
+ - Values: :ref:`string`
 
 Specifies the hierarchy separator for the namespace.
 The separator is a single character, which can't then otherwise be used in folder names.
@@ -196,7 +196,7 @@ Example::
 ---------------------------
 
  - Default: ``yes``
- - Values: ref:`boolean`
+ - Values: :ref:`boolean`
 
 Whether subscriptions are stored in this namespace.
 This is usually set to ``no`` for shared namespaces so that the shared folders' subscriptions are stored in the user's primary subscriptions file.
