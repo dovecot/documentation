@@ -4,6 +4,25 @@
 Mbox Mailbox Format
 ===================
 
+For information on how to configure mbox in Dovecot, see :ref:`mbox_settings`.
+
+.. warning::
+
+  Mbox format is considered deprecated and is maintained primarily for
+  backwards compatibility and utility purposes (specifically for archival
+  purposes, as mbox allows multiple messages to be natively stored in a
+  single file).
+
+  mbox is not being maintained for write fixes or general feature or
+  optimization improvements, so it is not advised to use to actively store
+  production data.
+
+  In a production system, a more modern mailbox format should be used, e.g.,
+  :ref:`dbox_mbox_format` (or :ref:`maildir_mbox_format`).
+
+Overview
+^^^^^^^^
+
 Usually UNIX systems are configured by default to deliver mails to
 ``/var/mail/username`` or ``/var/spool/mail/username`` mboxes. In the IMAP
 world, these files are called INBOX mailboxes. IMAP protocol supports multiple
@@ -33,6 +52,8 @@ Additionally, the `mbox Wikipedia`_ page also is a good resource.
 
 .. _`RFC 4155`: https://tools.ietf.org/html/rfc4155
 .. _`mbox Wikipedia`: https://en.wikipedia.org/wiki/Mbox
+
+.. _mbox_mbox_format_locking:
 
 Locking
 ^^^^^^^
@@ -82,7 +103,8 @@ dotlock file can't be created. There are a couple of ways to work around this:
   software requiring access to the directory runs with the group's privileges.
   This may mean making the binary itself setgid-mail, or using a separate
   dotlock helper program which is setgid-mail. With Dovecot this can be done
-  by setting ``mail_privileged_group = mail``.
+  by setting
+  :ref:`mail_privileged_group = mail <setting-mail_privileged_group>`.
 
 * Set sticky bit to the directory (``chmod +t /var/mail``). This makes it
   somewhat safe to use, because users can't delete each others mailboxes, but
@@ -194,35 +216,12 @@ its internal headers. It can use this space to move only minimal amount of
 data necessary to get the necessary data inserted. Also if data is removed, it
 just grows these spaces areas.
 
-``mbox_lazy_writes`` setting works by adding and/or updating Dovecot's
-metadata headers only after closing the mailbox or when messages are expunged
-from the mailbox. C-Client works the same way. The upside of this is that it
-reduces writes because multiple flag updates to same message can be grouped,
-and sometimes the writes don't have to be done at all if the whole message is
-expunged. The downside is that other processes don't notice the changes
-immediately (but other Dovecot processes do notice because the changes are in
-index files).
+There are several configuration options that can be used that will affect
+optimization:
 
-``mbox_dirty_syncs`` setting tries to avoid re-reading the mbox every time
-something changes. Whenever the mbox changes (ie. timestamp or size), it first
-checks if the mailbox's size changed. If it didn't, it most likely meant that
-only message flags were changed so it does a full mbox read to find it. If the
-mailbox shrunk, it means that mails were expunged and again Dovecot does a
-full sync. Usually however the only thing besides Dovecot that modifies the
-mbox is the LDA which appends new mails to the mbox. So if the mbox size was
-grown, Dovecot first checks if the last known message is still where it was
-last time. If it is, Dovecot reads only the newly added messages and goes into
-a "dirty mode". As long as Dovecot is in dirty mode, it can't be certain that
-mails are where it expects them to be, so whenever accessing some mail, it
-first verifies that it really is the correct mail by finding its X-UID header.
-If the X-UID header is different, it fallbacks to a full sync to find the
-mail's correct position. The dirty mode goes away after a full sync. If
-``mbox_lazy_writes`` was enabled and the mail didn't yet have X-UID header,
-Dovecot uses MD5 sum of a couple of headers to compare the mails.
-
-``mbox_very_dirty_syncs`` does the same as ``mbox_dirty_syncs``, but the
-dirty state is kept also when opening the mailbox. Normally opening the
-mailbox does a full sync if it had been changed outside Dovecot.
+* :ref:`setting-mbox_dirty_syncs`
+* :ref:`setting-mbox_lazy_writes`
+* :ref:`setting-mbox_very_dirty_syncs`
 
 From Escaping
 ^^^^^^^^^^^^^

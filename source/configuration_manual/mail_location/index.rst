@@ -100,7 +100,7 @@ BROKENCHAR          Specifies an escape character that is used for broken or oth
 
 		    .. versionchanged:: v2.3.14 Conflicting separators are also escaped.
 
-CONTROL             Specifies the location of control files under the `mbox <https://wiki.dovecot.org/MailLocation/mbox#Control_files>`__ or `Maildir <maildir_settings_control_files>` formats.
+CONTROL             Specifies the location of control files under the :ref:`mbox <mbox_settings_control_files>` or `Maildir <maildir_settings_control_files>` formats.
 
 VOLATILEDIR         Specifies the location of volatile files. This includes lock files and potentially other files that don't need to exist permanently. This is especially useful to avoid creating lock files to NFS or other remote filesystems. (v2.2.32+)
 
@@ -108,7 +108,7 @@ SUBSCRIPTIONS       Specifies the file used for storing subscriptions. The defau
 
 MAILBOXDIR          Specifies directory name under which all mailbox directories are stored. With :ref:`dbox formats <dbox_mbox_format>` the default is ``mailboxes/`` while with other mailbox formats the default is empty. Typically this should be changed only for :ref:`lazy_expunge_plugin` and :ref:`namespaces` with mdbox.
 
-DIRNAME             Specifies the directory name used for mailbox directories, or in the case of mbox specifies the mailbox message file name. With :ref:`dbox formats <dbox_mbox_format>` the default is ``dbox-Mails/`` while with other mailbox formats the default is empty. Can be used under either `mbox <https://wiki.dovecot.org/MailLocation/mbox#Message_file_name>`__ , `Maildir <maildir_settings_mailbox_directory_name>` , or :ref:`dbox <dbox_settings_mailbox_directory_name>` formats.
+DIRNAME             Specifies the directory name used for mailbox directories, or in the case of mbox specifies the mailbox message file name. With :ref:`dbox formats <dbox_mbox_format>` the default is ``dbox-Mails/`` while with other mailbox formats the default is empty. Can be used under either :ref:`mbox <mbox_settings_message_filename>`, `Maildir <maildir_settings_mailbox_directory_name>` , or :ref:`dbox <dbox_settings_mailbox_directory_name>` formats.
 
 FULLDIRNAME         Same as ``DIRNAME``, but use the directory name also for index and control directory paths. This should be used instead of ``DIRNAME`` for new installations. (v2.2.8+)
 
