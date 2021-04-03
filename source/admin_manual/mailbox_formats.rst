@@ -35,8 +35,8 @@ Mailbox formats supported by Dovecot:
 |                        |             | messages per     | containing one or  |
 |                        |             | file.            | more messages.     |
 +------------------------+-------------+------------------+--------------------+
-| imapc_                 | ``imapc``   | Use remote IMAP server as mail        |
-|                        |             | storage.                              |
+| :ref:`imapc            | ``imapc``   | Use remote IMAP server as mail        |
+| <imapc_mbox_format>`   |             | storage.                              |
 +------------------------+-------------+---------------------------------------+
 | pop3c                  | ``pop3c``   | Use remote POP3 server as mail        |
 |                        |             | storage.                              |
@@ -46,7 +46,6 @@ The Tag column indicates the tag which is used at the beginning of a
 :ref:`mailbox location specification <mail_location_settings>`.
 
 .. _dbox: https://wiki.dovecot.org/MailboxFormat/dbox
-.. _imapc: https://wiki.dovecot.org/MailboxFormat/imapc
 
 .. toctree::
    :maxdepth: 1
