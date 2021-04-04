@@ -141,7 +141,7 @@ As an alternative, it is possible to configure Dovecot to store all mailboxes
 in a single directory with hierarchical levels separated by a dot. This can
 be configured by adding ``:LAYOUT=maildir++`` to the mail location. There
 are, however, some further considerations when doing this; see
-https://wiki.dovecot.org/MboxChildFolders for some examples.
+:ref:`mbox_child_folders` for some examples.
 
 .. _mbox_settings_control_files:
 
@@ -163,7 +163,7 @@ example:
 would store the subscribed mailboxes list at ``~/mail-control/.subscriptions``.
 
 One practical application of the ``CONTROL`` parameter is described at
-https://wiki.dovecot.org/MboxChildFolders.
+:ref:`mbox_child_folders`.
 
 .. _mbox_settings_message_filename:
 
@@ -181,7 +181,7 @@ particular value, then Dovecot will store messages in a file with a name of
 that value, in a directory with a name equivalent to the mailbox name.
 
 There are, however, some further considerations when doing this; see
-https://wiki.dovecot.org/MboxChildFolders for an example.
+:ref:`mbox_child_folders` for an example.
 
 Settings
 ^^^^^^^^
