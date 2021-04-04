@@ -145,8 +145,7 @@ normally possible to create a mailbox and child mailboxes under it.
 
 However if you really want to be able to have mailboxes containing both
 messages and child mailboxes under mbox, then Dovecot can be configured to do
-this, subject to certain provisos; see
-https://wiki.dovecot.org/MboxChildFolders.
+this, subject to certain provisos; see :ref:`mbox_child_folders`.
 
 Dovecot's Metadata
 ^^^^^^^^^^^^^^^^^^
