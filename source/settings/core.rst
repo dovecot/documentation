@@ -251,6 +251,7 @@ See :ref:`setting-auth_policy_server_url`
 Hash mechanism to use for password.
 
 See :ref:`setting-auth_policy_server_url`
+
 .. todo:: Is this the full list?
 
 
@@ -811,7 +812,7 @@ Example Setting:
    deliver_log_format = stime=%{session_time} msgid=%m: %$
 
 
- .. _setting-dict_db_config:
+.. _setting-dict_db_config:
 
 ``dict_db_config``
 ------------------
