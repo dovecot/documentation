@@ -10,4 +10,4 @@ See: `IMAP Quota specifications <http://www.rfc-editor.org/rfc/rfc2087.txt>`_
 
 See: `Quota <https://wiki.dovecot.org/Quota>`_
 
-See: `Quota Configuration <https://wiki.dovecot.org/Quota/Configuration>`_
+See: :ref:`quota_configuration`

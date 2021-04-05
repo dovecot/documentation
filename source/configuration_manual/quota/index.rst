@@ -4,7 +4,7 @@
 Quota
 ===========
 
-See http://wiki.dovecot.org/Quota/Configuration for more details.
+See :ref:`quota_configuration` for configuration details.
 
 .. code-block:: none
 
@@ -110,4 +110,5 @@ See also
 .. toctree::
   :maxdepth: 1
 
+  quota_configuration
   unified_quota_configuration
