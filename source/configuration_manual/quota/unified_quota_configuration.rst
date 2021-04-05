@@ -4,11 +4,15 @@
  Unified Quota Configuration
 ==================================
 
-Unified quota plugin is a combined count and dict plugin, which uses quota:count to keep tabs of local quota,
-and dict lookups to maintain external usage. When quota usage is looked up, it will count local quota usage
+Unified quota is only available as part of
+:ref:`OX Dovecot Pro <ox_dovecot_pro_releases>`.
+
+Unified quota plugin is a combined count and dict plugin, which uses
+quota:count to keep tabs of local quota and dict lookups to maintain external
+usage. When quota usage is looked up, it will count local quota usage
 and increment that with the other product(s) in dict.
 
-Required Dovecot Packages:
+Required OX Dovecot Pro Packages:
 
 - ``dovecot-ee-quota-unified-plugin``
 - ``dovecot-ee-cassandra-plugin``    (*relies on Dovecot 3rd party repo*)
