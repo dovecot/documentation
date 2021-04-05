@@ -261,7 +261,7 @@ accessible via the `CheckPassword
 <https://wiki.dovecot.org/AuthDatabase/CheckPassword>`_ backend and a scripting
 language.
 
-When given a `proxy <https://wiki.dovecot.org/Quota/Dict>`_: URL the Dict
+When given a :ref:`proxy URL <quota_backend_dict>` the Dict
 backend speaks a simple protocol over a UNIX socket. The protocol is defined in
 ``src/lib-dict/dict-client.h`` (`GitHub
 <https://github.com/dovecot/core/blob/master/src/lib-dict/dict-client.h>`_).
