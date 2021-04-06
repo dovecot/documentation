@@ -1013,6 +1013,22 @@ Mailbox
 |                     | .. versionadded:: v2.3.10                            |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail_expunged:
+
+mail_expunged
+^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.16
+
+A mail was expunged from the mailbox. Note that this event inherits from
+mailbox, not mail.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| uid                 | UID of the expunged mail.                              |
++---------------------+--------------------------------------------------------+
+
 .. _event_mail:
 
 Mail
@@ -1028,6 +1044,31 @@ Mail
 | uid                 | Mail IMAP UID number                                 |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail_opened:
+
+mail_opened
+^^^^^^^^^^^
+
+.. versionadded:: 2.3.16
+
+A mail was opened e.g. for reading its body. Note that this event is not sent
+when mails' metadata is accessed, even if it causes opening the mail file.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| reason              | Reason why the mail was opened. (optional)             |
++---------------------+--------------------------------------------------------+
+
+.. _event_mail_expunge_requested:
+
+mail_expunge_requested
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.16
+
+A mail is set to be expunged. (Note that expunges can be rolled back later on,
+this event is emitted when an expunge is requested).
 
 Mail index
 ==========
@@ -1228,6 +1269,21 @@ deleted.
 +----------------------+-------------------------------------------------------+
 | reason               | Reason string why cache was found to be corrupted.    |
 +----------------------+-------------------------------------------------------+
+
+.. _event_mail_cache_lookup_finished:
+
+mail_cache_lookup_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.16
+
+A mail field was looked up from cache.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| field               | Cache field name e.g. ``imap.body`` or ``hdr.from``    |
++---------------------+--------------------------------------------------------+
 
 HTTP
 ====
