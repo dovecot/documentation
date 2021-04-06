@@ -62,6 +62,9 @@ Additionally imapc must be configured accordingly on the backends:
    configured on all backends and directors
  * :ref:`setting-imapc_host` must point to a load balancer's address that
    connects to Dovecot director/proxy
+ * :ref:`setting-imapc_features`: To be able to pass through ``SEARCH`` commands
+   to the sharing user's backend, :ref:`setting-imapc_features` should at least
+   contain ``search``.
 
 .. versionadded:: 2.3.15 INDEXPVT for imapc is supported from 2.3.15 onwards.
                   In general INDEXPVT with imapc is only supported for non-obox
@@ -73,6 +76,7 @@ Additionally imapc must be configured accordingly on the backends:
    imapc_master_user = %u
    #imapc_user = # leave this empty. It'll be automatically filled with the destination username.
    imapc_password = master-secret
+   imapc_features = search
 
 As mentioned earlier the :ref:`acl <acl>` plugin must be loaded and configured
 accordingly:
