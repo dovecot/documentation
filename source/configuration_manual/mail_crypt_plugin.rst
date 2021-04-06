@@ -351,7 +351,10 @@ similarly to the fs-compress wrapper. It can be used to encrypt e.g.:
 * External mail attachments (mail_attachment_fs)
 
 fs-crypt comes in two flavors, mail-crypt and crypt. mail-crypt is intended to
-be used with user context, while crypt can be used elsewhere.
+be used with user context, while crypt can be used elsewhere. Note that
+fs-[mail-]crypt and the fs-compress wrapper can be also combined. Please make
+sure that compression is always applied before encryption. See
+:ref:`plugin-fs-compress` for an example and more details about compression.
 
 Currently the fs-crypt plugin requires that all the files it reads are
 encrypted. If it sees an unencrypted file it'll fail to read it. The plan is to

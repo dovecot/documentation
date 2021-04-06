@@ -4,8 +4,13 @@
 S3-compatible Storages
 ======================
 
-This document covers the S3 compatible storage services. In case you want to
-use AWS S3 please also refer to :ref:`amazon_s3`.
+Supported providers
+-------------------
+
+For Dovecot Pro edition, only AWS S3 is officially supported.
+Please see :ref:`amazon_s3`.
+
+This document covers the S3 compatible storage services, which are not supported.
 
 .. code-block:: none
 
