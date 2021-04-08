@@ -200,7 +200,7 @@ Private index files
 
 .. versionadded:: v2.2
 
-Since v2.2 the recommended way to enable private flags for shared mailboxes is to create private indexes with ``:INDEXPVT=<path>``. See `SharedMailboxes/Public <https://wiki.dovecot.org/SharedMailboxes/Public>`_ for more information.
+The recommended way to enable private flags for shared mailboxes is to create private indexes with ``:INDEXPVT=<path>``. See :ref:`public_shared_mailboxes` for more information.
 
 INBOX path
 ^^^^^^^^^^^

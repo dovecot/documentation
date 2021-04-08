@@ -949,6 +949,7 @@ If the file was created for obox, it has also fields:
 |                     | * index: Index bundle                                |
 |                     | * box: Mailbox directory (for creating/deleting it,  |
 |                     |   if used by the storage driver)                     |
+|                     | * fts: FTS file                                      |
 +---------------------+------------------------------------------------------+
 | reason              | Reason for accessing the file                        |
 +---------------------+------------------------------------------------------+
