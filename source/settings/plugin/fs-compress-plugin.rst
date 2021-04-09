@@ -50,4 +50,4 @@ For example:
 
 This decompresses mails if they were stored using gz compression and falls back to reading the mails as plaintext.
 
-.. Warning:: It's currently not possible to use multiple different algorithms (for the same user).
+.. warning:: Prior to v2.3.13 it is not possible to use multiple different algorithms for the same user.
