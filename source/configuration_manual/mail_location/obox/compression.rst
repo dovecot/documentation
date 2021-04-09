@@ -7,11 +7,11 @@ Compression
 .. code-block:: none
 
   plugin {
-    obox_index_fs = compress:maybe-gz:6:<...>
+    obox_index_fs = compress:maybe-<algorithm>:<level>:<...>
   }
 
 All of the object storage backends should be set up to compress index bundle
-objects. This commonly shrinks the indexes down to ``20-30``% of the original
+objects. This commonly shrinks the indexes down to 20-30% of the original
 size with ``gzip -6`` compression. It's possible to use also other compression
 algorithms.
 
@@ -20,7 +20,7 @@ documentation for supported algorithms and the meaning of the level
 parameter.
 
 .. Note:: Compression auto-detection for index bundles became available (via
-          ``maybe-gz``) as of v2.2.34+.
+          ``maybe-<algorithm>``) as of v2.2.34+.
 
 Email object (a/k/a message blob data) compression has generally been done with
 the zlib plugin instead of via the ``compress`` fs wrapper.
@@ -32,8 +32,8 @@ Example:
   # NOTE: Using this has some trade-offs with obox installations, see below.
   mail_plugins = $mail_plugins zlib
   plugin {
-    zlib_save = gz
-    zlib_save_level = 6
+    zlib_save = <algorithm>
+    zlib_save_level = <level>
   }
 
 However, the problem with this with obox is that the mail files are written
@@ -42,10 +42,10 @@ the other hand it requres Dovecot to always uncompress the files before
 accessing them.
 
 This decompression uses a temporary file that is written to
-``mail_temp_dir``. By using the ``compress`` fs wrapper after ``fscache`` in
-``obox_fs`` line the mails are stored uncompressed in fscache, and reading
-the mails from there doesn't require writing to ``mail_temp_dir``.
+:ref:`setting-mail_temp_dir`. By using the ``compress`` fs wrapper after ``fscache`` in
+:ref:`plugin-obox-setting_obox_fs` line the mails are stored uncompressed in ``fscache``, and reading
+the mails from there doesn't require writing to :ref:`setting-mail_temp_dir`.
 
 Compression status of email object data is auto-detected. Therefore,
-``zlib_save`` may safely be added to a currently existing system; existing
+:ref:`plugin-zlib-setting_zlib_save` may safely be added to a currently existing system; existing
 non-compressed mail objects will be identified correctly.
