@@ -4,6 +4,8 @@
 Dovecot Core Settings
 ========================
 
+See :ref:`settings` for list of all setting groups.
+
 .. _setting-auth_anonymous_username:
 
 ``auth_anonymous_username``
@@ -4477,7 +4479,7 @@ The replicator host to be used in dsync operation.
 -------------------
 
 - Default: <empty>
-- Values: ref:`string`
+- Values: :ref:`string`
 
 Specifies remote hostname or UNIX socket to connect for replicator process.
 If :ref:`setting-replicator_port` is set to ``0``, then it will be treated
@@ -4492,7 +4494,7 @@ See :ref:`setting-replicator`
 -------------------
 
 - Default: ``0``
-- Values: ref:`uint`
+- Values: :ref:`uint`
 
 The port indicated here is used by dsync for replication. If set to ``0``,
 :ref:`setting-replicator_host` is interpreted as UNIX socket path.
@@ -4535,7 +4537,7 @@ to apply a security update, for example.
 -------
 
 - Default: ``yes``
-- Values: :ref:``yes``,``no``, or ``required``
+- Values: ``yes``, ``no``, or ``required``
 
 The level of SSL support.
 
