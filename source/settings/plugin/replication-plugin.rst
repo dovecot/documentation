@@ -4,6 +4,8 @@
 replication plugin
 ======================
 
+For configuration details, see :ref:`replication`.
+
 ``replication-plugin``
 ^^^^^^^^^^^^^^^^^^^^^^^^
 .. _plugin-replication-setting_mail_replica:

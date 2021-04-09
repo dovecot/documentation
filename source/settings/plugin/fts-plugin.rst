@@ -159,7 +159,7 @@ List of available filters:
 
   This stemmer is based on the Snowball stemmer library.
   
-  See ref:`fts_languages`
+  See :ref:`fts_languages`
 
 ``normalizer-icu``:
 
