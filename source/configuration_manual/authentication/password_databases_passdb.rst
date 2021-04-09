@@ -11,13 +11,6 @@ Dovecot splits all authentication lookups into two categories:
 passdb lookup most importantly authenticate the user. They also provide any
 other pre-login information needed for users, such as:
 
-Which server user is proxied to.
-
-If user should be allowed to log in at all (temporarily or permanently).
-
-* passdb lookup most importantly authenticate the user. They also provide any
-  other pre-login information needed for users, such as:
-
  * Which server user is proxied to.
  * If user should be allowed to log in at all (temporarily or permanently).
 
