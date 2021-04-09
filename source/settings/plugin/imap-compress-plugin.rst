@@ -1,4 +1,4 @@
-.. _plugin-compress:
+.. _plugin-imap-compress:
 
 ====================
 IMAP COMPRESS plugin
