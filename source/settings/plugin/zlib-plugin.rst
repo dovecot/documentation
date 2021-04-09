@@ -42,4 +42,11 @@ Example Setting:
    
    zlib_save_level = 6
 
+.. versionadded:: v2.3.15
 
+You can use per-algorithm compression levels, and defaults. Prior to v2.3.15,
+the compression level must be an integer in the range 1 to 9 regardless of the
+algorithm selected. The default level is 6. These values may not be sensical
+with compression algorithms other than gz and bz2.
+
+For example, zstd supports levels from -1 to 22 in latest Zstandard version.
