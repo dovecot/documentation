@@ -8,4 +8,5 @@ longer maintained.
 In case the feature is revived in the future, this list provides a reference
 to recover the old information, if needed.
 
-* source/configuration_manual/coi.rst 
+* source/configuration_manual/coi.rst
+* source/configuration_manual/mail_location/obox/microsoft_azure.rst
