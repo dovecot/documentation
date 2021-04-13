@@ -15,7 +15,6 @@ The header name used is specific to the obox driver:
  ==========  ===============================
   s3	     x-amz-meta-dovecot-<key>
   sproxyd    X-Object-meta-dovecot-<key>
-  swift	     X-Object-Meta-<key>
  ==========  ===============================
 
 The metacache keys available are:
