@@ -9,7 +9,6 @@ FTS (Full Text Search)
 
   dovecot
   solr
-  squat
   tokenization
 
 Introduction
@@ -94,8 +93,7 @@ See :ref:`fts_tokenization` for more details about configuring the tokenization.
 Open-Source Dovecot Full Text Search Backends
 ---------------------------------------------
 
-Currently, Dovecot ships with three open-source plugins.  Only one driver is
-currently maintained: Solr.
+Currently, Dovecot only maintains one open-source FTS driver: Solr.
 
 The SOLR backend is the most feature rich of the current implementations. It
 uses the Apache Foundation SOLR search platform, which in turn uses the Java
@@ -106,17 +104,6 @@ installation by adding more nodes running java virtual machines. However
 using JVMs is quite resource intensive compared to Dovecot native components
 and the achieved scaling comes at a high price as the number of required
 host systems quickly grows very large.
-
-.. note::
-
-  Squat was obsoleted in Dovecot version 2.1.
-
-Finally, Dovecot features a fully native FTS backend called Squat. When it
-was implemented, it was the only backend to support arbitrary substring
-indexing and matching. Arbitrary substring indexing means that any part of
-a word, not only its beginning, can be used as a search term. Currently
-also SOLR supports similar functionality, but enabling it increases SOLR's
-already high resource requirements.
 
 
 OX Dovecot Pro Full Text Search Backend
@@ -198,3 +185,4 @@ Deprecated/Unmaintained FTS Plugins
   :maxdepth: 1
 
   lucene
+  squat
