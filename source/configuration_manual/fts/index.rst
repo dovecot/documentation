@@ -9,7 +9,6 @@ FTS (Full Text Search)
 
   dovecot
   solr
-  lucene
   squat
   tokenization
 
@@ -37,12 +36,12 @@ Dovecot supports the following FTS indexing engines:
 
 * :ref:`fts_backend_solr` communicates with
   Lucene's `Solr server <http://lucene.apache.org/solr/>`_.
-* :ref:`fts_backend_lucene` uses Lucene's C++ library.
 * :ref:`fts_backend_dovecot` is currently only available as part of the OX Dovecot Pro product.
 * :ref:`fts_backend_squat` is Dovecot's own search index. (Obsolete in v2.1+)
 * `fts-xapian <https://github.com/grosjo/fts-xapian>`_ is `Xapian <https://xapian.org/>`_ based plugin. (Requires v2.3+)
 * `fts-elastic <https://github.com/filiphanes/fts-elastic>`_ is `ElasticSearch <https://www.elastic.co>`_ based plugin.
 * `fts-elasticsearch <https://github.com/atkinsj/fts-elasticsearch>`_ is another `ElasticSearch <https://www.elastic.co>`_ based plugin.
+
 
 Searching In Dovecot
 --------------------
@@ -95,16 +94,8 @@ See :ref:`fts_tokenization` for more details about configuring the tokenization.
 Open-Source Dovecot Full Text Search Backends
 ---------------------------------------------
 
-Currently, Dovecot ships with three open-source plugins.  Two are based on
-popular open-source search software SOLR and Lucene while the third uses a
-custom storage format (called Squat).  While they all provide the same basic
-functionality (i.e., indexing of messages), they have different advantages and
-disadvantages and therefore one must decide which trade-offs are acceptable in
-a particular deployment.
-
-.. note::
-
-  Squat was obsoleted in Dovecot version 2.1.
+Currently, Dovecot ships with three open-source plugins.  Only one driver is
+currently maintained: Solr.
 
 The SOLR backend is the most feature rich of the current implementations. It
 uses the Apache Foundation SOLR search platform, which in turn uses the Java
@@ -116,12 +107,9 @@ using JVMs is quite resource intensive compared to Dovecot native components
 and the achieved scaling comes at a high price as the number of required
 host systems quickly grows very large.
 
-The Lucene backend uses the C language version of the Lucene search library.
-This makes this backend more efficient for small and mid-sized sites.
-Because Dovecot uses a single index for all of a user’s messages, this
-backend scales badly with large user accounts.  Additionally, this backend
-does not have a surrounding framework, like SOLR, to enable easy
-distribution to multiple indexing backend hosts.
+.. note::
+
+  Squat was obsoleted in Dovecot version 2.1.
 
 Finally, Dovecot features a fully native FTS backend called Squat. When it
 was implemented, it was the only backend to support arbitrary substring
@@ -201,3 +189,12 @@ Dovecot General FTS Configuration
 ---------------------------------
 
 See :ref:`fts_plugin` for settings.
+
+
+Deprecated/Unmaintained FTS Plugins
+-----------------------------------
+
+.. toctree::
+  :maxdepth: 1
+
+  lucene
