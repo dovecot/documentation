@@ -13,7 +13,6 @@ obox drivers
 
  * :ref:`scality_sproxyd`
  * :ref:`scality_cdmi`
- * :ref:`openstack_swift`
  * :ref:`amazon_s3`
  * :ref:`s3_storages`
 
