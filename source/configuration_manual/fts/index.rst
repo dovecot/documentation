@@ -27,19 +27,21 @@ substring matching.  Some newer mobile clients (e.g. Apple iOS) rely on this
 functionality.
 
 Without a high-performance index, Dovecot must fall back to a slow sequential
-search through all messages. If storage latencies are high, this searching
-may not be completed in a reasonable time, or resource utilization may be
-too large, especially in mailboxes with large messages.
+search through all messages (default behavior). If storage latencies are high,
+this searching may not be completed in a reasonable time, or resource
+utilization may be too large, especially in mailboxes with large messages.
 
-Dovecot supports the following FTS indexing engines:
+Dovecot maintains these FTS indexing engines:
 
-* :ref:`fts_backend_solr` communicates with
-  Lucene's `Solr server <http://lucene.apache.org/solr/>`_.
-* :ref:`fts_backend_dovecot` is currently only available as part of the OX Dovecot Pro product.
-* :ref:`fts_backend_squat` is Dovecot's own search index. (Obsolete in v2.1+)
-* `fts-xapian <https://github.com/grosjo/fts-xapian>`_ is `Xapian <https://xapian.org/>`_ based plugin. (Requires v2.3+)
-* `fts-elastic <https://github.com/filiphanes/fts-elastic>`_ is `ElasticSearch <https://www.elastic.co>`_ based plugin.
-* `fts-elasticsearch <https://github.com/atkinsj/fts-elasticsearch>`_ is another `ElasticSearch <https://www.elastic.co>`_ based plugin.
+========================== =====================================================
+Name                       Description
+========================== =====================================================
+:ref:`fts_backend_dovecot` Dovecot native, object storage optimized driver.
+                           Only available as part of
+                           :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>`.
+:ref:`fts_backend_solr`    Interface to
+                           `Apache Solr <https://solr.apache.org/>`_.
+========================== =====================================================
 
 
 Searching In Dovecot
@@ -84,10 +86,14 @@ Dovecot FTS Architecture
 
 Dovecot splits the full text search functionality into two parts:
 a common tokenization library (lib-fts) and backend indexing engine responsible for storing the tokens produced by the common library persistently.
-Some of the FTS backends do their own internal tokenization, although it's possible to configure them to use the lib-fts tokanization as well.
-The backends are implemented as plugins.
 
-See :ref:`fts_tokenization` for more details about configuring the tokenization.
+Some of the FTS backends do their own internal tokenization, although it's
+possible to configure them to use the lib-fts tokanization as well.
+
+See :ref:`fts_tokenization` for more details about configuring the
+tokenization.
+
+All backends are implemented as plugins.
 
 
 Open-Source Dovecot Full Text Search Backends
@@ -95,12 +101,11 @@ Open-Source Dovecot Full Text Search Backends
 
 Currently, Dovecot only maintains one open-source FTS driver: Solr.
 
-The SOLR backend is the most feature rich of the current implementations. It
-uses the Apache Foundation SOLR search platform, which in turn uses the Java
-implementation of the Lucene search library. This combination offers
-“Advanced Full text Search capabilities”. These components run using Java
-virtual machine (JVM) environments and it is possible to scale an
-installation by adding more nodes running java virtual machines. However
+It uses `Apache Foundation SOLR search platform <https://solr.apache.org>`_,
+which in turn uses the Java implementation of the Lucene search library.
+This combination offers "Advanced Full text Search capabilities". These
+components run using Java virtual machine (JVM) environments and it is
+possible to scale an installation by adding more nodes running JVMs. However
 using JVMs is quite resource intensive compared to Dovecot native components
 and the achieved scaling comes at a high price as the number of required
 host systems quickly grows very large.
@@ -109,10 +114,9 @@ host systems quickly grows very large.
 OX Dovecot Pro Full Text Search Backend
 ---------------------------------------
 
- * :ref:`fts_backend_dovecot`
-
-Dovecot FTS is a proprietary FTS plugin available for OX Dovecot Pro. It
-provides fast and compact indexing of search data.
+:ref:`fts_backend_dovecot` is a proprietary FTS plugin available for
+:ref:`OX Dovecot Pro <ox_dovecot_pro_releases>`. It provides fast and compact
+indexing of search data.
 
 All Dovecot indexes, including FTS indexes, are stored in the same storage
 (including object storage) used to store the mail and index data. No
@@ -129,10 +133,16 @@ FTS Configuration
 FTS Indexing Triggers
 ^^^^^^^^^^^^^^^^^^^^^
 
-Missing mails are always added to FTS indexes when using IMAP SEARCH command that attempts to access the FTS indexes.
-Automatic FTS indexing can also be done during mail delivery, IMAP APPEND and other ways of adding mails to mailboxes using :ref:`plugin-fts-setting-fts_autoindex`.
+Missing mails are always added to FTS indexes when using IMAP SEARCH command
+that attempts to access the FTS indexes.
 
-Indexing can also be triggered manually::
+Automatic FTS indexing can also be done during mail delivery, IMAP APPEND and
+other ways of adding mails to mailboxes using
+:ref:`plugin-fts-setting-fts_autoindex`.
+
+Indexing can also be triggered manually:
+
+.. code-block:: none
 
   doveadm index -u user@domain -q INBOX
 
@@ -140,12 +150,16 @@ Indexing can also be triggered manually::
 Enforce FTS
 ^^^^^^^^^^^
 
-When FTS indexing fails, Dovecot falls back on using the built-in search, which does not have indexes for mail bodies.
-This could end up opening all the mails in the mailbox, which often isn't wanted.
+When FTS indexing fails, Dovecot falls back on using the built-in search,
+which does not have indexes for mail bodies.
+
+This could end up opening all the mails in the mailbox, which often isn't
+wanted.
+
 To disable this functionality, enable :ref:`plugin-fts-setting-fts_enforced`.
 
 
-Indexing attachments
+Indexing Attachments
 --------------------
 
 Attachments can be indexed either via a script that translates the attachment
@@ -176,6 +190,21 @@ Dovecot General FTS Configuration
 ---------------------------------
 
 See :ref:`fts_plugin` for settings.
+
+
+Community Developed Plugins
+---------------------------
+
+The Dovecot team does not maintain these plugins, and makes no guarantee about
+their compatibility or performance:
+
+===================== ==========================================================
+Name                  Link
+===================== ==========================================================
+``fts-elastic``       https://github.com/filiphanes/fts-elastic
+``fts-elasticsearch`` https://github.com/atkinsj/fts-elasticsearch
+``fts-xapian``        https://github.com/grosjo/fts-xapian
+===================== ==========================================================
 
 
 Deprecated/Unmaintained FTS Plugins
