@@ -12,3 +12,4 @@ to recover the old information, if needed.
 * source/configuration_manual/coi.rst
 * source/configuration_manual/mail_location/obox/microsoft_azure.rst
 * source/configuration_manual/mail_location/obox/open_stack_swift.rst
+* source/settings/plugin/imap-injection-plugin.rst
