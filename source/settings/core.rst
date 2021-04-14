@@ -4544,9 +4544,18 @@ See: https://wiki.dovecot.org/SSL/DovecotConfiguration
 ``ssl_min_protocol``
 --------------------
 
-- Default: ``TLSv1``
+- Default: ``TLSv1.2``
 
 The minimum SSL protocol version Dovecot accepts.
+Supported values are:
+
+ * ``ANY`` - Support any version. (should not be used)
+ * ``SSLv3`` - Support SSLv3+. (should not be used)
+ * ``TLSv1`` - Support TLSv1+.
+ * ``TLSv1.1`` - Support TLSv1.1+.
+ * ``TLSv1.2`` - Support TLSv1.2+. (default)
+ * ``TLSv1.3`` - Support TLSv1.3+.
+ * ``LATEST`` - Support only the latest version available.
 
 See :ref:`setting-ssl`
 
