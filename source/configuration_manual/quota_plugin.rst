@@ -1,8 +1,9 @@
+.. _quota:
 .. _quota_plugin:
 
-=====
-Quota
-=====
+============
+Quota Plugin
+============
 
 Quota tracking and enforcing plugin.
 
@@ -49,8 +50,11 @@ There are different quota backends that Dovecot can use:
 +--------------------------+---------------------------------------------------+
 
 We recommend using :ref:`count <quota_backend_count>` for any new
-installations. If you need usage data to an external database, consider using
-:ref:`quota_clone_plugin` for exporting the information.
+installations.
+
+If you need usage data to an external database, consider using
+:ref:`quota_clone_plugin` for exporting the information. (It's very slow to
+query every user's quota from the index files directly.)
 
 Quota Service
 =============
@@ -82,14 +86,13 @@ https://blog.sys4.de/postfix-dovecot-mailbox-quota-en.html
 Enabling Quota Plugins
 ======================
 
-Enable them in configuration files, e.g.:
+Enable in configuration files, e.g.:
 
 ``conf.d/10-mail.conf``:
 
 .. code-block:: none
 
-  # Space separated list of plugins to load for all services. Plugins specific
-  # to IMAP, LDA, etc. are added to this list in their own .conf files.
+  # Enable quota plugin for tracking and enforcing the quota.
   mail_plugins = $mail_plugins quota
 
 ``conf.d/20-imap.conf``:
@@ -97,7 +100,8 @@ Enable them in configuration files, e.g.:
 .. code-block:: none
 
   protocol imap {
-    # Space separated list of plugins to load (default is global mail_plugins).
+    # Enable the IMAP QUOTA extension, allowing IMAP clients to ask for the
+    # current quota usage.
     mail_plugins = $mail_plugins imap_quota
   }
 
@@ -108,15 +112,19 @@ Enable them in configuration files, e.g.:
   plugin {
     quota_grace = 10%%
     # 10% is the default
-    quota_status_success=DUNNO
-    quota_status_nouser=DUNNO
-    quota_status_overquota="552 5.2.2 Mailbox is full"
+    quota_status_success = DUNNO
+    quota_status_nouser = DUNNO
+    quota_status_overquota = "552 5.2.2 Mailbox is full"
   }
 
 Configuration
 =============
 
-See :ref:`quota_configuration`.
+.. toctree::
+  :maxdepth: 1
+
+  quota/index
+  quota/unified_quota_configuration
 
 Quota Recalculation
 ===================
@@ -154,6 +162,36 @@ because user is over quota. The possible solutions for this are:
 To make sure users don't start keeping messages permanently in Trash you can
 use a nightly `cronjob <https://wiki.dovecot.org/Plugins/Expire>`_ to expunge
 old messages from Trash mailbox.
+
+Debugging Quota
+================
+
+User's current quota usage can be looked up with: ``doveadm quota get -u
+user@domain``
+
+User's current quota may sometimes be wrong for various reasons (typically only
+after some other problems). The quota can be recalculated with:
+
+``doveadm quota recalc -u user@domain``
+
+Example
+=======
+
+To use the recommended ``count`` quota driver:
+
+.. code-block:: none
+
+  mail_plugins = $mail_plugins quota
+  protocol imap {
+    mail_plugins = $mail_plugins imap_quota
+  }
+
+  plugin {
+    quota = count:User quota
+    quota_max_mail_size = 100M
+    # Required for 'count' quota driver
+    quota_vsizes = yes
+
 
 Associated Plugins
 ==================
