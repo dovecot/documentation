@@ -85,9 +85,9 @@ SPAM folder are ignored per the ``ignore`` directive and would not count
 against the quota.
 
 ``?`` as the mailbox name works almost like ``*``. The difference is that
-``?`` is used only if quota backend doesn't override the limit. For example
-with `Maildir++ quota`_ if ``maildirsize`` file exists, the limits are taken
-from it, but if it doesn't exist the ``?`` limits are used.
+``?`` is used only if quota backend doesn't override the limit. For example,
+with `Maildir++ quota <maildir_quota>`_ if ``maildirsize`` file exists, the
+limits are taken from it, but if it doesn't exist the ``?`` limits are used.
 
 ``*`` and ``?`` wildcards can be used as a generic wildcard in mailbox
 names, so for example ``box*`` matches ``boxes``. As shown in the above
@@ -95,7 +95,7 @@ example, the first quota rule is named ``quota_rule`` while the following
 rules have an increasing digit in them. You can have as many quota rules as
 you want.
 
-.. _`Maildir++ quota`: https://www.courier-mta.org/imap/README.maildirquota.html
+.. _`maildir_quota`: https://www.courier-mta.org/imap/README.maildirquota.html
 
 Quota Rules Limit Configuration
 -------------------------------
