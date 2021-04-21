@@ -1676,286 +1676,99 @@ Example Setting:
 .. todo:: Indicate imap setting
 
 
-.. _setting-imapc_cmd_timeout:
-
 ``imapc_cmd_timeout``
 ---------------------
 
-- Default: ``5mins``
-- Values:  :ref:`time`
+See :ref:`setting-imapc_cmd_timeout`
 
-How long to wait for a reply to an IMAP command sent to a remote IMAP server
-before disconnecting and retrying.
-
-This parameter is used in dsync-based migration of mail from the remote system.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_connection_retry_count:
 
 ``imapc_connection_retry_count``
 --------------------------------
 
-- Default: ``1``
-- Values: :ref:`uint`
+See :ref:`setting-imapc_connection_retry_count`
 
-How many times to retry connection against a remote IMAP server?
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_connection_retry_interval:
 
 ``imapc_connection_retry_interval``
 -----------------------------------
 
-- Default: ``1secs``
-- Values:  :ref:`time_msecs`
+See :ref:`setting-imapc_connection_retry_interval`
 
-How long to wait between retries against a remote IMAP server?
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_features:
 
 ``imapc_features``
 ------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_features`
 
-This setting provides a space-separated list of features and workarounds that
-can be enabled for dsync-based migration of mail from a remote IMAP server.
-
-Supported imapc_features:
-
-* ``rfc822.size`` - Allow passing through message sizes using FETCH RFC822.SIZE
-* ``fetch-headers`` - Allow fetching specific message headers using FETCH
-  BODY.PEEK[HEADER.FIELDS (..)], may give a significant performance improvement
-
-.. todo:: Import imapc_features list from wiki
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_host:
 
 ``imapc_host``
 --------------
 
-- Default: <empty>
-
-The remote IMAP server to use for dsync-based migration of mail (which allows
-preservation of the IMAP UIDs etc.).
-
-Example:
-
-.. code-block:: none
-
-   imapc_host = imap.example.com
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_list_prefix:
+See :ref:`setting-imapc_host`
 
 ``imapc_list_prefix``
 ---------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_list_prefix`
 
-In dsync-based migration, only mailboxes under this prefix on the
-remote system are accessed.
-
-Example, for a source IMAP server that uses an INBOX namespace prefix:
-
-.. code-block:: none
-
-   imapc_list_prefix = INBOX/
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_master_user:
 
 ``imapc_master_user``
 ---------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_master_user`
 
-If you are using master users for dsync-based migration of mail,
-this is the master user for the source IMAP server.
-
-To authenticate as a master user but use a separate login user, the
-following configuration should be employed, where the credentials are
-represented by masteruser and masteruser-secret:
-
-.. code-block:: none
-
-   imapc_user = %u
-   imapc_master_user = masteruser
-   imapc_password = masteruser-secret
-
-:ref:`Mail user variables <variables-mail_user>` can be used.
-
-See also :ref:`setting-imapc_password`.
-See also :ref:`setting-imapc_user`.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_max_idle_time:
 
 ``imapc_max_idle_time``
 -----------------------
 
-- Default: ``29mins``
-- Values:  :ref:`time`
+See :ref:`setting-imapc_max_idle_time`
 
-Send a command to the source IMAP server as a keepalove after no other command
-has been sent for this amount of time.
-
-Dovecot will send either "NOOP" or "DONE" to the source IMAP server.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_max_line_length:
 
 ``imapc_max_line_length``
 -------------------------
 
-- Default: ``0``
-- Values:  :ref:`size`
+See :ref:`setting-imapc_max_line_length`
 
-The maximum line length to accept from the remote IMAP server.
-
-This setting is used to limit maximum memory usage.
-
-A value of ``0`` indicates no maximum.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_password:
 
 ``imapc_password``
 ------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_password`
 
-The password used in the login to the source IMAP server for migration of mail
-via dsync.
-
-If using master users, this setting will be the password of the master user.
-
-See also :ref:`setting-imapc_master_user`.
-
-See also :ref:`setting-imapc_user`.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_port:
 
 ``imapc_port``
 --------------
 
-- Default: ``143``
+See :ref:`setting-imapc_port`
 
-Port used for connection to the source IMAP server in dsync-based migration of
-mail.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_rawlog_dir:
 
 ``imapc_rawlog_dir``
 --------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_rawlog_dir`
 
-Directory location to store raw IMAP protocol traffic logs used in
-dsync-based migration of mail..
-
-See: https://wiki.dovecot.org/Debugging/Rawlog
-
-.. todo:: Link to rawlog documentation
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_sasl_mechanisms:
 
 ``imapc_sasl_mechanisms``
 -------------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_sasl_mechanisms`
 
-The SASL mechanisms to use for authentication when connection to a remote
-IMAP server during dsync-based migration of mail.
-
-The first one advertised by the IMAP sever is used.
-
-PLAIN authentication will be used by default.
-
-Example value:
-
-.. code-block:: none
-
-   imapc_sasl_mechanisms = external plain login
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_ssl:
 
 ``imapc_ssl``
 -------------
 
-- Default: ``no``
-- Values: ``yes``, ``no``, or ``imaps``
+See :ref:`setting-imapc_ssl`
 
-To enable SSL for dsync-based migration of mail, use ``imapc_ssl = imaps``
-to specify the protocol for connection to the source IMAP server.
-
-.. todo:: Values are incorrect?  At least "imaps" is also supported.
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_ssl_verify:
 
 ``imapc_ssl_verify``
 --------------------
 
-- Default: ``yes``
-- Values: :ref:`boolean`
+See :ref:`setting-imapc_ssl_verify`
 
-Require SSL verification of remote IMAP account certificate during dsync-based
-migration of mail.
-
-Verification may be disabled during testing, but should be enabled during
-production use.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_user:
 
 ``imapc_user``
 --------------
 
-- Default: <empty>
-
-The user identity to be used for performing a regular IMAP LOGIN to the
-source IMAP server in dsync-based migration of mail.
-
-:ref:`Mail user variables <variables-mail_user>` can be used.
-
-See also :ref:`setting-imapc_master_user`.
-See also :ref:`setting-imapc_password`.
-
-.. todo:: Indicate dsync setting
+See :ref:`setting-imapc_user`
 
 
 .. _setting-import_environment:
@@ -1972,7 +1785,6 @@ The list is space-separated, and it can include key = value pairs for
 assigning variables the desired value upon Dovecot startup.
 
 .. todo:: Explain default variables
-
 
 
 .. _setting-info_log_path:
@@ -3387,78 +3199,34 @@ If enabled, assume that the mailbox list index is fully updated so that
 stat() will not be run for mailbox files/directories.
 
 
-.. _setting-maildir_broken_filename_sizes:
-
 ``maildir_broken_filename_sizes``
 ---------------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-maildir_broken_filename_sizes`
 
-Maildir only: If enabled, do not obtain a mail message's physical size from
-the ``S=<size>`` data in the Maildir filename except when recalculating the
-Maildir++ quota.
-
-.. todo:: Indicate Maildir-only setting
-
-
-.. _setting-maildir_copy_with_hardlinks:
 
 ``maildir_copy_with_hardlinks``
 -------------------------------
 
-- Default: ``yes``
-- Values: :ref:`boolean`
+See :ref:`setting-maildir_copy_with_hardlinks`
 
-Maildir only: If enabled, copying of a message is done with hard links
-whenever possible.
-
-This greatly improves performance, and no negative effects are likely.
-
-.. todo:: Indicate Maildir-only setting
-
-
-.. _setting-maildir_empty_new:
 
 ``maildir_empty_new``
 ---------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-maildir_empty_new`
 
-Maildir only: Should mail messages always be moved from the ``new/`` directory
-to ``cur/``, even when the ``\Recent`` flags aren't being reset?
-
-.. todo:: Indicate Maildir-only setting
-
-
-.. _setting-maildir_stat_dirs:
 
 ``maildir_stat_dirs``
 ---------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-maildir_stat_dirs`
 
-Maildir only: If enabled, don't include directories in a LIST response that
-begin with a dot.
-
-.. todo:: Indicate Maildir-only setting
-
-
-.. _setting-maildir_very_dirty_syncs:
 
 ``maildir_very_dirty_syncs``
 ----------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
-
-Maildir: If disabled, Dovecot is assumed to be the only MUA that accesses
-Maildir directly, so the ``cur/`` directory is scanned only when its mtime
-changes unexpectedly or when the mail cannot otherwise be found.
-
-.. todo:: Indicate Maildir-only setting
+See :ref:`setting-maildir_very_dirty_syncs`
 
 
 .. _setting-master_user_separator:
@@ -3482,231 +3250,76 @@ Example:
    master_user_separator = *
 
 
-.. _setting-mbox_dirty_syncs:
-
 ``mbox_dirty_syncs``
 --------------------
 
-- Default: ``yes``
-- Values: :ref:`boolean`
+See :ref:`setting-mbox_dirty_syncs`
 
-mbox only: Enable optimized mbox syncing?
-
-For larger mbox files, it can take a long time to determine what has
-changed when the file is altered unexpectedly. Since the change in
-most cases consists solely of newly appended mail, Dovecot can
-operate more quickly if it starts off by simply reading the new
-messages, then falls back to reading the entire mbox file if
-something elsewhere in it isn't as expected.
-
-See :ref:`setting-mbox_very_dirty_syncs`
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_dotlock_change_timeout:
 
 ``mbox_dotlock_change_timeout``
 -------------------------------
 
-- Default: ``2 mins``
-- Values:  :ref:`time`
+See :ref:`setting-mbox_dotlock_change_timeout`
 
-mbox only: Override a lockfile after this amount of time if a dot-lock exists
-but the mailbox hasn't been modified in any way.
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_lazy_writes:
 
 ``mbox_lazy_writes``
 --------------------
 
-- Default: ``yes``
-- Values: :ref:`boolean`
+See :ref:`setting-mbox_lazy_writes`
 
-mbox only: If enabled, mbox headers are not written until a
-full write sync is performed (with the EXPUNGE and CHECK commands and
-during closing of the mailbox).
-
-Enabling this setting is especially useful with POP3, in which clients often
-delete all mail messages.
-
-One negative consequence of enabling this setting is that the changes aren't
-immediately visible to other MUAs.
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_lock_timeout:
 
 ``mbox_lock_timeout``
 ---------------------
 
-- Default: ``5mins``
-- Values:  :ref:`time`
+See :ref:`setting-mbox_lock_timeout`
 
-mbox only: The maximum time to wait for all locks to be released before
-aborting.
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_md5:
 
 ``mbox_md5``
 ------------
 
-- Default: ``apop3d``
+See: :ref:`setting-mbox_md5`
 
-mbox only: The mail-header selection algorithm to use for MD5 POP3 UIDLs when
-the setting ``pop3_uidl_format=%m`` is applied.
-
-See :ref:`setting-pop3_uidl_format`
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_min_index_size:
 
 ``mbox_min_index_size``
 -----------------------
 
-- Default: ``0``
+See :ref:`setting-mbox_min_index_size`
 
-mbox only: For mboxes smaller than this size, index files are not
-written.
-
-If an index file already exists, it gets read but not updated.
-
-The default is OK and doesn't need to be change. 
-
-.. todo:: Indicate mbox-only setting
-.. todo:: Should not be changed
-
-
-.. _setting-mbox_read_locks:
 
 ``mbox_read_locks``
 -------------------
 
-- Default: ``fcntl``
-- Values: ``dotlock, dotlock_try, fcntl, flock, lockf``
+See :ref:`setting-mbox_read_locks`
 
-mbox only: Specify which locking method(s) to use for locking the mbox files
-during reading.
-
-To use multiple values, separate them with spaces.
-
-There are at least four different ways to lock a mbox:
-
-* **dotlock**: mailboxname.lock file created by almost all software when writing to mboxes. This grants the writer an exclusive lock over the mbox, so it's usually not used while reading the mbox so that other processes can also read it at the same time. So while using a dotlock typically prevents actual mailbox corruption, it doesn't protect against read errors if mailbox is modified while a process is reading.
-
-* **flock**: flock() system call is quite commonly used for both read and write locking. The read lock allows multiple processes to obtain a read lock for the mbox, so it works well for reading as well. The one downside to it is that it doesn't work if mailboxes are stored in NFS.
-
-* **fcntl**: Very similar to flock, also commonly used by software. In some systems this fcntl() system call is compatible with flock(), but in other systems it's not, so you shouldn't rely on it. fcntl works with NFS if you're using lockd daemon in both NFS server and client.
-
-* **lockf**: POSIX lockf() locking. Because it allows creating only exclusive locks, it's somewhat useless so Dovecot doesn't support it. With Linux lockf() is internally compatible with fcntl() locks, but again you shouldn't rely on this.
-
-
-.. todo:: Explain differences between values
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_very_dirty_syncs:
 
 ``mbox_very_dirty_syncs``
 -------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-mbox_very_dirty_syncs`
 
-mbox only: If enabled, Dovecot performs the optimizations from
-``mbox_dirty_syncs`` also for the IMAP SELECT, EXAMINE, EXPUNGE, and CHECK
-commands.
-
-If set, this option overrides ``mbox_dirty_syncs``.
-
-See :ref:`setting-mbox_dirty_syncs`
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_write_locks:
 
 ``mbox_write_locks``
 --------------------
 
-- Default: ``dotlock fcntl``
-- Values: ``dotlock, dotlock_try, fcntl, flock, lockf``
+See :ref:`setting-mbox_write_locks`
 
-mbox only: Specify which locking method(s) to use for locking the mbox files
-during writing.
-
-To use multiple values, separate them with spaces.
-
-There are at least four different ways to lock a mbox:
-
-* **dotlock**: mailboxname.lock file created by almost all software when writing to mboxes. This grants the writer an exclusive lock over the mbox, so it's usually not used while reading the mbox so that other processes can also read it at the same time. So while using a dotlock typically prevents actual mailbox corruption, it doesn't protect against read errors if mailbox is modified while a process is reading.
-
-* **flock**: flock() system call is quite commonly used for both read and write locking. The read lock allows multiple processes to obtain a read lock for the mbox, so it works well for reading as well. The one downside to it is that it doesn't work if mailboxes are stored in NFS.
-
-* **fcntl**: Very similar to flock, also commonly used by software. In some systems this fcntl() system call is compatible with flock(), but in other systems it's not, so you shouldn't rely on it. fcntl works with NFS if you're using lockd daemon in both NFS server and client.
-
-* **lockf**: POSIX lockf() locking. Because it allows creating only exclusive locks, it's somewhat useless so Dovecot doesn't support it. With Linux lockf() is internally compatible with fcntl() locks, but again you shouldn't rely on this.
-
-.. todo:: Explain differences between values
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mdbox_preallocate_space:
 
 ``mdbox_preallocate_space``
 ---------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-mdbox_preallocate_space`
 
-mdbox only: If enabled, preallocate space for newly created files.
-
-In creation of new mdbox files, their size is immediately
-preallocated as ``mdbox_rotate_size``.
-
-This setting currently works only in Linux with certain filesystems (ext4
-and xfs).
-
-See :ref:`setting-mdbox_rotate_size`
-
-.. todo:: Indicate mdbox-only setting
-
-
-.. _setting-mdbox_rotate_interval:
 
 ``mdbox_rotate_interval``
 -------------------------
 
-- Default: ``0``
-- Values:  :ref:`size`
+See :ref:`setting-mdbox_rotate_interval`
 
-mdbox only: The maximum age the dbox file may reach before it's rotated.
-
-``0`` means there is no age-based rotation.
-
-.. todo:: Indicate mdbox-only setting
-
-
-.. _setting-mdbox_rotate_size:
 
 ``mdbox_rotate_size``
 ---------------------
 
-- Default: ``10M``
-- Values:  :ref:`size`
-
-mdbox only: The maximum size the dbox file may reach before it is rotated.
-
-.. todo:: Indicate mdbox-only setting
+See :ref:`setting-mdbox_rotate_size`
 
 
 .. _setting-mmap_disable:
