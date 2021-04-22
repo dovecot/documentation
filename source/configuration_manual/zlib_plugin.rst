@@ -6,9 +6,9 @@ Zlib plugin
 
 Zlib plugin can be used to read compressed mbox, maildir or dbox files. It can
 be also used to write (via IMAP, `LDA <https://wiki.dovecot.org/LDA>`_ and/or
-:ref:`lmtp_server`) compressed messages to `dbox
-<https://wiki.dovecot.org/MailboxFormat/dbox>`_ or Maildir mailboxes. Zlib
-plugin supports compression and decompression using the following libraries:
+:ref:`lmtp_server`) compressed messages to :ref:`dbox <dbox_mbox_format>` or
+Maildir mailboxes. Zlib plugin supports compression and decompression using
+the following libraries:
 
 * zlib/gzip
 * bzlib/bzip2
