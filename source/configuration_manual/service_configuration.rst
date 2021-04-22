@@ -98,7 +98,7 @@ There are 3 types of services that need to be optimized in different ways:
 3. Services that have no blocking operations (e.g. imap-login, pop3-login):
     For best performance (but a bit less safety), these should have ``process_limit`` and ``process_min_avail`` set to the number of CPU cores, so each CPU will be busy serving the process but without unnecessary context switches.
     Then ``client_limit`` needs to be set high enough to be able to serve all the needed connections (``max connections=process_limit * client_limit``).
-    ``service_count ``is commonly set to unlimited (0) for these services. Otherwise when the service_count is beginning to be reached, the total number of available connections will shrink. With very bad luck that could mean that all the processes are simply waiting for the existing connections to die away before the process can die and a new one can be created. Although this could be made less likely by setting ``process_limit`` higher than ``process_min_avail``, but that's still not a guarantee since each process could get a very long running connection and the ``process_limit`` would be eventually reached.
+    ``service_count`` is commonly set to unlimited (0) for these services. Otherwise when the service_count is beginning to be reached, the total number of available connections will shrink. With very bad luck that could mean that all the processes are simply waiting for the existing connections to die away before the process can die and a new one can be created. Although this could be made less likely by setting ``process_limit`` higher than ``process_min_avail``, but that's still not a guarantee since each process could get a very long running connection and the ``process_limit`` would be eventually reached.
 
 Service listeners
 =================
@@ -156,13 +156,22 @@ anvil
 ^^^^^
 The anvil process tracks state of users and their connections.
 
-  * ``chroot=empty`` and ``user=$default_internal_user``, because anvil doesn't need access to anything.
+  * **chroot=empty** and **user=$default_internal_user**, because anvil doesn't need access to anything.
 
-  * ``process_limit=1``, because there can be only one.
+  * **process_limit=1**, because there can be only one.
 
-  * ``idle_kill=4294967295s``, because it should never die or all of its tracked state would be lost.
+  * **client_limit** should be large enough to handle all the simultaneous connections.
+    Dovecot attempts to verify that the limit is high enough at startup.
+    If it's not, it logs a warning such as:
 
-  * `doveadm who` and some other doveadm commands connect to anvil's UNIX listener and request its state.
+     * ``Warning: service anvil { client_limit=200 } is lower than required under max. load (207)``
+
+     This is calculated by counting the process_limit of auth and login services,
+     because each of them has a persistent connection to anvil.
+
+  * **idle_kill=4294967295s**, because it should never die or all of its tracked state would be lost.
+
+  * ``doveadm who`` and some other doveadm commands connect to anvil's UNIX listener and request its state.
 
 auth
 ^^^^^
@@ -175,7 +184,17 @@ The master auth process. There are 4 types of auth client connections:
 
 With UNIX listeners the client type is selected based on the filename after the last ``-`` in the filename. For example ``anything-userdb`` is of `userdb` type. The default type is `client` for inet insteners and unrecognized UNIX listeners. You can add as many client and userdb listeners as you want (and you probably shouldn't touch the login/master listeners).
 
-   * **client_limit** should be large enough to handle all the simultaneous connections. Typically only login processes use long lasting auth connections, while other processes do only quick lookups and disconnect afterwards.
+   * **client_limit** should be large enough to handle all the simultaneous connections.
+     Dovecot attempts to verify that the limit is high enough at startup.
+     If it's not, it logs a warning such as:
+
+      * ``Warning: service auth { client_limit=1000 } is lower than required under max. load (1328)``
+
+     This is calculated by counting the process_limit of every service that
+     is enabled with the "protocol" setting (e.g. imap, pop3, lmtp).
+     Only services with service_count != 1 are counted, because they have
+     persistent connections to auth, while service_count=1 processes only do
+     short-lived auth connections.
 
    * **process_limit=1**, because there can be only one auth master process.
 
