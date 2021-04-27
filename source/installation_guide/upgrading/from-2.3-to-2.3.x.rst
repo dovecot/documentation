@@ -22,3 +22,6 @@ Upgrading Dovecot v2.3.x to v2.3.15
 ===================================
 
  * The 'SNIPPET' and 'PREVIEW (w/explicit algorithm selection)' IMAP commands have been deprecated. The new RFC 8970 compliant PREVIEW command should be exclusoively used in the future.
+ * :ref:`plugin-fs-compress` now accept per-algorithm value.
+ * :ref:`plugin-zlib` now accepts per-algorithm value.
+ * :ref:`plugin-imap-compress` now uses per-algorithm compression level settings. The old setting is ignored.
