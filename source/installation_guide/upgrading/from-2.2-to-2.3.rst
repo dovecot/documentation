@@ -111,7 +111,7 @@ Diffie-Hellman Parameters for SSL
  * You are encouraged to create at least 2048 bit parameters. 4096 is industry recommendation.
  * Note that it will take LONG TIME to generate the parameters, and it should be done with a machine that has GOOD SOURCE OF ENTROPY. Running it on a virtual machine is not recommended, unless there is some entropy helper/driver installed. Running this on your production proxy can starve connections due to lack of entropy.
 
- * Since v2.3.3+ DH parameter usage is **optional** and can be omitted. You are invited to amend ciphers to disallow non-ECC based DH algorithms, but if you don't and someone does try to use them, error will be emitted.
+ * Since v2.3.3+ DH parameter usage is **optional** and can be omitted. In that case one must also remove (or rename) ``/var/lib/dovecot/ssl-parameters.dat`` . You are invited to amend ciphers to disallow non-ECC based DH algorithms, but if you don't and someone does try to use them, error will be emitted.
 
     * Example: ``ssl_cipher_list=ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW:!DH@STRENGTH``
 
