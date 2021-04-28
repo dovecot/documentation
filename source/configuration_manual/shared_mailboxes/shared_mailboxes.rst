@@ -61,6 +61,9 @@ template, it's faster not to use the ``%%h``. For example:
 
      location = maildir:/var/mail/%%d/%%n/Maildir:INDEXPVT=~/Maildir/shared/%%u
 
+
+.. _user_shared_mailboxes_vs:
+
 % vs %%
 -------
 
