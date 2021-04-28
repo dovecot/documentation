@@ -40,8 +40,9 @@ Name                Description
                     other data in the same SQL row - otherwise the entire row
                     could get deleted. Note that the unset is required with
                     PostgreSQL or the merge_quota() trigger doesn't work
-                    correctly. (v2.2.20+)
-                    .. versionaddedd:: 2.2.20
+                    correctly.
+
+                    .. versionadded:: 2.2.20
 
 ``ns=<prefix>``     This quota root is tracked only for the given namespace.
 =================== ============================================================
