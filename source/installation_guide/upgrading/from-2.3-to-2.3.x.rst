@@ -17,6 +17,59 @@ Upgrading Dovecot v2.3.x to v2.3.14
  * Removed autocreate plugin. Use `mailbox { auto }` :ref:`mailbox_settings` instead.
  * Removed expire plugin. Use `mailbox { autoexpunge }` :ref:`mailbox_settings` instead.
  * Removed xz write support from zlib plugin. (Reading xz compressed mails is still supported.) Use another compression algorithm.
+ * obox (fs-dictmap):
+   :ref:`Update configuration to support Cassandra max bucket ID safe shrinking behavior <upgrade_2_3_14_max_bucket_id>`
+
+.. _upgrade_2_3_14_max_bucket_id:
+
+Max Bucket ID Safe Shrinking
+----------------------------
+
+.. note::
+
+  Only needed for :ref:`obox + fs-dictmap <dictmap_configuration>`
+  installations.
+
+To support Cassandra max bucket ID safe shrinking behavior,
+``dovecot-dict-cql.conf.ext`` must get updated. The map for
+``shared/dictmap/$user/mailboxes/$mailbox_guid/max_bucket`` must include the
+writetime of the last ``max_bucket`` update. See:
+:ref:`dictmap_cassandra_objectid`.
+
+This mapping update is downwards compatible and can be done independently of
+upgrading OX Dovecot Pro.  It is not a schema update but rather fetching
+additional, already available, information from Cassandra using the built-in
+writetime functionality.
+
+The issue solved by this change is that in a fs-dictmap installation (e.g.,
+Cassandra+Scality), the ``max_bucket`` ID never shrinks. Buckets are used to
+prevent partitions in Cassandra becoming too big (each bucket is sized to
+keep 10,000 mails).
+
+If a user receives a huge amount of mails and fills multiple buckets, the
+max_bucket id is incremented. If most of these mails are deleted again, this
+now larger ``max_bucket`` ID stays.
+
+A big ``max_bucket`` id means one Cassandra SELECT per bucket < max_bucket.
+This happens whenever a folder is accessed for the first time in the metacache
+(after cleanup or backend change) and all the mails of this folder are
+listed.
+
+Thus, this change means there could be less Cassandra SELECTs overall. This
+fix is automatically applied per user after a user's folder has been accessed
+for the first time.
+
+In order to prevent race conditions, the writetime of the last ``max_bucket``
+ID is taken into account. This is why the change to the Dovecot Cassandra
+mapping configuration is necessary. The change of the mapping is downwards
+compatible so rollbacks to earlier versions are not complicated by this change.
+
+Before 2.3.14, the ``max_bucket`` ID never shrunk, which means that there
+could be inefficient  mailboxes with a higher ``max_bucket`` ID than actual
+filled buckets.
+
+To be informed about shrinking, the
+:ref:`event_fs_dictmap_max_bucket_changed` event can be monitored.
 
 Upgrading Dovecot v2.3.x to v2.3.15
 ===================================

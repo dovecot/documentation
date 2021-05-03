@@ -2485,6 +2485,8 @@ deleted data see :ref:`cassandra` for more details.
 |                       | .. versionadded:: 2.3.15                             |
 +-----------------------+------------------------------------------------------+
 
+.. _event_fs_dictmap_max_bucket_changed:
+
 fs_dictmap_max_bucket_changed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
