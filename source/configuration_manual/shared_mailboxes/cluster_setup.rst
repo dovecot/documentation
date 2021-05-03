@@ -55,6 +55,8 @@ in this mailbox ``someone1`` would access a mailbox with the name
     location = imapc:~/shared/%%u:INDEXPVT=~/shared-pvt/%%u
    }
 
+.. note:: See :ref:`user_shared_mailboxes_vs` for an explanation more details on the used variables.
+
 Additionally imapc must be configured accordingly on the backends:
  * :ref:`setting-imapc_master_user` must be set to ``%u`` e.g. the logged in
    user becomes imapc master user

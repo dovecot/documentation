@@ -107,10 +107,11 @@ permissions to 0660, so neither team can even accidentally see each others'
 shared mailboxes.
 
 Currently Dovecot supports specifying only the primary group, but if your
-userdb returns ``system_user`` `extra field
-<https://wiki.dovecot.org/UserDatabase/ExtraFields>`_, the non-primary groups
-are taken from ``/etc/group`` for that user. In a future version the whole GID
-list will be configurable without help from ``/etc/group``.
+userdb returns ``system_user``
+:ref:`extra field <authentication-user_database_extra_fields>`, the
+non-primary groups are taken from ``/etc/group`` for that user. In a future
+version the whole GID list will be configurable without help from
+``/etc/group``.
 
 It's also possible to give all the users access to extra groups with
 ``mail_access_groups`` setting.
@@ -130,15 +131,13 @@ auth process or auth worker process. They have different default users:
     user = root
   }
 
-The user must have access to your `password databases
-<https://wiki.dovecot.org/PasswordDatabase>`_ and `user databases
-<https://wiki.dovecot.org/UserDatabase>`_. It's not used for anything else. The
+The user must have access to your :ref:`authentication-password_databases`
+and :ref:`authentication-user_database`. It's not used for anything else. The
 default is to use root, because it's guaranteed to have access to all the
 password databases. If you don't need this, you should change it to
 ``$default_internal_user``.
 
-`PAM <https://wiki.dovecot.org/PasswordDatabase/PAM>`_ and `shadow
-<https://wiki.dovecot.org/PasswordDatabase/Shadow>`_ passdbs are usually
+:ref:`authentication-pam` and :ref:`authentication-shadow` passdbs are usually
 configured to read ``/etc/shadow`` file. Even this doesn't need root access if
 the file is readable by shadow group:
 
