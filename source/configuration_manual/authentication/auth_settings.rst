@@ -4,7 +4,7 @@
  Auth Settings
 ===================
 
-See http://wiki.dovecot.org/Authentication for more details. 
+See :ref:`authentication-authentication` for more details.
 
 .. code-block:: none
 
@@ -34,7 +34,8 @@ This can be useful for detecting brute force authentication attempts without log
    }
    }
 
-Disable authentication penalty. This is explained in http://wiki.dovecot.org/Authentication/Penalty
+Disable authentication penalty. This is explained in
+:ref:`authentication-authentication_penalty`
 
 .. code-block:: none
 

@@ -45,8 +45,7 @@ The user database lookup can return these fields:
 
 The user and password databases (See :ref:`authentication-password_databases`) may be
 the same or they may be different depending on your needs. You can also have
-`multiple databases
-<https://wiki.dovecot.org/Authentication/MultipleDatabases>`_.
+:ref:`multiple databases <authentication-multiple_authentication_databases>`.
 
 Currently supported user databases are:
 

@@ -295,7 +295,7 @@ Functions
 
 .. py:function::  var_expand(template)
 
-   Expands mail user variables (see `Variables <https://wiki.dovecot.org/Variables>`_ )
+   Expands mail user variables (see :ref:`config_variables`)
 
    :param str template: Variable template string
 

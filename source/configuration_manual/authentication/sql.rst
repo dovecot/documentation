@@ -28,20 +28,18 @@ Password database lookups
 password_query setting contains the SQL query to look up the password. It must
 return a field named ``password``. If you have it by any other name in the
 database, you can use the SQL's ``AS`` keyword (``SELECT pw AS password ..``).
-You can use all the normal `variables <https://wiki.dovecot.org/Variables>`_
+You can use all the normal :ref:`config_variables`
 such as ``%u`` in the SQL query.
 
 If all the passwords are in same format, you can use ``default_pass_scheme`` to
 specify it. Otherwise each password needs to be prefixed with
 ``{password-scheme}``, for example ``{plain}plaintext-password``. See
-`Authentication/PasswordSchemes
-<https://wiki.dovecot.org/Authentication/PasswordSchemes>`_ for a list of
-supported password schemes.
+:ref:`authentication-password_schemes` for a list of supported password schemes.
 
 By default MySQL does case-insensitive string comparisons, so you may have a
 problem if your users are logging with different as ``user``, ``User`` and
-``uSer``. To fix this, you can make the SQL database return a `user field
-<https://wiki.dovecot.org/PasswordDatabase/ExtraFields/User>`_, which makes
+``uSer``. To fix this, you can make the SQL database return a
+:ref:`authentication-user_extra_field`, which makes
 Dovecot modify the username to the returned value.
 
 .. Note:: If you're using separate user and domain fields, a common problem is
@@ -50,8 +48,8 @@ Dovecot modify the username to the returned value.
           returning a concatenated ``user@domain`` string or username/domain
           fields separately. See the examples below.
 
-The query can also return other `extra fields
-<https://wiki.dovecot.org/PasswordDatabase/ExtraFields>`_ which have special
+The query can also return other
+:ref:`authentication-password_database_extra_fields` which have special
 meaning.
 
 You can't use multiple statements in one query, but you could use a stored
@@ -86,8 +84,7 @@ query.
 
 ``user_query`` setting contains the SQL query to look up the userdb
 information. The commonly returned userdb fields are uid, gid, home and mail.
-See `UserDatabase/ExtraFields
-<https://wiki.dovecot.org/UserDatabase/ExtraFields>`_ for more information
+See :ref:`authentication-user_database_extra_fields` for more information
 about these and other fields that can be returned.
 
 If you're using a single UID and GID for all users, you can set them in
@@ -117,8 +114,7 @@ can make the ``password_query`` return all the necessary userdb fields and use
 prefetch userdb to use those fields. If you're using Dovecot's deliver you'll
 still need to have the ``user_query`` working.
 
-See `UserDatabase/Prefetch <https://wiki.dovecot.org/UserDatabase/Prefetch>`_
-for example configuration
+See :ref:`authentication-prefetch_userdb` for example configuration.
 
 High availability
 =================

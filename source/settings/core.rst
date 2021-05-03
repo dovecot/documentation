@@ -2002,9 +2002,8 @@ Proxy to other LMTP/SMTP servers?
 
 Proxy destination is determined via passdb lookup parameters.
 
-See: https://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
+See :ref:`authentication-proxies`
 
-.. todo:: Link to proxy documentation
 .. todo:: Indicate LMTP setting
 
 
@@ -2021,10 +2020,9 @@ Directory location to store raw LMTP proxy protocol traffic logs.
 However, because LMTP session starts without a user, all user-specific
 variables expand to empty.
 
-See: https://wiki.dovecot.org/Debugging/Rawlog
+See :ref:`debugging_rawlog`
 
 .. todo:: Indicate LMTP setting
-.. todo:: Link to rawlog documentation
 
 
 .. _setting-lmtp_rawlog_dir:
@@ -2040,10 +2038,9 @@ Directory location to store raw LMTP protocol traffic logs.
 However, because LMTP session starts without a user, all user-specific
 variables expand to empty.
 
-See: https://wiki.dovecot.org/Debugging/Rawlog
+See :ref:`debugging_rawlog`
 
 .. todo:: Indicate LMTP setting
-.. todo:: Link to rawlog documentation
 
 
 .. _setting-lmtp_rcpt_check_quota:
@@ -2264,7 +2261,7 @@ Variable Long name      Description
 %d       domain         domain part in user@domain, empty if user with no domain
 %h       home           Expands to HOME environment. Usually means it's empty.
 %p       pid            PID of the current process
-%m       mech           `authentication mechanism <https://wiki.dovecot.org/Authentication/Mechanisms>`_ e.g. PLAIN
+%m       mech           :ref:`authentication-authentication_mechanisms` e.g. PLAIN
 %a       lport          local port
 %b       rport          remote port
 %c       secured        "secured" string with SSL, TLS and localhost connections. Otherwise empty.
@@ -2772,9 +2769,7 @@ mail=/var/vmail/domain/user/mail/:
 
 See :ref:`setting-mail_location`
 
-See: https://wiki.dovecot.org/QuickConfiguration
-
-.. todo:: Link to configuration page - this is too complex for config page
+See :ref:`quick_configuration`
 
 
 .. _setting-mail_location:
@@ -3134,9 +3129,7 @@ This may happen when mail messages do not have their virtual sizes cached.
 When indexing is occuring in the background, explicit quota size queries
 return an internal error and mail deliveries are assumed to succeed.
 
-See: https://wiki.dovecot.org/Quota
-
-.. todo:: Link to quota page
+See :ref:`quota_plugin`
 
 
 .. _setting-mailbox_idle_check_interval:
@@ -3856,9 +3849,8 @@ the metadata.
 Directory location to store raw POP3 protocol traffic logs used in
 dsync-based migration of mail..
 
-See: https://wiki.dovecot.org/Debugging/Rawlog
+See :ref:`debugging_rawlog`
 
-.. todo:: Link to rawlog documentation
 .. todo:: Indicate dsync setting
 
 
@@ -3955,9 +3947,7 @@ account moves under the quota limit at the time of redelivery.
 If disabled, the message is bounced with a permanent error returned to the
 sending server.
 
-.. todo:: Link to quota page
-
-See: https://wiki.dovecot.org/Quota
+See :ref:`quota_plugin`
 
 
 .. _setting-rawlog_dir:
@@ -3975,9 +3965,7 @@ If empty, rawlog files are not created.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
 
-See: https://wiki.dovecot.org/Debugging/Rawlog
-
-.. todo:: Link to rawlog information page
+See :ref:`debugging_rawlog`
 
 
 .. _setting-recipient_delimiter:
@@ -4158,11 +4146,10 @@ ssl=no: SSL/TLS is completely disabled.
 
 With both ssl=yes and ssl=required it's still possible that the client attempts to do a plaintext authentication before enabling SSL/TLS, which exposes the plaintext password to the internet. Dovecot attempts to indicate this to the IMAP clients via the LOGINDISABLED capability, but many clients still ignore it and send the password anyway. There is unfortunately no way for Dovecot to prevent this behavior. The POP3 standard doesn't have an equivalent capability at all, so the POP3 clients can't even know if the server would accept a plaintext authenticatio
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Explain levels
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_alt_cert:
@@ -4187,10 +4174,9 @@ Example:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_alt_key:
@@ -4215,10 +4201,9 @@ Example:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_ca:
@@ -4238,10 +4223,9 @@ Example:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_cert:
@@ -4258,10 +4242,9 @@ See :ref:`setting-ssl`
 
 See :ref:`setting-ssl_key`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_cert_username_field:
@@ -4283,10 +4266,9 @@ See :ref:`setting-auth_ssl_username_from_cert`
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_cipher_list:
@@ -4305,10 +4287,9 @@ See :ref:`setting-ssl`
 
 See :ref:`setting-ssl_min_protocol`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_client_ca_dir:
@@ -4325,10 +4306,9 @@ with the imapc back end).
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL
+See :ref:`ssl`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_client_ca_file:
@@ -4347,10 +4327,9 @@ contains the CAs that are actually necessary.
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_client_cert:
@@ -4368,10 +4347,9 @@ Example Setting:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_client_key:
@@ -4389,10 +4367,9 @@ Example Setting:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL
+See :ref:`ssl`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_crypto_device:
@@ -4407,10 +4384,9 @@ Which SSL crypto device to use.
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_curve_list:
@@ -4432,11 +4408,9 @@ Example:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
-
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_dh:
@@ -4463,10 +4437,9 @@ Example Setting:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_client_require_valid_cert:
@@ -4481,10 +4454,9 @@ Require a valid cerficate when connecting to external SSL services?
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_key:
@@ -4507,10 +4479,9 @@ See :ref:`setting-ssl`
 
 See :ref:`setting-ssl_cert`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_key_password:
@@ -4533,10 +4504,9 @@ See :ref:`setting-ssl`
 
 See :ref:`setting-ssl_key`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_min_protocol:
@@ -4561,10 +4531,9 @@ See :ref:`setting-ssl`
 
 See :ref:`setting-ssl_cipher_list`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_options:
@@ -4584,9 +4553,9 @@ Currently supported options are:
 
 See :ref:`setting-ssl`
 
-.. todo:: Indicate SSL setting
+See :ref:`dovecot_ssl_configuration`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_prefer_server_ciphers:
@@ -4601,10 +4570,9 @@ If enabled, give preference to the server's cipher list over a client's list.
 
 See :ref:`setting-ssl`
 
-.. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
+See :ref:`dovecot_ssl_configuration`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_require_crl:
@@ -4619,10 +4587,9 @@ If enabled, the CRL check must succeed for client certificates.
 
 See :ref:`setting-ssl`
 
-.. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
+See :ref:`dovecot_ssl_configuration`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_verify_client_cert:
@@ -4639,12 +4606,11 @@ See :ref:`setting-ssl`
 
 See :ref:`setting-auth_ssl_require_client_cert`
 
+See :ref:`dovecot_ssl_configuration`
+
+See :ref:`ssl`
+
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
-
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
-
-See: https://wiki.dovecot.org/SSL
 
 
 .. _setting-state_dir:
@@ -4865,9 +4831,9 @@ Write protocol logs for relay connection to this directory for debugging.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
 
-.. todo:: Indicate submission setting
+See :ref:`debugging_rawlog`
 
-see: https://wiki.dovecot.org/Debugging/Rawlog
+.. todo:: Indicate submission setting
 
 
 .. _setting-submission_relay_ssl:

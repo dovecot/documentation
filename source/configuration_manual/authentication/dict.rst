@@ -257,8 +257,7 @@ Complete example for authenticating via a UNIX socket
 
 The Dict auth backend can be used to query a local UNIX socket for users. This
 can be handy for accessing user databases which would otherwise only be
-accessible via the `CheckPassword
-<https://wiki.dovecot.org/AuthDatabase/CheckPassword>`_ backend and a scripting
+accessible via the :ref:`authentication-checkpassword` backend and a scripting
 language.
 
 When given a :ref:`proxy URL <quota_backend_dict>` the Dict
