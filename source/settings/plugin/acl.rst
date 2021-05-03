@@ -209,7 +209,7 @@ w     write           Message flags and keywords can be changed, except \Seen an
 s     write-seen      \Seen flag can be changed
 t     write-deleted   \Deleted flag can be changed
 i     insert          Messages can be written or copied to the mailbox
-p     post            Messages can be posted to the mailbox by `LDA <https://wiki.dovecot.org/LDA>`_, e.g. from :ref:`pigeonhole_sieve_interpreter`
+p     post            Messages can be posted to the mailbox by :ref:`lda`, e.g. from :ref:`pigeonhole_sieve_interpreter`
 e     expunge         Messages can be expunged
 k     create          Mailboxes can be created (or renamed) directly under this mailbox (but not necessarily under its children, see ACL Inheritance section above) (renaming also requires delete rights)
 x     delete          Mailbox can be deleted

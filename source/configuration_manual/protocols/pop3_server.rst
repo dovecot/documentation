@@ -166,7 +166,7 @@ calculation:
 
 * X-Delivery-ID: header
 
-If you use `Dovecot's deliver <https://wiki.dovecot.org/LDA>`_ or IMAP APPEND
+If you use :ref:`lda` or IMAP APPEND
 and ``pop3_uidl_format = %m`` it always appends the X-Delivery-ID: header to
 saved mailbox. Any existing X-Delivery-ID: headers in the saved mails are
 dropped.

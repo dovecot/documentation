@@ -593,9 +593,11 @@ put it in `quotes`. The mailbox settings are:
     needs to be added to post-login CAPABILITY response as RFC 6154 mandates. You
     can do this with imap_capability = +SPECIAL-USE
 
+.. _namespaces-autoexpunge:
+
 * autoexpunge=<time>: Automatically at user deinitialization expunge all mails in this mailbox whose
   saved-timestamp is older than `<time>` (e.g. autoexpunge=30d). This removes the
-  need for `expire plugin <https://wiki.dovecot.org/Plugins/Expire>`_ if you
+  need for :ref:`plugin-expire` if you
   don't care that the expunging may not always happen in time.
 
   .. versionadded:: v2.2.20
