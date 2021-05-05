@@ -1018,7 +1018,7 @@ Mailbox
 mail_expunged
 ^^^^^^^^^^^^^
 
-.. versionadded:: 2.3.16
+.. versionadded:: 2.3.15
 
 A mail was expunged from the mailbox. Note that this event inherits from
 mailbox, not mail.
@@ -1049,7 +1049,7 @@ Mail
 mail_opened
 ^^^^^^^^^^^
 
-.. versionadded:: 2.3.16
+.. versionadded:: 2.3.15
 
 A mail was opened e.g. for reading its body. Note that this event is not sent
 when mails' metadata is accessed, even if it causes opening the mail file.
@@ -1065,7 +1065,7 @@ when mails' metadata is accessed, even if it causes opening the mail file.
 mail_expunge_requested
 ^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.3.16
+.. versionadded:: 2.3.15
 
 A mail is set to be expunged. (Note that expunges can be rolled back later on,
 this event is emitted when an expunge is requested).
@@ -1275,7 +1275,7 @@ deleted.
 mail_cache_lookup_finished
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.3.16
+.. versionadded:: 2.3.15
 
 A mail field was looked up from cache.
 
