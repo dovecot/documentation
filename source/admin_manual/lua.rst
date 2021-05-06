@@ -46,6 +46,8 @@ Lua API
 .. warning:: Never use ``os.exit()`` from a Lua script. This will cause the
 	     whole process to exit instead of just the script.
 
+.. py:currentmodule:: dovecot
+
 .. py:function:: i_debug(text)
 
    Log debug level message
@@ -74,17 +76,19 @@ Event functions are available from
 
 .. versionadded:: v2.3.4
 
-.. py:function:: dovecot.event()
+.. py:function:: event()
 
    Generate new event with lua script as parent.
 
-.. py:function:: dovecot.event(parent)
+.. py:function:: event(parent)
    :noindex:
 
    Generate new event with given parent event.
 
 object event
 ^^^^^^^^^^^^^
+
+.. py:currentmodule:: event
 
 .. Note::
 
@@ -483,7 +487,7 @@ Variables
 
    Full mailbox name
 
-.. py:attribute:: Mailbox name
+.. py:attribute:: name
 
     Mailbox name
 
