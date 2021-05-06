@@ -31,7 +31,7 @@ return non-zero to indicate that the script has a problem.
 C API
 ^^^^^^
 
-.. c:function:: void dlua_register_dovecot(struct dlua_script *script)
+.. c:function:: void dlua_dovecot_register(struct dlua_script *script)
 
 Register dovecot variable. This item can also be extended by context specific
 tables, like authentication database adds dovecot.auth.
@@ -42,6 +42,9 @@ Pushes an Dovecot Event to stack.
 
 Lua API
 ^^^^^^^^
+
+.. warning:: Never use ``os.exit()`` from a Lua script. This will cause the
+	     whole process to exit instead of just the script.
 
 .. py:function:: i_debug(text)
 
