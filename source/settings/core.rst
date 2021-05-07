@@ -1243,10 +1243,11 @@ See :ref:`settings` for list of all setting groups.
    :todo: Indicate imap setting
    :values: @string
 
-   Specifies the hosts allowed in URLAUTH URLs sent by clients.
+   Specifies the host used for URLAUTH URLs. Only this host is accepted in
+   the client-provided URLs. Using ``*`` value (not recommended) allows all
+   hosts and the generated URLs use :dovecot_core:ref:`hostname` as the host.
 
-   ``*`` allows all. An empty value disables checking and disables the URLAUTH
-   extension.
+   An empty value disables the URLAUTH extension entirely.
 
    .. warning::
 
