@@ -97,6 +97,29 @@ You can also iterate through the whole array easily:
 There's also ``array_foreach_modifiable()`` to get the data without
 const.
 
+There are also ``array_idx_elem()`` and ``array_foreach_elem()`` to access
+arrays of pointers more easily. They work by making a copy of the dereferenced
+pointer. For example:
+
+::
+
+  ARRAY(const char *) strings;
+
+  // array_idx() requires dereferencing:
+  const char *const *strp = array_idx(&strings, idx);
+  printf("%s\n", *strp);
+  // array_idx_elem() dereferences already:
+  printf("%s\n", array_idx_elem(&strings, idx));
+
+  // array_foreach() requires dereferencing:
+  const char *const *strp;
+  array_foreach(&strings, strp)
+    printf("%s\n", *strp);
+  // array_foreach_elem() dereferences already:
+  const char *str;
+  array_foreach_elem(&strings, str)
+    printf("%s\n", str);
+
 Unsafe Read/Write
 -----------------
 
