@@ -151,7 +151,17 @@ provided via password query:
     '%w' AS userdb_mail_crypt_private_password \
     FROM virtual_users  WHERE email='%u';
 
-Global Keys
+Choosing encryption key
+-----------------------
+
+DO NOT use password directly. It can contain % which is interpreted as
+variable expansion and can cause errors. Also, it might be visible in
+debug logging. Suggested approaches are base64 encoding, hex encoding
+or hashing the password. With hashing, you get the extra benefit that
+password won't be directly visible in logs.
+
+
+Global keys
 ===========
 
 In this mode, all keying material is taken from plugin environment. You can use
