@@ -4291,6 +4291,18 @@ See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
 
+.. _setting-ssl_cipher_suites:
+
+``ssl_cipher_suites``
+---------------------
+
+.. versionadded:: v2.3.15
+
+- Default: OpenSSL version specific.
+
+The list of SSL cipher suites to use, in order of preference.
+
+See `<https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites>`__
 
 .. _setting-ssl_client_ca_dir:
 
