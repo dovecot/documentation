@@ -78,3 +78,7 @@ Upgrading Dovecot v2.3.x to v2.3.15
  * :ref:`plugin-fs-compress` now accept per-algorithm value.
  * :ref:`plugin-zlib` now accepts per-algorithm value.
  * :ref:`plugin-imap-compress` now uses per-algorithm compression level settings. The old setting is ignored.
+
+Upgrading Dovecot v2.3.x to v2.3.16
+===================================
+ * :ref:`auth-worker service <service_configuration_auth_worker>` service\_count setting has been changed.

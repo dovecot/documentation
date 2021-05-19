@@ -202,19 +202,26 @@ With UNIX listeners the client type is selected based on the filename after the 
 
    * **chroot** could be set (to e.g. `empty`) if passdb/userdb doesn't need to read any files (e.g. SQL, LDAP config is read before chroot)
 
+
+.. _service_configuration_auth_worker:
+
 auth-worker
 ^^^^^^^^^^^
+
 Auth master process connects to auth worker processes. It is mainly used by passdbs and userdbs that do potentially long running lookups. For example MySQL supports only synchronous lookups, so each query is run in a separate auth worker process that does nothing else during the query. PostgreSQL and LDAP supports asynchronous lookups, so those don't use worker processes at all. With some passdbs and userdbs you can select if worker processes should be used.
 
    * **client_limit=1**, because only the master auth process connects to auth worker.
-
-   * **service_count=1**, because auth master stops extra idling workers by disconnecting from them.
 
    * **process_limit** should be a bit higher than ``auth_worker_max_count`` setting.
 
    * **user=root** by default, because by default PAM authentication is used, which usually requires reading ``/etc/shadow``. If this isn't needed, it's a good idea to change this to something else, such as ``$default_internal_user``.
 
    * **chroot** could also be set if possible.
+
+   * **service_count=0** counts the number of processed auth requests. This can be used to cycle the process after the specified number of auth requests (default is unlimited). The worker processes also stop after being idle for ``idle_kill`` seconds. Prior to v2.3.16, you should keep this as **1**.
+
+     .. versionchanged:: v2.3.16
+
 
 config
 ^^^^^^
