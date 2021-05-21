@@ -211,6 +211,14 @@ The following algorithms are supported
 There is currently no support for EdDSA algorithms.
 ES supports any curve supported by OpenSSL for this purpose.
 
+OpenID.Discovery
+****************
+
+.. versionadded:: v2.3.16
+
+Support for `RFC 7628 <https://datatracker.ietf.org/doc/html/rfc7628#section-3.2.2>`__  OpenID Discovery (OIDC) can be achieved with
+``openid_configuration_url`` setting. Setting this causes Dovecot to report OIDC configuration URL as ``openid-configuration`` element in error JSON.
+
 Full config file
 ******************
 
@@ -255,6 +263,10 @@ Full config file
 
   ## Expected issuer(s) for the token (space separated list)
   # issuers =
+
+
+  ## URL to RFC 7628 OpenID Provider Configuration Information schema
+  # openid_configuration_url =
 
   ## Extra fields to set in passdb response (in passdb static style)
   # pass_attrs =
