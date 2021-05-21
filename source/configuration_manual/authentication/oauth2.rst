@@ -155,9 +155,9 @@ This requires that key issuer supports `JWT tokens (RFC 7519) <https://tools.iet
 You can put the validation keys into any `dictionary <https://wiki.dovecot.org/Dictionary>`_.
 The lookup key used is ``/shared/<azp:default>/<alg>/<keyid:default>``.
 If there is no ``azp`` element in token body, then default is used.
-The ``alg`` field is always uppercased by dovecot.
+The ``alg`` field is always uppercased by Dovecot.
 If there is no ``kid`` element in token header, ``default`` is used.
-Keys are cached into memory when they are fetched, to evict them from cache you need to restart dovecot.
+Keys are cached into memory when they are fetched, to evict them from cache you need to restart Dovecot.
 If you want to do key rotation, it is recommended to use a new key id.
 
 Example:
@@ -190,7 +190,7 @@ To use local validation, put into ``dovecot-oauth2.conf.ext``
   introspection_mode = local
   local_validation_key_dict = fs:posix:prefix=/etc/dovecot/keys/
 
-Currently dovecot oauth2 library implements the following features of JWT tokens:
+Currently Dovecot oauth2 library implements the following features of JWT tokens:
 
  * IAT checking
  * NBF checking
