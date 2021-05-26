@@ -29,9 +29,9 @@ See :ref:`plugin-fts-setting-fts_autoindex_max_recent_msgs`
 - Default: ``0`` (ignore)
 - Values: :ref:`uint`
 
-To exclude infrequently accessed mailboxes from automatic indexing, set this value to the maximum number of \Recent flagged messages that exist in the mailbox.
+To exclude infrequently accessed mailboxes from automatic indexing, set this value to the maximum number of ``\Recent`` flagged messages that exist in the mailbox.
 
-Mailboxes with more flagged \Recent messages than this value will not be autoindexed, even though they get deliveries or appends.
+Mailboxes with more flagged ``\Recent`` messages than this value will not be autoindexed, even though they get deliveries or appends.
 This is useful for, e.g., inactive Junk folders.
 
 Any folders excluded from automatic indexing will still be indexed, if a search on them is performed.
@@ -54,7 +54,7 @@ Example Setting:
 
 To exclude a mailbox from automatic indexing, it can be listed in this setting.
 To exclude additional mailboxes, add sequential numbers to the end of the plugin name.
-It's possible to use either mailbox names or refer to them using special-use flags (e.g. \Trash)
+It's possible to use either mailbox names or refer to them using special-use flags (e.g. ``\Trash``)
 
 For example::
 
@@ -159,7 +159,7 @@ List of available filters:
 
   This stemmer is based on the Snowball stemmer library.
   
-  See ref:`fts_languages`
+  See :ref:`fts_languages`
 
 ``normalizer-icu``:
 
@@ -271,7 +271,7 @@ Currently supported languages:
 +---------------+---------------------------------------+----------+-----------+
 | it            | Italian                               | Yes      | Yes       |
 +---------------+---------------------------------------+----------+-----------+
-| jp            | Japanese                              | No       | No        |
+| ja            | Japanese                              | No       | No        |
 |               | (Requires separate Kuromoji license)  |          |           |
 +---------------+---------------------------------------+----------+-----------+
 | nl            | Dutch                                 | Yes      | Yes       |

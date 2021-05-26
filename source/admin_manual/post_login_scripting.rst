@@ -41,8 +41,8 @@ whatever user owns the mails (e.g. vmail). If you're using multiple UNIX UIDs
 (e.g. system users), use ``script-login -d`` to drop to the ``UID`` or ``GID``
 specified by the userdb lookup (ignoring user/group/chroot service settings).
 
-It's not currently possible to run post-login scripts in `proxies
-<https://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy>`_, because
+It's not currently possible to run post-login scripts in
+:ref:`authentication-proxies`, because
 they're not actually logging in to the local Dovecot. An alternative method
 could be implemented some day, maybe as a plugin.
 
@@ -105,7 +105,7 @@ If you want to know when the user last logged in, you can do it like this:
 Custom mailbox location autodetection
 =====================================
 
-See `MailLocation <https://wiki.dovecot.org/MailLocation>`_ for an example.
+See :ref:`mail_location_settings` for an example.
 
 Alerts
 ======

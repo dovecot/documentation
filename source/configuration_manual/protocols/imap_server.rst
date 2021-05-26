@@ -20,7 +20,7 @@ Some of the extensions need to be explicitly enabled:
 
   :ref:`imap_metadata`
 
-  :ref:`plugin-compress`
+  :ref:`plugin-imap-compress`
   
   :ref:`fts`
   

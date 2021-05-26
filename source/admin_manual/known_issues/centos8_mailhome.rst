@@ -46,6 +46,6 @@ To make this change permanent, you need to add new fcontext rule.
 
 .. code::
 
-   semanage fcontext --add --type mail_home_rw_t --range s0 /home/mail(/.*)?
+   semanage fcontext --add --type mail_home_rw_t --range s0 '/home/mail(/.*)?'
 
 After this, dovecot should be able to write into your mail location again.

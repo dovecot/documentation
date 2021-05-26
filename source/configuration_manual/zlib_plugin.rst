@@ -5,11 +5,16 @@ Zlib plugin
 ===========
 
 Zlib plugin can be used to read compressed mbox, maildir or dbox files. It can
-be also used to write (via IMAP, `LDA <https://wiki.dovecot.org/LDA>`_ and/or
-:ref:`lmtp_server`) compressed messages to `dbox
-<https://wiki.dovecot.org/MailboxFormat/dbox>`_ or Maildir mailboxes. Zlib
-plugin supports compression using zlib/gzip, bzlib/bzip2, liblzma/xz (v2.2.9+)
-liblz4/lz4 (v2.2.11+), and `Zstandard <https://facebook.github.io/zstd/>`_ (2.3.12+)
+also be used to write (via IMAP, `LDA <lda>` and/or :ref:`lmtp_server`)
+compressed messages to `dbox <dbox_mbox_format>` or
+`Maildir <maildir_mbox_format>`_ mailboxes. Zlib plugin supports compression
+and decompression using the following libraries:
+
+* zlib/gzip
+* bzlib/bzip2
+* liblzma/xz (v2.2.9+ reading, v2.2.9-v2.3.13 writing)
+* liblz4/lz4 (v2.2.11+)
+* `Zstandard <https://facebook.github.io/zstd/>`_ (2.3.12+)
 
 Configuration:
 
@@ -20,9 +25,21 @@ Configuration:
 
   # Enable these only if you want compression while saving:
   plugin {
-    zlib_save_level = 6 # 1..9; default is 6
-    zlib_save = gz # or bz2, xz, lz4 or zstd
+    zlib_save = gz
+    zlib_save_level = 6
   }
+
+The ``zlib_save`` setting selects the compression algorithm (currently
+supported values are: gz, bz2, lz4, zstd) to use when saving a new mail.
+The ``zlib_save_level`` setting sets the compression level used.
+
+You can use per-algorithm compression levels, and defaults. Prior to v2.3.15,
+the compression level must be an integer in the range 1 to 9 regardless of the
+algorithm selected. The default level is 6. These values may not make sense
+with compression algorithms other than gz and bz2. For example, zstd supports
+levels from -1 to 22 in latest Zstandard version.
+
+  .. versionchanged:: 2.3.15
 
 mbox
 ====
@@ -46,13 +63,16 @@ Maildir
 =======
 
 When this plugin is loaded Dovecot can read both compressed and uncompressed
-files from Maildir. If you've enabled both gzip and bzip2 support you can have
-files compressed with either one of them in the Maildir. The compression is
-detected by reading the first few bytes from the file and figuring out if it's
-a valid gzip or bzip2 header. The file name doesn't matter. This means that an
-IMAP client could also try to exploit security holes in zlib/bzlib by writing
-specially crafted mails using IMAP's APPEND command. This is prevented by
-Dovecot not allowing clients to save mails that are detected as compressed.
+files from Maildir. The files within a Maildir can use any supported
+compression algorithm (e.g., some can be compressed uzing gzip, while others
+are compressed using zstd). The algorithm is detected by reading the first
+few bytes from the file and figuring out if it's a valid gzip or bzip2 header.
+The file name doesn't matter.
+
+To avoid IMAP clients attempting to exploit security holes in the compression
+algorithm libraries (e.g., bzlib) by writing specially crafted mails using
+IMAP's APPEND command, Dovecot will not allow clients to save mails that are
+detected as compressed.
 
 All mails must have , ``S=<size>`` in their filename where <size> contains the
 original uncompressed mail size, otherwise there will be problems with quota

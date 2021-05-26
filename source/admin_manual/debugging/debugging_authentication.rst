@@ -29,7 +29,7 @@ PLAIN SASL mechanism
 
 With IMAP and POP3 it's easy to log in manually using the IMAP's LOGIN command or POP3's USER and PASS commands (see `TestInstallation <https://wiki.dovecot.org/TestInstallation>`_ and `TestPop3Installation <https://wiki.dovecot.org/TestPop3Installation>`_ for details), but with SMTP AUTH you'll need to use PLAIN authentication mechanism, which requires you to build a base64-encoded string in the correct format. The PLAIN authentication is also used internally by both IMAP and POP3 to authenticate to dovecot-auth, so you see it in the debug logs.
 
-The PLAIN mechanism's authentication format is: <authorization ID> NUL <authentication ID> NUL <password>. Authorization ID is the username who you want to log in as, and authentication ID is the username whose password you're giving. If you're not planning on doing a `master user login <https://wiki.dovecot.org/Authentication/MasterUsers>`_, you can either set both of these fields to the same username, or leave the authorization ID empty.
+The PLAIN mechanism's authentication format is: <authorization ID> NUL <authentication ID> NUL <password>. Authorization ID is the username who you want to log in as, and authentication ID is the username whose password you're giving. If you're not planning on doing a `master user login <authentication-master_users>`, you can either set both of these fields to the same username, or leave the authorization ID empty.
 
 Encoding with mmencode
 ^^^^^^^^^^^^^^^^^^^^^^

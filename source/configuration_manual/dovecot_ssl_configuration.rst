@@ -4,39 +4,21 @@
 Dovecot SSL configuration
 =========================
 
-.. code-block:: none
-
-   Contents
-
-    1. Dovecot SSL configuration
-       1. Multiple SSL certificates
-         1. Different certificates per algorithm
-         2. Different certificates per IP and protocol
-         3. With client TLS SNI (Server Name Indication) support
-    2. Password protected key files
-    3. Chained SSL certificates
-    4. SSL security settings
-    5. SSL verbosity
-    6. Client certificate verification/authentication
-    7. Testing
-    8. Testing CA
-      1. Testing CA On Debian
-      2. Testing CA On RHEL
-      3. Testing CA Success
-    9. Client connections
+.. contents::
+   :local:
 
 The most important SSL settings are (in ``conf.d/10-ssl.conf``):
 
-.. code-block:: none 
+.. code::
 
-   ssl=yes
-   # Preferred permissions: root:root 0444
-   ssl_cert=</etc/ssl/certs/dovecot.pem
-   # Preferred permissions: root:root 0400
-   ssl_key=</etc/ssl/private/dovecot.pem
+  ssl = yes
+  # Preferred permissions: root:root 0444
+  ssl_cert = </etc/ssl/certs/dovecot.pem
+  # Preferred permissions: root:root 0400
+  ssl_key = </etc/ssl/private/dovecot.pem
 
 
-.. Note:: The < is mandatory. It indicates that the variable should contain contents of the file, instead of the file name. Not using it will cause an error.
+.. Warning:: The ``<`` is mandatory. It indicates that the variable should contain contents of the file, instead of the file name. Not using it will cause an error.
 
 The certificate file can be world-readable, since it doesn't contain anything sensitive (in fact it's sent to each connecting SSL client). The key file's permissions should be restricted to only root (and possibly ssl-certs group or similar if your OS uses such). 
 
@@ -44,26 +26,26 @@ Dovecot opens both of these files while still running as root, so you don't need
 
 It's possible to keep the certificate and the key both in the same file:
 
-.. code-block:: none 
+.. code::
 
-   # Preferred permissions: root:root 0400
-   ssl_cert=</etc/ssl/dovecot.pem
-   ssl_key=</etc/ssl/dovecot.pem
+  # Preferred permissions: root:root 0400
+  ssl_cert = </etc/ssl/dovecot.pem
+  ssl_key = </etc/ssl/dovecot.pem
 
 It's also possible to use different certificates for IMAP and POP3. However its important to note that ``ssl = yes`` must be set globally if you require SSL for any protocol (or dovecot will not listen on the SSL ports), which in turn requires that a certificate and key are specified globally even if you intend to specify certificates per protocol.
 
 The per protocol certificate settings override the global setting.:
 
-.. code-block:: none 
+.. code::
 
-   protocol imap {
-   ssl_cert=</etc/ssl/certs/imap.pem
-   ssl_key=</etc/ssl/private/imap.pem
-   }
-   protocol pop3 {
-   ssl_cert=</etc/ssl/certs/pop3.pem
-   ssl_key=</etc/ssl/private/pop3.pem
-   }
+  protocol imap {
+    ssl_cert = </etc/ssl/certs/imap.pem
+    ssl_key = </etc/ssl/private/imap.pem
+  }
+  protocol pop3 {
+    ssl_cert = </etc/ssl/certs/pop3.pem
+    ssl_key = </etc/ssl/private/pop3.pem
+  }
 
 There are a couple of different ways to specify when SSL/TLS is required:
 
@@ -72,20 +54,19 @@ There are a couple of different ways to specify when SSL/TLS is required:
 * ``ssl=yes`` and ``disable_plaintext_auth=no``: SSL/TLS is offered to the client, but the client isn't required to use it. The client is allowed to login with plaintext authentication even when SSL/TLS isn't enabled on the connection. This is insecure, because the plaintext password is exposed to the internet.
 
 * ``ssl=yes`` and ``disable_plaintext_auth=yes``: SSL/TLS is offered to the client, but the client isn't required to use it. The client isn't allowed to use plaintext authentication, unless SSL/TLS is enabled first. However, if non-plaintext authentication mechanisms are enabled they are still allowed even without SSL/TLS. 
-
-    Depending on how secure they are, the authentication is either fully secure or it could have some ways for it to be attacked.
+  Depending on how secure they are, the authentication is either fully secure or it could have some ways for it to be attacked.
 
 * ``ssl=required``: SSL/TLS is always required, even if non-plaintext authentication mechanisms are used. Any attempt to authenticate before SSL/TLS is enabled will cause an authentication failure.
 
-.. NOTE:: If you have only plaintext mechanisms enabled (e.g. auth { mechanisms = plain login } ), ``ssl=yes`` and ``ssl=required`` are completely equivalent because in either case the authentication will fail unless SSL/TLS is enabled first.
+  .. NOTE:: If you have only plaintext mechanisms enabled (e.g. auth { mechanisms = plain login } ), ``ssl=yes`` and ``ssl=required`` are completely equivalent because in either case the authentication will fail unless SSL/TLS is enabled first.
 
-.. NOTE:: With both ``ssl=yes`` and ``ssl=required`` it's still possible that the client attempts to do a plaintext authentication before enabling SSL/TLS, which exposes the plaintext password to the internet. 
+  .. NOTE:: With both ``ssl=yes`` and ``ssl=required`` it's still possible that the client attempts to do a plaintext authentication before enabling SSL/TLS, which exposes the plaintext password to the internet. 
 
-           Dovecot attempts to indicate this to the IMAP clients via the LOGINDISABLED capability, but many clients still ignore it and send the password anyway. There is unfortunately no way for Dovecot to prevent this behavior. The POP3 standard doesn't have an equivalent capability at all, so the POP3 clients can't even know if the server would accept a plaintext authentication.
+             Dovecot attempts to indicate this to the IMAP clients via the LOGINDISABLED capability, but many clients still ignore it and send the password anyway. There is unfortunately no way for Dovecot to prevent this behavior. The POP3 standard doesn't have an equivalent capability at all, so the POP3 clients can't even know if the server would accept a plaintext authentication.
 
 * The main difference between ``ssl=required`` and ``disable_plaintext_auth=yes`` is that if ``ssl=required``, it guarantees that the entire connection is protected against eavesdropping (SSL/TLS encrypts the rest of the connection), while ``disable_plaintext_auth=yes`` only guarantees that the password is protected against eavesdropping (SASL mechanism is encrypted, but no SSL/TLS is necessarily used). Nowadays you most likely should be using SSL/TLS anyway for the entire connection, since the cost of SSL/TLS is cheap enough. Using both SSL/TLS and non-plaintext authentication would be the ideal situation since it protects the plaintext password even against man-in-the-middle attacks.
 
-.. Note:: The plaintext authentication is always allowed (and SSL not required) for connections from localhost, as they're assumed to be secure anyway. This applies to all connections where the local and the remote IP addresses are equal. Also IP ranges specified by login_trusted_networks setting are assumed to be secure.
+  .. Note:: The plaintext authentication is always allowed (and SSL not required) for connections from localhost, as they're assumed to be secure anyway. This applies to all connections where the local and the remote IP addresses are equal. Also IP ranges specified by :ref:`setting-login_trusted_networks` setting are assumed to be secure.
 
 Multiple SSL certificates
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -97,49 +78,49 @@ Different certificates per algorithm
 
 You can specify alternative ssl certificate that will be used if the algorithm differs from the primary certificate. This is useful when migrating to e.g. ECDSA certificate.
 
-.. code-block:: none 
+.. code::
 
-   ssl_alt_cert=</path/to/alternative/cert.pem
-   ssl_alt_key=</path/to/alternative/key.pem
+  ssl_alt_cert = </path/to/alternative/cert.pem
+  ssl_alt_key = </path/to/alternative/key.pem
 
 Different certificates per IP and protocol
 ******************************************
 
 If you have multiple IPs available, this method is guaranteed to work with all clients.
 
-.. code-block:: none 
+.. code::
 
-   local 192.0.2.10 { # instead of IP you can also use hostname, which will be resolved
-      protocol imap {
-         ssl_cert=</etc/ssl/dovecot/imap-01.example.com.cert.pem
-         ssl_key=</etc/ssl/dovecot/imap-01.example.com.key.pem
-   }
+  local 192.0.2.10 { # instead of IP you can also use hostname, which will be resolved
+    protocol imap {
+      ssl_cert = </etc/ssl/dovecot/imap-01.example.com.cert.pem
+      ssl_key = </etc/ssl/dovecot/imap-01.example.com.key.pem
+    }
 
-   protocol pop3 {
-    ssl_cert=</etc/ssl/dovecot/pop-01.example.com.cert.pem
-    ssl_key=</etc/ssl/dovecot/pop-01.example.com.key.pem
-   }
-   }
-
-   local 192.0.2.20 {
-     protocol imap {
-         ssl_cert=</etc/ssl/dovecot/imap-02.example.com.cert.pem
-         ssl_key=</etc/ssl/dovecot/imap-02.example.com.key.pem
+    protocol pop3 {
+     ssl_cert = </etc/ssl/dovecot/pop-01.example.com.cert.pem
+     ssl_key = </etc/ssl/dovecot/pop-01.example.com.key.pem
+    }
   }
 
-   protocol pop3 {
-    ssl_cert=</etc/ssl/dovecot/pop-02.example.com.cert.pem
-    ssl_key=</etc/ssl/dovecot/pop-02.example.com.key.pem
-   }
-   }
+  local 192.0.2.20 {
+    protocol imap {
+      ssl_cert = </etc/ssl/dovecot/imap-02.example.com.cert.pem
+      ssl_key = </etc/ssl/dovecot/imap-02.example.com.key.pem
+    }
+
+    protocol pop3 {
+      ssl_cert = </etc/ssl/dovecot/pop-02.example.com.cert.pem
+      ssl_key = </etc/ssl/dovecot/pop-02.example.com.key.pem
+    }
+  }
 
 .. Note:: You will still need a top-level ``default`` ``ssl_key`` and ``ssl_cert`` as well, or you will receive errors.
 
 
-.. code-block:: none 
+.. code::
 
-   # doveconf -n
-   doveconf: Error: ssl enabled, but ssl_cert not set
+  # doveconf -n
+  doveconf: Error: ssl enabled, but ssl_cert not set
 
 With client TLS SNI (Server Name Indication) support
 ****************************************************
@@ -148,32 +129,27 @@ It is important to note that having multiple SSL certificates per IP will not be
 
 .. code-block:: none 
 
-   local_name imap.example.org {
-      ssl_cert=</etc/ssl/certs/imap.example.org.crt
-      ssl_key=</etc/ssl/private/imap.example.org.key
-   }
-   local_name imap.example2.org {
-      ssl_cert=</etc/ssl/certs/imap.example2.org.crt
-      ssl_key=</etc/ssl/private/imap.example2.org.key
-   }
-   # ..etc..
+  local_name imap.example.org {
+    ssl_cert = </etc/ssl/certs/imap.example.org.crt
+    ssl_key = </etc/ssl/private/imap.example.org.key
+  }
+  local_name imap.example2.org {
+    ssl_cert = </etc/ssl/certs/imap.example2.org.crt
+    ssl_key = </etc/ssl/private/imap.example2.org.key
+  }
+  # ..etc..
 
 Password protected key files
 ****************************
 
 SSL key files may be password protected. There are two ways to provide Dovecot with the password:
 
-Starting Dovecot with ``dovecot -p`` asks the password. It's not stored anywhere, so this method prevents Dovecot from starting automatically at startup.
+ #. Starting Dovecot with ``dovecot -p`` asks the password. It's not stored anywhere, so this method prevents Dovecot from starting automatically at startup.
+ #. ``ssl_key_password`` setting. Note that ``dovecot.conf`` is by default world-readable, so you probably shouldn't place it there directly. Instead you could store it in a different file, such as ``/etc/dovecot-private.conf`` containing:
 
-.. code-block:: none 
+.. code::
 
-   ssl_key_password setting. 
-
-.. Note:: ``dovecot.conf`` is by default world-readable, so you probably shouldn't place it there directly. Instead you could store it in a different file, such as ``/etc/dovecot-private.conf`` containing:
-
-.. code-block:: none 
-
-   ssl_key_password=secret
+  ssl_key_password = secret
 
 and then use ``!include_try /etc/dovecot-private.conf`` in the main ``dovecot.conf``.
 
@@ -182,66 +158,68 @@ Chained SSL certificates
 
 Put all the certificates in the ``ssl_cert`` file. For example when using a certificate signed by TDC the correct order is:
 
-1. Dovecot's public certificate
-2. TDC SSL Server CA
-3. TDC Internet Root CA
-4. Globalsign Partners CA
+ #. Dovecot's public certificate
+ #. TDC SSL Server CA
+ #. TDC Internet Root CA
+ #. Globalsign Partners CA
 
 SSL security settings
 *********************
 
-When Dovecot starts up for the first time, it generates new 512bit and 1024bit Diffie Hellman parameters and saves them into <prefix>/var/lib/dovecot/ssl-parameters.dat. Dovecot v2.1.x and older regenerated them every week by default, but because the extra security gained by the regeneration is quite small, Dovecot v2.2 disabled the regeneration feature completely.
+When Dovecot starts up for the first time, it generates new 512bit and 1024bit Diffie Hellman parameters and saves them into ``<prefix>/var/lib/dovecot/ssl-parameters.dat``. Dovecot v2.1.x and older regenerated them every week by default, but because the extra security gained by the regeneration is quite small, Dovecot v2.2 disabled the regeneration feature completely.
 
 
 .. Note:: Since v2.3.3+ Diffie-Hellman parameters have been made optional, and you are encouraged to disable non-ECC DH algorithms completely.
 
 From and up to version 2.2, you can specify the wanted DH parameters length using:
 
-.. code-block:: none 
+.. code::
 
-   ssl_dh_parameters_length=2048
+  ssl_dh_parameters_length = 2048
 
 From version 2.3, you must specify path to DH parameters file using:
 
-.. code-block:: none 
+.. code::
 
-   ssl_dh=</path/to/dh.pem
+  ssl_dh = </path/to/dh.pem
 
 To generate new parameters file, you can use:
 
-.. code-block:: none 
+.. code::
 
-   # This might take a very long time. Run it on a machine with sufficient entropy.
-   openssl dhparam 4096 > dh.pem
+  # This might take a very long time. Run it on a machine with sufficient entropy.
+  openssl dhparam 4096 > dh.pem
 
 You can also convert an old v2.2 parameters file with command:
 
-.. code-block:: none 
+.. code::
 
-   dd if=/path/to/ssl-parameters.dat bs=1 skip=88 | openssl dhparam -inform DER
+  dd if=/path/to/ssl-parameters.dat bs=1 skip=88 | openssl dhparam -inform DER
 
 This should work most of the times. If not, generate new file.
 
 By default Dovecot's allowed ciphers list contains:
 
-.. code-block:: none 
+.. code::
 
-   ssl_cipher_list=ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH
+  ssl_cipher_list = ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH
 
 Disallowing more won't really gain any security for those using better ciphers, but it does prevent people from accidentally using insecure ciphers. See https://www.openssl.org/docs/manmaster/man1/ciphers.html for a list of the ciphers.
 
 You should usually prefer server ciphers and their order, so setting
 
-   ssl_prefer_server_ciphers=yes
+.. code::
+
+  ssl_prefer_server_ciphers = yes
 
 is recommended.
 
 SSL verbosity
 *************
 
-.. code-block:: none 
+.. code::
 
-   verbose_ssl=yes
+  verbose_ssl = yes
 
 This will make Dovecot log all the problems it sees with SSL connections. Some errors might be caused by dropped connections, so it could be quite noisy.
 
@@ -250,38 +228,39 @@ Client certificate verification/authentication
 
 If you want to require clients to present a valid SSL certificate, you'll need these settings:
 
-.. code-block:: none 
+.. code::
 
-   ssl_ca=</etc/ssl/ca.pem
-   ssl_verify_client_cert=yes
+  ssl_ca = </etc/ssl/ca.pem
+  ssl_verify_client_cert = yes
 
-   auth_ssl_require_client_cert=yes
-   #auth_ssl_username_from_cert=yes
+  auth_ssl_require_client_cert = yes
+  # if you want to get username from certificate as well, enable this
+  #auth_ssl_username_from_cert = yes
 
 The CA file should contain the certificate(s) followed by the matching CRL(s). 
 
 .. Note:: The CRLs are required to exist. For a multi-level CA place the certificates in this order:
 
-1. Issuing CA cert
-2. Issuing CA CRL
-3. Intermediate CA cert
-4. Intermediate CA CRL
-5. Root CA cert
-6. Root CA CRL
+#. Issuing CA cert
+#. Issuing CA CRL
+#. Intermediate CA cert
+#. Intermediate CA CRL
+#. Root CA cert
+#. Root CA CRL
 
 The certificates and the CRLs have to be in PEM format. To convert a DER format CRL (e.g. http://crl.cacert.org/class3-revoke.crl) into PEM format, use:
 
-.. code-block:: none 
+.. code::
 
-   openssl crl -in class3-revoke.crl -inform DER -outform PEM > class3-revoke.pem
+  openssl crl -in class3-revoke.crl -inform DER -outform PEM > class3-revoke.pem
 
 With the above settings if a client connects which doesn't present a certificate signed by one of the CAs in the ``ssl_ca`` file, Dovecot won't let the user log in. This could present a problem if you're using Dovecot to provide SASL authentication for an MTA (such as Postfix) which is not capable of supplying client certificates for SASL authentication. If you need Dovecot to provide SASL authentication to an MTA without requiring client certificates and simultaneously provide IMAP service to clients while requiring client certificates, you can put ``auth_ssl_require_client_cert=yes`` inside of a protocol block as shown below to make an exemption for SMTP SASL clients (such as Postfix).
 
-.. code-block:: none 
+.. code::
 
-   protocol !smtp {
-   auth_ssl_require_client_cert=yes
-   }
+  protocol !smtp {
+    auth_ssl_require_client_cert=yes
+  }
 
 You may also force the username to be taken from the certificate by setting ``auth_ssl_username_from_cert=yes``.
 
@@ -291,19 +270,19 @@ You may also force the username to be taken from the certificate by setting ``au
 
 * You can change the field with ``ssl_cert_username_field=name`` setting (parsed using OpenSSL's ``OBJ_txt2nid()`` function). ``x500UniqueIdentifier`` is a common choice.
 
-You may also want to disable the password checking completely. Doing this currently circumvents Dovecot's security model so it's not recommended to use it, but it is possible by making the passdb allow logins using any password (typically requiring `nopassword extra field to be returned <https://wiki.dovecot.org/PasswordDatabase/ExtraFields>`_).
+You may also want to disable the password checking completely. Doing this currently circumvents Dovecot's security model so it's not recommended to use it, but it is possible by making the passdb allow logins using any password (typically requiring `nopassword extra field to be returned <authentication-password_database_extra_fields>`).
 
 Testing
 ^^^^^^^
 Try out your new setup:
 
-.. code-block:: none 
+.. code::
 
-   openssl s_client -servername mail.sample.com -connect mail.sample.com:pop3s
+  openssl s_client -servername mail.sample.com -connect mail.sample.com:pop3s
 
 You should see something like this:
 
-.. code-block:: none 
+.. code::
 
    CONNECTED(00000003)
    depth=2 /O=Root CA/OU=http://www.cacert.org/CN=CA Cert Signing Authority/emailAddress=support@cacert.org
@@ -390,9 +369,9 @@ Testing CA
 
 The above test procedure returns:
 
-.. code-block:: none 
+.. code::
 
-   Verify return code: 19 (self signed certificate in certificate chain)
+  Verify return code: 19 (self signed certificate in certificate chain)
 
 which is expected result since test command omits option to verify CA root certificate. The following commands will enable CA root certificate validation.
 
@@ -401,18 +380,18 @@ Testing CA On Debian
 
 On Debian derived distributions try:
 
-.. code-block:: none 
+.. code::
 
-   openssl s_client -CApath /etc/ssl/certs -connect mail.sample.com:pop3s
+  openssl s_client -CApath /etc/ssl/certs -connect mail.sample.com:pop3s
 
 Testing CA On RHEL
 ******************
 
 On Red Hat Enterprise Linux derived distributions try:
 
-.. code-block:: none 
+.. code::
 
-   openssl s_client -CAfile /etc/pki/tls/cert.pem -connect mail.sample.com:pop3s
+  openssl s_client -CAfile /etc/pki/tls/cert.pem -connect mail.sample.com:pop3s
 
 Testing CA Success
 ******************
@@ -426,7 +405,7 @@ Client connections
 
 Dovecot uses default system CAs for outgoing connections.
 
-.. code-block:: none 
+.. code::
 
-   ssl_client_ca_dir=/path/to/pem/certificates
-   ssl_client_ca_file=/path/to/pem/bundle
+  ssl_client_ca_dir = /path/to/pem/certificates
+  ssl_client_ca_file = /path/to/pem/bundle

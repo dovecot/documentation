@@ -3329,30 +3329,39 @@ parameters::
             {
                 "name": "keyPrefix",
                 "type": "string"
+            },
+            {
+                "name": "prepend-prefix",
+                "type": "boolean"
             }
         ]
     }
 
 
 
-+------------+---------+---------------------------------------+---------------------------------+
-| Parameter  | Type    | Description                           | example                         |
-+============+=========+=======================================+=================================+
-| socketPath | String  | Path to doveadm socket                | /var/run/dovecot/doveadm-server |
-+------------+---------+---------------------------------------+---------------------------------+
-| allUsers   | Boolean | apply operation to all users          |                                 |
-+------------+---------+---------------------------------------+---------------------------------+
-| user       | String  | uid to apply metadata get             |                                 |
-+------------+---------+---------------------------------------+---------------------------------+
-| userFile   | String  | optionally fetch usernames from file. |                                 |
-|            |         | One username per line                 |                                 |
-+------------+---------+---------------------------------------+---------------------------------+
-| key        | String  | metadata key to get                   |                                 |
-+------------+---------+---------------------------------------+---------------------------------+
-| keyPrefix  | String  | search prefix for keys                |                                 |
-+------------+---------+---------------------------------------+---------------------------------+
-| mailbox    | String  | mailbox to fetch metadata from        |                                 |
-+------------+---------+---------------------------------------+---------------------------------+
++----------------+---------+---------------------------------------+---------------------------------+
+| Parameter      | Type    | Description                           | example                         |
++================+=========+=======================================+=================================+
+| socketPath     | String  | Path to doveadm socket                | /var/run/dovecot/doveadm-server |
++----------------+---------+---------------------------------------+---------------------------------+
+| allUsers       | Boolean | apply operation to all users          |                                 |
++----------------+---------+---------------------------------------+---------------------------------+
+| user           | String  | uid to apply metadata get             |                                 |
++----------------+---------+---------------------------------------+---------------------------------+
+| userFile       | String  | optionally fetch usernames from file. |                                 |
+|                |         | One username per line                 |                                 |
++----------------+---------+---------------------------------------+---------------------------------+
+| key            | String  | metadata key to get                   |                                 |
++----------------+---------+---------------------------------------+---------------------------------+
+| keyPrefix      | String  | search prefix for keys                |                                 |
++----------------+---------+---------------------------------------+---------------------------------+
+| mailbox        | String  | mailbox to fetch metadata from        |                                 |
++----------------+---------+---------------------------------------+---------------------------------+
+| prepend-prefix | Boolean | Prepend metadata type prefix          |                                 |
+|                |         | ("/shared" or "/private") to name     |                                 |
+|                |         |                                       |                                 |
+|                |         | .. versionadded:: v2.3.14             |                                 |
++----------------+---------+---------------------------------------+---------------------------------+
 
 
 
@@ -4447,7 +4456,7 @@ example::
 
 .. code::
 
-    curl  -v -u doveadm:secretpassword -X POST http://localhost:ype: application/json" -d '[["oboxUserDelete", {"allUsers":0,"user":"testuser003"}, "tag1"]] '
+    curl -v -u doveadm:secretpassword -X POST -H "Content-Type: application/json" -d '[["oboxUserDelete", {"allUsers":0,"user":"testuser003"}, "tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -4460,6 +4469,11 @@ response::
         ]
     ]
 
+.. note::
+
+   .. versionadded:: v2.3.12.1 This command returns a specific exit code (65)
+        in the failure response, if the deletion is not possible as the index
+        is still open in another process.
 
 
 doveadm penalty

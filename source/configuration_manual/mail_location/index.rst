@@ -8,12 +8,11 @@ Mail Location Settings
    :maxdepth: 1
    :glob:
 
+   dbox/*
+   imapc/*
+   Maildir/*
    mbox/*
    obox/index
-
-* For Maildir-specific settings, see `MailLocation/Maildir <https://wiki.dovecot.org/MailLocation/Maildir>`_
-
-* For dbox-specific settings, see `MailLocation/dbox mailbox format <https://wiki.dovecot.org/MailLocation/dbox>`_
 
 There are three different places where the mail location is looked up from:
 
@@ -68,11 +67,11 @@ Format
 ^^^^^^^
 The format of the mailbox location specification is as follows:
 
-`mailbox-format <https://wiki.dovecot.org/MailboxFormat>`_ : path [ : key = value … ]
+`mailbox-format <mailbox_formats>`_ : path [ : key = value … ]
 
 where:
 
-* mailbox-format is a tag identifying one of the formats described at `Mailbox formats <https://wiki.dovecot.org/MailboxFormat>`_ 
+* mailbox-format is a tag identifying one of the formats described at `Mailbox formats <mailbox_formats>`_
 
 * path is the path to a directory where the mail is stored. This must be an absolute path, not a relative path. Even if relative paths appear to work, this usage is deprecated and will likely stop working at some point. Do not use the home directory, for reasons see :ref:`Home vs. mail directory <home_directories_for_virtual_users>`.
 
@@ -97,21 +96,23 @@ NO-NOSELECT         Automatically delete any ``\NoSelect`` mailboxes that have n
 
 UTF-8               Store mailbox names on disk using UTF-8 instead of modified UTF-7.
 
-BROKENCHAR          Specifies an escape character that is used for broken mailbox names. If mailbox name can't be changed reversibly to UTF-8 and back, encode the problematic parts using ``<broken_char><hex>`` in the user-visible UTF-8 name. The broken_char itself also has to be encoded the same way. This can be useful with imapc to access mailbox names that aren't valid mUTF-7 charset from remote servers. (v2.2.32+)
+BROKENCHAR          Specifies an escape character that is used for broken or otherwise inaccessible mailbox names. If mailbox name can't be changed reversibly to UTF-8 and back, encode the problematic parts using ``<broken_char><hex>`` in the user-visible UTF-8 name. The broken_char itself also has to be encoded the same way. This can be useful with :ref:imapc_mbox_format to access mailbox names that aren't valid mUTF-7 charset from remote servers, or if the remote server uses a different hierarchy separator and has folder names containing the local separator. (v2.2.32+)
 
-CONTROL             Specifies the location of control files under the `mbox <https://wiki.dovecot.org/MailLocation/mbox#Control_files>`__ or `Maildir formats <https://wiki.dovecot.org/MailLocation/Maildir#Control_files>`_
+		    .. versionchanged:: v2.3.14 Conflicting separators are also escaped.
+
+CONTROL             Specifies the location of control files under the :ref:`mbox <mbox_settings_control_files>` or `Maildir <maildir_settings_control_files>` formats.
 
 VOLATILEDIR         Specifies the location of volatile files. This includes lock files and potentially other files that don't need to exist permanently. This is especially useful to avoid creating lock files to NFS or other remote filesystems. (v2.2.32+)
 
 SUBSCRIPTIONS       Specifies the file used for storing subscriptions. The default is ``subscriptions``. If you're trying to avoid name collisions with a mailbox named ``subscriptions``, then also consider setting ``MAILBOXDIR``.
 
-MAILBOXDIR          Specifies directory name under which all mailbox directories are stored. With `dbox formats <https://wiki.dovecot.org/MailboxFormat/dbox>`_ the default is ``mailboxes/`` while with other mailbox formats the default is empty. Typically this should be changed only for :ref:`lazy_expunge_plugin` and :ref:`namespaces` with mdbox.
+MAILBOXDIR          Specifies directory name under which all mailbox directories are stored. With :ref:`dbox formats <dbox_mbox_format>` the default is ``mailboxes/`` while with other mailbox formats the default is empty. Typically this should be changed only for :ref:`lazy_expunge_plugin` and :ref:`namespaces` with mdbox.
 
-DIRNAME             Specifies the directory name used for mailbox directories, or in the case of mbox specifies the mailbox message file name. With `dbox formats <https://wiki.dovecot.org/MailboxFormat/dbox>`_ the default is ``dbox-Mails/`` while with other mailbox formats the default is empty. Can be used under either `mbox <https://wiki.dovecot.org/MailLocation/mbox#Message_file_name>`__ , `Maildir <https://wiki.dovecot.org/MailLocation/Maildir#Mailbox_directory_name>`_ , or `dbox <https://wiki.dovecot.org/MailLocation/dbox#Mailbox_directory_name>`__ formats. 
+DIRNAME             Specifies the directory name used for mailbox directories, or in the case of mbox specifies the mailbox message file name. With :ref:`dbox formats <dbox_mbox_format>` the default is ``dbox-Mails/`` while with other mailbox formats the default is empty. Can be used under either :ref:`mbox <mbox_settings_message_filename>`, `Maildir <maildir_settings_mailbox_directory_name>` , or :ref:`dbox <dbox_settings_mailbox_directory_name>` formats.
 
 FULLDIRNAME         Same as ``DIRNAME``, but use the directory name also for index and control directory paths. This should be used instead of ``DIRNAME`` for new installations. (v2.2.8+)
 
-ALT                 specifies the `Alternate storage <https://wiki.dovecot.org/MailLocation/dbox#Alternate_storage>`_ path for dbox formats.
+ALT                 specifies the `alternate storage <dbox_settings_alt_storage>` path for dbox formats.
 ================= ==============================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
 
 * The colons and equals signs are literal and there are no spaces in an actual mailbox location specification.
@@ -143,18 +144,14 @@ with mbox:
 
    mail_location = mbox:~/mail:INBOX=/var/mail/%u
 
-or if you'd like to use the `dbox <https://wiki.dovecot.org/MailboxFormat/dbox>`_ format:
+or if you'd like to use the :ref:`dbox <dbox_mbox_format>` format:
 
 .. code-block:: none
 
    # single-dbox
    mail_location = sdbox:~/dbox
 
-or:
-
-.. code-block:: none
-
-   # multi-dbox
+   # OR multi-dbox
    mail_location = mdbox:~/mdbox
 
 Use only absolute paths. Even if relative paths would appear to work, they might just as well break some day.
@@ -179,8 +176,10 @@ Example:
 
    %1Mu/%2.1Mu/%u returns directories from 0/0/user to f/f/user.
 
+.. _Mail Location Index Files:
+
 Index files
-^^^^^^^^^^^^^^
+^^^^^^^^^^^
 Index files are by default stored under the same directory as mails. With maildir they are stored in the actual maildirs, with mbox they are stored under ``.imap/`` directory. You may want to change the index file location if you're using `NFS <https://wiki.dovecot.org/NFS>`_ or if you're setting up `shared mailboxes <https://wiki.dovecot.org/SharedMailboxes>`_.
 
 You can change the index file location by adding ``:INDEX=<path>`` to mail_location. For example:
@@ -198,7 +197,7 @@ Private index files
 
 .. versionadded:: v2.2
 
-Since v2.2 the recommended way to enable private flags for shared mailboxes is to create private indexes with ``:INDEXPVT=<path>``. See `SharedMailboxes/Public <https://wiki.dovecot.org/SharedMailboxes/Public>`_ for more information.
+The recommended way to enable private flags for shared mailboxes is to create private indexes with ``:INDEXPVT=<path>``. See :ref:`public_shared_mailboxes` for more information.
 
 INBOX path
 ^^^^^^^^^^^

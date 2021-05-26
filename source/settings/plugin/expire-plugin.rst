@@ -4,6 +4,9 @@
 expire plugin
 ===============
 
+.. versionremoved:: 2.3.14 This plugin is not needed. Use `mailbox { autoexpunge }` :ref:`mailbox_settings` instead.
+
+
 ``expire-plugin``
 ^^^^^^^^^^^^^^^^^^^
 .. _plugin-expire-setting_expire:

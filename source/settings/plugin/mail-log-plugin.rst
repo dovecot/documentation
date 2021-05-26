@@ -42,24 +42,6 @@ Example Setting:
 ``mail_log_cached_only``
 -------------------------------
 
-Whether to use only cached fields for mail log
-
-
-.. _setting-plugin_mail_crypt_curve:
-
-``mail_crypt_curve``
----------------------
-
-This parameter defines the elliptic curve to use for key generation with the mail_crypt plug-in.  Any valid curve supported by the
-underlying cryptographic library is allowed.  
- 
-Example Setting:
-
-.. code-block:: none
-   
-   mail_crypt_curve = secp521r1
- 
-This must be set if you wish to use folder keys rather than global keys.  With global keys (either RSA or, preferred, EC keys), all
-keying material is taken from the plug-in environment, and no key generation is performed.  In folder-keys mode, a key pair is generated
-for the user, and a folder-specific key pair is generated.  The latter is encrypted by means of the user's key pair.
-
+If enabled, everything except `save` event will log only the fields that can
+be looked up from cache. This improves performance if some of the fields
+aren't cached and it's not a strict requirement to log them.

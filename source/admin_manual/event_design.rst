@@ -8,7 +8,12 @@ Events Design
 
 Dovecot introduces events, which improves both logging and statistics. 
 
-See :ref:`list_of_events` for list of all events.
+See also:
+
+ * :ref:`list_of_events` for list of all events.
+ * :ref:`statistics`
+ * :ref:`event_export`
+ * :ref:`event_filter`
 
 Each logging call can be attached to a specific event, which can provide more
 metadata and context than just the log message string. This will eventually

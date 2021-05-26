@@ -5,16 +5,15 @@ Access Control Lists
 ====================
 
 This page talks mainly about how ACLs work, for more general description of how
-shared mailboxes work, see `SharedMailboxes
-<https://wiki.dovecot.org/SharedMailboxes>`_.
+shared mailboxes work, see :ref:`SharedMailboxes <shared_mailboxes>`.
 
 Dovecot v1.0 and v1.1 supports administrator-configured ACL files. v1.2+
 supports also IMAP ACL extension, which allows users to change ACLs themselves.
 The ACL code was written to allow multiple ACL backends, but currently Dovecot
 supports only virtual ACL files. Note that using ACLs doesn't grant mail
-processes any extra filesystem permissions that they already don't have. `You
-must make sure that the processes have enough permissions
-<https://wiki.dovecot.org/SharedMailboxes/Permissions>`_ to be able to access
+processes any extra filesystem permissions that they already don't have.
+:ref:`You must make sure that the processes have enough permissions
+<admin_manual_permissions_in_shared_mailboxes>` to be able to access
 the mailboxes. When testing you could first try accessing shared/public
 mailboxes without ACL plugin even enabled.
 
@@ -56,7 +55,7 @@ Master users
 
 Master users have their own ACLs. They're not the the mailbox owners, so by
 default they have no permissions to any of the mailboxes. See
-Authentication/MasterUsers#ACLs for more information.
+:ref:`ACLs at Master users <authentication-master_users_acls>` for more information.
 
 ACL vfile backend
 ^^^^^^^^^^^^^^^^^
@@ -106,9 +105,7 @@ mailboxes. They are used mainly for two purposes:
 1. Removing some permissions from users' personal mailboxes. For example each
    user might have an `Invoices` mailbox which will be read-only.
 2. Giving permissions to master user logins. See
-   `Authentication/MasterUsers#ACLs
-   <https://wiki.dovecot.org/Authentication/MasterUsers#ACLs>`_ for more
-   information.
+   :ref:`ACLs at Master users <authentication-master_users_acls>` for more information.
 
 If a mailbox has both global ACLs and the per-mailbox ACL file, both of them
 are read and the ACLs are merged. If there are any conflicts, the global ACL
@@ -212,7 +209,7 @@ w     write           Message flags and keywords can be changed, except \Seen an
 s     write-seen      \Seen flag can be changed
 t     write-deleted   \Deleted flag can be changed
 i     insert          Messages can be written or copied to the mailbox
-p     post            Messages can be posted to the mailbox by `LDA <https://wiki.dovecot.org/LDA>`_, e.g. from :ref:`pigeonhole_sieve_interpreter`
+p     post            Messages can be posted to the mailbox by :ref:`lda`, e.g. from :ref:`pigeonhole_sieve_interpreter`
 e     expunge         Messages can be expunged
 k     create          Mailboxes can be created (or renamed) directly under this mailbox (but not necessarily under its children, see ACL Inheritance section above) (renaming also requires delete rights)
 x     delete          Mailbox can be deleted

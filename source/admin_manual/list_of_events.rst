@@ -4,11 +4,14 @@
 Events
 ######
 
-List of all events emitted by Dovecot.
+List of all events emitted by Dovecot for statistics, exporting and filtering.
 
-These events can be used in :ref:`statistics` and :ref:`event_export`.
+See also:
 
-See :ref:`event_design` for technical implementation details.
+ * :ref:`statistics`
+ * :ref:`event_export`
+ * :ref:`event_filter`
+ * :ref:`event_design` for technical implementation details
 
 **********
 Categories
@@ -899,6 +902,57 @@ Emitted when a server connection is terminated.
 | reason              | Disconnection reason                                 |
 +---------------------+------------------------------------------------------+
 
+FS
+==
+
+.. _event_fs:
+
+fs
+--
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from environment (e.g. :ref:`event_mail_user`)                    |
++---------------------+------------------------------------------------------+
+
+.. _event_fs_file:
+
+fs_file
+-------
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_fs` or any other specified event                 |
+| (e.g. :ref:`event_mail`)                                                   |
++---------------------+------------------------------------------------------+
+
+.. _event_fs_iter:
+
+fs_file
+-------
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_fs` or any other specified event                 |
+| (e.g. :ref:`event_mailbox`)                                                |
++---------------------+------------------------------------------------------+
+
+If the file was created for obox, it has also fields:
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| file_type           | * mail: Email file                                   |
+|                     | * index: Index bundle                                |
+|                     | * box: Mailbox directory (for creating/deleting it,  |
+|                     |   if used by the storage driver)                     |
+|                     | * fts: FTS file                                      |
++---------------------+------------------------------------------------------+
+| reason              | Reason for accessing the file                        |
++---------------------+------------------------------------------------------+
 
 Storage
 =======
@@ -959,6 +1013,22 @@ Mailbox
 |                     | .. versionadded:: v2.3.10                            |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail_expunged:
+
+mail_expunged
+^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail was expunged from the mailbox. Note that this event inherits from
+mailbox, not mail.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| uid                 | UID of the expunged mail.                              |
++---------------------+--------------------------------------------------------+
+
 .. _event_mail:
 
 Mail
@@ -974,6 +1044,31 @@ Mail
 | uid                 | Mail IMAP UID number                                 |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail_opened:
+
+mail_opened
+^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail was opened e.g. for reading its body. Note that this event is not sent
+when mails' metadata is accessed, even if it causes opening the mail file.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| reason              | Reason why the mail was opened. (optional)             |
++---------------------+--------------------------------------------------------+
+
+.. _event_mail_expunge_requested:
+
+mail_expunge_requested
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail is set to be expunged. (Note that expunges can be rolled back later on,
+this event is emitted when an expunge is requested).
 
 Mail index
 ==========
@@ -993,6 +1088,9 @@ Index file handling for ``dovecot.index*``, ``dovecot.map.index*``,
 | :ref:`event_mail_user` depending on what the index is used for.            |
 +---------------------+------------------------------------------------------+
 
+
+.. _event_mail_index_recreated:
+
 mail_index_recreated
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -1011,7 +1109,29 @@ A mail index file was recreated.
 +---------------------+--------------------------------------------------------+
 
 
-.. _event_mail_index_recreated:
+.. _event_indexer_worker_indexing_finished:
+
+indexer_worker_indexing_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+Indexer worker process completed an indexing transaction.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| Inherits from :ref:`event_mailbox`                                           |
++---------------------+--------------------------------------------------------+
+| message_count       | Number of messages indexed                             |
++---------------------+--------------------------------------------------------+
+| first_uid           | UID of the first indexed message                       |
++---------------------+--------------------------------------------------------+
+| last_uid            | UID of the last indexed message                        |
++---------------------+--------------------------------------------------------+
+| user_cpu_usecs      | Total user CPU spent on the indexing transaction in    |
+|                     | microseconds.                                          |
++---------------------+--------------------------------------------------------+
 
 
 Mail cache
@@ -1150,11 +1270,54 @@ deleted.
 | reason               | Reason string why cache was found to be corrupted.    |
 +----------------------+-------------------------------------------------------+
 
+.. _event_mail_cache_lookup_finished:
+
+mail_cache_lookup_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail field was looked up from cache.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| field               | Cache field name e.g. ``imap.body`` or ``hdr.from``    |
++---------------------+--------------------------------------------------------+
+
 HTTP
 ====
 
 These events are emitted by Dovecot's internal HTTP library.
 
+Common fields
+-------------
+
+Fields present in all HTTP events.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| attempts            | Amount of individual HTTP request attempts. (number  |
+|                     | of retries after failures + 1)                       |
++---------------------+------------------------------------------------------+
+| bytes_in            | Amount of data read, in bytes.                       |
++---------------------+------------------------------------------------------+
+| bytes_out           | Amount of data written, in bytes.                    |
++---------------------+------------------------------------------------------+
+| dest_host           | Destination host.                                    |
++---------------------+------------------------------------------------------+
+| dest_port           | Destination port.                                    |
++---------------------+------------------------------------------------------+
+| method              | HTTP verb used uppercased, e.g. ``GET``.             |
++---------------------+------------------------------------------------------+
+| redirects           | Number of redirects done while processing request.   |
++---------------------+------------------------------------------------------+
+| status_code         | HTTP result status code (integer).                   |
++---------------------+------------------------------------------------------+
+| target              | Request path with parameters, e.g.                   |
+|                     | ``/path/?delimiter=%2F&prefix=test%2F``.             |
++---------------------+------------------------------------------------------+
 
 http_request_finished
 ---------------------
@@ -1163,22 +1326,6 @@ Emitted when an HTTP request is complete.
 
 This event is useful to track and monitor external services.
 
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| status_code         | HTTP result status code (integer)                    |
-+---------------------+------------------------------------------------------+
-| attempts            | Amount of individual HTTP request attempts (number   |
-|                     | (of retries after failures + 1)                      |
-+---------------------+------------------------------------------------------+
-| redirects           | Number of redirects done while processing request    |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
-
-
 http_request_redirected
 -----------------------
 
@@ -1186,43 +1333,12 @@ Intermediate event emitted when an HTTP request is being redirected.
 
 The ``http_request_finished`` event is still sent at the end of the request.
 
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| status_code         | HTTP result status code (integer)                    |
-+---------------------+------------------------------------------------------+
-| attempts            | Amount of individual HTTP request attempts (number   |
-|                     | (of retries after failures + 1)                      |
-+---------------------+------------------------------------------------------+
-| redirects           | Number of redirects done while processing request    |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
-
 http_request_retried
 --------------------
 
 Intermediate event emitted when an HTTP request is being retried.
 
 The ``http_request_finished`` event is still sent at the end of the request.
-
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| status_code         | HTTP result status code (integer)                    |
-+---------------------+------------------------------------------------------+
-| attempts            | Amount of individual HTTP request attempts (number   |
-|                     | (of retries after failures + 1)                      |
-+---------------------+------------------------------------------------------+
-| redirects           | Number of redirects done while processing request    |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
-
 
 IMAP
 ====
@@ -2315,23 +2431,120 @@ indexes in metacache.
 fs-dictmap
 ----------
 
+
+fs_dictmap_dict_write_uncertain
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.13
+
+The event is sent whenever a dict write is uncertain.
+E.g. writes to Cassandra may eventually succeed even if the write initially appeared to fail.
+
++-----------------------+-------------------------------------------------------+
+| Field                 | Description                                           |
++=======================+=======================================================+
+| Inherits from :ref:`event_fs_file`                                            |
++-----------------------+-------------------------------------------------------+
+| path                  | Virtual FS path to the object (based on dict)         |
++-----------------------+-------------------------------------------------------+
+| object_id             | Object ID in the storage                              |
++-----------------------+-------------------------------------------------------+
+| cleanup               | ``success``, ``failed`` or ``disabled``. Indicates if |
+|                       | uncertain write was attempted to be cleaned (deleted) |
+|                       | and whether it was successful.                        |
+|                       | See :ref:`dictmap_configuration_parameters`.          |
++-----------------------+-------------------------------------------------------+
+| error                 | Error message why the write initially failed          |
++-----------------------+-------------------------------------------------------+
+
 fs_dictmap_object_lost
 ^^^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.3.10
 
 The event is sent whenever "Object exists in dict, but not in storage" error
-happens.
+happens. Normally this shouldn't happen, because the writes and deletes are
+done in such an order that Dovecot prefers to rather leak objects in storage
+than cause this error. A likely source of this error can be resurrected
+deleted data see :ref:`cassandra` for more details.
 
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
 +=======================+======================================================+
-| Inherits from fs_file                                                        |
+| Inherits from :ref:`event_fs_file`                                           |
 +-----------------------+------------------------------------------------------+
 | path                  | Virtual FS path to the object (based on dict)        |
 +-----------------------+------------------------------------------------------+
 | object_id             | Object ID in the storage                             |
 +-----------------------+------------------------------------------------------+
+| deleted               | Set to ``yes``, if the corresponding entry in dict   |
+|                       | has been deleted as the ``delete-dangling-links``    |
+|                       | option was set                                       |
+|                       | (:ref:`dictmap_configuration_parameters`).           |
+|                       |                                                      |
+|                       | .. versionadded:: 2.3.15                             |
++-----------------------+------------------------------------------------------+
+
+.. _event_fs_dictmap_max_bucket_changed:
+
+fs_dictmap_max_bucket_changed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.13
+
+This event is sent whenever the ``max_bucket`` value for a mailbox changes.
+There can be three situations when this happens: Either a new mail is added to a
+mailbox, where the current bucket is found to be filled and the next bucket is
+started to be filled (``reason = file``).
+
+Besides the expected situation, Dovecot emits this event if it encounters a
+bucket with a higher index then the current max_bucket while
+iterating a mailbox (``reason = iter``).
+
+.. versionchanged:: 2.3.14
+        In addition ``max_bucket`` can be shrunk in case an iteration discovers empty
+        buckets before the current ``max_bucket`` value (``reason = iter``).
+
+The ``error`` field is only set if setting the new ``max_bucket`` value
+failed.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| Inherits either from :ref:`event_fs_file` or :ref:`event_fs_iter`            |
++-----------------------+------------------------------------------------------+
+| reason                | Either ``file`` or ``iter`` depending on the source  |
+|                       | of the event as explained above.                     |
++-----------------------+------------------------------------------------------+
+| old_max_bucket        | The ``max_bucket`` value for the current mailbox,    |
+|                       | before the event was emitted.                        |
++-----------------------+------------------------------------------------------+
+| max_bucket            | The newly set ``max_bucket`` value.                  |
++-----------------------+------------------------------------------------------+
+| error                 | Error string if error occurred.                      |
++-----------------------+------------------------------------------------------+
+
+
+fs_dictmap_empty_bucket_iterated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.14
+
+In case an empty bucket is found while iterating which is not the last bucket
+emit an event.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| Inherits from :ref:`event_fs_iter`                                           |
++-----------------------+------------------------------------------------------+
+| empty_bucket          | Index of the empty bucket that was just discovered   |
++-----------------------+------------------------------------------------------+
+| max_bucket            | The current ``max_bucket`` value.                    |
++-----------------------+------------------------------------------------------+
+| deleted_count         | The count of deleted keys for the empty bucket.      |
++-----------------------+------------------------------------------------------+
+
 
 Dictionaries
 ============
@@ -2418,3 +2631,26 @@ dict_server_transaction_finished
 
 Event emitted when dict server finishes transaction. Same fields as
 :ref:`dict_transaction_finished`.
+
+
+***********
+FTS-Dovecot
+***********
+
+lib-fts-index
+=============
+
+fts_dovecot_too_many_triplets
+-----------------------------
+
+.. versionadded:: 2.3.15
+
+Event emitted when number of triplets exceeds the limit defined by :ref:`plugin-fts-dovecot-setting-fts_dovecot_max_triplets`.
+
++---------------+--------------------------------------------------+
+| Field         | Description                                      |
++===============+==================================================+
+| Inherits from :ref:`event_mail_user`                             |
++---------------+--------------------------------------------------+
+| triplet_count | Number of triplets found                         |
++---------------+--------------------------------------------------+

@@ -77,11 +77,21 @@ The parameters common to all object storages include:
 | loghdr=<name>                         |Headers with the given name in HTTP responses are logged as part of any error, debug or warning messages related to the HTTP   | none         |
 |                                       |request. These headers are also included in the http_request_finished event as fields prefixed with ``http_hdr_``.             |              |
 |                                       |Can be specified multiple times.                                                                                               |              |
+|                                       |                                                                                                                               |              |
 |                                       |.. versionadded:: 2.3.10                                                                                                       |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | max_connect_retries=<n>               |Number of connect retries                                                                                                      | 2            |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
-| max_retries=<n>                       |Max number of HTTP request retries                                                                                             | 4            |
+| max_retries=<n>                       |Max number of HTTP request retries. Retries happen for 5xx errors as well as for 423(locked)                                   | 4            |
+|                                       |with :ref:`sproxyd <scality_sproxyd>` and 409(conflict) with :ref:`cdmi <scality_cdmi>`.                                       |              |
+|                                       |There is a wait between attempting next retry. The initial retry is done after 50ms. The following retries are done            |              |
+|                                       |after waiting ten times as long as the previous attempt, so 50ms -> 500 ms -> 5s ->10s. The maximum wait time per attempt      |              |
+|                                       |before retry is limited to 10 seconds. Please note that if the overall request time exceeds the configured                     |              |
+|                                       |``absolute_timeout`` it takes precedence, emits an error and prevents further retries. While the configured ``timeout`` value  |              |
+|                                       |determines how long HTTP responses are allowed to take before an error ascertained.                                            |              |
+|                                       |                                                                                                                               |              |
+|                                       |.. versionchanged:: 2.3.15 Earlier versions had the same initial retry(50ms), followed by doubling the wait time to            |              |
+|                                       |                    100ms, 200ms, 400ms and so forth.                                                                          |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | no_trace_headers=1                    |Set to 1 to not add X-Dovecot-User or X-Dovecot-Session headers to HTTP request Useful to correlate object                     | 0            |
 |                                       |storage requests to AS/Dovecot sessions. If not doing correlations via log aggregation, this is safe to disable.               |              |

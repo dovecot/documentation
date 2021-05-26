@@ -140,9 +140,9 @@ This requires that key issuer supports `JWT tokens (RFC 7519) <https://tools.iet
 You can put the validation keys into any `dictionary <https://wiki.dovecot.org/Dictionary>`_.
 The lookup key used is ``/shared/<azp:default>/<alg>/<keyid:default>``.
 If there is no ``azp`` element in token body, then default is used.
-The ``alg`` field is always uppercased by dovecot.
+The ``alg`` field is always uppercased by Dovecot.
 If there is no ``kid`` element in token header, ``default`` is used.
-Keys are cached into memory when they are fetched, to evict them from cache you need to restart dovecot.
+Keys are cached into memory when they are fetched, to evict them from cache you need to restart Dovecot.
 If you want to do key rotation, it is recommended to use a new key id.
 
 Example:
@@ -175,7 +175,7 @@ To use local validation, put into ``dovecot-oauth2.conf.ext``
   introspection_mode = local
   local_validation_key_dict = fs:posix:prefix=/etc/dovecot/keys/
 
-Currently dovecot oauth2 library implements the following features of JWT tokens:
+Currently Dovecot oauth2 library implements the following features of JWT tokens:
 
  * IAT checking
  * NBF checking
@@ -195,6 +195,14 @@ The following algorithms are supported
 
 There is currently no support for EdDSA algorithms.
 ES supports any curve supported by OpenSSL for this purpose.
+
+OpenID.Discovery
+****************
+
+.. versionadded:: v2.3.16
+
+Support for `RFC 7628 <https://datatracker.ietf.org/doc/html/rfc7628#section-3.2.2>`__  OpenID Discovery (OIDC) can be achieved with
+``openid_configuration_url`` setting. Setting this causes Dovecot to report OIDC configuration URL as ``openid-configuration`` element in error JSON.
 
 Full config file
 ******************
@@ -240,6 +248,10 @@ Full config file
 
   ## Expected issuer(s) for the token (space separated list)
   # issuers =
+
+
+  ## URL to RFC 7628 OpenID Provider Configuration Information schema
+  # openid_configuration_url =
 
   ## Extra fields to set in passdb response (in passdb static style)
   # pass_attrs =

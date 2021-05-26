@@ -4,7 +4,7 @@
 Mail Event Logging
 =========================
 
-See http://wiki.dovecot.org/Plugins/MailLog for more details. 
+See :ref:`plugin-mail-log` for more details.
 
 .. code-block:: none
 

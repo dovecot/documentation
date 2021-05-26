@@ -16,11 +16,11 @@ include:
 * Overriding settings for the user (almost any setting can be overridden)
 
 ===========================   ================   ===============
-Passdb lookups are done by:   Dovecot Director   Dovecot Backend
+Userdb lookups are done by:   Dovecot Director   Dovecot Backend
 ===========================   ================   ===============
-IMAP & POP3 logins            ``-``              Yes
-LMTP mail delivery            ``-``              Yes
-doveadm commands              ``-``              Yes
+IMAP & POP3 logins            No                 Yes
+LMTP mail delivery            No                 Yes
+doveadm commands              No                 Yes
 ===========================   ================   ===============
 
 The user database lookup can return these fields:
@@ -45,8 +45,7 @@ The user database lookup can return these fields:
 
 The user and password databases (See :ref:`authentication-password_databases`) may be
 the same or they may be different depending on your needs. You can also have
-`multiple databases
-<https://wiki.dovecot.org/Authentication/MultipleDatabases>`_.
+:ref:`multiple databases <authentication-multiple_authentication_databases>`.
 
 Currently supported user databases are:
 

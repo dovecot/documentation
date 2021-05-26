@@ -8,8 +8,7 @@ Welcome plugin
 
 Call a script when the user logs in for the first time. This is specifically
 done when the INBOX is (auto)created. The scripts are called similarly to
-`quota warning scripts
-<https://wiki.dovecot.org/Quota/Configuration#Quota_warnings>`_.
+:ref:`quota_configuration_warning_scripts`.
 
 .. code-block:: none
 

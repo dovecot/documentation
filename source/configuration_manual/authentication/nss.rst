@@ -16,8 +16,7 @@ with :ref:`authentication-passwd` userdb, but it has one problem:
 
 So if you're using e.g. ``nss_ldap`` and your LDAP database is down, all userdb
 lookups may return ``user doesn't exist`` errors. This is especially bad if
-you're using `LDA <https://wiki.dovecot.org/LDA>`_, which causes the mails to
-be bounced back to sender.
+you're using :ref:`lda`, which causes the mails to be bounced back to sender.
 
 The NSS userdb works around this problem by loading the NSS modules and calling
 them itself. This is a bit kludgy, and it probably works only with Linux.
