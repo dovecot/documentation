@@ -104,21 +104,6 @@ put into ``dovecot-oauth2.token.conf.ext``
 
 .. code-block:: none
 
-  driver = oauth2
-    mechanisms = oauthbearer xoauth2
-    args = /usr/local/etc/dovecot/dovecot-oauth2.token.conf.ext
-  }
-
-  passdb {
-    driver = oauth2
-    mechanisms = plain login
-    args = /usr/local/etc/dovecot/dovecot-oauth2.plain.conf.ext
-  }
-
-put into ``dovecot-oauth2.token.conf.ext``
-
-.. code-block:: none
-
   grant_url = http://localhost:8000/token
   client_id = verySecretClientId
   client_secret = verySecretSecret
