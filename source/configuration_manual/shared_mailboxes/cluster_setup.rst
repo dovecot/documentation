@@ -122,3 +122,15 @@ possibilities for it are:
 
 -  Any other `shared dictionary <https://wiki.dovecot.org/Dictionary>`__ can
    be used like described at :ref:`user_shared_mailboxes_shared_mailbox_listing`
+
+
+Shared folders and quota
+------------------------
+
+When using the :ref:`quota_plugin` it must be configured to not attempt to
+calculate quota for the shared namespaces. This is suggested to be achieved by
+limiting the quota plugin to the private inbox namespace using:
+
+``quota=count:ns=<inbox namespace prefix>``
+
+For more details on quota configuration please see :ref:`quota_configuration`.
