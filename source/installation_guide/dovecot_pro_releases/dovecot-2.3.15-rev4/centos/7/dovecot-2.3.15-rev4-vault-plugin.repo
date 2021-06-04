@@ -1,0 +1,9 @@
+# vault-plugin component requires separate OX License
+# Please contact to support@open-xchange.com to get access
+[dovecot-2.3.15-rev4-vault-plugin]
+name=CentOS 7 - OX Dovecot Pro Vault plug-in
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.15/plugin/vault-plugin/CentOS7
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
