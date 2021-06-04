@@ -1,0 +1,2 @@
+# dovecot-2.3.14.1-rev2 Debian Stretch (9.0) - DataStax C/C++ Driver for Apache Cassandra
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.14.1/3rdparty/cassandra-cpp-driver/DebianStretch ./

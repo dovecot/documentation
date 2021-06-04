@@ -1,0 +1,9 @@
+# vault-plugin component requires separate OX License
+# Please contact to support@open-xchange.com to get access
+[dovecot-2.3.14.1-rev2-vault-plugin]
+name=RedHat Enterprise Linux 8 - OX Dovecot Pro Vault plug-in
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/plugin/vault-plugin/RHEL8
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+

@@ -1,0 +1,4 @@
+# promotionalmail component requires separate OX License
+# Please contact to support@open-xchange.com to get access
+# dovecot-2.3.14.1-rev2 Debian Stretch (9.0) - OX Engage Dovecot plug-in
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/promotionalmail/DebianStretch ./
