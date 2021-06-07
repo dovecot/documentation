@@ -147,18 +147,20 @@ If you want to do key rotation, it is recommended to use a new key id.
 
 Example:
 
-.. code::javascript
+.. code:: javascript
 
    {"kid":"Zm9vb2Jhcgo","alg":"ES256","typ":"JWT"}.{"sub":"testuser@example.org","azp":"issuer.net-dovecot"}
 
 Would turn into
 
 ::
+
    /shared/issuer.net-dovecot/ES256/Zm9vb2Jhcgo
 
 And would expect, when using fs posix, key at
 
 ::
+
    /etc/dovecot/keys/issuer.net-dovecot/ES256/Zm9vb2Jhcgo
 
 Local validation can be enabled with other oauth2 options,
@@ -177,21 +179,21 @@ To use local validation, put into ``dovecot-oauth2.conf.ext``
 
 Currently Dovecot oauth2 library implements the following features of JWT tokens:
 
- * IAT checking
- * NBF checking
- * EXP checking
- * ISS checking
- * ALG checking
- * SUB support
- * AUD support (this is checked against scope, if provided)
- * AZP support
+* IAT checking
+* NBF checking
+* EXP checking
+* ISS checking
+* ALG checking
+* SUB support
+* AUD support (this is checked against scope, if provided)
+* AZP support
 
 The following algorithms are supported
 
-  * HS256, HS384, HS512
-  * RS256, RS384, RS512
-  * PS256, PS384, PS512
-  * ES256, ES384, ES512
+* HS256, HS384, HS512
+* RS256, RS384, RS512
+* PS256, PS384, PS512
+* ES256, ES384, ES512
 
 There is currently no support for EdDSA algorithms.
 ES supports any curve supported by OpenSSL for this purpose.
