@@ -116,6 +116,17 @@ Or more simply using ``array_foreach_elem()``::
      ...
    }
 
+Note that deleting an element while iterating will cause the iteration to
+skip over the next element. So deleting a single element and breaking out
+of the loop is fine, but continuing the loop is likely a bug. Use instead::
+
+   array_foreach_reverse(&foo_array, foo) {
+     if (want_delete(foo))
+       array_delete(&foo_array, array_foreach_idx(&foo_array, foo), 1);
+   }
+
+There's also an equivalent ``array_foreach_reverse_modifiable()``.
+
 It's a bug to attempt to use the read functions before the array is
 initialized. Use ``array_is_created()`` to check if it's initialized.
 
