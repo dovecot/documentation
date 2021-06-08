@@ -29,12 +29,10 @@ may not implement all:
 
 These events are not supported by the notification framework:
 
-* Login (handled by `Authentication
-  <https://wiki.dovecot.org/Authentication>`_)
-* Logout (handled by `Authentication
-  <https://wiki.dovecot.org/Authentication>`_)
-* QuotaExceed (handled by `Quota <https://wiki.dovecot.org/Quota>`_)
-* QuotaWithin (handled by `Quota <https://wiki.dovecot.org/Quota>`_)
+* Login (handled by :ref:`authentication-authentication`)
+* Logout (handled by :ref:`authentication-authentication`)
+* QuotaExceed (handled by :ref:`quota`)
+* QuotaWithin (handled by :ref:`quota`)
 
 Usage
 =====

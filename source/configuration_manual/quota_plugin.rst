@@ -1,44 +1,62 @@
+.. _quota:
 .. _quota_plugin:
 
-=====
-Quota
-=====
+============
+Quota Plugin
+============
 
-* quota: Quota tracking and enforcing
+Quota tracking and enforcing plugin.
 
- * imap_quota: IMAP commands for requesting current quota
- * quota_clone: Copy the current quota usage to a dict.
+Three plugins are associated with quota:
+
+======================================= ========================================
+Name                                    Description
+======================================= ========================================
+imap_quota                              Enables IMAP commands for requesting
+                                        and adminstering current quota.
+quota                                   Implements the actual quota handling
+                                        and includes all quota backends.
+:ref:`quota_clone <quota_clone_plugin>` Copy the current quota usage to a dict.
+======================================= ========================================
 
 Quota backend specifies the method how Dovecot keeps track of the current quota
 usage. They don't (usually) specify users' quota limits, that's done by
-`returning extra fields from userdb
-<https://wiki.dovecot.org/Quota/Configuration#Per-user_quota>`_. There are
-different quota backends that Dovecot can use:
+:ref:`returning extra fields from userdb <quota_configuration_per_user>`.
+There are different quota backends that Dovecot can use:
 
-* `fs <https://wiki.dovecot.org/Quota/FS>`_: Filesystem quota.
-* `dirsize <https://wiki.dovecot.org/Quota/Dirsize>`_: The simplest and slowest
-  quota backend, but it works quite well with mboxes.
-* `dict <https://wiki.dovecot.org/Quota/Dict>`_: Store quota usage in a
-  dictionary (e.g. SQL, or flat files).
-* `maildir <https://wiki.dovecot.org/Quota/Maildir>`_: Store quota usage in
-  Maildir++ maildirsize files. This is the most commonly used quota for virtual
-  users.
-* `count <https://wiki.dovecot.org/Quota/Count>`_: Store quota usage within
-  Dovecot's index files.
++--------------------------+---------------------------------------------------+
+| Backend                  | Description                                       |
++==========================+===================================================+
+| :ref:`count              | Store quota usage within Dovecot's index files.   |
+| <quota_backend_count>`   |                                                   |
+|                          | .. versionadded:: v2.2.19                         |
++--------------------------+---------------------------------------------------+
+| :ref:`dict               | Store quota usage in a dictionary (e.g. SQL, or   |
+| <quota_backend_dict>`    | flat files).                                      |
++--------------------------+---------------------------------------------------+
+| :ref:`dirsize            | The simplest and slowest quota backend.           |
+| <quota_backend_dirsize>` |                                                   |
++--------------------------+---------------------------------------------------+
+| :ref:`fs                 | Filesystem quota.                                 |
+| <quota_backend_fs>`      |                                                   |
++--------------------------+---------------------------------------------------+
+| :ref:`imapc              | Use quota from remote IMAP server with imapc.     |
+| <quota_backend_imapc>`   |                                                   |
+|                          | .. versionadded:: v2.2.30                         |
++--------------------------+---------------------------------------------------+
+| :ref:`maildir            | Store quota usage in Maildir++ maildirsize        |
+| <quota_backend_maildir>` | files. This is the most commonly used quota for   |
+|                          | virtual users.                                    |
++--------------------------+---------------------------------------------------+
 
-  .. versionadded:: v2.2.19
+We recommend using :ref:`count <quota_backend_count>` for any new
+installations.
 
-* `imapc <https://wiki.dovecot.org/MailboxFormat/imapc#Quota>`_: Use quota from
-  remote IMAP server with imapc.
+If you need usage data to an external database, consider using
+:ref:`quota_clone_plugin` for exporting the information. (It's very slow to
+query every user's quota from the index files directly.)
 
-  .. versionadded:: v2.2.30
-
-
-We recommend using `count <https://wiki.dovecot.org/Quota/Count>`_ for any new
-installations. If you need usage data to an external database, consider using
-:ref:`quota_clone_plugin` for exporting the information.
-
-Quota service
+Quota Service
 =============
 
 The quota service allows postfix to check quota before delivery:
@@ -65,33 +83,26 @@ And then have postfix check_policy_service check that:
 For more about this service see
 https://blog.sys4.de/postfix-dovecot-mailbox-quota-en.html
 
-Enabling quota plugins
+Enabling Quota Plugins
 ======================
 
-There are three quota related plugins:
-
-* quota: Implements the actual quota handling and includes also all the quota
-  backends.
-* imap_quota: For reporting quota information via IMAP.
-* quota_grace: Determines if and how far user can go over quota
-
-Enable them in configuration files, e.g.:
+Enable in configuration files, e.g.:
 
 ``conf.d/10-mail.conf``:
 
 .. code-block:: none
 
-  # Space separated list of plugins to load for all services. Plugins specific
-  # to IMAP, LDA, etc. are added to this list in their own .conf files.
-  mail_plugins=$mail_plugins quota
+  # Enable quota plugin for tracking and enforcing the quota.
+  mail_plugins = $mail_plugins quota
 
 ``conf.d/20-imap.conf``:
 
 .. code-block:: none
 
   protocol imap {
-    # Space separated list of plugins to load (default is global mail_plugins).
-    mail_plugins=$mail_plugins imap_quota
+    # Enable the IMAP QUOTA extension, allowing IMAP clients to ask for the
+    # current quota usage.
+    mail_plugins = $mail_plugins imap_quota
   }
 
 ``conf.d/90-quota.conf``: (for use with the quota-status service)
@@ -101,24 +112,27 @@ Enable them in configuration files, e.g.:
   plugin {
     quota_grace = 10%%
     # 10% is the default
-    quota_status_success=DUNNO
-    quota_status_nouser=DUNNO
-    quota_status_overquota="552 5.2.2 Mailbox is full"
+    quota_status_success = DUNNO
+    quota_status_nouser = DUNNO
+    quota_status_overquota = "552 5.2.2 Mailbox is full"
   }
 
 Configuration
 =============
 
-See `Quota/Configuration <https://wiki.dovecot.org/Quota/Configuration>`_ for
-backend-independent quota configuration.
+.. toctree::
+  :maxdepth: 1
 
-Quota recalculation
+  quota/index
+  quota/unified_quota_configuration
+
+Quota Recalculation
 ===================
 
 If your quotas are out of sync, you can use ``doveadm quota recalc -u <uid>``
 command to recalculate them.
 
-Quota and Trash mailbox
+Quota and Trash Mailbox
 =======================
 
 Standard way to expunge messages with IMAP works by:
@@ -146,10 +160,56 @@ because user is over quota. The possible solutions for this are:
   quota limit (but not unlimited).
 
 To make sure users don't start keeping messages permanently in Trash you can
-use a nightly `cronjob <https://wiki.dovecot.org/Plugins/Expire>`_ to expunge
-old messages from Trash mailbox.
+use `autoexpunge <namespaces_autoexpunge>` to expunge old messages from Trash
+mailbox.
+
+Debugging Quota
+================
+
+User's current quota usage can be looked up with: ``doveadm quota get -u
+user@domain``
+
+User's current quota may sometimes be wrong for various reasons (typically only
+after some other problems). The quota can be recalculated with:
+
+``doveadm quota recalc -u user@domain``
+
+Example
+=======
+
+To use the recommended ``count`` quota driver:
+
+.. code-block:: none
+
+  mail_plugins = $mail_plugins quota
+  protocol imap {
+    mail_plugins = $mail_plugins imap_quota
+  }
+
+  plugin {
+    quota = count:User quota
+    quota_max_mail_size = 100M
+    # Required for 'count' quota driver
+    quota_vsizes = yes
+
+
+Associated Plugins
+==================
 
 .. toctree::
   :maxdepth: 1
 
   quota_clone_plugin
+
+Quota Drivers
+=============
+
+.. toctree::
+  :maxdepth: 1
+
+  quota/quota_count
+  quota/quota_dict
+  quota/quota_dirsize
+  quota/quota_fs
+  quota/quota_imapc
+  quota/quota_maildir

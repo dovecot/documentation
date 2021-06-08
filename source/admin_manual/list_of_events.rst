@@ -949,6 +949,7 @@ If the file was created for obox, it has also fields:
 |                     | * index: Index bundle                                |
 |                     | * box: Mailbox directory (for creating/deleting it,  |
 |                     |   if used by the storage driver)                     |
+|                     | * fts: FTS file                                      |
 +---------------------+------------------------------------------------------+
 | reason              | Reason for accessing the file                        |
 +---------------------+------------------------------------------------------+
@@ -1012,6 +1013,22 @@ Mailbox
 |                     | .. versionadded:: v2.3.10                            |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail_expunged:
+
+mail_expunged
+^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail was expunged from the mailbox. Note that this event inherits from
+mailbox, not mail.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| uid                 | UID of the expunged mail.                              |
++---------------------+--------------------------------------------------------+
+
 .. _event_mail:
 
 Mail
@@ -1027,6 +1044,31 @@ Mail
 | uid                 | Mail IMAP UID number                                 |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail_opened:
+
+mail_opened
+^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail was opened e.g. for reading its body. Note that this event is not sent
+when mails' metadata is accessed, even if it causes opening the mail file.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| reason              | Reason why the mail was opened. (optional)             |
++---------------------+--------------------------------------------------------+
+
+.. _event_mail_expunge_requested:
+
+mail_expunge_requested
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail is set to be expunged. (Note that expunges can be rolled back later on,
+this event is emitted when an expunge is requested).
 
 Mail index
 ==========
@@ -1046,6 +1088,9 @@ Index file handling for ``dovecot.index*``, ``dovecot.map.index*``,
 | :ref:`event_mail_user` depending on what the index is used for.            |
 +---------------------+------------------------------------------------------+
 
+
+.. _event_mail_index_recreated:
+
 mail_index_recreated
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -1064,7 +1109,29 @@ A mail index file was recreated.
 +---------------------+--------------------------------------------------------+
 
 
-.. _event_mail_index_recreated:
+.. _event_indexer_worker_indexing_finished:
+
+indexer_worker_indexing_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+Indexer worker process completed an indexing transaction.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| Inherits from :ref:`event_mailbox`                                           |
++---------------------+--------------------------------------------------------+
+| message_count       | Number of messages indexed                             |
++---------------------+--------------------------------------------------------+
+| first_uid           | UID of the first indexed message                       |
++---------------------+--------------------------------------------------------+
+| last_uid            | UID of the last indexed message                        |
++---------------------+--------------------------------------------------------+
+| user_cpu_usecs      | Total user CPU spent on the indexing transaction in    |
+|                     | microseconds.                                          |
++---------------------+--------------------------------------------------------+
 
 
 Mail cache
@@ -1202,6 +1269,21 @@ deleted.
 +----------------------+-------------------------------------------------------+
 | reason               | Reason string why cache was found to be corrupted.    |
 +----------------------+-------------------------------------------------------+
+
+.. _event_mail_cache_lookup_finished:
+
+mail_cache_lookup_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail field was looked up from cache.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| field               | Cache field name e.g. ``imap.body`` or ``hdr.from``    |
++---------------------+--------------------------------------------------------+
 
 HTTP
 ====
@@ -2381,7 +2463,10 @@ fs_dictmap_object_lost
 .. versionadded:: 2.3.10
 
 The event is sent whenever "Object exists in dict, but not in storage" error
-happens.
+happens. Normally this shouldn't happen, because the writes and deletes are
+done in such an order that Dovecot prefers to rather leak objects in storage
+than cause this error. A likely source of this error can be resurrected
+deleted data see :ref:`cassandra` for more details.
 
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
@@ -2392,6 +2477,15 @@ happens.
 +-----------------------+------------------------------------------------------+
 | object_id             | Object ID in the storage                             |
 +-----------------------+------------------------------------------------------+
+| deleted               | Set to ``yes``, if the corresponding entry in dict   |
+|                       | has been deleted as the ``delete-dangling-links``    |
+|                       | option was set                                       |
+|                       | (:ref:`dictmap_configuration_parameters`).           |
+|                       |                                                      |
+|                       | .. versionadded:: 2.3.15                             |
++-----------------------+------------------------------------------------------+
+
+.. _event_fs_dictmap_max_bucket_changed:
 
 fs_dictmap_max_bucket_changed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2537,3 +2631,26 @@ dict_server_transaction_finished
 
 Event emitted when dict server finishes transaction. Same fields as
 :ref:`dict_transaction_finished`.
+
+
+***********
+FTS-Dovecot
+***********
+
+lib-fts-index
+=============
+
+fts_dovecot_too_many_triplets
+-----------------------------
+
+.. versionadded:: 2.3.15
+
+Event emitted when number of triplets exceeds the limit defined by :ref:`plugin-fts-dovecot-setting-fts_dovecot_max_triplets`.
+
++---------------+--------------------------------------------------+
+| Field         | Description                                      |
++===============+==================================================+
+| Inherits from :ref:`event_mail_user`                             |
++---------------+--------------------------------------------------+
+| triplet_count | Number of triplets found                         |
++---------------+--------------------------------------------------+

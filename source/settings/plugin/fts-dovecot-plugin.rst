@@ -106,3 +106,18 @@ update the FTS indexes, but at the cost of doing more writes to object storage.
 
 The recommended value is 10. This will become the default in some future
 version.
+
+
+.. _plugin-fts-dovecot-setting-fts_dovecot_max_triplets:
+
+``fts_dovecot_max_triplets``
+-----------------------------------
+
+.. versionadded:: v2.3.15
+
+- Default: ``0`` (unlimited)
+
+FTS lookups will fail and error message will be logged, when the number of triplets exceeds the threshold specified in the setting. 0 means there is no maximum number of triplets to be exceeded.
+
+The recommended value is 200. This will become the default in some future
+version.
