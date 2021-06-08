@@ -4,6 +4,8 @@
 Shared Mailboxes in Dovecot Cluster
 ===================================
 
+.. note:: This setup is supported from Dovecot version 2.3.15 and higher only
+
 As mentioned in :ref:`Director <dovecot_director>`, you can't have
 multiple servers accessing the same user at the same time
 or it will lead into trouble. This can become problematic with shared
@@ -56,6 +58,7 @@ in this mailbox ``someone1`` would access a mailbox with the name
     type = shared
     prefix = shared/%%u/
     list = children
+    subscriptions = no
     # Use INDEXPVT to enable per-user \Seen flags.
     # If running earlier versions than 2.3.15, or if using obox storage
     # INDEXPVT is not supported.
@@ -65,11 +68,11 @@ in this mailbox ``someone1`` would access a mailbox with the name
 .. note:: See :ref:`user_shared_mailboxes_vs` for an explanation more details on the used variables.
 
 Additionally imapc must be configured accordingly on the backends:
- * Master passdb must return ``userdb_sharing_user=%{master_user}``
- * :ref:`setting-imapc_master_user` must be set to ``%{userdb:sharing_user}``.
-   This makes sure the ``imapc_master_user`` is not overwritten by other userdb
-   lookups which may happen on proxies or directors. In case of a simple setup
-   ``imapc_master_user`` can also be just set to ``%u`` (the logged in user).
+ * On backends either passdb or userdb for non-master users must return
+   ``userdb_imapc_master_user=%{user}`` or ``imapc_master_user=%{user}``
+ * :ref:`setting-imapc_master_user` becomes set using userdb. In case of
+   a simple setup ``imapc_master_user`` can also be just set to ``%u``
+   (the logged in user).
  * :ref:`setting-imapc_password` must be set to the master password which is
    configured on all backends and directors
  * :ref:`setting-imapc_host` must point to a load balancer's address that
@@ -86,7 +89,6 @@ Additionally imapc must be configured accordingly on the backends:
 ::
 
    imapc_host = director-ip
-   imapc_master_user = %u
    #imapc_user = # leave this empty. It'll be automatically filled with the destination username.
    imapc_password = master-secret
    imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl
