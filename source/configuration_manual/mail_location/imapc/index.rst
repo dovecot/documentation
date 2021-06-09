@@ -90,6 +90,10 @@ Features
   this timeout, it's doubled, otherwise both throttling and the next
   shrinking timeout is shrank to 3/4 the previous value.
 
+.. versionadded:: 2.3.15
+
+* ``acl``: When this feature is enabled and the imap-acl plugin is loaded, using a remote location via imapc will make IMAP ACL commands (MYRIGHTS, GETACL, SETACL, DELETEACL) proxied to the remote.
+
 Optimizations
 #############
 
