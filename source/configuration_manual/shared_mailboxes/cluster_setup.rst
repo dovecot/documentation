@@ -52,7 +52,7 @@ in this mailbox ``someone1`` would access a mailbox with the name
 
 ::
 
-   namespace {
+   namespace shared {
     type = shared
     prefix = shared/%%u/
     list = children

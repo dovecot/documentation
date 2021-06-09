@@ -128,19 +128,17 @@ In config you should have:
      postmaster_address = postmaster@example.com
    }
 
+.. _simple_virtual_install_smtp_auth:
+
 SMTP AUTH
 ---------
 
-If you're using one of these MTAs, you can use Dovecot SASL to
+If you're using one of these MTAs, you can use Dovecot :ref:`sasl` to
 authenticate SMTP.
 
--  :ref:`Postfix (v2.3+) configuration <howto-postfix_and_dovecot_sasl>`
-
--  `Exim (v4.64+)
-   configuration <https://wiki2.dovecot.org/HowTo/EximAndDovecotSASL>`__
-
--  `chasquid (v0.04+)
-   configuration <https://wiki2.dovecot.org/HowTo/ChasquidAndDovecotSASL>`__
+- :ref:`Postfix (v2.3+) configuration <howto-postfix_and_dovecot_sasl>`
+- :ref:`Exim (v4.64+) configuration <howto-exim_and_dovecot_sasl>`
+- :ref:`chasquid (v0.04+) configuration <howto-chasquid_and_dovecot_sasl>`
 
 Quota
 =====

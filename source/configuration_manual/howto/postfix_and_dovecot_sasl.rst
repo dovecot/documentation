@@ -4,7 +4,7 @@
 Postfix and Dovecot SASL
 ########################
 
-Since version 2.3, Postfix supports SMTP AUTH through Dovecot SASL as introduced in the Dovecot 1.0 series.
+Since version 2.3, Postfix supports SMTP AUTH through Dovecot :ref:`sasl` as introduced in the Dovecot 1.0 series.
 If using Postfix obtained from a binary (such as a .rpm or .deb file), you can check if Postfix was compiled with support for Dovecot SASL by running the command:
 
 ::
