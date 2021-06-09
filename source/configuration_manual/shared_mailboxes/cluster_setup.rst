@@ -126,6 +126,8 @@ possibilities for it are:
    be used like described at :ref:`user_shared_mailboxes_shared_mailbox_listing`
 
 
+Please also see :ref:`mailbox_sharing_in_cluster_simple_example`.
+
 Shared folders and quota
 ------------------------
 
