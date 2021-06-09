@@ -1,3 +1,5 @@
+.. _configuration_manual:
+
 =======================
 Configuration Manual
 =======================
