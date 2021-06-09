@@ -57,6 +57,8 @@ Name              Description
 .. _`fts-flatcurve`: https://github.com/slusarz/dovecot-fts-flatcurve/
 .. _`Xapian`: https://xapian.org/
 
+.. seealso::
+  :ref:`fts-community_developed_plugins`
 
 Searching In Dovecot
 --------------------
@@ -205,6 +207,8 @@ Dovecot General FTS Configuration
 
 See :ref:`fts_plugin` for settings.
 
+
+.. _fts-community_developed_plugins:
 
 Community Developed Plugins
 ---------------------------
