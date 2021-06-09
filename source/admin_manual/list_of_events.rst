@@ -392,6 +392,7 @@ Common fields
 |                     |  * ``TLS``                                           |
 +---------------------+------------------------------------------------------+
 
+.. _event-auth_request_finished:
 
 auth_request_finished
 ---------------------

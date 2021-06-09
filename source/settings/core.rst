@@ -2228,6 +2228,10 @@ Variables:
 - Default: ``%$: %s``
 - Values:  :ref:`string`
 
+.. deprecated:: v2.3.7
+
+  Use :ref:`event-auth_request_finished` event instead.
+
 The formatting of login log messages.
 
 Variables:
@@ -2246,6 +2250,10 @@ See :ref:`setting-login_log_format_elements`
 
 - Default: ``user=<%u> method=%m rip=%r lip=%l mpid=%e %c``
 - Values:  :ref:`string`
+
+.. deprecated:: v2.3.7
+
+  Use :ref:`event-auth_request_finished` event instead.
 
 A space-separated list of elements of the login log formatting.
 
