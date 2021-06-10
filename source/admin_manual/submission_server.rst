@@ -9,8 +9,8 @@ a `Mail Submission Agent (MSA) <https://tools.ietf.org/html/rfc6409>`_. It is
 currently implemented as a proxy that acts as a front-end for any :ref:`mta`,
 adding the necessary functionality required for a submission service: it adds
 the required `AUTH <https://tools.ietf.org/html/rfc4954>`_ support, avoiding
-the need to configure the MTA for SASL authentication. More SMTP capabilities
-like `CHUNKING <https://tools.ietf.org/html/rfc3030>`_ and `SIZE
+the need to configure the MTA for :ref:`SASL authentication <sasl>`. More SMTP
+capabilities like `CHUNKING <https://tools.ietf.org/html/rfc3030>`_ and `SIZE
 <https://tools.ietf.org/html/rfc1870>`_ are supported, without requiring the
 backend MTA supporting these extensions. Other capabilities like `8BITMIME
 <https://tools.ietf.org/html/rfc6152>`_ and `DSN

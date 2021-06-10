@@ -78,9 +78,9 @@ LDAP example
     args = /etc/dovecot/dovecot-ldap.conf.ext
   }
 
- ``dovecot-ldap.conf.ext``:
+``dovecot-ldap.conf.ext``:
 
- .. code-block:: none
+.. code-block:: none
 
   pass_attrs = uid=user, userPassword=password, \
     homeDirectory=userdb_home, uidNumber=userdb_uid, gidNumber=userdb_gid

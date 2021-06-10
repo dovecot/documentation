@@ -260,8 +260,8 @@ See: https://wiki.dovecot.org/Debugging/Rawlog
 - Default: <empty>
 - Values: :ref:`string`
 
-The SASL mechanisms to use for authentication when connection to a remote
-IMAP server.
+The :ref:`sasl` mechanisms to use for authentication when connection to a
+remote IMAP server.
 
 The first one advertised by the remote IMAP sever is used.
 
