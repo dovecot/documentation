@@ -49,7 +49,7 @@ Dovecot stores some Maildir metadata into two control files:
 * ``dovecot-keywords`` file contains Maildir filename flag (a..z = 0..25) <->
   keyword name mapping
 
-Both of these files are described fully in :ref:maildir_mbox_formats. The
+Both of these files are described fully in :ref:`maildir_mbox_format`. The
 important thing to remember about them is that they shouldn't be treated the
 same way as index files. Index files can be deleted and rebuilt without any
 side effects, but if you delete control files you'll cause messages to get
@@ -83,9 +83,9 @@ the index path. Example:
 Optimizations
 ^^^^^^^^^^^^^
 
-* ref:`maildir_copy_with_hardlinks = yes <setting-maildir_copy_with_hardlinks>`
-* ref:`maildir_stat_dirs = no <setting-maildir_stat_dirs>`
-* ref:`maildir_very_dirty_syncs = yes <setting-maildir_very_dirty_syncs>`
+* :ref:`maildir_copy_with_hardlinks = yes <setting-maildir_copy_with_hardlinks>`
+* :ref:`maildir_stat_dirs = no <setting-maildir_stat_dirs>`
+* :ref:`maildir_very_dirty_syncs = yes <setting-maildir_very_dirty_syncs>`
 
 Filesystem Optimizations
 ------------------------

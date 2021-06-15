@@ -24,7 +24,7 @@ There are three different places where the mail location is looked up from:
 
 Autodetection
 ^^^^^^^^^^^^^^
-By default the `ref`:`setting-mail_location` setting is empty, which means that Dovecot attempts to locate automatically where your mails are. This is done by looking, in order, at:
+By default the :ref:`setting-mail_location` setting is empty, which means that Dovecot attempts to locate automatically where your mails are. This is done by looking, in order, at:
 
 * ~/mdbox/
 
@@ -96,7 +96,7 @@ NO-NOSELECT         Automatically delete any ``\NoSelect`` mailboxes that have n
 
 UTF-8               Store mailbox names on disk using UTF-8 instead of modified UTF-7.
 
-BROKENCHAR          Specifies an escape character that is used for broken or otherwise inaccessible mailbox names. If mailbox name can't be changed reversibly to UTF-8 and back, encode the problematic parts using ``<broken_char><hex>`` in the user-visible UTF-8 name. The broken_char itself also has to be encoded the same way. This can be useful with :ref:imapc_mbox_format to access mailbox names that aren't valid mUTF-7 charset from remote servers, or if the remote server uses a different hierarchy separator and has folder names containing the local separator. (v2.2.32+)
+BROKENCHAR          Specifies an escape character that is used for broken or otherwise inaccessible mailbox names. If mailbox name can't be changed reversibly to UTF-8 and back, encode the problematic parts using ``<broken_char><hex>`` in the user-visible UTF-8 name. The broken_char itself also has to be encoded the same way. This can be useful with :ref:`imapc_mbox_format` to access mailbox names that aren't valid mUTF-7 charset from remote servers, or if the remote server uses a different hierarchy separator and has folder names containing the local separator. (v2.2.32+)
 
 		    .. versionchanged:: v2.3.14 Conflicting separators are also escaped.
 
