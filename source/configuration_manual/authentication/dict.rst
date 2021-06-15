@@ -6,8 +6,8 @@ Key-value authentication (dict) database
 
 Key-value databases can be used as auth backends. They probably should be used
 only for caching in front of e.g. SQL auth backends. Iteration is supported if
-the underlying dict provider supports iteration. See `Dictionary
-<https://wiki.dovecot.org/Dictionary>`_ for list of supported databases.
+the underlying dict provider supports iteration. See :ref:`Dictionary <dict>`
+for a list of supported databases.
 
 Auth configuration
 ==================

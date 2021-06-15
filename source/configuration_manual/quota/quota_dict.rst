@@ -14,7 +14,7 @@ The ``dict`` (dictionary) quota backend supports both ``storage`` and
 ``messages`` quota limits. The current quota is kept in the specified
 dictionary.
 
-See `dictionary`_ for full description of the available backends.
+See :ref:`dict` for full description of the available backends.
 
 The quota root format is:
 
@@ -217,6 +217,4 @@ dictionary names are configured in ``dovecot.conf``. For example:
     expire = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
   }
 
-See `dictionary`_ for more information, especially about permission issues.
-
-.. _`dictionary`: https://wiki.dovecot.org/Dictionary
+See :ref:`dict` for more information, especially about permission issues.

@@ -268,7 +268,7 @@ Placing the ACL file makes the ACL effective, but ``dovecot`` doesn't take care 
 the user->shared mailboxes mapping out of the box, and as a result, it won't publish
 shared mailboxes to clients if this is not set up.
 You have to configure this manually by defining an appropriate
-`dictionary <https://wiki.dovecot.org/Dictionary>`_ to store the share map.
+:ref:`dictionary <dict>` to store the share map.
 
 Certain dictionary backends are writable by ``dovecot``, so when you establish
 an ACL using ``doveadm``, a dictionary entry is added along to the ACL.

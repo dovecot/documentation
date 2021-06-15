@@ -137,7 +137,7 @@ Local validation
 Local validation allows validating tokens without connecting to an oauth2 server.
 This requires that key issuer supports `JWT tokens (RFC 7519) <https://tools.ietf.org/html/rfc7519>`_.
 
-You can put the validation keys into any `dictionary <https://wiki.dovecot.org/Dictionary>`_.
+You can put the validation keys into any :ref:`dictionary <dict>`.
 The lookup key used is ``/shared/<azp:default>/<alg>/<keyid:default>``.
 If there is no ``azp`` element in token body, then default is used.
 The ``alg`` field is always uppercased by Dovecot.
