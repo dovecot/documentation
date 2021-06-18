@@ -5,7 +5,7 @@ Mail Namespace
 ==============
 
 ``src/lib-storage/mail-namespace.h`` describes mail namespaces. See
-:ref: `Namespaces <namespaces>` for more information about what they
+:ref:`Namespaces <namespaces>` for more information about what they
 are actually about.
 
 Hierarchy separators and namespace prefixes
