@@ -47,8 +47,7 @@ The parameters common to all object storages include:
 | bucket=<n>                            |Used by some backends to specify the bucket to save the data into                                                              | none         |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | bulk_delete_limit=<n>                 |Number of deletes supported within the same bulk delete request. 0 disables bulk deletes. Note that this setting works only    | scality: 1000|
-|                                       |for the backends that support bulk deletion.                                                                                   | swift: 10000 |
-|                                       |                                                                                                                               | s3: 1000     |
+|                                       |for the backends that support bulk deletion.                                                                                   | s3: 1000     |
 |                                       |                                                                                                                               |              |
 |                                       |.. versionadded:: 2.2.36                                                                                                       |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+

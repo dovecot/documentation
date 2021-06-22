@@ -177,7 +177,7 @@ auth
 ^^^^^
 The master auth process. There are 4 types of auth client connections:
 
-   * **client**: Only SASL authentication is allowed. This can be safely exposed to entire world.
+   * **client**: Only :ref:`sasl` authentication is allowed. This can be safely exposed to entire world.
    * **userdb**: userdb lookups and passdb lookups (without the password itself) can be done for any user, and a list of users can be requested. This may or may not be a security issue. Access to userdb lookup is commonly needed by dovecot-lda, doveadm and other tools.
    * **login**: Starts a two phase user login by performing authenticating (same as`client` type). Used by login processes.
    * **master**: Finishes the two phase user login by performing a userdb lookup (similar to "userdb" type). Used by post-login processes (e.g. imap, pop3).

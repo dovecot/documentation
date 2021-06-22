@@ -203,4 +203,3 @@ If multiple backends do changes to the same mailbox at the same time, Dovecot wi
    sizing_information
    s3_object_id_format
    s3_api_url_calls
-   swift_api_url_calls
