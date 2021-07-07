@@ -138,8 +138,8 @@ Metadata
 ========
 
 The push notifications are enabled separately for each user using METADATA.
-Normally `AppSuite <https://wiki.dovecot.org/AppSuite>`_ does this internally,
-but for e.g. testing purposes you can do this yourself:
+Normally `OX App Suite <https://www.open-xchange.com/products/ox-app-suite/>`_
+does this internally, but for e.g. testing purposes you can do this yourself:
 
 .. code-block:: none
 

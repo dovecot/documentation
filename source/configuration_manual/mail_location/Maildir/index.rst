@@ -60,15 +60,14 @@ cache and download the messages all over again. If you do this for all the
 users, you could cause huge disk I/O bursts to your server.
 
 Dovecot cannot currently handle not being able to write the control files, so
-it will cause problems with `filesystem quota`_. To avoid problems with this,
+it will cause problems with :ref:`filesystem quota <quota_backend_fs>`. To
+avoid problems with this,
 you should place control files into a partition where quota isn't checked. You
 can specify this by adding ``:CONTROL=<path>`` to ``mail_location``:
 
 .. code-block:: none
 
   mail_location = maildir:~/Maildir:CONTROL=/var/no-quota/%u
-
-.. _`filesystem quota`: https://wiki.dovecot.org/Quota/FS
 
 Index Files
 ^^^^^^^^^^^

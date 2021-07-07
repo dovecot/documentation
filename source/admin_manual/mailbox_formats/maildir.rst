@@ -128,7 +128,7 @@ Dovecot supports reading a few fields from the ``<base filename>``:
 
 * ``,S=<size>``: ``<size>`` contains the file size. Getting the size from the
   filename avoids doing a system ``stat()`` call, which may improve the
-  performance. This is especially useful with `Maildir++ quota`_.
+  performance. This is especially useful with :ref:`quota_backend_maildir`.
 * ``,W=<vsize>``: ``<vsize>`` contains the file's RFC822.SIZE, i.e., the file
   size with linefeeds being CR+LF characters. If the message was stored with
   CR+LF linefeeds, ``<size>`` and ``<vsize>`` are the same. Setting this may
@@ -140,8 +140,6 @@ A Maildir filename with those fields would look something like:
 .. code-block:: none
 
   1035478339.27041_118.foo.org,S=1000,W=1030:2,S
-
-.. _`Maildir++ quota`: https://wiki.dovecot.org/Quota/Maildir
 
 Usage of Timestamps
 -------------------
@@ -298,10 +296,8 @@ look like:
 Filesystem Permissions
 ----------------------
 
-See `Shared Mailboxes Permissions`_ for how permissions are set for newly
-created files and directories.
-
-.. _`Shared Mailboxes Permissions`: https://wiki.dovecot.org/SharedMailboxes/Permissions
+See :ref:`Shared Mailboxes Permissions <admin_manual_permissions_in_shared_mailboxes`
+for how permissions are set for newly created files and directories.
 
 Issues with the Specification
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
