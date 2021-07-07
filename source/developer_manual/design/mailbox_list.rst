@@ -41,7 +41,7 @@ Mailbox list is configured by
    Defaults to root_dir.
 
 -  alt_dir: This is currently
-   `dbox <https://wiki.dovecot.org/MailboxFormat/dbox#>`__-specific
+   `dbox <https://wiki.dovecot.org/MailboxFormat/dbox>`-specific
    setting.
 
 -  inbox_path: Path to INBOX mailbox. This exists mainly because with

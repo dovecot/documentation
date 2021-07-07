@@ -24,10 +24,9 @@ filesystem:
 Configuration and Use
 =====================
 
-* :ref:`Download and Installation
-  <sieve_installation>`
+* :ref:`Download and Installation <sieve_installation>`
 * `Configuration
-  <https://wiki.dovecot.org/Pigeonhole/ManageSieve/Configuration>`__
+  <https://wiki.dovecot.org/Pigeonhole/ManageSieve/Configuration>`_
 * `Troubleshooting
-  <https://wiki.dovecot.org/Pigeonhole/ManageSieve/Troubleshooting>`__
-* `Client Issues <https://wiki.dovecot.org/Pigeonhole/ManageSieve/Clients>`__
+  <https://wiki.dovecot.org/Pigeonhole/ManageSieve/Troubleshooting>`_
+* `Client Issues <https://wiki.dovecot.org/Pigeonhole/ManageSieve/Clients>`_

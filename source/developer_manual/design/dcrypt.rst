@@ -14,7 +14,7 @@ ECDH algorithm
 
 ECDH (Elliptic curve Diffie-Hellman) is widely used in lib-dcrypt for
 both key and data storage. This algorithm is also known as
-`ECIES <https://en.wikipedia.org/wiki/ECIES>`__ (Elliptic curve
+`ECIES <https://en.wikipedia.org/wiki/ECIES>`_ (Elliptic curve
 Integrated Encryption Scheme).
 
 When encrypting data, we perform following steps, this is the currently
@@ -66,7 +66,7 @@ Key formats
 -----------
 
 lib-dcrypt can consume keys in `PEM
-format <https://tools.ietf.org/html/rfc1421>`__ (with or without
+format <https://tools.ietf.org/html/rfc1421>`_ (with or without
 password), and in Dovecot's special format intended for dict storage.
 
 Dovecot's format consists from unencrypted and encrypted keys. You can
@@ -125,4 +125,4 @@ File format is described below
    ekh - (eof-maclen) payload data
 
 There is a small script for decrypting these files, see
-`decrypt.rb <https://wiki.dovecot.org/Design/Dcrypt?action=AttachFile&do=get&target=decrypt.rb>`__.
+`decrypt.rb <https://wiki.dovecot.org/Design/Dcrypt?action=AttachFile&do=get&target=decrypt.rb>`_.

@@ -123,8 +123,7 @@ possibilities for it are:
 -  sql: Shared SQL server
 
 -  Any other :ref:`shared dictionary <dict>` can be used like described at
-   :ref:`user_shared_mailboxes_shared_mailbox_listing`
-
+   :ref:`user_shared_mailboxes_shared_mailbox_listing`.
 
 Please also see :ref:`mailbox_sharing_in_cluster_simple_example`.
 
