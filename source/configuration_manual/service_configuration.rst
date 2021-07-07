@@ -122,6 +122,8 @@ mode
 ^^^^^
 Mode of the file. Defaults to 0700. Note that 0700 is an octal value, while 700 is a different decimal value. Setting mode to ``0`` disables the listener.
 
+.. _service_configuration_inet_listeners:
+
 inet_listeners
 ^^^^^^^^^^^^^^
 

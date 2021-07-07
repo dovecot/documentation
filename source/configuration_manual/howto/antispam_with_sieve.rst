@@ -43,13 +43,11 @@ Caveats and possible pitfalls
 
 Changes:
 
--  2017/11/20 - Possibility of using spamc with
-   `SpamAssassin <https://wiki2.dovecot.org/SpamAssassin#>`__
-   to mitigate multi-message delays
+-  2017/11/20 - Possibility of using spamc with SpamAssassin to mitigate
+   multi-message delays
 
 -  2017/05/05 - Recommendation about Virtual Users and using an SQL
-   Backend. Added brief info about
-   `RoundCube <https://wiki2.dovecot.org/RoundCube#>`__.
+   Backend. Added brief info about RoundCube.
 
 -  2017/04/01 - Pass imap user to scripts.
 

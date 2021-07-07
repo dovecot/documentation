@@ -122,7 +122,7 @@ simultaneous mailbox access.
 
 New mail deliveries are often still handled by different computers. This
 isn't a problem with maildir as long as you're not using
-`LDA <https://wiki2.dovecot.org/LDA#>`__ (i.e. dovecot-uidlist file
+`LDA <https://wiki.dovecot.org/LDA#>`__ (i.e. dovecot-uidlist file
 or index files shouldn't get updated). It shouldn't be a problem with
 mboxes either as long as you're using fcntl locking. This problem can be
 fully solved by using LMTP protocol to deliver the mails to the correct
