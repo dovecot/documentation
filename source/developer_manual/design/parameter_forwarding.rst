@@ -63,7 +63,7 @@ Supported parameters
 SMTP/LMTP protocol
 ------------------
 
-See `<http://www.postfix.org/XCLIENT_README.html>`__
+See http://www.postfix.org/XCLIENT_README.html
 
 -  ``ADDR`` - Client IP, IPV6: prefix is needed for IPv6.
 

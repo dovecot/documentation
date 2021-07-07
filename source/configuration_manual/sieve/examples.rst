@@ -203,7 +203,7 @@ The virustest extension can be used in a similar manner:
 Plus Addressed mail filtering
 -----------------------------
 
-Using the `subaddress <http://tools.ietf.org/html/rfc5233/>`__
+Using the `subaddress <http://tools.ietf.org/html/rfc5233/>`_
 extension, it is possible to match against the 'detail' part of an
 e-mail address, e.g. a '``+tag``' suffix to the local part of the
 address. This is for example useful when you don't want just any +tag to
@@ -219,7 +219,7 @@ user+spam@example.com into user's Spam folder.
    }
 
 The following more advanced example uses the
-`subaddress <http://tools.ietf.org/html/rfc5233/>`__ extension to handle
+`subaddress <http://tools.ietf.org/html/rfc5233/>`_ extension to handle
 recipient addresses structured as ``sales+<name>@company.com`` in a
 special way. The ``<name>`` part is extracted from the address using
 :ref:`variables <pigeonhole_extension_variables>` extension,
@@ -367,12 +367,12 @@ tree as follows:
 
 For example, in March 2013 this puts messages from the Dovecot mailing
 list in a folder called ``INBOX.Lists.2013.03.dovecot``. It combines the
-`date <http://tools.ietf.org/html/rfc5260#section-4>`__ and
+`date <http://tools.ietf.org/html/rfc5260#section-4>`_ and
 :ref:`variables <pigeonhole_extension_variables>` extensions to
 extract the required date strings. Using the ``:create`` argument for
 the ``fileinto`` command, the indicated folder is created automatically
 if it doesn't exist. The ``:create`` argument is provided by the
-`mailbox <http://tools.ietf.org/html/rfc5490#section-3>`__ extension.
+`mailbox <http://tools.ietf.org/html/rfc5490#section-3>`_ extension.
 
 Emulating :ref:`lmtp_save_to_detail_mailbox=yes <setting-lmtp_save_to_detail_mailbox>`
 --------------------------------------------------------------------------------------
@@ -396,7 +396,7 @@ Translation from Procmail
 There exists a script which attempts to translate simple Procmail rules
 into Sieve rules:
 http://www.earth.ox.ac.uk/~steve/sieve/procmail2sieve.pl
-(`dovecot.org mirror <http://dovecot.org/tools/procmail2sieve.pl>`__)
+(`dovecot.org mirror <http://dovecot.org/tools/procmail2sieve.pl>`_)
 
 Here's the original post announcing it:
 http://dovecot.org/list/dovecot/2007-March/020895.html.

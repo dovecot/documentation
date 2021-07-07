@@ -5,7 +5,7 @@ Pigeonhole Sieve: Include Extension
 ===================================
 
 The Sieve **include** extension (`RFC
-6609 <http://tools.ietf.org/html/rfc6609>`__) permits users to include
+6609 <http://tools.ietf.org/html/rfc6609>`_) permits users to include
 one Sieve script into another. This can make managing large scripts or
 multiple sets of scripts much easier, and allows a site and its users to
 build up libraries of scripts. Users are able to include their own

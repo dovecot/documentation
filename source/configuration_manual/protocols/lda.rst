@@ -5,43 +5,34 @@ Dovecot LDA
 ===========
 
 The Dovecot LDA is a `local delivery
-agent <https://wiki2.dovecot.org/MDA#>`__, which takes mail from an
-`MTA <https://wiki2.dovecot.org/MTA#>`__ and delivers it to a user's
-mailbox, while keeping Dovecot index files up to date. Nowadays you
-should probably use the `LMTP
-server <https://wiki2.dovecot.org/LMTP#>`__ instead, because it's
-somewhat easier to configure (especially related to permissions) and
-gives better performance.
+agent <https://wiki.dovecot.org/MDA>`_, which takes mail from an :ref:`mta`
+and delivers it to a user's mailbox, while keeping Dovecot index files up to
+date. Nowadays you should probably use the `LMTP server <lmtp_server>`
+instead, because it's somewhat easier to configure (especially related to
+permissions) and gives better performance.
 
 This page describes the common settings required to make LDA work. You
 should read it first, and then the MTA specific pages:
 
--  `LDA/Postfix <https://wiki2.dovecot.org/LDA/Postfix#>`__
-
--  `LDA/Exim <https://wiki2.dovecot.org/LDA/Exim#>`__
-
--  `LDA/Sendmail <https://wiki2.dovecot.org/LDA/Sendmail#>`__
-
--  `LDA/Qmail <https://wiki2.dovecot.org/LDA/Qmail#>`__
-
--  `LDA/ZMailer <https://wiki2.dovecot.org/LDA/ZMailer#>`__
+-  `LDA/Postfix <https://wiki.dovecot.org/LDA/Postfix>`_
+-  `LDA/Exim <https://wiki.dovecot.org/LDA/Exim>`_
+-  `LDA/Sendmail <https://wiki.dovecot.org/LDA/Sendmail>`_
+-  `LDA/Qmail <https://wiki.dovecot.org/LDA/Qmail>`_
+-  `LDA/ZMailer <https://wiki.dovecot.org/LDA/ZMailer>`_
 
 Main features of Dovecot LDA
 ----------------------------
 
 -  `Mailbox indexing during mail
-   delivery <https://wiki2.dovecot.org/LDA/Indexing#>`__, providing
+   delivery <https://wiki.dovecot.org/LDA/Indexing>`_, providing
    faster mailbox access later
 
 -  :ref:`Quota enforcing by a plugin <quota_plugin>`
 
--  :ref:`Sieve language support by a
-   plugin <sieve>`
+-  :ref:`Sieve language support by a plugin <sieve>`
 
    -  Mail filtering
-
    -  Mail forwarding
-
    -  Vacation auto-reply
 
 Common configuration
@@ -164,7 +155,7 @@ You can use LDA with a few selected system users (ie. user is found from
 
 This should work with any MTA which supports per-user ``.forward``
 files. For qmail's per-user setup, see
-`LDA/Qmail <https://wiki2.dovecot.org/LDA/Qmail#>`__.
+`LDA/Qmail <https://wiki.dovecot.org/LDA/Qmail>`_.
 
 This method doesn't require the authentication socket explained below
 since it's executed as the user itself.
@@ -308,7 +299,7 @@ Logging
    failure.
 
 -  If you have trouble finding where Dovecot logs by default, see
-   `Logging <https://wiki2.dovecot.org/Logging#>`__.
+   :ref:`dovecot_logging`.
 
 -  Note that Postfix's ``mailbox_size_limit`` setting applies to all
    files that are written to. So if you have a limit of 50 MB,
@@ -353,12 +344,9 @@ For using syslog with dovecot-lda, set the paths empty:
 Plugins
 -------
 
--  Most of the `Dovecot
-   plugins <https://wiki2.dovecot.org/Plugins#>`__ work with
-   dovecot-lda.
+-  Most of the :ref:`Dovecot plugins <setting-plugins>` work with dovecot-lda.
 
--  Virtual quota can be enforced using :ref:`Quota
-   plugin <quota_plugin>`.
+-  Virtual quota can be enforced using :ref:`Quota plugin <quota_plugin>`.
 
 -  Sieve language support can be added with the :ref:`Pigeonhole Sieve
    plugin <sieve>`.

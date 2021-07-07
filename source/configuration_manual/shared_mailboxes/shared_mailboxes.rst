@@ -176,8 +176,7 @@ Using SQL dictionary
      acl = pgsql:/etc/dovecot/dovecot-dict-sql.conf.ext
    }
 
-See `Dict <https://wiki.dovecot.org/SharedMailboxes/Shared/Dict#>`__ for
-more information, especially about permission issues.
+See :ref:`dict` for more information, especially about permission issues.
 
 Database tables:
 
@@ -235,7 +234,7 @@ or it can be done using IMAP SETACL command. It is
 the only way to update the shared mailbox list dictionary.
 
 Below is a quick introduction to IMAP ACL commands. See `RFC
-4314 <http://www.ietf.org/rfc/rfc4314.txt>`__ for more details.
+4314 <http://www.ietf.org/rfc/rfc4314.txt>`_ for more details.
 
 -  ``MYRIGHTS <mailbox>``: Returns the user's current rights to the mailbox.
 
@@ -254,8 +253,7 @@ Below is a quick introduction to IMAP ACL commands. See `RFC
         -  ``$group``: Matches all users belonging to the group ($ is not part of
            the group name).
 
-        -  ``$!group``: See group-override in
-           `ACL <https://wiki.dovecot.org/SharedMailboxes/Shared/ACL#>`__
+        -  ``$!group``: See ``group-override`` in :ref:`acl`
            (Dovecot-specific feature).
 
         -  ``user``: Matches the given user.

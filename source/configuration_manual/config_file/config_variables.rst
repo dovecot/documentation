@@ -19,8 +19,7 @@ Global variables that work everywhere are:
 +------------+-----------------------------------------------------------------------------+
 | Long name  |  Description                                                                |
 +============+=============================================================================+
-| %%         | '%' character. See                                                          |
-|            | `SharedMailboxes/Shared <https://wiki.dovecot.org/SharedMailboxes/Shared>`_ |
+| %%         | '%' character. See :ref:`user_shared_mailboxes`                             |
 |            | for further information about %% variables                                  |
 +------------+-----------------------------------------------------------------------------+
 | env:<name> | Environment variable <name>                                                 |

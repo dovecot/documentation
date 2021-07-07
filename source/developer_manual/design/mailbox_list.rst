@@ -40,9 +40,7 @@ Mailbox list is configured by
    be deleted. For example subscriptions file is a control file.
    Defaults to root_dir.
 
--  alt_dir: This is currently
-   `dbox <https://wiki.dovecot.org/MailboxFormat/dbox#>`__-specific
-   setting.
+-  alt_dir: This is currently :ref:`dbox <dbox_mbox_format>`-specific setting.
 
 -  inbox_path: Path to INBOX mailbox. This exists mainly because with
    mbox format INBOX is often in a different location than other
