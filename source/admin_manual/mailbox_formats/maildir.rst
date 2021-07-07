@@ -296,7 +296,7 @@ look like:
 Filesystem Permissions
 ----------------------
 
-See :ref:`Shared Mailboxes Permissions <admin_manual_permissions_in_shared_mailboxes`
+See :ref:`Shared Mailboxes Permissions <admin_manual_permissions_in_shared_mailboxes>`
 for how permissions are set for newly created files and directories.
 
 Issues with the Specification
