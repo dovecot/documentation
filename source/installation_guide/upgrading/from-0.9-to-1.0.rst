@@ -84,7 +84,7 @@ The port settings are different. The new settings are::
 Log Changes for POP before SMTP
 -------------------------------
 
-If you used `POP-before-SMTP <https://wiki2.dovecot.org/HowTo/PopBSMTPAndDovecot>`_ , the log strings are different. This should work with new versions::
+If you used `POP-before-SMTP <https://wiki.dovecot.org/HowTo/PopBSMTPAndDovecot>`_ , the log strings are different. This should work with new versions::
 
   $s =~ s/^... .. ..:..:.. .* dovecot: (pop3|imap)-login: Login: .+ rip=(\d+\.\d+\.\d+\.\d+),.*$/$2/i;
 

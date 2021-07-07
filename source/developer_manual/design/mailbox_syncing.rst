@@ -112,8 +112,8 @@ deinitialized, the sequences change.
 Message flag change records don't actually show what the changes were.
 You can find the new flags just by fetching them (``mail_get_flags()``,
 etc.), they're available immediately. You'll need to create a
-`transaction <lib-storage_mailbox_transactions>`__ and a
-`mail <lib-storage_mail>`__ for that. For example:
+`transaction <lib-storage_mailbox_transactions>` and a
+`mail <lib-storage_mail>` for that. For example:
 
 .. code-block:: C
 

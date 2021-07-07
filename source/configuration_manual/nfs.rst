@@ -70,8 +70,9 @@ Clock synchronization
 =====================
 
 Run ntpd in the NFS server and all the NFS clients to make sure their
-clocks are synchronized. They should always be less than 1 second apart
-from each other.
+clocks are synchronized. If the clocks are more than one second apart
+from each others and multiple computers access the same mailbox
+simultaneously, you may get errors.
 
 Clustering without director
 ===========================
@@ -109,4 +110,3 @@ configuration.
           protocol lda {
             mail_location = maildir:~/Maildir:INDEX=MEMORY
           }
-

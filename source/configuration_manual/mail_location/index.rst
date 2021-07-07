@@ -180,7 +180,7 @@ Example:
 
 Index files
 ^^^^^^^^^^^
-Index files are by default stored under the same directory as mails. With maildir they are stored in the actual maildirs, with mbox they are stored under ``.imap/`` directory. You may want to change the index file location if you're using `NFS <https://wiki.dovecot.org/NFS>`_ or if you're setting up `shared mailboxes <https://wiki.dovecot.org/SharedMailboxes>`_.
+Index files are by default stored under the same directory as mails. With maildir they are stored in the actual maildirs, with mbox they are stored under ``.imap/`` directory. You may want to change the index file location if you're using :ref:`nfs` or if you're setting up :ref:`shared_mailboxes`.
 
 You can change the index file location by adding ``:INDEX=<path>`` to mail_location. For example:
 
