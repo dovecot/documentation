@@ -37,13 +37,13 @@ to check are:
 
 .. code-block:: none
 
-  [azureoxuser@vmback2 ~]$ sudo umount /metacache
-  [sudo] password for azureoxuser:
+  [oxuser@vmback2 ~]$ sudo umount /metacache
+  [sudo] password for oxuser:
 
-  [azureoxuser@vmback2 ~]$ sudo tune2fs -O ^has_journal /dev/sdc1
+  [oxuser@vmback2 ~]$ sudo tune2fs -O ^has_journal /dev/sdc1
   tune2fs 1.42.9 (28-Dec-2013)
 
-  [azureoxuser@vmback2 ~]$ sudo fsck.ext4 -f /dev/sdc1
+  [oxuser@vmback2 ~]$ sudo fsck.ext4 -f /dev/sdc1
   e2fsck 1.42.9 (28-Dec-2013)
   Pass 1: Checking inodes, blocks, and sizes
   Pass 2: Checking directory structure
@@ -52,21 +52,21 @@ to check are:
   Pass 5: Checking group summary information
   /dev/sdc1: 11/16777216 files (0.0% non-contiguous), 1068533/67108608 blocks
 
-  [azureoxuser@vmback2 ~]$ sudo tune2fs -o discard /dev/sdc1
+  [oxuser@vmback2 ~]$ sudo tune2fs -o discard /dev/sdc1
   tune2fs 1.42.9 (28-Dec-2013)
 
-  [azureoxuser@vmback2 ~]$ sudo dumpe2fs /dev/sdc1 | grep discard
+  [oxuser@vmback2 ~]$ sudo dumpe2fs /dev/sdc1 | grep discard
   dumpe2fs 1.42.9 (28-Dec-2013)
   Default mount options:    user_xattr acl discard
 
-  [azureoxuser@vmback2 ~]$ sudo blkid /dev/sdc1
+  [oxuser@vmback2 ~]$ sudo blkid /dev/sdc1
   /dev/sdc1: UUID="5d20d432-3152-4ccf-98e3-94e7500cfd40" TYPE="ext4"
 
-  [azureoxuser@vmback2 ~]$ sudo vi /etc/fstab
+  [oxuser@vmback2 ~]$ sudo vi /etc/fstab
   UUID=5d20d432-3152-4ccf-98e3-94e7500cfd40   /metacache      ext4    defaults,noatime,nodiratime     0 0
-  [azureoxuser@vmback2 ~]$ sudo mount /metacache
+  [oxuser@vmback2 ~]$ sudo mount /metacache
 
-  [azureoxuser@vmback2 ~]$ sudo mount | grep metacache
+  [oxuser@vmback2 ~]$ sudo mount | grep metacache
   /dev/sdc1 on /metacache type ext4 (rw,noatime,nodiratime,seclabel)
 
 * To further reduce iops on the metacache volume when using ``zlib`` or

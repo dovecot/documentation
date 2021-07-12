@@ -4,8 +4,6 @@
 LDAP
 =====
 
-See http://wiki.dovecot.org/AuthDatabase/LDAP for more details.
-
 .. Note:: A director proxy doesn't need userdb configuration (unlike backends).
 
 There are two ways to do LDAP authentication:

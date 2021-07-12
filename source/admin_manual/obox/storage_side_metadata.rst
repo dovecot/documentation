@@ -13,10 +13,8 @@ The header name used is specific to the obox driver:
  ==========  ===============================
  Driver       Metadata Header
  ==========  ===============================
-  azure	     x-ms-meta-dovecot_<key>
   s3	     x-amz-meta-dovecot-<key>
   sproxyd    X-Object-meta-dovecot-<key>
-  swift	     X-Object-Meta-<key>
  ==========  ===============================
 
 The metacache keys available are:

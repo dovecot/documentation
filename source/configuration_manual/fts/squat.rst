@@ -102,7 +102,7 @@ words match mostly non-substrings (which is common), using long enough
 full word indexing can improve the search performance a lot, especially
 when the word matches a lot of messages.
 
-The Squat name comes from `Cyrus IMAP <http://cyrusimap.web.cmu.edu/>`__
+The Squat name comes from `Cyrus IMAP <http://cyrusimap.web.cmu.edu/>`_
 which implements slightly similar Squat indexes ("Search QUery Answer
 Tool"). Dovecot's implementation and file format however is completely
 different. The main visible difference is that Dovecot allows updating
@@ -115,12 +115,12 @@ Configuration
 
 ``fts_squat`` setting can be used to change Squat options:
 
--  partial=n: Length of the substring blocks to index. Default is 4
-   characters and it's probably not a good idea to change it.
+- ``full=n``: Index n first characters from the beginning of words. Default
+  is 4, but it could be useful to increase this to e.g. 10 or so.
+  However larger values take more disk space.
 
--  full=n: Index n first characters from the beginning of words. Default
-   is 4, but it could be useful to increase this to e.g. 10 or so.
-   However larger values take more disk space.
+- ``partial=n``: Length of the substring blocks to index. Default is 4
+  characters and it's probably not a good idea to change it.
 
 ::
 

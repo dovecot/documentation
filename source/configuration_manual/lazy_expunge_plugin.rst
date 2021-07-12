@@ -128,7 +128,7 @@ Example configuration:
 mdbox
 """""
 
-With `mdbox <https://wiki.dovecot.org/MailLocation/dbox>`_, use different
+With `mdbox <dbox_mbox_format>`_, use different
 ``MAILBOXDIRs`` (so copying between namespaces works quickly within the same
 storage), but otherwise exactly the same paths (``INDEX``, ``control``):
 

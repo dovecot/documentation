@@ -4,6 +4,8 @@
 Pigeonhole settings
 ===================
 
+See :ref:`settings` for list of all setting groups.
+
 Global settings
 ^^^^^^^^^^^^^^^
 
@@ -258,7 +260,7 @@ This setting used to be called `plugin-sievei-setting-sieve_global_dir`, but tha
 --------------------
 
  - Default: <empty>
- - Value: `:ref:`string`
+ - Value: :ref:`string`
 
 .. deprecated:: v0.3.1
 

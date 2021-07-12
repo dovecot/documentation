@@ -5,10 +5,10 @@ Zlib plugin
 ===========
 
 Zlib plugin can be used to read compressed mbox, maildir or dbox files. It can
-be also used to write (via IMAP, `LDA <https://wiki.dovecot.org/LDA>`_ and/or
-:ref:`lmtp_server`) compressed messages to `dbox
-<https://wiki.dovecot.org/MailboxFormat/dbox>`_ or Maildir mailboxes. Zlib
-plugin supports compression and decompression using the following libraries:
+also be used to write (via IMAP, `LDA <lda>` and/or :ref:`lmtp_server`)
+compressed messages to `dbox <dbox_mbox_format>` or
+`Maildir <maildir_mbox_format>`_ mailboxes. Zlib plugin supports compression
+and decompression using the following libraries:
 
 * zlib/gzip
 * bzlib/bzip2
@@ -33,11 +33,13 @@ The ``zlib_save`` setting selects the compression algorithm (currently
 supported values are: gz, bz2, lz4, zstd) to use when saving a new mail.
 The ``zlib_save_level`` setting sets the compression level used.
 
-.. note::
-   Currently, the compression level must be an integer in the range 1 to 9
-   regardless of the algorithm selected.  The default level is 6.  These
-   values may not be sensical with compression algorithms other than gz and
-   bz2.
+You can use per-algorithm compression levels, and defaults. Prior to v2.3.15,
+the compression level must be an integer in the range 1 to 9 regardless of the
+algorithm selected. The default level is 6. These values may not make sense
+with compression algorithms other than gz and bz2. For example, zstd supports
+levels from -1 to 22 in latest Zstandard version.
+
+  .. versionchanged:: 2.3.15
 
 mbox
 ====

@@ -4,7 +4,11 @@
 Dovecot Lua support
 =========================
 
-Since v2.3.0 dovecot supports Lua scripting. Dovecot supports lua 5.0 or newer.
+Since v2.3.0 dovecot supports Lua scripting. Dovecot supports Lua 5.1 and
+Lua 5.3.
+
+.. versionremoved:: 2.3.15 Lua 5.2 was supported until its removal in
+   Dovecot version 2.3.15.
 
 See also:
 
@@ -27,7 +31,7 @@ return non-zero to indicate that the script has a problem.
 C API
 ^^^^^^
 
-.. c:function:: void dlua_register_dovecot(struct dlua_script *script)
+.. c:function:: void dlua_dovecot_register(struct dlua_script *script)
 
 Register dovecot variable. This item can also be extended by context specific
 tables, like authentication database adds dovecot.auth.
@@ -38,6 +42,11 @@ Pushes an Dovecot Event to stack.
 
 Lua API
 ^^^^^^^^
+
+.. warning:: Never use ``os.exit()`` from a Lua script. This will cause the
+	     whole process to exit instead of just the script.
+
+.. py:currentmodule:: dovecot
 
 .. py:function:: i_debug(text)
 
@@ -67,17 +76,19 @@ Event functions are available from
 
 .. versionadded:: v2.3.4
 
-.. py:function:: dovecot.event()
+.. py:function:: event()
 
    Generate new event with lua script as parent.
 
-.. py:function:: dovecot.event(parent)
+.. py:function:: event(parent)
    :noindex:
 
    Generate new event with given parent event.
 
 object event
 ^^^^^^^^^^^^^
+
+.. py:currentmodule:: event
 
 .. Note::
 
@@ -291,7 +302,7 @@ Functions
 
 .. py:function::  var_expand(template)
 
-   Expands mail user variables (see `Variables <https://wiki.dovecot.org/Variables>`_ )
+   Expands mail user variables (see :ref:`config_variables`)
 
    :param str template: Variable template string
 
@@ -476,7 +487,7 @@ Variables
 
    Full mailbox name
 
-.. py:attribute:: Mailbox name
+.. py:attribute:: name
 
     Mailbox name
 
