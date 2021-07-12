@@ -78,7 +78,7 @@ Sieve. The plugin is activated by adding it to the :ref:`plugin-sieve-setting-si
 
 The following configuration settings are used:
 
-ref:`plugin-sieve-setting-sieve_extdata_dict_uri` =
+``plugin-sieve-setting-sieve_extdata_dict_uri`` =
    Specifies the uri of the dict that is used for extdata lookups.
 
 Example:
