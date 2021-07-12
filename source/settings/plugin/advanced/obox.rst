@@ -219,6 +219,26 @@ Disable caching bundle list. This setting was added to disable it in case there
 were bugs in it. This setting is likely to become removed entirely.
 
 
+.. _plugin-obox-setting_metacache_index_merging:
+
+``metacache_index_merging``
+---------------------------
+
+.. versionadded:: v2.3.6
+
+- Default: ``v2``
+
+  .. versionchanged:: v2.3.16 Changed default from v1 to v2
+
+Specifies the algorithm to use when merging folder indexes:
+
+ * ``v1`` - The old dsync-based algorithm, which can cause very inefficient
+   behavior in some situations.
+ * ``v2`` - The new algorithm designed specifically for this purpose of merging
+   two indexes. This is the recommended setting.
+ * ``none`` - Alias for :ref:`plugin-obox-setting_metacache_disable_merging`
+
+
 .. _plugin-obox-setting_metacache_disable_merging:
 
 ``metacache_disable_merging``

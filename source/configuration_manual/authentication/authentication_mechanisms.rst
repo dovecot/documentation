@@ -1,8 +1,8 @@
 .. _authentication-authentication_mechanisms:
 
-=========================
-authentication_mechanisms
-=========================
+================================
+Authentication (SASL) Mechanisms
+================================
 
 Plaintext authentication
 ========================

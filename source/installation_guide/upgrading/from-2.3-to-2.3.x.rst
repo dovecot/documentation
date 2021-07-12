@@ -74,7 +74,12 @@ To be informed about shrinking, the
 Upgrading Dovecot v2.3.x to v2.3.15
 ===================================
 
+ * :ref:`setting-ssl_min_protocol` default changed to TLSv1.2. Change it to TLSv1 or TLSv1.1 if you need to support older protocols.
  * The 'SNIPPET' and 'PREVIEW (w/explicit algorithm selection)' IMAP commands have been deprecated. The new RFC 8970 compliant PREVIEW command should be exclusoively used in the future.
  * :ref:`plugin-fs-compress` now accept per-algorithm value.
  * :ref:`plugin-zlib` now accepts per-algorithm value.
  * :ref:`plugin-imap-compress` now uses per-algorithm compression level settings. The old setting is ignored.
+
+Upgrading Dovecot v2.3.x to v2.3.16
+===================================
+ * :ref:`auth-worker service <service_configuration_auth_worker>` service\_count setting has been changed.
