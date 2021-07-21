@@ -2928,6 +2928,8 @@ A spece-separated list of plugins to load.
 
 See :ref:`setting-mail_plugin_dir`
 
+See :ref:`Example Usage <config_file_syntax-mail_plugins_example>`
+
 
 .. _setting-mail_prefetch_count:
 
