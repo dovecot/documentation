@@ -38,8 +38,12 @@ These events are not supported by the notification framework:
 Usage
 =====
 
-To use push notifications, both the `notify` and the `push_notification`
-plugins need to be activated. For LMTP delivery, this is required:
+To use push notifications, both the ``notify`` and the ``push_notification``
+plugins need to be activated by defining in :ref:`setting-mail_plugins`.
+
+This can either be set globally or restricted to the protocols where you
+want push notifications to be generated.  For example, to restrict to mail
+delivery notifications only, this config should be used:
 
 .. code-block:: none
 
@@ -47,14 +51,11 @@ plugins need to be activated. For LMTP delivery, this is required:
     mail_plugins = $mail_plugins notify push_notification
   }
 
-If you also want push notifications to work for LDA-based delivery, you would
-need additional configuration:
-
-.. code-block:: none
-
+  # If notifications are also needed for LDA-based delivery, add:
   protocol lda {
     mail_plugins = $mail_plugins notify push_notification
   }
+
 
 Drivers
 =======
