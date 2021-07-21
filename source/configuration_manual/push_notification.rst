@@ -11,8 +11,9 @@ Dovecot's Push Notification framework exposes `RFC 5423 (Internet Message Store
 Events) <https://tools.ietf.org/html/rfc5423>`_ events that occur in Dovecot to
 a system that can be used to report these events to external services.
 
-These events are available within the notification framework, although a driver
-may not implement all:
+These events (see https://datatracker.ietf.org/doc/html/rfc5423#section-4.1
+for descriptions) are available within the notification framework, although a
+driver may not implement all of them:
 
 * FlagsClear
 * FlagsSet
