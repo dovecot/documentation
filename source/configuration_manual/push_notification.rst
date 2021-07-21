@@ -72,7 +72,7 @@ DLOG (Debug log)
 This will cause notifications to end up in your debug log.
 
 OX (Open-Xchange) driver
-========================
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 The OX backend supports sending notifications on MessageNew events (i.e. mail
 deliveries, not IMAP APPENDs).
@@ -137,7 +137,7 @@ e.g.
   push_notification_driver = ox:url=http://example.com/ user_from_metadata
 
 Metadata
-========
+--------
 
 The push notifications are enabled separately for each user using METADATA.
 Normally `AppSuite <https://wiki.dovecot.org/AppSuite>`_ does this internally,
@@ -148,7 +148,7 @@ but for e.g. testing purposes you can do this yourself:
   doveadm mailbox metadata set -u user@example.com -s "" /private/vendor/vendor.dovecot/http-notify user=11@3
 
 Example Payload
-===============
+---------------
 
 See
 https://github.com/dovecot/core/blob/master/src/plugins/push-notification/push-notification-driver-ox.c.
@@ -185,7 +185,7 @@ Push notification sent in JSON format with the following fields:
 .. _lua_push_notifications:
 
 Lua
-===
+^^^
 
 .. versionadded:: v2.3.4
 
@@ -195,7 +195,7 @@ Dovecot. If you have ``mail_lua_script`` (a global script for storage) it will
 be used if no script is specified.
 
 Configuration
-=============
+-------------
 
 .. code-block:: none
 
@@ -207,11 +207,10 @@ Configuration
     #mail_lua_script=/path/to/common/script.lua
   }
 
-Example script
-==============
+Example Scripts
+---------------
 
-Simple example
-^^^^^^^^^^^^^^
+Simple example:
 
 .. code-block:: none
 
@@ -260,7 +259,7 @@ Simple example
 
 .. versionadded:: v2.3.4
 
-Example with event code
+Example with event code:
 
 .. code-block:: none
 
@@ -341,7 +340,7 @@ Example with event code
   75 end
 
 Overview
-========
+--------
 
 The Lua driver hooks into all events, and calls matching functions when found
 in Lua script.
@@ -365,7 +364,7 @@ functions are never called. This is optimization to avoid roundtrip to Lua when
 it's not needed.
 
 Transactions
-============
+------------
 
 * dovecot_lua_notify_begin_txn(user)
 
@@ -377,7 +376,7 @@ as opaque value by Lua driver. The user parameter is ``mail_user`` object.
 End transaction, context is unreferenced.
 
 Mailbox events
-==============
+--------------
 
 All mailbox events contain `mailbox` parameter, which is the name of the
 affected mailbox.
@@ -407,7 +406,7 @@ Called when mailbox has been unsubscribed from. The mailbox does not
 necessarily exist.
 
 Message events
-==============
+--------------
 
 All message events contain following parameters
 
