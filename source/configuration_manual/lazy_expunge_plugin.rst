@@ -25,12 +25,18 @@ should be used to prune the mailbox to control storage usage.
 Configuration
 =============
 
-There are two plugin configuration options:
-
-:``lazy_expunge``: The mailbox/namespace to move messages to when expunged
-:``lazy_expunge_only_last_instance``: If true, only move to expunged storage
-                                      if this is the last copy of the message
-                                      in the user's account
+ * ``lazy_expunge``: The mailbox/namespace to move messages to when expunged.
+ * ``lazy_expunge_only_last_instance``: If true, only move to expunged storage
+   if this is the last copy of the message in the user's account.
+ * ``lazy_expunge_exclude``: Mailbox name/wildcard to exclude from lazy expunging.
+   It's possible to use either mailbox names or refer to them using special-use flags (e.g. ``\Trash``).
+   To exclude additional mailboxes, add sequential numbers to the end of the plugin name.
+   For example::
+   
+       lazy_expunge_exclude = \Drafts
+       lazy_expunge_exclude2 = External Accounts/*
+   
+   .. versionadded:: v2.3.17
 
 Storage Locations
 -----------------
