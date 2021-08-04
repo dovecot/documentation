@@ -2013,6 +2013,8 @@ See :ref:`authentication-proxies`
 ``lmtp_proxy_rawlog_dir``
 -------------------------
 
+.. versionadded:: v2.3.2
+
 - Default: <empty>
 
 Directory location to store raw LMTP proxy protocol traffic logs.
@@ -2030,6 +2032,8 @@ See :ref:`debugging_rawlog`
 
 ``lmtp_rawlog_dir``
 -------------------
+
+.. versionadded:: v2.3.2
 
 - Default: <empty>
 
@@ -3962,13 +3966,23 @@ See :ref:`quota_plugin`
 
 - Default: <empty>
 
-Location to store rawlog data files.
-
-If empty, rawlog files are not created.
+Directory where to create ``*.in`` and ``*.out`` rawlog files, one per TCP
+connection. The directory must already exist and be writable by the process.
+No error is logged if the directory doesn't exist.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
 
 See :ref:`debugging_rawlog`
+
+Example:
+
+.. code-block:: none
+
+   protocol imap {
+     rawlog_dir = /tmp/rawlog/%u
+     # if you want to put files into user's homedir, use this, do not use ~
+     #rawlog_dir = %h/rawlog
+ }
 
 
 .. _setting-recipient_delimiter:
