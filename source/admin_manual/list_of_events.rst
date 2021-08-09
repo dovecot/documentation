@@ -2570,10 +2570,31 @@ Common fields
 | driver         | Name of the dictionary driver,                       |
 |                | e.g. ``sql`` or ``proxy``.                           |
 +----------------+------------------------------------------------------+
-| user           | Username, if it's not empty                          |
-+----------------+------------------------------------------------------+
 | error          | Error, if one occured                                |
 +----------------+------------------------------------------------------+
+
+.. _dict_created:
+
+dict_created
+^^^^^^^^^^^^
+.. versionadded:: 2.3.17
+
+Emitted when a dict is initialized.
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| dict_name       | Name of the dict as set in configurations            |
++-----------------+------------------------------------------------------+
+
+.. _dict_destroyed:
+
+dict_destroyed
+^^^^^^^^^^^^^^
+.. versionadded:: 2.3.17
+
+Emitted when a dict is destroyed. Same fields as
+:ref:`dict_created`.
 
 .. _dict_lookup_finished:
 
@@ -2585,6 +2606,8 @@ Event emitted when lookup finishes.
 +-----------------+------------------------------------------------------+
 | Field           | Description                                          |
 +=================+======================================================+
+| user            | Username, if it's not empty                          |
++-----------------+------------------------------------------------------+
 | key             | Key name, starts with ``priv/`` or ``shared/``       |
 +-----------------+------------------------------------------------------+
 | key_not_found   | Set to ``yes`` if key not found                      |
@@ -2598,6 +2621,8 @@ dict_iteration_finished
 +-----------------+------------------------------------------------------+
 | Field           | Description                                          |
 +=================+======================================================+
+| user            | Username, if it's not empty                          |
++-----------------+------------------------------------------------------+
 | key             | Used prefix, starts with ``priv/`` or ``shared/``    |
 +-----------------+------------------------------------------------------+
 | key_not_found   | Set to ``yes`` if key not found                      |
@@ -2615,6 +2640,8 @@ Event emitted when transaction has been committed or rolled back.
 +-----------------+------------------------------------------------------+
 | Field           | Description                                          |
 +=================+======================================================+
+| user            | Username, if it's not empty                          |
++-----------------+------------------------------------------------------+
 | rollback        | Set to ``yes`` when transaction was rolled back      |
 +-----------------+------------------------------------------------------+
 | write_uncertain | Set to ``yes`` if write was not confirmed            |
