@@ -25,3 +25,50 @@ Example:
   protocol imap {
     imap_metadata = yes
   }
+
+Storing metadata in SQL dictionary
+==================================
+
+You can store metadata into a database too. This works best with dedicated
+table for storing the entries.
+
+Database schema
+---------------
+
+Since username is a primary key, it is required to have some value. When empty,
+it means that the value applies to keys with ``shared/`` prefix. Keys
+with ``priv/`` prefix are expected to have a non-empty username.
+
+.. code:: sql
+
+  CREATE TABLE metadata (
+    username VARCHAR(255) NOT NULL DEFAULT '',
+    attr_name VARCHAR(255) NOT NULL,
+    attr_value VARCHAR(65535),
+    PRIMARY KEY(username, attr_name)
+  );
+
+Configuration
+-------------
+
+Create dictionary config file with following map::
+
+  ## driver specific config excluded
+
+  map {
+     pattern = $key
+     table = attr_priv
+     fields {
+        attr_name = $key
+     }
+     username_field = username
+     value_field = attr_value
+  }
+
+Then in dovecot add::
+
+  dict {
+    metadata = driver:/path/to/config
+  }
+
+  mail_attribute_dict = proxy::metadata
