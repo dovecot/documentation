@@ -56,7 +56,6 @@ The virtual indexes will be stored in the user root bundle.
 It is possible to disable storing virtual indexes in the user root bundle using
 :ref:`plugin-obox-setting_metacache_disable_secondary_indexes`.
 
-
 Virtual mailbox configuration
 =============================
 
