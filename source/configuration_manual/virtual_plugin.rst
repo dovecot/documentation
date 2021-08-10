@@ -35,6 +35,28 @@ default it uses the `fs` layout, so you can create directories such as:
 If you prefer to use Maildir++ layout instead, you can simply append
 ``:LAYOUT=maildir++`` to the location.
 
+.. _virtual_plugin_obox_secondary_indexes:
+
+Storage location with obox
+--------------------------
+
+.. versionadded:: v2.3.17
+
+When using the virtual plugin with obox, the virtual INDEX location must point
+to a directory named "virtual" in the user home directory. This way the virtual
+indexes are added to the obox root index bundles and will be preserved when
+user moves between backends or when metacache is cleaned.
+
+.. code-block:: none
+
+        location = virtual:/etc/dovecot/virtual:INDEX=~/virtual
+
+The virtual indexes will be stored in the user root bundle.
+
+It is possible to disable storing virtual indexes in the user root bundle using
+:ref:`plugin-obox-setting_metacache_disable_secondary_indexes`.
+
+
 Virtual mailbox configuration
 =============================
 
