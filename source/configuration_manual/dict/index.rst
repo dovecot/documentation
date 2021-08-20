@@ -25,6 +25,13 @@ Name                                            Description
 :ref:`sql <dict-sql>`                           SQL
 =============================================== ===========================
 
+  .. versionadded:: v2.3.17
+
+Starting version 2.3.17, the dict server process keeps the last 10 idle dict
+backends cached for maximum of 30 seconds. Practically this acts as a
+connection pool for dict-redis, dict-memcached and dict-ldap. Note that this
+doesn't affect dict-sql, because it already had its own internal cache.
+
 
 .. _dict-file:
 
