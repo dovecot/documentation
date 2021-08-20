@@ -150,6 +150,9 @@ To do a more complex search:
 Memcached (ASCII Protocol)
 --------------------------
 
+.. note:: Memcached dict support is considered deprecated and will be
+          removed in the future. Users are advised to upgrade to Redis.
+
 .. versionadded:: v2.2.9 
 
 This driver uses the "legacy" Memcache ASCII protocol.
@@ -181,6 +184,9 @@ Supported parameters are:
 
 Memcached (Binary Protocol)
 ---------------------------
+
+.. note:: Memcached dict support is considered deprecated and will be
+          removed in the future. Users are advised to upgrade to Redis.
 
 .. versionadded:: v2.2.9 
 
