@@ -1,0 +1,2 @@
+# dovecot-2.3.16-rev6 Ubuntu 20.04 LTS (Focal Fossa) - OX Dovecot Pro Full Text Search plug-in
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.16/fts/Ubuntu_20.04 ./

@@ -18,7 +18,7 @@ The fs-dictmap syntax is:
 
     dictmap:<dict uri> ; <parent fs uri>[ ; <dictmap settings>]
 
- For <dict uri> you can use any of the Dovecot dict drivers as specified by http://wiki.dovecot.org/Dictionary.
+For <dict uri> you can use any of the Dovecot :ref:`dictionary <dict>` drivers.
 
 .. Note:: The delimiter between the dictmap configuration components is ‘ ; ‘ (<SPACE><SEMICOLON><SPACE>). The spaces before and after the semicolon are necessary; otherwise Dovecot will emit a syntax error and exit.
 

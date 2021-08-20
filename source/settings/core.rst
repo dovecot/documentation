@@ -4549,12 +4549,21 @@ The minimum SSL protocol version Dovecot accepts.
 Supported values are:
 
  * ``ANY`` - Support any version. (should not be used)
+
+   .. versionadded:: v2.3.15
+
  * ``SSLv3`` - Support SSLv3+. (should not be used)
- * ``TLSv1`` - Support TLSv1+.
+ * ``TLSv1`` - Support TLSv1+. (default before v2.3.15)
  * ``TLSv1.1`` - Support TLSv1.1+.
- * ``TLSv1.2`` - Support TLSv1.2+. (default)
+ * ``TLSv1.2`` - Support TLSv1.2+. (default since v2.3.15)
  * ``TLSv1.3`` - Support TLSv1.3+.
+
+   .. versionadded:: v2.3.15
+
  * ``LATEST`` - Support only the latest version available.
+
+   .. versionadded:: v2.3.15
+
 
 See :ref:`setting-ssl`
 
