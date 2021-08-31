@@ -62,6 +62,8 @@ Changes:
 
 -  2018/04/11 - Added notes about sa-learn/spamc and warning about sieve
    script location.
+   
+-  2021/09/01 - Tweak spamc scripts to not use mutually-exclusive parameters
 
 Dovecot configuration
 ---------------------
@@ -154,7 +156,7 @@ sa-learn-spam.sh
 
    #!/bin/sh
    # you can also use tcp/ip here, consult spamc(1)
-   exec /usr/bin/spamc -u ${1} -L spam -C report
+   exec /usr/bin/spamc -u ${1} -L spam
 
 sa-learn-ham.sh
 
@@ -162,7 +164,7 @@ sa-learn-ham.sh
 
    #!/bin/sh
    # you can also use tcp/ip here, consult spamc(1)
-   exec /usr/bin/spamc -u ${1} -L ham -C report
+   exec /usr/bin/spamc -u ${1} -L ham
 
 You can also use sa-learn.
 
