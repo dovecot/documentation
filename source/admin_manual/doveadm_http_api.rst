@@ -55,7 +55,7 @@ Basic auth usage::
   curl -H "Authorization: Basic <base64 doveadm:doveadm_password>" http://host:port/doveadm/v1
   curl –u doveadm:password http://host:port/doveadm/v1
 
-There is also https://github.com/hnsk/doveadm-http-cli that can be used for accessing the API.
+There is also https://github.com/dovecot/doveadm-http-cli that can be used for accessing the API.
 
 
 ************
