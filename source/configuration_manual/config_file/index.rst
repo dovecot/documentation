@@ -235,7 +235,7 @@ The value is read exactly as the entire contents of the file. This includes all 
 Variable expansion
 ^^^^^^^^^^^^^^^^^^
 
-It's possible to refer to other earlier settings as $name.
+It's possible to refer to other earlier settings as ``$name``.
 
 Example:
 
@@ -245,7 +245,10 @@ Example:
    key2 = $key value2
    # Equivalent to key2 = value1 value2
 
-This is commonly used with `mail_plugins` settings to easily add more plugins e.g. inside imap protocol:
+.. _config_file_syntax-mail_plugins_example:
+
+This is commonly used with :ref:`setting-mail_plugins` to easily add more
+plugins, e.g., inside IMAP protocol:
 
 .. code-block:: none
 
@@ -254,7 +257,9 @@ This is commonly used with `mail_plugins` settings to easily add more plugins e.
       mail_plugins = $mail_plugins imap_acl imap_quota
    }
 
-However, you must be careful with the ordering of these in the configuration file, because the `$variables` are expanded immediately while parsing the config file and they're not updated later.
+However, you must be careful with the ordering of these in the configuration
+file, because the ``$variables`` are expanded immediately while parsing the
+config file and they're not updated later.
 
 For example this is a common problem:
 
@@ -271,17 +276,23 @@ For example this is a common problem:
    protocol imap {
      mail_plugins = $mail_plugins imap_quota
    }
+
    # The end result is:
    # mail_plugins = " acl quota" - OK
    # protocol imap {
    #   mail_plugins = " acl imap_acl imap_quota" - NOT OK
    # }
+
    # v2.2.24+ also gives a warning about this:
    # doveconf: Warning: /etc/dovecot/dovecot.conf line 8: Global setting mail_plugins won't change the setting inside an earlier filter at /etc/dovecot/dovecot.conf line 5 (if this is intentional, avoid this warning by moving the global setting before /etc/dovecot/dovecot.conf line 5)
 
-This is because the second mail_plugins change that added `quota` globally didn't update anything inside the existing `protocol { .. }` or other filters.
+This is because the second mail_plugins change that added ``quota`` globally
+didn't update anything inside the existing ``protocol { .. }`` or other
+filters.
 
-Some variables exist in the plugin section only, such as `sieve_extensions`. Those variables cannot be referred to, that is `$sieve_extensions` won't work.
+Some variables exist in the plugin section only, such as
+:ref:`plugin-sieve-setting-sieve_extensions`. Those variables cannot be
+referred to; that is ``$sieve_extensions`` won't work.
 
 Environment variables
 ^^^^^^^^^^^^^^^^^^^^^

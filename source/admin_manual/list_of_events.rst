@@ -821,22 +821,55 @@ These events apply only for connections using the ``connection API``.
           some types of connections, but not for others.
 
 
-client_connection_connected
----------------------------
+Common fields for client (incoming) connections
+-----------------------------------------------
 
-Emitted when a client connection is established.
+Fields present in all ``client_connection_*`` events.
 
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| client_ip           | Source IP address                                    |
+| local_ip            | Local server IP address where TCP client connected   |
+|                     | to.                                                  |
 +---------------------+------------------------------------------------------+
-| client_port         | Source port                                          |
+| remote_ip           | Remote TCP client's IP address.                      |
 +---------------------+------------------------------------------------------+
-| ip                  | Target IP address                                    |
+| remote_port         | Remote TCP client's source port.                     |
 +---------------------+------------------------------------------------------+
-| port                | Target port                                          |
+| remote_pid          | Remote UNIX socket client's process ID.              |
 +---------------------+------------------------------------------------------+
+| remote_uid          | Remote UNIX socket client's system user ID.          |
++---------------------+------------------------------------------------------+
+
+Common fields for server (outgoing) connections
+------------------------------------------------
+
+Fields present in all ``server_connection_*`` events.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| source_ip           | Source IP address used for the outgoing TCP          |
+|                     | connection. This is set only if a specific source IP |
+|                     | was explicitly requested.                            |
++---------------------+------------------------------------------------------+
+| dest_ip             | TCP connection's destination IP address.             |
++---------------------+------------------------------------------------------+
+| dest_port           | TCP connection's destination port.                   |
++---------------------+------------------------------------------------------+
+| dest_host           | TCP connection's destination hostname, if known.     |
++---------------------+------------------------------------------------------+
+| socket_path         | UNIX socket connection's path                        |
++---------------------+------------------------------------------------------+
+| remote_pid          | Remote UNIX socket server's process ID.              |
++---------------------+------------------------------------------------------+
+| remote_uid          | Remote UNIX socket server's system user ID.          |
++---------------------+------------------------------------------------------+
+
+client_connection_connected
+---------------------------
+
+Emitted when a server accepts an incoming client connection.
 
 
 client_connection_disconnected
@@ -847,14 +880,6 @@ Emitted when a client connection is terminated.
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| client_ip           | Source IP address                                    |
-+---------------------+------------------------------------------------------+
-| client_port         | Source port                                          |
-+---------------------+------------------------------------------------------+
-| ip                  | Target IP address                                    |
-+---------------------+------------------------------------------------------+
-| port                | Target port                                          |
-+---------------------+------------------------------------------------------+
 | bytes_in            | Amount of data read, in bytes                        |
 +---------------------+------------------------------------------------------+
 | bytes_out           | Amount of data written, in bytes                     |
@@ -866,24 +891,8 @@ Emitted when a client connection is terminated.
 server_connection_connected
 ---------------------------
 
-Emitted when a server connection is established.
-
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| client_ip           | Source IP address                                    |
-+---------------------+------------------------------------------------------+
-| client_port         | Source port                                          |
-+---------------------+------------------------------------------------------+
-| ip                  | Target IP address                                    |
-+---------------------+------------------------------------------------------+
-| port                | Target port                                          |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
-
+Emitted when an outgoing server connection was either successfully established
+or failed. Currently it is not possible to know which one happened.
 
 server_connection_disconnected
 ------------------------------
@@ -893,14 +902,6 @@ Emitted when a server connection is terminated.
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| client_ip           | Source IP address                                    |
-+---------------------+------------------------------------------------------+
-| client_port         | Source port                                          |
-+---------------------+------------------------------------------------------+
-| ip                  | Target IP address                                    |
-+---------------------+------------------------------------------------------+
-| port                | Target port                                          |
-+---------------------+------------------------------------------------------+
 | bytes_in            | Amount of data read, in bytes                        |
 +---------------------+------------------------------------------------------+
 | bytes_out           | Amount of data written, in bytes                     |
@@ -1312,6 +1313,8 @@ Fields present in all HTTP events.
 | bytes_out           | Amount of data written, in bytes.                    |
 +---------------------+------------------------------------------------------+
 | dest_host           | Destination host.                                    |
++---------------------+------------------------------------------------------+
+| dest_ip             | Destination IP address.                              |
 +---------------------+------------------------------------------------------+
 | dest_port           | Destination port.                                    |
 +---------------------+------------------------------------------------------+
@@ -2570,10 +2573,31 @@ Common fields
 | driver         | Name of the dictionary driver,                       |
 |                | e.g. ``sql`` or ``proxy``.                           |
 +----------------+------------------------------------------------------+
-| user           | Username, if it's not empty                          |
-+----------------+------------------------------------------------------+
 | error          | Error, if one occured                                |
 +----------------+------------------------------------------------------+
+
+.. _dict_created:
+
+dict_created
+^^^^^^^^^^^^
+.. versionadded:: 2.3.17
+
+Emitted when a dict is initialized.
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| dict_name       | Name of the dict as set in configurations            |
++-----------------+------------------------------------------------------+
+
+.. _dict_destroyed:
+
+dict_destroyed
+^^^^^^^^^^^^^^
+.. versionadded:: 2.3.17
+
+Emitted when a dict is destroyed. Same fields as
+:ref:`dict_created`.
 
 .. _dict_lookup_finished:
 
@@ -2585,6 +2609,8 @@ Event emitted when lookup finishes.
 +-----------------+------------------------------------------------------+
 | Field           | Description                                          |
 +=================+======================================================+
+| user            | Username, if it's not empty                          |
++-----------------+------------------------------------------------------+
 | key             | Key name, starts with ``priv/`` or ``shared/``       |
 +-----------------+------------------------------------------------------+
 | key_not_found   | Set to ``yes`` if key not found                      |
@@ -2598,6 +2624,8 @@ dict_iteration_finished
 +-----------------+------------------------------------------------------+
 | Field           | Description                                          |
 +=================+======================================================+
+| user            | Username, if it's not empty                          |
++-----------------+------------------------------------------------------+
 | key             | Used prefix, starts with ``priv/`` or ``shared/``    |
 +-----------------+------------------------------------------------------+
 | key_not_found   | Set to ``yes`` if key not found                      |
@@ -2615,6 +2643,8 @@ Event emitted when transaction has been committed or rolled back.
 +-----------------+------------------------------------------------------+
 | Field           | Description                                          |
 +=================+======================================================+
+| user            | Username, if it's not empty                          |
++-----------------+------------------------------------------------------+
 | rollback        | Set to ``yes`` when transaction was rolled back      |
 +-----------------+------------------------------------------------------+
 | write_uncertain | Set to ``yes`` if write was not confirmed            |

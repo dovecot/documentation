@@ -2013,6 +2013,8 @@ See :ref:`authentication-proxies`
 ``lmtp_proxy_rawlog_dir``
 -------------------------
 
+.. versionadded:: v2.3.2
+
 - Default: <empty>
 
 Directory location to store raw LMTP proxy protocol traffic logs.
@@ -2030,6 +2032,8 @@ See :ref:`debugging_rawlog`
 
 ``lmtp_rawlog_dir``
 -------------------
+
+.. versionadded:: v2.3.2
 
 - Default: <empty>
 
@@ -2927,6 +2931,8 @@ See :ref:`setting-mail_plugins`
 A spece-separated list of plugins to load.
 
 See :ref:`setting-mail_plugin_dir`
+
+See :ref:`Example Usage <config_file_syntax-mail_plugins_example>`
 
 
 .. _setting-mail_prefetch_count:
@@ -3960,13 +3966,23 @@ See :ref:`quota_plugin`
 
 - Default: <empty>
 
-Location to store rawlog data files.
-
-If empty, rawlog files are not created.
+Directory where to create ``*.in`` and ``*.out`` rawlog files, one per TCP
+connection. The directory must already exist and be writable by the process.
+No error is logged if the directory doesn't exist.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
 
 See :ref:`debugging_rawlog`
+
+Example:
+
+.. code-block:: none
+
+   protocol imap {
+     rawlog_dir = /tmp/rawlog/%u
+     # if you want to put files into user's homedir, use this, do not use ~
+     #rawlog_dir = %h/rawlog
+ }
 
 
 .. _setting-recipient_delimiter:
@@ -4533,12 +4549,21 @@ The minimum SSL protocol version Dovecot accepts.
 Supported values are:
 
  * ``ANY`` - Support any version. (should not be used)
+
+   .. versionadded:: v2.3.15
+
  * ``SSLv3`` - Support SSLv3+. (should not be used)
- * ``TLSv1`` - Support TLSv1+.
+ * ``TLSv1`` - Support TLSv1+. (default before v2.3.15)
  * ``TLSv1.1`` - Support TLSv1.1+.
- * ``TLSv1.2`` - Support TLSv1.2+. (default)
+ * ``TLSv1.2`` - Support TLSv1.2+. (default since v2.3.15)
  * ``TLSv1.3`` - Support TLSv1.3+.
+
+   .. versionadded:: v2.3.15
+
  * ``LATEST`` - Support only the latest version available.
+
+   .. versionadded:: v2.3.15
+
 
 See :ref:`setting-ssl`
 

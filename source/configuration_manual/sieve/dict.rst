@@ -6,9 +6,8 @@ Pigeonhole Sieve: Dict Lookup for Sieve Scripts
 
 Sieve scripts can be obtained from a number of different :ref:`types of
 locations <pigeonhole_configuration_script_locations>`.
-This page shows how to retrieve them from a `Dovecot
-dictionary <http://wiki2.dovecot.org/Dictionary>`__ (abbreviated as
-'dict'), which can have either a file or database backend.
+This page shows how to retrieve them from a :ref:`Dovecot dictionary <dict>`
+(abbreviated as 'dict'), which can have either a file or database backend.
 
 To retrieve a Sieve script from the dict database, two lookups are
 performed. First, the name of the Sieve script is queried from the dict
@@ -155,8 +154,8 @@ Finally, configure Sieve to check the dict (e.g. in
 As with the flat file, the database query will need to return the Sieve
 script all in one line, otherwise the subsequent lines will be ignored.
 
-Note: you might need to `configure the proxy
-permissions <https://wiki2.dovecot.org/Dict#>`__
+Note: you might need to configure the
+:ref:`dict proxy permissions <dict-proxy_process>`.
 
 Caching the compiled Sieve binaries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

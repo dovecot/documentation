@@ -72,7 +72,8 @@ utility. For example:
 
 .. versionadded:: v2.3.0
 
-The scheme defaults to BCRYPT, but you can use ``-s`` to override
+The scheme defaults to CRYPT (with the ``$2y$`` bcrypt format),
+but you can use ``-s`` to override it:
 
 .. code-block:: none
 

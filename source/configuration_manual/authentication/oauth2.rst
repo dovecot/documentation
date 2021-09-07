@@ -137,7 +137,7 @@ Local validation
 Local validation allows validating tokens without connecting to an oauth2 server.
 This requires that key issuer supports `JWT tokens (RFC 7519) <https://tools.ietf.org/html/rfc7519>`_.
 
-You can put the validation keys into any `dictionary <https://wiki.dovecot.org/Dictionary>`_.
+You can put the validation keys into any :ref:`dictionary <dict>`.
 The lookup key used is ``/shared/<azp:default>/<alg>/<keyid:default>``.
 If there is no ``azp`` element in token body, then default is used.
 The ``alg`` field is always uppercased by Dovecot.
@@ -162,6 +162,28 @@ And would expect, when using fs posix, key at
 ::
 
    /etc/dovecot/keys/issuer.net-dovecot/ES256/Zm9vb2Jhcgo
+
+
+In key id and AZP field, ``/`` are escaped with ``%2f`` and ``%`` are escaped with with ``%25`` with any driver.
+This is because ``/`` is a dict key component delimiter.
+
+.. versionchanged:: v2.3.14.1
+
+When using dict-fs driver, if the path starts with ``.`` it will be escaped using two more dots.
+So any ``.`` turns into ``...``, and any ``..`` turns into ``....``.
+
+For example, token
+
+.. code:: javascript
+
+  {"kid":""./../../../../etc,"alg":"ES256","typ":"JWT"}.{"sub":"testuser@example.org","azp":"attack"}
+
+Would turn into
+
+::
+
+  /etc/dovecot/keys/attack/ES256/...%2f....%2f....%2f....%2f....%2fetc%2fpasswd
+
 
 Local validation can be enabled with other oauth2 options,
 so that if key validation fails for non-JWT keys,

@@ -14,7 +14,7 @@ The ``dict`` (dictionary) quota backend supports both ``storage`` and
 ``messages`` quota limits. The current quota is kept in the specified
 dictionary.
 
-See `dictionary`_ for full description of the available backends.
+See :ref:`dict` for full description of the available backends.
 
 The quota root format is:
 
@@ -40,8 +40,9 @@ Name                Description
                     other data in the same SQL row - otherwise the entire row
                     could get deleted. Note that the unset is required with
                     PostgreSQL or the merge_quota() trigger doesn't work
-                    correctly. (v2.2.20+)
-                    .. versionaddedd:: 2.2.20
+                    correctly.
+
+                    .. versionadded:: 2.2.20
 
 ``ns=<prefix>``     This quota root is tracked only for the given namespace.
 =================== ============================================================
@@ -216,6 +217,4 @@ dictionary names are configured in ``dovecot.conf``. For example:
     expire = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
   }
 
-See `dictionary`_ for more information, especially about permission issues.
-
-.. _`dictionary`: https://wiki.dovecot.org/Dictionary
+See :ref:`dict` for more information, especially about permission issues.
