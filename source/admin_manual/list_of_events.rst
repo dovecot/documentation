@@ -206,31 +206,49 @@ Common fields
 
 These fields are common for the rest of the authentication client events.
 
-+--------------------+-----------------------------------------------------------+
-| Field             | Description                                                |
-+===================+============================================================+
-| service           | Service name, such as imap3, pop3, lmtp.                   |
-+-------------------+------------------------------------------------------------+
-| session           | Session identifier.                                        |
-+-------------------+------------------------------------------------------------+
-| local_name        | TLS SNI.                                                   |
-+-------------------+------------------------------------------------------------+
-| local_ip          | Local IP client connected to.                              |
-+-------------------+------------------------------------------------------------+
-| remote_ip         | Remote IP of client.                                       |
-+-------------------+------------------------------------------------------------+
-| local_port        | Local port client connected to.                            |
-+-------------------+------------------------------------------------------------+
-| remote_port       | Remote port of client.                                     |
-+-------------------+------------------------------------------------------------+
-| real_local_ip     | Real local IP as seen by the server.                       |
-+-------------------+------------------------------------------------------------+
-| real_remote_ip    | Real remote IP as seen by the server.                      |
-+-------------------+------------------------------------------------------------+
-| real_local_port   | Real local port as seen by the server.                     |
-+-------------------+------------------------------------------------------------+
-| real_remote_port  | Real remote port as seen by the server.                    |
-+-------------------+------------------------------------------------------------+
++--------------------+------------------------------------------------------------------------+
+| Field             | Description                                                             |
++===================+=========================================================================+
+| mechanism         | Name of used SASL mechanism (e.g. PLAIN).                               |
++-------------------+-------------------------------------------------------------------------+
+| service           | Service name, such as imap3, pop3, lmtp.                                |
++-------------------+-------------------------------------------------------------------------+
+| transport         | Transport security indicator (insecure, TLS, trusted).                  |
++-------------------+-------------------------------------------------------------------------+
+| session           | Session identifier.                                                     |
++-------------------+-------------------------------------------------------------------------+
+| certificate_user  | Username from certificate                                               |
++-------------------+-------------------------------------------------------------------------+
+| client_id         | Expands to client ID request as IMAP arglist.                           |
+|                   | Needs :dovecot_core:ref:`imap_id_retain=yes <imap_id_retain>`.          |
++-------------------+-------------------------------------------------------------------------+
+| local_name        | TLS SNI.                                                                |
++-------------------+-------------------------------------------------------------------------+
+| local_ip          | Local IP client connected to.                                           |
++-------------------+-------------------------------------------------------------------------+
+| remote_ip         | Remote IP of client.                                                    |
++-------------------+-------------------------------------------------------------------------+
+| local_port        | Local port client connected to.                                         |
++-------------------+-------------------------------------------------------------------------+
+| remote_port       | Remote port of client.                                                  |
++-------------------+-------------------------------------------------------------------------+
+| real_local_ip     | Real local IP as seen by the server.                                    |
++-------------------+-------------------------------------------------------------------------+
+| real_remote_ip    | Real remote IP as seen by the server.                                   |
++-------------------+-------------------------------------------------------------------------+
+| real_local_port   | Real local port as seen by the server.                                  |
++-------------------+-------------------------------------------------------------------------+
+| real_remote_port  | Real remote port as seen by the server.                                 |
++-------------------+-------------------------------------------------------------------------+
+| tls_cipher        | Cipher name used, e.g. ``TLS_AES_256_GCM_SHA384``.                      |
++-------------------+-------------------------------------------------------------------------+
+| tls_cipher_bits   | Cipher bits, e.g. ``256``.                                              |
++-------------------+-------------------------------------------------------------------------+
+| tls_pfs           | Perfect forward-security mechanism, e.g. ``KxANY``, ``KxECDHE``.        |
++-------------------+-------------------------------------------------------------------------+
+| tls_protocol      | TLS protocol name, e.g. ``TLSv1.3``.                                    |
++-------------------+-------------------------------------------------------------------------+
+
 
 auth_client_passdb_lookup_started
 ---------------------------------
@@ -314,87 +332,87 @@ to track and log individual authentication actions.
 Common fields
 -------------
 
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| user                | Full username. This can change during authentication,|
-|                     | for example due to passdb lookups.                   |
-+---------------------+------------------------------------------------------+
-| original_user       | Original username exactly as provided by the client. |
-+---------------------+------------------------------------------------------+
-| translated_user     | Similar to original_user, except after               |
-|                     | :dovecot_core:ref:`auth_username_translation`        |
-|                     | translations are applied.                            |
-+---------------------+------------------------------------------------------+
-| login_user          | When doing a master user login, the user we are      |
-|                     | logging in as. Otherwise not set.                    |
-+---------------------+------------------------------------------------------+
-| master_user         | When doing a master user login, the master username. |
-|                     | Otherwise not set.                                   |
-+---------------------+------------------------------------------------------+
-| mechanism           | Name of used SASL mechanism (e.g. PLAIN)             |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| service             | Service doing the lookup (e.g. imap, pop3)           |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| session             | Session ID                                           |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| client_id           | Expands to client ID request as IMAP arglist. Needs  |
-|                     | imap_id_retain=yes                                   |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| remote_ip           | Remote IP address of the client connection           |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| local_ip            | Local IP address where client connected to           |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| remote_port         | Remote port of the client connection                 |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| local_port          | Local port where the client connected to             |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| real_remote_ip      | Same as remote_ip, except if the connection was      |
-|                     | proxied, this is the proxy's IP address.             |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| real_local_ip       | Same as local_ip, except if the connection was       |
-|                     | proxied, this is the IP where proxy connected to.    |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| real_remote_port    | Same as remote_port, except if the connection was    |
-|                     | proxied, this is the proxy connection's port.        |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| real_local_port     | Same as remote_port, except if the connection was    |
-|                     | proxied, this is the local port where the proxy      |
-|                     | connected to.                                        |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| local_name          | TLS SNI hostname, if given                           |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.12                            |
-+---------------------+------------------------------------------------------+
-| transport           | Client connection's transport security. Values:      |
-|                     |  * ``insecure``                                      |
-|                     |  * ``trusted``                                       |
-|                     |  * ``TLS``                                           |
-+---------------------+------------------------------------------------------+
++---------------------+-------------------------------------------------------------------+
+| Field               | Description                                                       |
++=====================+===================================================================+
+| user                | Full username. This can change during authentication,             |
+|                     | for example due to passdb lookups.                                |
++---------------------+-------------------------------------------------------------------+
+| original_user       | Original username exactly as provided by the client.              |
++---------------------+-------------------------------------------------------------------+
+| translated_user     | Similar to original_user, except after                            |
+|                     | :dovecot_core:ref:`auth_username_translation`                     |
+|                     | translations are applied.                                         |
++---------------------+-------------------------------------------------------------------+
+| login_user          | When doing a master user login, the user we are                   |
+|                     | logging in as. Otherwise not set.                                 |
++---------------------+-------------------------------------------------------------------+
+| master_user         | When doing a master user login, the master username.              |
+|                     | Otherwise not set.                                                |
++---------------------+-------------------------------------------------------------------+
+| mechanism           | Name of used SASL mechanism (e.g. PLAIN)                          |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| service             | Service doing the lookup (e.g. imap, pop3)                        |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| session             | Session ID                                                        |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| client_id           | Expands to client ID request as IMAP arglist. Needs               |
+|                     | :dovecot_core:ref:`imap_id_retain=yes <imap_id_retain>`           |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| remote_ip           | Remote IP address of the client connection                        |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| local_ip            | Local IP address where client connected to                        |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| remote_port         | Remote port of the client connection                              |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| local_port          | Local port where the client connected to                          |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| real_remote_ip      | Same as remote_ip, except if the connection was                   |
+|                     | proxied, this is the proxy's IP address.                          |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| real_local_ip       | Same as local_ip, except if the connection was                    |
+|                     | proxied, this is the IP where proxy connected to.                 |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| real_remote_port    | Same as remote_port, except if the connection was                 |
+|                     | proxied, this is the proxy connection's port.                     |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| real_local_port     | Same as remote_port, except if the connection was                 |
+|                     | proxied, this is the local port where the proxy                   |
+|                     | connected to.                                                     |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| local_name          | TLS SNI hostname, if given                                        |
+|                     |                                                                   |
+|                     | .. versionadded:: v2.3.12                                         |
++---------------------+-------------------------------------------------------------------+
+| transport           | Client connection's transport security. Values:                   |
+|                     |  * ``insecure``                                                   |
+|                     |  * ``trusted``                                                    |
+|                     |  * ``TLS``                                                        |
++---------------------+-------------------------------------------------------------------+
 
 
 auth_request_finished
