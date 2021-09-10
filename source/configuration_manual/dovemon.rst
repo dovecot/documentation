@@ -8,6 +8,9 @@ Dovemon is a backend monitoring tool for director hosts. It monitors backend res
 
 Configuration file: /etc/dovecot/dovemon.config.yml: 
 
+
+.. versionchanged:: v2.3.17 Python version required by Dovemon changed from 2 to 3.
+
 .. code-block:: none
 
    loglevel: 4
