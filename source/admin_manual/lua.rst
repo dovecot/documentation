@@ -172,6 +172,81 @@ Functions:
 
    Returns an passthrough event. A log message *must be* logged or else a panic will occur.
 
+object dict
+^^^^^^^^^^^
+
+.. py:currentmodule:: dict
+
+Functions:
+----------
+
+.. py:function::  lookup(key[, username])
+
+   Lookup key from dict. If key is found, returns a table with values.
+   If key is not found, returns nil.
+
+   :param str key: Key to lookup
+   :param str username: Username for private dict keys
+
+.. py:function::  iterate(path, flags[, username])
+
+   Returns an iteration step function and dict iter userdata. For example::
+
+	for key, values in dict:iterate(key_prefix, 0) do
+	  dovecot.i_debug('key='..key..', first value='..values[1])
+	end
+
+   :param str path: Path prefix to iterate
+   :param int flags: Iteration flags. Currently raw numbers must be used for these. See ``enum dict_iterate_flags`` in the C code.
+   :param str username: Username for private dict paths
+
+.. py:function::  transaction_begin([username])
+
+   Returns a new transaction object.
+
+   :param str username: Username for private dict keys
+
+object dict.transaction
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. py:currentmodule:: dict.transaction
+
+Functions:
+----------
+
+.. py:function::  set(key, value)
+
+   Set key=value in the dict transaction.
+
+   :param str key: Key to set
+   :param str value: Value to set
+
+.. py:function::  unset(key, value)
+
+   Unset key in the dict transaction.
+
+   .. versionadded:: v2.3.17
+
+   :param str key: Key to unset
+
+.. py:function::  set_timestamp({tv_sec=seconds, tv_nsec=nanoseconds})
+
+   Set timestamp to the dict transaction. This is currently used only with
+   Cassandra.
+
+   .. versionadded:: v2.3.17
+
+   :param int seconds: UNIX timestamp
+   :param int nanoseconds: Nanoseconds part of the timestamp
+
+.. py:function::  commit()
+
+   Commit the transaction.
+
+.. py:function::  rollback()
+
+   Rollback the transaction.
+
 mail-lua
 ^^^^^^^^^
 
