@@ -35,7 +35,9 @@ Configuration
   # finish the quota calculation on background in indexer-worker process. Mail
   # deliveries will be assumed to succeed, and explicit quota lookups will
   # return internal error. (v2.2.28+)
-  mail_vsize_bg_after_count = 100
+  protocol !indexer-worker {
+    mail_vsize_bg_after_count = 100
+  }
 
   plugin {
     # 10MB quota limit
