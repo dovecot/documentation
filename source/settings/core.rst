@@ -3136,6 +3136,13 @@ This may happen when mail messages do not have their virtual sizes cached.
 When indexing is occuring in the background, explicit quota size queries
 return an internal error and mail deliveries are assumed to succeed.
 
+This setting must not be set to indexer-worker process, or the background
+calculation isn't finished. The configuration should be like::
+
+  protocol !indexer-worker {
+    mail_vsize_bg_after_count = 10
+  }
+
 See :ref:`quota_plugin`
 
 
