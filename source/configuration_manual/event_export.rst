@@ -142,6 +142,8 @@ statistics gathering.  The only additions to the block are the ``exporter`` and
 These are only meaningful if the event matches the predicate (categories,
 filter, etc.) specified in the metric block.
 
+.. _filtering-events-label:
+
 Filtering Events
 ^^^^^^^^^^^^^^^^
 

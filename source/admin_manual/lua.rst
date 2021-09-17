@@ -85,6 +85,26 @@ Event functions are available from
 
    Generate new event with given parent event.
 
+
+.. py:function:: restrict_global_variables(toggle)
+
+   Enable or disable restricting new global variables. If enabled, the rest
+   of the script won't be allowed to declare global non-function variables but
+   they can declare local variables and use already defined global variables.
+   If a script needs to define a variable, they must declare them as local i.e.
+   instead of ``my_var = "some value"``, do ``local my_var = "some value"``.
+   Restrictions will remain in place until the end of the execution of the
+   script or until they are lifted by calling
+   ``dovecot.restrict_global_variables(false)``.
+
+   Default is permissive mode i.e. same as lua's default, global variables
+   are not restricted.
+
+   :param boolean toggle: Enable or disable defining new global variables
+
+.. versionadded:: v2.3.17
+
+
 object event
 ^^^^^^^^^^^^^
 
