@@ -2310,6 +2310,21 @@ Location of the login plugin directory.
 List of plugins to load for IMAP and POP3 login processes.
 
 
+.. _setting-login_proxy_rawlog_dir:
+
+``login_proxy_rawlog_dir``
+--------------------------
+
+.. versionadded:: v2.3.17
+
+- Default: <empty>
+- Values: :ref:`string`
+
+Login processes write rawlogs for proxied connections to this directory for
+debugging purposes. Note that login processes are usually chrooted, so the
+directory is relative to ``$base_dir/login/``.
+
+
 .. _setting-login_proxy_timeout:
 
 ``login_proxy_timeout``
