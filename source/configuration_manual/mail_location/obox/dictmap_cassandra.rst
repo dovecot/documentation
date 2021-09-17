@@ -172,6 +172,8 @@ Reference counting requires an additional table:
 
  * user_mailbox_objects_reverse
 
+.. _dictmap_cassandra_quorum_configuration:
+
 Quorum Configuration
 --------------------
 
@@ -233,6 +235,8 @@ reliably continue operating if Cassandra in the local datacenter no longer
 has quorum, i.e. at least half of its nodes have gone down. In this case
 writes will always fail. If this happens, all users should be moved to be
 processed by another datacenter.
+
+.. _dictmap_cassandra_fallback_consistency:
 
 Fallback consistency
 --------------------
