@@ -4548,13 +4548,13 @@ See :ref:`dovecot_ssl_configuration`
 The minimum SSL protocol version Dovecot accepts.
 Supported values are:
 
- * ``ANY`` - Support any version. (should not be used)
+ * ``ANY`` - Support any version. (SHOULD NOT BE USED)
 
    .. versionadded:: v2.3.15
 
- * ``SSLv3`` - Support SSLv3+. (should not be used)
- * ``TLSv1`` - Support TLSv1+. (default before v2.3.15)
- * ``TLSv1.1`` - Support TLSv1.1+.
+ * ``SSLv3`` - Support SSLv3+. (SHOULD NOT BE USED) (SSLv3 deprecated: `RFC 7568 <https://datatracker.ietf.org/doc/html/rfc7568>`_)
+ * ``TLSv1`` - Support TLSv1+. (default before v2.3.15) (TLSv1 deprecated: `RFC 8996 <https://datatracker.ietf.org/doc/html/rfc8996>`_)
+ * ``TLSv1.1`` - Support TLSv1.1+. (TLSv1.1 deprecated: `RFC 8996 <https://datatracker.ietf.org/doc/html/rfc8996>`_)
  * ``TLSv1.2`` - Support TLSv1.2+. (default since v2.3.15)
  * ``TLSv1.3`` - Support TLSv1.3+.
 
