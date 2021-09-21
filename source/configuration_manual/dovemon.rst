@@ -5,8 +5,8 @@ Dovemon
 =======
 
 When running a Dovecot director ring, it is vital to keep track of status of
-backends and remove them from the directors if they are not reachable or add
-them back if they come back online. Dovemon is the daemon that monitors status
+backends and remove them from the directors if they are not reachable and add
+them back when they come back online. Dovemon is a daemon that monitors status
 of backends and can act automatically based on what it sees from the health
 checks so that the administrator does not need to manually monitor the
 backends.
@@ -34,7 +34,7 @@ other directors will find out in the next ring synchronization.
 
    Figure 2: Different backends assigned to each dovemon process
 
-As shown in the above figures, each dovemon process is interacts with a
+As shown in the above figures, each dovemon process interacts with a
 separate director and notifies it if backends need to go down or up. At each
 cycle of operation, dovemon polls the director for a list of all backends and
 performs a set of tests for each backend in a separate thread. By default, this
