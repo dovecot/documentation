@@ -4,7 +4,7 @@
 Dovemon
 =======
 
-Dovemon is a backend monitoring tool for director hosts. It monitors backend responses and disables/enables backends if they stop responding. (Requires Dovecot v2.2.19 or later. For older versions use poolmon.) 
+Dovemon is a backend monitoring tool for director hosts. It monitors backend responses and disables/enables backends if they stop responding.
 
 Configuration file: /etc/dovecot/dovemon.config.yml: 
 
@@ -465,9 +465,6 @@ and command responses are checked.
 Poll those hosts not listed in accounts file but are present in list of
 backends returned by director (i.e. response to ``HOST-LIST``).
 
-.. versionadded:: v2.2.32
-
-
 .. _setting-dovemon_use_host_flush:
 
 ``use_host_flush``
@@ -478,9 +475,6 @@ backends returned by director (i.e. response to ``HOST-LIST``).
 
 Issue a ``HOST-FLUSH`` after marking backend down with ``HOST-DOWN``. If set
 to false, dovemon issues ``HOST-RESET-USERS`` for the host.
-
-.. versionadded:: v2.2.32.1
-
 
 .. _setting-dovemon_use_delayed_down:
 
