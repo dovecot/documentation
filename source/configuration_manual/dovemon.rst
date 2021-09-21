@@ -4,12 +4,95 @@
 Dovemon
 =======
 
-Dovemon is a backend monitoring tool for director hosts. It monitors backend responses and disables/enables backends if they stop responding.
+When running a Dovecot director ring, it is vital to keep track of status of
+backends and remove them from the directors if they are not reachable or add
+them back if they come back online. Dovemon is the daemon that monitors status
+of backends and can act automatically based on what it sees from the health
+checks so that the administrator does not need to manually monitor the
+backends.
 
-Configuration file: /etc/dovecot/dovemon.config.yml: 
+Dovemon is part of licensed Dovecot Pro and is therefore available only as part
+of the Dovecot Pro.
 
+Each director instance interacts with a separate dovemon daemon. In a typical
+setup, dovemon can be used in two ways. In a more general situation, each
+dovemon monitors all backends and can enable and disable all of them. In this
+context, disabling a backend means setting it to "down" and enabling means
+setting the backend to "up". Figure 1 illustrates such setup.
+
+.. figure:: _static/dovemon-monitors-all.png
+   :scale: 50
+
+   Figure 1: Each dovemon instance monitor all backends
+
+Alternatively, it is possible to assign certain backends to each dovemon in the
+configuration file. In this case, if a backend is down by the relevant dovemon,
+other directors will find out in the next ring synchronization.
+
+.. figure:: _static/dovemon-monitors-specific.png
+   :scale: 50
+
+   Figure 2: Different backends assigned to each dovemon process
+
+As shown in the above figures, each dovemon process is interacts with a
+separate director and notifies it if backends need to go down or up. At each
+cycle of operation, dovemon polls the director for a list of all backends and
+performs a set of tests for each backend in a separate thread. By default, this
+cycle period is 10 seconds. These tests vary from simple connection check to
+more complicated protocol level scenarios such as LMTP mail delivery, IMAP &
+POP3 delete, IMAP expunge, etc. Each of these tests can be enabled or disabled
+in the config file. By default, dovemon only performs a simple IMAP connection
+and issues a LIST command.
+
+If a certain number of test rounds fail consecutively (default is 3), dovemon
+performs a series of "rapid" tests which means that it launches the tests again
+but without any delays in between each round. The default value for number of
+rapid test rounds is 10. At this stage, if a configurable amount of the tests
+fail (default=7) the backend is deemed as faulty and it is removed from the
+list of active backends. This is done by setting the backend as "down" in the
+director process. Dovemon will continue polling the backend (if not disabled by
+another dovemon) with tests configuration according to the YAML file and set it
+to "up" again as soon as the first round of tests succeed.
+
+At each cycle, dovemon waits for a configurable time (default is 3 seconds) to
+receive a reply from backend. In case the reply times out, doveadm adds another
+timeout period for the next round of polling. This is repeated until the max
+retries have been performed. In the default case where where 3 retries are
+performed with timeout set to 3s, dovemon waits for 3s, 6s, and 9s for first,
+second, and third polling results respectively. However, this does not affect
+the interval between pollings i.e. start time of each polling is always at 10s
+interval (in default case).
+
+During all of the time dovemon inspects the backends, it keeps track of latency
+of each backend. However, this information is not used for decision making and
+are only written to logs.
+
+Init scripts for Debian and Redhat systems are provided in binary packages in
+form of Systemd unit files but they need to be enabled manually. By default
+they are disabled.
+
+In order to avoid a situation where dovemon instances over-rule each other's
+decision on a host status each dovemon will bring back up a backend only if it
+was disabled by itself (i.e. if dovemon finds out from its director that a
+backend is down it will not try to bring it back up).
 
 .. versionchanged:: v2.3.17 Python version required by Dovemon changed from 2 to 3.
+
+.. _dovemon_configuration:
+
+Configuration
+-------------
+
+Configuration of dovemon is done via modifying a YAML file. The python script
+has an internal list of default configuration options. If any of these default
+settings are present in the config file and the value is modified, the modified
+value is used. Unknown configurations in the file are ignored. The binary
+packages (rpm and deb) include an example config file.
+
+Upon receiving SIGHUP, dovemon reads the YAML file again and reloads the
+configurations.
+
+Configuration file: ``/etc/dovecot/dovemon.config.yml``
 
 .. code-block:: none
 
@@ -40,7 +123,9 @@ Test accounts file: ``/etc/dovecot/dovemon.testaccounts.yml``
    username: user0002
    password: tosivaikeasalasana
 
-For master user authentication, the ``auth`` setting in ``dovemon.yml`` should be set to ``sasl``. Test accounts file:
+
+For master user authentication, the ``auth`` setting in ``dovemon.yml`` should
+be set to ``sasl``. Test accounts file:
 
 .. code-block:: none
 
@@ -49,11 +134,45 @@ For master user authentication, the ``auth`` setting in ``dovemon.yml`` should b
    masteruser: masteruser
    password: masterpassword
 
-This file allows configuring a separate test account for each backend. The backend must be specified using the same IP address as what ``doveadm director status`` shows for it.
-if connection to backends fail 3 times in a row per protocol (``retry_count`` in config) dovemon goes to rapid poll mode for the backend. In this rapid mode dovecot does quick round of 10 polls with the same protocol (``rapid_rounds`` in config) and if 7 of them still fail, then issue ``HOST-DOWN`` in the backend and ``FLUSH`` users form the backend to be redistributed to the remainining backends.
-Also dovemon issues ``HOST-UP`` on backend upon first successful poll if backend is already marked down.
 
-For more information on dovemon workflow see dovemon documentation page
+This file allows configuring a separate test account for each backend. The
+backend must be specified using the same IP address as what
+``doveadm director status`` shows for it.
+
+If connection to backends fail 3 times in a row per protocol (``retry_count``
+in config) dovemon goes to rapid poll mode for the backend. In this rapid mode
+dovecot does quick round of 10 polls with the same protocol (``rapid_rounds``
+in config) and if 7 of them still fail, then issue ``HOST-DOWN`` in the backend
+and ``FLUSH`` users form the backend to be redistributed to the remainining
+backends.
+
+Also dovemon issues ``HOST-UP`` on backend upon first successful poll if
+backend is already marked down.
+
+.. _dovemon_logging:
+
+Logging
+-------
+
+At each phase of its operation i.e. at connection step, authentication step,
+logout, etc, dovemon writes corresponding logs to syslog. Moreover, if dovemon
+receives a SIGHUP it will write results of the last 10 polls to syslog. Latency
+information detected from these polls is also included in the information
+written to logs.
+
+.. _dovemon_return_codes:
+
+Return codes
+------------
+
+.. code-block:: none
+
+  0: SIGTERM received, exited normally
+  -1: Dovemon was unable to lock the pid file, already exists
+  1: Dovemon was unable to lock the pid file, for any other reason
+  2: Dovemon was unable to write default configuration to disk
+  3: Configuration file exists but Dovemon was unable to read the file
+  4: Configuration file path not set and "--write-missing-config" is not used
 
 
 .. _dovemon_boolean:
