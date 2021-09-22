@@ -256,6 +256,8 @@ If it's possible that the destination already has new mails (or other changes), 
 
 Note that Public and Shared namespaces are synchronized automatically (see caveats).
 
+See :ref:`doveadm_error_codes` for details on how to handle errors.
+
 Caveats
 -------
 
