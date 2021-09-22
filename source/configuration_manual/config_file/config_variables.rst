@@ -358,7 +358,7 @@ Authentication variables:
 |          |                     |                                                               |
 |          |                     | .. versionadded:: v2.2.29                                     |
 +----------+---------------------+---------------------------------------------------------------+
-|          | forward_<name>      | Used by proxies to pass on extra fields to the next hop, see  |
+|          | passdb:forward_<name> | Used by proxies to pass on extra fields to the next hop, see  |
 |          |                     | :ref:`authentication-proxies`                                 |
 |          |                     |                                                               |
 |          |                     | .. versionadded:: v2.2.29                                     |
