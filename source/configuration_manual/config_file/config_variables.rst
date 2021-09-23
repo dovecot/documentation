@@ -163,208 +163,208 @@ Login variables:
 
 Authentication variables:
 
-+----------+---------------------+---------------------------------------------------------------+
-| Variable | Long name           | Description                                                   |
-+==========+=====================+===============================================================+
-| %u       | user                | full username (e.g. user@domain)                              |
-+----------+---------------------+---------------------------------------------------------------+
-| %n       | username            | user part in user@domain, same as %u if there's no domain     |
-+----------+---------------------+---------------------------------------------------------------+
-| %d       | domain              | domain part in user@domain, empty if user with no domain      |
-+----------+---------------------+---------------------------------------------------------------+
-|          | domain_first        | For "username@domain_first@domain_last" style usernames       |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.6                                      |
-+----------+---------------------+---------------------------------------------------------------+
-|          | domain_last         | For "username@domain_first@domain_last" style usernames       |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.6                                      |
-+----------+---------------------+---------------------------------------------------------------+
-| %s       | service             | imap, pop3, smtp, lda (and doveadm, dsync, etc.)              |
-+----------+---------------------+---------------------------------------------------------------+
-|          | local_name          | TLS SNI hostname, if given                                    |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.26                                     |
-+----------+---------------------+---------------------------------------------------------------+
-| %l       | local_ip            | local IP address                                              |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.13 For older versions use %{lip}       |
-+----------+---------------------+---------------------------------------------------------------+
-| %r       | remote_ip           | remote IP address                                             |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.13 For older versions use %{rip}       |
-+----------+---------------------+---------------------------------------------------------------+
-| %a       | local_port          | local port                                                    |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.13 For older versions use %{lport}     |
-+----------+---------------------+---------------------------------------------------------------+
-| %b       | remote_port         | remote port                                                   |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.13 For older versions use %{rport}     |
-+----------+---------------------+---------------------------------------------------------------+
-|          | real_remote_ip      | Same as %{remote_ip}, except in proxy setups contains the     |
-|          |                     | remote proxy's IP instead of the client's IP                  |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.13 For older versions use %{real_rip}  |
-+----------+---------------------+---------------------------------------------------------------+
-|          | real_local_ip       | Same as %{local_ip}, except in proxy setups contains the local|
-|          |                     | proxy's IP instead of the remote proxy's IP                   |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.13 For older versions use %{real_lip}  |
-+----------+---------------------+---------------------------------------------------------------+
-|          | real_remote_port    | Similar to %{real_rip} except for port instead of IP          |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.13 For older versions use %{real_rport}|
-+----------+---------------------+---------------------------------------------------------------+
-|          | real_local_port     | Similar to %{real_lip} except for port instead of IP          |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.13 For older versions use %{real_lport}|
-+----------+---------------------+---------------------------------------------------------------+
-|          | rip                 | Deprecated version of %{remote_ip}                            |
-|          |                     |                                                               |
-|          |                     | .. deprecated:: v2.3.13                                       |
-+----------+---------------------+---------------------------------------------------------------+
-|          | lip                 | Deprecated version of %{local_ip}                             |
-|          |                     |                                                               |
-|          |                     | .. deprecated:: v2.3.13                                       |
-+----------+---------------------+---------------------------------------------------------------+
-|          | rport               | Deprecated version of %{remote_port}                          |
-|          |                     |                                                               |
-|          |                     | .. deprecated:: v2.3.13                                       |
-+----------+---------------------+---------------------------------------------------------------+
-|          | lport               | Deprecated version of %{local_port}                           |
-|          |                     |                                                               |
-|          |                     | .. deprecated:: v2.3.13                                       |
-+----------+---------------------+---------------------------------------------------------------+
-|          | real_rip            | Deprecated version of %{real_remote_ip}                       |
-|          |                     |                                                               |
-|          |                     | .. deprecated:: v2.3.13                                       |
-+----------+---------------------+---------------------------------------------------------------+
-|          | real_lip            | Deprecated version of %{real_local_ip}                        |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.0                                      |
-|          |                     | .. deprecated:: v2.3.13                                       |
-+----------+---------------------+---------------------------------------------------------------+
-|          | real_rport          | Deprecated version of %{real_remote_port}                     |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.0                                      |
-|          |                     | .. deprecated:: v2.3.13                                       |
-+----------+---------------------+---------------------------------------------------------------+
-|          | real_lport          | Deprecated version of %{real_local_port}                      |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.0                                      |
-|          |                     | .. deprecated:: v2.3.13                                       |
-+----------+---------------------+---------------------------------------------------------------+
-| %p       | pid                 | process ID of the authentication client                       |
-+----------+---------------------+---------------------------------------------------------------+
-|          | session_pid         | For user logins: The PID of the IMAP/POP3 process handling the|
-|          |                     | session.                                                      |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.7                                      |
-+----------+---------------------+---------------------------------------------------------------+
-| %m       | mechanism           | :ref:`authentication-authentication_mechanisms` e.g. PLAIN    |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.13                                     |
-+----------+---------------------+---------------------------------------------------------------+
-|          | mech                | Deprecated version of %{mechanism}                            |
-|          |                     |                                                               |
-|          |                     | .. deprecated:: v2.3.13                                       |
-+----------+---------------------+---------------------------------------------------------------+
-| %w       | password            | plaintext password from plaintext authentication mechanism    |
-+----------+---------------------+---------------------------------------------------------------+
-| %c       | secured             | "TLS" with established SSL/TLS connections, "TLS handshaking",|
-|          |                     | or "TLS [handshaking]: error text" if disconnecting due to TLS|
-|          |                     | error. "secured" with localhost connections. Otherwise empty. |
-+----------+---------------------+---------------------------------------------------------------+
-| %k       | cert                | "valid" if client had sent a valid client certificate,        |
-|          |                     | otherwise empty.                                              |
-+----------+---------------------+---------------------------------------------------------------+
-|          | session             | session ID for this client connection (unique for 9 years)    |
-+----------+---------------------+---------------------------------------------------------------+
-|          | auth_user           | SASL authentication ID (e.g. if master user login is done,    |
-|          |                     | this contains the master username). If username changes during|
-|          |                     | authentication, this value contains the original username.    |
-|          |                     | Otherwise the same as %{user}.                                |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.11                                     |
-+----------+---------------------+---------------------------------------------------------------+
-|          | auth_username       | user part in %{auth_user}                                     |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.11                                     |
-+----------+---------------------+---------------------------------------------------------------+
-|          | auth_domain         | domain part in %{auth_user}                                   |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.11                                     |
-+----------+---------------------+---------------------------------------------------------------+
-|          | login_user          | For master user logins: Logged in user@domain                 |
-+----------+---------------------+---------------------------------------------------------------+
-|          | login_username      | For master user logins: Logged in user                        |
-+----------+---------------------+---------------------------------------------------------------+
-|          | login_domain        | For master user logins: Logged in domain                      |
-+----------+---------------------+---------------------------------------------------------------+
-|          | master_user         | For master user logins: The master username                   |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.7                                      |
-+----------+---------------------+---------------------------------------------------------------+
-|          | original_user       | Same as %{user}, except using the original username the client|
-|          |                     | sent before any changes by auth process                       |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.13                                     |
-+----------+---------------------+---------------------------------------------------------------+
-|          | original_username   | Same as %{username}, except using the original username       |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.13                                     |
-+----------+---------------------+---------------------------------------------------------------+
-|          | original_domain     | Same as %{domain}, except using the original username         |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.3.13                                     |
-+----------+---------------------+---------------------------------------------------------------+
-|          | orig_user           | Deprecated version of %{original_user}                        |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.6                                      |
-|          |                     | .. versionadded:: v2.2.13 Works in auth process.              |
-|          |                     | .. deprecated:: v2.3.13                                       |
-+----------+---------------------+---------------------------------------------------------------+
-|          | orig_username       | Deprecated version of %{original_username}                    |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.6                                      |
-|          |                     | .. versionadded:: v2.2.13 Works in auth process.              |
-|          |                     | .. deprecated:: v2.3.13                                       |
-+----------+---------------------+---------------------------------------------------------------+
-|          | orig_username       | Deprecated version of %{original_domain}                      |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.6                                      |
-|          |                     | .. versionadded:: v2.2.13 Works in auth process.              |
-|          |                     | .. deprecated:: v2.3.13                                       |
-+----------+---------------------+---------------------------------------------------------------+
-|          | passdb:<name>       | Return passdb extra field "name". %{passdb:name:default}      |
-|          |                     | returns "default" if "name" doesn't exist (not returned if    |
-|          |                     | name exists but is empty). Note that this doesn't work in     |
-|          |                     | passdb/userdb ldap's pass_attrs or user_attrs.                |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.19                                     |
-+----------+---------------------+---------------------------------------------------------------+
-|          | userdb:<name>       | Return userdb extra field "name". Note that this can also be  |
-|          |                     | used in passdbs to access any userdb_* extra fields added by  |
-|          |                     | previous passdb lookups. %{userdb:name:default} returns       |
-|          |                     | "default" if "name" doesn't exist (not returned if name exists|
-|          |                     | but is empty). Note that this doesn't work in passdb/userdb   |
-|          |                     | ldap's pass_attrs or user_attrs.                              |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.19                                     |
-+----------+---------------------+---------------------------------------------------------------+
-|          | client_id           | Expands to client ID request as IMAP arglist. Needs           |
-|          |                     | imap_id_retain=yes                                            |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.29                                     |
-+----------+---------------------+---------------------------------------------------------------+
++----------+-----------------------+---------------------------------------------------------------+
+| Variable | Long name             | Description                                                   |
++==========+=======================+===============================================================+
+| %u       | user                  | full username (e.g. user@domain)                              |
++----------+-----------------------+---------------------------------------------------------------+
+| %n       | username              | user part in user@domain, same as %u if there's no domain     |
++----------+-----------------------+---------------------------------------------------------------+
+| %d       | domain                | domain part in user@domain, empty if user with no domain      |
++----------+-----------------------+---------------------------------------------------------------+
+|          | domain_first          | For "username@domain_first@domain_last" style usernames       |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.6                                      |
++----------+-----------------------+---------------------------------------------------------------+
+|          | domain_last           | For "username@domain_first@domain_last" style usernames       |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.6                                      |
++----------+-----------------------+---------------------------------------------------------------+
+| %s       | service               | imap, pop3, smtp, lda (and doveadm, dsync, etc.)              |
++----------+-----------------------+---------------------------------------------------------------+
+|          | local_name            | TLS SNI hostname, if given                                    |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.26                                     |
++----------+-----------------------+---------------------------------------------------------------+
+| %l       | local_ip              | local IP address                                              |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.3.13 For older versions use %{lip}       |
++----------+-----------------------+---------------------------------------------------------------+
+| %r       | remote_ip             | remote IP address                                             |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.3.13 For older versions use %{rip}       |
++----------+-----------------------+---------------------------------------------------------------+
+| %a       | local_port            | local port                                                    |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.3.13 For older versions use %{lport}     |
++----------+-----------------------+---------------------------------------------------------------+
+| %b       | remote_port           | remote port                                                   |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.3.13 For older versions use %{rport}     |
++----------+-----------------------+---------------------------------------------------------------+
+|          | real_remote_ip        | Same as %{remote_ip}, except in proxy setups contains the     |
+|          |                       | remote proxy's IP instead of the client's IP                  |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.3.13 For older versions use %{real_rip}  |
++----------+-----------------------+---------------------------------------------------------------+
+|          | real_local_ip         | Same as %{local_ip}, except in proxy setups contains the local|
+|          |                       | proxy's IP instead of the remote proxy's IP                   |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.3.13 For older versions use %{real_lip}  |
++----------+-----------------------+---------------------------------------------------------------+
+|          | real_remote_port      | Similar to %{real_rip} except for port instead of IP          |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.3.13 For older versions use %{real_rport}|
++----------+-----------------------+---------------------------------------------------------------+
+|          | real_local_port       | Similar to %{real_lip} except for port instead of IP          |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.3.13 For older versions use %{real_lport}|
++----------+-----------------------+---------------------------------------------------------------+
+|          | rip                   | Deprecated version of %{remote_ip}                            |
+|          |                       |                                                               |
+|          |                       | .. deprecated:: v2.3.13                                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | lip                   | Deprecated version of %{local_ip}                             |
+|          |                       |                                                               |
+|          |                       | .. deprecated:: v2.3.13                                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | rport                 | Deprecated version of %{remote_port}                          |
+|          |                       |                                                               |
+|          |                       | .. deprecated:: v2.3.13                                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | lport                 | Deprecated version of %{local_port}                           |
+|          |                       |                                                               |
+|          |                       | .. deprecated:: v2.3.13                                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | real_rip              | Deprecated version of %{real_remote_ip}                       |
+|          |                       |                                                               |
+|          |                       | .. deprecated:: v2.3.13                                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | real_lip              | Deprecated version of %{real_local_ip}                        |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.0                                      |
+|          |                       | .. deprecated:: v2.3.13                                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | real_rport            | Deprecated version of %{real_remote_port}                     |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.0                                      |
+|          |                       | .. deprecated:: v2.3.13                                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | real_lport            | Deprecated version of %{real_local_port}                      |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.0                                      |
+|          |                       | .. deprecated:: v2.3.13                                       |
++----------+-----------------------+---------------------------------------------------------------+
+| %p       | pid                   | process ID of the authentication client                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | session_pid           | For user logins: The PID of the IMAP/POP3 process handling the|
+|          |                       | session.                                                      |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.7                                      |
++----------+-----------------------+---------------------------------------------------------------+
+| %m       | mechanism             | :ref:`authentication-authentication_mechanisms` e.g. PLAIN    |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.3.13                                     |
++----------+-----------------------+---------------------------------------------------------------+
+|          | mech                  | Deprecated version of %{mechanism}                            |
+|          |                       |                                                               |
+|          |                       | .. deprecated:: v2.3.13                                       |
++----------+-----------------------+---------------------------------------------------------------+
+| %w       | password              | plaintext password from plaintext authentication mechanism    |
++----------+-----------------------+---------------------------------------------------------------+
+| %c       | secured               | "TLS" with established SSL/TLS connections, "TLS handshaking",|
+|          |                       | or "TLS [handshaking]: error text" if disconnecting due to TLS|
+|          |                       | error. "secured" with localhost connections. Otherwise empty. |
++----------+-----------------------+---------------------------------------------------------------+
+| %k       | cert                  | "valid" if client had sent a valid client certificate,        |
+|          |                       | otherwise empty.                                              |
++----------+-----------------------+---------------------------------------------------------------+
+|          | session               | session ID for this client connection (unique for 9 years)    |
++----------+-----------------------+---------------------------------------------------------------+
+|          | auth_user             | SASL authentication ID (e.g. if master user login is done,    |
+|          |                       | this contains the master username). If username changes during|
+|          |                       | authentication, this value contains the original username.    |
+|          |                       | Otherwise the same as %{user}.                                |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.11                                     |
++----------+-----------------------+---------------------------------------------------------------+
+|          | auth_username         | user part in %{auth_user}                                     |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.11                                     |
++----------+-----------------------+---------------------------------------------------------------+
+|          | auth_domain           | domain part in %{auth_user}                                   |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.11                                     |
++----------+-----------------------+---------------------------------------------------------------+
+|          | login_user            | For master user logins: Logged in user@domain                 |
++----------+-----------------------+---------------------------------------------------------------+
+|          | login_username        | For master user logins: Logged in user                        |
++----------+-----------------------+---------------------------------------------------------------+
+|          | login_domain          | For master user logins: Logged in domain                      |
++----------+-----------------------+---------------------------------------------------------------+
+|          | master_user           | For master user logins: The master username                   |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.7                                      |
++----------+-----------------------+---------------------------------------------------------------+
+|          | original_user         | Same as %{user}, except using the original username the client|
+|          |                       | sent before any changes by auth process                       |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.3.13                                     |
++----------+-----------------------+---------------------------------------------------------------+
+|          | original_username     | Same as %{username}, except using the original username       |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.3.13                                     |
++----------+-----------------------+---------------------------------------------------------------+
+|          | original_domain       | Same as %{domain}, except using the original username         |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.3.13                                     |
++----------+-----------------------+---------------------------------------------------------------+
+|          | orig_user             | Deprecated version of %{original_user}                        |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.6                                      |
+|          |                       | .. versionadded:: v2.2.13 Works in auth process.              |
+|          |                       | .. deprecated:: v2.3.13                                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | orig_username         | Deprecated version of %{original_username}                    |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.6                                      |
+|          |                       | .. versionadded:: v2.2.13 Works in auth process.              |
+|          |                       | .. deprecated:: v2.3.13                                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | orig_username         | Deprecated version of %{original_domain}                      |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.6                                      |
+|          |                       | .. versionadded:: v2.2.13 Works in auth process.              |
+|          |                       | .. deprecated:: v2.3.13                                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | passdb:<name>         | Return passdb extra field "name". %{passdb:name:default}      |
+|          |                       | returns "default" if "name" doesn't exist (not returned if    |
+|          |                       | name exists but is empty). Note that this doesn't work in     |
+|          |                       | passdb/userdb ldap's pass_attrs or user_attrs.                |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.19                                     |
++----------+-----------------------+---------------------------------------------------------------+
+|          | userdb:<name>         | Return userdb extra field "name". Note that this can also be  |
+|          |                       | used in passdbs to access any userdb_* extra fields added by  |
+|          |                       | previous passdb lookups. %{userdb:name:default} returns       |
+|          |                       | "default" if "name" doesn't exist (not returned if name exists|
+|          |                       | but is empty). Note that this doesn't work in passdb/userdb   |
+|          |                       | ldap's pass_attrs or user_attrs.                              |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.19                                     |
++----------+-----------------------+---------------------------------------------------------------+
+|          | client_id             | Expands to client ID request as IMAP arglist. Needs           |
+|          |                       | imap_id_retain=yes                                            |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.29                                     |
++----------+-----------------------+---------------------------------------------------------------+
 |          | passdb:forward_<name> | Used by proxies to pass on extra fields to the next hop, see  |
-|          |                     | :ref:`authentication-proxies`                                 |
-|          |                     |                                                               |
-|          |                     | .. versionadded:: v2.2.29                                     |
-+----------+---------------------+---------------------------------------------------------------+
-| %!       |                     | Internal ID number of the current passdb/userdb.              |
-+----------+---------------------+---------------------------------------------------------------+
+|          |                       | :ref:`authentication-proxies`                                 |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.2.29                                     |
++----------+-----------------------+---------------------------------------------------------------+
+| %!       |                       | Internal ID number of the current passdb/userdb.              |
++----------+-----------------------+---------------------------------------------------------------+
 
 Modifiers
 ^^^^^^^^^^
