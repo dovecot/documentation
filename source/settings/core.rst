@@ -1632,6 +1632,12 @@ Specifies the hosts allowed in URLAUTH URLs sent by clients.
 ``*`` allows all. An empty value disables checking and disables the URLAUTH
 extension.
 
+.. warning::
+
+  URLAUTH in current versions of Dovecot is broken in several ways. This
+  will be fixed in the future, but activating URLAUTH support on production
+  systems is not recommended.
+
 .. note::
 
   This setting is REQUIRED for the
