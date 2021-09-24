@@ -1629,7 +1629,13 @@ Example Setting:
 
 Specifies the hosts allowed in URLAUTH URLs sent by clients.
 
-``*`` allows all. An empty value disables checking.
+``*`` allows all. An empty value disables checking and disables the URLAUTH
+extension.
+
+.. note::
+
+  This setting is REQUIRED for the
+  `URLAUTH <https://tools.ietf.org/html/rfc4467>`_ extension to be active.
 
 .. todo:: Indicate imap setting
 
