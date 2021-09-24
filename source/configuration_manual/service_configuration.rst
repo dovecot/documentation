@@ -304,14 +304,27 @@ Indexer master process, which tracks and prioritizes indexing requests from mail
 
 indexer-worker
 ^^^^^^^^^^^^^^
-
 Indexer worker process.
 
    * **client_limit=1**, because indexing is a synchronous operation.
 
-**process_limit** defaults to 10, because the FTS index updating can eat a lot of CPU and disk I/O. You may need to adjust this value depending on your system.
+   * **process_limit** defaults to 10, because the FTS index updating can eat a lot of CPU and disk I/O. You may need to adjust this value depending on your system.
 
    * **user=root**, but the privileges are (temporarily) dropped to the mail user's privileges after userdb lookup. If only a single UID is used, user can be set to the mail UID for higher security, because the process can't gain root privileges anymore.
+
+indexer-workers are background processes that are not normally visible to the
+end user (exception: if mails are not indexed, i.e. on delivery, indexing needs
+to occur on-demand if a user issues a SEARCH command). Therefore, they
+generally should be configured to a lower priority to ensure that they do not
+steal resources from other processes that are user facing. A recommendation
+is to execute the process at a lower priority. This can be done by prefixing
+the executable location with a priority modifier, such as:
+
+.. code-block:: none
+
+   service indexer-worker {
+     executable = /usr/bin/nice -n 10 /usr/libexec/dovecot/indexer-worker
+   }
 
 ipc
 ^^^^^
