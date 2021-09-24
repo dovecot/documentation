@@ -812,26 +812,6 @@ Example Setting:
    deliver_log_format = stime=%{session_time} msgid=%m: %$
 
 
-.. _setting-dict_db_config:
-
-``dict_db_config``
-------------------
-
- - Default: <empty>
- - Values: :ref:`string`
-
-Points to a Berkeley DB config file. Equivalent to adding
-DB_CONFIG=/path to import_environment.
-
-See https://docs.oracle.com/database/bdb181/html/bdb-sql/sql_db_config.html for more information.
-
-Example setting:
-
-.. code-block:: none
-
-  dict_db_config=/etc/dovecot/berkeley.conf
-
-
 .. _setting-director_flush_socket:
 
 ``director_flush_socket``
