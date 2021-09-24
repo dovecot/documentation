@@ -19,8 +19,8 @@ backend/relay MTA.
 
 The most notable feature that the proxy adds is the `BURL capability
 <https://tools.ietf.org/html/rfc4468>`_. The main application of that
-capability—together with :ref:`imap_server`.  `URLAUTH
-<https://tools.ietf.org/html/rfc4467>`_ —is avoiding a duplicate upload of
+capability — together with :ref:`IMAP <imap_server>` and  `URLAUTH
+<https://tools.ietf.org/html/rfc4467>`_ — is avoiding a duplicate upload of
 submitted e-mail messages; normally the message is both sent through SMTP and
 uploaded to the `Sent` folder through IMAP. Using BURL, the client can first
 upload the message to IMAP and then use BURL to make the SMTP server fetch the
