@@ -71,8 +71,11 @@ MTA server. The submission service is a login service, just like IMAP, POP3 and 
 are required to authenticate. The same :ref:`authentication configuration
 <authentication-authentication>` shall also apply to submission,
 unless you're doing protocol-specific things, in which case you may need to
-amend your configuration for the new protocol. BURL support requires a working
-IMAP URLAUTH implementation.
+amend your configuration for the new protocol.
+
+BURL support requires a working IMAP URLAUTH implementation. Details on
+configuring Dovecot's URLAUTH support can be found at
+:ref:`setting-imap_urlauth_host`.
 
 The following settings apply to the Submission service:
 
