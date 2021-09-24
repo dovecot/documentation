@@ -2664,20 +2664,6 @@ See :ref:`setting-mail_never_cache_fields`
 .. todo:: List fields, or link to fields decription page
 
 
-.. _setting-mail_cache_min_mail_count:
-
-``mail_cache_min_mail_count``
------------------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
-
-Only update cache file when the mailbox contains at least this many messages.
-
-With a setting other than ``0``, you can optimize behavior for fewer disk
-writes at the cost of more disk reads.
-
-
 .. _setting-mail_chroot:
 
 ``mail_chroot``
