@@ -136,6 +136,8 @@ rebuild this dictionary, so make sure it doesn't get lost. If it does,
 each user having shared mailboxes must use the IMAP SETACL command (see
 below) to get the dictionary updated for themselves.
 
+See :ref:`plugin-acl-setting-acl_shared_dict` for plugin setting information.
+
 You could use any dictionary backend, including SQL or Cassandra, but a
 simple flat file should work pretty well too:
 
