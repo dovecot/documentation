@@ -539,7 +539,7 @@ If you want to allow all characters, leave the value empty.
 ``auth_username_format``
 ------------------------
 
-- Default: ``%u``
+- Default: ``%Lu``
 - Values:  :ref:`string`
 
 Formattting applied to username before querying the auth database.
@@ -1629,7 +1629,19 @@ Example Setting:
 
 Specifies the hosts allowed in URLAUTH URLs sent by clients.
 
-``*`` allows all. An empty value disables checking.
+``*`` allows all. An empty value disables checking and disables the URLAUTH
+extension.
+
+.. warning::
+
+  URLAUTH in current versions of Dovecot is broken in several ways. This
+  will be fixed in the future, but activating URLAUTH support on production
+  systems is not recommended.
+
+.. note::
+
+  This setting is REQUIRED for the
+  `URLAUTH <https://tools.ietf.org/html/rfc4467>`_ extension to be active.
 
 .. todo:: Indicate imap setting
 
