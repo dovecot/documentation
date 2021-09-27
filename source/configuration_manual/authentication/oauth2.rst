@@ -225,7 +225,7 @@ OpenID.Discovery
 
 .. versionadded:: v2.3.16
 
-Support for `RFC 7628 <https://datatracker.ietf.org/doc/html/rfc7628#section-3.2.2>`__  OpenID Discovery (OIDC) can be achieved with
+Support for `RFC 7628 <https://datatracker.ietf.org/doc/html/rfc7628#section-3.2.2>`_  OpenID Discovery (OIDC) can be achieved with
 ``openid_configuration_url`` setting. Setting this causes Dovecot to report OIDC configuration URL as ``openid-configuration`` element in error JSON.
 
 Full config file

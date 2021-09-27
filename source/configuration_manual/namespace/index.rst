@@ -220,10 +220,8 @@ Namespace types
 There are 3 types of namespaces:
 
 * private: Typically contains only user's own private mailboxes.
-* shared: Contains other users' `shared mailboxes
-  <https://wiki.dovecot.org/SharedMailboxes/Shared>`_
-* public: Contains `public mailboxes
-  <https://wiki.dovecot.org/SharedMailboxes/Public>`_
+* shared: Contains other users' :ref:`shared mailboxes <user_shared_mailboxes>`.
+* public: Contains :ref:`public mailboxes <public_shared_mailboxes>`.
 
 .. _hierarchy-separators:
 
@@ -341,8 +339,7 @@ currently no way to simply `add` a namespace.
 
 Dovecot Support for Shared Mailboxes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Dovecot can support mailbox sharing in several different ways: `Dovecot Shared
-Mailboxes <https://wiki.dovecot.org/SharedMailboxes>`_
+See :ref:`mailbox sharing <shared_mailboxes>`.
 
 Examples:
 ^^^^^^^^^^

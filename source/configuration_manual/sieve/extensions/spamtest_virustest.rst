@@ -5,7 +5,7 @@ Pigeonhole Sieve: Spamtest and Virustest Extensions
 ===================================================
 
 Using the **spamtest** and **virustest** extensions (`RFC
-5235 <http://tools.ietf.org/html/rfc5235/>`__), the Sieve language
+5235 <http://tools.ietf.org/html/rfc5235/>`_), the Sieve language
 provides a uniform and standardized command interface for evaluating
 spam and virus tests performed on the message. Users no longer need to
 know what headers need to be checked and how the scanner's verdict is
