@@ -539,7 +539,7 @@ If you want to allow all characters, leave the value empty.
 ``auth_username_format``
 ------------------------
 
-- Default: ``%u``
+- Default: ``%Lu``
 - Values:  :ref:`string`
 
 Formattting applied to username before querying the auth database.
