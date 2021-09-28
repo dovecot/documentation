@@ -32,6 +32,18 @@ To use **multi-dbox**, use the tag ``mdbox`` in the
   # multi-dbox
   mail_location = mdbox:~/mdbox
 
+Default ``mail_location`` Keys
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For dbox, the default :ref:`mail_location_settings-keys` are:
+
+================ ===============
+Key              Default Value
+================ ===============
+``MAILDIRBOX``   ``mailboxes/``
+``FULLDIRNAME``  ``dbox-Mails/``
+================ ===============
+
 .. _dbox_settings_alt_storage:
 
 Alternate Storage
@@ -57,7 +69,8 @@ mail processes can't create directories under it (e.g. ``root:root 0755``).
 This way if the alt storage isn't mounted for some reason, Dovecot won't
 think that all the messages in alt storage were deleted and lose their flags.
 
-.. _dbox_settings_mailbox_directory_name:
+
+
 
 mdbox Configuration Settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
