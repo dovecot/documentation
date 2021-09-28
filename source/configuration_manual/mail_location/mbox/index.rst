@@ -32,11 +32,25 @@ completely by just keeping everything in ``~/mail/``:
   # INBOX exists in ~/mail/inbox
   mail_location = mbox:~/mail
 
+Default ``mail_location`` Keys
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For mbox, the default :ref:`mail_location_settings-keys` are:
+
+================ =============================================================
+Key              Default Value
+================ =============================================================
+``FULLDIRNAME``  <empty> (For mbox, this setting specifies the mailbox message
+                 file name)
+================ =============================================================
+
 Index Files
 ^^^^^^^^^^^
 
-See :ref:`Mail Location Index Files` for a full explanation of how to change
-the index path. Example:
+By default, index files are stored under an ``.imap/`` directory.
+
+See :ref:`mail_location_settings-index_files` for an explanation of how to
+change the index path. Example:
 
 .. code-block:: none
 

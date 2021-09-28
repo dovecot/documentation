@@ -2781,6 +2781,7 @@ See :ref:`quick_configuration`
 -----------------
 
 - Default: <empty>
+- Value:   :ref:`string`
 
 This setting indicates the location for users' mailboxes.
 
@@ -2791,6 +2792,9 @@ users whose mail directory hasn't yet been created, so you should
 explicitly state the full location here, if possible.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
+
+See :ref:`mail_location_settings`.
+
 
 .. _setting-mail_log_prefix:
 

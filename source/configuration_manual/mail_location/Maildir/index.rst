@@ -38,6 +38,17 @@ you'll need to enable fs layout:
 
   mail_location = maildir:~/Maildir:LAYOUT=fs
 
+Default ``mail_location`` Keys
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For Maildir, the default :ref:`mail_location_settings-keys` are:
+
+================ =============
+Key              Default Value
+================ =============
+``FULLDIRNAME``  <empty>
+================ =============
+
 .. _maildir_settings_control_files:
 
 Control Files
@@ -72,8 +83,10 @@ can specify this by adding ``:CONTROL=<path>`` to ``mail_location``:
 Index Files
 ^^^^^^^^^^^
 
-See :ref:`Mail Location Index Files` for a full explanation of how to change
-the index path. Example:
+By default, index files are stored in the actual Maildirs.
+
+See :ref:`mail_location_settings-index_files` for an explanation of how to
+change the index path. Example:
 
 .. code-block:: none
 
@@ -90,8 +103,6 @@ Filesystem Optimizations
 ------------------------
 
 See :ref:`maildir_and_filesystems`.
-
-.. _maildir_settings_mailbox_directory_name:
 
 Mailbox Directory Name
 ^^^^^^^^^^^^^^^^^^^^^^
