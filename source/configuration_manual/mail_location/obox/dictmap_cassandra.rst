@@ -116,6 +116,8 @@ need to be appended to ``dovecot-dict-cql.conf.ext`` are described in:
  * :ref:`dictmap_cassandra_objectid`
  * :ref:`dictmap_cassandra_path`
 
+The connect string is described in more detail in :ref:`sql-cassandra`.
+
 The following base tables are always needed by fs-dictmap:
 
  * user_index_objects
