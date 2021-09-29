@@ -1,3 +1,5 @@
+.. _plugin-imapsieve:
+
 ============================
 Pigeonhole: IMAPSieve plugin
 ============================
@@ -14,12 +16,21 @@ Pigeonhole: IMAPSieve plugin
  - Default: <empty>
  - Value: :ref:`url`
 
-If configured, this setting enables support for user Sieve scripts in IMAP.
-So, leave this unconfigured if you don't want users to have the ability to associate Sieve scripts with mailboxes.
-This has no effect on the administrator-controlled Sieve scripts.
-The value is an URL pointing to the ManageSieve server that users must use to upload their Sieve scripts;
-e.g., ``sieve://sieve.example.com``.
+If set, support for user Sieve scripts in IMAP is enabled.
 
+The value is an URL pointing to the ManageSieve server that users must use to
+upload their Sieve scripts.
+
+Leave this setting empty if you don't want users to have the ability to
+associate Sieve scripts with mailboxes.
+
+This has no effect on the administrator-controlled Sieve scripts.
+
+.. code-block:: none
+
+  plugin {
+    imapsieve_url = sieve://sieve.example.com
+  }
 
 .. _plugin-imapsieve-setting-imapsieve_mailboxxxx_name:
 
