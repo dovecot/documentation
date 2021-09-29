@@ -19,6 +19,8 @@ See :ref:`plugin-fts-dovecot` for setting information.
 The :ref:`plugin-fts-dovecot-setting-fts_dovecot_fs` setting defines the
 location for the fts indexes.
 
+See :ref:`plugin-fts` for generic FTS settings.
+
 Data Storage Engine
 ^^^^^^^^^^^^^^^^^^^
 
