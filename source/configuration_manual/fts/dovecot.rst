@@ -3,16 +3,21 @@
 Dovecot Pro FTS Engine
 ======================
 
-FS Settings
-^^^^^^^^^^^
+.. important:: The Dovecot Pro FTS driver is a part of
+               :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>` only.
 
-The :ref:`plugin-fts-dovecot-setting-fts_dovecot_fs` setting defines the location for the
-fts indexes.
+The Dovecot FTS indexes are created and queried by a custom (Dovecot Pro) FTS
+engine. The FTS engine component is loaded into the Dovecot FTS plugin as an
+index backend and it processes text input from the FTS tokenizer and filter
+chains and search queries constructed by the FTS plugin.
 
-The Dovecot FTS indexes are created and queried by a custom FTS engine. The
-FTS engine component is loaded into the Dovecot FTS plugin as an index
-backend and it processes text input from the FTS tokenizer and filter chains
-and search queries constructed by the FTS plugin.
+Settings
+^^^^^^^^
+
+See :ref:`plugin-fts-dovecot` for setting information.
+
+The :ref:`plugin-fts-dovecot-setting-fts_dovecot_fs` setting defines the
+location for the fts indexes.
 
 Data Storage Engine
 ^^^^^^^^^^^^^^^^^^^
@@ -80,8 +85,8 @@ be kept in local metacache until one of the following happens:
  * The triplet has at least :ref:`plugin-fts-dovecot-setting-fts_dovecot_mail_flush_interval` number of mails. Note that the default is 0, which means this check isn't done at all.
  * Metacache is flushed
 
-FTS is commonly also configured to use "fscache", which caches reading of
-FTS triplets that were already saved to the object storage.
+FTS is commonly also configured to use :ref:`fscache`, which caches reading
+of FTS triplets that were already saved to the object storage.
 
 Lookups
 ^^^^^^^
