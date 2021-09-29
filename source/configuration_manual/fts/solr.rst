@@ -103,53 +103,19 @@ generated based on ``schema.xml``.
 Dovecot Plugin
 --------------
 
-On Dovecot's side add:
+See :ref:`plugin-fts-solr` for setting information.
 
-Into 10-mail.conf (note add existing plugins to string)
-
-::
-
-   mail_plugins = $mail_plugins fts fts_solr
-
-Into 90-plugins.conf
+Example Configuration
+~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-   plugin {
-     fts = solr
-     fts_solr = url=https://solr.example.org:8983/solr/dovecot/
-   }
+  mail_plugins = $mail_plugins fts fts_solr
 
-Fields listed in ``fts_solr`` plugin setting are space separated. They
-can contain:
-
--  url=<solr url> : Required base URL for Solr. (remember to add your
-   core name if using solr 7+ : "/solr/dovecot/"). The default URL for
-   Solr 7+ is <https://localhost:8983/solr/dovecot>
-
--  debug : Enable HTTP debugging. Writes to debug log.
-
--  break-imap-search : Use Solr also for indexing TEXT and BODY
-   searches. This makes your server non-IMAP-compliant. (This is always
-   enabled in v2.1+, and removed since v2.3+ as it's default behaviour)
-
--  rawlog_dir=<directory> : For debugging, store HTTP exchanges between
-   Dovecot and Solr in this directory. (2.3.6+)
-
--  batch_size : Configure the number of mails sent in single requests to
-   Solr, default is 1000. (2.3.6+)
-
-   -  with fts_autoindex=yes, each new mail gets separately indexed on
-      arrival, so batch_size only matters when doing the initial
-      indexing of a mailbox.
-
-   -  with fts_autoindex=no, new mails don't get indexed on arrival, so
-      batch_size is used when indexing gets triggered.
-
--  soft_commit=yes|no : Control whether new mails are immediately
-   searchable via Solr, default to yes. When using no, it's important to
-   set autoCommit or autoSoftCommit time in solrconfig.xml so mails
-   eventually become searchable. (2.3.6+)
+  plugin {
+    fts = solr
+    fts_solr = url=https://solr.example.org:8983/solr/dovecot/
+  }
 
 Important notes:
 
@@ -158,7 +124,9 @@ Important notes:
    requests for fields such as sender/recipients/subject when Body is
    not included as this data is contained within the local index.
 
-Solr commits & optimization
+.. _fts_backend_solr-soft_commits:
+
+Solr Commits & Optimization
 ---------------------------
 
 Solr indexes should be optimized once in a while to make searches faster
@@ -183,6 +151,25 @@ The default configuration of Solr is to auto-commit every once in a
 while (~15sec) so commit is not necessary. Also, the default
 TieredMergePolicy in Solr will automatically purge removed documents later, 
 so optimize is not necessary.
+
+Soft Commits
+~~~~~~~~~~~~
+
+If soft commits are enabled, dovecot will perform a soft commit to Solr at the
+end of transaction. This has the benefit that search results are immediately
+available. You can also enable automatic commits in SOLR config, with
+
+.. code-block:: xml
+
+  <autoSoftCommit>
+    <maxTime>60000</maxTime>
+  </autoSoftCommit>
+
+or setting it in solrconfig.xml with
+
+.. code-block:: xml
+
+  ${solr.autoSoftCommit.maxTime:60000}
 
 Re-index mailbox
 ----------------
