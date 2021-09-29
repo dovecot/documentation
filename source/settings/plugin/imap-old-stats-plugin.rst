@@ -1,7 +1,14 @@
 .. _plugin-imap-old-stats:
 
-==========================
+=====================
 imap-old-stats plugin
-==========================
+=====================
 
-``imap old stats`` plugin no settings in dovecot.conf, it just needs to be loaded to get IMAP stats to the old stats plugin.
+.. warning:: This plugin has been deprecated. Use :ref:`plugin-stats` instead.
+
+.. seealso:: :ref:`plugin-old-stats`.
+
+Settings
+========
+
+None.
