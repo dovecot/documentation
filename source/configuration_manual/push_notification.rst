@@ -108,8 +108,9 @@ OX (Open-Xchange) driver [``ox``]
 The OX backend supports sending notifications on MessageNew events (i.e. mail
 deliveries, not IMAP APPENDs).
 
-This driver was designed for use with `OX App Suite <https://documentation.open-xchange.com/7.10.5/middleware/mail/dovecot/dovecot_push.html>`_, but can be
-used by any push endpoint that implements the OX Push Notification API.
+This driver was designed for use with
+`OX App Suite Push Notification API <https://documentation.open-xchange.com/7.10.5/middleware/mail/dovecot/dovecot_push.html>`_, but can be
+used by any push endpoint that implements this API, not just OX App Suite.
 
 Configuration options:
 
@@ -147,8 +148,8 @@ Metadata
 --------
 
 The push notifications are enabled separately for each user using METADATA.
-Normally OX App Suite does this internally, but for testing purposes you can
-do this yourself:
+Normally `OX App Suite <https://www.open-xchange.com/products/ox-app-suite/>`_
+does this internally, but for e.g. testing purposes you can do this yourself:
 
 .. code-block:: none
 

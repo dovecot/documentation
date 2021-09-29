@@ -4,7 +4,7 @@ Pigeonhole IMAP FILTER=SIEVE Plugin
 
 Normally, Sieve filters can either be applied at initial mail delivery
 or triggered by certain events in the Internet Message Access Protocol
-(``IMAPSIEVE``; `RFC 6785 <http://tools.ietf.org/html/rfc6785>`__). The
+(``IMAPSIEVE``; `RFC 6785 <http://tools.ietf.org/html/rfc6785>`_). The
 user can configure which Sieve scripts to run at these instances, but it
 is not possible to trigger the execution of Sieve scripts manually.
 However, this could be very useful; e.g, to test new Sieve rules and to
@@ -18,7 +18,7 @@ on a set of messages that match the specified IMAP searching criteria.
 
 The latest draft of the specification for this IMAP capability is
 available
-`here <https://github.com/dovecot/pigeonhole/blob/master/doc/rfc/draft-bosch-imap-filter-sieve-00.txt>`__.
+`here <https://github.com/dovecot/pigeonhole/blob/master/doc/rfc/draft-bosch-imap-filter-sieve-00.txt>`_.
 This plugin is experimental and the specification is likely to change.
 Use the specification included in your current release to obtain the
 matching specification for your release.

@@ -5,7 +5,7 @@ Pigeonhole Sieve: Variables Extension
 =====================================
 
 The Sieve **variables** extension
-(`RFC5229 <http://tools.ietf.org/html/rfc5229/>`__) adds the concept of
+(`RFC5229 <http://tools.ietf.org/html/rfc5229/>`_) adds the concept of
 variables to the Sieve language.
 
 Configuration

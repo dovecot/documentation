@@ -71,8 +71,7 @@ Standalone non-root debugging environments
 Dovecot can be instructed to run the imap handler as a non-root user,
 and therefore that binary can be debugged by that same non-root user. At
 the moment, only manual (telnet) interaction is possible. This setup is
-documented in https://wiki.dovecot.org/HowTo/Rootless /
-http://wiki.dovecot.net/SelfContainedTestEnvironments
+documented in https://wiki.dovecot.org/HowTo/Rootless.
 
 Disabling optimizations
 =======================

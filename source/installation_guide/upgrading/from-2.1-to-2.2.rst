@@ -9,7 +9,8 @@ v2.2 has a couple of changes to settings since v2.1:
 There are also some changes you should be aware of:
 
  * :ref:`plugin-fts-solr` no longer does "hard commits" to the Solr index for performance reasons. `You must do this manually once in a while <plugin-fts_solr_soft_commits>`.
- * When creating home directories, the permissions are copied from the parent directory if it has setgid-bit set. For full details, see https://wiki.dovecot.org/SharedMailboxes/Permissions.
+ * When creating home directories, the permissions are copied from the parent directory if it has setgid-bit set. For full details, see
+   :ref:`admin_manual_permissions_in_shared_mailboxes`.
  * ``doveadm auth`` command was renamed to ``doveadm auth test``
  * IMAP: ID command now advertises server name as Dovecot by default. It was already trivial to guess this from command replies.
  * LDA/LMTP: If saving a mail brings user from under quota to over quota, allow it based on quota_grace setting (default: 10% above quota limit).

@@ -72,4 +72,4 @@ or setting it in solrconfig.xml with
 
 You can also set up a cron job for performing the commits manually.
 
-See: `Solr Full Text Search Indexing <https://wiki.dovecot.org/Plugins/FTS/Solr>`_
+See: :ref:`fts_backend_solr`.
