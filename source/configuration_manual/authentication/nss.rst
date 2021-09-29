@@ -9,7 +9,7 @@
 .. NOTE:: This userdb is probably useless with Dovecot v2.0.12+, since it uses
           ``getpwnam_r()``, which supports error reporting.
 
-Usually `NSS <https://en.wikipedia.org/wiki/Name_Service_Switch>`__ is used
+Usually `NSS <https://en.wikipedia.org/wiki/Name_Service_Switch>`_ is used
 with :ref:`authentication-passwd` userdb, but it has one problem:
 
    * It can't distinguish between temporary and permanent errors.

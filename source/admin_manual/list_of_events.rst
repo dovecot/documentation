@@ -825,6 +825,8 @@ These events apply only for connections using the ``connection API``.
           some types of connections, but not for others.
 
 
+.. _event_incoming_conn:
+
 Common fields for client (incoming) connections
 -----------------------------------------------
 
@@ -1296,15 +1298,16 @@ A mail field was looked up from cache.
 | field               | Cache field name e.g. ``imap.body`` or ``hdr.from``    |
 +---------------------+--------------------------------------------------------+
 
-HTTP
-====
+HTTP Client
+===========
 
-These events are emitted by Dovecot's internal HTTP library.
+These events are emitted by Dovecot's internal HTTP library when acting as
+a client to an external service.
 
 Common fields
 -------------
 
-Fields present in all HTTP events.
+Fields present in all HTTP client events.
 
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
@@ -1352,6 +1355,56 @@ http_request_retried
 Intermediate event emitted when an HTTP request is being retried.
 
 The ``http_request_finished`` event is still sent at the end of the request.
+
+
+HTTP Server
+===========
+
+These events are emitted by Dovecot's internal HTTP library when serving
+requests (e.g. doveadm HTTP API).
+
+Common fields
+-------------
+
+Fields present in all HTTP server events.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_incoming_conn`                                   |
++---------------------+------------------------------------------------------+
+| request_id          | Assigned ID if of the received request.              |
++---------------------+------------------------------------------------------+
+| method              | HTTP verb used uppercased, e.g. ``GET``.             |
++---------------------+------------------------------------------------------+
+| target              | Request path with parameters, e.g.                   |
+|                     | ``/path/?delimiter=%2F&prefix=test%2F``.             |
++---------------------+------------------------------------------------------+
+
+http_server_request_started
+---------------------------
+
+.. versionadded:: v2.3.18
+
+Emitted when a new HTTP request is received and the request headers
+(but not body payload) are parsed.
+
+http_server_request_finished
+----------------------------
+
+.. versionadded:: v2.3.18
+
+Emitted when the HTTP request is fully completed i.e the incoming request body
+is read and the full response to the request has been sent to the client.
+
++---------------------+------------------------------------------------------+
+| bytes_in            | Amount of request data read, in bytes.               |
++---------------------+------------------------------------------------------+
+| bytes_out           | Amount of response data written, in bytes.           |
++---------------------+------------------------------------------------------+
+| status_code         | HTTP result status code (integer).                   |
++---------------------+------------------------------------------------------+
+
 
 IMAP
 ====

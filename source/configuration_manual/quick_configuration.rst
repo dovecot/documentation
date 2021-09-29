@@ -177,7 +177,7 @@ NFS
 ---
 
 If you're using NFS or some other remote filesystem that's shared between
-multiple computers, you should read `NFS <https://wiki.dovecot.org/NFS>`_.
+multiple computers, you should read :ref:`nfs`.
 
 Running
 -------

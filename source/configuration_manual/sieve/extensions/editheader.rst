@@ -5,7 +5,7 @@ Pigeonhole Sieve: Editheader Extension
 ======================================
 
 The **editheader** extension
-(`RFC5293 <http://tools.ietf.org/html/rfc5293/>`__) enables Sieve
+(`RFC5293 <http://tools.ietf.org/html/rfc5293/>`_) enables Sieve
 scripts to delete and add message header fields, thereby allowing
 interaction with other components that consume or produce header fields.
 
