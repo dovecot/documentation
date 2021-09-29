@@ -22,21 +22,15 @@ Generally, lazy-expunge is configured so that the expunged mails are not
 counted in the user's quota.  Unless being used for archiving, autoexpunge
 should be used to prune the mailbox to control storage usage.
 
+Settings
+========
+
+See :ref:`plugin-lazy-expunge`.
+
 Configuration
 =============
 
- * ``lazy_expunge``: The mailbox/namespace to move messages to when expunged.
- * ``lazy_expunge_only_last_instance``: If true, only move to expunged storage
-   if this is the last copy of the message in the user's account.
- * ``lazy_expunge_exclude``: Mailbox name/wildcard to exclude from lazy expunging.
-   It's possible to use either mailbox names or refer to them using special-use flags (e.g. ``\Trash``).
-   To exclude additional mailboxes, add sequential numbers to the end of the plugin name.
-   For example::
-   
-       lazy_expunge_exclude = \Drafts
-       lazy_expunge_exclude2 = External Accounts/*
-   
-   .. versionadded:: v2.3.17
+.. _lazy_expunge_plugin-storage_locations:
 
 Storage Locations
 -----------------
@@ -54,7 +48,7 @@ You probably also want to hide it with an :ref:`ACL <acl>` from the user, if
 recovery is only expected to be an action performed by an admin/operator.
 
 To move to a mailbox, do NOT add a trailing delimiter to the
-``lazy_expunge`` argument.
+:ref:`plugin-lazy-expunge-setting-lazy_expunge` setting.
 
 Example configuration:
 
@@ -102,8 +96,9 @@ exists in the expunge namespace, the contents are merged.
 
 To move to a namespace, you MUST add a trailing delimiter to the
 ``lazy_expunge`` argument.  Example: if the namespace delimiter is ``/``,
-and you want to move to the ``.EXPUNGED`` namespace, then the ``lazy_expunge``
-option should be set to ``.EXPUNGED/``.
+and you want to move to the ``.EXPUNGED`` namespace, then the
+:ref:`plugin-lazy-expunge-setting-lazy_expunge` setting should be set to
+``.EXPUNGED/``.
 
 Example configuration:
 
@@ -134,7 +129,7 @@ Example configuration:
 mdbox
 """""
 
-With `mdbox <dbox_mbox_format>`_, use different
+With `mdbox <dbox_mbox_format>`, use different
 ``MAILBOXDIRs`` (so copying between namespaces works quickly within the same
 storage), but otherwise exactly the same paths (``INDEX``, ``control``):
 
@@ -163,7 +158,7 @@ storage), but otherwise exactly the same paths (``INDEX``, ``control``):
     #location = mdbox:~/mdbox:INDEX=/var/index/%d/%n:MAILBOXDIR=expunged:LISTINDEX=expunged.list.index
   }
 
-Copy only the last instance
+Copy Only the Last Instance
 ---------------------------
 
 If a mail has multiple copies within a user account, each copy is normally
@@ -174,16 +169,14 @@ IMAP COPY command to copy the message to Trash before expunging the message
 from the original mailbox.  Deleting later from Trash would result in two
 copies of the same message in the lazy expunge storage.
 
-With v2.2+ you can set ``lazy_expunge_only_last_instance = yes`` to copy only
-the last instance to the expunge storage.  This ensures that only a single
+With v2.2+ you can enable
+:ref:`plugin-lazy-expunge-setting-lazy_expunge_only_last_instance` to copy
+only the last instance to the expunge storage.  This ensures that only a single
 copy of a message will appear in the expunge storage.
 
-This setting works with the following mailbox formats:
-
-* Maildir (with ``maildir_copy_with_hardlinks = yes``, which is the default)
-* sdbox
-* mdbox
-* obox with fs-dictmap
+Note that this feature only works with certain storage setups; see
+:ref:`plugin-lazy-expunge-setting-lazy_expunge_only_last_instance` for the
+list of supported storages.
 
 Quota
 -----
@@ -232,7 +225,8 @@ Obox Settings
 =============
 
 Lazy expunge allows reduction of Cassandra dictmap lookups by removing the
-lockdir setting and enabling the ``obox_track_copy_flags`` setting.
+lockdir setting and enabling the
+:ref:`plugin-obox-setting_obox_track_copy_flags` setting.
 
 .. code-block:: none
 
@@ -242,8 +236,6 @@ lockdir setting and enabling the ``obox_track_copy_flags`` setting.
      # If Cassandra w/obox is used:
      obox_track_copy_flags = yes
   }
-
-See :ref:`plugin-obox-setting_obox_track_copy_flags`.
 
 ========
 Dumpster

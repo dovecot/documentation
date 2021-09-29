@@ -51,8 +51,9 @@ dovecot-dict-cql.conf.ext:
    # num_threads=4 \
    
    # (v2.2.26+) Use latency-aware routing
+   # Existence of setting = yes; absence of setting = no
    # See: http://datastax.github.io/cpp-driver/topics/configuration/#latency-aware-routing
-   # latency_aware_routing=y \
+   # latency_aware_routing \
    
    # DEBUG: (v2.2.25+) Warning timeouts; if request takes longer than this amount of seconds, log query at WARN level
    # warn_timeout=5 \
@@ -79,7 +80,8 @@ dovecot-dict-cql.conf.ext:
    
    
    # DEBUG: Output all Cassandra queries to log at DEBUG level
-   # debug_queries=y \
+   # Existence of setting = yes; absence of setting = no
+   # debug_queries \
    
    # DEBUG: Output internal metrics in JSON format to this file.
    # Format of data can be found at the end of this document.

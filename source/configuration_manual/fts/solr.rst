@@ -3,7 +3,7 @@
 Solr FTS Engine
 ===============
 
-`Solr <https://lucene.apache.org/solr/>`__ is a Lucene indexing server.
+`Solr <https://lucene.apache.org/solr/>`_ is a Lucene indexing server.
 Dovecot communicates to it using HTTP/XML queries.
 
 The steps described in this page are tested for Solr 7.7.0. For
@@ -31,7 +31,7 @@ First, the Solr server needs to be installed. Most operating systems
 will have packages for this. The latest version can be downloaded and
 installed from official website, and here are instructions to install
 7.7.0 based on the howto `How to Install Apache Solr 7.5 on Debian
-9/8 <https://tecadmin.net/install-apache-solr-on-debian/>`__:
+9/8 <https://tecadmin.net/install-apache-solr-on-debian/>`_:
 
 ::
 
@@ -93,9 +93,9 @@ Install schema.xml and solrconfig.xml
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Copy
-`doc/solr-config-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/master/doc/solr-config-7.7.0.xml>`__
+`doc/solr-config-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/master/doc/solr-config-7.7.0.xml>`_
 and
-`doc/solr-schema-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/master/doc/solr-schema-7.7.0.xml>`__
+`doc/solr-schema-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/master/doc/solr-schema-7.7.0.xml>`_
 (Since Dovecot 2.3.6+) to ``/var/solr/data/dovecot/conf/`` as
 ``solrconfig.xml`` and ``schema.xml``. The ``managed-schema`` file is
 generated based on ``schema.xml``.
@@ -278,7 +278,7 @@ it are:
       ``user_query = SELECT concat('url=https://', solr_host, ':8983/solr/dovecot/') AS fts_solr, ...``
 
 You can also use
-`SolrCloud <https://lucene.apache.org/solr/guide/7_6/solrcloud.html>`__,
+`SolrCloud <https://lucene.apache.org/solr/guide/7_6/solrcloud.html>`_,
 the clustered version of Solr, that allows you to scale up, and adds
 failover / high availability to your FTS system. Dovecot-solr works fine
 with a SolrCloud cluster as long as the solr schema is the right one.
@@ -290,7 +290,7 @@ External sites with tutorials on using Solr under Dovecot
 
 -  `Installing Apache Solr with Dovecot for fulltext search results
    (ATmail support
-   guide) <https://help.atmail.com/hc/en-us/articles/201566404-Installing-Apache-Solr-with-Dovecot-for-fulltext-search-results>`__
+   guide) <https://help.atmail.com/hc/en-us/articles/201566404-Installing-Apache-Solr-with-Dovecot-for-fulltext-search-results>`_
 
 -  FreeBSD: <https://mor-pah.net/2016/08/15/dovecot-2-2-with-solr-6-or-5/>
 

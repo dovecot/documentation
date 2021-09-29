@@ -98,8 +98,8 @@ anything special with the groups, so if you're not sure how you should create
 them, you might as well place all the users into a single group or create a
 separate group for each user.
 
-If you use multiple UIDs and you wish to create `shared mailboxes
-<https://wiki.dovecot.org/SharedMailboxes>`_, setting up the groups properly
+If you use multiple UIDs and you wish to create :ref:`shared_mailboxes`,
+setting up the groups properly
 may make your configuration more secure. For example if you have two teams and
 their mailboxes are shared only to their team members, you could create a group
 for each team and set the shared mailbox's group to the team's group and

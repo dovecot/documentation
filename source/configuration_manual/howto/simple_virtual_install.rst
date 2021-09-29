@@ -18,7 +18,7 @@ System configuration
 
 -  Create ``/home/vmail`` directory owned by vmail:vmail. The mails for all users are stored under this directory.
 
--  Create ``/var/log/dovecot.log`` and ``/var/log/dovecot-info.log`` files owned by vmail:vmail, so that `dovecot-lda <https://wiki2.dovecot.org/LDA>`__ can write to them.
+-  Create ``/var/log/dovecot.log`` and ``/var/log/dovecot-info.log`` files owned by vmail:vmail, so that :ref:`lda` can write to them.
 
 dovecot.conf
 ============
@@ -116,10 +116,11 @@ SMTP server configuration
 Delivering mails
 ----------------
 
-You can configure the SMTP server to deliver mails internally, or you can use `dovecot-lda <https://wiki2.dovecot.org/LDA>`__.
-Using dovecot-lda gives you better performance because it updates Dovecot's index files while saving the mails.
-See`LDA <https://wiki2.dovecot.org/LDA>`__ for how to configure this.
-Alternatively you can also use :ref:`LMTP <lmtp_server>`.
+You can configure the SMTP server to deliver mails internally, or you can use
+:ref:`lda`. Using dovecot-lda gives you better performance because it updates
+Dovecot's index files while saving the mails. See :ref:`lda` for configuration
+information. Alternatively you can also use :ref:`LMTP <lmtp_server>`.
+
 In config you should have:
 
 ::

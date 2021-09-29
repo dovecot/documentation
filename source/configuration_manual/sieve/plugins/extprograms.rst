@@ -5,7 +5,7 @@ Pigeonhole Sieve: Extprograms Plugin
 ====================================
 
 The "sieve_extprograms" plugin provides an extension to the `Sieve
-filtering language <http://www.sieve.info>`__ adding new action commands
+filtering language <http://www.sieve.info>`_ adding new action commands
 for invoking a predefined set of external programs. Messages can be
 piped to or filtered through those programs and string data can be input
 to and retrieved from those programs. To mitigate the security concerns,
@@ -15,7 +15,7 @@ programs are restricted through administrator configuration.
 This plugin is only available for Pigeonhole
 v0.3 and higher (available for Dovecot v2.1). For Pigeonhole 
 v0.4 this plugin is part of the release. This an evolution of the `Pipe
-plugin <https://wiki2.dovecot.org/Pigeonhole/Sieve/Plugins/Pipe#>`__
+plugin <https://wiki.dovecot.org/Pigeonhole/Sieve/Plugins/Pipe>`_
 for Pigeonhole v0.2 and now provides the ``filter`` and ``execute`` commands
 (and corresponding extensions) in addition to the ``pipe`` command that
 was provided earlier by the Pipe plugin.
@@ -157,7 +157,7 @@ Usage
 -----
 
 Read the specification (`v0.3
-plugin <http://hg.rename-it.nl/pigeonhole-0.3-sieve-extprograms/raw-file/tip/doc/rfc/spec-bosch-sieve-extprograms.txt>`__/`v0.4+ <https://github.com/dovecot/pigeonhole/blob/master/doc/rfc/spec-bosch-sieve-extprograms.txt>`__)
+plugin <http://hg.rename-it.nl/pigeonhole-0.3-sieve-extprograms/raw-file/tip/doc/rfc/spec-bosch-sieve-extprograms.txt>`_/`v0.4+ <https://github.com/dovecot/pigeonhole/blob/master/doc/rfc/spec-bosch-sieve-extprograms.txt>`_)
 for detailed information on how to use the new language extensions.
 
 Full Examples

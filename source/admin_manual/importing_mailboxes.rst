@@ -4,7 +4,7 @@
 Importing mailboxes
 ===================
 
-For importing mails, dovecot has `doveadm import <https://wiki2.dovecot.org/Tools/Doveadm/Import>`_ command.
+For importing mails, dovecot has `doveadm import <https://wiki.dovecot.org/Tools/Doveadm/Import>`_ command.
 
 .. warning::
 
