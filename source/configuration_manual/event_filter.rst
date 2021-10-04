@@ -48,25 +48,35 @@ The key-value comparisons are of the form: ``<key> <operator> <value>``
 
 Where the key is one of:
 
-1. ``event``
-2. ``category``
-3. ``source_location``
-4. a field name
+#. ``event``
+#. ``category``
+#. ``source_location``
+#. a field name
 
 The operator is one of:
 
-1. ``=``
-2. ``>``
-3. ``<``
-4. ``>=``
-5. ``<=``
+#. ``=``
+#. ``>``
+#. ``<``
+#. ``>=``
+#. ``<=``
 
 And the value is either:
 
-1. a single word token, or
-2. a quoted string
+#. a single word token, or
+#. a quoted string
 
 The value may contain wildcards if the comparison operator is ``=``.
+The value comparison is case-insensitive, but the key is case-sensitive.
+
+There are some limitations on which operators work with what field types:
+
+* string: Only the ``=`` operator is supported.
+* number: All operators are supported.
+* timestamp: No operators are supported.
+* a list of strings: Only the ``=`` operator is supported.
+  It returns true if the key is one of the values in the list. If the value
+  is an empty string, it returns true if the list is empty.
 
 For example, to match events with the event name ``abc``, one would use one of
 the following expressions.  Note that white space is not significant between

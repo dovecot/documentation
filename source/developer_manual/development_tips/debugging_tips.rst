@@ -2,6 +2,8 @@
 Debugging tips
 ==============
 
+.. contents::
+
 Debug pre-auth IMAP with libexec/dovecot/imap
 =============================================
 
@@ -69,8 +71,7 @@ Standalone non-root debugging environments
 Dovecot can be instructed to run the imap handler as a non-root user,
 and therefore that binary can be debugged by that same non-root user. At
 the moment, only manual (telnet) interaction is possible. This setup is
-documented in https://wiki.dovecot.org/HowTo/Rootless /
-http://wiki.dovecot.net/SelfContainedTestEnvironments
+documented in https://wiki.dovecot.org/HowTo/Rootless.
 
 Disabling optimizations
 =======================
@@ -207,3 +208,90 @@ creates dovecot-sysreport-*.tar.bt output files for them:
           cd ..
           rm -rf tmp-gdb
         done
+
+Following deep inside structs
+=============================
+
+Dovecot implements classes/objects using C structs. For example there is the
+``struct connection`` base object, which is extended with:
+
+.. code-block:: C
+
+  struct dict_connection {
+    struct connection conn;
+    ...
+  }
+
+However, many places still refer to these extended objects using their base
+classes, so you need to cast them to get all of their wanted fields visible.
+For example:
+
+.. code-block:: C
+
+  (gdb) p dict_connections
+  $1 = (struct connection_list *) 0x55823025e9a0
+  (gdb) p dict_connections.connections
+  $2 = (struct connection *) 0x55823025c160
+  (gdb) p *dict_connections.connections
+  $3 = {prev = 0x0, next = 0x0, list = 0x55823025e9a0,
+  ... the rest of struct connection
+  (gdb) p *(struct dict_connection *)dict_connections.connections
+  $4 = {conn = {prev = 0x0, next = 0x0, list = 0x55823025e9a0,
+  ... the rest of struct dict_connection
+
+It's a bit more tricky to look inside dynamic array types. As an example
+lets consider ``ARRAY(struct dict_connection_cmd *) cmds``. This ends up
+being expanded into:
+
+.. code-block:: C
+
+  struct array {
+    buffer_t *buffer;
+    size_t element_size;
+  };
+  union {
+    struct array arr;
+    struct dict_connection_cmd *const *v;
+    struct dict_connection_cmd **v_modifiaable;
+  } cmds;
+
+You can find out the size of the array with:
+
+.. code-block:: C
+
+  p cmds.arr.buffer.used / cmds.arr.element_size
+
+You can access the elements of the array with:
+
+.. code-block:: C
+
+  p *(*cmds.v)[0]
+  p *(*cmds.v)[1]
+  p *(*cmds.v)[...]
+
+So to actually access the ``dict_connection.cmds`` array for the first
+connection in ``dict_connections``, the gdb print commands get a bit long:
+
+.. code-block:: C
+
+  (gdb) p ((struct dict_connection *)dict_connections.connections).cmds
+  $5 = {arr = {buffer = 0x55823026da80, element_size = 8}, v = 0x55823026da80,
+    v_modifiable = 0x55823026da80}  
+
+  (gdb) p ((struct dict_connection *)dict_connections.connections).cmds.arr.buffer.used / 8
+  $6 = 1
+
+  (gdb) p *(*((struct dict_connection *)dict_connections.connections).cmds.v)[0]
+  $7 = {cmd = 0x55822ecc8b00 <cmds+16>, conn = 0x55823025c160, start_timeval = {
+      tv_sec = 1632257119, tv_usec = 530341}, event = 0x558230280b98,
+    reply = 0x0, iter = 0x0, iter_flags = 0, async_reply_id = 0, trans_id = 0,
+    rows = 0, uncork_pending = false}
+
+There can of course be multiple dict connections, which you can access by
+following the linked list:
+
+.. code-block:: C
+
+  (gdb) p *dict_connections.connections.next
+  (gdb) p *dict_connections.connections.next.next
+  (gdb) p *dict_connections.connections.next.next.next

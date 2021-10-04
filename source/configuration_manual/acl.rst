@@ -17,78 +17,75 @@ processes any extra filesystem permissions that they already don't have.
 the mailboxes. When testing you could first try accessing shared/public
 mailboxes without ACL plugin even enabled.
 
-ACLs can be enabled in ``dovecot.conf`` with:
+Settings
+========
+
+See :ref:`plugin-acl`.
+
+Groups
+^^^^^^
+
+See :ref:`plugin-acl-setting_acl_groups` for setting information.
+
+The ``acl_groups`` setting can be dynamically set via
+:ref:`authentication-user_database_extra_fields`.
+
+Sample Configuration:
+^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: none
 
   mail_plugins = acl
-    protocol imap {
+  protocol imap {
     mail_plugins = $mail_plugins imap_acl
   }
 
   plugin {
-    # Without global ACLs:
     acl = vfile
 
-    # With global ACL files in /etc/dovecot/dovecot-acls file (v2.2.11+):
-    #acl = vfile:/etc/dovecot/dovecot-acl
-
-    # With global ACLs in /etc/dovecot/acls/ directory (obsolete):
-    #acl = vfile:/etc/dovecot/acls
-
     # If enabled, don't try to find dovecot-acl files from mailbox directories.
-    # This reduces unnecessary disk I/O when only global ACLs are used. (v2.2.31+)
+    # This reduces unnecessary disk I/O when only global ACLs are used.
+    # (v2.2.31+)
     #acl_globals_only = yes
   }
 
-ACL groups support works by returning a comma-separated ``acl_groups``
-:ref:`authentication-user_database_extra_fields` from userdb, which contains all the groups
-the user belongs to. User's UNIX groups have no effect on ACLs (you can
-`enable` them by using a special :ref:`post_login_scripting`).
-
-The default ACL for mailboxes is to give the mailbox owner all permissions and
-other users none. Mailboxes in public namespaces don't have owners, so by
-default no one can access them.
 
 Master users
 ============
 
 Master users have their own ACLs. They're not the the mailbox owners, so by
 default they have no permissions to any of the mailboxes. See
-:ref:`ACLs at Master users <authentication-master_users_acls>` for more information.
+:ref:`ACLs at Master users <authentication-master_users_acls>` for more
+information.
 
 ACL vfile backend
-^^^^^^^^^^^^^^^^^
+=================
 
 vfile backend supports per-mailbox ACLs and global ACLs.
 
 Per-mailbox ACLs are stored in ``dovecot-acl`` named file, which exists in:
 
-* maildir: The Maildir's mail directory (eg. ``~/Maildir, ~/Maildir/.folder/``)
-* mbox: Control directory. You should explicitly specify ``:CONTROL=<path>`` in
-  mail location.
-* dbox: dbox's mail directory (eg. ``~/dbox/INBOX/dbox-Mails/``)
+* :ref:`maildir_mbox_format`: The Maildir's mail directory (eg. ``~/Maildir,
+  ~/Maildir/.folder/``).
+* :ref:`mbox_mbox_format`: Control directory. You should explicitly specify
+  ``:CONTROL=<path>`` in :ref:`setting-mail_location`.
+* :ref:`dbox_mbox_format`: dbox's mail directory (eg.
+  ``~/dbox/INBOX/dbox-Mails/``).
 
 ACL Inheritance
-^^^^^^^^^^^^^^^
+===============
 
 Every time you create a new mailbox, it gets its ACLs from the parent mailbox.
 If you're creating a root-level mailbox, it uses the namespace's default ACLs.
 There is no actual inheritance, however: If you modify parent's ACLs, the
 child's ACLs stay the same. There is currently no support for ACL inheritance.
 
-* Maildir: Namespace's default ACLs are read from `dovecot-acl` file in the
+* Maildir: Namespace's default ACLs are read from ``dovecot-acl`` file in the
   namespace's mail root directory (e.g. ``/var/public/Maildir``). Note that
   currently these default ACLs are used only when creating new mailboxes, they
   aren't used for mailboxes without ACLs.
 
-* If ``plugin { acl_defaults_from_inbox=yes }`` , the default ACLs for private
-  and shared namespaces (but not public namespaces) are taken from the INBOX.
-  This means that giving somebody access to your INBOX will give them access to
-  all your other mailboxes as well, unless the specific mailboxes' ACLs override
-  the INBOX's.
-
-  .. versionadded:: v2.2.2
+* See :ref:`plugin-acl-setting_acl_defaults_from_inbox`.
 
 .. NOTE::
 
@@ -97,7 +94,7 @@ child's ACLs stay the same. There is currently no support for ACL inheritance.
   `user2`, the `user1` still has access to that mailbox.
 
 Global ACLs
-^^^^^^^^^^^
+===========
 
 Global ACLs can be used to apply ACLs globally to all user's specific
 mailboxes. They are used mainly for two purposes:
@@ -165,10 +162,10 @@ you can instead create a .DEFAULT file for `foo`:
 * foo: ``/etc/dovecot/acls/foo/.DEFAULT``
 * foo/bar: ``/etc/dovecot/acls/foo/bar``
 
-ACL files
-^^^^^^^^^
+ACL File Format
+===============
 
-The files themselves are in format:
+The ACL files are in format:
 
 .. code-block:: none
 
@@ -176,12 +173,12 @@ The files themselves are in format:
 
 Where **identifier** is one of:
 
-* group-override=**group name**
-* user=**user name**
-* owner
-* group=**group name**
-* authenticated
-* anyone (or anonymous, which is alias for anyone)
+* ``group-override=<group name>``
+* ``user=<user name>``
+* ``owner``
+* ``group=<group name>``
+* ``authenticated``
+* ``anyone`` (or ``anonymous``)
 
 The ACLS are processed in the precedence given above, so for example if you
 have given read-access to a group, you can still remove that from specific
@@ -200,23 +197,26 @@ Now if timo is in tempdisabled group, he has no access to the mailbox. This
 wouldn't be possible with a normal group identifier, because the ``user=timo``
 would override it.
 
-The currently supported ACLs and their corresponding named ACLs are:
+The currently supported ACLs are:
 
-==== =============== ======================================================================================================================================================================================
-l     lookup          Mailbox is visible in mailbox list. Mailbox can be subscribed to.
-r     read            Mailbox can be opened for reading.
-w     write           Message flags and keywords can be changed, except \Seen and \Deleted
-s     write-seen      \Seen flag can be changed
-t     write-deleted   \Deleted flag can be changed
-i     insert          Messages can be written or copied to the mailbox
-p     post            Messages can be posted to the mailbox by :ref:`lda`, e.g. from :ref:`pigeonhole_sieve_interpreter`
-e     expunge         Messages can be expunged
-k     create          Mailboxes can be created (or renamed) directly under this mailbox (but not necessarily under its children, see ACL Inheritance section above) (renaming also requires delete rights)
-x     delete          Mailbox can be deleted
-a     admin           Administration rights to the mailbox (currently: ability to change ACLs for mailbox)
-==== =============== ======================================================================================================================================================================================
+======== =============== ======================================================================================================================================================================================
+ID       Type                Description
+======== =============== ======================================================================================================================================================================================
+``l``     lookup          Mailbox is visible in mailbox list. Mailbox can be subscribed to.
+``r``     read            Mailbox can be opened for reading.
+``w``     write           Message flags and keywords can be changed, except \Seen and \Deleted
+``s``     write-seen      \Seen flag can be changed
+``t``     write-deleted   \Deleted flag can be changed
+``i``     insert          Messages can be written or copied to the mailbox
+``p``     post            Messages can be posted to the mailbox by :ref:`lda`, e.g. from :ref:`pigeonhole_sieve_interpreter`
+``e``     expunge         Messages can be expunged
+``k``     create          Mailboxes can be created (or renamed) directly under this mailbox (but not necessarily under its children, see ACL Inheritance section above) (renaming also requires delete rights)
+``x``     delete          Mailbox can be deleted
+``a``     admin           Administration rights to the mailbox (currently: ability to change ACLs for mailbox)
+======== =============== ======================================================================================================================================================================================
 
-The ACLs are compatible with RFC 4314 (IMAP ACL extension, updated version).
+The ACLs are compatible with
+`RFC 4314 <https://tools.ietf.org/html/rfc4314>`_ (IMAP ACL extension).
 
 Unknown ACL letters are complained about, but unknown named ACLs are ignored.
 Named ACLs are mostly intended for future extensions.
@@ -251,24 +251,23 @@ Prevent all users from deleting their Spam folder (notice no x flag)
 
   INBOX.Spam owner lrwstipeka
 
-List cache
-^^^^^^^^^^
+List Cache
+==========
 
 ``dovecot-acl-list`` file lists all mailboxes that have ``l`` rights assigned.
 If you manually add/edit ``dovecot-acl`` files, you may need to delete the
 ``dovecot-acl-list`` to get the mailboxes visible.
 
 Dictionaries
-^^^^^^^^^^^^
+============
 
-In order for an ACL to be fully useful, it has to be communicated to IMAP clients.
-For example, if you use ACL to share a mailbox to another user, the client has to
-be explicitly told to check out the other user's mailbox too, as that one is shared.
-Placing the ACL file makes the ACL effective, but ``dovecot`` doesn't take care of
-the user->shared mailboxes mapping out of the box, and as a result, it won't publish
-shared mailboxes to clients if this is not set up.
-You have to configure this manually by defining an appropriate
-:ref:`dictionary <dict>` to store the share map.
+In order for an ACL to be fully useful, it has to be communicated to IMAP
+clients. For example, if you use ACL to share a mailbox to another user, the
+client has to be explicitly told to check out the other user's mailbox too, as
+that one is shared.
 
-Certain dictionary backends are writable by ``dovecot``, so when you establish
-an ACL using ``doveadm``, a dictionary entry is added along to the ACL.
+Placing the ACL file makes the ACL effective, but Dovecot doesn't take care of
+the user to shared mailboxes mapping out of the box, and as a result, it won't
+publish shared mailboxes to clients if this is not set up. You have to
+configure this manually by defining an appropriate :ref:`dictionary <dict>` to
+store the share map.

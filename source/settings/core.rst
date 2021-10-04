@@ -539,7 +539,7 @@ If you want to allow all characters, leave the value empty.
 ``auth_username_format``
 ------------------------
 
-- Default: ``%u``
+- Default: ``%Lu``
 - Values:  :ref:`string`
 
 Formattting applied to username before querying the auth database.
@@ -1629,7 +1629,19 @@ Example Setting:
 
 Specifies the hosts allowed in URLAUTH URLs sent by clients.
 
-``*`` allows all. An empty value disables checking.
+``*`` allows all. An empty value disables checking and disables the URLAUTH
+extension.
+
+.. warning::
+
+  URLAUTH in current versions of Dovecot is broken in several ways. This
+  will be fixed in the future, but activating URLAUTH support on production
+  systems is not recommended.
+
+.. note::
+
+  This setting is REQUIRED for the
+  `URLAUTH <https://tools.ietf.org/html/rfc4467>`_ extension to be active.
 
 .. todo:: Indicate imap setting
 
@@ -2652,20 +2664,6 @@ See :ref:`setting-mail_never_cache_fields`
 .. todo:: List fields, or link to fields decription page
 
 
-.. _setting-mail_cache_min_mail_count:
-
-``mail_cache_min_mail_count``
------------------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
-
-Only update cache file when the mailbox contains at least this many messages.
-
-With a setting other than ``0``, you can optimize behavior for fewer disk
-writes at the cost of more disk reads.
-
-
 .. _setting-mail_chroot:
 
 ``mail_chroot``
@@ -2783,6 +2781,7 @@ See :ref:`quick_configuration`
 -----------------
 
 - Default: <empty>
+- Value:   :ref:`string`
 
 This setting indicates the location for users' mailboxes.
 
@@ -2793,6 +2792,9 @@ users whose mail directory hasn't yet been created, so you should
 explicitly state the full location here, if possible.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
+
+See :ref:`mail_location_settings`.
+
 
 .. _setting-mail_log_prefix:
 
@@ -4319,7 +4321,7 @@ See :ref:`dovecot_ssl_configuration`
 
 The list of SSL cipher suites to use, in order of preference.
 
-See `<https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites>`__
+See https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites
 
 .. _setting-ssl_client_ca_dir:
 

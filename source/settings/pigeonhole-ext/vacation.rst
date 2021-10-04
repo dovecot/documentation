@@ -14,7 +14,7 @@ Pigeonhole Sieve: Vacation Extension
 
 Specifies the minimum period that can be specified for the ``:days`` and ``:seconds`` tags of the vacation command.
 A minimum of 0 indicates that users are allowed to make the Sieve interpreter send a vacation response message for every incoming message that meets the other reply criteria
-(refer to `RFC5230 <https://tools.ietf.org/html/rfc5230>`__). A value of zero is however not recommended.
+(refer to `RFC5230 <https://tools.ietf.org/html/rfc5230>`_). A value of zero is however not recommended.
 
 
 .. _plugin-sieve-setting-sieve_vacation_max_period:
