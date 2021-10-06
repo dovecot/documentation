@@ -22,13 +22,25 @@ race conditions with it so the quota may not always be 100% correct. The old
 value is always replaced with the new one though (not just
 incremented/decremented) so the cloned quota is never too much wrong.
 
-The keys that are written to:
+The keys that are written:
 
-* priv/quota/storage - storage usage in bytes
-* priv/quota/messages - count of messages
+======================== ========================
+Key                      Value
+======================== ========================
+``priv/quota/messages``  Count of messages
+``priv/quota/storage``   Storage usage (in bytes)
+======================== ========================
 
 Configuration
 =============
+
+Settings
+--------
+
+See :ref:`plugin-quota-clone`.
+
+Example
+-------
 
 .. code-block:: none
 
@@ -42,11 +54,10 @@ More complex example using SQL:
 
 .. code-block:: none
 
-   dict {
-     mysql = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
-   }
+  dict {
+    mysql = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
+  }
 
-   plugin {
-      quota_clone_dict = proxy::mysql
-   }
-
+  plugin {
+     quota_clone_dict = proxy::mysql
+  }
