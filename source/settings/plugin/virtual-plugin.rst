@@ -1,13 +1,20 @@
 .. _plugin-virtual:
 
-========================
-virtual-plugin
-========================
+==============
+virtual plugin
+==============
 
-Virtual mailboxes. This improves performance since the backend mailboxes can be left closed.
+.. seealso:: :ref:`virtual_plugin`
 
-First, you'll have to load the plugin:
+Settings
+========
 
-.. code-block:: none
+.. _plugin-virtual-storage-setting_virtual_max_open_mailboxes:
 
-   mail_plugins = $mail_plugins virtual
+``virtual_max_open_mailboxes``
+------------------------------
+
+- Default: 64
+- Values:  :ref:`uint`
+
+How many mailboxes to open in virtual plugin.
