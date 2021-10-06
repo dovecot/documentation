@@ -1,7 +1,7 @@
 .. _plugin-vault:
 
 ============
-Vault Plugin
+vault Plugin
 ============
 
 .. note::
@@ -13,10 +13,16 @@ The vault plugin performs the job of storing the incoming mail first to
 a configurable mailbox location (e.g. ``ARCHIVE``) and, if that succeeds,
 then to user’s INBOX. It also adds the ``\Seen`` flag to the message.
 
+Settings:
+=========
+
 .. _plugin-vault-setting_vault_mailbox:
 
 ``vault_mailbox``
 -----------------
+
+- Default: <empty>
+- Values:  :ref:`string`
 
 This setting enables the vault plugin and identifies where to store a copy
 of the message.
