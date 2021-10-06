@@ -1,10 +1,11 @@
 .. _plugin-stats:
 
-==============
-stats plugins
-==============
+============
+stats plugin
+============
 
-Send statistics from mail processes to the stats process.
+.. versionremoved:: 2.3.0
 
-See :ref:`statistics`
+The stats plugin was removed in 2.3.0 and replaced with :ref:`statistics`.
 
+The old stats plugin functionality was moved to :ref:`plugin-old-stats`.
