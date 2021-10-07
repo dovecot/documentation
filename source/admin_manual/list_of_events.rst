@@ -600,7 +600,7 @@ auth_client_userdb_lookup_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -622,7 +622,7 @@ auth_client_userdb_lookup_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -646,7 +646,7 @@ auth_client_passdb_lookup_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -668,7 +668,7 @@ auth_client_passdb_lookup_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -692,7 +692,7 @@ auth_client_userdb_list_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -713,7 +713,7 @@ auth_client_userdb_list_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -737,7 +737,7 @@ auth_client_cache_flush_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -759,7 +759,7 @@ auth_client_cache_flush_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
