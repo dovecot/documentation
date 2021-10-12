@@ -55,14 +55,14 @@ in this mailbox ``someone1`` would access a mailbox with the name
 ::
 
    namespace shared {
-    type = shared
-    prefix = shared/%%u/
-    list = children
-    subscriptions = no
-    # Use INDEXPVT to enable per-user \Seen flags.
-    # If running earlier versions than 2.3.15, or earlier than 2.3.17 with obox
-    # storage INDEXPVT is not supported.
-    location = imapc:~/shared/%%u:INDEXPVT=~/shared-pvt/%%u
+     type = shared
+     prefix = shared/%%u/
+     list = children
+     subscriptions = no
+     # Use INDEXPVT to enable per-user \Seen flags.
+     # If running earlier versions than 2.3.15, or earlier than 2.3.17 with obox
+     # storage INDEXPVT is not supported.
+     location = imapc:~/shared/%%u:INDEXPVT=~/shared-pvt/%%u
    }
 
 .. note:: Obox relies on having the INDEXPVT directory configured to ``~/shared-pvt``
