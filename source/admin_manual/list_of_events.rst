@@ -1773,7 +1773,17 @@ Common fields:
 +=====================+=====================================================================+
 | Inherits from environment (LDA, LMTP or IMAP)                                             |
 +---------------------+---------------------------------------------------------------------+
+| connection_id       | The session ID for this connection. The connnection ID is forwarded |
+|                     | through proxies, allowing correlation between sessions on frontend  |
+|                     | and backend systems.                                                |
+|                     |                                                                     |
+|                     | .. versionadded:: v2.3.18                                           |
++---------------------+---------------------------------------------------------------------+
 | protocol            | The protocol used by the connection; i.e., either "smtp" or "lmtp". |
++---------------------+---------------------------------------------------------------------+
+| session             | The session ID for this connection (same as connection_id)          |
+|                     |                                                                     |
+|                     | .. versionadded:: v2.3.18                                           |
 +---------------------+---------------------------------------------------------------------+
 
 Command
@@ -1831,7 +1841,12 @@ Common fields:
 +------------------+----------------------------------------------------------+
 | transaction_id   | Transaction ID used by the server for this transaction   |
 |                  | (this ID is logged, mentioned in the DATA reply and      |
-|                  | part of the "Received:" header).                         |
+|                  | part of the "Received:" header). It is based on the      |
+|                  | connection_id with a ":<seq>" sequence number suffix.    |
++------------------+----------------------------------------------------------+
+| session          | Session ID for this transaction (same as transaction_id) |
+|                  |                                                          |
+|                  | .. versionadded:: v2.3.18                                |
 +------------------+----------------------------------------------------------+
 | mail_from        | Sender address.                                          |
 +------------------+----------------------------------------------------------+
@@ -1920,6 +1935,11 @@ Common fields:
 +-----------------------+------------------------------------------------------+
 | rcpt_param_orcpt_type | The address type (typically "rfc822") of the ORCPT   |
 |                       | parameter for the RCPT command.                      |
++-----------------------+------------------------------------------------------+
+| session               | Session ID for this transaction and recipient. It is |
+|                       | based on the transaction_id with a ":<seq>"          |
+|                       | recipient sequence number suffix.                    |
+|                       | Only available for LMTP currently.                   |
 +-----------------------+------------------------------------------------------+
 
 smtp_server_transaction_rcpt_finished
