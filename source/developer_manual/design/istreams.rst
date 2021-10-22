@@ -252,6 +252,9 @@ earlier. There are a few different ways to implement istreams:
    either when the next ``read()`` returns >0 or when the istream is
    destroyed.
 
+     - See ``src/lib-mail/istream-header-filter.c`` or
+       ``src/lib-dcrypt/istream-decrypt.c`` for examples of how to do this.
+
 -  Filter streams that only pass through parent stream's contents
    without changes can just point to the parent stream. The default
    snapshotting causes the parent to be snapshotted, so the filter

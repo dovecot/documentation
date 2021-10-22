@@ -16,7 +16,7 @@ Dovecot Design
 Protocol extensions
 -------------------
 
--  :ref:`Forwarding parameters in IMAP/POP3/LMTP/SMTP proxying <parameter_forwarding>`
+-  :ref:`Forwarding parameters in IMAP/POP3/LMTP/SMTP proxying <forwarding_parameters>`
 
 Code APIs
 ---------

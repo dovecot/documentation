@@ -1,7 +1,7 @@
 .. _howto-exim_and_dovecot_sasl:
 
 #####################
-Postfix and Exim SASL
+Exim and Dovecot SASL
 #####################
 
 Exim v4.64+ users can use Dovecot :ref:`sasl` instead of Cyrus SASL for

@@ -45,6 +45,11 @@ Mailbox formats supported by Dovecot:
 The Tag column indicates the tag which is used at the beginning of a
 :ref:`mailbox location specification <mail_location_settings>`.
 
+Configuration
+=============
+
+See :ref:`mail_location_settings` for configuration information.
+
 Physical Storage
 ================
 

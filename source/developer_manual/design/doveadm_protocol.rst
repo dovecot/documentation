@@ -101,4 +101,4 @@ sent in one line. So in the above case the protocol output will be:
 Example Clients
 ---------------
 
--  Perl: `Net::Doveadm <https://metacpan.org/pod/Net::Doveadm>`__
+-  Perl: `Net::Doveadm <https://metacpan.org/pod/Net::Doveadm>`_

@@ -142,6 +142,8 @@ statistics gathering.  The only additions to the block are the ``exporter`` and
 These are only meaningful if the event matches the predicate (categories,
 filter, etc.) specified in the metric block.
 
+.. _filtering-events-label:
+
 Filtering Events
 ^^^^^^^^^^^^^^^^
 
@@ -164,7 +166,9 @@ There are five possible parts that can be included in a serialized event:
 * `hostname` - the name of the host generating this event
 * `timestamps` - the event start and end timestamps
 * `categories` - a set of categories associated with this event
-* `fields` - the fields associated with this event
+* `fields` - the fields associated with this event; the fields that will be
+             exported are defined by the :ref:`fields <statistics>` setting in
+             the parent `metric` block
 
 The `exporter_include` setting is made up of these tokens which control what
 parts of an event are exported.  It can be set to any set of those
