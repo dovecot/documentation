@@ -42,4 +42,6 @@ Example Setting:
 ``mail_log_cached_only``
 -------------------------------
 
-Whether to use only cached fields for mail log
+If enabled, everything except `save` event will log only the fields that can
+be looked up from cache. This improves performance if some of the fields
+aren't cached and it's not a strict requirement to log them.

@@ -18,7 +18,7 @@ System configuration
 
 -  Create ``/home/vmail`` directory owned by vmail:vmail. The mails for all users are stored under this directory.
 
--  Create ``/var/log/dovecot.log`` and ``/var/log/dovecot-info.log`` files owned by vmail:vmail, so that `dovecot-lda <https://wiki2.dovecot.org/LDA>`__ can write to them.
+-  Create ``/var/log/dovecot.log`` and ``/var/log/dovecot-info.log`` files owned by vmail:vmail, so that :ref:`lda` can write to them.
 
 dovecot.conf
 ============
@@ -116,10 +116,11 @@ SMTP server configuration
 Delivering mails
 ----------------
 
-You can configure the SMTP server to deliver mails internally, or you can use `dovecot-lda <https://wiki2.dovecot.org/LDA>`__.
-Using dovecot-lda gives you better performance because it updates Dovecot's index files while saving the mails.
-See`LDA <https://wiki2.dovecot.org/LDA>`__ for how to configure this.
-Alternatively you can also use :ref:`LMTP <lmtp_server>`.
+You can configure the SMTP server to deliver mails internally, or you can use
+:ref:`lda`. Using dovecot-lda gives you better performance because it updates
+Dovecot's index files while saving the mails. See :ref:`lda` for configuration
+information. Alternatively you can also use :ref:`LMTP <lmtp_server>`.
+
 In config you should have:
 
 ::
@@ -128,19 +129,17 @@ In config you should have:
      postmaster_address = postmaster@example.com
    }
 
+.. _simple_virtual_install_smtp_auth:
+
 SMTP AUTH
 ---------
 
-If you're using one of these MTAs, you can use Dovecot SASL to
+If you're using one of these MTAs, you can use Dovecot :ref:`sasl` to
 authenticate SMTP.
 
--  :ref:`Postfix (v2.3+) configuration <howto-postfix_and_dovecot_sasl>`
-
--  `Exim (v4.64+)
-   configuration <https://wiki2.dovecot.org/HowTo/EximAndDovecotSASL>`__
-
--  `chasquid (v0.04+)
-   configuration <https://wiki2.dovecot.org/HowTo/ChasquidAndDovecotSASL>`__
+- :ref:`Postfix (v2.3+) configuration <howto-postfix_and_dovecot_sasl>`
+- :ref:`Exim (v4.64+) configuration <howto-exim_and_dovecot_sasl>`
+- :ref:`chasquid (v0.04+) configuration <howto-chasquid_and_dovecot_sasl>`
 
 Quota
 =====

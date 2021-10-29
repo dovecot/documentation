@@ -9,8 +9,8 @@ a `Mail Submission Agent (MSA) <https://tools.ietf.org/html/rfc6409>`_. It is
 currently implemented as a proxy that acts as a front-end for any :ref:`mta`,
 adding the necessary functionality required for a submission service: it adds
 the required `AUTH <https://tools.ietf.org/html/rfc4954>`_ support, avoiding
-the need to configure the MTA for SASL authentication. More SMTP capabilities
-like `CHUNKING <https://tools.ietf.org/html/rfc3030>`_ and `SIZE
+the need to configure the MTA for :ref:`SASL authentication <sasl>`. More SMTP
+capabilities like `CHUNKING <https://tools.ietf.org/html/rfc3030>`_ and `SIZE
 <https://tools.ietf.org/html/rfc1870>`_ are supported, without requiring the
 backend MTA supporting these extensions. Other capabilities like `8BITMIME
 <https://tools.ietf.org/html/rfc6152>`_ and `DSN
@@ -19,8 +19,8 @@ backend/relay MTA.
 
 The most notable feature that the proxy adds is the `BURL capability
 <https://tools.ietf.org/html/rfc4468>`_. The main application of that
-capability—together with :ref:`imap_server`.  `URLAUTH
-<https://tools.ietf.org/html/rfc4467>`_ —is avoiding a duplicate upload of
+capability — together with :ref:`IMAP <imap_server>` and  `URLAUTH
+<https://tools.ietf.org/html/rfc4467>`_ — is avoiding a duplicate upload of
 submitted e-mail messages; normally the message is both sent through SMTP and
 uploaded to the `Sent` folder through IMAP. Using BURL, the client can first
 upload the message to IMAP and then use BURL to make the SMTP server fetch the
@@ -68,11 +68,14 @@ Submission Service
 
 Just add ``submission`` to the ``protocols=`` setting and configure the relay
 MTA server. The submission service is a login service, just like IMAP, POP3 and :ref:`pigeonhole_managesieve_server`, so clients
-are required to authenticate. The same `authentication configuration
-<https://wiki.dovecot.org/Authentication>`_ swill also apply to submission,
+are required to authenticate. The same :ref:`authentication configuration
+<authentication-authentication>` shall also apply to submission,
 unless you're doing protocol-specific things, in which case you may need to
-amend your configuration for the new protocol. BURL support requires a working
-IMAP URLAUTH implementation.
+amend your configuration for the new protocol.
+
+BURL support requires a working IMAP URLAUTH implementation. Details on
+configuring Dovecot's URLAUTH support can be found at
+:ref:`setting-imap_urlauth_host`.
 
 The following settings apply to the Submission service:
 

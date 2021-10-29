@@ -5,7 +5,7 @@ Dumpster Config
 ===============
 
 "Dumpster" is an Open-Xchange proprietary App Suite feature that will list
-messages stored in a single Dovecot lazy_expunge mailbox.
+messages stored in a single Dovecot :ref:`lazy_expunge_plugin` mailbox.
 
 This config moves the last copy of a message, when deleted, to a hidden
 ``EXPUNGED`` mailbox.  Messages in the ``EXPUNGED`` mailbox will be

@@ -4,6 +4,8 @@
 Dovecot Core Settings
 ========================
 
+See :ref:`settings` for list of all setting groups.
+
 .. _setting-auth_anonymous_username:
 
 ``auth_anonymous_username``
@@ -249,6 +251,7 @@ See :ref:`setting-auth_policy_server_url`
 Hash mechanism to use for password.
 
 See :ref:`setting-auth_policy_server_url`
+
 .. todo:: Is this the full list?
 
 
@@ -536,7 +539,7 @@ If you want to allow all characters, leave the value empty.
 ``auth_username_format``
 ------------------------
 
-- Default: ``%u``
+- Default: ``%Lu``
 - Values:  :ref:`string`
 
 Formattting applied to username before querying the auth database.
@@ -809,7 +812,7 @@ Example Setting:
    deliver_log_format = stime=%{session_time} msgid=%m: %$
 
 
- .. _setting-dict_db_config:
+.. _setting-dict_db_config:
 
 ``dict_db_config``
 ------------------
@@ -1626,7 +1629,19 @@ Example Setting:
 
 Specifies the hosts allowed in URLAUTH URLs sent by clients.
 
-``*`` allows all. An empty value disables checking.
+``*`` allows all. An empty value disables checking and disables the URLAUTH
+extension.
+
+.. warning::
+
+  URLAUTH in current versions of Dovecot is broken in several ways. This
+  will be fixed in the future, but activating URLAUTH support on production
+  systems is not recommended.
+
+.. note::
+
+  This setting is REQUIRED for the
+  `URLAUTH <https://tools.ietf.org/html/rfc4467>`_ extension to be active.
 
 .. todo:: Indicate imap setting
 
@@ -1674,286 +1689,99 @@ Example Setting:
 .. todo:: Indicate imap setting
 
 
-.. _setting-imapc_cmd_timeout:
-
 ``imapc_cmd_timeout``
 ---------------------
 
-- Default: ``5mins``
-- Values:  :ref:`time`
+See :ref:`setting-imapc_cmd_timeout`
 
-How long to wait for a reply to an IMAP command sent to a remote IMAP server
-before disconnecting and retrying.
-
-This parameter is used in dsync-based migration of mail from the remote system.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_connection_retry_count:
 
 ``imapc_connection_retry_count``
 --------------------------------
 
-- Default: ``1``
-- Values: :ref:`uint`
+See :ref:`setting-imapc_connection_retry_count`
 
-How many times to retry connection against a remote IMAP server?
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_connection_retry_interval:
 
 ``imapc_connection_retry_interval``
 -----------------------------------
 
-- Default: ``1secs``
-- Values:  :ref:`time_msecs`
+See :ref:`setting-imapc_connection_retry_interval`
 
-How long to wait between retries against a remote IMAP server?
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_features:
 
 ``imapc_features``
 ------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_features`
 
-This setting provides a space-separated list of features and workarounds that
-can be enabled for dsync-based migration of mail from a remote IMAP server.
-
-Supported imapc_features:
-
-* ``rfc822.size`` - Allow passing through message sizes using FETCH RFC822.SIZE
-* ``fetch-headers`` - Allow fetching specific message headers using FETCH
-  BODY.PEEK[HEADER.FIELDS (..)], may give a significant performance improvement
-
-.. todo:: Import imapc_features list from wiki
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_host:
 
 ``imapc_host``
 --------------
 
-- Default: <empty>
-
-The remote IMAP server to use for dsync-based migration of mail (which allows
-preservation of the IMAP UIDs etc.).
-
-Example:
-
-.. code-block:: none
-
-   imapc_host = imap.example.com
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_list_prefix:
+See :ref:`setting-imapc_host`
 
 ``imapc_list_prefix``
 ---------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_list_prefix`
 
-In dsync-based migration, only mailboxes under this prefix on the
-remote system are accessed.
-
-Example, for a source IMAP server that uses an INBOX namespace prefix:
-
-.. code-block:: none
-
-   imapc_list_prefix = INBOX/
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_master_user:
 
 ``imapc_master_user``
 ---------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_master_user`
 
-If you are using master users for dsync-based migration of mail,
-this is the master user for the source IMAP server.
-
-To authenticate as a master user but use a separate login user, the
-following configuration should be employed, where the credentials are
-represented by masteruser and masteruser-secret:
-
-.. code-block:: none
-
-   imapc_user = %u
-   imapc_master_user = masteruser
-   imapc_password = masteruser-secret
-
-:ref:`Mail user variables <variables-mail_user>` can be used.
-
-See also :ref:`setting-imapc_password`.
-See also :ref:`setting-imapc_user`.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_max_idle_time:
 
 ``imapc_max_idle_time``
 -----------------------
 
-- Default: ``29mins``
-- Values:  :ref:`time`
+See :ref:`setting-imapc_max_idle_time`
 
-Send a command to the source IMAP server as a keepalove after no other command
-has been sent for this amount of time.
-
-Dovecot will send either "NOOP" or "DONE" to the source IMAP server.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_max_line_length:
 
 ``imapc_max_line_length``
 -------------------------
 
-- Default: ``0``
-- Values:  :ref:`size`
+See :ref:`setting-imapc_max_line_length`
 
-The maximum line length to accept from the remote IMAP server.
-
-This setting is used to limit maximum memory usage.
-
-A value of ``0`` indicates no maximum.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_password:
 
 ``imapc_password``
 ------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_password`
 
-The password used in the login to the source IMAP server for migration of mail
-via dsync.
-
-If using master users, this setting will be the password of the master user.
-
-See also :ref:`setting-imapc_master_user`.
-
-See also :ref:`setting-imapc_user`.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_port:
 
 ``imapc_port``
 --------------
 
-- Default: ``143``
+See :ref:`setting-imapc_port`
 
-Port used for connection to the source IMAP server in dsync-based migration of
-mail.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_rawlog_dir:
 
 ``imapc_rawlog_dir``
 --------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_rawlog_dir`
 
-Directory location to store raw IMAP protocol traffic logs used in
-dsync-based migration of mail..
-
-See: https://wiki.dovecot.org/Debugging/Rawlog
-
-.. todo:: Link to rawlog documentation
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_sasl_mechanisms:
 
 ``imapc_sasl_mechanisms``
 -------------------------
 
-- Default: <empty>
+See :ref:`setting-imapc_sasl_mechanisms`
 
-The SASL mechanisms to use for authentication when connection to a remote
-IMAP server during dsync-based migration of mail.
-
-The first one advertised by the IMAP sever is used.
-
-PLAIN authentication will be used by default.
-
-Example value:
-
-.. code-block:: none
-
-   imapc_sasl_mechanisms = external plain login
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_ssl:
 
 ``imapc_ssl``
 -------------
 
-- Default: ``no``
-- Values: ``yes``, ``no``, or ``imaps``
+See :ref:`setting-imapc_ssl`
 
-To enable SSL for dsync-based migration of mail, use ``imapc_ssl = imaps``
-to specify the protocol for connection to the source IMAP server.
-
-.. todo:: Values are incorrect?  At least "imaps" is also supported.
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_ssl_verify:
 
 ``imapc_ssl_verify``
 --------------------
 
-- Default: ``yes``
-- Values: :ref:`boolean`
+See :ref:`setting-imapc_ssl_verify`
 
-Require SSL verification of remote IMAP account certificate during dsync-based
-migration of mail.
-
-Verification may be disabled during testing, but should be enabled during
-production use.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-imapc_user:
 
 ``imapc_user``
 --------------
 
-- Default: <empty>
-
-The user identity to be used for performing a regular IMAP LOGIN to the
-source IMAP server in dsync-based migration of mail.
-
-:ref:`Mail user variables <variables-mail_user>` can be used.
-
-See also :ref:`setting-imapc_master_user`.
-See also :ref:`setting-imapc_password`.
-
-.. todo:: Indicate dsync setting
+See :ref:`setting-imapc_user`
 
 
 .. _setting-import_environment:
@@ -1970,7 +1798,6 @@ The list is space-separated, and it can include key = value pairs for
 assigning variables the desired value upon Dovecot startup.
 
 .. todo:: Explain default variables
-
 
 
 .. _setting-info_log_path:
@@ -2113,6 +1940,8 @@ Example:
 ``lmtp_add_received_header``
 ----------------------------
 
+.. versionadded:: v2.3.9
+
 - Default: ``yes``
 - Values: :ref:`boolean`
 
@@ -2186,9 +2015,8 @@ Proxy to other LMTP/SMTP servers?
 
 Proxy destination is determined via passdb lookup parameters.
 
-See: https://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
+See :ref:`authentication-proxies`
 
-.. todo:: Link to proxy documentation
 .. todo:: Indicate LMTP setting
 
 
@@ -2196,6 +2024,8 @@ See: https://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
 
 ``lmtp_proxy_rawlog_dir``
 -------------------------
+
+.. versionadded:: v2.3.2
 
 - Default: <empty>
 
@@ -2205,16 +2035,17 @@ Directory location to store raw LMTP proxy protocol traffic logs.
 However, because LMTP session starts without a user, all user-specific
 variables expand to empty.
 
-See: https://wiki.dovecot.org/Debugging/Rawlog
+See :ref:`debugging_rawlog`
 
 .. todo:: Indicate LMTP setting
-.. todo:: Link to rawlog documentation
 
 
 .. _setting-lmtp_rawlog_dir:
 
 ``lmtp_rawlog_dir``
 -------------------
+
+.. versionadded:: v2.3.2
 
 - Default: <empty>
 
@@ -2224,10 +2055,9 @@ Directory location to store raw LMTP protocol traffic logs.
 However, because LMTP session starts without a user, all user-specific
 variables expand to empty.
 
-See: https://wiki.dovecot.org/Debugging/Rawlog
+See :ref:`debugging_rawlog`
 
 .. todo:: Indicate LMTP setting
-.. todo:: Link to rawlog documentation
 
 
 .. _setting-lmtp_rcpt_check_quota:
@@ -2448,7 +2278,7 @@ Variable Long name      Description
 %d       domain         domain part in user@domain, empty if user with no domain
 %h       home           Expands to HOME environment. Usually means it's empty.
 %p       pid            PID of the current process
-%m       mech           `authentication mechanism <https://wiki.dovecot.org/Authentication/Mechanisms>`_ e.g. PLAIN
+%m       mech           :ref:`authentication-authentication_mechanisms` e.g. PLAIN
 %a       lport          local port
 %b       rport          remote port
 %c       secured        "secured" string with SSL, TLS and localhost connections. Otherwise empty.
@@ -2490,6 +2320,21 @@ Location of the login plugin directory.
 - Default: <empty>
 
 List of plugins to load for IMAP and POP3 login processes.
+
+
+.. _setting-login_proxy_rawlog_dir:
+
+``login_proxy_rawlog_dir``
+--------------------------
+
+.. versionadded:: v2.3.17
+
+- Default: <empty>
+- Values: :ref:`string`
+
+Login processes write rawlogs for proxied connections to this directory for
+debugging purposes. Note that login processes are usually chrooted, so the
+directory is relative to ``$base_dir/login/``.
 
 
 .. _setting-login_proxy_timeout:
@@ -2814,71 +2659,6 @@ See :ref:`setting-imap_metadata`
 .. todo:: Indicate metadata setting
 
 
-.. _setting-mail_cache_compress_continued_percentage:
-
-``mail_cache_compress_continued_percentage``
---------------------------------------------
-
-- Default: ``200``
-- Values: :ref:`uint`
-
-Compress the cache file when n% of rows contain continued rows.
-
-For example ``200`` means that the record has 2 continued rows, i.e. it exists
-in 3 separate segments in the cache file.
-
-The default is OK and doesn't need to be change. 
-
-.. todo:: Should not be changed
-
-
-.. _setting-mail_cache_compress_delete_percentage:
-
-``mail_cache_compress_delete_percentage``
------------------------------------------
-
-- Default: ``20``
-- Values: :ref:`uint`
-
-Compress the cache file when n% of records are deleted (by count, not by
-size).
-
-The default is OK and doesn't need to be change. 
-
-.. todo:: Should not be changed
-
-
-.. _setting-mail_cache_compress_header_continue_count:
-
-``mail_cache_compress_header_continue_count``
----------------------------------------------
-
-- Default: ``4``
-- Values: :ref:`uint`
-
-Compress the cache file when we need to follow more than n next_offsets to
-find the latest cache header.
-
-The default is OK and doesn't need to be change. 
-
-.. todo:: Should not be changed
-
-
-.. _setting-mail_cache_compress_min_size:
-
-``mail_cache_compress_min_size``
---------------------------------
-
-- Default: ``32k``
-- Values:  :ref:`size`
-
-Only compress cache file if it is larger than this size.
-
-The default is OK and doesn't need to be change. 
-
-.. todo:: Should not be changed
-
-
 .. _setting-mail_cache_fields:
 
 ``mail_cache_fields``
@@ -2897,70 +2677,6 @@ See :ref:`setting-mail_always_cache_fields`
 See :ref:`setting-mail_never_cache_fields`
 
 .. todo:: List fields, or link to fields decription page
-
-
-.. _setting-mail_cache_min_mail_count:
-
-``mail_cache_min_mail_count``
------------------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
-
-Only update cache file when the mailbox contains at least this many messages.
-
-With a setting other than ``0``, you can optimize behavior for fewer disk
-writes at the cost of more disk reads.
-
-
-.. _setting-mail_cache_max_size:
-
-``mail_cache_max_size``
------------------------
-
-.. versionadded:: v2.3.11
-
-- Default: ``1G``
-- Values:  :ref:`size`
-
-If dovecot.index.cache becomes becomes larger than this, it's truncated to
-empty size. The maximum value is 1 GB because the cache file format can't
-currently support large sizes.
-
-.. _setting-mail_cache_record_max_size:
-
-``mail_cache_record_max_size``
-------------------------------
-
-- Default: ``64k``
-- Values:  :ref:`size`
-
-If a cache record becomes larger than this, don't add it to the cache file.
-
-The default is OK and doesn't need to be change. 
-
-.. todo:: Should not be changed
-
-
-.. _setting-mail_cache_unaccessed_field_drop:
-
-``mail_cache_unaccessed_field_drop``
-------------------------------------
-
-- Default: ``30days``
-- Values:  :ref:`time`
-
-Specifies when cache decisions are downgraded.
-
-.. versionchanged:: v2.3.11 Change caching decision from YES to TEMP after this
-                    much time has passed. Drop the field entirely after twice
-                    this much time has passed (i.e. 60 days by default),
-                    regardless of whether the cache decision was YES or TEMP
-                    previously. Older versions used this setting only for
-                    dropping the field after it hadn't been accessed for this
-                    long.
-
-See :ref:`mail_cache_settings` for details.
 
 
 .. _setting-mail_chroot:
@@ -3071,119 +2787,7 @@ mail=/var/vmail/domain/user/mail/:
 
 See :ref:`setting-mail_location`
 
-See: https://wiki.dovecot.org/QuickConfiguration
-
-.. todo:: Link to configuration page - this is too complex for config page
-
-
-.. _setting-mail_index_log2_max_age:
-
-``mail_index_log2_max_age``
----------------------------
-
-- Default: ``2days``
-- Values:  :ref:`time`
-
-Delete .log.2 index file when older than this value.
-
-Older .log.2 files are useful for QRESYNC and dsync, so this value should not
-be too low.
-
-The default is OK and doesn't need to be change. 
-
-.. todo:: Should not be changed
-
-
-.. _setting-mail_index_log_rotate_max_size:
-
-``mail_index_log_rotate_max_size``
-----------------------------------
-
-- Default: ``1M``
-- Values:  :ref:`size`
-
-Always rotate transaction log after it exceeds this size.
-
-The default is OK and doesn't need to be changed.
-
-.. todo:: Should not be changed
-
-See also:
-
-* :ref:`setting-mail_index_log_rotate_min_age`
-* :ref:`setting-mail_index_log_rotate_min_size`
-
-
-.. _setting-mail_index_log_rotate_min_age:
-
-``mail_index_log_rotate_min_age``
----------------------------------
-
-- Default: ``5mins``
-- Values:  :ref:`time`
-
-Rotate transaction log if it is older than this value and is larger than
-:ref:`setting-mail_index_log_rotate_min_size`.
-
-The default is OK and doesn't need to be changed.
-
-See :ref:`setting-mail_index_log_rotate_max_size`
-
-.. todo:: Should not be changed
-
-
-.. _setting-mail_index_log_rotate_min_size:
-
-``mail_index_log_rotate_min_size``
-----------------------------------
-
-- Default: ``32k``
-- Values:  :ref:`size`
-
-Rotate transaction log if it is larger than this size and is older than
-:ref:`setting-mail_index_log_rotate_min_age`.
-
-The default is OK and doesn't need to be changed.
-
-See :ref:`setting-mail_index_log_rotate_max_size`
-
-.. todo:: Should not be changed
-
-
-.. _setting-mail_index_rewrite_max_log_bytes:
-
-``mail_index_rewrite_max_log_bytes``
-------------------------------------
-
-- Default: ``128k``
-- Values:  :ref:`size`
-
-Rewrite the index when the number of bytes that needs to be read from the
-.log index file on refresh is between these min/max values.
-
-The default is OK and doesn't need to be changed.
-
-See :ref:`setting-mail_index_rewrite_min_log_bytes`
-
-.. todo:: Should not be changed
-
-
-.. _setting-mail_index_rewrite_min_log_bytes:
-
-``mail_index_rewrite_min_log_bytes``
-------------------------------------
-
-- Default: ``8k``
-- Values:  :ref:`size`
-
-Rewrite the index when the number of bytes that needs to be read from the
-.log index file on refresh is between these min/max values.
-
-The default is OK and doesn't need to be changed.
-
-See :ref:`setting-mail_index_rewrite_max_log_bytes`
-
-.. todo:: Should not be changed
+See :ref:`quick_configuration`
 
 
 .. _setting-mail_location:
@@ -3192,6 +2796,7 @@ See :ref:`setting-mail_index_rewrite_max_log_bytes`
 -----------------
 
 - Default: <empty>
+- Value:   :ref:`string`
 
 This setting indicates the location for users' mailboxes.
 
@@ -3202,6 +2807,9 @@ users whose mail directory hasn't yet been created, so you should
 explicitly state the full location here, if possible.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
+
+See :ref:`mail_location_settings`.
+
 
 .. _setting-mail_log_prefix:
 
@@ -3340,6 +2948,8 @@ See :ref:`setting-mail_plugins`
 A spece-separated list of plugins to load.
 
 See :ref:`setting-mail_plugin_dir`
+
+See :ref:`Example Usage <config_file_syntax-mail_plugins_example>`
 
 
 .. _setting-mail_prefetch_count:
@@ -3543,9 +3153,7 @@ This may happen when mail messages do not have their virtual sizes cached.
 When indexing is occuring in the background, explicit quota size queries
 return an internal error and mail deliveries are assumed to succeed.
 
-See: https://wiki.dovecot.org/Quota
-
-.. todo:: Link to quota page
+See :ref:`quota_plugin`
 
 
 .. _setting-mailbox_idle_check_interval:
@@ -3608,78 +3216,34 @@ If enabled, assume that the mailbox list index is fully updated so that
 stat() will not be run for mailbox files/directories.
 
 
-.. _setting-maildir_broken_filename_sizes:
-
 ``maildir_broken_filename_sizes``
 ---------------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-maildir_broken_filename_sizes`
 
-Maildir only: If enabled, do not obtain a mail message's physical size from
-the ``S=<size>`` data in the Maildir filename except when recalculating the
-Maildir++ quota.
-
-.. todo:: Indicate Maildir-only setting
-
-
-.. _setting-maildir_copy_with_hardlinks:
 
 ``maildir_copy_with_hardlinks``
 -------------------------------
 
-- Default: ``yes``
-- Values: :ref:`boolean`
+See :ref:`setting-maildir_copy_with_hardlinks`
 
-Maildir only: If enabled, copying of a message is done with hard links
-whenever possible.
-
-This greatly improves performance, and no negative effects are likely.
-
-.. todo:: Indicate Maildir-only setting
-
-
-.. _setting-maildir_empty_new:
 
 ``maildir_empty_new``
 ---------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-maildir_empty_new`
 
-Maildir only: Should mail messages always be moved from the ``new/`` directory
-to ``cur/``, even when the ``\Recent`` flags aren't being reset?
-
-.. todo:: Indicate Maildir-only setting
-
-
-.. _setting-maildir_stat_dirs:
 
 ``maildir_stat_dirs``
 ---------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-maildir_stat_dirs`
 
-Maildir only: If enabled, don't include directories in a LIST response that
-begin with a dot.
-
-.. todo:: Indicate Maildir-only setting
-
-
-.. _setting-maildir_very_dirty_syncs:
 
 ``maildir_very_dirty_syncs``
 ----------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
-
-Maildir: If disabled, Dovecot is assumed to be the only MUA that accesses
-Maildir directly, so the ``cur/`` directory is scanned only when its mtime
-changes unexpectedly or when the mail cannot otherwise be found.
-
-.. todo:: Indicate Maildir-only setting
+See :ref:`setting-maildir_very_dirty_syncs`
 
 
 .. _setting-master_user_separator:
@@ -3703,231 +3267,76 @@ Example:
    master_user_separator = *
 
 
-.. _setting-mbox_dirty_syncs:
-
 ``mbox_dirty_syncs``
 --------------------
 
-- Default: ``yes``
-- Values: :ref:`boolean`
+See :ref:`setting-mbox_dirty_syncs`
 
-mbox only: Enable optimized mbox syncing?
-
-For larger mbox files, it can take a long time to determine what has
-changed when the file is altered unexpectedly. Since the change in
-most cases consists solely of newly appended mail, Dovecot can
-operate more quickly if it starts off by simply reading the new
-messages, then falls back to reading the entire mbox file if
-something elsewhere in it isn't as expected.
-
-See :ref:`setting-mbox_very_dirty_syncs`
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_dotlock_change_timeout:
 
 ``mbox_dotlock_change_timeout``
 -------------------------------
 
-- Default: ``2 mins``
-- Values:  :ref:`time`
+See :ref:`setting-mbox_dotlock_change_timeout`
 
-mbox only: Override a lockfile after this amount of time if a dot-lock exists
-but the mailbox hasn't been modified in any way.
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_lazy_writes:
 
 ``mbox_lazy_writes``
 --------------------
 
-- Default: ``yes``
-- Values: :ref:`boolean`
+See :ref:`setting-mbox_lazy_writes`
 
-mbox only: If enabled, mbox headers are not written until a
-full write sync is performed (with the EXPUNGE and CHECK commands and
-during closing of the mailbox).
-
-Enabling this setting is especially useful with POP3, in which clients often
-delete all mail messages.
-
-One negative consequence of enabling this setting is that the changes aren't
-immediately visible to other MUAs.
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_lock_timeout:
 
 ``mbox_lock_timeout``
 ---------------------
 
-- Default: ``5mins``
-- Values:  :ref:`time`
+See :ref:`setting-mbox_lock_timeout`
 
-mbox only: The maximum time to wait for all locks to be released before
-aborting.
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_md5:
 
 ``mbox_md5``
 ------------
 
-- Default: ``apop3d``
+See: :ref:`setting-mbox_md5`
 
-mbox only: The mail-header selection algorithm to use for MD5 POP3 UIDLs when
-the setting ``pop3_uidl_format=%m`` is applied.
-
-See :ref:`setting-pop3_uidl_format`
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_min_index_size:
 
 ``mbox_min_index_size``
 -----------------------
 
-- Default: ``0``
+See :ref:`setting-mbox_min_index_size`
 
-mbox only: For mboxes smaller than this size, index files are not
-written.
-
-If an index file already exists, it gets read but not updated.
-
-The default is OK and doesn't need to be change. 
-
-.. todo:: Indicate mbox-only setting
-.. todo:: Should not be changed
-
-
-.. _setting-mbox_read_locks:
 
 ``mbox_read_locks``
 -------------------
 
-- Default: ``fcntl``
-- Values: ``dotlock, dotlock_try, fcntl, flock, lockf``
+See :ref:`setting-mbox_read_locks`
 
-mbox only: Specify which locking method(s) to use for locking the mbox files
-during reading.
-
-To use multiple values, separate them with spaces.
-
-There are at least four different ways to lock a mbox:
-
-* **dotlock**: mailboxname.lock file created by almost all software when writing to mboxes. This grants the writer an exclusive lock over the mbox, so it's usually not used while reading the mbox so that other processes can also read it at the same time. So while using a dotlock typically prevents actual mailbox corruption, it doesn't protect against read errors if mailbox is modified while a process is reading.
-
-* **flock**: flock() system call is quite commonly used for both read and write locking. The read lock allows multiple processes to obtain a read lock for the mbox, so it works well for reading as well. The one downside to it is that it doesn't work if mailboxes are stored in NFS.
-
-* **fcntl**: Very similar to flock, also commonly used by software. In some systems this fcntl() system call is compatible with flock(), but in other systems it's not, so you shouldn't rely on it. fcntl works with NFS if you're using lockd daemon in both NFS server and client.
-
-* **lockf**: POSIX lockf() locking. Because it allows creating only exclusive locks, it's somewhat useless so Dovecot doesn't support it. With Linux lockf() is internally compatible with fcntl() locks, but again you shouldn't rely on this.
-
-
-.. todo:: Explain differences between values
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_very_dirty_syncs:
 
 ``mbox_very_dirty_syncs``
 -------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-mbox_very_dirty_syncs`
 
-mbox only: If enabled, Dovecot performs the optimizations from
-``mbox_dirty_syncs`` also for the IMAP SELECT, EXAMINE, EXPUNGE, and CHECK
-commands.
-
-If set, this option overrides ``mbox_dirty_syncs``.
-
-See :ref:`setting-mbox_dirty_syncs`
-
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mbox_write_locks:
 
 ``mbox_write_locks``
 --------------------
 
-- Default: ``dotlock fcntl``
-- Values: ``dotlock, dotlock_try, fcntl, flock, lockf``
+See :ref:`setting-mbox_write_locks`
 
-mbox only: Specify which locking method(s) to use for locking the mbox files
-during writing.
-
-To use multiple values, separate them with spaces.
-
-There are at least four different ways to lock a mbox:
-
-* **dotlock**: mailboxname.lock file created by almost all software when writing to mboxes. This grants the writer an exclusive lock over the mbox, so it's usually not used while reading the mbox so that other processes can also read it at the same time. So while using a dotlock typically prevents actual mailbox corruption, it doesn't protect against read errors if mailbox is modified while a process is reading.
-
-* **flock**: flock() system call is quite commonly used for both read and write locking. The read lock allows multiple processes to obtain a read lock for the mbox, so it works well for reading as well. The one downside to it is that it doesn't work if mailboxes are stored in NFS.
-
-* **fcntl**: Very similar to flock, also commonly used by software. In some systems this fcntl() system call is compatible with flock(), but in other systems it's not, so you shouldn't rely on it. fcntl works with NFS if you're using lockd daemon in both NFS server and client.
-
-* **lockf**: POSIX lockf() locking. Because it allows creating only exclusive locks, it's somewhat useless so Dovecot doesn't support it. With Linux lockf() is internally compatible with fcntl() locks, but again you shouldn't rely on this.
-
-.. todo:: Explain differences between values
-.. todo:: Indicate mbox-only setting
-
-
-.. _setting-mdbox_preallocate_space:
 
 ``mdbox_preallocate_space``
 ---------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-mdbox_preallocate_space`
 
-mdbox only: If enabled, preallocate space for newly created files.
-
-In creation of new mdbox files, their size is immediately
-preallocated as ``mdbox_rotate_size``.
-
-This setting currently works only in Linux with certain filesystems (ext4
-and xfs).
-
-See :ref:`setting-mdbox_rotate_size`
-
-.. todo:: Indicate mdbox-only setting
-
-
-.. _setting-mdbox_rotate_interval:
 
 ``mdbox_rotate_interval``
 -------------------------
 
-- Default: ``0``
-- Values:  :ref:`size`
+See :ref:`setting-mdbox_rotate_interval`
 
-mdbox only: The maximum age the dbox file may reach before it's rotated.
-
-``0`` means there is no age-based rotation.
-
-.. todo:: Indicate mdbox-only setting
-
-
-.. _setting-mdbox_rotate_size:
 
 ``mdbox_rotate_size``
 ---------------------
 
-- Default: ``10M``
-- Values:  :ref:`size`
-
-mdbox only: The maximum size the dbox file may reach before it is rotated.
-
-.. todo:: Indicate mdbox-only setting
+See :ref:`setting-mdbox_rotate_size`
 
 
 .. _setting-mmap_disable:
@@ -4464,9 +3873,8 @@ the metadata.
 Directory location to store raw POP3 protocol traffic logs used in
 dsync-based migration of mail..
 
-See: https://wiki.dovecot.org/Debugging/Rawlog
+See :ref:`debugging_rawlog`
 
-.. todo:: Link to rawlog documentation
 .. todo:: Indicate dsync setting
 
 
@@ -4563,9 +3971,7 @@ account moves under the quota limit at the time of redelivery.
 If disabled, the message is bounced with a permanent error returned to the
 sending server.
 
-.. todo:: Link to quota page
-
-See: https://wiki.dovecot.org/Quota
+See :ref:`quota_plugin`
 
 
 .. _setting-rawlog_dir:
@@ -4577,15 +3983,23 @@ See: https://wiki.dovecot.org/Quota
 
 - Default: <empty>
 
-Location to store rawlog data files.
-
-If empty, rawlog files are not created.
+Directory where to create ``*.in`` and ``*.out`` rawlog files, one per TCP
+connection. The directory must already exist and be writable by the process.
+No error is logged if the directory doesn't exist.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
 
-See: https://wiki.dovecot.org/Debugging/Rawlog
+See :ref:`debugging_rawlog`
 
-.. todo:: Link to rawlog information page
+Example:
+
+.. code-block:: none
+
+   protocol imap {
+     rawlog_dir = /tmp/rawlog/%u
+     # if you want to put files into user's homedir, use this, do not use ~
+     #rawlog_dir = %h/rawlog
+ }
 
 
 .. _setting-recipient_delimiter:
@@ -4700,7 +4114,7 @@ The replicator host to be used in dsync operation.
 -------------------
 
 - Default: <empty>
-- Values: ref:`string`
+- Values: :ref:`string`
 
 Specifies remote hostname or UNIX socket to connect for replicator process.
 If :ref:`setting-replicator_port` is set to ``0``, then it will be treated
@@ -4715,7 +4129,7 @@ See :ref:`setting-replicator`
 -------------------
 
 - Default: ``0``
-- Values: ref:`uint`
+- Values: :ref:`uint`
 
 The port indicated here is used by dsync for replication. If set to ``0``,
 :ref:`setting-replicator_host` is interpreted as UNIX socket path.
@@ -4758,7 +4172,7 @@ to apply a security update, for example.
 -------
 
 - Default: ``yes``
-- Values: :ref:``yes``,``no``, or ``required``
+- Values: ``yes``, ``no``, or ``required``
 
 The level of SSL support.
 
@@ -4766,11 +4180,10 @@ ssl=no: SSL/TLS is completely disabled.
 
 With both ssl=yes and ssl=required it's still possible that the client attempts to do a plaintext authentication before enabling SSL/TLS, which exposes the plaintext password to the internet. Dovecot attempts to indicate this to the IMAP clients via the LOGINDISABLED capability, but many clients still ignore it and send the password anyway. There is unfortunately no way for Dovecot to prevent this behavior. The POP3 standard doesn't have an equivalent capability at all, so the POP3 clients can't even know if the server would accept a plaintext authenticatio
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Explain levels
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_alt_cert:
@@ -4795,10 +4208,9 @@ Example:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_alt_key:
@@ -4823,10 +4235,9 @@ Example:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_ca:
@@ -4846,10 +4257,9 @@ Example:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_cert:
@@ -4866,10 +4276,9 @@ See :ref:`setting-ssl`
 
 See :ref:`setting-ssl_key`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_cert_username_field:
@@ -4891,10 +4300,9 @@ See :ref:`setting-auth_ssl_username_from_cert`
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_cipher_list:
@@ -4913,11 +4321,22 @@ See :ref:`setting-ssl`
 
 See :ref:`setting-ssl_min_protocol`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
+.. _setting-ssl_cipher_suites:
+
+``ssl_cipher_suites``
+---------------------
+
+.. versionadded:: v2.3.15
+
+- Default: OpenSSL version specific.
+
+The list of SSL cipher suites to use, in order of preference.
+
+See https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites
 
 .. _setting-ssl_client_ca_dir:
 
@@ -4933,10 +4352,9 @@ with the imapc back end).
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL
+See :ref:`ssl`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_client_ca_file:
@@ -4955,10 +4373,9 @@ contains the CAs that are actually necessary.
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_client_cert:
@@ -4976,10 +4393,9 @@ Example Setting:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_client_key:
@@ -4997,10 +4413,9 @@ Example Setting:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL
+See :ref:`ssl`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_crypto_device:
@@ -5015,10 +4430,9 @@ Which SSL crypto device to use.
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_curve_list:
@@ -5040,11 +4454,9 @@ Example:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
-
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_dh:
@@ -5071,10 +4483,9 @@ Example Setting:
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_client_require_valid_cert:
@@ -5089,10 +4500,9 @@ Require a valid cerficate when connecting to external SSL services?
 
 See :ref:`setting-ssl`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_key:
@@ -5115,10 +4525,9 @@ See :ref:`setting-ssl`
 
 See :ref:`setting-ssl_cert`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_key_password:
@@ -5141,10 +4550,9 @@ See :ref:`setting-ssl`
 
 See :ref:`setting-ssl_key`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_min_protocol:
@@ -5152,18 +4560,35 @@ See: https://wiki.dovecot.org/SSL/DovecotConfiguration
 ``ssl_min_protocol``
 --------------------
 
-- Default: ``TLSv1``
+- Default: ``TLSv1.2``
 
 The minimum SSL protocol version Dovecot accepts.
+Supported values are:
+
+ * ``ANY`` - Support any version. (SHOULD NOT BE USED)
+
+   .. versionadded:: v2.3.15
+
+ * ``SSLv3`` - Support SSLv3+. (SHOULD NOT BE USED) (SSLv3 deprecated: `RFC 7568 <https://datatracker.ietf.org/doc/html/rfc7568>`_)
+ * ``TLSv1`` - Support TLSv1+. (default before v2.3.15) (TLSv1 deprecated: `RFC 8996 <https://datatracker.ietf.org/doc/html/rfc8996>`_)
+ * ``TLSv1.1`` - Support TLSv1.1+. (TLSv1.1 deprecated: `RFC 8996 <https://datatracker.ietf.org/doc/html/rfc8996>`_)
+ * ``TLSv1.2`` - Support TLSv1.2+. (default since v2.3.15)
+ * ``TLSv1.3`` - Support TLSv1.3+.
+
+   .. versionadded:: v2.3.15
+
+ * ``LATEST`` - Support only the latest version available.
+
+   .. versionadded:: v2.3.15
+
 
 See :ref:`setting-ssl`
 
 See :ref:`setting-ssl_cipher_list`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+See :ref:`dovecot_ssl_configuration`
 
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
 
 
 .. _setting-ssl_options:
@@ -5183,9 +4608,9 @@ Currently supported options are:
 
 See :ref:`setting-ssl`
 
-.. todo:: Indicate SSL setting
+See :ref:`dovecot_ssl_configuration`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_prefer_server_ciphers:
@@ -5200,10 +4625,9 @@ If enabled, give preference to the server's cipher list over a client's list.
 
 See :ref:`setting-ssl`
 
-.. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
+See :ref:`dovecot_ssl_configuration`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_require_crl:
@@ -5218,10 +4642,9 @@ If enabled, the CRL check must succeed for client certificates.
 
 See :ref:`setting-ssl`
 
-.. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
+See :ref:`dovecot_ssl_configuration`
 
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
+.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_verify_client_cert:
@@ -5238,12 +4661,11 @@ See :ref:`setting-ssl`
 
 See :ref:`setting-auth_ssl_require_client_cert`
 
+See :ref:`dovecot_ssl_configuration`
+
+See :ref:`ssl`
+
 .. todo:: Indicate SSL setting
-.. todo:: Link to SSL page
-
-See: https://wiki.dovecot.org/SSL/DovecotConfiguration
-
-See: https://wiki.dovecot.org/SSL
 
 
 .. _setting-state_dir:
@@ -5464,9 +4886,9 @@ Write protocol logs for relay connection to this directory for debugging.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
 
-.. todo:: Indicate submission setting
+See :ref:`debugging_rawlog`
 
-see: https://wiki.dovecot.org/Debugging/Rawlog
+.. todo:: Indicate submission setting
 
 
 .. _setting-submission_relay_ssl:

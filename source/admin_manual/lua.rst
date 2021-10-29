@@ -4,7 +4,11 @@
 Dovecot Lua support
 =========================
 
-Since v2.3.0 dovecot supports Lua scripting. Dovecot supports lua 5.0 or newer.
+Since v2.3.0 dovecot supports Lua scripting. Dovecot supports Lua 5.1 and
+Lua 5.3.
+
+.. versionremoved:: 2.3.15 Lua 5.2 was supported until its removal in
+   Dovecot version 2.3.15.
 
 See also:
 
@@ -27,7 +31,7 @@ return non-zero to indicate that the script has a problem.
 C API
 ^^^^^^
 
-.. c:function:: void dlua_register_dovecot(struct dlua_script *script)
+.. c:function:: void dlua_dovecot_register(struct dlua_script *script)
 
 Register dovecot variable. This item can also be extended by context specific
 tables, like authentication database adds dovecot.auth.
@@ -38,6 +42,11 @@ Pushes an Dovecot Event to stack.
 
 Lua API
 ^^^^^^^^
+
+.. warning:: Never use ``os.exit()`` from a Lua script. This will cause the
+	     whole process to exit instead of just the script.
+
+.. py:currentmodule:: dovecot
 
 .. py:function:: i_debug(text)
 
@@ -67,17 +76,39 @@ Event functions are available from
 
 .. versionadded:: v2.3.4
 
-.. py:function:: dovecot.event()
+.. py:function:: event()
 
    Generate new event with lua script as parent.
 
-.. py:function:: dovecot.event(parent)
+.. py:function:: event(parent)
    :noindex:
 
    Generate new event with given parent event.
 
+
+.. py:function:: restrict_global_variables(toggle)
+
+   Enable or disable restricting new global variables. If enabled, the rest
+   of the script won't be allowed to declare global non-function variables but
+   they can declare local variables and use already defined global variables.
+   If a script needs to define a variable, they must declare them as local i.e.
+   instead of ``my_var = "some value"``, do ``local my_var = "some value"``.
+   Restrictions will remain in place until the end of the execution of the
+   script or until they are lifted by calling
+   ``dovecot.restrict_global_variables(false)``.
+
+   Default is permissive mode i.e. same as lua's default, global variables
+   are not restricted.
+
+   :param boolean toggle: Enable or disable defining new global variables
+
+.. versionadded:: v2.3.17
+
+
 object event
 ^^^^^^^^^^^^^
+
+.. py:currentmodule:: event
 
 .. Note::
 
@@ -160,6 +191,81 @@ Functions:
 .. py:function::  passthrough_event()
 
    Returns an passthrough event. A log message *must be* logged or else a panic will occur.
+
+object dict
+^^^^^^^^^^^
+
+.. py:currentmodule:: dict
+
+Functions:
+----------
+
+.. py:function::  lookup(key[, username])
+
+   Lookup key from dict. If key is found, returns a table with values.
+   If key is not found, returns nil.
+
+   :param str key: Key to lookup
+   :param str username: Username for private dict keys
+
+.. py:function::  iterate(path, flags[, username])
+
+   Returns an iteration step function and dict iter userdata. For example::
+
+	for key, values in dict:iterate(key_prefix, 0) do
+	  dovecot.i_debug('key='..key..', first value='..values[1])
+	end
+
+   :param str path: Path prefix to iterate
+   :param int flags: Iteration flags. Currently raw numbers must be used for these. See ``enum dict_iterate_flags`` in the C code.
+   :param str username: Username for private dict paths
+
+.. py:function::  transaction_begin([username])
+
+   Returns a new transaction object.
+
+   :param str username: Username for private dict keys
+
+object dict.transaction
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. py:currentmodule:: dict.transaction
+
+Functions:
+----------
+
+.. py:function::  set(key, value)
+
+   Set key=value in the dict transaction.
+
+   :param str key: Key to set
+   :param str value: Value to set
+
+.. py:function::  unset(key, value)
+
+   Unset key in the dict transaction.
+
+   .. versionadded:: v2.3.17
+
+   :param str key: Key to unset
+
+.. py:function::  set_timestamp({tv_sec=seconds, tv_nsec=nanoseconds})
+
+   Set timestamp to the dict transaction. This is currently used only with
+   Cassandra.
+
+   .. versionadded:: v2.3.17
+
+   :param int seconds: UNIX timestamp
+   :param int nanoseconds: Nanoseconds part of the timestamp
+
+.. py:function::  commit()
+
+   Commit the transaction.
+
+.. py:function::  rollback()
+
+   Rollback the transaction.
 
 mail-lua
 ^^^^^^^^^
@@ -291,7 +397,7 @@ Functions
 
 .. py:function::  var_expand(template)
 
-   Expands mail user variables (see `Variables <https://wiki.dovecot.org/Variables>`_ )
+   Expands mail user variables (see :ref:`config_variables`)
 
    :param str template: Variable template string
 
@@ -476,7 +582,7 @@ Variables
 
    Full mailbox name
 
-.. py:attribute:: Mailbox name
+.. py:attribute:: name
 
     Mailbox name
 

@@ -5,29 +5,26 @@ Prefetch User Database
 ======================
 
 Prefetch userdb can be used to combine passdb and userdb lookups into a single
-lookup. It's usually used with `SQL
-<https://wiki.dovecot.org/AuthDatabase/SQL>`_, `LDAP
-<https://wiki.dovecot.org/AuthDatabase/LDAP>`_ and `checkpassword
-<https://wiki.dovecot.org/AuthDatabase/CheckPassword>`_
-passdbs.
+lookup. It's usually used with :ref:`authentication-sql`,
+:ref:`authentication-ldap_authentication`, and
+:ref:`authentication-checkpassword` passdbs.
 
 Prefetch basically works by requiring that the passdb returns the userdb
-information in `extra fields
-<https://wiki.dovecot.org/PasswordDatabase/ExtraFields>`_ with ``userdb_``
+information in :ref:`authentication-password_database_extra_fields`
+with ``userdb_``
 prefixes. For example if a userdb typically returns ``uid``, ``gid`` and home
 fields, the passdb would have to return ``userdb_uid``, ``userdb_gid`` and
 ``userdb_home`` fields.
 
-If you're using `LDA <https://wiki.dovecot.org/LDA>`_ or `LMTP
-<https://wiki.dovecot.org/LMTP>`_, you still need a valid userdb which can be
+If you're using :ref:`lda` or :ref:`lmtp_server` you still need a valid userdb which can be
 used to locate the users. You can do this by adding a normal SQL/LDAP userdb
 **after the userdb prefetch**. The order of definitions is significant. See
 below for examples.
 
 LDAP: ``auth_bind=yes`` with ``auth_bind_userdn-template`` is incompatible with
 prefetch, because no passdb lookup is done then. If you want zero LDAP lookups,
-you might want to use `static userdb
-<https://wiki.dovecot.org/UserDatabase/Static>`_ instead of prefetch.
+you might want to use :ref:`authentication-static_user_database` instead of
+prefetch.
 
 SQL example
 ===========
@@ -81,9 +78,9 @@ LDAP example
     args = /etc/dovecot/dovecot-ldap.conf.ext
   }
 
- ``dovecot-ldap.conf.ext``:
+``dovecot-ldap.conf.ext``:
 
- .. code-block:: none
+.. code-block:: none
 
   pass_attrs = uid=user, userPassword=password, \
     homeDirectory=userdb_home, uidNumber=userdb_uid, gidNumber=userdb_gid

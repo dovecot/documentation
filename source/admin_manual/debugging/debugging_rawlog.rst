@@ -6,70 +6,75 @@ Rawlog
 
 Dovecot supports logging IMAP/POP3/LMTP/SMTP(submission) traffic (also TLS/SSL encrypted). There are several possibilities for this:
 
-.. versionadded:: v2.2.26
-
-1. rawlog_dir setting
-
-2. Using rawlog binary, which is executed as post-login script.
-
-3. Pre-login imap/pop3-login process via ``-R`` parameter.
-
-   .. versionadded:: since v2.3.2
-
-4. For lmtp, you need to use ``lmtp_rawlog_dir`` and ``lmtp_proxy_rawlog_dir`` settings
-
-   .. versionadded:: since v2.3.2
-
-5. For submission, you can use ``rawlog_dir`` setting and ``submission_relay_rawlog_dir``
+#. :ref:`setting-rawlog_dir` setting.
 
    .. versionadded:: v2.2.26
 
-rawlog_dir setting
-==================
+#. Pre-login \*-login process via ``-R`` parameter. See below.
 
-Dovecot creates ``*.in`` and ``*.out`` rawlogs to the specified directory if it exists. 
+   .. versionadded:: v2.3.2
+
+#. For proxying (in \*-login processes), use :ref:`setting-login_proxy_rawlog_dir`.
+
+   .. versionadded:: v2.3.17
+
+#. For lmtp, you need to use :ref:`setting-lmtp_rawlog_dir` and :ref:`setting-lmtp_proxy_rawlog_dir` settings.
+
+   .. versionadded:: v2.3.2
+
+#. For submission, you need to use :ref:`setting-rawlog_dir` and :ref:`setting-submission_relay_rawlog_dir` settings.
+
+#. Using rawlog binary, which is executed as post-login script.
+   This is the legacy method, which shouldn't be necessary anymore. See below.
+
+Pre-login rawlog
+================
+
+.. versionadded:: v2.3.2
+
+The pre-login rawlog is used before IMAP, POP3, Submission or ManageSieve
+client logs in to the post-login process. Note that LMTP and doveadm protocols
+don't have a pre-login process.
+
+.. note:: SSL/TLS sessions are currently not decrypted to rawlogs.
+
+You can enable pre-login rawlog for all users by telling the login processes
+to log to a rawlog directory.
 
 Example:
 
 .. code-block:: none
 
-   protocol imap {
-     rawlog_dir = /tmp/rawlog/%u
-     # if you want to put files into user's homedir, use this, do not use ~
-     #rawlog_dir = %h/rawlog
+ service imap-login {
+   executable = imap-login -R rawlogs
  }
 
+This attempts to write the rawlogs under ``$base_dir/login/rawlogs`` directory.
+You need to create it first with enough write permissions.
 
-.. versionadded:: since v2.3.2
+Example:
 
-lmtp_rawlog_dir
-===============
+.. code-block:: none
 
-You can use ``lmtp_rawlog_dir`` to generate rawlogs on lmtp backend server. Unlike the ``rawlog_dir`` setting, this does not accept variables.
-
-.. versionadded:: since v2.3.2
-
-lmtp_proxy_rawlog_dir 
-=====================
-
-You can use ``lmtp_proxy_rawlog_dir`` to generate rawlogs on lmtp proxy server. Unlike the ``rawlog_dir`` setting, this does not accept variables.
-
-.. versionadded:: since v2.3.2
-
-submission_relay_rawlog_dir
-===========================
-
-You can use ``submission_relay_rawlog_dir`` to generate relay rawlogs on the dovecot submission server.
+   mkdir /var/run/dovecot/login/rawlogs
+   chown dovenull /var/run/dovecot/login/rawlogs
+   chmod 0700 /var/run/dovecot/login/rawlogs
 
 rawlog binary
 =============
 
-It works by checking if ``dovecot.rawlog/`` directory exists in the logged in user's home directory, and writing the traffic to ``yyyymmdd-HHMMSS-pid.in`` and ``.out`` files. Each connection gets their own in/out files. Rawlog will simply skip users who don't have the ``dovecot.rawlog/`` directory and the performance impact for those users is minimal.
+This is the legacy method. :ref:`setting-rawlog_dir` setting is preferred nowadays.
+
+This works by checking if ``dovecot.rawlog/`` directory exists in the logged in
+user's home directory, and writing the traffic to ``yyyymmdd-HHMMSS-pid.in``
+and ``.out`` files. Each connection gets their own in/out files. Rawlog will
+simply skip users who don't have the ``dovecot.rawlog/`` directory and the
+performance impact for those users is minimal.
 
 Home directory
-==============
+--------------
 
-.. NOTE:: that for rawlog to work, your userdb must have returned a home directory for the user. 
+.. NOTE:: For rawlog binary to work, your userdb must have returned a home directory for the user.
 
 .. IMPORTANT:: The home directory must be returned by userdb, mail_home setting won't work. Verify that doveadm user -u user@example.com (with -u parameter) returns the home directory, for example:
 
@@ -101,9 +106,9 @@ You can also set DEBUG environment to have rawlog log an info message why it's n
  import_environment=$import_environment DEBUG=1
  
 Configuration
-=============
+-------------
 
-To enable rawlog, you must use rawlog as a post-login script:
+To enable rawlog binary, use post-login scripting:
 
 .. code-block:: none
 
@@ -127,26 +132,3 @@ You can also give parameters to rawlog:
 * -I: Include IP address in the filename
 * -f in: Log only to ``*.in`` files
 * -f out: Log only to ``*.out`` files
-
-Pre-login rawlog
-================
-
-You can enable pre-login rawlog for all users by telling the login processes to log to a rawlog directory,
-
-Example:
-
-.. code-block:: none
-
- service imap-login {
-   executable = imap-login -R rawlogs
- }
-
-This tries to write the rawlogs under ``$base_dir/login/rawlogs`` directory. You need to create it first with enough write permissions, 
-
-Example:
-
-.. code-block:: none
-
-   mkdir /var/run/dovecot/login/rawlogs
-   chown dovenull /var/run/dovecot/login/rawlogs
-   chmod 0700 /var/run/dovecot/login/rawlogs

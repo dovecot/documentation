@@ -102,14 +102,13 @@ is what causes the error message presented above. Instead, the
 
 The old CMUSieve plugin did use UTF-7 for folder names. Therefore, this
 problem could have emerged after migrating from CMUSieve to Pigeonhole.
-In that case you should carefully read the `migration
-instructions <http://wiki.dovecot.org/LDA/Sieve/Dovecot#Migration_from_CMUSieve>`__
-again.
+In that case you should carefully read the :ref:`migration
+instructions <sieve_configuration_from_cmusieve>` again.
 
 Often the 'author' of such scripts is an older or misconfigured Sieve
 GUI editor. For example, the
-`SieveRules <https://github.com/JohnDoh/Roundcube-Plugin-SieveRules-Managesieve#readme>`__
-plugin for the `RoundCube webmail IMAP client <http://roundcube.net/>`__
+`SieveRules <https://github.com/JohnDoh/Roundcube-Plugin-SieveRules-Managesieve#readme>`_
+plugin for the `RoundCube webmail IMAP client <http://roundcube.net/>`_
 has a configuration option to enable the correct behavior:
 
 ::

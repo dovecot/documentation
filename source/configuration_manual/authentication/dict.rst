@@ -6,8 +6,8 @@ Key-value authentication (dict) database
 
 Key-value databases can be used as auth backends. They probably should be used
 only for caching in front of e.g. SQL auth backends. Iteration is supported if
-the underlying dict provider supports iteration. See `Dictionary
-<https://wiki.dovecot.org/Dictionary>`_ for list of supported databases.
+the underlying dict provider supports iteration. See :ref:`Dictionary <dict>`
+for a list of supported databases.
 
 Auth configuration
 ==================
@@ -257,11 +257,10 @@ Complete example for authenticating via a UNIX socket
 
 The Dict auth backend can be used to query a local UNIX socket for users. This
 can be handy for accessing user databases which would otherwise only be
-accessible via the `CheckPassword
-<https://wiki.dovecot.org/AuthDatabase/CheckPassword>`_ backend and a scripting
+accessible via the :ref:`authentication-checkpassword` backend and a scripting
 language.
 
-When given a `proxy <https://wiki.dovecot.org/Quota/Dict>`_: URL the Dict
+When given a :ref:`proxy URL <quota_backend_dict>` the Dict
 backend speaks a simple protocol over a UNIX socket. The protocol is defined in
 ``src/lib-dict/dict-client.h`` (`GitHub
 <https://github.com/dovecot/core/blob/master/src/lib-dict/dict-client.h>`_).

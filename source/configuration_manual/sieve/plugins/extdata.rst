@@ -78,7 +78,7 @@ Sieve. The plugin is activated by adding it to the :ref:`plugin-sieve-setting-si
 
 The following configuration settings are used:
 
-ref:`plugin-sieve-setting-sieve_extdata_dict_uri` =
+``plugin-sieve-setting-sieve_extdata_dict_uri`` =
    Specifies the uri of the dict that is used for extdata lookups.
 
 Example:
@@ -153,5 +153,5 @@ Finally configure extdata to use the proxy:
    sieve_extdata_dict_uri = proxy::sieve
 
 Read the (preliminary)
-`specification <https://github.com/stephanbosch/sieve-extdata-plugin/blob/core-0.5/doc/rfc/spec-bosch-sieve-external-data.txt>`__
+`specification <https://github.com/stephanbosch/sieve-extdata-plugin/blob/core-0.5/doc/rfc/spec-bosch-sieve-external-data.txt>`_
 for more information.

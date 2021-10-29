@@ -34,7 +34,7 @@ Caveats and possible pitfalls
    setup, you should instead configure Spamassassin to use
    MySQL/PostgreSQL as a backend, unless you want a headache with file
    permissions and lock files. You can find instructions
-   `here <http://www.iredmail.org/docs/store.spamassassin.bayes.in.sql.html>`__.
+   `here <http://www.iredmail.org/docs/store.spamassassin.bayes.in.sql.html>`_.
    In this case, the ``-u`` parameter passed to ``sa-learn`` (and the
    relevant sieve variables) is obsolete and can be safely removed.
 
@@ -43,13 +43,11 @@ Caveats and possible pitfalls
 
 Changes:
 
--  2017/11/20 - Possibility of using spamc with
-   `SpamAssassin <https://wiki2.dovecot.org/SpamAssassin#>`__
-   to mitigate multi-message delays
+-  2017/11/20 - Possibility of using spamc with SpamAssassin to mitigate
+   multi-message delays
 
 -  2017/05/05 - Recommendation about Virtual Users and using an SQL
-   Backend. Added brief info about
-   `RoundCube <https://wiki2.dovecot.org/RoundCube#>`__.
+   Backend. Added brief info about RoundCube.
 
 -  2017/04/01 - Pass imap user to scripts.
 
@@ -62,6 +60,8 @@ Changes:
 
 -  2018/04/11 - Added notes about sa-learn/spamc and warning about sieve
    script location.
+   
+-  2021/09/01 - Tweak spamc scripts to not use mutually-exclusive parameters
 
 Dovecot configuration
 ---------------------
@@ -154,7 +154,7 @@ sa-learn-spam.sh
 
    #!/bin/sh
    # you can also use tcp/ip here, consult spamc(1)
-   exec /usr/bin/spamc -u ${1} -L spam -C report
+   exec /usr/bin/spamc -u ${1} -L spam
 
 sa-learn-ham.sh
 
@@ -162,7 +162,7 @@ sa-learn-ham.sh
 
    #!/bin/sh
    # you can also use tcp/ip here, consult spamc(1)
-   exec /usr/bin/spamc -u ${1} -L ham -C report
+   exec /usr/bin/spamc -u ${1} -L ham
 
 You can also use sa-learn.
 
@@ -218,10 +218,10 @@ For rspamd
 
 By default, rspamd does global learning. If you want per-user
 classification, or something more complex, see
-` <https://rspamd.com/doc/configuration/statistic.html>`__
+https://rspamd.com/doc/configuration/statistic.html
 
 Alternative scripts can be found from
-` <https://github.com/darix/dovecot-sieve-antispam-rspamd/>`__
+https://github.com/darix/dovecot-sieve-antispam-rspamd/
 
 sa-learn-spam.sh
 
@@ -264,8 +264,8 @@ variables are supported in this.
 RoundCube
 ---------
 
-Recent versions of `RoundCube <https://roundcube.net/>`__ include a
+Recent versions of `RoundCube <https://roundcube.net/>`_ include a
 `markasjunk2
-plugin <https://plugins.roundcube.net/packages/johndoh/markasjunk2>`__
+plugin <https://plugins.roundcube.net/packages/johndoh/markasjunk2>`_
 for allowing users to mark Spam/Ham in a convenient way. Please make
 sure the Junk/Spam folder matches your configuration.

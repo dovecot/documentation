@@ -10,34 +10,32 @@ Service Stop and Restart
 ^^^^^^^^^^^^^^^^^^^^^^^^
 When the dovecot service is stopped, it flushes all pending changes. Or in more details:
 
-* "doveadm metacache flushall -i" is first run to flush all pending important changes.
+* ``doveadm metacache flushall -i`` is first run to flush all pending important changes.
 
  * Since the important changes are usually flushed every 5 minutes, the flushes aren't expected to take excessively long.
 
 * All new imap, pop3, managesieve, submission and lmtp connections are stopped. 
 
-.. todo:: should also stop submission
-
-* "doveadm kick '*'" is used to kick all the existing imap, pop3 and managesieve connections. 
+* ``doveadm kick '*'`` is used to kick all the existing imap, pop3 and managesieve connections.
 
 .. Note:: LMTP connections can't be kicked. However, they're assumed to finish rather quickly.
 
-* "doveadm metacache flushall -i" is run again to flush the important changes
+* ``doveadm metacache flushall -i`` is run again to flush the important changes
 
 * Wait 1 second
 
-* "doveadm kick '*'" is run again - just in case there were a few more clients that managed to log in
+* ``doveadm kick '*'`` is run again - just in case there were a few more clients that managed to log in
 
-* The final "doveadm metacache flushall -i" is run.
+* The final ``doveadm metacache flushall -i`` is run.
 
-* The "service dovecot stop" is finished and exits
+* The ``service dovecot stop`` is finished and exits
 
 This flushing isn't performed when restarting the service or when doing upgrade with yum/apt. There's also metacache-flush.service that can be manually stopped if the flushall isn't wanted to be run.
 
 Simple Upgrade
 ^^^^^^^^^^^^^^^
 
-The simplest way to upgrade Dovecot backend is to simply run "yum upgrade" or "apt-get upgrade". This causes very little downtime on that server, so most clients can successfully reconnect back to the server after getting disconnected. This method also has the advantage that all the caches are filled up for the users.
+The simplest way to upgrade Dovecot backend is to simply run ``yum upgrade`` or ``apt-get upgrade``. This causes very little downtime on that server, so most clients can successfully reconnect back to the server after getting disconnected. This method also has the advantage that all the caches are filled up for the users.
 
 Complex Upgrade
 ^^^^^^^^^^^^^^^^
@@ -65,17 +63,17 @@ Problems with Backend Shutdown
 
 There are some things that can be done to help problems caused by these:
 
-* Run "doveadm metacache flushall" every night. This way there won't be highly out-of-date indexes lying around.
+* Run ``doveadm metacache flushall`` every night. This way there won't be highly out-of-date indexes lying around.
 
 * Delete really old obsolete indexes from all backends before shutting down backends. Ideally only when the user isn't assigned to the backend before the shutdown - otherwise it could unnecessarily delete indexes for users who simply haven't been accessed for a while but don't have any newer indexes anywhere.
   
   * When starting up a backend also delete rather old (e.g. >1 day) indexes from metacache.
 
-  * Use the "last-access(0)" timestamp in "doveadm metacache list" output to determine the user's last access timestamp.
+  * Use the ``last-access(0)`` timestamp in ``doveadm metacache list`` output to determine the user's last access timestamp.
    
    * If the user isn't found from the list at all, then it's definitely an old index that hasn't so far been accessed in this backend since Dovecot was started up.
 
-.. Note:: You can't currently use "doveadm metacache clean" to delete changed indexes. The only alternative is to just forcibly "rm -rf" the directory. However, if the user happens to be accessed during the "rm -rf" this can cause index corruption, which can have rather bad consequences (like redownloading all mails). This is why it should verify whether director currently points the user to this backend, and only rm -rf users whose backend is elsewhere.
+.. Note:: You can't currently use ``doveadm metacache clean`` to delete changed indexes. The only alternative is to just forcibly "rm -rf" the directory. However, if the user happens to be accessed during the "rm -rf" this can cause index corruption, which can have rather bad consequences (like redownloading all mails). This is why it should verify whether director currently points the user to this backend, and only rm -rf users whose backend is elsewhere.
 
 Backend Crashes
 ^^^^^^^^^^^^^^^^
@@ -140,11 +138,9 @@ The output will have fields:
    
    * New mail deliveries aren't important, because the mail is immediately saved to object storage. In case of a crash the mails are listed in object storage and missing mails are added back to Dovecot indexes. The obox plugin also guarantees that the IMAP UID will be preserved in case of a crash. However, if a new mail delivery also sets a message flag (e.g. via Sieve script), then the change will be marked as important. An exception is the $HasAttachment and $HasNoAttachment flags, which are stored in the obox OID directly so they can be cheaply restored after a crash.
 
- * last-service : Last service that accessed this user. 
+ * last-service : Last service that accessed this user. However, metacache clean and flush operations (via metacache-worker or doveadm) won't update this field.
 
-.. Note:: metacache clean and flush operations (via metacache-worker or doveadm) won't update this field.
-
- * cleanup-weight : Currently calculated weight when these indexes are cleaned up. Smaller numbers are cleaned up before larger numbers. Sorting the list output `(with |sort -n)` by this field will show the order in which the indexes would be cleaned. The cleanup weights are recalculated whenever the indexes are being accessed.
+ * cleanup-weight : Currently calculated weight when these indexes are cleaned up. Smaller numbers are cleaned up before larger numbers. Sorting the list output (with ``|sort -n``) by this field will show the order in which the indexes would be cleaned. The cleanup weights are recalculated whenever the indexes are being accessed.
 
 
 There are 4 priorities for index files:
@@ -203,4 +199,3 @@ If multiple backends do changes to the same mailbox at the same time, Dovecot wi
    sizing_information
    s3_object_id_format
    s3_api_url_calls
-   swift_api_url_calls

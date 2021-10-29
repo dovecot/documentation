@@ -219,6 +219,26 @@ Disable caching bundle list. This setting was added to disable it in case there
 were bugs in it. This setting is likely to become removed entirely.
 
 
+.. _plugin-obox-setting_metacache_index_merging:
+
+``metacache_index_merging``
+---------------------------
+
+.. versionadded:: v2.3.6
+
+- Default: ``v2``
+
+  .. versionchanged:: v2.3.16 Changed default from v1 to v2
+
+Specifies the algorithm to use when merging folder indexes:
+
+ * ``v1`` - The old dsync-based algorithm, which can cause very inefficient
+   behavior in some situations.
+ * ``v2`` - The new algorithm designed specifically for this purpose of merging
+   two indexes. This is the recommended setting.
+ * ``none`` - Alias for :ref:`plugin-obox-setting_metacache_disable_merging`
+
+
 .. _plugin-obox-setting_metacache_disable_merging:
 
 ``metacache_disable_merging``
@@ -261,6 +281,24 @@ renumbered, don't renumber any of them. This situation isn't expected to happen
 normally, and renumbering too many UIDs can cause unnecessary extra disk IO.
 The downside is that a caching IMAP client might become confused if it had
 previously seen different UIDs.
+
+
+.. _plugin-obox-setting_metacache_disable_secondary_indexes:
+
+``metacache_disable_secondary_indexes``
+---------------------------------------
+
+- Default: ``no``
+- Values: :ref:`boolean`
+
+.. versionadded:: v2.3.17
+
+Disable including secondary indexes into the user root bundle when using the
+virtual or virtual-attachments plugin (see
+:ref:`virtual plugin <virtual_plugin_obox_secondary_indexes>` and
+:ref:`virtual-attachments plugin<virtual_attachments_plugin_obox_secondary_indexes>`).
+This setting can be used to exclude the virtual and virtual-attachments folders
+from the user root bundle in case any problems are encountered.
 
 .. _plugin-obox-setting_metacache_priority_weights:
 .. _plugin-obox-setting_metacache_size_weights:

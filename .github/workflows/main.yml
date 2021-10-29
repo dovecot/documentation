@@ -11,7 +11,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
     - uses: actions/checkout@v2
-    - uses: ammaraskar/sphinx-action@0.3
+    - uses: ammaraskar/sphinx-action@0.4
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         DOCS-FOLDER: "."
@@ -19,7 +19,7 @@ jobs:
     - uses: dovecot/rsync-deployments@master
       with:
         RSYNC_OPTIONS: -azr --delete
-        RSYNC_TARGET: docs@talvi.dovecot.org:public_html/.
+        RSYNC_TARGET: docs@doc.dovecot.org:public_html/.
         RSYNC_BASEDIR: /_build/.
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}

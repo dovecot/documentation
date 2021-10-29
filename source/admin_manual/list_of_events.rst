@@ -9,6 +9,7 @@ List of all events emitted by Dovecot for statistics, exporting and filtering.
 See also:
 
  * :ref:`statistics`
+ * :ref:`event_reasons`
  * :ref:`event_export`
  * :ref:`event_filter`
  * :ref:`event_design` for technical implementation details
@@ -40,6 +41,12 @@ Root Categories
 | fts                | Full text search plugin                                 |
 +--------------------+---------------------------------------------------------+
 | fts-dovecot        | :ref:`fts_backend_dovecot`                              |
++--------------------+---------------------------------------------------------+
+| http-client        | HTTP client library                                     |
+|                    |                                                         |
+|                    | .. versionadded:: v2.3.16                               |
++--------------------+---------------------------------------------------------+
+| http-server        | HTTP server library                                     |
 +--------------------+---------------------------------------------------------+
 | imap               | imap process                                            |
 +--------------------+---------------------------------------------------------+
@@ -161,12 +168,15 @@ SQL Categories
 Global Fields
 *************
 
-**ALL events have the following fields**:
+**ALL events may have the following fields**:
 
 +--------------+------------------------------------------------------------+
 | Field        | Description                                                |
 +==============+============================================================+
 | duration     | Duration of the event (in microseconds)                    |
++--------------+------------------------------------------------------------+
+| reason_code  | List of reason code strings why the event happened. See    |
+|              | :ref:`event_reasons` for possible values.                  |
 +--------------+------------------------------------------------------------+
 
 
@@ -590,7 +600,7 @@ auth_client_userdb_lookup_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -612,7 +622,7 @@ auth_client_userdb_lookup_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -636,7 +646,7 @@ auth_client_passdb_lookup_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -658,7 +668,7 @@ auth_client_passdb_lookup_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -682,7 +692,7 @@ auth_client_userdb_list_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -703,7 +713,7 @@ auth_client_userdb_list_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -727,7 +737,7 @@ auth_client_cache_flush_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -749,7 +759,7 @@ auth_client_cache_flush_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -815,22 +825,57 @@ These events apply only for connections using the ``connection API``.
           some types of connections, but not for others.
 
 
-client_connection_connected
----------------------------
+.. _event_incoming_conn:
 
-Emitted when a client connection is established.
+Common fields for client (incoming) connections
+-----------------------------------------------
+
+Fields present in all ``client_connection_*`` events.
 
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| client_ip           | Source IP address                                    |
+| local_ip            | Local server IP address where TCP client connected   |
+|                     | to.                                                  |
 +---------------------+------------------------------------------------------+
-| client_port         | Source port                                          |
+| remote_ip           | Remote TCP client's IP address.                      |
 +---------------------+------------------------------------------------------+
-| ip                  | Target IP address                                    |
+| remote_port         | Remote TCP client's source port.                     |
 +---------------------+------------------------------------------------------+
-| port                | Target port                                          |
+| remote_pid          | Remote UNIX socket client's process ID.              |
 +---------------------+------------------------------------------------------+
+| remote_uid          | Remote UNIX socket client's system user ID.          |
++---------------------+------------------------------------------------------+
+
+Common fields for server (outgoing) connections
+------------------------------------------------
+
+Fields present in all ``server_connection_*`` events.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| source_ip           | Source IP address used for the outgoing TCP          |
+|                     | connection. This is set only if a specific source IP |
+|                     | was explicitly requested.                            |
++---------------------+------------------------------------------------------+
+| dest_ip             | TCP connection's destination IP address.             |
++---------------------+------------------------------------------------------+
+| dest_port           | TCP connection's destination port.                   |
++---------------------+------------------------------------------------------+
+| dest_host           | TCP connection's destination hostname, if known.     |
++---------------------+------------------------------------------------------+
+| socket_path         | UNIX socket connection's path                        |
++---------------------+------------------------------------------------------+
+| remote_pid          | Remote UNIX socket server's process ID.              |
++---------------------+------------------------------------------------------+
+| remote_uid          | Remote UNIX socket server's system user ID.          |
++---------------------+------------------------------------------------------+
+
+client_connection_connected
+---------------------------
+
+Emitted when a server accepts an incoming client connection.
 
 
 client_connection_disconnected
@@ -841,14 +886,6 @@ Emitted when a client connection is terminated.
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| client_ip           | Source IP address                                    |
-+---------------------+------------------------------------------------------+
-| client_port         | Source port                                          |
-+---------------------+------------------------------------------------------+
-| ip                  | Target IP address                                    |
-+---------------------+------------------------------------------------------+
-| port                | Target port                                          |
-+---------------------+------------------------------------------------------+
 | bytes_in            | Amount of data read, in bytes                        |
 +---------------------+------------------------------------------------------+
 | bytes_out           | Amount of data written, in bytes                     |
@@ -860,24 +897,8 @@ Emitted when a client connection is terminated.
 server_connection_connected
 ---------------------------
 
-Emitted when a server connection is established.
-
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| client_ip           | Source IP address                                    |
-+---------------------+------------------------------------------------------+
-| client_port         | Source port                                          |
-+---------------------+------------------------------------------------------+
-| ip                  | Target IP address                                    |
-+---------------------+------------------------------------------------------+
-| port                | Target port                                          |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
-
+Emitted when an outgoing server connection was either successfully established
+or failed. Currently it is not possible to know which one happened.
 
 server_connection_disconnected
 ------------------------------
@@ -887,14 +908,6 @@ Emitted when a server connection is terminated.
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| client_ip           | Source IP address                                    |
-+---------------------+------------------------------------------------------+
-| client_port         | Source port                                          |
-+---------------------+------------------------------------------------------+
-| ip                  | Target IP address                                    |
-+---------------------+------------------------------------------------------+
-| port                | Target port                                          |
-+---------------------+------------------------------------------------------+
 | bytes_in            | Amount of data read, in bytes                        |
 +---------------------+------------------------------------------------------+
 | bytes_out           | Amount of data written, in bytes                     |
@@ -949,6 +962,7 @@ If the file was created for obox, it has also fields:
 |                     | * index: Index bundle                                |
 |                     | * box: Mailbox directory (for creating/deleting it,  |
 |                     |   if used by the storage driver)                     |
+|                     | * fts: FTS file                                      |
 +---------------------+------------------------------------------------------+
 | reason              | Reason for accessing the file                        |
 +---------------------+------------------------------------------------------+
@@ -1012,6 +1026,22 @@ Mailbox
 |                     | .. versionadded:: v2.3.10                            |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail_expunged:
+
+mail_expunged
+^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail was expunged from the mailbox. Note that this event inherits from
+mailbox, not mail.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| uid                 | UID of the expunged mail.                              |
++---------------------+--------------------------------------------------------+
+
 .. _event_mail:
 
 Mail
@@ -1027,6 +1057,31 @@ Mail
 | uid                 | Mail IMAP UID number                                 |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail_opened:
+
+mail_opened
+^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail was opened e.g. for reading its body. Note that this event is not sent
+when mails' metadata is accessed, even if it causes opening the mail file.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| reason              | Reason why the mail was opened. (optional)             |
++---------------------+--------------------------------------------------------+
+
+.. _event_mail_expunge_requested:
+
+mail_expunge_requested
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail is set to be expunged. (Note that expunges can be rolled back later on,
+this event is emitted when an expunge is requested).
 
 Mail index
 ==========
@@ -1046,6 +1101,9 @@ Index file handling for ``dovecot.index*``, ``dovecot.map.index*``,
 | :ref:`event_mail_user` depending on what the index is used for.            |
 +---------------------+------------------------------------------------------+
 
+
+.. _event_mail_index_recreated:
+
 mail_index_recreated
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -1064,7 +1122,29 @@ A mail index file was recreated.
 +---------------------+--------------------------------------------------------+
 
 
-.. _event_mail_index_recreated:
+.. _event_indexer_worker_indexing_finished:
+
+indexer_worker_indexing_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+Indexer worker process completed an indexing transaction.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| Inherits from :ref:`event_mailbox`                                           |
++---------------------+--------------------------------------------------------+
+| message_count       | Number of messages indexed                             |
++---------------------+--------------------------------------------------------+
+| first_uid           | UID of the first indexed message                       |
++---------------------+--------------------------------------------------------+
+| last_uid            | UID of the last indexed message                        |
++---------------------+--------------------------------------------------------+
+| user_cpu_usecs      | Total user CPU spent on the indexing transaction in    |
+|                     | microseconds.                                          |
++---------------------+--------------------------------------------------------+
 
 
 Mail cache
@@ -1203,11 +1283,57 @@ deleted.
 | reason               | Reason string why cache was found to be corrupted.    |
 +----------------------+-------------------------------------------------------+
 
-HTTP
-====
+.. _event_mail_cache_lookup_finished:
 
-These events are emitted by Dovecot's internal HTTP library.
+mail_cache_lookup_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. versionadded:: 2.3.15
+
+A mail field was looked up from cache.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| field               | Cache field name e.g. ``imap.body`` or ``hdr.from``    |
++---------------------+--------------------------------------------------------+
+
+HTTP Client
+===========
+
+These events are emitted by Dovecot's internal HTTP library when acting as
+a client to an external service.
+
+Common fields
+-------------
+
+Fields present in all HTTP client events.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| attempts            | Amount of individual HTTP request attempts. (number  |
+|                     | of retries after failures + 1)                       |
++---------------------+------------------------------------------------------+
+| bytes_in            | Amount of data read, in bytes.                       |
++---------------------+------------------------------------------------------+
+| bytes_out           | Amount of data written, in bytes.                    |
++---------------------+------------------------------------------------------+
+| dest_host           | Destination host.                                    |
++---------------------+------------------------------------------------------+
+| dest_ip             | Destination IP address.                              |
++---------------------+------------------------------------------------------+
+| dest_port           | Destination port.                                    |
++---------------------+------------------------------------------------------+
+| method              | HTTP verb used uppercased, e.g. ``GET``.             |
++---------------------+------------------------------------------------------+
+| redirects           | Number of redirects done while processing request.   |
++---------------------+------------------------------------------------------+
+| status_code         | HTTP result status code (integer).                   |
++---------------------+------------------------------------------------------+
+| target              | Request path with parameters, e.g.                   |
+|                     | ``/path/?delimiter=%2F&prefix=test%2F``.             |
++---------------------+------------------------------------------------------+
 
 http_request_finished
 ---------------------
@@ -1216,43 +1342,12 @@ Emitted when an HTTP request is complete.
 
 This event is useful to track and monitor external services.
 
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| status_code         | HTTP result status code (integer)                    |
-+---------------------+------------------------------------------------------+
-| attempts            | Amount of individual HTTP request attempts (number   |
-|                     | (of retries after failures + 1)                      |
-+---------------------+------------------------------------------------------+
-| redirects           | Number of redirects done while processing request    |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
-
-
 http_request_redirected
 -----------------------
 
 Intermediate event emitted when an HTTP request is being redirected.
 
 The ``http_request_finished`` event is still sent at the end of the request.
-
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| status_code         | HTTP result status code (integer)                    |
-+---------------------+------------------------------------------------------+
-| attempts            | Amount of individual HTTP request attempts (number   |
-|                     | (of retries after failures + 1)                      |
-+---------------------+------------------------------------------------------+
-| redirects           | Number of redirects done while processing request    |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
 
 http_request_retried
 --------------------
@@ -1261,19 +1356,53 @@ Intermediate event emitted when an HTTP request is being retried.
 
 The ``http_request_finished`` event is still sent at the end of the request.
 
+
+HTTP Server
+===========
+
+These events are emitted by Dovecot's internal HTTP library when serving
+requests (e.g. doveadm HTTP API).
+
+Common fields
+-------------
+
+Fields present in all HTTP server events.
+
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| status_code         | HTTP result status code (integer)                    |
+| Inherits from :ref:`event_incoming_conn`                                   |
 +---------------------+------------------------------------------------------+
-| attempts            | Amount of individual HTTP request attempts (number   |
-|                     | (of retries after failures + 1)                      |
+| request_id          | Assigned ID if of the received request.              |
 +---------------------+------------------------------------------------------+
-| redirects           | Number of redirects done while processing request    |
+| method              | HTTP verb used uppercased, e.g. ``GET``.             |
 +---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
+| target              | Request path with parameters, e.g.                   |
+|                     | ``/path/?delimiter=%2F&prefix=test%2F``.             |
 +---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
+
+http_server_request_started
+---------------------------
+
+.. versionadded:: v2.3.18
+
+Emitted when a new HTTP request is received and the request headers
+(but not body payload) are parsed.
+
+http_server_request_finished
+----------------------------
+
+.. versionadded:: v2.3.18
+
+Emitted when the HTTP request is fully completed i.e the incoming request body
+is read and the full response to the request has been sent to the client.
+
++---------------------+------------------------------------------------------+
+| bytes_in            | Amount of request data read, in bytes.               |
++---------------------+------------------------------------------------------+
+| bytes_out           | Amount of response data written, in bytes.           |
++---------------------+------------------------------------------------------+
+| status_code         | HTTP result status code (integer).                   |
 +---------------------+------------------------------------------------------+
 
 
@@ -1644,7 +1773,17 @@ Common fields:
 +=====================+=====================================================================+
 | Inherits from environment (LDA, LMTP or IMAP)                                             |
 +---------------------+---------------------------------------------------------------------+
+| connection_id       | The session ID for this connection. The connnection ID is forwarded |
+|                     | through proxies, allowing correlation between sessions on frontend  |
+|                     | and backend systems.                                                |
+|                     |                                                                     |
+|                     | .. versionadded:: v2.3.18                                           |
++---------------------+---------------------------------------------------------------------+
 | protocol            | The protocol used by the connection; i.e., either "smtp" or "lmtp". |
++---------------------+---------------------------------------------------------------------+
+| session             | The session ID for this connection (same as connection_id)          |
+|                     |                                                                     |
+|                     | .. versionadded:: v2.3.18                                           |
 +---------------------+---------------------------------------------------------------------+
 
 Command
@@ -1702,7 +1841,12 @@ Common fields:
 +------------------+----------------------------------------------------------+
 | transaction_id   | Transaction ID used by the server for this transaction   |
 |                  | (this ID is logged, mentioned in the DATA reply and      |
-|                  | part of the "Received:" header).                         |
+|                  | part of the "Received:" header). It is based on the      |
+|                  | connection_id with a ":<seq>" sequence number suffix.    |
++------------------+----------------------------------------------------------+
+| session          | Session ID for this transaction (same as transaction_id) |
+|                  |                                                          |
+|                  | .. versionadded:: v2.3.18                                |
 +------------------+----------------------------------------------------------+
 | mail_from        | Sender address.                                          |
 +------------------+----------------------------------------------------------+
@@ -1791,6 +1935,11 @@ Common fields:
 +-----------------------+------------------------------------------------------+
 | rcpt_param_orcpt_type | The address type (typically "rfc822") of the ORCPT   |
 |                       | parameter for the RCPT command.                      |
++-----------------------+------------------------------------------------------+
+| session               | Session ID for this transaction and recipient. It is |
+|                       | based on the transaction_id with a ":<seq>"          |
+|                       | recipient sequence number suffix.                    |
+|                       | Only available for LMTP currently.                   |
 +-----------------------+------------------------------------------------------+
 
 smtp_server_transaction_rcpt_finished
@@ -2400,7 +2549,10 @@ fs_dictmap_object_lost
 .. versionadded:: 2.3.10
 
 The event is sent whenever "Object exists in dict, but not in storage" error
-happens.
+happens. Normally this shouldn't happen, because the writes and deletes are
+done in such an order that Dovecot prefers to rather leak objects in storage
+than cause this error. A likely source of this error can be resurrected
+deleted data see :ref:`cassandra` for more details.
 
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
@@ -2411,6 +2563,15 @@ happens.
 +-----------------------+------------------------------------------------------+
 | object_id             | Object ID in the storage                             |
 +-----------------------+------------------------------------------------------+
+| deleted               | Set to ``yes``, if the corresponding entry in dict   |
+|                       | has been deleted as the ``delete-dangling-links``    |
+|                       | option was set                                       |
+|                       | (:ref:`dictmap_configuration_parameters`).           |
+|                       |                                                      |
+|                       | .. versionadded:: 2.3.15                             |
++-----------------------+------------------------------------------------------+
+
+.. _event_fs_dictmap_max_bucket_changed:
 
 fs_dictmap_max_bucket_changed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2489,10 +2650,31 @@ Common fields
 | driver         | Name of the dictionary driver,                       |
 |                | e.g. ``sql`` or ``proxy``.                           |
 +----------------+------------------------------------------------------+
-| user           | Username, if it's not empty                          |
-+----------------+------------------------------------------------------+
 | error          | Error, if one occured                                |
 +----------------+------------------------------------------------------+
+
+.. _dict_created:
+
+dict_created
+^^^^^^^^^^^^
+.. versionadded:: 2.3.17
+
+Emitted when a dict is initialized.
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| dict_name       | Name of the dict as set in configurations            |
++-----------------+------------------------------------------------------+
+
+.. _dict_destroyed:
+
+dict_destroyed
+^^^^^^^^^^^^^^
+.. versionadded:: 2.3.17
+
+Emitted when a dict is destroyed. Same fields as
+:ref:`dict_created`.
 
 .. _dict_lookup_finished:
 
@@ -2504,6 +2686,8 @@ Event emitted when lookup finishes.
 +-----------------+------------------------------------------------------+
 | Field           | Description                                          |
 +=================+======================================================+
+| user            | Username, if it's not empty                          |
++-----------------+------------------------------------------------------+
 | key             | Key name, starts with ``priv/`` or ``shared/``       |
 +-----------------+------------------------------------------------------+
 | key_not_found   | Set to ``yes`` if key not found                      |
@@ -2517,6 +2701,8 @@ dict_iteration_finished
 +-----------------+------------------------------------------------------+
 | Field           | Description                                          |
 +=================+======================================================+
+| user            | Username, if it's not empty                          |
++-----------------+------------------------------------------------------+
 | key             | Used prefix, starts with ``priv/`` or ``shared/``    |
 +-----------------+------------------------------------------------------+
 | key_not_found   | Set to ``yes`` if key not found                      |
@@ -2534,6 +2720,8 @@ Event emitted when transaction has been committed or rolled back.
 +-----------------+------------------------------------------------------+
 | Field           | Description                                          |
 +=================+======================================================+
+| user            | Username, if it's not empty                          |
++-----------------+------------------------------------------------------+
 | rollback        | Set to ``yes`` when transaction was rolled back      |
 +-----------------+------------------------------------------------------+
 | write_uncertain | Set to ``yes`` if write was not confirmed            |
@@ -2556,3 +2744,110 @@ dict_server_transaction_finished
 
 Event emitted when dict server finishes transaction. Same fields as
 :ref:`dict_transaction_finished`.
+
+
+Pre-login Client
+================
+
+.. _pre_login_client:
+
+Client
+------
+
+Common fields:
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| local_ip            | Local IP address                                     |
++---------------------+------------------------------------------------------+
+| local_port          | Local port                                           |
++---------------------+------------------------------------------------------+
+| remote_ip           | Remote IP address                                    |
++---------------------+------------------------------------------------------+
+| remote_port         | Remote port                                          |
++---------------------+------------------------------------------------------+
+| user                | Full username                                        |
++---------------------+------------------------------------------------------+
+| service             | Name of service e.g. ``submission``, ``imap``        |
++---------------------+------------------------------------------------------+
+
+
+Login proxy
+===========
+
+.. versionadded:: v2.3.18
+
+Emitted when login process proxies a connection to a backend.
+
+Common fields:
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`pre_login_client`                                      |
++---------------------+------------------------------------------------------+
+| dest_host           | Host name of the proxy destination (if proxying is   |
+|                     | configured with IP address, will have the same value |
+|                     | as ``dest_ip``).                                     |
++---------------------+------------------------------------------------------+
+| dest_ip             | Proxy destination IP                                 |
++---------------------+------------------------------------------------------+
+| dest_port           | Proxy destination port                               |
++---------------------+------------------------------------------------------+
+| source_ip           | Source IP where proxy connection originated from     |
++---------------------+------------------------------------------------------+
+| master_user         | If proxying is done with a master user               |
+|                     | authentication, contains the full username of master |
+|                     | user.                                                |
++---------------------+------------------------------------------------------+
+
+proxy_session_started
+---------------------
+Emitted before connecting to proxy destination.
+
+proxy_session_established
+-------------------------
+Emitted after proxied connection is established and user is successfully logged
+in to the backend.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| source_port         | Source port where proxy connection originated from   |
++---------------------+------------------------------------------------------+
+
+proxy_session_finished
+----------------------
+Emitted when proxying has ended. Either successfully or with error.
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| source_port     | Source port where proxy connection originated from   |
++-----------------+------------------------------------------------------+
+| error           | If login to destination failed, contains the error.  |
++-----------------+------------------------------------------------------+
+
+
+***********
+FTS-Dovecot
+***********
+
+lib-fts-index
+=============
+
+fts_dovecot_too_many_triplets
+-----------------------------
+
+.. versionadded:: 2.3.15
+
+Event emitted when number of triplets exceeds the limit defined by :ref:`plugin-fts-dovecot-setting-fts_dovecot_max_triplets`.
+
++---------------+--------------------------------------------------+
+| Field         | Description                                      |
++===============+==================================================+
+| Inherits from :ref:`event_mail_user`                             |
++---------------+--------------------------------------------------+
+| triplet_count | Number of triplets found                         |
++---------------+--------------------------------------------------+

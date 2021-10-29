@@ -178,7 +178,7 @@ applicable):
    to specify differences relative to the default. For example
    :ref:`plugin-sieve-setting-sieve_extensions` = +imapflags will enable the `deprecated
    imapflags
-   extension <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`__
+   extension <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_
    in addition to all extensions enabled by default.
 
 :ref:`plugin-sieve-setting-sieve_global_extensions` = (v0.3+)
@@ -227,7 +227,7 @@ applicable):
 :ref:`setting-recipient_delimiter` = +
    The separator that is expected between the :user and :detail address
    parts introduced by the `subaddress
-   extension <http://tools.ietf.org/html/rfc5233/>`__. This may also be
+   extension <http://tools.ietf.org/html/rfc5233/>`_. This may also be
    a sequence of characters (e.g. '--'). The current implementation
    looks for the separator from the left of the localpart and uses the
    first one encountered. The :user part is left of the separator and
@@ -637,6 +637,8 @@ General Dovecot 2.0 changes
    you need to add the Sieve plugin to the :ref:`setting-mail_plugins` setting
    there too when you decide to use :ref:`LMTP <lmtp_server>`.
 
+.. _sieve_configuration_from_cmusieve:
+
 From CMUSieve (Dovecot v1.0/v1.1)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -647,21 +649,20 @@ config file (as explained :ref:`above <pigeonhole_configuration_basic_configurat
 However, there are a few important differences in the supported Sieve language features:
 
 -  The **imapflags** extension is now called **imap4flags**. The
-   CMUSieve implementation is based on an `old draft
-   specification <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`__
-   that is not completely compatible with the `new
-   version <http://tools.ietf.org/html/rfc5232/>`__. Particularly, the
+   CMUSieve implementation is based on an `old imapflags draft
+   specification <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_
+   that is not completely compatible with `RFC 5232
+   <http://tools.ietf.org/html/rfc5232/>`_. Particularly, the
    **mark** and **unmark** commands were removed from the new
    specification. For backwards compatibility, support for the old
    imapflags extension can be enabled using the :ref:`plugin-sieve-setting-sieve_extensions`
-   setting (as explained `above <#configuration>`__). This is disabled
-   by default.
+   setting. This is disabled by default.
 
 -  The **notify** extension is now called **enotify**. The CMUSieve
-   implementation is based on an `old draft
-   specification <http://tools.ietf.org/html/draft-martin-sieve-notify-01>`__
-   that is not completely compatible with the `new
-   version <http://tools.ietf.org/html/rfc5435/>`__. Particularly, the
+   implementation is based on an `old notify draft
+   specification <http://tools.ietf.org/html/draft-martin-sieve-notify-01>`_
+   that is not completely compatible with `RFC5425
+   <http://tools.ietf.org/html/rfc5435/>`_. Particularly, the
    **denotify** command and **$text$** substitutions were removed from
    the new specification. For backwards compatibility, support for the
    old imapflags extension can be enabled using the :ref:`plugin-sieve-setting-sieve_extensions`
@@ -686,7 +687,7 @@ From Dovecot Sieve v0.1.x (Dovecot v1.2)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  The :ref:`plugin-sieve-setting-sieve_subaddress_sep` setting for the `Sieve subaddress
-   extension <http://tools.ietf.org/html/rfc5233/>`__ is now known as
+   extension <http://tools.ietf.org/html/rfc5233/>`_ is now known as
    :ref:`setting-recipient_delimiter`. Although :ref:`plugin-sieve-setting-sieve_subaddress_sep` is still
    recognized for backwards compatibility, it is recommended to update
    the setting to the new name, since the :ref:`LMTP <lmtp_server>`
