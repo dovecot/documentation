@@ -56,9 +56,9 @@ There are a couple of different ways to specify when SSL/TLS is required:
 * ``ssl=yes`` and ``disable_plaintext_auth=yes``: SSL/TLS is offered to the client, but the client isn't required to use it. The client isn't allowed to use plaintext authentication, unless SSL/TLS is enabled first. However, if non-plaintext authentication mechanisms are enabled they are still allowed even without SSL/TLS. 
   Depending on how secure they are, the authentication is either fully secure or it could have some ways for it to be attacked.
 
-* ``ssl=required``: SSL/TLS is always required, even if non-plaintext authentication mechanisms are used. Any attempt to authenticate before SSL/TLS is enabled will cause an authentication failure.
+* ``ssl=required``: SSL/TLS is always required, even if non-plaintext authentication mechanisms are used. Any attempt to authenticate before SSL/TLS is enabled will cause an authentication failure. Note that this setting is unrelated to the STARTTLS command - either implicit SSL/TLS or STARTTLS command is allowed.
 
-  .. NOTE:: If you have only plaintext mechanisms enabled (e.g. auth { mechanisms = plain login } ), ``ssl=yes`` and ``ssl=required`` are completely equivalent because in either case the authentication will fail unless SSL/TLS is enabled first.
+  .. NOTE:: If you have only plaintext mechanisms enabled (e.g. auth { mechanisms = plain login } ) and ``disable_plaintext_auth=yes``, ``ssl=yes`` and ``ssl=required`` are completely equivalent because in either case the authentication will fail unless SSL/TLS is enabled first.
 
   .. NOTE:: With both ``ssl=yes`` and ``ssl=required`` it's still possible that the client attempts to do a plaintext authentication before enabling SSL/TLS, which exposes the plaintext password to the internet. 
 
