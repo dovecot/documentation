@@ -1027,6 +1027,7 @@ Variables that can be used for this setting:
 If ``yes``, disables the LOGIN command and all other plaintext authentication
 unless SSL/TLS is used (LOGINDISABLED capability).
 
+See :ref:`dovecot_ssl_configuration` for more detailed explanation of how this setting interacts with the :ref:`setting-ssl` setting.
 
 .. _setting-dotlock_use_excl:
 
@@ -4176,14 +4177,11 @@ to apply a security update, for example.
 
 The level of SSL support.
 
-ssl=no: SSL/TLS is completely disabled.
+ * ssl=no: SSL/TLS is completely disabled.
+ * ssl=yes: SSL/TLS is enabled, but not necessarily required for clients.
+ * ssl=required: SSL/TLS is always required for the clients, except for local/trusted connections.
 
-With both ssl=yes and ssl=required it's still possible that the client attempts to do a plaintext authentication before enabling SSL/TLS, which exposes the plaintext password to the internet. Dovecot attempts to indicate this to the IMAP clients via the LOGINDISABLED capability, but many clients still ignore it and send the password anyway. There is unfortunately no way for Dovecot to prevent this behavior. The POP3 standard doesn't have an equivalent capability at all, so the POP3 clients can't even know if the server would accept a plaintext authenticatio
-
-See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Explain levels
-.. todo:: Indicate SSL setting
+See :ref:`dovecot_ssl_configuration` for more detailed explanation of this setting and its interaction with the :ref:`setting-disable_plaintext_auth` setting.
 
 
 .. _setting-ssl_alt_cert:
