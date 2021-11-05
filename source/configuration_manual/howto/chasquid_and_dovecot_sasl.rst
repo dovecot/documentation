@@ -1,7 +1,7 @@
 .. _howto-chasquid_and_dovecot_sasl:
 
 #########################
-Postfix and Chasquid SASL
+Chasquid and Dovecot SASL
 #########################
 
 `chasquid <https://blitiri.com.ar/p/chasquid>`_ users can use Dovecot

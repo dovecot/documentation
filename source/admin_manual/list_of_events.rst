@@ -600,7 +600,7 @@ auth_client_userdb_lookup_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -622,7 +622,7 @@ auth_client_userdb_lookup_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -646,7 +646,7 @@ auth_client_passdb_lookup_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -668,7 +668,7 @@ auth_client_passdb_lookup_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -692,7 +692,7 @@ auth_client_userdb_list_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -713,7 +713,7 @@ auth_client_userdb_list_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -737,7 +737,7 @@ auth_client_cache_flush_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -759,7 +759,7 @@ auth_client_cache_flush_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -1773,7 +1773,17 @@ Common fields:
 +=====================+=====================================================================+
 | Inherits from environment (LDA, LMTP or IMAP)                                             |
 +---------------------+---------------------------------------------------------------------+
+| connection_id       | The session ID for this connection. The connnection ID is forwarded |
+|                     | through proxies, allowing correlation between sessions on frontend  |
+|                     | and backend systems.                                                |
+|                     |                                                                     |
+|                     | .. versionadded:: v2.3.18                                           |
++---------------------+---------------------------------------------------------------------+
 | protocol            | The protocol used by the connection; i.e., either "smtp" or "lmtp". |
++---------------------+---------------------------------------------------------------------+
+| session             | The session ID for this connection (same as connection_id)          |
+|                     |                                                                     |
+|                     | .. versionadded:: v2.3.18                                           |
 +---------------------+---------------------------------------------------------------------+
 
 Command
@@ -1831,7 +1841,12 @@ Common fields:
 +------------------+----------------------------------------------------------+
 | transaction_id   | Transaction ID used by the server for this transaction   |
 |                  | (this ID is logged, mentioned in the DATA reply and      |
-|                  | part of the "Received:" header).                         |
+|                  | part of the "Received:" header). It is based on the      |
+|                  | connection_id with a ":<seq>" sequence number suffix.    |
++------------------+----------------------------------------------------------+
+| session          | Session ID for this transaction (same as transaction_id) |
+|                  |                                                          |
+|                  | .. versionadded:: v2.3.18                                |
 +------------------+----------------------------------------------------------+
 | mail_from        | Sender address.                                          |
 +------------------+----------------------------------------------------------+
@@ -1920,6 +1935,11 @@ Common fields:
 +-----------------------+------------------------------------------------------+
 | rcpt_param_orcpt_type | The address type (typically "rfc822") of the ORCPT   |
 |                       | parameter for the RCPT command.                      |
++-----------------------+------------------------------------------------------+
+| session               | Session ID for this transaction and recipient. It is |
+|                       | based on the transaction_id with a ":<seq>"          |
+|                       | recipient sequence number suffix.                    |
+|                       | Only available for LMTP currently.                   |
 +-----------------------+------------------------------------------------------+
 
 smtp_server_transaction_rcpt_finished
@@ -2724,6 +2744,90 @@ dict_server_transaction_finished
 
 Event emitted when dict server finishes transaction. Same fields as
 :ref:`dict_transaction_finished`.
+
+
+Pre-login Client
+================
+
+.. _pre_login_client:
+
+Client
+------
+
+Common fields:
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| local_ip            | Local IP address                                     |
++---------------------+------------------------------------------------------+
+| local_port          | Local port                                           |
++---------------------+------------------------------------------------------+
+| remote_ip           | Remote IP address                                    |
++---------------------+------------------------------------------------------+
+| remote_port         | Remote port                                          |
++---------------------+------------------------------------------------------+
+| user                | Full username                                        |
++---------------------+------------------------------------------------------+
+| service             | Name of service e.g. ``submission``, ``imap``        |
++---------------------+------------------------------------------------------+
+
+
+Login proxy
+===========
+
+.. versionadded:: v2.3.18
+
+Emitted when login process proxies a connection to a backend.
+
+Common fields:
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`pre_login_client`                                      |
++---------------------+------------------------------------------------------+
+| dest_host           | Host name of the proxy destination (if proxying is   |
+|                     | configured with IP address, will have the same value |
+|                     | as ``dest_ip``).                                     |
++---------------------+------------------------------------------------------+
+| dest_ip             | Proxy destination IP                                 |
++---------------------+------------------------------------------------------+
+| dest_port           | Proxy destination port                               |
++---------------------+------------------------------------------------------+
+| source_ip           | Source IP where proxy connection originated from     |
++---------------------+------------------------------------------------------+
+| master_user         | If proxying is done with a master user               |
+|                     | authentication, contains the full username of master |
+|                     | user.                                                |
++---------------------+------------------------------------------------------+
+
+proxy_session_started
+---------------------
+Emitted before connecting to proxy destination.
+
+proxy_session_established
+-------------------------
+Emitted after proxied connection is established and user is successfully logged
+in to the backend.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| source_port         | Source port where proxy connection originated from   |
++---------------------+------------------------------------------------------+
+
+proxy_session_finished
+----------------------
+Emitted when proxying has ended. Either successfully or with error.
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| source_port     | Source port where proxy connection originated from   |
++-----------------+------------------------------------------------------+
+| error           | If login to destination failed, contains the error.  |
++-----------------+------------------------------------------------------+
 
 
 ***********

@@ -10,9 +10,13 @@ Dovecot supports logging IMAP/POP3/LMTP/SMTP(submission) traffic (also TLS/SSL e
 
    .. versionadded:: v2.2.26
 
-#. Pre-login imap/pop3-login process via ``-R`` parameter. See below.
+#. Pre-login \*-login process via ``-R`` parameter. See below.
 
    .. versionadded:: v2.3.2
+
+#. For proxying (in \*-login processes), use :ref:`setting-login_proxy_rawlog_dir`.
+
+   .. versionadded:: v2.3.17
 
 #. For lmtp, you need to use :ref:`setting-lmtp_rawlog_dir` and :ref:`setting-lmtp_proxy_rawlog_dir` settings.
 
@@ -27,6 +31,12 @@ Pre-login rawlog
 ================
 
 .. versionadded:: v2.3.2
+
+The pre-login rawlog is used before IMAP, POP3, Submission or ManageSieve
+client logs in to the post-login process. Note that LMTP and doveadm protocols
+don't have a pre-login process.
+
+.. note:: SSL/TLS sessions are currently not decrypted to rawlogs.
 
 You can enable pre-login rawlog for all users by telling the login processes
 to log to a rawlog directory.

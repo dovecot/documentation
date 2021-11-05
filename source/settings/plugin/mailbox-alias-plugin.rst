@@ -1,8 +1,8 @@
 .. _plugin-mailbox-alias:
 
-==========================
+====================
 mailbox-alias plugin
-==========================
+====================
 
 Map multiple names to the same mailbox.
 

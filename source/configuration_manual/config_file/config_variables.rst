@@ -37,7 +37,7 @@ Global variables that work everywhere are:
 |            | :ref:`mail user variables <variables-mail_user>`.                           |
 +------------+-----------------------------------------------------------------------------+
 
-If var_expand_crypt plugin is loaded (see `Plugins/VarExpandCrypt <https://wiki.dovecot.org/Plugins/VarExpandCrypt>`_):
+If :ref:`var_expand_crypt_plugin` is loaded:
 
 +-------------------------------+-----------------------------+
 | Long name                     | Description                 |

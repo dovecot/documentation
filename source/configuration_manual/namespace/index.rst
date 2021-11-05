@@ -258,9 +258,8 @@ Example:
 
 The layout separator also restricts the mailbox names. For example if the
 layout separator is ``.``, you can't just set separator to ``/`` and create a
-mailbox named `foo.bar`. If you need to do this, you can use `listescape
-<https://wiki.dovecot.org/Plugins/Listescape>`_ plugin to add escape the
-mailbox names as necessary.
+mailbox named `foo.bar`. If you need to do this, you can use
+:ref:`listescape_plugin` to escape the mailbox names as necessary.
 
 A commonly used separator is ``/``. It probably causes the least amount of
 trouble with different IMAP clients. The ``^`` separator is troublesome with

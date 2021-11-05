@@ -1,14 +1,17 @@
 .. _plugin-mail-lua:
 
-====================
+===============
 mail-lua plugin
-====================
+===============
 
 .. versionadded:: v2.3.4 
 
-mail-lua is a plugin that can be loaded to provide API for mail storage Lua plugins. 
+.. seealso:: :ref:`lua`
 
-.. _plugin-mail_lua-setting_mail_lua_script:
+mail-lua is a plugin that can be loaded to provide API for mail storage Lua
+plugins.
+
+.. _plugin-mail-lua-setting_mail_lua_script:
 
 ``mail_lua_script``
 -------------------
@@ -16,12 +19,11 @@ mail-lua is a plugin that can be loaded to provide API for mail storage Lua plug
 .. versionadded:: v2.3.4
 
 - Default: <empty>
+- Values:  :ref:`string`
 
-Specify file name to load for user.
+Specify filename to load for user.
 
-Format is ``<filename>``.
-
-Example Setting:
+Example:
 
 .. code-block:: none
 
