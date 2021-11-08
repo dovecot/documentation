@@ -233,7 +233,7 @@ See also :ref:`setting-imapc_user`.
 ``imapc_port``
 --------------
 
-- Default: <empty>
+- Default: ``143``
 - Values: :ref:`uint`
 
 The port on the remote IMAP host to connect to.
@@ -313,7 +313,7 @@ Only used if :ref:`setting-imapc_ssl` is enabled.
 - Values: :ref:`string`
 
 The user identity to be used for performing a regular IMAP LOGIN to the
-source IMAP server in dsync-based migration of mail.
+source IMAP server.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
 
