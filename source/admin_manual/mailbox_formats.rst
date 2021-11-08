@@ -38,8 +38,8 @@ Mailbox formats supported by Dovecot:
 | :ref:`imapc            | ``imapc``   | Use remote IMAP server as mail        |
 | <imapc_mbox_format>`   |             | storage.                              |
 +------------------------+-------------+---------------------------------------+
-| pop3c                  | ``pop3c``   | Use remote POP3 server as mail        |
-|                        |             | storage.                              |
+| :ref:`pop3c            | ``pop3c``   | Use remote POP3 server as mail        |
+| <pop3c_mbox_format>`   |             | storage.                              |
 +------------------------+-------------+---------------------------------------+
 
 The Tag column indicates the tag which is used at the beginning of a

@@ -3753,179 +3753,64 @@ standard variable modifiers (e.g., %Uf supplies the filename in uppercase):
 .. todo:: Indicate POP3 setting
 
 
-.. _setting-pop3c_features:
-
 ``pop3c_features``
 ------------------
 
-- Default: <empty>
+See :ref:`setting-pop3c_features`
 
-A space-separated list of features and workarounds that can be enabled for
-access to a remote POP3 server.
-
-Available options:
-
-* ``no-pipelining``: Prevents use of the PIPELINING extension even when it's advertised
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_host:
 
 ``pop3c_host``
 --------------
 
-- Default: <empty>
+See :ref:`setting-pop3c_host`
 
-The remote POP3 server to use for dsync-based migration of mail (which allows
-preservation of the POP3 UIDLs etc.).
-
-Example:
-
-.. code-block:: none
-
-   pop3c_host = pop3.example.com
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_master_user:
 
 ``pop3c_master_user``
 ---------------------
 
-- Default: <empty>
+See :ref:`setting-pop3c_master_user`
 
-If you are using master users for dsync-based migration of mail,
-this is the master user for the source POP3 server.
-
-To authenticate as a master user but use a separate login user, the
-following configuration should be employed, where the credentials are
-represented by masteruser and masteruser-secret:
-
-.. code-block:: none
-
-   pop3c_user = %u
-   pop3c_master_user = masteruser
-   pop3c_password = masteruser-secret
-
-:ref:`Mail user variables <variables-mail_user>` can be used.
-
-See also :ref:`setting-pop3c_password`.
-
-See also :ref:`setting-pop3c_user`.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_password:
 
 ``pop3c_password``
 ------------------
 
-- Default: <empty>
+See :ref:`setting-pop3c_password`
 
-The password used in the login to the source POP3 server for migration of mail
-via dsync.
-
-If using master users, this setting will be the password of the master user.
-
-See also :ref:`setting-pop3c_master_user`.
-
-See also :ref:`setting-pop3c_user`.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_port:
 
 ``pop3c_port``
 --------------
 
-- Default: ``110``
+See :ref:`setting-pop3c_port`
 
-Port used for connection to the source POP3 server in dsync-based migration of
-mail.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_quick_received_date:
 
 ``pop3c_quick_received_date``
 -----------------------------
 
-- Default: ``no``
-- Values: :ref:`boolean`
+See :ref:`setting-pop3c_quick_received_date`
 
-If enabled, dsync doesn't require calling TOP for each message in order to get
-the metadata.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_rawlog_dir:
 
 ``pop3c_rawlog_dir``
 --------------------
 
-- Default: <empty>
+See :ref:`setting-pop3c_rawlog_dir`
 
-Directory location to store raw POP3 protocol traffic logs used in
-dsync-based migration of mail..
-
-See :ref:`debugging_rawlog`
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_ssl:
 
 ``pop3c_ssl``
 -------------
 
-- Default: ``no``
-- Values: ``yes``, ``no``, or ``pop3s``
+See :ref:`setting-pop3c_ssl`
 
-Enable SSL to remote POP3 account for dsync-based migration of mail?
-
-.. todo:: Values are incorrect?  At least "pop3s" is also supported.
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_ssl_verify:
 
 ``pop3c_ssl_verify``
 --------------------
 
-- Default: ``yes``
-- Values:  :ref:`boolean`
+See :ref:`setting-pop3c_ssl_verify`
 
-Require SSL verification of remote POP3 account certificate during dsync-based
-migration of mail.
-
-Verification may be disabled during testing, but should be enabled during
-production use.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_user:
 
 ``pop3c_user``
 --------------
 
-- Default: ``%u``
-
-The user identity to be used for performing a regular LOGIN to the
-source POP3 server in dsync-based migration of mail.
-
-:ref:`Mail user variables <variables-mail_user>` can be used.
-
-See also :ref:`setting-pop3c_master_user`.
-See also :ref:`setting-pop3c_password`.
-
-.. todo:: Indicate dsync setting
+See :ref:`setting-pop3c_user`
 
 
 .. _setting-postmaster_address:
