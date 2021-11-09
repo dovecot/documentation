@@ -1,0 +1,2 @@
+# dovecot-2.3.17-rev8 Ubuntu 20.04 LTS (Focal Fossa) - OX Dovecot Pro Object Storage plug-in
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/obox2/Ubuntu_20.04 ./
