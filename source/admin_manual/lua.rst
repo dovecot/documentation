@@ -32,12 +32,12 @@ return non-zero to indicate that the script has a problem.
 C API
 ^^^^^^
 
-.. c:function:: void dlua_dovecot_register(struct dlua_script *script)
+.. c:function:: void dlua_dovecot_register(struct dlua_script \*script)
 
 Register dovecot variable. This item can also be extended by context specific
 tables, like authentication database adds dovecot.auth.
 
-.. c:function:: void dlua_push_event(struct event *event)
+.. c:function:: void dlua_push_event(struct event \*event)
 
 Pushes an Dovecot Event to stack.
 
@@ -103,6 +103,131 @@ Lua API
    :param boolean toggle: Enable or disable defining new global variables
 
    .. versionadded:: v2.3.17
+
+.. py:currentmodule:: dovecot.http
+
+.. py:function:: client({timeout=milliseconds, max_attempts=number, debug=boolean})
+
+   Create a new http client object that can be used to submit requests to
+   remote servers.
+
+   :param int timeout: Timeout for HTTP requests in milliseconds.
+   :param int max_attempts: Number of times the request is tried.
+   :param bool debug: Enable debug messages for this client.
+   :return: An http_client object.
+
+object http_client
+^^^^^^^^^^^^^^^^^^
+
+.. py:currentmodule:: http_client
+
+.. py:function:: request({url=string, method=string})
+
+   Create a new request object. By default, the request has ``Host``, and
+   ``Date`` headers with relevant values, as well as ``Connection: Keep-Alive``.
+
+   :param string url: Full url address. Parameters will be parsed from the
+     string. TLS encryption is implied with use of ``https``.
+   :param string method: HTTP method to use.
+   :return: An http_request object.
+
+object http_request
+^^^^^^^^^^^^^^^^^^^
+
+.. py:currentmodule:: http_request
+
+.. py:function:: add_header(name, value)
+
+   Add a header to the request.
+
+   :param string name: Name of the HTTP header.
+   :param string value: Value of the header.
+
+.. py:function:: remove_header(name)
+
+   Do a lookup of the header in the request and remove it if found.
+
+   :param string name: Name of the HTTP header.
+
+.. py:function:: set_payload(value)
+
+   Set payload data to the request.
+
+   :param string value: Payload of the request as string data.
+
+.. py:function:: submit()
+
+   Connect to the remote server and submit the request. This function blocks
+   until the HTTP response is fully received.
+
+   :return: An http_response object.
+
+object http_response
+^^^^^^^^^^^^^^^^^^^^
+
+.. py:currentmodule:: http_response
+
+.. py:function:: status()
+
+   Get the status code of the HTTP response. The codes contain error codes as
+   well as HTTP codes e.g. 200 HTTP_OK and error code that denote connection
+   to remote server failed. A human-readable string of the error can then
+   be read using ``reason()`` function.
+
+   :return: Status code of the http response.
+
+.. py:function:: reason()
+
+   Returns a human-readable string of HTTP status codes e.g. "OK", "Bad Request",
+   "Service Unavailable", as well as connection errors e.g.
+   "connect(...) failed: Connection refused"
+
+   :return: String representation of the status.
+
+.. py:function:: header(name)
+
+   Get value of a header in the HTTP request. If header is not found from the
+   response, an empty string is returned.
+
+   :return: Value of the HTTP response header.
+
+.. py:function:: payload()
+
+   Get the payload of the HTTP response.
+
+   :return: Payload of the HTTP response as string.
+
+
+Example HTTP client code
+------------------------
+
+.. code:: lua
+  
+  local json = require "json"
+  local http_client = dovecot.http.client {
+      timeout = 10000;
+      max_attempts = 3;
+      debug = true;
+  }
+  
+  function auth_password_verify(request, password)
+    local auth_request = http_client:request {
+      url = "https://endpoint/";
+      method = "POST";
+    }
+    local req = {user=request.user, password=password}
+    auth_request:set_payload(json.encode(req))
+    local auth_response = auth_request:submit()
+    local resp_status = auth_response:status()
+  
+    if resp_status == 200
+    then
+      return dovecot.auth.PASSDB_RESULT_OK, ""
+    else
+      return dovecot.auth.PASSDB_RESULT_PASSWORD_MISMATCH, ""
+    end
+  end
+
 
 object event
 ^^^^^^^^^^^^^
