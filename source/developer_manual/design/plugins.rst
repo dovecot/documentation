@@ -31,6 +31,18 @@ If the version string in plugin doesn't match the version of the running
 binary, the plugin loading fails. The DOVECOT_ABI_VERSION is defined in
 Dovecot's ``config.h``, which you're typically including.
 
+It's possible to check the Dovecot version number with a macro. This allows
+either supporting different Dovecot APIs or giving a clear error message if
+the API is too old to support your plugin. For example:
+
+.. code-block:: C
+
+  #if ! DOVECOT_PREREQ(2, 3, 18)
+  #  error Must have at least v2.3.18
+  #endif
+
+.. versionchanged:: v2.3.18 added the 3rd micro-version parameter.
+
 Dependencies
 ------------
 
