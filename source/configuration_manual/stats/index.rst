@@ -258,10 +258,10 @@ Metrics can be added dynamically by running:
 
 .. code-block:: none
 
-   doveadm stats add [--description <string>] [--exporter <name> [--exporter-include <field>]] [--fields <fields>] [--group_by <fields>] <name> <filter>
+   doveadm stats add [--description <string>] [--exporter <name> [--exporter-include <field>]] [--fields <fields>] [--group-by <fields>] <name> <filter>
 
 * ``exporter`` and ``exporter-include`` parameters are described in :ref:`filtering-events-label`.
-* ``fields`` and ``group_by`` are described :ref:`here<statistics>`
+* ``fields`` and ``group-by`` are described :ref:`here<statistics>`
 * ``<filter>`` syntax is described in :ref:`event_filter_metric`.
 
 
