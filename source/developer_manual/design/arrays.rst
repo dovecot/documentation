@@ -13,12 +13,16 @@ Declaring
 
 Arrays can be declared in two ways:
 
-#. Directly::
+#. Directly:
+
+   .. code-block:: C
 
        ARRAY(int) numbers;
        ARRAY(struct foo) foos;
 
-#. Via predefined type::
+#. Via predefined type:
+
+   .. code-block:: C
 
        ARRAY_DEFINE_TYPE(foo, struct foo);
        ...
@@ -27,7 +31,7 @@ Arrays can be declared in two ways:
 The main reason to define a type for an array is to be able to pass the
 array as a function parameter, like:
 
-::
+.. code-block:: C
 
    void func(ARRAY_TYPE(foo) *foos) { .. }
 
@@ -46,7 +50,7 @@ the initial size is just multiplied by element size and passed to
 
 Example:
 
-::
+.. code-block:: C
 
    ARRAY(struct foo *) foo;
 
@@ -79,14 +83,18 @@ Reading
 -------
 
 Usually array is read by going through all of its elements. This can be
-done by returning all the elements::
+done by returning all the elements:
+
+.. code-block:: C
 
    unsigned int count;
 
    const struct foo *foo = array_get(&array, &count);
    struct foo *foo = array_get_modifiable(&array, &count);
 
-or the array can also be iterated easily::
+or the array can also be iterated easily:
+
+.. code-block:: C
 
    const struct foo *foo;
    array_foreach(&foo_array, foo) {
@@ -100,7 +108,9 @@ or the array can also be iterated easily::
 
 The ``_modifiable()`` versions return a non-const pointer.
 
-Arrays that are pointers-to-pointers can be iterated like::
+Arrays that are pointers-to-pointers can be iterated like:
+
+.. code-block:: C
 
    ARRAY(struct foo *) foo_array;
    struct foo *const *foop;
@@ -108,7 +118,9 @@ Arrays that are pointers-to-pointers can be iterated like::
      struct foo *foo = foop;
    }
 
-Or more simply using ``array_foreach_elem()``::
+Or more simply using ``array_foreach_elem()``:
+
+.. code-block:: C
 
    ARRAY(struct foo *) foo_array;
    struct foo *foo;
@@ -118,7 +130,9 @@ Or more simply using ``array_foreach_elem()``::
 
 Note that deleting an element while iterating will cause the iteration to
 skip over the next element. So deleting a single element and breaking out
-of the loop is fine, but continuing the loop is likely a bug. Use instead::
+of the loop is fine, but continuing the loop is likely a bug. Use instead:
+
+.. code-block:: C
 
    array_foreach_reverse(&foo_array, foo) {
      if (want_delete(foo))
@@ -146,7 +160,7 @@ There are also ``array_idx_elem()`` and ``array_foreach_elem()`` to access
 arrays of pointers more easily. They work by making a copy of the dereferenced
 pointer. For example:
 
-::
+.. code-block:: C
 
   ARRAY(const char *) strings;
 
