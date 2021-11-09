@@ -24,7 +24,9 @@ You can create statically allocated buffers with
 ``buffer_create_data()``. Trying to write past the given buffer size
 will panic. Static buffers don't need to be freed.
 
-The code to initialize static buffers looks like::
+The code to initialize static buffers looks like:
+
+.. code-block:: C
 
    unsigned char buf_data[1024];
    buffer_t buf;

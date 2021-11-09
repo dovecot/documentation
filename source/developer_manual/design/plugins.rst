@@ -23,7 +23,7 @@ Versioning
 Since different Dovecot versions can have different APIs, your plugin
 should usually also define ``<plugin_name>_version``, like:
 
-::
+.. code-block:: C
 
    const char *imap_quota_plugin_version = DOVECOT_ABI_VERSION;
 
@@ -53,7 +53,7 @@ not found". There are two steps for this:
 First create ``<plugin_name>_dependencies`` array listing plugin names that
 the plugin depends on, like:
 
-::
+.. code-block:: C
 
    const char *imap_quota_plugin_dependencies[] = { "quota", NULL };
 
