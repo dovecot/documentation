@@ -60,7 +60,7 @@ the plugin depends on, like:
 Then you'll also have to make the plugin .so binary link to the other
 plugins:
 
-::
+.. code-block:: none
 
    if PLUGIN_DEPS
    lib11_imap_quota_plugin_la_LIBADD = \
@@ -73,7 +73,7 @@ Otherwise the build might fail or plugin loading might fail.
 Once all this is done, trying to load imap_quota plugin without quota
 plugin gives a nice error message:
 
-::
+.. code-block:: none
 
    Error: Can't load plugin imap_quota_plugin: Plugin quota must be loaded also
 

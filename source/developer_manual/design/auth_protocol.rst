@@ -14,7 +14,7 @@ transfers are the largest single parameters.
 
 Each command is in format:
 
-::
+.. code-block:: none
 
    <command name> TAB <parameters separated with TAB>
 
@@ -25,7 +25,7 @@ parameter name is unknown, the parameter should just be ignored.
 
 Typical command looks like (without spaces):
 
-::
+.. code-block:: none
 
    command TAB param1 TAB param2 TAB optname=value TAB optboolean
 
@@ -50,7 +50,7 @@ Server is the auth process.
 
 The connection starts by both client and server sending handshakes:
 
-::
+.. code-block:: none
 
    C: "VERSION" TAB <major> TAB <minor>
    C: "CPID" TAB <pid>
@@ -103,7 +103,7 @@ Mechanisms may have parameters giving some details about them:
 Authentication Request
 ~~~~~~~~~~~~~~~~~~~~~~
 
-::
+.. code-block:: none
 
    C: "AUTH" TAB <id> TAB <mechanism> TAB service=<service> [TAB <parameters>]
    S1: "FAIL" TAB <id> [TAB <parameters>]
@@ -174,7 +174,7 @@ A CONT response means that the authentication continues, and more data
 is expected from client to finish the authentication. Given base64 data
 should be sent to client. The client may continue the process issuing
 
-::
+.. code-block:: none
 
    C: "CONT" TAB <id> TAB <base64 data>
 
@@ -194,7 +194,7 @@ and in SMTP AUTH case it's not needed.
 
 The connection starts by both server and master sending handshakes:
 
-::
+.. code-block:: none
 
    S: "VERSION" TAB <major> TAB <minor>
    S: "SPID" TAB <pid>
@@ -208,7 +208,7 @@ SPID can be used to let master identify the server process.
 Master Requests
 ~~~~~~~~~~~~~~~
 
-::
+.. code-block:: none
 
    M: "REQUEST" TAB <id> TAB <client-pid> TAB <client-id> TAB <cookie>
    M: "USER" TAB <id> TAB <userid> TAB service=<service> [TAB <parameters>]

@@ -11,7 +11,7 @@ adding inet_listener to doveadm service). The protocol looks like:
 
 Initial handshake from client to server:
 
-::
+.. code-block:: none
 
    C: VERSION      doveadm-server  1       0
 
@@ -35,7 +35,7 @@ The authentication is done with a regular SASL PLAIN authentication,
 i.e. "PLAIN<tab>base64(\0username\0password)". Currently the username
 must be "doveadm". For example for user=doveadm, password=secret use:
 
-::
+.. code-block:: none
 
    C: PLAIN        AGRvdmVhZG0Ac2VjcmV0
    S: +
@@ -49,7 +49,7 @@ empty, "v" (verbose) or "D" (debug). Note that if the command name has
 spaces, they are sent as spaces instead of as tabs (e.g. "quota get",
 not "quota<tab>get"). So for example to get a quota for user tss:
 
-::
+.. code-block:: none
 
    C:      tss     quota get
    S: user STORAGE 1814    -       0       user    MESSAGE 6       -       0
@@ -94,7 +94,7 @@ There are two fields, "mailbox-guid" and "uid" in the output. The title
 names won't be sent via doveadm protocol, but everything else will be
 sent in one line. So in the above case the protocol output will be:
 
-::
+.. code-block:: none
 
    fa8cb722dfad9c52b62600007049b30b<tab>125159<tab>fa8cb722dfad9c52b62600007049b30b<tab>125160
 
