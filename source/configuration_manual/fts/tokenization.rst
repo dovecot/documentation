@@ -28,12 +28,13 @@ The lib-fts tokenization library works in the following way:
 Languages
 ^^^^^^^^^
 
-The setting :ref:`plugin-fts-setting-fts_languages` lists languages FTS should detect.
+The setting :dovecot_plugin:ref:`fts_languages` lists languages FTS should
+detect.
 At least one language must be listed.
 The first language is the default language used in case detection fails.
 
 Each added language makes the indexing and searching slightly slower, so it's recommended not to add too many languages unnecessarily.
-The language detection performance can be improved by limiting the number of languages available for textcat, see :ref:`plugin-fts-setting-fts_language_config`.
+The language detection performance can be improved by limiting the number of languages available for textcat, see :dovecot_plugin:ref:`fts_language_config`.
 
 Example::
 
@@ -52,7 +53,7 @@ Example::
     fts_tokenizers = generic email-address
     fts_tokenizer_generic = algorithm=simple
 
-See :ref:`plugin-fts-setting-fts_tokenizers`
+See :dovecot_plugin:ref:`fts_tokenizers`
 
 
 Filters
@@ -66,7 +67,7 @@ Example::
     fts_filters_en = normalizer-icu snowball english-possessive stopwords
 
 
-See :ref:`plugin-fts-setting-fts_filters`
+See :dovecot_plugin:ref:`fts_filters`
 
 
 On filter and tokenizer order

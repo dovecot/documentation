@@ -9,12 +9,9 @@ virtual plugin
 Settings
 ========
 
-.. _plugin-virtual-storage-setting_virtual_max_open_mailboxes:
-
-``virtual_max_open_mailboxes``
-------------------------------
-
-- Default: 64
-- Values:  :ref:`uint`
+.. dovecot_plugin:setting:: virtual_max_open_mailboxes
+   :default: 64
+   :plugin: virtual
+   :values: @uint
 
 How many mailboxes to open in virtual plugin.

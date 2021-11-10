@@ -101,7 +101,7 @@ The S3 drivers support bulk-delete requests. The ``bulk-delete`` option is
 enabled by default to delete up to 1000 keys with one request. To change this
 behaviour refer to ``bulk_delete_limit`` at :ref:`http_storages`. To actually
 delete that many mails in a single request, you must also set
-:ref:`plugin-obox-setting_obox_max_parallel_deletes`:
+:dovecot_plugin:ref:`obox_max_parallel_deletes`:
 
 .. code-block:: none
 

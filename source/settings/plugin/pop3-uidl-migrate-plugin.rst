@@ -10,13 +10,9 @@ pop3-uidl-migrate plugin
 Settings
 ========
 
-.. _plugin-pop3-uidl-migrate-setting_pop3_uidl_migrate_format:
-
-``pop3_uidl_migrate_format``
-----------------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: pop3_uidl_migrate_format
+   :plugin: pop3-uidl-migrate
+   :values: @string
 
 A template of the UIDL format to use when migrating messages.
 

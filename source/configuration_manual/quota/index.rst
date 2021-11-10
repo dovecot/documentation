@@ -19,8 +19,8 @@ See :ref:`plugin-quota` for all quota settings.
 Quota Root
 ^^^^^^^^^^
 
-See :ref:`plugin-quota-setting_quota` for the details on the syntax of the
-quota root setting.
+See :dovecot_plugin:ref:`quota` for the details on the syntax of the quota
+root setting.
 
 Quota root is a concept from `IMAP Quota specifications (RFC 2087)`_. Normally
 you'll have only one quota root, but in theory there could be, e.g., "user
@@ -36,8 +36,8 @@ completely different quota root from the rest of the mailboxes (e.g. INBOX in
 Quota Rules
 ^^^^^^^^^^^
 
-See :ref:`plugin-quota-setting_quota` for the details on the syntax of the
-quota rule setting.
+See :dovecot_plugin:ref:`quota` for the details on the syntax of the quota
+rule setting.
 
 For `Maildir++ quota <maildir_quota>`_ if ``maildirsize`` file exists the
 limits are taken from it but if it doesn't exist the ``?`` limits are used.
@@ -223,9 +223,11 @@ Public namespaces are ignored unless there is explicit quota specified for it.
 Custom Quota Exceeded Message
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-See :ref:`plugin-quota-setting_quota_exceeded_message`.
+See :dovecot_plugin:ref:`quota_exceeded_message`.
 
-Example::
+Example:
+
+.. code-block:: none
 
   plugin {
     quota_exceeded_message = Quota exceeded, please go to http://www.example.com/over_quota_help for instructions on how to fix this.
@@ -236,7 +238,7 @@ Example::
 Quota Warning Scripts
 ^^^^^^^^^^^^^^^^^^^^^
 
-See :ref:`plugin-quota-setting_quota_warning`.
+See :dovecot_plugin:ref:`quota_warning`.
 
 Example Configuration
 ---------------------
@@ -307,9 +309,9 @@ The overquota-flag name in userdb must be ``quota_over_flag``.
 
 These settings are available:
 
-* :ref:`plugin-quota-setting_quota_over_flag_lazy_check`
-* :ref:`plugin-quota-setting_quota_over_flag_value`
-* :ref:`plugin-quota-setting_quota_over_script`
+* :dovecot_plugin:ref:`quota_over_flag_lazy_check`
+* :dovecot_plugin:ref:`quota_over_flag_value`
+* :dovecot_plugin:ref:`quota_over_script`
 
 Example::
 
@@ -330,7 +332,7 @@ Example::
 Quota Grace
 ^^^^^^^^^^^
 
-See :ref:`plugin-quota-setting_quota_grace`.
+See :dovecot_plugin:ref:`quota_grace`.
 
 With v2.2+, by default the last mail can bring user over quota. This is
 useful to allow user to actually unambiguously become over quota instead of
@@ -357,7 +359,7 @@ Maximum Saved Mail Size
 
 .. versionadded:: v2.2.29
 
-See :ref:`plugin-quota-setting_quota_grace`.
+See :dovecot_plugin:ref:`quota_grace`.
 
 Dovecot allows specifying the maximum message size that is allowed to be
 saved (e.g. by LMTP, IMAP APPEND or doveadm save). The default is 0, which is
@@ -376,7 +378,7 @@ Quota Virtual Sizes
 
 .. versionadded:: v2.2.19
 
-See :ref:`plugin-quota-setting_quota_vsizes`.
+See :dovecot_plugin:ref:`quota_vsizes`.
 
 Indicates that the quota plugin should use virtual sizes rather than physical
 sizes when calculating message sizes. Required for the ``count`` driver.

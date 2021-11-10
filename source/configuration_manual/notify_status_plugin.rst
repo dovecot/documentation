@@ -19,8 +19,7 @@ See :ref:`plugin-notify-status`.
 
 This plugin requires that the :ref:`plugin-notify` be loaded.
 
-The values to store are listed at
-:ref:`plugin-notify-status-setting_notify_status_mailbox`.
+The values to store are listed at :dovecot_plugin:ref:`notify_status_mailbox`.
 
 Dictionary Configuration
 ------------------------

@@ -9,17 +9,15 @@ fts-solr plugin
 Settings
 ========
 
-.. _setting-plugin_fts_solr:
-
-``fts_solr``
-------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: fts_solr
+   :plugin: fts-solr
+   :values: @string
 
 Configuration of fts_solr driver.
 
-Format is a space separated list of options::
+Format is a space separated list of options:
+
+.. code-block:: none
 
   fts_solr = [option1[=value1]] [option2[=value2]] [...]
 
@@ -72,7 +70,9 @@ The following options are supported:
 
     * See :ref:`fts_backend_solr-soft_commits` for additional information.
 
-Example::
+Example:
+
+.. code-block:: none
 
   plugin {
     fts_solr = url=http://solr.example.org:8983/solr/ debug batch_size=1000

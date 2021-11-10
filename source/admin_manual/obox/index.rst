@@ -126,7 +126,7 @@ The output will have fields:
 
 * user_* : Alternative usernames, if configured by returning user_* extra fields from userdb
 
-* upload-within : This corresponds to the metacache_upload_interval setting.
+* upload-within : This corresponds to the :dovecot_plugin:ref:`metacache_upload_interval` setting.
 
 * dev-major dev-minor : Filesystem device where the user is located in. Filesystems are separately tracked by metacache, although currently support for multiple filesystems doesn't work as well as it could. Mainly the problem is that metacache_max_space globally applies to all the filesystems.
 

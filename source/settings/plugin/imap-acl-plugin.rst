@@ -9,13 +9,9 @@ imap-acl plugin
 Settings
 ========
 
-.. _plugin-imap-acl-setting_acl_anyone:
-
-``acl_anyone``
---------------
-
-- Default: <empty>
-- Values:  ``allow``
+.. dovecot_plugin:setting:: acl_anyone
+   :plugin: imap-acl
+   :values: allow
 
 Users who have different set of keys cannot share mails when the mails are
 encrypted, but sharing is possible within the scope of a key.

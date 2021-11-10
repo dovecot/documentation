@@ -9,29 +9,32 @@ old-stats plugin
 Settings
 ========
 
-.. _plugin-old-stats-setting_old_stats_refresh:
-
-``old_stats_refresh``
----------------------
+.. dovecot_plugin:setting:: old_stats_refresh
+   :hdr_only: yes
+   :plugin: old-stats
 
 This required parameter is used with the :ref:`plugin-imap-old-stats` so that
 the stats process can report IMAP-command-specific statistics for CPU use,
 disk usage, etc. It specifies how often to refresh session statistics.
 
-Example::
+Example:
+
+.. code-block:: none
 
   plugin {
     old_stats_refresh = 30 secs
   }
 
-.. _plugin-old-stats-setting_old_stats_track_cmds:
 
-``old_stats_track_cmds``
-------------------------
+.. dovecot_plugin:setting:: old_stats_track_cmds
+   :hdr_only: yes
+   :plugin: old-stats
 
 The :ref:`plugin-imap-old-stats` enables the stats process to report
 IMAP-command-specific statistics for CPU use, disk usage, etc. This setting,
-for tracking these per-command statistics, is optional::
+for tracking these per-command statistics, is optional:
+
+.. code-block:: none
 
   plugin {
     old_stats_track_cmds = yes

@@ -61,28 +61,22 @@ See also :ref:`fts_tokenization`
 Settings
 ^^^^^^^^
 
-.. _plugin-fts-setting-fts_autoindex:
-
-``fts_autoindex``
------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: fts_autoindex
+   :default: no
+   :plugin: fts
+   :values: @boolean
 
 If enabled, index mail as it is delivered or appended.
 
-See :ref:`plugin-fts-setting-fts_autoindex_exclude`
+.. seealso::
 
-See :ref:`plugin-fts-setting-fts_autoindex_max_recent_msgs`
+  :dovecot_plugin:ref:`fts_autoindex_exclude`
+  :dovecot_plugin:ref:`fts_autoindex_max_recent_msgs`
 
 
-.. _plugin-fts-setting-fts_autoindex_exclude:
-
-``fts_autoindex_exclude``
--------------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: fts_autoindex_exclude
+   :plugin: fts
+   :values: @string
 
 To exclude a mailbox from automatic indexing, it can be listed in this setting.
 
@@ -91,7 +85,9 @@ plugin name.
 
 Use either mailbox names or special-use flags (e.g. ``\Trash``).
 
-For example::
+For example:
+
+.. code-block:: none
 
   plugin {
     fts_autoindex_exclude = \Junk
@@ -100,19 +96,17 @@ For example::
   }
 
 
-.. _plugin-fts-setting-fts_autoindex_max_recent_msgs:
-
-``fts_autoindex_max_recent_msgs``
----------------------------------
-
-.. versionadded:: 2.2.9
-
-- Default: ``0`` (ignore)
-- Values:  :ref:`uint`
+.. dovecot_plugin:setting:: fts_autoindex_max_recent_msgs
+   :added: v2.2.9
+   :default: 0
+   :plugin: fts
+   :values: @uint
 
 To exclude infrequently accessed mailboxes from automatic indexing, set this
 value to the maximum number of ``\Recent`` flagged messages that exist in the
 mailbox.
+
+A value of ``0`` means to ignore this setting.
 
 Mailboxes with more flagged ``\Recent`` messages than this value will not be
 autoindexed, even though they get deliveries or appends. This is useful for,
@@ -130,22 +124,20 @@ Example Setting:
   }
 
 
-.. _plugin-fts-setting-fts_decoder:
+.. dovecot_plugin:setting:: fts_decoder
+   :added: v2.1
+   :plugin: fts
+   :values: @string
 
-``fts_decoder``
----------------
-
-.. versionadded:: 2.1
-
-- Default: <empty>
-- Values:  :ref:`string`
 
 Decode attachments to plaintext using this service and index the resulting
 plaintext.
 
 See the ``decode2text.sh`` script included in Dovecot for how to use this.
 
-Example::
+Example:
+
+.. code-block:: none
 
   plugin {
     fts_decoder = decode2text
@@ -160,15 +152,11 @@ Example::
   }
 
 
-.. _plugin-fts-setting-fts_enforced:
-
-``fts_enforced``
-----------------
-
-.. versionadded:: v2.2.19
-
-- Default: ``no``
-- Values:  ``yes``, ``no`` or ``body``
+.. dovecot_plugin:setting:: fts_enforced
+   :added: v2.2.19
+   :default: no
+   :plugin: fts
+   :values: yes, no, body
 
 Require FTS indexes to perform a search? This controls what to do when
 searching headers and what to do on error situations.
@@ -201,13 +189,9 @@ cases it's possible that the search results will be different depending on
 whether the search was performed via FTS index or not.
 
 
-.. _plugin-fts-setting-fts_filters:
-
-``fts_filters``
-----------------
-
-- Default: <none>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: fts_filters
+   :plugin: fts
+   :values: @string
 
 The list of filters to apply.
 
@@ -296,7 +280,9 @@ Language specific filter chains can be specified with ``fts_filters_<lang>``
 |                        | tokenizer with ``algorithm=tr29 wb5a=yes``.         |
 +------------------------+-----------------------------------------------------+
 
-Example::
+Example:
+
+.. code-block:: none
 
   plugin {
     fts_filters = normalizer-icu snowball stopwords
@@ -305,18 +291,15 @@ Example::
 
 See also :ref:`fts_tokenization`
 
+
+.. dovecot_
 .. _`Normalizer Format`: http://userguide.icu-project.org/transforms/general#TOC-Transliterator-Identifiers
 
-.. _plugin-fts-setting-fts_header_excludes:
 
-``fts_header_excludes``
------------------------
-
-.. versionadded:: 2.3.18
-
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: fts_header_excludes
+   :added: v2.3.18
+   :plugin: fts
+   :values: @string
 
 The list of headers to, respectively, include or exclude.
 
@@ -351,28 +334,27 @@ Example::
 
 - No headers are indexed, except those specified in the ``includes``.
 
-.. _plugin-fts-setting-fts_header_includes:
 
-``fts_header_includes``
------------------------
+.. dovecot_plugin:setting:: fts_header_includes
+   :added: v2.3.18
+   :plugin: fts
+   :values: @string
 
-.. versionadded:: 2.3.18
+See :dovecot_plugin:ref:`fts_header_excludes`.
 
-See :ref:`plugin-fts-setting-fts_header_excludes`.
 
-.. _plugin-fts-setting-fts_index_timeout:
-
-``fts_index_timeout``
----------------------
-
-- Default: ``0`` (no timeout)
-- Values:  :ref:`uint`
+.. dovecot_plugin:setting:: fts_index_timeout
+   :default: 0
+   :plugin: fts
+   :values: @uint
 
 When the full text search backend detects that the index isn't up-to-date,
 the indexer is told to index the messages and is given this much time to do so.
 If this time limit is reached, an error is returned, indicating that the search
 timed out during waiting for the indexing to complete:
 ``NO [INUSE] Timeout while waiting for indexing to finish``
+
+A value of ``0`` means no timeout.
 
 Example Setting:
 
@@ -383,38 +365,33 @@ Example Setting:
   }
 
 
-.. _plugin-fts-setting-fts_language_config:
-
-``fts_language_config``
------------------------
-
-- Default: <textcat dir>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: fts_language_config
+   :default: !<textcat dir>
+   :plugin: fts
+   :values: @string
 
 Path to the textcat/exttextcat configuration file, which lists the supported
 languages.
 
 This is recommended to be changed to point to a minimal version of a
 configuration that supports only the languages listed in
-:ref:`plugin-fts-setting-fts_languages`.
+:dovecot_plugin:ref:`fts_languages`.
 
 Doing this improves language detection performance during indexing and also
 makes the detection more accurate.
 
-Example::
+Example:
+
+.. code-block:: none
 
   plugin {
     fts_language_config = /usr/share/libexttextcat/fpdb.conf
   }
 
 
-.. _plugin-fts-setting-fts_languages:
-
-``fts_languages``
------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: fts_languages
+   :plugin: fts
+   :values: @string
 
 A space-separated list of languages that the full text search should detect.
 
@@ -424,43 +401,39 @@ The language listed first is the default and is used when language recognition
 fails.
 
 For better performance it's recommended to synchronize this setting with the
-textcat configuration file; see :ref:`plugin-fts-setting-fts_language_config`.
+textcat configuration file; see :dovecot_plugin:ref:`fts_language_config`.
 
 The filters used for stemming and stopwords are language dependent.
 
-Example setting::
+Example setting:
+
+.. code-block:: none
 
   plugin {
     fts_languages = en de
   }
 
 
-.. _plugin-fts-setting-fts_tika:
-
-``fts_tika``
-------------
-
-.. versionadded:: 2.2.13
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: fts_tika
+   :added: v2.2.13
+   :plugin: fts
+   :values: @string
 
 URL for `Apache Tika <https://tika.apache.org/>`_ decoder for attachments.
 
-Example::
+Example:
+
+.. code-block:: none
 
   plugin {
     fts_tika = http://tikahost:9998/tika/
   }
 
 
-.. _plugin-fts-setting-fts_tokenizers:
-
-``fts_tokenizers``
-------------------
-
-- Default: ``generic email-address``
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: fts_tokenizers
+   :default: generic email-address
+   :plugin: fts
+   :values: @string
 
 The list of tokenizers to use.
 

@@ -11,13 +11,9 @@ charset-alias plugin
 Settings
 ========
 
-.. _plugin-charset-alias-setting_charset_aliases:
-
-``charset_aliases``
--------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: charset_aliases
+   :plugin: charset-alias
+   :values: @string
 
 A space-separated string of ``<from>=<to>`` charsets. The "from" charsets"
 will be treated as "to" charsets when decoding to UTF-8.

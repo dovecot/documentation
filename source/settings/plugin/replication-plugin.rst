@@ -9,14 +9,11 @@ For configuration details, see :ref:`replication`.
 Settings
 ========
 
+.. dovecot_plugin:setting:: mail_replica
+   :plugin: replication
+   :values: @string
 
-.. _plugin-replication-setting_mail_replica:
-
-``mail_replica``
-----------------
-
-This parameter for the mail_replica plug-in indicates the location
-for replication.
+The location for replication.
 
 Example:
 
@@ -25,10 +22,10 @@ Example:
   mail_replica = remote:vmail@targethost.example.com
 
 
-.. _plugin-replication-setting_replication_sync_timeout:
-
-``replication_sync_timeout``
-----------------------------
+.. dovecot_plugin:setting:: replication_sync_timeout
+   :default: 10 secs
+   :plugin: replication
+   :values: @time
 
 When a new mail message is saved via IMAP or a message is being delivered via
 LDA/LMTP, the system waits this amount of time for the mail to be synced to

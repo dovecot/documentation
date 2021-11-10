@@ -136,7 +136,7 @@ rebuild this dictionary, so make sure it doesn't get lost. If it does,
 each user having shared mailboxes must use the IMAP SETACL command (see
 below) to get the dictionary updated for themselves.
 
-See :ref:`plugin-acl-setting-acl_shared_dict` for plugin setting information.
+See :dovecot_plugin:ref:`acl_shared_dict` for plugin setting information.
 
 You could use any dictionary backend, including SQL or Cassandra, but a
 simple flat file should work pretty well too:
@@ -269,7 +269,7 @@ See :ref:`acl` for list of <rights>.
 Sharing Mailboxes to Everyone
 -----------------------------
 
-See :ref:`plugin-imap-acl-setting_acl_anyone`.
+See :dovecot_plugin:ref:`acl_anyone`.
 
 Note that you can also do this only for some users by using the second
 table "``anyone_shares``". Every user listed in this table shares his

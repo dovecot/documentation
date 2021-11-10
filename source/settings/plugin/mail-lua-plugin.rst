@@ -11,15 +11,14 @@ mail-lua plugin
 mail-lua is a plugin that can be loaded to provide API for mail storage Lua
 plugins.
 
-.. _plugin-mail-lua-setting_mail_lua_script:
 
-``mail_lua_script``
--------------------
+Settings
+========
 
-.. versionadded:: v2.3.4
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: mail_lua_script
+   :added: v2.3.4
+   :plugin: mail-lua
+   :values: @string
 
 Specify filename to load for user.
 

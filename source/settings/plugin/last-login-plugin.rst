@@ -9,48 +9,36 @@ last-login plugin
 Settings
 ========
 
-.. _plugin-last-login-setting_last_login_dict:
-
-``last_login_dict``
--------------------
-
-.. versionadded:: 2.2.14
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: last_login_dict
+   :added: v2.2.14
+   :plugin: last-login
+   :values: @string
 
 The dictionary where last login information is updated.
 
-Example::
+Example:
+
+.. code-block:: none
 
   plugin {
     last_login_dict = redis:host=127.0.0.1:port=6379
   }
 
 
-.. _plugin-last-login-setting_last_login_key:
-
-``last_login_key``
-------------------
-
-.. versionadded:: 2.2.14
-
-- Default: ``last-login/%u``
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: last_login_key
+   :added: v2.2.14
+   :default: last-login/%u
+   :plugin: last-login
+   :values: @string
 
 The key that is updated in the dictionary (defined by
-:ref:`plugin-last-login-setting_last_login_dict`) with the last login
-information.
+:dovecot_plugin:ref:`last_login_dict`) with the last login information.
 
 
-.. _plugin-last-login-setting_last_login_precision:
-
-``last_login_precision``
--------------------------
-
-.. versionadded:: 2.2.14
-
-- Default: ``s``
-- Values:  ``s`` | ``ms`` | ``us`` | ``ns``
+.. dovecot_plugin:setting:: last_login_precision
+   :added: v2.2.14
+   :default: s
+   :plugin: last-login
+   :values: s, ms, us, ns
 
 Precision for last login timestamp.

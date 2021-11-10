@@ -16,13 +16,9 @@ then to user’s INBOX. It also adds the ``\Seen`` flag to the message.
 Settings:
 =========
 
-.. _plugin-vault-setting_vault_mailbox:
-
-``vault_mailbox``
------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: vault_mailbox
+   :plugin: vault
+   :values: @string
 
 This setting enables the vault plugin and identifies where to store a copy
 of the message.

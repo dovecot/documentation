@@ -12,15 +12,11 @@ fts-dovecot plugin
 Settings
 ========
 
-.. _plugin-fts-dovecot-setting-fts_dovecot_mail_flush_interval:
-
-``fts_dovecot_mail_flush_interval``
------------------------------------
-
-.. versionadded:: v2.3.5
-
-- Default: ``0`` (none)
-- Values:  :ref:`uint`
+.. dovecot_plugin:setting:: fts_dovecot_mail_flush_interval
+   :added: v2.3.5
+   :default: 0
+   :plugin: fts-dovecot
+   :values: @uint
 
 Upload locally cached FTS indexes to object storage every N new emails. This
 reduces the number of emails that have to be read after backend failure to
@@ -30,15 +26,11 @@ The recommended value is ``10``. This will become the default in some future
 version.
 
 
-.. _plugin-fts-dovecot-setting-fts_dovecot_max_triplets:
-
-``fts_dovecot_max_triplets``
-----------------------------
-
-.. versionadded:: v2.3.15
-
-- Default: ``0`` (unlimited)
-- Values:  :ref:`uint`
+.. dovecot_plugin:setting:: fts_dovecot_max_triplets
+   :added: v2.3.15
+   :default: 0
+   :plugin: fts-dovecot
+   :values: @uint
 
 FTS lookups will fail and error message will be logged, when the number of
 triplets exceeds the threshold specified in the setting. ``0`` means there is
@@ -48,15 +40,11 @@ The recommended value is ``200``. This will become the default in some future
 version.
 
 
-.. _plugin-fts-dovecot-setting-fts_dovecot_min_merge_l_file_size:
-
-``fts_dovecot_min_merge_l_file_size``
--------------------------------------
-
-.. versionadded:: v2.3.5
-
-- Default: ``128 kB``
-- Values:  :ref:`size`
+.. dovecot_plugin:setting:: fts_dovecot_min_merge_l_file_size
+   :added: v2.3.5
+   :default: 128 kB
+   :plugin: fts-dovecot
+   :values: @size
 
 The smallest FTS triplet is getting recreated whenever indexing new mails until
 it reaches this size. Then the triplet becomes merged with the next largest
@@ -66,17 +54,13 @@ When fts-cache is used, this effectively controls how large the fts.L file
 can become in metacache until the FTS triplet is uploaded to object storage.
 
 
-.. _plugin-fts-dovecot-setting-fts_dovecot_fs:
-
-``fts_dovecot_fs``
-------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: fts_dovecot_fs
+   :plugin: fts-dovecot
+   :values: @string
 
 Define the location for the fts cache and indexes path on remote filesystems.
 
-It must be somewhat synchronized with :ref:`plugin-obox-setting_obox_fs` and
+It must be somewhat synchronized with :dovecot_plugin:ref:`obox_fs` and
 :ref:`setting-mail_location`.
 
 It is strongly recommended to use :ref:`fscache` to speed up
@@ -85,7 +69,9 @@ It is strongly recommended to use :ref:`fscache` to speed up
 It is recommended that the FTS and email fscaches point to *DIFFERENT*
 locations.
 
-A simple example with local storage for FTS::
+A simple example with local storage for FTS:
+
+.. code-block:: none
 
   mail_plugins = $mail_plugins fts fts_dovecot
 
@@ -100,15 +86,11 @@ Example configurations for different object storage backends:
 * :ref:`s3_example_configuration`
 
 
-.. _plugin-fts-dovecot-setting-fts_dovecot_prefix:
-
-``fts_dovecot_prefix``
-----------------------
-
-.. versionadded:: v2.3.5
-
-- Default: ``no``
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: fts_dovecot_prefix
+   :added: v2.3.5
+   :default: no
+   :plugin: fts-dovecot
+   :values: @string
 
 Specifies how prefix search should be invoked. May not work with some filters.
 

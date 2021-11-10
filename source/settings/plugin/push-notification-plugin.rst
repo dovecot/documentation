@@ -9,13 +9,9 @@ push-notification
 Settings
 ========
 
-.. _plugin-push-notification-setting_push_notification_driver:
-
-``push_notification_driver``
-----------------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: push_notification_driver
+   :plugin: push-notification
+   :values: @string
 
 The configuration value is the name of the driver, optionally
 followed by an ``:`` and driver-specific options (see :ref:`push_notification`
