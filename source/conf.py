@@ -12,11 +12,10 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# sys.path.insert(0, os.path.abspath('.'))
+import os, sys
+sys.path.append(os.path.abspath('./_ext'))
 
 # Increase recursion limit; needed for todo processing
-import sys
 sys.setrecursionlimit(10000)
 
 # -- Project information -----------------------------------------------------
@@ -48,6 +47,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx_copybutton',
     'sphinx_removed_in',
+    'dovecot_sphinx',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
