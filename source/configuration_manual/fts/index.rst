@@ -78,7 +78,7 @@ On the other hand, searching through message headers benefits from Dovecot's
 standard index and cache files (dovecot.index and dovecot.index.cache), which
 often contain the necessary information.  It is possible to redirect header
 searches to FTS indexes via a configuration option
-(:ref:`plugin-fts-setting-fts_enforced`).
+(:dovecot_plugin:ref:`fts_enforced`).
 
 Triggers for FTS indexing are configurable. It can be started on demand when
 searching, or automatically when new messages arrive or as a batch job.
@@ -154,7 +154,7 @@ that attempts to access the FTS indexes.
 
 Automatic FTS indexing can also be done during mail delivery, IMAP APPEND and
 other ways of adding mails to mailboxes using
-:ref:`plugin-fts-setting-fts_autoindex`.
+:dovecot_plugin:ref:`fts_autoindex`.
 
 Indexing can also be triggered manually:
 
@@ -172,7 +172,7 @@ which does not have indexes for mail bodies.
 This could end up opening all the mails in the mailbox, which often isn't
 wanted.
 
-To disable this functionality, enable :ref:`plugin-fts-setting-fts_enforced`.
+To disable this functionality, enable :dovecot_plugin:ref:`fts_enforced`.
 
 
 Indexing Attachments
@@ -181,8 +181,8 @@ Indexing Attachments
 Attachments can be indexed either via a script that translates the attachment
 to UTF-8 plaintext or Apache Tika server.
 
-* :ref:`plugin-fts-setting-fts_decoder`: Use decoder script.
-* :ref:`plugin-fts-setting-fts_tika`: Use Apache Tika server.
+* :dovecot_plugin:ref:`fts_decoder`: Use decoder script.
+* :dovecot_plugin:ref:`fts_tika`: Use Apache Tika server.
 
 
 Rescan

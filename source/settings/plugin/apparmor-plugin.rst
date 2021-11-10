@@ -11,13 +11,9 @@ apparmor plugin
 Settings
 ========
 
-.. _plugin-apparmor-setting_apparmor_hat:
-
-``apparmor_hat``
-----------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: apparmor_hat
+   :plugin: apparmor
+   :values: @string
 
 The AppArmor "hat" to change to when a user is loaded. 
 

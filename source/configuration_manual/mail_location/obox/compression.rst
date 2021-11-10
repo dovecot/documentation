@@ -43,9 +43,9 @@ accessing them.
 
 This decompression uses a temporary file that is written to
 :ref:`setting-mail_temp_dir`. By using the ``compress`` fs wrapper after ``fscache`` in
-:ref:`plugin-obox-setting_obox_fs` line the mails are stored uncompressed in ``fscache``, and reading
+:dovecot_plugin:ref:`obox_fs` line the mails are stored uncompressed in ``fscache``, and reading
 the mails from there doesn't require writing to :ref:`setting-mail_temp_dir`.
 
 Compression status of email object data is auto-detected. Therefore,
-:ref:`plugin-zlib-setting_zlib_save` may safely be added to a currently existing system; existing
-non-compressed mail objects will be identified correctly.
+:dovecot_plugin:ref:`zlib_save` may safely be added to a currently existing
+system; existing non-compressed mail objects will be identified correctly.

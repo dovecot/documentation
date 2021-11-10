@@ -11,13 +11,9 @@ quota-clone plugin
 Settings
 ========
 
-.. _plugin-quota-clone-setting_quota_clone_dict:
-
-``quota_clone_dict``
---------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: quota_clone_dict
+   :plugin: quota-clone
+   :values: @string
 
 The dictionary to update with quota clone information. This must be set for
 the plugin to be active.

@@ -9,14 +9,9 @@ doveadm-dsync plugin
 Settings
 ========
 
-.. _plugin-doveadm-dsync-setting_noreplicate:
-
-``noreplicate``
----------------
-
-.. versionadded:: 2.3.1
-
-- Default: <empty>
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: noreplicate
+   :added: v2.3.1
+   :plugin: doveadm-dsync
+   :values: @boolean
 
 If "yes", user will not be replicated using replicator.

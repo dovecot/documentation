@@ -10,13 +10,9 @@ imap-filter-sieve plugin
 Settings
 ========
 
-.. _plugin-imap-filter-sieve-setting_sieve_global:
-
-``sieve_global``
-----------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: sieve_global
+   :plugin: imap-filter-sieve
+   :values: @string
 
 The include extension fetches the global scripts from the location specified
 in this parameter.

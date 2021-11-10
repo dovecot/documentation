@@ -9,15 +9,11 @@ See :ref:`imap_compress` for an overview of Dovecot's IMAP compression support.
 Settings
 ========
 
-.. _plugin-imap-zlib-setting-imap_compress_level:
-
-``imap_compress_<algorithm>_level``
------------------------------------
-
-.. versionchanged:: 2.3.15
-
-- Default: <algorithm dependent>
-- Values:  :ref:`uint`
+.. dovecot_plugin:setting:: imap_compress_<algorithm>_level
+   :changed: v2.3.15
+   :default: !<algorithm dependent>
+   :plugin: imap-zlib
+   :values: @uint
 
 Defines the compression level for the given algorithm.
 
@@ -30,11 +26,8 @@ Algorithm   Minimum            Default Maximum
 =========== ================== ======= =======
 
 
-.. _plugin-imap-zlib-setting-imap_zlib_compression_level:
+.. dovecot_plugin:setting:: imap_zlib_compression_level
+   :hdr_only: yes
+   :plugin: imap-zlib
 
-``imap_zlib_compression_level``
--------------------------------
-
-.. versionremoved:: 2.3.15
-
-This is now called :ref:`plugin-imap-zlib-setting-imap_compress_level`.
+.. versionremoved:: v2.3.15 Now called :dovecot_plugin:ref:`imap_compress_<algorithm>_level`

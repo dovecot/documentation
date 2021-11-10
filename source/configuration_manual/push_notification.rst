@@ -69,7 +69,7 @@ Drivers
 =======
 
 A push notification driver is defined by the
-:ref:`plugin-push-notification-setting_push_notification_driver` setting.
+:dovecot_plugin:ref:`push_notification_driver` setting.
 
 The configuration value is the name of the driver, optionally
 followed by an ``:`` and driver-specific options (see drivers for options
@@ -225,14 +225,14 @@ Lua push notification handler requires :ref:`mail_lua <plugin-mail-lua>` and
 ``push_notification_lua`` plugins to be loaded in addition to the plugins 
 discussed :ref:`above <push_notification-usage>`.
 
-+----------+----------+---------------+------------------------------------------------+
-| Name     | Required | Type          | Description                                    |
-+==========+==========+===============+================================================+
-| ``file`` | NO       | :ref:`string` | The lua file to execute. If no script is       | 
-|          |          |               | is specified,                                  |
-|          |          |               | :ref:`plugin-mail-lua-setting_mail_lua_script` |
-|          |          |               | will be used by default.                       |
-+----------+----------+---------------+------------------------------------------------+
++----------+----------+---------------+----------------------------------------+
+| Name     | Required | Type          | Description                            |
++==========+==========+===============+========================================+
+| ``file`` | NO       | :ref:`string` | The lua file to execute. If no script  |
+|          |          |               | is specified,                          |
+|          |          |               | :dovecot_plugin:ref:`mail_lua_script`  |
+|          |          |               | will be used by default.               |
++----------+----------+---------------+----------------------------------------+
 
 .. code-block:: none
 

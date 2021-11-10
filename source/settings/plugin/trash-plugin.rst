@@ -9,13 +9,9 @@ trash plugin
 Settings
 ========
 
-.. _plugin-trash-setting_trash:
-
-``trash``
----------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: trash
+   :plugin: trash
+   :values: @string
 
 A text file that configures the plug-in's behavior. This setting is required
 for the plugin to be active.

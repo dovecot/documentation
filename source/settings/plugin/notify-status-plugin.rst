@@ -11,13 +11,9 @@ notify-status plugin
 Settings
 --------
 
-.. _plugin-notify-status-setting_notify_status_dict:
-
-``notify_status_dict``
-----------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: notify_status_dict
+   :plugin: notify-status
+   :values: @string
 
 The URI of the dictionary to use. This MUST be set for the plugin to be active.
 
@@ -32,13 +28,9 @@ Example:
   }
 
 
-.. _plugin-notify-status-setting_notify_status_mailbox:
-
-``notify_status_mailbox``
--------------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: notify_status_mailbox
+   :plugin: notify-status
+   :values: @string
 
 A mailbox pattern to exclude from status updates. Wildcards are acceptable.
 
@@ -57,13 +49,10 @@ Example:
   }
 
 
-.. _plugin-notify-status-setting_notify_status_value:
-
-``notify_status_value``
------------------------
-
-- Default: ``{"messages":%%{messages},"unseen":%%{unseen}}``
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: notify_status_value
+   :default: {"messages":%%{messages},"unseen":%%{unseen}}
+   :plugin: notify-status
+   :values: @string
 
 A template of the string that will be written to the dictionary.
 

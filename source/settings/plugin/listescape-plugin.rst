@@ -9,11 +9,10 @@ listescape plugin
 Settings
 ========
 
-``listescape_char``
--------------------
-
-- Default: ``\``
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: listescape_char
+   :default: \
+   :plugin: listescape
+   :values: @string
 
 The escape character to use.
 

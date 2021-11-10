@@ -9,13 +9,9 @@ zlib plugin
 Settings
 ^^^^^^^^
 
-.. _plugin-zlib-setting_zlib_save:
-
-``zlib_save``
--------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: zlib_save
+   :plugin: zlib
+   :values: @string
 
 The compression algorithm to use.  This setting is REQUIRED - if empty, the
 plugin is disabled.
@@ -41,16 +37,13 @@ Example:
    zlib_save = gz
 
 
-.. _plugin-zlib-setting_zlib_save_level:
-
-``zlib_save_level``
--------------------
-
-- Default: <algorithm dependent>
-- Values:  :ref:`uint`
+.. dovecot_plugin:setting:: zlib_save_level
+   :default: !<algorithm dependent>
+   :plugin: zlib
+   :values: @uint
 
 The compression level to use.  This value is dependent on the algorithm
-chosen in :ref:`plugin-zlib-setting_zlib_save`.
+chosen in :dovecot_plugin:ref:`zlib_save`.
 
 The following levels are supported:
 
@@ -71,7 +64,7 @@ Example:
 
 .. versionchanged:: 2.3.15
 
-Prior to v2.3.15, the compression level must be an integer in the range 1 to 9
-regardless of the algorithm selected. The default level is 6. This value may
-not make sense with compression algorithms other than gz and bz2. For example,
-zstd supports levels from 1 to 22 in latest versions.
+   Prior to v2.3.15, the compression level must be an integer in the range 1 to 9
+   regardless of the algorithm selected. The default level is 6. This value may
+   not make sense with compression algorithms other than gz and bz2. For example,
+   zstd supports levels from 1 to 22 in latest versions.

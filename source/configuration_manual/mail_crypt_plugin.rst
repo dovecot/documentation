@@ -60,7 +60,7 @@ fine.
 
 This page assumes you are using configuring mail encryption from scratch with
 a recent version of Dovecot.  If you are upgrading from an older version,
-see :ref:`setting-plugin_mail_crypt_save_version` for possible backwards
+see :dovecot_plugin:ref:`mail_crypt_save_version` for possible backwards
 compatibility issues.
 
 
@@ -71,8 +71,8 @@ See :ref:`plugin-mail-crypt`.
 
 Plugin settings may also be dynamically set via
 :ref:`authentication-user_database_extra_fields`. To provide
-:ref:`setting-plugin_mail_crypt_global_private_key` and
-:ref:`setting-plugin_mail_crypt_global_public_key` as userdb attributes, you
+:dovecot_plugin:ref:`mail_crypt_global_private_key` and
+:dovecot_plugin:ref:`mail_crypt_global_public_key` as userdb attributes, you
 can base64 encode the original contents, such as PEM file. For example,
 
 .. code-block:: none
@@ -86,7 +86,7 @@ Modes Of Operation
 
 Mail crypt plugin can operate using **either** global keys or folder keys.
 Using both is not supported. To perform any encryption,
-:ref:`setting-plugin_mail_crypt_save_version` must be specified and non-zero.
+:dovecot_plugin:ref:`mail_crypt_save_version` must be specified and non-zero.
 
 Folder Keys
 -----------
@@ -95,9 +95,9 @@ In this mode, the user is generated a key pair, and each folder is generated a
 key pair, which is encrypted using the user's key pair. A user can have more
 than one key pair but only one can be active.
 
-:ref:`setting-plugin_mail_crypt_save_version` must be ``2``.
+:dovecot_plugin:ref:`mail_crypt_save_version` must be ``2``.
 
-:ref:`setting-plugin_mail_crypt_curve` must be set.
+:dovecot_plugin:ref:`mail_crypt_curve` must be set.
 
 :ref:`setting-mail_attribute_dict` must be set, as is is used to store the
 keys.
@@ -313,7 +313,7 @@ With folder keys, key sharing can be done to single user, or multiple users.
 When key is shared to single user, and the user has public key available, the
 folder key is encrypted to recipient's public key.
 
-If you have :ref:`setting-plugin_mail_crypt_acl_require_secure_key_sharing`
+If you have :dovecot_plugin:ref:`mail_crypt_acl_require_secure_key_sharing`
 enabled, you can't share the key to groups or someone with no public key.
 
 Decrypting Files Encrypted with mail-crypt plugin

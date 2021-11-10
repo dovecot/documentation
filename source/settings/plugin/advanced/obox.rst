@@ -12,38 +12,29 @@ Obox Advanced Settings
 Settings
 ========
 
-.. _plugin-obox-setting_metacache_bg_root_uploads:
-
-``metacache_bg_root_uploads``
------------------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: metacache_bg_root_uploads
+   :default: no
+   :plugin: obox
+   :values: @boolean
 
 By default, doing changes to folders (e.g. creating or renaming) uploads
 changes immediately to object storage. If this setting is enabled, the upload
 happens sometimes later (within
-:ref:`plugin-obox-setting_metacache_upload_interval`).
+:dovecot_plugin:ref:`metacache_upload_interval`).
 
 
-.. _plugin-obox-setting_metacache_disable_bundle_list_cache:
-
-``metacache_disable_bundle_list_cache``
----------------------------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: metacache_disable_bundle_list_cache
+   :default: no
+   :plugin: obox
+   :values: @boolean
 
 Disable caching bundle list.
 
 
-.. _plugin-obox-setting_metacache_disable_merging:
-
-``metacache_disable_merging``
------------------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: metacache_disable_merging
+   :default: no
+   :plugin: obox
+   :values: @boolean
 
 Disable index merging when opening root or mailbox indexes. This can be used
 to work around bugs in the merging code that cause crashes. Usually this
@@ -53,46 +44,37 @@ setting isn't set in dovecot.conf, but set via doveadm call:
 
   doveadm -o plugin/metacache_disable_merging=yes force-resync -u user@example '*'
 
-.. seealso:: :ref:`plugin-obox-setting_metacache_index_merging`
+.. seealso:: :dovecot_plugin:ref:`metacache_index_merging`
 
 
-.. _plugin-obox-setting_metacache_disable_secondary_indexes:
-
-``metacache_disable_secondary_indexes``
----------------------------------------
-
-.. versionadded:: v2.3.17
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: metacache_disable_secondary_indexes
+   :added: v2.3.17
+   :default: no
+   :plugin: obox
+   :values: @boolean
 
 Disable including secondary indexes into the user root bundle when using the
 virtual or virtual-attachments plugin (see
 :ref:`virtual plugin <virtual_plugin_obox_secondary_indexes>` and
-:ref:`virtual-attachments plugin<virtual_attachments_plugin_obox_secondary_indexes>`).
+:ref:`virtual-attachments plugin <virtual_attachments_plugin_obox_secondary_indexes>`).
 
 This setting can be used to exclude the virtual and virtual-attachments folders
 from the user root bundle in case any problems are encountered.
 
 
-.. _plugin-obox-setting_metacache_index_merging:
-
-``metacache_index_merging``
----------------------------
-
-.. versionadded:: v2.3.6
-
-- Default: ``v2``
-- Values:  :ref:`string`
-
-.. versionchanged:: v2.3.16 Changed default from v1 to v2
+.. dovecot_plugin:setting:: metacache_index_merging
+   :added: v2.3.6
+   :changed: v2.3.16 Changed default from v1 to v2
+   :default: v2
+   :plugin: obox
+   :values: @string
 
 Specifies the algorithm to use when merging folder indexes.
 
 ========== ===================================================================
 Algorithm  Description
 ========== ===================================================================
-``none``   Alias for :ref:`plugin-obox-setting_metacache_disable_merging`
+``none``   Alias for :dovecot_plugin:ref:`metacache_disable_merging`
 ``v1``     The old dsync-based algorithm, which can cause very inefficient
            behavior in some situations.
 ``v2``     The new algorithm designed specifically for this purpose of merging
@@ -100,27 +82,20 @@ Algorithm  Description
 ========== ===================================================================
 
 
-.. _plugin-obox-setting_metacache_max_parallel_requests:
-
-``metacache_max_parallel_requests``
------------------------------------
-
-- Default: ``10``
-- Values:  :ref:`uint`
+.. dovecot_plugin:setting:: metacache_max_parallel_requests
+   :default: 10
+   :plugin: obox
+   :values: @uint
 
 Maximum number of metacache read/write operations to do in parallel.
 
 
-.. _plugin-obox-setting_metacache_merge_max_uid_renumbers:
+.. dovecot_plugin:setting:: metacache_merge_max_uid_renumbers
+   :default: 100
+   :plugin: obox
+   :values: @uint
 
-``metacache_merge_max_uid_renumbers``
--------------------------------------
-
-- Default: ``100``
-- Values:  :ref:`uint`
-
-This is used only with :ref:`plugin-obox-setting_metacache_index_merging`
-= ``v2``.
+This is used only with :dovecot_plugin:ref:`metacache_index_merging` = ``v2``.
 
 If the merging detects that there are more than this many UIDs that are
 conflicting and would have to be renumbered, don't renumber any of them. This
@@ -131,14 +106,13 @@ The downside is that a caching IMAP client might become confused if it had
 previously seen different UIDs.
 
 
-.. _plugin-obox-setting_metacache_priority_weights:
-.. _plugin-obox-setting_metacache_size_weights:
+.. dovecot_plugin:setting:: metacache_priority_weights
+   :hdr_only: yes
+   :plugin: obox
 
-``metacache_priority_weights``
-------------------------------
-
-``metacache_size_weights``
-------------------------------
+.. dovecot_plugin:setting:: metacache_size_weights
+   :hdr_only: yes
+   :plugin: obox
 
 .. code-block:: none
 
@@ -229,24 +203,18 @@ The weight adjustment calculation is:
   * >=1 GB: ``+120``
 
 
-.. _plugin-obox-setting_metacache_socket_path:
-
-``metacache_socket_path``
--------------------------
-
-- Default: ``metacache``
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: metacache_socket_path
+   :default: metacache
+   :plugin: obox
+   :values: @string
 
 Path to communicate with metacache process.
 
 
-.. _plugin-obox-setting_metacache_userdb:
-
-``metacache_userdb``
---------------------
-
-- Default: ``metacache/metacache-users.db``
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: metacache_userdb
+   :default: metacache/metacache-users.db
+   :plugin: obox
+   :values: @string
 
 Path to a database which metacache process periodically writes to.
 
@@ -255,13 +223,10 @@ This database is read by metacache at startup to get the latest state.
 The path is relative to :ref:`setting-state_dir`.
 
 
-.. _plugin-obox-setting_obox_allow_inconsistency:
-
-``obox_allow_inconsistency``
-----------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_plugin:setting:: obox_allow_inconsistency
+   :default: no
+   :plugin: obox
+   :values: @boolean
 
 Even in case of object storage errors, try to allow accessing the emails as
 well as possible. This especially means that if the local metacache already
@@ -269,15 +234,12 @@ has a copy of the indexes, they can be used to provide access to user's emails
 even if the object storage is unavailable.
 
 
-.. _plugin-obox-setting_obox_allow_nonreproducible_uids:
+.. dovecot_plugin:setting:: obox_allow_nonreproducible_uids
+   :added: v2.3.6
+   :default: no
+   :plugin: obox
+   :values: @boolean
 
-``obox_allow_nonreproducible_uids``
------------------------------------
-
-.. versionadded:: v2.3.6
-
-- Default: ``no``
-- Values:  :ref:`boolean`
 
 Normally Dovecot attempts to make sure that IMAP UIDs aren't lost even if
 a backend crashes (or if user is moved to another backend without indexes first
@@ -288,13 +250,10 @@ IMAP clients to become confused, possibly even causing it delete wrong mails.
 Also FTS indexes may become inconsistent since they also rely on UIDs.
 
 
-.. _plugin-obox-setting_obox_autofix_storage:
-
-``obox_autofix_storage``
-------------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: obox_autofix_storage
+   :default: no
+   :plugin: obox
+   :values: @boolean
 
 If activated, when an unexpected 404 is found when retrieving a message from
 object storage, Dovecot will rescan the mailbox by listing its objects. If
@@ -304,13 +263,10 @@ the message is dropped from the index. The message object is not removed from
 the object storage.
 
 
-.. _plugin-obox-setting_obox_avoid_cached_vsize:
-
-``obox_avoid_cached_vsize``
----------------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: obox_avoid_cached_vsize
+   :default: no
+   :plugin: obox
+   :values: @boolean
 
 Avoid getting the email's size from the cache whenever the email body is
 opened anyway. This avoid unnecessary errors if a lot of the vsizes are wrong.
@@ -321,39 +277,29 @@ This setting was mainly useful due to earlier bugs that caused the vsize to
 be wrong in many cases.
 
 
-.. _plugin-obox-setting_obox_disable_fast_copy:
-
-``obox_disable_fast_copy``
---------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_plugin:setting:: obox_disable_fast_copy
+   :default: no
+   :plugin: obox
+   :values: @boolean
 
 Workaround for object storages with a broken copy operation. Instead perform
 copying by reading and writing the full object.
 
 
-.. _plugin-obox-setting_obox_dont_use_object_ids:
+.. dovecot_plugin:setting:: obox_dont_use_object_ids
+   :added: v2.3.0
+   :default: no
+   :plugin: obox
+   :values: @boolean
 
-``obox_dont_use_object_ids``
-----------------------------
-
-.. versionadded:: v2.3.0
-
-- Default: ``no``
-- Values:  :ref:`boolean`
-
-This is the reverse of :ref:`plugin-obox-setting_obox_use_object_ids` with
+This is the reverse of :dovecot_plugin:ref:`obox_use_object_ids` with
 newer Dovecot versions. See its description for more details.
 
 
-.. _plugin-obox-setting_obox_fetch_lost_mails_as_empty:
-
-``obox_fetch_lost_mails_as_empty``
-----------------------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: obox_fetch_lost_mails_as_empty
+   :default: no
+   :plugin: obox
+   :values: @boolean
 
 Cassandra: `Object exists in dict, but not in storage` errors will be handled
 by returning empty emails to the IMAP client. The tagged FETCH response will
@@ -362,50 +308,38 @@ be ``OK`` instead of ``NO``.
 See :ref:`storage_workarounds` for more details.
 
 
-.. _plugin-obox-setting_obox_lost_mailbox_prefix:
-
-``obox_lost_mailbox_prefix``
-----------------------------
-
-- Default: ``recovered-lost-folder-``
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: obox_fetch_lost_mailbox_prefix
+   :default: recovered-lost-folder-
+   :plugin: obox
+   :values: @string
 
 If folder name is lost entirely due to lost index files, generate a name for
 the folder using this prefix.
 
 
-.. _plugin-obox-setting_obox_max_rescan_mail_count:
-
-``obox_max_rescan_mail_count``
-------------------------------
-
-- Default: ``10``
-- Values:  :ref:`uint`
+.. dovecot_plugin:setting:: obox_max_rescan_mail_count
+   :default: 10
+   :plugin: obox
+   :values: @uint
 
 Upload indexes after this many mails have been saved since the last upload.
 A higher value reduces the number of uploads, but increases the number of
 mail downloads to fill the caches after a backend crash.
 
 
-.. _plugin-obox-setting_obox_no_pop3_backend_uidls:
-
-``obox_no_pop3_backend_uidls``
-------------------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: obox_no_pop3_backend_uidls
+   :default: no
+   :plugin: obox
+   :values: @boolean
 
 Enable if there are no migrated POP3 UIDLs.  If enabled, don't try to look
 up UIDLs in any situation.
 
 
-.. _plugin-obox-setting_obox_size_missing_action:
-
-``obox_size_missing_action``
-----------------------------
-
-- Default: ``warn-read``
-- Values:  ``warn-read``, ``read`` or ``stat``
+.. dovecot_plugin:setting:: obox_size_missing_action
+   :default: warn-read
+   :plugin: obox
+   :values: read, stat, warn-read
 
 This setting controls what should be done when the mail object is missing the
 size metadata.
@@ -423,28 +357,21 @@ Value          Description
 ============== ===============================================================
 
 
-.. _plugin-obox-setting_obox_use_object_ids:
-
-``obox_use_object_ids``
------------------------
-
-.. versionremoved:: v2.3.0
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_plugin:setting:: obox_use_object_ids
+   :default: no
+   :plugin: obox
+   :removed: v2.3.0
+   :values: @boolean
 
 Access objects directly via their IDs instead of by paths, if possible. This
 can bypass index lookups with Scality CDMI and fs-dictmap/Cassandra. This
 setting was removed from v2.3 and made the default. (Although there is
-:ref:`plugin-obox-setting_obox_dont_use_object_ids` to disable it if really
-needed.)
+:dovecot_plugin:ref:`obox_dont_use_object_ids` to disable it if really needed.)
 
-.. _plugin-obox-setting_obox_username:
 
-``obox_username``
------------------
-
-- Default: :ref:`setting-mail_location`
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: obox_username
+   :default: @setting-mail_location
+   :plugin: obox
+   :values: @string
 
 Overrides the obox username in storage.

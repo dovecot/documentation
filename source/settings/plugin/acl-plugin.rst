@@ -9,13 +9,9 @@ acl plugin
 Settings
 ^^^^^^^^
 
-.. _plugin-acl-setting_acl:
-
-``acl``
--------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: acl
+   :plugin: acl
+   :values: @string
 
 The ACL driver to use. This setting is **REQUIRED** - if empty, the acl plugin
 is disabled.
@@ -58,15 +54,11 @@ Example:
   }
 
 
-.. _plugin-acl-setting_acl_defaults_from_inbox:
-
-``acl_defaults_from_inbox``
----------------------------
-
-.. versionadded:: 2.2.2
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: acl_defaults_from_inbox
+   :added: v2.2.2
+   :default: no
+   :plugin: acl
+   :values: @boolean
 
 If yes, the default ACLs for private and shared namespaces (but not public
 namespaces) are taken from the INBOX. This means that giving somebody access
@@ -74,27 +66,19 @@ to your INBOX will give them access to all your other mailboxes as well,
 unless the specific mailboxes' ACLs override the INBOX's.
 
 
-.. _plugin-acl-setting_acl_globals_only:
-
-``acl_globals_only``
---------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
-
-.. versionadded:: 2.2.31
+.. dovecot_plugin:setting:: acl_globals_only
+   :added: v2.2.31
+   :default: no
+   :plugin: acl
+   :values: @boolean
 
 If enabled, don't try to find ``dovecot-acl`` files from mailbox directories.
 This reduces unnecessary disk I/O when only global ACLs are used.
 
 
-.. _plugin-acl-setting_acl_groups:
-
-``acl_groups``
---------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: acl_groups
+   :plugin: acl
+   :values: @string
 
 A comma-separated string which contains all the groups the user belongs to.
 
@@ -106,15 +90,10 @@ other users none. Mailboxes in public namespaces don't have owners, so by
 default no one can access them.
 
 
-.. _plugin-acl-setting-acl_ignore_namespace:
-
-``acl_ignore_namespace``
-------------------------
-
-.. versionadded:: 2.3.15
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: acl_ignore_namespace
+   :added: v2.3.15
+   :plugin: acl
+   :values: @string
 
 Ignore ACLs entirely for the given namespace.
 
@@ -132,13 +111,9 @@ Example:
   }
 
 
-.. _plugin-acl-setting-acl_shared_dict:
-
-``acl_shared_dict``
--------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: acl_shared_dict
+   :plugin: acl
+   :values: @string
 
 A shared mailbox dictionary that defines which users may LIST mailboxes shared
 by other users.
@@ -157,10 +132,9 @@ Example:
 .. seealso:: :ref:`dict`
 
 
-.. _plugin-acl-setting_acl_user:
-
-``acl_user``
-------------
+.. dovecot_plugin:setting:: acl_user
+   :plugin: acl
+   :values: @string
 
 - Default: <empty>
 - Values:  :ref:`string`
@@ -170,9 +144,8 @@ See :ref:`authentication-master_users_acls`.
 See :ref:`setting-auth_master_user_separator` for the format of this setting. 
 
 
-.. _plugin-acl-setting_master_user:
+.. dovecot_plugin:setting:: master_user
+   :plugin: acl
+   :values: @string
 
-``master_user``
----------------
-
-See :ref:`plugin-acl-setting_acl_user`.
+See :dovecot_plugin:ref:`acl_user`.

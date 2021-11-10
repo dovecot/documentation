@@ -1,8 +1,8 @@
 .. _mail_cache_settings:
 
-=============================
+===================
 Mail Cache Settings
-=============================
+===================
 
 Dovecot caches the mail headers and other fields to dovecot.index.cache files automatically based on what the IMAP client uses. This is a per-folder decision. This works generally well for newly created folders, but not so well during migration, because Dovecot doesn't yet known which fields need to be cached. So Dovecot needs to be told what to initially add to dovecot.index.cache while mails are being saved. This can be useful even after migration. For example a user might normally use their mobile app IMAP client, but once a few months they would login to the webmail. Dovecot would normally preserve the fields used by the mobile IMAP client, but drop the extra fields used only by webmail after a month. This might not be wanted. This can be configured with:
 
@@ -50,11 +50,11 @@ Fields
    dovecot.index)
  * ``size.virtual``: Virtual message size (line feeds counted as CRLFs). This is
    also often stored in dovecot.index file (especially when using
-   :ref:`plugin-quota-setting_quota_vsizes` = yes).
+   :dovecot_plugin:ref:`quota_vsizes` = ``yes``).
  * ``size.physical``: Physical message size (line feeds exactly as they are
    stored in the stored mail). Note that the size is of the mail as plaintext,
    i.e. after decryption/compression. This is typically used by quota plugin if
-   :ref:`plugin-quota-setting_quota_vsizes` = no).
+   :dovecot_plugin:ref:`quota_vsizes` = ``no``).
  * ``imap.bodystructure``: IMAP BODYSTRUCTURE response, which describes what
    the message's MIME structure looks like.
  * ``imap.body``: IMAP BODY response. This is the short version of

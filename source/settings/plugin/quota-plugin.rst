@@ -9,15 +9,13 @@ quota-plugin
 Settings
 ========
 
-.. _plugin-quota-setting_quota:
+.. dovecot_plugin:setting:: quota
+   :plugin: quota
+   :values: @string
 
-``quota``
----------
+Quota root configuration has the following syntax:
 
-- Default: <empty>
-- Values:  :ref:`string`
-
-Quota root configuration has the following syntax::
+.. code-block:: none
 
   quota = <backend>[:<quota root name>[:<backend args>]]
 
@@ -54,13 +52,9 @@ If you want to specify multiple backend arguments, separate them with ':'
 See :ref:`quota_configuration_root` for additional configuration information.
 
 
-.. _plugin-quota-setting_quota_exceeded_message:
-
-``quota_exceeded_message``
---------------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: quota_exceeded_message
+   :plugin: quota
+   :values: @string
 
 The message specified here is passed on to a user who goes over quota.
 
@@ -79,51 +73,41 @@ Example Setting:
   }
 
 
-.. _plugin-quota-setting_quota_grace:
-
-``quota_grace``
----------------
-
-- Default: ``10%%``
-- Values:  :ref:`string` and :ref:`size`
+.. dovecot_plugin:setting:: quota_grace
+   :default: 10%%
+   :plugin: quota
+   :values: @string, @size
 
 If set, allows message deliveries to exceed quota by this value.
 
 See :ref:`quota_configuration_grace` for additional configuration information.
 
 
-.. _plugin-quota-setting_quota_max_mail_size:
-
-``quota_max_mail_size``
------------------------
-
-.. versionadded:: v2.2.29
-
-- Default: ``0`` (unlimited)
-- Values:  :ref:`uint`
+.. dovecot_plugin:setting:: quota_max_mail_size
+   :added: v2.2.29
+   :default: 0
+   :plugin: quota
+   :values: @uint
 
 The maximum message size that is allowed to be saved (e.g. by LMTP, IMAP
 APPEND or doveadm save).
+
+``0`` means unlimited.
 
 See :ref:`quota_configuration_max_mail_size` for additional configuration
 information.
 
 
-.. _plugin-quota-setting_quota_over_flag:
-
-``quota_over_flag``
--------------------
-
-.. versionadded:: v2.2.16
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: quota_over_flag
+   :added: v2.2.16
+   :plugin: quota
+   :values: @string
 
 An identifier that indicates whether the overquota-flag is active for a user.
 
 This identifier is compared against
-:ref:`plugin-quota-setting_quota_over_flag_value` to determine
-if the overquota-flag should be determine to be set for the user.
+:dovecot_plugin:ref:`quota_over_flag_value` to determine if the overquota-flag
+should be determine to be set for the user.
 
 Usually, this value will be loaded via userdb.
 
@@ -131,15 +115,11 @@ See :ref:`quota_configuration_overquota_flag` for additional configuration
 information.
 
 
-.. _plugin-quota-setting_quota_over_flag_lazy_check:
-
-``quota_over_flag_lazy_check``
-------------------------------
-
-.. versionadded:: v2.2.25
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: quota_over_flag_lazy_check
+   :added: v2.2.25
+   :default: no
+   :plugin: quota
+   :values: @boolean
 
 If enabled, overquota-flag is checked only when current quota usage is going
 to already be checked.
@@ -148,18 +128,13 @@ Can be used to optimize the overquota-flag check in case it is running too
 slowly.
 
 
-.. _plugin-quota-setting_quota_over_flag_value:
+.. dovecot_plugin:setting:: quota_over_flag_value
+   :added: v2.2.16
+   :plugin: quota
+   :values: @string
 
-``quota_over_flag_value``
--------------------------
-
-.. versionadded:: v2.2.16
-
-- Default: <empty>
-- Values:  :ref:`string`
-
-The search string to match against :ref:`plugin-quota-setting_quota_over_flag`
-to determine if the overquota-flag is set for the user.
+The search string to match against :dovecot_plugin:ref:`quota_over_flag` to
+determine if the overquota-flag is set for the user.
 
 Wildcards can be used in a generic way, e.g. ``*yes`` or ``*TRUE*``
 
@@ -167,23 +142,20 @@ See :ref:`quota_configuration_overquota_flag` for additional configuration
 information.
 
 
-.. _plugin-quota-setting_quota_over_script:
-
-``quota_over_script``
----------------------
-
-.. versionadded:: v2.2.16
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: quota_over_script
+   :added: v2.2.16
+   :plugin: quota
+   :values: @string
 
 The service script to execute if overquota-flag is wrong. Configured the same
-as :ref:`plugin-quota-setting_quota_warning` scripts.
+as :dovecot_plugin:ref:`quota_warning` scripts.
 
-The current :ref:`plugin-quota-setting_quota_over_flag` value is appended
-as the last parameter.
+The current :dovecot_plugin:ref:`quota_over_flag` value is appended as the
+last parameter.
 
-Example::
+Example:
+
+.. code-block:: none
 
   plugin {
     quota_over_script = quota-warning mismatch %u
@@ -192,20 +164,18 @@ Example::
 .. IMPORTANT::
 
   obox installations using ``quota_over_script`` must currently also have
-  :ref:`plugin-quota-setting_quota_over_flag_lazy_check` enabled. Otherwise
-  the ``quota_over_flag`` checking may cause a race condition with metacache
+  :dovecot_plugin:ref:`quota_over_flag_lazy_check` enabled. Otherwise the
+  ``quota_over_flag`` checking may cause a race condition with metacache
   cleaning, which may end up losing folder names or mail flags within folders.
 
 
-.. _plugin-quota-setting_quota_rule:
+.. dovecot_plugin:setting:: quota_rule
+   :plugin: quota
+   :values: @string
 
-``quota_rule``
---------------
+Quota rule configuration has the following syntax:
 
-- Default: <empty>
-- Values:  :ref:`string`
-
-Quota rule configuration has the following syntax::
+.. code-block:: none
 
   quota_rule = <mailbox name>:<limit configuration>
 
@@ -260,40 +230,28 @@ backend. It means you can have the quota in Maildir++ format (e.g.
 See :ref:`quota_configuration_root` for additional configuration information.
 
 
-.. _plugin-quota-setting_quota_set:
-
-``quota_set``
-----------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: quota_set
+   :plugin: quota
+   :values: @string
 
 A dictionary string where your quota limit exists and can be modified.
 
 See :ref:`quota_configuration_admin` for additional configuration information.
 
 
-.. _plugin-quota-setting_quota_vsizes:
-
-``quota_vsizes``
-----------------
-
-.. versionadded:: v2.2.19
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: quota_vsizes
+   :added: v2.2.19
+   :default: no
+   :plugin: quota
+   :values: @boolean
 
 With this setting, virtual sizes rather than physical sizes are used for
 quota-related calculations.
 
 
-.. _plugin-quota-setting_quota_warning:
-
-``quota_warning``
------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: quota_warning
+   :plugin: quota
+   :values: @string
 
 You can configure Dovecot to run an external command when user's quota exceeds
 a specified limit. Note that the warning is ONLY executed at the exact time
@@ -306,7 +264,7 @@ Quota warning configuration has the following syntax::
   quota_warning = <limit configuration> <quota-warning socket name> <parameters>
 
 ``limit_configuration`` is almost exactly same as for
-:ref:`plugin-quota-setting_quota`, with the exception of adding ``-`` before
+:dovecot_plugin:ref:`quota`, with the exception of adding ``-`` before
 the value for "reverse" warnings where the script is called when quota drops
 below the value. Usually you want to use percents instead of absolute limits.
 

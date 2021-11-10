@@ -40,10 +40,11 @@ Configuration
 -------------
 
 Since v2.3.1 you can disable replication for a user by providing
-``noreplicate`` :ref:`user database field <authentication-user_database_extra_fields>`. See :ref:`plugin-doveadm-dsync-setting_noreplicate`.
+``noreplicate`` :ref:`user database field <authentication-user_database_extra_fields>`. See :dovecot_plugin:ref:`noreplicate`.
 
 Another way to disable replication for some users is to return
-:ref:`plugin-replication-setting_mail_replica` field from userdb for users you want to replicate.
+:dovecot_plugin:ref:`mail_replica` field from userdb for users you want to
+replicate.
 
 Make sure that user listing is configured for your :ref:`userdb <authentication-user_database>`. This is
 required by replication to find the list of users that are periodically
@@ -291,10 +292,10 @@ specific priority. The same user can only be in one (or none) of these
 queues:
 
 -  Queued 'sync' requests: This priority is used only for mail saves if
-   :ref:`plugin-replication-setting_replication_sync_timeout` setting is used.
+   :dovecot_plugin:ref:`replication_sync_timeout` setting is used.
 
 -  Queued 'high' requests: This priority is used only for mail saves if
-   :ref:`plugin-replication-setting_replication_sync_timeout` setting is not
+   :dovecot_plugin:ref:`replication_sync_timeout` setting is not
    used, or if the sync request timed out.
 
 -  Queued 'low' requests: This priority is used for everything else

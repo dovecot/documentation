@@ -27,7 +27,7 @@ quota_rule to set per-user quota limits or also plugin-settings).
 
 * ``user``: User can be overriden (normally set in passdb, see
   :ref:`authentication-password_databases`).
-* ``noreplicate``: See :ref:`plugin-doveadm-dsync-setting_noreplicate`.
+* ``noreplicate``: See :dovecot_plugin:ref:`noreplicate`.
 
 The extra fields are also passed to :ref:`post_login_scripting`.
 

@@ -119,7 +119,7 @@ accordingly:
 
 
 The :ref:`acl <acl>` plugin must be told to ignore the shared namespace and all
-its children using the :ref:`plugin-acl-setting-acl_ignore_namespace` setting.
+its children using the :dovecot_plugin:ref:`acl_ignore_namespace` setting.
 
 The shared dictionary needs to be accessible from all the backends. The
 possibilities for it are:

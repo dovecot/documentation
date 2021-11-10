@@ -16,8 +16,8 @@ Settings
 
 See :ref:`plugin-fts-dovecot` for setting information.
 
-The :ref:`plugin-fts-dovecot-setting-fts_dovecot_fs` setting defines the
-location for the fts indexes.
+The :dovecot_plugin:ref:`fts_dovecot_fs` setting defines the location for the
+fts indexes.
 
 See :ref:`plugin-fts` for generic FTS settings.
 
@@ -83,8 +83,11 @@ means quite a lot of write and delete operations. To optimize this, "fts-cache"
 was implemented for write caching. The fts-cache causes the last triplet to
 be kept in local metacache until one of the following happens:
 
- * fts.L file's size grows larger than :ref:`plugin-fts-dovecot-setting-fts_dovecot_min_merge_l_file_size` (default: 128 kB)
- * The triplet has at least :ref:`plugin-fts-dovecot-setting-fts_dovecot_mail_flush_interval` number of mails. Note that the default is 0, which means this check isn't done at all.
+ * fts.L file's size grows larger than
+   :dovecot_plugin:ref:`fts_dovecot_min_merge_l_file_size` (default: 128 kB)
+ * The triplet has at least
+   :dovecot_plugin:ref:`fts_dovecot_mail_flush_interval` number of mails. Note
+   that the default is 0, which means this check isn't done at all.
  * Metacache is flushed
 
 FTS is commonly also configured to use :ref:`fscache`, which caches reading

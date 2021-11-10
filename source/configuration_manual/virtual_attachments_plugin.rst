@@ -71,4 +71,4 @@ metacache is cleaned.
 The virtual-attachments indexes & cache will be stored in the user root bundle.
 
 It is possible to disable storing virtual indexes in the user root bundle using
-:ref:`plugin-obox-setting_metacache_disable_secondary_indexes`.
+:dovecot_plugin:ref:`metacache_disable_secondary_indexes`.

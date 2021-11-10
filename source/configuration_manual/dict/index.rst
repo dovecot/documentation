@@ -332,7 +332,7 @@ For example when using dict for a per-user quota value the map looks like:
     '$value') ON DUPLICATE KEY UPDATE quota_bytes='$value'``
 
 You can also access multiple SQL fields. For example
-:ref:`acl_shared_dict <plugin-acl-setting-acl_shared_dict>` can contain:
+:dovecot_plugin:ref:`acl_shared_dict` can contain:
 
 .. code-block:: none
 

@@ -2350,8 +2350,8 @@ obox_index_merge_skip_uid_renumbering
 
 Index merging should have renumbered UIDs due to conflicts, but there were
 too many of them (more than
-:ref:`plugin-obox-setting_metacache_merge_max_uid_renumbers`), so no
-renumbering was done after all.
+:dovecot_plugin:ref:`metacache_merge_max_uid_renumbers`), so no renumbering
+was done after all.
 
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
@@ -2877,7 +2877,8 @@ fts_dovecot_too_many_triplets
 
 .. versionadded:: 2.3.15
 
-Event emitted when number of triplets exceeds the limit defined by :ref:`plugin-fts-dovecot-setting-fts_dovecot_max_triplets`.
+Event emitted when number of triplets exceeds the limit defined by
+:dovecot_plugin:ref:`fts_dovecot_max_triplets`.
 
 +---------------+--------------------------------------------------+
 | Field         | Description                                      |

@@ -5,8 +5,7 @@ fs-compress plugin
 ==================
 
 It can be used by any of the settings using the FS drivers (e.g.
-:ref:`plugin-obox-setting_obox_fs`,
-:ref:`plugin-fts-dovecot-setting-fts_dovecot_fs`, etc.)
+:dovecot_plugin:ref:`obox_fs`, :dovecot_plugin:ref:`fts_dovecot_fs`, etc.)
 
 The exact location where to set it in the FS driver string depends on what
 other FS drivers are being used.
@@ -30,11 +29,11 @@ The fs-compress configuration format is:
 
   compress:<zlib_save>:<zlib_save_level>
 
-See :ref:`plugin-zlib-setting_zlib_save` for information on available
-compression algorithms.
+See :dovecot_plugin:ref:`zlib_save` for information on available compression
+algorithms.
 
-See :ref:`plugin-zlib-setting_zlib_save_level` for information on
-compression levels and defaults.
+See :dovecot_plugin:ref:`zlib_save_level` for information on compression
+levels and defaults.
 
 Optional compression
 --------------------

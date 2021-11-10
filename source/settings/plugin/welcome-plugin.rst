@@ -11,13 +11,9 @@ welcome plugin
 Settings
 ========
 
-.. _plugin-welcome-setting_welcome_script:
-
-``welcome_script``
-------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: welcome_script
+   :plugin: welcome
+   :values: @string
 
 The script to run when the user logs in for the first time (that is, when this
 user's INBOX is created). This must be set or else the plugin will not be
@@ -32,13 +28,10 @@ Example:
   }
 
 
-.. _plugin-welcome-setting_welcome_wait:
-
-``welcome_wait``
-----------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: welcome_wait
+   :default: no
+   :plugin: welcome
+   :values: @boolean
 
 If enabled, wait for the script to finish.  By default, the welcome script
 is run asynchronously.

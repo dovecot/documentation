@@ -48,7 +48,7 @@ You probably also want to hide it with an :ref:`ACL <acl>` from the user, if
 recovery is only expected to be an action performed by an admin/operator.
 
 To move to a mailbox, do NOT add a trailing delimiter to the
-:ref:`plugin-lazy-expunge-setting-lazy_expunge` setting.
+:dovecot_plugin:ref:`lazy_expunge` setting.
 
 Example configuration:
 
@@ -97,7 +97,7 @@ exists in the expunge namespace, the contents are merged.
 To move to a namespace, you MUST add a trailing delimiter to the
 ``lazy_expunge`` argument.  Example: if the namespace delimiter is ``/``,
 and you want to move to the ``.EXPUNGED`` namespace, then the
-:ref:`plugin-lazy-expunge-setting-lazy_expunge` setting should be set to
+:dovecot_plugin:ref:`lazy_expunge` setting should be set to
 ``.EXPUNGED/``.
 
 Example configuration:
@@ -170,12 +170,12 @@ from the original mailbox.  Deleting later from Trash would result in two
 copies of the same message in the lazy expunge storage.
 
 With v2.2+ you can enable
-:ref:`plugin-lazy-expunge-setting-lazy_expunge_only_last_instance` to copy
+:dovecot_plugin:ref:`lazy_expunge_only_last_instance` to copy
 only the last instance to the expunge storage.  This ensures that only a single
 copy of a message will appear in the expunge storage.
 
 Note that this feature only works with certain storage setups; see
-:ref:`plugin-lazy-expunge-setting-lazy_expunge_only_last_instance` for the
+:dovecot_plugin:ref:`lazy_expunge_only_last_instance` for the
 list of supported storages.
 
 Quota
@@ -225,8 +225,8 @@ Obox Settings
 =============
 
 Lazy expunge allows reduction of Cassandra dictmap lookups by removing the
-lockdir setting and enabling the
-:ref:`plugin-obox-setting_obox_track_copy_flags` setting.
+lockdir setting and enabling the :dovecot_plugin:ref:`obox_track_copy_flags`
+setting.
 
 .. code-block:: none
 

@@ -25,7 +25,7 @@ See :ref:`plugin-acl`.
 Groups
 ^^^^^^
 
-See :ref:`plugin-acl-setting_acl_groups` for setting information.
+See :dovecot_plugin:ref:`acl_groups` for setting information.
 
 The ``acl_groups`` setting can be dynamically set via
 :ref:`authentication-user_database_extra_fields`.
@@ -98,7 +98,7 @@ child's ACLs stay the same. There is currently no support for ACL inheritance.
   currently these default ACLs are used only when creating new mailboxes, they
   aren't used for mailboxes without ACLs.
 
-* See :ref:`plugin-acl-setting_acl_defaults_from_inbox`.
+* See :dovecot_plugin:ref:`acl_defaults_from_inbox`.
 
 .. NOTE::
 

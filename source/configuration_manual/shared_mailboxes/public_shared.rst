@@ -185,5 +185,5 @@ After this you have to place ``dovecot-acl`` files in every
 mailbox/folder below ``/var/mail/public`` with rights for that folder
 (e.g. ``user=someone lr``).
 
-The :ref:`plugin-acl-setting-acl_shared_dict` setting is not relevant for
+The :dovecot_plugin:ref:`acl_shared_dict` setting is not relevant for
 public mailboxes (only for shared).

@@ -9,30 +9,25 @@ mail-crypt plugin
 Settings
 ========
 
-.. _setting-plugin_mail_crypt_acl_require_secure_key_sharing:
-
-``mail_crypt_acl_require_secure_key_sharing``
----------------------------------------------
-
-- Default: ``0``
-- Values:  :ref:`boolean`
+.. dovecot_plugin:setting:: mail_crypt_acl_require_secure_key_sharing
+   :default: 0
+   :plugin: mail-crypt
+   :values: @boolean
 
 If true (``1`` or ``y``), require secure key sharing.
 
 
-.. _setting-plugin_mail_crypt_curve:
-
-``mail_crypt_curve``
---------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: mail_crypt_curve
+   :plugin: mail-crypt
+   :values: @string
 
 Defines the elliptic curve to use for key generation.
 
 Any valid curve supported by the underlying cryptographic library is allowed.
 
-Example::
+Example:
+
+.. code-block:: none
 
   plugin {
     mail_crypt_curve = secp521r1
@@ -48,24 +43,9 @@ folder-specific key pair is generated. The latter is encrypted by means of the
 user's key pair.
 
 
-.. _setting-plugin_mail_crypt_global_public_key:
-
-``mail_crypt_global_public_key``
---------------------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
-
-Public key to encrypt files. Key must be in PEM format, using pkey format.
-
-
-.. _setting-plugin_mail_crypt_global_private_key:
-
-``mail_crypt_global_private_key``
----------------------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: mail_crypt_global_private_key
+   :plugin: mail-crypt
+   :values: @string
 
 Private key(s) to decrypt files. Key(s) must be in PEM format, using pkey
 format.
@@ -74,48 +54,40 @@ You can define multiple keys by appending an increasing number to the setting
 label.
 
 
-.. _setting-plugin_mail_crypt_private_key:
+.. dovecot_plugin:setting:: mail_crypt_global_public_key
+   :plugin: mail-crypt
+   :values: @string
 
-``mail_crypt_private_key``
---------------------------
+Public key to encrypt files. Key must be in PEM format, using pkey format.
 
-- Default: <empty>
-- Values:  :ref:`string`
+
+.. dovecot_plugin:setting:: mail_crypt_private_key
+   :plugin: mail-crypt
+   :values: @string
 
 Private key to decrypt user's master key. Key must be in PEM format, using
 pkey format.
 
 
-.. _setting-plugin_mail_crypt_private_password:
-
-``mail_crypt_private_password``
--------------------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_plugin:setting:: mail_crypt_private_password
+   :plugin: mail-crypt
+   :values: @string
 
 Password to decrypt user's master key or environment private key.
 
 
-.. _setting-plugin_mail_crypt_require_encrypted_user_key:
-
-``mail_crypt_require_encrypted_user_key``
------------------------------------------
-
-- Default: <empty>
-- Values:  <existence> (if setting exists, it is evaluated as true)
+.. dovecot_plugin:setting:: mail_crypt_require_encrypted_user_key
+   :plugin: mail-crypt
+   :values: !<existence> (if setting exists it is evaluated as true)
 
 If true (setting exists with any value), require user key encryption
 with password.
 
 
-.. _setting-plugin_mail_crypt_save_version:
-
-``mail_crypt_save_version``
----------------------------
-
-- Default: ``2``
-- Values:  :ref:`uint`
+.. dovecot_plugin:setting:: mail_crypt_save_version
+   :default: 2
+   :plugin: mail-crypt
+   :values: @uint
 
 Sets the version of the mail_crypt compatibility desired.
 
