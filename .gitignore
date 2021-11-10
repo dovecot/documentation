@@ -5,3 +5,4 @@
 .DS.Store
 .DS_Store
 *.html
+__pycache__
