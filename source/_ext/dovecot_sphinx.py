@@ -28,6 +28,11 @@ class DovecotSettingDirective(ObjectDescription):
     signode += addnodes.desc_name(text=sig)
     return sig
 
+  def add_target_and_index(self, name_cls, sig, signode):
+    if 'hdr_only' in self.options and self.options.get('hdr_only') == 'no_index':
+      return
+    self.add_target_and_index_dovecot(sig, signode)
+
   def _parse_rst_txt(self, txt):
     node = nodes.Element()
     source, line = self.state_machine.get_source_and_line()
@@ -98,7 +103,7 @@ class DovecotSettingIndex(Index):
 
     # Sort the list of settings in alphabetical order
     settings = self.domain.get_objects()
-    settings = sorted(settings, key=lambda plugin_setting: plugin_setting[0])
+    settings = sorted(settings, key=lambda setting: setting[0])
 
     for name, dispname, typ, docname, anchor, _ in settings:
       content[dispname[0].lower()].append(
@@ -113,6 +118,9 @@ class DovecotSettingDomain(Domain):
 
   roles = {
       'ref': XRefRole()
+  }
+  initial_data = {
+      'settings': {},
   }
 
   def resolve_xref(self, env, fromdocname, builder, typ, target, node,
@@ -130,102 +138,111 @@ class DovecotSettingDomain(Domain):
     else:
       return None
 
+  def get_full_qualified_name(self, node):
+    return '{}.{}'.format(self.set_prefix, node.arguments[0])
+
+  def get_objects(self):
+    for name, (docname, anchor) in list(self.data['settings'].items()):
+      # name, dispname, type, docname, anchor, priority
+      yield name, name, self.label, docname, anchor, 0
+
+  def add_setting(self, signature, anchor):
+      self.data['settings'][signature] = (self.env.docname, anchor)
+
 
 class DovecotPluginSettingDirective(DovecotSettingDirective):
 
-  def handle_signature(self, sig, signode):
-    signode += addnodes.desc_name(text=sig)
-    return sig
-
-  def add_target_and_index(self, name_cls, sig, signode):
-    anchor = 'plugin_setting-{}-{}'.format(self.options.get('plugin').strip(),
-                                           sig)
-    signode['ids'].append(anchor)
+  def add_target_and_index_dovecot(self, sig, signode):
     dplugin = self.env.get_domain('dovecot_plugin')
+    anchor = '{}-{}-{}'.format(dplugin.set_prefix,
+                               self.options.get('plugin').strip(), sig)
+    signode['ids'].append(anchor)
     dplugin.add_setting(sig, anchor)
 
 class DovecotPluginSettingIndex(DovecotSettingIndex):
 
   name = 'plugin_setting'
-  localname = 'Dovecot Plugin Setting Index'
-  shortname = 'Plugin Setting'
+  localname = 'Dovecot Plugin Settings Index'
+  shortname = 'Plugin'
 
 class DovecotPluginSettingDomain(DovecotSettingDomain):
 
   name = 'dovecot_plugin'
-  label = 'Dovecot Plugin Sphinx Extensions'
+  label = 'Dovecot Plugin Settings'
+  set_prefix = 'plugin_setting'
+
   directives = {
       'setting': DovecotPluginSettingDirective
   }
   indices = {
       DovecotPluginSettingIndex
   }
-  initial_data = {
-      'plugin_settings': [],
-  }
-
-  def get_full_qualified_name(self, node):
-    return '{}.{}'.format('plugin_setting', node.arguments[0])
-
-  def get_objects(self):
-    for obj in self.data['plugin_settings']:
-      yield(obj)
-
-  def add_setting(self, signature, anchor):
-      name = '{}.{}'.format('plugin_setting', signature)
-
-      self.data['plugin_settings'].append(
-        (name, signature, 'Plugin Setting', self.env.docname, anchor, 0))
 
 
 class DovecotCoreSettingDirective(DovecotSettingDirective):
 
-  def add_target_and_index(self, name_cls, sig, signode):
-    if 'hdr_only' in self.options and self.options.get('hdr_only') == 'no_index':
-      return
+  """Plugin information is ignored in this class, for now"""
 
-    anchor = 'setting-{}'.format(sig)
+  def add_target_and_index_dovecot(self, sig, signode):
+    dcore = self.env.get_domain('dovecot_core')
+    anchor = '{}-{}'.format(dcore.set_prefix, sig)
     signode['ids'].append(anchor)
-    dplugin = self.env.get_domain('dovecot_core')
-    dplugin.add_setting(sig, anchor)
+    dcore.add_setting(sig, anchor)
 
 class DovecotCoreSettingIndex(DovecotSettingIndex):
 
   name = 'core_setting'
-  localname = 'Dovecot Core Setting Index'
-  shortname = 'Setting'
+  localname = 'Dovecot Core Settings Index'
+  shortname = 'Core'
 
 class DovecotCoreSettingDomain(DovecotSettingDomain):
 
   name = 'dovecot_core'
-  label = 'Dovecot Core Settings Domain'
+  label = 'Dovecot Core Settings'
+  set_prefix = 'core_setting'
+
   directives = {
       'setting': DovecotCoreSettingDirective
   }
   indices = {
       DovecotCoreSettingIndex
   }
-  initial_data = {
-      'core_settings': [],
+
+
+class PigeonholeSettingDirective(DovecotCoreSettingDirective):
+
+  """Plugin information is ignored in this class, for now"""
+
+  def add_target_and_index_dovecot(self, sig, signode):
+    p = self.env.get_domain('pigeonhole')
+    anchor = '{}-{}'.format(p.set_prefix, sig)
+    signode['ids'].append(anchor)
+    p.add_setting(sig, anchor)
+
+class PigeonholeSettingIndex(DovecotSettingIndex):
+
+  name = 'pigeonhole_setting'
+  localname = 'Dovecot Pigeonhole Settings Index'
+  shortname = 'Pigeonhole'
+
+class PigeonholeSettingDomain(DovecotSettingDomain):
+
+  name = 'pigeonhole'
+  label = 'Dovecot Pigeonhole Settings'
+  set_prefix = 'pigeonhole_setting'
+
+  directives = {
+      'setting': PigeonholeSettingDirective
   }
-
-  def get_full_qualified_name(self, node):
-    return '{}.{}'.format('core_setting', node.arguments[0])
-
-  def get_objects(self):
-    for obj in self.data['core_settings']:
-      yield(obj)
-
-  def add_setting(self, signature, anchor):
-      name = '{}.{}'.format('core_setting', signature)
-
-      self.data['core_settings'].append(
-        (name, signature, 'Core Setting', self.env.docname, anchor, 0))
+  indices = {
+      PigeonholeSettingIndex
+  }
 
 
 def setup(app):
   app.add_domain(DovecotCoreSettingDomain)
   app.add_domain(DovecotPluginSettingDomain)
+  app.add_domain(PigeonholeSettingDomain)
 
   return {
     'version': sphinx.__display_version__,
