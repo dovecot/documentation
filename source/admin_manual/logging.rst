@@ -41,14 +41,14 @@ If you don't want to use syslog, you can make Dovecot log to files directly:
    debug_log_path = /var/log/dovecot-debug.log
 
 The warning and error messages go to the file specified by
-:ref:`setting-log_path`, while informative messages goes to
-:ref:`setting-info_log_path` and debug messages goes to
-:ref:`setting-debug_log_path`.
+:dovecot_core:ref:`log_path`, while informative messages goes to
+:dovecot_core:ref:`info_log_path` and debug messages goes to
+:dovecot_core:ref:`debug_log_path`.
 
 Syslog
 ^^^^^^
 
-You can change Dovecot's syslog facility from :ref:`setting-syslog_facility` setting. The syslog configuration is often in ``/etc/syslog.conf`` or ``/etc/rsyslog*`` files.
+You can change Dovecot's syslog facility from :dovecot_core:ref:`syslog_facility` setting. The syslog configuration is often in ``/etc/syslog.conf`` or ``/etc/rsyslog*`` files.
 
 When using syslog, Dovecot uses 5 different logging levels:
 
@@ -137,16 +137,16 @@ Logging verbosity
 
 There are several settings that control logging verbosity. By default they're all disabled, but they may be useful for debugging.
 
-* :ref:`auth_verbose=yes <setting-auth_verbose>` enables logging all failed authentication attempts.
+* :dovecot_core:ref:`auth_verbose=yes <auth_verbose>` enables logging all failed authentication attempts.
 
-* :ref:`auth_debug=yes <setting-auth_debug>` enables all authentication debug logging (also enables :ref:`setting-auth_verbose`). Passwords are logged as `<hidden>`.
+* :dovecot_core:ref:`auth_debug=yes <auth_debug>` enables all authentication debug logging (also enables :dovecot_core:ref:`auth_verbose`). Passwords are logged as `<hidden>`.
 
-* :ref:`auth_debug_passwords=yes <setting-auth_debug_passwords>` does everything that ``auth_debug=yes`` does, but it also removes password hiding (but only if you are not using PAM, since PAM errors aren't written to Dovecot's own logs).
+* :dovecot_core:ref:`auth_debug_passwords=yes <auth_debug_passwords>` does everything that ``auth_debug=yes`` does, but it also removes password hiding (but only if you are not using PAM, since PAM errors aren't written to Dovecot's own logs).
 
-* :ref:`mail_debug=yes <setting-mail_debug>` enables all kinds of mail related debug logging, such as showing where Dovecot is looking for mails.
+* :dovecot_core:ref:`mail_debug=yes <mail_debug>` enables all kinds of mail related debug logging, such as showing where Dovecot is looking for mails.
 
-* :ref:`verbose_ssl=yes <setting-verbose_ssl>` enables logging SSL errors and warnings. Even without this setting if connection is closed because of an SSL error, the error is logged as the disconnection reason.
+* :dovecot_core:ref:`verbose_ssl=yes <verbose_ssl>` enables logging SSL errors and warnings. Even without this setting if connection is closed because of an SSL error, the error is logged as the disconnection reason.
 
-* :ref:`auth_verbose_passwords=no|plain|sha1 <setting-auth_verbose_passwords>` If authentication fails, this setting logs the used password. If you don't really need to know what the password itself was, but are more interested in knowing if the user is simply trying to use the wrong password every single time or if it's a brute force attack, you can set this to ``sha1`` and only the SHA1 of the password is logged. That's enough to know if the password is same or different between login attempts.
+* :dovecot_core:ref:`auth_verbose_passwords=no|plain|sha1 <auth_verbose_passwords>` If authentication fails, this setting logs the used password. If you don't really need to know what the password itself was, but are more interested in knowing if the user is simply trying to use the wrong password every single time or if it's a brute force attack, you can set this to ``sha1`` and only the SHA1 of the password is logged. That's enough to know if the password is same or different between login attempts.
 
-* :ref:`setting-log_debug` Flexible debug logging configuration.
+* :dovecot_core:ref:`log_debug` Flexible debug logging configuration.

@@ -166,8 +166,8 @@ First we have the settings that provide content for the passdb lookup:
   default values, these values override what the passdb backend returned.
   All %variables used here reflect the state AFTER the passdb lookup.
 * **auth_verbose**: If this is explicitly set to yes or no, it overrides the
-  :ref:`setting-auth_verbose` setting. (However, ``auth_debug=yes`` overrides the
-  :ref:`setting-auth_verbose`.)
+  :dovecot_core:ref:`auth_verbose` setting. (However, ``auth_debug=yes``
+  overrides :dovecot_core:ref:`auth_verbose`.)
 
   .. versionadded:: v2.2.24
 

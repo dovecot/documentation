@@ -6,7 +6,7 @@ Rawlog
 
 Dovecot supports logging IMAP/POP3/LMTP/SMTP(submission) traffic (also TLS/SSL encrypted). There are several possibilities for this:
 
-#. :ref:`setting-rawlog_dir` setting.
+#. :dovecot_core:ref:`rawlog_dir` setting.
 
    .. versionadded:: v2.2.26
 
@@ -14,15 +14,15 @@ Dovecot supports logging IMAP/POP3/LMTP/SMTP(submission) traffic (also TLS/SSL e
 
    .. versionadded:: v2.3.2
 
-#. For proxying (in \*-login processes), use :ref:`setting-login_proxy_rawlog_dir`.
+#. For proxying (in \*-login processes), use :dovecot_core:ref:`login_proxy_rawlog_dir`.
 
    .. versionadded:: v2.3.17
 
-#. For lmtp, you need to use :ref:`setting-lmtp_rawlog_dir` and :ref:`setting-lmtp_proxy_rawlog_dir` settings.
+#. For lmtp, you need to use :dovecot_core:ref:`lmtp_rawlog_dir` and :dovecot_core:ref:`lmtp_proxy_rawlog_dir` settings.
 
    .. versionadded:: v2.3.2
 
-#. For submission, you need to use :ref:`setting-rawlog_dir` and :ref:`setting-submission_relay_rawlog_dir` settings.
+#. For submission, you need to use :dovecot_core:ref:`rawlog_dir` and :dovecot_core:ref:`submission_relay_rawlog_dir` settings.
 
 #. Using rawlog binary, which is executed as post-login script.
    This is the legacy method, which shouldn't be necessary anymore. See below.
@@ -63,7 +63,8 @@ Example:
 rawlog binary
 =============
 
-This is the legacy method. :ref:`setting-rawlog_dir` setting is preferred nowadays.
+This is the legacy method. :dovecot_core:ref:`rawlog_dir` setting is preferred
+nowadays.
 
 This works by checking if ``dovecot.rawlog/`` directory exists in the logged in
 user's home directory, and writing the traffic to ``yyyymmdd-HHMMSS-pid.in``

@@ -32,7 +32,7 @@ This setting is used to avoid load spikes caused by reconnecting clients after a
 
 .. versionadded:: v2.3.9
 
-:ref:`setting-doveadm_ssl`: setting can be used to specify SSL mode to use when doing doveadm proxying.
+:dovecot_core:ref:`doveadm_ssl`: setting can be used to specify SSL mode to use when doing doveadm proxying.
 Can be overriden with ssl and starttls :ref:`proxy flags <authentication-proxies>`.
 When using starttls, do not add ``ssl=yes`` to doveadm service's ``inet_listener`` block.
 

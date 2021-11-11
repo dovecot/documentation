@@ -6,7 +6,7 @@ Forwarding parameters in IMAP/POP3/LMTP/SMTP proxying
 
 Dovecot supports proxying various pieces of information and even
 variables for various protocols when forwarding connection. It requires
-that the sender is listed under :ref:`setting-login_trusted_networks`. For
+that the sender is listed under :dovecot_core:ref:`login_trusted_networks`. For
 IMAP, it uses the ``ID`` command, for other protocols, ``XCLIENT`` is used.
 
 This feature is supported since v1.2, except for parameter forwarding, which

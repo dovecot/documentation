@@ -91,7 +91,7 @@ that the message existed, unless the sender decides to resend it.
 
 Since power failures and kernel panics are quite rare, many people are
 tempted to disable fsyncing because it may increase the performance quite a
-lot. Dovecot allows this by setting :ref:`setting-mail_fsync` to ``never``.
+lot. Dovecot allows this by setting :dovecot_core:ref:`mail_fsync` to ``never``.
 However, this is dangerous, especially with IMAP, LDA, and LMTP. If you do
 want to set to ``never``, you should only explicitly do this for services
 that you are comfortable with data loss. Example:
@@ -136,7 +136,7 @@ not certain that it gives better performance. Try benchmarking to make sure.
 
 .. seealso::
 
-   :ref:`setting-mmap_disable`
+   :dovecot_core:ref:`mmap_disable`
 
 Locking
 ^^^^^^^
@@ -147,7 +147,7 @@ flock instead. Fcntl locks may also cause problems with some NFS
 configurations, in which case you can try if switching to dotlocks helps.
 Note that dotlocks are the slowest locking method.
 
-You can change the locking method from :ref:`setting-lock_method` setting.
+You can change the locking method from :dovecot_core:ref:`lock_method` setting.
 Regardless of the ``lock_method`` setting, Dovecot always uses dotlocks for
 some locks.
 

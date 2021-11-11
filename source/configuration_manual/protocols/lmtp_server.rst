@@ -56,7 +56,7 @@ It's possible to use Dovecot LMTP server as a proxy to remote LMTP or SMTP serve
 
 .. parsed-literal::
 
-   :ref:`lmtp_proxy <setting-lmtp_proxy>` = yes
+   :dovecot_core:ref:`lmtp_proxy <lmtp_proxy>` = yes
 
 Performance
 ===========
@@ -92,7 +92,7 @@ Plugins
 
 * Virtual quota can be enforced using :ref:`Quota plugin <quota>`.
 
-   * :ref:`lmtp_rcpt_check_quota <setting-lmtp_rcpt_check_quota>` ``= yes`` enables quota checking already at RCPT TO stage. This check isn't done for proxied connections.
+   * :dovecot_core:ref:`lmtp_rcpt_check_quota <lmtp_rcpt_check_quota>` ``= yes`` enables quota checking already at RCPT TO stage. This check isn't done for proxied connections.
 
 * Sieve language support can be added with the :ref:`Pigeonhole Sieve plugin <sieve>`.
 
@@ -101,8 +101,8 @@ Address extension delivery
 
 To make address extension work with LMTP you must check these variables are set
 
-* :ref:`lmtp_save_to_detail_mailbox <setting-lmtp_save_to_detail_mailbox>` ``= yes``
-* :ref:`recipient_delimiter <setting-recipient_delimiter>` ``= +``
+* :dovecot_core:ref:`lmtp_save_to_detail_mailbox <lmtp_save_to_detail_mailbox>` ``= yes``
+* :dovecot_core:ref:`recipient_delimiter <recipient_delimiter>` ``= +``
 
 Using LMTP with different MTAs
 ==============================

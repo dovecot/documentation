@@ -10,10 +10,10 @@ Other fields may also be stored in the userdb, and these are called 'extra
 fields'. Possibilities are:
 
 * ``mail`` :ref:`mail_location_settings`, overrides
-  the global :ref:`setting-mail_location` setting.
+  the global :dovecot_core:ref:`mail_location` setting.
 * ``nice``: Set the mail process's priority to be the given value.
-* ``chroot``: Chroot to given directory. Overrides :ref:`setting-mail_chroot` setting in
-  ``dovecot.conf``.
+* ``chroot``: Chroot to given directory. Overrides
+  :dovecot_core:ref:`mail_chroot` setting in ``dovecot.conf``.
 * ``system_groups_user``: Specifies the username whose groups are read from
   ``/etc/group`` (or wherever NSS is configured to taken them from). The logged
   in user has access to those groups. This may be useful for shared mailboxes.

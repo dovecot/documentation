@@ -13,9 +13,9 @@ Some of the extensions need to be explicitly enabled:
 * COMPRESS
 * SEARCH=FUZZY
 * SPECIAL-USE
-* NOTIFY: Set :ref:`setting-mailbox_list_index` to ``yes``
-* URLAUTH: Set :ref:`setting-imap_urlauth_host` and
-  :ref:`setting-mail_attribute_dict`
+* NOTIFY: Set :dovecot_core:ref:`mailbox_list_index` to ``yes``
+* URLAUTH: Set :dovecot_core:ref:`imap_urlauth_host` and
+  :dovecot_core:ref:`mail_attribute_dict`
 
 .. seealso::
 

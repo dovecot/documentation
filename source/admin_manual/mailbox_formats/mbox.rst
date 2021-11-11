@@ -104,7 +104,7 @@ dotlock file can't be created. There are a couple of ways to work around this:
   This may mean making the binary itself setgid-mail, or using a separate
   dotlock helper program which is setgid-mail. With Dovecot this can be done
   by setting
-  :ref:`mail_privileged_group = mail <setting-mail_privileged_group>`.
+  :dovecot_core:ref:`mail_privileged_group = mail <mail_privileged_group>`.
 
 * Set sticky bit to the directory (``chmod +t /var/mail``). This makes it
   somewhat safe to use, because users can't delete each others mailboxes, but
@@ -218,9 +218,9 @@ just grows these spaces areas.
 There are several configuration options that can be used that will affect
 optimization:
 
-* :ref:`setting-mbox_dirty_syncs`
-* :ref:`setting-mbox_lazy_writes`
-* :ref:`setting-mbox_very_dirty_syncs`
+* :dovecot_core:ref:`mbox_dirty_syncs`
+* :dovecot_core:ref:`mbox_lazy_writes`
+* :dovecot_core:ref:`mbox_very_dirty_syncs`
 
 From Escaping
 ^^^^^^^^^^^^^

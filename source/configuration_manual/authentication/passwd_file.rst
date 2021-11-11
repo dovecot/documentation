@@ -31,7 +31,7 @@ extra_fields is a space-separated list of ``key=value`` pairs which can be used
 to set various :ref:`passdb settings <authentication-password_database_extra_fields>` and :ref:`userdb settings <authentication-user_database_extra_fields>`.
 Keys which begin with a
 ``userdb_ prefix`` are used for userdb, others are used for passdb. So for
-example if you wish to override :ref:`setting-mail_location`
+example if you wish to override :dovecot_core:ref:`mail_location`
 setting for one user, use
 ``userdb_mail=mbox:~/mail``. :ref:`Variable <config_variables>`
 expansion is done for extra_fields.

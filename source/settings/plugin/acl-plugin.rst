@@ -141,7 +141,8 @@ Example:
 
 See :ref:`authentication-master_users_acls`.
 
-See :ref:`setting-auth_master_user_separator` for the format of this setting. 
+See :dovecot_core:ref:`auth_master_user_separator` for the format of this
+setting. 
 
 
 .. dovecot_plugin:setting:: master_user

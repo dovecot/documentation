@@ -69,7 +69,7 @@ Reading and writing
 -------------------
 
 Appending to an existing ``dovecot-index.log`` file locks it exclusively
-using the index files' default lock method (:ref:`setting-lock_method`
+using the index files' default lock method (:dovecot_core:ref:`lock_method`
 setting). The transaction log files are opened with ``O_APPEND`` flag,
 which usually makes the writes appear as atomic (although this doesn't
 seem to be actually guaranteed, practically this seems to happen).

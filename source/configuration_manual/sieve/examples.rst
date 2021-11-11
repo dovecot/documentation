@@ -374,8 +374,8 @@ the ``fileinto`` command, the indicated folder is created automatically
 if it doesn't exist. The ``:create`` argument is provided by the
 `mailbox <http://tools.ietf.org/html/rfc5490#section-3>`_ extension.
 
-Emulating :ref:`lmtp_save_to_detail_mailbox=yes <setting-lmtp_save_to_detail_mailbox>`
---------------------------------------------------------------------------------------
+Emulating :dovecot_core:ref:`lmtp_save_to_detail_mailbox=yes <lmtp_save_to_detail_mailbox>`
+-------------------------------------------------------------------------------------------
 
 If you can't turn this option on, you can emulate the behaviour to some
 extent with following code.

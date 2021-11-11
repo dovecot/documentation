@@ -56,8 +56,7 @@ the vacation action will not trigger a response to prevent sending a reply when 
 
 Normally only the final recipient address is used in this check. This setting allows including the original recipient specified in the SMTP session if available.
 This is useful to handle mail accounts with aliases. Use this option with caution: if you are using aliases that point to more than a single account,
-senders can get multiple vacation responses for a single message. Use the :ref:`LDA <lda>` ``-a`` option or the LMTP/LDA :ref:`setting-lda_original_recipient_header` setting
-to make the original SMTP recipient available to Sieve.
+senders can get multiple vacation responses for a single message. Use the :ref:`LDA <lda>` ``-a`` option or the LMTP/LDA :dovecot_core:ref:`lda_original_recipient_header` setting to make the original SMTP recipient available to Sieve.
 
 
 .. _plugin-sieve-setting-sieve_vacation_dont_check_recipient:

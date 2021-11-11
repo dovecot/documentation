@@ -162,7 +162,7 @@ Global filter syntax
 .. versionchanged:: v2.3.12 filtering changed to use the common filter language
   (see :ref:`event_filter_new_lang`)
 
-Since v2.3.12, settings such as :ref:`setting-log_debug` use the common
+Since v2.3.12, settings such as :dovecot_core:ref:`log_debug` use the common
 filtering languge.  For example::
 
   log_debug = (event=http_request_finished AND category=imap) OR \

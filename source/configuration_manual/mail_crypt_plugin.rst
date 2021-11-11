@@ -99,7 +99,7 @@ than one key pair but only one can be active.
 
 :dovecot_plugin:ref:`mail_crypt_curve` must be set.
 
-:ref:`setting-mail_attribute_dict` must be set, as is is used to store the
+:dovecot_core:ref:`mail_attribute_dict` must be set, as is is used to store the
 keys.
 
 Unencrypted User Keys

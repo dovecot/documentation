@@ -52,7 +52,7 @@ addition of proxy field. The common fields to use for both proxying ways are:
 * ``proxy_mech=s``: Tell client to use this SASL authentication mechanism when
   logging in.
 * ``proxy_timeout=`` <:ref:`time_msecs`>: Abort connection after this much time has passed.
-  This overrides the default :ref:`setting-login_proxy_timeout`.
+  This overrides the default :dovecot_core:ref:`login_proxy_timeout`.
 
   .. versionchanged:: v2.3 Added support for milliseconds.
 
@@ -94,16 +94,18 @@ You can use SSL/TLS connection to destination server by returning:
 * ``starttls=any-cert``: Combine starttls and ``ssl=any-cert``.
 
 Additionally you can also tell Dovecot to send SSL client certificate to the
-remote server using :ref:`setting-ssl_client_cert` and :ref:`setting-ssl_client_key` settings in
-dovecot.conf.
+remote server using :dovecot_core:ref:`ssl_client_cert` and
+:dovecot_core:ref:`ssl_client_key` settings in dovecot.conf.
 
-Set :ref:`setting-login_trusted_networks` to point to the proxies in the backends. This
-way you'll get the clients' actual IP addresses logged instead of the proxy's.
+Set :dovecot_core:ref:`login_trusted_networks` to point to the proxies in the
+backends. This way you'll get the clients' actual IP addresses logged instead
+of the proxy's.
 
 The destination servers don't need to be running Dovecot, but you should make
 sure that the Dovecot proxy doesn't advertise more capabilities than the
 destination server can handle. For IMAP you can do this by changing
-:ref:`setting-imap_capability` setting. For POP3 you'll have to modify Dovecot's sources
+:dovecot_core:ref:`imap_capability` setting. For POP3 you'll have to modify
+Dovecot's sources
 for now ``(src/pop3/capability.h)``. Dovecot also automatically sends updated
 untagged CAPABILITY reply if it detects that the remote server has different
 capabilities than what it already advertised to the client, but some clients
@@ -117,7 +119,8 @@ Source IPs
 If your proxy handles a lot of connections ``(~64k)`` to the same destination
 IP you may run out of TCP ports. The only way to work around this is to use
 either multiple destination IPs or ports, or multiple source IPs. Multiple
-source IPs can be easily used by adding them to the :ref:`setting-login_source_ips`
+source IPs can be easily used by adding them to the
+:dovecot_core:ref:`login_source_ips`
 setting in ``dovecot.conf``. You can also use hostnames which expand to
 multiple IPs. By prefixing the setting with ``?`` (e.g. ``login_source_ips =
 ?proxy-sources.example.com``) Dovecot will use only those IPs that actually
@@ -134,8 +137,8 @@ Disconnection delay
 To avoid reconnection load spikes when a backend server dies, you can tell
 proxy to spread the client disconnections over a longer time period (after the
 server side of the connection is already disconnected).
-:ref:`setting-login_proxy_max_disconnect_delay` setting in ``dovecot.conf`` controls this
-(disabled by default).
+:dovecot_core:ref:`login_proxy_max_disconnect_delay` setting in
+``dovecot.conf`` controls this (disabled by default).
 
 Forwarding fields
 =================
@@ -146,7 +149,8 @@ You can forward arbitratry variables by returning them prefixed with
 ``forward_``. Dovecot will use protocol dependant way to forward these
 variables forward and they will appear on the other side as
 ``forward_variable`` Currently ``IMAP/POP3`` only feature. This feature
-requires that the sending host is in :ref:`setting-login_trusted_networks`. For IMAP the
+requires that the sending host is in
+:dovecot_core:ref:`login_trusted_networks`. For IMAP the
 feature works by providing the variables as part of ID command, such as ``i ID
 ( ... x-forward-var value)``.
 
@@ -200,7 +204,8 @@ client, set
   imap_id_retain=yes
 
 This will also enable ``client_id`` variable in variable expansions for auth
-requests, which will contain the ID command as IMAP arglist. See :ref:`setting-imap_id_retain`.
+requests, which will contain the ID command as IMAP arglist. See
+:dovecot_core:ref:`imap_id_retain`.
 
 Password forwarding
 ===================

@@ -27,7 +27,7 @@ Folder names
 Each folder has a name. In configuration files and log files Dovecot almost
 always uses the "virtual name", which uses the configured namespace's hierarchy
 separator as well as the namespace prefix. Depending on the used LAYOUT in
-:ref:`setting-mail_location` the internal folder name may be different. The
+:dovecot_core:ref:`mail_location` the internal folder name may be different. The
 internal name is stored in databases (e.g. mailbox subscriptions), which allows
 changing the namespace prefix or separator without having to change the
 databases.
@@ -36,7 +36,7 @@ The folder names use UTF-8 character set internally. All folder names must be
 valid UTF-8. With ``LAYOUT=fs`` and ``LAYOUT=Maildir++`` the folder names are
 stored in filesystem paths as mUTF-7 (see IMAP RFC 3501) mainly for legacy
 reasons. This can be changed by specifying the UTF8 parameter in
-:ref:`setting-mail_location`.
+:dovecot_core:ref:`mail_location`.
 
 -------------------
 Folder name lengths
@@ -64,4 +64,4 @@ Parent folders
 A folder can have one or more parent folders that do not physically exist.
 These are presented with ``\NoSelect`` or ``\Nonexistent`` attribute.
 It's possible to try to avoid creating these by using the ``NO-NOSELECT``
-option in :ref:`setting-mail_location`.
+option in :dovecot_core:ref:`mail_location`.

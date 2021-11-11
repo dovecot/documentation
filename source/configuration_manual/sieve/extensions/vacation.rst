@@ -71,8 +71,8 @@ the ``plugin`` section (default values are indicated):
    :ref:`LDA <lda>`
    ``-a`` option or the
    :ref:`LMTP <lmtp_server>`
-   :ref:`setting-lda_original_recipient_header` setting to make the original SMTP
-   recipient available to Sieve.
+   :dovecot_core:ref:`lda_original_recipient_header` setting to make the
+   original SMTP recipient available to Sieve.
 
 :ref:`plugin-sieve-setting-sieve_vacation_dont_check_recipient` = no
    This disables the checks for implicit delivery entirely. This means

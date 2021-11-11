@@ -224,7 +224,7 @@ applicable):
    to ``<filename>.log`` by default. If it is not a file, the default
    user log file is ``~/.dovecot.sieve.log``.
 
-:ref:`setting-recipient_delimiter` = +
+:dovecot_core:ref:`recipient_delimiter` = +
    The separator that is expected between the :user and :detail address
    parts introduced by the `subaddress
    extension <http://tools.ietf.org/html/rfc5233/>`_. This may also be
@@ -625,7 +625,7 @@ General Dovecot 2.0 changes
    :ref:`LDA <lda>`
    does not create mailfolders automatically by default anymore. If your
    configuration relies on this, you need to enable the
-   :ref:`setting-lda_mailbox_autocreate` setting for
+   :dovecot_core:ref:`lda_mailbox_autocreate` setting for
    :ref:`LDA <lda>`
    or start using the Sieve mailbox extension's ``:create`` tag for
    **fileinto** commands.
@@ -634,8 +634,8 @@ General Dovecot 2.0 changes
    Much like the :ref:`LDA <lda>` it can make use of the Pigeonhole Sieve plugin.
    Since the :ref:`LMTP <lmtp_server>`
    service has its own ``prototocol lmtp`` section in the config file,
-   you need to add the Sieve plugin to the :ref:`setting-mail_plugins` setting
-   there too when you decide to use :ref:`LMTP <lmtp_server>`.
+   you need to add the Sieve plugin to the :dovecot_core:ref:`mail_plugins`
+   setting there too when you decide to use :ref:`LMTP <lmtp_server>`.
 
 .. _sieve_configuration_from_cmusieve:
 
@@ -644,7 +644,8 @@ From CMUSieve (Dovecot v1.0/v1.1)
 
 For the most part, migration from CMUSieve to Pigeonhole Sieve is just a
 matter of changing the used plugin name from **cmusieve** to **sieve**
-in the :ref:`setting-mail_plugins` option in the ``protocol lda`` section of the
+in the :dovecot_core:ref:`mail_plugins` option in the ``protocol lda`` section
+of the
 config file (as explained :ref:`above <pigeonhole_configuration_basic_configuration>`).
 However, there are a few important differences in the supported Sieve language features:
 
@@ -688,7 +689,7 @@ From Dovecot Sieve v0.1.x (Dovecot v1.2)
 
 -  The :ref:`plugin-sieve-setting-sieve_subaddress_sep` setting for the `Sieve subaddress
    extension <http://tools.ietf.org/html/rfc5233/>`_ is now known as
-   :ref:`setting-recipient_delimiter`. Although :ref:`plugin-sieve-setting-sieve_subaddress_sep` is still
+   :dovecot_core:ref:`recipient_delimiter`. Although :ref:`plugin-sieve-setting-sieve_subaddress_sep` is still
    recognized for backwards compatibility, it is recommended to update
    the setting to the new name, since the :ref:`LMTP <lmtp_server>`
-   service also uses the :ref:`setting-recipient_delimiter` setting.
+   service also uses the :dovecot_core:ref:`recipient_delimiter` setting.

@@ -186,7 +186,7 @@ top level of the configuration file:
    ssl_cert = </etc/ssl/dovecot.pem
    ssl_key = </etc/ssl/dovecot.pem
 
-:ref:`setting-ssl_cert` is not a valid setting inside ``service`` or
+:dovecot_core:ref:`ssl_cert` is not a valid setting inside ``service`` or
 ``inet_listener`` blocks, so you can't use a separate SSL certificate
 for the doveadm listener. You can, however, use separate SSL
 certificates for the *other* protocols, like so:
@@ -215,12 +215,13 @@ Now you can use ``tcps:hostname`` or ``tcps:hostname:port`` as the dsync
 target.
 
 Note that the SSL certificate must be signed by one of the CAs in the
-:ref:`setting-ssl_client_ca_dir` or :ref:`setting-ssl_client_ca_file`.
+:dovecot_core:ref:`ssl_client_ca_dir` or :dovecot_core:ref:`ssl_client_ca_file`.
 You can't use a self-signed certificate or a private CA, unless you correctly
 set them up into the CA file/directory (see openssl documentation for details).
 
-You could point :ref:`setting-ssl_client_ca_file` to your private CA, but keep in
-mind that :ref:`setting-ssl_client_ca_file` and :ref:`setting-ssl_client_ca_dir`
+You could point :dovecot_core:ref:`ssl_client_ca_file` to your private CA, but
+keep in mind that :dovecot_core:ref:`ssl_client_ca_file` and
+:dovecot_core:ref:`ssl_client_ca_dir`
 also affect other services where Dovecot acts as an SSL client (e.g. the imapc
 feature), so be careful not to break SSL for those services.
 
@@ -310,7 +311,7 @@ The following fields are:
 -  Queued 'full resync' requests: Number of users who don't specifically
    have any replication pending, but who are currently waiting for a
    periodic "full sync". This is controlled by the
-   :ref:`setting-replication_full_sync_interval` setting.
+   :dovecot_core:ref:`replication_full_sync_interval` setting.
 
 -  Waiting 'failed' requests: Number of users whose last replication
    attempt failed, and we're now waiting for the retry interval (5 mins)
@@ -342,7 +343,7 @@ These fields mean:
 
 -  full sync: How long time ago the last "full sync" attempt was
    performed. This should happen once per
-   :ref:`setting-replication_full_sync_interval`.
+   :dovecot_core:ref:`replication_full_sync_interval`.
    This doesn't mean that the sync succeeded necessarily.
 
 -  success sync: Time when the last successful sync was performed. If
@@ -354,7 +355,7 @@ These fields mean:
 The current dsync replication status can be looked up with
 ``doveadm replicator dsync-status``. This shows the dsync replicator
 status for each potential dsync connection, as configured by
-:ref:`setting-replication_max_conns`. An example output is:
+:dovecot_core:ref:`replication_max_conns`. An example output is:
 
 ::
 
@@ -397,8 +398,8 @@ the error logs. So if a user is marked as failed, try to find any errors
 logged for the user and see if the same error keeps repeating in the
 logs. If you want to debug the dsync, you can manually trigger it with:
 ``doveadm -D sync -u user@domain -d -N -l 30 -U`` (the parameters after
-"sync" should be the same as in :ref:`setting-replication_dsync_parameters`
-setting).
+"sync" should be the same as in
+:dovecot_core:ref:`replication_dsync_parameters` setting).
 
 Notes
 -----

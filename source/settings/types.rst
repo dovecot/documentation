@@ -14,7 +14,7 @@ String
 ------
 
 String settings are typically used with variable expansion to configure how
-something is logged. For example :ref:`setting-imap_logout_format`:
+something is logged. For example :dovecot_core:ref:`imap_logout_format`:
 
 .. code-block:: none
 

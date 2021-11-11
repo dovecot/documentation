@@ -206,7 +206,7 @@ the connections permanently open.
 
 The dictionary server is referenced with URI
 ``proxy:<dictionary server socket path>:<dictionary name>``. The socket path
-may be left empty if you haven't changed :ref:`setting-base_dir` in
+may be left empty if you haven't changed :dovecot_core:ref:`base_dir` in
 ``dovecot.conf``. Otherwise set it to ``<base_dir>/dict-server``. The
 dictionary names are configured in ``dovecot.conf``. For example:
 

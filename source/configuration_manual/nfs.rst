@@ -11,10 +11,10 @@ to all mailbox access, including mail delivery.
 
 * Use :ref:`Dovecot director <dovecot_director>` for clustering.
 * Use :ref:`lmtp_server` for mail deliveries.
-* Set :ref:`setting-mmap_disable` = ``yes``
-* Set :ref:`setting-mail_fsync` = ``always``
-* Do **not** set :ref:`setting-mail_nfs_index` or
-  :ref:`setting-mail_nfs_storage` (i.e. keep them as ``no``)
+* Set :dovecot_core:ref:`mmap_disable` = ``yes``
+* Set :dovecot_core:ref:`mail_fsync` = ``always``
+* Do **not** set :dovecot_core:ref:`mail_nfs_index` or
+  :dovecot_core:ref:`mail_nfs_storage` (i.e. keep them as ``no``)
 * Do **not** use the ``quota-status`` service.
 * Unmounted NFS mount point directory should not be writable to Dovecot
   mail processes (i.e. often the ``vmail`` user). Otherwise if the NFS
@@ -99,9 +99,9 @@ configuration.
   redirected to the same Dovecot server. This way a single client using
   multiple IMAP connections doesn't immediately cause problems.
 
-* Set :ref:`setting-mail_nfs_index` = ``yes`` and
-  :ref:`setting-mail_nfs_storage` = ``yes``. These will attempt to flush the NFS
-  caches at appropriate times. However, it doesn't work perfectly.
+* Set :dovecot_core:ref:`mail_nfs_index` = ``yes`` and
+  :dovecot_core:ref:`mail_nfs_storage` = ``yes``. These will attempt to flush
+  the NFS caches at appropriate times. However, it doesn't work perfectly.
 
     * Disabling NFS attribute cache helps a lot in getting rid of caching
       related errors, but this makes performance MUCH worse and increases
@@ -109,7 +109,8 @@ configuration.
       or ``noac`` mount option.
 
 * Make sure NFS lockd works properly. If it doesn't, use
-  :ref:`setting-lock_method` = ``dotlock``. However, this degrades performance.
+  :dovecot_core:ref:`lock_method` = ``dotlock``. However, this degrades
+  performance.
 
 * Use Maildir mailbox format instead of sdbox/mdbox. Maildir is much more
   resistant to corruption.

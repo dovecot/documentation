@@ -9,8 +9,8 @@ Mail Location Settings
 
 There are three different places where the mail location is looked up from:
 
-1. :ref:`setting-mail_location` in ``dovecot.conf`` is used if nothing else
-   overrides it.
+1. :dovecot_core:ref:`mail_location` in ``dovecot.conf`` is used if nothing
+   else overrides it.
 
 2. mail :ref:`authentication-user_database` overrides ``mail_location``
    setting.
@@ -160,7 +160,7 @@ Key          Replaced By      Value Description
 Variables
 ---------
 
-You can use several variables in the :ref:`setting-mail_location` setting.
+You can use several variables in the :dovecot_core:ref:`mail_location` setting.
 See :ref:`config_variables` for a full list, but the most commonly used ones
 are:
 
@@ -246,9 +246,9 @@ Example:
 Autodetection
 =============
 
-By default the :ref:`setting-mail_location` setting is empty, which means that
-Dovecot attempts to locate automatically where your mails are. This is done by
-looking, in order, at:
+By default the :dovecot_core:ref:`mail_location` setting is empty, which means
+that Dovecot attempts to locate automatically where your mails are. This is
+done by looking, in order, at:
 
 * ~/mdbox/
 * ~/sdbox/
@@ -295,9 +295,9 @@ Example:
 Mailbox Autocreation
 ====================
 
-Autocreation is only triggered if :ref:`setting-mail_location` is correctly
-set. You'll see something like this if you enable
-:ref:`debug logging <setting-mail_debug>` (example for ``mbox`` mailbox
+Autocreation is only triggered if :dovecot_core:ref:`mail_location` is
+correctly set. You'll see something like this if you enable
+:dovecot_core:ref:`debug logging <mail_debug>` (example for ``mbox`` mailbox
 format):
 
 .. code-block:: none
@@ -328,7 +328,7 @@ If you really don't want to set any home directory, you can use something like:
 Per-User Mail Locations
 -----------------------
 
-It's possible to override the default :ref:`setting-mail_location` for
+It's possible to override the default :dovecot_core:ref:`mail_location` for
 specific users by making the :ref:`authentication-user_database` return
 ``mail`` extra field.
 
@@ -338,8 +338,8 @@ expanded later, so use it instead.
 .. Note::
 
    Since a location specified within a :ref:`namespaces` overrides
-   :ref:`setting-mail_location`, in case you specified that parameter you'll
-   have to override in in the user database, specifying
+   :dovecot_core:ref:`mail_location`, in case you specified that parameter
+   you'll have to override in in the user database, specifying
    ``namespace/inbox/location`` extra field instead of mail.
 
 SQL

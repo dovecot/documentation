@@ -387,7 +387,7 @@ at the MTA, MDA, or LDA (as is recommended with
 :ref:`mbox <mbox_mbox_format>`).
 
 There is one exception, though, namely when
-:ref:`pop3_reuse_xuidl = yes <setting-pop3_reuse_xuidl>` (which
+:dovecot_core:ref:`pop3_reuse_xuidl = yes <pop3_reuse_xuidl>` (which
 is however deprecated): in this case ``X-UIDL`` is used for the POP3 UIDLs.
 Therefore, in this case, is recommended to strip the ``X-UIDL`` mail headers
 *case-insensitively* at the MTA, MDA, or LDA.

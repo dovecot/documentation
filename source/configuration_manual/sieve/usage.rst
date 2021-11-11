@@ -12,22 +12,21 @@ the same way as IMAP clients see them. For example if you want to
 deliver mail to the "Customers" mailbox which exists under "Work"
 mailbox:
 
--  Namespace with :ref:`prefix="" <setting-namespace_prefix>`, :ref:`separator=. <setting-namespace_separator>` (Maildir default):
+-  Namespace with :dovecot_core:ref:`prefix="" <namespace_prefix>`, :dovecot_core:ref:`separator=. <namespace_separator>` (Maildir default):
 
 ::
 
    require "fileinto";
    fileinto "Work.Customers";
 
--  Namespace with :ref:`prefix=INBOX. <setting-namespace_prefix>`, :ref:`separator=. <setting-namespace_separator>` (Courier
-   migration):
+-  Namespace with :dovecot_core:ref:`prefix=INBOX. <namespace_prefix>`, :dovecot_core:ref:`separator=. <namespace_separator>` (Courier migration):
 
 ::
 
    require "fileinto";
    fileinto "INBOX.Work.Customers";
 
--  Namespace with :ref:`prefix="" <setting-namespace_prefix>`, :ref:`separator=/ <setting-namespace_separator>` (mbox, dbox default):
+-  Namespace with :dovecot_core:ref:`prefix="" <namespace_prefix>`, :dovecot_core:ref:`separator=/ <namespace_separator>` (mbox, dbox default):
 
 ::
 

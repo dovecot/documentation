@@ -6,16 +6,17 @@ Mail Cache Settings
 
 Dovecot caches the mail headers and other fields to dovecot.index.cache files automatically based on what the IMAP client uses. This is a per-folder decision. This works generally well for newly created folders, but not so well during migration, because Dovecot doesn't yet known which fields need to be cached. So Dovecot needs to be told what to initially add to dovecot.index.cache while mails are being saved. This can be useful even after migration. For example a user might normally use their mobile app IMAP client, but once a few months they would login to the webmail. Dovecot would normally preserve the fields used by the mobile IMAP client, but drop the extra fields used only by webmail after a month. This might not be wanted. This can be configured with:
 
-* :ref:`setting-mail_cache_fields`: List of fields that are initially cached
-  for newly created users. Afterwards the caching decisions will live on based
-  on the user's IMAP access patterns. Note that the INBOX's caching decisions
-  are copied to newly created folders.
-* :ref:`setting-mail_always_cache_fields`: List of fields that are always
+* :dovecot_core:ref:`mail_cache_fields`: List of fields that are initially
+  cached for newly created users. Afterwards the caching decisions will live
+  on based on the user's IMAP access patterns. Note that the INBOX's caching
+  decisions are copied to newly created folders.
+* :dovecot_core:ref:`mail_always_cache_fields`: List of fields that are always
   cached for everyone. These fields won't get dropped automatically even if
   user never accesses them.
-* :ref:`setting-mail_never_cache_fields`: List of fields that should never be
-  cached. This should probably never include anything other than imap.envelope,
-  which isn't needed because it can be generated from the cached header fields.
+* :dovecot_core:ref:`mail_never_cache_fields`: List of fields that should never
+  be cached. This should probably never include anything other than
+  imap.envelope, which isn't needed because it can be generated from the cached
+  header fields.
 
 Settings for clients
 --------------------
@@ -63,13 +64,13 @@ Fields
    imap.bodystructure.
  * ``imap.envelope``: IMAP ENVELOPE response, which contains the From, To, Cc,
    Bcc, Sender, Reply-To, Date, Subject, Message-ID and In-Reply-To headers in
-   parsed forms. This is typically in the :ref:`setting-mail_never_cache_fields`
-   because the raw headers are more useful in the cache and the ENVELOPE can be
-   generated from them.
+   parsed forms. This is typically in the
+   :dovecot_core:ref:`mail_never_cache_fields` because the raw headers are
+   more useful in the cache and the ENVELOPE can be generated from them.
  * ``pop3.uidl``: POP3 UIDL responses. This is useful especially if some of the
    UIDLs have been migrated from an old system or if
-   :ref:`setting-pop3_reuse_xuidl` is used. Otherwise Dovecot generates the
-   UIDL in a way that usually doesn't require cache.
+   :dovecot_core:ref:`pop3_reuse_xuidl` is used. Otherwise Dovecot generates
+   the UIDL in a way that usually doesn't require cache.
  * ``pop3.order``: POP3 messages' order. This is used after migration from
    another system where the IMAP and POP3 messages' order differs.
  * ``guid``: Internal Dovecot GUID for messages.
@@ -101,8 +102,8 @@ IMAP clients don't advertise how they work, so Dovecot attempts to figure it
 out dynamically. The behavior is now:
 
  * For a newly created INBOX Dovecot gets the caching decisions from the
-   :ref:`setting-mail_cache_fields` and :ref:`setting-mail_always_cache_fields`
-   settings.
+   :dovecot_core:ref:`mail_cache_fields` and
+   :dovecot_core:ref:`mail_always_cache_fields` settings.
  * For a newly created non-INBOX folder the caching decisions are copied from
    the INBOX.
  * Whenever a new non-cached field is accessed, its caching decision is set to
@@ -118,12 +119,12 @@ out dynamically. The behavior is now:
 
     * .. versionchanged:: v2.3.11 Changes YES -> TEMP if the YES decision hasn't
                           been reconfirmed for the last 30 days
-                          (:ref:`setting-mail_cache_unaccessed_field_drop`).
+                          (:dovecot_core:ref:`mail_cache_unaccessed_field_drop`).
                           Older versions changed the YES -> TEMP decision every
                           time the cache was purged, which could have happened
                           too early sometimes.
     * .. versionchanged:: v2.3.11 Changes TEMP -> NO and drops the field if it
                           hasn't been accessed for the last 60 days (2 *
-                          :ref:`setting-mail_cache_unaccessed_field_drop`).
+                          :dovecot_core:ref:`mail_cache_unaccessed_field_drop`).
                           Older versions dropped it after 30 days (1 *
-                          :ref:`setting-mail_cache_unaccessed_field_drop`).
+                          :dovecot_core:ref:`mail_cache_unaccessed_field_drop`).

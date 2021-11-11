@@ -48,16 +48,26 @@ Example configuration for default namespace::
     inbox = yes
   }
 
-Namespace Settings
-==================
+Settings
+========
 
-.. _setting-namespace_alias_for:
+.. dovecot_core:setting:: namespace
+   :values: @string
 
-``namespace/alias_for``
------------------------
+Name of the namespace.
 
-- Default: <empty>
-- Values:  :ref:`string`
+Giving name is optional, but doing so enables referencing the configuration
+later on.
+
+Example, to name a namespace ``foo``::
+
+  namespace foo {
+    [...]
+  }
+
+
+.. dovecot_core:setting:: namespace/alias_for
+   :values: @string
 
 Defines the namespace prefix for purposes of alias detection.
 
@@ -85,64 +95,45 @@ Example::
   }
 
 
-.. _setting-namespace_disabled:
+.. dovecot_core:setting:: namespace/disabled
+   :default: no
+   :values: @boolean
 
-``namespace/disabled``
-----------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
-
-If set, namespace is disabled and cannot be accessed by user in any way.
+If ``yes``, namespace is disabled and cannot be accessed by user in any way.
 
 Useful when returned by a userdb lookup to easily configure per-user
 namespaces.
 
 
-.. _setting-namespace_hidden:
+.. dovecot_core:setting:: namespace/hidden
+   :default: no
+   :values: @boolean
 
-``namespace/hidden``
---------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
-
-If set, namespace will be hidden from IMAP ``NAMESPACE`` command.
+If ``yes``, namespace will be hidden from IMAP NAMESPACE command.
 
 
-.. _setting-namespace_ignore_on_failure:
+.. dovecot_core:setting:: namespace/ignore_on_failure
+   :default: no
+   :values: @boolean
 
-``namespace/ignore_on_failure``
--------------------------------
-
- - Default: ``no``
- - Values:  :ref:`boolean`
-
-If :ref:`setting-namespace_location` fails to load, by default the entire
-session will fail to start. If this is set, this namespace will be ignored
-instead.
+If namespace :dovecot_core:ref:`namespace/location` fails to load, by default
+the entire session will fail to start. If this is set, this namespace will be
+ignored instead.
 
 
-.. _setting-namespace_inbox:
+.. dovecot_core:setting:: namespace/inbox
+   :default: no
+   :values: @boolean
 
-``namespace/inbox``
--------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
-
-If set, this namespace will be considered the one holding the INBOX folder.
+If ``yes``, this namespace will be considered the one holding the INBOX
+folder.
 
 There can be only one namespace defined like this.
 
 
-.. _setting-namespace_list:
-
-``namespace/list``
-------------------
-
-- Default: ``yes``
-- Values:  ``yes``, ``no``, or ``children``
+.. dovecot_core:setting:: namespace/list
+   :default: yes
+   :values: yes, no, children
 
 Include this namespace in LIST output when listing its parent's folders.
 
@@ -162,16 +153,12 @@ them. For example, if this setting is ``no``, using ``LIST "" *`` with
 namespace prefix "lazy-expunge/" won't list it, but using
 ``LIST "" lazy-expunge/*`` lists all folders under it.
 
-See also :ref:`setting-namespace_hidden`.
+.. seealso:: :dovecot_core:ref:`namespace/hidden`
 
 
-.. _setting-namespace_location:
-
-``namespace/location``
-----------------------
-
-- Default: :ref:`setting-mail_location`
-- Values:  :ref:`string`
+.. dovecot_core:setting:: namespace/location
+   :default: @mail_location;dovecot_core
+   :values: @string
 
 Specifies driver and parameters for physical mailbox storage. It allows an
 override of the ``mail_location`` setting for a namespace.
@@ -185,30 +172,22 @@ Example::
   }
 
 
-.. _setting-namespace_order:
-
-``namespace/order``
--------------------
-
-- Default: ``0``
-- Values:  :ref:`uint`
+.. dovecot_core:setting:: namespace/order
+   :default: 0
+   :values: @uint
 
 Sets display order in IMAP ``NAMESPACE`` command.
 
 Namespaces are automatically numbered if this setting does not exist.
 
 
-.. _setting-namespace_prefix:
-
-``namespace/prefix``
---------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_core:setting:: namespace/prefix
+   :values: @string
 
 Specifies prefix for namespace.
 
-Must end with :ref:`hierarchy separator <setting-namespace_separator>`.
+.. note:: Must end with
+          :dovecot_core:ref:`hierarchy separator <namespace/separator>`.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
 
@@ -220,13 +199,9 @@ Example::
   }
 
 
-.. _setting-namespace_separator:
-
-``namespace/separator``
------------------------
-
-- Default: ``.`` for Maildir, ``/`` for others.
-- Values:  :ref:`string`
+.. dovecot_core:setting:: namespace/separator
+   :default: !'.' for Maildir; '/' for other mbox formats
+   :values: @string
 
 Specifies the hierarchy separator for the namespace.
 
@@ -248,13 +223,9 @@ Example::
   }
 
 
-.. _setting-namespace_subscriptions:
-
-``namespace/subscriptions``
----------------------------
-
-- Default: ``yes``
-- Values:  :ref:`boolean`
+.. dovecot_core:setting:: namespace/subscriptions
+   :default: yes
+   :values: @boolean
 
 Whether subscriptions are stored in this namespace.
 
@@ -269,13 +240,9 @@ Dovecot first sees if there's a ``prefix=foo/`` namespace with
 found, an error is given.
 
 
-.. _setting-namespace_type:
-
-``namespace/type``
-------------------
-
-- Default: ``private``
-- Values:  ``private``, ``shared``, or ``public``
+.. dovecot_core:setting:: namespace/type
+   :default: private
+   :values: private, shared, public
 
 The namespace type.  One of:
 
@@ -293,7 +260,7 @@ Type         Description
 Hierarchy Separators
 ====================
 
-:ref:`Hierarchy separator <setting-namespace_separator>` specifies the
+:dovecot_core:ref:`Hierarchy separator <namespace/separator>` specifies the
 character that is used to separate the parent mailbox from its child mailbox.
 For example if you have a mailbox "foo" with child mailbox "bar", the full
 path to the child mailbox would be "foo/bar" with ``/`` as the separator, and
@@ -595,13 +562,9 @@ put it into quotes::
 Settings
 ========
 
-.. _setting-namespace-mailbox_auto:
-
-``namespace/mailbox/auto``
---------------------------
-
-- Default: ``no``
-- Values:  ``create``, ``no``, or ``subscribe``
+.. dovecot_core:setting:: namespace/mailbox/auto
+   :default: no
+   :values: create, no, subscribe
 
 Autocreate and/or subscribe to the mailbox?  Options:
 
@@ -618,15 +581,10 @@ first time. The autosubscribed mailboxes aren't written to subscriptions file,
 unless SUBSCRIBE command is explicitly used for them.
 
 
-.. _setting-namespace-mailbox_autoexpunge:
-
-``namespace/mailbox/autoexpunge``
----------------------------------
-
-.. versionadded:: v2.2.20
-
-- Default: ``0``
-- Values:  :ref:`time`:
+.. dovecot_core:setting:: namespace/mailbox/autoexpunge
+   :added: v2.2.20
+   :default: 0
+   :values: @time
 
 Expunge all mails in this mailbox whose saved-timestamp is older than this
 value.
@@ -637,37 +595,27 @@ For LMTP this happens when the user's mail delivery is finished. Note that if
 there are multiple recipients this may delay delivering the mails to the
 other recipients.
 
-":ref:`setting-mailbox_list_index` = yes" is highly recommended when using
-this setting, as it avoids actually opening the mailbox to see if anything
-needs to be expunged.
+:dovecot_core:ref:`mailbox_list_index` = ``yes`` is highly recommended when
+using this setting, as it avoids actually opening the mailbox to see if
+anything needs to be expunged.
 
-See also: :ref:`setting-namespace-mailbox_autoexpunge_max_mails`.
+.. seealso:: :dovecot_core:ref:`namespace/mailbox/autoexpunge_max_mails`.
 
 
-.. _setting-namespace-mailbox_autoexpunge_max_mails:
-
-``namespace/mailbox/autoexpunge_max_mails``
--------------------------------------------
-
-.. versionadded:: v2.2.25
-
-- Default: ``0``
-- Values:  :ref:`uint`:
+.. dovecot_core:setting:: namespace/mailbox/autoexpunge_max_mails
+   :added: v2.2.25
+   :default: 0
+   :values: @uint
 
 Mails are autoexpunged until mail count is at or below this number of
 messages.
 
 Once this threshold has been reached,
-:ref:`setting-namespace-mailbox_autoexpunge` processing is done.
+:dovecot_core:ref:`namespace/mailbox/autoexpunge` processing is done.
 
 
-.. _setting-namespace-mailbox_special_use:
-
-``namespace/mailbox/special_use``
----------------------------------
-
-- Default: <empty>
-- Values:  :ref:`string`:
+.. dovecot_core:setting:: namespace/mailbox/special_use
+   :values: @string
 
 Space-separated list of SPECIAL-USE
 (`RFC 6154 <http://www.faqs.org/rfcs/rfc6154.html>`_) flags to broadcast for
