@@ -26,16 +26,16 @@ Configuration
 The auth-policy server is a core feature and does not require plugin(s)
 to work. To activate this feature, you need to configure it.
 
--  :ref:`setting-auth_policy_server_url`: URL of the policy server, url is appended
-   with ``?command=allow/report`` unless it ends with ``&``, at which just
-   ``command=allow/report`` is added.
+-  :dovecot_core:ref:`auth_policy_server_url`: URL of the policy server, url
+   is appended with ``?command=allow/report`` unless it ends with ``&``, at
+   which just ``command=allow/report`` is added.
 
    -  *Default*: None (**REQUIRED** configuration)
 
    -  Example: ``auth_policy_server_url = http://example.com:4001/``
 
--  :ref:`setting-auth_policy_server_api_header`: Header and value to add to request
-   (for API authentication)
+-  :dovecot_core:ref:`auth_policy_server_api_header`: Header and value to add
+   to request (for API authentication)
 
    -  *Default*: None (No authentication is done)
 
@@ -43,51 +43,53 @@ to work. To activate this feature, you need to configure it.
 
    -  Example: ``Authorization: Basic <base64-encoded value>``
 
--  :ref:`setting-auth_policy_server_timeout_msecs`: Request timeout in milliseconds
+-  :dovecot_core:ref:`auth_policy_server_timeout_msecs`: Request timeout in
+    milliseconds
 
    -  *Default*: ``auth_policy_server_timeout_msecs = 2000``
 
--  :ref:`setting-auth_policy_hash_mech`: Hash mechanism to use for password, you
-   can use any hash mechanism supported by Dovecot
+-  :dovecot_core:ref:`auth_policy_hash_mech`: Hash mechanism to use for
+   password, you can use any hash mechanism supported by Dovecot
    (md4,md5,sha1,sha256,sha512)
 
    -  *Default*: ``auth_policy_hash_mech = sha256``
 
--  :ref:`setting-auth_policy_hash_nonce`: Cluster-wide nonce to add to hash.
-   This should contain a secret randomly generated string, which is the same for each Dovecot server within the cluster.
+-  :dovecot_core:ref:`auth_policy_hash_nonce`: Cluster-wide nonce to add to
+   hash.  This should contain a secret randomly generated string, which is the
+   same for each Dovecot server within the cluster.
 
    -  *Default*: None (**REQUIRED** configuration)
 
--  :ref:`setting-auth_policy_request_attributes`: Request attributes specification
-   (see attributes section below)
+-  :dovecot_core:ref:`auth_policy_request_attributes`: Request attributes
+   specification (see attributes section below)
 
    -  *Default*: ``auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s``
    -  .. versionadded:: v2.3.11
 
      - *Default* : ``auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s session_id=%{session}``
 
--  :ref:`setting-auth_policy_reject_on_fail`: If policy request fails for some
-   reason should users be rejected
+-  :dovecot_core:ref:`auth_policy_reject_on_fail`: If policy request fails for
+   some reason should users be rejected
 
    -  *Default*: ``auth_policy_reject_on_fail = no``
 
--  :ref:`setting-auth_policy_hash_truncate`: How many **bits** to use from password
-   hash.
+-  :dovecot_core:ref:`auth_policy_hash_truncate`: How many **bits** to use
+   from password hash.
 
    -  *Default*: ``auth_policy_hash_truncate = 12``
 
--  :ref:`setting-auth_policy_check_before_auth`: Whether to do policy lookup before
-   authentication is started
+-  :dovecot_core:ref:`auth_policy_check_before_auth`: Whether to do policy
+   lookup before authentication is started
 
    -  *Default*: ``auth_policy_check_before_auth = yes``
 
--  :ref:`setting-auth_policy_check_after_auth`: Whether to do policy lookup after
-   authentication is completed
+-  :dovecot_core:ref:`auth_policy_check_after_auth`: Whether to do policy
+   lookup after authentication is completed
 
    -  *Default*: ``auth_policy_check_after_auth = yes``
 
--  :ref:`setting-auth_policy_report_after_auth`: Whether to report authentication
-   result
+-  :dovecot_core:ref:`auth_policy_report_after_auth`: Whether to report
+   authentication result
 
    -  *Default*: ``auth_policy_report_after_auth = yes``
 
@@ -162,7 +164,7 @@ produces
 
 .. parsed-literal::
 
-   :ref:`setting-imap_id_retain` = yes
+   :dovecot_core:ref:`imap_id_retain` = yes
 
 for this to work.
 

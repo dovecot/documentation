@@ -47,7 +47,7 @@ have changed. This typically matters only when user is being moved to another
 backend and soon back again, or if the user is simultaneously being accessed
 by multiple backends. Default is 2 seconds.
 
-Must be less than :ref:`setting-director_user_expire` (Default: 15min).
+Must be less than :dovecot_core:ref:`director_user_expire` (Default: 15min).
 
 
 .. dovecot_plugin:setting:: metacache_max_grace
@@ -96,14 +96,14 @@ It's also possible to do this manually by running the
 
 
 .. dovecot_plugin:setting:: metacache_roots
-   :default: @setting-mail_home, @setting-mail_chroot
+   :default: @mail_home;dovecot_core, @mail_chroot;dovecot_core
    :plugin: obox
    :values: @string
 
 List of metacache root directories, separated with ``:``.
 
-Usually this is automatically parsed directly from :ref:`setting-mail_home`
-and :ref:`setting-mail_chroot` settings.
+Usually this is automatically parsed directly from
+:dovecot_core:ref:`mail_home` and :dovecot_core:ref:`mail_chroot` settings.
 
 Accessing a metacache directory outside these roots will result in a warning:
 "Index directory is outside metacache_roots".
@@ -149,7 +149,7 @@ This setting handles the object storage configuration for index bundles.
 
 
 .. dovecot_plugin:setting:: obox_max_parallel_copies
-   :default: @setting-mail_prefetch_count
+   :default: @mail_prefetch_count;dovecot_core
    :plugin: obox
    :values: @uint
 
@@ -161,7 +161,7 @@ HTTP request.
 
 
 .. dovecot_plugin:setting:: obox_max_parallel_deletes
-   :default: @setting-mail_prefetch_count
+   :default: @mail_prefetch_count;dovecot_core
    :plugin: obox
    :values: @uint
 
@@ -173,7 +173,7 @@ HTTP request.
 
 
 .. dovecot_plugin:setting:: obox_max_parallel_writes
-   :default: @setting-mail_prefetch_count
+   :default: @mail_prefetch_count;dovecot_core
    :plugin: obox
    :values: @uint
 

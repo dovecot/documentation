@@ -8,7 +8,7 @@ v2.1 is mostly compatible with v2.0 configuration, except:
  * Usernames in authentication are now lowercased by default. See
 
    * Non-lowercase usernames in password/user database result in "unknown user" errors
-   * To allow mixed case usernames again, set :ref:`auth_username_format= <setting-auth_username_format>` (i.e. to empty)
+   * To allow mixed case usernames again, set :dovecot_core:ref:`auth_username_format= <auth_username_format>` (i.e. to empty)
 
  * :ref:`plugin-fts-solr` full text search backend changed to use mailbox GUIDs instead of mailbox names, requiring reindexing everything. ``solr_old`` backend can be used with old indexes to avoid reindexing, but it doesn't support some newer features.
  * :ref:`Expire plugin <plugin-expire>`: Only go through users listed by userdb iteration. Delete dict rows for nonexistent users, unless ``expire_keep_nonexistent_users=yes``.

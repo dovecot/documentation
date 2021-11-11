@@ -61,7 +61,7 @@ can become in metacache until the FTS triplet is uploaded to object storage.
 Define the location for the fts cache and indexes path on remote filesystems.
 
 It must be somewhat synchronized with :dovecot_plugin:ref:`obox_fs` and
-:ref:`setting-mail_location`.
+:dovecot_core:ref:`mail_location`.
 
 It is strongly recommended to use :ref:`fscache` to speed up
 :ref:`obox <obox_settings>` and Dovecot FTS Engine operation.

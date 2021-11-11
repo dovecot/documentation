@@ -1,22 +1,31 @@
 .. _core_settings_advanced:
 
-======================
-Core Advanced Settings
-======================
+==============================
+Dovecot Core Advanced Settings
+==============================
+
+See :ref:`settings` for list of all setting groups.
 
 .. warning::
 
   These settings should not normally be changed.
 
-See :ref:`settings` for list of all setting groups.
 
-.. _setting-mail_cache_min_mail_count:
+.. dovecot_core:setting:: mail_cache_max_size
+   :added: v2.3.11
+   :default: 1G
+   :values: @size
 
-``mail_cache_min_mail_count``
------------------------------
+If ``dovecot.index.cache`` becomes becomes larger than this, it's truncated to
+empty size.
 
-- Default: ``0``
-- Values: :ref:`uint`
+.. warning:: The maximum value is 1 GB because the cache file format can't
+             currently support large sizes.
+
+
+.. dovecot_core:setting:: mail_cache_min_mail_count
+   :default: 0
+   :values: @uint
 
 Only update cache file when the mailbox contains at least this many messages.
 
@@ -24,13 +33,49 @@ With a setting other than ``0``, you can optimize behavior for fewer disk
 writes at the cost of more disk reads.
 
 
-.. _setting-mail_cache_unaccessed_field_drop:
+.. dovecot_core:setting:: mail_cache_purge_continued_percentage
+   :default: 200
+   :values: @uint
 
-``mail_cache_unaccessed_field_drop``
-------------------------------------
+Compress the cache file when n% of rows contain continued rows.
 
-- Default: ``30days``
-- Values:  :ref:`time`
+For example ``200`` means that the record has 2 continued rows, i.e. it exists
+in 3 separate segments in the cache file.
+
+
+.. dovecot_core:setting:: mail_cache_purge_delete_percentage
+   :default: 20
+   :values: @uint
+
+Compress the cache file when n% of records are deleted (by count, not by
+size).
+
+
+.. dovecot_core:setting:: mail_cache_purge_header_continue_count
+   :default: 4
+   :values: @uint
+
+Compress the cache file when we need to follow more than n next_offsets to
+find the latest cache header.
+
+
+.. dovecot_core:setting:: mail_cache_purge_min_size
+   :default: 32k
+   :values: @size
+
+Only compress cache file if it is larger than this size.
+
+
+.. dovecot_core:setting:: mail_cache_record_max_size
+   :default: 64k
+   :values: @size
+
+If a cache record becomes larger than this, don't add it to the cache file.
+
+
+.. dovecot_core:setting:: mail_cache_unaccessed_field_drop
+   :default: 30days
+   :values: @time
 
 Specifies when cache decisions are downgraded.
 
@@ -45,160 +90,61 @@ Specifies when cache decisions are downgraded.
 See :ref:`mail_cache_settings` for details.
 
 
-.. _setting-mail_cache_record_max_size:
-
-``mail_cache_record_max_size``
-------------------------------
-
-- Default: ``64k``
-- Values:  :ref:`size`
-
-If a cache record becomes larger than this, don't add it to the cache file.
-
-
-.. _setting-mail_cache_max_size:
-
-``mail_cache_max_size``
------------------------
-
-.. versionadded:: v2.3.11
-
-- Default: ``1G``
-- Values:  :ref:`size`
-
-If dovecot.index.cache becomes becomes larger than this, it's truncated to
-empty size. The maximum value is 1 GB because the cache file format can't
-currently support large sizes.
-
-
-.. _setting-mail_cache_purge_min_size:
-
-``mail_cache_purge_min_size``
---------------------------------
-
-- Default: ``32k``
-- Values:  :ref:`size`
-
-Only compress cache file if it is larger than this size.
-
-
-.. _setting-mail_cache_purge_delete_percentage:
-
-``mail_cache_purge_delete_percentage``
------------------------------------------
-
-- Default: ``20``
-- Values: :ref:`uint`
-
-Compress the cache file when n% of records are deleted (by count, not by
-size).
-
-
-.. _setting-mail_cache_purge_continued_percentage:
-
-``mail_cache_purge_continued_percentage``
---------------------------------------------
-
-- Default: ``200``
-- Values: :ref:`uint`
-
-Compress the cache file when n% of rows contain continued rows.
-
-For example ``200`` means that the record has 2 continued rows, i.e. it exists
-in 3 separate segments in the cache file.
-
-
-.. _setting-mail_cache_purge_header_continue_count:
-
-``mail_cache_purge_header_continue_count``
----------------------------------------------
-
-- Default: ``4``
-- Values: :ref:`uint`
-
-Compress the cache file when we need to follow more than n next_offsets to
-find the latest cache header.
-
-
-.. _setting-mail_index_rewrite_min_log_bytes:
-
-``mail_index_rewrite_min_log_bytes``
-------------------------------------
-
-- Default: ``8k``
-- Values:  :ref:`size`
-
-Rewrite the index when the number of bytes that needs to be read from the
-.log index file on refresh is between these min/max values.
-
-See :ref:`setting-mail_index_rewrite_max_log_bytes`
-
-
-.. _setting-mail_index_rewrite_max_log_bytes:
-
-``mail_index_rewrite_max_log_bytes``
-------------------------------------
-
-- Default: ``128k``
-- Values:  :ref:`size`
-
-Rewrite the index when the number of bytes that needs to be read from the
-.log index file on refresh is between these min/max values.
-
-See :ref:`setting-mail_index_rewrite_min_log_bytes`
-
-
-.. _setting-mail_index_log_rotate_max_size:
-
-``mail_index_log_rotate_max_size``
-----------------------------------
-
-- Default: ``1M``
-- Values:  :ref:`size`
+.. dovecot_core:setting:: mail_index_log_rotate_max_size
+   :default: 1M
+   :values: @size
 
 Always rotate transaction log after it exceeds this size.
 
-See also:
+.. seealso::
 
-* :ref:`setting-mail_index_log_rotate_min_age`
-* :ref:`setting-mail_index_log_rotate_min_size`
+   * :dovecot_core:ref:`mail_index_log_rotate_min_age`
+   * :dovecot_core:ref:`mail_index_log_rotate_min_size`
 
 
-.. _setting-mail_index_log_rotate_min_age:
-
-``mail_index_log_rotate_min_age``
----------------------------------
-
-- Default: ``5mins``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: mail_index_log_rotate_min_age
+   :default: 5mins
+   :values: @time
 
 Rotate transaction log if it is older than this value and is larger than
-:ref:`setting-mail_index_log_rotate_min_size`.
+:dovecot_core:ref:`mail_index_log_rotate_min_size`.
 
-See :ref:`setting-mail_index_log_rotate_max_size`
+.. seealso:: :dovecot_core:ref:`mail_index_log_rotate_max_size`
 
 
-.. _setting-mail_index_log_rotate_min_size:
-
-``mail_index_log_rotate_min_size``
-----------------------------------
-
-- Default: ``32k``
-- Values:  :ref:`size`
+.. dovecot_core:setting:: mail_index_log_rotate_min_size
+   :default: 32k
+   :values: @size
 
 Rotate transaction log if it is larger than this size and is older than
-:ref:`setting-mail_index_log_rotate_min_age`.
+:dovecot_core:ref:`mail_index_log_rotate_min_age`.
 
 
-.. _setting-mail_index_log2_max_age:
+.. dovecot_core:setting:: mail_index_log2_max_age
+   :default: 2days
+   :values: @time
 
-``mail_index_log2_max_age``
----------------------------
+Delete ``.log.2`` index file when older than this value.
 
-- Default: ``2days``
-- Values:  :ref:`time`
+Older ``.log.2`` files are useful for QRESYNC and dsync, so this value should
+not be too low.
 
-Delete .log.2 index file when older than this value.
 
-Older .log.2 files are useful for QRESYNC and dsync, so this value should not
-be too low.
+.. dovecot_core:setting:: mail_index_rewrite_max_log_bytes
+   :default: 128k
+   :values: @size
+
+Rewrite the index when the number of bytes that needs to be read from the
+.log index file on refresh is between these min/max values.
+
+.. seealso:: :dovecot_core:ref:`mail_index_rewrite_min_log_bytes`
+
+
+.. dovecot_core:setting:: mail_index_rewrite_min_log_bytes
+   :default: 8k
+   :values: @size
+
+Rewrite the index when the number of bytes that needs to be read from the
+.log index file on refresh is between these min/max values.
+
+.. seealso:: :dovecot_core:ref:`mail_index_rewrite_max_log_bytes`

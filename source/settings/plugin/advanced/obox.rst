@@ -220,7 +220,7 @@ Path to a database which metacache process periodically writes to.
 
 This database is read by metacache at startup to get the latest state.
 
-The path is relative to :ref:`setting-state_dir`.
+The path is relative to :dovecot_core:ref:`state_dir`.
 
 
 .. dovecot_plugin:setting:: obox_allow_inconsistency
@@ -370,7 +370,7 @@ setting was removed from v2.3 and made the default. (Although there is
 
 
 .. dovecot_plugin:setting:: obox_username
-   :default: @setting-mail_location
+   :default: @mail_location;dovecot_core
    :plugin: obox
    :values: @string
 

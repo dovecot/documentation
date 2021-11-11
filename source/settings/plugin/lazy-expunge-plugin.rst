@@ -50,7 +50,7 @@ in the user's account.
 This setting works with the following mailbox formats:
 
 * :ref:`Maildir <maildir_mbox_format>` (with
-  :ref:`maildir_copy_with_hardlinks = yes <setting-maildir_copy_with_hardlinks>`,
+  :dovecot_core:ref:`maildir_copy_with_hardlinks = yes <maildir_copy_with_hardlinks>`,
   which is the default)
 * :ref:`sdbox/mdbox <dbox_mbox_format>`
 * :ref:`obox with fs-dictmap <dictmap_configuration>`

@@ -61,8 +61,9 @@ Locking
 
 Make sure that all software accessing the mboxes are using the same locking
 methods in the same order. The order is important to prevent deadlocking.
-From Dovecot's side you can change these from :ref:`setting-mbox_read_locks`
-and :ref:`setting-mbox_write_locks` settings.
+From Dovecot's side you can change these from
+:dovecot_core:ref:`mbox_read_locks`
+and :dovecot_core:ref:`mbox_write_locks` settings.
 
 See :ref:`mbox_mbox_format_locking` for details on the various locking
 strategies.
@@ -91,7 +92,7 @@ You can give Dovecot access to mail group by setting:
 
   mail_privileged_group = mail
 
-NOTE: With :ref:`lda` the :ref:`setting-mail_privileged_group` setting
+NOTE: With :ref:`lda` the :dovecot_core:ref:`mail_privileged_group` setting
 unfortunately doesn't work, so you'll have to use the sticky bit, disable
 dotlocking completely, or use LMTP server instead.
 
@@ -127,7 +128,7 @@ files, you can work around not having a per-user directory:
 
 * Set users' home directory in userdb to some empty non-writable directory,
   for example ``/var/empty``
-* Modify :ref:`setting-mail_location` so that the mail root directory is also
+* Modify :dovecot_core:ref:`mail_location` so that the mail root directory is also
   the empty directory and append ``:INDEX=MEMORY`` to it. For example:
   ``mail_location = mbox:/var/empty:INBOX=/var/mail/%u:INDEX=MEMORY``
 * Note that if you have IMAP users, they'll see ``/var/empty`` as the
@@ -200,13 +201,9 @@ There are, however, some further considerations when doing this; see
 Settings
 ^^^^^^^^
 
-.. _setting-mbox_dirty_syncs:
-
-``mbox_dirty_syncs``
---------------------
-
-- Default: ``yes``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: mbox_dirty_syncs
+   :default: yes
+   :values: @boolean
 
 Enable optimized mbox syncing?
 
@@ -238,31 +235,24 @@ certain that mails are where it expects them to be, so whenever accessing some
 mail, it first verifies that it really is the correct mail by finding its
 X-UID header. If the X-UID header is different, it fallbacks to a full sync
 to find the mail's correct position. The dirty mode goes away after a full
-sync. If :ref:`setting-mbox_lazy_writes` was enabled and the mail didn't yet
-have an X-UID header, Dovecot uses the MD5 sum of a couple of headers to
+sync. If :dovecot_core:ref:`mbox_lazy_writes` was enabled and the mail didn't
+yet have an X-UID header, Dovecot uses the MD5 sum of a couple of headers to
 compare the mails.
 
-See :ref:`setting-mbox_very_dirty_syncs`
+.. seealso:: :dovecot_core:ref:`mbox_very_dirty_syncs`
 
 
-.. _setting-mbox_dotlock_change_timeout:
-
-``mbox_dotlock_change_timeout``
--------------------------------
-
-- Default: ``2 mins``
-- Values: :ref:`time`
+.. dovecot_core:setting:: mbox_dotlock_change_timeout
+   :default: 2 mins
+   :values: @time
 
 Override a lockfile after this amount of time if a dot-lock exists but the
 mailbox hasn't been modified in any way.
 
 
-.. _setting-mbox_lazy_writes:
-
-``mbox_lazy_writes``
---------------------
-- Default: ``yes``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: mbox_lazy_writes
+   :default: yes
+   :values: @boolean
 
 If enabled, mbox headers (e.g., meatadat updates, such as writing X-UID
 headers or flag changes) are not written until a full write sync is
@@ -283,39 +273,28 @@ downside is that other processes don't notice the changes immediately (but
 other Dovecot processes do notice because the changes are in index files).
 
 
-.. _setting-mbox_lock_timeout:
-
-``mbox_lock_timeout``
----------------------
-
-- Default: ``5 mins``
-- Values: :ref:`time`
+.. dovecot_core:setting:: mbox_lock_timeout
+   :default: 5 mins
+   :values: @time
 
 The maximum time to wait for all locks to be released before aborting.
 
 
-.. _setting-mbox_md5:
-
-``mbox_md5``
-------------
-
-- Default: ``apop3d``
+.. dovecot_core:setting:: mbox_md5
+   :default: apop3d
+   :values: @string
 
 The mail-header selection algorithm to use for MD5 POP3 UIDLs when the
-setting ``pop3_uidl_format = %m`` is applied.
+setting :dovecot_core:ref:`pop3_uidl_format` = ``%m`` is applied.
 
-See :ref:`setting-pop3_uidl_format`
+.. seealso:: :dovecot_core:ref:`pop3_uidl_format`
 
 .. todo:: What are the possible values?
 
 
-.. _setting-mbox_min_index_size:
-
-``mbox_min_index_size``
------------------------
-
-- Default: ``0``
-- Values: :ref:`size`
+.. dovecot_core:setting:: mbox_min_index_size
+   :default: 0
+   :values: @size
 
 For mboxes smaller than this size, index files are not written.
 
@@ -324,13 +303,9 @@ If an index file already exists, it gets read but not updated.
 The default should not be changed for most installations.
 
 
-.. _setting-mbox_read_locks:
-
-``mbox_read_locks``
--------------------
-
-- Default: ``fcntl``
-- Values: ``dotlock, dotlock_try, fcntl, flock, lockf``
+.. dovecot_core:setting:: mbox_read_locks
+   :default: fcntl
+   :values: dotlock, dotlock_try, fcntl, flock, lockf
 
 Specify which locking method(s) to use for locking the mbox files during
 reading.
@@ -341,30 +316,20 @@ Descriptions of the locking methods can be found at
 :ref:`mbox_mbox_format_locking`.
 
 
-.. _setting-mbox_very_dirty_syncs:
-
-``mbox_very_dirty_syncs``
--------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: mbox_very_dirty_syncs
+   :default: no
+   :values: @boolean
 
 If enabled, Dovecot performs the optimizations from
-:ref:`setting-mbox_dirty_syncs` also for the IMAP SELECT, EXAMINE, EXPUNGE,
-and CHECK commands.
+:dovecot_core:ref:`mbox_dirty_syncs` also for the IMAP SELECT, EXAMINE,
+EXPUNGE, and CHECK commands.
 
-If set, this option overrides ``mbox_dirty_syncs``.
-
-See :ref:`setting-mbox_dirty_syncs`
+If set, this option overrides :dovecot_core:ref:`mbox_dirty_syncs`.
 
 
-.. _setting-mbox_write_locks:
-
-``mbox_write_locks``
---------------------
-
-- Default: ``dotlock fcntl``
-- Values: ``dotlock, dotlock_try, fcntl, flock, lockf``
+.. dovecot_core:setting:: mbox_write_locks
+   :default: dotlock fcntl
+   :values: dotlock, dotlock_try, fcntl, flock, lockf
 
 Specify which locking method(s) to use for locking the mbox files during
 writing.

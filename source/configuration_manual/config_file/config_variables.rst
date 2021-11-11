@@ -467,10 +467,12 @@ Authentication variables
 |          |                       |                                                               |
 |          |                       | .. versionadded:: v2.2.19                                     |
 +----------+-----------------------+---------------------------------------------------------------+
-|          | client_id             | If :ref:`setting-imap_id_retain` is enabled this variable is  |
-|          |                       | populated with the client ID request as IMAP arglist.         |
+|          | client_id             | If :dovecot_core:ref:`imap_id_retain` is enabled this         |
+|          |                       | variable is populated with the client ID request as IMAP      |
+|          |                       | arglist.                                                      |
 |          |                       |                                                               |
-|          |                       | For directly logging the ID see :ref:`setting-imap_id_log`.   |
+|          |                       | For directly logging the ID see                               |
+|          |                       | :dovecot_core:ref:`imap_id_log`.                              |
 |          |                       |                                                               |
 |          |                       | .. versionadded:: v2.2.29                                     |
 +----------+-----------------------+---------------------------------------------------------------+

@@ -55,7 +55,7 @@ done.
 
 When using IAM you must ensure that the ``fs-auth`` service has proper
 permissions/owner. Configure the user for the fs-auth listener to be the same
-as for :ref:`setting-mail_uid`.
+as for :dovecot_core:ref:`mail_uid`.
 
 .. code-block:: none
 

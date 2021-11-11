@@ -27,8 +27,8 @@ Things that you should consider in your config:
  * :ref:`ACL settings <acl>`
  * :ref:`Quota <quota>` without rules (to make sure quota gets calculated, but not enforced)
  * :ref:`Mail caching settings <mail_cache_settings>`
- * :ref:`Attachment detection settings <setting-mail_attachment_detection_options>`
- * :ref:`Mailbox attribute settings <setting-mail_attribute_dict>`
+ * :dovecot_core:ref:`Attachment detection settings <mail_attachment_detection_options>`
+ * :dovecot_core:ref:`Mailbox attribute settings <mail_attribute_dict>`
  * :ref:`Compression <zlib_plugin>` and :ref:`encryption <mail_crypt_plugin>` settings
  * :ref:`NFS related settings <nfs>`
 
@@ -236,7 +236,8 @@ If you need to retain POP3 support on your new system, you should use :ref:`plug
     pop3_migration_mailbox = POP3-MIGRATION-NS/INBOX
   }
 
-You can alternatively configure compatible UIDL format in Dovecot. See :ref:`setting-pop3_uidl_format`.
+You can alternatively configure compatible UIDL format in Dovecot. See
+:dovecot_core:ref:`pop3_uidl_format`.
 
 Executing migration
 -------------------
@@ -281,7 +282,7 @@ Migration from Gmail to Dovecot
 ===============================
 
 You can use dsync migration via IMAP protocol, but there are a few things different with Gmail compared to other IMAP servers.
-With Gmail when you delete a mail from POP3, the mail is only hidden from future POP3 sessions, but it's still available via IMAP. If you wish to preserve this functionality, there's a :ref:`setting-pop3_deleted_flag` setting.
+With Gmail when you delete a mail from POP3, the mail is only hidden from future POP3 sessions, but it's still available via IMAP. If you wish to preserve this functionality, there's a :dovecot_core:ref:`pop3_deleted_flag` setting.
 
 Gmail has labels. If a message has multiple labels, it shows up in multiple IMAP folders, but it's still the same message and uses quota only once for that message.
 Dovecot currently doesn't have such support, so the migration will copy the message to multiple folders and each instance will use up quota.
@@ -315,9 +316,9 @@ Google has very limited support for username/password authentication, so you mig
 GMail Migration Feature
 -----------------------
 
-There is a :ref:`setting-imapc_features` = gmail-migration setting that helps with this migration. It will:
+There is a :dovecot_core:ref:`imapc_features` = ``gmail-migration`` setting that helps with this migration. It will:
 
- * Set the :ref:`setting-pop3_deleted_flag` to mails that no longer exist in POP3
+ * Set the :dovecot_core:ref:`pop3_deleted_flag` to mails that no longer exist in POP3
  * Return POP3 UIDL in GMail format so dsync can preserve it.
  * Add a new ``$GmailHaveLabels`` keyword to archived mails in the ``\All`` mailbox, which means those mails are not archived. You probably don't want to migrate these mails.
 

@@ -123,7 +123,7 @@ File                   Description
 ====================== =========================================================
 ``dovecot.map.index*`` The "map index"
 ``m.*``                Mail data. Each m.* file contains one or more messages.
-                       :ref:`setting-mdbox_rotate_size` can be used to
+                       :dovecot_core:ref:`mdbox_rotate_size` can be used to
                        configure how large the files can grow.
 ====================== =========================================================
 
@@ -187,7 +187,7 @@ primary path. This means that it's possible to move older mails that are
 rarely accessed to cheaper (slower) storage.
 
 To enable this functionality, use the ``ALT`` parameter in the
-:ref:`mail location <setting-mail_location>`.
+:dovecot_core:ref:`mail location <mail_location>`.
 See :ref:`alternate storage configuration <dbox_settings_alt_storage>`.
 
 When messages are moved from primary storage to alternate storage, only the
@@ -233,9 +233,9 @@ at the MTA, MDA or LDA (as it is recommended with
 :ref:`mbox <mbox_mbox_format>`).
 
 There is one exception: when
-:ref:`pop3_reuse_xuidl = yes <setting-pop3_reuse_xuidl>` (which is deprecated).
-In this case, the ``X-UIDL`` header is used for the POP3 UIDLs. Therefore,
-in this case it is recommended to strip the ``X-UIDL`` mail headers
+:dovecot_core:ref:`pop3_reuse_xuidl = yes <pop3_reuse_xuidl>` (which is
+deprecated). In this case, the ``X-UIDL`` header is used for the POP3 UIDLs.
+Therefore, in this case it is recommended to strip the ``X-UIDL`` mail headers
 *case-insensitively* at the MTA, MDA or LDA.
 
 Accessing Expunged Mails with mdbox

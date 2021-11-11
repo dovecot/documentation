@@ -74,17 +74,16 @@ in this mailbox ``someone1`` would access a mailbox with the name
 Additionally imapc must be configured accordingly on the backends:
  * On backends either passdb or userdb for non-master users must return
    ``userdb_imapc_master_user=%{user}`` or ``imapc_master_user=%{user}``
- * :ref:`setting-imapc_master_user` becomes set using userdb. In case of
+ * :dovecot_core:ref:`imapc_master_user` becomes set using userdb. In case of
    a simple setup ``imapc_master_user`` can also be just set to ``%u``
    (the logged in user).
- * :ref:`setting-imapc_password` must be set to the master password which is
-   configured on all backends and directors
- * :ref:`setting-imapc_host` must point to a load balancer's address that
+ * :dovecot_core:ref:`imapc_password` must be set to the master password which
+   is configured on all backends and directors
+ * :dovecot_core:ref:`imapc_host` must point to a load balancer's address that
    connects to Dovecot director/proxy
- * :ref:`setting-imapc_features`: For the best performance and functionality,
+ * :dovecot_core:ref:`imapc_features`: For the best performance and functionality,
    the setting should contain at least
    ``fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login``
-
 
 .. versionadded:: 2.3.15 INDEXPVT for imapc is supported from 2.3.15 onwards.
                   In general INDEXPVT with imapc is only supported for non-obox

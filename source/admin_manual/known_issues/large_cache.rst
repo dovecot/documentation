@@ -52,4 +52,4 @@ maximum cache file size (1 GB by default). For example to 1500M.
 
 An alternative solution to this is to reduce the maximum cache file size to
 be somewhat lower than the imap service's vsz_limit. See
-:ref:`setting-mail_cache_max_size`.
+:dovecot_core:ref:`mail_cache_max_size`.

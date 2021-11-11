@@ -51,7 +51,9 @@ hole.
 
 Since one login process can handle only one connection, the service's
 ``process_limit`` setting limits the number of users that can be logging in at
-the same time (defaults to :ref:`default_process_limit=100 <setting-default_process_limit>`). SSL/TLS proxying
+the same time (defaults to
+:dovecot_core:ref:`default_process_limit=100 <default_process_limit>`).
+SSL/TLS proxying
 processes are also counted here, so if you're using SSL/TLS you'll need to make
 sure this count is higher than the maximum number of users that can be logged
 in simultaneously. With TLS/SSL connections, the login process will not

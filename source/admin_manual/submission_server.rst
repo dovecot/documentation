@@ -75,7 +75,7 @@ amend your configuration for the new protocol.
 
 BURL support requires a working IMAP URLAUTH implementation. Details on
 configuring Dovecot's URLAUTH support can be found at
-:ref:`setting-imap_urlauth_host`.
+:dovecot_core:ref:`imap_urlauth_host`.
 
 The following settings apply to the Submission service:
 

@@ -1,30 +1,23 @@
 .. _core_settings:
 
-========================
+=====================
 Dovecot Core Settings
-========================
+=====================
 
 See :ref:`settings` for list of all setting groups.
 
-.. _setting-auth_anonymous_username:
 
-``auth_anonymous_username``
----------------------------
-
-- Default: ``anonymous``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: auth_anonymous_username
+   :default: anonymous
+   :values: @string
 
 This specifies the username to be used for users logging in with the ANONYMOUS
 SASL mechanism.
 
 
-.. _setting-auth_cache_negative_ttl:
-
-``auth_cache_negative_ttl``
----------------------------
-
-- Default: ``1hour``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: auth_cache_negative_ttl
+   :default: hour
+   :values: @time
 
 This sets the time to live for negative hits (i.e., when the user is
 not found or there is a password mismatch).
@@ -32,41 +25,28 @@ not found or there is a password mismatch).
 The value ``0`` completely disables caching of these hits.
 
 
-.. _setting-auth_cache_size:
-
-``auth_cache_size``
--------------------
-
-- Default: ``0``
-- Values:  :ref:`size`
+.. dovecot_core:setting:: auth_cache_size
+   :default: 0
+   :values: @size
 
 The authentication cache size (e.g., 10M).
 
 The setting ``auth_cache_size = 0`` disables use of the authentication cache.
 
 
-.. _setting-auth_cache_ttl:
-
-``auth_cache_ttl``
-------------------
-
-- Default: ``1hour``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: auth_cache_ttl
+   :default: 1hour
+   :values: @time
 
 This determines the time to live for cached data. After the TTL
 expires, the cached record is no longer used, unless the main
 database look-up returns internal failure.
 
 
-.. _setting-auth_cache_verify_password_with_worker:
-
-``auth_cache_verify_password_with_worker``
-------------------------------------------
-
-.. versionadded:: v2.2.34
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_core:setting:: auth_cache_verify_password_with_worker
+   :added: v2.2.34
+   :default: no
+   :values: @boolean
 
 .. Warning:: This feature doesn't currently work correctly when the passdb
              lookup is done via auth-workers. The password is checked correctly,
@@ -77,52 +57,36 @@ Setting this to yes moves the verification to auth-worker processes.
 This allows distributing the hash calculations to multiple CPU cores, which could make sense if strong hashes are used.
 
 
-.. _setting-auth_debug:
-
-``auth_debug``
---------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: auth_debug
+   :default: no
+   :values: @boolean
 
 Enables all authentication debug logging (also enables
-:ref:`setting-auth_verbose`). Passwords are logged as ``<hidden>``.
+:dovecot_core:ref:`auth_verbose`). Passwords are logged as ``<hidden>``.
 
 
-.. _setting-auth_debug_passwords:
-
-``auth_debug_passwords``
-------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: auth_debug_passwords
+   :default: no
+   :values: @boolean
 
 This setting adjusts log verbosity. In the event of password
 mismatches, the passwords and the scheme used are logged so that the
 problem can be debugged.
 
-Enabling this enables :ref:`setting-auth_debug` as well.
+Enabling this enables :dovecot_core:ref:`auth_debug` as well.
 
 
-.. _setting-auth_default_realm:
-
-``auth_default_realm``
-----------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: auth_default_realm
+   :values: @string
 
 This setting indicates the default realm/domain to use if none has
 been specified. The setting is used for both SASL realms
 and appending an @domain element to the username in plaintext logins.
 
 
-.. _setting-auth_failure_delay:
-
-``auth_failure_delay``
-----------------------
-
-- Default: ``2secs``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: auth_failure_delay
+   :default: 2secs
+   :values: @time
 
 This is the delay before replying to failed authentication attempts.
 
@@ -130,42 +94,28 @@ This setting defines the interval for which the authentication process flushes
 all auth failures. Thus, this is the maximum interval a user may encounter.
 
 
-.. _setting-auth_gssapi_hostname:
-
-``auth_gssapi_hostname``
-------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: auth_gssapi_hostname
+   :default: !<name returned by gethostname()>
+   :values: @string
 
 This supplies the hostname to use in Generic Security Services API
 (GSSAPI) principal names.
 
-The default is to use the name returned by gethostname().
-
 Use ``"$ALL"`` (with the quotation marks) to allow all keytab entries.
 
 
-.. _setting-auth_krb5_keytab:
-
-``auth_krb5_keytab``
---------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: auth_krb5_keytab
+   :default: !<system default (e.g. /etc/krb5.keytab)>
+   :values: @string
 
 This specifies the Kerberos keytab to use for the GSSAPI mechanism.
 
-If this is left undefined, the system default (usually ``/etc/krb5.keytab``)
-will be used.
-
-.. Note:: You may need to set the auth service to run as root in order for this file to be readable.
+.. Note:: You may need to set the auth service to run as root in order for
+          this file to be readable.
 
 
-.. _setting-auth_master_user_separator:
-
-``auth_master_user_separator``
-------------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: auth_master_user_separator
+   :values: @string
 
 If you want to allow master users to log in by specifying the master
 username within the normal username string (i.e., not using the SASL
@@ -175,35 +125,30 @@ Example:
 
 .. code-block:: none
 
-   auth_master_user_separator = *
+  auth_master_user_separator = *
 
 
-.. _setting-auth_mechanisms:
-
-``auth_mechanisms``
--------------------
-
-- Default: ``plain``
+.. dovecot_core:setting:: auth_mechanisms
+   :default: plain
+   :values: !<valid mechanism>
 
 Here you can supply a space-separated list of the authentication
 mechanisms you wish to use.
 
 Supported mechanisms:
 
-* plain
-* login
-* digest-md5
-* cram-md5
-* ntml
-* rpa
-* apop
-* anonymous
-* gssapi
-* otp
-* skey
-* gss-spnego
-
-.. todo:: Describe the mechanisms
+* ``plain``
+* ``login``
+* ``digest-md5``
+* ``cram-md5``
+* ``ntml``
+* ``rpa``
+* ``apop``
+* ``anonymous``
+* ``gssapi``
+* ``otp``
+* ``skey``
+* ``gss-spnego``
 
 Example:
 
@@ -212,56 +157,35 @@ Example:
   auth_mechanisms = plain login
 
 
-.. _setting-auth_policy_check_after_auth:
-
-``auth_policy_check_after_auth``
---------------------------------
-
-- Default: ``yes``
-
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: auth_policy_check_after_auth
+   :default: yes
+   :values: @boolean
 
 Do policy lookup after authentication is completed?
 
-See :ref:`setting-auth_policy_server_url`
+.. seealso:: :dovecot_core:ref:`auth_policy_server_url`
 
 
-.. _setting-auth_policy_check_before_auth:
-
-``auth_policy_check_before_auth``
----------------------------------
-
-- Default: ``yes``
-
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: auth_policy_check_before_auth
+   :default: yes
+   :values: @boolean
 
 Do policy lookup before authentication is started?
 
-See :ref:`setting-auth_policy_server_url`
+.. seealso:: :dovecot_core:ref:`auth_policy_server_url`
 
 
-.. _setting-auth_policy_hash_mech:
-
-``auth_policy_hash_mech``
--------------------------
-
-- Default: ``sha256``
-- Values: ``md4, md5, sha1, sha256, sha512``
+.. dovecot_core:setting:: auth_policy_hash_mech
+   :default: sha256
+   :values: md4, md5, sha1, sha256, sha512
 
 Hash mechanism to use for password.
 
-See :ref:`setting-auth_policy_server_url`
-
-.. todo:: Is this the full list?
+.. seealso:: :dovecot_core:ref:`auth_policy_server_url`
 
 
-.. _setting-auth_policy_hash_nonce:
-
-``auth_policy_hash_nonce``
---------------------------
-
-- Default: <empty>
-- Values:  :ref:`string`
+.. dovecot_core:setting:: auth_policy_hash_nonce
+   :values: @string
 
 Cluster-wide nonce to add to hash.
 
@@ -271,89 +195,67 @@ Example Setting:
 
 .. code-block:: none
 
-   auth_policy_hash_nonce = <localized_random_string>
+  auth_policy_hash_nonce = <localized_random_string>
 
-See :ref:`setting-auth_policy_server_url`
+.. seealso:: :dovecot_core:ref:`auth_policy_server_url`
 
 
-.. _setting-auth_policy_log_only:
+.. dovecot_core:setting:: auth_policy_hash_truncate
+   :default: 12
+   :values: @uint
 
-``auth_policy_log_only``
-------------------------
+How many bits to use from password hash when reporting to policy server.
 
-- Default: ``no``
-- Values: :ref:`boolean`
+.. seealso:: :dovecot_core:ref:`auth_policy_server_url`
+
+
+.. dovecot_core:setting:: auth_policy_log_only
+   :default: no
+   :values: @boolean
 
 Only log what the policy server response would do?
 
 If ``yes``, no request is made to the policy server.
 
-See :ref:`setting-auth_policy_server_url`
+.. seealso:: :dovecot_core:ref:`auth_policy_server_url`
 
 
-.. _setting-auth_policy_hash_truncate:
-
-``auth_policy_hash_truncate``
------------------------------
-
-- Default: ``12``
-- Values: :ref:`uint`
-
-How many bits to use from password hash when reporting to policy server.
-
-See :ref:`setting-auth_policy_server_url`
-
-
-.. _setting-auth_policy_reject_on_fail:
-
-``auth_policy_reject_on_fail``
-------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: auth_policy_reject_on_fail
+   :default: no
+   :values: @boolean
 
 If policy request fails for some reason should users be rejected?
 
-See :ref:`setting-auth_policy_server_url`
+.. seealso:: :dovecot_core:ref:`auth_policy_server_url`
 
 
-.. _setting-auth_policy_report_after_auth:
-
-``auth_policy_report_after_auth``
----------------------------------
-
-- Default: ``yes``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: auth_policy_report_after_auth
+   :default: yes
+   :values: @boolean
 
 Report authentication result?
 
 If ``no``, there will be no report for the authentication result.
 
 
-.. _setting-auth_policy_request_attributes:
-
-``auth_policy_request_attributes``
-----------------------------------
-
-- Default: ``login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s``
+.. dovecot_core:setting:: auth_policy_request_attributes
+   :default: login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s
+   :values: @string
 
 Request attributes specification.
 
 Variables that can be used for this setting:
 
 * :ref:`Auth variables <variables-auth>`.
-* ``%{hashed_password}`` - Truncated auth policy hash of username and password
-* ``%{requested_username}`` - Logged in user. Same as ``%{user}``, except for master user logins the same as ``%{login_user}``. (v2.2.34+)
+* ``%{hashed_password}``: Truncated auth policy hash of username and password
+* ``%{requested_username}``: Logged in user. Same as ``%{user}``, except for
+  master user logins the same as ``%{login_user}``. (v2.2.34+)
 
-See :ref:`setting-auth_policy_server_url`
+.. seealso:: :dovecot_core:ref:`auth_policy_server_url`
 
 
-.. _setting-auth_policy_server_api_header:
-
-``auth_policy_server_api_header``
----------------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: auth_policy_server_api_header
+   :values: @string
 
 Header and value to add to request (for API authentication).
 
@@ -362,38 +264,31 @@ Header and value to add to request (for API authentication).
    See: https://en.wikipedia.org/wiki/Basic_access_authentication#Client_side
 
 This can be used when you are using the weakforced policy server and the web
-listener password is "super"
+listener password is "super":
 
 .. code-block:: none
 
-   $ echo -n wforce:super | base64
-   d2ZvcmNlOnN1cGVy
+  $ echo -n wforce:super | base64
+  d2ZvcmNlOnN1cGVy
 
-Then the correct value for ``auth_policy_server_api_header`` is
+Then the correct value for this setting is:
 
 .. code-block:: none
 
-   auth_policy_server_api_header = Authorization: Basic d2ZvcmNlOnN1cGVy
+  auth_policy_server_api_header = Authorization: Basic d2ZvcmNlOnN1cGVy
 
-See :ref:`setting-auth_policy_server_url`
+.. seealso:: :dovecot_core:ref:`auth_policy_server_url`
 
 
-.. _setting-auth_policy_server_timeout_msecs:
+.. dovecot_core:setting:: auth_policy_server_timeout_msecs
+   :default: 2000
+   :values: @time_msecs
 
-``auth_policy_server_timeout_msecs``
-------------------------------------
+Auth polcy request timeout.
 
-- Default: ``2000``
-- Values: :ref:`uint`
 
-Request timeout, in milliseconds.
-
-.. _setting-auth_policy_server_url:
-
-``auth_policy_server_url``
---------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: auth_policy_server_url
+   :values: @string
 
 URL of the policy server.
 
@@ -406,20 +301,16 @@ Example Setting:
 
 .. code-block:: none
 
-   auth_policy_server_url = http://example.com:4001/
+  auth_policy_server_url = http://example.com:4001/
 
 
-.. _setting-auth_proxy_self:
-
-``auth_proxy_self``
--------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: auth_proxy_self
+   :values: @string
 
 If the destination for proxying matches any of the IP addresses listed
 here, proxying is not performed when ``proxy_maybe=yes`` is returned.
 
-.. todo:: Link to proxy_mayqe
+.. todo:: Link to proxy_maybe
 .. todo:: Mark setting as "normally don't touch"
 
 This parameter isn't normally needed; its main use is if the
@@ -427,93 +318,76 @@ destination IP address belongs to, for instance, a load-balancer rather
 than the server itself.
 
 
-.. _setting-auth_realms:
-
-``auth_realms``
----------------
-
-- Default: <empty>
+.. dovecot_core:setting:: auth_realms
+   :values: @string
 
 This setting supplies a space-separated list of realms for those SASL
-authentication mechanisms that need them. Realms are an integral part of Digest-MD5. You will need to specify realms you want to advertise to the client in the config file:
+authentication mechanisms that need them. Realms are an integral part of
+Digest-MD5.
+
+You will need to specify realms you want to advertise to the client in the
+config file:
 
 Example Setting:
 
 .. code-block:: none
 
-   auth_realms = example.com another.example.com foo
+  auth_realms = example.com another.example.com foo
 
 
-.. _setting-auth_socket_path:
-
-``auth_socket_path``
---------------------
-
-- Default: ``auth-userdb``
+.. dovecot_core:setting:: auth_socket_path
+   :default: auth-userdb
+   :values: @string
 
 This setting gives the UNIX socket path to the master authentication
-server for finding users. It is usually not necessary nor advisable to change the default.
+server for finding users.
+
+It is usually not necessary nor advisable to change the default.
 
 
-.. _setting-auth_ssl_require_client_cert:
-
-``auth_ssl_require_client_cert``
---------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: auth_ssl_require_client_cert
+   :default: no
+   :values: @boolean
 
 If ``yes``, authentication fails when a valid SSL client certificate is not
 provided.
 
-See :ref:`setting-ssl_ca`
+.. seealso::
 
-See :ref:`setting-ssl_verify_client_cert`
-
-See :ref:`dovecot_ssl_configuration`
-
-
-.. _setting-auth_ssl_username_from_cert:
-
-``auth_ssl_username_from_cert``
--------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+   * :dovecot_core:ref:`ssl_ca`
+   * :dovecot_core:ref:`ssl_verify_client_cert`
+   * :ref:`dovecot_ssl_configuration`
 
 
-Setting this to "yes" indicates that the username should be taken from
+.. dovecot_core:setting:: auth_ssl_username_from_cert
+   :default: no
+   :values: @boolean
+
+Setting this to ``yes`` indicates that the username should be taken from
 the client's SSL certificate 
 
 Generally, this will be either ``commonName`` or ``x500UniqueIdentifier``.
 
-The text is looked up from subject DN's specified field using OpenSSL's X509_NAME_get_text_by_NID() function.
-By default the CommonName field is used.
-You can change the field with ssl_cert_username_field = name setting (parsed using OpenSSL's OBJ_txt2nid() function). x500UniqueIdentifier is a common choice.
+The text is looked up from subject DN's specified field using OpenSSL's
+X509_NAME_get_text_by_NID() function. By default the CommonName field is used.
+You can change the field with ``ssl_cert_username_field = name`` setting
+(parsed using OpenSSL's OBJ_txt2nid() function). x500UniqueIdentifier is a
+common choice.
 
-See :ref:`setting-ssl_cert_username_field`
-
-
-.. _setting-auth_stats:
-
-``auth_stats``
---------------
-
-.. versionadded:: v2.3
-
-- Default: ``no``
-- Values: :ref:`boolean`
-
-If the setting ``auth_stats=yes`` is chosen, authentication statistics are added.
+.. seealso:: :dovecot_core:ref:`ssl_cert_username_field`
 
 
-.. _setting-auth_use_winbind:
+.. dovecot_core:setting:: auth_stats
+   :added: v2.3.0
+   :default: no
+   :values: @boolean
 
-``auth_use_winbind``
---------------------
+If enabled, authentication statistics are added.
 
-- Default: ``no``
-- Values: :ref:`boolean`
+
+.. dovecot_core:setting:: auth_use_winbind
+   :default: no
+   :values: @boolean
 
 By default, the NTLM mechanism is handled internally.
 
@@ -524,29 +398,24 @@ This option is useful when you need to authenticate users against a Windows
 domain (either AD or NT).
 
 
-.. _setting-auth_username_chars:
-
-``auth_username_chars``
------------------------
-
-- Default: ``abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890.-_@``
+.. dovecot_core:setting:: auth_username_chars
+   :default: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890.-_@
+   :values: @string
 
 The list of the characters allowed in a username.
 
-If the user-supplied username contains a character not listed here, login automatically fails.
+If the user-supplied username contains a character not listed here, login
+automatically fails.
 
-This is an additional check to make sure the user can't exploit any quote-escaping vulnerabilities that may be connected with SQL/LDAP databases.
+This is an additional check to make sure the user can't exploit any
+quote-escaping vulnerabilities that may be connected with SQL/LDAP databases.
 
 If you want to allow all characters, leave the value empty.
 
 
-.. _setting-auth_username_format:
-
-``auth_username_format``
-------------------------
-
-- Default: ``%Lu``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: auth_username_format
+   :default: %Lu
+   :values: @string
 
 Formattting applied to username before querying the auth database.
 
@@ -561,50 +430,37 @@ Examples:
 * ``%n-AT-%d`` - changes the "@" symbol into "-AT-" before lookup
 
 This translation is done after the changes specified with the
-:ref:`setting-auth_username_translation` setting.
+:dovecot_core:ref:`auth_username_translation` setting.
 
 
-.. _setting-auth_username_translation:
-
-``auth_username_translation``
------------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: auth_username_translation
+   :values: @string
 
 If set, performs username character translations before querying the auth
 database.
 
-The value is a string formed of sets of `from` and `to` characters
-alternating.  A value of `#@/@` means that `#` and `/` will both be
-translated to the `@` character.
+The value is a string formed of sets of ``from`` and ``to`` characters
+alternating.
 
-.. todo:: Better explanation
+A value of ``#@/@`` means that ``#`` and ``/`` will both be translated to the
+``@`` character.
 
 
-.. _setting-auth_verbose:
-
-``auth_verbose``
-----------------
-
-.. versionadded:: v2.2.24
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: auth_verbose
+   :added: v2.2.24
+   :default: no
+   :values: @boolean
 
 Adjust log verbosity.
 
 If ``yes``, log unsuccessful authentication attempts and why they failed.
 
-Explicitly setting :ref:`setting-auth_debug` will override this setting.
+Explicitly setting :dovecot_core:ref:`auth_debug` will override this setting.
 
 
-.. _setting-auth_verbose_passwords:
-
-``auth_verbose_passwords``
---------------------------
-
-- Default: ``no``
-- Values: ``no``, ``yes``, ``plain`` or ``sha1``
+.. dovecot_core:setting:: auth_verbose_passwords
+   :default: no
+   :values: no, yes, plain, sha1
 
 In case of password mismatches, log the attempted password. You can also
 truncate the logged password to ``n`` chars by appending ``:n`` (e.g.
@@ -616,10 +472,8 @@ Available transformations:
 * ``sha1``: output SHA1 hashed password
 
 
-.. _setting-auth_winbind_helper_path:
-
-``auth_winbind_helper_path``
-----------------------------
+.. dovecot_core:setting:: auth_winbind_helper_path
+   :values: @string
 
 This setting tells the system the path for Samba's ntlm_auth helper
 binary.
@@ -628,110 +482,85 @@ Example Setting:
 
 .. code-block:: none
 
-   auth_winbind_helper_path = /usr/bin/ntlm_auth
+  auth_winbind_helper_path = /usr/bin/ntlm_auth
 
 
-.. _setting-auth_worker_max_count:
-
-``auth_worker_max_count``
--------------------------
-
-- Default: ``30``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: auth_worker_max_count
+   :default: 30
+   :values: @uint
 
 Maximum number of dovecot-auth worker processes active.
 
-The auth workers are used to execute blocking passdb and userdb queries (e.g., MySQL and PAM). They are automatically created and destroyed as necessary.
+The auth workers are used to execute blocking passdb and userdb queries (e.g.,
+MySQL and PAM). They are automatically created and destroyed as necessary.
 
 
-.. _setting-base_dir:
-
-``base_dir``
-------------
-
-- Default: ``/var/run/dovecot/``
+.. dovecot_core:setting:: base_dir
+   :default: /var/run/dovecot/
+   :values: @string
 
 The base directory in which Dovecot should store runtime data.
 
-This can be used to override the ``base_dir`` determined at compile time.
+This can be used to override the base directory determined at compile time.
 
 
-.. _setting-config_cache_size:
-
-``config_cache_size``
----------------------
-
-- Default: ``1 M``
-- Values:  :ref:`size`
+.. dovecot_core:setting:: config_cache_size
+   :default: 1 M
+   :values: @size
 
 The maximum size of the in-memory configuration cache.
-The cache should be large enough to allow keeping the full, parsed Dovecot configuration in memory. 
-The default is almost always large enough, unless your system has numerous large TLS certificates in the configuration.
+
+The cache should be large enough to allow keeping the full, parsed Dovecot
+configuration in memory. 
+
+The default is almost always large enough, unless your system has numerous
+large TLS certificates in the configuration.
 
 
-.. _setting-debug_log_path:
+.. dovecot_core:setting:: debug_log_path
+   :default: @info_log_path;dovecot_core
+   :values: @string
 
-``debug_log_path``
-------------------
-
-This indicates the log file to use for debug messages. The default is to use
-:ref:`setting-info_log_path` for debug messages as well.
+The log file to use for debug messages.
 
 
-.. _setting-default_client_limit:
+.. dovecot_core:setting:: default_client_limit
+   :default: 1000
+   :values: @uint
 
-``default_client_limit``
-------------------------
-
-- Default: ``1000``
-- Values: :ref:`uint`
-
-The maximum number of simultaneous client connections per process for a service.
+The maximum number of simultaneous client connections per process for a
+service.
 
 Once this number of connections is reached, the next incoming connection
 prompts spawning of another process.
 
-This value can be overridden via the ``client_limit`` setting within service
-blocks.
-
-.. todo:: Link to service configuration page, when complete
+This value can be overridden via the :ref:`service_configuration-client_limit`
+setting within service blocks.
 
 
-.. _setting-default_idle_kill:
+.. dovecot_core:setting:: default_idle_kill
+   :default: 1mins
+   :values: @time
 
-``default_idle_kill``
----------------------
+If a process is idle after this much time has elapsed, it is notified that it
+should terminate itself if inactive.
 
-- Default: ``1mins``
-- Values:  :ref:`time`
-
-If a process is idle after this much time has elapsed,
-it is notified that it should terminate itself if inactive.
-
-This value can be overridden via the ``idle_kill`` setting within service
-blocks.
-
-.. todo:: Link to service configuration page, when complete
+This value can be overridden via the :ref:`service_configuration-idle_kill`
+setting within service blocks.
 
 
-.. _setting-default_internal_group:
-
-``default_internal_group``
---------------------------
-
-- Default: ``dovecot``
+.. dovecot_core:setting:: default_internal_group
+   :default: dovecot
+   :values: @string
 
 Define the default internal group.
 
-See :ref:`setting-default_internal_user`
+.. seealso:: :dovecot_core:ref:`default_internal_user`
 
 
-.. _setting-default_internal_user:
-
-``default_internal_user``
--------------------------
-
-- Default: ``dovecot``
+.. dovecot_core:setting:: default_internal_user
+   :default: dovecot
+   :values: @string
 
 Define the default internal user.
 
@@ -739,95 +568,75 @@ Unprivileged processes run under the ID of the internal user. This
 user should be distinct from the login user, to prevent login processes
 from disturbing other processes.
 
-See :ref:`setting-default_internal_group`
+.. seealso:: :dovecot_core:ref:`default_internal_group`
 
 
-.. _setting-default_login_user:
-
-``default_login_user``
-----------------------
-
-- Default: ``dovenull``
+.. dovecot_core:setting:: default_login_user
+   :default: dovenull
+   :values: @string
 
 The user the login process should run as.
 
-This is the least trusted user in Dovecot: this user should not
-have access to anything at all.
+This is the least trusted user in Dovecot: this user should not have access to
+anything at all.
 
 
-.. _setting-default_process_limit:
-
-``default_process_limit``
--------------------------
-
-- Default: ``100``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: default_process_limit
+   :default: 100
+   :values: @uint
 
 The maximum number of processes that may exist for a service.
 
-This value can be overridden via the ``process_limit`` setting within service
-blocks.
-
-.. todo:: Link to service configuration page, when complete
+This value can be overridden via the :ref:`service_configuration-process_limit`
+setting within service blocks.
 
 
-.. _setting-default_vsz_limit:
-
-``default_vsz_limit``
----------------------
-
-- Default: ``256M``
-- Values:  :ref:`size`
+.. dovecot_core:setting:: default_vsz_limit
+   :default: 256M
+   :values: @size
 
 The default virtual memory size limit for service processes.
 
-Designed to catch processes that leak memory so
-that they can be terminated before they use up all the available
-resources.
+Designed to catch processes that leak memory so that they can be terminated
+before they use up all the available resources.
+
+This value can be overridden via the :ref:`service_configuration-vsz_limit`
+setting within service blocks.
 
 
-.. _setting-deliver_log_format:
-
-``deliver_log_format``
-----------------------
-
-- Default: ``msgid=%m: %$``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: deliver_log_format
+   :default: msgid=%m: %$
+   :values: @string
 
 The format to use for logging mail deliveries.
 
 Variables that can be used for this setting:
 
 * :ref:`Global variables <variables-global>`.
-* ``%$`` - Delivery status message (e.g., saved to INBOX)
-* ``%{msgid}`` / ``%m`` - Message-ID
-* ``%{subject}`` / ``%s`` - Subject
-* ``%{from}`` / ``%f`` - From address
-* ``%{from_envelope}`` / ``%e`` : SMTP FROM envelope
-* ``%{size}`` / ``%p`` - Physical size
-* ``%{vsize}`` / ``%w`` - Virtual size
-* ``%{to_envelope}`` - RCPT TO envelope
-* ``%{delivery_time}`` - How many milliseconds to deliver the mail
-* ``%{session_time}`` - LMTP session duration, not including delivery_time
-* ``%{storage_id}`` - Backend-specific ID for mail, e.g. Maildir filename
+* ``%$``: Delivery status message (e.g., saved to INBOX)
+* ``%{msgid}`` / ``%m``: Message-ID
+* ``%{subject}`` / ``%s``: Subject
+* ``%{from}`` / ``%f``: From address
+* ``%{from_envelope}`` / ``%e``: SMTP FROM envelope
+* ``%{size}`` / ``%p``: Physical size
+* ``%{vsize}`` / ``%w``: Virtual size
+* ``%{to_envelope}``: RCPT TO envelope
+* ``%{delivery_time}``: How many milliseconds to deliver the mail
+* ``%{session_time}``: LMTP session duration, not including delivery_time
+* ``%{storage_id}``: Backend-specific ID for mail, e.g. Maildir filename
 
 Example Setting:
 
 .. code-block:: none
 
-   deliver_log_format = stime=%{session_time} msgid=%m: %$
+  deliver_log_format = stime=%{session_time} msgid=%m: %$
 
 
-.. _setting-dict_db_config:
+.. dovecot_core:setting:: dict_db_config
+   :values: @string
 
-``dict_db_config``
-------------------
-
- - Default: <empty>
- - Values: :ref:`string`
-
-Points to a Berkeley DB config file. Equivalent to adding
-DB_CONFIG=/path to import_environment.
+Points to a Berkeley DB config file. Equivalent to adding ``DB_CONFIG=/path``
+to :dovecot_core:ref:`import_environment`.
 
 See https://docs.oracle.com/database/bdb181/html/bdb-sql/sql_db_config.html for more information.
 
@@ -838,12 +647,8 @@ Example setting:
   dict_db_config=/etc/dovecot/berkeley.conf
 
 
-.. _setting-director_flush_socket:
-
-``director_flush_socket``
--------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: director_flush_socket
+   :values: @string
 
 The ``doveadm director flush`` command removes all user associations either
 from the given host or all hosts. All the existing connections will be kicked.
@@ -854,48 +659,35 @@ executed when the flush command is run.
 Variables that can be used for this setting:
 
 * :ref:`Global variables <variables-global>`.
-* ``%{ip}`` / ``%i`` : IP address of the backend
-* ``%{host}`` / ``%h`` : Hostname of the backend
+* ``%{ip}`` / ``%i``: IP address of the backend
+* ``%{host}`` / ``%h``: Hostname of the backend
 
 .. todo:: Indicate director-only setting
 
 
-.. _setting-director_mail_servers:
-
-``director_mail_servers``
--------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: director_mail_servers
+   :values: @ip_addresses
 
 List of IPs or hostnames of all backend mail servers.
 
 This list is used to bootstrap a Director ring; backend hosts can be
 dynamically added to a running ring via the doveadm commands.
 
-.. todo:: Link to IP range type format page.
 .. todo:: Indicate director-only setting
 
 
-.. _setting-director_max_parallel_kicks:
-
-``director_max_parallel_kicks``
--------------------------------
-
-- Default: ``100``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: director_max_parallel_kicks
+   :default: 100
+   :values: @uint
 
 The maximum number of concurrent kicks allowed in the Director ring.
 
 .. todo:: Indicate director-only setting
 
 
-.. _setting-director_max_parallel_moves:
-
-``director_max_parallel_moves``
--------------------------------
-
-- Default: ``100``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: director_max_parallel_moves
+   :default: 100
+   :values: @uint
 
 How many concurrent user moves are allowed in the Director ring?
 
@@ -905,13 +697,9 @@ parameter.
 .. todo:: Indicate director-only setting
 
 
-.. _setting-director_output_buffer_size:
-
-``director_output_buffer_size``
--------------------------------
-
-- Default: ``10M``
-- Values:  :ref:`size`
+.. dovecot_core:setting:: director_output_buffer_size
+   :default: 10M
+   :values: @size
 
 This allows configuring the max buffer size for outgoing connections.
 Previously it was hardcoded to 10 MB, which wasn't necessarily enough for
@@ -921,13 +709,9 @@ disconnected (and reconnected).
 .. todo:: Indicate director-only setting
 
 
-.. _setting-director_ping_idle_timeout:
-
-``director_ping_idle_timeout``
-------------------------------
-
-- Default: ``30secs``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: director_ping_idle_timeout
+   :default: 30secs
+   :values: @time
 
 Minimum time to wait for a reply to PING that was sent to another director
 before disconnecting (and reconnecting). This setting is used when there's
@@ -936,34 +720,28 @@ otherwise no input coming from the connection.
 .. todo:: Indicate director-only setting
 
 
-.. _setting-director_ping_max_timeout:
-
-``director_ping_max_timeout``
------------------------------
-
-- Default: ``1mins``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: director_ping_max_timeout
+   :default: 1mins
+   :values: @time
 
 Maximum time to wait for a reply to PING that was sent to another director
 before disconnecting (and reconnecting).
-This setting is used when the other director keeps sending input, but among it is no PONG reply.
+
+This setting is used when the other director keeps sending input, but among it
+is no PONG reply.
 
 .. todo:: Indicate director-only setting
 
 
-.. _setting-director_servers:
+.. dovecot_core:setting:: director_servers
+   :values: @ip_addresses
 
-``director_servers``
---------------------
+A list of IP addresses or hostnames for all Director servers, including the
+machine on which the setting is made.
 
-- Default: <empty>
-
-A space-separated list of IP addresses or hostnames for all Director servers,
-including the machine on which the setting is made.
-
-Ports can be specified after a colon (in IP:port
-form) if something other than the default port is to be used (the
-default port is the one used by the Director service's inet_listener).
+Ports can be specified after a colon (in IP:port form) if something other than
+the default port is to be used (the default port is the one used by the
+Director service's ``inet_listener``).
 
 This list is used to bootstrap a Director ring; directors can be dynamically
 added to a running ring via the doveadm commands.
@@ -971,13 +749,9 @@ added to a running ring via the doveadm commands.
 .. todo:: Indicate director-only setting
 
 
-.. _setting-director_user_expire:
-
-``director_user_expire``
-------------------------
-
-- Default: ``15mins``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: director_user_expire
+   :default: 15mins
+   :values: @time
 
 How long to keep routing information in the Director ring after a user has no
 more active connections.
@@ -985,13 +759,9 @@ more active connections.
 .. todo:: Indicate director-only setting
 
 
-.. _setting-director_user_kick_delay:
-
-``director_user_kick_delay``
-----------------------------
-
-- Default: ``2secs``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: director_user_kick_delay
+   :default: 2secs
+   :values: @time
 
 How long to wait after a user has been kicked from the Director ring
 before that user can log in to the new server. This timeout should allow time
@@ -1000,13 +770,9 @@ for the old backend to complete all of the user's existing processes.
 .. todo:: Indicate director-only setting
 
 
-.. _setting-director_username_hash:
-
-``director_username_hash``
---------------------------
-
-- Default: ``%Lu``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: director_username_hash
+   :default: %Lu
+   :values: @string
 
 How the username is translated before being hashed. For example, one might
 want to use ``%Ln`` if the user can log in with or without @domain and
@@ -1015,93 +781,70 @@ want to use ``%Ln`` if the user can log in with or without @domain and
 Variables that can be used for this setting:
 
 * :ref:`Global variables <variables-global>`.
-* ``%{user}`` / ``%u`` : Username (username@domain)
-* ``%{username}`` / ``%n`` : Username
-* ``%{domain}`` / ``%d`` : Domain
+* ``%{user}`` / ``%u``: Username (username@domain)
+* ``%{username}`` / ``%n``: Username
+* ``%{domain}`` / ``%d``: Domain
 
 .. todo:: Indicate director-only setting
 
 
-.. _setting-disable_plaintext_auth:
-
-``disable_plaintext_auth``
---------------------------
-
-- Default: ``yes``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: disable_plaintext_auth
+   :default: yes
+   :values: @boolean
 
 If ``yes``, disables the LOGIN command and all other plaintext authentication
 unless SSL/TLS is used (LOGINDISABLED capability).
 
-See :ref:`dovecot_ssl_configuration` for more detailed explanation of how this setting interacts with the :ref:`setting-ssl` setting.
-
-.. _setting-dotlock_use_excl:
-
-``dotlock_use_excl``
---------------------
-
-- Default: ``yes``
-- Values: :ref:`boolean`
-
-If ``yes``, rely on O_EXCL to work when creating dotlock
-files.  NFS has supported O_EXCL since version 3, so yes should be
-safe to use by default.
+See :ref:`dovecot_ssl_configuration` for more detailed explanation of how this
+setting interacts with the :dovecot_core:ref:`ssl` setting.
 
 
-.. _setting-doveadm_allowed_commands:
+.. dovecot_core:setting:: dotlock_use_excl
+   :default: yes
+   :values: @boolean
 
-``doveadm_allowed_commands``
-----------------------------
+If ``yes``, rely on O_EXCL to work when creating dotlock files.
 
-- Default: ``ALL``
-
-Lists the commands that the client may use with the
-doveadm server. The setting ``ALL`` allows all commands.
+NFS has supported O_EXCL since version 3, so ``yes`` should be safe to use by
+default.
 
 
-.. _setting-doveadm_api_key:
+.. dovecot_core:setting:: doveadm_allowed_commands
+   :default: ALL
+   :values: @string
 
-``doveadm_api_key``
--------------------
+Lists the commands that the client may use with the doveadm server.
 
-- Default: <empty>
+The setting ``ALL`` allows all commands.
 
-Set an API key for use of the HTTP API for the doveadm
-server.
 
-If set, the key must be included in the HTTP request (via X-API-Key header) base64 encoded.
+.. dovecot_core:setting:: doveadm_api_key
+   :values: @string
 
-.. _setting-doveadm_http_rawlog_dir:
+Set an API key for use of the HTTP API for the doveadm server.
 
-``doveadm_http_rawlog_dir``
----------------------------
+If set, the key must be included in the HTTP request (via X-API-Key header)
+base64 encoded.
 
-- Default: <empty>
+
+.. dovecot_core:setting:: doveadm_http_rawlog_dir
+   :values: @string
 
 Directory where doveadm stores HTTP rawlogs.
 
 
-.. _setting-doveadm_password:
-
-``doveadm_password``
---------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: doveadm_password
+   :values: @string
 
 The doveadm client and server must have a shared secret.  This setting
-configures the doveadm server's password, used for client
-authentication.
+configures the doveadm server's password, used for client authentication.
 
 Because it grants access to users' mailboxes, it must be kept secret.
 
 
-.. _setting-doveadm_port:
-
-``doveadm_port``
-----------------
-
-- Default: ``0``
-- Values:  :ref:`ip_addresses`
+.. dovecot_core:setting:: doveadm_port
+   :default: 0
+   :values: !<1-65535>
 
 The destination port to be used for the next doveadm proxying hop.
 
@@ -1111,56 +854,42 @@ A value of 0 means that proxying is not in use.
 .. todo:: Indicate proxy-only setting
 
 
-.. _setting-doveadm_socket_path:
+.. dovecot_core:setting:: doveadm_socket_path
+   :default: doveadm-server
+   :values: @string
 
-``doveadm_socket_path``
------------------------
+The UNIX socket or host (``host:port`` syntax is allowed) for connecting to
+the doveadm server.
 
-- Default: ``doveadm-server``
 
-The UNIX socket or host (host:port syntax is allowed) for connecting to the
-doveadm server.
+.. dovecot_core:setting:: doveadm_ssl
+   :added: v2.3.9
+   :default: no
+   :values: no, ssl, starttls
 
-.. _setting-doveadm_ssl:
+.. todo:: Add documentation
 
-``doveadm_ssl``
----------------
 
-.. versionadded:: 2.3.9
-
-- Default: ``no``
-- Values: ``no, ssl, starttls``
-
-.. _setting-doveadm_username:
-
-``doveadm_username``
---------------------
-
-- Default: ``doveadm``
+.. dovecot_core:setting:: doveadm_username
+   :default: doveadm
+   :values: @string
 
 The username for authentication to the doveadm service.
 
 
-.. _setting-doveadm_worker_count:
+.. dovecot_core:setting:: doveadm_worker_count
+   :default: 0
+   :values: @uint
 
-``doveadm_worker_count``
-------------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
-
-If the worker count set here is non-zero, mail commands are run via
-this many connections to the doveadm service.
+If the worker count set here is non-zero, mail commands are run via this many
+connections to the doveadm service.
 
 If ``0``, commands are run directly in the same process.
 
 
-.. _setting-dsync_alt_char:
-
-``dsync_alt_char``
-------------------
-
-- Default: ``_``
+.. dovecot_core:setting:: dsync_alt_char
+   :default: _
+   :values: @string
 
 When the source and destination mailbox formats are different, it's
 possible for a mailbox name to exist on one source that isn't valid for
@@ -1170,15 +899,10 @@ character indicated here.
 .. todo:: Indicate dsync setting
 
 
-.. _setting-dsync_commit_msgs_interval:
-
-``dsync_commit_msgs_interval``
-------------------------------
-
-.. versionadded:: v2.2.30
-
-- Default: ``100``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: dsync_commit_msgs_interval
+   :added: v2.2.30
+   :default: 100
+   :values: @uint
 
 Dsync will commit this number of messages incrementally, to avoid huge
 transactions that fail.
@@ -1186,40 +910,32 @@ transactions that fail.
 .. todo:: Indicate dsync setting
 
 
-.. _setting-dsync_features:
-
-``dsync_features``
-------------------
-
-.. versionadded:: v2.2.26
-
-- Default: <empty>
+.. dovecot_core:setting:: dsync_features
+   :added: v2.2.26
+   :values: @string
 
 This setting specifies features and workarounds that can be used with
 dsync.  Options are specified in this setting via a space-separated list.
 
 Available options:
 
-* ``empty-header-workaround``: Workaround for servers (e.g. Zimbra) that sometimes send FETCH replies containing no headers.
+* ``empty-header-workaround``: Workaround for servers (e.g. Zimbra) that
+  sometimes send FETCH replies containing no headers.
 
 .. code-block:: none
 
-    dsync_features = empty-header-workaround
+  dsync_features = empty-header-workaround
 
 .. todo:: Indicate dsync setting
 
 
-.. _setting-dsync_hashed_headers:
-
-``dsync_hashed_headers``
-------------------------
-
-.. versionadded:: v2.2.33
-
-- Default: ``Date Message-ID``
+.. dovecot_core:setting:: dsync_hashed_headers
+   :added: v2.2.33
+   :default: Date Message-ID
+   :values: @string
 
 Which email headers are used in incremental syncing for checking whether the
-local email matches the remote email.
+local email matches the remote email?
 
 This list should only include headers that can be efficiently downloaded from
 the remote server.
@@ -1227,77 +943,56 @@ the remote server.
 .. todo:: Indicate dsync setting
 
 
-.. _setting-dsync_remote_cmd:
+.. dovecot_core:setting:: dsync_remote_cmd
+   :default: ssh -l%{login} %{host} doveadm dsync-server -u%u -U
+   :values: @string
 
-``dsync_remote_cmd``
---------------------
-
-- Default: ``ssh -l%{login} %{host} doveadm dsync-server -u%u -U``
-
-Command to replicate when the mail_replica plug-in is used.
+Command to replicate when the :ref:`replication <replication>` plug-in is used.
 
 Variables that can be used for this setting:
 
 * :ref:`Global variables <variables-global>`.
-* ``%{user}`` / ``%u`` : Username
-* ``%{login}`` : Remote login name (from login@host)
-* ``%{host}`` : Remote hostname (from login@host)
+* ``%{user}`` / ``%u``: Username
+* ``%{login}``: Remote login name (from login@host)
+* ``%{host}``: Remote hostname (from login@host)
 
 .. todo:: Indicate dsync setting
 
 
-.. _setting-first_valid_gid:
+.. dovecot_core:setting:: first_valid_gid
+   :default: 1
+   :values: @uint
 
-``first_valid_gid``
--------------------
-
-- Default: ``1``
-- Values: :ref:`uint`
-
-This setting and ``last_valid_gid`` specify the valid GID range for users.
+This setting and :dovecot_core:ref:`last_valid_gid` specify the valid GID
+range for users.
 
 A user whose primary GID is outside this range is not allowed to log in.
 
 If the user belongs to any supplementary groups, the corresponding IDs are
 not set.
 
-See also :ref:`setting-last_valid_gid`.
 
+.. dovecot_core:setting:: first_valid_uid
+   :default: 500
+   :values: @uint
 
-.. _setting-first_valid_uid:
-
-``first_valid_uid``
--------------------
-
-- Default: ``500``
-- Values: :ref:`uint`
-
-This setting and ``last_valid_uid`` specify the valid UID range for users.
+This setting and :dovecot_core:ref:`last_valid_uid` specify the valid UID
+range for users.
 
 A user whose UID is outside this range is not allowed to log in.
 
-See also :ref:`setting-last_valid_uid`.
 
+.. dovecot_core:setting:: haproxy_timeout
+   :default: 3secs
+   :values: @time
 
-.. _setting-haproxy_timeout:
-
-``haproxy_timeout``
--------------------
-
-- Default: ``3secs``
-- Values:  :ref:`time`
-
-When to abort the HAProxy connection when no complete header has been received. The value is given in seconds.
+When to abort the HAProxy connection when no complete header has been received.
 
 .. todo:: Indicate haproxy setting
 
 
-.. _setting-haproxy_trusted_networks:
-
-``haproxy_trusted_networks``
-----------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: haproxy_trusted_networks
+   :values: @string
 
 A space-separated list of trusted network ranges for HAProxy connections.
 
@@ -1307,25 +1002,16 @@ for HAProxy are aborted immediately.
 .. todo:: Indicate haproxy setting
 
 
-.. _setting-hostname:
+.. dovecot_core:setting:: hostname
+   :default: !<system's real hostname@domain.tld>
+   :values: @string
 
-``hostname``
-------------
-
-- Default: <empty>
-
-The hostname to be used in email messages sent out by the local delivery
-agent (such as the Message-ID: header) and in LMTP replies.
-
-The default is the system's real hostname@domain.tld.
+The hostname to be used in email messages sent out by the local delivery agent
+(such as the Message-ID: header) and in LMTP replies.
 
 
-.. _setting-imap_capability:
-
-``imap_capability``
--------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: imap_capability
+   :values: @string
 
 Override the IMAP CAPABILITY response.
 
@@ -1336,17 +1022,13 @@ are added at the end of the default string.
 
 .. code-block:: none
 
-   imap_capability = +XFOO XBAR
+  imap_capability = +XFOO XBAR
 
 
-.. _setting-imap_client_workarounds:
+.. dovecot_core:setting:: imap_client_workarounds
+   :values: @string
 
-``imap_client_workarounds``
----------------------------
-
-- Default: <empty>
-
-Workarounds for various IMAP client bugs can be enabled here.  The list is
+Workarounds for various IMAP client bugs can be enabled here. The list is
 space-separated.
 
 The following values are currently supported:
@@ -1377,14 +1059,11 @@ The following values are currently supported:
 .. todo:: Indicate imap setting
 
 
-.. _setting-imap_fetch_failure:
+.. dovecot_core:setting:: imap_fetch_failure
+   :default: disconnect-immediately
+   :values: disconnect-after, disconnect-immediately, no-after
 
-``imap_fetch_failure``
-----------------------
-
-- Default: ``disconnect-immediately``
-
-Behavior when FETCH fails due to some internal error:
+Behavior when IMAP FETCH fails due to some internal error:
 
 ``disconnect-immediately``:
 
@@ -1409,35 +1088,22 @@ Behavior when FETCH fails due to some internal error:
 .. todo:: Indicate imap setting
 
 
-.. _setting-imap_hibernate_timeout:
-
-``imap_hibernate_timeout``
---------------------------
-
-- Default: ``0``
-- Values:  :ref:`size`
+.. dovecot_core:setting:: imap_hibernate_timeout
+   :default: 0
+   :values: @size
 
 How long to wait while the client is in IDLE state before moving the
 connection to the hibernate process, to save on memory use, and close the
 existing IMAP process.
+
 If nothing happens for this long while client is IDLEing, move the connection
 to imap-hibernate process and close the old imap process. This saves memory,
 because connections use very little memory in imap-hibernate process. The
 downside is that recreating the imap process back uses some resources.
 
-Example Setting:
 
-.. code-block:: none
-   
-   imap_hibernate_timeout = 0
-
-
-.. _setting-imap_id_log:
-
-``imap_id_log``
----------------
-
-- Default: <empty>
+.. dovecot_core:setting:: imap_id_log
+   :values: @string
 
 The ID fields sent by the client that are output to the log.
 
@@ -1446,21 +1112,11 @@ Using ``*`` as the value denotes that everything available should be sent.
 .. todo:: Is there list of fields?
 .. todo:: Indicate imap setting
 
-Example Setting:
-
-.. code-block:: none
    
-   imap_id_log = 
-   
-.. _setting-imap_id_retain:
-
-``imap_id_retain``
-------------------
-
-.. versionadded:: v2.2.29
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: imap_id_retain
+   :added: v2.2.29
+   :default: no
+   :values: @boolean
 
 When proxying IMAP connections to other hosts, this variable must be enabled to
 forward the IMAP ID command provided by the client.
@@ -1468,23 +1124,14 @@ forward the IMAP ID command provided by the client.
 This setting enables the ``%{client_id}`` variable for auth processes. See
 :ref:`Auth variables <variables-auth>`.
 
-Example Setting:
 
-.. code-block:: none
-
-     imap_id_retain=yes
-
-
-.. _setting-imap_id_send:
-
-``imap_id_send``
-----------------
-
-- Default: ``name *``
+.. dovecot_core:setting:: imap_id_send
+   :default: name *
+   :values: @string
 
 Which ID field names and values to send to clients.
 
-Using * as the value makes Dovecot use the default value.
+Using ``*`` as the value makes Dovecot use the default value.
 
 There are currently defaults for the following fields:
 
@@ -1496,8 +1143,7 @@ There are currently defaults for the following fields:
 * ``support-email``: Support email set in Dovecot distribution (Default: ``dovecot@dovecot.org``)
 * ``revision``: Short commit hash of Dovecot git source tree HEAD (same as the commit hash reported in ``dovecot --version``)
 
-  .. versionadded:: 2.3.10
-     ``revision`` field.
+.. versionadded:: 2.3.10 ``revision`` field
 
 .. todo:: Indicate imap setting
 
@@ -1505,34 +1151,20 @@ Example Setting:
 
 .. code-block:: none
 
-   imap_id_send = "name" * "version" * support-url http://example.com/
+  imap_id_send = "name" * "version" * support-url http://example.com/
 
 
-.. _setting-imap_idle_notify_interval:
-
-``imap_idle_notify_interval``
------------------------------
-
-- Default: ``2mins``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: imap_idle_notify_interval
+   :default: 2mins
+   :values: @time
 
 The amount of time to wait between "OK Still here" untagged IMAP responses
 when the client is in IDLE operation.
 
-Example Setting:
 
-.. code-block:: none
-   
-   imap_idle_notify_interval = 2 mins
-
-
-.. _setting-imap_literal_minus:
-
-``imap_literal_minus``
-----------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
+.. dovecot_core:setting:: imap_literal_minus
+   :default: no
+   :values: @boolean
 
 Enable IMAP LITERAL- extension (replaces LITERAL+)?
 
@@ -1540,102 +1172,68 @@ Enable IMAP LITERAL- extension (replaces LITERAL+)?
 .. todo:: This was added in 2.2 version?
 
 
-.. _setting-imap_logout_format:
-
-``imap_logout_format``
-----------------------
-
-- Default: ``in=%i out=%o deleted=%{deleted} expunged=%{expunged} trashed=%{trashed} hdr_count=%{fetch_hdr_count} hdr_bytes=%{fetch_hdr_bytes} body_count=%{fetch_body_count} body_bytes=%{fetch_body_bytes}``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: imap_logout_format
+   :default: in=%i out=%o deleted=%{deleted} expunged=%{expunged} trashed=%{trashed} hdr_count=%{fetch_hdr_count} hdr_bytes=%{fetch_hdr_bytes} body_count=%{fetch_body_count} body_bytes=%{fetch_body_bytes}
+   :values: @string
 
 This setting specifies the IMAP logout format string. Supported variables are:
 
 * :ref:`Mail user variables <variables-mail_user>`.
-* ``%{input}`` / ``%i`` - total number of bytes read from client
-* ``%{output}`` / ``%o`` - total number of bytes sent to client
-* ``%{fetch_hdr_count}`` - Number of mails with mail header data sent to client
-* ``%{fetch_hdr_bytes}`` - Number of bytes with mail header data sent to client
-* ``%{fetch_body_count}`` - Number of mails with mail body data sent to client
-* ``%{fetch_body_bytes}`` - Number of bytes with mail body data sent to client
-* ``%{deleted}`` - Number of mails where client added \Deleted flag
-* ``%{expunged}`` - Number of mails that client expunged, which does not include automatically expunged mails
-* ``%{autoexpunged}`` - Number of mails that were automatically expunged after client disconnected
-* ``%{trashed}`` - Number of mails that client copied/moved to the special_use=\Trash mailbox.
-* ``%{appended}`` - Number of mails saved during the session
-
-The following multi-line example, which is the default, uses some of the most
-common variables:
-
-.. code-block:: none
-
-   imap_logout_format = in=%i out=%o del=%{deleted} expunged=%{expunged} \
-    trashed=%{trashed} hdr_count=%{fetch_hdr_count} \
-    hdr_bytes=%{fetch_hdr_bytes} body_count=%{fetch_body_count} \
-    body_bytes=%{fetch_body_bytes}
+* ``%{input}`` / ``%i``: total number of bytes read from client
+* ``%{output}`` / ``%o``: total number of bytes sent to client
+* ``%{fetch_hdr_count}``: Number of mails with mail header data sent to client
+* ``%{fetch_hdr_bytes}``: Number of bytes with mail header data sent to client
+* ``%{fetch_body_count}``: Number of mails with mail body data sent to client
+* ``%{fetch_body_bytes}``: Number of bytes with mail body data sent to client
+* ``%{deleted}``: Number of mails where client added \Deleted flag
+* ``%{expunged}``: Number of mails that client expunged, which does not include automatically expunged mails
+* ``%{autoexpunged}``: Number of mails that were automatically expunged after client disconnected
+* ``%{trashed}``: Number of mails that client copied/moved to the special_use=\Trash mailbox.
+* ``%{appended}``: Number of mails saved during the session
 
 .. todo:: Indicate imap setting
-.. todo:: Explain variables
 
 
-.. _setting-imap_max_line_length:
-
-``imap_max_line_length``
-------------------------
-
-- Default: ``64k``
-- Values:  :ref:`size`
+.. dovecot_core:setting:: imap_max_line_length
+   :default: 64k
+   :values: @size
 
 Maximum IMAP command line length. Some clients generate very long command
 lines with huge mailboxes, so you may need to raise this if you get
 Too long argument or IMAP command line too large errors often.
 
-Example Setting:
-
-.. code-block:: none
-
-   imap_max_line_length = 64k
-
 .. todo:: Indicate imap setting
 
 
-.. _setting-imap_metadata:
+.. dovecot_core:setting:: imap_metadata
+   :default: no
+   :values: @boolean
 
-``imap_metadata``
------------------
-
-- Default: ``no``
-- Values:  :ref:`boolean`
-
-Dovecot supports the IMAP METADATA extension (RFC 5464), which
-allows per-mailbox, per-user data to be stored and accessed via IMAP
-commands.  Set this parameter's value to "yes" if you wish to activate
-the IMAP METADATA commands.
+Dovecot supports the IMAP METADATA extension (RFC 5464), which allows
+per-mailbox, per-user data to be stored and accessed via IMAP commands. Set
+this parameter's value to ``yes`` if you wish to activate the IMAP METADATA
+commands.
 
 If activated, a dictionary needs to be configured, via the
-:ref:`setting-mail_attribute_dict` setting.
+:dovecot_core:ref:`mail_attribute_dict` setting.
 
 Example Setting:
 
 .. code-block:: none
 
-   # Store METADATA information within user's Maildir directory
-   mail_attribute_dict = file:%h/Maildir/dovecot-attributes
+  # Store METADATA information within user's Maildir directory
+  mail_attribute_dict = file:%h/Maildir/dovecot-attributes
 
-   protocol imap 
-   {
-     imap_metadata = yes
-   }
+  protocol imap {
+    imap_metadata = yes
+  }
 
 .. todo:: Indicate imap setting
 .. todo:: Indicate metadata setting
 
 
-.. _setting-imap_urlauth_host:
-
-``imap_urlauth_host``
----------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: imap_urlauth_host
+   :values: @string
 
 Specifies the hosts allowed in URLAUTH URLs sent by clients.
 
@@ -1656,16 +1254,13 @@ extension.
 .. todo:: Indicate imap setting
 
 
-.. _setting-imap_urlauth_logout_format:
-
-``imap_urlauth_logout_format``
-------------------------------
-
-- Default: ``in=%i out=%o``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: imap_urlauth_logout_format
+   :default: in=%i out=%o
+   :values: @string
 
 Specifies the logout format used with the URLAUTH extension in IMAP operation.
-NOTE: This setting is currently not actually used.
+
+.. note:: This setting is currently not used.
 
 Variables allowed:
 
@@ -1674,157 +1269,135 @@ Variables allowed:
 
 .. todo:: Indicate imap setting
 
-Example Setting:
 
-.. code-block:: none
-
-     imap_urlauth_logout_format = in=%i out=%o
-
-
-.. _setting-imap_urlauth_port:
-
-``imap_urlauth_port``
----------------------
-
-- Default: ``143``
+.. dovecot_core:setting:: imap_urlauth_port
+   :default: 143
+   :values: !<1-65535>
 
 The port is used with the URLAUTH extension in IMAP operation.
-
-Example Setting:
-
-.. code-block:: none
-   
-   imap_urlauth_port = 143
 
 .. todo:: Indicate imap setting
 
 
-``imapc_cmd_timeout``
----------------------
+.. dovecot_core:setting:: imapc_cmd_timeout
+   :hdr_only: no_index
 
-See :ref:`setting-imapc_cmd_timeout`
-
-
-``imapc_connection_retry_count``
---------------------------------
-
-See :ref:`setting-imapc_connection_retry_count`
+See :dovecot_core:ref:`imapc_cmd_timeout`
 
 
-``imapc_connection_retry_interval``
------------------------------------
+.. dovecot_core:setting:: imapc_connection_retry_count
+   :hdr_only: no_index
 
-See :ref:`setting-imapc_connection_retry_interval`
-
-
-``imapc_features``
-------------------
-
-See :ref:`setting-imapc_features`
+See :dovecot_core:ref:`imapc_connection_retry_count`
 
 
-``imapc_host``
---------------
+.. dovecot_core:setting:: imapc_connection_retry_interval
+   :hdr_only: no_index
 
-See :ref:`setting-imapc_host`
-
-``imapc_list_prefix``
----------------------
-
-See :ref:`setting-imapc_list_prefix`
+See :dovecot_core:ref:`imapc_connection_retry_interval`
 
 
-``imapc_master_user``
----------------------
+.. dovecot_core:setting:: imapc_features
+   :hdr_only: no_index
 
-See :ref:`setting-imapc_master_user`
-
-
-``imapc_max_idle_time``
------------------------
-
-See :ref:`setting-imapc_max_idle_time`
+See :dovecot_core:ref:`imapc_features`
 
 
-``imapc_max_line_length``
--------------------------
+.. dovecot_core:setting:: imapc_host
+   :hdr_only: no_index
 
-See :ref:`setting-imapc_max_line_length`
-
-
-``imapc_password``
-------------------
-
-See :ref:`setting-imapc_password`
+See :dovecot_core:ref:`imapc_host`
 
 
-``imapc_port``
---------------
+.. dovecot_core:setting:: imapc_list_prefix
+   :hdr_only: no_index
 
-See :ref:`setting-imapc_port`
-
-
-``imapc_rawlog_dir``
---------------------
-
-See :ref:`setting-imapc_rawlog_dir`
+See :dovecot_core:ref:`imapc_list_prefix`
 
 
-``imapc_sasl_mechanisms``
--------------------------
+.. dovecot_core:setting:: imapc_master_user
+   :hdr_only: no_index
 
-See :ref:`setting-imapc_sasl_mechanisms`
-
-
-``imapc_ssl``
--------------
-
-See :ref:`setting-imapc_ssl`
+See :dovecot_core:ref:`imapc_master_user`
 
 
-``imapc_ssl_verify``
---------------------
+.. dovecot_core:setting:: imapc_max_idle_time
+   :hdr_only: no_index
 
-See :ref:`setting-imapc_ssl_verify`
-
-
-``imapc_user``
---------------
-
-See :ref:`setting-imapc_user`
+See :dovecot_core:ref:`imapc_max_idle_time`
 
 
-.. _setting-import_environment:
+.. dovecot_core:setting:: imapc_max_line_length
+   :hdr_only: no_index
 
-``import_environment``
-----------------------
+See :dovecot_core:ref:`imapc_max_line_length`
 
-- Default: ``TZ CORE_OUTOFMEM CORE_ERROR``
+
+.. dovecot_core:setting:: imapc_password
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`imapc_password`
+
+
+.. dovecot_core:setting:: imapc_port
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`imapc_port`
+
+
+.. dovecot_core:setting:: imapc_rawlog_dir
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`imapc_rawlog_dir`
+
+
+.. dovecot_core:setting:: imapc_sasl_mechanisms
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`imapc_sasl_mechanisms`
+
+
+.. dovecot_core:setting:: imapc_ssl
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`imapc_ssl`
+
+
+.. dovecot_core:setting:: imapc_ssl_verify
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`imapc_ssl_verify`
+
+
+.. dovecot_core:setting:: imapc_user
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`imapc_user`
+
+
+.. dovecot_core:setting:: import_environment
+   :default: TZ CORE_OUTOFMEM CORE_ERROR
+   :values: @string
 
 A list of environment variables, space-separated, that are preserved and
 passed to all child processes.
 
-The list is space-separated, and it can include key = value pairs for
-assigning variables the desired value upon Dovecot startup.
+It can include key = value pairs for assigning variables the desired value
+upon Dovecot startup.
 
 .. todo:: Explain default variables
 
 
-.. _setting-info_log_path:
+.. dovecot_core:setting:: info_log_path
+   :default: @log_path;dovecot_core
+   :values: @string
 
-``info_log_path``
------------------
-
-The log file to use for informational messages. The default is to use
-:ref:`setting-log_path` for informational messages too.
+The log file to use for informational messages.
 
 
-.. _setting-instance_name:
-
-``instance_name``
------------------
-
-- Default: ``dovecot``
+.. dovecot_core:setting:: instance_name
+   :default: dovecot
+   :values: @string
 
 For multi-instance setups, supply the unique name of this Dovecot instance.
 
@@ -1832,15 +1405,12 @@ This simplifies use of commands such as doveadm: rather than using ``-c`` and
 the config path, you can use the ``-i`` flag with the relevant instance name.
 
 
-.. _setting-last_valid_gid:
+.. dovecot_core:setting:: last_valid_gid
+   :default: 0
+   :values: @uint
 
-``last_valid_gid``
-------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
-
-This setting and ``first_valid_gid`` specify the valid GID range for users.
+This setting and :dovecot_core:ref:`first_valid_gid` specify the valid GID
+range for users.
 
 A user whose primary GID is outside this range is not allowed to log in.
 
@@ -1849,33 +1419,22 @@ A user whose primary GID is outside this range is not allowed to log in.
 If the user belongs to any supplementary groups, the corresponding IDs are
 not set.
 
-See also :ref:`setting-first_valid_gid`.
 
+.. dovecot_core:setting:: last_valid_uid
+   :default: 0
+   :values: @uint
 
-.. _setting-last_valid_uid:
-
-``last_valid_uid``
-------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
-
-This setting and ``first_valid_uid`` specify the valid UID range for users.
+This setting and :dovecot_core:ref:`first_valid_uid` specify the valid UID
+range for users.
 
 ``0`` means there is no explicit last UID.
 
 A user whose UID is outside this range is not allowed to log in.
 
-See also :ref:`setting-last_valid_uid`.
 
-
-.. _setting-lda_mailbox_autocreate:
-
-``lda_mailbox_autocreate``
---------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: lda_mailbox_autocreate
+   :default: no
+   :values: @boolean
 
 Should LDA create a non-existent mailbox automatically when attempting to
 save a mail message?
@@ -1883,25 +1442,17 @@ save a mail message?
 .. todo:: Indicate LDA setting
 
 
-.. _setting-lda_mailbox_autosubscribe:
-
-``lda_mailbox_autosubscribe``
------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: lda_mailbox_autosubscribe
+   :default: no
+   :values: @boolean
 
 Should automatically created mailboxes be subscribed to?
 
 .. todo:: Indicate LDA setting
 
 
-.. _setting-lda_original_recipient_header:
-
-``lda_original_recipient_header``
----------------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: lda_original_recipient_header
+   :values: @string
 
 The header from which the original recipient address (used in the SMTP RCPT
 TO: address) is obtained if that address is not available elsewhere.
@@ -1910,27 +1461,21 @@ Example:
 
 .. code-block:: none
 
-   lda_original_recipient_header = X-Original-To
+  lda_original_recipient_header = X-Original-To
 
 .. todo:: Indicate LDA setting
 
 
-.. _setting-libexec_dir:
-
-``libexec_dir``
----------------
-
-- Default: ``/usr/libexec/dovecot``
+.. dovecot_core:setting:: libexc_dir
+   :default: /usr/libexec/dovecot
+   :values: @string
 
 The directory from which you execute commands via doveadm-exec.
 
 
-.. _setting-listen:
-
-``listen``
-----------
-
-- Default: ``*``, ``::``
+.. dovecot_core:setting:: listen
+   :default: \*, \:\:
+   :values: @ip_addresses
 
 A comma-separated list of IP addresses or hostnames on which external network
 connections will be handled.
@@ -1942,67 +1487,45 @@ Example:
 
 .. code-block:: none
 
-   listen = 127.0.0.1, 192.168.0.1
+  listen = 127.0.0.1, 192.168.0.1
 
 
-.. _setting-lmtp_add_received_header:
-
-``lmtp_add_received_header``
-----------------------------
-
-.. versionadded:: v2.3.9
-
-- Default: ``yes``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: lmtp_add_received_header
+   :added: v2.3.9
+   :default: yes
+   :values: @boolean
 
 Controls if "Received:" header should be added to delivered mails.
 
-
-.. _setting-lmtp_address_translate:
-
-``lmtp_address_translate``
---------------------------
-
-.. versionremoved:: 2.3.0
-
-- Default: <empty>
-- Values: :ref:`string`
-
-Allows rewriting LMTP recipient address. Supports only %u, %d, %n variables.
-
-Example:
-
-.. code-block:: none
-
-   lmtp_address_translate = %n@otherdomain.com
+.. todo:: Indicate LMTP setting
 
 
-.. _setting-lmtp_client_workarounds:
+.. dovecot_core:setting:: lmtp_address_translate
+   :removed: v2.3.0
+   :values: @string
 
-``lmtp_client_workarounds``
----------------------------
+.. todo:: Indicate LMTP setting
 
-.. versionadded:: v2.3.9
 
-- Default: <empty>
+.. dovecot_core:setting:: lmtp_client_workarounds
+   :added: v2.3.9
+   :values: @string
 
 Configures the list of active workarounds for LMTP client bugs. The list is
 space-separated. Supported workaround identifiers are:
 
-* ``whitespace-before-path`` - Allow one or more spaces or tabs between 'MAIL FROM:' and path and between 'RCPT TO:' and path.
-* ``mailbox-for-path`` - Allow using bare Mailbox syntax (i.e., without <...>) instead of full path syntax.
+* ``whitespace-before-path``: Allow one or more spaces or tabs between 'MAIL FROM:' and path and between 'RCPT TO:' and path.
+* ``mailbox-for-path``: Allow using bare Mailbox syntax (i.e., without <...>) instead of full path syntax.
 
 .. todo:: Indicate LMTP setting
 
-.. _setting-lmtp_hdr_delivery_address:
 
-``lmtp_hdr_delivery_address``
------------------------------
+.. dovecot_core:setting:: lmtp_hdr_delivery_address
+   :default: final
+   :values: alternative, final, none
 
-- Default: ``final``
-
-The recipient address to use for the
-Delivered-To: header and the relevant Received: header.
+The recipient address to use for the "Delivered-To:" header and the relevant
+"Received:" header.
 
 Options:
 
@@ -2013,13 +1536,9 @@ Options:
 .. todo:: Indicate LMTP setting
 
 
-.. _setting-lmtp_proxy:
-
-``lmtp_proxy``
---------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: lmtp_proxy
+   :default: no
+   :values: @boolean
 
 Proxy to other LMTP/SMTP servers?
 
@@ -2030,14 +1549,9 @@ See :ref:`authentication-proxies`
 .. todo:: Indicate LMTP setting
 
 
-.. _setting-lmtp_proxy_rawlog_dir:
-
-``lmtp_proxy_rawlog_dir``
--------------------------
-
-.. versionadded:: v2.3.2
-
-- Default: <empty>
+.. dovecot_core:setting:: lmtp_proxy_rawlog_dir
+   :added: v2.3.2
+   :values: @string
 
 Directory location to store raw LMTP proxy protocol traffic logs.
 
@@ -2050,14 +1564,9 @@ See :ref:`debugging_rawlog`
 .. todo:: Indicate LMTP setting
 
 
-.. _setting-lmtp_rawlog_dir:
-
-``lmtp_rawlog_dir``
--------------------
-
-.. versionadded:: v2.3.2
-
-- Default: <empty>
+.. dovecot_core:setting:: lmtp_rawlog_dir
+   :added: v2.3.2
+   :values: @string
 
 Directory location to store raw LMTP protocol traffic logs.
 
@@ -2070,13 +1579,9 @@ See :ref:`debugging_rawlog`
 .. todo:: Indicate LMTP setting
 
 
-.. _setting-lmtp_rcpt_check_quota:
-
-``lmtp_rcpt_check_quota``
--------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: lmtp_rcpt_check_quota
+   :default: no
+   :values: @boolean
 
 Should quota be verified before a reply to RCPT TO is issued?
 
@@ -2086,27 +1591,19 @@ default.
 .. todo:: Indicate LMTP setting
 
 
-.. _setting-lmtp_save_to_detail_mailbox:
+.. dovecot_core:setting:: lmtp_save_to_detail_mailbox
+   :default: no
+   :values: @boolean
 
-``lmtp_save_to_detail_mailbox``
--------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
-
-If the recipient address includes a detail element / role (as in
-user+detail format), save the message to the detail mailbox.
+If the recipient address includes a detail element / role (as in user+detail
+format), save the message to the detail mailbox.
 
 .. todo:: Indicate LMTP setting
 
 
-.. _setting-lmtp_user_concurrency_limit:
-
-``lmtp_user_concurrency_limit``
--------------------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: lmtp_user_concurrency_limit
+   :default: 0
+   :values: @uint
 
 Limit the number of concurrent deliveries to a single user to this maximum
 value.
@@ -2117,66 +1614,58 @@ causing delays to other deliveries.
 .. todo:: Indicate LMTP setting
 
 
-.. _setting-lock_method:
+.. dovecot_core:setting:: lock_method
+   :default: fcntl
+   :values: fcntl, flock, dotlock
 
-``lock_method``
----------------
+Specify the locking method to use for index files.
 
-- Default: ``fcntl``
-- Values: ``fcntl, flock, dotlock``
+Options:
 
-* **dotlock**: mailboxname.lock file created by almost all software when writing to mboxes. This grants the writer an exclusive lock over the mbox, so it's usually not used while reading the mbox so that other processes can also read it at the same time. So while using a dotlock typically prevents actual mailbox corruption, it doesn't protect against read errors if mailbox is modified while a process is reading.
-* **flock**: flock() system call is quite commonly used for both read and write locking. The read lock allows multiple processes to obtain a read lock for the mbox, so it works well for reading as well. The one downside to it is that it doesn't work if mailboxes are stored in NFS.
-* **fcntl**: Very similar to flock, also commonly used by software. In some systems this fcntl() system call is compatible with flock(), but in other systems it's not, so you shouldn't rely on it. fcntl works with NFS if you're using lockd daemon in both NFS server and client.
+* ``dotlock``: ``mailboxname.lock`` file created by almost all software when
+  writing to mboxes. This grants the writer an exclusive lock over the mbox,
+  so it's usually not used while reading the mbox so that other processes can
+  also read it at the same time. So while using a dotlock typically prevents
+  actual mailbox corruption, it doesn't protect against read errors if mailbox
+  is modified while a process is reading.
+* ``flock``: flock() system call is quite commonly used for both read and
+  write locking. The read lock allows multiple processes to obtain a read lock
+  for the mbox, so it works well for reading as well. The one downside to it
+  is that it doesn't work if mailboxes are stored in NFS.
+* ``fcntl``: Very similar to flock, also commonly used by software. In some
+  systems this fcntl() system call is compatible with flock(), but in other
+  systems it's not, so you shouldn't rely on it. fcntl works with NFS if
+  you're using lockd daemon in both NFS server and client.
 
-Specify the locking method to use for index files by setting
-lock_method to one of the above values.
 
-.. todo:: Describe values
+.. dovecot_core:setting:: log_core_filter
+   :values: @string
 
-
-.. _setting-log_core_filter:
-
-``log_core_filter``
--------------------
-
-- Default: <empty>
-
-Crash after logging a matching event.  The syntax of the filter is described
+Crash after logging a matching event. The syntax of the filter is described
 in :ref:`event_filter_global`.
 
-For example
+For example:
 
 .. code-block:: none
 
-   log_core_filter = category=error
+  log_core_filter = category=error
 
 will crash any time an error is logged, which can be useful for debugging.
 
 
-.. _setting-log_debug:
-
-``log_debug``
--------------
-
-- Default: <empty>
+.. dovecot_core:setting:: log_debug
+   :values: @string
 
 Filter to specify what debug logging to enable.  The syntax of the filter is
 described in :ref:`event_filter_global`.
 
-This will eventually replace ``mail_debug`` and ``auth_debug`` settings.
-
-See :ref:`setting-auth_debug`
-
-See :ref:`setting-mail_debug`
+This will eventually replace :dovecot_core:ref:`mail_debug` and
+:dovecot_core:ref:`auth_debug` settings.
 
 
-.. _setting-log_path:
-
-``log_path``
-------------
-
-- Default: ``syslog``
+.. dovecot_core:setting:: log_path
+   :default: syslog
+   :values: @string
 
 Specify the log file to use for error messages here.
 
@@ -2190,54 +1679,40 @@ logs, you can make Dovecot log elsewhere as well:
 
 .. code-block:: none
 
-   log_path = /var/log/dovecot.log
+  log_path = /var/log/dovecot.log
 
 If you don't want errors, info, and debug logs all in one file, specify
-:ref:`setting-info_log_path` or :ref:`setting-debug_log_path` as well:
+:dovecot_core:ref:`info_log_path` or :dovecot_core:ref:`debug_log_path` as
+well:
 
 .. code-block:: none
 
-   log_path = /var/log/dovecot.log
-   info_log_path = /var/log/dovecot-info.log
+  log_path = /var/log/dovecot.log
+  info_log_path = /var/log/dovecot-info.log
 
 
-.. todo:: Any other possible settings?
-
-
-.. _setting-log_timestamp:
-
-``log_timestamp``
------------------
-
-- Default: ``%b %d %H:%M:%S``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: log_timestamp
+   :default: %b %d %H:%M:%S
+   :values: @string
 
 The prefix for each line written to the log file.
 
 ``%`` variables are in strftime(3) format.
 
 
-.. _setting-login_access_sockets:
+.. dovecot_core:setting:: login_access_sockets
+   :values: @string
 
-``login_access_sockets``
-------------------------
-
-- Default: <empty>
-
-For blacklisting or whitelisting networks, supply a
-space-separated list of login-access-check sockets for this setting.
+For blacklisting or whitelisting networks, supply a space-separated list of
+login-access-check sockets for this setting.
 
 Dovecot login processes can check via UNIX socket whether login should be
 allowed for the incoming connection.
 
 
-.. _setting-login_greeting:
-
-``login_greeting``
-------------------
-
-- Default: ``Dovecot ready.``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: login_greeting
+   :default: Dovecot ready.
+   :values: @string
 
 The greeting message displayed to clients.
 
@@ -2246,32 +1721,23 @@ Variables:
 * LMTP: :ref:`Mail service user variables <variables-mail_service_user>`.
 * Other protocols: :ref:`Login variables <variables-login>` can be used.
 
-.. _setting-login_log_format:
 
-``login_log_format``
---------------------
-
-- Default: ``%$: %s``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: login_log_format
+   :default: %$: %s
+   :values: @string
 
 The formatting of login log messages.
 
 Variables:
 
 * :ref:`Global variables <variables-global>`.
-* ``%s``: A ``login_log_format_elements`` string
+* ``%s``: A :dovecot_core:ref:`login_log_format_elements` string
 * ``%$``: The log data
 
-See :ref:`setting-login_log_format_elements`
 
-
-.. _setting-login_log_format_elements:
-
-``login_log_format_elements``
------------------------------
-
-- Default: ``user=<%u> method=%m rip=%r lip=%l mpid=%e %c session=<%{session}>``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: login_log_format_elements
+   :default: user=<%u> method=%m rip=%r lip=%l mpid=%e %c session=<%{session}>
+   :values: @string
 
 A space-separated list of elements of the login log formatting.
 
@@ -2280,81 +1746,25 @@ comma-separated string.
 
 :ref:`Login variables <variables-login>` can be used.
 
-.. todo:: Describe login elements
 .. todo:: Provide join example
 
 
-.. _setting-login_plugin_dir:
-
-``login_plugin_dir``
---------------------
-
-- Default: ``/usr/lib64/dovecot/login``
+.. dovecot_core:setting:: login_plugin_dir
+   :default: /usr/lib64/dovecot/login
+   :values: @string
 
 Location of the login plugin directory.
 
 
-.. _setting-login_plugins:
-
-``login_plugins``
------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: login_plugins
+   :values: @string
 
 List of plugins to load for IMAP and POP3 login processes.
 
 
-.. _setting-login_proxy_rawlog_dir:
-
-``login_proxy_rawlog_dir``
---------------------------
-
-.. versionadded:: v2.3.17
-
-- Default: <empty>
-- Values: :ref:`string`
-
-Login processes write rawlogs for proxied connections to this directory for
-debugging purposes. Note that login processes are usually chrooted, so the
-directory is relative to ``$base_dir/login/``.
-
-
-.. _setting-login_proxy_timeout:
-
-``login_proxy_timeout``
------------------------
-
-.. versionadded:: v2.3.12
-
-- Default:``30 secs``
-- Values: :ref:`time_msecs`
-
-Timeout for login proxy failures.
-The timeout covers everything from the time connection is started until a successful login reply is received.
-This can be overwritten by proxy_timeout passdb extra field.
-
-
-.. _setting-login_proxy_max_reconnects:
-
-``login_proxy_max_reconnects``
-------------------------------
-
-.. versionadded:: v2.3.12
-
-- Default:``3``
-
-How many times login proxy will attempt to reconnect to destination server on connection failures (3 reconnects = total 4 connection attempts).
-Reconnecting is done for most types of failures, except for regular authentication failures.
-There is a 1 second delay between each reconnection attempt.
-If :ref:`setting-login_proxy_timeout` is reached, further reconnects aren't attempted.
-
-
-.. _setting-login_proxy_max_disconnect_delay:
-
-``login_proxy_max_disconnect_delay``
-------------------------------------
-
-- Default:``0``
+.. dovecot_core:setting:: login_proxy_max_disconnect_delay
+   :default: 0
+   :values: @uint
 
 Specify the delayed disconnection interval of clients when there is a
 server mass-disconnect.
@@ -2365,12 +1775,26 @@ disconnection is spread over the amount of time indicated.
 ``0`` disables the delay.
 
 
-.. _setting-login_proxy_notify_path:
+.. dovecot_core:setting:: login_proxy_max_reconnects
+   :added: v2.3.12
+   :default: 3
+   :values: @uint
 
-``login_proxy_notify_path``
----------------------------
+How many times login proxy will attempt to reconnect to destination server on
+connection failures (3 reconnects = total 4 connection attempts).
 
-- Default: ``proxy-notify``
+Reconnecting is done for most types of failures, except for regular
+authentication failures.
+
+There is a 1 second delay between each reconnection attempt.
+
+If :dovecot_core:ref:`login_proxy_timeout` is reached, further reconnects
+aren't attempted.
+
+
+.. dovecot_core:setting:: login_proxy_notify_path
+   :default: proxy-notify
+   :values: @string
 
 Path to proxy-notify pipe.
 
@@ -2381,13 +1805,31 @@ The default is OK and doesn't need to be change.
 .. todo:: Indicate that this setting should not be changed.
 
 
-.. _setting-login_source_ips:
+.. dovecot_core:setting:: login_proxy_rawlog_dir
+   :added: v2.3.17
+   :values: @string
 
-``login_source_ips``
---------------------
+Login processes write rawlogs for proxied connections to this directory for
+debugging purposes. Note that login processes are usually chrooted, so the
+directory is relative to ``$base_dir/login/``.
 
-- Default: <empty>
-- Values:  :ref:`ip_addresses`
+
+.. dovecot_core:setting:: login_proxy_timeout
+   :added: v2.3.12
+   :default: 30 secs
+   :values: @time_msecs
+
+Timeout for login proxy failures.
+
+The timeout covers everything from the time connection is started until a
+successful login reply is received.
+
+This can be overwritten by :ref:`proxy_timeout <authentication-proxies>`
+passdb extra field.
+
+
+.. dovecot_core:setting:: login_source_ips
+   :values: @ip_addresses
 
 A list of hosts / IP addresses that are used in a round-robin manner for the
 source IP address when the proxy creates TCP connections.
@@ -2401,24 +1843,21 @@ Example Setting:
 
 .. code-block:: none
    
-   login_source_ips = ?proxy-sources.example.com
-
-.. todo:: Provide example of "?" usage
+  login_source_ips = ?proxy-sources.example.com
 
 
-.. _setting-login_trusted_networks:
+.. dovecot_core:setting:: login_trusted_networks
+   :values: !<space-separated list of trusted network ranges>
 
-``login_trusted_networks``
---------------------------
+This setting is used for a few different purposes, but most importantly it
+allows the client connection to tell the server what the original client's IP
+address was.
 
-- Default: <empty>
+This original client IP address is then used for logging and authentication
+checks.
 
-A space-separated list of trusted network ranges.
-
-This setting is used for a few different purposes, but most importantly it allows the client connection to tell the server what the original client's IP address was.
-This original client IP address is then used for logging and authentication checks.
-
-Plaintext authentication is always allowed for trusted networks (:ref:`setting-disable_plaintext_auth` is ignored).
+Plaintext authentication is always allowed for trusted networks
+(:dovecot_core:ref:`disable_plaintext_auth` is ignored).
 
 The details of how this setting works depends on the used protocol:
 
@@ -2478,18 +1917,14 @@ LMTP:
    * HELO - Overrides what the client sent earlier in the LHLO command
    * LOGIN - Currently unused
    * PROTO - Currently unused
-   * TIMEOUT (overrides :ref:`setting-mail_max_lock_timeout`)
+   * TIMEOUT (overrides :dovecot_core:ref:`mail_max_lock_timeout`)
 
  * The trust is always checked against the connecting IP address.
    Except if HAProxy is used, then the original client IP address is used.
 
 
-.. _setting-mail_access_groups:
-
-``mail_access_groups``
-----------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: mail_access_groups
+   :values: @string
 
 Supplementary groups that are granted access for mail processes.
 
@@ -2504,62 +1939,55 @@ others' mail).
 .. todo:: Describe format; comma-separated list?
 
 
-.. _setting-mail_always_cache_fields:
-
-``mail_always_cache_fields``
-----------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: mail_always_cache_fields
+   :values: @string
 
 The fields specified here are always added to cache when saving mails, even
 if the client never accesses these fields.
 
 See :ref:`mail_cache_settings` for details and for the list of fields.
 
-See :ref:`setting-mail_cache_fields`
+.. seealso::
 
-See :ref:`setting-mail_never_cache_fields`
+   * :dovecot_core:ref:`mail_cache_fields`
+   * :dovecot_core:ref:`mail_never_cache_fields`
 
 
-.. _setting-mail_attachment_detection_options:
+.. dovecot_core:setting:: mail_attachment_detection_options
+   :values: @string
 
-``mail_attachment_detection_options``
--------------------------------------
-
-- Default: <empty>
-
-Settings to control adding ``$HasAttachment`` or ``$HasNoAttachment`` keywords. By default, all MIME parts with ``Content-Disposition=attachment``, or inlines with filename parameter are considered attachments.
+Settings to control adding ``$HasAttachment`` or ``$HasNoAttachment``
+keywords. By default, all MIME parts with ``Content-Disposition=attachment``,
+or inlines with filename parameter are considered attachments.
 
 To enable this feature, this setting needs at least one option specified.
+Multiple options can be added in a space-separated list.
 
 Options:
 
-* **add-flags** - Attachments are detected and marked during save.
-  Detection is done also during fetch if it can be done without extra disk IO and with minimal CPU cost.
-  This means that either both ``mime.parts`` and ``imap.bodystructure`` has to be in cache already, or if mail body is opened in any case.
+* ``add-flags``: Attachments are detected and marked during save.
+  Detection is done also during fetch if it can be done without extra disk IO
+  and with minimal CPU cost.
+  This means that either both ``mime.parts`` and ``imap.bodystructure`` has
+  to be in cache already, or if mail body is opened in any case.
 
   .. versionadded:: v2.3.13
-* **add-flags-on-save** - Deprecated alias for **add-flags**.
+* ``add-flags-on-save``: Deprecated alias for ``add-flags``.
   Before v2.3.13 the detection was done only during save, not during fetch.
 
   .. deprecated:: v2.3.13
-* **add-flags no-flags-on-fetch** - Flags are added during save, but not during fetch.
-  This option will likely be removed in a later release.
+* ``add-flags no-flags-on-fetch``: Flags are added during save, but not during
+  fetch. This option will likely be removed in a later release.
 
   .. versionadded:: v2.3.13
-* **content-type=type|!type** - Include or exclude given content type. Including will only negate an exclusion (e.g. ``content-type=!foo/* content-type=foo/bar``).
-* **exclude-inlined** - Do not consider any attachment with disposition inlined.
+* ``content-type=<type|!type>``: Include or exclude given content type.
+  Including will only negate an exclusion (e.g.
+  ``content-type=!foo/* content-type=foo/bar``).
+* ``exclude-inlined``: Do not consider any attachment with disposition inlined.
 
-.. todo:: Description
-.. todo:: Explain value format: comma-separate list?
 
-
-.. _setting-mail_attachment_dir:
-
-``mail_attachment_dir``
------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: mail_attachment_dir
+   :values: @string
 
 The directory in which to store mail attachments.
 
@@ -2571,31 +1999,25 @@ If no value is specified, attachment saving to external files is disabled.
 :ref:`Mail user variables <variables-mail_user>` can be used.
 
 
-.. _setting-mail_attachment_fs:
-
-``mail_attachment_fs``
-----------------------
-
-- Default: ``sis posix``
+.. dovecot_core:setting:: mail_attachment_fs
+   :default: sis posix
+   :values: posix, sis posix, sis-queue posix
 
 Which filesystem type to use for saving attachments.
 
 Options:
 
-* ``posix``: No single-instance storage done (this option might simplify the filesystem's own de-duplication operations)
+* ``posix``: No single-instance storage done (this option might simplify the
+  filesystem's own de-duplication operations)
 * ``sis posix``: SiS with immediate byte-by-byte comparison during saving
 * ``sis-queue posix``: Sis with delayed comparison and de-duplication
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
 
 
-.. _setting-mail_attachment_hash:
-
-``mail_attachment_hash``
-------------------------
-
-- Default: ``%{sha1}``
-- Values: ``%{md4}, %{md5}, %{sha1}, %{sha256}, %{sha512}, %{size}``
+.. dovecot_core:setting:: mail_attachment_hash
+   :default: %{sha1}
+   :values: %{md4}, %{md5}, %{sha1}, %{sha256}, %{sha512}, %{size}
 
 The hash format to use in attachment filenames when saving attachments
 externally.
@@ -2606,23 +2028,15 @@ The syntax allows truncation of any variable. For example ``%{sha256:80}``
 will return only the first 80 bits of the SHA256 output.
 
 
-.. _setting-mail_attachment_min_size:
-
-``mail_attachment_min_size``
-----------------------------
-
-- Default: ``128k``
-- Values:  :ref:`size`
+.. dovecot_core:setting:: mail_attachment_min_size
+   :default: 128k
+   :values: @size
 
 Attachments below this size will not be saved externally.
 
 
-.. _setting-mail_attribute_dict:
-
-``mail_attribute_dict``
------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: mail_attribute_dict
+   :values: @string
 
 The dictionary to be used for key=value mailbox attributes.
 
@@ -2634,19 +2048,16 @@ Example Setting:
 
 .. code-block:: none
 
-   mail_attribute_dict = file:%h/dovecot-attributes
+  mail_attribute_dict = file:%h/dovecot-attributes
 
-See :ref:`setting-imap_metadata`
+.. seealso:: :dovecot_core:ref:`imap_metadata`
 
 .. todo:: Indicate metadata setting
 
 
-.. _setting-mail_cache_fields:
-
-``mail_cache_fields``
----------------------
-
-- Default: ``flags``
+.. dovecot_core:setting:: mail_cache_fields
+   :default: flags
+   :values: @string
 
 The default list of fields that are added to cache if no other caching
 decisions exist yet. This setting is used only when creating the initial
@@ -2654,19 +2065,14 @@ INBOX for the user. Other folders get their defaults from the INBOX.
 
 See :ref:`mail_cache_settings` for details and for the list of fields.
 
-See :ref:`setting-mail_always_cache_fields`
+.. seealso::
 
-See :ref:`setting-mail_never_cache_fields`
+   * :dovecot_core:ref:`mail_always_cache_fields`
+   * :dovecot_core:ref:`mail_never_cache_fields`
 
-.. todo:: List fields, or link to fields decription page
 
-
-.. _setting-mail_chroot:
-
-``mail_chroot``
----------------
-
-- Default: <empty>
+.. dovecot_core:setting:: mail_chroot
+   :values: @string
 
 The default chroot directory for mail processes.
 
@@ -2675,67 +2081,59 @@ This chroots all users globally into the same directory.
 :ref:`Mail service user variables <variables-mail_service_user>` can be used.
 
 
-.. _setting-mail_debug:
+.. dovecot_core:setting:: mail_debug
+   :default: no
+   :values: @boolean
 
-``mail_debug``
---------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
-
-This setting adjusts log verbosity.  It enables mail-process
-debugging.  This can help you figure out the reason if Dovecot
-isn't finding certain mail messages.  
+This setting adjusts log verbosity. It enables mail-process debugging. This
+can help you figure out the reason if Dovecot isn't finding certain mail
+messages.  
 
 
-.. _setting-mail_fsync:
-
-``mail_fsync``
---------------
-
-- Default: ``optimized``
+.. dovecot_core:setting:: mail_fsync
+   :default: optimized
+   :values: always, optimized, never
 
 Specify when to use fsync() or fdatasync() calls.
-Using fsync waits until the data is written to disk before it continues, which is used to prevent corruption or data loss in case of server crashes.
-This setting applies to mail files and index files on the filesystem.
-This setting doesn't apply to object storage operations.
+
+Using fsync waits until the data is written to disk before it continues, which
+is used to prevent corruption or data loss in case of server crashes.
+
+This setting applies to mail files and index files on the filesystem. This
+setting doesn't apply to object storage operations.
 
 Options:
 
 * ``always``: Use fsync after all disk writes.
   Recommended for NFS to make sure there aren't any delayed write()s.
 * ``optimized``: Use fsync after important disk writes.
-  For example cache file writes aren't fsynced, because they can be regenerated if necessary.
+  For example cache file writes aren't fsynced, because they can be
+  regenerated if necessary.
 * ``never``: Never fsync any disk writes.
-  This provides the best performance, but risks losing recently saved emails in case of a crash with most mailbox formats.
+  This provides the best performance, but risks losing recently saved emails
+  in case of a crash with most mailbox formats.
 
-  With obox format this option is recommended to be used, because it affects only the local metacache operations.
-  If a server crashes, the existing metacache is treated as potentially corrupted and isn't used.
+  With :ref:`obox <obox_settings>`, this option is recommended to be used
+  because it affects only the local metacache operations. If a server crashes,
+  the existing metacache is treated as potentially corrupted and isn't used.
 
 
-.. _setting-mail_full_filesystem_access:
-
-``mail_full_filesystem_access``
--------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: mail_full_filesystem_access
+   :default: no
+   :values: @boolean
 
 Allow full filesystem access to clients?
 
 If enabled, no access checks are performed other than what the operating
 system does for the active UID/GID.
 
-This setting works with both Maildir and mbox formats, allowing you to prefix
-mailboxes' names with /path/ or ~user/ indicators.
+This setting works with both :ref:`Maildir <maildir_mbox_format>` and
+:ref:`mbox <mbox_mbox_format>`, allowing you to prefix mailbox names with
+/path/ or ~user/ indicators.
 
 
-.. _setting-mail_gid:
-
-``mail_gid``
-------------
-
-- Default: <empty>
+.. dovecot_core:setting:: mail_gid
+   :values: @string, @uint
 
 The system group ID used for accessing mail messages.
 
@@ -2744,41 +2142,33 @@ Can be either numeric IDs or group names.
 If you use multiple values here, userdb can override them by returning the
 gid field.
 
-See :ref:`setting-mail_uid`
+.. seealso:: :dovecot_core:ref:`mail_uid`
 
 .. todo:: Describe value format (comma-separate list?)
 
 
-.. _setting-mail_home:
-
-``mail_home``
--------------
-
-- Default: <empty>
+.. dovecot_core:setting:: mail_home
+   :values: @string
 
 The are various possible ways of specifying this parameter and mail_location.
-The following example is one option when home=/var/vmail/domain/user/ and
-mail=/var/vmail/domain/user/mail/:
+The following example is one option when ``home=/var/vmail/domain/user/`` and
+``mail=/var/vmail/domain/user/mail/``:
 
 .. code-block:: none
 
-   mail_home = /var/vmail/%d/%n
-   mail_location = maildir:~/mail
+  mail_home = /var/vmail/%d/%n
+  mail_location = maildir:~/mail
 
 :ref:`Mail service user variables <variables-mail_service_user>` can be used.
 
-See :ref:`setting-mail_location`
+.. seealso::
 
-See :ref:`quick_configuration`
+   * :dovecot_core:ref:`mail_location`
+   * :ref:`quick_configuration`
 
 
-.. _setting-mail_location:
-
-``mail_location``
------------------
-
-- Default: <empty>
-- Value:   :ref:`string`
+.. dovecot_core:setting:: mail_location
+   :values: @string
 
 This setting indicates the location for users' mailboxes.
 
@@ -2790,46 +2180,30 @@ explicitly state the full location here, if possible.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
 
-See :ref:`mail_location_settings`.
+.. seealso:: :ref:`mail_location_settings`
 
 
-.. _setting-mail_log_prefix:
-
-``mail_log_prefix``
--------------------
-
-- Default: ``%s(%u)<%{pid}><%{session}>:``
+.. dovecot_core:setting:: mail_log_prefix
+   :default: %s(%u)<%{pid}><%{session}>:
+   :values: @string
 
 You can specify a log prefix for mail processes here.
-
-Example setting: 
-
-.. code-block:: none
-
-   mail_log_prefix = "%s(%u): "
 
 :ref:`Mail service user variables <variables-mail_service_user>` can be used.
 
 
-.. _setting-mail_max_keyword_length:
-
-``mail_max_keyword_length``
----------------------------
-
-- Default: ``50``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: mail_max_keyword_length
+   :default: 50
+   :values: @uint
 
 The maximum length allowed for a mail keyword name.
 
 Compliance is enforced only during attempts to create new keywords
 
 
-.. _setting-mail_max_lock_timeout:
-
-``mail_max_lock_timeout``
--------------------------
-
-- Default: ``0``
+.. dovecot_core:setting:: mail_max_lock_timeout
+   :default: 0
+   :values: @time
 
 This value is used as a timeout for tempfailing mail connections.  It
 can be set globally, for application to all Dovecot services, but
@@ -2841,28 +2215,24 @@ tolerate tempfailing less well.
 .. todo:: Link to page explaining this option
 
 
-.. _setting-mail_max_userip_connections:
-
-``mail_max_userip_connections``
--------------------------------
-
-- Default: ``10``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: mail_max_userip_connections
+   :default: 10
+   :values: @uint
 
 The maximum number of IMAP connections allowed for a user from each IP
 address.
+
 This setting is checked only by backends, not proxies.
-Note that for this to work, any username changes must be done already by passdb lookup (not by userdb lookup).
+
+Note that for this to work, any username changes must be done already by
+passdb lookup (not by userdb lookup).
 
 Unique users are identified via case-sensitive comparison.
 
 
-.. _setting-mail_never_cache_fields:
-
-``mail_never_cache_fields``
----------------------------
-
-- Default: ``imap.envelope``
+.. dovecot_core:setting:: mail_never_cache_fields
+   :default: imap.envelope
+   :values: @string
 
 List of fields that should never be cached.
 
@@ -2871,76 +2241,57 @@ which isn't needed because it can be generated from the cached header fields.
 
 See :ref:`mail_cache_settings` for details and for the list of fields.
 
-See :ref:`setting-mail_cache_fields`
+.. seealso::
 
-See :ref:`setting-mail_always_cache_fields`
+   * :dovecot_core:ref:`mail_always_cache_fields`
+   * :dovecot_core:ref:`mail_cache_fields`
 
-.. _setting-mail_nfs_index:
 
-``mail_nfs_index``
-------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: mail_nfs_index
+   :default: no
+   :values: @boolean
 
 When mail-index files exist in NFS storage and you're running a
 multi-server setup that you wish to flush NFS caches, this can be set
-to ``yes`` (in this case, make sure also to use the settings).
+to ``yes`` (in this case, make sure also to use
+:dovecot_core:ref:`mmap_disable` = ``yes`` and
+:dovecot_core:ref:`fsync_disable` = ``no``).
 
-.. code-block:: none
-
-   mmap_disable=yes and fsync_disable=no 
-
-See :ref:`setting-mail_fsync`
-See :ref:`setting-mmap_disable`
+.. seealso:: :dovecot_core:ref:`mail_fsync`
 
 
-.. _setting-mail_nfs_storage:
-
-``mail_nfs_storage``
---------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: mail_nfs_storage
+   :default: no
+   :values: @boolean
 
 Flush NFS caches whenever it is necessasry to do so.
 
 This setting should only be enabled if you are using multiple servers on NFS.
 
 
-.. _setting-mail_plugin_dir:
-
-``mail_plugin_dir``
--------------------
-
-- Default: ``/usr/lib64/dovecot``
+.. dovecot_core:setting:: mail_plugin_dir
+   :default: /usr/lib64/dovecot
+   :values: @string
 
 The directory in which to search for Dovecot mail plugins.
 
-See :ref:`setting-mail_plugins`
+.. seealso:: :dovecot_core:ref:`mail_plugins`
 
 
-.. _setting-mail_plugins:
-
-``mail_plugins``
-----------------
-
-- Default: <empty>
+.. dovecot_core:setting:: mail_plugins
+   :values: @string
 
 A spece-separated list of plugins to load.
 
-See :ref:`setting-mail_plugin_dir`
+.. seealso::
 
-See :ref:`Example Usage <config_file_syntax-mail_plugins_example>`
+   * :dovecot_core:ref:`mail_plugin_dir`
+   * :ref:`Example Usage <config_file_syntax-mail_plugins_example>`
 
 
-.. _setting-mail_prefetch_count:
-
-``mail_prefetch_count``
------------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: mail_prefetch_count
+   :default: 0
+   :values: @uint
 
 The maximum number of messages to keep open and prefetch to memory.
 
@@ -2949,35 +2300,25 @@ The maximum number of messages to keep open and prefetch to memory.
 Behavior is dependent on the operating system and mailbox format.
 
 
-.. _setting-mail_privileged_group:
-
-``mail_privileged_group``
--------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: mail_privileged_group
+   :values: @string
 
 This group is enabled temporarily for privileged operations.  Currently, 
 this is used only with the INBOX when either its initial creation or
 dotlocking fails.
+
 Typically, this is set to ``mail`` to give access to ``/var/mail``.
 
 You can give Dovecot access to mail group by setting:
 
 .. code-block:: none 
 
-   mail_privileged_group = mail
-
-.. todo:: Better explanation
-.. todo:: Provide example
+  mail_privileged_group = mail
 
 
-.. _setting-mail_save_crlf:
-
-``mail_save_crlf``
-------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: mail_save_crlf
+   :default: no
+   :values: @boolean
 
 Save message with CR+LF line endings?
 
@@ -2989,68 +2330,50 @@ the cost of slightly increased disk I/O, which could decrease the speed in
 some deployments.
 
 
-.. _setting-mail_server_admin:
-
-``mail_server_admin``
----------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: mail_server_admin
+   :values: @string
 
 The method for contacting the server administrator.
 
-Per the METADATA standard (RFC 5464), this value MUST be a URI (e.g.,
-a mailto: or tel: URL), but that requirement is not enforced by Dovecot.
+Per the METADATA standard (RFC 5464), this value MUST be a URI (e.g., a
+mailto: or tel: URL), but that requirement is not enforced by Dovecot.
 
 This value is accessible to authenticated users through the ``/shared/admin``
 IMAP METADATA server entry.
 
 .. code-block:: none
 
-   mail_server_admin = mailto:admin@example.com
+  mail_server_admin = mailto:admin@example.com
 
-See :ref:`setting-imap_metadata`
+.. seealso:: :dovecot_core:ref:`imap_metadata`
 
 .. todo:: Indicate metadata setting
 
 
-.. _setting-mail_server_comment:
-
-``mail_server_comment``
------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: mail_server_comment
+   :values: @string
 
 A comment or note that is associated with the server.
 
 This value is accessible to authenticated users through the
 ``/shared/comment`` IMAP METADATA server entry.
 
-See :ref:`setting-imap_metadata`
+.. seealso:: :dovecot_core:ref:`imap_metadata`
 
 .. todo:: Indicate metadata setting
 
 
-.. _setting-mail_shared_explicit_inbox:
-
-``mail_shared_explicit_inbox``
-------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: mail_shared_explicit_inbox
+   :default: no
+   :values: @boolean
 
 This setting determines whether a shared INBOX should be visible as
 "shared/user" or as "shared/user/INBOX" instead.
 
-.. todo:: Double check description is correct
 
-
-.. _setting-mail_sort_max_read_count:
-
-``mail_sort_max_read_count``
-----------------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: mail_sort_max_read_count
+   :default: 0
+   :values: @uint
 
 The number of slow mail accesses an IMAP SORT can perform before it returns
 failure to the client.
@@ -3061,19 +2384,20 @@ The IMAP reply returned to the client is:
 
 .. code-block:: none
 
-   NO [LIMIT] Requested sort would have taken too long.
+  NO [LIMIT] Requested sort would have taken too long.
 
-As a special case with the obox format when doing a ``SORT (ARRIVAL)``, the SORT will always return OK.
-When it reaches the slow access limit, it falls back to using the save-date (instead of received-date) for the rest of the mails.
-Often this produces mostly the same result, especially in the INBOX.
+.. note:: As a special case with the :ref:`obox <obox_settings>` format when
+          doing a ``SORT (ARRIVAL)``, the SORT will always return OK.
+
+          When it reaches the slow access limit, it falls back to using the
+          save-date (instead of received-date) for the rest of the mails.
+
+          Often this produces mostly the same result, especially in the INBOX.
 
 
-.. _setting-mail_temp_dir:
-
-``mail_temp_dir``
------------------
-
-- Default: ``/tmp``
+.. dovecot_core:setting:: mail_temp_dir
+   :default: /tmp
+   :values: @string
 
 The directory in which LDA/LMTP will temporarily store incoming message data
 that is above 128kB in size.
@@ -3084,13 +2408,9 @@ that is above 128kB in size.
 .. todo:: Indicate LMTP setting
 
 
-.. _setting-mail_temp_scan_interval:
-
-``mail_temp_scan_interval``
----------------------------
-
-- Default: ``1week``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: mail_temp_scan_interval
+   :default: 1week
+   :values: @time
 
 How often Dovecot scans for and deletes stale temporary files.
 
@@ -3099,30 +2419,22 @@ These files are usually created only if Dovecot crashes when saving a message.
 A value of ``0`` means this scan never occurs.
 
 
-.. _setting-mail_uid:
-
-``mail_uid``
-------------
-
-- Default: <empty>
+.. dovecot_core:setting:: mail_uid
+   :values: @string, @uint
 
 This setting indicates the system userid used for accessing mail
 messages.  If you use multiple values here, userdb can override them
 by returning UID or GID fields.  You can use either numeric IDs or
 usernames here.
 
-See :ref:`setting-mail_gid`
+.. seealso:: :dovecot_core:ref:`mail_gid`
 
 .. todo:: Describe value format (comma-separate list?)
 
 
-.. _setting-mail_vsize_bg_after_count:
-
-``mail_vsize_bg_after_count``
------------------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: mail_vsize_bg_after_count
+   :default: 0
+   :values: @uint
 
 Controls transitioning mail size determination to the background instead of
 synchronously during the delivery process.
@@ -3136,22 +2448,20 @@ When indexing is occuring in the background, explicit quota size queries
 return an internal error and mail deliveries are assumed to succeed.
 
 This setting must not be set to indexer-worker process, or the background
-calculation isn't finished. The configuration should be like::
+calculation isn't finished. The configuration should be like:
+
+.. code-block:: none
 
   protocol !indexer-worker {
     mail_vsize_bg_after_count = 10
   }
 
-See :ref:`quota_plugin`
+.. seealso:: :ref:`quota_plugin`
 
 
-.. _setting-mailbox_idle_check_interval:
-
-``mailbox_idle_check_interval``
--------------------------------
-
-- Default: ``30secs``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: mailbox_idle_check_interval
+   :default: 30secs
+   :values: @time
 
 The minimum time between checks for new mail/other changes when a mailbox
 is in the IMAP IDLE state.
@@ -3159,15 +2469,11 @@ is in the IMAP IDLE state.
 .. todo:: Indicate imap setting
 
 
-.. _setting-mailbox_list_index:
+.. dovecot_core:setting:: mailbox_list_index
+   :default: yes
+   :values: @boolean
 
-``mailbox_list_index``
-----------------------
-
-- Default: ``yes``
-- Values: :ref:`boolean`
-
-These indexes live at the root of user's mailbox storage, and allows quick
+Dovecot indexes live at the root of user's mailbox storage, and allows quick
 lookup of mailbox status instead of needing to open all mailbox indexes
 separately.
 
@@ -3175,72 +2481,57 @@ Enabling this optimizes the server reply to IMAP STATUS commands, which are
 commonly issues. This also needs to be enabled if you wish to enable the IMAP
 NOTIFY extension.
 
-.. todo:: Link to IMAP NOTIFY documentation
 
-
-.. _setting-mailbox_list_index_include_inbox:
-
-``mailbox_list_index_include_inbox``
-------------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: mailbox_list_index_include_inbox
+   :default: no
+   :values: @boolean
 
 Should INBOX be kept up-to-date in the mailbox list index?
 
 Disabled by default as most mailbox accesses will open INBOX anyway.
 
-See :ref:`setting-mailbox_list_index`
+.. seealso:: :dovecot_core:ref:`mailbox_list_index`
 
 
-.. _setting-mailbox_list_index_very_dirty_syncs:
-
-``mailbox_list_index_very_dirty_syncs``
----------------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: mailbox_list_index_very_dirty_syncs
+   :default: no
+   :values: @boolean
 
 If enabled, assume that the mailbox list index is fully updated so that
 stat() will not be run for mailbox files/directories.
 
 
-``maildir_broken_filename_sizes``
----------------------------------
+.. dovecot_core:setting:: maildir_broken_filename_sizes
+   :hdr_only: no_index
 
-See :ref:`setting-maildir_broken_filename_sizes`
-
-
-``maildir_copy_with_hardlinks``
--------------------------------
-
-See :ref:`setting-maildir_copy_with_hardlinks`
+See :dovecot_core:ref:`maildir_broken_filename_sizes`
 
 
-``maildir_empty_new``
----------------------
+.. dovecot_core:setting:: maildir_copy_with_hardlinks
+   :hdr_only: no_index
 
-See :ref:`setting-maildir_empty_new`
+See :dovecot_core:ref:`maildir_copy_with_hardlinks`
 
+.. dovecot_core:setting:: maildir_empty_new
+   :hdr_only: no_index
 
-``maildir_stat_dirs``
----------------------
-
-See :ref:`setting-maildir_stat_dirs`
-
-
-``maildir_very_dirty_syncs``
-----------------------------
-
-See :ref:`setting-maildir_very_dirty_syncs`
+See :dovecot_core:ref:`maildir_empty_new`
 
 
-.. _setting-master_user_separator:
+.. dovecot_core:setting:: maildir_stat_dirs
+   :hdr_only: no_index
 
-``master_user_separator``
--------------------------
+See :dovecot_core:ref:`maildir_stat_dirs`
 
-- Default: <empty>
+
+.. dovecot_core:setting:: maildir_very_dirty_syncs
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`maildir_very_dirty_syncs`
+
+
+.. dovecot_core:setting:: master_user_separator
+   :values: @string
 
 The separator to use to enable master users to login by specifying the master
 username within the normal username string (i.e., not using the SASL
@@ -3250,91 +2541,87 @@ Example:
 
 .. code-block:: none
 
-   # Allows master login of the format <username>*<masteruser>
-   # E.g. if user = foo, and master_user = muser,
-   #   login username = foo*muser
-   master_user_separator = *
+  # Allows master login of the format <username>*<masteruser>
+  # E.g. if user = foo, and master_user = muser,
+  #   login username = foo*muser
+  master_user_separator = *
 
 
-``mbox_dirty_syncs``
---------------------
+.. dovecot_core:setting:: mbox_dirty_syncs
+   :hdr_only: no_index
 
-See :ref:`setting-mbox_dirty_syncs`
-
-
-``mbox_dotlock_change_timeout``
--------------------------------
-
-See :ref:`setting-mbox_dotlock_change_timeout`
+See :dovecot_core:ref:`mbox_dirty_syncs`
 
 
-``mbox_lazy_writes``
---------------------
+.. dovecot_core:setting:: mbox_dotlock_change_timeout
+   :hdr_only: no_index
 
-See :ref:`setting-mbox_lazy_writes`
-
-
-``mbox_lock_timeout``
----------------------
-
-See :ref:`setting-mbox_lock_timeout`
+See :dovecot_core:ref:`mbox_dotlock_change_timeout`
 
 
-``mbox_md5``
-------------
+.. dovecot_core:setting:: mbox_lazy_writes
+   :hdr_only: no_index
 
-See: :ref:`setting-mbox_md5`
-
-
-``mbox_min_index_size``
------------------------
-
-See :ref:`setting-mbox_min_index_size`
+See :dovecot_core:ref:`mbox_lazy_writes`
 
 
-``mbox_read_locks``
--------------------
+.. dovecot_core:setting:: mbox_lock_timeout
+   :hdr_only: no_index
 
-See :ref:`setting-mbox_read_locks`
-
-
-``mbox_very_dirty_syncs``
--------------------------
-
-See :ref:`setting-mbox_very_dirty_syncs`
+See :dovecot_core:ref:`mbox_lock_timeout`
 
 
-``mbox_write_locks``
---------------------
+.. dovecot_core:setting:: mbox_md5
+   :hdr_only: no_index
 
-See :ref:`setting-mbox_write_locks`
-
-
-``mdbox_preallocate_space``
----------------------------
-
-See :ref:`setting-mdbox_preallocate_space`
+See: :dovecot_core:ref:`mbox_md5`
 
 
-``mdbox_rotate_interval``
--------------------------
+.. dovecot_core:setting:: mbox_min_index_size
+   :hdr_only: no_index
 
-See :ref:`setting-mdbox_rotate_interval`
-
-
-``mdbox_rotate_size``
----------------------
-
-See :ref:`setting-mdbox_rotate_size`
+See :dovecot_core:ref:`mbox_min_index_size`
 
 
-.. _setting-mmap_disable:
+.. dovecot_core:setting:: mbox_read_locks
+   :hdr_only: no_index
 
-``mmap_disable``
-----------------
+See :dovecot_core:ref:`mbox_read_locks`
 
-- Default: ``no``
-- Values: :ref:`boolean`
+
+.. dovecot_core:setting:: mbox_very_dirty_syncs
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`mbox_very_dirty_syncs`
+
+
+.. dovecot_core:setting:: mbox_write_locks
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`mbox_write_locks`
+
+
+.. dovecot_core:setting:: mdbox_preallocate_space
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`mdbox_preallocate_space`
+
+
+.. dovecot_core:setting:: mbox_rotate_interval
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`mdbox_rotate_interval`
+
+
+.. dovecot_core:setting:: mdbox_rotate_size
+   :hdr_only: no_index
+
+See :dovecot_core:ref:`mdbox_rotate_size`
+
+
+.. dovecot_core:setting:: mmap_disable
+   :default: no
+   :values: @boolean
 
 Disable mmap() usage?
 
@@ -3342,38 +2629,19 @@ Disable mmap() usage?
 (i.e., if you use NFS or a clustered filesystem).
 
 
-.. _setting-namespace:
-
-``namespace``
--------------
-
-Declares new namespace, see :ref:`namespaces` for more details.
-
-.. _setting-old_stats_carbon_interval:
-
-``old_stats_carbon_interval``
------------------------------
-
-.. versionadded:: v2.2.27
-
-- Default: ``30secs``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: old_stats_carbon_interval
+   :added: v2.2.27
+   :default: 30secs
+   :values: @time
 
 The interval at which to send stats to the Carbon server.
 
-See :ref:`setting-old_stats_carbon_server`
-
-.. todo:: Indicate old stats setting
+.. seealso:: :dovecot_core:ref:`old_stats_carbon_server`
 
 
-.. _setting-old_stats_carbon_name:
-
-``old_stats_carbon_name``
--------------------------
-
-.. versionadded:: v2.2.27
-
-- Default: <empty>
+.. dovecot_core:setting:: old_stats_carbon_name
+   :added: v2.2.27
+   :values: @string
 
 The identifier to use for this node when exporting stats to the Carbon server.
 
@@ -3383,134 +2651,67 @@ Example:
 
 .. code-block:: none
 
-   stats_carbon_name = hostname
+  stats_carbon_name = hostname
 
-See :ref:`setting-old_stats_carbon_server`
-
-.. todo:: Indicate old stats setting
+.. seealso:: :dovecot_core:ref:`old_stats_carbon_server`
 
 
-.. _setting-old_stats_carbon_server:
-
-``old_stats_carbon_server``
----------------------------
-
-.. versionadded:: v2.2.27
-
-- Default: <empty>
+.. dovecot_core:setting:: old_stats_carbon_server
+   :added: v2.2.27
+   :values: !<hostname | ip>:<port>
 
 Send server statistics to an external Carbon server.
 
-Format is ``<hostname | ip>:<port>``.
 
-Example Setting:
-
-.. code-block:: none
-
-   127.0.0.1:2003
-.. todo:: Indicate old stats setting
-.. todo:: Is this correct default setting?
-
-
-.. _setting-old_stats_command_min_time:
-
-``old_stats_command_min_time``
-------------------------------
-
-- Default: ``1min``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: old_stats_command_min_time
+   :default: 1min
+   :values: @time
 
 Command-level stats older than this value will be cleared once the memory
-limit in ``old_stats_memory_limit`` is reached.
-
-See :ref:`setting-old_stats_memory_limit`
-
-.. todo:: Indicate old stats setting
+limit in :dovecot_core:ref:`old_stats_memory_limit` is reached.
 
 
-.. _setting-old_stats_domain_min_time:
-
-``old_stats_domain_min_time``
------------------------------
-
-- Default: ``12hours``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: old_stats_domain_min_time
+   :default: 12hours
+   :values: @time
 
 Domain-level stats older than this value will be cleared once the memory
-limit in ``old_stats_memory_limit`` is reached.
-
-See :ref:`setting-old_stats_memory_limit`
-
-.. todo:: Indicate old stats setting
+limit in :dovecot_core:ref:`old_stats_memory_limit` is reached.
 
 
-.. _setting-old_stats_ip_min_time:
-
-``old_stats_ip_min_time``
--------------------------
-
-- Default: ``12hours``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: old_stats_ip_min_time
+   :default: 12hours
+   :values: @time
 
 IP Address-level stats older than this value will be cleared once the memory
-limit in ``old_stats_memory_limit`` is reached.
-
-See :ref:`setting-old_stats_memory_limit`
-
-.. todo:: Indicate old stats setting
+limit in :dovecot_core:ref:`old_stats_memory_limit` is reached.
 
 
-.. _setting-old_stats_memory_limit:
-
-``old_stats_memory_limit``
---------------------------
-
-- Default: ``16M``
-- Values:  :ref:`size`
+.. dovecot_core:setting:: old_stats_memory_limit
+   :default: 16M
+   :values: @size
 
 The maximum amount of memory that can be used by the old stats process.
 
-.. todo:: Indicate old stats setting
 
-
-.. _setting-old_stats_session_min_time:
-
-``old_stats_session_min_time``
-------------------------------
-
-- Default: ``15mins``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: old_stats_session_min_time
+   :default: 15mins
+   :values: @time
 
 Session-level stats older than this value will be cleared once the memory
-limit in ``old_stats_memory_limit`` is reached.
-
-See :ref:`setting-old_stats_memory_limit`
-
-.. todo:: Indicate old stats setting
+limit in :dovecot_core:ref:`old_stats_memory_limit` is reached.
 
 
-.. _setting-old_stats_user_min_time:
-
-``old_stats_user_min_time``
----------------------------
-
-- Default: ``1hour``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: old_stats_user_min_time
+   :default: 1hour
+   :values: @time
 
 User-level stats older than this value will be cleared once the memory
-limit in ``old_stats_memory_limit`` is reached.
-
-See :ref:`setting-old_stats_memory_limit`
-
-.. todo:: Indicate old stats setting
+limit in :dovecot_core:ref:`old_stats_memory_limit` is reached.
 
 
-.. _setting-pop3_client_workarounds:
-
-``pop3_client_workarounds``
----------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: pop3_client_workarounds
+   :values: @string
 
 Workarounds for various POP3 client bugs can be enabled here.  The list is
 space-separated.
@@ -3530,29 +2731,19 @@ The following values are currently supported:
 .. todo:: Indicate POP3 setting
 
 
-.. _setting-pop3_delete_type:
+.. dovecot_core:setting:: pop3_delete_type
+   :default: default
+   :values: default, flag, expunge
 
-``pop3_delete_type``
---------------------
-
-- Default: < >
-- Values: ``flag`` or ``expunge``
-
-Action to perform in POP3 when mails are deleted and the ``pop3_deleted_flag``
-is enabled.
-
-See :ref:`setting-pop3_deleted_flag`
+Action to perform in POP3 when mails are deleted and
+:dovecot_core:ref:`pop3_deleted_flag` is enabled.
 
 .. todo:: Indicate POP3 setting
 .. todo:: Describe difference between flag and expunge
 
 
-.. _setting-pop3_deleted_flag:
-
-``pop3_deleted_flag``
----------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: pop3_deleted_flag
+   :values: @string
 
 Change POP3 behavior so a user cannot permanently delete messages via POP3.
 
@@ -3566,20 +2757,16 @@ Example:
 
 .. code-block:: none
 
-   pop3_deleted_flag = $POP3Deleted
+  pop3_deleted_flag = $POP3Deleted
 
-See :ref:`setting-pop3_delete_type`
+.. seealso:: :dovecot_core:ref:`pop3_delete_type`
 
 .. todo:: Indicate POP3 setting
 
 
-.. _setting-pop3_enable_last:
-
-``pop3_enable_last``
---------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: pop3_enable_last
+   :default: no
+   :values: @boolean
 
 Enable support for the POP3 LAST command.
 
@@ -3590,13 +2777,9 @@ flags that messages may have.
 .. todo:: Indicate POP3 setting
 
 
-.. _setting-pop3_fast_size_lookups:
-
-``pop3_fast_size_lookups``
---------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: pop3_fast_size_lookups
+   :default: no
+   :values: @boolean
 
 If enabled, use the virtual message size of the message for POP3 replies if
 available.
@@ -3613,26 +2796,18 @@ message to determine.
 .. todo:: Indicate POP3 setting
 
 
-.. _setting-pop3_lock_session:
-
-``pop3_lock_session``
----------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: pop3_lock_session
+   :default: no
+   :values: @boolean
 
 If enabled, only one POP3 session may exist for any single user.
 
 .. todo:: Indicate POP3 setting
 
 
-.. _setting-pop3_logout_format:
-
-``pop3_logout_format``
-----------------------
-
-- Default: ``top=%t/%p``, ``retr=%r/%b``, ``del=%d/%m``, ``size=%s``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: pop3_logout_format
+   :default: top=%t/%p retr=%r/%b del=%d/%m size=%s
+   :values: @string
 
 The string to display to the client on POP3 logout (informational only).
 
@@ -3654,13 +2829,9 @@ Variables available:
 .. todo:: Indicate POP3 setting
 
 
-.. _setting-pop3_no_flag_updates:
-
-``pop3_no_flag_updates``
-------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: pop3_no_flag_updates
+   :default: no
+   :values: @boolean
 
 If enabled, do not attempt to mark mail messages as seen or non-recent when a
 POP3 session is involved.
@@ -3668,13 +2839,9 @@ POP3 session is involved.
 .. todo:: Indicate POP3 setting
 
 
-.. _setting-pop3_reuse_xuidl:
-
-``pop3_reuse_xuidl``
---------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: pop3_reuse_xuidl
+   :default: no
+   :values: @boolean
 
 If enabled, and the mail message has an X-UIDL header, use this as the mail's
 UIDL.
@@ -3682,31 +2849,22 @@ UIDL.
 .. todo:: Indicate POP3 setting
 
 
-.. _setting-pop3_save_uidl:
+.. dovecot_core:setting:: pop3_save_uidl
+   :default: no
+   :values: @boolean
 
-``pop3_save_uidl``
-------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
-
-Maildir only: If enabled, allow permanent permanent saving of UIDLs sent to
-POP3 clients so that changes to ``pop3_uidl_format`` don't cause
-future changes to the corresponding UIDLs.
-
-See :ref:`setting-pop3_uidl_format`
+:ref:`Maildir <maildir_mbox_format>` only: If enabled, allow permanent saving
+of UIDLs sent to POP3 clients so that changes to
+:dovecot_core:ref:`pop3_uidl_format` don't cause future changes to the
+corresponding UIDLs.
 
 .. todo:: Indicate Maildir-only setting
 .. todo:: Indicate POP3 setting
 
 
-.. _setting-pop3_uidl_duplicates:
-
-``pop3_uidl_duplicates``
-------------------------
-
-- Default: ``allow``
-- Values: ``allow`` or ``rename``
+.. dovecot_core:setting:: pop3_uidl_duplicates
+   :default: allow
+   :values: allow, rename
 
 How to handle any duplicate POP3 UIDLs that may exist.
 
@@ -3718,13 +2876,9 @@ Options:
 .. todo:: Indicate POP3 setting
 
 
-.. _setting-pop3_uidl_format:
-
-``pop3_uidl_format``
---------------------
-
-- Default: ``%08Xu%08Xv``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: pop3_uidl_format
+   :default: %08Xu%08Xv
+   :values: @string
 
 The POP3 unique mail identifier (UIDL) format to use.
 
@@ -3916,12 +3070,9 @@ See also :ref:`setting-pop3c_password`.
 .. todo:: Indicate dsync setting
 
 
-.. _setting-postmaster_address:
-
-``postmaster_address``
-----------------------
-
-- Default: ``postmaster@%{if;%d;ne;;%d;%{hostname}}``
+.. dovecot_core:setting:: postmaster_address
+   :default: postmaster@%{if;%d;ne;;%d;%{hostname}}
+   :values: @string
 
 The From address from which email rejection messages (bounces) are sent.
 
@@ -3932,12 +3083,9 @@ Other :ref:`mail user variables <variables-mail_user>` can be used as well.
 .. todo:: Indicate LMTP setting
 
 
-.. _setting-protocols:
-
-``protocols``
--------------
-
-- Default: ``imap pop3 lmtp``
+.. dovecot_core:setting:: protocols
+   :default: imap pop3 lmtp
+   :values: @string
 
 The list of protocols this node will support.
 
@@ -3945,13 +3093,9 @@ It takes a space-separated list of protocols (which are configured separately)
 as its value.
 
 
-.. _setting-quota_full_tempfail:
-
-``quota_full_tempfail``
------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: quota_full_tempfail
+   :default: no
+   :values: @boolean
 
 If enabled, return a temporary failure to the sending server if quota is
 exceeded. This allows the message to potentially be delivered later if the
@@ -3963,14 +3107,9 @@ sending server.
 See :ref:`quota_plugin`
 
 
-.. _setting-rawlog_dir:
-
-``rawlog_dir``
---------------
-
-.. versionadded:: v2.2.26
-
-- Default: <empty>
+.. dovecot_core:setting:: rawlog_dir
+   :added: v2.2.26
+   :values: @string
 
 Directory where to create ``*.in`` and ``*.out`` rawlog files, one per TCP
 connection. The directory must already exist and be writable by the process.
@@ -3984,28 +3123,23 @@ Example:
 
 .. code-block:: none
 
-   protocol imap {
-     rawlog_dir = /tmp/rawlog/%u
-     # if you want to put files into user's homedir, use this, do not use ~
-     #rawlog_dir = %h/rawlog
- }
+  protocol imap {
+    rawlog_dir = /tmp/rawlog/%u
+    # if you want to put files into user's homedir, use this, do not use ~
+    #rawlog_dir = %h/rawlog
+  }
 
 
-.. _setting-recipient_delimiter:
-
-``recipient_delimiter``
------------------------
-
-- Default: ``+``
+.. dovecot_core:setting:: recipient_delimiter
+   :default: +
+   :values: @string
 
 The separator between the :user and :detail address parts.
 
-.. _setting-rejection_reason:
 
-``rejection_reason``
---------------------
-
-- Default: ``Your message to <%t> was automatically rejected:%n%r``
+.. dovecot_core:setting:: rejection_reason
+   :default: Your message to <%t> was automatically rejected:%n%r
+   :values: @string
 
 A human-readable message for the recipients of bounce messages.
 
@@ -4015,7 +3149,7 @@ The following variables are allowed:
 * ``%{crlf}`` / ``%n``: Newline (CRLF)
 * ``%{reason}`` / ``%r``: Reason for rejection
 * ``%{subject}`` / ``%s``: Original subject line
-* ``%{to}`` / ``%t`` : Recipient address
+* ``%{to}`` / ``%t``: Recipient address
 
 The variable values are obtained from the mail being delivered or the
 delivery protocol.
@@ -4024,129 +3158,95 @@ delivery protocol.
 .. todo:: Indicate LMTP setting
 
 
-.. _setting-rejection_subject:
-
-``rejection_subject``
----------------------
-
-- Default: ``Rejected: %s``
+.. dovecot_core:setting:: rejection_subject
+   :default: Rejected: %s
+   :values: @string
 
 The Subject: header to use for bounce messages.
 
 See ``rejection_reason`` for the list of variables that can be used.
 
-See :ref:`setting-rejection_reason`
+.. seealso:: :dovecot_core:ref:`rejection_reason`
 
 
-.. _setting-replication_dsync_parameters:
-
-``replication_dsync_parameters``
---------------------------------
-
-.. versionadded:: v2.2.9
-
-- Default: ``-d -N -l 30 -U``
+.. dovecot_core:setting:: replication_dsync_parameters
+   :added: v2.2.29
+   :default: -d -N -l 30 -U
+   :values: @string
 
 The parameters used by the replicator for the doveadm sync (dsync) command.
 
-See :ref:`setting-replicator`
+.. seealso:: :dovecot_core:ref:`replicator`
 
 .. todo:: Indicate replicator setting
 
 
-.. _setting-replication_full_sync_interval:
-
-``replication_full_sync_interval``
-----------------------------------
-
-- Default: ``1day``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: replication_full_sync_interval
+   :default: 1day
+   :values: @time
 
 How often full synchronization is to be performed with the replicator.
 
-See :ref:`setting-replicator`
+.. seealso:: :dovecot_core:ref:`replicator`
 
 .. todo:: Indicate replicator setting
 
 
-.. _setting-replication_max_conns:
-
-``replication_max_conns``
--------------------------
-
-- Default:``10``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: replication_max_conns
+   :default: 10
+   :values: @uint
 
 How many dsyncs may be run in parallel for replicator.
 
-See :ref:`setting-replicator`
+.. seealso:: :dovecot_core:ref:`replicator`
 
 .. todo:: Indicate replicator setting
 
 
-.. _setting-replicator:
-
-``replicator``
---------------
-
-- Default: 
+.. dovecot_core:setting:: replicator
+   :values: @string
 
 The replicator host to be used in dsync operation.
 
 .. todo:: Indicate replicator setting
-.. todo:: Is this correct value?
 
 
-.. _setting-replicator_host:
-
-``replicator_host``
--------------------
-
-- Default: <empty>
-- Values: :ref:`string`
+.. dovecot_core:setting:: replicator_host
+   :values: @string
 
 Specifies remote hostname or UNIX socket to connect for replicator process.
-If :ref:`setting-replicator_port` is set to ``0``, then it will be treated
-as UNIX socket.
+If :dovecot_core:ref:`replicator_port` is set to ``0``, then it will be
+treated as UNIX socket.
 
-See :ref:`setting-replicator`
+.. seealso:: :dovecot_core:ref:`replicator`
+
+.. todo:: Indicate replicator setting
 
 
-.. _setting-replicator_port:
-
-``replicator_port``
--------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: replicator_port
+   :default: 0
+   :values: @uint
 
 The port indicated here is used by dsync for replication. If set to ``0``,
-:ref:`setting-replicator_host` is interpreted as UNIX socket path.
+:dovecot_core:ref:`replicator_host` is interpreted as UNIX socket path.
 
-See :ref:`setting-replicator`
+.. seealso:: :dovecot_core:ref:`replicator`
+
+.. todo:: Indicate replicator setting
 
 
-.. _setting-sendmail_path:
-
-``sendmail_paths``
-------------------
-
-- Default: ``/usr/sbin/sendmail``
+.. dovecot_core:setting:: sendmail_path
+   :default: /usr/sbin/sendmail
+   :values: @string
 
 The binary to use for sending email.
 
-Used only if ``submission_host`` is not set.
-
-See :ref:`setting-submission_host`
+Used only if :dovecot_core:ref:`submission_host` is not set.
 
 
-.. _setting-shutdown_clients:
-
-``shutdown_clients``
---------------------
-
-- Default: ``yes``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: shutdown_clients
+   :default: yes
+   :values: @boolean
 
 If enabled, all processes are killed when the master process is shutdown.
 
@@ -4155,178 +3255,176 @@ interrupt earlier sessions, but may not be desirable if restarting Dovecot
 to apply a security update, for example.
 
 
-.. _setting-ssl:
-
-``ssl``
--------
-
-- Default: ``yes``
-- Values: ``yes``, ``no``, or ``required``
+.. dovecot_core:setting:: ssl
+   :default: yes
+   :values: yes, no, required
 
 The level of SSL support. This setting affects both the implicit SSL ports
 and the STARTTLS commands.
 
-``ssl=no``
+``no``
    SSL/TLS is completely disabled.
-``ssl=yes``
+``yes``
    SSL/TLS is enabled, but not necessarily required for clients.
 ``required``
    SSL/TLS is required for all imap, pop3, managesieve and
    submission protocol client connections. This differs from
-   :ref:`setting-disable_plaintext_auth` in that even non-plaintext
+   :dovecot_core:ref:`disable_plaintext_auth` in that even non-plaintext
    authentication mechanisms aren't allowed without SSL/TLS.
 
-See :ref:`dovecot_ssl_configuration` for more detailed explanation of this setting and its interaction with the :ref:`setting-disable_plaintext_auth` setting.
+.. seealso::
+
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_alt_cert:
+.. dovecot_core:setting:: ssl_alt_cert
+   :added: v2.2.31
+   :values: @string
 
-``ssl_alt_cert``
-----------------
-
-.. versionadded:: v2.2.31
-
-- Default: <empty>
-
-Alternative SSL certificate that will be used if the algorithm
-differs from the primary certificate.
+Alternative SSL certificate that will be used if the algorithm differs from
+the primary certificate.
 
 This is useful when migrating to e.g. an ECDSA certificate.
 
-Example::
+Example:
 
-   ssl_alt_cert = </path/to/alternative/cert.pem
+.. code-block:: none
+
+  ssl_alt_cert = </path/to/alternative/cert.pem
+
+.. seealso::
+
+   * :dovecot_core:ref:`ssl`
+   * :ref:`dovecot_ssl_configuration`
+
+
+.. dovecot_core:setting:: ssl_alt_key
+   :added: v2.2.31
+   :values: @string
+
+Private key for :dovecot_core:ref:`ssl_alt_cert`.
+
+Example:
+
+.. code-block:: none
+
    ssl_alt_key = </path/to/alternative/key.pem
-
-See :ref:`setting-ssl_alt_key`
-
-See :ref:`dovecot_ssl_configuration`
-
-
-.. _setting-ssl_alt_key:
-
-``ssl_alt_key``
----------------
-
-.. versionadded:: v2.2.31
-
-- Default: <empty>
-
-Private key for :ref:`setting-ssl_alt_cert`.
-
-Example::
-
    ssl_alt_cert = </path/to/alternative/cert.pem
-   ssl_alt_key = </path/to/alternative/key.pem
 
-See :ref:`setting-ssl_alt_cert`
+.. seealso::
 
-See :ref:`dovecot_ssl_configuration`
+   * :dovecot_core:ref:`ssl`
+   * :dovecot_core:ref:`ssl_alt_cert`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_ca:
-
-``ssl_ca``
-----------
-
-- Default: <empty>
+.. dovecot_core:setting:: ssl_ca
+   :values: @string
 
 List of SSL CA certificates that are used to validate whether SSL certificates
 presented by incoming imap/pop3/etc. client connections are valid.
 
 These CAs are also used by some processes for validating outgoing SSL
-connections, i.e. performing the same function as :ref:`setting-ssl_client_ca_file`.
+connections, i.e. performing the same function as
+:dovecot_core:ref:`ssl_client_ca_file`.
+
 This is mainly important for imap-login, pop3-login, etc. processes which
 are chrooted and can't access the CA files outside the chroot.
 
 Note that mail processes (imap, pop3, etc.) don't read this setting to save
 memory, because the CAs can be large and there can be many mail processes.
 
-Example::
+Example:
+
+.. code-block:: none
 
    ssl_ca = </etc/dovecot/ca.crt
    ssl_verify_client_cert = yes
 
-See :ref:`setting-ssl_verify_client_cert`
+.. seealso::
 
-See :ref:`setting-ssl_client_require_valid_cert`
+   * :dovecot_core:ref:`ssl`
+   * :dovecot_core:ref:`ssl_client_require_valid_cert`
+   * :dovecot_core:ref:`ssl_verify_client_cert`
+   * :ref:`dovecot_ssl_configuration`
 
-See :ref:`dovecot_ssl_configuration`
 
-
-.. _setting-ssl_cert:
-
-``ssl_cert``
-------------
-
-- Default: ``</etc/ssl/certs/dovecot.pem``
+.. dovecot_core:setting:: ssl_cert
+   :default: </etc/ssl/certs/dovecot.pem
+   :values: @string
 
 The PEM-encoded X.509 SSL/TLS certificate presented for incoming
 imap/pop3/etc. client connections.
-The :ref:`setting-ssl_key` is also needed for the private certificate.
 
-Example::
+The :dovecot_core:ref:`ssl_key` is also needed for the private certificate.
+
+Example:
+
+.. code-block:: none
 
    ssl_cert = </etc/ssl/private/dovecot.crt
    ssl_key = </etc/ssl/private/dovecot.key
 
-See :ref:`setting-ssl_key`
+.. seealso::
 
-See :ref:`dovecot_ssl_configuration`
+   * :dovecot_core:ref:`ssl`
+   * :dovecot_core:ref:`ssl_key`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_cert_username_field:
-
-``ssl_cert_username_field``
----------------------------
-
-- Default: ``commonName``
+.. dovecot_core:setting:: ssl_cert_username_field
+   :default: commonName
+   :values: @string
 
 Field name in the SSL client certificate that is used for
-:ref:`setting-auth_ssl_username_from_cert`.
+:dovecot_core:ref:`auth_ssl_username_from_cert`.
 
 The most common choices are ``commonName`` and ``x500UniqueIdentifier``.
 
-See :ref:`dovecot_ssl_configuration`
+.. Note::
+
+   :dovecot_core:ref:`auth_ssl_username_from_cert` MUST be enabled.
+
+.. seealso::
+
+   * :dovecot_core:ref:`ssl`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_cipher_list:
-
-``ssl_cipher_list``
--------------------
-
-- Default: ``ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH``
+.. dovecot_core:setting:: ssl_cipher_list
+   :default: ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH
+   :values: @string
 
 The list of SSL ciphers to use, in order of preference.
 
 You do not need to edit this setting in order to disable specific SSL
-protocols; that is best done with :ref:`setting-ssl_min_protocol` instead.
+protocols; that is best done with :dovecot_core:ref:`ssl_min_protocol`
+instead.
 
-See :ref:`setting-ssl_min_protocol`
+.. seealso::
 
-See :ref:`dovecot_ssl_configuration`
+   * :dovecot_core:ref:`ssl`
+   * :dovecot_core:ref:`ssl_min_protocol`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_cipher_suites:
-
-``ssl_cipher_suites``
----------------------
-
-.. versionadded:: v2.3.15
-
-- Default: OpenSSL version specific.
+.. dovecot_core:setting:: ssl_cipher_suites
+   :added: v2.3.15
+   :default: !<OpenSSL version specific>
+   :values: @string
 
 The list of SSL cipher suites to use, in order of preference.
 
-See https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites
+See: https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites
+
+.. seealso::
+
+   * :dovecot_core:ref:`ssl`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_client_ca_dir:
-
-``ssl_client_ca_dir``
----------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: ssl_client_ca_dir
+   :values: @string
 
 The directory where trusted SSL CA certificates can be found. For example
 ``/etc/ssl/certs``. These certificates are used only for outgoing SSL
@@ -4336,89 +3434,89 @@ For extra security you might want to point to a directory containing
 certificates only for the CAs that are actually needed for the server
 operation instead of all the root CAs.
 
-See :ref:`dovecot_ssl_configuration`
+.. seealso::
+
+   * :dovecot_core:ref:`ssl`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_client_ca_file:
-
-``ssl_client_ca_file``
-----------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: ssl_client_ca_file
+   :values: @string
 
 File containing the trusted SSL CA certificates. For example
-``/etc/ssl/certs/ca-bundle.crt``. These certificates are used only for outgoing SSL
-connections (e.g. with the imapc backend).
+``/etc/ssl/certs/ca-bundle.crt``.
 
-Note that this
-setting isn't recommended to be used with large CA bundles, because all the
-certificates are read into memory. This leads to excessive memory usage,
-because it gets multiplied by the number of imap processes. It's better to
-either use :ref:`setting-ssl_client_ca_dir` setting or use a CA bundle that
-only contains the CAs that are actually necessary for the server operation.
+These certificates are used only for outgoing SSL connections (e.g. with the
+:ref:`imapc backend <imapc_mbox_format>`).
 
-See :ref:`dovecot_ssl_configuration`
+Note that this setting isn't recommended to be used with large CA bundles,
+because all the certificates are read into memory. This leads to excessive
+memory usage, because it gets multiplied by the number of imap processes.
+It's better to either use :dovecot_core:ref:`ssl_client_ca_dir` setting or use
+a CA bundle that only contains the CAs that are actually necessary for the
+server operation.
+
+.. seealso::
+
+   * :dovecot_core:ref:`ssl`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_client_cert:
-
-``ssl_client_cert``
--------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: ssl_client_cert
+   :values: @string
 
 Public SSL certificate used for outgoing SSL connections. This is generally
 needed only when the server authenticates the client using the certificate.
-The :ref:`setting-ssl_client_key` is also needed for the private certificate.
 
-Example::
+:dovecot_core:ref:`ssl_client_key` is also needed for the private certificate.
 
-   ssl_client_cert = </etc/dovecot/dovecot-client.crt
-   ssl_client_key = </etc/dovecot/dovecot-client.key
+Example:
 
-See :ref:`setting-ssl_client_key`
-
-See :ref:`dovecot_ssl_configuration`
-
-
-.. _setting-ssl_client_key:
-
-``ssl_client_key``
-------------------
-
-- Default: <empty>
-
-Private key for :ref:`setting-ssl_client_cert`.
-
-Example settings:
+.. code-block:: none
 
    ssl_client_cert = </etc/dovecot/dovecot-client.crt
    ssl_client_key = </etc/dovecot/dovecot-client.key
 
-See :ref:`setting-ssl_client_cert`
+.. seealso::
 
-See :ref:`dovecot_ssl_configuration`
+   * :dovecot_core:ref:`ssl`
+   * :dovecot_core:ref:`ssl_client_key`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_crypto_device:
+.. dovecot_core:setting:: ssl_client_key
+   :values: @string
 
-``ssl_crypto_device``
----------------------
+Private key for :dovecot_core:ref:`ssl_client_cert`.
 
-- Default: <empty>
-- Values: <Obtain by running ``openssl engine`` command>
+Example:
+
+.. code-block:: none
+
+   ssl_client_cert = </etc/dovecot/dovecot-client.crt
+   ssl_client_key = </etc/dovecot/dovecot-client.key
+
+.. seealso::
+
+   * :dovecot_core:ref:`ssl`
+   * :dovecot_core:ref:`ssl_client_cert`
+   * :ref:`dovecot_ssl_configuration`
+
+
+.. dovecot_core:setting:: ssl_crypto_device
+   :values: !<Obtain by running 'openssl engine' command>
 
 Which SSL crypto device to use.
 
-See :ref:`dovecot_ssl_configuration`
+.. seealso::
+
+   * :dovecot_core:ref:`ssl`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_curve_list:
-
-``ssl_curve_list``
-------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: ssl_curve_list
+   :default: !<defaults from the SSL library>
+   :values: @string
 
 Colon separated list of elliptic curves to use.
 
@@ -4428,19 +3526,17 @@ Example:
 
 .. code-block:: none
 
-   ssl_curve_list = P-521:P-384:P-256
+  ssl_curve_list = P-521:P-384:P-256
 
-See :ref:`dovecot_ssl_configuration`
+.. seealso::
+
+   * :dovecot_core:ref:`ssl`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_dh:
-
-``ssl_dh``
-----------
-
-.. versionadded:: v2.3
-
-- Default: <empty>
+.. dovecot_core:setting:: ssl_dh
+   :added: v2.3.0
+   :values: @string
 
 As of Dovecot v2.3, the path to the Diffie-Hellman parameters file must be
 provided. This setting isn't needed if using only ECDSA certificates.
@@ -4449,55 +3545,54 @@ You can generate a new parameters file by, for example, running
 ``openssl gendh 4096`` on a machine with sufficient entropy (this may take
 some time).
 
-Example::
+Example:
 
-   ssl_dh=</path/to/dh.pem
+.. code-block:: none
 
-See :ref:`dovecot_ssl_configuration`
+  ssl_dh=</path/to/dh.pem
+
+.. seealso::
+
+   * :dovecot_core:ref:`ssl`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_client_require_valid_cert:
-
-``ssl_client_require_valid_cert``
----------------------------------
-
-- Default: ``yes``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: ssl_client_require_valid_cert
+   :default: yes
+   :values: @boolean
 
 Require a valid cerficate when connecting to external SSL services?
 
-See :ref:`dovecot_ssl_configuration`
+.. seealso::
+
+   * :dovecot_core:ref:`ssl`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_key:
+.. dovecot_core:setting:: ssl_key
+   :values: @string
 
-``ssl_key``
------------
+The PEM-encoded X.509 SSL/TLS private key for :dovecot_core:ref:`ssl_cert`.
 
-- Default: <empty>
+Example:
 
-The PEM-encoded X.509 SSL/TLS private key for :ref:`setting-ssl_cert`.
-
-Example::
+.. code-block:: none
 
    ssl_cert = </etc/ssl/private/dovecot.crt
    ssl_key = </etc/ssl/private/dovecot.key
 
-See :ref:`setting-ssl_cert`
+.. seealso::
 
-See :ref:`setting-ssl_key_password`
+   * :dovecot_core:ref:`ssl`
+   * :dovecot_core:ref:`ssl_cert`
+   * :dovecot_core:ref:`ssl_key_password`
+   * :ref:`dovecot_ssl_configuration`
 
-See :ref:`dovecot_ssl_configuration`
 
+.. dovecot_core:setting:: ssl_key_password
+   :values: @string
 
-.. _setting-ssl_key_password:
-
-``ssl_key_password``
---------------------
-
-- Default: <empty>
-
-The password to use if the :ref:`setting-ssl_key` is password-protected.
+The password to use if :dovecot_core:ref:`ssl_key` is password-protected.
 
 Since this file is often world-readable, you may wish to specify the path to a
 file containing the password, rather than the password itself, by using the
@@ -4506,111 +3601,118 @@ file with mode 0600.
 
 Alternatively, you can supply the password via the -p parameter at startup.
 
-See :ref:`setting-ssl_key`
+.. seealso::
 
-See :ref:`dovecot_ssl_configuration`
+   * :dovecot_core:ref:`ssl`
+   * :dovecot_core:ref:`ssl_key`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_min_protocol:
-
-``ssl_min_protocol``
---------------------
-
-- Default: ``TLSv1.2``
+.. dovecot_core:setting:: ssl_min_protocol
+   :default: TLSv1.2
+   :values: @string
 
 The minimum SSL protocol version Dovecot accepts.
+
 Supported values are:
 
- * ``ANY`` - Support any version. (SHOULD NOT BE USED)
+``ANY``
+   Support any version. (SHOULD NOT BE USED)
+
+   .. versionadded:: v2.3.15
+``SSLv3``
+   Support SSLv3+. (SHOULD NOT BE USED) (SSLv3 deprecated:
+   `RFC 7568 <https://datatracker.ietf.org/doc/html/rfc7568>`_)
+
+``TLSv1``
+   Support TLSv1+. (default before v2.3.15) (TLSv1 deprecated:
+   `RFC 8996 <https://datatracker.ietf.org/doc/html/rfc8996>`_)
+``TLSv1.1``
+   Support TLSv1.1+. (TLSv1.1 deprecated:
+   `RFC 8996 <https://datatracker.ietf.org/doc/html/rfc8996>`_)
+``TLSv1.2``
+   Support TLSv1.2+. (default since v2.3.15)
+``TLSv1.3``
+   Support TLSv1.3+.
+
+   .. versionadded:: v2.3.15
+``LATEST``
+   Support only the latest version available.
 
    .. versionadded:: v2.3.15
 
- * ``SSLv3`` - Support SSLv3+. (SHOULD NOT BE USED) (SSLv3 deprecated: `RFC 7568 <https://datatracker.ietf.org/doc/html/rfc7568>`_)
- * ``TLSv1`` - Support TLSv1+. (default before v2.3.15) (TLSv1 deprecated: `RFC 8996 <https://datatracker.ietf.org/doc/html/rfc8996>`_)
- * ``TLSv1.1`` - Support TLSv1.1+. (TLSv1.1 deprecated: `RFC 8996 <https://datatracker.ietf.org/doc/html/rfc8996>`_)
- * ``TLSv1.2`` - Support TLSv1.2+. (default since v2.3.15)
- * ``TLSv1.3`` - Support TLSv1.3+.
+.. seealso::
 
-   .. versionadded:: v2.3.15
-
- * ``LATEST`` - Support only the latest version available.
-
-   .. versionadded:: v2.3.15
-
-See :ref:`setting-ssl_cipher_list`
-
-See :ref:`dovecot_ssl_configuration`
+   * :dovecot_core:ref:`ssl`
+   * :dovecot_core:ref:`ssl_cipher_list`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_options:
-
-``ssl_options``
----------------
-
-- Default: <empty>
+.. dovecot_core:setting:: ssl_options
+   :default: no-compression
+   :values: compression, no_compression, no_ticket
 
 Additional options for SSL.
 
 Currently supported options are:
 
-* ``compression``: (before v2.3) Enable compression.
-* ``no_compression``: (v2.3+) Disable compression.
-* ``no_ticket``: Disable SSL session tickets.
+``compression``
+   (before v2.3) Enable compression.
+``no_compression``
+   (v2.3+) Disable compression.
+``no_ticket``
+   Disable SSL session tickets.
 
-See :ref:`dovecot_ssl_configuration`
+.. seealso::
+
+   * :dovecot_core:ref:`ssl`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_prefer_server_ciphers:
-
-``ssl_prefer_server_ciphers``
------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: ssl_prefer_server_ciphers
+   :default: no
+   :values: @boolean
 
 If enabled, give preference to the server's cipher list over a client's list.
 
-See :ref:`dovecot_ssl_configuration`
+.. seealso::
+
+   * :dovecot_core:ref:`ssl`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_require_crl:
-
-``ssl_require_crl``
--------------------
-
-- Default: ``yes``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: ssl_require_crl
+   :default: yes
+   :values: @boolean
 
 If enabled, the CRL check must succeed for presented SSL client certificates.
-The CRL list is generally appended to the :ref:`setting-ssl_ca` file.
+The CRL list is generally appended to the :dovecot_core:ref:`ssl_ca` file.
 
-See :ref:`setting-ssl_ca`
+.. seealso::
 
-See :ref:`dovecot_ssl_configuration`
+   * :dovecot_core:ref:`ssl`
+   * :dovecot_core:ref:`ssl_ca`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-ssl_verify_client_cert:
-
-``ssl_verify_client_cert``
---------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: ssl_verify_client_cert
+   :default: no
+   :values: @boolean
 
 If enabled, the imap/pop3/etc. client is required to send an SSL certificate.
 Note that this setting doesn't yet require the certificate to be valid.
 
-See :ref:`setting-auth_ssl_require_client_cert`
+.. seealso::
 
-See :ref:`dovecot_ssl_configuration`
+   * :ref:`ssl`
+   * :dovecot_core:ref:`ssl`
+   * :dovecot_core:ref:`auth_ssl_require_client_cert`
+   * :ref:`dovecot_ssl_configuration`
 
 
-.. _setting-state_dir:
-
-``state_dir``
--------------
-
-- Default: ``/var/lib/dovecot``
+.. dovecot_core:setting:: state_dir
+   :default: /var/lib/dovecot
+   :values: @string
 
 The compile-time directory PKG_STATEDIR (typically /var/lib/dovecot)
 is hard-coded as the location of things such as the ssl-parameters.dat
@@ -4623,25 +3725,20 @@ The settings ``state_dir = /home/foo/dovecot/state`` and
 ``base_dir = /home/foo/dovecot/run`` give an example of usage.
 
 
-.. _setting-stats_writer_socket_path:
-
-``stats_writer_socket_path``
-----------------------------
-
-- Default: ``stats-writer``
+.. dovecot_core:setting:: stats_writer_socket_path
+   :default: stats-writer
+   :values: @string
 
 The path to the stats-writer socket.
 
 
-.. _setting-submission_client_workarounds:
+.. dovecot_core:setting:: submission_client_workarounds
+   :values: @string
 
-``submission_client_workarounds``
----------------------------------
+Configures the list of active workarounds for Submission client bugs. The list
+is space-separated.
 
-- Default: <empty>
-
-Configures the list of active workarounds for Submission client bugs. The list is
-space-separated. Supported workaround identifiers are:
+Supported workaround identifiers are:
 
 * ``implicit-auth-external`` - Implicitly login using the EXTERNAL SASL
   mechanism upon the first MAIL command, provided that the client provides a
@@ -4651,37 +3748,25 @@ space-separated. Supported workaround identifiers are:
 
   .. versionadded:: v2.3.18
 
-* ``mailbox-for-path`` - Allow using bare Mailbox syntax (i.e., without <...>) instead of full path syntax.
-* ``whitespace-before-path`` - Allow one or more spaces or tabs between 'MAIL FROM:' and path and between 'RCPT TO:' and path.
+* ``mailbox-for-path``: Allow using bare Mailbox syntax (i.e., without <...>)
+  instead of full path syntax.
+* ``whitespace-before-path``: Allow one or more spaces or tabs between 'MAIL
+  FROM:' and path and between 'RCPT TO:' and path.
 
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_host:
-
-``submission_host``
--------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: submission_host
+   :values: @string
 
 Use this SMTP submission host to send messages.
 
-Overrides ``sendmail_path`` value, if set.
-
-See :ref:`setting-sendmail_path`
-
-.. code-block:: none
-
-   submission_host = mail.example.com:6543
+Overrides :dovecot_core:ref:`sendmail_path` value, if set.
 
 
-.. _setting-submission_logout_format:
-
-``submission_logout_format``
-----------------------------
-
-- Default: ``in=%i out=%o``
-- Values:  :ref:`string`
+.. dovecot_core:setting:: submission_logout_format
+   :default: in=%i out=%o
+   :values: @string
 
 The SMTP Submission logout format string.
 
@@ -4697,13 +3782,9 @@ Variables supported:
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_max_mail_size:
-
-``submission_max_mail_size``
-----------------------------
-
-- Default: ``40M``
-- Values:  :ref:`size`
+.. dovecot_core:setting:: submission_max_mail_size
+   :default: 40M
+   :values: @size
 
 The maximum message size accepted for relay.
 
@@ -4716,26 +3797,18 @@ unknown limit exists there, which will be passed back to the client.
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_max_recipients:
-
-``submission_max_recipients``
------------------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
+.. dovecot_core:setting:: submission_max_recipients
+   :default: 0
+   :values: @uint
 
 Maximum number of recipients accepted per connection.
 
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_relay_command_timeout:
-
-``submission_relay_command_timeout``
-------------------------------------
-
-- Default: ``5mins``
-- Values:  :ref:`time_msecs`
+.. dovecot_core:setting:: submission_relay_command_timeout
+   :default: 5mins
+   :values: @time_msecs
 
 Timeout for SMTP commands issued to the submission service's relay server.
 
@@ -4744,13 +3817,9 @@ The timeout is reset every time more data is being sent or received.
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_relay_connect_timeout:
-
-``submission_relay_connect_timeout``
-------------------------------------
-
-- Default: ``30secs``
-- Values:  :ref:`time_msecs`
+.. dovecot_core:setting:: submission_relay_connect_timeout
+   :default: 30secs
+   :values: @time_msecs
 
 Timeout for connecting to and logging into the submission service's relay
 server.
@@ -4758,24 +3827,16 @@ server.
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_relay_host:
-
-``submission_relay_host``
--------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: submission_relay_host
+   :values: @string
 
 Host of the relay server (required to provide the submission service).
 
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_relay_master_user:
-
-``submission_relay_master_user``
---------------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: submission_relay_master_user
+   :values: @string
 
 Master user name for authentication to the relay MTA if authentication is
 required.
@@ -4783,66 +3844,47 @@ required.
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_relay_max_idle_time:
-
-``submission_relay_max_idle_time``
-----------------------------------
-
-- Default: ``29mins``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: submission_relay_max_idle_time
+   :default: 29mins
+   :values: @time
 
 Submission relay max idle time for connection to relay MTA.
 
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_relay_password:
-
-``submission_relay_password``
------------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: submission_relay_password
+   :values: @string
 
 Password for authentication to the relay MTA if authentication is required.
 
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_relay_port:
-
-``submission_relay_port``
--------------------------
-
-- Default: ``25``
+.. dovecot_core:setting:: submission_relay_port
+   :default: 25
+   :values: !<1-65535>
 
 Port for the submission relay server.
 
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_relay_rawlog_dir:
-
-``submission_relay_rawlog_dir``
--------------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: submission_relay_rawlog_dir
+   :values: @string
 
 Write protocol logs for relay connection to this directory for debugging.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
 
-See :ref:`debugging_rawlog`
+.. seealso:: :ref:`debugging_rawlog`
 
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_relay_ssl:
-
-``submission_relay_ssl``
-------------------------
-
-- Default: ``no``
-- Values: ``no``, ``smtps``, or ``starttls``
+.. dovecot_core:setting:: submission_relay_ssl
+   :default: no
+   :values: no, smtps, starttls
 
 If enabled, SSL/TLS is used for the connection to the relay server.
 
@@ -4855,26 +3897,18 @@ Avaialble values:
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_relay_ssl_verify:
-
-``submission_relay_ssl_verify``
--------------------------------
-
-- Default: ``yes``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: submission_relay_ssl_verify
+   :default: yes
+   :values: @boolean
 
 If enabled, TLS certificate of the relay server must be verified.
 
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_relay_trusted:
-
-``submission_relay_trusted``
-----------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: submission_relay_trusted
+   :default: no
+   :values: @boolean
 
 If enabled, the relay server is trusted.
 
@@ -4884,61 +3918,43 @@ server (only if enabled).
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_relay_user:
-
-``submission_relay_user``
--------------------------
-
-- Default: <empty>
+.. dovecot_core:setting:: submission_relay_user
+   :values: @string
 
 User name for authentication to the relay MTA if authentication is required.
 
 .. todo:: Indicate submission setting
 
 
-.. _setting-submission_ssl:
+.. dovecot_core:setting:: submission_ssl
+   :default: no
+   :values: @boolean
 
-``submission_ssl``
-------------------
+If enabled, use SSL/TLS to connect to :dovecot_core:ref:`submission_host`.
 
-- Default: ``no``
-- Values: :ref:`boolean`
-
-If enabled, use SSL/TLS to connect to ``submission_host``.
-
-See :ref:`setting-submission_host`
+.. todo:: Indicate submission setting
 
 
-.. _setting-submission_timeout:
-
-``submission_timeout``
-----------------------
-
-- Default: ``30secs``
-- Values:  :ref:`time`
+.. dovecot_core:setting:: submission_timeout
+   :default: 30secs
+   :values: @time
 
 Timeout for submitting outgoing messages.
 
-See :ref:`setting-submission_host`
+.. seealso:: :dovecot_core:ref:`submission_host`
+
+.. todo:: Indicate submission setting
 
 
-.. _setting-syslog_facility:
-
-``syslog_facility``
--------------------
-
-- Default: ``mail``
+.. dovecot_core:setting:: syslog_facility
+   :default: mail
+   :values: @string
 
 The syslog facility used if you're logging to syslog.
 
 
-.. _setting-valid_chroot_dirs:
-
-``valid_chroot_dirs``
----------------------
-
-- Default: <empty>
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: valid_chroot_dirs
+   :values: @string
 
 A colon-separated list of directories under which chrooting is allowed for
 mail processes.
@@ -4949,13 +3965,9 @@ Interpretation is recursive, so including ``/var/mail`` allows chrooting
 to subdirectories such as ``/var/mail/foo/bar``.
 
 
-.. _setting-verbose_proctitle:
-
-``verbose_proctitle``
----------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: verbose_proctitle
+   :default: no
+   :values: @boolean
 
 If enabled, the ``ps`` command shows more verbose process details, including
 the username and IP address of the connected client.
@@ -4963,23 +3975,15 @@ the username and IP address of the connected client.
 This aids in seeing who is actually using the IMAP processes.
 
 
-.. _setting-verbose_ssl:
-
-``verbose_ssl``
----------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: verbose_ssl
+   :default: no
+   :values: @boolean
 
 If enabled, protocol-level SSL errors are logged.
 
 
-.. _setting-version_ignore:
-
-``version_ignore``
-------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: version_ignore
+   :default: no
+   :values: @boolean
 
 If enabled, ignore version mismatches between different Dovecot versions.

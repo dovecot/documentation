@@ -38,9 +38,9 @@ Only the specified fields that client(s) have asked for earlier are
 stored into cache file. This allows Dovecot to be adaptive to different
 clients' needs and still not waste disk space (and cause extra disk
 I/O!) for fields that client never needs. Although this behavior is
-configurable with :ref:`setting-mail_cache_fields`,
-:ref:`setting-mail_always_cache_fields`
-and :ref:`setting-mail_never_cache_fields` settings.
+configurable with :dovecot_core:ref:`mail_cache_fields`,
+:dovecot_core:ref:`mail_always_cache_fields`
+and :dovecot_core:ref:`mail_never_cache_fields` settings.
 
 Dovecot can cache fields either permanently or temporarily. Temporarily
 cached fields are dropped from the cache file after about a week.
@@ -63,12 +63,12 @@ the caching decisions once in a while:
    is accessed.
 
  * When last_used becomes 30 days old (or
-   :ref:`setting-mail_cache_unaccessed_field_drop`) a YES caching decision is
-   changed to TEMP.
+   :dovecot_core:ref:`mail_cache_unaccessed_field_drop`) a YES caching
+   decision is changed to TEMP.
 
  * When last_used becomes 60 days old (or 2 *
-   :ref:`setting-mail_cache_unaccessed_field_drop`) a TEMP caching decision is
-   changed to NO.
+   :dovecot_core:ref:`mail_cache_unaccessed_field_drop`) a TEMP caching
+   decision is changed to NO.
 
 
 File format

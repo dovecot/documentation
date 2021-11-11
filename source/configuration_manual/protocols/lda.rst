@@ -41,22 +41,22 @@ Common configuration
 The settings are listed in the example ``conf.d/15-lda.conf`` file. The
 important settings are:
 
--  :ref:`setting-postmaster_address` is used as the From: header address in bounce
-   mails
+-  :dovecot_core:ref:`postmaster_address` is used as the From: header address
+   in bounce mails
 
--  :ref:`setting-hostname` is used in generated Message-IDs and in Reporting-UA:
-   header in bounce mails
+-  :dovecot_core:ref:`hostname` is used in generated Message-IDs and in
+   Reporting-UA: header in bounce mails
 
--  :ref:`setting-sendmail_path` is used to send mails. Note that the default is
-   ``/usr/sbin/sendmail``, which doesn't necessarily work the same as
-   ``/usr/lib/sendmail``.
+-  :dovecot_core:ref:`sendmail_path` is used to send mails. Note that the
+   default is ``/usr/sbin/sendmail``, which doesn't necessarily work the same
+   as ``/usr/lib/sendmail``.
 
-   -  Alternatively you can use :ref:`setting-submission_host` to send mails via
-      the specified SMTP server.
+   -  Alternatively you can use :dovecot_core:ref:`submission_host` to send
+      mails via the specified SMTP server.
 
--  :ref:`setting-auth_socket_path` specifies the UNIX socket to auth-userdb where
-   LDA can lookup userdb information when ``-d`` parameter is used. See
-   below how to configure Dovecot to configure the socket.
+-  :dovecot_core:ref:`auth_socket_path` specifies the UNIX socket to
+   auth-userdb where LDA can lookup userdb information when ``-d`` parameter is
+   used. See below how to configure Dovecot to configure the socket.
 
 Note that the config files must be world readable to enable dovecot-lda
 process read them, while running with user privileges. You can put
@@ -75,8 +75,8 @@ Parameters accepted by dovecot-lda:
 -  ``-a <address>``: Original envelope recipient address (e.g.
    user+ext@domain), typically same as SMTP's RCPT TO: value. If not
    specified, it's taken from header specified by
-   :ref:`setting-lda_original_recipient_header` setting (v2.0.3+). If the header
-   doesn't exist either, defaults to same as username.
+   :dovecot_core:ref:`lda_original_recipient_header` setting (v2.0.3+). If the
+   header doesn't exist either, defaults to same as username.
 
 -  ``-r <address>``: Final envelope recipient address. Defaults to -a
    address, but may differ if e.g. aliases are used or when dropping the
@@ -137,7 +137,7 @@ dovecot-lda will exit with one of the following values:
 
 -  77 (EX_NOPERM): -e parameter was used and mail was rejected.
    Typically this happens when user is over quota and
-   :ref:`setting-quota_full_tempfail` = ``no``.
+   :dovecot_core:ref:`quota_full_tempfail` = ``no``.
 
 -  75 (EX_TEMPFAIL): A temporary failure. This is returned for almost
    all failures. See the log file for details.
@@ -317,8 +317,8 @@ If you want dovecot-lda to keep using Dovecot's the default log files:
 
 You can also specify different log files for dovecot-lda. This way you
 don't have to give any extra write permissions to other log files or the
-syslog socket. You can do this by overriding the :ref:`setting-log_path` and
-:ref:`setting-info_log_path` settings:
+syslog socket. You can do this by overriding the :dovecot_core:ref:`log_path`
+and :dovecot_core:ref:`info_log_path` settings:
 
 ::
 

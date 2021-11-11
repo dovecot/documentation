@@ -25,18 +25,20 @@ doveadm commands              No                 Yes
 
 The user database lookup can return these fields:
 
-* **uid**: User's UID (UNIX user ID), overrides the global :ref:`setting-mail_uid`
-  setting.
-* **gid**: User's GID (UNIX group ID), overrides the global :ref:`setting-mail_gid`
-  setting.
-* **home**: User's home directory, overrides the global :ref:`setting-mail_home` setting.
+* **uid**: User's UID (UNIX user ID), overrides the global
+  :dovecot_core:ref:`mail_uid` setting.
+* **gid**: User's GID (UNIX group ID), overrides the global
+  :dovecot_core:ref:`mail_gid` setting.
+* **home**: User's home directory, overrides the global
+  :dovecot_core:ref:`mail_home` setting.
   Although not required, it's highly recommended even for virtual users.
 * Optional extra fields:
 
  * **user**: Changes the username (can also be done by the passdb lookup)
  * Overwriting all mail-related settings, for example:
 
-  * **mail**: Mail location, overrides the global :ref:`setting-mail_location` setting.
+  * **mail**: Mail location, overrides the global
+    :dovecot_core:ref:`mail_location` setting.
     See: :ref:`mail_location_settings`
   * **quota_rule** to specify per-user quota limit
 
@@ -108,8 +110,8 @@ For example useful with userdb passwd for overriding e.g. home directory or the
 .. versionadded:: v2.2.24
 
 * ``auth_verbose``: If this is explicitly set to yes or no, it overrides the
-  global :ref:`setting-auth_verbose` setting. (However, ``auth_debug=yes`` overrides the
-  ``auth_verbose`` setting.)
+  global :dovecot_core:ref:`auth_verbose` setting. (However,
+  ``auth_debug=yes`` overrides the ``auth_verbose`` setting.)
 
 .. versionadded:: v2.2.10
 

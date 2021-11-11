@@ -26,6 +26,8 @@ protocol
 ^^^^^^^^
 If non-empty, this service is enabled only when the protocol name is listed in protocols setting.
 
+.. _service_configuration-idle_kill:
+
 idle_kill
 ^^^^^^^^^
 If a process doesn't appear to be doing anything after this much time, notify it that it should kill itself if it's not doing anything. ``process_min_avail`` setting overrides this. If set to ``0``, ``default_idle_kill`` is used.
@@ -60,6 +62,8 @@ Drop all privileges after forking, but before executing the binary. This is main
 Service limits
 ==============
 
+.. _service_configuration-client_limit:
+
 client_limit
 ^^^^^^^^^^^^
 Maximum number of simultaneous client connections per process. Once this number of connections is received, the next incoming connection will prompt Dovecot to spawn another process. If set to ``0``, ``default_client_limit`` is used instead.
@@ -68,6 +72,8 @@ service_count
 ^^^^^^^^^^^^^
 
 Number of client connections to handle until the process kills itself. ``0`` means unlimited. 1 means only a single connection is handled until the process is stopped - this is the most secure choice since there's no way for one connection's state to leak to the next one. For better performance this can be set higher, but ideally not unlimited since more complex services can have small memory leaks and/or memory fragmentation and the process should get restarted eventually. For example ``100..1000`` can be good values.
+
+.. _service_configuration-process_limit:
 
 process_limit
 ^^^^^^^^^^^^^
@@ -82,6 +88,8 @@ Minimum number of processes that always should be available to accept more clien
    This is usually not necessary to to be set.
    Large values might be useful in some special cases, like if there are a lot of POP3 users logging in exactly at the same time to check mails.
  * For ``service_count!=1`` processes it could be set to the number of CPU cores on the system to balance the load among them.
+
+.. _service_configuration-vsz_limit:
 
 vsz_limit
 ^^^^^^^^^

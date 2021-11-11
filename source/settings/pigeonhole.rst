@@ -421,7 +421,7 @@ This may also be a sequence of characters (e.g. ``--``).
 The current implementation looks for the separator from the left of the localpart and uses the first one encountered.
 The ``:user`` part is left of the separator and the ``:detail`` part is right.
 
-This setting has been replaced with :ref:`setting-recipient_delimiter`.
+This setting has been replaced with :dovecot_core:ref:`recipient_delimiter`.
 
 
 .. _plugin-sieve-setting-sieve_trace_dir:

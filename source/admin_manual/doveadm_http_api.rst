@@ -11,7 +11,9 @@ Doveadm HTTP API
 Configuration
 *************
 
-To be able to use doveadm http api it's mandatory to configure either :ref:`password <setting-doveadm_password>` for doveadm or a :ref:`api key <setting-doveadm_api_key>`.
+To be able to use doveadm HTTP API it's mandatory to configure either
+:dovecot_core:ref:`password <doveadm_password>` for doveadm or an
+:dovecot_core:ref:`api key <doveadm_api_key>`.
 
 To configure password for doveadm service in `/etc/dovecot/dovecot.conf`: ::
 

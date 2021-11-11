@@ -247,7 +247,7 @@ Example:
 
 .. _config_file_syntax-mail_plugins_example:
 
-This is commonly used with :ref:`setting-mail_plugins` to easily add more
+This is commonly used with :dovecot_core:ref:`mail_plugins` to easily add more
 plugins, e.g., inside IMAP protocol:
 
 .. code-block:: none
@@ -302,4 +302,5 @@ Environment variables
 It is possible use ``$ENV:name`` to expand values from environment.
 Expansion only works when it's surrounded by spaces, and is not inside ``"quotes"`` or ``'quotes'``.
 Note that these are also Case Sensitive.
-These can also be used for external config files, but you need to list them in :ref:`setting-import_environment` so that processes can see them.
+These can also be used for external config files, but you need to list them in
+:dovecot_core:ref:`import_environment` so that processes can see them.

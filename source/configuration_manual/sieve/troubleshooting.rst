@@ -36,9 +36,10 @@ Your MTA is not using Dovecot LDA or LMTP
    e.g. Exim or Postfix, for local message delivery. Most MTAs have
    their own local delivery agent, and without explicit configuration
    this is what is used. In that case, your Sieve scripts are simply
-   ignored. When you set :ref:`mail_debug=yes <setting-mail_debug>` in your configuration, your
-   logs will show details of LDA and/or LMTP execution. The following is
-   an example of the first few log lines of an LDA delivery:
+   ignored. When you set :dovecot_core:ref:`mail_debug=yes <mail_debug>` in
+   your configuration, your logs will show details of LDA and/or LMTP
+   execution. The following is an example of the first few log lines of an LDA
+   delivery:
 
    .. code-block:: none
 
@@ -58,7 +59,8 @@ The Sieve plugin is not enabled
    The Dovecot :ref:`LDA <lda>` and :ref:`LMTP <lmtp_server>`
    services do not provide Sieve support by default. Sieve support is
    provided as a separate plugin that needs to be enabled by adding it
-   to the :ref:`setting-mail_plugins` setting in the ``protocol lda {...}`` section
+   to the :dovecot_core:ref:`mail_plugins` setting in the
+   ``protocol lda {...}`` section
    for the LDA and the ``protocol lmtp {...}`` section for LMTP. If this
    is omitted, Sieve scripts are ignored. Check the :doc:`configuration
    page <configuration>`

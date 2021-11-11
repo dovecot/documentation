@@ -43,7 +43,7 @@ Usage
 =====
 
 To use push notifications, both the ``notify`` and the ``push_notification``
-plugins need to be activated by defining in :ref:`setting-mail_plugins`.
+plugins need to be activated by defining in :dovecot_core:ref:`mail_plugins`.
 
 This can either be set globally or restricted to the protocols where you
 want push notifications to be generated.  For example, to restrict to mail

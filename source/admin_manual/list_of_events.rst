@@ -323,7 +323,7 @@ Common fields
 | original_user       | Original username exactly as provided by the client. |
 +---------------------+------------------------------------------------------+
 | translated_user     | Similar to original_user, except after               |
-|                     | :ref:`setting-auth_username_translation`             |
+|                     | :dovecot_core:ref:`auth_username_translation`        |
 |                     | translations are applied.                            |
 +---------------------+------------------------------------------------------+
 | login_user          | When doing a master user login, the user we are      |

@@ -95,9 +95,9 @@ change the index path. Example:
 Optimizations
 ^^^^^^^^^^^^^
 
-* :ref:`maildir_copy_with_hardlinks = yes <setting-maildir_copy_with_hardlinks>`
-* :ref:`maildir_stat_dirs = no <setting-maildir_stat_dirs>`
-* :ref:`maildir_very_dirty_syncs = yes <setting-maildir_very_dirty_syncs>`
+* :dovecot_core:ref:`maildir_copy_with_hardlinks = yes <maildir_copy_with_hardlinks>`
+* :dovecot_core:ref:`maildir_stat_dirs = no <maildir_stat_dirs>`
+* :dovecot_core:ref:`maildir_very_dirty_syncs = yes <maildir_very_dirty_syncs>`
 
 Filesystem Optimizations
 ------------------------
@@ -177,26 +177,18 @@ the above example, this is done by changing the "Alias location" line to:
 Settings
 ^^^^^^^^
 
-.. _setting-maildir_broken_filename_sizes:
-
-``maildir_broken_filename_sizes``
----------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: maildir_broken_filename_sizes
+   :default: no
+   :values: @boolean
 
 If enabled, do not obtain a mail message's physical size from the
 ``S=<size>`` data in the Maildir filename except when recalculating the
 Maildir++ quota.
 
 
-.. _setting-maildir_copy_with_hardlinks:
-
-``maildir_copy_with_hardlinks``
--------------------------------
-
-- Default: ``yes``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: maildir_copy_with_hardlinks
+   :default: yes
+   :values: @boolean
 
 If enabled, copying of a message is done with hard links whenever possible.
 
@@ -205,25 +197,17 @@ effects. The only reason to disable this is if you're using a filesystem
 where hard links are slow (e.g. HFS+).
 
 
-.. _setting-maildir_empty_new:
-
-``maildir_empty_new``
----------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: maildir_empty_new
+   :default: no
+   :values: @boolean
 
 Should mail messages always be moved from the ``new/`` directory to ``cur/``,
 even when the ``\Recent`` flags aren't being reset?
 
 
-.. _setting-maildir_stat_dirs:
-
-``maildir_stat_dirs``
----------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: maildir_stat_dirs
+   :default: no
+   :values: @boolean
 
 If enabled, don't include directories in a LIST response that begin with a
 dot.  Thus, if disabled, Dovecot assumes that all the files beginning with
@@ -237,13 +221,9 @@ free without having to ``stat()``. In those filesystems this setting is
 ignored.
 
 
-.. _setting-maildir_very_dirty_syncs:
-
-``maildir_very_dirty_syncs``
-----------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: maildir_very_dirty_syncs
+   :default: no
+   :values: @boolean
 
 If enabled (``yes``), Dovecot is assumed to be the only MUA that accesses
 Maildir directly, so the ``cur/`` directory is scanned only when its mtime
@@ -253,5 +233,5 @@ If enabled and another process (or a Dovecot process which doesn't update
 index files) does changes to ``cur/`` while the mailbox is simultaneously
 being modified by Dovecot, Dovecot may not notice those external changes. It
 is still safe to deliver new mails to ``new/`` using non-Dovecot software
-(except with ``mailbox_list_index = yes``, changes aren't noticed outside
-INBOX).
+(except with :dovecot_core:ref:`mailbox_list_index` = ``yes``, changes aren't
+noticed outside INBOX).
