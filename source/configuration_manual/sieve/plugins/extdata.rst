@@ -70,7 +70,8 @@ Configuration
 -------------
 
 This package builds and installs the sieve_extdata plugin for Pigeonhole
-Sieve. The plugin is activated by adding it to the :ref:`plugin-sieve-setting-sieve_plugins` setting
+Sieve. The plugin is activated by adding it to the
+:pigeonhole:ref:`sieve_plugins` setting
 
 ::
 
@@ -78,20 +79,25 @@ Sieve. The plugin is activated by adding it to the :ref:`plugin-sieve-setting-si
 
 The following configuration settings are used:
 
-``plugin-sieve-setting-sieve_extdata_dict_uri`` =
-   Specifies the uri of the dict that is used for extdata lookups.
+Settings
+--------
+
+.. pigeonhole:setting:: sieve_extdata_dict_uri
+   :plugin: yes
+   :values: @string
+
+Specifies the URI of the dict that is used for extdata lookups.
 
 Example:
 
-::
+.. code-block:: none
 
-   plugin {
+  plugin {
+    sieve = ~/.dovecot.sieve
+    sieve_plugins = sieve_extdata
 
-     sieve = ~/.dovecot.sieve
-     sieve_plugins = sieve_extdata
-
-     sieve_extdata_dict_uri = file:/etc/dovecot/pigeonhole-sieve.dict
-   }
+    sieve_extdata_dict_uri = file:/etc/dovecot/pigeonhole-sieve.dict
+  }
 
 Usage
 -----

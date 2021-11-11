@@ -291,7 +291,7 @@ didn't update anything inside the existing ``protocol { .. }`` or other
 filters.
 
 Some variables exist in the plugin section only, such as
-:ref:`plugin-sieve-setting-sieve_extensions`. Those variables cannot be
+:pigeonhole:ref:`sieve_extensions`. Those variables cannot be
 referred to; that is ``$sieve_extensions`` won't work.
 
 Environment variables

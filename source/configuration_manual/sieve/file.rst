@@ -12,10 +12,10 @@ regular file. If the location points to a directory, a script called
 ``name`` is retrieved by reading a file from that directory with the
 file name ``name.sieve``.
 
-When this location type is involved in a :ref:`plugin-sieve-setting-sieve_before` or
-:ref:`plugin-sieve-setting-sieve_after` script sequence and the location points to a directory,
-all files in that directory with a ``.sieve`` extension are part of the
-sequence. The sequence order of the scripts in that directory is
+When this location type is involved in a :pigeonhole:ref:`sieve_before` or
+:pigeonhole:ref:`sieve_after` script sequence and the location points to a
+directory, all files in that directory with a ``.sieve`` extension are part of
+the sequence. The sequence order of the scripts in that directory is
 determined by the file names, using a normal 8bit per-character
 comparison.
 

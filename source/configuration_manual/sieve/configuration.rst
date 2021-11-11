@@ -57,8 +57,8 @@ The following options are defined for all location types:
    location. If the Sieve interpreter explicitly queries for a specific
    name (e.g. to let the Sieve `include
    extension <pigeonhole_extension_include>`
-   retrieve a script from the :ref:`plugin-sieve-setting-sieve_global` location), this option
-   has no effect.
+   retrieve a script from the :pigeonhole:ref:`sieve_global` location), this
+   option has no effect.
 
 ``bindir=<dirpath>``
    Points to the directory where the compiled binaries for this script
@@ -102,7 +102,7 @@ The sieve plugin recognizes the following configuration options in the
 ``plugin`` section of the config file (default values are shown if
 applicable):
 
-:ref:`plugin-sieve-setting-sieve` = ``file:~/sieve;active=~/.dovecot.sieve``
+:pigeonhole:ref:`sieve` = ``file:~/sieve;active=~/.dovecot.sieve``
    The location of the user's main Sieve script or script storage. The
    :ref:`LDA <lda>`
    Sieve plugin uses this to find the active script for Sieve filtering
@@ -126,9 +126,9 @@ applicable):
    :ref:`ManageSieve <pigeonhole_managesieve_server>`
    is used - it is the location of the symbolic link pointing to the
    active script in the storage directory. That storage directory is
-   then configured using the deprecated :ref:`plugin-sieve-setting-sieve_dir`  setting.
+   then configured using the deprecated :pigeonhole:ref:`sieve_dir` setting.
 
-:ref:`plugin-sieve-setting-sieve_default` = (v0.3+)
+:pigeonhole:ref:`sieve_default` = (v0.3+)
    The location of the default personal sieve script file which gets
    executed ONLY if user's private Sieve script does not exist, e.g.
    ``file:/var/lib/dovecot/default.sieve`` (check the :ref:`multiscript
@@ -136,25 +136,24 @@ applicable):
    scripts before and after the user's personal script). This is usually
    a global script, so be sure to pre-compile the specified script
    manually in that case using the ``sievec`` command line tool, as
-   explained
-   :doc:`here <usage>`.
-   This setting used to be called :ref:`plugin-sieve-setting-sieve_global_path` , but that name
-   is now deprecated.
+   explained :doc:`here <usage>`.
+   This setting used to be called :pigeonhole:ref:`sieve_global_path`, but
+   that name is now deprecated.
 
-:ref:`plugin-sieve-setting-sieve_default_name` = (v0.4.8+)
+:pigeonhole:ref:`sieve_default_name` = (v0.4.8+)
    The name by which the default Sieve script is visible to
    :ref:`ManageSieve <pigeonhole_managesieve_server>`
    clients. Normally, it is not visible at all. Refer to the :ref:`visible
    default script section <pigeonhole_configuration_visible_default_script>` for more
    information.
 
-:ref:`plugin-sieve-setting-sieve_global`  =
+:pigeonhole:ref:`sieve_global`  =
    Location for :global include scripts for the Sieve :ref:`include
    extension <pigeonhole_extension_include>`.
-   This setting used to be called :ref:`plugin-sieve-setting-sieve_global_dir`, but that name is
-   now deprecated.
+   This setting used to be called :pigeonhole:ref:`sieve_global_dir`, but that
+   name is now deprecated.
 
-:ref:`plugin-sieve-setting-sieve_discard` = (v0.4.16+)
+:pigeonhole:ref:`sieve_discard` = (v0.4.16+)
    The location of a Sieve script that is run for any message that is
    about to be discarded; i.e., it is not delivered anywhere by the
    normal Sieve execution. This only happens when the "implicit keep" is
@@ -164,7 +163,7 @@ applicable):
    discard script does nothing, the message is still discarded as it
    would be when no discard script is configured.
 
-:ref:`plugin-sieve-setting-sieve_extensions`  =
+:pigeonhole:ref:`sieve_extensions`  =
    Which Sieve language extensions are available to users. By default,
    all supported extensions are available, except for deprecated
    extensions, extensions that add the ability to change messages,
@@ -176,40 +175,39 @@ applicable):
    Normally, all enabled extensions must be listed for this setting, but
    starting with Pigeonhole verison 0.1.7, this setting can use '+' and '-'
    to specify differences relative to the default. For example
-   :ref:`plugin-sieve-setting-sieve_extensions` = +imapflags will enable the `deprecated
-   imapflags
-   extension <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_
+   :pigeonhole:ref:`sieve_extensions` = ``+imapflags`` will enable the
+   `deprecated imapflags extension <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_
    in addition to all extensions enabled by default.
 
-:ref:`plugin-sieve-setting-sieve_global_extensions` = (v0.3+)
+:pigeonhole:ref:`sieve_global_extensions` = (v0.3+)
    Which Sieve language extensions are ONLY avalable in global scripts.
    This can be used to restrict the use of certain Sieve extensions to
    administrator control, for instance when these extensions can cause
    security concerns. This setting has higher precedence than the
-   :ref:`plugin-sieve-setting-sieve_extensions`  setting (above), meaning that the extensions
-   enabled with this setting are never available to the user's personal
-   script no matter what is specified for the :ref:`plugin-sieve-setting-sieve_extensions`
-   setting. The syntax of this setting is similar to the
-   :ref:`plugin-sieve-setting-sieve_extensions` setting, with the difference that extensions are
-   enabled or disabled for exclusive use in global scripts. Currently,
-   no extensions are marked as such by default.
+   :pigeonhole:ref:`sieve_extensions`  setting (above), meaning that the
+   extensions enabled with this setting are never available to the user's
+   personal script no matter what is specified for the
+   :pigeonhole:ref:`sieve_extensions` setting. The syntax of this setting is
+   similar to the :pigeonhole:ref:`sieve_extensions` setting, with the
+   difference that extensions are enabled or disabled for exclusive use in
+   global scripts. Currently, no extensions are marked as such by default.
 
-:ref:`plugin-sieve-setting-sieve_implicit_extensions` = (v0.4.13+)
+:pigeonhole:ref:`sieve_implicit_extensions` = (v0.4.13+)
    Which Sieve language extensions are implicitly available to users.
    The extensions listed in this setting do not need to be enabled
    explicitly using the Sieve "require" command. This behavior directly
    violates the Sieve standard, but can be necessary for compatibility
    with some existing implementations of Sieve (notably jSieve). Do not
    use this setting unless you really need to! The syntax and semantics
-   of this setting are otherwise identical to the :ref:`plugin-sieve-setting-sieve_extensions`
-   setting.
+   of this setting are otherwise identical to the
+   :pigeonhole:ref:`sieve_extensions` setting.
 
-:ref:`plugin-sieve-setting-sieve_plugins` =
+:pigeonhole:ref:`sieve_plugins` =
    The Pigeonhole Sieve interpreter can have plugins of its own. Using
-   this setting, the used plugins can be specified. Check the :ref:`sieve_plugins`
-   for available plugins.
+   this setting, the used plugins can be specified. Check the
+   :ref:`sieve_plugins` for available plugins.
 
-:ref:`plugin-sieve-setting-sieve_user_email` = (v0.4.14+)
+:pigeonhole:ref:`sieve_user_email` = (v0.4.14+)
    The primary e-mail address for the user. This is used as a default
    when no other appropriate address is available for sending messages.
    If this setting is not configured, either the postmaster or null "<>"
@@ -217,10 +215,11 @@ applicable):
    setting is important when there is no message envelope to extract
    addresses from, such as when the script is executed in IMAP.
 
-:ref:`plugin-sieve-setting-sieve_user_log` =
+:pigeonhole:ref:`sieve_user_log` =
    The path to the file where the user log file is written. If not
    configured, a default location is used. If the main user's personal
-   Sieve (as configured with :ref:`plugin-sieve-setting-sieve`) is a :ref:`file <pigeonhole_file>`, the logfile is set
+   Sieve (as configured with :pigeonhole:ref:`sieve`) is a
+   :ref:`file <pigeonhole_file>`, the logfile is set
    to ``<filename>.log`` by default. If it is not a file, the default
    user log file is ``~/.dovecot.sieve.log``.
 
@@ -235,7 +234,7 @@ applicable):
    :ref:`LMTP <lmtp_server>`
    service with identical semantics.
 
-:ref:`plugin-sieve-setting-sieve_redirect_envelope_from` = sender (v0.4.4+)
+:pigeonhole:ref:`sieve_redirect_envelope_from` = sender (v0.4.4+)
    Specifies what envelope sender address is used for redirected
    messages. Normally, the Sieve "redirect" command copies the sender
    address for the redirected message from the processed message. So,
@@ -296,17 +295,17 @@ For example:
 Configurable Limits
 -------------------
 
-:ref:`plugin-sieve-setting-sieve_max_script_size` = 1M
+:pigeonhole:ref:`sieve_max_script_size` = 1M
    The maximum size of a Sieve script. The compiler will refuse to
    compile any script larger than this limit. If set to 0, no limit on
    the script size is enforced.
 
-:ref:`plugin-sieve-setting-sieve_max_actions` = 32
+:pigeonhole:ref:`sieve_max_actions` = 32
    The maximum number of actions that can be performed during a single
    script execution. If set to 0, no limit on the total number of
    actions is enforced.
 
-:ref:`plugin-sieve-setting-sieve_max_redirects` = 4
+:pigeonhole:ref:`sieve_max_redirects` = 4
    The maximum number of redirect actions that can be performed during a
    single script execution. The meaning of 0 differs based on your
    version. For versions v0.3.0 and beyond this means that redirect is
@@ -384,11 +383,11 @@ The Dovecot Sieve plugin allows executing multiple Sieve scripts
 sequentially. The extra scripts can be executed before and after the
 user's private script. For example, this allows executing global Sieve
 policies before the user's script. This is not possible using the
-:ref:`plugin-sieve-setting-sieve_default`  setting, because that is only used when the user's
-private script does not exist. The following settings in the ``plugin``
+:pigeonhole:ref:`sieve_default`  setting, because that is only used when the
+user's private script does not exist. The following settings in the ``plugin``
 section of the Dovecot config file control the execution sequence:
 
-:ref:`plugin-sieve-setting-sieve_before` =
+:pigeonhole:ref:`sieve_before` =
 
 sieve_before2 =
 
@@ -404,13 +403,13 @@ sieve_before2 =
    the specified order. Reading the numbered sieve_before settings stops
    at the first missing setting, so no numbers may be skipped.
 
-:ref:`plugin-sieve-setting-sieve_after` =
+:pigeonhole:ref:`sieve_after` =
 
 sieve_after2 =
 
 ``sieve_after3 = (etc..)``
-   Identical to :ref:`plugin-sieve-setting-sieve_before` , but the specified scripts are executed
-   after the user's script (only when keep is still in effect, as
+   Identical to :pigeonhole:ref:`sieve_before` , but the specified scripts are
+   executed after the user's script (only when keep is still in effect, as
    explained below).
 
 The script execution ends when the currently executing script in the
@@ -473,23 +472,23 @@ For example:
 
 .. note::
    Be sure to manually pre-compile the scripts specified by
-   :ref:`plugin-sieve-setting-sieve_before` and :ref:`plugin-sieve-setting-sieve_after` using the ``sievec`` tool, as
-   explained :doc:`here <usage>`.
+   :pigeonhole:ref:`sieve_before` and :pigeonhole:ref:`sieve_after` using the
+   ``sievec`` tool, as explained :doc:`here <usage>`.
 
 .. _pigeonhole_configuration_visible_default_script:
 
 Visible Default Script
 ----------------------
 
-The :ref:`plugin-sieve-setting-sieve_default`  setting specifies the location of a default
+The :pigeonhole:ref:`sieve_default`  setting specifies the location of a default
 script that is executed when the user has no active personal script.
 Normally, this default script is invisible to the user; i.e., it is not
 listed in
 :ref:`ManageSieve <pigeonhole_managesieve_server>`.
 To give the user the ability to see and read the default script, it is
 possible to make it visible under a specific configurable name using the
-:ref:`plugin-sieve-setting-sieve_default_name`  setting. This feature is only supported for
-Pigeonhole versions 0.4.8 and higher.
+:pigeonhole:ref:`sieve_default_name`  setting. This feature is only supported
+for Pigeonhole versions 0.4.8 and higher.
 
 ManageSieve will magically list the default script under that name, even
 though it does not actually exist in the user's normal script storage
@@ -510,7 +509,8 @@ user ever wants to revert to the default, the user only needs to delete
 the edited script and the default will reappear.
 
 The name by which the default script will be known is configured using
-the :ref:`plugin-sieve-setting-sieve_default_name` setting. Of course, the :ref:`plugin-sieve-setting-sieve_default`
+the :pigeonhole:ref:`sieve_default_name` setting. Of course, the
+:pigeonhole:ref:`sieve_default`
 setting needs to point to a valid script location as well for this to
 work. If the default script does not exist at the indicated location, it
 is not shown.
@@ -548,13 +548,13 @@ Pigeonhole versions 0.4.14 and higher.
 The following settings apply to both the LDA/LMTP Sieve plugin and the
 :doc:`IMAPSieve <plugins/imapsieve>` plugin:
 
-:ref:`plugin-sieve-setting-sieve_trace_dir` =
+:pigeonhole:ref:`sieve_trace_dir` =
    The directory where trace files are written. Trace debugging is
    disabled if this setting is not configured or if the directory does
    not exist. If the path is relative or it starts with "~/" it is
    interpreted relative to the current user's home directory.
 
-:ref:`plugin-sieve-setting-sieve_trace_level` =
+:pigeonhole:ref:`sieve_trace_level` =
    The verbosity level of the trace messages. Trace debugging is
    disabled if this setting is not configured. Possible values are:
 
@@ -572,11 +572,11 @@ The following settings apply to both the LDA/LMTP Sieve plugin and the
       Print all executed commands, performed tests and the values
       matched in those tests.
 
-:ref:`plugin-sieve-setting-sieve_trace_debug` = no
+:pigeonhole:ref:`sieve_trace_debug` = no
    Enables highly verbose debugging messages that are usually only
    useful for developers.
 
-:ref:`plugin-sieve-setting-sieve_trace_addresses` = no
+:pigeonhole:ref:`sieve_trace_addresses` = no
    Enables showing byte code addresses in the trace output, rather than
    only the source line numbers.
 
@@ -588,30 +588,30 @@ Deprecated Settings
 
 These settings are deprecated in newer versions, but still recognized:
 
-:ref:`plugin-sieve-setting-sieve_global_path` = (< v0.2)
-   The deprecated name for the :ref:`plugin-sieve-setting-sieve_default`  setting.
+:pigeonhole:ref:`sieve_global_path` = (< v0.2)
+   The deprecated name for the :pigeonhole:ref:`sieve_default`  setting.
 
-:ref:`plugin-sieve-setting-sieve_dir` = ~/sieve (< v0.3.1)
+:pigeonhole:ref:`sieve_dir` = ~/sieve (< v0.3.1)
    Directory for :personal include scripts for the :ref:`include
    extension <pigeonhole_extension_include>`.
    The Sieve interpreter only recognizes files that end with a
    ``.sieve`` extension, so the include extension expects a file called
-   ``name.sieve`` to exist in the :ref:`plugin-sieve-setting-sieve_dir`  directory for a script
-   called ``name``. When using
+   ``name.sieve`` to exist in the :pigeonhole:ref:`sieve_dir` directory for a
+   script called ``name``. When using
    `ManageSieve <pigeonhole_managesieve_server>`,
    this is also the directory where scripts are uploaded. For recent
    Pigeonhole versions, this location is configured as part of the
    ``sieve`` setting.
 
-:ref:`plugin-sieve-setting-sieve_global_dir` = (< v0.3.1)
+:pigeonhole:ref:`sieve_global_dir` = (< v0.3.1)
    Directory for :global include scripts for the :ref:`include
    extension <pigeonhole_extension_include>`.
    The Sieve interpreter only recognizes files that end with a
    ``.sieve`` extension, so the include extension expects a file called
-   ``name.sieve`` to exist in the :ref:`plugin-sieve-setting-sieve_global_dir`  directory for a
-   script called ``name``. For recent Pigeonhole versions, a more
-   generic version of this setting is called :ref:`plugin-sieve-setting-sieve_global`  and allows
-   locations other than file system directories.
+   ``name.sieve`` to exist in the :pigeonhole:ref:`sieve_global_dir` directory
+   for a script called ``name``. For recent Pigeonhole versions, a more
+   generic version of this setting is called :pigeonhole:ref:`sieve_global`
+   and allows locations other than file system directories.
 
 .. _pigeonhole_migration:
 
@@ -656,8 +656,8 @@ However, there are a few important differences in the supported Sieve language f
    <http://tools.ietf.org/html/rfc5232/>`_. Particularly, the
    **mark** and **unmark** commands were removed from the new
    specification. For backwards compatibility, support for the old
-   imapflags extension can be enabled using the :ref:`plugin-sieve-setting-sieve_extensions`
-   setting. This is disabled by default.
+   imapflags extension can be enabled using the
+   :pigeonhole:ref:`sieve_extensions` setting. This is disabled by default.
 
 -  The **notify** extension is now called **enotify**. The CMUSieve
    implementation is based on an `old notify draft
@@ -666,8 +666,8 @@ However, there are a few important differences in the supported Sieve language f
    <http://tools.ietf.org/html/rfc5435/>`_. Particularly, the
    **denotify** command and **$text$** substitutions were removed from
    the new specification. For backwards compatibility, support for the
-   old imapflags extension can be enabled using the :ref:`plugin-sieve-setting-sieve_extensions`
-   setting. This is disabled by default.
+   old imapflags extension can be enabled using the
+   :pigeonhole:ref:`sieve_extensions` setting. This is disabled by default.
 
 -  The :ref:`include
    extension <pigeonhole_extension_include>`
@@ -687,9 +687,10 @@ However, there are a few important differences in the supported Sieve language f
 From Dovecot Sieve v0.1.x (Dovecot v1.2)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  The :ref:`plugin-sieve-setting-sieve_subaddress_sep` setting for the `Sieve subaddress
+-  The :pigeonhole:ref:`sieve_subaddress_sep` setting for the `Sieve subaddress
    extension <http://tools.ietf.org/html/rfc5233/>`_ is now known as
-   :dovecot_core:ref:`recipient_delimiter`. Although :ref:`plugin-sieve-setting-sieve_subaddress_sep` is still
+   :dovecot_core:ref:`recipient_delimiter`. Although
+   :pigeonhole:ref:`sieve_subaddress_sep` is still
    recognized for backwards compatibility, it is recommended to update
    the setting to the new name, since the :ref:`LMTP <lmtp_server>`
    service also uses the :dovecot_core:ref:`recipient_delimiter` setting.

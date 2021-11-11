@@ -336,9 +336,9 @@ The lookup directories can be specified with:
      sieve_global_dir = /etc/dovecot/sieve/
    }
 
-Both :ref:`plugin-sieve-setting-sieve_dir` and :ref:`plugin-sieve-setting-sieve_global_dir` may also be overridden by
-:ref:`userdb extra
-fields <authentication-user_extra_field>`.
+Both :pigeonhole:ref:`sieve_dir` and :pigeonhole:ref:`sieve_global_dir` may
+also be overridden by
+:ref:`userdb extra fields <authentication-user_extra_field>`.
 
 It's not currently possible to use subdirectories for the scripts.
 Having a '/' character in the script name always fails the include. This

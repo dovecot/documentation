@@ -127,8 +127,8 @@ global scripts using the ``sievec`` command line tool. For example:
 
    sievec /var/lib/dovecot/sieve/global/
 
-This is necessary for scripts listed in the :ref:`plugin-sieve-setting-sieve_global_path`,
-:ref:`plugin-sieve-setting-sieve_before` and :ref:`plugin-sieve-setting-sieve_after` settings.
+This is necessary for scripts listed in the :pigeonhole:ref:`sieve_global_path`,
+:pigeonhole:ref:`sieve_before` and :pigeonhole:ref:`sieve_after` settings.
 For global scripts that are only included in other scripts using the Sieve include extension,
 this step is not necessary, since included scripts are incorporated into
 the binary produced for the main script.
@@ -140,8 +140,8 @@ Log messages produced during script compilation or during script
 execution are written to two locations by the LDA Sieve plugin:
 
 -  A log file is written in the same directory as the user's main
-   private script (as specified by the :ref:`plugin-sieve-setting-sieve` setting). This log file
-   bears the name of that script file appended with ".log", e.g.
+   private script (as specified by the :pigeonhole:ref:`sieve` setting). This
+   log file bears the name of that script file appended with ".log", e.g.
    ``.dovecot.sieve.log``. If there are errors or warnings in the
    script, the messages are appended to that log file until it
    eventually grows too large (>10 kB currently). When that happens, the
@@ -149,7 +149,7 @@ execution are written to two locations by the LDA Sieve plugin:
    started. Informational messages are not written to this log file and
    the log file is not created until messages are actually logged, i.e.
    when an error or warning is produced. The log file name can be overriden with
-   the :ref:`plugin-sieve-setting-sieve_user_log` setting.
+   the :pigeonhole:ref:`sieve_user_log` setting.
 
 -  Messages that could be of interest to the system administrator are
    also written to the Dovecot logging facility (usually syslog). This

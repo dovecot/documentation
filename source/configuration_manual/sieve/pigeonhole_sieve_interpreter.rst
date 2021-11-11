@@ -104,11 +104,12 @@ Extension                                                                       
   extensions that require explicit configuration and extensions that are still
   under development are not enabled without explicit :doc:`configuration
   <configuration>`. This means that
-  the :ref:`plugin-sieve-setting-sieve_extensions` or :ref:`plugin-sieve-setting-sieve_global_extensions` settings need to be
+  the :pigeonhole:ref:`sieve_extensions` or
+  :pigeonhole:ref:`sieve_global_extensions` settings need to be
   adjusted accordingly. Also, for :ref:`plugins
   <sieve_plugins>` it is not enough to add
-  the plugin name to the :ref:`plugin-sieve-setting-sieve_plugins` setting; the extensions introduced
-  by the plugin also need to be enabled explicitly.
+  the plugin name to the :pigeonhole:ref:`sieve_plugins` setting;
+  the extensions introduced by the plugin also need to be enabled explicitly.
 
 
 ManageSieve server
