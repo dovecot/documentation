@@ -4,13 +4,13 @@ Pigeonhole Sieve: Extensions for Notifications
 
 .. seealso:: :ref:`pigeonhole_extension_enotify`
 
-.. _plugin-sieve-setting-sieve_notify_mailto_envelope_from setting:
+Settings
+--------
 
-``sieve_notify_mailto_envelope_from setting``
-----------------------------------------------
+.. pigeonhole:setting:: sieve_notify_mailto_envelope_from setting
+   :plugin: yes
+   :values: @string
 
- - Default: <none>
- - Value: :ref:`string`
+Defines the source of the notification sender address for e-mail notifications.
 
-This allows configuring the source of the notification sender address for e-mail notifications.
-This is similar to the :ref:`plugin-sieve-setting-sieve_redirect_envelope_from` setting for redirect.
+This is similar to :pigeonhole:ref:`sieve_redirect_envelope_from`.

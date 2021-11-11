@@ -21,20 +21,20 @@ Configuration
 
 The **spamtest**, **spamtestplus** and **virustest** extensions are not
 enabled by default and thus need to be enabled explicitly using the
-:ref:`plugin-sieve-setting-sieve_extensions` setting.
+:pigeonhole:ref:`sieve_extensions` setting.
 
 The following settings need to be configured for using the **spamtest**
 and **spamtestplus** extensions. The **virustest** extension has
 identical configuration settings, but with a ``sieve_virustest_``
 prefix instead of a ``sieve_spamtest_`` prefix:
 
-:ref:`plugin-sieve-setting-sieve_spamtest_status_type` = ``"score" / "strlen" / "text"``
+:pigeonhole:ref:`sieve_spamtest_status_type` = ``"score" / "strlen" / "text"``
    This specifies the type of status result that the spam/virus scanner
    produces. This can either be a numeric score (``score``), a string of
    identical characters (``strlen``), e.g. '``*******``', or a textual
    description (``text``), e.g. ``{{{Spam}}}`` or ``Not Spam``.
 
-:ref:`plugin-sieve-setting-sieve_spamtest_status_header` = ``<header-field> [ ":" <regexp> ]``
+:pigeonhole:ref:`sieve_spamtest_status_header` = ``<header-field> [ ":" <regexp> ]``
    This specifies the header field that contains the result information
    of the spam scanner and it may express the syntax of the content of
    the header. If no matching header is found in the message, the
@@ -51,19 +51,20 @@ prefix instead of a ``sieve_spamtest_`` prefix:
    expression or if no value match is found, the ``spamtest`` test will
    match against "0" during Sieve script execution.
 
-:ref:`plugin-sieve-setting-sieve_spamtest_max_value` =
+:pigeonhole:ref:`sieve_spamtest_max_value` =
    This statically specifies the maximum value a numeric spam score can
    have.
 
-:ref:`plugin-sieve-setting-sieve_spamtest_max_header` = ``<header-field> [ ":" <regexp> ]``
+:pigeonhole:ref:`sieve_spamtest_max_header` = ``<header-field> [ ":" <regexp> ]``
    Some spam scanners include the maximum score value in one of their
    status headers. Using this setting, this maximum can be extracted
    from the message itself in stead of specifying the maximum manually
-   using the setting :ref:`plugin-sieve-setting-sieve_spamtest_max_value`  explained above. The
-   syntax is identical to the :ref:`plugin-sieve-setting-sieve_spamtest_status_header`  setting.
+   using the setting :pigeonhole:ref:`sieve_spamtest_max_value` explained
+   above. The syntax is identical to the
+   :pigeonhole:ref:`sieve_spamtest_status_header` setting.
 
-:ref:`plugin-sieve-setting-sieve_spamtest_text_valueX` =
-   When the :ref:`plugin-sieve-setting-sieve_spamtest_status_type` setting is set to ``text``,
+:pigeonhole:ref:`sieve_spamtest_text_valueX` =
+   When the :pigeonhole:ref:`sieve_spamtest_status_type` setting is set to ``text``,
    these settings specify that the ``spamtest`` test will match against
    the value "``X``" when the specified string is equal to the text
    (extracted) from the status header. For **spamtest** and

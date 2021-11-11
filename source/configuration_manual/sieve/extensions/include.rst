@@ -22,9 +22,9 @@ The **include** extension is available by default. The **include**
 extension has its own specific settings. The following settings can be
 configured for the **include** extension (default values are indicated):
 
-:ref:`plugin-sieve-setting-sieve_include_max_includes` = 255
+:pigeonhole:ref:`sieve_include_max_includes` = 255
    The maximum number of scripts that may be included. This is the total
    number of scripts involved in the include tree.
 
-:ref:`plugin-sieve-setting-sieve_include_max_nesting_depth` = 10
+:pigeonhole:ref:`sieve_include_max_nesting_depth` = 10
    The maximum nesting depth for the include tree.

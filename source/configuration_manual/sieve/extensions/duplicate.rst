@@ -29,9 +29,9 @@ The **duplicate** extension is available by default. The **duplicate**
 extension has its own specific settings. The following settings are
 available (default values are indicated):
 
-:ref:`plugin-sieve-setting-sieve_duplicate_default_period` = 14d
+:pigeonhole:ref:`sieve_duplicate_default_period` = 14d
 
-:ref:`plugin-sieve-setting-sieve_duplicate_max_period` = 7d
+:pigeonhole:ref:`sieve_duplicate_max_period` = 7d
    These options respectively specify the default and the maximum value
    for the period after which tracked values are purged from the
    duplicate tracking database. The period is specified in s(econds),

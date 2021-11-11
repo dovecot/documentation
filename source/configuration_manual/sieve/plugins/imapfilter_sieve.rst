@@ -54,6 +54,5 @@ stored scripts.
 This plugin uses the normal configuration settings used by the
 :ref:`LDA <lda>` Sieve plugin at delivery.
 
-The :ref:`plugin-sieve-setting-sieve_before` and
-:ref:`plugin-sieve-setting-sieve_after` scripts are currently ignored by this
-plugin.
+The :pigeonhole:ref:`sieve_before` and :pigeonhole:ref:`sieve_after` scripts
+are currently ignored by this plugin.

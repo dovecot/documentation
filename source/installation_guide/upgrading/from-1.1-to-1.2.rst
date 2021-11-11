@@ -31,5 +31,5 @@ Sieve:
 
 ManageSieve:
 
- * The :ref:`plugin-sieve-setting-sieve` and ``sieve_storage`` settings need to be placed in the ``plugin {}`` section now and ``sieve_storage`` needs to be renamed to :ref:`plugin-sieve-setting-sieve_dir`. This removes the duplication of these values with respect to the :ref:`Sieve Plugin <sieve>` for :ref:`Deliver <lda>`. So, since you are using the Sieve plugin, these settings should already be there and all that needs to be done is remove the ``sieve=`` and ``sieve_storage=`` settings from the ``protocol managesieve {}`` section.
+ * The :pigeonhole:ref:`sieve` and ``sieve_storage`` settings need to be placed in the ``plugin {}`` section now and ``sieve_storage`` needs to be renamed to :pigeonhole:ref:`sieve_dir`. This removes the duplication of these values with respect to the :ref:`Sieve Plugin <sieve>` for :ref:`Deliver <lda>`. So, since you are using the Sieve plugin, these settings should already be there and all that needs to be done is remove the ``sieve=`` and ``sieve_storage=`` settings from the ``protocol managesieve {}`` section.
 

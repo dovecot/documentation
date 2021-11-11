@@ -4,24 +4,22 @@ Pigeonhole Sieve: Duplicate Extension
 
 .. seealso:: :ref:`pigeonhole_extension_duplicate`
 
-.. _plugin-sieve-setting-sieve_duplicate_default_period:
+Settings
+--------
 
-``sieve_duplicate_default_period``
-----------------------------------
+.. pigeonhole:setting:: sieve_duplicate_default_period
+   :default: 14d
+   :plugin: yes
+   :values: @time
 
- - Default: ``14d``
- - Value: :ref:`time`
+Default period after which tracked values are purged from the duplicate
+tracking database.
 
-Default period after which tracked values are purged from the duplicate tracking database.
-The period is specified in s(econds), unless followed by a d(ay), h(our) or m(inute) specifier character. 
 
-.. _plugin-sieve-setting-sieve_duplicate_max_period:
+.. pigeonhole:setting:: sieve_duplicate_max_period
+   :default: 7d
+   :plugin: yes
+   :values: @time
 
-``sieve_duplicate_max_period``
-------------------------------
-
- - Default: ``7d``
- - Value: :ref:`time`
-
-Maximum period after which tracked values are purged from the duplicate tracking database.
-The period is specified in s(econds), unless followed by a d(ay), h(our) or m(inute) specifier character.
+Maximum period after which tracked values are purged from the duplicate
+tracking database.

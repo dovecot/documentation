@@ -38,29 +38,30 @@ Configuration
 The IMAP plugin is activated by adding it to the
 :dovecot_core:ref:`mail_plugins` setting for the imap protocol:
 
-::
+.. code-block:: none
 
-   protocol imap {
-     mail_plugins = $mail_plugins imap_sieve
-   }
+  protocol imap {
+    mail_plugins = $mail_plugins imap_sieve
+  }
 
 This will only enable support for administrator scripts. User scripts
 are only supported when additionally a Sieve URL is configured using the
-:ref:`plugin-imapsieve-setting-imapsieve_url` plugin setting. This URL points to the
+:pigeonhole:ref:`imapsieve_url` plugin setting. This URL points to the
 :ref:`ManageSieve <pigeonhole_managesieve_server>`
 server that users need to use to upload their Sieve scripts. This URL
 will be shown to the client in the IMAP CAPABILITY response as
 ``IMAPSIEVE=<URL>``.
 
-The Sieve plugin is activated by adding it to the :ref:`plugin-sieve-setting-sieve_plugins` setting:
+The Sieve plugin is activated by adding it to the
+:pigeonhole:ref:`sieve_plugins` setting:
 
-::
+.. code-block:: none
 
-   sieve_plugins = sieve_imapsieve
+  sieve_plugins = sieve_imapsieve
 
 This plugin registers the ``imapsieve`` extension with the Sieve
 interpreter. This extension is enabled implicitly, which means that it
-does not need to be added to the :ref:`plugin-sieve-setting-sieve_extensions` setting.
+does not need to be added to the :pigeonhole:ref:`sieve_extensions` setting.
 
 Note that the ``imapsieve`` extension can only be used in a Sieve script
 that is invoked from IMAP. When it is used in the active delivery
@@ -71,7 +72,7 @@ tested using the ``ihave`` test (`RFC
 
 The following settings are recognized the "imap_sieve" plugin:
 
-:ref:`plugin-imapsieve-setting-imapsieve_url` =
+:pigeonhole:ref:`imapsieve_url` =
    If configured, this setting enables support for user Sieve scripts in
    IMAP. So, leave this unconfigured if you don't want users to have the
    ability to associate Sieve scripts with mailboxes. This has no effect
@@ -81,7 +82,7 @@ The following settings are recognized the "imap_sieve" plugin:
    server that users must use to upload their Sieve scripts; e.g.,
    ``sieve://sieve.example.com``.
 
-:ref:`plugin-imapsieve-setting-imapsieve_mailboxxxx_name` =
+:pigeonhole:ref:`imapsieve_mailboxxxx_name` =
    This setting configures the name of a mailbox for which administrator
    scripts are configured. The \`XXX' in this setting is a sequence
    number, which allows configuring multiple associations between Sieve
@@ -93,18 +94,19 @@ The following settings are recognized the "imap_sieve" plugin:
    meaning that this setting can apply to multiple or even all ("*")
    mailboxes.
 
-:ref:`plugin-imapsieve-setting-imapsieve_mailboxxxx_before` =
+:pigeonhole:ref:`imapsieve_mailboxxxx_before` =
 
-:ref:`plugin-imapsieve-setting-imapsieve_mailboxxxx_after` =
+:pigeonhole:ref:`imapsieve_mailboxxxx_after` =
    When an IMAP event of interest occurs, these sieve scripts are
    executed before and after any user script respectively. These
    settings each specify the location of a single sieve script. The
-   semantics of these settings are very similar to the :ref:`plugin-sieve-setting-sieve_before` 
-   and :ref:`plugin-sieve-setting-sieve_after`  settings: the specified scripts form a sequence
+   semantics of these settings are very similar to the
+   :pigeonhole:ref:`sieve_before` and :pigeonhole:ref:`sieve_after` settings:
+   the specified scripts form a sequence
    together with the user script in which the next script is only
    executed when an (implicit) keep action is executed.
 
-:ref:`plugin-imapsieve-setting-imapsieve_mailboxxxx_causes` =
+:pigeonhole:ref:`imapsieve_mailboxxxx_causes` =
    Only execute the administrator Sieve scripts for the mailbox
    configured with ``imapsieve_mailboxXXX_name`` when one of the listed
    ``IMAPSIEVE``
@@ -113,7 +115,7 @@ The following settings are recognized the "imap_sieve" plugin:
    effect on the user script, which is always executed no matter the
    cause.
 
-:ref:`plugin-imapsieve-setting-imapsieve_mailboxxxx_from` =
+:pigeonhole:ref:`imapsieve_mailboxxxx_from` =
    Only execute the administrator Sieve scripts for the mailbox
    configured with ``imapsieve_mailboxXXX_name`` when the message
    originates from the indicated mailbox. This setting supports

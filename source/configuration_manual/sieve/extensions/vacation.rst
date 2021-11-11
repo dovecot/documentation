@@ -24,7 +24,7 @@ Configuration
 The **vacation** extension is available by default. In contrast, the
 **vacation-seconds** extension - which implies the vacation extension
 when used - is not available by default and needs to be enabled
-explicitly by adding it to the :ref:`plugin-sieve-setting-sieve_extensions`  setting. The
+explicitly by adding it to the :pigeonhole:ref:`sieve_extensions` setting. The
 configuration also needs to be adjusted accordingly to allow a non-reply
 period of less than a day.
 
@@ -36,7 +36,7 @@ them) are specified in **s**\ (econds), unless followed by a
 The following settings can be configured for the vacation extension in
 the ``plugin`` section (default values are indicated):
 
-:ref:`plugin-sieve-setting-sieve_vacation_min_period` = 1d
+:pigeonhole:ref:`sieve_vacation_min_period` = 1d
    This specifies the minimum period that can be specified for the :days
    and :seconds tags of the vacation command. A minimum of 0 indicates
    that users are allowed to make the Sieve interpreter send a vacation
@@ -44,18 +44,18 @@ the ``plugin`` section (default values are indicated):
    reply criteria (refer to RFC5230). A value of zero is however not
    recommended.
 
-:ref:`plugin-sieve-setting-sieve_vacation_max_period` = 0
+:pigeonhole:ref:`sieve_vacation_max_period` = 0
    This specifies the maximum period that can be specified for the :days
    tag of the vacation command. The configured value must be larger than
    the sieve_vacation_min_period setting. A value of 0 has a special
    meaning: it indicates that there is no upper limit.
 
-:ref:`plugin-sieve-setting-sieve_vacation_default_period` = 7d
+:pigeonhole:ref:`sieve_vacation_default_period` = 7d
    This specifies the default period that is used when no :days or
    :seconds tag is specified. The configured value must lie between the
    sieve_vacation_min_period and sieve_vacation_max_period.
 
-:ref:`plugin-sieve-setting-sieve_vacation_use_original_recipient` = no
+:pigeonhole:ref:`sieve_vacation_use_original_recipient` = no
    This specifies whether the original envelope recipient should be used
    in the check for implicit delivery. The vacation command checks
    headers of the incoming message, such as To: and Cc: for the address
@@ -74,7 +74,7 @@ the ``plugin`` section (default values are indicated):
    :dovecot_core:ref:`lda_original_recipient_header` setting to make the
    original SMTP recipient available to Sieve.
 
-:ref:`plugin-sieve-setting-sieve_vacation_dont_check_recipient` = no
+:pigeonhole:ref:`sieve_vacation_dont_check_recipient` = no
    This disables the checks for implicit delivery entirely. This means
    that the vacation command does not verify that the message is
    explicitly addressed at the recipient. Use this option with caution.
@@ -82,7 +82,7 @@ the ``plugin`` section (default values are indicated):
    vacation replies to be sent for messages not directly addressed at
    the recipient.
 
-:ref:`plugin-sieve-setting-sieve_vacation_send_from_recipient` = no
+:pigeonhole:ref:`sieve_vacation_send_from_recipient` = no
    This setting determines whether vacation messages are sent with the
    SMTP MAIL FROM envelope address set to the recipient address of the
    Sieve script owner. Normally this is set to <>, which is the default

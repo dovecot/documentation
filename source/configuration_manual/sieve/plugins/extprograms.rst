@@ -23,20 +23,21 @@ was provided earlier by the Pipe plugin.
 Configuration
 -------------
 
-The plugin is activated by adding it to the :ref:`plugin-sieve-setting-sieve_plugins` setting:
+The plugin is activated by adding it to the :pigeonhole:ref:`sieve_plugins`
+setting:
 
-::
+.. code-block:: none
 
-   sieve_plugins = sieve_extprograms
+  sieve_plugins = sieve_extprograms
 
 This plugin registers the ``vnd.dovecot.pipe``, ``vnd.dovecot.filter``
 and ``vnd.dovecot.execute`` extensions with the Sieve interpreter.
 However, these extensions are not enabled by default and thus need to be
 enabled explicitly. It is recommended to restrict the use of these
 extensions to global context by adding these to the
-:ref:`plugin-sieve-setting-sieve_global_extensions` setting. If personal user scripts also need
-to directly access external programs, the extensions need to be added to
-the :ref:`plugin-sieve-setting-sieve_extensions` setting.
+:pigeonhole:ref:`sieve_global_extensions` setting. If personal user scripts
+also need to directly access external programs, the extensions need to be
+added to the :pigeonhole:ref:`sieve_extensions` setting.
 
 The commands introduced by the Sieve language extensions in this plugin
 can directly pipe a message or string data to an external program
@@ -72,19 +73,19 @@ used, for which "<extension>" in the setting name is replaced by either
 ``pipe``, ``filter`` or ``execute`` depending on which extension is
 being configured:
 
-:ref:`plugin-sieve-setting-sieve_extension_socket_dir` =
+:pigeonhole:ref:`sieve_extension_socket_dir` =
    Points to a directory relative to the Dovecot base_dir where the
    plugin looks for script service sockets.
 
-:ref:`plugin-sieve-setting-sieve_extension_bin_dir` =
+:pigeonhole:ref:`sieve_extension_bin_dir` =
    Points to a directory where the plugin looks for programs (shell
    scripts) to execute directly and pipe messages to.
 
-:ref:`plugin-sieve-setting-sieve_extension_exec_timeout` = 10s
+:pigeonhole:ref:`sieve_extension_exec_timeout` = 10s
    Configures the maximum execution time after which the program is
    forcibly terminated.
 
-:ref:`plugin-sieve-setting-sieve_extension_input_eol` = crlf
+:pigeonhole:ref:`sieve_extension_input_eol` = crlf
    Determines the end-of-line character sequence used for the data piped
    to external programs. The default is currently "crlf", which
    represents a sequence of the carriage return (CR) and line feed (LF)
