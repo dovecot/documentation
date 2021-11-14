@@ -1791,15 +1791,31 @@ Command
 
 Common fields:
 
-+---------------------+--------------------------------+
-| Field               | Description                    |
-+=====================+================================+
-| Inherits from :ref:`event_connection`                |
-+---------------------+--------------------------------+
-| cmd_name            | name of the command            |
-|                     |                                |
-|                     | .. versionadded:: v2.3.9       |
-+---------------------+--------------------------------+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_connection`                                      |
++---------------------+------------------------------------------------------+
+| cmd_name            | name of the command                                  |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.9                             |
++---------------------+------------------------------------------------------+
+| cmd_input_name      | SMTP command name exactly as sent (e.g. ``MaIL``)    |
+|                     | regardless of whether or not it is valid.            |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.9                             |
++---------------------+------------------------------------------------------+
+| cmd_args            | SMTP command's full parameters                       |
+|                     | (e.g. ``<from@example.com>``)                        |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.18                            |
++---------------------+------------------------------------------------------+
+| cmd_human_args      | SMTP command's full parameters, as human-readable    |
+|                     | output. For SMTP, this is currently identical to     |
+|                     | cmd_args.                                            |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.18                            |
++---------------------+------------------------------------------------------+
 
 smtp_server_command_started
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
