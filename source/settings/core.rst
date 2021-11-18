@@ -4704,8 +4704,8 @@ The path to the stats-writer socket.
 Configures the list of active workarounds for Submission client bugs. The list is
 space-separated. Supported workaround identifiers are:
 
-* ``whitespace-before-path`` - Allow one or more spaces or tabs between 'MAIL FROM:' and path and between 'RCPT TO:' and path.
 * ``mailbox-for-path`` - Allow using bare Mailbox syntax (i.e., without <...>) instead of full path syntax.
+* ``whitespace-before-path`` - Allow one or more spaces or tabs between 'MAIL FROM:' and path and between 'RCPT TO:' and path.
 
 .. todo:: Indicate submission setting
 
