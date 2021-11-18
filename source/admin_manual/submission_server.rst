@@ -79,8 +79,7 @@ configuring Dovecot's URLAUTH support can be found at
 
 The following settings apply to the Submission service:
 
-submission_logout_format = in=%i out=%o
-***************************************
+**submission_logout_format = in=%i out=%o**
 
 The SMTP Submission logout format string. The following variable substitutions
 are supported:
