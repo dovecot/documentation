@@ -77,7 +77,7 @@ could be inefficient  mailboxes with a higher ``max_bucket`` ID than actual
 filled buckets.
 
 To be informed about shrinking, the
-:ref:`event_fs_dictmap_max_bucket_changed` event can be monitored.
+:dovecot_core:ref:`fs_dictmap_max_bucket_changed` event can be monitored.
 
 Upgrading Dovecot v2.3.x to v2.3.15
 ===================================

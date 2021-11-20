@@ -48,6 +48,7 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.todo',
     'sphinx_copybutton',
+    'sphinx_panels',
     'sphinx_removed_in',
     'dovecot_sphinx',
 ]

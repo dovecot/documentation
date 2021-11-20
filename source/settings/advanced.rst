@@ -56,7 +56,7 @@ See :ref:`settings` for list of all setting groups.
    stands for unlimited (which is also the former behavior).
 
    When entries are rejected, the event
-   :ref:`event_mail_cache_decision_rejected` is emitted.
+   :dovecot_core:ref:`mail_cache_decision_rejected` is emitted.
 
    Also, while the cache's headers count is saturated, the effective value of
    :dovecot_core:ref:`mail_cache_unaccessed_field_drop` is reduced to 1/4 of
