@@ -120,7 +120,7 @@ Example config for folder keys with Maildir:
     mail_crypt_save_version = 2
   }
 
-Encrypted User Jeys
+Encrypted User Keys
 ^^^^^^^^^^^^^^^^^^^
 
 In this version of the folder keys mode, the users private key is stored
