@@ -12,6 +12,7 @@ Dovecot Design
    and :ref:`Doveadm HTTP server protocol <admin-doveadm-http-api>`
 -  :ref:`Doveadm synchronization <doveadm_dsync>`
 -  :ref:`Dovecot Lua support <lua>`
+-  :ref:`Dovecot dict protocol <dovecot_dict_protocol>`
 
 Protocol extensions
 -------------------
