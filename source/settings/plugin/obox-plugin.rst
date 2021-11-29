@@ -179,7 +179,8 @@ This setting handles the object storage configuration for index bundles.
 
 .. todo:: Document this!
 
-.. WARNING:: obox_index_fs is currently not compatible with fs-posix driver.
+.. versionchanged:: v2.3.18 Fixed to work properly with fs-posix driver.
+                    Earlier versions don't work correctly in all situations.
 
 
 .. _plugin-obox-setting_obox_max_parallel_copies:

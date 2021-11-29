@@ -148,7 +148,7 @@ a warning each time the data stack needs to be grown.
 Stack frames are preferably created using a ``T_BEGIN``/``T_END`` block, for
 example:
 
-::
+.. code-block:: C
 
    T_BEGIN {
      string_t *str1 = t_str_new(256);

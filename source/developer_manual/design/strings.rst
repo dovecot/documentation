@@ -22,7 +22,7 @@ and they're no longer guaranteed to be NUL-terminated.
 
 Example:
 
-::
+.. code-block:: C
 
    T_BEGIN {
      string_t *str = t_str_new(64);

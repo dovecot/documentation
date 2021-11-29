@@ -209,7 +209,9 @@ Functions:
 
 .. py:function::  iterate(path, flags[, username])
 
-   Returns an iteration step function and dict iter userdata. For example::
+   Returns an iteration step function and dict iter userdata. For example:
+
+   .. code-block:: lua
 
 	for key, values in dict:iterate(key_prefix, 0) do
 	  dovecot.i_debug('key='..key..', first value='..values[1])
