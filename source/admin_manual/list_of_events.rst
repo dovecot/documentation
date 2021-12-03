@@ -1290,6 +1290,8 @@ mail_cache_lookup_finished
 
 .. versionadded:: 2.3.15
 
+.. versionremoved:: 2.3.18 Removed for performance reasons.
+
 A mail field was looked up from cache.
 
 +---------------------+--------------------------------------------------------+
