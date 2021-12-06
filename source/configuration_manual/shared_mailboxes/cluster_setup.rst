@@ -112,6 +112,12 @@ accordingly:
       acl_shared_dict = $your_prefered_shared_dict
     }
 
+    # In order to be able to issue ACL commands over imap, imap_acl must be loaded
+    protocol imap {
+      mail_plugins = $mail_plugins imap_acl
+    }
+
+
 The :ref:`acl <acl>` plugin must be told to ignore the shared namespace and all
 its children using the :ref:`plugin-acl-setting-acl_ignore_namespace` setting.
 

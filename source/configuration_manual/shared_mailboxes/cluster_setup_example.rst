@@ -90,6 +90,10 @@ Dovecot Backend configuration snippet
           acl_shared_dict = proxy:dict:acl-mysql
         }
 
+        protocol imap {
+          mail_plugins = $mail_plugins imap_acl
+        }
+
         # If quota is used make sure to disable counting for shared namespace
         #mail_plugins = $mail_plugins quota
         #plugin {
