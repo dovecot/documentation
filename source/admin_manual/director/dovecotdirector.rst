@@ -31,7 +31,7 @@ The doveadm director flush command works internally by individually moving all t
 Interpreting user mappings
 ===========================
 
-The command doveadm ``director status <username>`` shows diagnostic output of a users mappings in the director ring.
+The command doveadm ``director status <username> [tag]`` shows diagnostic output of a users mappings in the director ring. When using director tags the tag must be appended to the command.
 
 .. code-block:: none
 
