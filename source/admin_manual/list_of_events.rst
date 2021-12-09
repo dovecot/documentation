@@ -1791,15 +1791,31 @@ Command
 
 Common fields:
 
-+---------------------+--------------------------------+
-| Field               | Description                    |
-+=====================+================================+
-| Inherits from :ref:`event_connection`                |
-+---------------------+--------------------------------+
-| cmd_name            | name of the command            |
-|                     |                                |
-|                     | .. versionadded:: v2.3.9       |
-+---------------------+--------------------------------+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_connection`                                      |
++---------------------+------------------------------------------------------+
+| cmd_name            | name of the command                                  |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.9                             |
++---------------------+------------------------------------------------------+
+| cmd_input_name      | SMTP command name exactly as sent (e.g. ``MaIL``)    |
+|                     | regardless of whether or not it is valid.            |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.9                             |
++---------------------+------------------------------------------------------+
+| cmd_args            | SMTP command's full parameters                       |
+|                     | (e.g. ``<from@example.com>``)                        |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.18                            |
++---------------------+------------------------------------------------------+
+| cmd_human_args      | SMTP command's full parameters, as human-readable    |
+|                     | output. For SMTP, this is currently identical to     |
+|                     | cmd_args.                                            |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.18                            |
++---------------------+------------------------------------------------------+
 
 smtp_server_command_started
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2821,13 +2837,24 @@ proxy_session_finished
 ----------------------
 Emitted when proxying has ended. Either successfully or with error.
 
-+-----------------+------------------------------------------------------+
-| Field           | Description                                          |
-+=================+======================================================+
-| source_port     | Source port where proxy connection originated from   |
-+-----------------+------------------------------------------------------+
-| error           | If login to destination failed, contains the error.  |
-+-----------------+------------------------------------------------------+
++-------------------+------------------------------------------------------+
+| Field             | Description                                          |
++===================+======================================================+
+| source_port       | Source port where proxy connection originated from.  |
++-------------------+------------------------------------------------------+
+| error             | If login to destination failed, contains the error.  |
++-------------------+------------------------------------------------------+
+| disconnect_side   | Which side disconnected: client, server, proxy       |
++-------------------+------------------------------------------------------+
+| disconnect_reason | Reason for disconnection (empty = clean disconnect). |
++-------------------+------------------------------------------------------+
+| idle_secs         | Number of seconds the connection was idling before   |
+|                   | getting disconnected.                                |
++-------------------+------------------------------------------------------+
+| bytes_in          | Amount of data read from client, in bytes.           |
++-------------------+------------------------------------------------------+
+| bytes_out         | Amount of data written to client, in bytes.          |
++-------------------+------------------------------------------------------+
 
 
 ***********

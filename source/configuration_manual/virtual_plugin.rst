@@ -4,7 +4,7 @@
 Virtual Plugin
 ==============
 
-Virtual mailboxes
+Virtual Mailboxes
 =================
 
 First, you'll have to load the plugin:
@@ -12,6 +12,11 @@ First, you'll have to load the plugin:
 .. code-block:: none
 
   mail_plugins = $mail_plugins virtual
+
+Settings
+--------
+
+See :ref:`plugin-virtual`.
 
 Namespace configuration
 =======================

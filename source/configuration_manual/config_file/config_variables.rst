@@ -37,7 +37,7 @@ Global variables that work everywhere are:
 |            | :ref:`mail user variables <variables-mail_user>`.                           |
 +------------+-----------------------------------------------------------------------------+
 
-If var_expand_crypt plugin is loaded (see `Plugins/VarExpandCrypt <https://wiki.dovecot.org/Plugins/VarExpandCrypt>`_):
+If :ref:`var_expand_crypt_plugin` is loaded:
 
 +-------------------------------+-----------------------------+
 | Long name                     | Description                 |
@@ -107,7 +107,7 @@ Mail service user variables:
 |          |                |                                                               |
 |          |                | .. deprecated:: v2.3.14                                       |
 +----------+----------------+---------------------------------------------------------------+
-|          | rip            | Deprecated version of %{rip}                                  |
+|          | rip            | Deprecated version of %{remote_ip}                            |
 |          |                |                                                               |
 |          |                | .. deprecated:: v2.3.14                                       |
 +----------+----------------+---------------------------------------------------------------+
@@ -395,7 +395,7 @@ You can apply a modifiers for each variable (e.g. %Us or %U{service} = POP3):
    reverse the username to get better hash value variety, e.g. `%3RHu`.
 
 * %{<hash
-  algorithm>;rounds=<n>,truncate=<bits>,salt=s,format=<hex|hexuc|base64>:field}
+  algorithm>;rounds=<n>,truncate=<bits>,salt=s,format=<hex|hexuc|base64|base64url>:field}
 
  * Generic hash function that outputs a hex (by default) or `base64` value.
    Hash algorithm is any of the supported ones, e.g. `md5`, `sha1`, `sha256`.

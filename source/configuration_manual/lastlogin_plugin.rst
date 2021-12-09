@@ -4,8 +4,18 @@
 Last Login Plugin
 =================
 
-Requires v2.2.14+. This plugin can be used to easily update user's last-login
-timestamp in the configured dictionary. Configuration:
+.. versionadded:: 2.2.14
+
+This plugin can be used to update user's last-login timestamp in a configured
+dictionary.
+
+Settings
+========
+
+See :ref:`plugin-last-login`.
+
+Example Configuration
+=====================
 
 .. code-block:: none
 
@@ -30,7 +40,7 @@ timestamp in the configured dictionary. Configuration:
   user when new mails are delivered, you can do that by enabling the last_login
   plugin also for lda/lmtp and changing the last_login_key setting.
 
-Example dict config with schema
+Example dict config with schema:
 
 .. code-block:: none
 

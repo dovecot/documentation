@@ -20,7 +20,7 @@ Some of the extensions need to be explicitly enabled:
 .. seealso::
 
   * :ref:`imap_metadata`
-  * :ref:`plugin-imap-compress`
+  * :ref:`plugin-imap-zlib`
   * :ref:`fts`
   * :ref:`namespaces`
   * :ref:`hibernation`

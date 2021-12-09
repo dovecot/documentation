@@ -60,12 +60,18 @@ delivery notifications only, this config should be used:
     mail_plugins = $mail_plugins notify push_notification
   }
 
+Settings
+========
+
+See :ref:`plugin-push-notification`.
 
 Drivers
 =======
 
-A push notification driver is defined by the ``push_notification_driver``
-plugin option.  The configuration value is the name of the driver, optionally
+A push notification driver is defined by the
+:ref:`plugin-push-notification-setting_push_notification_driver` setting.
+
+The configuration value is the name of the driver, optionally
 followed by an ``:`` and driver-specific options (see drivers for options
 supported).
 
@@ -215,7 +221,7 @@ See :ref:`lua` for general information on how Lua is implemented in Dovecot.
 Configuration
 -------------
 
-Lua push notification handler requires ``mail_lua`` and
+Lua push notification handler requires :ref:`mail_lua <plugin-mail-lua>` and
 ``push_notification_lua`` plugins to be loaded in addition to the plugins 
 discussed :ref:`above <push_notification-usage>`.
 
@@ -224,7 +230,7 @@ discussed :ref:`above <push_notification-usage>`.
 +==========+==========+===============+================================================+
 | ``file`` | NO       | :ref:`string` | The lua file to execute. If no script is       | 
 |          |          |               | is specified,                                  |
-|          |          |               | :ref:`plugin-mail_lua-setting_mail_lua_script` |
+|          |          |               | :ref:`plugin-mail-lua-setting_mail_lua_script` |
 |          |          |               | will be used by default.                       |
 +----------+----------+---------------+------------------------------------------------+
 

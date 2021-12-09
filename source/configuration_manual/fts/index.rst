@@ -205,7 +205,7 @@ future versions.
 Dovecot General FTS Configuration
 ---------------------------------
 
-See :ref:`fts_plugin` for settings.
+See :ref:`plugin-fts` for settings.
 
 
 .. _fts-community_developed_plugins:

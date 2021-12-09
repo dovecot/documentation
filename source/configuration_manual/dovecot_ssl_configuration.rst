@@ -49,22 +49,22 @@ The per protocol certificate settings override the global setting.:
 
 There are a couple of different ways to specify when SSL/TLS is required:
 
-* ``ssl=no``: SSL/TLS is completely disabled.
+* :ref:`ssl=no <setting-ssl>`: SSL/TLS is completely disabled.
 
-* ``ssl=yes`` and ``disable_plaintext_auth=no``: SSL/TLS is offered to the client, but the client isn't required to use it. The client is allowed to login with plaintext authentication even when SSL/TLS isn't enabled on the connection. This is insecure, because the plaintext password is exposed to the internet.
+* :ref:`ssl=yes <setting-ssl>` and :ref:`disable_plaintext_auth=no <setting-disable_plaintext_auth>`: SSL/TLS is offered to the client, but the client isn't required to use it. The client is allowed to login with plaintext authentication even when SSL/TLS isn't enabled on the connection. This is insecure, because the plaintext password is exposed to the internet.
 
-* ``ssl=yes`` and ``disable_plaintext_auth=yes``: SSL/TLS is offered to the client, but the client isn't required to use it. The client isn't allowed to use plaintext authentication, unless SSL/TLS is enabled first. However, if non-plaintext authentication mechanisms are enabled they are still allowed even without SSL/TLS. 
+* :ref:`ssl=yes <setting-ssl>` and :ref:`disable_plaintext_auth=yes <setting-disable_plaintext_auth>`: SSL/TLS is offered to the client, but the client isn't required to use it. The client isn't allowed to use plaintext authentication, unless SSL/TLS is enabled first. However, if non-plaintext authentication mechanisms are enabled they are still allowed even without SSL/TLS.
   Depending on how secure they are, the authentication is either fully secure or it could have some ways for it to be attacked.
 
-* ``ssl=required``: SSL/TLS is always required, even if non-plaintext authentication mechanisms are used. Any attempt to authenticate before SSL/TLS is enabled will cause an authentication failure.
+* :ref:`ssl=required <setting-ssl>`: SSL/TLS is always required, even if non-plaintext authentication mechanisms are used. Any attempt to authenticate before SSL/TLS is enabled will cause an authentication failure. Note that this setting is unrelated to the STARTTLS command - either implicit SSL/TLS or STARTTLS command is allowed.
 
-  .. NOTE:: If you have only plaintext mechanisms enabled (e.g. auth { mechanisms = plain login } ), ``ssl=yes`` and ``ssl=required`` are completely equivalent because in either case the authentication will fail unless SSL/TLS is enabled first.
+  .. NOTE:: If you have only plaintext mechanisms enabled (e.g. :ref:`auth_mechanisms = plain login <setting-auth_mechanisms>`) and :ref:`disable_plaintext_auth=yes <setting-disable_plaintext_auth>`, :ref:`ssl=yes <setting-ssl>` and :ref:`ssl=required <setting-ssl>` are completely equivalent because in either case the authentication will fail unless SSL/TLS is enabled first.
 
-  .. NOTE:: With both ``ssl=yes`` and ``ssl=required`` it's still possible that the client attempts to do a plaintext authentication before enabling SSL/TLS, which exposes the plaintext password to the internet. 
+  .. NOTE:: With both :ref:`ssl=yes <setting-ssl>` and :ref:`ssl=required <setting-ssl>` it's still possible that the client attempts to do a plaintext authentication before enabling SSL/TLS, which exposes the plaintext password to the internet.
 
              Dovecot attempts to indicate this to the IMAP clients via the LOGINDISABLED capability, but many clients still ignore it and send the password anyway. There is unfortunately no way for Dovecot to prevent this behavior. The POP3 standard doesn't have an equivalent capability at all, so the POP3 clients can't even know if the server would accept a plaintext authentication.
 
-* The main difference between ``ssl=required`` and ``disable_plaintext_auth=yes`` is that if ``ssl=required``, it guarantees that the entire connection is protected against eavesdropping (SSL/TLS encrypts the rest of the connection), while ``disable_plaintext_auth=yes`` only guarantees that the password is protected against eavesdropping (SASL mechanism is encrypted, but no SSL/TLS is necessarily used). Nowadays you most likely should be using SSL/TLS anyway for the entire connection, since the cost of SSL/TLS is cheap enough. Using both SSL/TLS and non-plaintext authentication would be the ideal situation since it protects the plaintext password even against man-in-the-middle attacks.
+* The main difference between :ref:`ssl=required <setting-ssl>` and :ref:`disable_plaintext_auth=yes <setting-disable_plaintext_auth>` is that if :ref:`ssl=required <setting-ssl>`, it guarantees that the entire connection is protected against eavesdropping (SSL/TLS encrypts the rest of the connection), while :ref:`disable_plaintext_auth=yes <setting-disable_plaintext_auth>` only guarantees that the password is protected against eavesdropping (SASL mechanism is encrypted, but no SSL/TLS is necessarily used). Nowadays you most likely should be using SSL/TLS anyway for the entire connection, since the cost of SSL/TLS is cheap enough. Using both SSL/TLS and non-plaintext authentication would be the ideal situation since it protects the plaintext password even against man-in-the-middle attacks.
 
   .. Note:: The plaintext authentication is always allowed (and SSL not required) for connections from localhost, as they're assumed to be secure anyway. This applies to all connections where the local and the remote IP addresses are equal. Also IP ranges specified by :ref:`setting-login_trusted_networks` setting are assumed to be secure.
 
