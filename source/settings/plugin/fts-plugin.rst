@@ -297,6 +297,58 @@ See also :ref:`fts_tokenization`
 
 .. _`Normalizer Format`: http://userguide.icu-project.org/transforms/general#TOC-Transliterator-Identifiers
 
+.. _plugin-fts-setting-fts_header_excludes:
+
+``fts_header_excludes``
+-----------------------
+
+.. versionadded:: 2.3.18
+
+
+- Default: <empty>
+- Values:  :ref:`string`
+
+The list of headers to, respectively, include or exclude.
+
+- The default is the pre-existing behavior, i.e. index all headers.
+- ``includes`` take precedence over ``excludes``: if a header matches both,
+  it is indexed.
+- The terms are case insensitive.
+- An asterisk ``*`` at the end of a header name matches anything starting with
+  that header name.
+- The asterisk can only be used at the end of the header name.
+  Prefix and infix usage of asterisk are not supported.
+
+Example::
+
+  plugin {
+    fts_header_excludes = Received DKIM-* X-* Comments
+    fts_header_includes = X-Spam-Status Comments
+  }
+
+- ``Received`` headers, all ``DKIM-`` headers and all ``X-`` experimental headers
+  are excluded, with the following exceptions:
+- ``Comments`` and ``X-Spam-Status`` are indexed anyway, as they match **both**
+  ``excludes`` and ``includes`` lists.
+- All other headers are indexed.
+
+Example::
+
+  plugin {
+    fts_header_excludes = *
+    fts_header_includes = From To Cc Bcc Subject Message-ID In-* X-CustomApp-*
+  }
+
+- No headers are indexed, except those specified in the ``includes``.
+
+.. _plugin-fts-setting-fts_header_includes:
+
+``fts_header_includes``
+-----------------------
+
+.. versionadded:: 2.3.18
+
+See :ref:`plugin-fts-setting-fts_header_excludes`.
 
 .. _plugin-fts-setting-fts_index_timeout:
 
