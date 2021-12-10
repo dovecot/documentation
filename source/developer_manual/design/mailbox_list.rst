@@ -25,38 +25,66 @@ Mailbox list code also internally creates and updates mailbox changelog
 deletions, renames and subscription changes. This is primarily useful
 for dsync utility.
 
-Mailbox list is configured by
-:ref:`mail_location <mail_location_settings>` setting, which fills ``struct mailbox_list_settings``:
+.. _design_mailbox_names:
 
--  root_dir: The root mail directory (e.g. with
+Mailbox names
+-------------
+
+The mailbox names are configured via :ref:`lib-storage_mail_namespace`.
+
+The same mailbox name can be visible in three different forms:
+
+-  Virtual name (commonly called "vname") uses the namespace's configured
+   separator and namespace prefix. For example ``INBOX/foo/bar``.
+
+-  Storage name (commonly called just "name") uses the native separator and
+   doesn't have a namespace prefix. For example ``foo.bar``.
+
+-  Physical directory name on disk can be different again. For example
+   with Maildir++ it could be ``.../Maildir/.foo.bar`` (note the leading
+   dot before ``foo``). With ``LAYOUT=index`` the directory name is the mailbox
+   GUID (e.g. ``.../mailboxes/d3b07384d113edec49eaa6238ad5ff00``).
+
+The mailbox virtual/storage names can be converted with functions:
+
+-  ``mailbox_list_get_storage_name()`` - Virtual name -> storage name
+-  ``mailbox_list_get_vname()`` - Storage name -> virtual name
+
+Initialization
+--------------
+
+Mailbox list is configured by
+:ref:`mail_location <mail_location_settings>` setting, which fills
+``struct mailbox_list_settings``:
+
+-  ``layout``: The mailbox list layout (``fs``, ``maildir++`` or ``index``).
+
+-  ``root_dir``: The root mail directory (e.g. with
    ``mail_location=maildir:~/Maildir`` it would be the ``~/Maildir``).
 
--  index_dir: Directory under which index files are written to. Empty
-   string means in-memory indexes. Defaults to root_dir.
+-  ``index_dir``: Directory under which index files are written to. Empty
+   string means in-memory indexes. Defaults to ``root_dir``.
 
--  control_dir: Directory under which control files are written to.
+-  ``index_pvt_dir``: Directory for private index files (private \Seen flags
+   for shared folders).
+
+-  ``index_cache_dir``: Directory for dovecot.index.cache files. This could
+   allow storing them in a different filesystem than other index files.
+
+-  ``control_dir``: Directory under which control files are written to.
    Control files are files that contain some important metadata
    information about mailbox so (unlike index files) they should never
-   be deleted. For example subscriptions file is a control file.
-   Defaults to root_dir.
+   be deleted. For example the mailbox subscriptions file is a control file.
+   Defaults to ``root_dir``.
 
--  alt_dir: This is currently :ref:`dbox <dbox_mbox_format>`-specific setting.
+-  ``alt_dir``: This is :ref:`dbox <dbox_mbox_format>`-specific setting.
 
--  inbox_path: Path to INBOX mailbox. This exists mainly because with
+-  ``volatile_dir``: Directory under which temporary files are written to.
+   This directory is allowed to be deleted between Dovecot restarts.
+
+-  ``inbox_path``: Path to INBOX mailbox. This exists mainly because with
    mbox format INBOX is often in a different location than other
    mailboxes.
-
--  subscription_fname: Filename used by subscriptions file.
-
--  dir_guid_fname: Filename used to store directories' (not mailboxes')
-   global UIDs. Directory GUIDs are mainly useful for dsync.
-
--  maildir_name: Directory name under which the actual mailboxes are
-   stored in, such as dbox-Mails/ with dbox. See the .h file for more
-   detailed description.
-
--  mailbox_dir_name: If non-empty, store all mailboxes under
-   root_dir/mailbox_dir_name/.
 
 Listing mailboxes
 -----------------
@@ -76,17 +104,21 @@ First the list operation is initialized with one of the init functions:
       ``alias_for`` set. You usually want to set this flag to avoid
       processing the same mailbox multiple times.
 
-The patterns are IMAP-style patterns with '%' and '*' wildcards as
+The patterns are IMAP-style patterns with '%' and '\*' wildcards as
 described by RFC 3501: '%' matches only up to next hierarchy separator,
-while '*' matches the rest of the string.
+while '\*' matches the rest of the string.
 
 These flags control what mailboxes are returned:
 
--  ``MAILBOX_LIST_ITER_NO_AUTO_INBOX`` doesn't list INBOX unless it
-   physically exists. Normally INBOX is listed, because INBOX doesn't
-   need to be (and cannot be) explicitly created. It can always be
-   opened and messages can be saved to it, it's just automatically
-   created when it doesn't exist.
+-  ``MAILBOX_LIST_ITER_NO_AUTO_BOXES`` doesn't list INBOX or other autocreated
+   mailboxes unless they physically exists (i.e. they have been opened once).
+
+-  ``MAILBOX_LIST_ITER_SKIP_ALIASES`` skips namespaces that are aliases to
+   other namespaces (``alias_for`` set).
+
+-  ``MAILBOX_LIST_ITER_STAR_WITHIN_NS`` changes ``*`` in patterns to not cross
+   namespace boundaries. For example ``*o`` returns all mailboxes that end with
+   the ``o`` letter in the root namespace, but not in any other namespaces.
 
 -  ``MAILBOX_LIST_ITER_SELECT_SUBSCRIBED`` lists only subscribed
    mailboxes.
@@ -96,6 +128,9 @@ These flags control what mailboxes are returned:
    ``MAILBOX_CHILD_SUBSCRIBED`` flags for mailboxes whose children are
    subscribed. It also lists mailboxes that aren't themselves
    subscribed, but have children that do.
+
+- ``MAILBOX_LIST_ITER_SELECT_SPECIALUSE`` lists only mailboxes marked with
+  \Special-use flags.
 
 These flags control what is returned for matching mailboxes:
 
@@ -109,22 +144,21 @@ These flags control what is returned for matching mailboxes:
 -  ``MAILBOX_LIST_ITER_RETURN_CHILDREN`` sets "has child mailboxes" or
    "doesn't have child mailboxes" flag.
 
+-  ``MAILBOX_LIST_ITER_RETURN_SPECIALUSE`` returns mailbox's \Special-use flags.
+
 Other flags:
 
 -  ``MAILBOX_LIST_ITER_RAW_LIST`` should usually be avoided. It ignores
    ACLs and just returns everything.
 
--  ``MAILBOX_LIST_ITER_VIRTUAL_NAMES`` enables listing to use virtual
-   names instead of storage names in patterns and returned mailbox
-   names.
-
 Once listing is initialized, ``mailbox_list_iter_next()`` can be called
 until it returns NULL. The returned mailbox_info struct contains:
 
--  ``name``: Mailbox's name, either virtual or storage name depending on
-   ``_VIRTUAL_NAMES`` flag.
+-  ``vname``: Mailbox's virtual name.
 
--  ``ns``: Mailbox's namespace. This is useful only when mailboxes are
+-  ``special_use``: Mailbox's \Special-use flags.
+
+-  ``ns``: Mailbox's namespace. This is mainly useful when mailboxes are
    listed using ``mailbox_list_iter_init_namespaces()``.
 
 -  ``flags``: Mailbox flags:
@@ -138,12 +172,12 @@ until it returns NULL. The returned mailbox_info struct contains:
       because it has child mailboxes that do exist but don't match the
       pattern.
 
-      -  Example: "foo/bar" exists, but "foo" doesn't. "%", "foo" or
-         "*o" pattern would list "foo", because it matches the pattern
-         but its child doesn't. Then again "*", "*bar" or "%/%" wouldn't
-         list "foo", because "foo/bar" matches the pattern (and is also
-         listed). Something like "*asd*" wouldn't match either "foo" or
-         "foo/bar" so neither is returned.
+      -  Example: ``foo/bar`` exists, but ``foo`` doesn't. ``%``, ``foo`` or
+         ``*o`` pattern would list ``foo``, because it matches the pattern
+         but its child doesn't. Then again ``*``, ``*bar`` or ``%/%`` wouldn't
+         list ``foo``, because ``foo/bar`` matches the pattern (and is also
+         listed). Something like ``*asd*`` wouldn't match either ``foo`` or
+         ``foo/bar`` so neither is returned.
 
    -  ``MAILBOX_CHILDREN`` and ``MAILBOX_NOCHILDREN``: Mailbox has or
       doesn't have children. If neither of these flags are set, it's not
@@ -166,6 +200,8 @@ until it returns NULL. The returned mailbox_info struct contains:
 
    -  ``MAILBOX_CHILD_SUBSCRIBED``: Mailbox has a child that is
       subscribed (and ``_SELECT_RECURSIVEMATCH`` flag was set).
+
+   -  ``MAILBOX_SPECIALUSE_*``: These are for internal use only. Don't use them.
 
 Finally the listing is deinitalized with ``mailbox_list_iter_deinit()``.
 If it returns -1, it means that some mailboxes perhaps weren't listed
@@ -190,9 +226,9 @@ permissions for newly created files and directories.
 
 The returned permissions are:
 
--  mode: Creation mode, like 0600.
+-  ``mode``: Creation mode, like 0600.
 
--  gid: Group that should be set, unless it's ``(gid_t)-1``. There are 3
+-  ``gid``: Group that should be set, unless it's ``(gid_t)-1``. There are 3
    reasons why it could be that:
 
    -  directory has g+s bit set, so the wanted group is set
@@ -204,7 +240,7 @@ The returned permissions are:
    -  mode's group permissions are the same as world permissions, so
       group doesn't matter.
 
--  gid_origin: This string points to the directory where the group (and
+-  ``gid_origin``: This string points to the directory where the group (and
    permissions in general) was based on, or "defaults" for internal
    defaults.
 

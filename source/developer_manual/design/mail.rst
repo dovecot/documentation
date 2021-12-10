@@ -14,10 +14,12 @@ later ``mail_get_*()`` lookups so that it doesn't need to parse the
 message multiple times. These fields are also added to cache file, so
 you shouldn't list fields unless you're fairly certain you need them.
 
-If you need to jump around in the mailbox based on already known
-sequences or UIDs, you can do this with ``mail_set_seq()`` and
-``mail_set_uid()``. This way you don't have to go through all the
-trouble of setting up a mailbox search.
+Usually the mails are created and returned by ``mailbox_search_*()``
+functions. This is preferrable even if you're doing a simple search, such
+as "all mails". Using the search API allows the internal implementation to
+prefetch mails, which can reduce latency. Alternatively you can use
+``mail_set_seq()`` and ``mail_set_uid()`` to jump between mails, but this
+prevents prefetching.
 
 Getting data
 ------------
@@ -45,7 +47,8 @@ doing a ``mail_get_*()`` operation for a field that isn't in a cache,
 the field is generated and added to cache. If you don't want this, but
 instead have figured out some better optimized way to do non-cached
 lookups, you can change this field so that ``mail_get_*()`` lookups fail
-instead. This is primarily used by searching code internally.
+instead with ``MAIL_ERROR_LOOKUP_ABORTED``. This is primarily used by
+searching code internally.
 
 -  ``MAIL_LOOKUP_ABORT_NEVER``: The default - do whatever it takes to
    return the value.
@@ -63,14 +66,14 @@ Only functions returning int can fail, others don't.
 -  Keywords can be looked up either by getting an array of keyword
    strings or keyword indexes. The index lookups are slightly faster.
    Keyword indexes can be converted to strings by using the
-   ``status.keywords`` array returned by ``mailbox_get_status()``.
+   ``mailbox_status.keywords`` array returned by ``mailbox_get_status()``.
 
--  ``mail_get_first_header()`` return 0 if header wasn't found, 1 if it
+-  ``mail_get_first_header()`` returns 0 if header wasn't found, 1 if it
    was.
 
 -  ``mail_get_special()`` can return various special fields. If a
    special isn't implemented by some backend, the call returns success
-   and sets the value to "".
+   and sets the value to empty string.
 
 -  ``mail_get_stream()`` returns an input stream that can be used to
    access the mail. If this function is called multiple times, each call
@@ -93,8 +96,8 @@ been caused by various different things, but in any case all you can
 really do then is to just call ``mail_set_cache_corrupted()`` and try
 again.
 
-Setting data
-------------
+Changing metadata
+-----------------
 
 Some of the messages' metadata can be updated:
 
@@ -111,15 +114,13 @@ Some of the messages' metadata can be updated:
 Other functions are mainly intended for mailbox replication or restoring
 an existing mailbox (e.g. dsync):
 
--  ``mail_update_modseq()`` can be used to increase message's modseq
-
--  ``mail_update_uid()`` can be used to give a new (higher) UID for the
-   message. If such UID can't be given, this call is just ignored.
+-  ``mail_update_modseq()`` and ``mail_update_pvt_modseq()`` can be used to
+   increase the message's shared/private modseq.
 
 -  ``mail_update_pop3_uidl()`` can be used to give a specific POP3 UIDL
    for the message. This is used internally when ``pop3_save_uidl=yes``.
 
 Other metadata can't be changed. IMAP protocol requires that messages
-are immutable, so it's not possible to change message's received date,
+are immutable, so it's not possible to change a message's received date,
 headers or body. If you wish to modify any of them, you need to create a
 new message and expunge the old one.

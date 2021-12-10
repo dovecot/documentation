@@ -12,7 +12,7 @@ flags:
    when later :ref:`syncing <lib-storage_mailbox_sync>`
    the mailbox in this session, ``mailbox_sync_next()`` won't return
    sync records for the changes done by this transaction. This is
-   primarily meant for flag and keyword changes, you can't hide
+   primarily meant for flag and keyword changes; you can't hide
    expunges. For example IMAP's ``STORE FLAGS.SILENT`` command is
    implemented by setting this flag for the transaction.
 
@@ -21,7 +21,7 @@ flags:
    can be thought of as "change requests" that syncing later finishes,
    while external changes are done immediately and syncing ignores them.
    Normally you would use this flag when you want to save or copy
-   messages, nothing else.
+   messages.
 
 -  ``MAILBOX_TRANSACTION_FLAG_ASSIGN_UIDS``: Require assigning UIDs to
    saved/copied messages immediately. Normally this is done only when
@@ -33,6 +33,17 @@ flags:
    visible. You shouldn't usually need this, because usually you should
    have recently done a mailbox sync.
 
+-  ``MAILBOX_TRANSACTION_FLAG_NO_CACHE_DEC``: Don't update caching decisions
+   no matter what we do in this transaction (useful for e.g. precaching).
+
+-  ``MAILBOX_TRANSACTION_FLAG_SYNC``: Sync transaction describes changes to
+   mailbox that already happened to another mailbox with whom we're syncing
+   with (dsync).
+
+-  ``MAILBOX_TRANSACTION_FLAG_NO_NOTIFY``: Don't trigger any notifications
+   for this transaction. This especially means the notify plugin. This would
+   normally be used only with ``MAILBOX_TRANSACTION_FLAG_SYNC``.
+
 Changes for a transaction are kept in memory until the transaction is
 committed. If you want to cancel the changes, you can call
 ``mailbox_transaction_rollback()``. Transaction can be commited with
@@ -41,19 +52,21 @@ the results of the transaction, use
 ``mailbox_transaction_commit_get_changes()`` instead. It returns a
 change structure:
 
--  uid_validity: UIDVALIDITY used by returned UIDs
+-  ``uid_validity``: UIDVALIDITY used by returned UIDs
 
--  saved_uids: UIDs assigned to saved/copied mails. Typically they're in
+-  ``saved_uids``: UIDs assigned to saved/copied mails. Typically they're in
    an ascending order, unless you explicitly requested some specific
    UIDs for mails while saving them (e.g. dsync does this).
 
--  ignored_uid_changes: Number of UIDs that couldn't be changed by
-   ``mail_update_uid()`` calls, because the UIDs were less than
-   next_uid's value.
-
--  ignored_modseq_changes: Number of modseqs that couldn't be changed by
+-  ``ignored_modseq_changes``: Number of modseqs that couldn't be changed by
    ``mail_update_modseq()`` calls, because they would have lowered the
    modseq.
+
+-  ``changes_mask``: Bitmask of types of changes that occurred within this
+   transaction.
+
+-  ``no_read_perm``: User doesn't have read ACL for the mailbox, so don't show
+   the ``uid_validity`` / ``saved_uids``.
 
 Once you're done with reading the change structure, be sure to free the
 memory used by it with ``pool_unref(&changes->pool)``.

@@ -6,10 +6,10 @@ Mail Storage
 
 ``src/lib-storage/mail-storage.h`` and ``mail-storage-private.h``
 describes mail storage. Mail storage is mainly about being a common
-container for its mailboxes. For example with :ref:`dbox_mbox_format`,
+container for its mailboxes. For example with :ref:`mdbox format <dbox_mbox_format>`,
 each storage has one directory where all the message bodies are written
 to, while the per-mailbox directories only contain index files. With
-other mailbox formats mail storage doesn't do much else than allow
+other mailbox formats the mail storage doesn't do much else than allow
 allocating :ref:`mailboxes <lib-storage_mailbox>`.
 
 The only public functions for mail storage are:
@@ -52,3 +52,5 @@ Methods that mail storage backends need to implement are:
    format.
 
 -  ``mailbox_alloc()``: Allocate memory for :ref:`mailbox <lib-storage_mailbox>`.
+
+-  ``purge()``: If storage supports purging.

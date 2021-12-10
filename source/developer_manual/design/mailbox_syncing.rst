@@ -21,7 +21,7 @@ Dovecot attempts to do this with IMAP protocol when pipelining commands.
 The other important job of syncing is to refresh mailbox's state:
 
 -  Finding out about external modifications to mailbox (e.g. a new mail
-   delivered to Maildir/new/).
+   delivered to ``Maildir/new/``).
 
 -  Updating in-memory view of what messages exist, what their flags are,
    etc.
@@ -30,8 +30,8 @@ When a mailbox is opened, its state starts with what index files contain
 at the time. Since the backend mailbox may have already changed, and
 syncing an up-to-date mailbox is usually really cheap, there isn't much
 point in not syncing mailbox immediately after opening. The mailbox
-state stays the same until you synchronize the mailbox again, before
-that no new messages show up and no messages get expunged.
+state stays the same until you synchronize the mailbox again. Without
+syncing no new messages show up and no messages get expunged.
 
 Typically you would sync the mailbox
 
@@ -100,9 +100,9 @@ Reading changes
 
 While ``mailbox_sync_next()`` returns TRUE, it fills out sync record:
 
--  seq1, seq2: Message sequence numbers that were affected
+-  ``seq1``, ``seq2``: Message sequence numbers that were affected
 
--  type: expunge, flag change or modseq change.
+-  ``type``: expunge, flag change or modseq change.
 
 Expunge records don't immediately change the view's sequence numbers.
 After seeing an expunge record you can still fetch the expunged
@@ -110,8 +110,8 @@ messages' flags and possibly other information. Only after syncing is
 deinitialized, the sequences change.
 
 Message flag change records don't actually show what the changes were.
-You can find the new flags just by fetching them (``mail_get_flags()``,
-etc.), they're available immediately. You'll need to create a
+You can find the new flags by fetching them (``mail_get_flags()``,
+etc.). They're available immediately. You'll need to create a
 `transaction <lib-storage_mailbox_transactions>` and a
 `mail <lib-storage_mail>` for that. For example:
 
@@ -139,5 +139,5 @@ actually delayed, ``status_r->sync_delayed_expunges`` is set to TRUE.
 Implementing sync for a storage backend
 ---------------------------------------
 
-FIXME: talk about mail_index_sync_*() and how to change stuff and how to
+FIXME: talk about ``mail_index_sync_*()`` and how to change stuff and how to
 update internal state.
