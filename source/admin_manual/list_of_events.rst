@@ -2837,13 +2837,24 @@ proxy_session_finished
 ----------------------
 Emitted when proxying has ended. Either successfully or with error.
 
-+-----------------+------------------------------------------------------+
-| Field           | Description                                          |
-+=================+======================================================+
-| source_port     | Source port where proxy connection originated from   |
-+-----------------+------------------------------------------------------+
-| error           | If login to destination failed, contains the error.  |
-+-----------------+------------------------------------------------------+
++-------------------+------------------------------------------------------+
+| Field             | Description                                          |
++===================+======================================================+
+| source_port       | Source port where proxy connection originated from.  |
++-------------------+------------------------------------------------------+
+| error             | If login to destination failed, contains the error.  |
++-------------------+------------------------------------------------------+
+| disconnect_side   | Which side disconnected: client, server, proxy       |
++-------------------+------------------------------------------------------+
+| disconnect_reason | Reason for disconnection (empty = clean disconnect). |
++-------------------+------------------------------------------------------+
+| idle_secs         | Number of seconds the connection was idling before   |
+|                   | getting disconnected.                                |
++-------------------+------------------------------------------------------+
+| bytes_in          | Amount of data read from client, in bytes.           |
++-------------------+------------------------------------------------------+
+| bytes_out         | Amount of data written to client, in bytes.          |
++-------------------+------------------------------------------------------+
 
 
 ***********
