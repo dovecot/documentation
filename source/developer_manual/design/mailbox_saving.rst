@@ -1,4 +1,4 @@
-.. _lib-storage_mailbox_saveing:
+.. _lib-storage_mailbox_saving:
 
 ==============
 Mailbox Saving
@@ -13,11 +13,6 @@ fields:
 -  ``mailbox_save_set_received_date()`` sets message's received date
    (IMAP INTERNALDATE). It also supports specifying timezone, but most
    backends don't support saving it.
-
--  ``mailbox_save_set_dest_mail()`` specifies a mail that can be used to
-   access the partially saved mail after save/copy is finished (but not
-   committed). You should be able to do pretty much anything with the
-   mail, but its UID is usually 0 at this point.
 
 -  ``mailbox_save_set_from_envelope()`` sets the envelope sender.
    Currently this is only used by mbox format to specify the address in
@@ -65,3 +60,7 @@ an existing mail with ``mailbox_copy()`` or provide message body with:
 
 -  ``mailbox_save_finish()`` finishes saving the mail, or
    ``mailbox_save_cancel()`` aborts it.
+
+``mailbox_save_get_dest_mail()`` gives access to the mail whose saving/copying
+was just finished (but not committed). You should be able to do pretty much
+anything with the mail, but its UID is usually 0 at this point.

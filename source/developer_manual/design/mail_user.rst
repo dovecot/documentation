@@ -25,8 +25,11 @@ directly. Some of the most useful things you can do with a user are:
    ``plugin {}`` section.
 
 Typically each new IMAP/POP3/etc. connection creates a single mail user.
-Currently multiple connections for same user don't even try to share the
-mail user, but this may change in future. If a user has shared mailboxes
-from other users (not public namespaces), a mail user is also created
-whenever necessary to list/access the user's mailboxes. Again there is
-no attempt to share the created mail user with other connections.
+If the same process handles multiple connections for the same user, they
+don't share the same mail_user (especially since each mail_user has a
+unique session ID).
+
+If a user has shared mailboxes from other users (not public namespaces),
+a mail user is also created whenever necessary to list/access the user's
+mailboxes. Again there is no attempt to share the created mail user with
+other connections.
