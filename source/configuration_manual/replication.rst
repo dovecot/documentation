@@ -40,7 +40,8 @@ Configuration
 -------------
 
 Since v2.3.1 you can disable replication for a user by providing
-``noreplicate`` :ref:`user database field <authentication-user_database_extra_fields>`. See :dovecot_plugin:ref:`noreplicate`.
+``noreplicate``
+:ref:`user database field <authentication-user_database_extra_fields>`.
 
 Another way to disable replication for some users is to return
 :dovecot_plugin:ref:`mail_replica` field from userdb for users you want to
