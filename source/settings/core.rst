@@ -1456,8 +1456,11 @@ Example Setting:
 - Default: ``no``
 - Values: :ref:`boolean`
 
-When proxying IMAP connections to other hosts, forward the IMAP ID command
-provided by the client?
+When proxying IMAP connections to other hosts, this variable must be enabled to
+forward the IMAP ID command provided by the client.
+
+This setting enables the ``%{client_id}`` variable for auth processes. See
+:ref:`Auth variables <variables-auth>`.
 
 Example Setting:
 
