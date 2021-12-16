@@ -54,10 +54,12 @@ If :ref:`var_expand_crypt_plugin` is loaded, these also work globally:
 |                               | .. versionadded:: v2.2.29   |
 +-------------------------------+-----------------------------+
 
-.. _variables-mail_service_user:
+.. _variables-user:
 
-Mail service user variables
----------------------------
+User variables
+--------------
+
+Variables that are work nearly everywhere where there is a username:
 
 +----------+----------------+---------------------------------------------------------------+
 | Variable | Long name      | Description                                                   |
@@ -71,20 +73,6 @@ Mail service user variables
 | %d       | domain         | domain part in user@domain, empty if user with no domain      |
 +----------+----------------+---------------------------------------------------------------+
 | %s       | service        | imap, pop3, smtp, lda (and doveadm, dsync, etc.)              |
-+----------+----------------+---------------------------------------------------------------+
-| %p       | pid            | PID of the current process                                    |
-+----------+----------------+---------------------------------------------------------------+
-| %l       | local_ip       | local IP address                                              |
-|          |                |                                                               |
-|          |                | .. versionchanged:: v2.3.14 variable long name changed        |
-+----------+----------------+---------------------------------------------------------------+
-| %r       | remote_ip      | remote IP address                                             |
-|          |                |                                                               |
-|          |                | .. versionchanged:: v2.3.14 variable long name changed        |
-+----------+----------------+---------------------------------------------------------------+
-| %i       | uid            | UNIX user identifier of the user                              |
-+----------+----------------+---------------------------------------------------------------+
-|          | gid            | UNIX group identifier of the user                             |
 +----------+----------------+---------------------------------------------------------------+
 |          | session        | session ID for this client connection (unique for 9 years)    |
 +----------+----------------+---------------------------------------------------------------+
@@ -102,6 +90,31 @@ Mail service user variables
 |          | auth_domain    | domain part in %{auth_user}                                   |
 |          |                |                                                               |
 |          |                | .. versionadded:: v2.2.11                                     |
++----------+----------------+---------------------------------------------------------------+
+
+.. _variables-mail_service_user:
+
+Mail service user variables
+---------------------------
+
++----------+----------------+---------------------------------------------------------------+
+| Variable | Long name      | Description                                                   |
++==========+================+===============================================================+
+| See also :ref:`variables-global` and :ref:`variables-user`                                |
++----------+----------------+---------------------------------------------------------------+
+| %p       | pid            | PID of the current process                                    |
++----------+----------------+---------------------------------------------------------------+
+| %l       | local_ip       | local IP address                                              |
+|          |                |                                                               |
+|          |                | .. versionchanged:: v2.3.14 variable long name changed        |
++----------+----------------+---------------------------------------------------------------+
+| %r       | remote_ip      | remote IP address                                             |
+|          |                |                                                               |
+|          |                | .. versionchanged:: v2.3.14 variable long name changed        |
++----------+----------------+---------------------------------------------------------------+
+| %i       | uid            | UNIX user identifier of the user                              |
++----------+----------------+---------------------------------------------------------------+
+|          | gid            | UNIX group identifier of the user                             |
 +----------+----------------+---------------------------------------------------------------+
 |          | userdb:<name>  | Return userdb extra field "name". %{userdb:name:default}      |
 |          |                | returns "default" if "name" doesn't exist (not returned if    |
@@ -126,7 +139,8 @@ Mail user variables
 +----------+-----------+--------------------------------------------------------------------+
 | Variable | Long name | Description                                                        |
 +==========+===========+====================================================================+
-| See also :ref:`variables-global` and :ref:`variables-mail_service_user`                   |
+| See also :ref:`variables-global`, :ref:`variables-user` and                               |
+| :ref:`variables-mail_service_user`                                                        |
 +----------+-----------+--------------------------------------------------------------------+
 | %h       | home      | home directory. Use of ~/ is better whenever possible.             |
 +----------+-----------+--------------------------------------------------------------------+
@@ -141,15 +155,7 @@ Login variables
 +----------+-----------------------+---------------------------------------------------------------+
 | Variable | Long name             | Description                                                   |
 +==========+=======================+===============================================================+
-| See also :ref:`variables-global`                                                                 |
-+----------+-----------------------+---------------------------------------------------------------+
-| %u       | user                  | full username (e.g. user@domain)                              |
-+----------+-----------------------+---------------------------------------------------------------+
-| %n       | username              | user part in user@domain, same as %u if there's no domain     |
-+----------+-----------------------+---------------------------------------------------------------+
-| %d       | domain                | domain part in user@domain, empty if user with no domain      |
-+----------+-----------------------+---------------------------------------------------------------+
-| %s       | service               | imap, pop3, smtp, lda (and doveadm, dsync, etc.)              |
+| See also :ref:`variables-global` and :ref:`variables-user`                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | local_name            | TLS SNI hostname, if given                                    |
 |          |                       |                                                               |
@@ -243,23 +249,6 @@ Login variables
 +----------+-----------------------+---------------------------------------------------------------+
 | %e       | mail_pid              | PID for process that handles the mail session post-login      |
 +----------+-----------------------+---------------------------------------------------------------+
-|          | session               | Session ID for this client connection (unique for 9 years)    |
-+----------+-----------------------+---------------------------------------------------------------+
-|          | auth_user             | SASL authentication ID (e.g. if master user login is done,    |
-|          |                       | this contains the master username). If username changes during|
-|          |                       | authentication, this value contains the original username.    |
-|          |                       | Otherwise the same as %{user}.                                |
-|          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.11                                     |
-+----------+-----------------------+---------------------------------------------------------------+
-|          | auth_username         | user part in %{auth_user}                                     |
-|          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.11                                     |
-+----------+-----------------------+---------------------------------------------------------------+
-|          | auth_domain           | domain part in %{auth_user}                                   |
-|          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.11                                     |
-+----------+-----------------------+---------------------------------------------------------------+
 |          | original_user         | Same as %{user}, except using the original username the client|
 |          |                       | sent before any changes by auth process                       |
 |          |                       |                                                               |
@@ -314,13 +303,7 @@ Authentication variables
 +----------+-----------------------+---------------------------------------------------------------+
 | Variable | Long name             | Description                                                   |
 +==========+=======================+===============================================================+
-| See also :ref:`variables-global`                                                                 |
-+----------+-----------------------+---------------------------------------------------------------+
-| %u       | user                  | full username (e.g. user@domain)                              |
-+----------+-----------------------+---------------------------------------------------------------+
-| %n       | username              | user part in user@domain, same as %u if there's no domain     |
-+----------+-----------------------+---------------------------------------------------------------+
-| %d       | domain                | domain part in user@domain, empty if user with no domain      |
+| See also :ref:`variables-global` and :ref:`variables-user`                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | domain_first          | For "username@domain_first@domain_last" style usernames       |
 |          |                       |                                                               |
@@ -329,8 +312,6 @@ Authentication variables
 |          | domain_last           | For "username@domain_first@domain_last" style usernames       |
 |          |                       |                                                               |
 |          |                       | .. versionadded:: v2.2.6                                      |
-+----------+-----------------------+---------------------------------------------------------------+
-| %s       | service               | imap, pop3, smtp, lda (and doveadm, dsync, etc.)              |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | local_name            | TLS SNI hostname, if given                                    |
 |          |                       |                                                               |
@@ -428,23 +409,6 @@ Authentication variables
 +----------+-----------------------+---------------------------------------------------------------+
 | %k       | cert                  | "valid" if client had sent a valid client certificate,        |
 |          |                       | otherwise empty.                                              |
-+----------+-----------------------+---------------------------------------------------------------+
-|          | session               | session ID for this client connection (unique for 9 years)    |
-+----------+-----------------------+---------------------------------------------------------------+
-|          | auth_user             | SASL authentication ID (e.g. if master user login is done,    |
-|          |                       | this contains the master username). If username changes during|
-|          |                       | authentication, this value contains the original username.    |
-|          |                       | Otherwise the same as %{user}.                                |
-|          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.11                                     |
-+----------+-----------------------+---------------------------------------------------------------+
-|          | auth_username         | user part in %{auth_user}                                     |
-|          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.11                                     |
-+----------+-----------------------+---------------------------------------------------------------+
-|          | auth_domain           | domain part in %{auth_user}                                   |
-|          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.11                                     |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | login_user            | For master user logins: Logged in user@domain                 |
 +----------+-----------------------+---------------------------------------------------------------+
