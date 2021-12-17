@@ -26,21 +26,25 @@ Getting data
 
 Some of the mail fields can be accessed directly:
 
--  ``box``: Mail's mailbox, same as the transaction's.
+``box``
+   Mail's mailbox, same as the transaction's.
 
--  ``transaction``: Mail's transaction, the same that was given to
-   ``mail_alloc()``.
+``transaction``
+   Mail's transaction, the same that was given to ``mail_alloc()``.
 
--  ``seq``: Currently selected message's sequence number.
+``seq``
+   Currently selected message's sequence number.
 
--  ``uid``: Currently selected message's UID.
+``uid``
+   Currently selected message's UID.
 
--  ``expunged``: We already detected that the message is expunged and
+``expunged``
+   We already detected that the message is expunged and
    can't be accessed. This may also be set (and looked up) later when
    some ``mail_get_*()`` function fails.
 
--  ``has_nuls`` and ``has_no_nuls``: Message body is known to (not) have
-   NUL characters.
+``has_nuls``, ``has_no_nuls``
+   Message body is known to (not) have NUL characters.
 
 The final field is ``lookup_abort``, which is write-only. Normally when
 doing a ``mail_get_*()`` operation for a field that isn't in a cache,
@@ -50,13 +54,14 @@ lookups, you can change this field so that ``mail_get_*()`` lookups fail
 instead with ``MAIL_ERROR_LOOKUP_ABORTED``. This is primarily used by
 searching code internally.
 
--  ``MAIL_LOOKUP_ABORT_NEVER``: The default - do whatever it takes to
-   return the value.
+``MAIL_LOOKUP_ABORT_NEVER``
+   The default - do whatever it takes to return the value.
 
--  ``MAIL_LOOKUP_ABORT_READ_MAIL``: If returning the value would require
-   reading message headers/body, abort.
+``MAIL_LOOKUP_ABORT_READ_MAIL``
+   If returning the value would require reading message headers/body, abort.
 
--  ``MAIL_LOOKUP_ABORT_NOT_IN_CACHE``: If the value isn't already in
+``MAIL_LOOKUP_ABORT_NOT_IN_CACHE``:
+   If the value isn't already in
    cache, abort. For example if looking up message's physical size would
    require ``stat()``\ ing the file this wouldn't be done.
 
