@@ -28,6 +28,9 @@ ones are:
 -  ``mailbox_get_status()`` to get a summary of mailbox, such as number
    of messages in it.
 
+-  ``mailbox_get_metadata()`` to various kinds of metadata of a mailbox,
+   such as the sum of the message sizes inside the mailbox.
+
 -  :ref:`Syncing <lib-storage_mailbox_sync>`:
    ``mailbox_sync_*()`` to synchronize changes from the backend to
    memory.
@@ -38,9 +41,9 @@ ones are:
 
 -  :ref:`Searching <lib-storage_mailbox_searching>`:
    ``mailbox_search_*()`` is used for searching messages. Even simple
-   operations like "get all messages" go through this API, it'll then
-   simply do "search all".
+   operations like "get all messages" go through this API by creating a
+   "search all" query.
 
--  :ref:`Saving <lib-storage_mailbox_saveing>`:
+-  :ref:`Saving <lib-storage_mailbox_saving>`:
    ``mailbox_save_*()`` and ``mailbox_copy()`` is used for
    saving/copying new messages to mailbox.
