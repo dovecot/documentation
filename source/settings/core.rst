@@ -466,6 +466,12 @@ server for finding users. It is usually not necessary nor advisable to change th
 If ``yes``, authentication fails when a valid SSL client certificate is not
 provided.
 
+See :ref:`setting-ssl_ca`
+
+See :ref:`setting-ssl_verify_client_cert`
+
+See :ref:`dovecot_ssl_configuration`
+
 
 .. _setting-auth_ssl_username_from_cert:
 
@@ -3129,6 +3135,13 @@ This may happen when mail messages do not have their virtual sizes cached.
 When indexing is occuring in the background, explicit quota size queries
 return an internal error and mail deliveries are assumed to succeed.
 
+This setting must not be set to indexer-worker process, or the background
+calculation isn't finished. The configuration should be like::
+
+  protocol !indexer-worker {
+    mail_vsize_bg_after_count = 10
+  }
+
 See :ref:`quota_plugin`
 
 
@@ -4150,11 +4163,18 @@ to apply a security update, for example.
 - Default: ``yes``
 - Values: ``yes``, ``no``, or ``required``
 
-The level of SSL support.
+The level of SSL support. This setting affects both the implicit SSL ports
+and the STARTTLS commands.
 
- * ssl=no: SSL/TLS is completely disabled.
- * ssl=yes: SSL/TLS is enabled, but not necessarily required for clients.
- * ssl=required: SSL/TLS is always required for the clients, except for local/trusted connections.
+``ssl=no``
+   SSL/TLS is completely disabled.
+``ssl=yes``
+   SSL/TLS is enabled, but not necessarily required for clients.
+``required``
+   SSL/TLS is required for all imap, pop3, managesieve and
+   submission protocol client connections. This differs from
+   :ref:`setting-disable_plaintext_auth` in that even non-plaintext
+   authentication mechanisms aren't allowed without SSL/TLS.
 
 See :ref:`dovecot_ssl_configuration` for more detailed explanation of this setting and its interaction with the :ref:`setting-disable_plaintext_auth` setting.
 
@@ -4168,22 +4188,19 @@ See :ref:`dovecot_ssl_configuration` for more detailed explanation of this setti
 
 - Default: <empty>
 
-Specify alternative ssl certificate that will be used if the algorithm
+Alternative SSL certificate that will be used if the algorithm
 differs from the primary certificate.
 
 This is useful when migrating to e.g. an ECDSA certificate.
 
-Example:
-
-.. code-block:: none
+Example::
 
    ssl_alt_cert = </path/to/alternative/cert.pem
+   ssl_alt_key = </path/to/alternative/key.pem
 
-See :ref:`setting-ssl`
+See :ref:`setting-ssl_alt_key`
 
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_alt_key:
@@ -4195,22 +4212,16 @@ See :ref:`dovecot_ssl_configuration`
 
 - Default: <empty>
 
-Specify alternative ssl key that will be used if the algorithm differs from
-the primary key.
+Private key for :ref:`setting-ssl_alt_cert`.
 
-This is useful when migrating to e.g. an ECDSA key.
+Example::
 
-Example:
-
-.. code-block:: none
-
+   ssl_alt_cert = </path/to/alternative/cert.pem
    ssl_alt_key = </path/to/alternative/key.pem
 
-See :ref:`setting-ssl`
+See :ref:`setting-ssl_alt_cert`
 
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_ca:
@@ -4220,19 +4231,27 @@ See :ref:`dovecot_ssl_configuration`
 
 - Default: <empty>
 
-.. todo:: Add description
+List of SSL CA certificates that are used to validate whether SSL certificates
+presented by incoming imap/pop3/etc. client connections are valid.
 
-Example:
+These CAs are also used by some processes for validating outgoing SSL
+connections, i.e. performing the same function as :ref:`setting-ssl_client_ca_file`.
+This is mainly important for imap-login, pop3-login, etc. processes which
+are chrooted and can't access the CA files outside the chroot.
 
-.. code-block:: none
+Note that mail processes (imap, pop3, etc.) don't read this setting to save
+memory, because the CAs can be large and there can be many mail processes.
+
+Example::
 
    ssl_ca = </etc/dovecot/ca.crt
+   ssl_verify_client_cert = yes
 
-See :ref:`setting-ssl`
+See :ref:`setting-ssl_verify_client_cert`
+
+See :ref:`setting-ssl_client_require_valid_cert`
 
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_cert:
@@ -4242,16 +4261,18 @@ See :ref:`dovecot_ssl_configuration`
 
 - Default: ``</etc/ssl/certs/dovecot.pem``
 
-The PEM-encoded X.509 SSL/TLS certificate, with the value of ``ssl_key``
-pointing to the encoded private key.
+The PEM-encoded X.509 SSL/TLS certificate presented for incoming
+imap/pop3/etc. client connections.
+The :ref:`setting-ssl_key` is also needed for the private certificate.
 
-See :ref:`setting-ssl`
+Example::
+
+   ssl_cert = </etc/ssl/private/dovecot.crt
+   ssl_key = </etc/ssl/private/dovecot.key
 
 See :ref:`setting-ssl_key`
 
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_cert_username_field:
@@ -4261,21 +4282,12 @@ See :ref:`dovecot_ssl_configuration`
 
 - Default: ``commonName``
 
-Which field from the certificate to use for the username.
+Field name in the SSL client certificate that is used for
+:ref:`setting-auth_ssl_username_from_cert`.
 
 The most common choices are ``commonName`` and ``x500UniqueIdentifier``.
 
-.. Note::
-
-   ``auth_ssl_username_from_cert`` must be enabled.
-
-See :ref:`setting-auth_ssl_username_from_cert`
-
-See :ref:`setting-ssl`
-
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_cipher_list:
@@ -4288,15 +4300,12 @@ See :ref:`dovecot_ssl_configuration`
 The list of SSL ciphers to use, in order of preference.
 
 You do not need to edit this setting in order to disable specific SSL
-protocols; that is best done with ``ssl_min_protocol`` instead.
-
-See :ref:`setting-ssl`
+protocols; that is best done with :ref:`setting-ssl_min_protocol` instead.
 
 See :ref:`setting-ssl_min_protocol`
 
 See :ref:`dovecot_ssl_configuration`
 
-.. todo:: Indicate SSL setting
 
 .. _setting-ssl_cipher_suites:
 
@@ -4311,6 +4320,7 @@ The list of SSL cipher suites to use, in order of preference.
 
 See https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites
 
+
 .. _setting-ssl_client_ca_dir:
 
 ``ssl_client_ca_dir``
@@ -4318,16 +4328,15 @@ See https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites
 
 - Default: <empty>
 
-The directory and/or file where trusted SSL CA certificates can be found.
+The directory where trusted SSL CA certificates can be found. For example
+``/etc/ssl/certs``. These certificates are used only for outgoing SSL
+connections (e.g. with the imapc backend).
 
-These certs are used only when Dovecot needs to act as an SSL client (e.g.
-with the imapc back end).
+For extra security you might want to point to a directory containing
+certificates only for the CAs that are actually needed for the server
+operation instead of all the root CAs.
 
-See :ref:`setting-ssl`
-
-See :ref:`ssl`
-
-.. todo:: Indicate SSL setting
+See :ref:`dovecot_ssl_configuration`
 
 
 .. _setting-ssl_client_ca_file:
@@ -4337,18 +4346,18 @@ See :ref:`ssl`
 
 - Default: <empty>
 
-Specifies CAs to verify outgoing connections from dovecot. Note that this
+File containing the trusted SSL CA certificates. For example
+``/etc/ssl/certs/ca-bundle.crt``. These certificates are used only for outgoing SSL
+connections (e.g. with the imapc backend).
+
+Note that this
 setting isn't recommended to be used with large CA bundles, because all the
 certificates are read into memory. This leads to excessive memory usage,
 because it gets multiplied by the number of imap processes. It's better to
-either use ``ssl_client_ca_dir`` setting or use a CA bundle that only
-contains the CAs that are actually necessary.
-
-See :ref:`setting-ssl`
+either use :ref:`setting-ssl_client_ca_dir` setting or use a CA bundle that
+only contains the CAs that are actually necessary for the server operation.
 
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_client_cert:
@@ -4358,17 +4367,18 @@ See :ref:`dovecot_ssl_configuration`
 
 - Default: <empty>
 
-Client certificate used in outgoing SSL connections.
+Public SSL certificate used for outgoing SSL connections. This is generally
+needed only when the server authenticates the client using the certificate.
+The :ref:`setting-ssl_client_key` is also needed for the private certificate.
 
-Example Setting:
+Example::
 
    ssl_client_cert = </etc/dovecot/dovecot-client.crt
+   ssl_client_key = </etc/dovecot/dovecot-client.key
 
-See :ref:`setting-ssl`
+See :ref:`setting-ssl_client_key`
 
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_client_key:
@@ -4378,17 +4388,16 @@ See :ref:`dovecot_ssl_configuration`
 
 - Default: <empty>
 
-Client certificate private key used in outgoing SSL connections.
+Private key for :ref:`setting-ssl_client_cert`.
 
-Example Setting:
+Example settings:
 
+   ssl_client_cert = </etc/dovecot/dovecot-client.crt
    ssl_client_key = </etc/dovecot/dovecot-client.key
 
-See :ref:`setting-ssl`
+See :ref:`setting-ssl_client_cert`
 
-See :ref:`ssl`
-
-.. todo:: Indicate SSL setting
+See :ref:`dovecot_ssl_configuration`
 
 
 .. _setting-ssl_crypto_device:
@@ -4401,11 +4410,7 @@ See :ref:`ssl`
 
 Which SSL crypto device to use.
 
-See :ref:`setting-ssl`
-
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_curve_list:
@@ -4425,11 +4430,7 @@ Example:
 
    ssl_curve_list = P-521:P-384:P-256
 
-See :ref:`setting-ssl`
-
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_dh:
@@ -4442,23 +4443,17 @@ See :ref:`dovecot_ssl_configuration`
 - Default: <empty>
 
 As of Dovecot v2.3, the path to the Diffie-Hellman parameters file must be
-provided.
+provided. This setting isn't needed if using only ECDSA certificates.
 
 You can generate a new parameters file by, for example, running
 ``openssl gendh 4096`` on a machine with sufficient entropy (this may take
 some time).
 
-Example Setting:
-
-.. code-block:: none
+Example::
 
    ssl_dh=</path/to/dh.pem
 
-See :ref:`setting-ssl`
-
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_client_require_valid_cert:
@@ -4471,11 +4466,7 @@ See :ref:`dovecot_ssl_configuration`
 
 Require a valid cerficate when connecting to external SSL services?
 
-See :ref:`setting-ssl`
-
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_key:
@@ -4485,22 +4476,18 @@ See :ref:`dovecot_ssl_configuration`
 
 - Default: <empty>
 
-The PEM-encoded X.509 SSL/TLS key, with the value of ``ssl_key``
-pointing to the encoded private certificate.
+The PEM-encoded X.509 SSL/TLS private key for :ref:`setting-ssl_cert`.
 
-Example Setting:
+Example::
 
-.. code-block:: none
-
-   ssl_key = </etc/ssl/private/dovecot.pem
-
-See :ref:`setting-ssl`
+   ssl_cert = </etc/ssl/private/dovecot.crt
+   ssl_key = </etc/ssl/private/dovecot.key
 
 See :ref:`setting-ssl_cert`
 
-See :ref:`dovecot_ssl_configuration`
+See :ref:`setting-ssl_key_password`
 
-.. todo:: Indicate SSL setting
+See :ref:`dovecot_ssl_configuration`
 
 
 .. _setting-ssl_key_password:
@@ -4510,7 +4497,7 @@ See :ref:`dovecot_ssl_configuration`
 
 - Default: <empty>
 
-The password to use if the SSL key file is password-protected.
+The password to use if the :ref:`setting-ssl_key` is password-protected.
 
 Since this file is often world-readable, you may wish to specify the path to a
 file containing the password, rather than the password itself, by using the
@@ -4519,13 +4506,9 @@ file with mode 0600.
 
 Alternatively, you can supply the password via the -p parameter at startup.
 
-See :ref:`setting-ssl`
-
 See :ref:`setting-ssl_key`
 
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_min_protocol:
@@ -4554,14 +4537,9 @@ Supported values are:
 
    .. versionadded:: v2.3.15
 
-
-See :ref:`setting-ssl`
-
 See :ref:`setting-ssl_cipher_list`
 
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_options:
@@ -4579,11 +4557,7 @@ Currently supported options are:
 * ``no_compression``: (v2.3+) Disable compression.
 * ``no_ticket``: Disable SSL session tickets.
 
-See :ref:`setting-ssl`
-
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_prefer_server_ciphers:
@@ -4596,11 +4570,7 @@ See :ref:`dovecot_ssl_configuration`
 
 If enabled, give preference to the server's cipher list over a client's list.
 
-See :ref:`setting-ssl`
-
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_require_crl:
@@ -4611,13 +4581,12 @@ See :ref:`dovecot_ssl_configuration`
 - Default: ``yes``
 - Values: :ref:`boolean`
 
-If enabled, the CRL check must succeed for client certificates.
+If enabled, the CRL check must succeed for presented SSL client certificates.
+The CRL list is generally appended to the :ref:`setting-ssl_ca` file.
 
-See :ref:`setting-ssl`
+See :ref:`setting-ssl_ca`
 
 See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-ssl_verify_client_cert:
@@ -4628,17 +4597,12 @@ See :ref:`dovecot_ssl_configuration`
 - Default: ``no``
 - Values: :ref:`boolean`
 
-If enabled, the client is required to send a certificate that can be verified.
-
-See :ref:`setting-ssl`
+If enabled, the imap/pop3/etc. client is required to send an SSL certificate.
+Note that this setting doesn't yet require the certificate to be valid.
 
 See :ref:`setting-auth_ssl_require_client_cert`
 
 See :ref:`dovecot_ssl_configuration`
-
-See :ref:`ssl`
-
-.. todo:: Indicate SSL setting
 
 
 .. _setting-state_dir:

@@ -8,30 +8,46 @@ Typically plugins add hooks in their init() function by calling
 ``mail_storage_hooks_add()``, and remove the hooks at deinit() with
 ``mail_storage_hooks_remove()``. Hooks that are currently supported:
 
--  mail_user_created: A new mail user was created. It doesn't yet have
-   any namespaces.
+``mail_user_created``
+   A new mail user was created. It doesn't yet have any namespaces.
 
--  mail_storage_created: A new mail storage was created. It's not
+``mail_storage_created``
+   A new mail storage was created. It's not
    connected to any namespaces/mailbox lists yet.
 
--  mailbox_list_created: A new mailbox list was created. It's not
+``mailbox_list_created``
+   A new mailbox list was created. It's not
    connected to any storages yet. Because of this, some internal virtual
    methods haven't been overridden by the storage yet, so plugins rarely
-   want to use this hook. Instead they should use:
+   want to use this hook. Instead they should use
+   ``mail_namespace_storage_added``.
 
--  mail_namespace_storage_added: Storage was connected to its first
+``mail_namespace_storage_added``
+   Storage was connected to its first
    namespace/mailbox list. This hook should usually be used if plugin
    wants to override mailbox_list's methods.
 
--  mail_namespaces_created: User's all namespaces have been created.
+``mail_namespaces_created``
+   User's all namespaces have been created.
    This hook is called only per user at startup. More internal
    namespaces may be created later when using shared mailboxes.
 
--  mailbox_allocated: ``mailbox_alloc()`` was called.
+``mail_namespaces_added``
+   More namespaces were added to the user's
+   namespaces. At initialization this is called before
+   ``mail_namespaces_created``. Afterwards it's mainly called when shared
+   mailboxes are accessed, which trigger shared namespace creation.
 
--  mailbox_opened: Mailbox (and its index) was actually opened, either
+``mailbox_allocated``
+   ``mailbox_alloc()`` was called.
+
+``mailbox_opened``
+   Mailbox (and its index) was actually opened, either
    explicitly with ``mailbox_open()`` or implicitly by some other
    function.
+
+``mail_allocated``
+   Mail was allocated with ``mail_alloc()``.
 
 Overriding methods
 ------------------
@@ -58,16 +74,17 @@ Easiest way to set up the module context is to just copy&paste code from
 an existing plugin that sets the same context. Here's some documentation
 about it anyway:
 
-First you start by creating register for the plugin. There are different
+First you start by creating a register for the plugin. There are different
 registers for different types of objects:
 
--  mail_user_module_register: For mail_user.
--  mailbox_list_module_register: For mailbox_list.
--  mail_storage_module_register: For mail_storage, mailbox,
-   mailbox_transaction and mail_search.
--  mail_module_register: For mail.
+-  ``mail_user_module_register``: For ``struct mail_user``.
+-  ``mailbox_list_module_register``: For ``struct mailbox_list``.
+-  ``mail_storage_module_register``: For ``struct mail_storage``,
+   ``struct mailbox``, ``struct mailbox_transaction_context`` and
+   ``struct mail_search_context``.
+-  ``mail_module_register``: For ``struct mail``.
 
-We'll assume you want to use mail_storage_module_register:
+We'll assume you want to use ``mail_storage_module_register``:
 
 .. code-block:: C
 
@@ -129,6 +146,3 @@ with:
    #define PLUGIN_CONTEXT(obj) MODULE_CONTEXT(obj, plugin_storage_module)
    /* .. */
    struct plugin_mailbox *mbox = PLUGIN_CONTEXT(box);
-
-(Yes, this API seems a bit too difficult to use and could use a
-redesign.)

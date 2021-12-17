@@ -295,3 +295,76 @@ following the linked list:
   (gdb) p *dict_connections.connections.next
   (gdb) p *dict_connections.connections.next.next
   (gdb) p *dict_connections.connections.next.next.next
+
+Debugging data stack growth
+===========================
+
+Dovecot uses :ref:`data_stack` to implement its own secondary stack.
+This stack is intended to usually stay rather small, ideally within its
+initial 32 kB size. There are ``data_stack_grow`` events sent when it grows.
+To debug why data stack grows, you can have it panic::
+
+ log_core_filter = event=data_stack_grow
+ # Or have it panic later:
+ log_core_filter = event=data_stack_grow and alloc_size >= 10240
+
+The core dump can then be analyzed::
+
+  (gdb) p *current_frame
+  $1 = {prev = 0x555555874e78, block = 0x555555910760, block_space_left = 15640,
+    last_alloc_size = 96, marker = 0x5555557e726c "data-stack.c:514",
+    alloc_bytes = 96, alloc_count = 1}
+  (gdb) p *current_frame.prev
+  $2 = {prev = 0x555555874e18, block = 0x5555558742a0, block_space_left = 7264,
+    last_alloc_size = 744, marker = 0x5555557c011f "index-storage.c:1056",
+    alloc_bytes = 7312, alloc_count = 71}
+  (gdb) p *current_frame.prev.block
+  $3 = {prev = 0x0, next = 0x555555910760, size = 10240, left = 696,
+    left_lowwater = 696, canary = 0xbadbadd5badbadd5, data = 0x5555558742d0 "8"}
+
+First look at the ``block`` variable for these frames, and note how it changes
+for the 2rd one. So the data stack is grown between the 1nd and the 2rd frame.
+And since ``block_space_left`` was about 7 kB while the block's full size was
+10240 bytes, most of the space is allocated sometimes after
+``index-storage.c:1056``. We can also look further into the data stack frames
+to see if there are any other frames that use up a lot of memory::
+
+  (gdb) p *current_frame.prev.prev
+  $4 = {prev = 0x555555874db8, block = 0x5555558742a0, block_space_left = 7360,
+    last_alloc_size = 96, marker = 0x5555557aef7c "mail-storage.c:2818",
+    alloc_bytes = 96, alloc_count = 1}
+  ...
+  $5 = {prev = 0x5555558743e0, block = 0x5555558742a0, block_space_left = 8440,
+    last_alloc_size = 560, marker = 0x5555557a5467 "cmd-copy.c:328",
+    alloc_bytes = 984, alloc_count = 6}
+  (gdb) p *current_frame.prev.prev.prev.prev.prev
+  $6 = {prev = 0x555555874338, block = 0x5555558742a0, block_space_left = 9976,
+    last_alloc_size = 112, marker = 0x5555557a720f "imap-client.c:1357",
+    alloc_bytes = 1536, alloc_count = 14}
+
+So there was also some 1.5 kB used between ``imap-client.c:1357`` and
+``cmd-copy.c:328`` which might be worth looking into.
+
+Once you start debugging, get a gdb backtrace and start inserting further data
+stack frames into the function calls that the gdb backtrace shows. For example::
+
+  (gdb) bt
+  #0  data_stack_send_grow_event (last_alloc_size=744) at data-stack.c:400
+  #1  t_malloc_real (size=<optimized out>, permanent=<optimized out>)
+      at data-stack.c:523
+  ...
+  #10 0x000055555565257c in index_list_get_metadata (box=0x5555558ee8b0,
+      items=MAILBOX_METADATA_CACHE_FIELDS, metadata_r=0x7fffffffe180)
+      at mailbox-list-index-status.c:343
+  #11 0x00005555555ea928 in mailbox_get_metadata (box=0x5555558ee8b0,
+      items=items@entry=MAILBOX_METADATA_CACHE_FIELDS,
+      metadata_r=metadata_r@entry=0x7fffffffe180) at mail-storage.c:2204
+  #12 0x0000555555672794 in index_copy_cache_fields (
+      ctx=ctx@entry=0x5555559093b0, src_mail=src_mail@entry=0x555555904408,
+      dest_seq=1) at index-storage.c:1068
+
+Here you can see that #1 matches is inside the ``data-stack.c:514`` data
+stack frame and #12 is inside the ``index-storage.c:1056`` data stack frame.
+So you could start placing more ``T_BEGIN { .. } T_END`` frames between
+#2 and #11 frames shown by gdb to get more details where the data stack is
+being used.

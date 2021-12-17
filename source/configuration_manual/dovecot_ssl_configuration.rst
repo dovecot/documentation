@@ -401,9 +401,10 @@ Testing CA Success
 Client connections
 ******************
 
-.. versionadded:: v2.3.4 
-
-Dovecot uses default system CAs for outgoing connections.
+By default Dovecot uses OpenSSL's default system CAs to verify SSL
+certificates for outgoing connections. This can be overridden by specifying
+either :ref:`setting-ssl_client_ca_dir` or :ref:`setting-ssl_client_ca_file`.
+Using :ref:`setting-ssl_client_ca_dir` is preferred because it uses less memory.
 
 .. code::
 
