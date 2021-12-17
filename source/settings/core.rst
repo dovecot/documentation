@@ -1456,8 +1456,11 @@ Example Setting:
 - Default: ``no``
 - Values: :ref:`boolean`
 
-When proxying IMAP connections to other hosts, forward the IMAP ID command
-provided by the client?
+When proxying IMAP connections to other hosts, this variable must be enabled to
+forward the IMAP ID command provided by the client.
+
+This setting enables the ``%{client_id}`` variable for auth processes. See
+:ref:`Auth variables <variables-auth>`.
 
 Example Setting:
 
@@ -2261,7 +2264,7 @@ See :ref:`setting-login_log_format_elements`
 ``login_log_format_elements``
 -----------------------------
 
-- Default: ``user=<%u> method=%m rip=%r lip=%l mpid=%e %c``
+- Default: ``user=<%u> method=%m rip=%r lip=%l mpid=%e %c session=<%{session}>``
 - Values:  :ref:`string`
 
 A space-separated list of elements of the login log formatting.
@@ -2270,34 +2273,6 @@ Elements that have a non-empty value are joined together to form a
 comma-separated string.
 
 :ref:`Login variables <variables-login>` can be used.
-
-======== =============  =====================================================================================================
-Variable Long name      Description
-======== =============  =====================================================================================================
-%u       user           full username (e.g. user@domain)
-%n       username       user part in user@domain, same as %u if there's no domain
-%d       domain         domain part in user@domain, empty if user with no domain
-%h       home           Expands to HOME environment. Usually means it's empty.
-%p       pid            PID of the current process
-%m       mech           :ref:`authentication-authentication_mechanisms` e.g. PLAIN
-%a       lport          local port
-%b       rport          remote port
-%c       secured        "secured" string with SSL, TLS and localhost connections. Otherwise empty.
-%k       ssl_security   SSL protocol and cipher information, e.g. "TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)"
-%e       mail_pid       Mail process (imap/pop3) PID that handles the post-login connection
--        real_rip       Same as %{rip}, except in proxy setups contains the remote proxy's IP instead of the client's IP
--        real_lip       Same as %{lip}, except in proxy setups contains the local proxy's IP instead of the remote proxy's IP (v2.2+)
--        real_rport     Similar to %{real_rip} except for port instead of IP (v2.2+)
--        real_lport     Similar to %{real_lip} except for port instead of IP (v2.2+)
--        orig_user      Same as %{user}, except using the original username the client sent before any changes by auth process (v2.2.6+, v2.2.13+ for auth)
--        orig_username  Same as %{username}, except using the original username (v2.2.6+, v2.2.13+ for auth)
--        orig_domain    Same as %{domain}, except using the original username (v2.2.6+, v2.2.13+ for auth)
--        auth_user      SASL authentication ID (e.g. if master user login is done, this contains the master username). If username changes during authentication, this value contains the original username. Otherwise the same as %{user}. (v2.2.11+)
--        auth_username  user part in %{auth_user} (v2.2.11+)
--        auth_domain    domain part in %{auth_user} (v2.2.11+)
--        listener       Expands to the socket listener name as specified in config file (v2.2.19+)
--        passdb:<name>  Return passdb extra field "name". %{passdb:name:default} returns "default" if "name" doesn't exist (not returned if name exists but is empty) (v2.2.19+)
-======== =============  =====================================================================================================
 
 .. todo:: Describe login elements
 .. todo:: Provide join example
@@ -3350,8 +3325,8 @@ See :ref:`setting-mdbox_rotate_size`
 
 Disable mmap() usage?
 
-This must be disabled if you store indexes to shared filesystems (i.e., if you
-use NFS or a clustered filesystem).
+``mmap_disable`` must be set to yes if you store indexes to shared filesystems
+(i.e., if you use NFS or a clustered filesystem).
 
 
 .. _setting-namespace:
