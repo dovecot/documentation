@@ -8,7 +8,8 @@ Mailbox Searching
 iterating through multiple messages. The search queries can be complex
 or as simple as "all messages". Without searching there's also a way to
 directly switch to a specific message by its sequence number or UID, but
-this should be avoided usually.
+this should be avoided usually since they prevent mail prefetching (which can
+reduce latency).
 
 Initializing
 ------------
@@ -76,15 +77,13 @@ Iterating through all messages in a mailbox goes like:
    search_args = mail_search_build_init();
    mail_search_build_add_all(search_args);
 
-   search_ctx = mailbox_search_init(trans, search_args, NULL);
+   search_ctx = mailbox_search_init(trans, search_args, NULL, 0, NULL);
    /* search context keeps args referenced */
    mail_search_args_unref(&search_args);
 
-   mail = mail_alloc(trans, 0, NULL);
-   while (mailbox_search_next(ctx, mail)) {
+   while (mailbox_search_next(ctx, &mail)) {
            printf("matched uid %u\n", mail->uid);
    }
-   mail_free(&mail);
    if (mailbox_search_deinit(&search_ctx) < 0)
            i_error("search failed");
 

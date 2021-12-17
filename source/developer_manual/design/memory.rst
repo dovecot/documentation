@@ -126,6 +126,8 @@ from many memory allocations, but doesn't modify (much of) its state.
 It's a lot easier when you can do a lot of small memory allocations and
 in object destroy you simply free the memory pool.
 
+.. _data_stack:
+
 Data Stack
 ----------
 
