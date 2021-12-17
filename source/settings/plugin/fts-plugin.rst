@@ -165,30 +165,40 @@ Example::
 ``fts_enforced``
 ----------------
 
+.. versionadded:: v2.2.19
+
 - Default: ``no``
 - Values:  ``yes``, ``no`` or ``body``
 
-Require FTS indexes to perform a search?
+Require FTS indexes to perform a search? This controls what to do when
+searching headers and what to do on error situations.
 
-If disabled, and searching using FTS fails, Dovecot will fall back on using the
-built in search which does not have indexes for mail bodies. This may timeout
-for large mailboxes and/or slow storage.
+When searching from message body, the FTS index is always (attempted to be)
+updated to contain any missing mails before the search is performed.
 
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-| Value | Search type | FTS index updated | Error handling                                                        | New in version            |
-+=======+=============+===================+=======================================================================+===========================+
-| yes   | header      | yes               | Fail search                                                           | .. versionadded:: v2.2.19 |
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-| yes   | body        | yes               | Fail search                                                           | .. versionadded:: v2.2.19 |
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-| no    | header      | no                | Search without FTS: Try to use dovecot.index.cache, or open all mails | .. versionadded:: v2.2.19 |
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-| no    | body        | yes               | Search without FTS by opening all mails                               | .. versionadded:: v2.2.19 |
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-| body  | header      | no                | Fail search                                                           | .. versionadded:: v2.3.7  |
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-| body  | body        | yes               | Fail search                                                           | .. versionadded:: v2.3.7  |
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
+ ``no``
+    Searching from message headers won't update FTS indexes. For header
+    searches, the FTS indexes are used for searching the mails that are already
+    in it, but the unindexed mails are searched via dovecot.index.cache (or by
+    opening the emails if the headers aren't in cache).
+
+    If FTS lookup or indexing fails, both header and body searches fallback to
+    searching without FTS (i.e. possibly opening all emails). This may timeout
+    for large mailboxes and/or slow storage.
+
+ ``yes``
+    Searching from message headers updates FTS indexes, the same way as
+    searching from body does. If FTS lookup or indexing fails, the search fails.
+
+ ``body``
+    Searching from message headers won't update FTS indexes (the same
+    behavior as with ``no``). If FTS lookup or indexing fails, the search fails.
+
+   .. versionadded:: v2.3.7
+
+Note that only the ``yes`` value guarantees consistent search results. In other
+cases it's possible that the search results will be different depending on
+whether the search was performed via FTS index or not.
 
 
 .. _plugin-fts-setting-fts_filters:
@@ -297,6 +307,58 @@ See also :ref:`fts_tokenization`
 
 .. _`Normalizer Format`: http://userguide.icu-project.org/transforms/general#TOC-Transliterator-Identifiers
 
+.. _plugin-fts-setting-fts_header_excludes:
+
+``fts_header_excludes``
+-----------------------
+
+.. versionadded:: 2.3.18
+
+
+- Default: <empty>
+- Values:  :ref:`string`
+
+The list of headers to, respectively, include or exclude.
+
+- The default is the pre-existing behavior, i.e. index all headers.
+- ``includes`` take precedence over ``excludes``: if a header matches both,
+  it is indexed.
+- The terms are case insensitive.
+- An asterisk ``*`` at the end of a header name matches anything starting with
+  that header name.
+- The asterisk can only be used at the end of the header name.
+  Prefix and infix usage of asterisk are not supported.
+
+Example::
+
+  plugin {
+    fts_header_excludes = Received DKIM-* X-* Comments
+    fts_header_includes = X-Spam-Status Comments
+  }
+
+- ``Received`` headers, all ``DKIM-`` headers and all ``X-`` experimental headers
+  are excluded, with the following exceptions:
+- ``Comments`` and ``X-Spam-Status`` are indexed anyway, as they match **both**
+  ``excludes`` and ``includes`` lists.
+- All other headers are indexed.
+
+Example::
+
+  plugin {
+    fts_header_excludes = *
+    fts_header_includes = From To Cc Bcc Subject Message-ID In-* X-CustomApp-*
+  }
+
+- No headers are indexed, except those specified in the ``includes``.
+
+.. _plugin-fts-setting-fts_header_includes:
+
+``fts_header_includes``
+-----------------------
+
+.. versionadded:: 2.3.18
+
+See :ref:`plugin-fts-setting-fts_header_excludes`.
 
 .. _plugin-fts-setting-fts_index_timeout:
 

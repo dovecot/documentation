@@ -27,11 +27,28 @@ NFS mount options
 * ``nordirplus``: Disable readdirplus operations, which aren't needed by
   Dovecot. They can also slow down some NFS servers.
 
+* ``noatime``: Disable updating atime. Dovecot doesn't need this and it may
+  slow down NFS servers.
+
 * ``root_squash``: Dovecot doesn't care about this. Typically Dovecot doesn't
   store any root-owned files in NFS.
 
-* ``nolock``: This is possible to use either if ``lock_method=dotlock`` is
-  used, or as a slightly unsafe optimization (see below).
+* ``nolock`` / ``local_lock=all``: This is possible to use as a slightly
+  unsafe optimization. All file locking is handled only locally instead of via
+  NFS server. Assuming director works perfectly, there is no need to use
+  locking across NFS. Each user only locks their own files, and the user should
+  only be accessed by a single server at a time. Unfortunately, this doesn't
+  work 100% of the time so in some rare situations the same user can become
+  accessed by multiple servers simultaneously. In those situations the mails
+  are more likely to become corrupted if ``nolock`` is used. However, if
+  indexes and emails are on different mountpoints, email corruption shouldn't
+  be possible if the ``nolock`` is enabled only for the index mountpoint.
+  This can still increase the likelyhood of index corruption (which can lose
+  message flags), but locking won't prevent index corruption completely anyway.
+
+* ``actimeo``: This or the more specific settings can be used to control NFS
+  caching. The defaults are likely good enough, but you can try to increase
+  the caching time to reduce NFS traffic (e.g. ``actimeo=60``).
 
 Optimizations
 =============
@@ -58,13 +75,7 @@ Potential optimizations to use:
   mails. The ``doveadm altmove`` command needs to be run periodically. The
   ``NOALTCHECK`` disables a sanity check to make sure alt storage path doesn't
   unexpectedly change.
-* Slightly unsafe: Use ``nolock`` mount option to keep all locking within the
-  server. Assuming director works perfectly, there is no need to use locking
-  across NFS. Each user only locks their own files, and the user should only
-  be accessed by a single server at a time. Unfortunately, this doesn't work
-  100% of the time so in some rare situations the same user can become
-  accessed by multiple servers simultaneously. In those situations the mails
-  are more likely to become corrupted if ``nolock`` is used.
+* See the NFS mount options above.
 
 Clock synchronization
 =====================

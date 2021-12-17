@@ -83,7 +83,7 @@ Additionally imapc must be configured accordingly on the backends:
    connects to Dovecot director/proxy
  * :ref:`setting-imapc_features`: For the best performance and functionality,
    the setting should contain at least
-   ``fetch-bodystructure fetch-headers rfc822.size search modseq acl``
+   ``fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login``
 
 
 .. versionadded:: 2.3.15 INDEXPVT for imapc is supported from 2.3.15 onwards.
@@ -95,7 +95,7 @@ Additionally imapc must be configured accordingly on the backends:
    imapc_host = director-ip
    #imapc_user = # leave this empty. It'll be automatically filled with the destination username.
    imapc_password = master-secret
-   imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl
+   imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login
 
 
 As mentioned earlier the :ref:`acl <acl>` plugin must be loaded and configured
@@ -111,6 +111,12 @@ accordingly:
       acl_ignore_namespace = shared/*
       acl_shared_dict = $your_prefered_shared_dict
     }
+
+    # In order to be able to issue ACL commands over imap, imap_acl must be loaded
+    protocol imap {
+      mail_plugins = $mail_plugins imap_acl
+    }
+
 
 The :ref:`acl <acl>` plugin must be told to ignore the shared namespace and all
 its children using the :ref:`plugin-acl-setting-acl_ignore_namespace` setting.

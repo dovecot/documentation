@@ -79,8 +79,7 @@ configuring Dovecot's URLAUTH support can be found at
 
 The following settings apply to the Submission service:
 
-submission_logout_format = in=%i out=%o
-***************************************
+**submission_logout_format = in=%i out=%o**
 
 The SMTP Submission logout format string. The following variable substitutions
 are supported:
@@ -106,12 +105,21 @@ are supported:
    Configures the list of active workarounds for Submission client bugs. The 
    list is space-separated. Supported workaround identifiers are:
    
-   **whitespace-before-path**
-      Allow one or more spaces or tabs between ``MAIL FROM:`` and path and between
-      ``RCPT TO:`` and path.
+   **implicit-auth-external**
+      Implicitly login using the EXTERNAL SASL mechanism upon the first MAIL
+      command, provided that the client provides a valid TLS client certificate.
+      This is helpful for clients that omit explicit SASL authentication when
+      configured for authentication using a TLS certificate (Thunderbird for
+      example).
+
+      .. versionadded:: v2.3.18
+
    **mailbox-for-path**
       Allow using bare Mailbox syntax (i.e., without ``<...>``) instead of full path
       syntax.
+   **whitespace-before-path**
+      Allow one or more spaces or tabs between ``MAIL FROM:`` and path and between
+      ``RCPT TO:`` and path.
 **submission_max_mail_size**
       The maximum size of messages accepted for relay. This announced in the
       SMTP SIZE capability. If not configured, this is either determined from
