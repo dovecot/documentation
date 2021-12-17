@@ -49,12 +49,14 @@ Initializing
 
 There are some flags that control how much effort is spent on syncing:
 
--  ``MAILBOX_SYNC_FLAG_FAST`` can be given when you're ready for mailbox
+``MAILBOX_SYNC_FLAG_FAST``
+   This can be given when you're ready for mailbox
    to be refreshed, but don't care much if it actually is or not. When
    this flag is set, Dovecot still notices all internal changes, but
    external changes are checked only once every few seconds or so.
 
--  ``MAILBOX_SYNC_FLAG_FULL_READ`` is mainly useful with mboxes. If
+``MAILBOX_SYNC_FLAG_FULL_READ``
+   This is mainly useful with mboxes. If
    ``mbox_dirty_syncs=yes`` and a new mail gets appended to mbox by an
    external program, Dovecot assumes that the only change was the added
    mail, even though the program may have also modified existing
@@ -65,7 +67,8 @@ There are some flags that control how much effort is spent on syncing:
    unexpected changes. It's currently used only with IMAP SELECT and
    CHECK commands and POP3 startup. Probably unnecessary elsewhere.
 
--  ``MAILBOX_SYNC_FLAG_FULL_WRITE`` is again mainly useful with mboxes.
+``MAILBOX_SYNC_FLAG_FULL_WRITE``
+   This is again mainly useful with mboxes.
    If ``mbox_lazy_writes=no``, Dovecot delays writing flag changes to
    mbox file until mailbox is closed or IMAP CHECK command is issued.
    Using this elsewhere is probably unnecessary, except as an
@@ -73,26 +76,30 @@ There are some flags that control how much effort is spent on syncing:
    you might as well give this flag to it to avoid double-syncing with
    mbox.
 
--  ``MAILBOX_SYNC_FLAG_FORCE_RESYNC`` is used to force resyncing
+``MAILBOX_SYNC_FLAG_FORCE_RESYNC``
+   This is used to force resyncing
    indexes. The only time this should be done is when manually triggered
    by administrator.
 
 Then there are also other syncing flags:
 
--  ``MAILBOX_SYNC_FLAG_NO_EXPUNGES``: No expunged messages are removed
+``MAILBOX_SYNC_FLAG_NO_EXPUNGES``
+   No expunged messages are removed
    from the in-memory mailbox view. Their removal is delayed until
    syncing is done without this flag. Attempting to access the expunged
    messages may or may not work, depending on what information is
    accessed and what storage backend is used.
 
--  ``MAILBOX_SYNC_FLAG_FIX_INCONSISTENT``: Normally when the internal
+``MAILBOX_SYNC_FLAG_FIX_INCONSISTENT``
+   Normally when the internal
    mailbox state can't be consistently updated (typically due to index
    file corruption), the syncing fails. When this flag is set, it means
    that the caller doesn't care about mailbox's previous state and just
    wants to get it accessible again. Typically this is used when the
    mailbox is being opened, but not afterwards.
 
--  ``MAILBOX_SYNC_FLAG_EXPUNGE`` is mainly intended for virtual plugin
+``MAILBOX_SYNC_FLAG_EXPUNGE``
+   This is mainly intended for virtual plugin
    with IMAP protocol. You probably shouldn't use it.
 
 Reading changes
@@ -100,9 +107,11 @@ Reading changes
 
 While ``mailbox_sync_next()`` returns TRUE, it fills out sync record:
 
--  ``seq1``, ``seq2``: Message sequence numbers that were affected
+``seq1``, ``seq2``
+   Message sequence numbers that were affected
 
--  ``type``: expunge, flag change or modseq change.
+``type``
+   Expunge, flag change or modseq change.
 
 Expunge records don't immediately change the view's sequence numbers.
 After seeing an expunge record you can still fetch the expunged
