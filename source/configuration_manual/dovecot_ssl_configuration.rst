@@ -125,7 +125,7 @@ If you have multiple IPs available, this method is guaranteed to work with all c
 With client TLS SNI (Server Name Indication) support
 ****************************************************
 
-It is important to note that having multiple SSL certificates per IP will not be compatible with all clients, especially mobile ones. It is a TLS SNI limitation. See SSL/SNIClientSupport for list of clients known to (not) support SNI.
+It is important to note that having multiple SSL certificates per IP will not be compatible with all clients, especially mobile ones. It is a TLS SNI limitation.
 
 .. code-block:: none 
 
@@ -138,6 +138,23 @@ It is important to note that having multiple SSL certificates per IP will not be
     ssl_key = </etc/ssl/private/imap.example2.org.key
   }
   # ..etc..
+
+Clients confirmed working with TLS SNI:
+
+* Thunderbird (Linux)
+* K-9 on Android (merged Sept 2015 - https://github.com/k9mail/k-9/pull/718)
+* Apple Mail (according to https://forums.cpanel.net/threads/mail-ssl-sni.454592/ )
+* Mutt (ticket https://dev.mutt.org/trac/ticket/3923)
+* NeoMutt (since 2016-03-07 according to https://www.neomutt.org/feature/tls-sni )
+
+Not working Clients:
+
+* K-9 on Droid X2 (maybe fixed in newer versions - see above)
+* Apple Mail (Mac OS X 10.10 and lower AND iOS 9.3 and lower)
+* Outlook for Mac version 15 (according to https://forums.cpanel.net/threads/mail-ssl-sni.454592/ )
+* Kindle Fire HD 8
+* Outlook 2013
+
 
 Password protected key files
 ****************************
