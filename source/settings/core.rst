@@ -3350,8 +3350,8 @@ See :ref:`setting-mdbox_rotate_size`
 
 Disable mmap() usage?
 
-This must be disabled if you store indexes to shared filesystems (i.e., if you
-use NFS or a clustered filesystem).
+``mmap_disable`` must be set to yes if you store indexes to shared filesystems
+(i.e., if you use NFS or a clustered filesystem).
 
 
 .. _setting-namespace:
