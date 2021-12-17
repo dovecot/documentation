@@ -1,39 +1,37 @@
 .. _plugin-old-stats:
 
-=====================
-old stats plugin
-=====================
+================
+old-stats plugin
+================
 
+.. warning:: This plugin has been deprecated. Use :ref:`statistics` instead.
 
-``old_plugin-stats``
-^^^^^^^^^^^^^^^^^^^^^^
-.. _plugin-stats-setting_old_stats_refresh:
+Settings
+========
 
-``old_plugin-stats-stats_refresh``
----------------------------------------
+.. _plugin-old-stats-setting_old_stats_refresh:
 
-This required parameter is used with the imap_stats plug-in so that the stats
-process can report IMAP-command-specific statistics for CPU use, disk usage,
-etc. It specifies how often to refresh session statistics.
+``old_stats_refresh``
+---------------------
 
-Example Setting:
+This required parameter is used with the :ref:`plugin-imap-old-stats` so that
+the stats process can report IMAP-command-specific statistics for CPU use,
+disk usage, etc. It specifies how often to refresh session statistics.
 
-.. code-block:: none
+Example::
 
   plugin {
     old_stats_refresh = 30 secs
   }
 
-.. _plugin-stats-setting_old_stats_track_cmds:
+.. _plugin-old-stats-setting_old_stats_track_cmds:
 
 ``old_stats_track_cmds``
----------------------------------------
+------------------------
 
-The imap_stats plug-in enables the stats process to report
+The :ref:`plugin-imap-old-stats` enables the stats process to report
 IMAP-command-specific statistics for CPU use, disk usage, etc. This setting,
-for tracking these per-command statistics, is optional:
-
-.. code-block:: none
+for tracking these per-command statistics, is optional::
 
   plugin {
     old_stats_track_cmds = yes

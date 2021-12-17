@@ -1,14 +1,22 @@
 .. _plugin-doveadm-dsync:
 
-===========================
+====================
 doveadm-dsync plugin
-===========================
+====================
 
-``doveadm-dsync-plugin``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+.. seealso:: See :ref:`replication` for dsync replication overview.
+
+Settings
+========
+
 .. _plugin-doveadm-dsync-setting_noreplicate:
 
 ``noreplicate``
-----------------------
+---------------
 
-User will not be replicated using replicator.
+.. versionadded:: 2.3.1
+
+- Default: <empty>
+- Values:  :ref:`boolean`
+
+If "yes", user will not be replicated using replicator.

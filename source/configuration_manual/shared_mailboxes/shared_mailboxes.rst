@@ -266,18 +266,10 @@ before the identifier specifies negative rights.
 
 See :ref:`acl` for list of <rights>.
 
-Sharing mailboxes to everyone
+Sharing Mailboxes to Everyone
 -----------------------------
 
-By default Dovecot doesn't allow using the IMAP "``anyone``" or
-"``authenticated``" identifier, because it would be an easy way to spam
-other users in the system. If you wish to allow it, set:
-
-::
-
-   plugin {
-     acl_anyone = allow
-   }
+See :ref:`plugin-imap-acl-setting_acl_anyone`.
 
 Note that you can also do this only for some users by using the second
 table "``anyone_shares``". Every user listed in this table shares his

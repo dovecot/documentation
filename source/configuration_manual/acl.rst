@@ -30,12 +30,25 @@ See :ref:`plugin-acl-setting_acl_groups` for setting information.
 The ``acl_groups`` setting can be dynamically set via
 :ref:`authentication-user_database_extra_fields`.
 
+.. _acl-imap_acl:
+
+IMAP ACLs
+^^^^^^^^^
+
+To enable the IMAP ACL commands, you must load the ``imap_acl`` plugin. This
+plugin should only be loaded insided a ``protocol imap {}`` block.
+
+See :ref:`plugin-imap-acl` for settings.
+
 Sample Configuration:
 ^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: none
 
+  # Enable internal ACL support
   mail_plugins = acl
+
+  # Enable the IMAP ACL commands
   protocol imap {
     mail_plugins = $mail_plugins imap_acl
   }

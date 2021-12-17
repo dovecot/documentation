@@ -1,14 +1,15 @@
 .. _lua:
 
-=========================
-Dovecot Lua support
-=========================
+===================
+Dovecot Lua Support
+===================
 
 Since v2.3.0 dovecot supports Lua scripting. Dovecot supports Lua 5.1 and
 Lua 5.3.
 
-.. versionremoved:: 2.3.15 Lua 5.2 was supported until its removal in
-   Dovecot version 2.3.15.
+.. versionremoved:: 2.3.15
+
+   Lua 5.2 support.
 
 See also:
 
@@ -72,19 +73,18 @@ Lua API
 
    :param str text: Message to log
 
-Event functions are available from
-
-.. versionadded:: v2.3.4
-
 .. py:function:: event()
 
    Generate new event with lua script as parent.
+
+   .. versionadded:: v2.3.4
 
 .. py:function:: event(parent)
    :noindex:
 
    Generate new event with given parent event.
 
+   .. versionadded:: v2.3.4
 
 .. py:function:: restrict_global_variables(toggle)
 
@@ -102,8 +102,7 @@ Event functions are available from
 
    :param boolean toggle: Enable or disable defining new global variables
 
-.. versionadded:: v2.3.17
-
+   .. versionadded:: v2.3.17
 
 object event
 ^^^^^^^^^^^^^
@@ -210,7 +209,9 @@ Functions:
 
 .. py:function::  iterate(path, flags[, username])
 
-   Returns an iteration step function and dict iter userdata. For example::
+   Returns an iteration step function and dict iter userdata. For example:
+
+   .. code-block:: lua
 
 	for key, values in dict:iterate(key_prefix, 0) do
 	  dovecot.i_debug('key='..key..', first value='..values[1])
@@ -245,19 +246,19 @@ Functions:
 
    Unset key in the dict transaction.
 
-   .. versionadded:: v2.3.17
-
    :param str key: Key to unset
+
+   .. versionadded:: v2.3.17
 
 .. py:function::  set_timestamp({tv_sec=seconds, tv_nsec=nanoseconds})
 
    Set timestamp to the dict transaction. This is currently used only with
    Cassandra.
 
-   .. versionadded:: v2.3.17
-
    :param int seconds: UNIX timestamp
    :param int nanoseconds: Nanoseconds part of the timestamp
+
+   .. versionadded:: v2.3.17
 
 .. py:function::  commit()
 
@@ -268,7 +269,7 @@ Functions:
    Rollback the transaction.
 
 mail-lua
-^^^^^^^^^
+^^^^^^^^
 
 .. versionadded:: v2.3.4
 
@@ -276,8 +277,10 @@ mail-lua is a plugin that can be loaded to provide API for mail storage Lua
 plugins. Mail-lua provides a common script to be used in mail storage instead
 of per-plugin scripts.
 
+See: :ref:`plugin-mail-lua`.
+
 C API
-^^^^^^
+^^^^^
 
 .. c:function:: void dlua_register_mail_storage(struct dlua_script *script)
 
@@ -360,19 +363,19 @@ Following constants are specified:
 
    String constant ``vendor/vendor.dovecot/``
 
-.. versionadded:: 2.3.7
+   .. versionadded:: 2.3.7
 
 .. c:enum::  MAILBOX_ATTRIBUTE_PREFIX_DOVECOT_PVT
 
     String constant ``vendor/vendor.dovecot/pvt/``
 
-.. versionadded:: 2.3.7
+    .. versionadded:: 2.3.7
 
 .. c:enum::  MAILBOX_ATTRIBUTE_PREFIX_DOVECOT_PVT_SERVER
 
     String constant ``vendor/vendor.dovecot/pvt/server/``
 
-.. versionadded:: 2.3.7
+    .. versionadded:: 2.3.7
 
 
 object mail_user
@@ -414,7 +417,7 @@ Functions
 
    :param str key: Metadata key, must begin with /private/ or /shared/
 
-.. versionadded:: 2.3.7
+   .. versionadded:: 2.3.7
 
 .. py:function:: metadata_set(key, value)
 
@@ -423,7 +426,7 @@ Functions
    :param str key: Metadata key, must begin with /private/ or /shared/
    :param str value: Value to set, nil unsets value
 
-.. versionadded:: 2.3.7
+   .. versionadded:: 2.3.7
 
 .. py:function:: metadata_unset(key)
 
@@ -431,7 +434,7 @@ Functions
 
    :param str key: Metadata key, must begin with /private/ or /shared/
 
-.. versionadded:: 2.3.7
+   .. versionadded:: 2.3.7
 
 .. py:function:: metadata_list(prefix, prefix, prefix...)
 
@@ -439,7 +442,7 @@ Functions
 
    :param str prefix: Metadata prefix, must begin with /private/ or /shared/
 
-.. versionadded:: 2.3.7
+   .. versionadded:: 2.3.7
 
 Variables
 ---------
@@ -545,7 +548,7 @@ Functions
 
    :param str key: Metadata key, must begin with /private/ or /shared/
 
-.. versionadded:: 2.3.7
+   .. versionadded:: 2.3.7
 
 .. py:function:: metadata_set(key, value)
    :noindex:
@@ -555,7 +558,7 @@ Functions
    :param str key: Metadata key, must begin with /private/ or /shared/
    :param str value: Value to set, nil unsets value
 
-.. versionadded:: 2.3.7
+   .. versionadded:: 2.3.7
 
 .. py:function:: metadata_unset(key)
    :noindex:
@@ -564,7 +567,7 @@ Functions
 
    :param str key: Metadata key, must begin with /private/ or /shared/
 
-.. versionadded:: 2.3.7
+   .. versionadded:: 2.3.7
 
 .. py:function:: metadata_list(prefix, prefix, prefix...)
    :noindex:
@@ -573,7 +576,7 @@ Functions
 
    :param str prefix: Metadata prefix, must begin with /private/ or /shared/
 
-.. versionadded:: 2.3.7
+   .. versionadded:: 2.3.7
 
 Variables
 ---------

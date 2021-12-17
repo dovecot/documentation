@@ -258,18 +258,29 @@ Metrics can be added dynamically by running:
 
 .. code-block:: none
 
-   doveadm stats add [--description <string>] [--exporter <name> [--exporter-include <field>]] [--fields <fields>] [--group_by <fields>] <name> <filter>
+   doveadm stats add [--description <string>] [--exporter <name> [--exporter-include <field>]] [--fields <fields>] [--group-by <fields>] <name> <filter>
 
 * ``exporter`` and ``exporter-include`` parameters are described in :ref:`filtering-events-label`.
-* ``fields`` and ``group_by`` are described :ref:`here<statistics>`
+* ``fields`` and ``group-by`` are described :ref:`here<statistics>`
 * ``<filter>`` syntax is described in :ref:`event_filter_metric`.
 
+For example:
+
+.. code-block:: sh
+
+   doveadm stats add --description "IMAP SELECT commands" --exporter log-exporter --exporter-include "name timestamps" --fields "bytes_in bytes_out" --group-by "cmd_name tagged_reply_state" imap_cmd_select "event=imap_command_finished AND name=SELECT"
 
 Metrics can be removed dynamically by running:
 
 .. code-block:: none
 
    doveadm stats remove <name>
+
+For example:
+
+.. code-block:: sh
+
+   doveadm stats remove imap_cmd_select
 
 Examples:
 ---------

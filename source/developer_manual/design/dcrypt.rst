@@ -79,7 +79,7 @@ and should not be used.
 Version 2 format
 ~~~~~~~~~~~~~~~~
 
-::
+.. code-block:: none
 
    public key id: HEX(SHA256(public key in DER format))
    key data:
@@ -101,7 +101,7 @@ either HMAC based or AEAD based system is used when requested.
 
 File format is described below
 
-::
+.. code-block:: none
 
    000 - 008 CRYPTED\x03\x07 (MAGIC)
    009 - 009 \x02 (VERSION FIELD, 2)

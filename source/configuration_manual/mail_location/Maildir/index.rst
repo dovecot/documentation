@@ -141,6 +141,39 @@ specified, we get an extra path component ``INBOX/`` immediately prior to the
 
 The value for ``DIRNAME`` should be chosen carefully so as to minimise the chances of clashing with mail folder names. In the example here, unusual upper/lower casing has been used.
 
+Multiple Namespaces pointing to INBOX
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When there are multiple namespaces that point to the same INBOX namespace,
+``dovecot.list.index`` can potentially keep fighting over whether INBOX exists
+or not.
+
+For example:
+
+.. code-block:: none
+
+  mail_location = maildir:~/Maildir:LAYOUT=fs
+  namespace {
+    inbox = yes
+    prefix = INBOX/
+    separator = /
+    subscriptions = no
+  }
+  namespace {
+    prefix =
+    separator = /
+    alias_for = INBOX/
+    location = maildir:~/Maildir:LAYOUT=fs # Alias location
+    subscriptions = yes
+  }
+
+The solution is to disable ``dovecot.list.index`` for the alias namespace. In
+the above example, this is done by changing the "Alias location" line to:
+
+.. code-block:: none
+
+  location = maildir:~/Maildir:LAYOUT=fs:LISTINDEX=
+
 Settings
 ^^^^^^^^
 

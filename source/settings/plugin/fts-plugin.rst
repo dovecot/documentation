@@ -1,248 +1,11 @@
-.. _fts_plugin:
+.. _plugin-fts:
 
-=============================
-Full Text Search (FTS) plugin
-=============================
+==========
+fts plugin
+==========
 
-.. _plugin-fts-setting-fts_autoindex:
-
-``fts_autoindex``
------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
-
-If enabled, index mail as it is delivered or appended.
-
-See :ref:`plugin-fts-setting-fts_autoindex_exclude`
-
-See :ref:`plugin-fts-setting-fts_autoindex_max_recent_msgs`
-
-
-.. _plugin-fts-setting-fts_autoindex_max_recent_msgs:
-
-``fts_autoindex_max_recent_msgs``
------------------------------------
-
-.. versionadded:: 2.2.9
-
-- Default: ``0`` (ignore)
-- Values: :ref:`uint`
-
-To exclude infrequently accessed mailboxes from automatic indexing, set this value to the maximum number of ``\Recent`` flagged messages that exist in the mailbox.
-
-Mailboxes with more flagged ``\Recent`` messages than this value will not be autoindexed, even though they get deliveries or appends.
-This is useful for, e.g., inactive Junk folders.
-
-Any folders excluded from automatic indexing will still be indexed, if a search on them is performed.
-
-Example Setting:
-
-.. code-block:: none
-
-  plugin {
-    fts_autoindex_max_recent_msgs = 999
-  }
-
-.. _plugin-fts-setting-fts_autoindex_exclude:
-
-``fts_autoindex_exclude``
---------------------------
-
-- Default: <empty>
-- Values: :ref:`string`
-
-To exclude a mailbox from automatic indexing, it can be listed in this setting.
-To exclude additional mailboxes, add sequential numbers to the end of the plugin name.
-It's possible to use either mailbox names or refer to them using special-use flags (e.g. ``\Trash``)
-
-For example::
-
-  fts_autoindex_exclude = \Junk
-  fts_autoindex_exclude2 = \Trash
-  fts_autoindex_exclude3 = External Accounts/*
-
-
-.. _plugin-fts-setting-fts_index_timeout:
-
-``fts_index_timeout``
-------------------------
-
-- Default: ``0`` (no timeout)
-- Values: :ref:`uint`
-
-When the full text search backend detects that the index isn't up-to-date,
-the indexer is told to index the messages and is given this much time to do so.
-If this time limit is reached, an error is returned, indicating that the search
-timed out during waiting for the indexing to complete:
-``NO [INUSE] Timeout while waiting for indexing to finish``
-
-
-Example Setting:
-
-.. code-block:: none
-
-  plugin {
-    fts_index_timeout = 60s
-  }
-
-
-.. _plugin-fts-setting-fts_enforced:
-
-``fts_enforced``
-----------------
-
-- Default: ``no``
-- Values: ``yes``, ``no`` or ``body``
-
-Require FTS indexes to perform a search?
-
-If disabled, and searching using FTS fails, Dovecot will fall back on using the
-built in search which does not have indexes for mail bodies. This may timeout
-for large mailboxes and/or slow storage.
-
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-| Value | Search type | FTS index updated | Error handling                                                        | New in version            |
-+=======+=============+===================+=======================================================================+===========================+
-| yes   | header      | yes               | Fail search                                                           | .. versionadded:: v2.2.19 |
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-| yes   | body        | yes               | Fail search                                                           | .. versionadded:: v2.2.19 |
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-| no    | header      | no                | Search without FTS: Try to use dovecot.index.cache, or open all mails | .. versionadded:: v2.2.19 |
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-| no    | body        | yes               | Search without FTS by opening all mails                               | .. versionadded:: v2.2.19 |
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-| body  | header      | no                | Fail search                                                           | .. versionadded:: v2.3.7  |
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-| body  | body        | yes               | Fail search                                                           | .. versionadded:: v2.3.7  |
-+-------+-------------+-------------------+-----------------------------------------------------------------------+---------------------------+
-
-
-.. _plugin-fts-setting-fts_filters:
-
-``fts_filters``
------------------
-
-- Default: <none>
-
-The list of filters to apply.
-
-Language specific filter chains can be specified with ``fts_filters_<lang>`` (e.g. ``fts_filters_en``).
-
-List of available filters:
-
-``lowercase``:
-
-  Change all text to lower case. Supports UTF8, when compiled with libicu and
-  the library is installed. Otherwise only ASCII characters are lower cased.
-
-``stopwords``:
-
-  Filter certain common and short words, which are usually useless for
-  searching.
-
-  Settings: ``stopwords_dir``, path to the directory containing stopword files.
-
-  Stopword files are looked up in ``”<path>”/stopwords_<lang>.txt``.
-
-  See :ref:`fts_languages` for list of stopword files that are currently distributed with Dovecot.
-  More can be obtained from the Apache Lucene project or the snowball stemmer
-  source.
-
-  Stopword language files are also available from
-  https://github.com/stopwords-iso/.
-
-``snowball``:
-
-  Stemming tries to convert words to a common base form. A simple example is
-  converting “cars” to “car”.
-
-  This stemmer is based on the Snowball stemmer library.
-  
-  See :ref:`fts_languages`
-
-``normalizer-icu``:
-
-  Normalize text using libicu. This is potentially very resource intensive.
-
-  Caveat for Norwegian: The default normalizer filter does not modify U+00F8
-  (Latin Small Letter O with Stroke). In some configurations it might be
-  desirable to rewrite it to e.g. o. Same goes for the upper case version.
-  This can be done by passing a modified “id” setting to the normalizer filter.
-  Similar cases can exists for other languages as well.
-
-  Settings: ``id``, description of the normalizing/transliterating rules to use.
-  See http://userguide.icu-project.org/transforms/general#TOC-Transliterator-Identifiers for syntax.
-  Defaults to ``Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove``
-
-``english-possessive``:
-
-  Remove trailing ``'s`` from english possessive form tokens. Any trailing
-  single ``'`` characters are already removed by tokenizing, whether this
-  filter is used or not.
-
-  The snowball filter also removes possessive suffixes from English, so when
-  using snowball, english-possessive is not needed. Snowball quite likely
-  produces better results, so english-possessive is advisable only when
-  snowball is not available or can not be used due to extreme CPU performance
-  requirements.
-
-``contractions``:
-
-  Removes certain contractions that can prefix words. The idea is to only
-  index the part of the token that conveys the core meaning.
-
-  Only works with the French language, so the language of the input needs to
-  be recognized by textcat as French.
-
-  It filters “qu'”, “c'”, “d'”, “l'”, “m'”, “n'”, “s'” and “t'”.
-
-  Do not use at the same time as ``generic`` tokenizer with
-  ``algorithm=tr29 wb5a=yes``.
-
-  Example::
-
-    fts_filters = normalizer-icu snowball stopwords
-    fts_filters_en = lowercase snowball english-possessive stopwords
-
-See also :ref:`fts_tokenization`
-
-
-.. _plugin-fts-setting-fts_language_config:
-
-``fts_language_config``
------------------------
-
-- Default: <textcat dir>
-
-Path to the textcat/exttextcat configuration file, which lists the supported languages.
-For example ``/usr/share/libexttextcat/fpdb.conf``.
-This is recommended to be changed to point to a minimal version of a configuration that supports only the languages listed in :ref:`plugin-fts-setting-fts_languages`.
-Doing this improves language detection performance during indexing and also makes the detection more accurate.
-
-
-.. _plugin-fts-setting-fts_languages:
-
-``fts_languages``
------------------
-
-- Default: <empty>
-
-A space-separated list of languages that the full text search should detect.
-At least one language must be specified.
-The language listed first is the default and is used when language recognition fails.
-
-For better performance it's recommended to synchronize this setting with the textcat configuration file, see :ref:`plugin-fts-setting-fts_language_config`.
-
-The filters used for stemming and stopwords are language dependent.
-
-Example setting:
-
-.. code-block:: none
-
-  plugin {
-    fts_languages = en de
-  }
+.. seealso:: See :ref:`fts` for an overview of the Dovecot Full Text Search
+             (FTS) system.
 
 .. _fts_languages:
 
@@ -250,8 +13,12 @@ FTS languages
 ^^^^^^^^^^^^^
 
 Language names are given as ISO 639-1 alpha 2 codes.
-Stemming support indicates whether the "snowball" filter can be used.
-Stopwords support indicates whether a stopwords file is distributed with Dovecot.
+
+Stemming support indicates whether the ``snowball`` filter can be used.
+
+Stopwords support indicates whether a stopwords file is distributed with
+Dovecot.
+
 Currently supported languages:
 
 +---------------+---------------------------------------+----------+-----------+
@@ -291,6 +58,401 @@ Currently supported languages:
 
 See also :ref:`fts_tokenization`
 
+Settings
+^^^^^^^^
+
+.. _plugin-fts-setting-fts_autoindex:
+
+``fts_autoindex``
+-----------------
+
+- Default: ``no``
+- Values:  :ref:`boolean`
+
+If enabled, index mail as it is delivered or appended.
+
+See :ref:`plugin-fts-setting-fts_autoindex_exclude`
+
+See :ref:`plugin-fts-setting-fts_autoindex_max_recent_msgs`
+
+
+.. _plugin-fts-setting-fts_autoindex_exclude:
+
+``fts_autoindex_exclude``
+-------------------------
+
+- Default: <empty>
+- Values:  :ref:`string`
+
+To exclude a mailbox from automatic indexing, it can be listed in this setting.
+
+To exclude additional mailboxes, add sequential numbers to the end of the
+plugin name.
+
+Use either mailbox names or special-use flags (e.g. ``\Trash``).
+
+For example::
+
+  plugin {
+    fts_autoindex_exclude = \Junk
+    fts_autoindex_exclude2 = \Trash
+    fts_autoindex_exclude3 = External Accounts/*
+  }
+
+
+.. _plugin-fts-setting-fts_autoindex_max_recent_msgs:
+
+``fts_autoindex_max_recent_msgs``
+---------------------------------
+
+.. versionadded:: 2.2.9
+
+- Default: ``0`` (ignore)
+- Values:  :ref:`uint`
+
+To exclude infrequently accessed mailboxes from automatic indexing, set this
+value to the maximum number of ``\Recent`` flagged messages that exist in the
+mailbox.
+
+Mailboxes with more flagged ``\Recent`` messages than this value will not be
+autoindexed, even though they get deliveries or appends. This is useful for,
+e.g., inactive Junk folders.
+
+Any folders excluded from automatic indexing will still be indexed, if a
+search on them is performed.
+
+Example Setting:
+
+.. code-block:: none
+
+  plugin {
+    fts_autoindex_max_recent_msgs = 999
+  }
+
+
+.. _plugin-fts-setting-fts_decoder:
+
+``fts_decoder``
+---------------
+
+.. versionadded:: 2.1
+
+- Default: <empty>
+- Values:  :ref:`string`
+
+Decode attachments to plaintext using this service and index the resulting
+plaintext.
+
+See the ``decode2text.sh`` script included in Dovecot for how to use this.
+
+Example::
+
+  plugin {
+    fts_decoder = decode2text
+  }
+
+  service decode2text {
+    executable = script /usr/lib/dovecot/decode2text.sh
+    user = vmail
+    unix_listener decode2text {
+      mode = 0666
+    }
+  }
+
+
+.. _plugin-fts-setting-fts_enforced:
+
+``fts_enforced``
+----------------
+
+.. versionadded:: v2.2.19
+
+- Default: ``no``
+- Values:  ``yes``, ``no`` or ``body``
+
+Require FTS indexes to perform a search? This controls what to do when
+searching headers and what to do on error situations.
+
+When searching from message body, the FTS index is always (attempted to be)
+updated to contain any missing mails before the search is performed.
+
+ ``no``
+    Searching from message headers won't update FTS indexes. For header
+    searches, the FTS indexes are used for searching the mails that are already
+    in it, but the unindexed mails are searched via dovecot.index.cache (or by
+    opening the emails if the headers aren't in cache).
+
+    If FTS lookup or indexing fails, both header and body searches fallback to
+    searching without FTS (i.e. possibly opening all emails). This may timeout
+    for large mailboxes and/or slow storage.
+
+ ``yes``
+    Searching from message headers updates FTS indexes, the same way as
+    searching from body does. If FTS lookup or indexing fails, the search fails.
+
+ ``body``
+    Searching from message headers won't update FTS indexes (the same
+    behavior as with ``no``). If FTS lookup or indexing fails, the search fails.
+
+   .. versionadded:: v2.3.7
+
+Note that only the ``yes`` value guarantees consistent search results. In other
+cases it's possible that the search results will be different depending on
+whether the search was performed via FTS index or not.
+
+
+.. _plugin-fts-setting-fts_filters:
+
+``fts_filters``
+----------------
+
+- Default: <none>
+- Values:  :ref:`string`
+
+The list of filters to apply.
+
+Language specific filter chains can be specified with ``fts_filters_<lang>``
+(e.g. ``fts_filters_en``).
+
++------------------------+-----------------------------------------------------+
+| Filter                 | Description                                         |
++========================+=====================================================+
+| ``lowercase``          | Change all text to lower case. Supports UTF8, when  |
+|                        | compiled with libicu and the library is installed.  |
+|                        | Otherwise only ASCII characters are lowercased.     |
++------------------------+-----------------------------------------------------+
+| ``stopwords``          | Filter certain common and short words, which are    |
+|                        | usually useless for searching.                      |
+|                        |                                                     |
+|                        | Settings:                                           |
+|                        |                                                     |
+|                        | * ``stopwords_dir``: path to the directory          |
+|                        |   containing stopword files. Stopword files are     |
+|                        |   looked up in ``”<path>”/stopwords_<lang>.txt``.   |
+|                        |                                                     |
+|                        | See :ref:`fts_languages` for list of stopword files |
+|                        | that are currently distributed with Dovecot.        |
+|                        |                                                     |
+|                        | More languages can be obtained from                 |
+|                        | `Apache Lucene <https://lucene.apache.org/>`_,      |
+|                        | `Snowball stemmer <https://snowballstem.org/>`_, or |
+|                        | https://github.com/stopwords-iso/.                  |
++------------------------+-----------------------------------------------------+
+| ``snowball``           | Stemming tries to convert words to a common base    |
+|                        | form. A simple example is converting “cars” to      |
+|                        | “car” (in English).                                 |
+|                        |                                                     |
+|                        | This stemmer is based on the                        |
+|                        | `Snowball stemmer <https://snowballstem.org/>`_     |
+|                        | library.                                            |
+|                        |                                                     |
+|                        | See :ref:`fts_languages`                            |
++------------------------+-----------------------------------------------------+
+| ``normalizer-icu``     | Normalize text using libicu. This is potentially    |
+|                        | very resource intensive.                            |
+|                        |                                                     |
+|                        | Caveat for Norwegian: The default normalizer filter |
+|                        | does not modify ``U+00F8`` (Latin Small Letter O    |
+|                        | with Stroke). In some configurations it might be    |
+|                        | desirable to rewrite it to e.g. ``o``. Same goes    |
+|                        | for the upper case version. This can be done by     |
+|                        | passing a modified ``id`` setting to the normalizer |
+|                        | filter. Similar cases can exists for other          |
+|                        | languages as well.                                  |
+|                        |                                                     |
+|                        | Settings:                                           |
+|                        |                                                     |
+|                        | * ``id``: description of the                        |
+|                        |   normalizing/transliterating rules to use.         |
+|                        |                                                     |
+|                        |   * See `Normalizer Format`_ for syntax.            |
+|                        |   * Defaults to ``Any-Lower; NFKD; [: Nonspacing    |
+|                        |     Mark :] Remove; [\\x20] Remove``                |
++------------------------+-----------------------------------------------------+
+| ``english-possessive`` | Remove trailing ``'s`` from English possessive form |
+|                        | tokens. Any trailing single ``'`` characters are    |
+|                        | already removed by tokenizing, whether this filter  |
+|                        | is used or not.                                     |
+|                        |                                                     |
+|                        | The ``snowball`` filter also removes possessive     |
+|                        | suffixes from English, so if using ``snowball``     |
+|                        | this filter is not needed. ``snowball`` likely      |
+|                        | produces better results, so this filter is          |
+|                        | advisable only when ``snowball`` is not available   |
+|                        | or can not be used due to extreme CPU performance   |
+|                        | requirements.                                       |
++------------------------+-----------------------------------------------------+
+| ``contractions``       | Removes certain contractions that can prefix words. |
+|                        | The idea is to only index the part of the token     |
+|                        | that conveys the core meaning.                      |
+|                        |                                                     |
+|                        | Only works with French, so the language of the      |
+|                        | input needs to be recognized by textcat as French.  |
+|                        |                                                     |
+|                        | It filters “qu'”, “c'”, “d'”, “l'”, “m'”, “n'”,     |
+|                        | “s'” and “t'”.                                      |
+|                        |                                                     |
+|                        | Do not use at the same time as ``generic``          |
+|                        | tokenizer with ``algorithm=tr29 wb5a=yes``.         |
++------------------------+-----------------------------------------------------+
+
+Example::
+
+  plugin {
+    fts_filters = normalizer-icu snowball stopwords
+    fts_filters_en = lowercase snowball english-possessive stopwords
+  }
+
+See also :ref:`fts_tokenization`
+
+.. _`Normalizer Format`: http://userguide.icu-project.org/transforms/general#TOC-Transliterator-Identifiers
+
+.. _plugin-fts-setting-fts_header_excludes:
+
+``fts_header_excludes``
+-----------------------
+
+.. versionadded:: 2.3.18
+
+
+- Default: <empty>
+- Values:  :ref:`string`
+
+The list of headers to, respectively, include or exclude.
+
+- The default is the pre-existing behavior, i.e. index all headers.
+- ``includes`` take precedence over ``excludes``: if a header matches both,
+  it is indexed.
+- The terms are case insensitive.
+- An asterisk ``*`` at the end of a header name matches anything starting with
+  that header name.
+- The asterisk can only be used at the end of the header name.
+  Prefix and infix usage of asterisk are not supported.
+
+Example::
+
+  plugin {
+    fts_header_excludes = Received DKIM-* X-* Comments
+    fts_header_includes = X-Spam-Status Comments
+  }
+
+- ``Received`` headers, all ``DKIM-`` headers and all ``X-`` experimental headers
+  are excluded, with the following exceptions:
+- ``Comments`` and ``X-Spam-Status`` are indexed anyway, as they match **both**
+  ``excludes`` and ``includes`` lists.
+- All other headers are indexed.
+
+Example::
+
+  plugin {
+    fts_header_excludes = *
+    fts_header_includes = From To Cc Bcc Subject Message-ID In-* X-CustomApp-*
+  }
+
+- No headers are indexed, except those specified in the ``includes``.
+
+.. _plugin-fts-setting-fts_header_includes:
+
+``fts_header_includes``
+-----------------------
+
+.. versionadded:: 2.3.18
+
+See :ref:`plugin-fts-setting-fts_header_excludes`.
+
+.. _plugin-fts-setting-fts_index_timeout:
+
+``fts_index_timeout``
+---------------------
+
+- Default: ``0`` (no timeout)
+- Values:  :ref:`uint`
+
+When the full text search backend detects that the index isn't up-to-date,
+the indexer is told to index the messages and is given this much time to do so.
+If this time limit is reached, an error is returned, indicating that the search
+timed out during waiting for the indexing to complete:
+``NO [INUSE] Timeout while waiting for indexing to finish``
+
+Example Setting:
+
+.. code-block:: none
+
+  plugin {
+    fts_index_timeout = 60s
+  }
+
+
+.. _plugin-fts-setting-fts_language_config:
+
+``fts_language_config``
+-----------------------
+
+- Default: <textcat dir>
+- Values:  :ref:`string`
+
+Path to the textcat/exttextcat configuration file, which lists the supported
+languages.
+
+This is recommended to be changed to point to a minimal version of a
+configuration that supports only the languages listed in
+:ref:`plugin-fts-setting-fts_languages`.
+
+Doing this improves language detection performance during indexing and also
+makes the detection more accurate.
+
+Example::
+
+  plugin {
+    fts_language_config = /usr/share/libexttextcat/fpdb.conf
+  }
+
+
+.. _plugin-fts-setting-fts_languages:
+
+``fts_languages``
+-----------------
+
+- Default: <empty>
+- Values:  :ref:`string`
+
+A space-separated list of languages that the full text search should detect.
+
+At least one language must be specified.
+
+The language listed first is the default and is used when language recognition
+fails.
+
+For better performance it's recommended to synchronize this setting with the
+textcat configuration file; see :ref:`plugin-fts-setting-fts_language_config`.
+
+The filters used for stemming and stopwords are language dependent.
+
+Example setting::
+
+  plugin {
+    fts_languages = en de
+  }
+
+
+.. _plugin-fts-setting-fts_tika:
+
+``fts_tika``
+------------
+
+.. versionadded:: 2.2.13
+
+- Default: <empty>
+- Values:  :ref:`string`
+
+URL for `Apache Tika <https://tika.apache.org/>`_ decoder for attachments.
+
+Example::
+
+  plugin {
+    fts_tika = http://tikahost:9998/tika/
+  }
+
 
 .. _plugin-fts-setting-fts_tokenizers:
 
@@ -298,9 +460,12 @@ See also :ref:`fts_tokenization`
 ------------------
 
 - Default: ``generic email-address``
+- Values:  :ref:`string`
 
 The list of tokenizers to use.
-This setting can be overridden for specific languages by using ``fts_tokenizers_<lang>`` (e.g. ``fts_tokenizers_en``).
+
+This setting can be overridden for specific languages by using
+``fts_tokenizers_<lang>`` (e.g. ``fts_tokenizers_en``).
 
 List of tokenizers:
 
@@ -348,12 +513,13 @@ List of tokenizers:
 
     * transform half-width Katakana letters to full-width.
     * transform full-width number letters to half-width
-    * transform those special letters (e.g, 1 will be transformed to 1, and 平成 to 平成)
+    * transform those special letters (e.g, 1 will be transformed to 1, and
+      平成 to 平成)
 
   Settings:
 
     ``maxlen``: Maximum length of token, before an arbitrary cut off is made.
-                The default value for the kuromoji tokenizer is 1024.
+                The default value for the kuromoji tokenizer is ``1024``.
 
     ``kuromoji_split_compounds``: This setting enables “search mode” in the
                                   Atilika Kuromoji library. The setting
@@ -365,8 +531,8 @@ List of tokenizers:
                                   FTS indexes should be recreated in this case.
 
     ``id``: Description of the normalizing/transliterating rules to use.
-            See http://userguide.icu-project.org/transforms/general#TOC-Transliterator-Identifiers
-            for syntax. Defaults to “Any-NFKC” which is quite good for CJK text
+            See `Normalizer Format` for syntax.
+            Defaults to ``Any-NFKC`` which is quite good for CJK text
             mixed with latix alphabet languages. It transforms CJK characters to
             full-width encoding and transforms latin ones to half-width. The
             NFKC transformation is described above. NB In case this setting is
@@ -380,44 +546,3 @@ List of tokenizers:
   Japanese search implementations.
 
 See also :ref:`fts_tokenization`
-
-
-.. _plugin-fts-setting-fts_tika:
-
-``fts_tika``
----------------
-.. versionadded:: 2.2.13
-
-``http://tikahost:9998/tika/``: This URL needs to be running Apache Tika server
-(e.g. started with ``java -jar tika-server/target/tika-server-1.5.jar``)
-
-URL for TIKA decoder for attachments.
-
-
-.. _plugin-fts-setting-fts_decoder:
-
-``fts_decoder``
----------------
-
-.. versionadded:: 2.1
-
-Decode attachments to plaintext using this service and index the resulting plaintext.
-See the ``decode2text.sh`` script included in Dovecot for how to use this.
-
-Example on both:
-
-.. code-block:: none
-
-  plugin {
-    fts_decoder = decode2text
-    fts_tika = http://tikahost:9998/tika/
-  }
-
-  service decode2text {
-    executable = script /usr/lib/dovecot/decode2text.sh
-    user = vmail
-    unix_listener decode2text {
-      mode = 0666
-    }
-  }
-

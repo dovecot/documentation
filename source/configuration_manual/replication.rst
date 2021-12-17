@@ -40,7 +40,8 @@ Configuration
 -------------
 
 Since v2.3.1 you can disable replication for a user by providing
-``noreplicate`` :ref:`user database field <authentication-user_database_extra_fields>`.
+``noreplicate`` :ref:`user database field <authentication-user_database_extra_fields>`. See :ref:`plugin-doveadm-dsync-setting_noreplicate`.
+
 Another way to disable replication for some users is to return
 :ref:`plugin-replication-setting_mail_replica` field from userdb for users you want to replicate.
 
