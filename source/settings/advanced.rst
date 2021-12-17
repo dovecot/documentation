@@ -10,6 +10,20 @@ Core Advanced Settings
 
 See :ref:`settings` for list of all setting groups.
 
+.. _setting-mail_cache_min_mail_count:
+
+``mail_cache_min_mail_count``
+-----------------------------
+
+- Default: ``0``
+- Values: :ref:`uint`
+
+Only update cache file when the mailbox contains at least this many messages.
+
+With a setting other than ``0``, you can optimize behavior for fewer disk
+writes at the cost of more disk reads.
+
+
 .. _setting-mail_cache_unaccessed_field_drop:
 
 ``mail_cache_unaccessed_field_drop``

@@ -6,8 +6,7 @@ Mail Storage
 
 ``src/lib-storage/mail-storage.h`` and ``mail-storage-private.h``
 describes mail storage. Mail storage is mainly about being a common
-container for its mailboxes. For example with
-`multi-dbox <https://wiki.dovecot.org/MailboxFormat/dbox#>`__
+container for its mailboxes. For example with :ref:`dbox_mbox_format`,
 each storage has one directory where all the message bodies are written
 to, while the per-mailbox directories only contain index files. With
 other mailbox formats mail storage doesn't do much else than allow

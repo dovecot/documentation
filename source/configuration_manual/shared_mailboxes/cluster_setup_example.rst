@@ -50,7 +50,7 @@ Dovecot Backend configuration snippet
         imapc_host = <director-ip>
         imapc_password = imapcpass
         imapc_user = # empty defaults to shared user
-        imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl
+        imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login
 
         namespace shared {
           type = shared
@@ -88,6 +88,10 @@ Dovecot Backend configuration snippet
           acl = vfile
           acl_ignore_namespace = shared/*
           acl_shared_dict = proxy:dict:acl-mysql
+        }
+
+        protocol imap {
+          mail_plugins = $mail_plugins imap_acl
         }
 
         # If quota is used make sure to disable counting for shared namespace

@@ -197,7 +197,7 @@ See :ref:`pigeonhole_configuration_visible_default_script`.
 
 .. deprecated:: 0.3.1
 
-Directory for :personal `include scripts <http://tools.ietf.org/html/draft-ietf-sieve-include-05>`__ for the include extension.
+Directory for :personal `include scripts <http://tools.ietf.org/html/draft-ietf-sieve-include-05>`_ for the include extension.
 The Sieve interpreter only recognizes files that end with a .sieve extension,
 so the include extension expects a file called name.sieve to exist in the sieve_dir directory for a script called name.
 When using ManageSieve, this is also the directory where scripts are uploaded.
@@ -416,7 +416,7 @@ irrespective of what is configured for this setting.
 
 .. versionremoved:: v0.2
 
-The separator that is expected between the ``:user`` and ``:detail`` address parts introduced by the `subaddress extension <http://tools.ietf.org/html/rfc5233/>`__.
+The separator that is expected between the ``:user`` and ``:detail`` address parts introduced by the `subaddress extension <http://tools.ietf.org/html/rfc5233/>`_.
 This may also be a sequence of characters (e.g. ``--``).
 The current implementation looks for the separator from the left of the localpart and uses the first one encountered.
 The ``:user`` part is left of the separator and the ``:detail`` part is right.

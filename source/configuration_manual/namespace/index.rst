@@ -220,10 +220,8 @@ Namespace types
 There are 3 types of namespaces:
 
 * private: Typically contains only user's own private mailboxes.
-* shared: Contains other users' `shared mailboxes
-  <https://wiki.dovecot.org/SharedMailboxes/Shared>`_
-* public: Contains `public mailboxes
-  <https://wiki.dovecot.org/SharedMailboxes/Public>`_
+* shared: Contains other users' :ref:`shared mailboxes <user_shared_mailboxes>`.
+* public: Contains :ref:`public mailboxes <public_shared_mailboxes>`.
 
 .. _hierarchy-separators:
 
@@ -260,9 +258,8 @@ Example:
 
 The layout separator also restricts the mailbox names. For example if the
 layout separator is ``.``, you can't just set separator to ``/`` and create a
-mailbox named `foo.bar`. If you need to do this, you can use `listescape
-<https://wiki.dovecot.org/Plugins/Listescape>`_ plugin to add escape the
-mailbox names as necessary.
+mailbox named `foo.bar`. If you need to do this, you can use
+:ref:`listescape_plugin` to escape the mailbox names as necessary.
 
 A commonly used separator is ``/``. It probably causes the least amount of
 trouble with different IMAP clients. The ``^`` separator is troublesome with
@@ -341,8 +338,7 @@ currently no way to simply `add` a namespace.
 
 Dovecot Support for Shared Mailboxes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Dovecot can support mailbox sharing in several different ways: `Dovecot Shared
-Mailboxes <https://wiki.dovecot.org/SharedMailboxes>`_
+See :ref:`mailbox sharing <shared_mailboxes>`.
 
 Examples:
 ^^^^^^^^^^

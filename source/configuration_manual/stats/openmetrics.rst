@@ -51,10 +51,6 @@ a set of metrics.
 
 ::
 
-  metric client_connections {
-    filter = event=client_connection_finished
-  }
-
   metric auth_success {
     filter = (event=auth_request_finished AND success=yes)
   }
@@ -85,12 +81,6 @@ And the following is a sample exported data with such metrics configuration:
   # HELP dovecot_build Dovecot build information
   # TYPE dovecot_build info
   dovecot_build_info{version="2.4.devel",revision="38ecc424a"} 1
-  # HELP dovecot_client_connections Total number of all events of this kind
-  # TYPE dovecot_client_connections counter
-  dovecot_client_connections_total 0
-  # HELP dovecot_client_connections_duration_seconds Total duration of all events of this kind
-  # TYPE dovecot_client_connections_duration_seconds counter
-  dovecot_client_connections_duration_seconds_total 0.000000
   # HELP dovecot_auth_success Total number of all events of this kind
   # TYPE dovecot_auth_success counter
   dovecot_auth_success_total 892

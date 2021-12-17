@@ -108,11 +108,12 @@ Fields
 ^^^^^^^
 Each event can have any number of ``key=value`` fields. Parent event's fields are inherited by the child event.
 
-There are 3 types of fields:
+There are 4 types of fields:
 
 * strings
 * numbers ``(intmax_t = signed 64bit usually)``
 * timestamp (struct timeval)
+* a list of strings
 
 The fields can be used for various purposes:
 

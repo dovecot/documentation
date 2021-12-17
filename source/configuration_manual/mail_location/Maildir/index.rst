@@ -38,6 +38,17 @@ you'll need to enable fs layout:
 
   mail_location = maildir:~/Maildir:LAYOUT=fs
 
+Default ``mail_location`` Keys
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For Maildir, the default :ref:`mail_location_settings-keys` are:
+
+================ =============
+Key              Default Value
+================ =============
+``FULLDIRNAME``  <empty>
+================ =============
+
 .. _maildir_settings_control_files:
 
 Control Files
@@ -60,7 +71,8 @@ cache and download the messages all over again. If you do this for all the
 users, you could cause huge disk I/O bursts to your server.
 
 Dovecot cannot currently handle not being able to write the control files, so
-it will cause problems with `filesystem quota`_. To avoid problems with this,
+it will cause problems with :ref:`filesystem quota <quota_backend_fs>`. To
+avoid problems with this,
 you should place control files into a partition where quota isn't checked. You
 can specify this by adding ``:CONTROL=<path>`` to ``mail_location``:
 
@@ -68,13 +80,13 @@ can specify this by adding ``:CONTROL=<path>`` to ``mail_location``:
 
   mail_location = maildir:~/Maildir:CONTROL=/var/no-quota/%u
 
-.. _`filesystem quota`: https://wiki.dovecot.org/Quota/FS
-
 Index Files
 ^^^^^^^^^^^
 
-See :ref:`Mail Location Index Files` for a full explanation of how to change
-the index path. Example:
+By default, index files are stored in the actual Maildirs.
+
+See :ref:`mail_location_settings-index_files` for an explanation of how to
+change the index path. Example:
 
 .. code-block:: none
 
@@ -91,8 +103,6 @@ Filesystem Optimizations
 ------------------------
 
 See :ref:`maildir_and_filesystems`.
-
-.. _maildir_settings_mailbox_directory_name:
 
 Mailbox Directory Name
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -130,6 +140,39 @@ specified, we get an extra path component ``INBOX/`` immediately prior to the
 ``~/Maildir/INBOX/mAildir/{new,cur,tmp}/``.
 
 The value for ``DIRNAME`` should be chosen carefully so as to minimise the chances of clashing with mail folder names. In the example here, unusual upper/lower casing has been used.
+
+Multiple Namespaces pointing to INBOX
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When there are multiple namespaces that point to the same INBOX namespace,
+``dovecot.list.index`` can potentially keep fighting over whether INBOX exists
+or not.
+
+For example:
+
+.. code-block:: none
+
+  mail_location = maildir:~/Maildir:LAYOUT=fs
+  namespace {
+    inbox = yes
+    prefix = INBOX/
+    separator = /
+    subscriptions = no
+  }
+  namespace {
+    prefix =
+    separator = /
+    alias_for = INBOX/
+    location = maildir:~/Maildir:LAYOUT=fs # Alias location
+    subscriptions = yes
+  }
+
+The solution is to disable ``dovecot.list.index`` for the alias namespace. In
+the above example, this is done by changing the "Alias location" line to:
+
+.. code-block:: none
+
+  location = maildir:~/Maildir:LAYOUT=fs:LISTINDEX=
 
 Settings
 ^^^^^^^^

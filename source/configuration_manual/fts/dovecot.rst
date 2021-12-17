@@ -3,16 +3,23 @@
 Dovecot Pro FTS Engine
 ======================
 
-FS Settings
-^^^^^^^^^^^
+.. important:: The Dovecot Pro FTS driver is a part of
+               :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>` only.
 
-The :ref:`plugin-fts-dovecot-setting-fts_dovecot_fs` setting defines the location for the
-fts indexes.
+The Dovecot FTS indexes are created and queried by a custom (Dovecot Pro) FTS
+engine. The FTS engine component is loaded into the Dovecot FTS plugin as an
+index backend and it processes text input from the FTS tokenizer and filter
+chains and search queries constructed by the FTS plugin.
 
-The Dovecot FTS indexes are created and queried by a custom FTS engine. The
-FTS engine component is loaded into the Dovecot FTS plugin as an index
-backend and it processes text input from the FTS tokenizer and filter chains
-and search queries constructed by the FTS plugin.
+Settings
+^^^^^^^^
+
+See :ref:`plugin-fts-dovecot` for setting information.
+
+The :ref:`plugin-fts-dovecot-setting-fts_dovecot_fs` setting defines the
+location for the fts indexes.
+
+See :ref:`plugin-fts` for generic FTS settings.
 
 Data Storage Engine
 ^^^^^^^^^^^^^^^^^^^
@@ -20,22 +27,22 @@ Data Storage Engine
 Each account's mail is indexed into a small set of control files, and one or
 more triplets of files.
 
-The control files are::
+The control files are:
 
-  S - the 'Stats' cache - contains information about all of the triplets
-  X - the 'eXpunge' file - a list of mails to be expunged
-  Y - the 'expunged' file - a list of mails that have been expunged
+ * S - the 'Stats' cache - contains information about all of the triplets
+ * X - the 'eXpunge' file - a list of mails to be expunged
+ * Y - the 'expunged' file - a list of mails that have been expunged
 
 Both X and Y grow by being appended to. When Y grows to sufficient size to
 indicate that the X file contains old stuff, the contents of Y will be
 subtracted from X, and Y will be deleted. This is automatic as part of an
 expunge.
 
-Each triplet contains of the following::
+Each triplet contains of the following:
 
-  D - the 'Docindex', or index of documents - contains { mailbox_guid, uid, header/mime_part } info
-  W - the 'Wordlist' - contains all the indexed words, and offsets into the L file
-  L - the 'docList' - containing lists of indices into the D file.
+  * D - the 'Docindex', or index of documents - contains { mailbox_guid, uid, header/mime_part } info
+  * W - the 'Wordlist' - contains all the indexed words, and offsets into the L file
+  * L - the 'docList' - containing lists of indices into the D file.
 
 To perform a lookup of a word, find the L-offset for that word from the W
 file. From that offset in the L file, read the list of docidx (document
@@ -80,8 +87,8 @@ be kept in local metacache until one of the following happens:
  * The triplet has at least :ref:`plugin-fts-dovecot-setting-fts_dovecot_mail_flush_interval` number of mails. Note that the default is 0, which means this check isn't done at all.
  * Metacache is flushed
 
-FTS is commonly also configured to use "fscache", which caches reading of
-FTS triplets that were already saved to the object storage.
+FTS is commonly also configured to use :ref:`fscache`, which caches reading
+of FTS triplets that were already saved to the object storage.
 
 Lookups
 ^^^^^^^

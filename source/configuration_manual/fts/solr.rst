@@ -3,7 +3,7 @@
 Solr FTS Engine
 ===============
 
-`Solr <https://lucene.apache.org/solr/>`__ is a Lucene indexing server.
+`Solr <https://lucene.apache.org/solr/>`_ is a Lucene indexing server.
 Dovecot communicates to it using HTTP/XML queries.
 
 The steps described in this page are tested for Solr 7.7.0. For
@@ -31,7 +31,7 @@ First, the Solr server needs to be installed. Most operating systems
 will have packages for this. The latest version can be downloaded and
 installed from official website, and here are instructions to install
 7.7.0 based on the howto `How to Install Apache Solr 7.5 on Debian
-9/8 <https://tecadmin.net/install-apache-solr-on-debian/>`__:
+9/8 <https://tecadmin.net/install-apache-solr-on-debian/>`_:
 
 ::
 
@@ -93,9 +93,9 @@ Install schema.xml and solrconfig.xml
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Copy
-`doc/solr-config-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/master/doc/solr-config-7.7.0.xml>`__
+`doc/solr-config-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/master/doc/solr-config-7.7.0.xml>`_
 and
-`doc/solr-schema-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/master/doc/solr-schema-7.7.0.xml>`__
+`doc/solr-schema-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/master/doc/solr-schema-7.7.0.xml>`_
 (Since Dovecot 2.3.6+) to ``/var/solr/data/dovecot/conf/`` as
 ``solrconfig.xml`` and ``schema.xml``. The ``managed-schema`` file is
 generated based on ``schema.xml``.
@@ -103,53 +103,19 @@ generated based on ``schema.xml``.
 Dovecot Plugin
 --------------
 
-On Dovecot's side add:
+See :ref:`plugin-fts-solr` for setting information.
 
-Into 10-mail.conf (note add existing plugins to string)
-
-::
-
-   mail_plugins = $mail_plugins fts fts_solr
-
-Into 90-plugins.conf
+Example Configuration
+~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-   plugin {
-     fts = solr
-     fts_solr = url=https://solr.example.org:8983/solr/dovecot/
-   }
+  mail_plugins = $mail_plugins fts fts_solr
 
-Fields listed in ``fts_solr`` plugin setting are space separated. They
-can contain:
-
--  url=<solr url> : Required base URL for Solr. (remember to add your
-   core name if using solr 7+ : "/solr/dovecot/"). The default URL for
-   Solr 7+ is <https://localhost:8983/solr/dovecot>
-
--  debug : Enable HTTP debugging. Writes to debug log.
-
--  break-imap-search : Use Solr also for indexing TEXT and BODY
-   searches. This makes your server non-IMAP-compliant. (This is always
-   enabled in v2.1+, and removed since v2.3+ as it's default behaviour)
-
--  rawlog_dir=<directory> : For debugging, store HTTP exchanges between
-   Dovecot and Solr in this directory. (2.3.6+)
-
--  batch_size : Configure the number of mails sent in single requests to
-   Solr, default is 1000. (2.3.6+)
-
-   -  with fts_autoindex=yes, each new mail gets separately indexed on
-      arrival, so batch_size only matters when doing the initial
-      indexing of a mailbox.
-
-   -  with fts_autoindex=no, new mails don't get indexed on arrival, so
-      batch_size is used when indexing gets triggered.
-
--  soft_commit=yes|no : Control whether new mails are immediately
-   searchable via Solr, default to yes. When using no, it's important to
-   set autoCommit or autoSoftCommit time in solrconfig.xml so mails
-   eventually become searchable. (2.3.6+)
+  plugin {
+    fts = solr
+    fts_solr = url=https://solr.example.org:8983/solr/dovecot/
+  }
 
 Important notes:
 
@@ -158,7 +124,9 @@ Important notes:
    requests for fields such as sender/recipients/subject when Body is
    not included as this data is contained within the local index.
 
-Solr commits & optimization
+.. _fts_backend_solr-soft_commits:
+
+Solr Commits & Optimization
 ---------------------------
 
 Solr indexes should be optimized once in a while to make searches faster
@@ -183,6 +151,25 @@ The default configuration of Solr is to auto-commit every once in a
 while (~15sec) so commit is not necessary. Also, the default
 TieredMergePolicy in Solr will automatically purge removed documents later, 
 so optimize is not necessary.
+
+Soft Commits
+~~~~~~~~~~~~
+
+If soft commits are enabled, dovecot will perform a soft commit to Solr at the
+end of transaction. This has the benefit that search results are immediately
+available. You can also enable automatic commits in SOLR config, with
+
+.. code-block:: xml
+
+  <autoSoftCommit>
+    <maxTime>60000</maxTime>
+  </autoSoftCommit>
+
+or setting it in solrconfig.xml with
+
+.. code-block:: xml
+
+  ${solr.autoSoftCommit.maxTime:60000}
 
 Re-index mailbox
 ----------------
@@ -278,7 +265,7 @@ it are:
       ``user_query = SELECT concat('url=https://', solr_host, ':8983/solr/dovecot/') AS fts_solr, ...``
 
 You can also use
-`SolrCloud <https://lucene.apache.org/solr/guide/7_6/solrcloud.html>`__,
+`SolrCloud <https://lucene.apache.org/solr/guide/7_6/solrcloud.html>`_,
 the clustered version of Solr, that allows you to scale up, and adds
 failover / high availability to your FTS system. Dovecot-solr works fine
 with a SolrCloud cluster as long as the solr schema is the right one.
@@ -290,7 +277,7 @@ External sites with tutorials on using Solr under Dovecot
 
 -  `Installing Apache Solr with Dovecot for fulltext search results
    (ATmail support
-   guide) <https://help.atmail.com/hc/en-us/articles/201566404-Installing-Apache-Solr-with-Dovecot-for-fulltext-search-results>`__
+   guide) <https://help.atmail.com/hc/en-us/articles/201566404-Installing-Apache-Solr-with-Dovecot-for-fulltext-search-results>`_
 
 -  FreeBSD: <https://mor-pah.net/2016/08/15/dovecot-2-2-with-solr-6-or-5/>
 

@@ -1,0 +1,7 @@
+[dovecot-2.3.17-rev8-obox2]
+name=RedHat Enterprise Linux 7 - OX Dovecot Pro Object Storage plug-in
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/obox2/RHEL7
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+

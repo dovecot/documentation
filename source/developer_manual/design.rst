@@ -12,11 +12,12 @@ Dovecot Design
    and :ref:`Doveadm HTTP server protocol <admin-doveadm-http-api>`
 -  :ref:`Doveadm synchronization <doveadm_dsync>`
 -  :ref:`Dovecot Lua support <lua>`
+-  :ref:`Dovecot dict protocol <dovecot_dict_protocol>`
 
 Protocol extensions
 -------------------
 
--  :ref:`Forwarding parameters in IMAP/POP3/LMTP/SMTP proxying <parameter_forwarding>`
+-  :ref:`Forwarding parameters in IMAP/POP3/LMTP/SMTP proxying <forwarding_parameters>`
 
 Code APIs
 ---------

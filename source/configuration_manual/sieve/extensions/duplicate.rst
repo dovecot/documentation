@@ -5,7 +5,7 @@ Pigeonhole Sieve: Duplicate Extension
 =====================================
 
 The **duplicate** extension `RFC
-7353 <http://tools.ietf.org/html/rfc7352>`__ adds a new test command
+7353 <http://tools.ietf.org/html/rfc7352>`_ adds a new test command
 called ``duplicate`` to the Sieve language. This test adds the ability
 to detect duplications. The main application for this new test is
 handling duplicate deliveries commonly caused by mailing list
@@ -17,9 +17,9 @@ or other parts of the message.
 
 Previously, this extension was Dovecot-specific and available under the
 name ``vnd.dovecot.duplicate``. Specification for old version available
-`here <http://hg.rename-it.nl/dovecot-2.1-pigeonhole/raw-file/tip/doc/rfc/spec-bosch-sieve-duplicate.txt>`__.
+`here <http://hg.rename-it.nl/dovecot-2.1-pigeonhole/raw-file/tip/doc/rfc/spec-bosch-sieve-duplicate.txt>`_.
 That implementation differs significantly from what is now published as
-`RFC 7353 <http://tools.ietf.org/html/rfc7352>`__, but the original
+`RFC 7353 <http://tools.ietf.org/html/rfc7352>`_, but the original
 extension is still supported for backwards compatibility.
 
 Configuration

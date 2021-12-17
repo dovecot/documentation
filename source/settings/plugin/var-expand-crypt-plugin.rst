@@ -1,9 +1,14 @@
 .. _plugin-var-expand-crypt:
 
-=============================
+=======================
 var-expand-crypt plugin
-=============================
+=======================
 
-Variable encryption/decryption
+.. versionadded:: v2.2.29
 
-See: `var-expand-crypt plugin <https://wiki.dovecot.org/Plugins/VarExpandCrypt>`_
+.. seealso:: :ref:`var_expand_crypt_plugin`
+
+Settings
+========
+
+None.

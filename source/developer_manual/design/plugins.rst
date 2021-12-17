@@ -23,13 +23,25 @@ Versioning
 Since different Dovecot versions can have different APIs, your plugin
 should usually also define ``<plugin_name>_version``, like:
 
-::
+.. code-block:: C
 
    const char *imap_quota_plugin_version = DOVECOT_ABI_VERSION;
 
 If the version string in plugin doesn't match the version of the running
 binary, the plugin loading fails. The DOVECOT_ABI_VERSION is defined in
 Dovecot's ``config.h``, which you're typically including.
+
+It's possible to check the Dovecot version number with a macro. This allows
+either supporting different Dovecot APIs or giving a clear error message if
+the API is too old to support your plugin. For example:
+
+.. code-block:: C
+
+  #if ! DOVECOT_PREREQ(2, 3, 18)
+  #  error Must have at least v2.3.18
+  #endif
+
+.. versionchanged:: v2.3.18 added the 3rd micro-version parameter.
 
 Dependencies
 ------------
@@ -41,14 +53,14 @@ not found". There are two steps for this:
 First create ``<plugin_name>_dependencies`` array listing plugin names that
 the plugin depends on, like:
 
-::
+.. code-block:: C
 
    const char *imap_quota_plugin_dependencies[] = { "quota", NULL };
 
 Then you'll also have to make the plugin .so binary link to the other
 plugins:
 
-::
+.. code-block:: none
 
    if PLUGIN_DEPS
    lib11_imap_quota_plugin_la_LIBADD = \
@@ -61,7 +73,7 @@ Otherwise the build might fail or plugin loading might fail.
 Once all this is done, trying to load imap_quota plugin without quota
 plugin gives a nice error message:
 
-::
+.. code-block:: none
 
    Error: Can't load plugin imap_quota_plugin: Plugin quota must be loaded also
 

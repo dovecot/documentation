@@ -16,11 +16,8 @@ There are two ways for master users to log in as other users:
    ID field.
 
 2. Specify both the master username and the login username in the same
-   username field. The usernames are separated by a string configured
-   by the ``auth_master_user_separator`` setting. UW-IMAP uses ``*`` as
-   the separator, so that could be a good choice. Using ``*`` as the
-   separator, the master user would log in as
-   ``login_user*master_user``.
+   username field. See :ref:`setting-master_user_separator` for the format
+   of the string.
 
 Master users are configured by adding a new :ref:`authentication-password_databases`
 with ``master=yes`` setting. The users in the master passdb cannot log in as

@@ -55,15 +55,19 @@ in this mailbox ``someone1`` would access a mailbox with the name
 ::
 
    namespace shared {
-    type = shared
-    prefix = shared/%%u/
-    list = children
-    subscriptions = no
-    # Use INDEXPVT to enable per-user \Seen flags.
-    # If running earlier versions than 2.3.15, or if using obox storage
-    # INDEXPVT is not supported.
-    location = imapc:~/shared/%%u:INDEXPVT=~/shared-pvt/%%u
+     type = shared
+     prefix = shared/%%u/
+     list = children
+     subscriptions = no
+     # Use INDEXPVT to enable per-user \Seen flags.
+     # If running earlier versions than 2.3.15, or earlier than 2.3.17 with obox
+     # storage INDEXPVT is not supported.
+     location = imapc:~/shared/%%u:INDEXPVT=~/shared-pvt/%%u
    }
+
+.. note:: Obox relies on having the INDEXPVT directory configured to ``~/shared-pvt``
+          otherwise the private indexes are not tracked by metacache and can
+          get lost if user changes backends.
 
 .. note:: See :ref:`user_shared_mailboxes_vs` for an explanation more details on the used variables.
 
@@ -79,7 +83,7 @@ Additionally imapc must be configured accordingly on the backends:
    connects to Dovecot director/proxy
  * :ref:`setting-imapc_features`: For the best performance and functionality,
    the setting should contain at least
-   ``fetch-bodystructure fetch-headers rfc822.size search modseq acl``
+   ``fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login``
 
 
 .. versionadded:: 2.3.15 INDEXPVT for imapc is supported from 2.3.15 onwards.
@@ -91,7 +95,7 @@ Additionally imapc must be configured accordingly on the backends:
    imapc_host = director-ip
    #imapc_user = # leave this empty. It'll be automatically filled with the destination username.
    imapc_password = master-secret
-   imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl
+   imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login
 
 
 As mentioned earlier the :ref:`acl <acl>` plugin must be loaded and configured
@@ -108,6 +112,12 @@ accordingly:
       acl_shared_dict = $your_prefered_shared_dict
     }
 
+    # In order to be able to issue ACL commands over imap, imap_acl must be loaded
+    protocol imap {
+      mail_plugins = $mail_plugins imap_acl
+    }
+
+
 The :ref:`acl <acl>` plugin must be told to ignore the shared namespace and all
 its children using the :ref:`plugin-acl-setting-acl_ignore_namespace` setting.
 
@@ -123,8 +133,7 @@ possibilities for it are:
 -  sql: Shared SQL server
 
 -  Any other :ref:`shared dictionary <dict>` can be used like described at
-   :ref:`user_shared_mailboxes_shared_mailbox_listing`
-
+   :ref:`user_shared_mailboxes_shared_mailbox_listing`.
 
 Please also see :ref:`mailbox_sharing_in_cluster_simple_example`.
 

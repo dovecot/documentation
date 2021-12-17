@@ -9,8 +9,18 @@ See :ref:`quota` for an overview of the Dovecot quota plugin.
 Quota configuration is split into multiple settings: quota root and quota
 rules.
 
+Settings
+========
+
+See :ref:`plugin-quota` for all quota settings.
+
+.. _quota_configuration_root:
+
 Quota Root
 ^^^^^^^^^^
+
+See :ref:`plugin-quota-setting_quota` for the details on the syntax of the
+quota root setting.
 
 Quota root is a concept from `IMAP Quota specifications (RFC 2087)`_. Normally
 you'll have only one quota root, but in theory there could be, e.g., "user
@@ -19,55 +29,23 @@ with each other (if at all). In some systems, for example, INBOX could have a
 completely different quota root from the rest of the mailboxes (e.g. INBOX in
 ``/var/mail/`` partition and others in ``/home/`` partition).
 
-Quota root configuration includes the backend name, quota root name, and its
-parameters (if any):
-
-.. code-block:: none
-
-  quota = <backend>[:<quota root name>[:<backend args>]]
-
-The quota root name is just an arbitrary string that is sent to IMAP clients,
-which in turn may show it to the user. The name has no meaning. By default, an
-empty string is used, but you may want to change that since some clients
-(Apple Mail) break and don't show quota at all then.
-
-You can define multiple quota roots by appending an increasing number:
-
-.. code-block:: none
-
-  plugin {
-    quota = maildir:User quota
-    quota2 = fs:Disk quota
-    #quota3 = ...
-  }
-
-Globally available arguments for ``<backend args>`` parameter:
-
-=============== ================================================================
-Name            Description
-=============== ================================================================
-``noenforcing`` Don't try to enforce quotas by calculating if saving would get
-                user over quota. Only handle write failures.
-=============== ================================================================
-
-If you want to specify multiple backend arguments, separate them with ':'
-(e.g. ``noenforcing:foo:bar``).
-
 .. _`IMAP Quota specifications (RFC 2087)`: https://tools.ietf.org/html/rfc2087
+
+.. _quota_configuration_rules:
 
 Quota Rules
 ^^^^^^^^^^^
 
-Quota rules configure the actual quota limits. The syntax is:
+See :ref:`plugin-quota-setting_quota` for the details on the syntax of the
+quota rule setting.
 
-.. code-block:: none
+For `Maildir++ quota <maildir_quota>`_ if ``maildirsize`` file exists the
+limits are taken from it but if it doesn't exist the ``?`` limits are used.
 
-  quota_rule = <mailbox name>:<limit configuration>
-  #quota_rule2 = ...
-  #quota_rule3 = ..etc..
+.. _`maildir_quota`: https://www.courier-mta.org/imap/README.maildirquota.html
 
-``*`` as the mailbox name configures the default limit, which is applied on
-top of a mailbox-specific limit if found. For example:
+Example
+-------
 
 .. code-block:: none
 
@@ -84,57 +62,9 @@ is deleting messages to get under quota.  Additionally, any messages in the
 SPAM folder are ignored per the ``ignore`` directive and would not count
 against the quota.
 
-``?`` as the mailbox name works almost like ``*``. The difference is that
-``?`` is used only if quota backend doesn't override the limit. For example,
-with `Maildir++ quota <maildir_quota>`_ if ``maildirsize`` file exists, the
-limits are taken from it, but if it doesn't exist the ``?`` limits are used.
-
-``*`` and ``?`` wildcards can be used as a generic wildcard in mailbox
-names, so for example ``box*`` matches ``boxes``. As shown in the above
-example, the first quota rule is named ``quota_rule`` while the following
+The first quota rule muse be named ``quota_rule`` while the following
 rules have an increasing digit in them. You can have as many quota rules as
 you want.
-
-.. _`maildir_quota`: https://www.courier-mta.org/imap/README.maildirquota.html
-
-Quota Rules Limit Configuration
--------------------------------
-
-The following limit names are supported:
-
-============ ===================================================================
-Name         Description
-============ ===================================================================
-``backend``  Quota backend-specific limit configuration.
-``bytes``    Quota limit (without suffix: in bytes). 0 means unlimited.
-``ignore``   Don't include the specified mailbox in quota at all.
-``messages`` Quota limit in number of messages. 0 means unlimited.
-``storage``  Quota limit (without suffix: in kilobytes). 0 means unlimited.
-============ ===================================================================
-
-Settings with a limit value support the :ref:`size` syntax as a suffix. 
-
-Settings also support ``%`` as a suffix. Percents are relative to the default
-rule. For example:
-
-.. code-block:: none
-
-  plugin {
-    quota = maildir:User quota
-    quota_rule = *:storage=1GB
-    # 10% of 1GB = 100MB
-    quota_rule2 = Trash:storage=+10%%
-    # 20% of 1GB = 200MB
-    quota_rule3 = Spam:storage=+20%%
-  }
-
-Note that ``%`` is written twice to escape it, because :ref:`config_variables`
-are expanded in plugin section. :ref:`authentication-user_database`
-configuration may or may not require this escaping.
-
-Backend-specific configuration currently is used only with ``Maildir++`` quota
-backend. It means you can have the quota in Maildir++ format (e.g.
-``10000000S``).
 
 .. _quota_configuration_per_user:
 
@@ -281,25 +211,24 @@ sure the users differs. ``%u.archive`` defines ``<username>.archive`` as key
 to track quota for the ``Archive`` namespace; ``%u.default`` tracks the quota
 of other folders. See :ref:`config_variables` for further help on variables.
 
+Quota and Shared Namespaces
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Quota plugin considers shared namespaces against owner's quota, not the current user's.
+There is a limitation that per-user quota configuration is ignored, and the
+current user's configuration is used.
+
+Public namespaces are ignored unless there is explicit quota specified for it.
+
 Custom Quota Exceeded Message
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can configure Dovecot to send a custom string instead of the default quota
-exceeded message. Do this by setting the string in the
-``quota_exceeded_message`` plugin setting:
+See :ref:`plugin-quota-setting_quota_exceeded_message`.
 
-.. code-block:: none
+Example::
 
   plugin {
     quota_exceeded_message = Quota exceeded, please go to http://www.example.com/over_quota_help for instructions on how to fix this.
-  }
-
-Dovecot can also read the quota exceeded message from a file:
-
-.. code-block:: none
-
-  plugin {
-    quota_exceeded_message = </path/to/quota_exceeded_message.txt
   }
 
 .. _quota_configuration_warning_scripts:
@@ -307,36 +236,10 @@ Dovecot can also read the quota exceeded message from a file:
 Quota Warning Scripts
 ^^^^^^^^^^^^^^^^^^^^^
 
-You can configure Dovecot to run an external command when user's quota exceeds
-a specified limit. Note that the warning is ONLY executed at the exact time
-when the limit is being crossed, so when you're testing you have to do it by
-crossing the limit by saving a new mail. If something else besides Dovecot
-updates quota so that the limit is crossed, the warning is never executed.
+See :ref:`plugin-quota-setting_quota_warning`.
 
-The syntax is:
-
-.. code-block:: none
-
-  plugin {
-    quota_warning = <limit configuration> <quota-warning socket name> <parameters>
-    #quota_warning2 = ...
-    #quota_warning3 = ..etc..
-  }
-
-Limit configuration is almost exactly same as for rules, with the exception of
-adding "-" before the value for "reverse" warnings where the script is called
-when quota drops below the value. Usually you want to use percents instead of
-absolute limits. Only the command for the first exceeded limit is executed, so
-configure the highest limit first. The actual commands that are run need to be
-created as services (create a named Dovecot service and use the service name
-as the ``quota-warning socket name`` argument; see below for example).
-
-.. note::
-
-  The percent sign (``%``) needs to be written as ``%%`` to avoid
-  :ref:`variable expansion <config_variables>`.
-
-An example configuration:
+Example Configuration
+---------------------
 
 .. code-block:: none
 
@@ -381,6 +284,8 @@ just insert ":noenforcing" to proper location in it. For example with dict
 quota, you can use something like:
 ``-o "plugin/quota=dict:User quota::noenforcing:proxy::quota"``
 
+.. _quota_configuration_overquota_flag:
+
 Overquota-flag
 ^^^^^^^^^^^^^^
 
@@ -398,10 +303,15 @@ time user logs in (or mail gets delivered or any other email access to user)
 and compares it to the current actual quota usage. If the flag is wrong, a
 script is executed that should fix up the situation.
 
-The overquota-flag name in userdb must be ``quota_over_flag``. There are three
-settings to configure what to do:
+The overquota-flag name in userdb must be ``quota_over_flag``.
 
-.. code-block:: none
+These settings are available:
+
+* :ref:`plugin-quota-setting_quota_over_flag_lazy_check`
+* :ref:`plugin-quota-setting_quota_over_flag_value`
+* :ref:`plugin-quota-setting_quota_over_script`
+
+Example::
 
   plugin {
     # If quota_over_flag=TRUE, the overquota-flag is enabled. Otherwise not.
@@ -411,27 +321,16 @@ settings to configure what to do:
     # Wildcards can be used in a generic way, e.g. "*yes" or "*TRUE*"
     #quota_over_flag_value = *
 
-    # If set, overquota-flag is checked only when current quota usage is
-    # going to be checked anyway.
-    # This can be used to optimize this check in case it's running too slowly.
-    # (v2.2.25+)
-    #quota_over_flag_lazy_check = yes
-
-    # Service script to execute if overquota-flag is wrong. Configured the
-    # same as quota_warning scripts. The current quota_over_flag's value is
-    # appended as the last parameter.
+    quota_over_flag_lazy_check = yes
     quota_over_script = quota-warning mismatch %u
   }
 
-.. IMPORTANT::
-
-  obox installations using ``quota_over_script`` must currently also have
-  ``quota_over_flag_lazy_check = yes`` enabled. Otherwise the
-  ``quota_over_flag`` checking may cause a race condition with metacache
-  cleaning, which may end up losing folder names or mail flags within folders.
+.. _quota_configuration_grace:
 
 Quota Grace
 ^^^^^^^^^^^
+
+See :ref:`plugin-quota-setting_quota_grace`.
 
 With v2.2+, by default the last mail can bring user over quota. This is
 useful to allow user to actually unambiguously become over quota instead of
@@ -451,10 +350,14 @@ To change the quota grace, use:
     quota_grace = 50 M
   }
 
+.. _quota_configuration_max_mail_size:
+
 Maximum Saved Mail Size
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: v2.2.29
+
+See :ref:`plugin-quota-setting_quota_grace`.
 
 Dovecot allows specifying the maximum message size that is allowed to be
 saved (e.g. by LMTP, IMAP APPEND or doveadm save). The default is 0, which is
@@ -473,6 +376,8 @@ Quota Virtual Sizes
 
 .. versionadded:: v2.2.19
 
+See :ref:`plugin-quota-setting_quota_vsizes`.
+
 Indicates that the quota plugin should use virtual sizes rather than physical
 sizes when calculating message sizes. Required for the ``count`` driver.
 
@@ -482,10 +387,12 @@ sizes when calculating message sizes. Required for the ``count`` driver.
     quota_vsizes = yes
   }
 
+.. _quota_configuration_admin:
+
 Quota Admin Commands
 ^^^^^^^^^^^^^^^^^^^^
 
-The :ref:`imap_quota plugin <quota_plugin>` implements the ``SETQUOTA``
+The :ref:`imap_quota plugin <plugin-imap-quota>` implements the ``SETQUOTA``
 command, which allows changing the logged in user's quota limit if the user is
 admin. Normally this means that a master user must log in with
 ``userdb_admin = y`` set in the master passdb. The changing is done via

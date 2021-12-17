@@ -249,7 +249,7 @@ The port on the remote IMAP host to connect to.
 
 Log all IMAP traffic input/output to this directory.
 
-See: https://wiki.dovecot.org/Debugging/Rawlog
+See: :ref:`debugging_rawlog`.
 
 
 .. _setting-imapc_sasl_mechanisms:

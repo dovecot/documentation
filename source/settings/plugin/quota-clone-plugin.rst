@@ -1,36 +1,33 @@
 .. _plugin-quota-clone:
 
-===================
+==================
 quota-clone plugin
-===================
+==================
 
-``quota-clone-plugin``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+.. versionadded:: v2.2.17
+
+.. seealso:: :ref:`quota_clone_plugin`
+
+Settings
+========
+
 .. _plugin-quota-clone-setting_quota_clone_dict:
 
 ``quota_clone_dict``
----------------------------------------
+--------------------
 
-The plugin for quota cloning is used for storing all users' current quota usage in a database that should not be used as the authoritative
-quota database. Every time quota usage is updated, the dictionary specified here for the quota_clone plug-in is updated accordingly.
+- Default: <empty>
+- Values:  :ref:`string`
 
-For more information, see :ref:`quota_clone_plugin`
+The dictionary to update with quota clone information. This must be set for
+the plugin to be active.
 
-Example Setting: 
+See :ref:`dict` for dictionary configuration.
 
-.. code-block:: none
-
-   quota_clone_dict = redis:host=127.0.0.1:port=6379
-
-More complex example using SQL:
+Example: 
 
 .. code-block:: none
 
-   dict {
-     mysql = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
-   }
-
-   plugin {
-      quota_clone_dict = proxy::mysql
-   }
-
+  plugin {
+    quota_clone_dict = redis:host=127.0.0.1:port=6379
+  }

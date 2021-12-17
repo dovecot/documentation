@@ -6,7 +6,7 @@ Dovecot Dictionaries
 
 Dovecot's lib-dict can be used to access simple key-value databases. This is
 used by, for example, :ref:`quota_backend_dict`, :ref:`authentication-dict`,
-:ref:`last_login_plugin`, and :ref:`imap_metadata`. The dictionaries can be
+:ref:`lastlogin_plugin`, and :ref:`imap_metadata`. The dictionaries can be
 accessed either directly by the mail processes or they can be accessed via
 :ref:`dict-proxy_process` processes.
 
@@ -332,8 +332,7 @@ For example when using dict for a per-user quota value the map looks like:
     '$value') ON DUPLICATE KEY UPDATE quota_bytes='$value'``
 
 You can also access multiple SQL fields. For example
-:ref:`acl_shared_dict <plugin-acl-lookup-dict-setting-acl_shared_dict>` can
-contain:
+:ref:`acl_shared_dict <plugin-acl-setting-acl_shared_dict>` can contain:
 
 .. code-block:: none
 

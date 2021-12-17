@@ -1,45 +1,56 @@
 .. _plugin-last-login:
 
-===================
+=================
 last-login plugin
-===================
+=================
 
-``last-login-plugin``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. seealso:: See :ref:`lastlogin_plugin` for configuration information.
+
+Settings
+========
+
 .. _plugin-last-login-setting_last_login_dict:
 
 ``last_login_dict``
----------------------------------------
+-------------------
 
 .. versionadded:: 2.2.14
 
-The last_login plugin can be used to update the user-specific last-login timestamp in the dictionary indicated by this setting.
+- Default: <empty>
+- Values:  :ref:`string`
 
-Example Setting: 
+The dictionary where last login information is updated.
 
-.. code-block:: none
+Example::
 
-   last_login_dict = redis:host=127.0.0.1:port=6379
+  plugin {
+    last_login_dict = redis:host=127.0.0.1:port=6379
+  }
 
 
 .. _plugin-last-login-setting_last_login_key:
 
 ``last_login_key``
---------------------
+------------------
+
 .. versionadded:: 2.2.14
 
-The last_login plugin can be used to update the user-specific last-login timestamp in the dictionary indicated.  This setting specifies the key.
+- Default: ``last-login/%u``
+- Values:  :ref:`string`
 
-Example Setting: 
-
-.. code-block:: none
-
-   last_login_key = last-login/%u
+The key that is updated in the dictionary (defined by
+:ref:`plugin-last-login-setting_last_login_dict`) with the last login
+information.
 
 
 .. _plugin-last-login-setting_last_login_precision:
 
 ``last_login_precision``
 -------------------------
-Precision for last login timestamp
 
+.. versionadded:: 2.2.14
+
+- Default: ``s``
+- Values:  ``s`` | ``ms`` | ``us`` | ``ns``
+
+Precision for last login timestamp.

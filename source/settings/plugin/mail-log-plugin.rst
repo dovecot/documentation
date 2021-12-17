@@ -1,47 +1,67 @@
 .. _plugin-mail-log:
 
-=================
+===============
 mail-log plugin
-=================
+===============
 
-``mail-log-plugin``
-^^^^^^^^^^^^^^^^^^^^^
-.. _plugin-mail-log-setting_mail_log_fields:
+.. seealso:: See :ref:`mail_log_plugin` for configuration information.
 
-``mail_log_fields``
------------------------
+Settings
+========
 
-This setting specifies the fields for mail processes' event logging. The fields are given in a space-separated list. The following fields
-are available: uid, box, msgid, from, subject, size, vsize, and flags. size and vsize are available only for expunge and copy events. 
+.. _plugin-mail-log-setting_mail_log_cached_only:
 
-Example Setting: 
+``mail_log_cached_only``
+------------------------
 
-.. code-block:: none
+.. versionadded:: v2.2.28
 
-   mail_log_fields = uid box msgid size
+- Default: ``no``
+- Values:  :ref:`boolean`
+
+If enabled, everything except `save` event will log only the fields that can
+be looked up from cache. This improves performance if some of the fields
+aren't cached and it's not a strict requirement to log them.
 
 
 .. _plugin-mail-log-setting_mail_log_events:
 
 ``mail_log_events``
--------------------------
+-------------------
 
-This setting adjusts log verbosity, providing additional logging for
-mail processes at plug-in level.  The setting takes a space-separated list of events to log.  In addition to the events shown in the example
-below, flag_change and append are available. 
+- Default: ``no``
+- Values:  :ref:`boolean`
 
-Example Setting: 
+A space-separated list of events to log.
 
-.. code-block:: none
+* ``delete``
+* ``undelete``
+* ``expunge``
+* ``save``
+* ``copy``
+* ``mailbox_create``
+* ``mailbox_delete``
+* ``mailbox_rename``
+* ``flag_change``
 
-   mail_log_events = delete undelete expunge copy mailbox_delete mailbox_rename
 
+.. _plugin-mail-log-setting_mail_log_fields:
 
-.. _plugin-mail-log-setting_mail_log_cached_only:
+``mail_log_fields``
+-------------------
 
-``mail_log_cached_only``
--------------------------------
+A space-separated list of fields to log.
 
-If enabled, everything except `save` event will log only the fields that can
-be looked up from cache. This improves performance if some of the fields
-aren't cached and it's not a strict requirement to log them.
+============ ===================================================
+Field        Restrictions
+============ ===================================================
+``uid``
+``box``
+``msgid``
+``size``     Only available for ``expunge`` and ``copy`` events.
+``vsize``    Only available for ``expunge`` and ``copy`` events.
+``vsize``
+``flags``
+``from``
+``subject``
+============ ===================================================

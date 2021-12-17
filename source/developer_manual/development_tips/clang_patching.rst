@@ -13,7 +13,7 @@ Source Repos
 ------------
 
 There are github mirrors, but you can clone directly from
-`llvm.org <http://llvm.org>`__
+`llvm.org <http://llvm.org/>`_.
 
 .. code-block:: sh
 

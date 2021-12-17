@@ -60,12 +60,18 @@ delivery notifications only, this config should be used:
     mail_plugins = $mail_plugins notify push_notification
   }
 
+Settings
+========
+
+See :ref:`plugin-push-notification`.
 
 Drivers
 =======
 
-A push notification driver is defined by the ``push_notification_driver``
-plugin option.  The configuration value is the name of the driver, optionally
+A push notification driver is defined by the
+:ref:`plugin-push-notification-setting_push_notification_driver` setting.
+
+The configuration value is the name of the driver, optionally
 followed by an ``:`` and driver-specific options (see drivers for options
 supported).
 
@@ -108,8 +114,9 @@ OX (Open-Xchange) driver [``ox``]
 The OX backend supports sending notifications on MessageNew events (i.e. mail
 deliveries, not IMAP APPENDs).
 
-This driver was designed for use with `OX App Suite <https://documentation.open-xchange.com/7.10.5/middleware/mail/dovecot/dovecot_push.html>`_, but can be
-used by any push endpoint that implements the OX Push Notification API.
+This driver was designed for use with
+`OX App Suite Push Notification API <https://documentation.open-xchange.com/7.10.5/middleware/mail/dovecot/dovecot_push.html>`_, but can be
+used by any push endpoint that implements this API, not just OX App Suite.
 
 Configuration options:
 
@@ -147,8 +154,8 @@ Metadata
 --------
 
 The push notifications are enabled separately for each user using METADATA.
-Normally OX App Suite does this internally, but for testing purposes you can
-do this yourself:
+Normally `OX App Suite <https://www.open-xchange.com/products/ox-app-suite/>`_
+does this internally, but for e.g. testing purposes you can do this yourself:
 
 .. code-block:: none
 
@@ -214,7 +221,7 @@ See :ref:`lua` for general information on how Lua is implemented in Dovecot.
 Configuration
 -------------
 
-Lua push notification handler requires ``mail_lua`` and
+Lua push notification handler requires :ref:`mail_lua <plugin-mail-lua>` and
 ``push_notification_lua`` plugins to be loaded in addition to the plugins 
 discussed :ref:`above <push_notification-usage>`.
 
@@ -223,7 +230,7 @@ discussed :ref:`above <push_notification-usage>`.
 +==========+==========+===============+================================================+
 | ``file`` | NO       | :ref:`string` | The lua file to execute. If no script is       | 
 |          |          |               | is specified,                                  |
-|          |          |               | :ref:`plugin-mail_lua-setting_mail_lua_script` |
+|          |          |               | :ref:`plugin-mail-lua-setting_mail_lua_script` |
 |          |          |               | will be used by default.                       |
 +----------+----------+---------------+------------------------------------------------+
 

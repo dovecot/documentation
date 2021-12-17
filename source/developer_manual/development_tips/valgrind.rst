@@ -4,36 +4,43 @@ Valgrind
 
 The most useful Valgrind parameters:
 
-- ``–-vgdb=no``: Needed on some systems to avoid problems.
+========================= ======================================================
+Parameter                 Description
+========================= ======================================================
+``–-vgdb=no``             Needed on some systems to avoid problems.
 
-- ``--keep-debuginfo=yes``: Prevent unhelpful ``??`` for already unloaded plugins.
+``--keep-debuginfo=yes``  Prevent unhelpful ``??`` for already unloaded
+                          plugins.
 
--  ``--num-callers=n``: Display last n functions calls in the backtrace for each error.
+``--num-callers=<n>``     Display last <n> functions calls in the backtrace
+                          for each error.
 
--  ``--leak-check=full``: Show also unfreed memory as being leaked.
+``--leak-check=full``     Show also unfreed memory as being leaked.
 
--  ``--trace-children=yes``: Sometimes you might want to trace also the forked child processes.
+``--trace-children=yes``  Trace also the forked child processes.
 
--  ``--suppressions=<path>``: Suppressions for things that can't be fixed. Usually in external libraries.
+``--suppressions=<path>`` Suppressions for things that can't be fixed. Usually
+                          in external libraries.
 
--  ``-q``: Quiet - don't log about initialization etc.
+``-q``                    Quiet: don't log about initialization etc.
+========================= ======================================================
 
 Standalone
 ==========
 
-For example:
+.. code-block:: none
 
-``valgrind --leak-check=full /usr/libexec/dovecot/imap -u user@example.com``
+  valgrind --leak-check=full /usr/libexec/dovecot/imap -u user@example.com
 
 Service settings
 ================
 
-.. code-block::
+.. code-block:: none
 
-        service imap {
-                executable = /usr/bin/valgrind --vgdb=no --num-callers=50
-                        --leak-check=full -q /usr/local/libexec/dovecot/imap
-        }
+  service imap {
+    executable = /usr/bin/valgrind --vgdb=no --num-callers=50
+                 --leak-check=full -q /usr/local/libexec/dovecot/imap
+  }
 
 Debugging Valgrind errors in a live program using GDB
 =====================================================
@@ -67,9 +74,9 @@ isn't aware of the fork.
 Valgrinding plugin memory leaks
 ===============================
 
-Valgrind output at exit may contain very unhelpful ``"??"`` lines, which
+Valgrind output at exit may contain very unhelpful ``??`` lines, which
 point to already unloaded plugins. You can avoid this by
-giving ``**--keep-debuginfo=yes **`` parameter.
+giving ``--keep-debuginfo=yes`` parameter.
 
 Alternative way would be to set GDB=1 environment to disable all plugin
 unloading. This will cause some extra warnings about leaking memory in

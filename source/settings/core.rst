@@ -539,7 +539,7 @@ If you want to allow all characters, leave the value empty.
 ``auth_username_format``
 ------------------------
 
-- Default: ``%u``
+- Default: ``%Lu``
 - Values:  :ref:`string`
 
 Formattting applied to username before querying the auth database.
@@ -1027,6 +1027,7 @@ Variables that can be used for this setting:
 If ``yes``, disables the LOGIN command and all other plaintext authentication
 unless SSL/TLS is used (LOGINDISABLED capability).
 
+See :ref:`dovecot_ssl_configuration` for more detailed explanation of how this setting interacts with the :ref:`setting-ssl` setting.
 
 .. _setting-dotlock_use_excl:
 
@@ -1455,8 +1456,11 @@ Example Setting:
 - Default: ``no``
 - Values: :ref:`boolean`
 
-When proxying IMAP connections to other hosts, forward the IMAP ID command
-provided by the client?
+When proxying IMAP connections to other hosts, this variable must be enabled to
+forward the IMAP ID command provided by the client.
+
+This setting enables the ``%{client_id}`` variable for auth processes. See
+:ref:`Auth variables <variables-auth>`.
 
 Example Setting:
 
@@ -1629,7 +1633,19 @@ Example Setting:
 
 Specifies the hosts allowed in URLAUTH URLs sent by clients.
 
-``*`` allows all. An empty value disables checking.
+``*`` allows all. An empty value disables checking and disables the URLAUTH
+extension.
+
+.. warning::
+
+  URLAUTH in current versions of Dovecot is broken in several ways. This
+  will be fixed in the future, but activating URLAUTH support on production
+  systems is not recommended.
+
+.. note::
+
+  This setting is REQUIRED for the
+  `URLAUTH <https://tools.ietf.org/html/rfc4467>`_ extension to be active.
 
 .. todo:: Indicate imap setting
 
@@ -2248,7 +2264,7 @@ See :ref:`setting-login_log_format_elements`
 ``login_log_format_elements``
 -----------------------------
 
-- Default: ``user=<%u> method=%m rip=%r lip=%l mpid=%e %c``
+- Default: ``user=<%u> method=%m rip=%r lip=%l mpid=%e %c session=<%{session}>``
 - Values:  :ref:`string`
 
 A space-separated list of elements of the login log formatting.
@@ -2257,34 +2273,6 @@ Elements that have a non-empty value are joined together to form a
 comma-separated string.
 
 :ref:`Login variables <variables-login>` can be used.
-
-======== =============  =====================================================================================================
-Variable Long name      Description
-======== =============  =====================================================================================================
-%u       user           full username (e.g. user@domain)
-%n       username       user part in user@domain, same as %u if there's no domain
-%d       domain         domain part in user@domain, empty if user with no domain
-%h       home           Expands to HOME environment. Usually means it's empty.
-%p       pid            PID of the current process
-%m       mech           :ref:`authentication-authentication_mechanisms` e.g. PLAIN
-%a       lport          local port
-%b       rport          remote port
-%c       secured        "secured" string with SSL, TLS and localhost connections. Otherwise empty.
-%k       ssl_security   SSL protocol and cipher information, e.g. "TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)"
-%e       mail_pid       Mail process (imap/pop3) PID that handles the post-login connection
--        real_rip       Same as %{rip}, except in proxy setups contains the remote proxy's IP instead of the client's IP
--        real_lip       Same as %{lip}, except in proxy setups contains the local proxy's IP instead of the remote proxy's IP (v2.2+)
--        real_rport     Similar to %{real_rip} except for port instead of IP (v2.2+)
--        real_lport     Similar to %{real_lip} except for port instead of IP (v2.2+)
--        orig_user      Same as %{user}, except using the original username the client sent before any changes by auth process (v2.2.6+, v2.2.13+ for auth)
--        orig_username  Same as %{username}, except using the original username (v2.2.6+, v2.2.13+ for auth)
--        orig_domain    Same as %{domain}, except using the original username (v2.2.6+, v2.2.13+ for auth)
--        auth_user      SASL authentication ID (e.g. if master user login is done, this contains the master username). If username changes during authentication, this value contains the original username. Otherwise the same as %{user}. (v2.2.11+)
--        auth_username  user part in %{auth_user} (v2.2.11+)
--        auth_domain    domain part in %{auth_user} (v2.2.11+)
--        listener       Expands to the socket listener name as specified in config file (v2.2.19+)
--        passdb:<name>  Return passdb extra field "name". %{passdb:name:default} returns "default" if "name" doesn't exist (not returned if name exists but is empty) (v2.2.19+)
-======== =============  =====================================================================================================
 
 .. todo:: Describe login elements
 .. todo:: Provide join example
@@ -2308,6 +2296,21 @@ Location of the login plugin directory.
 - Default: <empty>
 
 List of plugins to load for IMAP and POP3 login processes.
+
+
+.. _setting-login_proxy_rawlog_dir:
+
+``login_proxy_rawlog_dir``
+--------------------------
+
+.. versionadded:: v2.3.17
+
+- Default: <empty>
+- Values: :ref:`string`
+
+Login processes write rawlogs for proxied connections to this directory for
+debugging purposes. Note that login processes are usually chrooted, so the
+directory is relative to ``$base_dir/login/``.
 
 
 .. _setting-login_proxy_timeout:
@@ -2652,20 +2655,6 @@ See :ref:`setting-mail_never_cache_fields`
 .. todo:: List fields, or link to fields decription page
 
 
-.. _setting-mail_cache_min_mail_count:
-
-``mail_cache_min_mail_count``
------------------------------
-
-- Default: ``0``
-- Values: :ref:`uint`
-
-Only update cache file when the mailbox contains at least this many messages.
-
-With a setting other than ``0``, you can optimize behavior for fewer disk
-writes at the cost of more disk reads.
-
-
 .. _setting-mail_chroot:
 
 ``mail_chroot``
@@ -2783,6 +2772,7 @@ See :ref:`quick_configuration`
 -----------------
 
 - Default: <empty>
+- Value:   :ref:`string`
 
 This setting indicates the location for users' mailboxes.
 
@@ -2793,6 +2783,9 @@ users whose mail directory hasn't yet been created, so you should
 explicitly state the full location here, if possible.
 
 :ref:`Mail user variables <variables-mail_user>` can be used.
+
+See :ref:`mail_location_settings`.
+
 
 .. _setting-mail_log_prefix:
 
@@ -3339,8 +3332,8 @@ See :ref:`setting-mdbox_rotate_size`
 
 Disable mmap() usage?
 
-This must be disabled if you store indexes to shared filesystems (i.e., if you
-use NFS or a clustered filesystem).
+``mmap_disable`` must be set to yes if you store indexes to shared filesystems
+(i.e., if you use NFS or a clustered filesystem).
 
 
 .. _setting-namespace:
@@ -4166,14 +4159,11 @@ to apply a security update, for example.
 
 The level of SSL support.
 
-ssl=no: SSL/TLS is completely disabled.
+ * ssl=no: SSL/TLS is completely disabled.
+ * ssl=yes: SSL/TLS is enabled, but not necessarily required for clients.
+ * ssl=required: SSL/TLS is always required for the clients, except for local/trusted connections.
 
-With both ssl=yes and ssl=required it's still possible that the client attempts to do a plaintext authentication before enabling SSL/TLS, which exposes the plaintext password to the internet. Dovecot attempts to indicate this to the IMAP clients via the LOGINDISABLED capability, but many clients still ignore it and send the password anyway. There is unfortunately no way for Dovecot to prevent this behavior. The POP3 standard doesn't have an equivalent capability at all, so the POP3 clients can't even know if the server would accept a plaintext authenticatio
-
-See :ref:`dovecot_ssl_configuration`
-
-.. todo:: Explain levels
-.. todo:: Indicate SSL setting
+See :ref:`dovecot_ssl_configuration` for more detailed explanation of this setting and its interaction with the :ref:`setting-disable_plaintext_auth` setting.
 
 
 .. _setting-ssl_alt_cert:
@@ -4326,7 +4316,7 @@ See :ref:`dovecot_ssl_configuration`
 
 The list of SSL cipher suites to use, in order of preference.
 
-See `<https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites>`__
+See https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites
 
 .. _setting-ssl_client_ca_dir:
 
@@ -4696,8 +4686,16 @@ The path to the stats-writer socket.
 Configures the list of active workarounds for Submission client bugs. The list is
 space-separated. Supported workaround identifiers are:
 
-* ``whitespace-before-path`` - Allow one or more spaces or tabs between 'MAIL FROM:' and path and between 'RCPT TO:' and path.
+* ``implicit-auth-external`` - Implicitly login using the EXTERNAL SASL
+  mechanism upon the first MAIL command, provided that the client provides a
+  valid TLS client certificate. This is helpful for clients that omit explicit
+  SASL authentication when configured for authentication using a TLS certificate
+  (Thunderbird for example).
+
+  .. versionadded:: v2.3.18
+
 * ``mailbox-for-path`` - Allow using bare Mailbox syntax (i.e., without <...>) instead of full path syntax.
+* ``whitespace-before-path`` - Allow one or more spaces or tabs between 'MAIL FROM:' and path and between 'RCPT TO:' and path.
 
 .. todo:: Indicate submission setting
 

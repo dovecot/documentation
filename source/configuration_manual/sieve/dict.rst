@@ -6,6 +6,7 @@ Pigeonhole Sieve: Dict Lookup for Sieve Scripts
 
 Sieve scripts can be obtained from a number of different :ref:`types of
 locations <pigeonhole_configuration_script_locations>`.
+
 This page shows how to retrieve them from a :ref:`Dovecot dictionary <dict>`
 (abbreviated as 'dict'), which can have either a file or database backend.
 
