@@ -1,0 +1,7 @@
+[dovecot-2.3.17-rev8-fts]
+name=Amazon Linux 2 - OX Dovecot Pro Full Text Search plug-in
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/fts/AmazonLinux2
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+

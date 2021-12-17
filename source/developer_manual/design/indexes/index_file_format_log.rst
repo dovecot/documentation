@@ -24,7 +24,9 @@ type, although some types don't allow this. Because the size of the
 transaction record for each type is known (or can be determined from the
 type-specific record contents), the ``mail_transaction_header.size`` field can
 be used to figure out how many changes there are. For example a transaction
-record that appends two mails::
+record that appends two mails:
+
+.. code-block:: C
 
   struct mail_transaction_header {
     .type = MAIL_TRANSACTION_APPEND,
@@ -160,7 +162,7 @@ Whenever using an extension, you'll need to first write
 hopefully will be replaced by something better in future. The intro
 contains:
 
-::
+.. code-block:: C
 
    struct mail_transaction_ext_intro {
            uint32_t ext_id;
@@ -210,7 +212,7 @@ Extension record updates typically are message-specific, so the changes
 must be done for each message separately rather than an UID range.
 For example:
 
-::
+.. code-block:: C
 
    struct mail_transaction_ext_rec_update {
            uint32_t uid; // instead of uid1, uid2

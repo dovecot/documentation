@@ -261,9 +261,8 @@ accessible via the :ref:`authentication-checkpassword` backend and a scripting
 language.
 
 When given a :ref:`proxy URL <quota_backend_dict>` the Dict
-backend speaks a simple protocol over a UNIX socket. The protocol is defined in
-``src/lib-dict/dict-client.h`` (`GitHub
-<https://github.com/dovecot/core/blob/master/src/lib-dict/dict-client.h>`_).
+backend speaks a simple protocol over a UNIX socket. The protocol is documented
+in :ref:`dict protocol<dovecot_dict_protocol>`.
 
 Auth configuration
 ^^^^^^^^^^^^^^^^^^
@@ -387,7 +386,8 @@ written in any language. Here's an example in Perl:
            die "Protocol error: Bad command $cmd" unless ($cmd eq 'L');
            # Process request
 
-               my ($namespace,$type,$arg) = split ('/',substr($_,1),3);
+               my ($key, $user) = split ("\t", substr($_, 1));
+               my ($namespace,$type,$arg) = split ('/',$key,3);
 
                if ($namespace eq 'shared') {
                    my $f = $L_handler{$type};

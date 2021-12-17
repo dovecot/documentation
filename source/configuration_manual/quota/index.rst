@@ -211,6 +211,15 @@ sure the users differs. ``%u.archive`` defines ``<username>.archive`` as key
 to track quota for the ``Archive`` namespace; ``%u.default`` tracks the quota
 of other folders. See :ref:`config_variables` for further help on variables.
 
+Quota and Shared Namespaces
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Quota plugin considers shared namespaces against owner's quota, not the current user's.
+There is a limitation that per-user quota configuration is ignored, and the
+current user's configuration is used.
+
+Public namespaces are ignored unless there is explicit quota specified for it.
+
 Custom Quota Exceeded Message
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

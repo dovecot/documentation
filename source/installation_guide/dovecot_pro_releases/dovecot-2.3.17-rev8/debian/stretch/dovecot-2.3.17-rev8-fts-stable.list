@@ -1,0 +1,2 @@
+# dovecot-2.3.17-rev8 Debian Stretch (9.0) - OX Dovecot Pro Full Text Search plug-in
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/fts/DebianStretch ./

@@ -15,6 +15,7 @@ The lib-fts tokenization library works in the following way:
 #. Tokenization: The text is split to tokens (individual words).
 
     * Whitespace and other nonindexable characters are dropped.
+    * Base64 sequences are looked for and skipped.
 
 #. Filtering: Tokens are normalized:
 
@@ -87,3 +88,31 @@ means that the tokenizer listed 'last' gets the processed data 'first'.
 
 So, for filters data flows “left to right” through the filters listed in the
 configuration. In tokenizers the order is “right to left”.
+
+Base64 detection
+----------------
+
+.. versionadded:: v2.3.18
+
+Base64 sequences are looked for in the tokenization buffer and skipped when detected.
+The detection works with what is already present in the buffer and it does not attempt to pull further data to complete a match.
+
+A base64 sequence is composed by:
+
+  * an optional leader character comprised in ``leader-characters`` set.
+  * a run characters all comprised in the ``base64-characters`` set, at least ``minimum-run-length`` long.
+  * an end-of-buffer or a trailer character comprised in ``trailer-characters`` set,
+
+where:
+
+  * leader-characters: ``[ \t\r\n=:;?]``
+  * base64-characters: ``[0-9A-Za-z/+]``
+  * trailer-characters: ``[ \t\r\n=:;?]``
+  * minimum run length: ``50``
+  * minimum runs count: ``1``
+
+i.e. (even single) 50-chars runs of characters in the base64 set are recognized as base64 and ignored in indexing.
+
+So far the above rule seems to give good results in base64 indexing avoidance.
+It also seems to run well against base64 embedded headers, like ARC-Seal, DKIM-Signature, X-SG-EID, X-SG-ID,
+including encoded parts (e.g. ``=?us-ascii?Q?...?=`` sequences).
