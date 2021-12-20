@@ -2895,179 +2895,64 @@ standard variable modifiers (e.g., %Uf supplies the filename in uppercase):
 .. todo:: Indicate POP3 setting
 
 
-.. _setting-pop3c_features:
+.. dovecot_core:setting:: pop3c_features
+   :hdr_only: no_index
 
-``pop3c_features``
-------------------
+See :dovecot_core:ref:`pop3c_features`
 
-- Default: <empty>
 
-A space-separated list of features and workarounds that can be enabled for
-access to a remote POP3 server.
+.. dovecot_core:setting:: pop3c_host
+   :hdr_only: no_index
 
-Available options:
+See :dovecot_core:ref:`pop3c_host`
 
-* ``no-pipelining``: Prevents use of the PIPELINING extension even when it's advertised
 
-.. todo:: Indicate dsync setting
+.. dovecot_core:setting:: pop3c_master_user
+   :hdr_only: no_index
 
+See :dovecot_core:ref:`pop3c_master_user`
 
-.. _setting-pop3c_host:
 
-``pop3c_host``
---------------
+.. dovecot_core:setting:: pop3c_password
+   :hdr_only: no_index
 
-- Default: <empty>
+See :dovecot_core:ref:`pop3c_password`
 
-The remote POP3 server to use for dsync-based migration of mail (which allows
-preservation of the POP3 UIDLs etc.).
 
-Example:
+.. dovecot_core:setting:: pop3c_port
+   :hdr_only: no_index
 
-.. code-block:: none
+See :dovecot_core:ref:`pop3c_port`
 
-   pop3c_host = pop3.example.com
 
-.. todo:: Indicate dsync setting
+.. dovecot_core:setting:: pop3c_quick_received_date
+   :hdr_only: no_index
 
+See :dovecot_core:ref:`pop3c_quick_received_date`
 
-.. _setting-pop3c_master_user:
 
-``pop3c_master_user``
----------------------
+.. dovecot_core:setting:: pop3c_rawlog_dir
+   :hdr_only: no_index
 
-- Default: <empty>
+See :dovecot_core:ref:`pop3c_rawlog_dir`
 
-If you are using master users for dsync-based migration of mail,
-this is the master user for the source POP3 server.
 
-To authenticate as a master user but use a separate login user, the
-following configuration should be employed, where the credentials are
-represented by masteruser and masteruser-secret:
+.. dovecot_core:setting:: pop3c_ssl
+   :hdr_only: no_index
 
-.. code-block:: none
+See :dovecot_core:ref:`pop3c_ssl`
 
-   pop3c_user = %u
-   pop3c_master_user = masteruser
-   pop3c_password = masteruser-secret
 
-:ref:`Mail user variables <variables-mail_user>` can be used.
+.. dovecot_core:setting:: pop3c_ssl_verify
+   :hdr_only: no_index
 
-See also :ref:`setting-pop3c_password`.
+See :dovecot_core:ref:`pop3c_ssl_verify`
 
-See also :ref:`setting-pop3c_user`.
 
-.. todo:: Indicate dsync setting
+.. dovecot_core:setting:: pop3c_user
+   :hdr_only: no_index
 
-
-.. _setting-pop3c_password:
-
-``pop3c_password``
-------------------
-
-- Default: <empty>
-
-The password used in the login to the source POP3 server for migration of mail
-via dsync.
-
-If using master users, this setting will be the password of the master user.
-
-See also :ref:`setting-pop3c_master_user`.
-
-See also :ref:`setting-pop3c_user`.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_port:
-
-``pop3c_port``
---------------
-
-- Default: ``110``
-
-Port used for connection to the source POP3 server in dsync-based migration of
-mail.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_quick_received_date:
-
-``pop3c_quick_received_date``
------------------------------
-
-- Default: ``no``
-- Values: :ref:`boolean`
-
-If enabled, dsync doesn't require calling TOP for each message in order to get
-the metadata.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_rawlog_dir:
-
-``pop3c_rawlog_dir``
---------------------
-
-- Default: <empty>
-
-Directory location to store raw POP3 protocol traffic logs used in
-dsync-based migration of mail..
-
-See :ref:`debugging_rawlog`
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_ssl:
-
-``pop3c_ssl``
--------------
-
-- Default: ``no``
-- Values: ``yes``, ``no``, or ``pop3s``
-
-Enable SSL to remote POP3 account for dsync-based migration of mail?
-
-.. todo:: Values are incorrect?  At least "pop3s" is also supported.
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_ssl_verify:
-
-``pop3c_ssl_verify``
---------------------
-
-- Default: ``yes``
-- Values:  :ref:`boolean`
-
-Require SSL verification of remote POP3 account certificate during dsync-based
-migration of mail.
-
-Verification may be disabled during testing, but should be enabled during
-production use.
-
-.. todo:: Indicate dsync setting
-
-
-.. _setting-pop3c_user:
-
-``pop3c_user``
---------------
-
-- Default: ``%u``
-
-The user identity to be used for performing a regular LOGIN to the
-source POP3 server in dsync-based migration of mail.
-
-:ref:`Mail user variables <variables-mail_user>` can be used.
-
-See also :ref:`setting-pop3c_master_user`.
-See also :ref:`setting-pop3c_password`.
-
-.. todo:: Indicate dsync setting
+See :dovecot_core:ref:`pop3c_user`
 
 
 .. dovecot_core:setting:: postmaster_address
