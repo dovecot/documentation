@@ -60,6 +60,8 @@ class DovecotSettingDirective(DovecotDirective):
   def transform_content(self, contentnode):
     super().transform_content(contentnode)
 
+    contentnode.parent['classes'].append('dovecotsetting')
+
     if self.options.get('hdr_only'):
       return
 

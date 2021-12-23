@@ -15,10 +15,15 @@ div.dovecot-seealso p {
   margin: 0 0 0 15px;
 }
 
-dl.setting, dl.setting_link {
-  padding-bottom: 20px;
+dl.dovecotsetting {
+  margin-bottom: 10px;
 }
 
-dl.setting dd {
+dl.dovecotsetting + dl.dovecotsetting {
+  border-top: 1px solid lightgray;
+  padding-top: 10px;
+}
+
+dl.dovecotsetting dd {
   margin-left: 15px;
 }
