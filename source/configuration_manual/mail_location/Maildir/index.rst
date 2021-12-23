@@ -181,57 +181,57 @@ Settings
    :default: no
    :values: @boolean
 
-If enabled, do not obtain a mail message's physical size from the
-``S=<size>`` data in the Maildir filename except when recalculating the
-Maildir++ quota.
+   If enabled, do not obtain a mail message's physical size from the
+   ``S=<size>`` data in the Maildir filename except when recalculating the
+   Maildir++ quota.
 
 
 .. dovecot_core:setting:: maildir_copy_with_hardlinks
    :default: yes
    :values: @boolean
 
-If enabled, copying of a message is done with hard links whenever possible.
+   If enabled, copying of a message is done with hard links whenever possible.
 
-This makes the performance much better, and it's unlikely to have any side
-effects. The only reason to disable this is if you're using a filesystem
-where hard links are slow (e.g. HFS+).
+   This makes the performance much better, and it's unlikely to have any side
+   effects. The only reason to disable this is if you're using a filesystem
+   where hard links are slow (e.g. HFS+).
 
 
 .. dovecot_core:setting:: maildir_empty_new
    :default: no
    :values: @boolean
 
-Should mail messages always be moved from the ``new/`` directory to ``cur/``,
-even when the ``\Recent`` flags aren't being reset?
+   Should mail messages always be moved from the ``new/`` directory to
+   ``cur/``, even when the ``\Recent`` flags aren't being reset?
 
 
 .. dovecot_core:setting:: maildir_stat_dirs
    :default: no
    :values: @boolean
 
-If enabled, don't include directories in a LIST response that begin with a
-dot.  Thus, if disabled, Dovecot assumes that all the files beginning with
-a dot in the Maildir are Maildirs.
+   If enabled, don't include directories in a LIST response that begin with a
+   dot.  Thus, if disabled, Dovecot assumes that all the files beginning with
+   a dot in the Maildir are Maildirs.
 
-You shouldn't have any non-directory files beginning with a dot in the
-Maildirs, but if you do you may need to set this to ``yes``, in which case
-Dovecot needs to ``stat()`` each directory entry, which degrades the
-performance. Some filesystems provide the directory/non-directory status for
-free without having to ``stat()``. In those filesystems this setting is
-ignored.
+   You shouldn't have any non-directory files beginning with a dot in the
+   Maildirs, but if you do you may need to set this to ``yes``, in which case
+   Dovecot needs to ``stat()`` each directory entry, which degrades the
+   performance. Some filesystems provide the directory/non-directory status
+   for free without having to ``stat()``. In those filesystems this setting is
+   ignored.
 
 
 .. dovecot_core:setting:: maildir_very_dirty_syncs
    :default: no
    :values: @boolean
 
-If enabled (``yes``), Dovecot is assumed to be the only MUA that accesses
-Maildir directly, so the ``cur/`` directory is scanned only when its mtime
-changes unexpectedly or when the mail cannot otherwise be found.
+   If enabled (``yes``), Dovecot is assumed to be the only MUA that accesses
+   Maildir directly, so the ``cur/`` directory is scanned only when its mtime
+   changes unexpectedly or when the mail cannot otherwise be found.
 
-If enabled and another process (or a Dovecot process which doesn't update
-index files) does changes to ``cur/`` while the mailbox is simultaneously
-being modified by Dovecot, Dovecot may not notice those external changes. It
-is still safe to deliver new mails to ``new/`` using non-Dovecot software
-(except with :dovecot_core:ref:`mailbox_list_index` = ``yes``, changes aren't
-noticed outside INBOX).
+   If enabled and another process (or a Dovecot process which doesn't update
+   index files) does changes to ``cur/`` while the mailbox is simultaneously
+   being modified by Dovecot, Dovecot may not notice those external changes.
+   It is still safe to deliver new mails to ``new/`` using non-Dovecot
+   software (except with :dovecot_core:ref:`mailbox_list_index` = ``yes``,
+   changes aren't noticed outside INBOX).

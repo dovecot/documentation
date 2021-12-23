@@ -7,7 +7,7 @@ Mbox Configuration
 See :ref:`mbox <mbox_mbox_format>` for a technical description of Dovecot's
 implementation of the mbox format.
 
-Mail Location Configuration 
+Mail Location Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In many systems, the user's mails are by default stored in
@@ -139,7 +139,7 @@ Directory Layout
 ^^^^^^^^^^^^^^^^
 
 By defaultm Dovecot uses filesystem layout under mbox. This means that mail is
-stored in mbox files under hierarchical directories, for example: 
+stored in mbox files under hierarchical directories, for example:
 
 ================== =============================================================
 File               Description
@@ -203,138 +203,138 @@ Settings
 
 .. dovecot_core:setting:: mbox_dirty_syncs
    :default: yes
+   :seealso: @mbox_very_dirty_syncs;dovecot_core
    :values: @boolean
 
-Enable optimized mbox syncing?
+   Enable optimized mbox syncing?
 
-For larger mbox files, it can take a long time to determine what has
-changed when the file is altered unexpectedly. Since the change in
-most cases consists solely of newly appended mail, Dovecot can
-operate more quickly if it starts off by simply reading the new
-messages, then falls back to reading the entire mbox file if
-something elsewhere in it isn't as expected.
+   For larger mbox files, it can take a long time to determine what has
+   changed when the file is altered unexpectedly. Since the change in
+   most cases consists solely of newly appended mail, Dovecot can
+   operate more quickly if it starts off by simply reading the new
+   messages, then falls back to reading the entire mbox file if
+   something elsewhere in it isn't as expected.
 
-Dovecot assumes that external mbox file changes only mean that new messages
-were appended to it. Without this setting Dovecot re-reads the whole mbox file
-whenever it changes. There are various safeguards in place to make this
-setting safe even when other changes than appends were done to the mbox. The
-downside to this setting is that external message flag modifications may not
-be visible immediately.
+   Dovecot assumes that external mbox file changes only mean that new messages
+   were appended to it. Without this setting Dovecot re-reads the whole mbox
+   file whenever it changes. There are various safeguards in place to make this
+   setting safe even when other changes than appends were done to the mbox. The
+   downside to this setting is that external message flag modifications may not
+   be visible immediately.
 
-When this setting is enabled, Dovecot tries to avoid re-reading the mbox every
-time something changes. Whenever the mbox changes (i.e. timestamp or size),
-Dovecot first checks if the mailbox's size changed. If it didn't, it most
-likely meant that only message flags were changed so it does a full mbox read
-to find it. If the mailbox shrunk, it means that mails were expunged and again
-Dovecot does a full sync. Usually however the only thing besides Dovecot that
-modifies the mbox is the LDA which appends new mails to the mbox. So if the
-mbox size was grown, Dovecot first checks if the last known message is still
-where it was last time. If it is, Dovecot reads only the newly added messages
-and goes into "dirty mode". As long as Dovecot is in dirty mode, it can't be
-certain that mails are where it expects them to be, so whenever accessing some
-mail, it first verifies that it really is the correct mail by finding its
-X-UID header. If the X-UID header is different, it fallbacks to a full sync
-to find the mail's correct position. The dirty mode goes away after a full
-sync. If :dovecot_core:ref:`mbox_lazy_writes` was enabled and the mail didn't
-yet have an X-UID header, Dovecot uses the MD5 sum of a couple of headers to
-compare the mails.
-
-.. seealso:: :dovecot_core:ref:`mbox_very_dirty_syncs`
+   When this setting is enabled, Dovecot tries to avoid re-reading the mbox
+   every time something changes. Whenever the mbox changes (i.e. timestamp or
+   size), Dovecot first checks if the mailbox's size changed. If it didn't, it
+   most likely meant that only message flags were changed so it does a full
+   mbox read to find it. If the mailbox shrunk, it means that mails were
+   expunged and again Dovecot does a full sync. Usually however the only thing
+   besides Dovecot that modifies the mbox is the LDA which appends new mails
+   to the mbox. So if the mbox size was grown, Dovecot first checks if the
+   last known message is still where it was last time. If it is, Dovecot reads
+   only the newly added messages and goes into "dirty mode". As long as
+   Dovecot is in dirty mode, it can't be certain that mails are where it
+   expects them to be, so whenever accessing some mail, it first verifies that
+   it really is the correct mail by finding its X-UID header. If the X-UID
+   header is different, it fallbacks to a full sync to find the mail's correct
+   position. The dirty mode goes away after a full sync. If
+   :dovecot_core:ref:`mbox_lazy_writes` was enabled and the mail didn't yet
+   have an X-UID header, Dovecot uses the MD5 sum of a couple of headers to
+   compare the mails.
 
 
 .. dovecot_core:setting:: mbox_dotlock_change_timeout
    :default: 2 mins
    :values: @time
 
-Override a lockfile after this amount of time if a dot-lock exists but the
-mailbox hasn't been modified in any way.
+   Override a lockfile after this amount of time if a dot-lock exists but the
+   mailbox hasn't been modified in any way.
 
 
 .. dovecot_core:setting:: mbox_lazy_writes
    :default: yes
    :values: @boolean
 
-If enabled, mbox headers (e.g., meatadat updates, such as writing X-UID
-headers or flag changes) are not written until a full write sync is
-performed (triggered via IMAP EXPUNGE or CHECK commands and/or when the
-mailbox is closed). mbox rewrites can be costly, so this may avoid a lot of
-disk writes.
+   If enabled, mbox headers (e.g., meatadat updates, such as writing X-UID
+   headers or flag changes) are not written until a full write sync is
+   performed (triggered via IMAP EXPUNGE or CHECK commands and/or when the
+   mailbox is closed). mbox rewrites can be costly, so this may avoid a lot of
+   disk writes.
 
-Enabling this setting is especially useful with POP3, in which clients often
-delete all mail messages.
+   Enabling this setting is especially useful with POP3, in which clients
+   often delete all mail messages.
 
-One negative consequence of enabling this setting is that the changes aren't
-immediately visible to other MUAs.
+   One negative consequence of enabling this setting is that the changes
+   aren't immediately visible to other MUAs.
 
-C-Client works the same way. The upside of this is that it reduces writes
-because multiple flag updates to same message can be grouped, and sometimes
-the writes don't have to be done at all if the whole message is expunged. The
-downside is that other processes don't notice the changes immediately (but
-other Dovecot processes do notice because the changes are in index files).
+   C-Client works the same way. The upside of this is that it reduces writes
+   because multiple flag updates to same message can be grouped, and sometimes
+   the writes don't have to be done at all if the whole message is expunged.
+   The downside is that other processes don't notice the changes immediately
+   (but other Dovecot processes do notice because the changes are in index
+   files).
 
 
 .. dovecot_core:setting:: mbox_lock_timeout
    :default: 5 mins
    :values: @time
 
-The maximum time to wait for all locks to be released before aborting.
+   The maximum time to wait for all locks to be released before aborting.
 
 
 .. dovecot_core:setting:: mbox_md5
    :default: apop3d
+   :seealso: @pop3_uidl_format;dovecot_core
+   :todo: What are the possible values?
    :values: @string
 
-The mail-header selection algorithm to use for MD5 POP3 UIDLs when the
-setting :dovecot_core:ref:`pop3_uidl_format` = ``%m`` is applied.
-
-.. seealso:: :dovecot_core:ref:`pop3_uidl_format`
-
-.. todo:: What are the possible values?
+   The mail-header selection algorithm to use for MD5 POP3 UIDLs when the
+   setting :dovecot_core:ref:`pop3_uidl_format` = ``%m`` is applied.
 
 
 .. dovecot_core:setting:: mbox_min_index_size
    :default: 0
    :values: @size
 
-For mboxes smaller than this size, index files are not written.
+   For mboxes smaller than this size, index files are not written.
 
-If an index file already exists, it gets read but not updated.
+   If an index file already exists, it gets read but not updated.
 
-The default should not be changed for most installations.
+   The default should not be changed for most installations.
 
 
 .. dovecot_core:setting:: mbox_read_locks
    :default: fcntl
    :values: dotlock, dotlock_try, fcntl, flock, lockf
 
-Specify which locking method(s) to use for locking the mbox files during
-reading.
+   Specify which locking method(s) to use for locking the mbox files during
+   reading.
 
-To use multiple values, separate them with spaces.
+   To use multiple values, separate them with spaces.
 
-Descriptions of the locking methods can be found at
-:ref:`mbox_mbox_format_locking`.
+   Descriptions of the locking methods can be found at
+   :ref:`mbox_mbox_format_locking`.
 
 
 .. dovecot_core:setting:: mbox_very_dirty_syncs
    :default: no
+   :seealso: @mbox_dirty_syncs;dovecot_core
    :values: @boolean
 
-If enabled, Dovecot performs the optimizations from
-:dovecot_core:ref:`mbox_dirty_syncs` also for the IMAP SELECT, EXAMINE,
-EXPUNGE, and CHECK commands.
+   If enabled, Dovecot performs the optimizations from
+   :dovecot_core:ref:`mbox_dirty_syncs` also for the IMAP SELECT, EXAMINE,
+   EXPUNGE, and CHECK commands.
 
-If set, this option overrides :dovecot_core:ref:`mbox_dirty_syncs`.
+   If set, this option overrides :dovecot_core:ref:`mbox_dirty_syncs`.
 
 
 .. dovecot_core:setting:: mbox_write_locks
    :default: dotlock fcntl
    :values: dotlock, dotlock_try, fcntl, flock, lockf
 
-Specify which locking method(s) to use for locking the mbox files during
-writing.
+   Specify which locking method(s) to use for locking the mbox files during
+   writing.
 
-To use multiple values, separate them with spaces.
+   To use multiple values, separate them with spaces.
 
-Descriptions of the locking methods can be found at
-:ref:`mbox_mbox_format_locking`.
+   Descriptions of the locking methods can be found at
+   :ref:`mbox_mbox_format_locking`.

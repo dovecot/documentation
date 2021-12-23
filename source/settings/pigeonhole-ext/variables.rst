@@ -13,13 +13,13 @@ Settings
    :plugin: yes
    :values: @uint
 
-The maximum number of variables that can be declared in a scope.
+   The maximum number of variables that can be declared in a scope.
 
-There are currently two variable scopes: the normal script scope and the
-global scope created by the
-:ref:`include extension <pigeonhole_extension_include>`.
+   There are currently two variable scopes: the normal script scope and the
+   global scope created by the
+   :ref:`include extension <pigeonhole_extension_include>`.
 
-.. note:: The minimum value for this setting is 128.
+   .. note:: The minimum value for this setting is 128.
 
 
 .. pigeonhole:setting:: sieve_variables_max_variable_size
@@ -28,7 +28,7 @@ global scope created by the
    :plugin: yes
    :values: @size
 
-The maximum allowed size for the value of a variable. If exceeded at runtime,
-the value is always truncated to the configured maximum.
+   The maximum allowed size for the value of a variable. If exceeded at
+   runtime, the value is always truncated to the configured maximum.
 
-.. note:: The minimum value for this setting is 4000 bytes.
+   .. note:: The minimum value for this setting is 4000 bytes.

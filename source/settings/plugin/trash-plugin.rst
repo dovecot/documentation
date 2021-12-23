@@ -13,20 +13,20 @@ Settings
    :plugin: trash
    :values: @string
 
-A text file that configures the plug-in's behavior. This setting is required
-for the plugin to be active.
+   A text file that configures the plugin's behavior. This setting is required
+   for the plugin to be active.
 
-Example:
+   Example:
 
-.. code-block:: none
+   .. code-block:: none
 
-  trash = /etc/dovecot/dovecot-trash.conf.External
+     trash = /etc/dovecot/dovecot-trash.conf.External
 
-The file uses the following format: 
+   The file uses the following format:
 
-.. code-block:: none
+   .. code-block:: none
 
-  <priority> <mailbox name>
+     <priority> <mailbox name>
 
-Deletion begins with the mailbox that has the lowest priority number and
-proceeds from there.
+   Deletion begins with the mailbox that has the lowest priority number and
+   proceeds from there.

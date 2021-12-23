@@ -14,4 +14,4 @@ Settings
    :plugin: virtual
    :values: @uint
 
-How many mailboxes to open in virtual plugin.
+   How many mailboxes to open in virtual plugin.

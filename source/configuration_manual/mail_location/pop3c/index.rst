@@ -24,120 +24,109 @@ Connection Settings
 .. dovecot_core:setting:: pop3c_features
    :values: @string
 
-A space-separated list of features, optimizations, and workarounds that can
-be enabled.
+   A space-separated list of features, optimizations, and workarounds that can
+   be enabled.
 
-Workarounds:
+   Workarounds:
 
-``no-pipelining``
-   Prevents use of the PIPELINING extension even when it is advertised.
+   ``no-pipelining``
+
+     Prevents use of the PIPELINING extension even when it is advertised.
 
 
 .. dovecot_core:setting:: pop3c_host
    :values: @string
 
-The remote POP3 host to connect to.
+   The remote POP3 host to connect to.
 
 
 .. dovecot_core:setting:: pop3c_master_user
+   :seealso: @pop3c_password;dovecot_core, @pop3c_user;dovecot_core
    :values: @string
 
-The master username to authenticate as on the remote POP3 host.
+   The master username to authenticate as on the remote POP3 host.
 
-To authenticate as a master user but use a separate login user, the
-following configuration should be employed, where the credentials are
-represented by masteruser and masteruser-secret:
+   To authenticate as a master user but use a separate login user, the
+   following configuration should be employed, where the credentials are
+   represented by masteruser and masteruser-secret:
 
-.. code-block:: none
+   .. code-block:: none
 
-  pop3c_user = %u
-  pop3c_master_user = masteruser
-  pop3c_password = masteruser-secret
+     pop3c_user = %u
+     pop3c_master_user = masteruser
+     pop3c_password = masteruser-secret
 
-:ref:`Mail user variables <variables-mail_user>` can be used.
-
-.. seealso::
-
-   * :dovecot_core:ref:`pop3c_password`.
-   * :dovecot_core:ref:`pop3c_user`.
+   :ref:`Mail user variables <variables-mail_user>` can be used.
 
 
 .. dovecot_core:setting:: pop3c_password
+   :seealso: @pop3c_master_user;dovecot_core, @pop3c_user;dovecot_core
    :values: @string
 
-The authentication password for the remote POP3 server.
+   The authentication password for the remote POP3 server.
 
-If using master users, this setting will be the password of the master user.
-
-.. seealso::
-
-   * :dovecot_core:ref:`pop3c_master_user`.
-   * :dovecot_core:ref:`pop3c_user`.
+   If using master users, this setting will be the password of the master user.
 
 
 .. dovecot_core:setting:: pop3c_port
    :default: 110
    :values: @uint
 
-The port on the remote POP3 host to connect to.
+   The port on the remote POP3 host to connect to.
 
 
 .. dovecot_core:setting:: pop3c_quick_received_date
    :default: no
    :values: @boolean
 
-If enabled, pop3c doesn't require calling TOP for each message in order to get
-the metadata.
+   If enabled, pop3c doesn't require calling TOP for each message in order to
+   get the metadata.
 
 
 .. dovecot_core:setting:: pop3c_rawlog_dir
+   :seealso: @debugging_rawlog
    :values: @string
 
-Log all POP3 traffic input/output to this directory.
-
-.. seealso:: :ref:`debugging_rawlog`
+   Log all POP3 traffic input/output to this directory.
 
 
 .. dovecot_core:setting:: pop3c_ssl
    :default: no
    :values: no, pop3s, starttls
 
-Use TLS to connect to the remote POP3 server.
+   Use TLS to connect to the remote POP3 server.
 
-============= =====================================================
-Value         Description
-============= =====================================================
-``no``        No TLS
-``pop3s``     Explicitly connect to remote POP3 port using TLS
-``starttls``  Use POP3 STARTTLS command to switch to TLS connection
-============= =====================================================
+   ============= =====================================================
+   Value         Description
+   ============= =====================================================
+   ``no``        No TLS
+   ``pop3s``     Explicitly connect to remote POP3 port using TLS
+   ``starttls``  Use POP3 STARTTLS command to switch to TLS connection
+   ============= =====================================================
 
 
 .. dovecot_core:setting:: pop3c_ssl_verify
    :default: yes
+   :seealso: @pop3c_ssl;dovecot_core
    :values: @boolean
 
-Verify remote POP3 TLS certificate?
+   Verify remote POP3 TLS certificate?
 
-Verification may be disabled during testing, but should be enabled during
-production use.
+   Verification may be disabled during testing, but should be enabled during
+   production use.
 
-Only used if :dovecot_core:ref:`pop3c_ssl` is enabled.
+   Only used if :dovecot_core:ref:`pop3c_ssl` is enabled.
 
 
 .. dovecot_core:setting:: pop3c_user
    :default: %u
+   :seealso: @pop3c_master_user;dovecot_core, @pop3c_password;dovecot_core
    :values: @string
 
-The user identity to be used for performing authentication to the source POP3
-server.
+   The user identity to be used for performing authentication to the source
+   POP3 server.
 
-:ref:`Mail user variables <variables-mail_user>` can be used.
-
-.. seealso::
-
-   * :dovecot_core:ref:`pop3c_master_user`
-   * :dovecot_core:ref:`pop3c_password`
+   :ref:`Mail user variables <variables-mail_user>` can be used.
 
 
 Usage Examples

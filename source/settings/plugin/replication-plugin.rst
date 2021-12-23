@@ -13,13 +13,13 @@ Settings
    :plugin: replication
    :values: @string
 
-The location for replication.
+   The location for replication.
 
-Example:
+   Example:
 
-.. code-block:: none
+   .. code-block:: none
 
-  mail_replica = remote:vmail@targethost.example.com
+     mail_replica = remote:vmail@targethost.example.com
 
 
 .. dovecot_plugin:setting:: replication_sync_timeout
@@ -27,13 +27,7 @@ Example:
    :plugin: replication
    :values: @time
 
-When a new mail message is saved via IMAP or a message is being delivered via
-LDA/LMTP, the system waits this amount of time for the mail to be synced to
-the remote site.  If it doesn't finish after this timeout, a status of success
-is indicated anyway.
-
-Example Setting: 
-
-.. code-block:: none
-
-  replication_sync_timeout = 2s
+   When a new mail message is saved via IMAP or a message is being delivered
+   via LDA/LMTP, the system waits this amount of time for the mail to be
+   synced to the remote site.  If it doesn't finish after this timeout, a
+   status of success is indicated anyway.

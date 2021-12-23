@@ -13,67 +13,68 @@ Settings
    :plugin: fts-solr
    :values: @string
 
-Configuration of fts_solr driver.
+   Configuration of fts_solr driver.
 
-Format is a space separated list of options:
+   Format is a space separated list of options:
 
-.. code-block:: none
+   .. code-block:: none
 
-  fts_solr = [option1[=value1]] [option2[=value2]] [...]
+     fts_solr = [option1[=value1]] [option2[=value2]] [...]
 
-The following options are supported:
+   The following options are supported:
 
-``url=<url>``
+   ``url=<url>``
 
-  * Default: ``https://localhost:8983/solr/dovecot/``
-  * Values:  :ref:`string`
-  * Required base URL for Solr.
+     * Default: ``https://localhost:8983/solr/dovecot/``
+     * Values:  :ref:`string`
+     * Required base URL for Solr.
 
-    * Remember to add your core name if using solr 7+: ``"/solr/dovecot/"``.
+       * Remember to add your core name if using solr 7+:
+         ``"/solr/dovecot/"``.
 
-``debug``
+   ``debug``
 
-  * Default: no
-  * Values:  <existence> (if ``debug`` exists, it is enabled)
-  * Enable HTTP debugging. Writes to debug log.
+     * Default: no
+     * Values:  <existence> (if ``debug`` exists, it is enabled)
+     * Enable HTTP debugging. Writes to debug log.
 
-``rawlog_dir=<directory>``
+   ``rawlog_dir=<directory>``
 
-  .. versionadded:: 2.3.6
+     .. versionadded:: 2.3.6
 
-  * Default: <empty>
-  * Values:  :ref:`string`
-  * Enable rawlog debugging. Store HTTP exchanges between Dovecot and Solr in
-    this directory.
+     * Default: <empty>
+     * Values:  :ref:`string`
+     * Enable rawlog debugging. Store HTTP exchanges between Dovecot and Solr
+       in this directory.
 
-``batch_size``
+   ``batch_size``
 
-  .. versionadded:: 2.3.6
+     .. versionadded:: 2.3.6
 
-  * Default: ``1000``
-  * Values:  :ref:`uint`
-  * Configure the number of mails sent in single requests to Solr.
+     * Default: ``1000``
+     * Values:  :ref:`uint`
+     * Configure the number of mails sent in single requests to Solr.
 
-    * With ``fts_autoindex=yes``, each new mail gets separately indexed on
-      arrival, so ``batch_size`` only matters when doing the initial indexing
-      of a mailbox.
-    * With ``fts_autoindex=no``, new mails don't get indexed on arrival, so
-      ``batch_size`` is used when indexing gets triggered.
+       * With ``fts_autoindex=yes``, each new mail gets separately indexed on
+         arrival, so ``batch_size`` only matters when doing the initial
+         indexing of a mailbox.
+       * With ``fts_autoindex=no``, new mails don't get indexed on arrival, so
+         ``batch_size`` is used when indexing gets triggered.
 
-``soft_commit=yes|no``
+   ``soft_commit=yes|no``
 
-  .. versionadded:: 2.3.6
+     .. versionadded:: 2.3.6
 
-  * Default: ``yes``
-  * Values:  :ref:`boolean`
-  * Controls whether new mails are immediately searchable via Solr.
+     * Default: ``yes``
+     * Values:  :ref:`boolean`
+     * Controls whether new mails are immediately searchable via Solr.
 
-    * See :ref:`fts_backend_solr-soft_commits` for additional information.
+       * See :ref:`fts_backend_solr-soft_commits` for additional information.
 
-Example:
+   Example:
 
-.. code-block:: none
+   .. code-block:: none
 
-  plugin {
-    fts_solr = url=http://solr.example.org:8983/solr/ debug batch_size=1000
-  }
+     plugin {
+       fts_solr = url=http://solr.example.org:8983/solr/ debug batch_size=1000
+     }

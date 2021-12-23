@@ -74,28 +74,29 @@ mdbox Configuration Settings
 
 .. dovecot_core:setting:: mdbox_preallocate_space
    :default: no
+   :seealso: @mdbox_rotate_size;dovecot_core
    :values: @boolean
 
-mdbox only: If enabled, preallocate space for newly created files.
+   mdbox only: If enabled, preallocate space for newly created files.
 
-In creation of new mdbox files, their size is immediately
-preallocated as :dovecot_core:ref:`mdbox_rotate_size`.
+   In creation of new mdbox files, their size is immediately
+   preallocated as :dovecot_core:ref:`mdbox_rotate_size`.
 
-This setting currently works only in Linux with certain filesystems (ext4
-and xfs).
+   This setting currently works only in Linux with certain filesystems (ext4
+   and xfs).
 
 
 .. dovecot_core:setting:: mdbox_rotate_interval
    :default: 0
    :values: @size
 
-mdbox only: The maximum age the dbox file may reach before it's rotated.
+   mdbox only: The maximum age the dbox file may reach before it's rotated.
 
-``0`` means there is no age-based rotation.
+   ``0`` means there is no age-based rotation.
 
 
 .. dovecot_core:setting:: mdbox_rotate_size
    :default: 10M
    :values: @size
 
-mdbox only: The maximum size the dbox file may reach before it is rotated.
+   mdbox only: The maximum size the dbox file may reach before it is rotated.

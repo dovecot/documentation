@@ -15,8 +15,8 @@ Settings
    :plugin: obox
    :values: @string
 
-:ref:`Dictionary <dict>` URI where fs-auth process keeps authentication cache.
-This allows sharing the cache between multiple servers.
+   :ref:`Dictionary <dict>` URI where fs-auth process keeps authentication
+   cache. This allows sharing the cache between multiple servers.
 
 
 .. dovecot_plugin:setting:: fs_auth_request_max_retries
@@ -24,8 +24,8 @@ This allows sharing the cache between multiple servers.
    :plugin: obox
    :values: @uint
 
-If fs-auth fails to perform authentication lookup, retry the HTTP request this
-many times.
+   If fs-auth fails to perform authentication lookup, retry the HTTP request
+   this many times.
 
 
 .. dovecot_plugin:setting:: fs_auth_request_timeout
@@ -33,7 +33,7 @@ many times.
    :plugin: obox
    :values: @time_msecs
 
-Absolute HTTP request timeout for authentication lookups.
+   Absolute HTTP request timeout for authentication lookups.
 
 
 .. dovecot_plugin:setting:: metacache_close_delay
@@ -41,13 +41,13 @@ Absolute HTTP request timeout for authentication lookups.
    :plugin: obox
    :values: @time
 
-If user was accessed this recently, assume the user's indexes are up-to-date.
-If not, list index bundles in object storage (or Cassandra) to see if they
-have changed. This typically matters only when user is being moved to another
-backend and soon back again, or if the user is simultaneously being accessed
-by multiple backends. Default is 2 seconds.
+   If user was accessed this recently, assume the user's indexes are
+   up-to-date.  If not, list index bundles in object storage (or Cassandra) to
+   see if they have changed. This typically matters only when user is being
+   moved to another backend and soon back again, or if the user is
+   simultaneously being accessed by multiple backends.
 
-Must be less than :dovecot_core:ref:`director_user_expire` (Default: 15min).
+   .. note:: Must be less than :dovecot_core:ref:`director_user_expire`.
 
 
 .. dovecot_plugin:setting:: metacache_max_grace
@@ -55,8 +55,8 @@ Must be less than :dovecot_core:ref:`director_user_expire` (Default: 15min).
    :plugin: obox
    :values: @size
 
-How much disk space on top of :dovecot_plugin:ref:`metacache_max_space` can be
-used before Dovecot stops allowing more users to login.
+   How much disk space on top of :dovecot_plugin:ref:`metacache_max_space` can
+   be used before Dovecot stops allowing more users to login.
 
 
 .. dovecot_plugin:setting:: metacache_max_space
@@ -64,9 +64,9 @@ used before Dovecot stops allowing more users to login.
    :plugin: obox
    :values: @size
 
-How much disk space metacache can use before old data is cleaned up.
+   How much disk space metacache can use before old data is cleaned up.
 
-Generally, this should be set at ~90% of the available disk space.
+   Generally, this should be set at ~90% of the available disk space.
 
 
 .. dovecot_plugin:setting:: metacache_rescan_interval
@@ -74,25 +74,25 @@ Generally, this should be set at ~90% of the available disk space.
    :plugin: obox
    :values: @time
 
-How often to run a background metacache rescan, which makes sure that the disk
-space usage tracked by metacache process matches what really exists on
-filesystem.
+   How often to run a background metacache rescan, which makes sure that the
+   disk space usage tracked by metacache process matches what really exists on
+   filesystem.
 
-The desync may happen, for example, because the metacache process (or the
-whole backend) crashes.
+   The desync may happen, for example, because the metacache process (or the
+   whole backend) crashes.
 
-The rescanning helps with two issues:
+   The rescanning helps with two issues:
 
- * If metacache filesystem uses more disk space than metacache process thinks,
-   it may run out of disk space.
- * If metacache filesystem uses less disk space than metacache process thinks,
-   metacache runs non-optimally since it's not filling it out as much as it
-   could.
+     * If metacache filesystem uses more disk space than metacache process
+       thinks, it may run out of disk space.
+     * If metacache filesystem uses less disk space than metacache process
+       thinks, metacache runs non-optimally since it's not filling it out as
+       much as it could.
 
-Setting this to 0 disables the rescan.
+   Setting this to ``0`` disables the rescan.
 
-It's also possible to do this manually by running the
-``doveadm metacache rescan`` command.
+   It's also possible to do this manually by running the ``doveadm metacache
+   rescan`` command.
 
 
 .. dovecot_plugin:setting:: metacache_roots
@@ -100,18 +100,18 @@ It's also possible to do this manually by running the
    :plugin: obox
    :values: @string
 
-List of metacache root directories, separated with ``:``.
+   List of metacache root directories, separated with ``:``.
 
-Usually this is automatically parsed directly from
-:dovecot_core:ref:`mail_home` and :dovecot_core:ref:`mail_chroot` settings.
+   Usually this is automatically parsed directly from
+   :dovecot_core:ref:`mail_home` and :dovecot_core:ref:`mail_chroot` settings.
 
-Accessing a metacache directory outside these roots will result in a warning:
-"Index directory is outside metacache_roots".
+   Accessing a metacache directory outside these roots will result in a
+   warning: "Index directory is outside metacache_roots".
 
-It's possible to disable this check entirely by setting the value to ``:``.
+   It's possible to disable this check entirely by setting the value to ``:``.
 
-This setting is required for
-:dovecot_plugin:ref:`metacache_rescan_interval`.
+   .. note:: This setting is required for
+             :dovecot_plugin:ref:`metacache_rescan_interval`.
 
 
 .. dovecot_plugin:setting:: metacache_upload_interval
@@ -119,33 +119,31 @@ This setting is required for
    :plugin: obox
    :values: @time
 
-How often to upload important index changes to object storage?
+   How often to upload important index changes to object storage?
 
-This mainly means that if a backend crashes during this time, message flag
-changes within this time may be lost. A longer time can however reduce the
-number of index bundle uploads.
+   This mainly means that if a backend crashes during this time, message flag
+   changes within this time may be lost. A longer time can however reduce the
+   number of index bundle uploads.
 
 
 .. dovecot_plugin:setting:: obox_fs
    :plugin: obox
+   :todo: Document this!
    :values: @string
 
-This setting handles the basic Object Storage configuration.
-
-.. todo:: Document this!
+   This setting handles the basic Object Storage configuration.
 
 
 .. dovecot_plugin:setting:: obox_index_fs
    :default: @obox_fs;dovecot_plugin
    :plugin: obox
+   :todo: Document this!
    :values: @string
 
-This setting handles the object storage configuration for index bundles.
+   This setting handles the object storage configuration for index bundles.
 
-.. todo:: Document this!
-
-.. versionchanged:: v2.3.18 Fixed to work properly with fs-posix driver.
-                    Earlier versions don't work correctly in all situations.
+   .. versionchanged:: v2.3.18 Fixed to work properly with fs-posix driver.
+                       Earlier versions don't work correctly in all situations.
 
 
 .. dovecot_plugin:setting:: obox_max_parallel_copies
@@ -153,11 +151,11 @@ This setting handles the object storage configuration for index bundles.
    :plugin: obox
    :values: @uint
 
-Maximum number of email HTTP copy/link operations to do in parallel.
+   Maximum number of email HTTP copy/link operations to do in parallel.
 
-If the storage driver supports bulk-copy/link operation, this controls how
-many individual copy operations can be packed into a single bulk-copy/link
-HTTP request.
+   If the storage driver supports bulk-copy/link operation, this controls how
+   many individual copy operations can be packed into a single bulk-copy/link
+   HTTP request.
 
 
 .. dovecot_plugin:setting:: obox_max_parallel_deletes
@@ -165,11 +163,11 @@ HTTP request.
    :plugin: obox
    :values: @uint
 
-Maximum number of email HTTP delete operations to do in parallel.
+   Maximum number of email HTTP delete operations to do in parallel.
 
-If the storage driver supports bulk-delete operation, this controls how
-many individual delete operations can be packed into a single bulk-delete
-HTTP request.
+   If the storage driver supports bulk-delete operation, this controls how
+   many individual delete operations can be packed into a single bulk-delete
+   HTTP request.
 
 
 .. dovecot_plugin:setting:: obox_max_parallel_writes
@@ -177,7 +175,7 @@ HTTP request.
    :plugin: obox
    :values: @uint
 
-Maximum number of email write HTTP operations to do in parallel.
+   Maximum number of email write HTTP operations to do in parallel.
 
 
 .. dovecot_plugin:setting:: obox_refresh_index_once_after
@@ -185,9 +183,9 @@ Maximum number of email write HTTP operations to do in parallel.
    :plugin: obox
    :values: @uint
 
-This forces the next mailbox open after the specified UNIX timestamp to
-refresh locally cached indexes to see if other backends have modified the
-user's indexes simultaneously.
+   This forces the next mailbox open after the specified UNIX timestamp to
+   refresh locally cached indexes to see if other backends have modified the
+   user's indexes simultaneously.
 
 
 .. dovecot_plugin:setting:: obox_rescan_mails_once_after
@@ -195,8 +193,8 @@ user's indexes simultaneously.
    :plugin: obox
    :values: @uint
 
-This forces the next mailbox open after the specified UNIX timestamp to rescan
-the mails to make sure there aren't any unindexed mails.
+   This forces the next mailbox open after the specified UNIX timestamp to
+   rescan the mails to make sure there aren't any unindexed mails.
 
 
 .. dovecot_plugin:setting:: obox_track_copy_flags
@@ -204,5 +202,5 @@ the mails to make sure there aren't any unindexed mails.
    :plugin: obox
    :values: @boolean
 
-Enable only if dictmap/Cassandra & :ref:`lazy_expunge_plugin` plugin are used:
-Try to avoid Cassandra SELECTs when expunging mails.
+   Enable only if dictmap/Cassandra & :ref:`lazy_expunge_plugin` plugin are
+   used: Try to avoid Cassandra SELECTs when expunging mails.

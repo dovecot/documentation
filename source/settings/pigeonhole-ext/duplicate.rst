@@ -12,8 +12,8 @@ Settings
    :plugin: yes
    :values: @time
 
-Default period after which tracked values are purged from the duplicate
-tracking database.
+   Default period after which tracked values are purged from the duplicate
+   tracking database.
 
 
 .. pigeonhole:setting:: sieve_duplicate_max_period
@@ -21,5 +21,5 @@ tracking database.
    :plugin: yes
    :values: @time
 
-Maximum period after which tracked values are purged from the duplicate
-tracking database.
+   Maximum period after which tracked values are purged from the duplicate
+   tracking database.

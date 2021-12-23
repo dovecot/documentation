@@ -20,16 +20,16 @@ Settings:
    :plugin: vault
    :values: @string
 
-This setting enables the vault plugin and identifies where to store a copy
-of the message.
+   This setting enables the vault plugin and identifies where to store a copy
+   of the message.
 
-Example:
+   Example:
 
-.. code-block:: none
-    
-  protocol lmtp {
-    mail_plugins = $mail_plugins vault
-    plugin {
-      vault_mailbox = ARCHIVE
-    }
-  }
+   .. code-block:: none
+
+     protocol lmtp {
+       mail_plugins = $mail_plugins vault
+       plugin {
+         vault_mailbox = ARCHIVE
+       }
+     }

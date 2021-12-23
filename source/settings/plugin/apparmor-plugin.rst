@@ -15,16 +15,16 @@ Settings
    :plugin: apparmor
    :values: @string
 
-The AppArmor "hat" to change to when a user is loaded. 
+   The AppArmor "hat" to change to when a user is loaded.
 
-You can define muiltiple hats by appending an increasing number to the
-setting name.
+   You can define muiltiple hats by appending an increasing number to the
+   setting name.
 
-Example:
+   Example:
 
-.. code-block:: none
+   .. code-block:: none
 
-  plugin {
-    apparmor_hat = hat_name
-    apparamor_hat2 = another_hat
-  }
+     plugin {
+       apparmor_hat = hat_name
+       apparamor_hat2 = another_hat
+     }

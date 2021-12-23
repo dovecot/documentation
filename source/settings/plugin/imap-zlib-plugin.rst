@@ -15,19 +15,18 @@ Settings
    :plugin: imap-zlib
    :values: @uint
 
-Defines the compression level for the given algorithm.
+   Defines the compression level for the given algorithm.
 
-Per the RFC, only the ``deflate`` algorithm is currently supported.
+   Per the RFC, only the ``deflate`` algorithm is currently supported.
 
-=========== ================== ======= =======
-Algorithm   Minimum            Default Maximum
-=========== ================== ======= =======
-``deflate`` 0 (no compression) 6       9
-=========== ================== ======= =======
+   =========== ================== ======= =======
+   Algorithm   Minimum            Default Maximum
+   =========== ================== ======= =======
+   ``deflate`` 0 (no compression) 6       9
+   =========== ================== ======= =======
 
 
 .. dovecot_plugin:setting:: imap_zlib_compression_level
    :hdr_only: yes
    :plugin: imap-zlib
-
-.. versionremoved:: v2.3.15 Now called :dovecot_plugin:ref:`imap_compress_<algorithm>_level`
+   :removed: v2.3.15 Now called :dovecot_plugin:ref:`imap_compress_<algorithm>_level`

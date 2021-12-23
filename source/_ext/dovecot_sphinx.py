@@ -2,36 +2,21 @@ from collections import defaultdict
 
 from docutils import nodes
 from docutils.parsers.rst import directives
+from docutils.parsers.rst.directives.admonitions import BaseAdmonition
 from docutils.statemachine import StringList
 
+import sphinx
 from sphinx import addnodes
 from sphinx.directives import ObjectDescription
 from sphinx.domains import Domain, Index
 from sphinx.roles import XRefRole
+from sphinx.util.docutils import SphinxDirective
 from sphinx.util.nodes import make_refnode
 
 
-class DovecotSettingDirective(ObjectDescription):
+class DovecotDirective(ObjectDescription):
 
   required_arguments = 1
-  option_spec = {
-      'added': directives.unchanged,
-      'changed': directives.unchanged,
-      'default': directives.unchanged,
-      'hdr_only': directives.unchanged,
-      'plugin': directives.unchanged,
-      'removed': directives.unchanged,
-      'values': directives.unchanged,
-  }
-
-  def handle_signature(self, sig, signode):
-    signode += addnodes.desc_name(text=sig)
-    return sig
-
-  def add_target_and_index(self, name_cls, sig, signode):
-    if 'hdr_only' in self.options and self.options.get('hdr_only') == 'no_index':
-      return
-    self.add_target_and_index_dovecot(sig, signode)
 
   def _parse_rst_txt(self, txt):
     node = nodes.Element()
@@ -41,11 +26,46 @@ class DovecotSettingDirective(ObjectDescription):
     self.state.nested_parse(vl, 0, node)
     return node.children[0]
 
+class DovecotSettingLinkDirective(DovecotDirective):
+
+  def add_target_and_index(self, name_cls, sig, signode):
+      return
+
+  def transform_content(self, contentnode):
+      ref = self._parse_rst_txt(':%s:ref:`%s`' % (self.domain, self.arguments[0]))
+      ref.insert(0, nodes.Text('See: '))
+      contentnode += ref
+
+class DovecotSettingDirective(DovecotDirective):
+
+  option_spec = {
+      'added': directives.unchanged,
+      'changed': directives.unchanged,
+      'default': directives.unchanged,
+      'hdr_only': directives.unchanged,
+      'plugin': directives.unchanged,
+      'removed': directives.unchanged,
+      'seealso': directives.unchanged,
+      'todo': directives.unchanged,
+      'values': directives.unchanged,
+  }
+
+  def handle_signature(self, sig, signode):
+    signode += addnodes.desc_name(text=sig)
+    return sig
+
+  def add_target_and_index(self, name_cls, sig, signode):
+    self.add_target_and_index_dovecot(sig, signode)
+
   def transform_content(self, contentnode):
     super().transform_content(contentnode)
 
     if self.options.get('hdr_only'):
       return
+
+    for x in ('changed', 'removed', 'added'):
+      if x in self.options:
+        contentnode.insert(0, self._parse_rst_txt('.. version%s:: %s' % (x, self.options.get(x))))
 
     par = nodes.paragraph(text='Default: ')
     if 'default' in self.options:
@@ -90,11 +110,30 @@ class DovecotSettingDirective(ObjectDescription):
 
       blist += nodes.list_item('', par)
 
-    contentnode += blist
+    contentnode.insert(0, blist)
 
-    for x in ('changed', 'removed', 'added'):
-      if x in self.options:
-        contentnode.insert(0, self._parse_rst_txt('.. version%s:: %s' % (x, self.options.get(x))))
+    if 'seealso' in self.options:
+      seealso = addnodes.seealso()
+      seealso.set_class('dovecot-seealso')
+
+      for x in self.options.get('seealso').split(','):
+        x = x.strip().replace('\\', '')
+
+        par = nodes.paragraph()
+        if x.startswith('@'):
+          parts = x[1:].split(';', 2)
+          par += self._parse_rst_txt(':%s:ref:`%s`' % (parts[1] if len(parts) == 2 else 'std', parts[0])).children
+        elif x.startswith('!'):
+          par += self._parse_rst_txt(x[1:]).children
+        else:
+          par += nodes.literal(text=x)
+
+        seealso += par
+
+      contentnode += seealso
+
+    if 'todo' in self.options:
+      contentnode += self._parse_rst_txt('.. todo:: %s' % (self.options.get('todo')))
 
 class DovecotSettingIndex(Index):
 
@@ -172,7 +211,8 @@ class DovecotPluginSettingDomain(DovecotSettingDomain):
   set_prefix = 'plugin_setting'
 
   directives = {
-      'setting': DovecotPluginSettingDirective
+      'setting': DovecotPluginSettingDirective,
+      'setting_link': DovecotSettingLinkDirective
   }
   indices = {
       DovecotPluginSettingIndex
@@ -202,7 +242,8 @@ class DovecotCoreSettingDomain(DovecotSettingDomain):
   set_prefix = 'core_setting'
 
   directives = {
-      'setting': DovecotCoreSettingDirective
+      'setting': DovecotCoreSettingDirective,
+      'setting_link': DovecotSettingLinkDirective
   }
   indices = {
       DovecotCoreSettingIndex
@@ -232,7 +273,8 @@ class PigeonholeSettingDomain(DovecotSettingDomain):
   set_prefix = 'pigeonhole_setting'
 
   directives = {
-      'setting': PigeonholeSettingDirective
+      'setting': PigeonholeSettingDirective,
+      'setting_link': DovecotSettingLinkDirective
   }
   indices = {
       PigeonholeSettingIndex

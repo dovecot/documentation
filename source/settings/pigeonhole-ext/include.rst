@@ -12,8 +12,8 @@ Settings
    :plugin: yes
    :values: @uint
 
-The maximum number of scripts that may be included. This is the total number
-of scripts involved in the include tree.
+   The maximum number of scripts that may be included. This is the total
+   number of scripts involved in the include tree.
 
 
 .. pigeonhole:setting:: sieve_include_max_nesting_depth
@@ -21,4 +21,4 @@ of scripts involved in the include tree.
    :plugin: yes
    :values: @uint
 
-The maximum nesting depth for the include tree.
+   The maximum nesting depth for the include tree.

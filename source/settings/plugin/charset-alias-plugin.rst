@@ -15,13 +15,13 @@ Settings
    :plugin: charset-alias
    :values: @string
 
-A space-separated string of ``<from>=<to>`` charsets. The "from" charsets"
-will be treated as "to" charsets when decoding to UTF-8.
+   A space-separated string of ``<from>=<to>`` charsets. The "from" charsets"
+   will be treated as "to" charsets when decoding to UTF-8.
 
-Example:
+   Example:
 
-.. code-block:: none
+   .. code-block:: none
 
-  plugin {
-    charset_aliases = shift_jis=sjis-win euc-jp=eucjp-win iso-2022-jp=iso-2022-jp-3
-  }
+     plugin {
+       charset_aliases = shift_jis=sjis-win euc-jp=eucjp-win iso-2022-jp=iso-2022-jp-3
+     }
