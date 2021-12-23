@@ -4,7 +4,7 @@
 mail-lua plugin
 ===============
 
-.. versionadded:: v2.3.4 
+.. versionadded:: v2.3.4
 
 .. seealso:: :ref:`lua`
 
@@ -20,12 +20,12 @@ Settings
    :plugin: mail-lua
    :values: @string
 
-Specify filename to load for user.
+   Specify filename to load for user.
 
-Example:
+   Example:
 
-.. code-block:: none
+   .. code-block:: none
 
-  plugin {
-    mail_lua_script = /etc/dovecot/user.lua
-  }
+     plugin {
+       mail_lua_script = /etc/dovecot/user.lua
+     }

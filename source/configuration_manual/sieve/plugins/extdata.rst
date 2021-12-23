@@ -86,18 +86,18 @@ Settings
    :plugin: yes
    :values: @string
 
-Specifies the URI of the dict that is used for extdata lookups.
+   Specifies the URI of the dict that is used for extdata lookups.
 
-Example:
+   Example:
 
-.. code-block:: none
+   .. code-block:: none
 
-  plugin {
-    sieve = ~/.dovecot.sieve
-    sieve_plugins = sieve_extdata
+     plugin {
+       sieve = ~/.dovecot.sieve
+       sieve_plugins = sieve_extdata
 
-    sieve_extdata_dict_uri = file:/etc/dovecot/pigeonhole-sieve.dict
-  }
+       sieve_extdata_dict_uri = file:/etc/dovecot/pigeonhole-sieve.dict
+     }
 
 Usage
 -----

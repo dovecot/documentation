@@ -54,206 +54,202 @@ Settings
 .. dovecot_core:setting:: namespace
    :values: @string
 
-Name of the namespace.
+   Name of the namespace.
 
-Giving name is optional, but doing so enables referencing the configuration
-later on.
+   Giving name is optional, but doing so enables referencing the configuration
+   later on.
 
-Example, to name a namespace ``foo``::
+   Example, to name a namespace ``foo``::
 
-  namespace foo {
-    [...]
-  }
+     namespace foo {
+       [...]
+     }
 
 
 .. dovecot_core:setting:: namespace/alias_for
    :values: @string
 
-Defines the namespace prefix for purposes of alias detection.
+   Defines the namespace prefix for purposes of alias detection.
 
-If multiple namespaces point to the same location, they should be marked as
-aliases against one primary namespace. This avoids duplicating work for some
-commands (listing the same mailbox multiple times).
+   If multiple namespaces point to the same location, they should be marked as
+   aliases against one primary namespace. This avoids duplicating work for
+   some commands (listing the same mailbox multiple times).
 
-:ref:`Mail user variables <variables-mail_user>` can be used.
+   :ref:`Mail user variables <variables-mail_user>` can be used.
 
-.. note::
+   .. note:: Alias namespaces often have ``hidden=yes`` and ``list=no`` so
+             they are not visible unless clients have specifically configured
+             them, and they're typically used when migrating to a different
+             namespace prefix for existing users.
 
-  Alias namespaces often have ``hidden=yes`` and ``list=no`` so they are not
-  visible unless clients have specifically configured them, and they're
-  typically used when migrating to a different namespace prefix for existing
-  users.
+   Example::
 
-Example::
+     namespace {
+       # If primary namespace has empty prefix
+       alias_for =
 
-  namespace {
-    # If primary namespace has empty prefix
-    alias_for =
-
-    # OR if primary namespace has ``prefix=INBOX/``
-    alias_for=INBOX/
-  }
+       # OR if primary namespace has ``prefix=INBOX/``
+       alias_for=INBOX/
+     }
 
 
 .. dovecot_core:setting:: namespace/disabled
    :default: no
    :values: @boolean
 
-If ``yes``, namespace is disabled and cannot be accessed by user in any way.
+   If ``yes``, namespace is disabled and cannot be accessed by user in any way.
 
-Useful when returned by a userdb lookup to easily configure per-user
-namespaces.
+   Useful when returned by a userdb lookup to easily configure per-user
+   namespaces.
 
 
 .. dovecot_core:setting:: namespace/hidden
    :default: no
    :values: @boolean
 
-If ``yes``, namespace will be hidden from IMAP NAMESPACE command.
+   If ``yes``, namespace will be hidden from IMAP NAMESPACE command.
 
 
 .. dovecot_core:setting:: namespace/ignore_on_failure
    :default: no
    :values: @boolean
 
-If namespace :dovecot_core:ref:`namespace/location` fails to load, by default
-the entire session will fail to start. If this is set, this namespace will be
-ignored instead.
+   If namespace :dovecot_core:ref:`namespace/location` fails to load, by
+   default the entire session will fail to start. If this is set, this
+   namespace will be ignored instead.
 
 
 .. dovecot_core:setting:: namespace/inbox
    :default: no
    :values: @boolean
 
-If ``yes``, this namespace will be considered the one holding the INBOX
-folder.
+   If ``yes``, this namespace will be considered the one holding the INBOX
+   folder.
 
-There can be only one namespace defined like this.
+   There can be only one namespace defined like this.
 
 
 .. dovecot_core:setting:: namespace/list
    :default: yes
+   :seealso: @namespace/hidden;dovecot_core
    :values: yes, no, children
 
-Include this namespace in LIST output when listing its parent's folders.
+   Include this namespace in LIST output when listing its parent's folders.
 
-Options:
+   Options:
 
-============= ==============================================================
-Value         Description
-============= ==============================================================
-``children``  Namespace prefix list listed only if it has child mailboxes.
-``no``        Namespace and mailboxes not listed unless listing requests
-              explicitly mailboxes under the namespace prefix.
-``yes``       Namespace and mailboxes are always listed.
-============= ==============================================================
+   ============= ============================================================
+   Value         Description
+   ============= ============================================================
+   ``children``  Namespace prefix list listed only if it has child mailboxes.
+   ``no``        Namespace and mailboxes not listed unless listing requests
+                 explicitly mailboxes under the namespace prefix.
+   ``yes``       Namespace and mailboxes are always listed.
+   ============= ============================================================
 
-It is still possible to list the namespace's folders by explicitly asking for
-them. For example, if this setting is ``no``, using ``LIST "" *`` with
-namespace prefix "lazy-expunge/" won't list it, but using
-``LIST "" lazy-expunge/*`` lists all folders under it.
-
-.. seealso:: :dovecot_core:ref:`namespace/hidden`
+   It is still possible to list the namespace's folders by explicitly asking
+   for them. For example, if this setting is ``no``, using ``LIST "" *`` with
+   namespace prefix "lazy-expunge/" won't list it, but using ``LIST ""
+   lazy-expunge/*`` lists all folders under it.
 
 
 .. dovecot_core:setting:: namespace/location
    :default: @mail_location;dovecot_core
    :values: @string
 
-Specifies driver and parameters for physical mailbox storage. It allows an
-override of the ``mail_location`` setting for a namespace.
+   Specifies driver and parameters for physical mailbox storage. It allows an
+   override of the ``mail_location`` setting for a namespace.
 
-:ref:`Mail user variables <variables-mail_user>` can be used.
+   :ref:`Mail user variables <variables-mail_user>` can be used.
 
-Example::
+   Example::
 
-  namespace {
-    location = sdbox:/archive/%u
-  }
+     namespace {
+       location = sdbox:/archive/%u
+     }
 
 
 .. dovecot_core:setting:: namespace/order
    :default: 0
    :values: @uint
 
-Sets display order in IMAP ``NAMESPACE`` command.
+   Sets display order in IMAP ``NAMESPACE`` command.
 
-Namespaces are automatically numbered if this setting does not exist.
+   Namespaces are automatically numbered if this setting does not exist.
 
 
 .. dovecot_core:setting:: namespace/prefix
    :values: @string
 
-Specifies prefix for namespace.
+   Specifies prefix for namespace.
 
-.. note:: Must end with
-          :dovecot_core:ref:`hierarchy separator <namespace/separator>`.
+   .. note:: Must end with
+             :dovecot_core:ref:`hierarchy separator <namespace/separator>`.
 
-:ref:`Mail user variables <variables-mail_user>` can be used.
+   :ref:`Mail user variables <variables-mail_user>` can be used.
 
-Example::
+   Example::
 
-  namespace {
-    prefix = Shared/
-    separator = /
-  }
+     namespace {
+       prefix = Shared/
+       separator = /
+     }
 
 
 .. dovecot_core:setting:: namespace/separator
    :default: !'.' for Maildir; '/' for other mbox formats
+   :seealso: @namespace-hierarchy-separators
    :values: @string
 
-Specifies the hierarchy separator for the namespace.
+   Specifies the hierarchy separator for the namespace.
 
-The separator is a single character, which can't then otherwise be used in
-folder names.
+   The separator is a single character, which can't then otherwise be used in
+   folder names.
 
-The commonly used separators are ``.`` and ``/``, but other separators can be
-used as well. For example ``^`` is less likely to be found in normal folder
-names.
+   The commonly used separators are ``.`` and ``/``, but other separators can
+   be used as well. For example ``^`` is less likely to be found in normal
+   folder names.
 
-Recommended value is to leave it empty and accept the default value.
+   Recommended value is to leave it empty and accept the default value.
 
-See :ref:`namespace-hierarchy-separators`.
+   Example::
 
-Example::
-
-  namespace {
-    separator = /
-  }
+     namespace {
+       separator = /
+     }
 
 
 .. dovecot_core:setting:: namespace/subscriptions
    :default: yes
    :values: @boolean
 
-Whether subscriptions are stored in this namespace.
+   Whether subscriptions are stored in this namespace.
 
-This is usually ``no`` for shared namespaces so that the shared folders'
-subscriptions are stored in the user's primary subscriptions file. If ``no``,
-the subscriptions are stored in the first parent namespace (based on the
-prefix) that has this setting enabled.
+   This is usually ``no`` for shared namespaces so that the shared folders'
+   subscriptions are stored in the user's primary subscriptions file. If
+   ``no``, the subscriptions are stored in the first parent namespace (based
+   on the prefix) that has this setting enabled.
 
-Example: If this setting is ``no`` for a namespace with ``prefix=foo/bar/``,
-Dovecot first sees if there's a ``prefix=foo/`` namespace with
-``subscriptions=yes`` and then a namespace with an empty prefix. If neither is
-found, an error is given.
+   Example: If this setting is ``no`` for a namespace with
+   ``prefix=foo/bar/``, Dovecot first sees if there's a ``prefix=foo/``
+   namespace with ``subscriptions=yes`` and then a namespace with an empty
+   prefix. If neither is found, an error is given.
 
 
 .. dovecot_core:setting:: namespace/type
    :default: private
    :values: private, shared, public
 
-The namespace type.  One of:
+   The namespace type.  One of:
 
-============ ===========================================================
-Type         Description
-============ ===========================================================
-``public``   Contains :ref:`public mailboxes <public_shared_mailboxes>`.
-``private``  Typically contains only user's own private mailboxes.
-``shared``   Contains other users'
-             :ref:`shared mailboxes <user_shared_mailboxes>`.
-============ ===========================================================
+   ============ ===========================================================
+   Type         Description
+   ============ ===========================================================
+   ``public``   Contains :ref:`public mailboxes <public_shared_mailboxes>`.
+   ``private``  Typically contains only user's own private mailboxes.
+   ``shared``   Contains other users'
+                :ref:`shared mailboxes <user_shared_mailboxes>`.
+   ============ ===========================================================
 
 .. _namespace-hierarchy-separators:
 
@@ -566,40 +562,39 @@ Settings
    :default: no
    :values: create, no, subscribe
 
-Autocreate and/or subscribe to the mailbox?  Options:
+   Autocreate and/or subscribe to the mailbox?
 
-============== ==================================
-Value          Description
-============== ==================================
-``create``     Autocreate but don't autosubscribe
-``no``         Don't autocreate or autosubscribe
-``subscribe``  Autocreate and autosubscribe
-============== ==================================
+   ============== ==================================
+   Value          Description
+   ============== ==================================
+   ``create``     Autocreate but don't autosubscribe
+   ``no``         Don't autocreate or autosubscribe
+   ``subscribe``  Autocreate and autosubscribe
+   ============== ==================================
 
-Autocreated mailboxes are created lazily to disk only when accessed for the
-first time. The autosubscribed mailboxes aren't written to subscriptions file,
-unless SUBSCRIBE command is explicitly used for them.
+   Autocreated mailboxes are created lazily to disk only when accessed for
+   the first time. The autosubscribed mailboxes aren't written to
+   subscriptions file, unless SUBSCRIBE command is explicitly used for them.
 
 
 .. dovecot_core:setting:: namespace/mailbox/autoexpunge
    :added: v2.2.20
    :default: 0
+   :seealso: @namespace/mailbox/autoexpunge_max_mails;dovecot_core
    :values: @time
 
-Expunge all mails in this mailbox whose saved-timestamp is older than this
-value.
+   Expunge all mails in this mailbox whose saved-timestamp is older than this
+   value.
 
-For IMAP and POP3 this happens after the client is already disconnected.
+   For IMAP and POP3 this happens after the client is already disconnected.
 
-For LMTP this happens when the user's mail delivery is finished. Note that if
-there are multiple recipients this may delay delivering the mails to the
-other recipients.
+   For LMTP this happens when the user's mail delivery is finished. Note that
+   if there are multiple recipients this may delay delivering the mails to the
+   other recipients.
 
-:dovecot_core:ref:`mailbox_list_index` = ``yes`` is highly recommended when
-using this setting, as it avoids actually opening the mailbox to see if
-anything needs to be expunged.
-
-.. seealso:: :dovecot_core:ref:`namespace/mailbox/autoexpunge_max_mails`.
+   :dovecot_core:ref:`mailbox_list_index` = ``yes`` is highly recommended when
+   using this setting, as it avoids actually opening the mailbox to see if
+   anything needs to be expunged.
 
 
 .. dovecot_core:setting:: namespace/mailbox/autoexpunge_max_mails
@@ -607,28 +602,28 @@ anything needs to be expunged.
    :default: 0
    :values: @uint
 
-Mails are autoexpunged until mail count is at or below this number of
-messages.
+   Mails are autoexpunged until mail count is at or below this number of
+   messages.
 
-Once this threshold has been reached,
-:dovecot_core:ref:`namespace/mailbox/autoexpunge` processing is done.
+   Once this threshold has been reached,
+   :dovecot_core:ref:`namespace/mailbox/autoexpunge` processing is done.
 
 
 .. dovecot_core:setting:: namespace/mailbox/special_use
    :values: @string
 
-Space-separated list of SPECIAL-USE
-(`RFC 6154 <http://www.faqs.org/rfcs/rfc6154.html>`_) flags to broadcast for
-the mailbox.
+   Space-separated list of SPECIAL-USE
+   (`RFC 6154 <http://www.faqs.org/rfcs/rfc6154.html>`_) flags to broadcast
+   for the mailbox.
 
-There are no validity checks, so you could specify anything you want here, but
-it's not a good idea to use other than the standard ones specified in the RFC.
+   There are no validity checks, so you could specify anything you want here,
+   but it's not a good idea to use other than the standard ones specified in
+   the RFC.
 
-.. Note::
-
-  Bug in v2.2.30-v2.2.33: if special-use flags are used, SPECIAL-USE
-  needs to be added to post-login CAPABILITY response as RFC 6154 mandates. You
-  can do this with ``imap_capability = +SPECIAL-USE``
+   .. note:: Bug in v2.2.30-v2.2.33: if special-use flags are used,
+             SPECIAL-USE needs to be added to post-login CAPABILITY response
+             as RFC 6154 mandates. You can do this with
+             ``imap_capability = +SPECIAL-USE``
 
 
 Example

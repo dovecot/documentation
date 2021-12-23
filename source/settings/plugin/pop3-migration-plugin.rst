@@ -4,7 +4,7 @@
 pop3-migration plugin
 =====================
 
-The pop3-migration plugin is used to preserve POP3 UIDLs. 
+The pop3-migration plugin is used to preserve POP3 UIDLs.
 
 When dsync is handling IMAP INBOX and requests a POP3 UIDL, the plugin
 connects to the POP3 server and figures out which IMAP messages match the
@@ -20,40 +20,37 @@ Settings
    :plugin: pop3-migration
    :values: @boolean
 
-.. todo
-
+   TODO
 
 .. dovecot_plugin:setting:: pop3_migration_ignore_extra_uidls
    :default: no
    :plugin: pop3-migration
    :values: @boolean
 
-.. todo
-
+   TODO
 
 .. dovecot_plugin:setting:: pop3_migration_ignore_missing_uidls
    :default: no
    :plugin: pop3-migration
    :values: @boolean
 
-.. todo
-
+   TODO
 
 .. dovecot_plugin:setting:: pop3_migration_mailbox
    :plugin: pop3-migration
    :values: @string
 
-This setting is required for the plugin to be active.
+   TODO
 
-.. todo
+   This setting is required for the plugin to be active.
 
-Example:
+   Example:
 
-.. code-block:: none
+   .. code-block:: none
 
-  plugin {
-    pop3_migration_mailbox = POP3-MIGRATION-NS/INBOX
-  }
+     plugin {
+       pop3_migration_mailbox = POP3-MIGRATION-NS/INBOX
+     }
 
 
 .. dovecot_plugin:setting:: pop3_migration_skip_size_check
@@ -61,7 +58,7 @@ Example:
    :plugin: pop3-migration
    :values: @boolean
 
-.. todo
+   TODO
 
 
 .. dovecot_plugin:setting:: pop3_migration_skip_uidl_check
@@ -69,4 +66,4 @@ Example:
    :plugin: pop3-migration
    :values: @boolean
 
-.. todo
+   TODO

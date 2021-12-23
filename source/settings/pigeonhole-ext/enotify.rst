@@ -9,8 +9,8 @@ Settings
 
 .. pigeonhole:setting:: sieve_notify_mailto_envelope_from setting
    :plugin: yes
+   :seealso: @sieve_redirect_envelope_from;pigeonhole
    :values: @string
 
-Defines the source of the notification sender address for e-mail notifications.
-
-This is similar to :pigeonhole:ref:`sieve_redirect_envelope_from`.
+   Defines the source of the notification sender address for e-mail
+   notifications.

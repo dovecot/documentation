@@ -15,38 +15,39 @@ Settings
    :plugin: notify-status
    :values: @string
 
-The URI of the dictionary to use. This MUST be set for the plugin to be active.
+   The URI of the dictionary to use. This MUST be set for the plugin to be
+   active.
 
-See :ref:`dict` for how to configure dictionaries.
+   See :ref:`dict` for how to configure dictionaries.
 
-Example:
+   Example:
 
-.. code-block:: none
+   .. code-block:: none
 
-  plugin {
-    notify_status_dict = proxy:dict-async:notify_status
-  }
+     plugin {
+       notify_status_dict = proxy:dict-async:notify_status
+     }
 
 
 .. dovecot_plugin:setting:: notify_status_mailbox
    :plugin: notify-status
    :values: @string
 
-A mailbox pattern to exclude from status updates. Wildcards are acceptable.
+   A mailbox pattern to exclude from status updates. Wildcards are acceptable.
 
-By default, all mailboxes are processed.
+   By default, all mailboxes are processed.
 
-You can define multiple quota roots by appending an increasing number to the
-setting label.
+   You can define multiple quota roots by appending an increasing number to the
+   setting label.
 
-Example:
+   Example:
 
-.. code-block:: none
+   .. code-block:: none
 
-  plugin {
-    notify_status_mailbox = Spam
-    notify_status_mailbox2 = Archive/*
-  }
+     plugin {
+       notify_status_mailbox = Spam
+       notify_status_mailbox2 = Archive/*
+     }
 
 
 .. dovecot_plugin:setting:: notify_status_value
@@ -54,23 +55,24 @@ Example:
    :plugin: notify-status
    :values: @string
 
-A template of the string that will be written to the dictionary.
+   A template of the string that will be written to the dictionary.
 
-The template supports variable substitution of the form ``%%{variable_name}``.
+   The template supports variable substitution of the form
+   ``%%{variable_name}``.
 
-Support variable substitutions:
+   Supported variable substitutions:
 
-======================= ============================================
-Field                   Value
-======================= ============================================
-``first_recent_uid``    First recent UID
-``highest_modseq``      Higest modification sequence number
-``highest_pvt_modseq``  Highest private modification sequence number
-``mailbox``             Mailbox name
-``messages``            Number of messages
-``recent``              Number of recent messages (deprecated)
-``uidnext``             Predicted next UID value
-``uidvalidity``         Current UID validity
-``unseen``              Number of unseen messages
-``username``            Username (user@domain)
-======================= ============================================
+   ======================= ============================================
+   Field                   Value
+   ======================= ============================================
+   ``first_recent_uid``    First recent UID
+   ``highest_modseq``      Higest modification sequence number
+   ``highest_pvt_modseq``  Highest private modification sequence number
+   ``mailbox``             Mailbox name
+   ``messages``            Number of messages
+   ``recent``              Number of recent messages (deprecated)
+   ``uidnext``             Predicted next UID value
+   ``uidvalidity``         Current UID validity
+   ``unseen``              Number of unseen messages
+   ``username``            Username (user@domain)
+   ======================= ============================================

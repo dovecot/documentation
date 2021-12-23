@@ -14,5 +14,5 @@ Settings
    :plugin: imap-filter-sieve
    :values: @string
 
-The include extension fetches the global scripts from the location specified
-in this parameter.
+   The include extension fetches the global scripts from the location
+   specified in this parameter.

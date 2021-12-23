@@ -39,21 +39,19 @@ Format:
    :added: [vX.Y.Z <reST text>]
    :changed: [vX.Y.Z <reST text>]
    :default: [<value1>, <value2>, ...]
-   :hdr_only: [yes | no_index]
+   :hdr_only: [yes]
    :plugin: <plugin-name>
    :removed: [vX.Y.Z <reST text>]
+   :seealso: [<value1>, <value2>, ...]
+   :todo: [todo text]
    :values: [<value1>, <value2>, ...]
 
-Blah blah blah (the setting documentation) blah blah blah
+   Blah blah blah (the setting documentation) blah blah blah
 ```
 
 The `plugin` setting is REQUIRED for "dovecot_plugin". It should also be used
 for plugin settings in "pigeonhole". (It is not used with "dovecot_core".)
 It is the name of the plugin that the setting lives in (e.g. `quota`).
-
-The `hdr_only` setting is optional. If set (= `yes`), only the setting name
-and index link are created - Default/Values information is not output. If
-set (= `no_index`), only the setting name is output.
 
 The `added`, `changed` and `removed` settings are optional. They indicate the
 version the setting was added, changed, or removed. The string can contain
@@ -74,6 +72,13 @@ Multiple items can be defined by delimiting with a ','.
 The `hdr_only` setting is optional. If set (= `yes`), only the setting name
 and index link are created - Default/Values information is not output.
 
+The `seealso` setting is optional. If set, it will display a list of related
+links/topics for the current setting. The syntax is the same as the `default`
+field.
+
+The `todo` setting is optional. If set, it will pass the text through to the
+Sphinx "todo" directive.
+
 The `values` setting is optional. If set, this is used to populate the
 "Values" description field. If empty, nothing is output.
 
@@ -92,6 +97,13 @@ The values field supports three types:
     * url
 
 Multiple items can be defined by delimiting with a ','.
+
+```
+.. <directive name>:setting_link:: <setting name>
+```
+
+Output a link to the setting.
+
 
 #### Sphinx Settings References
 

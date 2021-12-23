@@ -14,15 +14,15 @@ Settings
    :plugin: last-login
    :values: @string
 
-The dictionary where last login information is updated.
+   The dictionary where last login information is updated.
 
-Example:
+   Example:
 
-.. code-block:: none
+   .. code-block:: none
 
-  plugin {
-    last_login_dict = redis:host=127.0.0.1:port=6379
-  }
+     plugin {
+       last_login_dict = redis:host=127.0.0.1:port=6379
+     }
 
 
 .. dovecot_plugin:setting:: last_login_key
@@ -31,8 +31,8 @@ Example:
    :plugin: last-login
    :values: @string
 
-The key that is updated in the dictionary (defined by
-:dovecot_plugin:ref:`last_login_dict`) with the last login information.
+   The key that is updated in the dictionary (defined by
+   :dovecot_plugin:ref:`last_login_dict`) with the last login information.
 
 
 .. dovecot_plugin:setting:: last_login_precision
@@ -41,4 +41,4 @@ The key that is updated in the dictionary (defined by
    :plugin: last-login
    :values: s, ms, us, ns
 
-Precision for last login timestamp.
+   Precision for last login timestamp.
