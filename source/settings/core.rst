@@ -3323,7 +3323,7 @@ See :ref:`settings` for list of all setting groups.
 
      Support any version. (SHOULD NOT BE USED)
 
-   .. versionadded:: v2.3.15
+     .. versionadded:: v2.3.15
 
    ``SSLv3``
 
@@ -3348,7 +3348,7 @@ See :ref:`settings` for list of all setting groups.
 
      Support TLSv1.3+.
 
-   .. versionadded:: v2.3.15
+     .. versionadded:: v2.3.15
 
    ``LATEST``
 
