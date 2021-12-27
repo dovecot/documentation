@@ -4,12 +4,11 @@
 Login processes
 ===============
 
-The main purpose of login processes is to handle the IMAP, POP3, `Submission
-<https://wiki.dovecot.org/Submission>`_ (v2.3), and `ManageSieve
-<https://wiki.dovecot.org/Pigeonhole/ManageSieve>`_ connections before the user
+The main purpose of login processes is to handle the :ref:`IMAP <imap_server>`, :ref:`POP3 <pop3_server>`,
+:ref:`Submission <submission_server>` (v2.3), and :ref:`ManageSieve <pigeonhole_managesieve_server>` connections before the user
 has logged in. The login processes don't need to be able to do anything else
 than let the user log in, so they can run in highly restricted environment. By
-default they are run as a non-privileged `dovenull` user chrooted into a
+default they are run as a non-privileged ``dovenull`` user chrooted into a
 non-writable directory containing only authentication UNIX sockets.
 
 Login processes also handle proxying the SSL and TLS connections even after the
@@ -52,7 +51,9 @@ hole.
 
 Since one login process can handle only one connection, the service's
 ``process_limit`` setting limits the number of users that can be logging in at
-the same time (defaults to ``default_process_limit=100``). SSL/TLS proxying
+the same time (defaults to
+:dovecot_core:ref:`default_process_limit=100 <default_process_limit>`).
+SSL/TLS proxying
 processes are also counted here, so if you're using SSL/TLS you'll need to make
 sure this count is higher than the maximum number of users that can be logged
 in simultaneously. With TLS/SSL connections, the login process will not

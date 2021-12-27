@@ -62,7 +62,7 @@ Functions:
 * auth_request#response_from_template(template) - takes in key=value template
   and expands it using var_expand and produces table suitable for passdb result
 * auth_request#var_expand(template) - performs var expansion on the template
-  using `Variables <https://wiki.dovecot.org/Variables>`_
+  using :ref:`config_variables`
 * auth_request#password_verify(crypted_password, plain_password) - checks if
   the plain password matches the crypted or hashed password
 * auth_request#event() - Returns child event for the auth request, can be used
@@ -80,7 +80,7 @@ Subtables:
 Members:
 ^^^^^^^^
 
-See `Variables <https://wiki.dovecot.org/Variables>`_ for details
+See :ref:`config_variables` for details.
 
 * auth_request#auth_domain
 * auth_request#auth_user
@@ -141,7 +141,7 @@ imported into auth request. The string must be in key=value format, except if
 return code indicates internal error, the second parameter can be used as error
 string.
 
-If **auth_verify_password** is found, it's always used.
+If **auth_password_verify** is found, it's always used.
 
 To configure passdb in dovecot, use
 

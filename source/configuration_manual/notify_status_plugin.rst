@@ -1,28 +1,42 @@
 .. _notify_status_plugin:
 
 ====================
-notify_status plugin
+notify-status plugin
 ====================
 
 .. versionadded:: v2.2.33
 
-This plugin updates a dict every time a mailbox changes. The status can contain
-total message count and unseen count. It will update key ``priv/status/<mailbox
-name>``. See `Dictionary <https://wiki.dovecot.org/Dictionary>`_ for how to
-configure dict.
+This plugin updates a :ref:`dictionary <dict>` with mailbox status information
+every time a mailbox changes.
 
 Configuration
 =============
+
+Settings
+--------
+
+See :ref:`plugin-notify-status`.
+
+This plugin requires that the :ref:`plugin-notify` be loaded.
+
+The values to store are listed at :dovecot_plugin:ref:`notify_status_mailbox`.
+
+Dictionary Configuration
+------------------------
+
+See :ref:`dict` for how to configure dictionaries.
+
+This plugin updates the ``priv/status/<mailbox name>`` key.
+
+Example
+-------
 
 .. code-block:: none
 
   mail_plugins = $mail_plugins notify notify_status
 
   plugin {
-    notify_status_dict = <dict uri> # For example proxy:dict-async:notify_status
-
-    # Value written to dict:
-    #notify_status_value = {"messages":%%{messages},"unseen":%%{unseen}}
+    notify_status_dict = proxy:dict-async:notify_status
 
     # By default all mailboxes are added to dict. This can be limited with:
     #notify_status_mailbox = INBOX
@@ -30,7 +44,10 @@ Configuration
     #...
   }
 
-If SQL dict is used, you can use this map:
+SQL dict Example
+^^^^^^^^^^^^^^^^
+
+If SQL dict is used, you can use this dictionary map:
 
 .. code-block:: none
 
@@ -55,20 +72,3 @@ The matching SQL schema is:
     status VARCHAR(255),
     PRIMARY KEY (username, mailbox)
   );
-
-Supported fields
-================
-
-These fields can be used as ``%%{variables}`` in ``notify_status_value``
-setting:
-
-* username - Username (user@domain)
-* mailbox - name of mailbox
-* messages - n. of messages
-* unseen - n. unseen message
-* recent - n. recent messages (not accurate)
-* uidvalidity - current UID validity
-* uidnext - predicted next UID value
-* first_recent_uid - first recent UID
-* highest_modseq - higest modification sequence number
-* highest_pvt_modseq - highest private modification sequence number

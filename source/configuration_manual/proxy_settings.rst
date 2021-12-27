@@ -32,7 +32,7 @@ This setting is used to avoid load spikes caused by reconnecting clients after a
 
 .. versionadded:: v2.3.9
 
-:ref:`setting-doveadm_ssl`: setting can be used to specify SSL mode to use when doing doveadm proxying.
+:dovecot_core:ref:`doveadm_ssl`: setting can be used to specify SSL mode to use when doing doveadm proxying.
 Can be overriden with ssl and starttls :ref:`proxy flags <authentication-proxies>`.
 When using starttls, do not add ``ssl=yes`` to doveadm service's ``inet_listener`` block.
 
@@ -72,7 +72,7 @@ This setting configures the LMTP port to use.
     process_limit = 4
    }
 
-These 3 settings configure the imap-login process to be in "high performance mode" as explained in http://wiki.dovecot.org/LoginProcess. The 4 should be changed to the number of CPU cores on the server. 
+These 3 settings configure the imap-login process to be in "high performance mode" as explained in :ref:`login_processes`. The 4 should be changed to the number of CPU cores on the server.
 
 The ``client_limit`` setting should be increased to be as high as needed. The max number of connections per server is ``client_limit * process_limit``, so 40k connections in the above configuration.
 

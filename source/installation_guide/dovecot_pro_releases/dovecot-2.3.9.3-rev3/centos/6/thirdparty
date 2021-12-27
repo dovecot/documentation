@@ -1,0 +1,49 @@
+[dovecot-2.3.9.3-rev3-libuv]
+name=CentOS 6 - UV library
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-libuv/stable/1.9.0/CentOS6
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+[dovecot-2.3.9.3-rev3-cassandra-cpp-driver]
+name=CentOS 6 - DataStax C/C++ Driver for Apache Cassandra
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-cassandra-cpp-driver/stable/2.13.0/CentOS6
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+[dovecot-2.3.9.3-rev3-libexttextcat]
+name=CentOS 6 - Extextcat library
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-libexttextcat/stable/3.4.4/CentOS6
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+[dovecot-2.3.9.3-rev3-libsodium]
+name=CentOS 6 - Sodium library
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-libsodium/stable/1.0.16/CentOS6
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+[dovecot-2.3.9.3-rev3-icu56]
+name=CentOS 6 - ICU4C 56
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-icu56/stable/56.1/CentOS6
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+[dovecot-2.3.9.3-rev3-clucene]
+name=CentOS 6 - CLucene library
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-clucene/stable/2.3.3.4/CentOS6
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+[dovecot-2.3.9.3-rev3-stemmer]
+name=CentOS 6 - Snowball stemming C library
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-stemmer/stable/1.0/CentOS6
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+

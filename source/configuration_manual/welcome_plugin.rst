@@ -8,16 +8,23 @@ Welcome plugin
 
 Call a script when the user logs in for the first time. This is specifically
 done when the INBOX is (auto)created. The scripts are called similarly to
-`quota warning scripts
-<https://wiki.dovecot.org/Quota/Configuration#Quota_warnings>`_.
+:ref:`quota_configuration_warning_scripts`.
+
+Settings
+========
+
+See :ref:`plugin-welcome`.
+
+Example Configuration
+=====================
 
 .. code-block:: none
 
+  mail_plugins = $mail_plugins welcome
+
   plugin {
     welcome_script = welcome %u
-    # By default we run the script asynchronously, but with this option we
-    # wait for the script to finish.
-    #welcome_wait = yes
+    welcome_wait = no
   }
 
   service welcome {
@@ -27,5 +34,3 @@ done when the INBOX is (auto)created. The scripts are called similarly to
       user = vmail
     }
   }
-
-  mail_plugins = $mail_plugins welcome

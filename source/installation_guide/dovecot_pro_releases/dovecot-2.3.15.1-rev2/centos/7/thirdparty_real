@@ -1,0 +1,49 @@
+[dovecot-2.3.15.1-rev2-dovecot-3rdparty_libuv]
+name=CentOS 7 - UV library
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.15.1/3rdparty/libuv/CentOS7
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+[dovecot-2.3.15.1-rev2-dovecot-3rdparty_cassandra-cpp-driver]
+name=CentOS 7 - DataStax C/C++ Driver for Apache Cassandra
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.15.1/3rdparty/cassandra-cpp-driver/CentOS7
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+[dovecot-2.3.15.1-rev2-dovecot-3rdparty_libexttextcat]
+name=CentOS 7 - Extextcat library
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.15.1/3rdparty/libexttextcat/CentOS7
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+[dovecot-2.3.15.1-rev2-dovecot-3rdparty_icu56]
+name=CentOS 7 - ICU4C 56
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.15.1/3rdparty/icu56/CentOS7
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+[dovecot-2.3.15.1-rev2-dovecot-3rdparty_clucene]
+name=CentOS 7 - CLucene library
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.15.1/3rdparty/clucene/CentOS7
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+[dovecot-2.3.15.1-rev2-dovecot-3rdparty_stemmer]
+name=CentOS 7 - Snowball stemming C library
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.15.1/3rdparty/stemmer/CentOS7
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+[dovecot-2.3.15.1-rev2-dovecot-3rdparty_zstd]
+name=CentOS 7 - Zstd compression algorithm library
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.15.1/3rdparty/zstd/CentOS7
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+

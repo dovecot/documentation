@@ -8,10 +8,20 @@ Events Design
 
 Dovecot introduces events, which improves both logging and statistics. 
 
-See :ref:`list_of_events` for list of all events.
+See also:
 
-Each logging call can be attached to a specific event, which can provide more metadata and context than just the log message string. This will eventually allow implementing things like ``machine-parseable`` (e.g. ``JSON``)
- log lines containing key=value pairs, while still keeping the human readable text available. Each logging event can also be captured and sent to stats, even if it's not actually logged. Commonly statistics-related events are logged with debug level.
+ * :ref:`list_of_events` for list of all events.
+ * :ref:`statistics`
+ * :ref:`event_export`
+ * :ref:`event_filter`
+
+Each logging call can be attached to a specific event, which can provide more
+metadata and context than just the log message string. This will eventually
+allow implementing things like machine-parsable (e.g. ``JSON``) log lines
+containing key=value pairs, while still keeping the human readable text
+available. Each logging event can also be captured and sent to stats, even if
+it's not actually logged. Commonly statistics-related events are logged with
+debug level.
 
 Events have:
 
@@ -20,11 +30,17 @@ Events have:
 * Creation timestamp with microsecond precision.
 * Source code file and line number location when sending the event.
 * It may have an easy human-readable name. This is important for events that are expected to be used for statistics, so they can be easily referred to.
-* ``Forced debug``-flag. Debug logging is enabled for this event regardless of the global debug log filters. A child event will inherit this flag.
+* Forced debug-flag. Debug logging is enabled for this event regardless of the global debug log filters. A child event will inherit this flag.
 
 Events are hierarchical, so they can have parent events. The events always inherit all of their parents' categories and fields. A child event can replace a parent's field, and it can also remove a parent's field with ``event_field_clear()``. Ideally most events would have a parent hierarchy that reaches the top event that was created for the current user/session. This allows statistics to track which events happened due to which users. In some cases this may not really be possible, such as an HTTP connection that is shared across multiple users in the same process. Generic libraries should take the parent event in function parameters or in a settings struct or similar.
 
-An event's lifetime is usually the same as the "object" it attaches to.For example an IMAP client connection should have a single event created at the beginning of the connection and destroyed at disconnection. The IMAP client connection event could be used for logging things like ``Client connected`` and ``Client disconnected`` and perhaps some other ``connection-specific`` events. However, most of the logging should be done by new events that have the IMAP client connection event as their parent. 
+An event's lifetime is usually the same as the "object" it attaches to. For
+example an IMAP client connection should have a single event created at the
+beginning of the connection and destroyed at disconnection. The IMAP client
+connection event could be used for logging things like "Client connected" and
+"Client disconnected" and perhaps some other connection-specific events.
+However, most of the logging should be done by new events that have the IMAP
+client connection event as their parent.
 
 Example:
 
@@ -32,7 +48,11 @@ Example:
 
 .. Note:: There's an automatic "duration" statistics field that is calculated from the creation of the event to the (last) sending of the event, so for it to make sense the event lifetime and its logging also needs to make sense. So for example if the IMAP client connection event was used for logging many things throughout the session, the "duration" field would make little sense for most of those events.
 
-Events are ``sent`` by logging it. Any ``e_debug()``, ``e_info()``, ``e_warning()`` or ``e_error()`` call will also send the event, which may be redirected to the stats process. Often events that are intended for statistics are sent using the ``e_debug() call``. The event can be sent to statistics even if it's not actually logged. Avoid sending events excessively. 
+Events are sent by logging it. Any ``e_debug()``, ``e_info()``, ``e_warning()``
+or ``e_error()`` call will also send the event, which may be redirected to the
+stats process. Often events that are intended for statistics are sent using the
+``e_debug()`` call. The event can be sent to statistics even if it's not
+actually logged. Avoid sending events excessively.
 
 Example:
 
@@ -44,9 +64,7 @@ Events that are expected to be used in statistics should have a name. Be consist
 
 Example:
 
-.. code-block:: none
-
-   imap related events should begin with imap_ and mailbox related events begin with mailbox_.
+   imap related events should begin with ``imap_`` and mailbox related events begin with ``mailbox_``.
 
 
 The name should consist of only ``[a-z]``, ``[0-9]`` and ``_`` characters.
@@ -66,11 +84,11 @@ The event categories are hierarchical.
 
 Example:
 
-   ``mail`` category has parent ``mailbox``, which has parent ``storage``. If an event filter contains ``category:storage``, it will match the ``mail`` and ``mailbox`` child categories as well.
+   ``mail`` category has parent ``mailbox``, which has parent ``storage``. If an event filter contains ``category=storage``, it will match the ``mail`` and ``mailbox`` child categories as well.
 
-.. Note:: A category isn't the same as a service/process name. 
+.. Note:: A category isn't the same as a service/process name, but there is a ``service:<name>`` category.
 
-So for example imap process has an ``imap`` category for its ``IMAP-related`` events, such as IMAP client connection and IMAP command related events. Because most events would be child events under these IMAP events, they would all inherit the ``imap`` category. So it would appear that using ``category:imap`` filter would match most of the logging from imap process. However, there would likely be some events that wouldn't have the IMAP client as their parent event, so these wouldn't match the imap category.
+So for example imap process has an ``imap`` category for its ``IMAP-related`` events, such as IMAP client connection and IMAP command related events. Because most events would be child events under these IMAP events, they would all inherit the ``imap`` category. So it would appear that using ``category=imap`` filter would match most of the logging from imap process. However, there would likely be some events that wouldn't have the IMAP client as their parent event, so these wouldn't match the imap category.
 
 The same category name must not be duplicated within the process. This is because event handling is optimized and performs category checking by comparing the categories' pointers, not names' strings. (Then again, if the struct ``event_category`` variable names were consistent, you'd get duplicate symbol errors from linker as well.)
 
@@ -82,17 +100,20 @@ Example:
    
 So a statistics filter could end up counting each DNS lookup twice. Since it's more difficult to remember to check for event naming conflicts, it would be safer to use different category names entirely.
 
-The category name should consist of only ``[a-z]``, ``[0-9]`` and ``_`` characters.
+The category name should consist of only ``[a-z]``, ``[0-9]`` and ``-``
+characters. ``:`` is also used as a special case in ``service:<name>``, but it
+shouldn't be used for naming new categories.
 
 Fields
 ^^^^^^^
 Each event can have any number of ``key=value`` fields. Parent event's fields are inherited by the child event.
 
-There are 3 types of fields:
+There are 4 types of fields:
 
 * strings
 * numbers ``(intmax_t = signed 64bit usually)``
 * timestamp (struct timeval)
+* a list of strings
 
 The fields can be used for various purposes:
 
@@ -113,11 +134,11 @@ Current naming conventions:
 * Timestamps should have ``_time`` suffix
 * Durations should have ``_usecs`` suffix and be in microseconds.
    * Try to avoid adding extra duration fields for most events. There's the automatic ``duration`` field already that contains how long the event has existed. So usually the event lifetime should be the same as the wanted duration field.
-* Incoming TCP/IP connections should have ``remote_ip``, ``remote_port``, ``local_ip" and ``local_port`` fields
+* Incoming TCP/IP connections should have ``remote_ip``, ``remote_port``, ``local_ip`` and ``local_port`` fields
 * Outgoing TCP/IP connections should have ``ip`` and ``port`` for the remote side.
-   * For local side ``client_ip`` and ``client_port`` may optionally be used
+   * For local side (bind address) ``client_ip`` and ``client_port`` may optionally be used
 
-.. NOTE:: These are all different from incoming connection's IP/port fields. This is because often everything starts from an incoming connection, which will be used as the root event. So we may want to filter e.g. outgoing HTTP events going to port 80 which were initiated from IMAP clients that connected to ``port 993`` ``(port=80 local_port=993)``
+     .. NOTE:: These are all different from incoming connection's IP/port fields. This is because often everything starts from an incoming connection, which will be used as the root event. So we may want to filter e.g. outgoing HTTP events going to port 80 which were initiated from IMAP clients that connected to ``port 993`` ``(port=80 local_port=993)``
 
 * Connection reads/writes should be counted in ``bytes_in`` and ``bytes_out`` fields
    * These fields were chosen over e.g. ``network_in/out`` because a lot of code is rather generic and can work over TCP/IP or UNIX sockets, or maybe even any other kind of iostreams. Using a generic ``bytes_in/out`` makes it simpler to count these. If further differentiation is wanted on statistics side, networking events can be filtered out with ``ip``.
@@ -132,9 +153,9 @@ Current naming conventions:
 
 * error_code=<value> : Machine-readable error code for a failed operation. If set, the ``error`` field must also be set.
 
-.. Note:: the events shouldn't be sent every time when receiving/sending network traffic. Instead, the ``bytes_in/out`` fields should be updated internally so that whenever the next event is sent it will have an updated traffic number.
+.. Note:: Events shouldn't be sent every time when receiving/sending network traffic. Instead, the ``bytes_in/out`` fields should be updated internally so that whenever the next event is sent it will have an updated traffic number.
 
-Generally it's not useful for events to be counting operations. Rather each operation should be a separate event, and the statistics code should be the one counting them. This way statistics can only be counting e.g. operations with ``duration > 1 sec``. If the statistics code was seeing only bulk operation counts this wouldn't be possible. The ``bytes_in/out`` and such fields are more of an exception, because it would be too inefficient to send individual events each time those were updated.
+          Generally it's not useful for events to be counting operations. Rather each operation should be a separate event, and the statistics code should be the one counting them. This way statistics can only be counting e.g. operations with ``duration > 1 sec``. If the statistics code was seeing only bulk operation counts this wouldn't be possible. The ``bytes_in/out`` and such fields are more of an exception, because it would be too inefficient to send individual events each time those were updated.
 
 .. Note:: Even though internally updating a field for an event's parent will be immediately visible to its children, the update won't be automatically sent to the stats process. We may need to fix this if it becomes a problem.
 

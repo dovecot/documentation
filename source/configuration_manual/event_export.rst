@@ -13,6 +13,13 @@ There are two parts to the configuration:
 
 (2) event definition.
 
+See also:
+
+ * :ref:`list_of_events` for list of all events.
+ * :ref:`event_filter`
+ * :ref:`statistics`
+ * :ref:`event_design` for technical implementation details
+
 Exporter Definition
 ===================
 
@@ -135,6 +142,8 @@ statistics gathering.  The only additions to the block are the ``exporter`` and
 These are only meaningful if the event matches the predicate (categories,
 filter, etc.) specified in the metric block.
 
+.. _filtering-events-label:
+
 Filtering Events
 ^^^^^^^^^^^^^^^^
 
@@ -157,7 +166,9 @@ There are five possible parts that can be included in a serialized event:
 * `hostname` - the name of the host generating this event
 * `timestamps` - the event start and end timestamps
 * `categories` - a set of categories associated with this event
-* `fields` - the fields associated with this event
+* `fields` - the fields associated with this event; the fields that will be
+             exported are defined by the :ref:`fields <statistics>` setting in
+             the parent `metric` block
 
 The `exporter_include` setting is made up of these tokens which control what
 parts of an event are exported.  It can be set to any set of those
@@ -187,12 +198,12 @@ a datalake having a HTTP API, one could use config such as:
    metric imap_commands {
      exporter = datalake
      exporter_include = name hostname timestamps
-     event_name = imap_command_finished
+     filter = event=imap_command_finished
    }
 
 
-When debugging, it is sometimes useful to dump information to the log.  To
-accomplish this, one could use config such as:
+When debugging, it is sometimes useful to dump information to the log.
+For example, to output all named events from the IMAP service:
 
 .. code-block:: none
 
@@ -204,5 +215,5 @@ accomplish this, one could use config such as:
    
    metric imap_commands {
      exporter = log
-     event_name = imap_command_finished
+     filter = event=* AND category=service:imap
    }

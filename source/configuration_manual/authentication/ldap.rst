@@ -4,8 +4,6 @@
 LDAP
 =====
 
-See http://wiki.dovecot.org/AuthDatabase/LDAP for more details.
-
 .. Note:: A director proxy doesn't need userdb configuration (unlike backends).
 
 There are two ways to do LDAP authentication:
@@ -111,7 +109,7 @@ Active directory allows binding with username@domain.
 
 .. code-block:: none
 
-  auth_bind_dn = %u
+  auth_bind_userdn = %u
   auth_bind = yes
 
 Use LDAP authentication binding for verifying users' passwords.

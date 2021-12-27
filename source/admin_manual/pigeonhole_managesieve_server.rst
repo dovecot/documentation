@@ -4,10 +4,11 @@
 Pigeonhole ManageSieve Server
 ==============================
 
-The `Pigeonhole project <https://wiki.dovecot.org/Pigeonhole>`_ provides `Sieve
+The :ref:`Pigeonhole project <sieve>` provides `Sieve
 <http://sieve.info/>`_ support for Dovecot, which allows users to filter
-incoming messages by writing scripts specified in the Sieve language (RFC
-5228). The Pigeonhole ManageSieve service is used to manage a user's Sieve
+incoming messages by writing scripts specified in the Sieve language (`RFC
+5228 <https://tools.ietf.org/html/rfc5228>`_).
+The Pigeonhole ManageSieve service is used to manage a user's Sieve
 script collection. It has the following advantages over doing it directly via
 filesystem:
 
@@ -23,8 +24,7 @@ filesystem:
 Configuration and Use
 =====================
 
-* `Download and Installation
-  <https://wiki.dovecot.org/Pigeonhole/Installation>`_
+* :ref:`Download and Installation <sieve_installation>`
 * `Configuration
   <https://wiki.dovecot.org/Pigeonhole/ManageSieve/Configuration>`_
 * `Troubleshooting

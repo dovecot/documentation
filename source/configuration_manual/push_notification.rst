@@ -11,8 +11,11 @@ Dovecot's Push Notification framework exposes `RFC 5423 (Internet Message Store
 Events) <https://tools.ietf.org/html/rfc5423>`_ events that occur in Dovecot to
 a system that can be used to report these events to external services.
 
-These events are available within the notification framework, although a driver
-may not implement all:
+.. _push_notification-events:
+
+These events (see https://datatracker.ietf.org/doc/html/rfc5423#section-4.1
+for descriptions) are available within the notification framework, although a
+driver may not implement all of them:
 
 * FlagsClear
 * FlagsSet
@@ -29,18 +32,22 @@ may not implement all:
 
 These events are not supported by the notification framework:
 
-* Login (handled by `Authentication
-  <https://wiki.dovecot.org/Authentication>`_)
-* Logout (handled by `Authentication
-  <https://wiki.dovecot.org/Authentication>`_)
-* QuotaExceed (handled by `Quota <https://wiki.dovecot.org/Quota>`_)
-* QuotaWithin (handled by `Quota <https://wiki.dovecot.org/Quota>`_)
+* Login (handled by :ref:`authentication-authentication`)
+* Logout (handled by :ref:`authentication-authentication`)
+* QuotaExceed (handled by :ref:`quota`)
+* QuotaWithin (handled by :ref:`quota`)
+
+.. _push_notification-usage:
 
 Usage
 =====
 
-To use push notifications, both the `notify` and the `push_notification`
-plugins need to be activated. For LMTP delivery, this is required:
+To use push notifications, both the ``notify`` and the ``push_notification``
+plugins need to be activated by defining in :dovecot_core:ref:`mail_plugins`.
+
+This can either be set globally or restricted to the protocols where you
+want push notifications to be generated.  For example, to restrict to mail
+delivery notifications only, this config should be used:
 
 .. code-block:: none
 
@@ -48,20 +55,50 @@ plugins need to be activated. For LMTP delivery, this is required:
     mail_plugins = $mail_plugins notify push_notification
   }
 
-If you also want push notifications to work for LDA-based delivery, you would
-need additional configuration:
-
-.. code-block:: none
-
+  # If notifications are also needed for LDA-based delivery, add:
   protocol lda {
     mail_plugins = $mail_plugins notify push_notification
   }
 
+Settings
+========
+
+See :ref:`plugin-push-notification`.
+
 Drivers
 =======
 
-DLOG (Debug log)
-^^^^^^^^^^^^^^^^
+A push notification driver is defined by the
+:dovecot_plugin:ref:`push_notification_driver` setting.
+
+The configuration value is the name of the driver, optionally
+followed by an ``:`` and driver-specific options (see drivers for options
+supported).
+
+It is possible to specify multiple push notification drivers by adding a
+sequential number to the ``push_notification_driver`` label, starting with the
+number ``2``.  There can be no numbering gaps for the labels; only the drivers
+that appear in sequential order will be processed.
+
+Multiple driver configuration is useful if, for example, you want to process a
+single driver with different configurations.
+
+Example:
+
+.. code-block:: none
+
+  plugin {
+    push_notification_driver  = ox:url=http://example.com/foo
+    push_notification_driver2 = ox:url=http://example.com/bar
+    # This driver will NOT be processed, as it does not appear sequentially
+    # with the other configuration options
+    push_notification_driver4 = dlog
+  }
+
+The list of drivers shipped with Dovecot core appears below.
+
+DLOG (Debug log) [``dlog``]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: none
 
@@ -71,103 +108,91 @@ DLOG (Debug log)
 
 This will cause notifications to end up in your debug log.
 
-OX (Open-Xchange) driver
-========================
+OX (Open-Xchange) driver [``ox``]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The OX backend supports sending notifications on MessageNew events (i.e. mail
 deliveries, not IMAP APPENDs).
 
-The HTTP end-point (URL + authentication information) to use is configured in
-the Dovecot configuration file. The appropriate configuration options will
-contain the HTTP URL denoting the end-point to connect to as well as the
-authentication information for Basic Authentication as configured by properties
-``com.openexchange.rest.services.basic-auth.login`` and
-``com.openexchange.rest.services.basic-auth.password``. The URL to configure in
-Dovecot configuration follows this pattern.
+This driver was designed for use with
+`OX App Suite Push Notification API <https://documentation.open-xchange.com/7.10.5/middleware/mail/dovecot/dovecot_push.html>`_, but can be
+used by any push endpoint that implements this API, not just OX App Suite.
 
-.. code-block:: none
+Configuration options:
 
-  <http|https> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/preliminary/http-notify/v1/notify"
++------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+| Name                   | Required | Type              | Description                                                                                                                          |
++========================+==========+===================+======================================================================================================================================+
+| ``url``                | **YES**  | :ref:`string`     | The HTTP end-point (URL + authentication information) to use is configured in the Dovecot configuration file.                        |
+|                        |          |                   | Contains authentication information needed for Basic Authentication (if any). Example:                                               |
+|                        |          |                   | ``http<s> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/preliminary/http-notify/v1/notify"``                |
+|                        |          |                   |                                                                                                                                      |
+|                        |          |                   | For HTTPS endpoints, system CAs are trusted by default, but internal CAs might need further configuration.                           |
+|                        |          |                   |                                                                                                                                      |
+|                        |          |                   | For further details on configuring the App Suite endpoint, see:                                                                      |
+|                        |          |                   | https://documentation.open-xchange.com/latest/middleware/mail/dovecot/dovecot_push.html#configuration-of-dovecot-http-notify-plug-in |
++------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+| ``cache_lifetime``     | NO       | :ref:`time`       | Cache lifetime for the METADATA entry for a user. (DEFAULT: ``60 seconds``)                                                          |
++------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+| ``max_retries``        | NO       | :ref:`uint`       | The maximum number of retries to attempt to connect to OX endpoint. (DEFAULT: ``1``)                                                 |
++------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+| ``timeout_msecs``      | NO       | :ref:`time_msecs` | Time before HTTP request to OX endpoint will timeout. (DEFAULT: ``2000``)                                                            |
++------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+| ``user_from_metadata`` | NO       | (Existence of     | Use the user stored in the METADATA entry instead of the user sent by OX endpoint. Does not require an argument;                     |
+|                        |          | setting)          | presence of the option activates the feature. (DEFAULT: user returned by endpoint response is used)                                  |
++------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
 
-E.g.
+Example configuration:
 
 .. code-block:: none
 
   plugin {
-    push_notification_driver = ox:url=http://login:pass@node1.domain.tld:8009/preliminary/http-notify/v1/notify
+    push_notification_driver = ox:url=http://login:pass@node1.domain.tld:8009/preliminary/http-notify/v1/notify user_from_metadata timeout_msecs=10000
   }
 
-For HTTPS endpoints, system CAs are trusted by default, but internal CAs might
-need further configuration.
-
-Furthermore, it is also possible to specify more than one HTTP end-point to
-connect to if a new message delivery occurs. Thus the configuration section
-mentioned above may be extended by additional ``push_notification_driver``
-entries; e.g. ``push_notification_driver2``, ``push_notification_driver3``,
-etc.
-
-Please note that the path ``/preliminary/http-notify/v1/notify`` denotes the
-internal REST API of the Open-Xchange Middleware, which is not publicly
-accessible. The administrator can decide whether to add that path to the Apache
-configuration (see also ``AppSuite:Apache_Configuration and AppSuite:Grizzly``)
-through a Location/ProxyPass directive:
-
-.. code-block:: none
-
-  <Location /preliminary>
-    Order Deny,Allow
-    Deny from all
-    # Only allow access from servers within the network. Do not expose this
-    # location outside of your network. In case you use a load balancing service in front
-    # of your Apache infrastructure you should make sure that access to /preliminary will
-    # be blocked from the internet / outside clients. Examples:
-    # Allow from 192.168.0.1
-    # Allow from 192.168.1.1 192.168.1.2
-    # Allow from 192.168.0.
-    ProxyPass /preliminary balancer://oxcluster/preliminary
-  </Location>
-
-In case the ``user=`` sent by OX in the push_notification_driver url data does
-not match the IMAP login of a user, Dovecot ignores it. This can be overridden
-by defining ``user_from_metadata`` in the ``push_notification_driver`` url,
-e.g.
-
-.. code-block:: none
-
-  push_notification_driver = ox:url=http://example.com/ user_from_metadata
-
 Metadata
-========
+--------
 
 The push notifications are enabled separately for each user using METADATA.
-Normally `AppSuite <https://wiki.dovecot.org/AppSuite>`_ does this internally,
-but for e.g. testing purposes you can do this yourself:
+Normally `OX App Suite <https://www.open-xchange.com/products/ox-app-suite/>`_
+does this internally, but for e.g. testing purposes you can do this yourself:
 
 .. code-block:: none
 
   doveadm mailbox metadata set -u user@example.com -s "" /private/vendor/vendor.dovecot/http-notify user=11@3
 
 Example Payload
-===============
-
-See
-https://github.com/dovecot/core/blob/master/src/plugins/push-notification/push-notification-driver-ox.c.
+---------------
 
 Push notification sent in JSON format with the following fields:
 
-* **user**: User identifier (string)
-* **event**: RFC 5423 event type (string; currently only "MessageNew")
-* **folder**: Mailbox name (string)
-* **imap-uidvalidity**: RFC 3501 UIDVALIDITY value of the mailbox (integer)
-* **imap-uid**: UID of the message, if applicable (integer)
-* **from**: RFC 2822 address of the message sender (MIME-encoded), if applicable (string)
-* **subject**: Subject of the message (MIME-encoded), if applicable (string)
-* **snippet**: Snippet of the message body (UTF-8), if applicable (string)
-* **unseen**: RFC 3501 UNSEEN value of the mailbox (integer)
+==================== ======= ===================================================
+Name                 Type    Description
+==================== ======= ===================================================
+``event``            string  RFC 5423 event type (currently only "MessageNew")
 
-.. code-block:: none
+``folder``           string  Mailbox name
 
-  Content-Type: application/json; charset=utf-8
+``from``             string  RFC 2822 address of the message sender
+                             (MIME-encoded), if applicable
+
+``imap-uid``         integer UID of the message, if applicable
+
+``imap-uidvalidity`` integer RFC 3501 UIDVALIDITY value of the mailbox
+
+``snippet``          string  Snippet of the message body (UTF-8), if applicable
+
+``subject``          string  Subject of the message (MIME-encoded), if
+                             applicable
+
+``unseen``           integer RFC 3501 UNSEEN value of the mailbox
+
+``user``             string  User identifier
+==================== ======= ===================================================
+
+Example (``Content-Type: application/json; charset=utf-8``):
+
+.. code-block:: json
 
   {
     "user": "4@464646669",
@@ -184,18 +209,30 @@ Push notification sent in JSON format with the following fields:
 
 .. _lua_push_notifications:
 
-Lua
-===
+Lua [``lua``]
+^^^^^^^^^^^^^
 
 .. versionadded:: v2.3.4
 
-You can use Lua to write custom push notification handlers. See Design/Lua for
-general information about `Lua <https://wiki.dovecot.org/Design/Lua>`_ in
-Dovecot. If you have ``mail_lua_script`` (a global script for storage) it will
-be used if no script is specified.
+You can use Lua to write custom push notification handlers.
+
+See :ref:`lua` for general information on how Lua is implemented in Dovecot.
 
 Configuration
-=============
+-------------
+
+Lua push notification handler requires :ref:`mail_lua <plugin-mail-lua>` and
+``push_notification_lua`` plugins to be loaded in addition to the plugins 
+discussed :ref:`above <push_notification-usage>`.
+
++----------+----------+---------------+----------------------------------------+
+| Name     | Required | Type          | Description                            |
++==========+==========+===============+========================================+
+| ``file`` | NO       | :ref:`string` | The lua file to execute. If no script  |
+|          |          |               | is specified,                          |
+|          |          |               | :dovecot_plugin:ref:`mail_lua_script`  |
+|          |          |               | will be used by default.               |
++----------+----------+---------------+----------------------------------------+
 
 .. code-block:: none
 
@@ -203,160 +240,28 @@ Configuration
 
   plugin {
     push_notification_driver = lua:file=/path/to/lua/script
-    # you can omit the script name if you want to use mail_lua_script script instead
-    #mail_lua_script=/path/to/common/script.lua
   }
 
-Example script
-==============
-
-Simple example
-^^^^^^^^^^^^^^
-
-.. code-block:: none
-
-  1  -- To use
-  2  --
-  3  -- plugin {
-  4  --  push_notification_driver = lua:file=/home/cmouse/empty.lua
-  5  --  push_lua_url = http://push.notification.server/handler
-  6  -- }
-  7  --
-  8  -- server is sent a POST message to given url with parameters
-  9  --
-  10
-  11 local http = require("socket.http")
-  12 local url = require("socket.url")
-  13
-  14 function table_get(t, k, d)
-  15   return t[k] or d
-  16 end
-  17
-  18 function dovecot_lua_notify_begin_txn(user)
-  19   return {messages={}, ep=user:plugin_getenv("push_lua_url"), username=user.username}
-  20 end
-  21
-  22 function dovecot_lua_notify_end_txn(ctx, success)
-  23   local i, msg = next(ctx["messages"], nil)
-  24   while i do
-  25     local r, c = http.request(ctx["ep"], "from=" .. url.escape(table_get(msg, "from", "")) .. "&to=" .. url.escape(table_get(msg, "to", "")) .. "&subject=" .. url.escape(table_get(msg, "subject", "")) .. "&snippet=" .. url.escape(table_get(msg, "snippet", "")) .. "&user=" .. url.escape(ctx["username"]))
-  26     if r and c/100 ~= 2 then
-  27       dovecot.i_error("lua-push: Remote error " .. tostring(c) .. " handling push notication")
-  28     end
-  29     if r == nil then
-  30       dovecot.i_error("lua-push: " .. c)
-  31     end
-  32     i, msg = next(ctx["messages"], i)
-  33   end
-  34 end
-  35
-  36 function dovecot_lua_notify_event_message_append(ctx, event)
-  37   table.insert(ctx["messages"], event)
-  38 end
-  39
-  40 function dovecot_lua_notify_event_message_new(ctx, event)
-  41   table.insert(ctx["messages"], event)
-  42 end
-
-.. versionadded:: v2.3.4
-
-Example with event code
-
-.. code-block:: none
-
-  1  -- To use
-  2  --
-  3  -- plugin {
-  4  --  push_notification_driver = lua:file=/home/cmouse/empty.lua
-  5  --  push_lua_url = http://push.notification.server/handler
-  6  -- }
-  7  --
-  8  -- server is sent a POST message to given url with parameters
-  9  --
-  10
-  11 local http = require "socket.http"
-  12 local ltn12 = require "ltn12"
-  13 local url = require "socket.url"
-  14
-  15 function table_get(t, k, d)
-  16   return t[k] or d
-  17 end
-  18
-  19 function script_init()
-  20   return 0
-  21 end
-  22
-  23 function dovecot_lua_notify_begin_txn(user)
-  24   return {user=user, event=dovecot.event(), ep=user:plugin_getenv("push_lua_url"), states={}, messages={}}
-  25 end
-  26
-  27 function dovecot_lua_notify_event_message_new(ctx, event)
-  28   -- get mailbox status
-  29   local mbox = ctx.user:mailbox(event.mailbox)
-  30   mbox:sync()
-  31   local status = mbox:status(dovecot.storage.STATUS_RECENT, dovecot.storage.STATUS_UNSEEN, dovecot.storage.STATUS_MESSAGES)
-  32   mbox:free()
-  33   ctx.states[event.mailbox] = status
-  34   table.insert(ctx.messages, {from=event.from,subject=event.subject,mailbox=event.mailbox})
-  35 end
-  36
-  37 function dovecot_lua_notify_event_message_append(ctx, event, user)
-  38   dovecot_lua_notify_event_message_new(ctx, event, user)
-  39 end
-  40
-  41 function dovecot_lua_notify_end_txn(ctx)
-  42   -- report all states
-  43   for i,msg in ipairs(ctx.messages) do
-  44     local e = dovecot.event(ctx.event)
-  45     e:set_name("lua_notify_mail_finished")
-  46     reqbody = "mailbox=" .. url.escape(msg.mailbox) .. "&from=" .. url.escape(table_get(msg, "from", "")) .. "&subject=" .. url.escape(table_get(msg, "subject", ""))
-  47     e:log_debug(ctx.ep .. " - sending " .. reqbody)
-  48     res, code = http.request({method="POST",
-  49                   url=ctx.ep,
-  50                   source=ltn12.source.string(reqbody),
-  51                   headers={
-  52                     ["content-type"] = "application/x-www-form-url.escaped",
-  53                     ["content-length"] = tostring(#reqbody)
-  54                   }
-  55                  })
-  56     e:add_int("result_code", code)
-  57     e:log_info("Mail notify status " .. tostring(code))
-  58   end
-  59   for box,state in pairs(ctx.states) do
-  60     local e = dovecot.event()
-  61     e:set_name("lua_notify_mailbox_finished")
-  62     reqbody = "mailbox=" .. url.escape(state.mailbox) .. "&recent=" .. tostring(state.recent) .. "&unseen=" .. tostring(state.unseen) .. "&messages=" .. tostring(state.messages)
-  63     e:log_debug(ctx.ep .. " - sending " .. reqbody)
-  64     res, code = http.request({method="POST",
-  65                   url=ctx.ep,
-  66                   source=ltn12.source.string(reqbody),
-  67                   headers={
-  68                     ["content-type"] = "application/x-www-form-url.escaped",
-  69                     ["content-length"] = tostring(#reqbody)
-  70                   }
-  71                  })
-  72     e:add_int("result_code", code)
-  73     e:log_info("Mailbox notify status " .. tostring(code))
-  74   end
-  75 end
-
-Overview
-========
+API Overview
+------------
 
 The Lua driver hooks into all events, and calls matching functions when found
 in Lua script.
 
-Currently it supports
-
-* mailbox create, delete, rename, subscribe and unsubscribe
-* message new, append, expunge, read and trash, flags set, flags clear
+The driver supports all available
+:ref:`push notification events <push_notification-events>`.
 
 All events are called within a transaction. The event is called with context
-and an event table, which contains the event parameters. All events contain at
-least
+and an event table, which contains the event parameters.
 
-* name - name of the event
-* user - current mail user
+All events contain at least:
+
+========= ======================
+Name      Description
+========= ======================
+``name``  Name of the event name
+``user``  Current mail user
+========= ======================
 
 Events are always called after the fact.
 
@@ -365,94 +270,227 @@ functions are never called. This is optimization to avoid roundtrip to Lua when
 it's not needed.
 
 Transactions
-============
+############
 
-* dovecot_lua_notify_begin_txn(user)
+.. py:function:: dovecot_lua_notify_begin_txn(user)
 
-Start transaction. Return value is used as transaction context and is treated
-as opaque value by Lua driver. The user parameter is ``mail_user`` object.
+   Start transaction. Return value is used as transaction context and is treated
+   as opaque value by Lua driver. The user parameter is ``mail_user`` object.
 
-* dovecot_lua_notify_end_txn(context, success)
+.. py:function:: dovecot_lua_notify_end_txn(context, success)
 
-End transaction, context is unreferenced.
+   End transaction, context is unreferenced.
 
-Mailbox events
-==============
+Mailbox Events
+##############
 
-All mailbox events contain `mailbox` parameter, which is the name of the
-affected mailbox.
+All mailbox events contain the following parameters:
 
-* dovecot_lua_notify_event_mailbox_create(context, {name, mailbox})
+=========== ============================
+Name        Description
+=========== ============================
+``mailbox`` Name of the affected mailbox
+=========== ============================
 
-Called when mailbox has been created.
+Functions:
 
-* dovecot_lua_notify_event_mailbox_delete(context, {name, mailbox})
+.. py:function:: dovecot_lua_notify_event_mailbox_create(context, {name, mailbox})
 
-Called when mailbox has been deleted.
+   Called when mailbox has been created.
 
-* dovecot_lua_notify_event_mailbox_rename(context, {name, mailbox,
-  mailbox_old})
+.. py:function:: dovecot_lua_notify_event_mailbox_delete(context, {name, mailbox})
 
-Called when mailbox has been renamed, old name is retained in mailbox_old
-attribute.
+   Called when mailbox has been deleted.
 
-* dovecot_lua_notify_event_mailbox_subscribe(context, {name, mailbox})
+.. py:function:: dovecot_lua_notify_event_mailbox_rename(context, {name, mailbox, mailbox_old})
 
-Called when mailbox has been subscribed to. The mailbox does not necessarily
-exist.
+   Called when mailbox has been renamed, old name is retained in ``mailbox_old``
+   attribute.
 
-* dovecot_lua_notify_event_mailbox_unsubscribe(context, {name, mailbox})
+.. py:function:: dovecot_lua_notify_event_mailbox_subscribe(context, {name, mailbox})
 
-Called when mailbox has been unsubscribed from. The mailbox does not
-necessarily exist.
+   Called when mailbox has been subscribed to. The mailbox does not necessarily
+   exist.
 
-Message events
-==============
+.. py:function:: dovecot_lua_notify_event_mailbox_unsubscribe(context, {name, mailbox})
 
-All message events contain following parameters
+  Called when mailbox has been unsubscribed from. The mailbox does not
+  necessarily exist.
 
-==============   ========================
-mailbox            Mailbox name
-uid                Message UID
-uid_validity       Mailbox UID validity
-==============   ========================
+Message Events
+##############
 
-* dovecot_lua_notify_event_message_new(context, {name, mailbox, uid,
-  uid_validity, date, tz, from, from_address, from_display_name,
-  to, to_address, to_display_name, subject, snippet})
+All message events contain following parameters:
 
-Called when message is delivered.
+================ ===================
+Name             Description
+================ ===================
+``mailbox``      Mailbox name
+``uid``          Message UID
+``uid_validity`` Mailbox UIDVALIDITY
+================ ===================
 
-* dovecot_lua_notify_event_message_append(context, {name, mailbox, uid,
-  uid_validity, from, from_address, from_display_name,
-  to, to_address, to_display_name, subject, snippet})
+Functions:
 
-Called when message is APPENDed to a mailbox.
+.. py:function:: dovecot_lua_notify_event_message_new(context, {name, mailbox, uid, uid_validity, date, tz, from, from_address, from_display_name, to, to_address, to_display_name, subject, snippet})
 
-* dovecot_lua_notify_event_message_read(context, {name, mailbox, uid,
-  uid_validity})
+   Called when message is delivered.
 
-Called when message is marked as Seen.
+.. py:function:: dovecot_lua_notify_event_message_append(context, {name, mailbox, uid, uid_validity, from, from_address, from_display_name, to, to_address, to_display_name, subject, snippet})
 
-* dovecot_lua_notify_event_message_trash(context, {name, mailbox, uid,
-  uid_validity})
+   Called when message is APPENDed to a mailbox (via IMAP).
 
-Called when message is marked Deleted.
+.. py:function:: dovecot_lua_notify_event_message_read(context, {name, mailbox, uid, uid_validity})
 
-* dovecot_lua_notify_event_message_expunge(context, {name, mailbox, uid,
-  uid_validity})
+   Called when message is marked as ``Seen``.
 
-Called when message is EXPUNGEd.
+.. py:function:: dovecot_lua_notify_event_message_trash(context, {name, mailbox, uid, uid_validity})
 
-* dovecot_lua_notify_event_flags_set(context, {name, mailbox, uid,
-  uid_validity, flags, keywords_set})
+   Called when message is marked ``Deleted``.
 
-Called when message flags or keywords are set. flags is a bitmask. keywords_set
-is a table of strings of the keywords set by the event.
+.. py:function:: dovecot_lua_notify_event_message_expunge(context, {name, mailbox, uid, uid_validity})
 
-* dovecot_lua_notify_event_flags_clear(context, {name, mailbox, uid,
-  uid_validity, flags, keywords_clear, keywords_old})
+   Called when message is expunged.
 
-Called when message flags or keywords are removed. flags is a bitmask.
-keywords_clear contains the keywords cleared, keywords_old is the table of
-keywords that were set before the event.
+.. py:function:: dovecot_lua_notify_event_flags_set(context, {name, mailbox, uid, uid_validity, flags, keywords_set})
+
+   Called when message flags or keywords are set. ``flags`` is a bitmask.
+   ``keywords_set`` is a table of strings of the keywords set by the event.
+
+.. py:function:: dovecot_lua_notify_event_flags_clear(context, {name, mailbox, uid, uid_validity, flags, keywords_clear, keywords_old})
+
+   Called when message flags or keywords are removed. ``flags`` is a bitmask.
+   ``keywords_clear`` contains the keywords cleared, ``keywords_old`` is the
+   table of keywords that were set before the event.
+
+Example Scripts
+---------------
+
+Simple example:
+
+.. code-block:: lua
+   :linenos:
+
+   -- To use:
+   --
+   -- plugin {
+   --   push_notification_driver = lua:file=/home/example/empty.lua
+   --   push_lua_url = http://push.notification.server/handler
+   -- }
+   --
+   -- server is sent a POST message to given url with parameters
+   --
+
+   local http = require("socket.http")
+   local url = require("socket.url")
+
+   function table_get(t, k, d)
+     return t[k] or d
+   end
+
+   function dovecot_lua_notify_begin_txn(user)
+     return {messages={}, ep=user:plugin_getenv("push_lua_url"), username=user.username}
+   end
+
+   function dovecot_lua_notify_end_txn(ctx, success)
+     local i, msg = next(ctx["messages"], nil)
+     while i do
+       local r, c = http.request(ctx["ep"], "from=" .. url.escape(table_get(msg, "from", "")) .. "&to=" .. url.escape(table_get(msg, "to", "")) .. "&subject=" .. url.escape(table_get(msg, "subject", "")) .. "&snippet=" .. url.escape(table_get(msg, "snippet", "")) .. "&user=" .. url.escape(ctx["username"]))
+       if r and c/100 ~= 2 then
+         dovecot.i_error("lua-push: Remote error " .. tostring(c) .. " handling push notication")
+       end
+       if r == nil then
+         dovecot.i_error("lua-push: " .. c)
+       end
+       i, msg = next(ctx["messages"], i)
+     end
+   end
+
+   function dovecot_lua_notify_event_message_append(ctx, event)
+     table.insert(ctx["messages"], event)
+   end
+
+   function dovecot_lua_notify_event_message_new(ctx, event)
+     table.insert(ctx["messages"], event)
+   end
+
+Example with event code:
+
+.. code-block:: lua
+   :linenos:
+
+   -- To use:
+   --
+   -- plugin {
+   --   push_notification_driver = lua:file=/home/example/empty.lua
+   --   push_lua_url = http://push.notification.server/handler
+   -- }
+   --
+   -- server is sent a POST message to given url with parameters
+   --
+
+   local http = require "socket.http"
+   local ltn12 = require "ltn12"
+   local url = require "socket.url"
+
+   function table_get(t, k, d)
+     return t[k] or d
+   end
+
+   function script_init()
+     return 0
+   end
+
+   function dovecot_lua_notify_begin_txn(user)
+     return {user=user, event=dovecot.event(), ep=user:plugin_getenv("push_lua_url"), states={}, messages={}}
+   end
+
+   function dovecot_lua_notify_event_message_new(ctx, event)
+     -- get mailbox status
+     local mbox = ctx.user:mailbox(event.mailbox)
+     mbox:sync()
+     local status = mbox:status(dovecot.storage.STATUS_RECENT, dovecot.storage.STATUS_UNSEEN, dovecot.storage.STATUS_MESSAGES)
+     mbox:free()
+     ctx.states[event.mailbox] = status
+     table.insert(ctx.messages, {from=event.from,subject=event.subject,mailbox=event.mailbox})
+   end
+
+   function dovecot_lua_notify_event_message_append(ctx, event, user)
+     dovecot_lua_notify_event_message_new(ctx, event, user)
+   end
+
+   function dovecot_lua_notify_end_txn(ctx)
+     -- report all states
+     for i,msg in ipairs(ctx.messages) do
+       local e = dovecot.event(ctx.event)
+       e:set_name("lua_notify_mail_finished")
+       reqbody = "mailbox=" .. url.escape(msg.mailbox) .. "&from=" .. url.escape(table_get(msg, "from", "")) .. "&subject=" .. url.escape(table_get(msg, "subject", ""))
+       e:log_debug(ctx.ep .. " - sending " .. reqbody)
+       res, code = http.request({method="POST",
+                     url=ctx.ep,
+                     source=ltn12.source.string(reqbody),
+                     headers={
+                       ["content-type"] = "application/x-www-form-url.escaped",
+                       ["content-length"] = tostring(#reqbody)
+                     }
+                    })
+       e:add_int("result_code", code)
+       e:log_info("Mail notify status " .. tostring(code))
+     end
+     for box,state in pairs(ctx.states) do
+       local e = dovecot.event()
+       e:set_name("lua_notify_mailbox_finished")
+       reqbody = "mailbox=" .. url.escape(state.mailbox) .. "&recent=" .. tostring(state.recent) .. "&unseen=" .. tostring(state.unseen) .. "&messages=" .. tostring(state.messages)
+       e:log_debug(ctx.ep .. " - sending " .. reqbody)
+       res, code = http.request({method="POST",
+                     url=ctx.ep,
+                     source=ltn12.source.string(reqbody),
+                     headers={
+                       ["content-type"] = "application/x-www-form-url.escaped",
+                       ["content-length"] = tostring(#reqbody)
+                     }
+                    })
+       e:add_int("result_code", code)
+       e:log_info("Mailbox notify status " .. tostring(code))
+     end
+   end

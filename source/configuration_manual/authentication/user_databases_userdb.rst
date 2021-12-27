@@ -16,27 +16,29 @@ include:
 * Overriding settings for the user (almost any setting can be overridden)
 
 ===========================   ================   ===============
-Passdb lookups are done by:   Dovecot Director   Dovecot Backend
+Userdb lookups are done by:   Dovecot Director   Dovecot Backend
 ===========================   ================   ===============
-IMAP & POP3 logins            ``-``              Yes
-LMTP mail delivery            ``-``              Yes
-doveadm commands              ``-``              Yes
+IMAP & POP3 logins            No                 Yes
+LMTP mail delivery            No                 Yes
+doveadm commands              No                 Yes
 ===========================   ================   ===============
 
 The user database lookup can return these fields:
 
-* **uid**: User's UID (UNIX user ID), overrides the global :ref:`setting-mail_uid`
-  setting.
-* **gid**: User's GID (UNIX group ID), overrides the global :ref:`setting-mail_gid`
-  setting.
-* **home**: User's home directory, overrides the global :ref:`setting-mail_home` setting.
+* **uid**: User's UID (UNIX user ID), overrides the global
+  :dovecot_core:ref:`mail_uid` setting.
+* **gid**: User's GID (UNIX group ID), overrides the global
+  :dovecot_core:ref:`mail_gid` setting.
+* **home**: User's home directory, overrides the global
+  :dovecot_core:ref:`mail_home` setting.
   Although not required, it's highly recommended even for virtual users.
 * Optional extra fields:
 
  * **user**: Changes the username (can also be done by the passdb lookup)
  * Overwriting all mail-related settings, for example:
 
-  * **mail**: Mail location, overrides the global :ref:`setting-mail_location` setting.
+  * **mail**: Mail location, overrides the global
+    :dovecot_core:ref:`mail_location` setting.
     See: :ref:`mail_location_settings`
   * **quota_rule** to specify per-user quota limit
 
@@ -45,8 +47,7 @@ The user database lookup can return these fields:
 
 The user and password databases (See :ref:`authentication-password_databases`) may be
 the same or they may be different depending on your needs. You can also have
-`multiple databases
-<https://wiki.dovecot.org/Authentication/MultipleDatabases>`_.
+:ref:`multiple databases <authentication-multiple_authentication_databases>`.
 
 Currently supported user databases are:
 
@@ -98,8 +99,10 @@ First we have the settings that provide content for the userdb lookup:
 * ``default_fields``: Userdb fields (and :ref:`authentication-user_database_extra_fields`)
   that are used, unless overwritten by the userdb backend. They are in format
   ``key=value key2=value2 ....`` The values can contain :ref:`config_variables`.
+  All %variables used here reflect the state BEFORE the userdb lookup.
 * ``override_fields``: Same as default_fields, but instead of providing the
   default values, these values override what the userdb backend returned.
+  All %variables used here reflect the state AFTER the userdb lookup.
 
 For example useful with userdb passwd for overriding e.g. home directory or the
 ``uid`` or ``gid``. See :ref:`authentication-passwd`.
@@ -107,8 +110,8 @@ For example useful with userdb passwd for overriding e.g. home directory or the
 .. versionadded:: v2.2.24
 
 * ``auth_verbose``: If this is explicitly set to yes or no, it overrides the
-  global :ref:`setting-auth_verbose` setting. (However, ``auth_debug=yes`` overrides the
-  ``auth_verbose`` setting.)
+  global :dovecot_core:ref:`auth_verbose` setting. (However,
+  ``auth_debug=yes`` overrides the ``auth_verbose`` setting.)
 
 .. versionadded:: v2.2.10
 

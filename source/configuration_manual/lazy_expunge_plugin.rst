@@ -1,36 +1,76 @@
 .. _lazy_expunge_plugin:
 
 ============
-Lazy expunge
+Lazy Expunge
 ============
 
-The idea behind this plugin is that expunged mails and deleted mailboxes stay
-around for a while, so that user can undelete them without assistance from
-sysadmin. The expunged mails won't be counted in user's quota. The plugin
-itself doesn't clean up the expunged messages, you'll have to do it some other
-way (see below).
+The lazy expunge plugin provides a "second-chance" to recover messages that
+would otherwise be deleted from a mailbox by user action.
 
-The plugin is configured by defining namespaces where the mails are moved. You
-can decide if you want the namespaces to be visible to clients, or if you want
-to show them only via some special webmail interface.
+It does this by moving the message to a defined location (either a mailbox, or
+a namespace -- see below for further details) when a user deletes the message
+from a mailbox.
 
+This behavior is useful for a variety of reasons:
 
-mailbox (v2.2.24+)
-==================
+#. Protect against misconfigured clients (e.g. POP3 client that deletes all
+   messages)
+#. Protect against accidental deletion (user error)
+#. Archiving
 
-You create a single mailbox. All messages that are expunged from all the
-mailboxes are moved there. This is the simplest configuration. The mailbox is
-created automatically. You probably also want to hide it with an ACL.
+Generally, lazy-expunge is configured so that the expunged mails are not
+counted in the user's quota.  Unless being used for archiving, autoexpunge
+should be used to prune the mailbox to control storage usage.
+
+Settings
+========
+
+See :ref:`plugin-lazy-expunge`.
+
+Configuration
+=============
+
+.. _lazy_expunge_plugin-storage_locations:
+
+Storage Locations
+-----------------
+
+mailbox
+^^^^^^^
+
+.. versionadded:: v2.2.24
+
+Messages that are expunged are moved to a single mailbox.
+
+This is the simplest configuration. The mailbox is created automatically.
+
+You probably also want to hide it with an :ref:`ACL <acl>` from the user, if
+recovery is only expected to be an action performed by an admin/operator.
+
+To move to a mailbox, do NOT add a trailing delimiter to the
+:dovecot_plugin:ref:`lazy_expunge` setting.
+
+Example configuration:
 
 .. code-block:: none
 
+  namespace inbox {
+    mailbox .EXPUNGED {
+      autoexpunge = 7days
+      autoexpunge_max_mails = 100000
+    }
+  }
+
   mail_plugins = $mail_plugins lazy_expunge acl
   plugin {
+    # Move messages to an .EXPUNGED mailbox
     lazy_expunge = .EXPUNGED
-     acl = vfile:/etc/dovecot/dovecot.acl
 
-     # Expunged messages most likely don't want to be included in quota:
-     quota_rule2 = .EXPUNGED:ignore
+    # Define ACL so that user cannot list the .EXPUNGED mailbox
+    acl = vfile:/etc/dovecot/dovecot.acl
+
+    # Expunged messages most likely don't want to be included in quota:
+    quota_rule = .EXPUNGED:ignore
   }
 
 Where ``/etc/dovecot/dovecot.acl`` contains:
@@ -43,25 +83,35 @@ You could also leave the permissions empty if you don't want to allow clients
 to access it at all.
 
 namespace
-=========
+^^^^^^^^^
 
-You create only a single namespace. When a message is expunged from mailbox
-``<name>``, it's moved to a mailbox ``<name>`` in the expunge namespace. When
-an entire mailbox ``<name>`` is deleted, it's also moved to this namespace as
-``<name>``. If it already exists, their contents are merged.
+.. deprecated:: v2.3.0
+
+Expunged messages are moved to mailbox(es) within a defined namespace
+
+When a message is expunged from mailbox ``<name>``, it's moved to a mailbox
+``<name>`` in the expunge namespace. When an entire mailbox ``<name>`` is
+deleted, it's moved to this namespace as ``<name>``. If the mailbox already
+exists in the expunge namespace, the contents are merged.
+
+To move to a namespace, you MUST add a trailing delimiter to the
+``lazy_expunge`` argument.  Example: if the namespace delimiter is ``/``,
+and you want to move to the ``.EXPUNGED`` namespace, then the
+:dovecot_plugin:ref:`lazy_expunge` setting should be set to
+``.EXPUNGED/``.
 
 Example configuration:
 
 .. code-block:: none
 
-  # the default namespace
+  # Default namespace
   namespace {
     prefix =
     separator = /
     inbox = yes
   }
 
-  # namespace for lazy_expunge plugin:
+  # Namespace for lazy_expunge plugin
   namespace {
     prefix = .EXPUNGED/
     hidden = yes
@@ -72,132 +122,124 @@ Example configuration:
 
   mail_plugins = $mail_plugins lazy_expunge
   plugin {
+    # Move expunged messages into the .EXPUNGED namespace
     lazy_expunge = .EXPUNGED/
   }
 
-namespaces (obsolete, v2.0 only)
-================================
+mdbox
+"""""
 
-The namespaces are:
-
-1. Expunged messages namespace. Whenever a message is expunged in mailbox
-   <name>, it's moved to a mailbox <name> in this namespace. The mailboxes are
-   created automatically as needed.
-2. Deleted mailboxes namespace. Whenever a mailbox <name> is deleted, it's
-   moved here with name <name>-YYYMMDD-hhmmss. The timestamp is there so that
-   the mailbox can be deleted multiple times. If the mailbox is deleted
-   multiple times within a second, random 16bit hex value is appended to it.
-3. Expunged messages in a deleted mailbox namespace. When a mailbox is deleted
-   and it has messages in its expunged namespace, the mailbox is moved from the
-   expunged namespace to this namespace. The destination mailbox name is the
-   same as in the 2nd namespace (ie. contains the same timestamp).
-
-Example configuration:
+With `mdbox <dbox_mbox_format>`, use different
+``MAILBOXDIRs`` (so copying between namespaces works quickly within the same
+storage), but otherwise exactly the same paths (``INDEX``, ``control``):
 
 .. code-block:: none
 
-  # the default namespace
-  namespace {
-    prefix =
-    separator = /
-    inbox = yes
-  }
-
-  # namespaces for lazy_expunge plugin:
-  namespace {
-    prefix = .EXPUNGED/
-    separator = /
-    location = maildir:~/Maildir/expunged
-  }
-  namespace {
-    prefix = .DELETED/
-    separator = /
-    location = maildir:~/Maildir/deleted
-  }
-  namespace {
-    prefix = .DELETED/.EXPUNGED/
-    separator = /
-    location = maildir:~/Maildir/deleted/expunged
-  }
-
-  mail_plugins = $mail_plugins lazy_expunge
-  plugin {
-    lazy_expunge = .EXPUNGED/ .DELETED/ .DELETED/.EXPUNGED/
-  }
-
-Multi-dbox
-==========
-
-With multi-dbox use different MAILBOXDIRs (so copying between namespaces works
-quickly within the same storage), but otherwise exactly the same paths (index,
-control):
-
-.. code-block:: none
-
-  # the default namespace
+  # Default namespace
   namespace {
     prefix =
     inbox = yes
     location = mdbox:~/mdbox:INDEX=/var/index/%d/%n
+    separator = /
   }
 
-  # lazy_expunge namespace(s):
+  # lazy_expunge namespace(s)
   namespace {
     prefix = .EXPUNGED/
     hidden = yes
     list = no
+    separator = /
     subscriptions = no
 
     location = mdbox:~/mdbox:INDEX=/var/index/%d/%n:MAILBOXDIR=expunged
-    # If mailbox_list_index=yes is enabled, it needs a separate index file (v2.2.28+):
+
+    # If mailbox_list_index=yes is enabled, it needs a separate index file
+    # (v2.2.28+):
     #location = mdbox:~/mdbox:INDEX=/var/index/%d/%n:MAILBOXDIR=expunged:LISTINDEX=expunged.list.index
   }
 
-Copy only the last instance (v2.2+)
-===================================
+Copy Only the Last Instance
+---------------------------
 
-If mail has multiple copies (via IMAP COPY), each copy is normally moved to
-lazy expunge namespace when it's expunged. With v2.2+ you can set ``plugin {
-lazy_expunge_only_last_instance=yes }``  to copy only the last instance and
-immediately expunge the others. This may be useful if you want to provide a
-flat list of all expunged mails without duplicates in your webmail. With many
-clients this means that the last instance is always in the Trash mailbox.
+If a mail has multiple copies within a user account, each copy is normally
+moved to the lazy expunge storage when it's expunged.
+
+Example: this may happen when moving a message to Trash, as clients can issue
+IMAP COPY command to copy the message to Trash before expunging the message
+from the original mailbox.  Deleting later from Trash would result in two
+copies of the same message in the lazy expunge storage.
+
+With v2.2+ you can enable
+:dovecot_plugin:ref:`lazy_expunge_only_last_instance` to copy
+only the last instance to the expunge storage.  This ensures that only a single
+copy of a message will appear in the expunge storage.
+
+Note that this feature only works with certain storage setups; see
+:dovecot_plugin:ref:`lazy_expunge_only_last_instance` for the
+list of supported storages.
+
+Quota
+-----
+
+Generally, it is desired that messages in expunge storage are NOT
+counted towards user quota, as the messages seen by the user will not
+match-up with the size of the quota otherwise (especially if expunge storage
+is hidden from users via ACL).
+
+Example to exclude expunge storage from the quota:
+
+.. code-block:: none
+
+   plugin {
+     quota = count:User quota
+     quota_rule = *:storage=1GB
+     # Exclude .EXPUNGED mailbox from the quota
+     quota_rule2 = .EXPUNGED:ignore
+   }
+
+See :ref:`quota`.
 
 Cleaning up
 ===========
 
 doveadm
-^^^^^^^
+-------
+
+Doveadm can be used to manually clean expunge storage.
+
+Example to delete all messages in ``.EXPUNGED`` namespace older than one day:
 
 .. code-block:: none
 
-  doveadm expunge mailbox 'deleted/*' savedsince 1d
+  doveadm expunge mailbox '.EXPUNGED/*' savedsince 1d
 
-cronjob
-^^^^^^^
+autoexpunge
+-----------
 
-Run something like this for each user every night (not actually tested if it
-works, and vulnerable to TOCTTOU if the user can place symlinks in any of the
-directories find is traversing):
+Set autoexpunge configuration for expunge storage to automatically clean
+old messages.
+
+See :ref:`namespaces`.
+
+Obox Settings
+=============
+
+Lazy expunge allows reduction of Cassandra dictmap lookups by removing the
+lockdir setting and enabling the :dovecot_plugin:ref:`obox_track_copy_flags`
+setting.
 
 .. code-block:: none
 
-  # delete a day old mails
-  find Maildir/expunged Maildir/deleted Maildir/deleted/expunged \
-    -type f ! -cmin 1440 -print0 | xargs -0 rm
+   mail_plugins = $mail_plugins lazy_expunge
+   plugin {
+     lazy_expunge = .EXPUNGED
+     # If Cassandra w/obox is used:
+     obox_track_copy_flags = yes
+  }
 
-Trash plugin
-^^^^^^^^^^^^
+========
+Dumpster
+========
 
-`Trash plugin <https://wiki.dovecot.org/Plugins/Trash>`_ with some help from
-`Quota plugin <https://wiki.dovecot.org/Quota>`_ could probably be used to keep
-the expunged and deleted mailboxes under a specified size (not tested).
-
-Expire plugin
-^^^^^^^^^^^^^
-
-`Expire plugin <https://wiki.dovecot.org/Plugins/Expire>`_ was created to keep
-track of mails in specific mailboxes, and expunge them when they've been there
-for a specified amount of time. It keeps an internal database (e.g. SQL) of all
-such mailboxes, so it doesn't have to go through all the mailboxes for all the
-users.
+See :ref:`dumpster_config` for information on how to configure lazy_expunge
+with the OX Dumpster module.

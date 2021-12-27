@@ -7,7 +7,9 @@ fscache
 .. code-block:: none
 
   plugin {
-    obox_fs = fscache:1G:/var/cache/mails:…
+    obox_fs = fscache:2G:/var/cache/mails:…
+    # Or split users to multiple directories (4 x 512MB = 2 GB total):
+    obox_fs = fscache:512M:/var/cache/mails/%4Nu:…
   }
 
 
@@ -21,7 +23,8 @@ from the cache. Ideally the mail objects would usually stay in the fscache for
 several seconds during production load.
 
 Other than that, the fscache doesn't usually need to be very large. It's more
-useful to give the extra disk space to metacache (``obox_fs`` setting).
+useful to give the extra disk space to metacache (``INDEX`` path in
+``mail_location`` setting).
 
 .. Note::
 
@@ -42,40 +45,23 @@ couldn't be overflowed if many clients are accessing many large mails at
 exactly the same time. This is also why the fscache filesystem should be much
 larger than the fscache size limit.
 
-Many of our customers are running the doveadm fscache rescan command in a
-cronjob every hour (or even more often). This makes sure that if fscache is
-wrong for whatever reason, it will soon become fixed automatically.
+It is recommended to run ``doveadm fscache rescan`` command automatically
+once in a while (e.g. hourly cronjob). This makes sure that if fscache's size
+tracking is wrong for whatever reason, it will soon become fixed automatically.
+The rescan is a fast operation and works correctly even if fscache is being
+modified simultaneously.
 
-Caching Efficiency
-^^^^^^^^^^^^^^^^^^^
+Multiple fscache directories
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A series of tests were performed to compare performance with and without the
-fscache, as well as with the metacache optimizations.
+It's possible to split fscaches over multiple independent directories by
+including %variables in the path. This is typically done based on username
+hashing, e.g. ``/var/fscache/%8Nu`` would use 8 fscache directories. This is
+especially recommended with larger fscaches (>10 GB). The main benefit of
+split fscaches is that any cache trashing caused by a few users will be
+limited only to those users' fscaches.
 
-The results show that enabling the fscache results in a 14% reduction in
-storage operations.
-
-The metacache optimizations produce a further reduction of 11%, resulting in a
-total savings of 25%.
-
-With FTS enabled, the fts fscache reduces the storage operations by 35%.
-
-In all of these tests, Cassandra was used because this was against a Scality
-backend.  In a non-Scality environment, my expectation would be that the
-fscache and metacache produce even larger gains due to the relative increase in
-the volume of storage accesses.
-
-Possible Optimization
-^^^^^^^^^^^^^^^^^^^^^^
-
-It may be a good idea to replace the single global fscache with multiple
-fscaches.
-
-For example: include a %16Nu in the fscache path, so you'll get 16 fscaches in
-total. The main benefit would be in case there are a few users who are rapidly
-reading through a lot of mails which would quickly replace all the mails in a
-global fscache.
-
-But with 16 fscaches they could be trashing only a small percentage of them.
-This kind of splitting is especially useful if a huge fscache (>10 GB) is being
-used.
+For example if Dovecot is internally rebuilding caches for a single user, the
+1 GB fscache could quickly be filled only with that one user's emails. But if
+the fscache is slit over multiple directories, the other directories won't be
+affected and may still contain useful cache for other users.

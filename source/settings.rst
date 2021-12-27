@@ -7,8 +7,22 @@ Settings
 .. toctree::
    :maxdepth: 1
 
-   settings/dovecot_core_settings
+   settings/core
 
-   plugin-settings/index
+   settings/advanced
 
-   configuration_manual/config_file/config_types.rst
+   settings/plugin/index
+
+   settings/pigeonhole
+
+   settings/pigeonhole-ext/index
+
+See also
+
+.. toctree::
+   :maxdepth: 1
+
+   settings/types
+
+   configuration_manual/config_file/index
+   configuration_manual/config_file/config_variables

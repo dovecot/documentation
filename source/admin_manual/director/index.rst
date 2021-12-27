@@ -17,6 +17,6 @@ Directors can be managed using the ``doveadm director`` commands. See ``doveadm 
 
    director_disaster_recovery
 
-   rebalancing_directors
+   rebalancing_backends
 
    director_capacity

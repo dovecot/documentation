@@ -4,9 +4,9 @@
 Pigeonhole Sieve Interpreter
 ============================
 
-The Pigeonhole project provides Sieve support as a plugin for Dovecot's `Local
-Delivery Agent (LDA) <https://wiki.dovecot.org/LDA>`_ and also for its `LMTP
-<https://wiki.dovecot.org/LMTP>`_ service. The plugin implements a Sieve
+The Pigeonhole project provides Sieve support as a plugin for Dovecot's :ref:`Local
+Delivery Agent (LDA) <lda>` and also for its :ref:`LMTP
+<lmtp_server>` service. The plugin implements a Sieve
 interpreter, which filters incoming messages using a script specified in the
 Sieve language (`RFC 5228 <https://tools.ietf.org/html/rfc5228>`_). The Sieve
 script is provided by the user and, using that Sieve script, the user can
@@ -16,26 +16,26 @@ specific folders, forwarded, rejected, discarded, etc.
 Configuration and Use
 =====================
 
-`Download and Installation <https://wiki.dovecot.org/Pigeonhole/Installation>`_
+:doc:`Download and Installation <installation>`
 
-`Sieve Interpreter Configuration
-<https://wiki.dovecot.org/Pigeonhole/Sieve/Configuration>`_
+:doc:`Sieve Interpreter Configuration
+<configuration>`
 
-`Sieve Usage Information <https://wiki.dovecot.org/Pigeonhole/Sieve/Usage>`_
+:doc:`Sieve Usage Information <usage>`
 
-`Sieve Script Examples <https://wiki.dovecot.org/Pigeonhole/Sieve/Examples>`_
+:doc:`Sieve Script Examples <examples>`
 
-`Sieve Interpreter Plugins
-<https://wiki.dovecot.org/Pigeonhole/Sieve/Plugins>`_
+:ref:`Sieve Interpreter Plugins
+<sieve_plugins>`
 
-`Sieve Troubleshooting
-<https://wiki.dovecot.org/Pigeonhole/Sieve/Troubleshooting>`_
+:doc:`Sieve Troubleshooting
+<troubleshooting>`
 
 Supported Features
 ==================
 
-Sieve language has various `extensions
-<https://wiki.dovecot.org/Pigeonhole/Sieve/Extensions>`_. You can find more
+Sieve language has various :ref:`extensions
+<sieve_plugins>`. You can find more
 information about the extensions from the Sieve Mail Filtering Language Charter
 or the `Sieve.info wiki page <http://sieve.info/>`_.
 
@@ -88,11 +88,11 @@ Pigeonhole Sieve interpreter:
 Extension                                                                                                                                         Support Status                                                                                                        Default Enabled               Purpose
 `vnd.dovecot.debug <https://raw.githubusercontent.com/dovecot/pigeonhole/master/doc/rfc/spec-bosch-sieve-debug.txt>`_                             supported (v0.3.0+)                                                                                                         no                    Allows logging debug messages
 `vnd.dovecot.environment <https://raw.githubusercontent.com/dovecot/pigeonhole/master/doc/rfc/spec-bosch-sieve-dovecot-environment.txt>`_         supported (v0.4.14+)                                                                                                        no                    Extends the standard "environment" extension with extra items and a variables namespace for direct access
-`vnd.dovecot.execute <https://raw.githubusercontent.com/dovecot/pigeonhole/master/doc/rfc/spec-bosch-sieve-extprograms.txt>`_                     `Extprograms Plugin <https://wiki.dovecot.org/Pigeonhole/Sieve/Plugins/Extprograms>`_ (v0.3+)                               no                    Implements executing a pre-defined set of external programs with the option to process string data through the external program
-`vnd.dovecot.extdata <http://hg.rename-it.nl/pigeonhole-0.2-sieve-extdata/raw-file/tip/doc/rfc/spec-bosch-sieve-external-data.txt>`_              `Extdata Plugin <https://wiki.dovecot.org/Pigeonhole/Sieve/Plugins/Extdata>`_                                               no                    Allows a Sieve script to lookup information from a datasource external to the script
-`vnd.dovecot.filter <https://raw.githubusercontent.com/dovecot/pigeonhole/master/doc/rfc/spec-bosch-sieve-extprograms.txt>`_                      `plugin <https://wiki.dovecot.org/Pigeonhole/Sieve/Plugins/Extprograms>`_ (v0.3+)                                           no                    Implements filtering messages through a pre-defined set of external programs
+`vnd.dovecot.execute <https://raw.githubusercontent.com/dovecot/pigeonhole/master/doc/rfc/spec-bosch-sieve-extprograms.txt>`_                     :ref:`Extprograms Plugin <pigeonhole_plugin_extprograms>` (v0.3+)                                                           no                    Implements executing a pre-defined set of external programs with the option to process string data through the external program
+`vnd.dovecot.extdata <http://hg.rename-it.nl/pigeonhole-0.2-sieve-extdata/raw-file/tip/doc/rfc/spec-bosch-sieve-external-data.txt>`_              :ref:`Extdata Plugin <pigeonhole_plugin_extdata>`                                                                           no                    Allows a Sieve script to lookup information from a datasource external to the script
+`vnd.dovecot.filter <https://raw.githubusercontent.com/dovecot/pigeonhole/master/doc/rfc/spec-bosch-sieve-extprograms.txt>`_                      :ref:`Extprograms plugin <pigeonhole_plugin_extprograms>` (v0.3+)                                                           no                    Implements filtering messages through a pre-defined set of external programs
 `vnd.dovecot.pipe <https://raw.githubusercontent.com/dovecot/pigeonhole/master/doc/rfc/spec-bosch-sieve-extprograms.txt>`_                        `Pipe Plugin <https://wiki.dovecot.org/Pigeonhole/Sieve/Plugins/Pipe>`_ (v0.2),                                             no                    Implements piping messages to a pre-defined set of external programs
-                                                                                                                                                  `Pigeonhole Sieve Extprograms Plugin <https://wiki.dovecot.org/Pigeonhole/Sieve/Plugins/Extprograms>`_ (v0.3+)
+                                                                                                                                                  :ref:`pigeonhole_plugin_extprograms` (v0.3+)
 `vnd.dovecot.report <https://raw.githubusercontent.com/dovecot/pigeonhole/master/doc/rfc/spec-bosch-sieve-report.txt>`_                            supported (v0.4.14+)                                                                                                       no                    Implements sending Messaging Abuse Reporting Format (MARF) reports (`RFC 5965 <https://tools.ietf.org/html/rfc5965>`_
 ============================================================================================================================================   ===================================================================================================================   =====================   ==================================================================================================================================================
 
@@ -102,13 +102,14 @@ Extension                                                                       
   Not all extensions are enabled by default, as shown in the table above.
   Deprecated extensions, extensions that add the ability to change messages,
   extensions that require explicit configuration and extensions that are still
-  under development are not enabled without explicit `configuration
-  <https://wiki.dovecot.org/Pigeonhole/Sieve/Configuration>`_. This means that
-  the ``sieve_extensions`` or ``sieve_global_extensions`` settings need to be
-  adjusted accordingly. Also, for `plugins
-  <https://wiki.dovecot.org/Pigeonhole/Sieve/Plugins>`_ it is not enough to add
-  the plugin name to the ``sieve_plugins`` setting; the extensions introduced
-  by the plugin also need to be enabled explicitly.
+  under development are not enabled without explicit :doc:`configuration
+  <configuration>`. This means that
+  the :pigeonhole:ref:`sieve_extensions` or
+  :pigeonhole:ref:`sieve_global_extensions` settings need to be
+  adjusted accordingly. Also, for :ref:`plugins
+  <sieve_plugins>` it is not enough to add
+  the plugin name to the :pigeonhole:ref:`sieve_plugins` setting;
+  the extensions introduced by the plugin also need to be enabled explicitly.
 
 
 ManageSieve server
@@ -116,7 +117,7 @@ ManageSieve server
 
 To give users the ability to upload their own Sieve scripts to your server,
 i.e. without the need for shell or FTP access, you can use the ManageSieve
-protocol. This is also provided by the `Pigeonhole
-<https://wiki.dovecot.org/Pigeonhole>`_ project. It is available as a separate
-Dovecot service. Its configuration and use is explained on the `Pigeonhole
-ManageSieve page <https://wiki.dovecot.org/Pigeonhole/ManageSieve>`_.
+protocol. This is also provided by the :ref:`Pigeonhole
+<sieve>` project. It is available as a separate
+Dovecot service. Its configuration and use is explained on the :ref:`Pigeonhole
+ManageSieve page <pigeonhole_managesieve_server>`.

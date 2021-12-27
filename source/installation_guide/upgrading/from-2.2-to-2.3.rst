@@ -13,11 +13,11 @@ Settings Changes
 
  * ``director_doveadm_port`` setting removed. Name the ``inet_listener doveadm { .. }`` instead.
  * ``mdbox_purge_preserve_alt`` setting removed. It's always assumed to be "yes" now.
- * :ref:`setting-recipient_delimiter` setting used to be treated as a separator string. Now it's instead treated as a list of alternative delimiter characters.
+ * :dovecot_core:ref:`recipient_delimiter` setting used to be treated as a separator string. Now it's instead treated as a list of alternative delimiter characters.
  * Time interval based settings no longer default to "seconds". All numbers must explicitly be followed by the time unit (except 0). This is important, because some settings now support milliseconds as well.
  * ``fs-posix``: ``prefix=path`` parameter no longer automatically appends ``/`` to the path if it's not there. This allows using it properly as a prefix, instead of only a directory prefix. Make sure you have the ``/`` appended to the prefix, or the "dir/filename" will be accessed just as "dirnamename".
- * ``ssl_protocols`` setting was replaced by :ref:`setting-ssl_min_protocol`. Now you only specify the minimum ssl protocol version Dovecot accepts, defaulting to TLSv1.
- * ``ssl_parameters`` was replaced with :ref:`setting-ssl_dh`. See `Diffie-Hellman Parameters for SSL`.
+ * ``ssl_protocols`` setting was replaced by :dovecot_core:ref:`ssl_min_protocol`. Now you only specify the minimum ssl protocol version Dovecot accepts, defaulting to TLSv1.
+ * ``ssl_parameters`` was replaced with :dovecot_core:ref:`ssl_dh`. See `Diffie-Hellman Parameters for SSL`.
  * ``SSLv2`` is no longer supported as SSL protocol.
 
 Statistics Redesign
@@ -31,7 +31,7 @@ The statistics code was redesigned.
 
      * There's a new ``doveadm stats`` command that isn't compatible with the old one.
 
-  * The new stats code doesn't require a plugin, so make sure you remove ``stats`` from :ref:`setting-mail_plugins` setting. For more details see :ref:`statistics`.
+  * The new stats code doesn't require a plugin, so make sure you remove ``stats`` from :dovecot_core:ref:`mail_plugins` setting. For more details see :ref:`statistics`.
 
 Config changes required to 2.2.x config to keep using the "old" stats:
  * ``mail_plugins = stats`` -> ``mail_plugins = old_stats``
@@ -57,7 +57,7 @@ Dovecot can now act as a submission service. See :ref:`submission_server` for mo
 Localhost Auth Penalty
 ----------------------
 
-Dovecot no longer disables auth penalty waits for clients connecting from localhost (or :ref:`setting-login_trusted_networks` in general). The previous idea was that it would likely be a webmail that would have its own delays, but there are no guarantees about this.
+Dovecot no longer disables auth penalty waits for clients connecting from localhost (or :dovecot_core:ref:`login_trusted_networks` in general). The previous idea was that it would likely be a webmail that would have its own delays, but there are no guarantees about this.
 
 If the old behavior is still wanted, it's possible to do nowadays even more generically with e.g. setting following as the first passdb::
 
@@ -79,22 +79,22 @@ Changed Setting Defaults
 +----------------------------------------------+------------------------------+-------------------------------------------------------------------------+
 | Setting                                      | Old Default Value            | New Default Value                                                       |
 +==============================================+==============================+=========================================================================+
-| :ref:`setting-mdbox_rotate_size`             | 2M                           | 10M                                                                     |
+| :dovecot_core:ref:`mdbox_rotate_size`        | 2M                           | 10M                                                                     |
 +----------------------------------------------+------------------------------+-------------------------------------------------------------------------+
-| :ref:`setting-mailbox_list_index`            | no                           | yes                                                                     |
+| :dovecot_core:ref:`mailbox_list_index`       | no                           | yes                                                                     |
 +----------------------------------------------+------------------------------+-------------------------------------------------------------------------+
-| :ref:`setting-imap_logout_format`            | n=%i out=%o                  | in=%i out=%o deleted=%{deleted} expunged=%{expunged} trashed=%{trashed} |
+| :dovecot_core:ref:`imap_logout_format`       | n=%i out=%o                  | in=%i out=%o deleted=%{deleted} expunged=%{expunged} trashed=%{trashed} |
 |                                              |                              | hdr_count=%{fetch_hdr_count} hdr_bytes=%{fetch_hdr_bytes}               |
 |                                              |                              | body_count=%{fetch_body_count} body_bytes=%{fetch_body_bytes}           |
 +----------------------------------------------+------------------------------+-------------------------------------------------------------------------+
-| :ref:`setting-ssl_cipher_list`               | ALL:!LOW:!SSLv2:!EXP:!aNULL  | ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:   |
+| :dovecot_core:ref:`ssl_cipher_list`          | ALL:!LOW:!SSLv2:!EXP:!aNULL  | ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:   |
 |                                              |                              | !RC4:!ADH:!LOW@STRENGTH                                                 |
 +----------------------------------------------+------------------------------+-------------------------------------------------------------------------+
-| :ref:`setting-mail_log_prefix`               | "%s(%u): "                   | "%s(%u)<%{pid}><%{session}>: "                                          |
+| :dovecot_core:ref:`mail_log_prefix`          | "%s(%u): "                   | "%s(%u)<%{pid}><%{session}>: "                                          |
 +----------------------------------------------+------------------------------+-------------------------------------------------------------------------+
 | mysql: ``ssl_verify_server_cert``            | no                           | yes                                                                     |
 +----------------------------------------------+------------------------------+-------------------------------------------------------------------------+
-| :ref:`setting-ssl_options`                   |                              | no_compression is now the default, and a new compression option is      |
+| :dovecot_core:ref:`ssl_options`              |                              | no_compression is now the default, and a new compression option is      |
 |                                              |                              | introduced for enabling compression                                     |
 +----------------------------------------------+------------------------------+-------------------------------------------------------------------------+
 
@@ -103,7 +103,7 @@ Changed Setting Defaults
 Diffie-Hellman Parameters for SSL
 ---------------------------------
 
- * ``ssl-parameters.dat`` file is now obsolete. You should use :ref:`setting-ssl_dh` setting instead: ``ssl_dh=</etc/dovecot/dh.pem``
+ * ``ssl-parameters.dat`` file is now obsolete. You should use :dovecot_core:ref:`ssl_dh` setting instead: ``ssl_dh=</etc/dovecot/dh.pem``
 
    * You can convert an existing ssl-parameters.dat to dh.pem: ``dd if=/var/lib/dovecot/ssl-parameters.dat bs=1 skip=88 | openssl dhparam -inform der > /etc/dovecot/dh.pem``
 
@@ -111,14 +111,14 @@ Diffie-Hellman Parameters for SSL
  * You are encouraged to create at least 2048 bit parameters. 4096 is industry recommendation.
  * Note that it will take LONG TIME to generate the parameters, and it should be done with a machine that has GOOD SOURCE OF ENTROPY. Running it on a virtual machine is not recommended, unless there is some entropy helper/driver installed. Running this on your production proxy can starve connections due to lack of entropy.
 
- * Since v2.3.3+ DH parameter usage is **optional** and can be omitted. You are invited to amend ciphers to disallow non-ECC based DH algorithms, but if you don't and someone does try to use them, error will be emitted.
+ * Since v2.3.3+ DH parameter usage is **optional** and can be omitted. In that case one must also remove (or rename) ``/var/lib/dovecot/ssl-parameters.dat`` . You are invited to amend ciphers to disallow non-ECC based DH algorithms, but if you don't and someone does try to use them, error will be emitted.
 
     * Example: ``ssl_cipher_list=ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW:!DH@STRENGTH``
 
 Other Changes
 -------------
 
- * Invalid :ref:`setting-postmaster_address` now causes a failure early on with sieve/imap_sieve plugin enabled. It still defaults to ``postmaster@%d``, which expands to invalid ``postmaster@`` address if your usernames do not contain a domain, or are converted into domainless usernames by passdb/userdb. See https://wiki.dovecot.org/DomainLost.
+ * Invalid :dovecot_core:ref:`postmaster_address` now causes a failure early on with sieve/imap_sieve plugin enabled. It still defaults to ``postmaster@%d``, which expands to invalid ``postmaster@`` address if your usernames do not contain a domain, or are converted into domainless usernames by passdb/userdb. See https://wiki.dovecot.org/DomainLost.
  * Linux: Dovecot no longer enables core dumping for "setuid processes", which most of them are.
 
   * To enable them with Linux kernel v3.6+: Make sure core dumps get written to a globally shared directory and enable them with: ``sysctl -w fs.suid_dumpable=2``

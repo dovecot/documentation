@@ -1,22 +1,48 @@
-.. _mail_event_logging:
+.. _mail_log_plugin:
 
-=========================
-Mail Event Logging
-=========================
+==================
+Mail logger plugin
+==================
 
-See http://wiki.dovecot.org/Plugins/MailLog for more details. 
+This plugin can be used to log several actions done in a mail session:
+
+* Setting and removing \Deleted flag
+* Expunging (includes autoexpunge)
+* Copying mails
+* Saves
+* Mailbox creations
+* Mailbox deletions
+* Mailbox renames
+* Any flag changes
+
+Messages' IMAP UID and Message-ID header is logged for each action.
+
+Example:
 
 .. code-block:: none
 
+  imap(user): copy -> Trash: uid=908, msgid=<123.foo@bar>
+  imap(user): delete: uid=908, msgid=<123.foo@bar>
+  imap(user): expunged: uid=908, msgid=<123.foo@bar>
+
+The notify plugin is required for the mail_log plugin's operation, so be
+certain it's also enabled.
+
+Settings
+========
+
+See :ref:`plugin-mail-log`.
+
+Example Configuration
+=====================
+
+.. code-block:: none
+
+   # Enable the plugin globally for all services
    mail_plugins = $mail_plugins notify mail_log
 
-Enable the mail_log plugin. 
-
-.. code-block:: none
-
    plugin {
-    mail_log_events = delete undelete expunge copy mailbox_delete mailbox_rename
-    mail_log_fields = uid box msgid size from
+     mail_log_events = delete undelete expunge mailbox_delete mailbox_rename
+     mail_log_fields = uid box msgid size from
+     mail_log_cached_only = yes
    }
-
-Log a line about events that may cause message to be deleted. This is commonly useful when debugging why users have lost messages.

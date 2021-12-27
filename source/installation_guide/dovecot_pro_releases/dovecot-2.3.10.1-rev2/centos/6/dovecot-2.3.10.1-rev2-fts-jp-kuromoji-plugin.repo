@@ -1,0 +1,18 @@
+# fts-jp-kuromoji-plugin component requires separate OX License
+# Please contact to support@open-xchange.com to get access
+[dovecot-2.3.10.1-rev2-fts-jp-kuromoji-plugin]
+name=CentOS 6 - OX Dovecot Pro Full Text Search Kuromoji Tokenizer for Japanese
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.10.1/plugin/fts-jp-kuromoji-plugin/CentOS6
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+
+# dovecot-3rdparty_kuromoji component requires separate OX License
+# Please contact to support@open-xchange.com to get access
+[dovecot-2.3.10.1-rev2-dovecot-3rdparty_kuromoji]
+name=CentOS 6 - Atilika Kuromoji Library
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.10.1/3rdparty/kuromoji/CentOS6
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+

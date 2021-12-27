@@ -1,3 +1,5 @@
+.. _configuration_manual:
+
 =======================
 Configuration Manual
 =======================
@@ -8,4 +10,5 @@ Configuration Manual
 
    */index
    *
+   stats/openmetrics
    stats/old_statistics

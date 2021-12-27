@@ -4,34 +4,54 @@
  Scality sproxyd
 ======================
 
-sproxy driver requires Cassandra.  Cassandra portions of the configuration
-(``dictmap/refcounting``) is explained in the Cassandra section.
-
-Example sproxyd configuration:
+Using the sproxy driver requires using fs-dictmap/Cassandra. See
+:ref:`dictmap_configuration` and :ref:`dictmap_cassandra` for details and an
+example configuration.
 
 .. code-block:: none
 
-  mail_location = obox:%u:INDEX=~/:CONTROL=~/
-  plugin {
-    obox_fs = fscache:1G:/var/cache/mails:compress:gz:6:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2 ; refcounting-table:lockdir=/tmp:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3
-    obox_index_fs = compress:gz:6:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2 ; diff-table
-    fts_dovecot_fs = fts-cache:fscache:1G:/var/cache/mails: compress:gz:6:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=1 ; dict-prefix=%u/fts/
-  }
+   plugin {
+     # Basic configuration:
+     obox_fs = sproxyd:http://scality.example.com/?parameters
+   }
 
-The ``class=2`` specifies that Dovecot uses sproxyd with Class of Service value
-2, which means that the objects are written to the Scality RING 3 times.  This
-is generally the minimum allowable redundancy for mail and index objects.
+The parameters are:
 
-FTS data is more easily reproducible, so losing those indexes is not as
-critical; Class of Service 1 (as used in example above) may be appropriate
-based on customer requirements.
++---------------------------------+----------------------------------------------------------+
+| Parameter                       | Description                                              |
++=================================+==========================================================+
+| See :ref:`http_storages` for common parameters                                             |
++---------------------------------+----------------------------------------------------------+
+| class                           | Scality Class of Service. 2 means that the objects are   |
+|                                 | written to the Scality RING 3 times in total. This is    |
+|                                 | generally the minimum allowable redundancy for mail and  |
+|                                 | index objects.                                           |
+|                                 |                                                          |
+|                                 | FTS data is more easily reproducible, so losing those    |
+|                                 | indexes is not as critical; Class of Service 1 may be    |
+|                                 | appropriate based on customer requirements.              |
++---------------------------------+----------------------------------------------------------+
+| by-path                         | Objects are accessed by path instead of by object ID.    |
+|                                 | Scality sproxyd internally converts the paths into       |
+|                                 | object IDs. This shouldn't normally be used.             |
++---------------------------------+----------------------------------------------------------+
+| avoid_423=<:ref:`time_msecs`>   | Using this setting allows to delay DELETE requests if the|
+|                                 | same object ID has been GET/HEAD/PUT by the same process |
+|                                 | within <:ref:`time_msecs`>. This is intended to reduce   |
+|                                 | "423 Locked" sent by Scality.                            |
+|                                 |                                                          |
+|                                 | When ``avoid_423`` is not set, no delay is added.        |
+|                                 | Normally this setting should not be used. It should be   |
+|                                 | only be set, if it can be seen to bring a benefit.       |
+|                                 | Careful investigation of current error-rates and         |
+|                                 | consideration of the overall throughput of the platform  |
+|                                 | are recommended before using it.                         |
+|                                 |                                                          |
+|                                 | .. versionadded:: 2.3.15                                 |
++---------------------------------+----------------------------------------------------------+
 
 Dovecot uses its own Scality key format, which encodes the object type also to
-the key itself.
-
-Replace ``gz`` with ``maybe-gz`` if compression was not activated when the
-storage bucket was created.  Ensure that ``zlib_save`` is not active if
-``compress`` is active in obox plugin settings.
+the key itself. See :ref:`scality_key_format`.
 
 See also
 ********
@@ -39,8 +59,6 @@ See also
 .. toctree::
   :maxdepth: 1
 
-  scality_sproxyd_dictmap
+  dictmap
 
-  key_format
-
-  compression
+  dictmap_cassandra_objectid

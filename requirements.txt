@@ -1,2 +1,5 @@
-Sphinx==2.2.2
-sphinx-copybutton==0.2.5
+Sphinx==4.2.0
+sphinx-copybutton==0.4.0
+sphinx-removed-in==0.2.1
+pygments>=2.7.4
+wheel

@@ -5,13 +5,17 @@ Zlib plugin
 ===========
 
 Zlib plugin can be used to read compressed mbox, maildir or dbox files. It can
-be also used to write (via IMAP, `LDA <https://wiki.dovecot.org/LDA>`_ and/or
-:ref:`lmtp_server`) compressed messages to `dbox
-<https://wiki.dovecot.org/MailboxFormat/dbox>`_ or Maildir mailboxes. Zlib
-plugin supports compression using zlib/gzip, bzlib/bzip2, liblzma/xz (v2.2.9+)
-and liblz4/lz4 (v2.2.11+).
+also be used to write (via IMAP, :ref:`LDA <lda>` and/or :ref:`lmtp_server`)
+compressed messages to :ref:`dbox <dbox_mbox_format>` or
+:ref:`Maildir <maildir_mbox_format>` mailboxes.
 
-Configuration:
+Settings and Supported Algorithms
+=================================
+
+See :ref:`plugin-zlib`.
+
+Sample Configuration:
+---------------------
 
 .. code-block:: none
 
@@ -20,39 +24,45 @@ Configuration:
 
   # Enable these only if you want compression while saving:
   plugin {
-    zlib_save_level = 6 # 1..9; default is 6
-    zlib_save = gz # or bz2, xz or lz4
+    zlib_save = gz
+    zlib_save_level = 6
   }
 
-mbox
-====
+Interaction with Mailbox Formats
+================================
+
+:ref:`mbox_mbox_format`
+-----------------------
 
 Compressed mbox files can be accessed only as read-only. The compression is
 detected based on the file name, so your compressed mboxes should end with .gz
 or .bz2 extension. There is no support for compression during saving.
 
-dbox
-====
+:ref:`dbox_mbox_format`
+-----------------------
 
 Mails can be stored as compressed. Existing uncompressed mails can't currently
 be directly compressed (or vice versa). You could, however, use `dsync
-<https://wiki.dovecot.org/Tools/Doveadm/Sync?action=show&redirect=Tools%2FDsync>`_
+<https://wiki.dovecot.org/Tools/Doveadm/Sync>`_
 to copy all mails to another location (which saves them compressed) and then
 replace the original location with the new compressed location. You can do this
 by treating the operation the same as if you were migrating from one mailbox
 format to another (see the dsync page examples).
 
-Maildir
-=======
+:ref:`maildir_mbox_format`
+--------------------------
 
 When this plugin is loaded Dovecot can read both compressed and uncompressed
-files from Maildir. If you've enabled both gzip and bzip2 support you can have
-files compressed with either one of them in the Maildir. The compression is
-detected by reading the first few bytes from the file and figuring out if it's
-a valid gzip or bzip2 header. The file name doesn't matter. This means that an
-IMAP client could also try to exploit security holes in zlib/bzlib by writing
-specially crafted mails using IMAP's APPEND command. This is prevented by
-Dovecot not allowing clients to save mails that are detected as compressed.
+files from Maildir. The files within a Maildir can use any supported
+compression algorithm (e.g., some can be compressed uzing gzip, while others
+are compressed using zstd). The algorithm is detected by reading the first
+few bytes from the file and figuring out if it's a valid gzip or bzip2 header.
+The file name doesn't matter.
+
+To avoid IMAP clients attempting to exploit security holes in the compression
+algorithm libraries (e.g., bzlib) by writing specially crafted mails using
+IMAP's APPEND command, Dovecot will not allow clients to save mails that are
+detected as compressed.
 
 All mails must have , ``S=<size>`` in their filename where <size> contains the
 original uncompressed mail size, otherwise there will be problems with quota
@@ -67,8 +77,8 @@ If you want to use dsync to convert to a compressed Maildir you may need ``-o``
 ``maildir_copy_with_hardlinks=no`` (this is set to yes by default and will
 prevent compression).
 
-Compression
-===========
+Compress Existing Mails
+^^^^^^^^^^^^^^^^^^^^^^^
 
 You'll probably want to use some cronjob to compress old mails. However note
 that to avoid seeing duplicate mails in rare race conditions you'll have to use

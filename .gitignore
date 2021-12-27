@@ -1,6 +1,8 @@
 /_build
+/venv
 *~
 .*.swp
 .DS.Store
 .DS_Store
 *.html
+__pycache__

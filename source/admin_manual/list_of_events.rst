@@ -4,59 +4,179 @@
 Events
 ######
 
-List of all events emitted by Dovecot.
+List of all events emitted by Dovecot for statistics, exporting and filtering.
 
-These events can be used in :ref:`statistics` and :ref:`event_export`.
+See also:
 
-See :ref:`event_design` for technical implementation details.
+ * :ref:`statistics`
+ * :ref:`event_reasons`
+ * :ref:`event_export`
+ * :ref:`event_filter`
+ * :ref:`event_design` for technical implementation details
 
 **********
 Categories
 **********
 
-.. TODO: Compile complete list of categories
+Root Categories
+===============
 
-+----------------+------------------------------------------------------------+
-| Category       | Description                                                |
-+================+============================================================+
-| auth           |                                                            |
-+----------------+------------------------------------------------------------+
-| mailbox        |                                                            |
-+----------------+------------------------------------------------------------+
-| storage        |                                                            |
-+----------------+------------------------------------------------------------+
-| sieve          |                                                            |
-+----------------+------------------------------------------------------------+
-| sieve-execute  | Relates to (several) Sieve scripts being                   |
-|                | executed for a particular message.  This envelops all of   |
-|                | Sieve execution; both runtime and action execution.        |
-+----------------+------------------------------------------------------------+
-| sieve-runtime  | Relates to the evaluation of individual scripts.           |
-+----------------+------------------------------------------------------------+
-| sieve-action   | Relates to individual actions executed.                    |
-+----------------+------------------------------------------------------------+
-| sieve-storage  | Sieve storage events                                       |
-+----------------+------------------------------------------------------------+
-| managesieve    | Managesieve action events                                  |
-+----------------+------------------------------------------------------------+
-| smtp-server    | SMTP/LMTP server events                                    |
-+----------------+------------------------------------------------------------+
-| smtp-submit    | SMTP submission client events                              |
-+----------------+------------------------------------------------------------+
-| service:<name> | Event was sent by the named service, e.g. service:imap     |
-+----------------+------------------------------------------------------------+
++--------------------+---------------------------------------------------------+
+| Category           | Description                                             |
++====================+=========================================================+
+| auth               | Authentication (server mainly)                          |
++--------------------+---------------------------------------------------------+
+| auth-client        | Authentication client library                           |
++--------------------+---------------------------------------------------------+
+| dict               | Dictionary library and drivers                          |
++--------------------+---------------------------------------------------------+
+| dict-server        | Dictionary server/proxy (dict process)                  |
++--------------------+---------------------------------------------------------+
+| dns                | DNS client library                                      |
++--------------------+---------------------------------------------------------+
+| dns-worker         | dns-client process                                      |
++--------------------+---------------------------------------------------------+
+| fs                 | FS library                                              |
++--------------------+---------------------------------------------------------+
+| fts                | Full text search plugin                                 |
++--------------------+---------------------------------------------------------+
+| fts-dovecot        | :ref:`fts_backend_dovecot`                              |
++--------------------+---------------------------------------------------------+
+| http-client        | HTTP client library                                     |
+|                    |                                                         |
+|                    | .. versionadded:: v2.3.16                               |
++--------------------+---------------------------------------------------------+
+| http-server        | HTTP server library                                     |
++--------------------+---------------------------------------------------------+
+| imap               | imap process                                            |
++--------------------+---------------------------------------------------------+
+| imap-urlauth       | imap-urlauth process                                    |
++--------------------+---------------------------------------------------------+
+| imap-hibernate     | imap-hibernate process                                  |
++--------------------+---------------------------------------------------------+
+| lda                | dovecot-lda process                                     |
++--------------------+---------------------------------------------------------+
+| local-delivery     | LDA/LMTP local delivery                                 |
++--------------------+---------------------------------------------------------+
+| lmtp               | LMTP process                                            |
++--------------------+---------------------------------------------------------+
+| lua                | Lua script                                              |
++--------------------+---------------------------------------------------------+
+| mail-cache         | ``dovecot.index.cache`` file handling                   |
++--------------------+---------------------------------------------------------+
+| mail-index         | ``dovecot.index*`` file handling                        |
++--------------------+---------------------------------------------------------+
+| managesieve        | Managesieve                                             |
++--------------------+---------------------------------------------------------+
+| metacache          | obox metacache                                          |
++--------------------+---------------------------------------------------------+
+| push-notification  | push-notification plugin                                |
+|                    |                                                         |
+|                    | .. versionchanged:: v2.3.11 This was previously named   |
+|                    |                     push_notification.                  |
++--------------------+---------------------------------------------------------+
+| quota-status       | quota-status process                                    |
++--------------------+---------------------------------------------------------+
+| service:<name>     | Named service, e.g. service:imap or service:auth        |
++--------------------+---------------------------------------------------------+
+| smtp-client        | SMTP/LMTP client                                        |
++--------------------+---------------------------------------------------------+
+| smtp-server        | SMTP/LMTP server                                        |
++--------------------+---------------------------------------------------------+
+| smtp-submit        | SMTP submission client                                  |
++--------------------+---------------------------------------------------------+
+
+Storage Categories
+==================
+
++--------------------+---------------------------------------------------------+
+| Category           | Description                                             |
++====================+=========================================================+
+| storage            | Mail storage parent category                            |
++--------------------+---------------------------------------------------------+
+| cydir              | cydir storage                                           |
++--------------------+---------------------------------------------------------+
+| mdbox              | mdbox storage                                           |
++--------------------+---------------------------------------------------------+
+| sdbox              | sdbox storage                                           |
++--------------------+---------------------------------------------------------+
+| imapc              | imapc storage                                           |
++--------------------+---------------------------------------------------------+
+| maildir            | maildir storage                                         |
++--------------------+---------------------------------------------------------+
+| mbox               | mbox storage                                            |
++--------------------+---------------------------------------------------------+
+| pop3c              | pop3c storage                                           |
++--------------------+---------------------------------------------------------+
+| mailbox            | Mailbox (folder)                                        |
++--------------------+---------------------------------------------------------+
+
+Mailbox Categories
+==================
+
++--------------------+---------------------------------------------------------+
+| Category           | Description                                             |
++====================+=========================================================+
+| storage            | Mailbox (folder) parent category                        |
++--------------------+---------------------------------------------------------+
+| mail               | Mail                                                    |
++--------------------+---------------------------------------------------------+
+
+Sieve Categories
+================
+
+.. versionadded:: v2.3.11 makes the "sieve" category parent for the other
+                  sieve-* categories.
+
++--------------------+---------------------------------------------------------+
+| Category           | Description                                             |
++====================+=========================================================+
+| sieve              | Sieve parent category                                   |
++--------------------+---------------------------------------------------------+
+| sieve-action       | Individual Sieve actions executed.                      |
++--------------------+---------------------------------------------------------+
+| sieve-execute      | Sieve script(s) being executed for a particular         |
+|                    | message. This envelops all of Sieve execution; both     |
+|                    | runtime and action execution.                           |
++--------------------+---------------------------------------------------------+
+| sieve-runtime      | Evaluation of individual Sieve scripts.                 |
++--------------------+---------------------------------------------------------+
+| sieve-storage      | Sieve storage                                           |
++--------------------+---------------------------------------------------------+
+
+SQL Categories
+==============
+
++--------------------+---------------------------------------------------------+
+| Category           | Description                                             |
++====================+=========================================================+
+| sql                | SQL parent category                                     |
++--------------------+---------------------------------------------------------+
+| cassandra          | Cassandra CQL events.                                   |
++--------------------+---------------------------------------------------------+
+| mysql              | MySQL events.                                           |
++--------------------+---------------------------------------------------------+
+| pgsql              | PostgreSQL events.                                      |
++--------------------+---------------------------------------------------------+
+| sqlite             | SQLite events.                                          |
++--------------------+---------------------------------------------------------+
+| sqlpool            | SQL is used internally via "SQL connection pools"       |
++--------------------+---------------------------------------------------------+
 
 
 *************
 Global Fields
 *************
 
-**ALL events have the following fields**:
+**ALL events may have the following fields**:
 
 +--------------+------------------------------------------------------------+
 | Field        | Description                                                |
 +==============+============================================================+
 | duration     | Duration of the event (in microseconds)                    |
++--------------+------------------------------------------------------------+
+| reason_code  | List of reason code strings why the event happened. See    |
+|              | :ref:`event_reasons` for possible values.                  |
 +--------------+------------------------------------------------------------+
 
 
@@ -64,12 +184,217 @@ Global Fields
 Dovecot Core
 ************
 
+Authentication Client
+=====================
+
+auth_client_cache_flush_started
+-------------------------------
+
+*no particular fields*
+
+auth_client_cache_flush_finished
+--------------------------------
+
++--------------+------------------------------------------------------------+
+| Field        | Description                                                |
++==============+============================================================+
+| error        | Error string if error occured.                             |
++--------------+------------------------------------------------------------+
+
+Common fields
+-------------
+
+These fields are common for the rest of the authentication client events.
+
++--------------------+-----------------------------------------------------------+
+| Field             | Description                                                |
++===================+============================================================+
+| service           | Service name, such as imap3, pop3, lmtp.                   |
++-------------------+------------------------------------------------------------+
+| session           | Session identifier.                                        |
++-------------------+------------------------------------------------------------+
+| local_name        | TLS SNI.                                                   |
++-------------------+------------------------------------------------------------+
+| local_ip          | Local IP client connected to.                              |
++-------------------+------------------------------------------------------------+
+| remote_ip         | Remote IP of client.                                       |
++-------------------+------------------------------------------------------------+
+| local_port        | Local port client connected to.                            |
++-------------------+------------------------------------------------------------+
+| remote_port       | Remote port of client.                                     |
++-------------------+------------------------------------------------------------+
+| real_local_ip     | Real local IP as seen by the server.                       |
++-------------------+------------------------------------------------------------+
+| real_remote_ip    | Real remote IP as seen by the server.                      |
++-------------------+------------------------------------------------------------+
+| real_local_port   | Real local port as seen by the server.                     |
++-------------------+------------------------------------------------------------+
+| real_remote_port  | Real remote port as seen by the server.                    |
++-------------------+------------------------------------------------------------+
+
+auth_client_passdb_lookup_started
+---------------------------------
+
+auth_client_passdb_lookup_finished
+----------------------------------
+
++--------------------+-----------------------------------------------------------+
+| Field             | Description                                                |
++===================+============================================================+
+| user              | User to lookup.                                            |
++-------------------+------------------------------------------------------------+
+| error             | Error string if error occured.                             |
++-------------------+------------------------------------------------------------+
+
+
+auth_client_request_started
+---------------------------
+
+auth_client_request_challenged
+------------------------------
+
+auth_client_request_continued
+-----------------------------
+
+auth_client_request_finished
+----------------------------
+
++--------------------+-----------------------------------------------------------+
+| Field             | Description                                                |
++===================+============================================================+
+| user              | Username, if present.                                      |
++-------------------+------------------------------------------------------------+
+| original_user     | Original username, if present.                             |
++-------------------+------------------------------------------------------------+
+| auth_user         | Auth username, if present.                                 |
++-------------------+------------------------------------------------------------+
+| error             | Error string if error occured.                             |
++-------------------+------------------------------------------------------------+
+
+auth_client_userdb_list_started
+-------------------------------
+
++--------------+------------------------------------------------------------+
+| Field        | Description                                                |
++==============+============================================================+
+| user_mask    | User mask to list.                                         |
++--------------+------------------------------------------------------------+
+
+auth_client_userdb_list_finished
+--------------------------------
+
++--------------+------------------------------------------------------------+
+| Field        | Description                                                |
++==============+============================================================+
+| user_mask    | User mask to list.                                         |
++--------------+------------------------------------------------------------+
+| error        | Error string if error occured.                             |
++--------------+------------------------------------------------------------+
+
+auth_client_userdb_lookup_started
+---------------------------------
+
+auth_client_userdb_lookup_finished
+----------------------------------
+
++--------------------+-----------------------------------------------------------+
+| Field             | Description                                                |
++===================+============================================================+
+| user              | User to lookup.                                            |
++-------------------+------------------------------------------------------------+
+| error             | Error string if error occured.                             |
++-------------------+------------------------------------------------------------+
 
 Authentication Server
 =====================
 
 These events are generated in authentication process(es) and can be used
 to track and log individual authentication actions.
+
+Common fields
+-------------
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| user                | Full username. This can change during authentication,|
+|                     | for example due to passdb lookups.                   |
++---------------------+------------------------------------------------------+
+| original_user       | Original username exactly as provided by the client. |
++---------------------+------------------------------------------------------+
+| translated_user     | Similar to original_user, except after               |
+|                     | :dovecot_core:ref:`auth_username_translation`        |
+|                     | translations are applied.                            |
++---------------------+------------------------------------------------------+
+| login_user          | When doing a master user login, the user we are      |
+|                     | logging in as. Otherwise not set.                    |
++---------------------+------------------------------------------------------+
+| master_user         | When doing a master user login, the master username. |
+|                     | Otherwise not set.                                   |
++---------------------+------------------------------------------------------+
+| mechanism           | Name of used SASL mechanism (e.g. PLAIN)             |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| service             | Service doing the lookup (e.g. imap, pop3)           |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| session             | Session ID                                           |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| client_id           | Expands to client ID request as IMAP arglist. Needs  |
+|                     | imap_id_retain=yes                                   |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| remote_ip           | Remote IP address of the client connection           |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| local_ip            | Local IP address where client connected to           |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| remote_port         | Remote port of the client connection                 |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| local_port          | Local port where the client connected to             |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| real_remote_ip      | Same as remote_ip, except if the connection was      |
+|                     | proxied, this is the proxy's IP adderss.             |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| real_local_ip       | Same as local_ip, except if the connection was       |
+|                     | proxied, this is the IP where proxy connected to.    |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| real_remote_port    | Same as remote_port, except if the connection was    |
+|                     | proxied, this is the proxy connection's port.        |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| real_local_port     | Same as remote_port, except if the connection was    |
+|                     | proxied, this is the local port where the proxy      |
+|                     | connected to.                                        |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| local_name          | TLS SNI hostname, if given                           |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.12                            |
++---------------------+------------------------------------------------------+
+| transport           | Client connection's transport security. Values:      |
+|                     |  * ``insecure``                                      |
+|                     |  * ``trusted``                                       |
+|                     |  * ``TLS``                                           |
++---------------------+------------------------------------------------------+
 
 
 auth_request_finished
@@ -82,32 +407,9 @@ of authentication/login attempts.
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| user                | Full username                                        |
-+---------------------+------------------------------------------------------+
-| original_username   | Original username used                               |
-+---------------------+------------------------------------------------------+
-| translated_username | Username after                                       |
-|                     | :ref:`setting-auth_username_translation`             |
-|                     | translations are applied                             |
-+---------------------+------------------------------------------------------+
-| login_user          | When doing login using ``master_user``, the user we  |
-|                     | are logging in as                                    |
-+---------------------+------------------------------------------------------+
-| master_user         | Master username                                      |
-+---------------------+------------------------------------------------------+
 | error               | Set when error happens                               |
 +---------------------+------------------------------------------------------+
 | success             | ``yes``, when authentication succeeded               |
-+---------------------+------------------------------------------------------+
-| transport           | Values:                                              |
-|                     |  * ``insecure``                                      |
-|                     |  * ``trusted``                                       |
-|                     |  * ``TLS``                                           |
-+---------------------+------------------------------------------------------+
-| mechanism           | Name of used mechanism                               |
-+---------------------+------------------------------------------------------+
-| credentials_scheme  | Type of credential. Examples: ``SHA256-CRYPT``,      |
-|                     | ``PLAIN``, ...                                       |
 +---------------------+------------------------------------------------------+
 | policy_penalty      | Time of penalty added by policy server               |
 +---------------------+------------------------------------------------------+
@@ -156,13 +458,9 @@ Most useful for debugging authentication flow.
 | passdb_name         | ``passdb { name }``, if it is configured.            |
 |                     | Otherwise, the driver name.                          |
 +---------------------+------------------------------------------------------+
-| user                | Full username                                        |
-+---------------------+------------------------------------------------------+
-| master_user         | Master username                                      |
-+---------------------+------------------------------------------------------+
-| username            | Username without domain                              |
-+---------------------+------------------------------------------------------+
-| domain              | Domain (if present)                                  |
+| passdb_id           | ID number of the passdb username                     |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
 | result              | Values:                                              |
 |                     |  * ``ok``                                            |
@@ -173,10 +471,6 @@ Most useful for debugging authentication flow.
 |                     |  * ``scheme_not_available``                          |
 |                     |  * ``internal_failure``                              |
 |                     |  * ``next``                                          |
-+---------------------+------------------------------------------------------+
-| passdb_id           | ID number of the passdb username                     |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
 
 
@@ -218,22 +512,14 @@ Most useful for debugging authentication flow.
 | userdb_name         | ``userdb { name }``, if it is configured.            |
 |                     | Otherwise, the driver name.                          |
 +---------------------+------------------------------------------------------+
-| user                | Full username                                        |
-+---------------------+------------------------------------------------------+
-| master_user         | Master username                                      |
-+---------------------+------------------------------------------------------+
-| username            | Username without domain                              |
-+---------------------+------------------------------------------------------+
-| domain              | Domain (if present)                                  |
+| userdb_id           | ID number of the userdb username                     |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
 | result              | Values:                                              |
 |                     |  * ``ok``                                            |
 |                     |  * ``user_unknown``                                  |
 |                     |  * ``internal_failure``                              |
-+---------------------+------------------------------------------------------+
-| userdb_id           | ID number of the userdb username                     |
-|                     |                                                      |
-|                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
 
 
@@ -314,7 +600,7 @@ auth_client_userdb_lookup_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -336,7 +622,7 @@ auth_client_userdb_lookup_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -360,7 +646,7 @@ auth_client_passdb_lookup_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -382,7 +668,7 @@ auth_client_passdb_lookup_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -406,7 +692,7 @@ auth_client_userdb_list_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -427,7 +713,7 @@ auth_client_userdb_list_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -451,7 +737,7 @@ auth_client_cache_flush_started
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -473,7 +759,7 @@ auth_client_cache_flush_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| service             | Name of service. Examples: ``smtp``, ``imap``,       |
+| service             | Name of service. Examples: ``submission``, ``imap``, |
 |                     | ``lmtp``, ...                                        |
 +---------------------+------------------------------------------------------+
 | local_ip            | Local IP address                                     |
@@ -539,22 +825,57 @@ These events apply only for connections using the ``connection API``.
           some types of connections, but not for others.
 
 
-client_connection_connected
----------------------------
+.. _event_incoming_conn:
 
-Emitted when a client connection is established.
+Common fields for client (incoming) connections
+-----------------------------------------------
+
+Fields present in all ``client_connection_*`` events.
 
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| client_ip           | Source IP address                                    |
+| local_ip            | Local server IP address where TCP client connected   |
+|                     | to.                                                  |
 +---------------------+------------------------------------------------------+
-| client_port         | Source port                                          |
+| remote_ip           | Remote TCP client's IP address.                      |
 +---------------------+------------------------------------------------------+
-| ip                  | Target IP address                                    |
+| remote_port         | Remote TCP client's source port.                     |
 +---------------------+------------------------------------------------------+
-| port                | Target port                                          |
+| remote_pid          | Remote UNIX socket client's process ID.              |
 +---------------------+------------------------------------------------------+
+| remote_uid          | Remote UNIX socket client's system user ID.          |
++---------------------+------------------------------------------------------+
+
+Common fields for server (outgoing) connections
+------------------------------------------------
+
+Fields present in all ``server_connection_*`` events.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| source_ip           | Source IP address used for the outgoing TCP          |
+|                     | connection. This is set only if a specific source IP |
+|                     | was explicitly requested.                            |
++---------------------+------------------------------------------------------+
+| dest_ip             | TCP connection's destination IP address.             |
++---------------------+------------------------------------------------------+
+| dest_port           | TCP connection's destination port.                   |
++---------------------+------------------------------------------------------+
+| dest_host           | TCP connection's destination hostname, if known.     |
++---------------------+------------------------------------------------------+
+| socket_path         | UNIX socket connection's path                        |
++---------------------+------------------------------------------------------+
+| remote_pid          | Remote UNIX socket server's process ID.              |
++---------------------+------------------------------------------------------+
+| remote_uid          | Remote UNIX socket server's system user ID.          |
++---------------------+------------------------------------------------------+
+
+client_connection_connected
+---------------------------
+
+Emitted when a server accepts an incoming client connection.
 
 
 client_connection_disconnected
@@ -565,14 +886,6 @@ Emitted when a client connection is terminated.
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| client_ip           | Source IP address                                    |
-+---------------------+------------------------------------------------------+
-| client_port         | Source port                                          |
-+---------------------+------------------------------------------------------+
-| ip                  | Target IP address                                    |
-+---------------------+------------------------------------------------------+
-| port                | Target port                                          |
-+---------------------+------------------------------------------------------+
 | bytes_in            | Amount of data read, in bytes                        |
 +---------------------+------------------------------------------------------+
 | bytes_out           | Amount of data written, in bytes                     |
@@ -584,24 +897,8 @@ Emitted when a client connection is terminated.
 server_connection_connected
 ---------------------------
 
-Emitted when a server connection is established.
-
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| client_ip           | Source IP address                                    |
-+---------------------+------------------------------------------------------+
-| client_port         | Source port                                          |
-+---------------------+------------------------------------------------------+
-| ip                  | Target IP address                                    |
-+---------------------+------------------------------------------------------+
-| port                | Target port                                          |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
-
+Emitted when an outgoing server connection was either successfully established
+or failed. Currently it is not possible to know which one happened.
 
 server_connection_disconnected
 ------------------------------
@@ -611,14 +908,6 @@ Emitted when a server connection is terminated.
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| client_ip           | Source IP address                                    |
-+---------------------+------------------------------------------------------+
-| client_port         | Source port                                          |
-+---------------------+------------------------------------------------------+
-| ip                  | Target IP address                                    |
-+---------------------+------------------------------------------------------+
-| port                | Target port                                          |
-+---------------------+------------------------------------------------------+
 | bytes_in            | Amount of data read, in bytes                        |
 +---------------------+------------------------------------------------------+
 | bytes_out           | Amount of data written, in bytes                     |
@@ -626,9 +915,62 @@ Emitted when a server connection is terminated.
 | reason              | Disconnection reason                                 |
 +---------------------+------------------------------------------------------+
 
+FS
+==
+
+.. _event_fs:
+
+fs
+--
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from environment (e.g. :ref:`event_mail_user`)                    |
++---------------------+------------------------------------------------------+
+
+.. _event_fs_file:
+
+fs_file
+-------
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_fs` or any other specified event                 |
+| (e.g. :ref:`event_mail`)                                                   |
++---------------------+------------------------------------------------------+
+
+.. _event_fs_iter:
+
+fs_file
+-------
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_fs` or any other specified event                 |
+| (e.g. :ref:`event_mailbox`)                                                |
++---------------------+------------------------------------------------------+
+
+If the file was created for obox, it has also fields:
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| file_type           | * mail: Email file                                   |
+|                     | * index: Index bundle                                |
+|                     | * box: Mailbox directory (for creating/deleting it,  |
+|                     |   if used by the storage driver)                     |
+|                     | * fts: FTS file                                      |
++---------------------+------------------------------------------------------+
+| reason              | Reason for accessing the file                        |
++---------------------+------------------------------------------------------+
 
 Storage
 =======
+
+.. _event_mail_storage_service_user:
 
 Mail storage service user
 -------------------------
@@ -641,16 +983,31 @@ Mail storage service user
 | session             | Session ID for the storage sesssion                  |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail_user:
+
 Mail user
 ---------
 
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from mail storage service user                                    |
+| Inherits from :ref:`event_mail_storage_service_user`                       |
 +---------------------+------------------------------------------------------+
 | user                | Username of the user                                 |
 +---------------------+------------------------------------------------------+
+
+.. _event_storage:
+
+Storage
+-------
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_mail_user`                                       |
++---------------------+------------------------------------------------------+
+
+.. _event_mailbox:
 
 Mailbox
 -------
@@ -658,12 +1015,34 @@ Mailbox
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from mail user                                                    |
+| Inherits from :ref:`event_storage`                                         |
 +---------------------+------------------------------------------------------+
 | mailbox             | Full mailbox name in UTF-8                           |
 |                     |                                                      |
 |                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
+| mailbox_guid        | Mailbox GUID with obox storage                       |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.10                            |
++---------------------+------------------------------------------------------+
+
+.. _event_mail_expunged:
+
+mail_expunged
+^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail was expunged from the mailbox. Note that this event inherits from
+mailbox, not mail.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| uid                 | UID of the expunged mail.                              |
++---------------------+--------------------------------------------------------+
+
+.. _event_mail:
 
 Mail
 ----
@@ -671,19 +1050,292 @@ Mail
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from mailbox                                                      |
+| Inherits from :ref:`event_mailbox`                                         |
 +---------------------+------------------------------------------------------+
 | seq                 | Mail sequence number                                 |
 +---------------------+------------------------------------------------------+
 | uid                 | Mail IMAP UID number                                 |
 +---------------------+------------------------------------------------------+
 
+.. _event_mail_opened:
 
-HTTP
-====
+mail_opened
+^^^^^^^^^^^
 
-These events are emitted by Dovecot's internal HTTP library.
+.. versionadded:: 2.3.15
 
+A mail was opened e.g. for reading its body. Note that this event is not sent
+when mails' metadata is accessed, even if it causes opening the mail file.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| reason              | Reason why the mail was opened. (optional)             |
++---------------------+--------------------------------------------------------+
+
+.. _event_mail_expunge_requested:
+
+mail_expunge_requested
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+A mail is set to be expunged. (Note that expunges can be rolled back later on,
+this event is emitted when an expunge is requested).
+
+Mail index
+==========
+
+.. _event_mail_index:
+
+Mail index
+----------
+
+Index file handling for ``dovecot.index*``, ``dovecot.map.index*``,
+``dovecot.list.index*`` and similar indexes.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_mailbox`, :ref:`event_storage` or                |
+| :ref:`event_mail_user` depending on what the index is used for.            |
++---------------------+------------------------------------------------------+
+
+
+.. _event_mail_index_recreated:
+
+mail_index_recreated
+^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.12
+
+A mail index file was recreated.
+
+.. todo:: do we want to list all possible reasons?
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| filepath            | Path to the index file being recreated                 |
++---------------------+--------------------------------------------------------+
+| reason              | Reason why the mail index was recreated                |
++---------------------+--------------------------------------------------------+
+
+
+.. _event_indexer_worker_indexing_finished:
+
+indexer_worker_indexing_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+Indexer worker process completed an indexing transaction.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| Inherits from :ref:`event_mailbox`                                           |
++---------------------+--------------------------------------------------------+
+| message_count       | Number of messages indexed                             |
++---------------------+--------------------------------------------------------+
+| first_uid           | UID of the first indexed message                       |
++---------------------+--------------------------------------------------------+
+| last_uid            | UID of the last indexed message                        |
++---------------------+--------------------------------------------------------+
+| user_cpu_usecs      | Total user CPU spent on the indexing transaction in    |
+|                     | microseconds.                                          |
++---------------------+--------------------------------------------------------+
+
+
+Mail cache
+----------
+
+.. versionadded:: 2.3.11
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_mail_index`                                      |
++---------------------+------------------------------------------------------+
+
+mail_cache_decision_changed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A field's caching decision changed. The decisions are:
+
+ * no: The field is not cached.
+ * temp: The field is cached for 1 week and dropped on the next purge.
+ * yes: The field is cached permanently. If the field isn't accessed for 30
+   days it's dropped.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| field               | Cache field name (e.g. ``imap.body`` or ``hdr.from``)  |
++---------------------+--------------------------------------------------------+
+| last_used           | UNIX timestamp of when the field was accessed the last |
+|                     | time. This is updated only once per 24 hours.          |
++---------------------+--------------------------------------------------------+
+| reason              | Reason why the caching decision changed:               |
+|                     |                                                        |
+|                     | * add: no -> temp decision change, because a new field |
+|                     |   was added to cache.                                  |
+|                     | * old_mail: temp -> yes decision change, because a     |
+|                     |   mail older than 1 week was accessed.                 |
+|                     | * unordered_access: temp -> yes decision change,       |
+|                     |   because mails weren't accessed in ascending order    |
+|                     | * Other values indicate a reason for cache purging,    |
+|                     |   which changes the caching decision yes -> temp.      |
++---------------------+--------------------------------------------------------+
+| uid                 | IMAP UID number that caused the decision change. This  |
+|                     | is set only for some reasons, not all.                 |
++---------------------+--------------------------------------------------------+
+| old_decision        | Old cache decision: no, temp, yes                      |
++---------------------+--------------------------------------------------------+
+| new_decision        | New cache decision: no, temp, yes                      |
++---------------------+--------------------------------------------------------+
+
+.. _event_mail_cache_purge_started:
+
+mail_cache_purge_started
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cache file purging is started.
+
++----------------------+-------------------------------------------------------+
+| Field                | Description                                           |
++======================+=======================================================+
+| file_seq             | Sequence of the new cache file that is created.       |
++----------------------+-------------------------------------------------------+
+| prev_file_seq        | Sequence of the cache file that is to be purged.      |
++----------------------+-------------------------------------------------------+
+| prev_file_size       | Size of the cache file that is to be purged.          |
++----------------------+-------------------------------------------------------+
+| prev_deleted_records | Number of records (mails) marked as deleted in the    |
+|                      | cache file that is to be purged.                      |
++----------------------+-------------------------------------------------------+
+| reason               | Reason string for purging the cache file:             |
+|                      |                                                       |
+|                      | * doveadm mailbox cache purge                         |
+|                      | * copy cache decisions                                |
+|                      | * creating cache                                      |
+|                      | * cache is too large                                  |
+|                      | * syncing                                             |
+|                      | * rebuilding index                                    |
++----------------------+-------------------------------------------------------+
+
+mail_cache_purge_drop_field
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Existing field is dropped from the cache file because it hadn't been accessed
+for 30 days.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| All the same fields as in :ref:`event_mail_cache_purge_started`              |
++---------------------+--------------------------------------------------------+
+| field               | Cache field name (e.g. ``imap.body`` or ``hdr.from``)  |
++---------------------+--------------------------------------------------------+
+| decision            | Old caching decision: temp, yes                        |
++---------------------+--------------------------------------------------------+
+| last_used           | UNIX timestamp of when the field was accessed the last |
+|                     | time. This is updated only once per 24 hours.          |
++---------------------+--------------------------------------------------------+
+
+mail_cache_purge_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cache file purging is finished.
+
++----------------------+-------------------------------------------------------+
+| Field                | Description                                           |
++======================+=======================================================+
+| All the same fields as in :ref:`event_mail_cache_purge_started`              |
++----------------------+-------------------------------------------------------+
+| file_size            | Size of the new cache file.                           |
++----------------------+-------------------------------------------------------+
+| max_uid              | IMAP UID of the last mail in the cache file.          |
++----------------------+-------------------------------------------------------+
+
+mail_cache_corrupted
+^^^^^^^^^^^^^^^^^^^^
+
+Cache file was found to be corrupted and the whole file is deleted.
+
++----------------------+-------------------------------------------------------+
+| Field                | Description                                           |
++======================+=======================================================+
+| reason               | Reason string why cache was found to be corrupted.    |
++----------------------+-------------------------------------------------------+
+
+mail_cache_record_corrupted
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cache record for a specific mail was found to be corrupted and the record is
+deleted.
+
++----------------------+-------------------------------------------------------+
+| Field                | Description                                           |
++======================+=======================================================+
+| uid                  | IMAP UID of the mail whose cache record is corrupted. |
++----------------------+-------------------------------------------------------+
+| reason               | Reason string why cache was found to be corrupted.    |
++----------------------+-------------------------------------------------------+
+
+.. _event_mail_cache_lookup_finished:
+
+mail_cache_lookup_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.15
+
+.. versionremoved:: 2.3.18 Removed for performance reasons.
+
+A mail field was looked up from cache.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| field               | Cache field name e.g. ``imap.body`` or ``hdr.from``    |
++---------------------+--------------------------------------------------------+
+
+HTTP Client
+===========
+
+These events are emitted by Dovecot's internal HTTP library when acting as
+a client to an external service.
+
+Common fields
+-------------
+
+Fields present in all HTTP client events.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| attempts            | Amount of individual HTTP request attempts. (number  |
+|                     | of retries after failures + 1)                       |
++---------------------+------------------------------------------------------+
+| bytes_in            | Amount of data read, in bytes.                       |
++---------------------+------------------------------------------------------+
+| bytes_out           | Amount of data written, in bytes.                    |
++---------------------+------------------------------------------------------+
+| dest_host           | Destination host.                                    |
++---------------------+------------------------------------------------------+
+| dest_ip             | Destination IP address.                              |
++---------------------+------------------------------------------------------+
+| dest_port           | Destination port.                                    |
++---------------------+------------------------------------------------------+
+| method              | HTTP verb used uppercased, e.g. ``GET``.             |
++---------------------+------------------------------------------------------+
+| redirects           | Number of redirects done while processing request.   |
++---------------------+------------------------------------------------------+
+| status_code         | HTTP result status code (integer).                   |
++---------------------+------------------------------------------------------+
+| target              | Request path with parameters, e.g.                   |
+|                     | ``/path/?delimiter=%2F&prefix=test%2F``.             |
++---------------------+------------------------------------------------------+
 
 http_request_finished
 ---------------------
@@ -692,43 +1344,12 @@ Emitted when an HTTP request is complete.
 
 This event is useful to track and monitor external services.
 
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| status_code         | HTTP result status code (integer)                    |
-+---------------------+------------------------------------------------------+
-| attempts            | Amount of individual HTTP request attempts (number   |
-|                     | (of retries after failures + 1)                      |
-+---------------------+------------------------------------------------------+
-| redirects           | Number of redirects done while processing request    |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
-
-
 http_request_redirected
 -----------------------
 
 Intermediate event emitted when an HTTP request is being redirected.
 
 The ``http_request_finished`` event is still sent at the end of the request.
-
-+---------------------+------------------------------------------------------+
-| Field               | Description                                          |
-+=====================+======================================================+
-| status_code         | HTTP result status code (integer)                    |
-+---------------------+------------------------------------------------------+
-| attempts            | Amount of individual HTTP request attempts (number   |
-|                     | (of retries after failures + 1)                      |
-+---------------------+------------------------------------------------------+
-| redirects           | Number of redirects done while processing request    |
-+---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
-+---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
-+---------------------+------------------------------------------------------+
 
 http_request_retried
 --------------------
@@ -737,24 +1358,60 @@ Intermediate event emitted when an HTTP request is being retried.
 
 The ``http_request_finished`` event is still sent at the end of the request.
 
+
+HTTP Server
+===========
+
+These events are emitted by Dovecot's internal HTTP library when serving
+requests (e.g. doveadm HTTP API).
+
+Common fields
+-------------
+
+Fields present in all HTTP server events.
+
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| status_code         | HTTP result status code (integer)                    |
+| Inherits from :ref:`event_incoming_conn`                                   |
 +---------------------+------------------------------------------------------+
-| attempts            | Amount of individual HTTP request attempts (number   |
-|                     | (of retries after failures + 1)                      |
+| request_id          | Assigned ID if of the received request.              |
 +---------------------+------------------------------------------------------+
-| redirects           | Number of redirects done while processing request    |
+| method              | HTTP verb used uppercased, e.g. ``GET``.             |
 +---------------------+------------------------------------------------------+
-| bytes_in            | Amount of data read, in bytes                        |
+| target              | Request path with parameters, e.g.                   |
+|                     | ``/path/?delimiter=%2F&prefix=test%2F``.             |
 +---------------------+------------------------------------------------------+
-| bytes_out           | Amount of data written, in bytes                     |
+
+http_server_request_started
+---------------------------
+
+.. versionadded:: v2.3.18
+
+Emitted when a new HTTP request is received and the request headers
+(but not body payload) are parsed.
+
+http_server_request_finished
+----------------------------
+
+.. versionadded:: v2.3.18
+
+Emitted when the HTTP request is fully completed i.e the incoming request body
+is read and the full response to the request has been sent to the client.
+
++---------------------+------------------------------------------------------+
+| bytes_in            | Amount of request data read, in bytes.               |
++---------------------+------------------------------------------------------+
+| bytes_out           | Amount of response data written, in bytes.           |
++---------------------+------------------------------------------------------+
+| status_code         | HTTP result status code (integer).                   |
 +---------------------+------------------------------------------------------+
 
 
 IMAP
 ====
+
+.. _event_imap_client:
 
 IMAP client
 -----------
@@ -783,6 +1440,52 @@ IMAP client
 |                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
 
+imap_client_hibernated
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: v2.3.13
+
+Event emitted when an IMAP client is hibernated or when the hibernation attempt failed.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| mailbox             | Mailbox name where hibernation was started in.       |
++---------------------+------------------------------------------------------+
+| error               | Reason why hibernation attempt failed.               |
++---------------------+------------------------------------------------------+
+
+
+.. _imap_client_unhibernated:
+
+imap_client_unhibernated
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: v2.3.13
+
+Event emitted when an IMAP client is hibernated or when the hibernation attempt failed.
+Note that for failures this event can be logged by either imap or imap-hibernate process depending on which side the error was detected in.
+
+See also imap process's :ref:`imap_hibernate_client_unhibernated` event.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| reason              | Reason why client was unhibernated:                  |
+|                     |                                                      |
+|                     | * idle_done: IDLE command was stopped with DONE.     |
+|                     | * idle_bad_reply: IDLE command was stopped with some |
+|                     |   other command than DONE.                           |
+|                     | * mailbox_changes: Mailbox change notifications need |
+|                     |   to be sent to the client.                          |
++---------------------+------------------------------------------------------+
+| hibernation_usecs   | Number of microseconds how long the client was       |
+|                     | hibernated.                                          |
++---------------------+------------------------------------------------------+
+| mailbox             | Mailbox name where hibernation was started in.       |
++---------------------+------------------------------------------------------+
+| error               | Reason why unhibernation failed.                     |
++---------------------+------------------------------------------------------+
 
 IMAP command
 ------------
@@ -790,15 +1493,23 @@ IMAP command
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from IMAP client                                                  |
+| Inherits from :ref:`event_imap_client`                                     |
 +---------------------+------------------------------------------------------+
 | cmd_tag             | IMAP command tag                                     |
 |                     |                                                      |
 |                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
-| cmd_name            | IMAP command name (e.g. ``FETCH``)                   |
+| cmd_name            | IMAP command name uppercased (e.g. ``FETCH``).       |
 |                     |                                                      |
 |                     | .. versionadded:: v2.3.9                             |
+|                     |                                                      |
+|                     | .. versionchanged:: v2.3.11 Contains ``unknown`` for |
+|                     |                     unknown command names.           |
++---------------------+------------------------------------------------------+
+| cmd_input_name      | IMAP command name exactly as sent (e.g. ``fetcH``)   |
+|                     | regardless of whether or not it is valid.            |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.11                            |
 +---------------------+------------------------------------------------------+
 | cmd_args            | IMAP command's full parameters (e.g. ``1:* FLAGS``)  |
 |                     |                                                      |
@@ -848,23 +1559,73 @@ sessions, and/or detect broken clients.
 +---------------------+------------------------------------------------------+
 
 
+IMAP Hibernate
+==============
+
+.. versionadded:: v2.3.13
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| user                | Username of the user                                 |
++---------------------+------------------------------------------------------+
+| session             | Session ID of the IMAP connection                    |
++---------------------+------------------------------------------------------+
+| mailbox             | Mailbox name where hibernation was started in.       |
++---------------------+------------------------------------------------------+
+| local_ip            | IMAP connection's local (server) IP                  |
++---------------------+------------------------------------------------------+
+| local_port          | IMAP connection's local (server) port                |
++---------------------+------------------------------------------------------+
+| remote_ip           | IMAP connection's remote (client) IP                 |
++---------------------+------------------------------------------------------+
+| remote_port         | IMAP connection's remote (client) port               |
++---------------------+------------------------------------------------------+
+
+.. _imap_hibernate_client_unhibernated:
+
+imap_client_unhibernated
+------------------------
+
+Event emitted when an IMAP client is unhibernated or when the unhibernation attempt failed.
+Note that for failures this event can be logged by either imap or imap-hibernate process depending on which side the error was detected in.
+
+See also imap process's :ref:`imap_client_unhibernated` event.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| hibernation_usecs   | Number of microseconds how long the client was       |
+|                     | hibernated.                                          |
++---------------------+------------------------------------------------------+
+| error               | Reason why unhibernation failed.                     |
++---------------------+------------------------------------------------------+
+
+imap_client_unhibernate_retried
+-------------------------------
+
+Event emitted when an IMAP client is attempted to be unhibernated, but imap processes are busy and the unhibernation attempt is retried.
+This event is sent each time when retrying is done.
+The :ref:`imap_client_unhibernated` event is always still sent when unhibernation either succeeds or fails permanently.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| error               | Reason why unhibernation attempt failed.             |
++---------------------+------------------------------------------------------+
+
 Mail Delivery
 =============
 
 Events emitted on mail delivery.
 
-
-mail_delivery_started
----------------------
-.. versionadded:: 2.3.8
-
-Event emitted when message delivery is started.
-
-This event is useful for debugging mail delivery flow.
+Common fields:
 
 +-----------------------+----------------------------------------------------+
 | Field                 | Description                                        |
 +=======================+====================================================+
+| Inherits from environment (LDA, LMTP :ref:`event_smtp_recipient`)          |
++-----------------------+----------------------------------------------------+
 | message_id            | Message-ID header value (truncated to 200 bytes)   |
 +-----------------------+----------------------------------------------------+
 | message_subject       | Subject header value, in UTF-8 (truncated to 80    |
@@ -879,15 +1640,15 @@ This event is useful for debugging mail delivery flow.
 +-----------------------+----------------------------------------------------+
 | rcpt_to               | The envelope recipient for the message             |
 +-----------------------+----------------------------------------------------+
-| rcpt_param_notify     | The value of the NOTIFY parameter from the LMTP    |
-|                       | RCPT command                                       |
-+-----------------------+----------------------------------------------------+
-| rcpt_param_orcpt      | The value of the ORCPT parameter from the LMTP     |
-|                       | RCPT command                                       |
-+-----------------------+----------------------------------------------------+
-| rcpt_param_orcpt_type | The address type, typically ``rfc822``, of the     |
-|                       | ORCPT parameter for the LMTP RCPT command          |
-+-----------------------+----------------------------------------------------+
+
+
+mail_delivery_started
+---------------------
+.. versionadded:: 2.3.8
+
+Event emitted when message delivery is started.
+
+This event is useful for debugging mail delivery flow.
 
 
 mail_delivery_finished
@@ -901,30 +1662,8 @@ This event is useful for logging and tracking mail deliveries.
 +-----------------------+----------------------------------------------------+
 | Field                 | Description                                        |
 +=======================+====================================================+
-| message_id            | Message-ID header value (truncated to 200 bytes)   |
+| error                 | Error message if the delivery failed               |
 +-----------------------+----------------------------------------------------+
-| message_subject       | Subject header value, in UTF-8 (truncated to 80    |
-|                       | bytes)                                             |
-+-----------------------+----------------------------------------------------+
-| message_from          | Email address in the From header (e.g.             |
-|                       | ``user@example.com``)                              |
-+-----------------------+----------------------------------------------------+
-| message_size          | Size of the message, in bytes                      |
-+-----------------------+----------------------------------------------------+
-| message_vsize         | Size of the message with CRLF linefeeds, in bytes  |
-+-----------------------+----------------------------------------------------+
-| rcpt_to               | The envelope recipient for the message             |
-+-----------------------+----------------------------------------------------+
-| rcpt_param_notify     | The value of the NOTIFY parameter from the LMTP    |
-|                       | RCPT command                                       |
-+-----------------------+----------------------------------------------------+
-| rcpt_param_orcpt      | The value of the ORCPT parameter from the LMTP     |
-|                       | RCPT command                                       |
-+-----------------------+----------------------------------------------------+
-| rcpt_param_orcpt_type | The address type, typically ``rfc822``, of the     |
-|                       | ORCPT parameter for the LMTP RCPT command          |
-+-----------------------+----------------------------------------------------+
-
 
 DNS
 ===
@@ -1024,6 +1763,8 @@ SMTP Server
 
 These events are emitted by Dovecot's internal lib-smtp library.
 
+.. _event_connection:
+
 Connection
 ----------
 
@@ -1034,7 +1775,17 @@ Common fields:
 +=====================+=====================================================================+
 | Inherits from environment (LDA, LMTP or IMAP)                                             |
 +---------------------+---------------------------------------------------------------------+
+| connection_id       | The session ID for this connection. The connnection ID is forwarded |
+|                     | through proxies, allowing correlation between sessions on frontend  |
+|                     | and backend systems.                                                |
+|                     |                                                                     |
+|                     | .. versionadded:: v2.3.18                                           |
++---------------------+---------------------------------------------------------------------+
 | protocol            | The protocol used by the connection; i.e., either "smtp" or "lmtp". |
++---------------------+---------------------------------------------------------------------+
+| session             | The session ID for this connection (same as connection_id)          |
+|                     |                                                                     |
+|                     | .. versionadded:: v2.3.18                                           |
 +---------------------+---------------------------------------------------------------------+
 
 Command
@@ -1042,15 +1793,31 @@ Command
 
 Common fields:
 
-+---------------------+--------------------------------+
-| Field               | Description                    |
-+=====================+================================+
-| Inherits from connection                             |
-+---------------------+--------------------------------+
-| cmd_name            | name of the command            |
-|                     |                                |
-|                     | .. versionadded:: v2.3.9       |
-+---------------------+--------------------------------+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_connection`                                      |
++---------------------+------------------------------------------------------+
+| cmd_name            | name of the command                                  |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.9                             |
++---------------------+------------------------------------------------------+
+| cmd_input_name      | SMTP command name exactly as sent (e.g. ``MaIL``)    |
+|                     | regardless of whether or not it is valid.            |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.9                             |
++---------------------+------------------------------------------------------+
+| cmd_args            | SMTP command's full parameters                       |
+|                     | (e.g. ``<from@example.com>``)                        |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.18                            |
++---------------------+------------------------------------------------------+
+| cmd_human_args      | SMTP command's full parameters, as human-readable    |
+|                     | output. For SMTP, this is currently identical to     |
+|                     | cmd_args.                                            |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.18                            |
++---------------------+------------------------------------------------------+
 
 smtp_server_command_started
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1078,6 +1845,8 @@ failed somehow.
 |                     | success message.                                       |
 +---------------------+--------------------------------------------------------+
 
+.. _event_smtp_transaction:
+
 Transaction
 -----------
 
@@ -1086,11 +1855,16 @@ Common fields:
 +------------------+----------------------------------------------------------+
 | Field            | Description                                              |
 +==================+==========================================================+
-| Normally inherits from connection                                           |
+| Normally inherits from :ref:`event_connection`                              |
 +------------------+----------------------------------------------------------+
 | transaction_id   | Transaction ID used by the server for this transaction   |
 |                  | (this ID is logged, mentioned in the DATA reply and      |
-|                  | part of the "Received:" header).                         |
+|                  | part of the "Received:" header). It is based on the      |
+|                  | connection_id with a ":<seq>" sequence number suffix.    |
++------------------+----------------------------------------------------------+
+| session          | Session ID for this transaction (same as transaction_id) |
+|                  |                                                          |
+|                  | .. versionadded:: v2.3.18                                |
 +------------------+----------------------------------------------------------+
 | mail_from        | Sender address.                                          |
 +------------------+----------------------------------------------------------+
@@ -1157,6 +1931,8 @@ Transaction is finished or failed.
 |                      | error field is present).                              |
 +----------------------+-------------------------------------------------------+
 
+.. _event_smtp_recipient:
+
 Recipient
 ---------
 
@@ -1165,7 +1941,7 @@ Common fields:
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
 +=======================+======================================================+
-| Inherits from transaction                                                    |
+| Inherits from :ref:`event_smtp_transaction`                                  |
 +-----------------------+------------------------------------------------------+
 | rcpt_to               | Recipient address                                    |
 +-----------------------+------------------------------------------------------+
@@ -1177,6 +1953,11 @@ Common fields:
 +-----------------------+------------------------------------------------------+
 | rcpt_param_orcpt_type | The address type (typically "rfc822") of the ORCPT   |
 |                       | parameter for the RCPT command.                      |
++-----------------------+------------------------------------------------------+
+| session               | Session ID for this transaction and recipient. It is |
+|                       | based on the transaction_id with a ":<seq>"          |
+|                       | recipient sequence number suffix.                    |
+|                       | Only available for LMTP currently.                   |
 +-----------------------+------------------------------------------------------+
 
 smtp_server_transaction_rcpt_finished
@@ -1242,22 +2023,26 @@ Finished the message submission.
 Push notifications
 ==================
 
-+-----------------------+------------------------------------------------------+
-| Field                 | Description                                          |
-+=======================+======================================================+
-| Inherits from mail user                                                      |
-+-----------------------+------------------------------------------------------+
-| *No event specific fields defined*                                           |
-+---------------------+--------------------------------------------------------+
++-------------------------+------------------------------------------------------+
+| Field                   | Description                                          |
++=========================+======================================================+
+| Inherits from :ref:`event_mail_user`                                           |
++-------------------------+------------------------------------------------------+
+| mailbox                 | Mailbox for event                                    |
+|                         |                                                      |
+|                         | .. versionadded:: 2.3.10                             |
++-------------------------+------------------------------------------------------+
 
 push_notification_finished
 --------------------------
 
-Push notification event was sent.
+Push notification event was sent. See :ref:`stats_push_notifications`
 
 **********
 Pigeonhole
 **********
+
+.. _event_sieve:
 
 Sieve
 =====
@@ -1278,6 +2063,7 @@ Common fields
 | user                | Username of the user                                 |
 +---------------------+------------------------------------------------------+
 
+.. _event_sieve_execute:
 
 Sieve execute
 =============
@@ -1289,7 +2075,7 @@ Common fields
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
-| Inherits from sieve                                                        |
+| Inherits from :ref:`event_sieve`                                           |
 +---------------------+------------------------------------------------------+
 | message_id          | The message-id of the message being filtered.        |
 +---------------------+------------------------------------------------------+
@@ -1307,7 +2093,7 @@ Common fields
 +-----------------+------------------------------------------------------+
 | Field           | Description                                          |
 +=================+======================================================+
-| Inherits from sieve-execute                                            |
+| Inherits from :ref:`event_sieve_execute`                               |
 +-----------------+------------------------------------------------------+
 | script_name     | The name of the Sieve script as it is visible to the |
 |                 | user.                                                |
@@ -1339,7 +2125,7 @@ Sieve action
 +------------------------+------------------------------------------------------+
 | Field                  | Description                                          |
 +========================+======================================================+
-| Inherits from sieve-execute                                                   |
+| Inherits from :ref:`event_sieve_execute`                                      |
 +------------------------+------------------------------------------------------+
 | action_name            | The name of the Sieve action.                        |
 +------------------------+------------------------------------------------------+
@@ -1404,7 +2190,7 @@ Common fields
 +------------------+------------------------------------------------------+
 | Field            | Description                                          |
 +==================+======================================================+
-| Inherits from sieve                                                     |
+| Inherits from :ref:`event_sieve`                                        |
 +------------------+------------------------------------------------------+
 | storage_driver   | The driver name of the Sieve storage ('file', 'ldap' |
 |                  | or 'dict')                                           |
@@ -1527,7 +2313,7 @@ Events emitted by the new index merging (metacache_index_merging=v2).
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
 +=======================+======================================================+
-| Inherits from mailbox                                                        |
+| Inherits from :ref:`event_mailbox`                                           |
 +-----------------------+------------------------------------------------------+
 | *No event specific fields defined*                                           |
 +-----------------------+------------------------------------------------------+
@@ -1563,11 +2349,541 @@ obox_index_merge_skip_uid_renumbering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Index merging should have renumbered UIDs due to conflicts, but there were
-too many of them (more than metacache_merge_max_uid_renumbers), so no
-renumbering was done after all.
+too many of them (more than
+:dovecot_plugin:ref:`metacache_merge_max_uid_renumbers`), so no renumbering
+was done after all.
 
 +-----------------------+------------------------------------------------------+
 | Field                 | Description                                          |
 +=======================+======================================================+
 | renumber_count        | Number of UIDs that should have been renumbered      |
 +-----------------------+------------------------------------------------------+
+
+lib-metacache
+-------------
+
+.. versionadded:: 2.3.11
+
+Events emitted by the metacache library.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| Inherits from :ref:`event_mail_user` or :ref:`event_mailbox`                 |
++-----------------------+------------------------------------------------------+
+| *No event specific fields defined*                                           |
++-----------------------+------------------------------------------------------+
+
+metacache_user_refresh_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_user_refresh_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_refresh_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_refresh_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Metacache is being refreshed when user or mailbox is being accessed. These
+events are sent only when a storage operation is done to perform the refresh.
+These events aren't sent if the metacache is used without refreshing.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| metacache_status      | Status of the refresh operation:                     |
+|                       |                                                      |
+|                       | * refresh_changed: Bundles were listed in storage.   |
+|                       |   New bundles were found and downloaded.             |
+|                       | * refresh_unchanged: Bundles were listed in storage, |
+|                       |   but no new changes were found.                     |
+|                       | * kept: Local metacache was used without any storage |
+|                       |   operations.                                        |
+|                       | * created: A new user or mailbox is being created.   |
++-----------------------+------------------------------------------------------+
+| rescan                | yes, if mailbox is going to be rescanned             |
++-----------------------+------------------------------------------------------+
+| error                 | Error message if the refresh failed                  |
++-----------------------+------------------------------------------------------+
+
+metacache_user_bundle_download_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_user_bundle_download_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_bundle_download_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_bundle_download_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+User or mailbox index bundle file is downloaded. These events can happen while
+the user or mailbox is being refreshed.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| filename              | Bundle filename                                      |
++-----------------------+------------------------------------------------------+
+| bundle_type           | Bundle type: diff, base or self                      |
++-----------------------+------------------------------------------------------+
+| bundle_size           | Size of the bundle file in bytes (uncompressed)      |
++-----------------------+------------------------------------------------------+
+| error                 | Error message if the download failed                 |
++-----------------------+------------------------------------------------------+
+
+metacache_upload_started
+^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_upload_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Changes in metacache are being uploaded to storage.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| error                 | Error message if the upload failed                   |
++-----------------------+------------------------------------------------------+
+
+metacache_user_bundle_upload_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_user_bundle_upload_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_bundle_upload_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_mailbox_bundle_upload_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+User or mailbox index bundle file is uploaded. These events can happen while
+the user or mailbox is being uploaded. Note that the ``metacache_user_*``
+events can also be inherited from a mailbox event and include the mailbox
+fields if the user upload was triggered by a mailbox upload.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| filename              | Bundle filename                                      |
++-----------------------+------------------------------------------------------+
+| bundle_type           | Bundle type: diff, base or self                      |
++-----------------------+------------------------------------------------------+
+| bundle_size           | Size of the bundle file in bytes (uncompressed)      |
++-----------------------+------------------------------------------------------+
+| mailbox_guid          | GUID of the mailbox being uploaded. Note that the    |
+|                       | mailbox name field may or may not exist in this      |
+|                       | event depending on whether a single mailbox or the   |
+|                       | whole user is being uploaded.                        |
++-----------------------+------------------------------------------------------+
+| reason                | Reason for what changed in the indexes to cause this |
+|                       | bundle to be created and uploaded.                   |
++-----------------------+------------------------------------------------------+
+| error                 | Error message if the upload failed                   |
++-----------------------+------------------------------------------------------+
+
+metacache_user_clean_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+metacache_user_clean_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| min_priority          | Which priority indexes are being cleaned             |
++-----------------------+------------------------------------------------------+
+| error                 | Error message if the upload failed                   |
++-----------------------+------------------------------------------------------+
+
+obox_mailbox_rescan_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+obox_mailbox_rescan_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+obox_mailbox_rebuild_started
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+obox_mailbox_rebuild_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Mailbox is being rescanned or rebuilt. The rescan happens when a mailbox is
+opened for the first time in this backend (or after it was cleaned away).
+The rebuild happens after some kind of corruption had been detected. In both
+cases all the mails in the storage are listed and synced against the local
+indexes in metacache.
+
++--------------------------+------------------------------------------------------+
+| Field                    | Description                                          |
++==========================+======================================================+
+| mails_new                | Number of new mails found                            |
++--------------------------+------------------------------------------------------+
+| mails_temp_lost          | Number of mails temporarily lost due to "Object      |
+|                          | exists in dict, but not in storage".                 |
++--------------------------+------------------------------------------------------+
+| mails_lost               | Number of mails that existed in index, but no longer |
+|                          | exists in storage.                                   |
++--------------------------+------------------------------------------------------+
+| mails_lost_during_resync | Number of new mails found, but when doing GUID       |
+|                          | the mail no longer existed.                          |
++--------------------------+------------------------------------------------------+
+| mails_kept               | Number of mails found in both the index and in       |
+|                          | storage.                                             |
++--------------------------+------------------------------------------------------+
+| mails_total              | Number of mails that exists in the mailbox now.      |
++--------------------------+------------------------------------------------------+
+| guid_lookups             | Number of mails whose GUIDs were looked up from the  |
+|                          | email metadata.                                      |
++--------------------------+------------------------------------------------------+
+| guid_lookups_skipped     | Number of mails whose GUIDs were not looked up due   |
+|                          | to reaching the GUID lookup limit.                   |
++--------------------------+------------------------------------------------------+
+| error                    | Error message if the rescan/rebuild failed           |
++--------------------------+------------------------------------------------------+
+
+fs-dictmap
+----------
+
+
+fs_dictmap_dict_write_uncertain
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.13
+
+The event is sent whenever a dict write is uncertain.
+E.g. writes to Cassandra may eventually succeed even if the write initially appeared to fail.
+
++-----------------------+-------------------------------------------------------+
+| Field                 | Description                                           |
++=======================+=======================================================+
+| Inherits from :ref:`event_fs_file`                                            |
++-----------------------+-------------------------------------------------------+
+| path                  | Virtual FS path to the object (based on dict)         |
++-----------------------+-------------------------------------------------------+
+| object_id             | Object ID in the storage                              |
++-----------------------+-------------------------------------------------------+
+| cleanup               | ``success``, ``failed`` or ``disabled``. Indicates if |
+|                       | uncertain write was attempted to be cleaned (deleted) |
+|                       | and whether it was successful.                        |
+|                       | See :ref:`dictmap_configuration_parameters`.          |
++-----------------------+-------------------------------------------------------+
+| error                 | Error message why the write initially failed          |
++-----------------------+-------------------------------------------------------+
+
+fs_dictmap_object_lost
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.10
+
+The event is sent whenever "Object exists in dict, but not in storage" error
+happens. Normally this shouldn't happen, because the writes and deletes are
+done in such an order that Dovecot prefers to rather leak objects in storage
+than cause this error. A likely source of this error can be resurrected
+deleted data see :ref:`cassandra` for more details.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| Inherits from :ref:`event_fs_file`                                           |
++-----------------------+------------------------------------------------------+
+| path                  | Virtual FS path to the object (based on dict)        |
++-----------------------+------------------------------------------------------+
+| object_id             | Object ID in the storage                             |
++-----------------------+------------------------------------------------------+
+| deleted               | Set to ``yes``, if the corresponding entry in dict   |
+|                       | has been deleted as the ``delete-dangling-links``    |
+|                       | option was set                                       |
+|                       | (:ref:`dictmap_configuration_parameters`).           |
+|                       |                                                      |
+|                       | .. versionadded:: 2.3.15                             |
++-----------------------+------------------------------------------------------+
+
+.. _event_fs_dictmap_max_bucket_changed:
+
+fs_dictmap_max_bucket_changed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.13
+
+This event is sent whenever the ``max_bucket`` value for a mailbox changes.
+There can be three situations when this happens: Either a new mail is added to a
+mailbox, where the current bucket is found to be filled and the next bucket is
+started to be filled (``reason = file``).
+
+Besides the expected situation, Dovecot emits this event if it encounters a
+bucket with a higher index then the current max_bucket while
+iterating a mailbox (``reason = iter``).
+
+.. versionchanged:: 2.3.14
+        In addition ``max_bucket`` can be shrunk in case an iteration discovers empty
+        buckets before the current ``max_bucket`` value (``reason = iter``).
+
+The ``error`` field is only set if setting the new ``max_bucket`` value
+failed.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| Inherits either from :ref:`event_fs_file` or :ref:`event_fs_iter`            |
++-----------------------+------------------------------------------------------+
+| reason                | Either ``file`` or ``iter`` depending on the source  |
+|                       | of the event as explained above.                     |
++-----------------------+------------------------------------------------------+
+| old_max_bucket        | The ``max_bucket`` value for the current mailbox,    |
+|                       | before the event was emitted.                        |
++-----------------------+------------------------------------------------------+
+| max_bucket            | The newly set ``max_bucket`` value.                  |
++-----------------------+------------------------------------------------------+
+| error                 | Error string if error occurred.                      |
++-----------------------+------------------------------------------------------+
+
+
+fs_dictmap_empty_bucket_iterated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.14
+
+In case an empty bucket is found while iterating which is not the last bucket
+emit an event.
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| Inherits from :ref:`event_fs_iter`                                           |
++-----------------------+------------------------------------------------------+
+| empty_bucket          | Index of the empty bucket that was just discovered   |
++-----------------------+------------------------------------------------------+
+| max_bucket            | The current ``max_bucket`` value.                    |
++-----------------------+------------------------------------------------------+
+| deleted_count         | The count of deleted keys for the empty bucket.      |
++-----------------------+------------------------------------------------------+
+
+
+Dictionaries
+============
+
+.. versionadded:: 2.3.11
+
+Events emitted by dictionary library and dictionary server.
+
+.. _event_dict:
+
+Common fields
+-------------
+
++----------------+------------------------------------------------------+
+| Field          | Description                                          |
++================+======================================================+
+| driver         | Name of the dictionary driver,                       |
+|                | e.g. ``sql`` or ``proxy``.                           |
++----------------+------------------------------------------------------+
+| error          | Error, if one occured                                |
++----------------+------------------------------------------------------+
+
+.. _dict_created:
+
+dict_created
+^^^^^^^^^^^^
+.. versionadded:: 2.3.17
+
+Emitted when a dict is initialized.
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| dict_name       | Name of the dict as set in configurations            |
++-----------------+------------------------------------------------------+
+
+.. _dict_destroyed:
+
+dict_destroyed
+^^^^^^^^^^^^^^
+.. versionadded:: 2.3.17
+
+Emitted when a dict is destroyed. Same fields as
+:ref:`dict_created`.
+
+.. _dict_lookup_finished:
+
+dict_lookup_finished
+^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when lookup finishes.
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| user            | Username, if it's not empty                          |
++-----------------+------------------------------------------------------+
+| key             | Key name, starts with ``priv/`` or ``shared/``       |
++-----------------+------------------------------------------------------+
+| key_not_found   | Set to ``yes`` if key not found                      |
++-----------------+------------------------------------------------------+
+
+.. _dict_iteration_finished:
+
+dict_iteration_finished
+^^^^^^^^^^^^^^^^^^^^^^^
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| user            | Username, if it's not empty                          |
++-----------------+------------------------------------------------------+
+| key             | Used prefix, starts with ``priv/`` or ``shared/``    |
++-----------------+------------------------------------------------------+
+| key_not_found   | Set to ``yes`` if key not found                      |
++-----------------+------------------------------------------------------+
+| rows            | Number of rows returned                              |
++-----------------+------------------------------------------------------+
+
+.. _dict_transaction_finished:
+
+dict_transaction_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when transaction has been committed or rolled back.
+
++-----------------+------------------------------------------------------+
+| Field           | Description                                          |
++=================+======================================================+
+| user            | Username, if it's not empty                          |
++-----------------+------------------------------------------------------+
+| rollback        | Set to ``yes`` when transaction was rolled back      |
++-----------------+------------------------------------------------------+
+| write_uncertain | Set to ``yes`` if write was not confirmed            |
++-----------------+------------------------------------------------------+
+
+dict_server_lookup_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when dict server finishes lookup. Same fields as
+:ref:`dict_lookup_finished`.
+
+dict_server_iteration_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when dict server finishes iteration. Same fields as
+:ref:`dict_iteration_finished`.
+
+dict_server_transaction_finished
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event emitted when dict server finishes transaction. Same fields as
+:ref:`dict_transaction_finished`.
+
+
+Pre-login Client
+================
+
+.. _pre_login_client:
+
+Client
+------
+
+Common fields:
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| local_ip            | Local IP address                                     |
++---------------------+------------------------------------------------------+
+| local_port          | Local port                                           |
++---------------------+------------------------------------------------------+
+| remote_ip           | Remote IP address                                    |
++---------------------+------------------------------------------------------+
+| remote_port         | Remote port                                          |
++---------------------+------------------------------------------------------+
+| user                | Full username                                        |
++---------------------+------------------------------------------------------+
+| service             | Name of service e.g. ``submission``, ``imap``        |
++---------------------+------------------------------------------------------+
+
+
+Login proxy
+===========
+
+.. versionadded:: v2.3.18
+
+Emitted when login process proxies a connection to a backend.
+
+Common fields:
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`pre_login_client`                                      |
++---------------------+------------------------------------------------------+
+| dest_host           | Host name of the proxy destination (if proxying is   |
+|                     | configured with IP address, will have the same value |
+|                     | as ``dest_ip``).                                     |
++---------------------+------------------------------------------------------+
+| dest_ip             | Proxy destination IP                                 |
++---------------------+------------------------------------------------------+
+| dest_port           | Proxy destination port                               |
++---------------------+------------------------------------------------------+
+| source_ip           | Source IP where proxy connection originated from     |
++---------------------+------------------------------------------------------+
+| master_user         | If proxying is done with a master user               |
+|                     | authentication, contains the full username of master |
+|                     | user.                                                |
++---------------------+------------------------------------------------------+
+
+proxy_session_started
+---------------------
+Emitted before connecting to proxy destination.
+
+proxy_session_established
+-------------------------
+Emitted after proxied connection is established and user is successfully logged
+in to the backend.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| source_port         | Source port where proxy connection originated from   |
++---------------------+------------------------------------------------------+
+| reconnect_attempts  | Number of times connection failed and reconnection   |
+|                     | was attempted.                                       |
++---------------------+------------------------------------------------------+
+
+proxy_session_finished
+----------------------
+Emitted when proxying has ended. Either successfully or with error.
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| source_port         | Source port where proxy connection originated from.  |
++---------------------+------------------------------------------------------+
+| reconnect_attempts  | Number of times connection failed and reconnection   |
+|                     | was attempted.                                       |
++---------------------+------------------------------------------------------+
+| error               | If login to destination failed, contains the error.  |
++---------------------+------------------------------------------------------+
+| disconnect_side     | Which side disconnected: client, server, proxy       |
++---------------------+------------------------------------------------------+
+| disconnect_reason   | Reason for disconnection (empty = clean disconnect). |
++---------------------+------------------------------------------------------+
+| idle_secs           | Number of seconds the connection was idling before   |
+|                     | getting disconnected.                                |
++---------------------+------------------------------------------------------+
+| bytes_in            | Amount of data read from client, in bytes.           |
++---------------------+------------------------------------------------------+
+| bytes_out           | Amount of data written to client, in bytes.          |
++---------------------+------------------------------------------------------+
+
+
+***********
+FTS-Dovecot
+***********
+
+lib-fts-index
+=============
+
+fts_dovecot_too_many_triplets
+-----------------------------
+
+.. versionadded:: 2.3.15
+
+Event emitted when number of triplets exceeds the limit defined by
+:dovecot_plugin:ref:`fts_dovecot_max_triplets`.
+
++---------------+--------------------------------------------------+
+| Field         | Description                                      |
++===============+==================================================+
+| Inherits from :ref:`event_mail_user`                             |
++---------------+--------------------------------------------------+
+| triplet_count | Number of triplets found                         |
++---------------+--------------------------------------------------+

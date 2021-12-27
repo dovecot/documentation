@@ -19,7 +19,7 @@ a key of their own. The used cryptographical methods are widely used standards
 and keys are stored in portable formats, when possible.
 
 Functional Overview
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 The use of Mail crypt plugin depends on a user having a keypair, a private and
 a public key, for asymmetric cryptography. These keys are provisioned in a
@@ -33,7 +33,7 @@ stored, after being encrypted with the public asymmetric key, together with the
 file.
 
 Encryption Technologies
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 The Mail crypt plugin provides encryption at rest for emails. Encryption of the
 messages is performed using the symmetric Advanced Encryption Standard (AES)
@@ -58,61 +58,52 @@ fine.
   Improper configuration or use can make your emails unrecoverable. Treat
   encryption with care and backups.
 
-mail-crypt-plugin encrypts and decrypts mail. The plugin has an older version,
-and the extent of this version's backward compatibility is controlled by the
-setting ``mail_crypt_save_version``. The setting has three valid values, of
-which one must be set for the plugin to do anything. The values are 0 and 2.
-With ``mail_crypt_save_version=2``, mails are saved in dcrypt version 2 format,
-and this is the value that should be used. With ``mail_crypt_save_version=0``,
-the plugin does not write encrypted mails, but can still read them. To provide
-``mail_crypt_global_private_key`` and ``mail_crypt_global_public_key`` as
-userdb attributes, you can base64 encode the original contents, such as PEM
-file. For example,
+This page assumes you are using configuring mail encryption from scratch with
+a recent version of Dovecot.  If you are upgrading from an older version,
+see :dovecot_plugin:ref:`mail_crypt_save_version` for possible backwards
+compatibility issues.
+
+
+Settings
+========
+
+See :ref:`plugin-mail-crypt`.
+
+Plugin settings may also be dynamically set via
+:ref:`authentication-user_database_extra_fields`. To provide
+:dovecot_plugin:ref:`mail_crypt_global_private_key` and
+:dovecot_plugin:ref:`mail_crypt_global_public_key` as userdb attributes, you
+can base64 encode the original contents, such as PEM file. For example,
 
 .. code-block:: none
 
   cat ecprivkey.pem | base64 -w0
 
-Settings for mail crypt plugin
-==============================
-
-These all go into userdb environment or under plugin { }
-
-* **mail_crypt_save_version** - Save format, 0 = read only, 2 = current version
-* **mail_crypt_curve** - EC curve to use for key generation
-* **mail_crypt_global_private_key(_n)** - Private key to decrypt files, you can
-  specify many
-* **mail_crypt_global_public_key** - Public key to use to encrypt files, you
-  can specify one
-* **mail_crypt_private_key** - Private key to decrypt user's master key, can be
-  base64 encoded
-* **mail_crypt_private_password** - Password to decrypt user's master key or
-  environment private key
-* **mail_crypt_acl_require_secure_key_sharing** - Require secure key sharing
-* **mail_crypt_require_encrypted_user_key** - Require user key encryption with
-  password
-
 All external keys must be in PEM format, using pkey format.
 
-Modes of operation
+Modes Of Operation
 ==================
 
 Mail crypt plugin can operate using **either** global keys or folder keys.
 Using both is not supported. To perform any encryption,
-**mail_crypt_save_version** must be specified and non-zero.
+:dovecot_plugin:ref:`mail_crypt_save_version` must be specified and non-zero.
 
-Folder keys
-===========
+Folder Keys
+-----------
 
 In this mode, the user is generated a key pair, and each folder is generated a
 key pair, which is encrypted using the user's key pair. A user can have more
-than one key pair but only one can be active. You must use save version 2. You
-must also specify ``mail_crypt_curve``. Any valid curve supported by underlying
-cryptographic library is supported. ``mail_attribute_dict`` has to be set since
-it is used to store the keys.
+than one key pair but only one can be active.
 
-Unencrypted user keys
-=====================
+:dovecot_plugin:ref:`mail_crypt_save_version` must be ``2``.
+
+:dovecot_plugin:ref:`mail_crypt_curve` must be set.
+
+:dovecot_core:ref:`mail_attribute_dict` must be set, as is is used to store the
+keys.
+
+Unencrypted User Keys
+^^^^^^^^^^^^^^^^^^^^^
 
 In this version of the folder keys mode, the users private key is stored
 unencrypted on the server.
@@ -129,8 +120,8 @@ Example config for folder keys with Maildir:
     mail_crypt_save_version = 2
   }
 
-Encrypted user keys
-===================
+Encrypted User Keys
+^^^^^^^^^^^^^^^^^^^
 
 In this version of the folder keys mode, the users private key is stored
 encrypted on the server.
@@ -156,20 +147,22 @@ provided via password query:
   # File: /etc/dovecot/dovecot-sql.conf.ext
 
   password_query = SELECT \
-  email as user, password, \
-  '%w' AS userdb_mail_crypt_private_password \
-  FROM virtual_users  WHERE email='%u';
+    email as user, password, \
+    '%w' AS userdb_mail_crypt_private_password \
+    FROM virtual_users  WHERE email='%u';
 
-Global keys
+Global Keys
 ===========
 
 In this mode, all keying material is taken from plugin environment. You can use
-either EC keys (recommended) or RSA keys. No key generation is performed.
+either Elliptic Curve (EC) keys (recommended) or RSA keys. No key generation
+is automatically performed.
 
 RSA key
-=======
+-------
 
-Use of RSA keys is discouraged, please use Elliptic Curve keys instead.
+.. note:: Use of RSA keys is discouraged, please use
+          :ref:`mail_crypt_plugin_elliptic_curve_key` instead.
 
 You can generate an unencrypted RSA private key in the pkey format with the
 command:
@@ -194,7 +187,7 @@ private key, you can generate a public key out of it with:
 
   openssl pkey -in rsaprivkey.pem -pubout -out rsapubkey.pem
 
-These keys can then be used by mail-crypt-plugin with the configuration:
+These keys can then be used with this configuration:
 
 .. code-block:: none
 
@@ -207,17 +200,19 @@ These keys can then be used by mail-crypt-plugin with the configuration:
     mail_crypt_save_version = 2
   }
 
-EC key
-======
+.. _mail_crypt_plugin_elliptic_curve_key:
 
-In order to generate an EC key, you must first choose a curve from the outputof
-this command:
+Elliptic Curve (EC) Key
+-----------------------
+
+In order to generate an EC key, you must first choose a curve from the output
+of this command:
 
 .. code-block:: none
 
   openssl ecparam -list_curves
 
-If you choose the curve prime256v1, generate and EC key with the command:
+If you choose the curve prime256v1, generate an EC key with the command:
 
 .. code-block:: none
 
@@ -229,7 +224,7 @@ Then generate a public key out of your private EC key
 
   openssl pkey -in ecprivkey.pem -pubout -out ecpubkey.pem
 
-These keys can now be used with mail-crypt-plugin with the configuration:
+These keys can now be used with this configuration:
 
 .. code-block:: none
 
@@ -242,7 +237,7 @@ These keys can now be used with mail-crypt-plugin with the configuration:
   }
 
 Converting EC key to PKEY
-=========================
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you have an EC private key which begins with something like:
 
@@ -266,7 +261,7 @@ You must convert it to pkey format with:
 
 Then newkey.pem can be used with mail-crypt-plugin.
 
-Base64 encoded keys
+Base64-encoded Keys
 ===================
 
 Mail-crypt plugin can read keys that are base64 encoded. This is intended
@@ -292,20 +287,8 @@ Hence, this is possible:
     mail_crypt_save_version = 2
   }
 
-New dcrypt format (mail_crypt_save_version = 2)
-===============================================
-
-The recommended setting of ``mail_crypt_save_version`` for new installations of
-``mail-crypt-plugin`` is 2.
-
-Old dcrypt format (mail_crypt_save_version = 1)
-===============================================
-
-Do not use this. It is supported for legacy reasons only and should not be used
-to create new files. It will not work without a global key.
-
-Read-only mode (mail_crypt_save_version = 0)
-============================================
+Read-only Mode (``mail_crypt_save_version = 0``)
+================================================
 
 If you have encrypted mailboxes that you need to read, but no longer want to
 encrypt new mail, use ``mail_crypt_save_version=0``:
@@ -323,21 +306,24 @@ mail-crypt-plugin and ACLs
 If you are using global keys, mails can be shared within the key scope. The
 global key can be provided with several different scopes:
 
-* Global scope (key is configured in dovecot.conf file)
-* Per-user(group) scope (key is configured in userdb file)
+* Global scope: key is configured in ``dovecot.conf`` file
+* Per-user(group) scope: key is configured in userdb file
 
 With folder keys, key sharing can be done to single user, or multiple users.
 When key is shared to single user, and the user has public key available, the
-folder key is encrypted to recipient's public key. If you have
-``mail_crypt_acl_require_secure_key_sharing`` plugin setting, you can't share
-the key to groups or someone with no public key.
+folder key is encrypted to recipient's public key.
 
-decrypting files encrypted with mail-crypt plugin
+If you have :dovecot_plugin:ref:`mail_crypt_acl_require_secure_key_sharing`
+enabled, you can't share the key to groups or someone with no public key.
+
+Decrypting Files Encrypted with mail-crypt plugin
 =================================================
 
 You can use `decrypt.rb
 <https://gist.github.com/cmouse/882f2e2a60c1e49b7d343f5a6a2721de>`_ to decrypt
 encrypted files.
+
+.. _fs_crypt:
 
 fs-crypt and fs-mail-crypt
 ==========================
@@ -348,22 +334,34 @@ similarly to the fs-compress wrapper. It can be used to encrypt e.g.:
 * FTS index objects (fts_dovecot_fs)
 * External mail attachments (mail_attachment_fs)
 
-fs-crypt comes in two flavors, mail-crypt and crypt. mail-crypt is intended to
-be used with user context, while crypt can be used elsewhere.
+fs-crypt comes in two flavors, ``mail-crypt`` and ``crypt``. (The differences
+between the two are technical and related to internal code contexts.)
+
+Note that fs-[mail-]crypt and the fs-compress wrapper can be also combined.
+Please make sure that compression is always applied before encryption. See
+:ref:`plugin-fs-compress` for an example and more details about compression.
 
 Currently the fs-crypt plugin requires that all the files it reads are
 encrypted. If it sees an unencrypted file it'll fail to read it. The plan is to
 fix this later.
 
-FS driver syntax:
-``crypt:[algo=<s>:][set_prefix=<n>:][private_key_path=/path:][public_key_path=/path:][password=password:]<parent
-fs>`` where:
+FS driver syntax::
 
-* **algo**: Encryption algorithm. Default is aes-256-gcm-sha256.
-* **set_prefix**: Read _public_key and _private_key under this prefix. Default is "mail_crypt_global".
-* **private_key_path**: Path to private key
-* **public_key_path**: Path to public key
-* **password**: Password for decrypting public key
+  crypt:[algo=<s>:][set_prefix=<n>:][private_key_path=/path:][public_key_path=/path:][password=password:]<parent fs>``
+
+where:
+
+===================== ========================================================
+Key                   Value
+===================== ========================================================
+``algo``              Encryption algorithm. Default is ``aes-256-gcm-sha256``.
+``password``          Password for decrypting public key.
+``private_key_path``  Path to private key.
+``public_key_path``   Path to public key.
+``set_prefix``        Read ``<set_prefix>_public_key`` and
+                      ``<set_prefix>_private_key``. Default is
+                      ``mail_crypt_global``.
+===================== ========================================================
 
 Example:
 
@@ -384,10 +382,10 @@ To encrypt/decrypt files manually, you can use
 doveadm plugin
 ==============
 
-Following commands are made available via doveadm.
+The following commands are made available via doveadm.
 
-doveadm mailbox cryptokey generate
-==================================
+``doveadm mailbox cryptokey generate``
+--------------------------------------
 
 .. code-block:: none
 
@@ -417,8 +415,8 @@ keys.
   You must provide password if you want to generate password-protected keypair
   right away. You can also use doveadm mailbox cryptokey password to secure it.
 
-doveadm mailbox cryptokey list
-==============================
+``doveadm mailbox cryptokey list``
+----------------------------------
 
 .. code-block:: none
 
@@ -430,8 +428,8 @@ doveadm mailbox cryptokey list
 
 Will list all keys for user or mailbox.
 
-doveadm mailbox cryptokey export
-================================
+``doveadm mailbox cryptokey export``
+------------------------------------
 
 .. code-block:: none
 
@@ -443,8 +441,8 @@ doveadm mailbox cryptokey export
 
 Exports user or folder private keys.
 
-doveadm mailbox cryptokey password
-==================================
+``doveadm mailbox cryptokey password``
+--------------------------------------
 
 .. code-block:: none
 

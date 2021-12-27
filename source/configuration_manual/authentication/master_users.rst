@@ -16,11 +16,8 @@ There are two ways for master users to log in as other users:
    ID field.
 
 2. Specify both the master username and the login username in the same
-   username field. The usernames are separated by a string configured
-   by the ``auth_master_user_separator`` setting. UW-IMAP uses ``*`` as
-   the separator, so that could be a good choice. Using ``*`` as the
-   separator, the master user would log in as
-   ``login_user*master_user``.
+   username field. See :dovecot_core:ref:`master_user_separator` for the format
+   of the string.
 
 Master users are configured by adding a new :ref:`authentication-password_databases`
 with ``master=yes`` setting. The users in the master passdb cannot log in as
@@ -56,6 +53,8 @@ Usually it's better to have **only** a few special master users that are used
 only to log in as other people. One example could be a special "spam" master
 user that trains the users' spam filters by reading the messages from the
 user's spam mailbox.
+
+.. _authentication-master_users_acls:
 
 ACLs
 ^^^^^
@@ -167,7 +166,7 @@ exists and get other extra fields.
    # master password passdb
    passdb {
       driver = static
-      default_fields = password=master-password
+      args = password=master-password
       result_success = continue
    }
    # primary passdb
