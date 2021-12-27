@@ -1,0 +1,56 @@
+# See https://github.com/check-spelling/check-spelling/wiki/Configuration-Examples:-patterns
+
+# GitHub SHAs
+\bapi.github\.com/repos/[^/]+/[^/]+/[^/]+/[0-9a-f]+\b
+(?:\[[0-9a-f]+\]\(https:/|)/(?:www\.|)github\.com/[^/]+/[^/]+(?:/[^/]+/[0-9a-f]+(?:[-0-9a-zA-Z/#.]*|)\b|)
+\bgithub\.com/[^/]+/[^/]+[@#][0-9a-f]+\b
+# githubusercontent
+/[-a-z0-9]+\.githubusercontent\.com/[-a-zA-Z0-9?&=_\/.]*
+# gist github
+/gist\.github\.com/[^/]+/[0-9a-f]+
+# git.io
+\bgit\.io/[0-9a-zA-Z]+
+# GitHub JSON
+"node_id": "[-a-zA-Z=;:/0-9+]*"
+# Contributor
+\[[^\]]+]\(https://github\.com/[^/]+\)
+# GHSA
+GHSA(?:-[0-9a-z]{4}){3}
+
+x-amz-request-id:[0-9A-F]+
+x-amz-id-2:[-a-zA-Z=;:/0-9+]*
+
+# mailbox
+/mailboxes/[0-9a-f]+(?:/[0-9a-f]+|/idx/bundle\.[0-9a-f]+\.[0-9a-f]+|)
+
+# {SCHEME}doveadm_password
+\`\`\{[^} ]+\}[^`]+\`
+\{[^} ]+\}\S+
+\`\`echo [^|`]+\|base64 -d
+([`'])\$[^`']+\g{-1}
+/(?:keys|shared|priv)/[-\w/.]*
+
+# URL escaped characters
+\%[0-9A-F]{2}
+
+# uuid:
+\b[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}\b
+
+# URL escaped characters
+\%[0-9A-F]{2}
+\%[0-9a-f]{2}
+
+# hex digits including css/html color classes:
+(?:[\\0][xX]|\\u|[uU]\+|#x?|\%23)[0-9a-fA-FgGrR_]{2,}(?:[uU]?[lL]{0,2}|u\d+)\b
+
+# Compiler flags
+[\t "'`=]-[W]
+
+# tar arguments
+\b(?:\\n|)tar(?:\s+-[a-zA-Z]+|\s[a-z]+)+
+
+# <word>v#
+[Vv]\d+(?:\b|(?=[a-zA-Z_]))
+
+# ignore long runs of a single character:
+\b([A-Za-z])\g{-1}{3,}\b
