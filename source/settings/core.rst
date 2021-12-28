@@ -2383,7 +2383,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: mail_temp_dir
    :default: /tmp
-   :todo: Indiciate LDA AND LMTP setting
+   :todo: Indicate LDA AND LMTP setting
    :values: @string
 
    The directory in which LDA/LMTP will temporarily store incoming message data
