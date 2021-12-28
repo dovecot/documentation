@@ -154,7 +154,7 @@ requires that the sending host is in
 feature works by providing the variables as part of ID command, such as ``i ID
 ( ... x-forward-var value)``.
 
-For POP3 the forwarding mecahism uses ``XCLIENT`` with ``FORWARD=<base64
+For POP3 the forwarding mechanism uses ``XCLIENT`` with ``FORWARD=<base64
 encoded blob of forwarded variables>``
 
 See :ref:`forwarding_parameters` for more details on
