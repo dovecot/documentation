@@ -18,8 +18,8 @@ Configuration
 Examples
 ========
 
-Send notifications with different importances
----------------------------------------------
+Send notifications with different importance levels
+---------------------------------------------------
 
 .. code-block::
 
