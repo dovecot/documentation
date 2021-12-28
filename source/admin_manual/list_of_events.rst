@@ -980,7 +980,7 @@ Mail storage service user
 +=====================+======================================================+
 | Inherits from environment (e.g. IMAP/LMTP client)                          |
 +---------------------+------------------------------------------------------+
-| session             | Session ID for the storage sesssion                  |
+| session             | Session ID for the storage session                   |
 +---------------------+------------------------------------------------------+
 
 .. _event_mail_user:
