@@ -82,7 +82,7 @@ The following settings are recognized the "imap_sieve" plugin:
    server that users must use to upload their Sieve scripts; e.g.,
    ``sieve://sieve.example.com``.
 
-:pigeonhole:ref:`imapsieve_mailboxxxx_name` =
+:pigeonhole:ref:`imapsieve_mailboxXXX_name` =
    This setting configures the name of a mailbox for which administrator
    scripts are configured. The \`XXX' in this setting is a sequence
    number, which allows configuring multiple associations between Sieve
@@ -94,9 +94,9 @@ The following settings are recognized the "imap_sieve" plugin:
    meaning that this setting can apply to multiple or even all ("*")
    mailboxes.
 
-:pigeonhole:ref:`imapsieve_mailboxxxx_before` =
+:pigeonhole:ref:`imapsieve_mailboxXXX_before` =
 
-:pigeonhole:ref:`imapsieve_mailboxxxx_after` =
+:pigeonhole:ref:`imapsieve_mailboxXXX_after` =
    When an IMAP event of interest occurs, these sieve scripts are
    executed before and after any user script respectively. These
    settings each specify the location of a single sieve script. The
@@ -106,7 +106,7 @@ The following settings are recognized the "imap_sieve" plugin:
    together with the user script in which the next script is only
    executed when an (implicit) keep action is executed.
 
-:pigeonhole:ref:`imapsieve_mailboxxxx_causes` =
+:pigeonhole:ref:`imapsieve_mailboxXXX_causes` =
    Only execute the administrator Sieve scripts for the mailbox
    configured with ``imapsieve_mailboxXXX_name`` when one of the listed
    ``IMAPSIEVE``
@@ -115,7 +115,7 @@ The following settings are recognized the "imap_sieve" plugin:
    effect on the user script, which is always executed no matter the
    cause.
 
-:pigeonhole:ref:`imapsieve_mailboxxxx_from` =
+:pigeonhole:ref:`imapsieve_mailboxXXX_from` =
    Only execute the administrator Sieve scripts for the mailbox
    configured with ``imapsieve_mailboxXXX_name`` when the message
    originates from the indicated mailbox. This setting supports

@@ -2247,7 +2247,7 @@ See :ref:`settings` for list of all setting groups.
    multi-server setup that you wish to flush NFS caches, this can be set
    to ``yes`` (in this case, make sure also to use
    :dovecot_core:ref:`mmap_disable` = ``yes`` and
-   :dovecot_core:ref:`fsync_disable` = ``no``).
+   :dovecot_core:ref:`mail_fsync` = ``optimized``).
 
 
 .. dovecot_core:setting:: mail_nfs_storage
