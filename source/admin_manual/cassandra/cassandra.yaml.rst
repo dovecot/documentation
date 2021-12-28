@@ -66,7 +66,7 @@ Adjust based on actual ``sstable`` monitoring ratios:
    # of compaction, including validation compaction.
    compaction_throughput_mb_per_sec: 16
 
-``inter_dc_stream_throughput_magabits_per_sec``
+``inter_dc_stream_throughput_megabits_per_sec``
 Adjust based on wan capacity:
 
 .. code-block:: none
