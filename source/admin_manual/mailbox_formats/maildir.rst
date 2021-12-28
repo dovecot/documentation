@@ -360,7 +360,7 @@ check with a simple ``stat()`` anymore if it exists or not.
 
 Step 2 was pointed out to be useful if clock had moved backwards. However,
 this doesn't give any actual safety guarantees because an identical base
-filename could already exist in ``cur/``. Besidesm if the system was just
+filename could already exist in ``cur/``. Besides if the system was just
 rebooted, the file in ``tmp/`` could probably be even overwritten safely
 (assuming it wasn't already ``link()``\ ed to ``new/``).
 
