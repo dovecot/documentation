@@ -633,7 +633,7 @@ General Dovecot 2.0 changes
 -  Dovecot v2.0 adds support for :ref:`LMTP <lmtp_server>`.
    Much like the :ref:`LDA <lda>` it can make use of the Pigeonhole Sieve plugin.
    Since the :ref:`LMTP <lmtp_server>`
-   service has its own ``prototocol lmtp`` section in the config file,
+   service has its own ``protocol lmtp`` section in the config file,
    you need to add the Sieve plugin to the :dovecot_core:ref:`mail_plugins`
    setting there too when you decide to use :ref:`LMTP <lmtp_server>`.
 
