@@ -145,7 +145,7 @@ Forwarding fields
 
 .. versionadded:: v2.2.29
 
-You can forward arbitratry variables by returning them prefixed with
+You can forward arbitrary variables by returning them prefixed with
 ``forward_``. Dovecot will use protocol dependant way to forward these
 variables forward and they will appear on the other side as
 ``forward_variable`` Currently ``IMAP/POP3`` only feature. This feature
