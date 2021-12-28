@@ -3280,7 +3280,7 @@ See :ref:`settings` for list of all setting groups.
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
    :values: @boolean
 
-   Require a valid cerficate when connecting to external SSL services?
+   Require a valid certificate when connecting to external SSL services?
 
 
 .. dovecot_core:setting:: ssl_key
