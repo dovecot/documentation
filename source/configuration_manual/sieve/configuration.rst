@@ -449,7 +449,7 @@ For example:
    ...
       # Global scripts executed before the user's personal script.
       #   E.g. handling messages marked as dangerous
-      sieve_before = /var/lib/dovecot/sieve/discard-virusses.sieve
+      sieve_before = /var/lib/dovecot/sieve/discard-viruses.sieve
 
       # Domain-level scripts retrieved from LDAP
       sieve_before2 = ldap:/etc/dovecot/sieve-ldap.conf;name=ldap-domain
