@@ -5406,7 +5406,7 @@ parameters::
 |             |              | service                                 |                                 |
 |             |              |    The service for which the            |                                 |
 |             |              |    userdb        should be tested. The  |                                 |
-|             |              |    value may be thename of a service,   |                                 |
+|             |              |    value may be the name of a service,  |                                 |
 |             |              |    commonly used with Dovecot. For      |                                 |
 |             |              |    example: imap , pop3 or smtp.        |                                 |
 |             |              | lip                                     |                                 |
