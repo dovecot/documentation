@@ -2254,7 +2254,7 @@ See :ref:`settings` for list of all setting groups.
    :default: no
    :values: @boolean
 
-   Flush NFS caches whenever it is necessasry to do so.
+   Flush NFS caches whenever it is necessary to do so.
 
    This setting should only be enabled if you are using multiple servers on
    NFS.
