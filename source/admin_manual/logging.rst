@@ -111,7 +111,7 @@ You can use logrotate to maintain the Dovecot log files so they don't grow beyon
      endscript
    }
 
-.. Note:: doveadm is not working properly with SELinux (e.g. doveadm cannot read config file when called from logrotate context). SELinux safe postrotate alternative scriplet:
+.. Note:: doveadm is not working properly with SELinux (e.g. doveadm cannot read config file when called from logrotate context). SELinux safe postrotate alternative scriptlet:
 
 .. code-block:: none
 
