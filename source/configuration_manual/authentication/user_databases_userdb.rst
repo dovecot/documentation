@@ -51,7 +51,7 @@ the same or they may be different depending on your needs. You can also have
 
 Currently supported user databases are:
 
-* **Passwd**: System users (NSS, ``/etc/passwd``, or similiar). See
+* **Passwd**: System users (NSS, ``/etc/passwd``, or similar). See
   :ref:`authentication-passwd`.
 * **Passwd-file**: ``/etc/passwd``-like file in specified location. See
   :ref:`authentication-passwd_file`.
