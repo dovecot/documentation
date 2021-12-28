@@ -229,7 +229,7 @@ In this kind of a configuration having read_fallback_consistency=quorum is not
 very useful.
 
 Also note that there are no consistency settings that allow Dovecot to
-realiably continue operating if Cassandra in the local datacenter no longer
+reliably continue operating if Cassandra in the local datacenter no longer
 has quorum, i.e. at least half of its nodes have gone down. In this case
 writes will always fail. If this happens, all users should be moved to be
 processed by another datacenter.
