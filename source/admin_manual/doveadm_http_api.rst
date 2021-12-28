@@ -2358,7 +2358,7 @@ doveadm fts lookup
 
 Search mail with FTS plugin.
 
-parameterse::
+parameters::
 
     {
         "command": "ftsLookup",
