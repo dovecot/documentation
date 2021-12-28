@@ -75,7 +75,7 @@ Pigeonhole can be installed from packages by running:
 ArchLinux
 ~~~~~~~~~
 
-Pidgeonhole is available in the community repositories, and can be
+Pigeonhole is available in the community repositories, and can be
 installed by running:
 
 ::
@@ -85,7 +85,7 @@ installed by running:
 RHEL 6 + clones (CentOS, Scientific Linux, ...)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Pidgeonhole is available in the main repository, and can be installed by
+Pigeonhole is available in the main repository, and can be installed by
 running:
 
 ::
