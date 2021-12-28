@@ -61,7 +61,7 @@ Code  Label          Description
 
 74    EX_IOERR       *Input/Output Error*.
 
-75    EX_TEMPFAILE   *Temporary failure*. A temporary error that may be
+75    EX_TEMPFAIL    *Temporary failure*. A temporary error that may be
                      resolved by running the migration again. For migration
                      purposes, if this code is returned dsync should be
                      re-run. There should be some sort of maximum retry value
