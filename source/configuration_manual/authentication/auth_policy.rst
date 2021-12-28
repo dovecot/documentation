@@ -9,7 +9,7 @@ Dovecot supports external authentication policy server. This
 server can be used to decide whether the connecting user is permitted,
 tarpitted or outright rejected. While dovecot can do tarpitting and
 refusal on its own, this adds support for making cluster-wide decisions
-to make it easier to deter and defeat bruteforce attacks.
+to make it easier to deter and defeat brute force attacks.
 
 Known issues
 ------------
