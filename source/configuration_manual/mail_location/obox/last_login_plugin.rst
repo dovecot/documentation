@@ -43,7 +43,7 @@ The test environment is made of a basic Dovecot PRO installation on a BE node + 
 
 7.2 Dovecot packages
 =========================
-This is the minimal list of packages to installa on the BE node to have the last login plugin feature available:
+This is the minimal list of packages to install on the BE node to have the last login plugin feature available:
 
 * dovecot-ee-2.2.31.2-1.x86_64
 * dovecot-ee-cassandra-plugin-2.2.31.2-1.x86_64
