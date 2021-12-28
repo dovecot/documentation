@@ -27,7 +27,7 @@ The correct way to use SSL is to have each SSL certificate signed by an Certific
 
 There are two ways to get a CA signed certificate: get it from an external CA, or create your own CA.
 
-The clients have a built-in list of trusted CAs, so getting it from one of those CAs will have the advantage of the certificate working without any client configuration. There are already-trusted-CAs where you can buy the certificate, and there are already-trusted-CAs where you can get your certificate for free. On the oher hand, if you create your own CA, you'll have to install the CA certificate to all the clients (see `certificate_client_importing`.
+The clients have a built-in list of trusted CAs, so getting it from one of those CAs will have the advantage of the certificate working without any client configuration. There are already-trusted-CAs where you can buy the certificate, and there are already-trusted-CAs where you can get your certificate for free. On the other hand, if you create your own CA, you'll have to install the CA certificate to all the clients (see `certificate_client_importing`.
 
 So the two options end up being three:
 
