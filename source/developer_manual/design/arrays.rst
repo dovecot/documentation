@@ -66,7 +66,7 @@ Writing
 ``array_push_back(array, data)``
    Append one element to the end of the array.
 ``array_push_front(array, data)``
-   Prepend one element to the begininng of the array.
+   Prepend one element to the beginning of the array.
 ``array_append(array, data, count)``
    Append multiple elements to the end of the array.
 ``array_append_zero(array)``
