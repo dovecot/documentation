@@ -2258,7 +2258,7 @@ Finished saving a Sieve script.
 Managesieve
 ===========
 
-Eventes emitted by the ManageSieve process.
+Events emitted by the ManageSieve process.
 
 +--------------+------------------------------------------------------+
 | Field        | Description                                          |
