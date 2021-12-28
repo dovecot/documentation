@@ -171,7 +171,7 @@ together.
 | NO_VALUE       | 0x08   | Don't return values, only keys                   |
 +----------------+--------+--------------------------------------------------+
 | EXACT_KEY      | 0x10   | Don't recurse at all. This is basically the same |
-|                |        | as LOOKUP comman dbut it will return all of the  |
+|                |        | as LOOKUP command but it will return all of the  |
 |                |        | rows instead of only the first one.              |
 +----------------+--------+--------------------------------------------------+
 | FLAG_ASYNC     | 0x20   | Perform iteration asynchronously                 |
