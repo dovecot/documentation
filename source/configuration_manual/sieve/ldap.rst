@@ -9,7 +9,7 @@ is used to retrieve Sieve scripts from an LDAP database. To retrieve a
 Sieve script from the LDAP database, at most two lookups are performed.
 First, the LDAP entry containing the Sieve script is searched using the
 specified LDAP search filter. If the LDAP entry changed since it was
-last retrieved (or it was never retieved before), the attribute
+last retrieved (or it was never retrieved before), the attribute
 containing the actual Sieve script is retrieved in a second lookup. In
 the first lookup, a special attribute is read and checked for changes.
 Usually, this is the ``modifyTimestamp`` attribute, but an alternative

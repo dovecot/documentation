@@ -156,7 +156,7 @@ Example:
 - Default: <empty>
 - Values:  :ref:`string`
 
-Specify user attributes to be retrived from LDAP in passdb look up.
+Specify user attributes to be retrieved from LDAP in passdb look up.
 See also :ref:`authentication-ldap_backend_configuration`
 
 Password checking attributes:
@@ -209,7 +209,7 @@ Example:
 - Default: <empty>
 - Values:  :ref:`string`
 
-Specify user attributes to be retrived from LDAP (in userdb look up)
+Specify user attributes to be retrieved from LDAP (in userdb look up)
 See also :ref:`authentication-ldap_backend_configuration`
 User attributes are given in LDAP-name=dovecot-internal-name list.
 The internal names are:
