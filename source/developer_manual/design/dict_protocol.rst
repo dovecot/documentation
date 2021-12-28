@@ -65,7 +65,7 @@ Command parameters and extra result values are tab-escaped using the dovecot's
 generic tab-escaping. Escaping is described in more details in :ref:`dovecot_auth_protocol`.
 
 After responses to certain commands, an execution duration summary line is also
-sent to the client contatining timestamp information about how long the command
+sent to the client containing timestamp information about how long the command
 took to finish.  The commands that trigger this timestamp response are LOOKUP,
 ITERATE, and COMMIT. Format of this line is as follows:
 

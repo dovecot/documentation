@@ -176,7 +176,7 @@ File                                       Description
                                            mail folder "foo/bar"
 ``~/mail/mailboxes/inbox``                 mbox file containing messages for
                                            INBOX
-``~/mail/control/.subscriptions``          File containg list of subscribed
+``~/mail/control/.subscriptions``          File containing list of subscribed
                                            mailboxes
 ``~/mail/index/INBOX/dovecot.index.*``     Index files for INBOX
 ``~/mail/index/foo/dovecot.index.*``       Index files for mail folder "foo"
