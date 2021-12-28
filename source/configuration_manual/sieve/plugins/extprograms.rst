@@ -13,7 +13,7 @@ the external programs cannot be chosen arbitrarily; the available
 programs are restricted through administrator configuration.
 
 This plugin is only available for Pigeonhole
-v0.3 and higher (available for Dovecot v2.1). For Pigeonhole 
+v0.3 and higher (available for Dovecot v2.1). For Pigeonhole
 v0.4 this plugin is part of the release. This an evolution of the `Pipe
 plugin <https://wiki.dovecot.org/Pigeonhole/Sieve/Plugins/Pipe>`_
 for Pigeonhole v0.2 and now provides the ``filter`` and ``execute`` commands
@@ -73,19 +73,19 @@ used, for which "<extension>" in the setting name is replaced by either
 ``pipe``, ``filter`` or ``execute`` depending on which extension is
 being configured:
 
-:pigeonhole:ref:`sieve_extension_socket_dir` =
+``sieve_extension_socket_dir`` =
    Points to a directory relative to the Dovecot base_dir where the
    plugin looks for script service sockets.
 
-:pigeonhole:ref:`sieve_extension_bin_dir` =
+``sieve_extension_bin_dir`` =
    Points to a directory where the plugin looks for programs (shell
    scripts) to execute directly and pipe messages to.
 
-:pigeonhole:ref:`sieve_extension_exec_timeout` = 10s
+``sieve_extension_exec_timeout`` = 10s
    Configures the maximum execution time after which the program is
    forcibly terminated.
 
-:pigeonhole:ref:`sieve_extension_input_eol` = crlf
+``sieve_extension_input_eol`` = crlf
    Determines the end-of-line character sequence used for the data piped
    to external programs. The default is currently "crlf", which
    represents a sequence of the carriage return (CR) and line feed (LF)

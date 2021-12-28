@@ -44,7 +44,7 @@ Settings
    :values: APPEND, COPY, FLAG
 
    Only execute the administrator Sieve scripts for the mailbox configured
-   with :pigeonhole:ref:`imapsieve_mailboxxxx_name` when one of the listed
+   with :pigeonhole:ref:`imapsieve_mailboxXXX_name` when one of the listed
    ``IMAPSIEVE`` causes apply.
 
    This has no effect on the user script, which is always executed no matter
@@ -56,7 +56,7 @@ Settings
    :values: @string
 
    Only execute the administrator Sieve scripts for the mailbox configured
-   with :pigeonhole:ref:`imapsieve_mailboxxxx_name` when the message
+   with :pigeonhole:ref:`imapsieve_mailboxXXX_name` when the message
    originates from the indicated mailbox.
 
    This setting supports wildcards with a syntax compatible with the ``IMAP

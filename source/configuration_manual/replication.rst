@@ -36,6 +36,8 @@ multi-million user installations.
   owner user, and public folders would likely need a per-folder lock or a
   aybe a global public folder lock). There are no plans to fix this.
 
+.. _replication_configuration:
+
 Configuration
 -------------
 
