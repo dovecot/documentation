@@ -15,7 +15,7 @@ message multiple times. These fields are also added to cache file, so
 you shouldn't list fields unless you're fairly certain you need them.
 
 Usually the mails are created and returned by ``mailbox_search_*()``
-functions. This is preferrable even if you're doing a simple search, such
+functions. This is preferable even if you're doing a simple search, such
 as "all mails". Using the search API allows the internal implementation to
 prefetch mails, which can reduce latency. Alternatively you can use
 ``mail_set_seq()`` and ``mail_set_uid()`` to jump between mails, but this
