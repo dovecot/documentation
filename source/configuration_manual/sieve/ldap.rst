@@ -120,7 +120,7 @@ The contents of sieve-ldap.conf:
 ::
 
    # This file needs to be accessible by the Sieve interpreter running in LDA/LMTP.
-   # This requires acces by the mail user. Don't use privileged LDAP credentials
+   # This requires access by the mail user. Don't use privileged LDAP credentials
    # here as these may likely leak. Only search and read access is required.
 
    # Space separated list of LDAP hosts to use. host:port is allowed too.
