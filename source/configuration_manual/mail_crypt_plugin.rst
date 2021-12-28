@@ -151,12 +151,32 @@ provided via password query:
     '%w' AS userdb_mail_crypt_private_password \
     FROM virtual_users  WHERE email='%u';
 
-Global Keys
+Choosing encryption key
+-----------------------
+
+DO NOT use password directly. It can contain % which is interpreted as
+variable expansion and can cause errors. Also, it might be visible in
+debug logging. Suggested approaches are base64 encoding, hex encoding
+or hashing the password. With hashing, you get the extra benefit that
+password won't be directly visible in logs.
+
+Another issue that you must consider when using user's password is that
+when the password changes, *you must* re-encrypt the user private key.
+
+Global keys
 ===========
 
 In this mode, all keying material is taken from plugin environment. You can use
 either Elliptic Curve (EC) keys (recommended) or RSA keys. No key generation
 is automatically performed.
+
+A good solution for environments where no user folder sharing is needed is to
+generate per-user EC key pair and encrypt that with something derived from
+user's password. The benefit is that it can be easier to do key management
+when you can do the EC re-encryption steps in case of password change in your
+user database instead of dovecot's database.
+
+You should not configure :dovecot_plugin:ref:`mail_crypt_curve` when using global keys.
 
 RSA key
 -------
