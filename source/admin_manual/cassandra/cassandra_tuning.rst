@@ -14,7 +14,7 @@ The following is an OS tuning script provided by DataStax (created for use with 
    echo 0 > /proc/sys/vm/zone_reclaim_mode
  
  
-   # readadhead to 64
+   # readahead to 64
    blockdev --setra 64 /dev/vda1
  
    # swap off
