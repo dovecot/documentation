@@ -8,7 +8,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: ${{ github.ref == 'refs/heads/master' }}
     steps:
     - uses: actions/checkout@v2
     - uses: ammaraskar/sphinx-action@0.4
@@ -17,6 +17,7 @@ jobs:
         DOCS-FOLDER: "."
         build-command: make dirhtml
     - uses: dovecot/rsync-deployments@master
+      if: env.DEPLOY_KEY != null
       with:
         RSYNC_OPTIONS: -azr --delete
         RSYNC_TARGET: docs@doc.dovecot.org:public_html/.
