@@ -113,7 +113,7 @@ In some configurations, in particular with :ref:`obox_settings`, Dovecot nodes n
 
 Software that is known to work in this regard is `PowerDNS <https://www.powerdns.com/>`_  for a performant service and `nscd <https://www.gnu.org/software/libc/libc.html>`_  for local caching.
 
-In environments where reaching a particular packets per second (PPS) rate for DNS or all packets combined, can lead to harsh throttling, it is recommended to select a locally caching option, such as nscd. The same applies to certain virtualized environments, where the layer between virtual machine and hypervizor can drop packets under high load, leading to DNS timeouts. Additionally, at the time of writing Amazon AWS instances are known to react adversly when an undocumented PPS rate is reached.
+In environments where reaching a particular packets per second (PPS) rate for DNS or all packets combined, can lead to harsh throttling, it is recommended to select a locally caching option, such as nscd. The same applies to certain virtualized environments, where the layer between virtual machine and hypervizor can drop packets under high load, leading to DNS timeouts. Additionally, at the time of writing Amazon AWS instances are known to react adversely when an undocumented PPS rate is reached.
 
 Not recommended
 ^^^^^^^^^^^^^^^^
