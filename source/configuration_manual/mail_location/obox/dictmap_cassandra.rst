@@ -260,7 +260,7 @@ Uncertain writes
 Cassandra doesn't perform any rollbacks to writes. When Cassandra reports a
 write as failed, it only means that it wasn't able to verify that the required
 consistency level was reached yet. It's still likely/possible that the write
-was succcessful to some nodes. If even a single copy was written, Cassandra
+was successful to some nodes. If even a single copy was written, Cassandra
 will eventually be consistent after hinted handoffs or repairs. This means
 that even though a write may initially have looked like it failed, the data
 can become visible sooner or later.
