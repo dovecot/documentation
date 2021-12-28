@@ -229,7 +229,7 @@ until it returns NULL. The returned mailbox_info struct contains:
    ``MAILBOX_SPECIALUSE_*``
       These are for internal use only. Don't use them.
 
-Finally the listing is deinitalized with ``mailbox_list_iter_deinit()``.
+Finally the listing is deinitialized with ``mailbox_list_iter_deinit()``.
 If it returns -1, it means that some mailboxes perhaps weren't listed
 due to some internal error.
 
