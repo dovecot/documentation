@@ -143,7 +143,7 @@ If connection to backends fail 3 times in a row per protocol (``retry_count``
 in config) dovemon goes to rapid poll mode for the backend. In this rapid mode
 dovecot does quick round of 10 polls with the same protocol (``rapid_rounds``
 in config) and if 7 of them still fail, then issue ``HOST-DOWN`` in the backend
-and ``FLUSH`` users form the backend to be redistributed to the remainining
+and ``FLUSH`` users form the backend to be redistributed to the remaining
 backends.
 
 Also dovemon issues ``HOST-UP`` on backend upon first successful poll if
