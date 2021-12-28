@@ -222,7 +222,7 @@ feature. The users will be normally authenticated in the proxy and the common
 proxy fields are returned, but you'll need to return two fields specially:
 
 * ``master=s``: This contains the master username (e.g. proxy). It's used as
-  SASL auhentication ID.
+  SASL authentication ID.
 
    * Alternatively you could return ``destuser=user*master`` and set
      ``auth_master_user_separator = *``.
