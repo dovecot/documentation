@@ -43,7 +43,7 @@ NFS mount options
   are more likely to become corrupted if ``nolock`` is used. However, if
   indexes and emails are on different mountpoints, email corruption shouldn't
   be possible if the ``nolock`` is enabled only for the index mountpoint.
-  This can still increase the likelyhood of index corruption (which can lose
+  This can still increase the likelihood of index corruption (which can lose
   message flags), but locking won't prevent index corruption completely anyway.
 
 * ``actimeo``: This or the more specific settings can be used to control NFS
