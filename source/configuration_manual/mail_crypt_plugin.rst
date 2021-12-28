@@ -191,7 +191,7 @@ command:
 
   openssl genpkey -algorithm RSA -out rsaprivkey.pem
 
-Alterantively, you can generate a password encrypted private key with:
+Alternatively, you can generate a password encrypted private key with:
 
 .. code-block:: none
 
