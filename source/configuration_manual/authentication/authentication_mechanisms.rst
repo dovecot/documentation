@@ -84,7 +84,7 @@ Dovecot supports the following non-plaintext mechanisms:
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
 | EXTERNAL                                                                     | EXTERNAL SASL mechanism.                                                 |                          |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
-| OAUTBEARER                                                                   | OAuth2 bearer authentication https://tools.ietf.org/html/rfc7628.        | .. versionadded:: 2.2.29 |
+| OAUTHBEARER                                                                  | OAuth2 bearer authentication https://tools.ietf.org/html/rfc7628.        | .. versionadded:: 2.2.29 |
 |                                                                              | See :ref:`authentication-oauth2`.                                        |                          |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
 | XOAUTH2                                                                      | `Google flavor OAUTHBEARER                                               | .. versionadded:: 2.2.29 |
