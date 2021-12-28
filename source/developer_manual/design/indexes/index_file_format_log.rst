@@ -135,7 +135,7 @@ Flags and keywords
 ------------------
 
 IMAP protocol supports changing both flags and keywords with the same STORE
-command, but in Dovecot index fiels they are handled separately.
+command, but in Dovecot index fields they are handled separately.
 
 Flags can be added/removed with ``MAIL_TRANSACTION_FLAG_UPDATE`` while
 keywords can be added/remove with ``MAIL_TRANSACTION_KEYWORD_UPDATE``.

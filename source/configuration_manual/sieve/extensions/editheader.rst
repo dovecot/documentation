@@ -57,7 +57,7 @@ Example
      # Use editheader
      sieve_extensions = +editheader
 
-     # Header fiels must not exceed one kilobyte
+     # Header fields must not exceed one kilobyte
      sieve_editheader_max_header_size = 1k
 
      # Protected special headers
