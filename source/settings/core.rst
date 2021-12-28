@@ -3587,7 +3587,7 @@ See :ref:`settings` for list of all setting groups.
 
    If enabled, SSL/TLS is used for the connection to the relay server.
 
-   Avaialble values:
+   Available values:
 
    ``no``
 

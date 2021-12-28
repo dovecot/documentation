@@ -180,7 +180,7 @@ applicable):
    in addition to all extensions enabled by default.
 
 :pigeonhole:ref:`sieve_global_extensions` = (v0.3+)
-   Which Sieve language extensions are ONLY avalable in global scripts.
+   Which Sieve language extensions are ONLY available in global scripts.
    This can be used to restrict the use of certain Sieve extensions to
    administrator control, for instance when these extensions can cause
    security concerns. This setting has higher precedence than the
