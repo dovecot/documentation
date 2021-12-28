@@ -117,7 +117,7 @@ To generate the hash, you concatenate nonce, login name, nil byte,
 password and run it through the hash algorithm once. The hash is
 truncated when truncation is set to non-zero. The hash is truncated by
 first choosing bits from MSB to byte boundary (rounding up), then
-right-shifting the remainding bits.
+right-shifting the remaining bits.
 
 .. code-block:: none
 
