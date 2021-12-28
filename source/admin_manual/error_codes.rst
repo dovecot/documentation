@@ -57,7 +57,7 @@ Code  Label          Description
                      this error occurs, would possibly indicate an issue with
                      the sync (i.e. duplicate message). In this case, the
                      migration should be marked as failed and the user flagged
-                     for further investigation why the sync was unsuccesful.
+                     for further investigation why the sync was unsuccessful.
 
 74    EX_IOERR       *Input/Output Error*.
 
