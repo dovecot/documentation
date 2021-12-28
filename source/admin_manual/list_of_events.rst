@@ -198,7 +198,7 @@ auth_client_cache_flush_finished
 +--------------+------------------------------------------------------------+
 | Field        | Description                                                |
 +==============+============================================================+
-| error        | Error string if error occured.                             |
+| error        | Error string if error occurred.                            |
 +--------------+------------------------------------------------------------+
 
 Common fields
@@ -243,7 +243,7 @@ auth_client_passdb_lookup_finished
 +===================+============================================================+
 | user              | User to lookup.                                            |
 +-------------------+------------------------------------------------------------+
-| error             | Error string if error occured.                             |
+| error             | Error string if error occurred.                            |
 +-------------------+------------------------------------------------------------+
 
 
@@ -268,7 +268,7 @@ auth_client_request_finished
 +-------------------+------------------------------------------------------------+
 | auth_user         | Auth username, if present.                                 |
 +-------------------+------------------------------------------------------------+
-| error             | Error string if error occured.                             |
+| error             | Error string if error occurred.                            |
 +-------------------+------------------------------------------------------------+
 
 auth_client_userdb_list_started
@@ -288,7 +288,7 @@ auth_client_userdb_list_finished
 +==============+============================================================+
 | user_mask    | User mask to list.                                         |
 +--------------+------------------------------------------------------------+
-| error        | Error string if error occured.                             |
+| error        | Error string if error occurred.                            |
 +--------------+------------------------------------------------------------+
 
 auth_client_userdb_lookup_started
@@ -302,7 +302,7 @@ auth_client_userdb_lookup_finished
 +===================+============================================================+
 | user              | User to lookup.                                            |
 +-------------------+------------------------------------------------------------+
-| error             | Error string if error occured.                             |
+| error             | Error string if error occurred.                            |
 +-------------------+------------------------------------------------------------+
 
 Authentication Server
@@ -2668,7 +2668,7 @@ Common fields
 | driver         | Name of the dictionary driver,                       |
 |                | e.g. ``sql`` or ``proxy``.                           |
 +----------------+------------------------------------------------------+
-| error          | Error, if one occured                                |
+| error          | Error, if one occurred                               |
 +----------------+------------------------------------------------------+
 
 .. _dict_created:
