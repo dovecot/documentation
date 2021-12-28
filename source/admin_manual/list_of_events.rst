@@ -795,7 +795,7 @@ Common fields:
 +---------------------+------------------------------------------------------+
 | remote_ip           | Client connection's remote (client) IP               |
 +---------------------+------------------------------------------------------+
-| remote_port         | Client onnection's remote (client) port              |
+| remote_port         | Client connection's remote (client) port             |
 +---------------------+------------------------------------------------------+
 
 auth_master_client_login_started
@@ -1775,7 +1775,7 @@ Common fields:
 +=====================+=====================================================================+
 | Inherits from environment (LDA, LMTP or IMAP)                                             |
 +---------------------+---------------------------------------------------------------------+
-| connection_id       | The session ID for this connection. The connnection ID is forwarded |
+| connection_id       | The session ID for this connection. The connection ID is forwarded  |
 |                     | through proxies, allowing correlation between sessions on frontend  |
 |                     | and backend systems.                                                |
 |                     |                                                                     |
