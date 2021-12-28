@@ -33,8 +33,8 @@ multi-million user installations.
   working simultaneously on the same user. But with shared folders
   multiple users can be syncing the same folder. So this would need
   additional locks (e.g. shared folders would likely need to lock the
-  owner user, and public folders would likely need a per-folder lock or a
-  aybe a global public folder lock). There are no plans to fix this.
+  owner user, and public folders would likely need a per-folder lock or
+  maybe a global public folder lock). There are no plans to fix this.
 
 .. _replication_configuration:
 
