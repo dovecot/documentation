@@ -3025,7 +3025,7 @@ See :ref:`settings` for list of all setting groups.
 
    If enabled, all processes are killed when the master process is shutdown.
 
-   Otherwise, existing processes will contiue to run. This may be useful to not
+   Otherwise, existing processes will continue to run. This may be useful to not
    interrupt earlier sessions, but may not be desirable if restarting Dovecot
    to apply a security update, for example.
 
