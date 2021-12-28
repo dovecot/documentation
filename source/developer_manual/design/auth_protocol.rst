@@ -32,7 +32,7 @@ Typical command looks like (without spaces):
 The parameters use Dovecot's generic "tab-escaping", where ``\001`` is used
 as the escape character. After it follows:
 
- * 0: NUL chracter
+ * 0: NUL character
  * 1: ``\001`` character
  * t: TAB
  * r: CR
