@@ -173,7 +173,7 @@ applicable):
    available by default. All supported extensions are listed
    :ref:`here <sieve_plugins>`.
    Normally, all enabled extensions must be listed for this setting, but
-   starting with Pigeonhole verison 0.1.7, this setting can use '+' and '-'
+   starting with Pigeonhole version 0.1.7, this setting can use '+' and '-'
    to specify differences relative to the default. For example
    :pigeonhole:ref:`sieve_extensions` = ``+imapflags`` will enable the
    `deprecated imapflags extension <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_
