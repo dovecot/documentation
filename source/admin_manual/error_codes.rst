@@ -57,11 +57,11 @@ Code  Label          Description
                      this error occurs, would possibly indicate an issue with
                      the sync (i.e. duplicate message). In this case, the
                      migration should be marked as failed and the user flagged
-                     for further investigation why the sync was unsuccesful.
+                     for further investigation why the sync was unsuccessful.
 
 74    EX_IOERR       *Input/Output Error*.
 
-75    EX_TEMPFAILE   *Temporary failure*. A temporary error that may be
+75    EX_TEMPFAIL    *Temporary failure*. A temporary error that may be
                      resolved by running the migration again. For migration
                      purposes, if this code is returned dsync should be
                      re-run. There should be some sort of maximum retry value

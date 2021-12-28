@@ -148,7 +148,7 @@ execution are written to two locations by the LDA Sieve plugin:
    old log file is moved to a ".log.0" file and an empty log file is
    started. Informational messages are not written to this log file and
    the log file is not created until messages are actually logged, i.e.
-   when an error or warning is produced. The log file name can be overriden with
+   when an error or warning is produced. The log file name can be overridden with
    the :pigeonhole:ref:`sieve_user_log` setting.
 
 -  Messages that could be of interest to the system administrator are

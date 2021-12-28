@@ -581,7 +581,7 @@ List keys in dictionary.
 +------------+---------+---------------------------------------+---------------------------------+
 | dictUri    | String  | optional URI for dictionary to modify |                                 |
 +------------+---------+---------------------------------------+---------------------------------+
-| exact      | Boolean | list only excact matches              |                                 |
+| exact      | Boolean | list only exact matches               |                                 |
 +------------+---------+---------------------------------------+---------------------------------+
 | recurse    | Boolean | do recursive search                   |                                 |
 +------------+---------+---------------------------------------+---------------------------------+
@@ -2358,7 +2358,7 @@ doveadm fts lookup
 
 Search mail with FTS plugin.
 
-parameterse::
+parameters::
 
     {
         "command": "ftsLookup",
@@ -2623,7 +2623,7 @@ parameters::
 |                   |              | One username per line                 |                                 |
 +-------------------+--------------+---------------------------------------+---------------------------------+
 | subscribe         | Boolean      | when enabled possible newly created   |                                 |
-|                   |              | folders are also subscibed            |                                 |
+|                   |              | folders are also subscribed           |                                 |
 +-------------------+--------------+---------------------------------------+---------------------------------+
 | sourceLocation    | String       | location of source mailboxes          |                                 |
 +-------------------+--------------+---------------------------------------+---------------------------------+

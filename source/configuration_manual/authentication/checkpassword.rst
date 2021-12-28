@@ -9,7 +9,7 @@ CheckPassword
 You can also use Lua to write your custom authentication, see :ref:`lua`
 Checkpassword is an authentication interface originally implemented by qmail.
 
-Note that the original Qmail site is gone, but you can still find resouces at 
+Note that the original Qmail site is gone, but you can still find resources at 
 <https://www.getmailbird.com/what-resources-are-available-now-that-qmail-org-is-gone/>.
 
 Checkpassword combines both the :ref:`authentication-password_databases` and

@@ -52,8 +52,8 @@ OX Dovecot Pro Command Log plug-in
 .. literalinclude:: dovecot-2.3.9.4-rev1-cmdlog-plugin.list
      :language: none
 
-OX Dovecot Pro Pigeonhole Sieve Zimbra compability plug-in
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OX Dovecot Pro Pigeonhole Sieve Zimbra compatibility plug-in
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. literalinclude:: dovecot-2.3.9.4-rev1-pigeonhole-sieve-zimbra-compat-plugin.list
      :language: none

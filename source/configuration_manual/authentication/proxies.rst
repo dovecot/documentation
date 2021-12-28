@@ -145,7 +145,7 @@ Forwarding fields
 
 .. versionadded:: v2.2.29
 
-You can forward arbitratry variables by returning them prefixed with
+You can forward arbitrary variables by returning them prefixed with
 ``forward_``. Dovecot will use protocol dependant way to forward these
 variables forward and they will appear on the other side as
 ``forward_variable`` Currently ``IMAP/POP3`` only feature. This feature
@@ -154,7 +154,7 @@ requires that the sending host is in
 feature works by providing the variables as part of ID command, such as ``i ID
 ( ... x-forward-var value)``.
 
-For POP3 the forwarding mecahism uses ``XCLIENT`` with ``FORWARD=<base64
+For POP3 the forwarding mechanism uses ``XCLIENT`` with ``FORWARD=<base64
 encoded blob of forwarded variables>``
 
 See :ref:`forwarding_parameters` for more details on
@@ -222,7 +222,7 @@ feature. The users will be normally authenticated in the proxy and the common
 proxy fields are returned, but you'll need to return two fields specially:
 
 * ``master=s``: This contains the master username (e.g. proxy). It's used as
-  SASL auhentication ID.
+  SASL authentication ID.
 
    * Alternatively you could return ``destuser=user*master`` and set
      ``auth_master_user_separator = *``.

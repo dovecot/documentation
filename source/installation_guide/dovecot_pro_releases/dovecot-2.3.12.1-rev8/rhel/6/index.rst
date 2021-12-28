@@ -58,8 +58,8 @@ OX Dovecot Pro Vault plug-in
 .. literalinclude:: dovecot-2.3.12.1-rev8-vault-plugin.repo
      :language: none
 
-OX Dovecot Pro Pigeonhole Sieve Zimbra compability plug-in
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OX Dovecot Pro Pigeonhole Sieve Zimbra compatibility plug-in
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. literalinclude:: dovecot-2.3.12.1-rev8-pigeonhole-sieve-zimbra-compat-plugin.repo
      :language: none

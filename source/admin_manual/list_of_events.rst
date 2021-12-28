@@ -198,7 +198,7 @@ auth_client_cache_flush_finished
 +--------------+------------------------------------------------------------+
 | Field        | Description                                                |
 +==============+============================================================+
-| error        | Error string if error occured.                             |
+| error        | Error string if error occurred.                            |
 +--------------+------------------------------------------------------------+
 
 Common fields
@@ -243,7 +243,7 @@ auth_client_passdb_lookup_finished
 +===================+============================================================+
 | user              | User to lookup.                                            |
 +-------------------+------------------------------------------------------------+
-| error             | Error string if error occured.                             |
+| error             | Error string if error occurred.                            |
 +-------------------+------------------------------------------------------------+
 
 
@@ -268,7 +268,7 @@ auth_client_request_finished
 +-------------------+------------------------------------------------------------+
 | auth_user         | Auth username, if present.                                 |
 +-------------------+------------------------------------------------------------+
-| error             | Error string if error occured.                             |
+| error             | Error string if error occurred.                            |
 +-------------------+------------------------------------------------------------+
 
 auth_client_userdb_list_started
@@ -288,7 +288,7 @@ auth_client_userdb_list_finished
 +==============+============================================================+
 | user_mask    | User mask to list.                                         |
 +--------------+------------------------------------------------------------+
-| error        | Error string if error occured.                             |
+| error        | Error string if error occurred.                            |
 +--------------+------------------------------------------------------------+
 
 auth_client_userdb_lookup_started
@@ -302,7 +302,7 @@ auth_client_userdb_lookup_finished
 +===================+============================================================+
 | user              | User to lookup.                                            |
 +-------------------+------------------------------------------------------------+
-| error             | Error string if error occured.                             |
+| error             | Error string if error occurred.                            |
 +-------------------+------------------------------------------------------------+
 
 Authentication Server
@@ -366,7 +366,7 @@ Common fields
 |                     | .. versionadded:: v2.3.12                            |
 +---------------------+------------------------------------------------------+
 | real_remote_ip      | Same as remote_ip, except if the connection was      |
-|                     | proxied, this is the proxy's IP adderss.             |
+|                     | proxied, this is the proxy's IP address.             |
 |                     |                                                      |
 |                     | .. versionadded:: v2.3.12                            |
 +---------------------+------------------------------------------------------+
@@ -795,7 +795,7 @@ Common fields:
 +---------------------+------------------------------------------------------+
 | remote_ip           | Client connection's remote (client) IP               |
 +---------------------+------------------------------------------------------+
-| remote_port         | Client onnection's remote (client) port              |
+| remote_port         | Client connection's remote (client) port             |
 +---------------------+------------------------------------------------------+
 
 auth_master_client_login_started
@@ -980,7 +980,7 @@ Mail storage service user
 +=====================+======================================================+
 | Inherits from environment (e.g. IMAP/LMTP client)                          |
 +---------------------+------------------------------------------------------+
-| session             | Session ID for the storage sesssion                  |
+| session             | Session ID for the storage session                   |
 +---------------------+------------------------------------------------------+
 
 .. _event_mail_user:
@@ -1775,7 +1775,7 @@ Common fields:
 +=====================+=====================================================================+
 | Inherits from environment (LDA, LMTP or IMAP)                                             |
 +---------------------+---------------------------------------------------------------------+
-| connection_id       | The session ID for this connection. The connnection ID is forwarded |
+| connection_id       | The session ID for this connection. The connection ID is forwarded  |
 |                     | through proxies, allowing correlation between sessions on frontend  |
 |                     | and backend systems.                                                |
 |                     |                                                                     |
@@ -2258,7 +2258,7 @@ Finished saving a Sieve script.
 Managesieve
 ===========
 
-Eventes emitted by the ManageSieve process.
+Events emitted by the ManageSieve process.
 
 +--------------+------------------------------------------------------+
 | Field        | Description                                          |
@@ -2668,7 +2668,7 @@ Common fields
 | driver         | Name of the dictionary driver,                       |
 |                | e.g. ``sql`` or ``proxy``.                           |
 +----------------+------------------------------------------------------+
-| error          | Error, if one occured                                |
+| error          | Error, if one occurred                               |
 +----------------+------------------------------------------------------+
 
 .. _dict_created:

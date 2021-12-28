@@ -75,7 +75,7 @@ The following options are defined for all location types:
 .. note::
   Pigeonhole versions before v0.3.1 do not support the location
   syntax described here. These versions only support bare filesystem paths
-  pointing to files or directores as script storage location. Also, in
+  pointing to files or directories as script storage location. Also, in
   that case a few additional :ref:`deprecated settings <pigeonhole_deprecated_settings>` are
   needed for configuration.
 
@@ -173,14 +173,14 @@ applicable):
    available by default. All supported extensions are listed
    :ref:`here <sieve_plugins>`.
    Normally, all enabled extensions must be listed for this setting, but
-   starting with Pigeonhole verison 0.1.7, this setting can use '+' and '-'
+   starting with Pigeonhole version 0.1.7, this setting can use '+' and '-'
    to specify differences relative to the default. For example
    :pigeonhole:ref:`sieve_extensions` = ``+imapflags`` will enable the
    `deprecated imapflags extension <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_
    in addition to all extensions enabled by default.
 
 :pigeonhole:ref:`sieve_global_extensions` = (v0.3+)
-   Which Sieve language extensions are ONLY avalable in global scripts.
+   Which Sieve language extensions are ONLY available in global scripts.
    This can be used to restrict the use of certain Sieve extensions to
    administrator control, for instance when these extensions can cause
    security concerns. This setting has higher precedence than the
@@ -449,7 +449,7 @@ For example:
    ...
       # Global scripts executed before the user's personal script.
       #   E.g. handling messages marked as dangerous
-      sieve_before = /var/lib/dovecot/sieve/discard-virusses.sieve
+      sieve_before = /var/lib/dovecot/sieve/discard-viruses.sieve
 
       # Domain-level scripts retrieved from LDAP
       sieve_before2 = ldap:/etc/dovecot/sieve-ldap.conf;name=ldap-domain
@@ -633,7 +633,7 @@ General Dovecot 2.0 changes
 -  Dovecot v2.0 adds support for :ref:`LMTP <lmtp_server>`.
    Much like the :ref:`LDA <lda>` it can make use of the Pigeonhole Sieve plugin.
    Since the :ref:`LMTP <lmtp_server>`
-   service has its own ``prototocol lmtp`` section in the config file,
+   service has its own ``protocol lmtp`` section in the config file,
    you need to add the Sieve plugin to the :dovecot_core:ref:`mail_plugins`
    setting there too when you decide to use :ref:`LMTP <lmtp_server>`.
 

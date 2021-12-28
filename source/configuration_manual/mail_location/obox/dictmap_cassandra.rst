@@ -229,7 +229,7 @@ In this kind of a configuration having read_fallback_consistency=quorum is not
 very useful.
 
 Also note that there are no consistency settings that allow Dovecot to
-realiably continue operating if Cassandra in the local datacenter no longer
+reliably continue operating if Cassandra in the local datacenter no longer
 has quorum, i.e. at least half of its nodes have gone down. In this case
 writes will always fail. If this happens, all users should be moved to be
 processed by another datacenter.
@@ -260,7 +260,7 @@ Uncertain writes
 Cassandra doesn't perform any rollbacks to writes. When Cassandra reports a
 write as failed, it only means that it wasn't able to verify that the required
 consistency level was reached yet. It's still likely/possible that the write
-was succcessful to some nodes. If even a single copy was written, Cassandra
+was successful to some nodes. If even a single copy was written, Cassandra
 will eventually be consistent after hinted handoffs or repairs. This means
 that even though a write may initially have looked like it failed, the data
 can become visible sooner or later.

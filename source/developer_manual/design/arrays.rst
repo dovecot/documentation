@@ -66,7 +66,7 @@ Writing
 ``array_push_back(array, data)``
    Append one element to the end of the array.
 ``array_push_front(array, data)``
-   Prepend one element to the begininng of the array.
+   Prepend one element to the beginning of the array.
 ``array_append(array, data, count)``
    Append multiple elements to the end of the array.
 ``array_append_zero(array)``
@@ -219,7 +219,7 @@ reallocate the array elsewhere in memory.
    Return a non-const pointer to the specified index.
    Assert-crashes if the index doesn't already exist.
    See also ``array_idx_get_space()``.
-``array_front_modifiabe(array)``
+``array_front_modifiable(array)``
    Return a non-const pointer to the first element in the array.
    Assert-crashes if the array is empty.
 ``array_back_modifiable(array)``

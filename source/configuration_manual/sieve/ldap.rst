@@ -9,7 +9,7 @@ is used to retrieve Sieve scripts from an LDAP database. To retrieve a
 Sieve script from the LDAP database, at most two lookups are performed.
 First, the LDAP entry containing the Sieve script is searched using the
 specified LDAP search filter. If the LDAP entry changed since it was
-last retrieved (or it was never retieved before), the attribute
+last retrieved (or it was never retrieved before), the attribute
 containing the actual Sieve script is retrieved in a second lookup. In
 the first lookup, a special attribute is read and checked for changes.
 Usually, this is the ``modifyTimestamp`` attribute, but an alternative
@@ -54,7 +54,7 @@ user=<username>
 If the name of the Script is left unspecified and not otherwise provided
 by the Sieve interpreter, the name defaults to \`\ ``default``'.
 
-The configuration file is based on the :ref:`LDAP Authenticaion
+The configuration file is based on the :ref:`LDAP Authentication
 configuration <authentication-ldap_settings_common>`. The
 following parameters are specific to the Sieve ldap configuration:
 
@@ -120,7 +120,7 @@ The contents of sieve-ldap.conf:
 ::
 
    # This file needs to be accessible by the Sieve interpreter running in LDA/LMTP.
-   # This requires acces by the mail user. Don't use privileged LDAP credentials
+   # This requires access by the mail user. Don't use privileged LDAP credentials
    # here as these may likely leak. Only search and read access is required.
 
    # Space separated list of LDAP hosts to use. host:port is allowed too.

@@ -50,7 +50,7 @@ and processes that start up standalone (e.g. ``dovecot-lda``) bypass the log
 process.
 
 The Dovecot master process sets up a separate pipe for each service, which is
-shared by all the processses of that service. The write side of the pipe
+shared by all the processes of that service. The write side of the pipe
 becomes the processes' stderr fd, while the read side is read by the log
 process.
 

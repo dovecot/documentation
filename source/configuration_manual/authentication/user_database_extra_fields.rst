@@ -25,7 +25,7 @@ fields'. Possibilities are:
 It's possible to override settings from ``dovecot.conf`` (most commonly
 quota_rule to set per-user quota limits or also plugin-settings).
 
-* ``user``: User can be overriden (normally set in passdb, see
+* ``user``: User can be overridden (normally set in passdb, see
   :ref:`authentication-password_databases`).
 * ``noreplicate``: See :dovecot_plugin:ref:`noreplicate`.
 

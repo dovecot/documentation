@@ -63,7 +63,7 @@ systems. For systemd, these commands are as follows:
    sudo systemctl start solr
    sudo systemctl status solr
 
-By default, the Solr administation page for the newly created instance
+By default, the Solr administration page for the newly created instance
 is located at <https://localhost:8983/solr/#/~cores/dovecot>. It
 can be used to check the status of the Solr instance. Configuration
 errors are often most conveniently viewed here. Solr also writes log

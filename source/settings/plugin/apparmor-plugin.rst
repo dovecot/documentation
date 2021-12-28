@@ -17,7 +17,7 @@ Settings
 
    The AppArmor "hat" to change to when a user is loaded.
 
-   You can define muiltiple hats by appending an increasing number to the
+   You can define multiple hats by appending an increasing number to the
    setting name.
 
    Example:
@@ -26,5 +26,5 @@ Settings
 
      plugin {
        apparmor_hat = hat_name
-       apparamor_hat2 = another_hat
+       apparmor_hat2 = another_hat
      }

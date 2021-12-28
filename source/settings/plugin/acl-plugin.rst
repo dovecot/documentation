@@ -103,7 +103,7 @@ Settings
 
    Ignore ACLs entirely for the given namespace.
 
-   You can define muiltiple namespaces by appending an increasing number to
+   You can define multiple namespaces by appending an increasing number to
    the setting name.
 
    Example:

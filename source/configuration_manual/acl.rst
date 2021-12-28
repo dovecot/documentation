@@ -36,7 +36,7 @@ IMAP ACLs
 ^^^^^^^^^
 
 To enable the IMAP ACL commands, you must load the ``imap_acl`` plugin. This
-plugin should only be loaded insided a ``protocol imap {}`` block.
+plugin should only be loaded inside a ``protocol imap {}`` block.
 
 See :ref:`plugin-imap-acl` for settings.
 

@@ -252,7 +252,7 @@ being expanded into:
   union {
     struct array arr;
     struct dict_connection_cmd *const *v;
-    struct dict_connection_cmd **v_modifiaable;
+    struct dict_connection_cmd **v_modifiable;
   } cmds;
 
 You can find out the size of the array with:

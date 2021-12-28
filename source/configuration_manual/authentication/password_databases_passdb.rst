@@ -94,10 +94,10 @@ lookup can return:
 
 * **Passwd-file**: ``/etc/passwd-like`` file in specified location. See
   :ref:`authentication-passwd`.
-* **Passwd**: System users (NSS, ``/etc/passwd``, or similiar). See
+* **Passwd**: System users (NSS, ``/etc/passwd``, or similar). See
   :ref:`authentication-password_schemes`.
 * **Shadow**: Shadow passwords for system users (NSS, ``/etc/shadow`` or
-  similiar). See :ref:`authentication-shadow`.
+  similar). See :ref:`authentication-shadow`.
 
  * Dovecot supports reading all :ref:`authentication-password_schemes` from passwd and shadow
    databases (if prefix is specified), but that is of course incompatible with

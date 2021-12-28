@@ -30,11 +30,11 @@ All metric names are prefixed with ``dovecot_`` and each non-histogram metric is
 Dynamically generated statistics with :ref:`group_by <statistics_group_by>` will be exported too.
 The name of the base metric is used as above, and any dynamically generated sub-metrics are exported using labels.
 Quantized sub-metrics are exported as histograms.
-Histgorams are exported as ``dovecot_<metric_name>_bucket`` with corresponding labels. Each histogram will have
+Histograms are exported as ``dovecot_<metric_name>_bucket`` with corresponding labels. Each histogram will have
 an automatically generated ``_sum`` (specifying sum of all values in quantiles) and ``_count`` (total number of samples in the quantiles) metrics.
 
 .. versionchanged:: 2.3.14 Histogram metrics will no longer have "histogram" in their name added by dovecot.
-.. versionchanged:: 2.3.14 The separate metrics of type counter for total number and total duarion (previosuly ``dovecot_<metric_name>_count`` and ``dovecot_<metric_name>_duration_usecs_sum``) are no longer exported for histograms.
+.. versionchanged:: 2.3.14 The separate metrics of type counter for total number and total duration (previously ``dovecot_<metric_name>_count`` and ``dovecot_<metric_name>_duration_usecs_sum``) are no longer exported for histograms.
 
 Dovecot will also export version information and startup time as special metrics even if nothing is configured.
 These are called ``dovecot_build_info`` and ``process_start_time_seconds``.

@@ -34,8 +34,8 @@ OX Engage Dovecot plug-in
 .. literalinclude:: dovecot-2.3.9.4-rev1-promotionalmail.repo
      :language: none
 
-OX Dovecot Pro Pigeonhole Sieve Zimbra compability plug-in
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OX Dovecot Pro Pigeonhole Sieve Zimbra compatibility plug-in
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. literalinclude:: dovecot-2.3.9.4-rev1-pigeonhole-sieve-zimbra-compat-plugin.repo
      :language: none

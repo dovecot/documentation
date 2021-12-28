@@ -266,7 +266,7 @@ See :ref:`settings` for list of all setting groups.
    :default: 2000
    :values: @time_msecs
 
-   Auth polcy request timeout.
+   Auth policy request timeout.
 
 
 .. dovecot_core:setting:: auth_policy_server_url
@@ -394,7 +394,7 @@ See :ref:`settings` for list of all setting groups.
    :todo: List allowed formatting modifiers
    :values: @string
 
-   Formattting applied to username before querying the auth database.
+   Formatting applied to username before querying the auth database.
 
    You can use the standard variables here.
 
@@ -2254,7 +2254,7 @@ See :ref:`settings` for list of all setting groups.
    :default: no
    :values: @boolean
 
-   Flush NFS caches whenever it is necessasry to do so.
+   Flush NFS caches whenever it is necessary to do so.
 
    This setting should only be enabled if you are using multiple servers on
    NFS.
@@ -2383,7 +2383,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: mail_temp_dir
    :default: /tmp
-   :todo: Indiciate LDA AND LMTP setting
+   :todo: Indicate LDA AND LMTP setting
    :values: @string
 
    The directory in which LDA/LMTP will temporarily store incoming message data
@@ -2428,7 +2428,7 @@ See :ref:`settings` for list of all setting groups.
 
    This may happen when mail messages do not have their virtual sizes cached.
 
-   When indexing is occuring in the background, explicit quota size queries
+   When indexing is occurring in the background, explicit quota size queries
    return an internal error and mail deliveries are assumed to succeed.
 
    This setting must not be set to indexer-worker process, or the background
@@ -3025,7 +3025,7 @@ See :ref:`settings` for list of all setting groups.
 
    If enabled, all processes are killed when the master process is shutdown.
 
-   Otherwise, existing processes will contiue to run. This may be useful to not
+   Otherwise, existing processes will continue to run. This may be useful to not
    interrupt earlier sessions, but may not be desirable if restarting Dovecot
    to apply a security update, for example.
 
@@ -3280,7 +3280,7 @@ See :ref:`settings` for list of all setting groups.
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
    :values: @boolean
 
-   Require a valid cerficate when connecting to external SSL services?
+   Require a valid certificate when connecting to external SSL services?
 
 
 .. dovecot_core:setting:: ssl_key
@@ -3587,7 +3587,7 @@ See :ref:`settings` for list of all setting groups.
 
    If enabled, SSL/TLS is used for the connection to the relay server.
 
-   Avaialble values:
+   Available values:
 
    ``no``
 

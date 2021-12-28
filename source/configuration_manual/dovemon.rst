@@ -60,7 +60,7 @@ timeout period for the next round of polling. This is repeated until the max
 retries have been performed. In the default case where where 3 retries are
 performed with timeout set to 3s, dovemon waits for 3s, 6s, and 9s for first,
 second, and third polling results respectively. However, this does not affect
-the interval between pollings i.e. start time of each polling is always at 10s
+the interval between polls i.e. start time of each polling is always at 10s
 interval (in default case).
 
 During all of the time dovemon inspects the backends, it keeps track of latency
@@ -143,7 +143,7 @@ If connection to backends fail 3 times in a row per protocol (``retry_count``
 in config) dovemon goes to rapid poll mode for the backend. In this rapid mode
 dovecot does quick round of 10 polls with the same protocol (``rapid_rounds``
 in config) and if 7 of them still fail, then issue ``HOST-DOWN`` in the backend
-and ``FLUSH`` users form the backend to be redistributed to the remainining
+and ``FLUSH`` users form the backend to be redistributed to the remaining
 backends.
 
 Also dovemon issues ``HOST-UP`` on backend upon first successful poll if

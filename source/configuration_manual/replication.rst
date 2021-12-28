@@ -349,7 +349,7 @@ These fields mean:
 
 -  success sync: Time when the last successful sync was performed. If
    the last sync succeeded, this is the same as the "fast sync" or the
-   "full sync" timestap.
+   "full sync" timestamp.
 
 -  failed: "y" if the last sync failed, "-" if not.
 

@@ -64,7 +64,7 @@ cassandra-rackdc.properties files content:
 Endpoint_Snitch (Cassandra.yaml)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Modify the cassandra.ymal file "endpoint_snitch" to use
+Modify the cassandra.yaml file "endpoint_snitch" to use
 "GossipingPropertyFileSnitch".
 
 .. code-block:: none

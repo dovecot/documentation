@@ -80,7 +80,7 @@ only new mails so the memmove()d size is rather small. If multiple mails are
 expunged at once, we'll also optimize so that we don't memmove() the same data
 multiple times. (The first Dovecot 0.99.x versions attempted to avoid this
 memmove() by tracking the mails in a binary tree, but this was optimizing a
-rarely problematic accesss pattern at the expense of a normal access pattern.)
+rarely problematic access pattern at the expense of a normal access pattern.)
 
 
 Maps

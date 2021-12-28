@@ -110,7 +110,7 @@ Shared Storage
 --------------
 
 The recommended storage solution for large installations that require
-high-availabilty and scalabale performance is object storage.
+high-availability and scalable performance is object storage.
 :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>` provides the
 :ref:`obox mailbox format <obox_settings>` to efficiently interact with
 selected object storage systems.

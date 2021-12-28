@@ -135,7 +135,7 @@ Flags and keywords
 ------------------
 
 IMAP protocol supports changing both flags and keywords with the same STORE
-command, but in Dovecot index fiels they are handled separately.
+command, but in Dovecot index fields they are handled separately.
 
 Flags can be added/removed with ``MAIL_TRANSACTION_FLAG_UPDATE`` while
 keywords can be added/remove with ``MAIL_TRANSACTION_KEYWORD_UPDATE``.
@@ -202,11 +202,11 @@ extension changes are stale and they must be ignored. For example:
 ``hdr_size`` specifies the number of bytes the extension wants to have
 in the index file's header. ``record_size`` specifies the number of
 bytes it wants to use for each record. The sizes may grow or shrink at any
-time. ``record_align`` contains the required alignmentation for the
+time. ``record_align`` contains the required alignment for the
 field. For example if the extension contains a 32bit integer, the alignment
 should be 32bit so that the process won't crash in CPUs which
-require proper alignmentation. Of course, if the field is accessed only as
-4 individual bytes, the alignmentation can be 1.
+require proper alignment. Of course, if the field is accessed only as
+4 individual bytes, the alignment can be 1.
 
 Extension record updates typically are message-specific, so the changes
 must be done for each message separately rather than an UID range.

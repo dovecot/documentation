@@ -205,7 +205,7 @@ Add to your ``dovecot-sql.conf`` file:
 PostgreSQL/Horde
 ================
 
-I used the following in ``devocot-sql.conf`` file to authenticate directly
+I used the following in ``dovecot-sql.conf`` file to authenticate directly
 against the Horde user/password database (with static userdb) on PostgreSQL:
 
 .. code-block:: none

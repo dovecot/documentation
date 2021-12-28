@@ -171,7 +171,7 @@ every message. This can cause "lockout" of the user until all the
 processes sequentially complete, potentially tens of seconds or minutes.
 If spamd is being used and the administrator is willing to accept the
 potential security issues of allowing unauthenticated learning of
-spam/ham, spamd can be envoked with the --allow-tell option and spamc
+spam/ham, spamd can be invoked with the --allow-tell option and spamc
 with the --learntype= option. Please consult the man pages of spamd and
 spamc for further details.
 
