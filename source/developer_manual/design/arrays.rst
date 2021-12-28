@@ -219,7 +219,7 @@ reallocate the array elsewhere in memory.
    Return a non-const pointer to the specified index.
    Assert-crashes if the index doesn't already exist.
    See also ``array_idx_get_space()``.
-``array_front_modifiabe(array)``
+``array_front_modifiable(array)``
    Return a non-const pointer to the first element in the array.
    Assert-crashes if the array is empty.
 ``array_back_modifiable(array)``
