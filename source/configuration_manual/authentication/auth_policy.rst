@@ -280,4 +280,4 @@ The JSON request is sent with two additional attributes:
 External Auth Policy Servers
 ============================
 
-- `OXpedia AppSuite:OX Abuse Shield <http://oxpedia.org/wiki/index.php?title=AppSuite:Dovecot_Antiabuse_Shield>`_
+- `OXpedia AppSuite:OX Abuse Shield <https://oxpedia.org/wiki/index.php?title=AppSuite:OX_Abuse_Shield>`_
