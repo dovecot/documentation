@@ -10,6 +10,7 @@ from sphinx import addnodes
 from sphinx.directives import ObjectDescription
 from sphinx.domains import Domain, Index
 from sphinx.roles import XRefRole
+from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
 from sphinx.util.nodes import make_refnode
 
@@ -177,6 +178,8 @@ class DovecotSettingDomain(Domain):
       return make_refnode(builder, fromdocname, todocname, targ, contnode,
                           targ)
     else:
+      logger = logging.getLogger(__name__)
+      logger.warning('Missing cross-reference: %r', target, location=node)
       return None
 
   def get_full_qualified_name(self, node):
