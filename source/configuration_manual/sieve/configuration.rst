@@ -75,7 +75,7 @@ The following options are defined for all location types:
 .. note::
   Pigeonhole versions before v0.3.1 do not support the location
   syntax described here. These versions only support bare filesystem paths
-  pointing to files or directores as script storage location. Also, in
+  pointing to files or directories as script storage location. Also, in
   that case a few additional :ref:`deprecated settings <pigeonhole_deprecated_settings>` are
   needed for configuration.
 
