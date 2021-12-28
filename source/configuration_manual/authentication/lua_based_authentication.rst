@@ -224,7 +224,7 @@ caution, the way Lua is used here means you can have multiple user password per
 line, instead of just one. This can be extended to more complicated separators
 or multiple fields per user.
 
-If you only want to autenticate users, and don't care about user listing, you
+If you only want to authenticate users, and don't care about user listing, you
 can use
 
 .. code-block:: none
