@@ -54,7 +54,7 @@ user=<username>
 If the name of the Script is left unspecified and not otherwise provided
 by the Sieve interpreter, the name defaults to \`\ ``default``'.
 
-The configuration file is based on the :ref:`LDAP Authenticaion
+The configuration file is based on the :ref:`LDAP Authentication
 configuration <authentication-ldap_settings_common>`. The
 following parameters are specific to the Sieve ldap configuration:
 
