@@ -104,7 +104,7 @@ Dovecot splits the full text search functionality into two parts:
 a common tokenization library (lib-fts) and backend indexing engine responsible for storing the tokens produced by the common library persistently.
 
 Some of the FTS backends do their own internal tokenization, although it's
-possible to configure them to use the lib-fts tokanization as well.
+possible to configure them to use the lib-fts tokenization as well.
 
 See :ref:`fts_tokenization` for more details about configuring the
 tokenization.
