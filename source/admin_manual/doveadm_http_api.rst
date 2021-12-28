@@ -2623,7 +2623,7 @@ parameters::
 |                   |              | One username per line                 |                                 |
 +-------------------+--------------+---------------------------------------+---------------------------------+
 | subscribe         | Boolean      | when enabled possible newly created   |                                 |
-|                   |              | folders are also subscibed            |                                 |
+|                   |              | folders are also subscribed           |                                 |
 +-------------------+--------------+---------------------------------------+---------------------------------+
 | sourceLocation    | String       | location of source mailboxes          |                                 |
 +-------------------+--------------+---------------------------------------+---------------------------------+
