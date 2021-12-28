@@ -48,7 +48,7 @@ Settings
    The following levels are supported:
 
    ======== ================== ============= =======
-   Name     Minimium           Default       Maximum
+   Name     Minimum            Default       Maximum
    ======== ================== ============= =======
    ``bz2``  1                  9             9
    ``gz``   0 (no compression) 6             9
