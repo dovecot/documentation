@@ -397,7 +397,7 @@ Simple example:
      while i do
        local r, c = http.request(ctx["ep"], "from=" .. url.escape(table_get(msg, "from", "")) .. "&to=" .. url.escape(table_get(msg, "to", "")) .. "&subject=" .. url.escape(table_get(msg, "subject", "")) .. "&snippet=" .. url.escape(table_get(msg, "snippet", "")) .. "&user=" .. url.escape(ctx["username"]))
        if r and c/100 ~= 2 then
-         dovecot.i_error("lua-push: Remote error " .. tostring(c) .. " handling push notication")
+         dovecot.i_error("lua-push: Remote error " .. tostring(c) .. " handling push notification")
        end
        if r == nil then
          dovecot.i_error("lua-push: " .. c)
