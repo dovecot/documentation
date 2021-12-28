@@ -394,7 +394,7 @@ See :ref:`settings` for list of all setting groups.
    :todo: List allowed formatting modifiers
    :values: @string
 
-   Formattting applied to username before querying the auth database.
+   Formatting applied to username before querying the auth database.
 
    You can use the standard variables here.
 
