@@ -39,6 +39,7 @@ addition of proxy field. The common fields to use for both proxying ways are:
   Useful when dividing users across multiple director clusters.
 
 * ``host=s``: The destination server's IP address. This field is required.
+* ``director_tag=s``: The destination tag name.
 * ``source_ip=s``: The source IP address to use for outgoing connections.
 
   .. versionadded:: v2.2.14
