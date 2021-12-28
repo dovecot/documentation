@@ -2428,7 +2428,7 @@ See :ref:`settings` for list of all setting groups.
 
    This may happen when mail messages do not have their virtual sizes cached.
 
-   When indexing is occuring in the background, explicit quota size queries
+   When indexing is occurring in the background, explicit quota size queries
    return an internal error and mail deliveries are assumed to succeed.
 
    This setting must not be set to indexer-worker process, or the background
