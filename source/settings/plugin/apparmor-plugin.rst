@@ -26,5 +26,5 @@ Settings
 
      plugin {
        apparmor_hat = hat_name
-       apparamor_hat2 = another_hat
+       apparmor_hat2 = another_hat
      }
