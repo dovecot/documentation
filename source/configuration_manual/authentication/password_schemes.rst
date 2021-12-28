@@ -195,7 +195,7 @@ Other schemes
 
 * **ARGON2I**: ARGON2i password scheme, needs libsodium
 * **ARGON2ID**: ARGON2id password scheme, needs libsodium
-* **PBKDF2**: PKCS5 Password hashing algortihm.
+* **PBKDF2**: PKCS5 Password hashing algorithm.
   Note that there is no standard encoding for this format, so this scheme may not be interoperable with other software.
   Dovecot implements it as "$1$salt$rounds$hash".
 
