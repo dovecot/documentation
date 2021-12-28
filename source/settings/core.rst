@@ -1427,7 +1427,7 @@ See :ref:`settings` for list of all setting groups.
      lda_original_recipient_header = X-Original-To
 
 
-.. dovecot_core:setting:: libexc_dir
+.. dovecot_core:setting:: libexec_dir
    :default: /usr/libexec/dovecot
    :values: @string
 
