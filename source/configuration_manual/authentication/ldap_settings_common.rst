@@ -94,7 +94,7 @@ Password for LDAP server, used if :ref:`ldap_settings_common-dn` is specified.
 
 A space separated list of LDAP hosts to connect to.
 Configure either this setting or :ref:`ldap_settings_common-uris` to specify
-what LDAP server(s) to conenct to.
+what LDAP server(s) to connect to.
 You can also use host:port syntax to use different ports.
 
 Example:
@@ -281,7 +281,7 @@ Currently supported only with OpenLDAP.
 
 LDAP URIs to use.
 Configure either this setting or :ref:`ldap_settings_common-hosts` to specify
-what LDAP server(s) to conenct to.
+what LDAP server(s) to connect to.
 Note that this setting isn't supported by all LDAP libraries.
 The URIs are in syntax ``protocol://host:port``.
 
