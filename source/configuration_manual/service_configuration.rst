@@ -192,7 +192,7 @@ The master auth process. There are 4 types of auth client connections:
    * **login**: Starts a two phase user login by performing authenticating (same as`client` type). Used by login processes.
    * **master**: Finishes the two phase user login by performing a userdb lookup (similar to "userdb" type). Used by post-login processes (e.g. imap, pop3).
 
-With UNIX listeners the client type is selected based on the filename after the last ``-`` in the filename. For example ``anything-userdb`` is of `userdb` type. The default type is `client` for inet insteners and unrecognized UNIX listeners. You can add as many client and userdb listeners as you want (and you probably shouldn't touch the login/master listeners).
+With UNIX listeners the client type is selected based on the filename after the last ``-`` in the filename. For example ``anything-userdb`` is of `userdb` type. The default type is `client` for inet listeners and unrecognized UNIX listeners. You can add as many client and userdb listeners as you want (and you probably shouldn't touch the login/master listeners).
 
    * **client_limit** should be large enough to handle all the simultaneous connections.
      Dovecot attempts to verify that the limit is high enough at startup.
