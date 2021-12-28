@@ -88,7 +88,7 @@ Lenny Update
 On Debian Lenny I had a couple of problems. For historic reasons, I have
 inboxes in /var/mail/$USER. The most elegant approach was to add the
 auth master socket in the dovecot configuration, then chmod 1777
-/var/mail (root/mail) and use this procamil file:
+/var/mail (root/mail) and use this procmail file:
 
 ::
 
