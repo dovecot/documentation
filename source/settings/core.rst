@@ -130,7 +130,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: auth_mechanisms
    :default: plain
-   :values: plain, login, digest-md5, cram-md5, ntml, rpa, apop, anonymous, gssapi, otp, skey, gss-spnego
+   :values: plain, login, digest-md5, cram-md5, ntlm, rpa, apop, anonymous, gssapi, otp, skey, gss-spnego
 
    Here you can supply a space-separated list of the authentication
    mechanisms you wish to use.
