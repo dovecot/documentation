@@ -60,6 +60,12 @@ Sample Configuration:
     # This reduces unnecessary disk I/O when only global ACLs are used.
     # (v2.2.31+)
     #acl_globals_only = yes
+
+    # Namespace prefix to ignore. Use counter to ignore multiple, e.g. acl_ignore_namespace2
+    #acl_ignore_namespace =
+
+    # Dict for mapping which users have shared mailboxes to each other.
+    #acl_shared_dict =
   }
 
 
@@ -103,8 +109,8 @@ child's ACLs stay the same. There is currently no support for ACL inheritance.
 .. NOTE::
 
   Currently the default ACLs are merged with the mailbox-specific ACLs. So if a
-  default ACL gives access to `user1` and a per-mailbox ACL gives access to
-  `user2`, the `user1` still has access to that mailbox.
+  default ACL gives access to ``user1`` and a per-mailbox ACL gives access to
+  ``user2``, the ``user1`` still has access to that mailbox.
 
 Global ACLs
 ===========
@@ -113,7 +119,7 @@ Global ACLs can be used to apply ACLs globally to all user's specific
 mailboxes. They are used mainly for two purposes:
 
 1. Removing some permissions from users' personal mailboxes. For example each
-   user might have an `Invoices` mailbox which will be read-only.
+   user might have an ``Invoices`` mailbox which will be read-only.
 2. Giving permissions to master user logins. See
    :ref:`ACLs at Master users <authentication-master_users_acls>` for more information.
 
@@ -128,7 +134,7 @@ Global ACL file
 
 .. versionadded:: v2.2.11
 
-Global ACL file path is specified as a parameter to vfile backend in ``acl``
+Global ACL file path is specified as a parameter to vfile backend in :dovecot_plugin:ref:`acl <acl>`
 setting (``/etc/dovecot/dovecot-acl`` in the above example). The file contains
 otherwise the same data as regular per-mailbox ``dovecot-acl`` files, except
 each line is prefixed by the mailbox name pattern. The pattern may contain
@@ -162,15 +168,15 @@ Example:
 * archives/2007: ``/etc/dovecot/acls/archives/2007``
 
 The filenames must start with namespace prefix (if it has one). For example
-with namespace ``prefix=INBOX/`` containing mailbox `foo` use
+with namespace ``prefix=INBOX/`` containing mailbox ``foo`` use
 ``/etc/dovecot/acls/INBOX/foo``.
 
 There is an extra problem with mailbox formats that use '/' as the separator
-(e.g. mbox, dbox): For example if you have mailboxes `foo` and `foo/bar` and
+(e.g. mbox, dbox): For example if you have mailboxes ``foo`` and ``foo/bar`` and
 you wish to give ACLs to both of them, you can't create both
 ``/etc/dovecot/acls/foo`` and ``/etc/dovecot/acls/foo/bar`` files. The foo has
 to be either a directory or a file, it can't be both. To solve this problem,
-you can instead create a .DEFAULT file for `foo`:
+you can instead create a .DEFAULT file for ``foo``:
 
 * foo: ``/etc/dovecot/acls/foo/.DEFAULT``
 * foo/bar: ``/etc/dovecot/acls/foo/bar``
@@ -244,7 +250,7 @@ Named ACLs are mostly intended for future extensions.
 Examples
 ^^^^^^^^
 
-Mailbox owner has all privileges, `timo` has list-read privileges:
+Mailbox owner has all privileges, ``timo`` has list-read privileges:
 
 .. code-block:: none
 
@@ -283,4 +289,10 @@ Placing the ACL file makes the ACL effective, but Dovecot doesn't take care of
 the user to shared mailboxes mapping out of the box, and as a result, it won't
 publish shared mailboxes to clients if this is not set up. You have to
 configure this manually by defining an appropriate :ref:`dictionary <dict>` to
-store the share map.
+store the map using :dovecot_plugin:ref:`acl_shared_dict setting <acl_shared_dict>`.
+
+.. code::
+
+   plugin {
+      acl_shared_dict = file:/var/lib/dovecot/dovecot-acl.db
+   }
