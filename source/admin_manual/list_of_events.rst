@@ -366,7 +366,7 @@ Common fields
 |                     | .. versionadded:: v2.3.12                            |
 +---------------------+------------------------------------------------------+
 | real_remote_ip      | Same as remote_ip, except if the connection was      |
-|                     | proxied, this is the proxy's IP adderss.             |
+|                     | proxied, this is the proxy's IP address.             |
 |                     |                                                      |
 |                     | .. versionadded:: v2.3.12                            |
 +---------------------+------------------------------------------------------+

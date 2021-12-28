@@ -265,15 +265,15 @@ redirected in the Sieve script shown above.
 
    # DB STRUCTURE
    #CREATE TABLE `sieve_count` (
-   #  `from_addres` varchar(254) NOT NULL,
+   #  `from_address` varchar(254) NOT NULL,
    #  `date` datetime NOT NULL
    #) ENGINE=InnoDB DEFAULT CHARSET=latin1;
    #
    #ALTER TABLE `sieve_count`
-   #  ADD KEY `from_addres` (`from_addres`);
+   #  ADD KEY `from_address` (`from_address`);
 
-   MAILS=$(mysql -u$USER -p$PASS $DATABASE --batch --silent -e "SELECT count(*) as ile FROM sieve_count WHERE from_addres='$1' AND DATE_SUB(now(),INTERVAL $2 SECOND) < date;")
-   ADDRESULT=$(mysql -u$USER -p$PASS $DATABASE --batch --silent -e "INSERT INTO sieve_count (from_addres, date) VALUES ('$1', NOW());")
+   MAILS=$(mysql -u$USER -p$PASS $DATABASE --batch --silent -e "SELECT count(*) as ile FROM sieve_count WHERE from_address='$1' AND DATE_SUB(now(),INTERVAL $2 SECOND) < date;")
+   ADDRESULT=$(mysql -u$USER -p$PASS $DATABASE --batch --silent -e "INSERT INTO sieve_count (from_address, date) VALUES ('$1', NOW());")
 
    # uncoment below to debug
    # echo Uset $1 sent $MAILS in last $2 s >> /usr/lib/dovecot/sieve-pipe/output.txt
