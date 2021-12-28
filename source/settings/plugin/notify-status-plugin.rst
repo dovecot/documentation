@@ -66,7 +66,7 @@ Settings
    Field                   Value
    ======================= ============================================
    ``first_recent_uid``    First recent UID
-   ``highest_modseq``      Higest modification sequence number
+   ``highest_modseq``      Highest modification sequence number
    ``highest_pvt_modseq``  Highest private modification sequence number
    ``mailbox``             Mailbox name
    ``messages``            Number of messages
