@@ -5525,7 +5525,7 @@ example::
 
 .. code::
 
-    curl  -v -u doveadm:secretpassword -X POST http://localhost:ype: application/json" -d '[["who", {}, "tag1"]] ' http://localhost:8080/doveadm/v1
+    curl  -v -u doveadm:secretpassword -X POST -H "Content-Type: application/json" -d '[["who", {}, "tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
