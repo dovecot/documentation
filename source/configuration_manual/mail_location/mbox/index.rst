@@ -138,7 +138,7 @@ files, you can work around not having a per-user directory:
 Directory Layout
 ^^^^^^^^^^^^^^^^
 
-By defaultm Dovecot uses filesystem layout under mbox. This means that mail is
+By default Dovecot uses filesystem layout under mbox. This means that mail is
 stored in mbox files under hierarchical directories, for example:
 
 ================== =============================================================
