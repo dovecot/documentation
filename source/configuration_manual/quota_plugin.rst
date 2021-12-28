@@ -13,7 +13,7 @@ Three plugins are associated with quota:
 Name                                    Description
 ======================================= ========================================
 :ref:`imap_quota <plugin-imap-quota>`   Enables IMAP commands for requesting
-                                        and adminstering current quota.
+                                        and administering current quota.
 quota                                   Implements the actual quota handling
                                         and includes all quota backends.
 :ref:`quota_clone <quota_clone_plugin>` Copy the current quota usage to a dict.
