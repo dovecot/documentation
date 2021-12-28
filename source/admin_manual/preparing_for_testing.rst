@@ -12,7 +12,7 @@ System configuration
 
 Dovecot configuration
 ^^^^^^^^^^^^^^^^^^^^^
-Enable LTMP delivery times in the configuration:
+Enable LMTP delivery times in the configuration:
 
 .. code-block:: none
 
