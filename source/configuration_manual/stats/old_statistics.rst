@@ -172,8 +172,8 @@ can contain zero of more filters:
 ====================== ============================================================================================================================
    connected            The session must be currently connected (or the user/domain/ip must have at least one session that is currently connected)
    since=<timestamp>    Last update was since this UNIX timestamp
-   user=<wildcard>      Username matches this wildard
-   domain=<wildcard>    Domain name matches this wildard
+   user=<wildcard>      Username matches this wildcard
+   domain=<wildcard>    Domain name matches this wildcard
    ip=<ip>[/bits]       IP address matches this IP/network (e.g. 192.168.1.0/24)
 ====================== ============================================================================================================================
 
