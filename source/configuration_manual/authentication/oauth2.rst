@@ -67,7 +67,7 @@ Without proxy authentication
 
   passdb {
     driver = static
-    args = nopasssword=y proxy=y proxy_mech=%m ...
+    args = nopassword=y proxy=y proxy_mech=%m ...
   }
 
 or with proxy authentication, put into ``dovecot-oauth2.conf.ext``
