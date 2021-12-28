@@ -266,7 +266,7 @@ See :ref:`settings` for list of all setting groups.
    :default: 2000
    :values: @time_msecs
 
-   Auth polcy request timeout.
+   Auth policy request timeout.
 
 
 .. dovecot_core:setting:: auth_policy_server_url
