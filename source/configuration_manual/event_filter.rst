@@ -163,7 +163,7 @@ Global filter syntax
   (see :ref:`event_filter_new_lang`)
 
 Since v2.3.12, settings such as :dovecot_core:ref:`log_debug` use the common
-filtering languge.  For example::
+filtering language.  For example::
 
   log_debug = (event=http_request_finished AND category=imap) OR \
               (event=imap_command_finished AND user=testuser)
