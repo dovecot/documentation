@@ -28,11 +28,11 @@ required required for all high performance mailbox formats (sdbox, mdbox, obox).
 The index files were implemented to optimize Dovecot, so the file formats
 attempt to be efficient. The index files are often mmap()ed into memory and
 accessed directly via structs. This means that the data is stored using the
-CPU endianess, and all structs that end up in index files have to be careful
+CPU endianness, and all structs that end up in index files have to be careful
 with data alignment to avoid crashes with CPUs that require the alignment.
 
 At times there have been thoughts about changing index handling so it wouldn't
-care about CPU endianess or alignment, but this would be a huge change and
+care about CPU endianness or alignment, but this would be a huge change and
 the end result would almost certainly be worse performance. This is mostly a
 theoretical problem anyway: It's very unlikely that index files are moving
 between little and big endian CPUs, and if that is actually wanted the mails
