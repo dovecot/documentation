@@ -53,7 +53,7 @@ flags:
 
 Changes for a transaction are kept in memory until the transaction is
 committed. If you want to cancel the changes, you can call
-``mailbox_transaction_rollback()``. Transaction can be commited with
+``mailbox_transaction_rollback()``. Transaction can be committed with
 ``mailbox_transaction_commit()``. If you want to know a bit more about
 the results of the transaction, use
 ``mailbox_transaction_commit_get_changes()`` instead. It returns a
