@@ -30,7 +30,7 @@ All metric names are prefixed with ``dovecot_`` and each non-histogram metric is
 Dynamically generated statistics with :ref:`group_by <statistics_group_by>` will be exported too.
 The name of the base metric is used as above, and any dynamically generated sub-metrics are exported using labels.
 Quantized sub-metrics are exported as histograms.
-Histgorams are exported as ``dovecot_<metric_name>_bucket`` with corresponding labels. Each histogram will have
+Histograms are exported as ``dovecot_<metric_name>_bucket`` with corresponding labels. Each histogram will have
 an automatically generated ``_sum`` (specifying sum of all values in quantiles) and ``_count`` (total number of samples in the quantiles) metrics.
 
 .. versionchanged:: 2.3.14 Histogram metrics will no longer have "histogram" in their name added by dovecot.
