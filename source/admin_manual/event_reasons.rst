@@ -33,28 +33,18 @@ Mailbox
 Mail
 ----
 
- * ``mail:virtual_size`` - Mail's virtual size
- * ``mail:physical_size`` - Mail's physical size
+These events are sent only when they cause a mail body to be opened (not when
+they are read from cache):
+
  * ``mail:snippet`` - Message snippet / IMAP PREVIEW
- * ``mail:prefetch`` - Mail is being prefetched for some purpose.
    The other reasons may give further details why.
  * ``mail:header_fields`` - A specified list of headers.
    These are normally expected to be returned from cache.
  * ``mail:attachment_keywords`` - ``$HasAttachment`` or ``$HasNoAttachment`` keyword is being generated.
  * ``mail:mime_parts`` - MIME part structure
  * ``mail:date`` - Date header
- * ``mail:received_date`` - Received date / IMAP INTERNALDATE
- * ``mail:save_date`` - Save date
- * ``mail:storage_id`` - Internal storage ID (e.g. obox object ID)
  * ``mail:imap_envelope`` - IMAP ENVELOPE
  * ``mail:imap_bodystructure`` - IMAP BODY / BODYSTRUCTURE
- * ``mail:pop3_uidl`` - POP3 UIDL
- * ``mail:pop3_order`` - POP3 message order
- * ``mail:guid`` - GUID
- * ``mail:refcount`` - Message's reference count, if supported by storage driver.
-   For example based on hard link count.
- * ``mail:refcount_id`` - Unique ID identifying that the refcount is counting.
-   For example file's inode number.
 
 imap
 ----
