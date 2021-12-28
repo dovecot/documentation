@@ -42,8 +42,8 @@ OX Dovecot Pro IMAP Proxy Authentication plug-in
 .. literalinclude:: dovecot-2.3.13-rev4-imap-proxyauth-plugin.repo
      :language: none
 
-OX Dovecot Pro Pigeonhole Sieve Zimbra compability plug-in
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OX Dovecot Pro Pigeonhole Sieve Zimbra compatibility plug-in
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. literalinclude:: dovecot-2.3.13-rev4-pigeonhole-sieve-zimbra-compat-plugin.repo
      :language: none

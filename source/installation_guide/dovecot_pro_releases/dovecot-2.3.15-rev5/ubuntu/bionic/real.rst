@@ -31,8 +31,8 @@ OX Dovecot Pro Object Storage Development Tools - fs-server backend
 .. literalinclude:: dovecot-2.3.15-rev5-fsserver.list
      :language: none
 
-OX Dovecot Pro Pigeonhole Sieve Zimbra compability plug-in
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OX Dovecot Pro Pigeonhole Sieve Zimbra compatibility plug-in
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. literalinclude:: dovecot-2.3.15-rev5-pigeonhole-sieve-zimbra-compat-plugin.list
      :language: none
