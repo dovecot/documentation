@@ -38,7 +38,7 @@ Example:
 
 However, the problem with this with obox is that the mail files are written
 compressed to fscache. On one hand this increases the fscache's file, but on
-the other hand it requres Dovecot to always uncompress the files before
+the other hand it requires Dovecot to always uncompress the files before
 accessing them.
 
 This decompression uses a temporary file that is written to
