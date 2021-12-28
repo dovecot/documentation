@@ -35,13 +35,17 @@ for storing the entries.
 Database schema
 ---------------
 
+Since username is a primary key, it is required to have some value. When empty,
+it means that the value applies to keys with ``shared/`` prefix. Keys with ``priv/``
+prefix are expected to have a non-empty username.
+
 .. code:: sql
 
   CREATE TABLE metadata (
-    attr_name VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL DEFAULT '',
+    attr_name VARCHAR(255) NOT NULL,
     attr_value VARCHAR(65535),
-    PRIMARY KEY(attr_name, username)
+    PRIMARY KEY(username, attr_name)
   );
 
 Configuration
@@ -68,10 +72,3 @@ Then in dovecot add::
   }
 
   mail_attribute_dict = proxy::metadata
-
-Storing metadata in redis
-=========================
-
-To use redis, you can use::
-
-  mail_attribute_dict = redis:127.0.0.1  
