@@ -54,7 +54,7 @@ format to another (see the dsync page examples).
 
 When this plugin is loaded Dovecot can read both compressed and uncompressed
 files from Maildir. The files within a Maildir can use any supported
-compression algorithm (e.g., some can be compressed uzing gzip, while others
+compression algorithm (e.g., some can be compressed using gzip, while others
 are compressed using zstd). The algorithm is detected by reading the first
 few bytes from the file and figuring out if it's a valid gzip or bzip2 header.
 The file name doesn't matter.
