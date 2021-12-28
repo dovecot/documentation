@@ -82,7 +82,7 @@ Sometimes syslog is configured to log all info level logging to ``/var/log/messa
 Syslog rate limiting
 ^^^^^^^^^^^^^^^^^^^^
 
-rsyslog is configured with flood control enabled by default. Since Dovecot can log a lot in some situations, especially with debug loggine enabled, this causes log messages to be lost.
+rsyslog is configured with flood control enabled by default. Since Dovecot can log a lot in some situations, especially with debug logging enabled, this causes log messages to be lost.
 
 The rate limiting should be disabled in ``/etc/rsyslog.conf``:
 
