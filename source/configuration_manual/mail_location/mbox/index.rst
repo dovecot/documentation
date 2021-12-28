@@ -254,7 +254,7 @@ Settings
    :default: yes
    :values: @boolean
 
-   If enabled, mbox headers (e.g., meatadat updates, such as writing X-UID
+   If enabled, mbox headers (e.g., metadata updates, such as writing X-UID
    headers or flag changes) are not written until a full write sync is
    performed (triggered via IMAP EXPUNGE or CHECK commands and/or when the
    mailbox is closed). mbox rewrites can be costly, so this may avoid a lot of
