@@ -519,7 +519,7 @@ Settings
 
         Description of the normalizing/transliterating rules to use. See
         `Normalizer Format` for syntax. Defaults to ``Any-NFKC`` which is
-        quite good for CJK text mixed with latix alphabet languages. It
+        quite good for CJK text mixed with latin alphabet languages. It
         transforms CJK characters to full-width encoding and transforms latin
         ones to half-width. The NFKC transformation is described above.
 
