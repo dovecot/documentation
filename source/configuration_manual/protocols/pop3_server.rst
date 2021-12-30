@@ -34,7 +34,7 @@ must not be done for existing files, only to newly delivered mails.
 If Dovecot's LDA is used, dovecot-uidlist and the index files are updated upon
 message arrival, therefore there will be no message-size performance issues.
 
-``pop3_fast_size_lookups=yes`` settinguses the virtual message sizes when
+``pop3_fast_size_lookups=yes`` setting uses the virtual message sizes when
 they're already available, but fallbacks to using the physical message sizes
 (violating POP3 specifications, but then again a lot of POP3 servers do that).
 

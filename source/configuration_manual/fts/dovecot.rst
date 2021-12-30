@@ -98,7 +98,7 @@ Lookups
 
 The precise techniques for doing lookups depends on whether it's an AND or
 an OR query. AND permits early aborts before any of the L file is even
-touched. OR invites no such optimisation.
+touched. OR invites no such optimization.
 
 Example Configuration:
 ----------------------

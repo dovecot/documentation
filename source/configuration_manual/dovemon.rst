@@ -67,7 +67,7 @@ During all of the time dovemon inspects the backends, it keeps track of latency
 of each backend. However, this information is not used for decision making and
 are only written to logs.
 
-Init scripts for Debian and Redhat systems are provided in binary packages in
+Init scripts for Debian and Red Hat systems are provided in binary packages in
 form of Systemd unit files but they need to be enabled manually. By default
 they are disabled.
 

@@ -99,7 +99,7 @@ follows:
         #pragma GCC push_options
         #pragma GCC optimize (0)
         #else
-        #warning GCC not new enough to support local optimisation pragmas
+        #warning GCC not new enough to support local optimization pragmas
         #endif
         #endif
 

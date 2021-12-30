@@ -45,12 +45,12 @@ over few larger machines. These smaller machines might not be economical in
 physical servers, but are useful for virtualised hardware where several virtual
 machines can be combined together to utilise a single physical host.
 
-Proxy Virtualisation
+Proxy Virtualization
 ^^^^^^^^^^^^^^^^^^^^
 
 Proxy layer sizing for physical servers: 2-4 cores per instance. As 2 core
 physical machines are rare nowadays on servers, proxies are ideal targets for
-virtualisation. Typically on physical servers 4 cores are used if SSL is
+virtualization. Typically on physical servers 4 cores are used if SSL is
 offloaded from IMAPS to IMAP on the proxies. In most customer projects SSL is
 offloaded on the physical Load Balancer, such as `F5
 <https://www.f5.com/services/resources/glossary/load-balancer>`_, which leaves
@@ -64,12 +64,12 @@ system.
 The proxy layer can also be expanded by adding more instances of proxy nodes
 which is easy in virtualised environments.
 
-Director Virtualisation
+Director Virtualization
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 Director layer sizing for physical servers: 2-4 cores per instance. As 2 core
 physical machines are rare nowadays on servers, directors are ideal targets for
-virtualisation. The director process is typically running on a single CPU, so
+virtualization. The director process is typically running on a single CPU, so
 to utilise the added cores there needs to be more processes assigned, one per
 core. Please see also `Virtualised Director sizing` below.
 
@@ -80,7 +80,7 @@ system.
 The director layer can also be expanded by adding more instances of director
 nodes which is easy in virtualised environments.
 
-Backend Virtualisation
+Backend Virtualization
 ^^^^^^^^^^^^^^^^^^^^^^
 
 Backend layer sizing for physical servers: 4-8 cores per instance. As the

@@ -5405,8 +5405,8 @@ parameters::
 |             |              |                                         |                                 |
 |             |              | service                                 |                                 |
 |             |              |    The service for which the            |                                 |
-|             |              |    userdb           uld be tested. The  |                                 |
-|             |              |    value may be thename of a service,   |                                 |
+|             |              |    userdb        should be tested. The  |                                 |
+|             |              |    value may be the name of a service,  |                                 |
 |             |              |    commonly used with Dovecot. For      |                                 |
 |             |              |    example: imap , pop3 or smtp.        |                                 |
 |             |              | lip                                     |                                 |
@@ -5525,7 +5525,7 @@ example::
 
 .. code::
 
-    curl  -v -u doveadm:secretpassword -X POST http://localhost:ype: application/json" -d '[["who", {}, "tag1"]] ' http://localhost:8080/doveadm/v1
+    curl  -v -u doveadm:secretpassword -X POST -H "Content-Type: application/json" -d '[["who", {}, "tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
