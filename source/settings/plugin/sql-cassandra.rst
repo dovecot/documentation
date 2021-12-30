@@ -1,8 +1,8 @@
 .. _sql-cassandra:
 
-====================
-SQL Driver Cassandra
-====================
+=====================
+SQL Driver: Cassandra
+=====================
 
 Driver name ``cassandra``.
 
@@ -10,257 +10,296 @@ Driver for Apache Cassandra CQL server.
 
 To compile support for this driver, you need to have DataStax C/C++ driver and headers installed.
 
-Supported options
+Supported Options
 =================
 
-``host``
---------
-- Default: <empty>
-- Values: :ref:`string`
+.. dovecot_core:setting:: connect_timeout
+   :default: 5s
+   :domain: sql-cassandra
+   :values: @time_msecs
 
-Host or IP address to connect. Can appear multiple times.
+   Connection timeout.
 
-``port``
---------
-- Default: ``9042``
-- Values: :ref:`uint`
 
-CQL port to use.
+.. dovecot_core:setting:: dbname
+   :domain: sql-cassandra
+   :hdr_only: yes
 
-``keyspace``
-------------
-- Default: <empty>
-- Values: :ref:`string`
+   Alias for :dovecot_core:ref:`sql-cassandra;keyspace`.
 
-Specifies the keyspace name to use.
 
-``dbname``
-----------
+.. dovecot_core:setting:: debug_queries
+   :default: no
+   :domain: sql-cassandra
+   :values: @boolean
 
-Alias for ``keyspace``.
+   Whether to log CQL queries.
 
-``version``
------------
-- Default: Depends on driver version.
-- Values: ``v3``, ``v4``, ``v5`` (refer to cassandra manual).
+   .. note:: This setting behaves differently than other boolean settings.
+             The feature is enabled by presence of the keyword in connect
+             string, so to disable this feature, you must remove the keyword
+             completely.
 
-Cassandra driver version to use. It is good idea to specify this to avoid warnings about version handshake.
-If you want to use server-side prepared statements, you need to use at least ``v4``.
 
-``user``
---------
-- Default: <empty>
-- Values: :ref:`string`
+.. dovecot_core:setting:: delete_consistency
+   :default: local-quorum
+   :domain: sql-cassandra
+   :seealso: @dictmap_cassandra_quorum_configuration
+   :values: !:ref:`cassandra_consistency`
 
-Username for authentication.
+   Write consistency when deleting from the database.
 
-``password``
-------------
-- Default: <empty>
-- Values: :ref:`string`
 
-Password for authentication.
+.. dovecot_core:setting:: delete_fallback_consistency
+   :default: local-quorum
+   :domain: sql-cassandra
+   :seealso: @dictmap_cassandra_fallback_consistency
+   :values: !:ref:`cassandra_consistency`
 
-``ssl_ca``
-----------
-- Default: <empty>
-- Values: :ref:`string`
+   Write consistency when deleting from the database fails with primary
+   consistency.
 
-Path to SSL certificate authority file to use to validate peer certificate.
 
-``ssl_cert_file``
------------------
-- Default: <empty>
-- Values: :ref:`string`
+.. dovecot_core:setting:: execution_retry_interval
+   :default: 0
+   :domain: sql-cassandra
+   :seealso: !https://docs.datastax.com/en/developer/java-driver/4.13/manual/core/speculative_execution/
+   :values: @time_msecs
 
-Path to a certificate file to use for authenticating against the remote server.
+   If the driver supports speculative execution policy, configures constant
+   speculative execution policy.
 
-``ssl_private_key_file``
-------------------------
-- Default: <empty>
-- Values: :ref:`string`
 
-Path to private key matching ``ssl_cert_file`` to use for authenticating against the remote server.
+.. dovecot_core:setting:: execution_retry_times
+   :default: 0
+   :domain: sql-cassandra
+   :seealso: !https://docs.datastax.com/en/developer/java-driver/4.13/manual/core/speculative_execution/
+   :values: @time_msecs
 
-``ssl_verify``
----------------
-- Default: ``none``
-- Values: ``none``, ``cert``, ``cert-ip``, ``cert-dns``
+   If the driver supports speculative execution policy, configures constant
+   speculative execution policy.
 
-Configure the peer certificate validation method.
 
-``none``
-  Disables validation
+.. dovecot_core:setting:: heartbeat_interval
+   :default: 5s
+   :domain: sql-cassandra
+   :values: @time
 
-``cert``
-  Validate that the certificate is valid.
+   How often to send keepalive packets to cassandra nodes.
 
-``cert-ip``
-  Validate that the certificate is valid and has Common Name or Subject Alternate Name for the IP address.
 
-``cert-dns``
-   Validate that the certificate is valid and has Common Name or Subject Alternate Name that matches PTR resource record for the server's IP address.
+.. dovecot_core:setting:: host
+   :domain: sql-cassandra
+   :values: @string
 
-``log_level``
---------------
-- Default: ``warn``
-- Values: ``critical``, ``error``, ``warn``, ``info``, ``debug``, ``trace``
+   Host or IP address to connect. Can appear multiple times.
 
-Driver log level.
 
-``debug_queries``
------------------
-- Default: no
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: idle_timeout
+   :default: 0
+   :domain: sql-cassandra
+   :values: @time_msecs
 
-Whether to log CQL queries. Note that this setting behaves differently than other boolean settings.
-The feature is enabled by presence of the keyword in connect string, so to disable this feature,
-you must remove the keyword completely.
+   How long to idle before disconnecting.
 
-``metrics``
------------
-- Default: <empty>
-- Values: :ref:`string`
 
-Path where to write JSON metrics.
+.. dovecot_core:setting:: keyspace
+   :domain: sql-cassandra
+   :values: @string
 
-.. seealso:: :ref:`cassandra_metrics_json_output`
+   Specifies the keyspace name to use.
 
-``num_threads``
-----------------
-- Default: <driver dependent>
-- Values: :ref:`uint`
 
-Set number of IO threads to handle query requests.
+.. dovecot_core:setting:: latency_aware_routing
+   :default: no
+   :domain: sql-cassandra
+   :values: @boolean
 
-``page_size``
--------------
-- Default: -1
-- Values: :ref:`uint`, ``-1`` to disable.
+   When turned on, latency-aware routing tracks the latency of queries to
+   avoid sending new queries to poorly performing Cassandra nodes.
 
-When a query returns many rows, it can be sometimes inefficient to return them as a single response message.
-Instead, the driver can break the results into pages which get returned as they are needed.
-This setting controls the size of each page.
+   .. note:: The feature is enabled by presence of the keyword in connect
+             string, so to disable this feature, you must remove the keyword
+             completely.
 
-``read_consistency``
---------------------
-- Default: ``local-quorum``
-- Values: :ref:`cassandra_consistency`
 
-Read consistency.
+.. dovecot_core:setting:: log_level
+   :default: warn
+   :domain: sql-cassandra
+   :values: critical, error, warn, info, debug, trace
 
-.. seealso:: :ref:`dictmap_cassandra_quorum_configuration`.
+   Driver log level.
 
-``read_fallback_consistency``
------------------------------
-- Default: ``local-quorum``
-- Values: :ref:`cassandra_consistency`
 
-Read consistency if primary consistency fails.
+.. dovecot_core:setting:: metrics
+   :domain: sql-cassandra
+   :seealso: @cassandra_metrics_json_output
+   :values: string
 
-.. seealso:: :ref:`dictmap_cassandra_fallback_consistency`
+   Path where to write JSON metrics.
 
-``write_consistency``
----------------------
-- Default: ``local-quorum``
-- Values: :ref:`cassandra_consistency`
 
-Write consistency when updating or inserting to the database.
+.. dovecot_core:setting:: num_threads
+   :default: !<driver dependent>
+   :domain: sql-cassandra
+   :values: @uint
 
-.. seealso:: :ref:`dictmap_cassandra_quorum_configuration`.
+   Set number of IO threads to handle query requests.
 
-``write_fallback_consistency``
-------------------------------
-- Default: ``local-quorum``
-- Values: :ref:`cassandra_consistency`
 
-Write consistency when updating or inserting to the database fails with primary consistency.
+.. dovecot_core:setting:: page_size
+   :default: -1
+   :domain: sql-cassandra
+   :values: @uint
 
-.. seealso:: :ref:`dictmap_cassandra_fallback_consistency`
+   When a query returns many rows, it can be sometimes inefficient to return
+   them as a single response message. Instead, the driver can break the
+   results into pages which get returned as they are needed.
 
-``delete_consistency``
-----------------------
-- Default: ``local-quorum``
-- Values: :ref:`cassandra_consistency`
+   This setting controls the size of each page.
 
-Write consistency when deleting from the database.
+   Set to ``-1`` to disable.
 
-.. seealso:: :ref:`dictmap_cassandra_quorum_configuration`.
 
-``delete_fallback_consistency``
--------------------------------
-- Default: ``local-quorum``
-- Values: :ref:`cassandra_consistency`
+.. dovecot_core:setting:: password
+   :domain: sql-cassandra
+   :values: @string
 
-Write consistency when deleting from the database fails with primary consistency.
+   Password for authentication.
 
-.. seealso:: :ref:`dictmap_cassandra_fallback_consistency`
 
-``latency_aware_routing``
--------------------------
-- Default: no
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: port
+   :default: 9042
+   :domain: sql-cassandra
+   :values: @uint
 
-When turned on, latency-aware routing tracks the latency of queries to avoid sending new queries to poorly performing Cassandra nodes.
-The feature is enabled by presence of the keyword in connect string, so to disable this feature,
-you must remove the keyword completely.
+   CQL port to use.
 
-``idle_timeout``
-----------------
-- Default: 0
-- Values: :ref:`time_msecs`
 
-How long to idle before disconnecting.
+.. dovecot_core:setting:: read_consistency
+   :default: local-quorum
+   :domain: sql-cassandra
+   :seealso: @dictmap_cassandra_quorum_configuration
+   :values: !:ref:`cassandra_consistency`
 
-``connect_timeout``
--------------------
-- Default: 5s
-- Values: :ref:`time_msecs`
+   Read consistency.
 
-Connection timeout.
 
-``request_timeout``
--------------------
-- Default: 60s
-- Values: :ref:`time_msecs`
+.. dovecot_core:setting:: read_fallback_consistency
+   :default: local-quorum
+   :domain: sql-cassandra
+   :seealso: @dictmap_cassandra_fallback_consistency
+   :values: !:ref:`cassandra_consistency`
 
-How long to wait for a query to finish.
+   Read consistency if primary consistency fails.
 
-``warn_timeout``
-----------------
-- Default: 5s
-- Values: :ref:`time_msecs`
 
-Emit warning if query takes longer than this.
+.. dovecot_core:setting:: request_timeout
+   :default: 60s
+   :domain: sql-cassandra
+   :values: @time_msecs
 
-``heartbeat_interval``
-----------------------
-- Default: 5s
-- Values: :ref:`time`
+   How long to wait for a query to finish.
 
-How often to send keepalive packets to cassandra nodes.
 
-``execution_retry_interval``
-----------------------------
-- Default: 0
-- Values: :ref:`time_msecs`
+.. dovecot_core:setting:: ssl_ca
+   :domain: sql-cassandra
+   :values: @string
 
-If the driver supports speculative execution policy, configures constant speculative execution policy.
+   Path to SSL certificate authority file to use to validate peer certificate.
 
-.. seealso:: https://docs.datastax.com/en/developer/java-driver/4.13/manual/core/speculative_execution/
 
-``execution_retry_times``
--------------------------
-- Default: 0
-- Values: :ref:`time_msecs`
+.. dovecot_core:setting:: ssl_cert_file
+   :domain: sql-cassandra
+   :values: @string
 
-If the driver supports speculative execution policy, configures constant speculative execution policy
+   Path to a certificate file to use for authenticating against the remote
+   server.
 
-.. seealso:: https://docs.datastax.com/en/developer/java-driver/4.13/manual/core/speculative_execution/
+
+.. dovecot_core:setting:: ssl_private_key_file
+   :domain: sql-cassandra
+   :values: @string
+
+   Path to private key matching
+   :dovecot_core:ref:`sql-cassandra;ssl_cert_file` to use for authenticating
+   against the remote server.
+
+
+.. dovecot_core:setting:: ssl_verify
+   :default: none
+   :domain: sql-cassandra
+   :values: none, cert, cert-ip, cert-dns
+
+   Configure the peer certificate validation method.
+
+   Options:
+
+   ``none``
+     Disables validation.
+
+   ``cert``
+     Validate that the certificate is valid.
+
+   ``cert-ip``
+     Validate that the certificate is valid and has Common Name or Subject
+     Alternate Name for the IP address.
+
+   ``cert-dns``
+      Validate that the certificate is valid and has Common Name or Subject
+      Alternate Name that matches PTR resource record for the server's IP
+      address.
+
+
+.. dovecot_core:setting:: user
+   :domain: sql-cassandra
+   :values: @string
+
+   Username for authentication.
+
+
+.. dovecot_core:setting:: version
+   :default: !Depends on driver version.
+   :domain: sql-cassandra
+   :values: v3, v4, v5
+
+   Cassandra driver version to use. It is good idea to specify this to avoid
+   warnings about version handshake.
+
+   .. note:: If you want to use server-side prepared statements, you need to
+             use at least ``v3``.
+
+
+.. dovecot_core:setting:: warn_timeout
+   :default: 5s
+   :domain: sql-cassandra
+   :values: @time_msecs
+
+   Emit warning if query takes longer than this.
+
+
+.. dovecot_core:setting:: write_consistency
+   :default: local-quorum
+   :domain: sql-cassandra
+   :seealso: @dictmap_cassandra_quorum_configuration
+   :values: !:ref:`cassandra_consistency`
+
+   Write consistency when updating or inserting to the database.
+
+
+.. dovecot_core:setting:: write_fallback_consistency
+   :default: local-quorum
+   :domain: sql-cassandra
+   :seealso: @dictmap_cassandra_fallback_consistency
+   :values: !:ref:`cassandra_consistency`
+
+   Write consistency when updating or inserting to the database fails with
+   primary consistency.
+
 
 .. _cassandra_consistency:
 
-Cassandra consistency values
+Cassandra Consistency Values
 ============================
 
 Consistency levels in Cassandra can be configured to manage availability versus data accuracy.

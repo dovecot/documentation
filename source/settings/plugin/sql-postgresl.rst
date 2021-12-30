@@ -1,12 +1,12 @@
-=====================
-SQL Driver PostgreSQL
-=====================
+======================
+SQL Driver: PostgreSQL
+======================
 
 Driver name is ``postgresql``.
 
 To compile support for this driver, you need PostgreSQL client library and headers.
 
-Supported options
+Supported Options
 -----------------
 
 PostgreSQL parses connection string directly. Dovecot only parses ``host`` argument.

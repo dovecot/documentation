@@ -1,31 +1,34 @@
-=================
-SQL Driver SQLite
-=================
+==================
+SQL Driver: SQLite
+==================
 
 Driver name is ``sqlite``.
 
 To compile support for this driver. you need sqlite library and headers.
 
-Supported options
------------------
-
 .. versionchanged:: v2.4/v3.0
 
-Prior v2.3.18, Dovecot uses the whole value as filename to connect, whitespace included.
-This was changed to support options, so it will use the first encountered parameter that has no ``=`` as filename.
-Whitespace cannot be used in filename.
+   Prior to v2.3.18, Dovecot uses the whole value as filename to connect,
+   whitespace included.
 
-``journal_mode``
-----------------
-- Default: ``delete``
-- Values: ``delete``, ``wal``.
+   This was changed to support options, so it will use the first encountered
+   parameter that has no ``=`` as filename. Whitespace cannot be used in
+   filename.
 
-Allows using write-ahead logging mode for database.
+Supported Options
+-----------------
 
-``readonly``
--------------
-- Default: ``no``
-- Values: :ref:`boolean`
+.. dovecot_core:setting:: journal_mode
+   :default: delete
+   :domain: sql-sqlite
+   :values: delete, wal
 
-Specifies that this database is read-only and should not be attempted to be created or written to.
+   Allows using write-ahead logging mode for database.
 
+.. dovecot_core:setting:: readonly
+   :default: no
+   :domain: sql-sqlite
+   :values: @boolean
+
+   Specifies that this database is read-only and should not be attempted to be
+   created or written to.
