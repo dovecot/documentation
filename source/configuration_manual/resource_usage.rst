@@ -10,9 +10,14 @@ These settings are useful to prevent IMAP commands from opening too many emails 
    
    mail_sort_max_read_count = 100
 
-This controls how many slow mail accesses sorting can perform before it fails: a NO [LIMIT] Requested sort would have taken too long The SORT reply is still returned, but it's likely not correct.
+This controls how many slow mail accesses sorting can perform before it fails with:
+``NO [LIMIT] Requested sort would have taken too long.``
+The SORT reply is still returned, but it's likely not correct.
 
-.. Exception:: Exception: With obox format SORT (ARRIVAL) will always return OK. When it reaches the limit, it starts getting the received-timestamps from the time the object was saved. This is commonly the same as the received-timestamp, but not always.
+As an exception with the obox format, ``SORT (ARRIVAL)`` will always return OK.
+When it reaches the limit, it starts getting the received-timestamps from the
+time the object was saved. This is commonly the same as the received-timestamp,
+but not always.
 
 .. code-block:: none
 
@@ -34,4 +39,4 @@ If enabled, everything except `save` event will log only the fields that can be 
 
    import_environment = $import_environment MALLOC_MMAP_THRESHOLD_=131072
 
-Avoid processes permanently using too much memory by having it use ``mmap()`` for ``>=28 kB`` memory allocations.
+Avoid processes permanently using too much memory by having it use ``mmap()`` for ``>=128 kB`` memory allocations.
