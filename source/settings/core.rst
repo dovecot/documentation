@@ -1577,6 +1577,21 @@ See :ref:`settings` for list of all setting groups.
    causing delays to other deliveries.
 
 
+.. dovecot_core:setting:: lmtp_verbose_replies
+   :added: v2.3.18
+   :default: no
+   :values: @boolean
+
+   This setting makes the replies returned to the client much more verbose.
+   Currently, this only applies when the LMTP proxy is involved, for which
+   e.g. backend connection errors are returned in full detail.
+
+   Normally, these errors are replaced by a more generic error message to
+   prevent leaking system details to the clients (e.g. IP addresses and ports).
+   It is therefore not recommended to enable this setting beyond troubleshooting
+   efforts.
+
+
 .. dovecot_core:setting:: lock_method
    :default: fcntl
    :values: fcntl, flock, dotlock
