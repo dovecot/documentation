@@ -985,6 +985,7 @@ rackdc
 rampup
 rapidpoll
 rawlog
+rchar
 rdineren
 rdparty
 reada
@@ -1041,6 +1042,7 @@ rsapubkey
 rset
 rspamc
 rspamd
+rss
 rst
 rsyslog
 Rvdm
@@ -1217,7 +1219,9 @@ sys
 sysadmin
 syscall
 sysconfig
+syscr
 sysctl
+syscw
 syslog
 syslogd
 sysreport
@@ -1352,6 +1356,7 @@ userslist
 usr
 utf
 utils
+utime
 UUID
 uuuuuu
 Uvh
@@ -1395,6 +1400,7 @@ vsize
 vsz
 wal
 wbytes
+wchar
 weakforced
 webmail
 webpage
