@@ -27,12 +27,18 @@ class DovecotDirective(ObjectDescription):
     self.state.nested_parse(vl, 0, node)
     return node.children[0]
 
+  def _transform_content(self, contentnode):
+    contentnode.parent['classes'].append('dovecotsetting')
+
+
 class DovecotSettingLinkDirective(DovecotDirective):
 
   def add_target_and_index(self, name_cls, sig, signode):
       return
 
   def transform_content(self, contentnode):
+      self._transform_content(contentnode)
+
       ref = self._parse_rst_txt(':%s:ref:`%s`' % (self.domain, self.arguments[0]))
       ref.insert(0, nodes.Text('See: '))
       contentnode += ref
@@ -60,8 +66,7 @@ class DovecotSettingDirective(DovecotDirective):
 
   def transform_content(self, contentnode):
     super().transform_content(contentnode)
-
-    contentnode.parent['classes'].append('dovecotsetting')
+    self._transform_content(contentnode)
 
     if self.options.get('hdr_only'):
       return
