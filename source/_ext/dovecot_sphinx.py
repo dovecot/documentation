@@ -49,6 +49,7 @@ class DovecotSettingDirective(DovecotDirective):
       'added': directives.unchanged,
       'changed': directives.unchanged,
       'default': directives.unchanged,
+      'domain': directives.unchanged,
       'hdr_only': directives.unchanged,
       'plugin': directives.unchanged,
       'removed': directives.unchanged,
@@ -62,7 +63,15 @@ class DovecotSettingDirective(DovecotDirective):
     return sig
 
   def add_target_and_index(self, name_cls, sig, signode):
-    self.add_target_and_index_dovecot(sig, signode)
+    if 'domain' in self.options:
+      sig = '{}-{}'.format(self.options.get('domain'), sig)
+    d = self.env.get_domain(self.domain)
+    anchor = '{}-{}'.format(d.set_prefix, self.dovecot_anchor(sig))
+    signode['ids'].append(anchor)
+    d.add_setting(sig, anchor)
+
+  def dovecot_anchor(self, sig):
+    return sig
 
   def transform_content(self, contentnode):
     super().transform_content(contentnode)
@@ -172,13 +181,18 @@ class DovecotSettingDomain(Domain):
 
   def resolve_xref(self, env, fromdocname, builder, typ, target, node,
                    contnode):
+    parts = target.split(';', 2)
+    t = '{}-{}'.format(parts[0], parts[1]) if len(parts) == 2 else target;
+
     match = [(docname, anchor)
              for name, sig, typ, docname, anchor, prio
-             in self.get_objects() if sig == target]
+             in self.get_objects() if sig == t]
 
     if len(match) > 0:
       todocname = match[0][0]
       targ = match[0][1]
+      if len(parts) == 2:
+        contnode.replace(contnode[0], nodes.Text(parts[1]))
 
       return make_refnode(builder, fromdocname, todocname, targ, contnode,
                           targ)
@@ -201,12 +215,8 @@ class DovecotSettingDomain(Domain):
 
 class DovecotPluginSettingDirective(DovecotSettingDirective):
 
-  def add_target_and_index_dovecot(self, sig, signode):
-    dplugin = self.env.get_domain('dovecot_plugin')
-    anchor = '{}-{}-{}'.format(dplugin.set_prefix,
-                               self.options.get('plugin').strip(), sig)
-    signode['ids'].append(anchor)
-    dplugin.add_setting(sig, anchor)
+  def dovecot_anchor(self, sig):
+    return '{}-{}'.format(self.options.get('plugin').strip(), sig)
 
 class DovecotPluginSettingIndex(DovecotSettingIndex):
 
@@ -232,12 +242,7 @@ class DovecotPluginSettingDomain(DovecotSettingDomain):
 class DovecotCoreSettingDirective(DovecotSettingDirective):
 
   """Plugin information is ignored in this class, for now"""
-
-  def add_target_and_index_dovecot(self, sig, signode):
-    dcore = self.env.get_domain('dovecot_core')
-    anchor = '{}-{}'.format(dcore.set_prefix, sig)
-    signode['ids'].append(anchor)
-    dcore.add_setting(sig, anchor)
+  pass
 
 class DovecotCoreSettingIndex(DovecotSettingIndex):
 
@@ -263,12 +268,7 @@ class DovecotCoreSettingDomain(DovecotSettingDomain):
 class PigeonholeSettingDirective(DovecotCoreSettingDirective):
 
   """Plugin information is ignored in this class, for now"""
-
-  def add_target_and_index_dovecot(self, sig, signode):
-    p = self.env.get_domain('pigeonhole')
-    anchor = '{}-{}'.format(p.set_prefix, sig)
-    signode['ids'].append(anchor)
-    p.add_setting(sig, anchor)
+  pass
 
 class PigeonholeSettingIndex(DovecotSettingIndex):
 
