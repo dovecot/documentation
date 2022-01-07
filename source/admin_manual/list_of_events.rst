@@ -18,165 +18,175 @@ See also:
 Categories
 **********
 
-Root Categories
-===============
+.. dropdown:: Root Categories
+   :animate: fade-in
 
-+--------------------+---------------------------------------------------------+
-| Category           | Description                                             |
-+====================+=========================================================+
-| auth               | Authentication (server mainly)                          |
-+--------------------+---------------------------------------------------------+
-| auth-client        | Authentication client library                           |
-+--------------------+---------------------------------------------------------+
-| dict               | Dictionary library and drivers                          |
-+--------------------+---------------------------------------------------------+
-| dict-server        | Dictionary server/proxy (dict process)                  |
-+--------------------+---------------------------------------------------------+
-| dns                | DNS client library                                      |
-+--------------------+---------------------------------------------------------+
-| dns-worker         | dns-client process                                      |
-+--------------------+---------------------------------------------------------+
-| fs                 | FS library                                              |
-+--------------------+---------------------------------------------------------+
-| fts                | Full text search plugin                                 |
-+--------------------+---------------------------------------------------------+
-| fts-dovecot        | :ref:`fts_backend_dovecot`                              |
-+--------------------+---------------------------------------------------------+
-| http-client        | HTTP client library                                     |
-|                    |                                                         |
-|                    | .. versionadded:: v2.3.16                               |
-+--------------------+---------------------------------------------------------+
-| http-server        | HTTP server library                                     |
-+--------------------+---------------------------------------------------------+
-| imap               | imap process                                            |
-+--------------------+---------------------------------------------------------+
-| imap-urlauth       | imap-urlauth process                                    |
-+--------------------+---------------------------------------------------------+
-| imap-hibernate     | imap-hibernate process                                  |
-+--------------------+---------------------------------------------------------+
-| lda                | dovecot-lda process                                     |
-+--------------------+---------------------------------------------------------+
-| local-delivery     | LDA/LMTP local delivery                                 |
-+--------------------+---------------------------------------------------------+
-| lmtp               | LMTP process                                            |
-+--------------------+---------------------------------------------------------+
-| lua                | Lua script                                              |
-+--------------------+---------------------------------------------------------+
-| mail-cache         | ``dovecot.index.cache`` file handling                   |
-+--------------------+---------------------------------------------------------+
-| mail-index         | ``dovecot.index*`` file handling                        |
-+--------------------+---------------------------------------------------------+
-| managesieve        | Managesieve                                             |
-+--------------------+---------------------------------------------------------+
-| metacache          | obox metacache                                          |
-+--------------------+---------------------------------------------------------+
-| pop3               | pop3 process                                            |
-+--------------------+---------------------------------------------------------+
-| push-notification  | push-notification plugin                                |
-|                    |                                                         |
-|                    | .. versionchanged:: v2.3.11 This was previously named   |
-|                    |                     push_notification.                  |
-+--------------------+---------------------------------------------------------+
-| quota-status       | quota-status process                                    |
-+--------------------+---------------------------------------------------------+
-| service:<name>     | Named service, e.g. service:imap or service:auth        |
-+--------------------+---------------------------------------------------------+
-| smtp-client        | SMTP/LMTP client                                        |
-+--------------------+---------------------------------------------------------+
-| smtp-server        | SMTP/LMTP server                                        |
-+--------------------+---------------------------------------------------------+
-| smtp-submit        | SMTP submission client                                  |
-+--------------------+---------------------------------------------------------+
-| ssl                | SSL/TLS connections                                     |
-+--------------------+---------------------------------------------------------+
-| ssl-client         | Incoming SSL/TLS connections                            |
-+--------------------+---------------------------------------------------------+
-| ssl-server         | Outgoing SSL/TLS connections                            |
-+--------------------+---------------------------------------------------------+
-| submission         | Submission process                                      |
-+--------------------+---------------------------------------------------------+
-| fs-dictmap         | :ref:`fs-dictmap <dictmap_configuration>`               |
-+--------------------+---------------------------------------------------------+
+   .. list-table::
+      :widths: 25 75
+      :header-rows: 1
 
+      * - Category
+        - Description
+      * - ``auth``
+        - Authentication (server mainly)
+      * - ``auth-client``
+        - Authentication client library
+      * - ``dict``
+        - Dictionary library and drivers
+      * - ``dict-server``
+        - Dictionary server/proxy (dict process)
+      * - ``dns``
+        - DNS client library
+      * - ``dns-worker``
+        - dns-client process
+      * - ``fs``
+        - FS library
+      * - ``fs-dictmap``
+        - :ref:`fs-dictmap <dictmap_configuration>`
+      * - ``fts``
+        - Full text search plugin
+      * - ``fts-dovecot``
+        - :ref:`fts_backend_dovecot`
+      * - ``http-client``
+        - HTTP client library
 
-Storage Categories
-==================
+          .. versionadded:: v2.3.16
+      * - ``http-server``
+        - HTTP server library
+      * - ``imap``
+        - imap process
+      * - ``imap-urlauth``
+        - imap-urlauth process
+      * - ``imap-hibernate``
+        - imap-hibernate process
+      * - ``lda``
+        - dovecot-lda process
+      * - ``local-delivery``
+        - LDA/LMTP local delivery
+      * - ``lmtp``
+        - LMTP process
+      * - ``lua``
+        - Lua script
+      * - ``mail-cache``
+        - ``dovecot.index.cache`` file handling
+      * - ``mail-index``
+        - ``dovecot.index*`` file handling
+      * - ``managesieve``
+        - Managesieve
+      * - ``metacache``
+        - obox metacache
+      * - ``pop3``
+        - POP3 process
+      * - ``push-notification``
+        - push-notification plugin
 
-+--------------------+---------------------------------------------------------+
-| Category           | Description                                             |
-+====================+=========================================================+
-| storage            | Mail storage parent category                            |
-+--------------------+---------------------------------------------------------+
-| cydir              | cydir storage                                           |
-+--------------------+---------------------------------------------------------+
-| mdbox              | mdbox storage                                           |
-+--------------------+---------------------------------------------------------+
-| sdbox              | sdbox storage                                           |
-+--------------------+---------------------------------------------------------+
-| obox               | obox storage                                            |
-+--------------------+---------------------------------------------------------+
-| imapc              | imapc storage                                           |
-+--------------------+---------------------------------------------------------+
-| maildir            | maildir storage                                         |
-+--------------------+---------------------------------------------------------+
-| mbox               | mbox storage                                            |
-+--------------------+---------------------------------------------------------+
-| pop3c              | pop3c storage                                           |
-+--------------------+---------------------------------------------------------+
-| mailbox            | Mailbox (folder)                                        |
-+--------------------+---------------------------------------------------------+
+          .. versionchanged:: v2.3.11 This was previously named ``push_notification``.
+      * - ``quota-status``
+        - quota-status process
+      * - ``service:<name>``
+        - Named service, e.g. service:imap or service:auth
+      * - ``smtp-client``
+        - SMTP/LMTP client
+      * - ``smtp-server``
+        - SMTP/LMTP server
+      * - ``smtp-submit``
+        - SMTP submission client
+      * - ``ssl``
+        - SSL/TLS connections
+      * - ``ssl-client``
+        - Incoming SSL/TLS connections
+      * - ``ssl-server``
+        - Outgoing SSL/TLS connections
+      * - ``submission``
+        - Submission process
 
-Mailbox Categories
-==================
+.. dropdown:: Storage Categories
+   :animate: fade-in
 
-+--------------------+---------------------------------------------------------+
-| Category           | Description                                             |
-+====================+=========================================================+
-| storage            | Mailbox (folder) parent category                        |
-+--------------------+---------------------------------------------------------+
-| mail               | Mail                                                    |
-+--------------------+---------------------------------------------------------+
+   .. list-table::
+      :widths: 25 75
+      :header-rows: 1
 
-Sieve Categories
-================
+      * - Category
+        - Description
+      * - ``storage``
+        - Mail storage parent category
+      * - :ref:`imapc <imapc_mbox_format>`
+        - imapc storage
+      * - ``mailbox``
+        - Mailbox (folder)
+      * - :ref:`maildir <maildir_mbox_format>`
+        - Maildir storage
+      * - :ref:`mbox <mbox_mbox_format>`
+        - mbox storage
+      * - :ref:`mdbox <dbox_mbox_format>`
+        - mdbox storage
+      * - :ref:`obox <obox_settings>`
+        - obox storage
+      * - :ref:`sdbox <dbox_mbox_format>`
+        - sdbox storage
+      * - :ref:`pop3c <pop3c_mbox_format>`
+        - pop3c storage
 
-.. versionadded:: v2.3.11 makes the "sieve" category parent for the other
-                  sieve-* categories.
+.. dropdown:: Mailbox Categories
+   :animate: fade-in
 
-+--------------------+---------------------------------------------------------+
-| Category           | Description                                             |
-+====================+=========================================================+
-| sieve              | Sieve parent category                                   |
-+--------------------+---------------------------------------------------------+
-| sieve-action       | Individual Sieve actions executed.                      |
-+--------------------+---------------------------------------------------------+
-| sieve-execute      | Sieve script(s) being executed for a particular         |
-|                    | message. This envelops all of Sieve execution; both     |
-|                    | runtime and action execution.                           |
-+--------------------+---------------------------------------------------------+
-| sieve-runtime      | Evaluation of individual Sieve scripts.                 |
-+--------------------+---------------------------------------------------------+
-| sieve-storage      | Sieve storage                                           |
-+--------------------+---------------------------------------------------------+
+   .. list-table::
+      :widths: 25 75
+      :header-rows: 1
 
-SQL Categories
-==============
+      * - Category
+        - Description
+      * - ``storage``
+        - Mailbox (folder) parent category
+      * - ``mail``
+        - Mail
 
-+--------------------+---------------------------------------------------------+
-| Category           | Description                                             |
-+====================+=========================================================+
-| sql                | SQL parent category                                     |
-+--------------------+---------------------------------------------------------+
-| cassandra          | Cassandra CQL events.                                   |
-+--------------------+---------------------------------------------------------+
-| mysql              | MySQL events.                                           |
-+--------------------+---------------------------------------------------------+
-| pgsql              | PostgreSQL events.                                      |
-+--------------------+---------------------------------------------------------+
-| sqlite             | SQLite events.                                          |
-+--------------------+---------------------------------------------------------+
-| sqlpool            | SQL is used internally via "SQL connection pools"       |
-+--------------------+---------------------------------------------------------+
+.. dropdown:: Sieve Categories
+   :animate: fade-in
+
+   .. versionadded:: v2.3.11 makes the ``sieve`` category parent for the other
+                     ``sieve-*`` categories.
+
+   .. list-table::
+      :widths: 25 75
+      :header-rows: 1
+
+      * - Category
+        - Description
+      * - ``sieve``
+        - Sieve parent category
+      * - ``sieve-action``
+        - Individual Sieve actions executed.
+      * - ``sieve-execute``
+        - Sieve script(s) being executed for a particular message. This envelops
+          all of Sieve execution; both runtime and action execution.
+      * - ``sieve-runtime``
+        - Evaluation of individual Sieve scripts
+      * - ``sieve-storage``
+        - Sieve storage
+
+.. dropdown:: SQL Categories
+   :animate: fade-in
+
+   .. list-table::
+      :widths: 25 75
+      :header-rows: 1
+
+      * - Category
+        - Description
+      * - ``sql``
+        - SQL parent category
+      * - ``cassandra``
+        - Cassandra CQL events
+      * - ``mysql``
+        - MySQL events
+      * - ``pgsql``
+        - PostgreSQL events
+      * - ``sqlite``
+        - SQLite events
+      * - ``sqlpool``
+        - SQL is used internally via "SQL connection pools"
 
 
 ******
