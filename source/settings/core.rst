@@ -2883,6 +2883,23 @@ See :ref:`settings` for list of all setting groups.
    As used here, the variable ``%d`` expands to the domain of the local user.
    Other :ref:`mail user variables <variables-mail_user>` can be used as well.
 
+.. dovecot_core:setting:: process_shutdown_filter
+   :values: @string
+
+   .. versionadded:: 2.3.19
+
+   Filter to specify which events shutdown the process after finishing the
+   current connections. This is mainly intended to save memory by preventing
+   long-running imap processes that use a lot of memory (due to libc not freeing
+   all of it to the OS). The syntax of the filter is described in
+   :ref:`event_filter_global`.
+
+   For example:
+
+   .. code-block:: none
+
+     process_shutdown_filter = "event=mail_user_session_finished AND rss > 10M"
+
 
 .. dovecot_core:setting:: protocols
    :default: imap pop3 lmtp
