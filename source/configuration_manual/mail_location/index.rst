@@ -92,6 +92,8 @@ Key                Value Description
 
                    .. versionadded:: v2.2.32
 
+                   .. versionchanged:: v2.3.19 Add support for using ``NO-NOSELECT``
+                                       with LAYOUT=index
 ``UTF-8``          Store mailbox names on disk using UTF-8 instead of
                    modified UTF-7 (mUTF-7).
 
