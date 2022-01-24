@@ -96,24 +96,30 @@ Base64 detection
 .. versionadded:: v2.3.18
 
 Base64 sequences are looked for in the tokenization buffer and skipped when detected.
-The detection works with what is already present in the buffer and it does not attempt to pull further data to complete a match.
 
-A base64 sequence is composed by:
+A base64 sequence is detected by:
 
-  * an optional leader character comprised in ``leader-characters`` set.
-  * a run characters all comprised in the ``base64-characters`` set, at least ``minimum-run-length`` long.
-  * an end-of-buffer or a trailer character comprised in ``trailer-characters`` set,
+  * an optional leader character comprised in ``leader-characters`` set,
+  * a run of characters, all comprised in the ``base64-characters`` set, at least ``minimum-run-length`` long,
+  * an end-of-buffer, or a trailer character comprised in ``trailer-characters`` set,
 
 where:
 
-  * leader-characters: ``[ \t\r\n=:;?]``
-  * base64-characters: ``[0-9A-Za-z/+]``
-  * trailer-characters: ``[ \t\r\n=:;?]``
-  * minimum run length: ``50``
-  * minimum runs count: ``1``
+  * ``leader-characters`` are: ``[ \t\r\n=:;?]``
+  * ``base64-characters`` are: ``[0-9A-Za-z/+]``
+  * ``trailer-characters`` are: ``[ \t\r\n=:;?]``
+  * ``minimum-run-length`` is: ``50``
+  * ``minimum-run-count`` is: ``1``
 
-i.e. (even single) 50-chars runs of characters in the base64 set are recognized as base64 and ignored in indexing.
+e.g. (even single) 50-chars runs of characters in the base64 set are recognized as
+base64 and ignored in indexing.
+
+If a base64 sequence happens to be split across different chunks of data, part of
+it might not be detected as base64. In this case, the undetected base64 fragment is
+still indexed. However, this happens rarely enough that it does not significantly
+impact the quality of the filter.
 
 So far the above rule seems to give good results in base64 indexing avoidance.
-It also seems to run well against base64 embedded headers, like ARC-Seal, DKIM-Signature, X-SG-EID, X-SG-ID,
-including encoded parts (e.g. ``=?us-ascii?Q?...?=`` sequences).
+It also performs well in removing base64 fragments inside headers,
+like ARC-Seal, DKIM-Signature, X-SG-EID, X-SG-ID,
+including header-encoded parts (e.g. ``=?us-ascii?Q?...?=`` sequences).

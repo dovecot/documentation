@@ -1014,6 +1014,46 @@ Mail user
 | user                | Username of the user                                 |
 +---------------------+------------------------------------------------------+
 
+mail_user_session_finished
+--------------------------
+.. versionadded:: v2.3.19
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| Inherits from :ref:`event_mail_user`                                       |
++---------------------+------------------------------------------------------+
+| utime               | User CPU time used in microseconds                   |
++---------------------+------------------------------------------------------+
+| stime               | System CPU time used in microseconds                 |
++---------------------+------------------------------------------------------+
+| minor_faults        | Page reclaims (soft page faults)                     |
++---------------------+------------------------------------------------------+
+| major_faults        | Page faults (hard page faults)                       |
++---------------------+------------------------------------------------------+
+| vol_cs              | Voluntary context switches                           |
++---------------------+------------------------------------------------------+
+| invol_cs            | Involuntary context switches                         |
++---------------------+------------------------------------------------------+
+| rss                 | Resident set size in bytes.                          |
+|                     | (Skipped in non-Linux environments.)                 |
++---------------------+------------------------------------------------------+
+| vsz                 | Virtual memory size in bytes.                        |
+|                     | (Skipped in non-Linux environments.)                 |
++---------------------+------------------------------------------------------+
+| rchar               | I/O counter: chars (bytes) read from storage         |
+|                     | (Skipped in non-Linux environments.)                 |
++---------------------+------------------------------------------------------+
+| wchar               | I/O counter: chars (bytes) written to storage        |
+|                     | (Skipped in non-Linux environments.)                 |
++---------------------+------------------------------------------------------+
+| syscr               | Number of read syscalls                              |
+|                     | (Skipped in non-Linux environments.)                 |
++---------------------+------------------------------------------------------+
+| syscw               | Number of write syscalls                             |
+|                     | (Skipped in non-Linux environments.)                 |
++---------------------+------------------------------------------------------+
+
 .. _event_storage:
 
 Storage
