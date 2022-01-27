@@ -38,6 +38,8 @@ ignore$
 \.woff2?$
 \.zip$
 ^\.github/
+^source/_ext/
+^source/_static/
 ^\Qsource/admin_manual/debugging/debugging_authentication.rst\E$
 ^\Qsource/configuration_manual/dovecot_ssl_configuration.rst\E$
 ^\Qsource/configuration_manual/plugins/index.rst\E$

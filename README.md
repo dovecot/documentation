@@ -39,6 +39,7 @@ Format:
    :added: [vX.Y.Z <reST text>]
    :changed: [vX.Y.Z <reST text>]
    :default: [<value1>, <value2>, ...]
+   :domain: <domain-name>
    :hdr_only: [yes]
    :plugin: <plugin-name>
    :removed: [vX.Y.Z <reST text>]
@@ -69,6 +70,10 @@ The default field supports three types:
 
 Multiple items can be defined by delimiting with a ','.
 
+The `domain` setting is used to distinguish a sub-namespace within the
+main namespace (e.g. driver configuration for "external config" that may
+contain duplicate setting names as the base namespace).
+
 The `hdr_only` setting is optional. If set (= `yes`), only the setting name
 and index link are created - Default/Values information is not output.
 
@@ -84,7 +89,7 @@ The `values` setting is optional. If set, this is used to populate the
 
 The values field supports three types:
   * Raw text will be output as a literal (i.e. '0' will be output as `0`)
-  * Text prefixed with '!' will be output as raw text
+  * Text prefixed with '!' will be output as reST text
   * Text prefixed with '@' will be treated as a Dovecot settings type
     reference. The allowable types are:
     * string
@@ -111,6 +116,12 @@ To reference Dovecot core settings in Sphinx, use this:
 
 ```
 :dovecot_core:ref:`<setting_name>`
+```
+
+To reference a domain within core settings (e.g. SQL configuration), use this:
+
+```
+:dovecot_core:ref:`<domain>;<setting_name>`
 ```
 
 To reference Dovecot core *plugin* settings in Sphinx, use this:

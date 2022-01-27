@@ -228,7 +228,6 @@ dbox
 dboxes
 dclocal
 DCMAKE
-dcore
 dcrypt
 DDTHH
 debian
@@ -304,7 +303,6 @@ dovemail
 dovemon
 dovenull
 downsides
-dplugin
 DRhu
 droppriv
 drwx
@@ -504,6 +502,7 @@ HIGHESTPVTMODSEQ
 hmac
 homedir
 homepage
+hostaddr
 hostname
 Hotspot
 howto
@@ -639,6 +638,7 @@ liblib
 liblz
 liblzma
 libpam
+libpq
 libsodium
 libstemmer
 libtool
@@ -985,6 +985,7 @@ rackdc
 rampup
 rapidpoll
 rawlog
+rchar
 rdineren
 rdparty
 reada
@@ -993,7 +994,7 @@ readdir
 readdirplus
 readlines
 README
-READONLY
+readonly
 readthedocs
 realloc
 recalc
@@ -1041,6 +1042,7 @@ rsapubkey
 rset
 rspamc
 rspamd
+rss
 rst
 rsyslog
 Rvdm
@@ -1217,7 +1219,9 @@ sys
 sysadmin
 syscall
 sysconfig
+syscr
 sysctl
+syscw
 syslog
 syslogd
 sysreport
@@ -1352,6 +1356,7 @@ userslist
 usr
 utf
 utils
+utime
 UUID
 uuuuuu
 Uvh
@@ -1393,7 +1398,9 @@ vpv
 VRFY
 vsize
 vsz
+wal
 wbytes
+wchar
 weakforced
 webmail
 webpage
