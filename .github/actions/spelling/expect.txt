@@ -19,6 +19,7 @@ adminuser
 AEAD
 Aildir
 algo
+aliasempty
 allbackups
 alloc
 alloca
@@ -150,6 +151,7 @@ charset
 chasquid
 chcon
 checkpassword
+checkpwd
 CHECKSCRIPT
 chgrp
 chmod
@@ -231,6 +233,8 @@ debuginfo
 Ded
 deduplicate
 deeplinks
+defaultdict
+defaultdelivery
 deinit
 deinitialization
 Deinitialize
@@ -1220,7 +1224,9 @@ tarpitting
 tclass
 tcontext
 tcp
+TCPLOCALIP
 tcplog
+TCPREMOTEIP
 tcpwrap
 tecadmin
 technet
