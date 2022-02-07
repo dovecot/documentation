@@ -46,8 +46,8 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.todo',
     'sphinx_copybutton',
-    'sphinx_removed_in',
     'dovecot_sphinx',
+    'sphinx_toolbox.changeset',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
