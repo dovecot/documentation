@@ -225,15 +225,6 @@ Name                  Link
 ===================== ==========================================================
 
 
-Deprecated/Unmaintained FTS Plugins
------------------------------------
-
-.. toctree::
-  :maxdepth: 1
-
-  squat
-
-
 Removed FTS Plugins
 -------------------
 
@@ -241,3 +232,4 @@ Removed FTS Plugins
   :maxdepth: 1
 
   lucene
+  squat
