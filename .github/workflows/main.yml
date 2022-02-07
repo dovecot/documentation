@@ -19,8 +19,27 @@ jobs:
     - uses: dovecot/rsync-deployments@master
       with:
         RSYNC_OPTIONS: -azr --delete
+        RSYNC_TARGET: docs@doc.dovecot.org:public_html/3.0/.
+        RSYNC_BASEDIR: /_build/.
+      if: env.DEPLOY_KEY
+      env:
+        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+  release-2.3:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/release-2.3'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ammaraskar/sphinx-action@0.4
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        DOCS-FOLDER: "."
+        build-command: make dirhtml
+    - uses: dovecot/rsync-deployments@master
+      with:
+        RSYNC_OPTIONS: -azr --delete
         RSYNC_TARGET: docs@doc.dovecot.org:public_html/.
         RSYNC_BASEDIR: /_build/.
       if: env.DEPLOY_KEY
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+
