@@ -13,8 +13,9 @@ Settings
 ========
 
 .. dovecot_plugin:setting:: fts_dovecot_mail_flush_interval
-   :added: v2.3.5
-   :default: 0
+   :added: v2.3.5 defaults was 0
+   :changed: v3.0.0 defaults changes from 0 to 10
+   :default: 10
    :plugin: fts-dovecot
    :values: @uint
 
@@ -23,22 +24,17 @@ Settings
    failure to update the FTS indexes, but at the cost of doing more writes to
    object storage.
 
-   The recommended value is ``10``. This will become the default in a future
-   release.
-
 
 .. dovecot_plugin:setting:: fts_dovecot_max_triplets
-   :added: v2.3.15
-   :default: 0
+   :added: v2.3.15 defaults was 0
+   :changed: v3.0.0 defaults changes from 0 to 200
+   :default: 200
    :plugin: fts-dovecot
    :values: @uint
 
    FTS lookups will fail and error message will be logged, when the number of
    triplets exceeds the threshold specified in the setting. ``0`` means there
    is no maximum number of triplets to be exceeded.
-
-   The recommended value is ``200``. This will become the default in a future
-   release.
 
 
 .. dovecot_plugin:setting:: fts_dovecot_min_merge_l_file_size
