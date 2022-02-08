@@ -105,7 +105,7 @@ Example Configuration:
 
 Example configuration using OBOX::
 
-  #These are assumed below, 
+  #These are assumed below,
   #mail_location = obox:%2Mu/%2.3Mu/%u:INDEX=~/:CONTROL=~/
   #obox_fs = fscache:512M:/var/cache/mails/%4Nu:s3:http://mails.s3.example.com/
 
@@ -119,7 +119,7 @@ Example configuration using OBOX::
 
     # Local filesystem example:
     # Use local filesystem storing FTS indexes
-    #fts_dovecot_fs = posix:prefix=%h/fts/ 
+    #fts_dovecot_fs = posix:prefix=%h/fts/
 
     # OBOX example:
     # Keep this the same as obox_fs plus the root "directory" in mail_location
@@ -129,7 +129,7 @@ Example configuration using OBOX::
 
     # Detected languages. Languages that are not recognized, default to the
     # first enumerated language, i.e. en.
-    fts_languages = en fr # English and French. 
+    fts_languages = en fr # English and French.
 
     # This chain of filters first normalizes and lower cases the text, then
     #  stems the words and lastly removes stopwords.
