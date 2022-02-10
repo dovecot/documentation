@@ -379,7 +379,8 @@ Settings
    the indexer is told to index the messages and is given this much time to do
    so. If this time limit is reached, an error is returned, indicating that
    the search timed out during waiting for the indexing to complete:
-   ``NO [INUSE] Timeout while waiting for indexing to finish``
+   ``NO [INUSE] Timeout while waiting for indexing to finish``. Note the
+   :dovecot_plugin:ref:`fts_enforced` setting does not change this behavior.
 
    A value of ``0`` means no timeout.
 
