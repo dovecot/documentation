@@ -131,31 +131,19 @@ Key                Value Description
 
 ``FULLDIRNAME``    Specifies the directory name used for mailbox, index, and
                    control directory paths. See the individual mailbox format
-                   pages for further information. This key replaced the
-                   deprecated ``DIRNAME`` key.
+                   pages for further information.
+
+                   .. note:: Bug: Before v2.4.0/v3.0.0 when using
+                             ``FULLDIRNAME`` together with ``INDEX``,
+                             ``INDEXPVT``, ``INDEXCACHE`` or ``CONTROL``
+                             options renaming the parent folder causes its
+                             child folders to lose all messages.
 
                    .. versionadded:: v2.2.8
 
 ``ALT``            Specifies the
                    :ref:`alternate storage <dbox_settings_alt_storage>` path.
 ================== =============================================================
-
-Deprecated Keys
----------------
-
-============ ================ ==============================================
-Key          Replaced By      Value Description
-============ ================ ==============================================
-``DIRNAME``  ``FULLDIRNAME``  Specifies the directory name used for mailbox
-                              directories, or in the case of mbox specifies
-                              the mailbox message file name.
-
-                              .. note:: DIRNAME is not used for index or
-                                        control directories, while
-                                        ``FULLDIRNAME`` is.
-
-                              .. deprecated:: v2.2.8
-============ ================ ==============================================
 
 Variables
 ---------
