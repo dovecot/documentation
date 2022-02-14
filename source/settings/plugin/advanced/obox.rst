@@ -230,7 +230,13 @@ Settings
 .. dovecot_plugin:setting:: obox_allow_inconsistency
    :default: no
    :plugin: obox
+   :removed: v3.0.0
    :values: @boolean
+
+   .. warning::
+      The setting has been removed as it caused problems with caching IMAP
+      clients, which may lose emails permanently or otherwise become confused
+      about their internal state.
 
    Even in case of object storage errors, try to allow accessing the emails as
    well as possible. This especially means that if the local metacache already
