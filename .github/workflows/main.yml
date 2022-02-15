@@ -3,12 +3,12 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     steps:
     - uses: actions/checkout@v2
     - uses: ammaraskar/sphinx-action@0.4
