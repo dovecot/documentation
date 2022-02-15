@@ -24,7 +24,7 @@ jobs:
       if: env.DEPLOY_KEY
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-  release-2.3:
+  release23:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/release-2.3'
     steps:
