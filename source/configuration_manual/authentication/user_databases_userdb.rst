@@ -60,7 +60,6 @@ Currently supported user databases are:
 * **SQL**: SQL database (PostgreSQL, MySQL, SQLite). See :ref:`authentication-sql`
 * **Dict**: Dict key-value database (Redis, etc.). See :ref:`authentication-dict`.
 * **Static**: Userdb information generated from a given template. See :ref:`authentication-static_user_database`.
-* **VPopMail**: External software used to handle virtual domains.
 * **Prefetch**: This assumes that the passdb already returned also all the
   required user database information. See :ref:`authentication-prefetch_userdb`
 * **Lua**: Lua script for authentication. See :ref:`authentication-lua_based_authentication`.

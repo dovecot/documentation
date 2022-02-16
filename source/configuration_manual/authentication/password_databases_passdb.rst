@@ -103,8 +103,6 @@ lookup can return:
    databases (if prefix is specified), but that is of course incompatible with
    all other tools using/modifying the passwords.
 
-* **VPopMail**: External software used to handle virtual domains.
-
 **Databases** that support looking up everything:
 
 * **Passwd-file**: ``/etc/passwd``-like file in specified location. See
