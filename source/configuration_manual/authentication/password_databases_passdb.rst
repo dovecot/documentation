@@ -92,12 +92,10 @@ lookup can return:
 
 **Databases** that support looking up only passwords, but no user or extra fields:
 
-* **Passwd-file**: ``/etc/passwd-like`` file in specified location. See
+* **Passwd-file**: ``/etc/passwd``-like file in specified location. See
   :ref:`authentication-passwd`.
 * **Passwd**: System users (NSS, ``/etc/passwd``, or similar). See
   :ref:`authentication-password_schemes`.
-* **Shadow**: Shadow passwords for system users (NSS, ``/etc/shadow`` or
-  similar). See :ref:`authentication-shadow`.
 
  * Dovecot supports reading all :ref:`authentication-password_schemes` from passwd and shadow
    databases (if prefix is specified), but that is of course incompatible with
@@ -264,7 +262,6 @@ The result values that can be used:
   static_password_database
   password_schemes
   user_extra_field
-  shadow
   passwd_file
   ldap
   sql
