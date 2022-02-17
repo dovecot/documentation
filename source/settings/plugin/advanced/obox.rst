@@ -34,8 +34,11 @@ Settings
 .. dovecot_plugin:setting:: metacache_disable_merging
    :default: no
    :plugin: obox
+   :removed: v3.0.0
    :seealso: @metacache_index_merging;dovecot_plugin
    :values: @boolean
+
+   .. note:: Use ``metacache_index_merging=none`` instead.
 
    Disable index merging when opening root or mailbox indexes. This can be
    used to work around bugs in the merging code that cause crashes. Usually

@@ -183,7 +183,7 @@ If multiple backends do changes to the same mailbox at the same time, Dovecot wi
 
 .. code-block:: none
 
-   doveadm -o plugin/metacache_disable_merging=yes force-resync -u user@domain INBOX
+   doveadm -o plugin/metacache_index_merging=none force-resync -u user@domain INBOX
 
 .. toctree::
    :maxdepth: 1
