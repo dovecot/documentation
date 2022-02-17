@@ -3463,6 +3463,14 @@ See :ref:`settings` for list of all setting groups.
    The path to the stats-writer socket.
 
 
+.. dovecot_core:setting:: submission_add_received_header
+   :added: v2.3.19,v3.0.0
+   :default: yes
+   :values: @boolean
+
+   Controls if "Received:" header should be added to mails by the submission backend.
+
+
 .. dovecot_core:setting:: submission_client_workarounds
    :todo: Indicate submission setting
    :values: @string
