@@ -4,7 +4,9 @@
 old-stats plugin
 ================
 
-.. warning:: This plugin has been deprecated. Use :ref:`statistics` instead.
+.. versionremoved:: 3.0.0
+
+.. seealso:: :ref:`statistics`.
 
 Settings
 ========
