@@ -3,16 +3,9 @@
 Lucene FTS Engine
 =================
 
-.. warning::
+.. versionremoved:: 2.4.0;3.0.0
 
-  This plugin is no longer maintained in Dovecot (as of 2.3+) and will be
-  removed in the future.
-
-  It is using CLucene library, which is very old and has some bugs.
-
-  If looking for a full-featured FTS backend, you should use
-  :ref:`fts_backend_solr` instead which has more features, is more stable,
-  is actively developed, and has an FTS driver supported by Dovecot.
+.. seealso:: :ref:`fts_backend_solr`.
 
 Requires Dovecot v2.1+ to work properly. The CLucene version must be
 v2.3 (not v0.9). Dovecot builds only a single Lucene index for all

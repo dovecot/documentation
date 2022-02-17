@@ -231,5 +231,13 @@ Deprecated/Unmaintained FTS Plugins
 .. toctree::
   :maxdepth: 1
 
-  lucene
   squat
+
+
+Removed FTS Plugins
+-------------------
+
+.. toctree::
+  :maxdepth: 1
+
+  lucene
