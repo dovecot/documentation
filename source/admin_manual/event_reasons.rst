@@ -25,7 +25,6 @@ Mailbox
  * ``mailbox:delete`` - Mailbox is being deleted
  * ``mailbox:subscribe`` - Mailbox is being subscribed
  * ``mailbox:unsubscribe`` - Mailbox is being unsubscribed
- * ``mailbox:search`` - Mails are being accessed due to search query
  * ``mailbox:sort`` - Mails are being sorted (IMAP SORT)
  * ``mailbox:thread`` - Threading is being built for mails (IMAP THREAD)
  * ``mailbox:vsize`` - mailbox vsize is requested or updated
