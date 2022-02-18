@@ -4,6 +4,10 @@
 Shadow
 =======
 
+.. versionremoved:: v2.4.0;v3.0.0
+
+.. warning:: This plugin has been removed. Use :ref:`authentication-pam` instead.
+
 Works at least with Linux and Solaris, but nowadays :ref:`authentication-pam` is usually
 preferred to this.
 

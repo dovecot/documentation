@@ -354,6 +354,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: auth_stats
    :added: v2.3.0
+   :removed: v3.0.0
    :default: no
    :values: @boolean
 
@@ -2576,6 +2577,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: old_stats_carbon_interval
    :added: v2.2.27
+   :removed: v3.0.0
    :default: 30secs
    :seealso: @old_stats_carbon_server;dovecot_core
    :values: @time
@@ -2585,6 +2587,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: old_stats_carbon_name
    :added: v2.2.27
+   :removed: v3.0.0
    :seealso: @old_stats_carbon_server;dovecot_core
    :values: @string
 
@@ -2602,12 +2605,14 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: old_stats_carbon_server
    :added: v2.2.27
+   :removed: v3.0.0
    :values: !<hostname | ip>:<port>
 
    Send server statistics to an external Carbon server.
 
 
 .. dovecot_core:setting:: old_stats_command_min_time
+   :removed: v3.0.0
    :default: 1min
    :values: @time
 
@@ -2616,6 +2621,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: old_stats_domain_min_time
+   :removed: v3.0.0
    :default: 12hours
    :values: @time
 
@@ -2624,6 +2630,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: old_stats_ip_min_time
+   :removed: v3.0.0
    :default: 12hours
    :values: @time
 
@@ -2632,6 +2639,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: old_stats_memory_limit
+   :removed: v3.0.0
    :default: 16M
    :values: @size
 
@@ -2639,6 +2647,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: old_stats_session_min_time
+   :removed: v3.0.0
    :default: 15mins
    :values: @time
 
@@ -2647,6 +2656,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: old_stats_user_min_time
+   :removed: v3.0.0
    :default: 1hour
    :values: @time
 

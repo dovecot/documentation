@@ -84,9 +84,6 @@ Example configuration:
     master = yes
     result_success = continue
   }
-  passdb {
-    driver = shadow
-  }
   userdb {
     driver = passwd
   }
