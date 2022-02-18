@@ -104,8 +104,7 @@ setting in ``dovecot-sql.conf.ext``
 :ref:`authentication-passwd_file` : CRYPT is used
 by default, but can be changed with ``scheme`` parameter in passdb args.
 
-:ref:`authentication-passwd`, :ref:`authentication-shadow`, ``vPopMail``: CRYPT is used by default
-and can't be changed currently.
+:ref:`authentication-passwd`: CRYPT is used by default and can't be changed currently.
 
 :ref:`authentication-pam`, :ref:`authentication-bsdauth`, :ref:`authentication-checkpassword`: Dovecot never even sees the
 password with these databases, so Dovecot has nothing to do with what password
