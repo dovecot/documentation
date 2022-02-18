@@ -107,7 +107,7 @@ lookup can return:
   :ref:`authentication-passwd_file`.
 * **LDAP**: Lightweight Directory Access Protocol. See :ref:`authentication-ldap`.
 * **SQL**: SQL database (PostgreSQL, MySQL, SQLite). See :ref:`authentication-sql`.
-* **Dict**: Dict key-value database (Redis, memcached, etc.) See :ref:`authentication-dict`.
+* **Dict**: Dict key-value database (Redis, etc.) See :ref:`authentication-dict`.
 * **CheckPassword**: External checkpassword program when used with Dovecot
   extensions. See :ref:`authentication-checkpassword`.
 * **Static**: Static passdb for simple configurations. See

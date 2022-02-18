@@ -14,7 +14,7 @@ When the dovecot service is stopped, it flushes all pending changes. Or in more 
 
  * Since the important changes are usually flushed every 5 minutes, the flushes aren't expected to take excessively long.
 
-* All new imap, pop3, managesieve, submission and lmtp connections are stopped. 
+* All new imap, pop3, managesieve, submission and lmtp connections are stopped.
 
 * ``doveadm kick '*'`` is used to kick all the existing imap, pop3 and managesieve connections.
 
@@ -52,13 +52,13 @@ Problems with Backend Shutdown
  * When user is moved to a new backend, these missing unimportant changes may need to be regenerated. Usually this means reading a maximum of 9 mails per folder (obox_max_rescan_mail_count=10), but in some rare situations the cache may have just had huge changes. These changes will need to be re-done on the new backend, which may be expensive.
 
  * Metacache directories with unimportant changes are left lying around.
-  
+
   * Normally this shouldn't actually cause problems, because:
 
     * Eventually they may become cleaned up to free up disk space, which normally causes them to be flushed to object storage. However, the flushing isn't performed when another server has already changed the indexes. So an obsolete index bundle won't actually be written to object storage.
 
     * When opening an obsolete metacache directory with only unimportant changes, it's not used if there's already a newer index bundle. The obsolete directory just gets deleted. Only if there are important changes it performs dsync-merging.
-  
+
   * However, dsync-merging still seems to happen rather commonly and can cause problems with UID renumbering or losing data in dovecot.index.cache. This has been fixed with v2 merging algorithm.
 
 There are some things that can be done to help problems caused by these:
@@ -66,11 +66,11 @@ There are some things that can be done to help problems caused by these:
 * Run ``doveadm metacache flushall`` every night. This way there won't be highly out-of-date indexes lying around.
 
 * Delete really old obsolete indexes from all backends before shutting down backends. Ideally only when the user isn't assigned to the backend before the shutdown - otherwise it could unnecessarily delete indexes for users who simply haven't been accessed for a while but don't have any newer indexes anywhere.
-  
+
   * When starting up a backend also delete rather old (e.g. >1 day) indexes from metacache.
 
   * Use the ``last-access(0)`` timestamp in ``doveadm metacache list`` output to determine the user's last access timestamp.
-   
+
    * If the user isn't found from the list at all, then it's definitely an old index that hasn't so far been accessed in this backend since Dovecot was started up.
 
 .. Note:: You can't currently use ``doveadm metacache clean`` to delete changed indexes. The only alternative is to just forcibly "rm -rf" the directory. However, if the user happens to be accessed during the "rm -rf" this can cause index corruption, which can have rather bad consequences (like redownloading all mails). This is why it should verify whether director currently points the user to this backend, and only rm -rf users whose backend is elsewhere.
@@ -117,7 +117,7 @@ Metacache is rarely large enough to contain indexes for all the users in the bac
 To list all users currently known to be in metacache, run:
 
 .. code-block:: none
-   
+
    doveadm metacache list
 
 The output will have fields:
@@ -135,7 +135,7 @@ The output will have fields:
 * last-access(priority) : UNIX timestamp of when the the index files of this priority were last accessed in metacache.
 
  * changes : "none" means the index files have no changes done locally since they were downloaded. "unimportant" means there are some changes, but nothing that couldn't be regenerated if the server crashed. "important" means that there are changes that would be lost in case of a server crash. Currently the only important change is flag changes.
-   
+
    * New mail deliveries aren't important, because the mail is immediately saved to object storage. In case of a crash the mails are listed in object storage and missing mails are added back to Dovecot indexes. The obox plugin also guarantees that the IMAP UID will be preserved in case of a crash. However, if a new mail delivery also sets a message flag (e.g. via Sieve script), then the change will be marked as important. An exception is the $HasAttachment and $HasNoAttachment flags, which are stored in the obox OID directly so they can be cheaply restored after a crash.
 
  * last-service : Last service that accessed this user. However, metacache clean and flush operations (via metacache-worker or doveadm) won't update this field.
@@ -174,16 +174,16 @@ It's also possible to flush only indexes with specified priority (and below) wit
 If a user no longer actually exists on filesystem, it can be removed from metacache process with:
 
 .. code-block:: none
-   
+
    doveadm metacache remove user@domain
 
 This command also supports wildcards, so you can remove e.g. "testuser*" or even "*" for everyone.
 
-If multiple backends do changes to the same mailbox at the same time, Dovecot will eventually perform a dsync-merge for the indexes. Due to dsync being quite a complicated algorithm there's a chance that the merging may trigger a bug/crash that won't fix itself automatically. If this happens, the bug should be reported to get it properly fixed, but a quick workaround is to run: 
+If multiple backends do changes to the same mailbox at the same time, Dovecot will eventually perform a dsync-merge for the indexes. Due to dsync being quite a complicated algorithm there's a chance that the merging may trigger a bug/crash that won't fix itself automatically. If this happens, the bug should be reported to get it properly fixed, but a quick workaround is to run:
 
 .. code-block:: none
-   
-   doveadm -o plugin/metacache_disable_merging=yes force-resync -u user@domain INBOX
+
+   doveadm -o plugin/metacache_index_merging=none force-resync -u user@domain INBOX
 
 .. toctree::
    :maxdepth: 1
