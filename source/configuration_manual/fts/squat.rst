@@ -3,11 +3,7 @@
 Squat FTS Engine
 ================
 
-.. deprecated:: v2.1
-
-.. warning:: Squat is deprecated and should no longer be used.
-             It is going to be removed in a future version entirely.
-	     It's recommended to use :ref:`fts_backend_solr` instead.
+.. versionremoved:: 2.4.0;3.0.0
 
 The main difference between Squat indexes and the others is that Squat
 provides support for substring searches, while pretty much all other FTS

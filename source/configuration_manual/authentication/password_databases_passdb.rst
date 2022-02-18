@@ -92,18 +92,14 @@ lookup can return:
 
 **Databases** that support looking up only passwords, but no user or extra fields:
 
-* **Passwd-file**: ``/etc/passwd-like`` file in specified location. See
+* **Passwd-file**: ``/etc/passwd``-like file in specified location. See
   :ref:`authentication-passwd`.
 * **Passwd**: System users (NSS, ``/etc/passwd``, or similar). See
   :ref:`authentication-password_schemes`.
-* **Shadow**: Shadow passwords for system users (NSS, ``/etc/shadow`` or
-  similar). See :ref:`authentication-shadow`.
 
  * Dovecot supports reading all :ref:`authentication-password_schemes` from passwd and shadow
    databases (if prefix is specified), but that is of course incompatible with
    all other tools using/modifying the passwords.
-
-* **VPopMail**: External software used to handle virtual domains.
 
 **Databases** that support looking up everything:
 
@@ -111,7 +107,7 @@ lookup can return:
   :ref:`authentication-passwd_file`.
 * **LDAP**: Lightweight Directory Access Protocol. See :ref:`authentication-ldap`.
 * **SQL**: SQL database (PostgreSQL, MySQL, SQLite). See :ref:`authentication-sql`.
-* **Dict**: Dict key-value database (Redis, memcached, etc.) See :ref:`authentication-dict`.
+* **Dict**: Dict key-value database (Redis, etc.) See :ref:`authentication-dict`.
 * **CheckPassword**: External checkpassword program when used with Dovecot
   extensions. See :ref:`authentication-checkpassword`.
 * **Static**: Static passdb for simple configurations. See
@@ -266,7 +262,6 @@ The result values that can be used:
   static_password_database
   password_schemes
   user_extra_field
-  shadow
   passwd_file
   ldap
   sql
