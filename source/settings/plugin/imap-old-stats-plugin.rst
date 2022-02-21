@@ -4,9 +4,9 @@
 imap-old-stats plugin
 =====================
 
-.. warning:: This plugin has been deprecated. Use :ref:`plugin-stats` instead.
+.. versionremoved:: 3.0.0
 
-.. seealso:: :ref:`plugin-old-stats`.
+.. seealso:: :ref:`statistics`.
 
 Settings
 ========

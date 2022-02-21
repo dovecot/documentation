@@ -225,8 +225,8 @@ Name                  Link
 ===================== ==========================================================
 
 
-Deprecated/Unmaintained FTS Plugins
------------------------------------
+Removed FTS Plugins
+-------------------
 
 .. toctree::
   :maxdepth: 1
