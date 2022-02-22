@@ -544,6 +544,7 @@ INBO
 inbox
 inboxes
 INCLUDERC
+INDEXCACHE
 indexfiles
 INDEXPVT
 inet
