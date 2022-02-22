@@ -381,6 +381,8 @@ extprograms
 extracttext
 exttextcat
 facebook
+FADV
+fadvise
 failover
 faqs
 fcntl
@@ -1401,6 +1403,7 @@ wforce
 wget
 whitelisting
 Wietse
+WILLNEED
 wiki
 wikipedia
 wildcards
