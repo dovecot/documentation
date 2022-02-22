@@ -2295,11 +2295,32 @@ See :ref:`settings` for list of all setting groups.
    :default: 0
    :values: @uint
 
-   The maximum number of messages to keep open and prefetch to memory.
+   The number of messages to try to prefetch whenever possible. Depending on
+   the (remote) storage latency, this may significantly speed up performance
+   when reading many mails. The exact behavior depends on the mailbox format:
 
-   ``0`` indicates no limit should be applied.
+   * mbox, mdbox: No effect in behavior.
+   * sdbox, maildir: Call ``posix_fadvise(POSIX_FADV_WILLNEED)`` on mail files
+     to instruct kernel to read the whole files into memory.
+   * imapc: Combine multiple mail reads into the same remote imapc FETCH
+     command. For example with ``mail_prefetch_count=0`` reading two mails
+     would result in ``FETCH 1 BODY.PEEK[]`` and ``FETCH 2 BODY.PEEK[]``
+     commands, while with ``mail_prefetch_count=1`` they would be combined into
+     a single ``FETCH 1:2 BODY.PEEK[]`` command. The downside is that each mail
+     uses a file descriptor and disk space in :dovecot_core:ref:`mail_temp_dir`.
+   * obox: Read multiple mails in parallel from object storage to local disk
+     without waiting for previous reads to finish. The downside is that each
+     mail uses a file descriptor and disk space in
+     :dovecot_core:ref:`mail_temp_dir`.
 
-   Behavior is dependent on the operating system and mailbox format.
+     This setting is also the default for
+     :dovecot_plugin:ref:`obox_max_parallel_copies`,
+     :dovecot_plugin:ref:`obox_max_parallel_deletes` and
+     :dovecot_plugin:ref:`obox_max_parallel_writes`.
+
+   For imapc and obox formats a good value is likely between 10..100.
+
+   ``0`` means that no prefetching is done.
 
 
 .. dovecot_core:setting:: mail_privileged_group
