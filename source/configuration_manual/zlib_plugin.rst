@@ -80,9 +80,12 @@ prevent compression).
 Compress Existing Mails
 ^^^^^^^^^^^^^^^^^^^^^^^
 
+To compress existing mails, the supported way is to use local dsync migration.
+See :ref:`migrating_mailboxes`.
+
 You'll probably want to use some cronjob to compress old mails. However note
 that to avoid seeing duplicate mails in rare race conditions you'll have to use
-the included maildirlock utility. The idea is to:
+the `maildirlock utility <https://github.com/dovecot/tools/blob/main/README.maildirlock>`_ . The idea is to:
 
 1. Find the mails you want to compress in a single maildir.
 
