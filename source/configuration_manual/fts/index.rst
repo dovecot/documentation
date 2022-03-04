@@ -9,6 +9,7 @@ FTS (Full Text Search)
 
   dovecot
   solr
+  flatcurve
   tokenization
 
 Introduction
@@ -33,26 +34,18 @@ utilization may be too large, especially in mailboxes with large messages.
 
 Dovecot maintains these FTS indexing engines:
 
-========================== =====================================================
-Name                       Description
-========================== =====================================================
-:ref:`fts_backend_dovecot` Dovecot native, object storage optimized driver.
-                           Only available as part of
-                           :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>`.
-:ref:`fts_backend_solr`    Interface to
-                           `Apache Solr <https://solr.apache.org/>`_.
-========================== =====================================================
-
-Dovecot plans on supporting this plugin in the future, although it is not
-yet part of core:
-
-================= ==============================================================
-Name              Description
-================= ==============================================================
-`fts-flatcurve`_  `Xapian`_ based driver; stores data locally, and uses
-                  built-in Dovecot stemming library and new Dovecot 2.3
-                  features (e.g. events).
-================= ==============================================================
+============================= ================================================
+Name                           Description
+============================= ================================================
+:ref:`fts_backend_dovecot`    Dovecot native, object storage optimized driver.
+                              Only available as part of
+                              :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>`.
+:ref:`fts_backend_solr`       Interface to
+                              `Apache Solr <https://solr.apache.org/>`_.
+:ref:`fts_backend_flatcurve`  `Xapian`_ based driver; stores data locally.
+                              Uses built-in Dovecot stemming library and new
+                              Dovecot 2.3 features (e.g. events).
+============================= ================================================
 
 .. _`fts-flatcurve`: https://github.com/slusarz/dovecot-fts-flatcurve/
 .. _`Xapian`: https://xapian.org/
