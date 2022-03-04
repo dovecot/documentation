@@ -33,7 +33,7 @@ New features
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | Feature                                                    | Notes                                                                                    |
 +============================================================+==========================================================================================+
-| Flatcurve FTS                                              | Xapian based full-text search                                                            |
+| :ref:`Flatcurve FTS <fts_backend_flatcurve>`               | Xapian based full-text search                                                            |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | :ref:`fs_crypt` now has ``maybe`` parameter                | The fs_crypt now requires encryption and decryption keys by default. To keep the old     |
 |                                                            | behavior, add the maybe parameter.                                                       |
@@ -59,7 +59,7 @@ Removed features and their replacements
 | :dovecot_core:ref:`auth_worker_max_count                   | Use :ref:`service-specific process limit <service_configuration>`.                       |
 | <auth_worker_max_count>`                                   |                                                                                          |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| | fts-lucene                                               | Use ``fts-flatcurve`` or :ref:`Solr FTS <fts_backend_solr>`                              |
+| | fts-lucene                                               | Use :ref:`Flatcurve FTS <fts_backend_flatcurve>` or :ref:`Solr FTS <fts_backend_solr>`   |
 | | fts-squat                                                |                                                                                          |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | Weak password schemes                                      | Weak password schemes are disabled by default, you need to use                           |
