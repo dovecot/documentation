@@ -5,6 +5,20 @@ Dovecot Core Settings
 See :ref:`settings` for list of all setting groups.
 
 
+.. dovecot_core:setting:: auth_allow_weak_schemes
+   :added: v2.4;v3.0
+   :default: no
+   :values: @boolean
+
+   Controls whether password schemes marked as weak are allowed to be used.
+   See <authentication-password_schemes> for disabled by default schemes.
+
+   If enabled, will emit warning to logs. If a disabled scheme is used,
+   an error is logged.
+
+   Notably, any explicitly plaintext schemes (such as PLAIN), CRAM-MD5 and DIGEST-MD5 are
+   not affected by this setting.
+
 .. dovecot_core:setting:: auth_anonymous_username
    :default: anonymous
    :values: @string
