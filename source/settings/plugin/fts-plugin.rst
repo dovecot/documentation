@@ -93,6 +93,28 @@ Settings
        fts_autoindex_exclude3 = External Accounts/*
      }
 
+   .. versionchanged:: v2.4.0;v3.0.0 The ``fts_autoindex_exclude`` setting
+      matches also the namespace prefix in folder names. Previously the folder
+      name was matched only without the namespace prefix.
+
+      Namespaces match as follows:
+
+      - The full folder name, including the namespace prefix.
+
+        For example ``fts_autoindex_exclude = Public/incoming``
+        would match the ``incoming`` folder in the ``Public/`` namespace.
+
+      - For ``inbox=yes`` namespace, the folder name without the namespace prefix.
+
+        For example ``fts_autoindex_exclude = incoming`` would match the ``incoming``
+        folder in the INBOX namespace, but not in the ``Public/`` namespace.
+
+      - The folder names support ``*`` and ``?`` wildcards.
+
+      Namespace prefixes must NOT be specified and will not match for:
+
+      - the ``INBOX`` folder
+      - special-use flags (e.g. ``\Trash``)
 
 .. dovecot_plugin:setting:: fts_autoindex_max_recent_msgs
    :added: v2.2.9
