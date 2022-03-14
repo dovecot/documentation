@@ -177,7 +177,7 @@ writing the mail to the mbox.**
 
 Only the first message contains the X-IMAP or X-IMAPbase header. The
 difference is that when all the messages are deleted from mbox file, a pseudo
-message is written to the mbox which contains X-IMAP header. 
+message is written to the mbox which contains X-IMAP header.
 
 This is the ``DON'T DELETE THIS MESSAGE -- FOLDER INTERNAL DATA`` message
 which you hate seeing when using non-C-client and non-Dovecot software. This
