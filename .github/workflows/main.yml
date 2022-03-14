@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - release-2.3
 
 jobs:
   release:
@@ -42,4 +43,3 @@ jobs:
       if: env.DEPLOY_KEY
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-
