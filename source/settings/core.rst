@@ -3378,14 +3378,15 @@ See :ref:`settings` for list of all setting groups.
 
    ``ANY``
 
-     Support any version. (SHOULD NOT BE USED)
-
      .. versionadded:: v2.3.15
+     .. versionchanged:: v2.4.0;v3.0.0
+
+     .. warning:: this value is meant for tests only.
+                  It should not be used in any deployment of any value/relevance.
 
    ``SSLv3``
 
-     Support SSLv3+. (SHOULD NOT BE USED) (SSLv3 deprecated:
-     `RFC 7568 <https://datatracker.ietf.org/doc/html/rfc7568>`_)
+     .. versionremoved:: v2.4.0;v3.0.0
 
    ``TLSv1``
 
