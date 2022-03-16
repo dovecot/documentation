@@ -113,6 +113,7 @@ BROKENCHAR
 bsdauth
 BSDs
 bsearch
+btn
 btrfs
 bucketname
 buf
@@ -886,6 +887,7 @@ oldkey
 oldname
 oldpath
 oldstats
+onclick
 onelevel
 onlinepubs
 opendir
