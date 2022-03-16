@@ -14,6 +14,22 @@ See also:
  * :ref:`event_filter`
  * :ref:`event_design` for technical implementation details
 
+Page options:
+
+.. raw:: html
+
+   <script>
+   function toggleTables(expand) {
+     $('details.dropdown').each(function() {
+       $(this).attr('open', expand);
+     });
+   }
+   </script>
+
+   <button type="button" class="btn btn-primary" onclick="toggleTables(true)">Expand All Tables</button>
+   <button type="button" class="btn btn-secondary" onclick="toggleTables(false)">Collapse All Tables</button>
+
+
 **********
 Categories
 **********
