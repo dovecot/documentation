@@ -119,8 +119,7 @@ Other plugins
    This may cause mailbox metadata to be accessed.
  * ``trash:clean`` - trash plugin cleaning space
  * ``quota:count`` - quota plugin is counting the mailbox's full size.
-   This is normal with quota=count driver. Also quota=dict uses it for the
-   initial mailbox calculation.
+   This is normal with quota=count driver.
  * ``quota:recalculate`` - Quota is being recalculated (e.g. doveadm quota recalc)
  * ``pop3_migration:uidl_sync`` - pop3_migration plugin matching IMAP and POP3 mails.
  * ``lazy_expunge:expunge`` - lazy_expunge plugin is handling an expunge.

@@ -31,12 +31,6 @@ There are different quota backends that Dovecot can use:
 | <quota_backend_count>`   |                                                   |
 |                          | .. versionadded:: v2.2.19                         |
 +--------------------------+---------------------------------------------------+
-| :ref:`dict               | Store quota usage in a dictionary (e.g. SQL, or   |
-| <quota_backend_dict>`    | flat files).                                      |
-+--------------------------+---------------------------------------------------+
-| :ref:`dirsize            | The simplest and slowest quota backend.           |
-| <quota_backend_dirsize>` |                                                   |
-+--------------------------+---------------------------------------------------+
 | :ref:`fs                 | Filesystem quota.                                 |
 | <quota_backend_fs>`      |                                                   |
 +--------------------------+---------------------------------------------------+
@@ -208,8 +202,6 @@ Quota Drivers
   :maxdepth: 1
 
   quota/quota_count
-  quota/quota_dict
-  quota/quota_dirsize
   quota/quota_fs
   quota/quota_imapc
   quota/quota_maildir
