@@ -516,7 +516,6 @@ IES
 ietf
 iface
 ifconfig
-ignoreunlimited
 ihave
 ilo
 IMA
@@ -737,7 +736,6 @@ memmove
 mempool
 memset
 memtable
-mergequota
 messageguid
 metacache
 metacpan
@@ -909,13 +907,11 @@ php
 pid
 pidfile
 Piljk
-pipermail
 pkcs
 pkey
 pki
 plaa
 plist
-plpgsql
 plugin
 png
 pointsize
@@ -1299,6 +1295,7 @@ unauth
 uncoment
 uncomment
 uncompress
+uncompressing
 unconfigured
 undelete
 unescape
@@ -1321,6 +1318,7 @@ upn
 uppercased
 uppercasing
 upperfirst
+upserting
 Urg
 uri
 url
