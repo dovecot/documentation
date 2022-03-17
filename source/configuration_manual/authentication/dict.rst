@@ -260,7 +260,7 @@ can be handy for accessing user databases which would otherwise only be
 accessible via the :ref:`authentication-checkpassword` backend and a scripting
 language.
 
-When given a :ref:`proxy URL <quota_backend_dict>` the Dict
+When given a :ref:`proxy URL <dict>` the Dict
 backend speaks a simple protocol over a UNIX socket. The protocol is documented
 in :ref:`dict protocol<dovecot_dict_protocol>`.
 
