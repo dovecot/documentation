@@ -551,7 +551,7 @@ of a ``namespace`` block, with the format::
 The mailbox-name specifies the full mailbox name; if it has spaces, you can
 put it into quotes::
 
-  mailbox "Test Mailbox {
+  mailbox "Test Mailbox" {
     [...]
   }
 
