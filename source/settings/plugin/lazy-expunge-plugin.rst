@@ -36,6 +36,28 @@ Settings
      lazy_expunge_exclude = \Drafts
      lazy_expunge_exclude2 = External Accounts/*
 
+   .. versionchanged:: v2.4.0;v3.0.0 The  ``lazy_expunge_exclude`` setting
+      matches also the namespace prefix in folder names. Previously the folder
+      name was matched only without the namespace prefix.
+
+      Namespaces match as follows:
+
+      - The full folder name, including the namespace prefix.
+
+        For example ``lazy_expunge_exclude = Public/incoming``
+        would match the ``incoming`` folder in the ``Public/`` namespace.
+
+      - For ``inbox=yes`` namespace, the folder name without the namespace prefix.
+
+        For example ``lazy_expunge_exclude = incoming`` would match the ``incoming``
+        folder in the INBOX namespace, but not in the ``Public/`` namespace.
+
+      - The folder names support ``*`` and ``?`` wildcards.
+
+      Namespace prefixes must NOT be specified and will not match for:
+
+      - the ``INBOX`` folder
+      - special-use flags (e.g. ``\Trash``)
 
 .. dovecot_plugin:setting:: lazy_expunge_only_last_instance
    :default: no
