@@ -8,14 +8,14 @@ For information on how to configure mbox in Dovecot, see :ref:`mbox_settings`.
 
 .. warning::
 
-  Mbox format is considered deprecated and is maintained primarily for
-  backwards compatibility and utility purposes (specifically for archival
-  purposes, as mbox allows multiple messages to be natively stored in a
-  single file).
+  Mbox format is deprecated and should not be used in production setups at all.
 
-  mbox is not being maintained for write fixes or general feature or
-  optimization improvements, so it is not advised to use to actively store
-  production data.
+  Mbox is no longer being maintained for write fixes, for any new or advanced
+  features, nor for optimization improvements.
+
+  It still exists solely to read old mail storages, and for backwards utility
+  purposes (specifically for archival purposes, as mbox allows multiple
+  messages to be natively stored in a single file).
 
   In a production system, a more modern mailbox format should be used, e.g.,
   :ref:`dbox_mbox_format` (or :ref:`maildir_mbox_format`).
@@ -177,7 +177,7 @@ writing the mail to the mbox.**
 
 Only the first message contains the X-IMAP or X-IMAPbase header. The
 difference is that when all the messages are deleted from mbox file, a pseudo
-message is written to the mbox which contains X-IMAP header. 
+message is written to the mbox which contains X-IMAP header.
 
 This is the ``DON'T DELETE THIS MESSAGE -- FOLDER INTERNAL DATA`` message
 which you hate seeing when using non-C-client and non-Dovecot software. This
