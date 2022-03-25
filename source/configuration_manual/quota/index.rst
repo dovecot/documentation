@@ -200,7 +200,6 @@ parameter to quota setting. For example:
     # Count quota
     #quota = count:User quota:%u.default:ns=
     #quota2 = count:Archive quota:%u.archive:ns=Archive/
-    #quota_vsizes = yes
     #quota_rules and quota2_rules..
   }
 
@@ -377,6 +376,7 @@ Quota Virtual Sizes
 ^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: v2.2.19
+.. versionchanged:: v2.4;v3.0
 
 See :dovecot_plugin:ref:`quota_vsizes`.
 
@@ -388,6 +388,8 @@ sizes when calculating message sizes. Required for the ``count`` driver.
   plugin {
     quota_vsizes = yes
   }
+
+In v2.4;v3.0 this is now automatically determined by the quota plugin.
 
 .. _quota_configuration_admin:
 
