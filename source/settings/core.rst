@@ -3419,7 +3419,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: ssl_options
    :default: no-compression
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
-   :values: compression, no_compression, no_ticket
+   :values: compression, no_ticket
 
    Additional options for SSL.
 
@@ -3427,11 +3427,7 @@ See :ref:`settings` for list of all setting groups.
 
    ``compression``
 
-     (before v2.3) Enable compression.
-
-   ``no_compression``
-
-     (v2.3+) Disable compression.
+     Enable compression.
 
    ``no_ticket``
 
