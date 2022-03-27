@@ -58,8 +58,6 @@ Databases that belong to this category are:
 
 * **PAM**: Pluggable Authentication Modules. See :ref:`authentication-pam`.
 * **BSDAuth**: BSD authentication. See :ref:`authentication-bsdauth`.
-* **CheckPassword**: External checkpassword program without Dovecot extensions.
-  See :ref:`authentication-checkpassword`.
 * **IMAP**: Authenticate against remote IMAP server. See :ref:`imap`.
 * **OAuth2**: Authenticate against oauth2 provider. See :ref:`authentication-oauth2`.
 
@@ -108,8 +106,6 @@ lookup can return:
 * **LDAP**: Lightweight Directory Access Protocol. See :ref:`authentication-ldap`.
 * **SQL**: SQL database (PostgreSQL, MySQL, SQLite). See :ref:`authentication-sql`.
 * **Dict**: Dict key-value database (Redis, etc.) See :ref:`authentication-dict`.
-* **CheckPassword**: External checkpassword program when used with Dovecot
-  extensions. See :ref:`authentication-checkpassword`.
 * **Static**: Static passdb for simple configurations. See
   :ref:`authentication-static_password_database`.
 * **Lua**: Lua script for authentication. See: :ref:`authentication-lua_based_authentication`.
@@ -256,7 +252,6 @@ The result values that can be used:
   authentication_mechanisms
   pam
   bsdauth
-  checkpassword
   authentication_via_remote_imap_server
   oauth2
   static_password_database
