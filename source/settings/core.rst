@@ -3401,11 +3401,11 @@ See :ref:`settings` for list of all setting groups.
 
    ``compression``
 
-     (before v2.3) Enable compression.
+     Enable compression (v2.3+).
 
    ``no_compression``
 
-     (v2.3+) Disable compression.
+     Disable compression (before v2.3).
 
    ``no_ticket``
 
