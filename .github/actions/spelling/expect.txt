@@ -11,7 +11,6 @@ addflag
 addhdr
 addhdrvar
 addheader
-addnodes
 ADDRESULT
 ADH
 adminpass
@@ -165,7 +164,6 @@ Ciphersuites
 CJK
 cleartext
 closedir
-cls
 clucene
 clusterfs
 cmake
@@ -185,8 +183,6 @@ Compuserve
 concat
 CONDSTORE
 config
-contentnode
-contnode
 copybox
 copybutton
 COPYUID
@@ -235,7 +231,6 @@ debuginfo
 Ded
 deduplicate
 deeplinks
-defaultdict
 deinit
 deinitialization
 Deinitialize
@@ -267,7 +262,6 @@ dirpath
 dirs
 dirsize
 displayname
-dispname
 distros
 DKIM
 DLLVM
@@ -278,11 +272,9 @@ dnpass
 dns
 docidx
 Docindex
-docname
 doctest
 DOCTYPE
 documentclass
-docutils
 domaindb
 domainless
 domainname
@@ -297,7 +289,6 @@ doveconf
 dovecotdirector
 Dovecotdoc
 dovecotpw
-dovecotsetting
 dovelda
 dovemail
 dovemon
@@ -339,7 +330,6 @@ Eing
 EINVAL
 ekh
 elasticsearch
-elif
 ELOOP
 elsif
 emacs
@@ -414,7 +404,6 @@ formatdate
 forwardfor
 fpdb
 fqdn
-fromdocname
 frontend
 FROP
 fsbench
@@ -503,6 +492,7 @@ hmac
 homedir
 homepage
 hostaddr
+hostchange
 hostname
 Hotspot
 howto
@@ -605,6 +595,7 @@ kuromoji
 kuserok
 KVM
 LANMAN
+lasthost
 lastlogin
 launchd
 lcov
@@ -645,12 +636,11 @@ libtool
 libuv
 libwrap
 lifewithqmail
-lightgray
 linelen
 linenos
 linux
 listescape
-LISTINDEX
+listindex
 listname
 LISTSERV
 literalinclude
@@ -660,7 +650,6 @@ lmtpd
 lmtponly
 lmtptest
 localhost
-localname
 localpart
 localtoc
 lockd
@@ -1006,7 +995,6 @@ redownloaded
 redownloading
 refcount
 refcounting
-refnode
 regex
 regexp
 releasever
@@ -1099,13 +1087,11 @@ sharedmail
 sharedscripts
 sharedusers
 shm
-shortname
 showcerts
 sievec
 sievemailinglist
 sieverules
 SIGHUP
-signode
 SIGTERM
 sizeof
 sjis
@@ -1164,10 +1150,8 @@ ssl
 sstable
 stackbuf
 standalone
-startswith
 starttls
 STATEDIR
-statemachine
 staticbuf
 statsdb
 statstable
@@ -1229,7 +1213,6 @@ systemctl
 systemd
 TABLEGEN
 tarball
-targ
 targethost
 Tarpit
 tarpitted
@@ -1276,7 +1259,6 @@ tmpfs
 tmpmbox
 toctree
 todo
-todocname
 tohdr
 tokeninfo
 tokenization
@@ -1343,6 +1325,7 @@ uri
 url
 urlauth
 usec
+usercache
 userdata
 userdb
 userdn
