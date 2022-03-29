@@ -97,9 +97,9 @@ close the connection if versions do not match.
 
 Currently, dovecot's client and server check that they support the same major
 version number. Minor version can be ignored. This document describes
-protocol major version 3, minor 2 which is supported in dovecot v2.3.17+. In
-earlier dovecot versions lower protocol versions are used e.g. v2.3.16 protocol
-major version is 2 and minor is 2.
+protocol major version 3, minor 2 which is supported in dovecot v2.3.17+.
+Dovecot v2.4/v3.0 changed the major version to 4, but it's otherwise compatible
+with the protocol version 3.2.
 
 
 Other dict commands and their line format is described as follows.
@@ -252,17 +252,15 @@ Possible responses include:
 COMMIT_ASYNC command
 ^^^^^^^^^^^^^^^^^^^^
 
+.. deprecated:: v2.2.24
+.. versionremoved:: v2.4.0;v3.0.0
+
 Obsolete command to commit the transaction. This hasn't been used by the
 dict client since v2.2.24.
 
 .. code-block:: none
 
    C: D<transaction id>
-
-.. deprecated:: v2.2.24
-
-The async commit is currently used by dovecot's dict client even though it is
-supported by dict server.
 
 ROLLBACK command
 ^^^^^^^^^^^^^^^^
