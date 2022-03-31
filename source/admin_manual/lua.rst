@@ -32,12 +32,12 @@ return non-zero to indicate that the script has a problem.
 C API
 ^^^^^^
 
-.. c:function:: void dlua_dovecot_register(struct dlua_script \*script)
+.. c:function:: void dlua_dovecot_register(struct dlua_script *script)
 
 Register dovecot variable. This item can also be extended by context specific
 tables, like authentication database adds dovecot.auth.
 
-.. c:function:: void dlua_push_event(struct event \*event)
+.. c:function:: void dlua_push_event(struct event *event)
 
 Pushes an Dovecot Event to stack.
 
