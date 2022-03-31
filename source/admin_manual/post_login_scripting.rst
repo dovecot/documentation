@@ -155,10 +155,6 @@ script in order to deny connection (after a successful login), like this:
   fi
   exec "$@"
 
-You can also use
-
-* TCP wrappers can be used with ``login_access_sockets=tcpwrap``
-
 Dynamically adding shared mailboxes according to filesystem permissions
 =======================================================================
 
