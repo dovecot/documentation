@@ -97,34 +97,3 @@ passwords, read their mails, etc.
 * Default ``client_limit * process_limit = 1000*100 = 100k`` connections
 * ``vsz_limit`` should be increased to avoid out of memory errors, especially
   if you're using SSL/TLS.
-
-Login access check sockets
-==========================
-
-Dovecot login processes can check via UNIX socket if the incoming connection
-should be allowed to log in. This is most importantly implemented to enable TCP
-wrappers support for Dovecot.
-
-TCP wrappers support
-^^^^^^^^^^^^^^^^^^^^
-
-You must have built Dovecot with support for TCP wrappers. You can do this by
-giving ``--with-libwrap`` parameter to ``configure``.
-
-Add to ``dovecot.conf``:
-
-.. code-block:: none
-
-  login_access_sockets = tcpwrap
-
-  service tcpwrap {
-    unix_listener login/tcpwrap {
-      group = $default_login_user
-      mode = 0600
-      user = $default_login_user
-    }
-  }
-
-Remember to configure your rules! The format is described in ``hosts.allow(5)``
-and ``hosts.deny(5)``. Files used are usually ``/etc/hosts.allow`` and
-``/etc/hosts.deny``.
