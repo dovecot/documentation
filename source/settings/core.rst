@@ -1718,6 +1718,13 @@ See :ref:`settings` for list of all setting groups.
    allowed for the incoming connection.
 
 
+.. dovecot_core:setting:: login_auth_socket_path
+   :values: @string
+
+   Default socket path for all services' login processes. Can be overridden by
+   passing a parameter to the login executable.
+
+
 .. dovecot_core:setting:: login_greeting
    :default: Dovecot ready.
    :values: @string
