@@ -56,6 +56,9 @@ By default all active sessions will be shut down when director is reloaded or re
         user = dovecot
     }
    }
+   # v2.4+
+   login_auth_socket_path = director
+   # Older versions:
    service imap-login {
     executable = imap-login director
    }
