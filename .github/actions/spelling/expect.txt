@@ -1218,7 +1218,6 @@ tclass
 tcontext
 tcp
 tcplog
-tcpwrap
 tecadmin
 technet
 telnet
