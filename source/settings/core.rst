@@ -1709,6 +1709,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: login_access_sockets
    :values: @string
+   :removed: v2.4;v3.0
 
    For blacklisting or whitelisting networks, supply a space-separated list of
    login-access-check sockets for this setting.

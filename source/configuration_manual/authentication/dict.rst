@@ -9,6 +9,9 @@ only for caching in front of e.g. SQL auth backends. Iteration is supported if
 the underlying dict provider supports iteration. See :ref:`Dictionary <dict>`
 for a list of supported databases.
 
+For making custom authentication code, please see
+:ref:`authentication-lua_based_authentication` instead.
+
 Auth configuration
 ==================
 
@@ -255,10 +258,8 @@ The CDB dictionary doesn't support iteration yet.
 Complete example for authenticating via a UNIX socket
 =====================================================
 
-The Dict auth backend can be used to query a local UNIX socket for users. This
-can be handy for accessing user databases which would otherwise only be
-accessible via the :ref:`authentication-checkpassword` backend and a scripting
-language.
+The Dict auth backend can be used to query a local UNIX socket for users,
+but you should consider using :ref:`authentication-lua_based_authentication` instead.
 
 When given a :ref:`proxy URL <dict>` the Dict
 backend speaks a simple protocol over a UNIX socket. The protocol is documented

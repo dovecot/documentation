@@ -106,7 +106,7 @@ by default, but can be changed with ``scheme`` parameter in passdb args.
 
 :ref:`authentication-passwd`: CRYPT is used by default and can't be changed currently.
 
-:ref:`authentication-pam`, :ref:`authentication-bsdauth`, :ref:`authentication-checkpassword`: Dovecot never even sees the
+:ref:`authentication-pam`, :ref:`authentication-bsdauth`: Dovecot never even sees the
 password with these databases, so Dovecot has nothing to do with what password
 scheme is used.
 
