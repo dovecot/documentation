@@ -369,6 +369,9 @@ FS driver syntax::
 
   crypt:[maybe][algo=<s>:][set_prefix=<n>:][private_key_path=/path:][public_key_path=/path:][password=password:]<parent fs>``
 
+.. versionchanged:: v2.3.19
+  You can now leave all parameters out of mail-crypt. Prior to this, you would always have to specify them.
+
 .. versionadded:: v2.3.19
 
    ``maybe`` was added
