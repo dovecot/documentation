@@ -30,18 +30,42 @@ Alternatively, you can migrate your data to new setup.
 Removed features and their replacements
 =======================================
 
-+-------------------------------+------------------------------------------------------------------------------------------+
-| Feature                       | Notes                                                                                    |
-+===============================+==========================================================================================+
-| | Dict quota                  | The dict and dirsize backends are removed.                                               |
-| | Dirsize quota               | You should use :ref:`count <quota_backend_count>` instead along with                     |
-|                               | :ref:`quota_clone plugin <quota_clone_plugin>`.                                          |
-|                               |                                                                                          |
-|                               | Note that switching to quota count can cause all user's indexes to update,               |
-|                               | so reserve time for this.                                                                |
-+-------------------------------+------------------------------------------------------------------------------------------+
-| XZ Compression                | You need to perform migration using different plugin. With maildir, you can try          |
-|                               | uncompressing all your mail and compressing them with another algorithm while Dovecot is |
-|                               | not running.                                                                             |
-+-------------------------------+------------------------------------------------------------------------------------------+
-
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| Feature                                                    | Notes                                                                                    |
++============================================================+==========================================================================================+
+| | Dict quota                                               | The dict and dirsize backends are removed.                                               |
+| | Dirsize quota                                            | You should use :ref:`count <quota_backend_count>` instead along with                     |
+|                                                            | :ref:`quota_clone plugin <quota_clone_plugin>`.                                          |
+|                                                            |                                                                                          |
+|                                                            | Note that switching to quota count can cause all user's indexes to update,               |
+|                                                            | so reserve time for this.                                                                |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| XZ Compression                                             | You need to perform migration using different plugin. With maildir, you can try          |
+|                                                            | uncompressing all your mail and compressing them with another algorithm while Dovecot is |
+|                                                            | not running.                                                                             |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| setting                                                    |                                                                                          |
+| ``auth_worker_max_count``                                  | Use service-specific process limit.                                                      |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| | fts-lucene                                               | Use ``fts-flatcurve`` or :ref:`Solr FTS <fts_backend_solr>`                              |
+| | fts-squat                                                |                                                                                          |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| Weak password schemes                                      | Weak password schemes are disabled by default, you need to use                           |
+|                                                            | :dovecot_core:ref:`auth_allow_weak_schemes` to enable them.                              |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| Global ACL directory                                       | Use global acl file instead.                                                             |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``ssl-parameters.dat``                                     | This file is no longer converted automatically by config process, you need to set        |
+|                                                            | :dovecot_core:ref:`ssl_dh` setting if you need non-ECC Diffie-Hellman.                   |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| License plugin                                             | This plugin has been removed and ``license_checksum`` setting is marked obsolete         |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| shadow auth driver                                         | Use :ref:`authentication-pam` instead.                                                   |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| old-stats plugin                                           | Use new stats instead.                                                                   |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| Memcached dict driver                                      | Use redis instead.                                                                       |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| dsync: Remove -D parameter                                 | Parameter for disabling mailbox rename syncing removed.                                  |
+|                                                            | It hasn't been necessary for a long time, and it is broke                                |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
