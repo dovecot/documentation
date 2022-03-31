@@ -53,8 +53,8 @@ Removed features and their replacements
 |                                                            | uncompressing all your mail and compressing them with another algorithm while Dovecot is |
 |                                                            | not running.                                                                             |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| setting                                                    |                                                                                          |
-| ``auth_worker_max_count``                                  | Use service-specific process limit.                                                      |
+| :dovecot_core:ref:`auth_worker_max_count                   | Use service-specific process limit.                                                      |
+| <auth_worker_max_count>`                                   |                                                                                          |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | | fts-lucene                                               | Use ``fts-flatcurve`` or :ref:`Solr FTS <fts_backend_solr>`                              |
 | | fts-squat                                                |                                                                                          |
