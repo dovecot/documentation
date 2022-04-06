@@ -5,7 +5,7 @@ Dovecot Dictionaries
 ====================
 
 Dovecot's lib-dict can be used to access simple key-value databases. This is
-used by, for example, :ref:`quota_backend_dict`, :ref:`authentication-dict`,
+used by, for example, :ref:`authentication-dict`,
 :ref:`lastlogin_plugin`, and :ref:`imap_metadata`. The dictionaries can be
 accessed either directly by the mail processes or they can be accessed via
 :ref:`dict-proxy_process` processes.

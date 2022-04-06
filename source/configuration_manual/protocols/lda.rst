@@ -284,10 +284,6 @@ Problems with dovecot-lda
    thus will not work if ``-d`` parameter is used. The
    :ref:`UserDatabase/Prefetch <authentication-prefetch_userdb>` page explains how to fix this.
 
-   -  See
-      :ref:`Checkpassword <authentication-checkpassword>`
-      for how to make dovecot-lda work with checkpassword.
-
 Logging
 ~~~~~~~
 

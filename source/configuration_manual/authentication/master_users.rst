@@ -34,12 +34,6 @@ whole new user (with eg. :ref:`authentication-static_user_database` ). ``result_
 doesn't work with PAM or LDAP without ``auth_bind=yes``, because both of them
 require knowing the user's password.
 
-``result_success=continue`` is especially useful with a :ref:`authentication-checkpassword` passdb because the
-script gets both the login and the master username as environment variables.
-Other passdbs see only the login username in ``%u``. In the future there will
-probably be another setting to make the user verification to be done from
-userdb.
-
 If you want master users to be able to log in as themselves, you'll need to
 either add the user to the normal passdb or add the passdb to dovecot.conf
 twice, with and without ``master=yes``.

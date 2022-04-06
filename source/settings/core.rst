@@ -1709,12 +1709,20 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: login_access_sockets
    :values: @string
+   :removed: v2.4;v3.0
 
    For blacklisting or whitelisting networks, supply a space-separated list of
    login-access-check sockets for this setting.
 
    Dovecot login processes can check via UNIX socket whether login should be
    allowed for the incoming connection.
+
+
+.. dovecot_core:setting:: login_auth_socket_path
+   :values: @string
+
+   Default socket path for all services' login processes. Can be overridden by
+   passing a parameter to the login executable.
 
 
 .. dovecot_core:setting:: login_greeting
@@ -3418,7 +3426,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: ssl_options
    :default: no-compression
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
-   :values: compression, no_compression, no_ticket
+   :values: compression, no_ticket
 
    Additional options for SSL.
 
@@ -3426,11 +3434,7 @@ See :ref:`settings` for list of all setting groups.
 
    ``compression``
 
-     (before v2.3) Enable compression.
-
-   ``no_compression``
-
-     (v2.3+) Disable compression.
+     Enable compression.
 
    ``no_ticket``
 
