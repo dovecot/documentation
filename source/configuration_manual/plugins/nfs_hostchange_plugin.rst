@@ -2,6 +2,8 @@
 NFS host change plugin
 ======================
 
+.. versionadded:: v2.3.19
+
 .. note::
 
    This is a Dovecot Pro only plugin.
@@ -62,7 +64,7 @@ Settings
 ========
 
 .. dovecot_plugin:setting:: nfs_hostchange_migration
-   :added: v2.4;v3.0
+   :added: v2.3.19
    :default: no
    :plugin: nfs_hostchange
    :values: @boolean
