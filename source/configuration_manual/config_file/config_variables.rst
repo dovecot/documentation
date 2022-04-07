@@ -72,7 +72,7 @@ Variables that are work nearly everywhere where there is a username:
 +----------+----------------+---------------------------------------------------------------+
 | %d       | domain         | domain part in user@domain, empty if user with no domain      |
 +----------+----------------+---------------------------------------------------------------+
-| %s       | service        | imap, pop3, smtp, lda (and doveadm, dsync, etc.)              |
+| %s       | service        | imap, pop3, smtp, lda (and doveadm, etc.)                     |
 +----------+----------------+---------------------------------------------------------------+
 |          | session        | session ID for this client connection (unique for 9 years)    |
 +----------+----------------+---------------------------------------------------------------+
