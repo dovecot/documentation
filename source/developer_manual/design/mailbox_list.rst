@@ -23,7 +23,7 @@ functions are:
 Mailbox list code also internally creates and updates mailbox changelog
 (in ``dovecot.mailbox.log`` file), which keeps track of mailbox
 deletions, renames and subscription changes. This is primarily useful
-for dsync utility.
+when running the ``doveadm sync`` command.
 
 .. _design_mailbox_names:
 
