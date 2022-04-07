@@ -81,6 +81,10 @@ Removed features and their replacements
 | dsync: Remove -D parameter                                 | Parameter for disabling mailbox rename syncing removed.                                  |
 |                                                            | It hasn't been necessary for a long time, and it is broke                                |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| dsync                                                      | Use `doveadm` instead.                                                                   |
+|                                                            | `dsync` has been a symlink to `doveadm` already, this release removed the symlink        |
+|                                                            | completely.                                                                              |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | :dovecot_core:ref:`login_access_sockets                    | Use :ref:`authentication-lua_based_authentication` instead.                              |
 | <login_access_sockets>`                                    | Dovecot will fail to start if this setting is present in configuration.                  |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
