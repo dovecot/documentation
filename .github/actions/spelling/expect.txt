@@ -64,6 +64,7 @@ authpriv
 authtok
 authuser
 authz
+autoconf
 autocreate
 autocreated
 Autocreation
@@ -136,6 +137,7 @@ CApath
 cas
 Cazabon
 cbc
+ccs
 cdb
 cdmi
 certbot
@@ -154,6 +156,7 @@ CHECKSCRIPT
 chgrp
 chmod
 chown
+chrony
 chroot
 chrooting
 CIDR
@@ -163,6 +166,7 @@ cipe
 Ciphersuites
 CJK
 cleartext
+clockspeed
 closedir
 clucene
 clusterfs
@@ -191,6 +195,7 @@ courierimapuiddb
 cov
 CPID
 cpp
+CPPFLAGS
 cql
 cqlsh
 crlf
@@ -256,6 +261,7 @@ dictmap
 dictrevmap
 dicts
 Diffie
+digestmd
 DIRNAME
 dirnamename
 dirpath
@@ -268,6 +274,7 @@ DLLVM
 dlog
 dlua
 DMARC
+dnotify
 dnpass
 dns
 docidx
@@ -351,6 +358,7 @@ eokb
 eol
 eperm
 epk
+epoll
 epub
 EROFS
 errno
@@ -419,6 +427,7 @@ fstat
 fsuid
 fsync
 fsyncing
+ftp
 fts
 ftscache
 FULLDIRNAME
@@ -474,10 +483,13 @@ halon
 haproxy
 hara
 hardcoded
+hardlink
+hardlinking
 hardlinks
 hasfrop
 hashmap
 hatv
+haxx
 hba
 hda
 HDD
@@ -495,11 +507,13 @@ homedir
 homepage
 hostaddr
 hostchange
+HOSTDOMAIN
 hostname
 Hotspot
 howto
 htaccess
 htbp
+htdigest
 htiweb
 htm
 html
@@ -531,6 +545,7 @@ imaptest
 imapwiki
 IMDS
 imem
+imtest
 INBO
 inbox
 inboxes
@@ -547,6 +562,7 @@ ino
 inode
 inodetofile
 inotify
+inotifytools
 INTERNALDATE
 internalfail
 interoperable
@@ -597,6 +613,7 @@ kuromoji
 kuserok
 KVM
 LANMAN
+largefile
 lasthost
 lastlogin
 launchd
@@ -627,12 +644,16 @@ libexec
 libexpat
 libexttextcat
 libicu
+libkrb
+libldap
 liblib
 liblz
 liblzma
+libmysqlclient
 libpam
 libpq
 libsodium
+libsqlite
 libstemmer
 libtool
 libuv
@@ -742,6 +763,7 @@ messageguid
 metacache
 metacpan
 metadata
+microsites
 microsoft
 middleware
 millisecs
@@ -832,6 +854,7 @@ noscheme
 nosearch
 noselect
 nosep
+nosuid
 notfound
 notifempty
 notwhat
@@ -843,7 +866,9 @@ nsend
 nsname
 nss
 ntlm
+ntp
 ntpd
+ntpdate
 nullok
 nuls
 nulsoe
@@ -892,6 +917,7 @@ oxbuildkey
 oxpedia
 oxuser
 pacman
+pandoc
 papersize
 params
 passdb
@@ -906,11 +932,14 @@ pfs
 PGP
 pgsql
 php
+phtml
 pid
 pidfile
+pidof
 Piljk
 pkcs
 pkey
+pkgconfig
 pki
 plaa
 plist
@@ -1014,6 +1043,7 @@ rfc
 rhel
 RHu
 RLIMIT
+rml
 Rnotation
 Roboto
 roundcube
@@ -1061,6 +1091,7 @@ secretpassword
 seealso
 seekable
 SELEC
+selfservice
 semanage
 sendfile
 sendmail
@@ -1080,6 +1111,7 @@ setra
 setrecursionlimit
 setsid
 SFTP
+sfw
 sgid
 SHAREDDIR
 sharedmail
@@ -1110,6 +1142,7 @@ solib
 solr
 solrcloud
 solrconfig
+somaxconn
 somedict
 SOURCEDIR
 sourceforge
@@ -1146,6 +1179,7 @@ ssd
 ssh
 ssha
 ssl
+ssldir
 sstable
 stackbuf
 standalone
@@ -1191,6 +1225,8 @@ Subtables
 subvalue
 sudo
 sudoers
+sunfreeware
+sunsite
 SUSE
 svbin
 swapoff
@@ -1267,9 +1303,11 @@ tostring
 transitioning
 trie
 Trojita
+Tru
 tscript
 ttl
 tukaani
+tuxfamily
 txn
 TYPECHECK
 typedef
@@ -1372,10 +1410,12 @@ vlan
 vlast
 vmail
 vmback
+vmware
 VMware
 vname
 vnd
 VOLATILEDIR
+vpopmail
 vpv
 VRFY
 vsize
@@ -1383,6 +1423,7 @@ vsz
 wal
 wbytes
 wchar
+Wcry
 weakforced
 webmail
 webpage
@@ -1408,6 +1449,8 @@ xattr
 XBAR
 xchange
 xclient
+Xen
+xenproject
 Xes
 XFOO
 xfs
