@@ -65,6 +65,7 @@ authpriv
 authtok
 authuser
 authz
+autoconf
 autocreate
 autocreated
 Autocreation
@@ -193,6 +194,7 @@ courierimapuiddb
 cov
 CPID
 cpp
+CPPFLAGS
 cql
 cqlsh
 crlf
@@ -233,7 +235,6 @@ debuginfo
 Ded
 deduplicate
 deeplinks
-defaultdict
 defaultdelivery
 deinit
 deinitialization
@@ -895,6 +896,7 @@ oxbuildkey
 oxpedia
 oxuser
 pacman
+pandoc
 papersize
 params
 passdb
@@ -1151,6 +1153,7 @@ ssd
 ssh
 ssha
 ssl
+ssldir
 sstable
 stackbuf
 standalone
