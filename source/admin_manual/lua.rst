@@ -116,8 +116,12 @@ Lua API
    :param bool debug: Enable debug messages for this client.
    :return: An http_client object.
 
+   .. versionadded:: 2.3.19
+
 object http_client
 ^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.19
 
 .. py:currentmodule:: http_client
 
@@ -133,6 +137,8 @@ object http_client
 
 object http_request
 ^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.19
 
 .. py:currentmodule:: http_request
 
@@ -164,6 +170,8 @@ object http_request
 
 object http_response
 ^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.3.19
 
 .. py:currentmodule:: http_response
 
