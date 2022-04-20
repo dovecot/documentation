@@ -56,7 +56,7 @@ Removed features and their replacements
 |                                                            | uncompressing all your mail and compressing them with another algorithm while Dovecot is |
 |                                                            | not running.                                                                             |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| :dovecot_core:ref:`auth_worker_max_count                   | Use service-specific process limit.                                                      |
+| :dovecot_core:ref:`auth_worker_max_count                   | Use :ref:`service-specific process limit <service_configuration>`.                       |
 | <auth_worker_max_count>`                                   |                                                                                          |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | | fts-lucene                                               | Use ``fts-flatcurve`` or :ref:`Solr FTS <fts_backend_solr>`                              |
@@ -74,14 +74,14 @@ Removed features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | shadow auth driver                                         | Use :ref:`authentication-pam` instead.                                                   |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| old-stats plugin                                           | Use new stats instead.                                                                   |
+| old-stats plugin                                           | Use :ref:`new stats <statistics>` instead.                                               |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| Memcached dict driver                                      | Use redis instead.                                                                       |
+| Memcached dict driver                                      | Use :ref:`redis <dict-redis>` instead.                                                   |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | dsync: Remove -D parameter                                 | Parameter for disabling mailbox rename syncing removed.                                  |
 |                                                            | It hasn't been necessary for a long time, and it is broke                                |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| dsync                                                      | Use `doveadm` instead.                                                                   |
+| dsync                                                      | Use `doveadm sync` instead.                                                              |
 |                                                            | `dsync` has been a symlink to `doveadm` already, this release removed the symlink        |
 |                                                            | completely.                                                                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
