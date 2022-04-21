@@ -350,6 +350,8 @@ object dict
 
 .. py:currentmodule:: dict
 
+.. note:: Currently this object cannot be created within the Lua code itself.
+
 Functions:
 ----------
 
