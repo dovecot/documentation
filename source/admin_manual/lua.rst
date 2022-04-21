@@ -424,6 +424,31 @@ Functions:
 
    Rollback the transaction.
 
+object dns_client
+^^^^^^^^^^^^^^^^^
+
+.. py:currentmodule:: dns_client
+
+.. versionadded:: v2.4;v3.0
+
+.. note:: Currently this object cannot be created within the Lua code itself.
+
+Functions:
+----------
+
+.. py:function::  lookup(hostname[, event])
+
+   Lookup hostname asynchronously via dns-client process.
+
+   :param str hostname: Hostname to lookup
+   :param event event: Event to use for logging
+
+   :return: On succesful DNS lookup, returns a table with IP addresses (which
+            has at least one IP).
+
+	    On failure, returns nil, error string, net_gethosterror()
+	    compatible error code (similar to e.g. Lua io.* calls).
+
 mail-lua
 ^^^^^^^^
 
