@@ -98,33 +98,24 @@ passwords, read their mails, etc.
 * ``vsz_limit`` should be increased to avoid out of memory errors, especially
   if you're using SSL/TLS.
 
-Login access check sockets
-==========================
+Configuring socket paths for login processes
+============================================
 
-Dovecot login processes can check via UNIX socket if the incoming connection
-should be allowed to log in. This is most importantly implemented to enable TCP
-wrappers support for Dovecot.
+The authentication UNIX socket is "login" by default.
 
-TCP wrappers support
-^^^^^^^^^^^^^^^^^^^^
-
-You must have built Dovecot with support for TCP wrappers. You can do this by
-giving ``--with-libwrap`` parameter to ``configure``.
-
-Add to ``dovecot.conf``:
+The :dovecot_core:ref:`login_auth_socket_path` setting allows to configure this
+path for all login processes. For individual processes this can be overridden
+by supplying a parameter to the appropriate service's executable. The following
+example sets up the global socket "general-login-socket" but overrides this for
+the imap-login process individually (in ``dovecot.conf``):
 
 .. code-block:: none
 
-  login_access_sockets = tcpwrap
+  login_auth_socket_path = general-login-socket
 
-  service tcpwrap {
-    unix_listener login/tcpwrap {
-      group = $default_login_user
-      mode = 0600
-      user = $default_login_user
-    }
+  service imap-login {
+    executable = imap-login specific-login-socket
   }
 
-Remember to configure your rules! The format is described in ``hosts.allow(5)``
-and ``hosts.deny(5)``. Files used are usually ``/etc/hosts.allow`` and
-``/etc/hosts.deny``.
+This can be especially useful when setting up a director ring to simplify
+socket paths for all available authentication processes.

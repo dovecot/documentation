@@ -5,6 +5,20 @@ Dovecot Core Settings
 See :ref:`settings` for list of all setting groups.
 
 
+.. dovecot_core:setting:: auth_allow_weak_schemes
+   :added: v2.4;v3.0
+   :default: no
+   :values: @boolean
+
+   Controls whether password schemes marked as weak are allowed to be used.
+   See <authentication-password_schemes> for disabled by default schemes.
+
+   If enabled, will emit warning to logs. If a disabled scheme is used,
+   an error is logged.
+
+   Notably, any explicitly plaintext schemes (such as PLAIN), CRAM-MD5 and DIGEST-MD5 are
+   not affected by this setting.
+
 .. dovecot_core:setting:: auth_anonymous_username
    :default: anonymous
    :values: @string
@@ -43,12 +57,9 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: auth_cache_verify_password_with_worker
    :added: v2.2.34
+   :changed: v2.3.18 Fixed to work properly. Older versions lost passdb extra fields.
    :default: no
    :values: @boolean
-
-   .. Warning:: This feature doesn't currently work correctly when the passdb
-                lookup is done via auth-workers. The password is checked
-                correctly, but all the passdb extra fields are lost.
 
    The auth master process by default is responsible for the hash
    verifications. Setting this to yes moves the verification to auth-worker
@@ -1695,12 +1706,20 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: login_access_sockets
    :values: @string
+   :removed: v2.4;v3.0
 
    For blacklisting or whitelisting networks, supply a space-separated list of
    login-access-check sockets for this setting.
 
    Dovecot login processes can check via UNIX socket whether login should be
    allowed for the incoming connection.
+
+
+.. dovecot_core:setting:: login_auth_socket_path
+   :values: @string
+
+   Default socket path for all services' login processes. Can be overridden by
+   passing a parameter to the login executable.
 
 
 .. dovecot_core:setting:: login_greeting
@@ -3385,14 +3404,15 @@ See :ref:`settings` for list of all setting groups.
 
    ``ANY``
 
-     Support any version. (SHOULD NOT BE USED)
-
      .. versionadded:: v2.3.15
+     .. versionchanged:: v2.4.0;v3.0.0
+
+     .. warning:: this value is meant for tests only.
+                  It should not be used in any deployment of any value/relevance.
 
    ``SSLv3``
 
-     Support SSLv3+. (SHOULD NOT BE USED) (SSLv3 deprecated:
-     `RFC 7568 <https://datatracker.ietf.org/doc/html/rfc7568>`_)
+     .. versionremoved:: v2.4.0;v3.0.0
 
    ``TLSv1``
 
@@ -3424,7 +3444,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: ssl_options
    :default: no-compression
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
-   :values: compression, no_compression, no_ticket
+   :values: compression, no_ticket
 
    Additional options for SSL.
 
@@ -3432,11 +3452,7 @@ See :ref:`settings` for list of all setting groups.
 
    ``compression``
 
-     (before v2.3) Enable compression.
-
-   ``no_compression``
-
-     (v2.3+) Disable compression.
+     Enable compression.
 
    ``no_ticket``
 

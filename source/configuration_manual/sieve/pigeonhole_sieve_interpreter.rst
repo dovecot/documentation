@@ -76,8 +76,8 @@ Extension                                                                       
 `vacation-seconds <https://tools.ietf.org/html/rfc6131>`_                                            supported (0.2.3+)              no                         Extends vacation extension with the ability to send vacation responses with intervals of seconds rather than days
 `variables <https://tools.ietf.org/html/rfc5229>`_                                                   supported                       yes                        Adds variables support to the language
 `virustest <https://tools.ietf.org/html/rfc5235>`_                                                   supported (v0.1.16+)            no                         Implements a uniform way to test against headers added by virus scanners
-imapflags(`obsolete draft <https://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_)         deprecated                      no                         Old version of imap4flags (for backwards compatibility with CMU Sieve)
-`notify <https://tools.ietf.org/html/draft-martin-sieve-notify-01>`_                                 deprecated                      no                         Old version of enotify (for backwards compatibility with CMU Sieve)
+imapflags(`obsolete draft <https://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_)         removed (v3.0.0)                no                         Old version of imap4flags (for backwards compatibility with CMU Sieve)
+`notify <https://tools.ietf.org/html/draft-martin-sieve-notify-01>`_                                 removed (v3.0.0)                no                         Old version of enotify (for backwards compatibility with CMU Sieve)
 ================================================================================================   =============================   =====================   =====================================================================================================================================
 
 

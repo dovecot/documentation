@@ -72,7 +72,7 @@ Variables that are work nearly everywhere where there is a username:
 +----------+----------------+---------------------------------------------------------------+
 | %d       | domain         | domain part in user@domain, empty if user with no domain      |
 +----------+----------------+---------------------------------------------------------------+
-| %s       | service        | imap, pop3, smtp, lda (and doveadm, dsync, etc.)              |
+| %s       | service        | imap, pop3, smtp, lda (and doveadm, etc.)                     |
 +----------+----------------+---------------------------------------------------------------+
 |          | session        | session ID for this client connection (unique for 9 years)    |
 +----------+----------------+---------------------------------------------------------------+
@@ -250,7 +250,10 @@ Login variables
 | %e       | mail_pid              | PID for process that handles the mail session post-login      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | original_user         | Same as %{user}, except using the original username the client|
-|          |                       | sent before any changes by auth process                       |
+|          |                       | sent before any changes by auth process. With master user     |
+|          |                       | logins (also with                                             |
+|          |                       | :dovecot_core:ref:`auth_master_user_separator` based logins), |
+|          |                       | this contains only the original master username.              |
 |          |                       |                                                               |
 |          |                       | .. versionadded:: v2.3.14                                     |
 +----------+-----------------------+---------------------------------------------------------------+

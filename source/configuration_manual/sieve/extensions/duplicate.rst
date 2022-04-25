@@ -15,12 +15,9 @@ from previously delivered messages. For more complex applications, the
 ``duplicate`` test can also use the content of a specific header field
 or other parts of the message.
 
-Previously, this extension was Dovecot-specific and available under the
-name ``vnd.dovecot.duplicate``. Specification for old version available
-`here <http://hg.rename-it.nl/dovecot-2.1-pigeonhole/raw-file/tip/doc/rfc/spec-bosch-sieve-duplicate.txt>`_.
-That implementation differs significantly from what is now published as
-`RFC 7353 <http://tools.ietf.org/html/rfc7352>`_, but the original
-extension is still supported for backwards compatibility.
+.. versionchanged:: v3.0;v2.4
+
+  ``vnd.dovecot.duplicate`` extension has been removed in favor of this.
 
 Configuration
 -------------
