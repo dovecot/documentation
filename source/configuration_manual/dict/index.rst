@@ -5,7 +5,7 @@ Dovecot Dictionaries
 ====================
 
 Dovecot's lib-dict can be used to access simple key-value databases. This is
-used by, for example, :ref:`quota_backend_dict`, :ref:`authentication-dict`,
+used by, for example, :ref:`authentication-dict`,
 :ref:`lastlogin_plugin`, and :ref:`imap_metadata`. The dictionaries can be
 accessed either directly by the mail processes or they can be accessed via
 :ref:`dict-proxy_process` processes.
@@ -18,8 +18,6 @@ Name                                            Description
 :ref:`file <dict-file>`                         Flat Files
 :ref:`fs <dict-fs>`                             FS (lib-fs wrapper)
 :ref:`ldap <dict-ldap>`                         LDAP (read only)
-:ref:`memcached-ascii <dict-memcached_ascii>`   Memcached (ASCII protocol)
-:ref:`memcached-binary <dict-memcached_binary>` Memcached (Binary protocol)
 :ref:`proxy <dict-proxy>`                       Proxy
 :ref:`redis <dict-redis>`                       Redis
 :ref:`sql <dict-sql>`                           SQL
@@ -29,8 +27,8 @@ Name                                            Description
 
 Starting version 2.3.17, the dict server process keeps the last 10 idle dict
 backends cached for maximum of 30 seconds. Practically this acts as a
-connection pool for dict-redis, dict-memcached and dict-ldap. Note that this
-doesn't affect dict-sql, because it already had its own internal cache.
+connection pool for dict-redis and dict-ldap. Note that this doesn't affect
+dict-sql, because it already had its own internal cache.
 
 
 .. _dict-file:
@@ -150,10 +148,10 @@ To do a more complex search:
 Memcached (ASCII Protocol)
 --------------------------
 
-.. note:: Memcached dict support is considered deprecated and will be
-          removed in the future. Users are advised to upgrade to Redis.
+.. versionadded:: v2.2.9
+.. versionremoved:: v2.4.0;v3.0.0
 
-.. versionadded:: v2.2.9 
+.. note:: Users are advised to upgrade to Redis.
 
 This driver uses the "legacy" Memcache ASCII protocol.
 
@@ -185,10 +183,10 @@ Supported parameters are:
 Memcached (Binary Protocol)
 ---------------------------
 
-.. note:: Memcached dict support is considered deprecated and will be
-          removed in the future. Users are advised to upgrade to Redis.
+.. versionadded:: v2.2.9
+.. versionremoved:: v2.4.0;v3.0.0
 
-.. versionadded:: v2.2.9 
+.. note:: Users are advised to upgrade to Redis.
 
 This driver uses the "new" Memcache binary protocol.
 

@@ -34,8 +34,11 @@ Settings
 .. dovecot_plugin:setting:: metacache_disable_merging
    :default: no
    :plugin: obox
+   :removed: v3.0.0
    :seealso: @metacache_index_merging;dovecot_plugin
    :values: @boolean
+
+   .. note:: Use ``metacache_index_merging=none`` instead.
 
    Disable index merging when opening root or mailbox indexes. This can be
    used to work around bugs in the merging code that cause crashes. Usually
@@ -63,7 +66,7 @@ Settings
 
 .. dovecot_plugin:setting:: metacache_index_merging
    :added: v2.3.6
-   :changed: v2.3.16 Changed default from v1 to v2
+   :changed: v2.4.0;v3.0.0 Removed ``v1`` option
    :default: v2
    :plugin: obox
    :values: @string
@@ -227,7 +230,13 @@ Settings
 .. dovecot_plugin:setting:: obox_allow_inconsistency
    :default: no
    :plugin: obox
+   :removed: v3.0.0
    :values: @boolean
+
+   .. warning::
+      The setting has been removed as it caused problems with caching IMAP
+      clients, which may lose emails permanently or otherwise become confused
+      about their internal state.
 
    Even in case of object storage errors, try to allow accessing the emails as
    well as possible. This especially means that if the local metacache already

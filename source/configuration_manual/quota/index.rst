@@ -197,10 +197,9 @@ parameter to quota setting. For example:
     quota = maildir:User quota:ns=
     quota2 = maildir:Archive quota:ns=Archive/
 
-    # Dict quota
-    #quota = dict:User quota:%u.default:ns=:proxy::quota
-    #quota2 = dict:Archive quota:%u.archive:ns=Archive/:proxy::quota
-
+    # Count quota
+    #quota = count:User quota:%u.default:ns=
+    #quota2 = count:Archive quota:%u.archive:ns=Archive/
     #quota_rules and quota2_rules..
   }
 
@@ -284,7 +283,7 @@ change the ``plugin/quota`` value to match the quota backend and other
 configuration you use. Basically preserve your original "quota" setting and
 just insert ":noenforcing" to proper location in it. For example with dict
 quota, you can use something like:
-``-o "plugin/quota=dict:User quota::noenforcing:proxy::quota"``
+``-o "plugin/quota=count:User quota::noenforcing"``
 
 .. _quota_configuration_overquota_flag:
 
@@ -377,6 +376,7 @@ Quota Virtual Sizes
 ^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: v2.2.19
+.. versionchanged:: v2.4;v3.0
 
 See :dovecot_plugin:ref:`quota_vsizes`.
 
@@ -388,6 +388,8 @@ sizes when calculating message sizes. Required for the ``count`` driver.
   plugin {
     quota_vsizes = yes
   }
+
+In v2.4;v3.0 this is now automatically determined by the quota plugin.
 
 .. _quota_configuration_admin:
 

@@ -104,10 +104,9 @@ setting in ``dovecot-sql.conf.ext``
 :ref:`authentication-passwd_file` : CRYPT is used
 by default, but can be changed with ``scheme`` parameter in passdb args.
 
-:ref:`authentication-passwd`, :ref:`authentication-shadow`, ``vPopMail``: CRYPT is used by default
-and can't be changed currently.
+:ref:`authentication-passwd`: CRYPT is used by default and can't be changed currently.
 
-:ref:`authentication-pam`, :ref:`authentication-bsdauth`, :ref:`authentication-checkpassword`: Dovecot never even sees the
+:ref:`authentication-pam`, :ref:`authentication-bsdauth`: Dovecot never even sees the
 password with these databases, so Dovecot has nothing to do with what password
 scheme is used.
 
@@ -161,6 +160,8 @@ Strong schemes and mechanism-specific schemes are listed above.
 * **CRYPT**: Traditional DES-crypted password in ``/etc/passwd (e.g. "pass" =
   vpvKh.SaNbR6s)``
 
+.. versionchanged:: v2.4;v3.0 DES and MD5 based crypt are disabled by default.
+
  * Dovecot uses libc's ``crypt()`` function, which means that CRYPT is usually
    able to recognize MD5-CRYPT and possibly also other password schemes. See
    all of the ``*-CRYPT`` schemes at the top of this page.
@@ -171,6 +172,8 @@ Strong schemes and mechanism-specific schemes are listed above.
 
 MD5 based schemes:
 ******************
+
+.. versionchanged:: v2.4;v3.0 Disabled by default.
 
 * **PLAIN-MD5**: MD5 sum of the password stored in hex.
 * **LDAP-MD5**: MD5 sum of the password stored in base64.

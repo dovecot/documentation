@@ -92,6 +92,8 @@ Key                Value Description
 
                    .. versionadded:: v2.2.32
 
+                   .. versionchanged:: v2.3.19 Add support for using ``NO-NOSELECT``
+                                       with LAYOUT=index
 ``UTF-8``          Store mailbox names on disk using UTF-8 instead of
                    modified UTF-7 (mUTF-7).
 
@@ -129,33 +131,34 @@ Key                Value Description
                    directories are stored. The default is empty unless
                    otherwise described in the mailbox format pages.
 
+``DIRNAME``        Specifies the directory name used for mailbox directories,
+                   or in the case of mbox specifies the mailbox message file
+                   name.
+
+                   The :ref:`sdbox and mdbox <dbox_settings>` formats use
+                   ``DIRNAME=dbox-Mails`` by default.
+
+                   .. note:: ``DIRNAME`` is not used for index or control
+                             directories, consider using ``FULLDIRNAME``
+                             instead.
+
 ``FULLDIRNAME``    Specifies the directory name used for mailbox, index, and
                    control directory paths. See the individual mailbox format
-                   pages for further information. This key replaced the
-                   deprecated ``DIRNAME`` key.
+                   pages for further information.
+
+                   .. note:: Bug: Before v2.3.19 folder renaming was broken
+                             when using ``FULLDIRNAME`` together with
+                             ``INDEX``, ``INDEXPVT``, ``INDEXCACHE`` or
+                             ``CONTROL``. Renaming a parent folder lost the
+                             index/control files for all of its child folders,
+                             which with some mailbox formats lost the mails
+                             until force-resync was used.
 
                    .. versionadded:: v2.2.8
 
 ``ALT``            Specifies the
                    :ref:`alternate storage <dbox_settings_alt_storage>` path.
 ================== =============================================================
-
-Deprecated Keys
----------------
-
-============ ================ ==============================================
-Key          Replaced By      Value Description
-============ ================ ==============================================
-``DIRNAME``  ``FULLDIRNAME``  Specifies the directory name used for mailbox
-                              directories, or in the case of mbox specifies
-                              the mailbox message file name.
-
-                              .. note:: DIRNAME is not used for index or
-                                        control directories, while
-                                        ``FULLDIRNAME`` is.
-
-                              .. deprecated:: v2.2.8
-============ ================ ==============================================
 
 Variables
 ---------

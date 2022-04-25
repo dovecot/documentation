@@ -5,6 +5,20 @@ Dovecot Core Settings
 See :ref:`settings` for list of all setting groups.
 
 
+.. dovecot_core:setting:: auth_allow_weak_schemes
+   :added: v2.4;v3.0
+   :default: no
+   :values: @boolean
+
+   Controls whether password schemes marked as weak are allowed to be used.
+   See <authentication-password_schemes> for disabled by default schemes.
+
+   If enabled, will emit warning to logs. If a disabled scheme is used,
+   an error is logged.
+
+   Notably, any explicitly plaintext schemes (such as PLAIN), CRAM-MD5 and DIGEST-MD5 are
+   not affected by this setting.
+
 .. dovecot_core:setting:: auth_anonymous_username
    :default: anonymous
    :values: @string
@@ -354,6 +368,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: auth_stats
    :added: v2.3.0
+   :removed: v3.0.0
    :default: no
    :values: @boolean
 
@@ -1694,12 +1709,20 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: login_access_sockets
    :values: @string
+   :removed: v2.4;v3.0
 
    For blacklisting or whitelisting networks, supply a space-separated list of
    login-access-check sockets for this setting.
 
    Dovecot login processes can check via UNIX socket whether login should be
    allowed for the incoming connection.
+
+
+.. dovecot_core:setting:: login_auth_socket_path
+   :values: @string
+
+   Default socket path for all services' login processes. Can be overridden by
+   passing a parameter to the login executable.
 
 
 .. dovecot_core:setting:: login_greeting
@@ -2576,6 +2599,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: old_stats_carbon_interval
    :added: v2.2.27
+   :removed: v3.0.0
    :default: 30secs
    :seealso: @old_stats_carbon_server;dovecot_core
    :values: @time
@@ -2585,6 +2609,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: old_stats_carbon_name
    :added: v2.2.27
+   :removed: v3.0.0
    :seealso: @old_stats_carbon_server;dovecot_core
    :values: @string
 
@@ -2602,12 +2627,14 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: old_stats_carbon_server
    :added: v2.2.27
+   :removed: v3.0.0
    :values: !<hostname | ip>:<port>
 
    Send server statistics to an external Carbon server.
 
 
 .. dovecot_core:setting:: old_stats_command_min_time
+   :removed: v3.0.0
    :default: 1min
    :values: @time
 
@@ -2616,6 +2643,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: old_stats_domain_min_time
+   :removed: v3.0.0
    :default: 12hours
    :values: @time
 
@@ -2624,6 +2652,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: old_stats_ip_min_time
+   :removed: v3.0.0
    :default: 12hours
    :values: @time
 
@@ -2632,6 +2661,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: old_stats_memory_limit
+   :removed: v3.0.0
    :default: 16M
    :values: @size
 
@@ -2639,6 +2669,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: old_stats_session_min_time
+   :removed: v3.0.0
    :default: 15mins
    :values: @time
 
@@ -2647,6 +2678,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: old_stats_user_min_time
+   :removed: v3.0.0
    :default: 1hour
    :values: @time
 
@@ -3354,14 +3386,15 @@ See :ref:`settings` for list of all setting groups.
 
    ``ANY``
 
-     Support any version. (SHOULD NOT BE USED)
-
      .. versionadded:: v2.3.15
+     .. versionchanged:: v2.4.0;v3.0.0
+
+     .. warning:: this value is meant for tests only.
+                  It should not be used in any deployment of any value/relevance.
 
    ``SSLv3``
 
-     Support SSLv3+. (SHOULD NOT BE USED) (SSLv3 deprecated:
-     `RFC 7568 <https://datatracker.ietf.org/doc/html/rfc7568>`_)
+     .. versionremoved:: v2.4.0;v3.0.0
 
    ``TLSv1``
 
@@ -3393,7 +3426,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: ssl_options
    :default: no-compression
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
-   :values: compression, no_compression, no_ticket
+   :values: compression, no_ticket
 
    Additional options for SSL.
 
@@ -3401,11 +3434,7 @@ See :ref:`settings` for list of all setting groups.
 
    ``compression``
 
-     (before v2.3) Enable compression.
-
-   ``no_compression``
-
-     (v2.3+) Disable compression.
+     Enable compression.
 
    ``no_ticket``
 
@@ -3461,6 +3490,14 @@ See :ref:`settings` for list of all setting groups.
    :values: @string
 
    The path to the stats-writer socket.
+
+
+.. dovecot_core:setting:: submission_add_received_header
+   :added: v2.3.19,v3.0.0
+   :default: yes
+   :values: @boolean
+
+   Controls if "Received:" header should be added to mails by the submission backend.
 
 
 .. dovecot_core:setting:: submission_client_workarounds

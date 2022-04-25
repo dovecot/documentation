@@ -5,9 +5,8 @@ Prefetch User Database
 ======================
 
 Prefetch userdb can be used to combine passdb and userdb lookups into a single
-lookup. It's usually used with :ref:`authentication-sql`,
-:ref:`authentication-ldap_authentication`, and
-:ref:`authentication-checkpassword` passdbs.
+lookup. It's usually used with :ref:`authentication-sql` and
+:ref:`authentication-ldap_authentication`.
 
 Prefetch basically works by requiring that the passdb returns the userdb
 information in :ref:`authentication-password_database_extra_fields`

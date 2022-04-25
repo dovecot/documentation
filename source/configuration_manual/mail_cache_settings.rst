@@ -51,11 +51,10 @@ Fields
    dovecot.index)
  * ``size.virtual``: Virtual message size (line feeds counted as CRLFs). This is
    also often stored in dovecot.index file (especially when using
-   :dovecot_plugin:ref:`quota_vsizes` = ``yes``).
+   :ref:`count quota <quota_backend_count>`.).
  * ``size.physical``: Physical message size (line feeds exactly as they are
    stored in the stored mail). Note that the size is of the mail as plaintext,
-   i.e. after decryption/compression. This is typically used by quota plugin if
-   :dovecot_plugin:ref:`quota_vsizes` = ``no``).
+   i.e. after decryption/compression. This is typically used by :ref:`fs <quota_backend_fs>` or :ref:`maildir <quota_backend_maildir>` quota.
  * ``imap.bodystructure``: IMAP BODYSTRUCTURE response, which describes what
    the message's MIME structure looks like.
  * ``imap.body``: IMAP BODY response. This is the short version of

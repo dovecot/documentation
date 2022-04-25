@@ -1,7 +1,7 @@
 .. _doveadm_error_codes:
 
-Doveadm (Dsync) Error/Exit Codes
-================================
+Doveadm Error/Exit Codes
+========================
 
 Dovecot uses standard libc error codes. These codes are most useful to
 determine why dsync mail migration failed.

@@ -137,9 +137,8 @@ default is to use root, because it's guaranteed to have access to all the
 password databases. If you don't need this, you should change it to
 ``$default_internal_user``.
 
-:ref:`authentication-pam` and :ref:`authentication-shadow` passdbs are usually
-configured to read ``/etc/shadow`` file. Even this doesn't need root access if
-the file is readable by shadow group:
+:ref:`authentication-pam` is usually configured to read ``/etc/shadow`` file.
+Even this doesn't need root access if the file is readable by shadow group:
 
 .. code-block:: none
 

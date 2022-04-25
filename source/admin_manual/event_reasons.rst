@@ -25,7 +25,6 @@ Mailbox
  * ``mailbox:delete`` - Mailbox is being deleted
  * ``mailbox:subscribe`` - Mailbox is being subscribed
  * ``mailbox:unsubscribe`` - Mailbox is being unsubscribed
- * ``mailbox:search`` - Mails are being accessed due to search query
  * ``mailbox:sort`` - Mails are being sorted (IMAP SORT)
  * ``mailbox:thread`` - Threading is being built for mails (IMAP THREAD)
  * ``mailbox:vsize`` - mailbox vsize is requested or updated
@@ -120,8 +119,7 @@ Other plugins
    This may cause mailbox metadata to be accessed.
  * ``trash:clean`` - trash plugin cleaning space
  * ``quota:count`` - quota plugin is counting the mailbox's full size.
-   This is normal with quota=count driver. Also quota=dict uses it for the
-   initial mailbox calculation.
+   This is normal with quota=count driver.
  * ``quota:recalculate`` - Quota is being recalculated (e.g. doveadm quota recalc)
  * ``pop3_migration:uidl_sync`` - pop3_migration plugin matching IMAP and POP3 mails.
  * ``lazy_expunge:expunge`` - lazy_expunge plugin is handling an expunge.

@@ -367,13 +367,21 @@ fix this later.
 
 FS driver syntax::
 
-  crypt:[algo=<s>:][set_prefix=<n>:][private_key_path=/path:][public_key_path=/path:][password=password:]<parent fs>``
+  crypt:[maybe][algo=<s>:][set_prefix=<n>:][private_key_path=/path:][public_key_path=/path:][password=password:]<parent fs>``
+
+.. versionchanged:: v2.3.19
+  You can now leave all parameters out of mail-crypt. Prior to this, you would always have to specify them.
+
+.. versionadded:: v2.3.19
+
+   ``maybe`` was added
 
 where:
 
-===================== ========================================================
+===================== ===========================================================
 Key                   Value
-===================== ========================================================
+===================== ===========================================================
+``maybe``             Allow missing encryption keys.
 ``algo``              Encryption algorithm. Default is ``aes-256-gcm-sha256``.
 ``password``          Password for decrypting public key.
 ``private_key_path``  Path to private key.
@@ -381,7 +389,7 @@ Key                   Value
 ``set_prefix``        Read ``<set_prefix>_public_key`` and
                       ``<set_prefix>_private_key``. Default is
                       ``mail_crypt_global``.
-===================== ========================================================
+===================== ===========================================================
 
 Example:
 
