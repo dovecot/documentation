@@ -43,12 +43,9 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: auth_cache_verify_password_with_worker
    :added: v2.2.34
+   :changed: v2.3.18 Fixed to work properly. Older versions lost passdb extra fields.
    :default: no
    :values: @boolean
-
-   .. Warning:: This feature doesn't currently work correctly when the passdb
-                lookup is done via auth-workers. The password is checked
-                correctly, but all the passdb extra fields are lost.
 
    The auth master process by default is responsible for the hash
    verifications. Setting this to yes moves the verification to auth-worker
