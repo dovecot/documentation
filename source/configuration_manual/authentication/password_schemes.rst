@@ -10,6 +10,12 @@ than **PLAIN** is to prevent someone with access to the password database (such
 as a hacker) from stealing users' passwords and using them to access other
 services.
 
+Since 3.0/2.4, some password schemes are disabled by default due to being considered weak.
+This includes MD based (except DIGEST-MD5 and CRAM-MD5), LANMAN, NTLM and few others.
+Please read the documentation carefully.
+
+You can enable these with :dovecot_core:ref:`auth_allow_weak_schemes`.
+
 What scheme to use?
 ===================
 
@@ -133,22 +139,23 @@ CRAM-MD5 and DIGEST-MD5, the password must be stored in plaintext.
 In future it's possible that Dovecot could support multiple passwords in
 different schemes for a single user.
 
-+---------------+------------------------------------------------------------------------+--------------------------+
-| LANMAN	| DES-based encryption. Used sometimes with NTLM mechanism.              |                          |
-+---------------+------------------------------------------------------------------------+--------------------------+
-| NTLM          | MD4 sum of the password stored in hex. Used with NTLM mechanism.       |                          |
-+---------------+------------------------------------------------------------------------+--------------------------+
-| RPA           | Used with RPA mechanism.                                               |                          |
-+---------------+------------------------------------------------------------------------+--------------------------+
-| CRAM-MD5      | Used with CRAM-MD5 mechanism.                                          |                          |
-+---------------+------------------------------------------------------------------------+--------------------------+
-| DIGEST-MD5    | Used with DIGEST-MD5 mechanism. The username is included in            |                          |
-|               | the hash, so it's not possible to use the hash for different usernames.|                          |
-+---------------+------------------------------------------------------------------------+--------------------------+
-| SCRAM-SHA-1   | Used with SCRAM-SHA-1 mechanism.                                       |                          |
-+---------------+------------------------------------------------------------------------+--------------------------+
-| SCRAM-SHA-256 | Stronger replacement for SCRAM-SHA-1                                   | .. versionadded:: 2.3.10 |
-+---------------+------------------------------------------------------------------------+--------------------------+
++---------------+------------------------------------------------------------------------+--------------------------------+
+| LANMAN	| DES-based encryption. Used sometimes with NTLM mechanism.              |  .. versionremoved:: 2.3.13    |
++---------------+------------------------------------------------------------------------+--------------------------------+
+| NTLM          | MD4 sum of the password stored in hex. Used with NTLM mechanism.       |  .. versionremoved:: 2.3.13    |
+|               |                                                                        |     Use GSSAPI instead         |
++---------------+------------------------------------------------------------------------+--------------------------------+
+| RPA           | Used with RPA mechanism.                                               |  .. versionremoved:: 2.3.13    |
++---------------+------------------------------------------------------------------------+--------------------------------+
+| CRAM-MD5      | Used with CRAM-MD5 mechanism.                                          |                                |
++---------------+------------------------------------------------------------------------+--------------------------------+
+| DIGEST-MD5    | Used with DIGEST-MD5 mechanism. The username is included in            |                                |
+|               | the hash, so it's not possible to use the hash for different usernames.|                                |
++---------------+------------------------------------------------------------------------+--------------------------------+
+| SCRAM-SHA-1   | Used with SCRAM-SHA-1 mechanism.                                       |                                |
++---------------+------------------------------------------------------------------------+--------------------------------+
+| SCRAM-SHA-256 | Stronger replacement for SCRAM-SHA-1                                   | .. versionadded:: 2.3.10       |
++---------------+------------------------------------------------------------------------+--------------------------------+
 
 
 Other supported password schemes
