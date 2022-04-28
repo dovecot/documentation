@@ -11,7 +11,7 @@ See :ref:`settings` for list of all setting groups.
    :values: @boolean
 
    Controls whether password schemes marked as weak are allowed to be used.
-   See <authentication-password_schemes> for disabled by default schemes.
+   See :ref:`authentication-password_schemes` for disabled by default schemes.
 
    If enabled, will emit warning to logs. If a disabled scheme is used,
    an error is logged.
