@@ -210,7 +210,7 @@ General Comparisons of Maildir on Different Filesystems
 * https://www.thesmbexchange.com/eng/qmail_fs_benchmark.html
 * https://www.htiweb.inf.br/benchmark/fsbench.htm (including some graphs)
 
-Linux ext2 / ext3 
+Linux ext2 / ext3
 -----------------
 
 The main disadvantage in using these filesystems is that searching can be
