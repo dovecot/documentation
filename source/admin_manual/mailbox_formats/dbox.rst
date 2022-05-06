@@ -11,6 +11,11 @@ redesigned in v1.1 series and improved even further in v2.0.
 For information on how to configure dbox in Dovecot, see
 :ref:`dbox_settings`.
 
+.. Note::
+
+   This mailbox format is officially supported by :ref:`OX Dovecot Pro
+   <ox_dovecot_pro_releases>`.
+
 Usage
 ^^^^^
 
