@@ -8,6 +8,9 @@ Obox Settings
 
    These settings are assuming that message data is being stored in object storage (obox mailbox). These settings should not be used if a block storage driver (e.g. mdbox) is being used. 
 
+   This mailbox format is officially supported by :ref:`OX Dovecot Pro
+   <ox_dovecot_pro_releases>`.
+
 obox drivers
 ------------
 
