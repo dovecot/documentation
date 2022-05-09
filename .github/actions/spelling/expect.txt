@@ -973,6 +973,7 @@ preinit
 PREREQ
 printf
 printfa
+prioritization
 Proactively
 procmail
 procmailrc
