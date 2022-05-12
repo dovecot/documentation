@@ -27,18 +27,6 @@ Alternatively, you can migrate your data to new setup.
 .. seealso::
   :ref:`migrating_mailboxes`.
 
-New features
-============
-
-+------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| Feature                                                    | Notes                                                                                    |
-+============================================================+==========================================================================================+
-| :ref:`Flatcurve FTS <fts_backend_flatcurve>`               | Xapian based full-text search                                                            |
-+------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| :ref:`fs_crypt` now has ``maybe`` parameter                | The fs_crypt now requires encryption and decryption keys by default. To keep the old     |
-|                                                            | behavior, add the maybe parameter.                                                       |
-+------------------------------------------------------------+------------------------------------------------------------------------------------------+
-
 Removed features and their replacements
 =======================================
 
@@ -71,11 +59,12 @@ Removed features and their replacements
 | ``ssl-parameters.dat``                                     | This file is no longer converted automatically by config process, you need to set        |
 |                                                            | :dovecot_core:ref:`ssl_dh` setting if you need non-ECC Diffie-Hellman.                   |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| License plugin                                             | This plugin has been removed and ``license_checksum`` setting is marked obsolete         |
+| License plugin                                             | This plugin has been removed and ``license_checksum`` setting is marked obsolete. Plugin |
+|                                                            | setting ``license_checksum`` has been also removed.                                      |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | shadow auth driver                                         | Use :ref:`authentication-pam` instead.                                                   |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| old-stats plugin                                           | Use :ref:`new stats <statistics>` instead.                                               |
+| old-stats plugin                                           | Use :ref:`new stats <statistics>` instead. ``auth_stats`` setting has been removed too.  |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | Memcached dict driver                                      | Use :ref:`redis <dict-redis>` instead.                                                   |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
@@ -93,6 +82,27 @@ Removed features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | checkpassword auth database                                | Use :ref:`authentication-lua_based_authentication` instead.                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| IPC process                                                | Has been merged to anvil.                                                                |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``login_access_sockets``                                   | Use :ref:`authentication-lua_based_authentication` instead.                              |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``auth_debug``                                             | Use :dovecot_core:ref:`log_debug` filter instead. Example: ``log_debug=category=auth``   |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+
+
+Changed default settings
+========================
+
++------------------------------------------------+----------------------------+------------------+-------------------------------------------------------------+
+| Key                                            | Old                        | New              | Notes                                                       |
++================================================+============================+==================+=============================================================+
+| service/anvil/chroot                           | empty                      | <no value>       | Anvil is no longer chrooted                                 |
++------------------------------------------------+----------------------------+------------------+-------------------------------------------------------------+
+| service/anvil/user                             | $default_internal_user     | <no value>       | Anvil runs as root                                          |
++------------------------------------------------+----------------------------+------------------+-------------------------------------------------------------+
+| service/auth-worker/process_limit              | 1                          | 30               | Behaviour of process limit has changed for auth-worker,  it |
+|                                                |                            |                  | now behaves as it was supposed to.                          |
++------------------------------------------------+----------------------------+------------------+-------------------------------------------------------------+
 
 Use Global ACL Files instead of Global ACL Directories
 ------------------------------------------------------
