@@ -40,8 +40,8 @@ Cassandra/sproxyd Example Configuration
      # With lazy_expunge plugin:
      #obox_fs = fscache:512M:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; refcounting-table:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11
 
-     obox_index_fs = compress:gz:6:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; diff-table
-     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:gz:6:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=1&reason_header_max_length=200 ; dict-prefix=%u/fts/
+     obox_index_fs = compress:zstd:3:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; diff-table
+     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=1&reason_header_max_length=200 ; dict-prefix=%u/fts/
    }
 
 It's highly recommended to use :ref:`lazy_expunge_plugin` with dictmap.
