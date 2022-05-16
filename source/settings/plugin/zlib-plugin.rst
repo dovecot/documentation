@@ -34,7 +34,7 @@ Settings
 
    .. code-block:: none
 
-      zlib_save = gz
+      zlib_save = zstd
 
 
 .. dovecot_plugin:setting:: zlib_save_level
@@ -60,7 +60,7 @@ Settings
 
    .. code-block:: none
 
-      zlib_save_level = 6
+      zlib_save_level = 3
 
    .. versionchanged:: v2.3.15
 
