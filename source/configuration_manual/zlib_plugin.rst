@@ -24,8 +24,8 @@ Sample Configuration:
 
   # Enable these only if you want compression while saving:
   plugin {
-    zlib_save = gz
-    zlib_save_level = 6
+    zlib_save = zstd
+    zlib_save_level = 3
   }
 
 Interaction with Mailbox Formats
