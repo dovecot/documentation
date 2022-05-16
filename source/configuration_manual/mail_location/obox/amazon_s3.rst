@@ -176,9 +176,9 @@ With IAM:
 
    mail_location = obox:%8Mu/%u:INDEX=~/:CONTROL=~/
    plugin {
-     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:gz:6:aws-s3:https://dovecot-mails.s3.eu-central-1.amazonaws.com/?region=eu-central-1&auth_role=s3access
-     obox_index_fs = compress:gz:6:aws-s3:https://dovecot-mails.s3.eu-central-1.amazonaws.com/?region=eu-central-1&auth_role=s3access
-     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:gz:6:aws-s3:https://dovecot-mails.s3.eu-central-1.amazonaws.com/%8Mu/%u/fts/?region=eu-central-1&auth_role=s3access
+     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:zstd:3:aws-s3:https://dovecot-mails.s3.eu-central-1.amazonaws.com/?region=eu-central-1&auth_role=s3access
+     obox_index_fs = compress:zstd:3:aws-s3:https://dovecot-mails.s3.eu-central-1.amazonaws.com/?region=eu-central-1&auth_role=s3access
+     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:aws-s3:https://dovecot-mails.s3.eu-central-1.amazonaws.com/%8Mu/%u/fts/?region=eu-central-1&auth_role=s3access
      obox_max_parallel_deletes = 1000
    }
    mail_uid = vmail
@@ -194,8 +194,8 @@ Without IAM:
 
    mail_location = obox:%8Mu/%u:INDEX=~/:CONTROL=~/
    plugin {
-     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:gz:6:aws-s3:https://ACCESSKEY:SECRET@dovecot-mails.s3.eu-central-1.amazonaws.com/?region=eu-central-1&auth_role=s3access
-     obox_index_fs = compress:gz:6:aws-s3:https://ACCESSKEY:SECRET@dovecot-mails.s3.eu-central-1.amazonaws.com/?region=eu-central-1&auth_role=s3access
-     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:gz:6:aws-s3:https://ACCESSKEY:SECRET@dovecot-mails.s3.eu-central-1.amazonaws.com/%8Mu/%u/fts/?region=eu-central-1&auth_role=s3access
+     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:zstd:3:aws-s3:https://ACCESSKEY:SECRET@dovecot-mails.s3.eu-central-1.amazonaws.com/?region=eu-central-1&auth_role=s3access
+     obox_index_fs = compress:zstd:3:aws-s3:https://ACCESSKEY:SECRET@dovecot-mails.s3.eu-central-1.amazonaws.com/?region=eu-central-1&auth_role=s3access
+     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:aws-s3:https://ACCESSKEY:SECRET@dovecot-mails.s3.eu-central-1.amazonaws.com/%8Mu/%u/fts/?region=eu-central-1&auth_role=s3access
      obox_max_parallel_deletes = 1000
    }
