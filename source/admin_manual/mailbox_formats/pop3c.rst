@@ -14,5 +14,4 @@ For information on how to configure pop3c in Dovecot, see
 
 .. Note::
 
-   This mailbox format is not supported by :ref:`OX Dovecot Pro
-   <ox_dovecot_pro_releases>`.
+   This mailbox format is not supported by :ref:`ox_dovecot_pro`.

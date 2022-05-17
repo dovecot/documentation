@@ -9,8 +9,8 @@ internal "lib-fs paths" into dict API. The dict API paths in turn are
 translated to SQL/CQL queries via dict-sql.
 
 Cassandra requires installing dovecot-ee-cassandra-plugin package and the
-cpp-driver from 3rdparty repository. See :ref:`ox_dovecot_pro_releases`
-for further details.
+cpp-driver from 3rdparty repository. See :ref:`ox_dovecot_pro` for further
+details.
 
 The fs-dictmap syntax is:
 

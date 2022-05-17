@@ -13,8 +13,7 @@ For information on how to configure dbox in Dovecot, see
 
 .. Note::
 
-   This mailbox format is officially supported by :ref:`OX Dovecot Pro
-   <ox_dovecot_pro_releases>`.
+   This mailbox format is officially supported by :ref:`ox_dovecot_pro`.
 
 Usage
 ^^^^^

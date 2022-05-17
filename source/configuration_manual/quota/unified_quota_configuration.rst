@@ -4,8 +4,7 @@
 Unified Quota Configuration
 ===========================
 
-Unified quota is only available as part of
-:ref:`OX Dovecot Pro <ox_dovecot_pro_releases>`.
+Unified quota is only available as part of :ref:`ox_dovecot_pro`.
 
 Unified quota plugin is a combined count and dict plugin, which uses
 quota:count to keep tabs of local quota and dict lookups to maintain external

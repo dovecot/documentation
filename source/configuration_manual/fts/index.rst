@@ -39,7 +39,7 @@ Name                           Description
 ============================= ================================================
 :ref:`fts_backend_dovecot`    Dovecot native, object storage optimized driver.
                               Only available as part of
-                              :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>`.
+                              :ref:`ox_dovecot_pro`.
 :ref:`fts_backend_solr`       Interface to
                               `Apache Solr <https://solr.apache.org/>`_.
 :ref:`fts_backend_flatcurve`  `Xapian`_ based driver; stores data locally.
@@ -124,8 +124,7 @@ OX Dovecot Pro Full Text Search Backend
 ---------------------------------------
 
 :ref:`fts_backend_dovecot` is a proprietary FTS plugin available for
-:ref:`OX Dovecot Pro <ox_dovecot_pro_releases>`. It provides fast and compact
-indexing of search data.
+:ref:`ox_dovecot_pro`. It provides fast and compact indexing of search data.
 
 All Dovecot indexes, including FTS indexes, are stored in the same storage
 (including object storage) used to store the mail and index data. No

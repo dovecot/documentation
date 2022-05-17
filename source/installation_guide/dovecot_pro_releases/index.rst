@@ -1,8 +1,8 @@
-.. _ox_dovecot_pro_releases:
+.. _ox_dovecot_pro:
   
-#######################
-OX Dovecot Pro Releases
-#######################
+##############
+OX Dovecot Pro
+##############
 
 `OX Dovecot Pro <https://www.open-xchange.com/portfolio/ox-dovecot-pro/>`_ is
 a commercial software product of

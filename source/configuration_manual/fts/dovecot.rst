@@ -4,7 +4,7 @@ Dovecot Pro FTS Engine
 ======================
 
 .. important:: The Dovecot Pro FTS driver is a part of
-               :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>` only.
+               :ref:`ox_dovecot_pro` only.
 
 The Dovecot FTS indexes are created and queried by a custom (Dovecot Pro) FTS
 engine. The FTS engine component is loaded into the Dovecot FTS plugin as an

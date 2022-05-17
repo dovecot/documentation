@@ -507,7 +507,7 @@ Settings
    ``kuromoji``
 
      .. important:: The kuromoji tokenizer is a part of
-                    :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>` only.
+                    :ref:`ox_dovecot_pro` only.
 
      This tokenizer is used for Japanese text. This tokenizer
      utilizes Atilika Kuromoji tokenizer library to tokenize Japanese text.
