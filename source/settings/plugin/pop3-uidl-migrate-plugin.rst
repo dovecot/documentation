@@ -5,7 +5,7 @@ pop3-uidl-migrate plugin
 ========================
 
 .. note:: pop3-uidl-migrate plugin is only available as part of
-  :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>`.
+  :ref:`ox_dovecot_pro`.
 
 Settings
 ========

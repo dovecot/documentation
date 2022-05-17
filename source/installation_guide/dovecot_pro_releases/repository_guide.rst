@@ -27,7 +27,7 @@ OX Dovecot Pro v2.3
 -------------------
 
 Repository details can be found in release specific documentation in
-:ref:`ox_dovecot_pro_releases`.
+:ref:`ox_dovecot_pro`.
 
 OX Dovecot Pro v2.2 (EOL)
 -------------------------

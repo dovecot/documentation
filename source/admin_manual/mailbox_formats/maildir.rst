@@ -17,9 +17,9 @@ For information on how to configure Maildir in Dovecot, see
 
    The Maildir mailbox format is mainly viable for smaller installations.
 
-   It is not supported by :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>` and
-   will be maintained on a best-effort basis for :ref:`Dovecot Community
-   Edition <dovecot_community_repositories>`, without any prioritization of new
+   It is not supported by :ref:`ox_dovecot_pro` and will be maintained on a
+   best-effort basis for :ref:`Dovecot Community Edition
+   <dovecot_community_repositories>`, without any prioritization of new
    features or optimizations.
 
 Dovecot Extensions
