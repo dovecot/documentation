@@ -134,18 +134,6 @@ The ``!-prefixed`` virtual mailbox is also selected from; you don't need to
 list it again without an ! or you'll get two copies of your messages in the
 virtual mailbox.
 
-Sieve filters with virtual mailboxes
-====================================
-
-Using the sieve plugin with virtual mailboxes will cause dovecot to output a
-fatal exception error in it's logs and crash. This is because sieve can't tell
-the difference between a virtual location and a maildir/mbox location due to
-the way it detects actions in the mailboxes.
-
-If you use virtual mailboxes that are configured in sieve, make sure that they
-point to the namespace which has a maildir/mbox location and a unique prefix.
-If you don't, sieve will crash trying to copy a message to a virtual mailbox.
-
 Mailbox selection base on METADATA
 ==================================
 
