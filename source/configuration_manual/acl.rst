@@ -129,6 +129,9 @@ file overrides per-mailbox ACL file. This is because users can modify their own
 per-mailbox ACL files via IMAP ACL extension. Global ACLs can only be modified
 by administrator, so users shouldn't be able to override them.
 
+
+.. _acl-global_acl_file:
+
 Global ACL file
 ^^^^^^^^^^^^^^^
 
