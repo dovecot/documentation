@@ -65,7 +65,7 @@ Removed features and their replacements
 | Weak password schemes                                      | Weak password schemes are disabled by default, you need to use                           |
 |                                                            | :dovecot_core:ref:`auth_allow_weak_schemes` to enable them.                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| Global ACL directory                                       | Use global acl file instead.                                                             |
+| Global ACL directory                                       | Use :ref:`acl-global_acl_file` instead.                                                  |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``ssl-parameters.dat``                                     | This file is no longer converted automatically by config process, you need to set        |
 |                                                            | :dovecot_core:ref:`ssl_dh` setting if you need non-ECC Diffie-Hellman.                   |
