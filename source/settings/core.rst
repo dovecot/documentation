@@ -2183,7 +2183,7 @@ See :ref:`settings` for list of all setting groups.
    :seealso: @mail_location;dovecot_core, @quick_configuration
    :values: @string
 
-   The are various possible ways of specifying this parameter and
+   There are various possible ways of specifying this parameter and
    :dovecot_core:ref:`mail_location`.
 
    The following example is one option when ``home=/var/vmail/domain/user/``
