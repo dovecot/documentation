@@ -137,7 +137,6 @@ CApath
 cas
 Cazabon
 cbc
-ccs
 cdb
 cdmi
 certbot
@@ -274,7 +273,6 @@ DLLVM
 dlog
 dlua
 DMARC
-dnotify
 dnpass
 dns
 docidx
@@ -358,7 +356,6 @@ eokb
 eol
 eperm
 epk
-epoll
 epub
 EROFS
 errno
@@ -427,7 +424,6 @@ fstat
 fsuid
 fsync
 fsyncing
-ftp
 fts
 ftscache
 FULLDIRNAME
@@ -451,7 +447,6 @@ gethostbyname
 gethosterror
 gethostname
 getmail
-getmailbird
 getpid
 getpwnam
 GETQUOTA
@@ -485,11 +480,9 @@ hara
 hardcoded
 hardlink
 hardlinking
-hardlinks
 hasfrop
 hashmap
 hatv
-haxx
 hba
 hda
 HDD
@@ -507,7 +500,6 @@ homedir
 homepage
 hostaddr
 hostchange
-HOSTDOMAIN
 hostname
 Hotspot
 howto
@@ -562,7 +554,6 @@ ino
 inode
 inodetofile
 inotify
-inotifytools
 INTERNALDATE
 internalfail
 interoperable
@@ -613,7 +604,6 @@ kuromoji
 kuserok
 KVM
 LANMAN
-largefile
 lasthost
 lastlogin
 launchd
@@ -644,20 +634,15 @@ libexec
 libexpat
 libexttextcat
 libicu
-libkrb
-libldap
 liblib
 liblz
 liblzma
-libmysqlclient
 libpam
 libpq
 libsodium
-libsqlite
 libstemmer
 libtool
 libuv
-libwrap
 lifewithqmail
 linelen
 linenos
@@ -939,7 +924,6 @@ pidof
 Piljk
 pkcs
 pkey
-pkgconfig
 pki
 plaa
 plist
@@ -984,7 +968,6 @@ PROT
 proxyauth
 Ptest
 ptr
-ptrace
 pubout
 pukki
 PUTSCRIPT
@@ -1044,7 +1027,6 @@ rfc
 rhel
 RHu
 RLIMIT
-rml
 Rnotation
 Roboto
 roundcube
@@ -1112,7 +1094,6 @@ setra
 setrecursionlimit
 setsid
 SFTP
-sfw
 sgid
 SHAREDDIR
 sharedmail
@@ -1226,8 +1207,6 @@ Subtables
 subvalue
 sudo
 sudoers
-sunfreeware
-sunsite
 SUSE
 svbin
 swapoff
@@ -1304,7 +1283,6 @@ tostring
 transitioning
 trie
 Trojita
-Tru
 tscript
 ttl
 tukaani
@@ -1412,11 +1390,9 @@ vlast
 vmail
 vmback
 vmware
-VMware
 vname
 vnd
 VOLATILEDIR
-vpopmail
 vpv
 VRFY
 vsize
@@ -1424,7 +1400,6 @@ vsz
 wal
 wbytes
 wchar
-Wcry
 weakforced
 webmail
 webpage
@@ -1433,10 +1408,10 @@ wforce
 wget
 whitelisting
 Wietse
-WILLNEED
 wiki
 wikipedia
 wildcards
+WILLNEED
 winbind
 Wordlist
 workaround
