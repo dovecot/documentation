@@ -40,6 +40,19 @@ support for this feature.
   implicitly storing submitted messages to the Sent folder. Once a plugin API
   is devised, you can create your own plugins.
 
+The submission service, when protocol submission is enabled, will listen to
+587/tcp (STARTTLS) by default.
+
+To listen on 465/tcp (SMTPS), use following configuration::
+
+  service submission-login {
+    inet_listener submissions {
+      port = 465
+      ssl = yes
+    }
+  }
+
+
 Features
 ========
 
