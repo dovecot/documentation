@@ -785,7 +785,11 @@ See :ref:`settings` for list of all setting groups.
    :values: @boolean
 
    If ``yes``, disables the LOGIN command and all other plaintext
-   authentication unless SSL/TLS is used (LOGINDISABLED capability).
+   authentication unless SSL/TLS is used (LOGINDISABLED capability) or the
+   connection is "secured":
+
+     * Client IP is in :dovecot_core:ref:`login_trusted_networks`
+     * Client IP is from localhost, and it's not coming from HAProxy listener
 
    See :ref:`dovecot_ssl_configuration` for more detailed explanation of how
    this setting interacts with the :dovecot_core:ref:`ssl` setting.
@@ -1840,6 +1844,12 @@ See :ref:`settings` for list of all setting groups.
    This setting is used for a few different purposes, but most importantly it
    allows the client connection to tell the server what the original client's
    IP address was.
+
+   Client connections from trusted networks are also treated as "secured", i.e.
+   the same as if they had been using SSL/TLS. This affects the
+   :dovecot_core:ref:`ssl` and :dovecot_core:ref:`disable_plaintext_auth`
+   settings. It also marks the connection as "secured" for all auth lookups,
+   which also affects the ``%{secured}`` :ref:`variable <config_variables>`.
 
    This original client IP address is then used for logging and authentication
    checks.
@@ -3087,6 +3097,10 @@ See :ref:`settings` for list of all setting groups.
      :dovecot_core:ref:`disable_plaintext_auth` in that even non-plaintext
      authentication mechanisms aren't allowed without SSL/TLS.
 
+     Note that SSL is still not required for "secured" connections:
+
+     * Client IP is in :dovecot_core:ref:`login_trusted_networks`
+     * Client IP is from localhost, and it's not coming from HAProxy listener
 
 .. dovecot_core:setting:: ssl_alt_cert
    :added: v2.2.31
