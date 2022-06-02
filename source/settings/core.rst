@@ -918,6 +918,15 @@ See :ref:`settings` for list of all setting groups.
      Workaround for servers (e.g. Zimbra) that sometimes send FETCH replies
      containing no headers.
 
+   ``no-header-hashes``
+
+     When this setting is enabled and one dsync side doesn't support mail
+     GUIDs (i.e. imapc), there is no fallback to using header hashes. Instead,
+     dsync assumes that all mails with identical IMAP UIDs contain the same
+     mail contents. This can significantly improve dsync performance with some
+     IMAP servers that don't support caching Date/Message-ID headers.
+
+     .. versionadded:: v2.3.20
 
 .. dovecot_core:setting:: dsync_hashed_headers
    :added: v2.2.33
