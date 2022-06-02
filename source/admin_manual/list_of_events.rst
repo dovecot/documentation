@@ -187,20 +187,6 @@ Dovecot Core
 Authentication Client
 =====================
 
-auth_client_cache_flush_started
--------------------------------
-
-*no particular fields*
-
-auth_client_cache_flush_finished
---------------------------------
-
-+--------------+------------------------------------------------------------+
-| Field        | Description                                                |
-+==============+============================================================+
-| error        | Error string if error occurred.                            |
-+--------------+------------------------------------------------------------+
-
 Common fields
 -------------
 
