@@ -2606,6 +2606,8 @@ fs-dictmap
 ----------
 
 
+.. _fs_dictmap_dict_write_uncertain:
+
 fs_dictmap_dict_write_uncertain
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2613,6 +2615,7 @@ fs_dictmap_dict_write_uncertain
 
 The event is sent whenever a dict write is uncertain.
 E.g. writes to Cassandra may eventually succeed even if the write initially appeared to fail.
+See also :ref:`fs_object_write_uncertain`
 
 +-----------------------+-------------------------------------------------------+
 | Field                 | Description                                           |
@@ -2718,6 +2721,28 @@ emit an event.
 +-----------------------+------------------------------------------------------+
 | deleted_count         | The count of deleted keys for the empty bucket.      |
 +-----------------------+------------------------------------------------------+
+
+.. _fs_object_write_uncertain:
+
+fs_object_write_uncertain
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: v2.4.0;v3.0.0
+
+The event is sent whenever an object write is uncertain.
+When a write HTTP operation times out actual outcome is uncertain.
+See also :ref:`fs_dictmap_dict_write_uncertain`.
+
++-----------------------+-------------------------------------------------------+
+| Field                 | Description                                           |
++=======================+=======================================================+
+| Inherits from :ref:`event_fs_file`                                            |
++-----------------------+-------------------------------------------------------+
+| cleanup               | ``success`` or ``failed``. Indicates if uncertain     |
+|                       |  write was cleaned (deleted) successfully             |
++-----------------------+-------------------------------------------------------+
+| error                 | Error message why the write initially failed          |
++-----------------------+-------------------------------------------------------+
 
 
 Dictionaries
