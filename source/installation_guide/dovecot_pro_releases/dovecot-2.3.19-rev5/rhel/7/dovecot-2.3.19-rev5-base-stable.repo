@@ -1,0 +1,7 @@
+[dovecot-2.3.19-rev5-base]
+name=RedHat Enterprise Linux 7 - OX Dovecot Pro Mail Server
+baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/base/RHEL7
+gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgcheck=1
+enabled=1
+

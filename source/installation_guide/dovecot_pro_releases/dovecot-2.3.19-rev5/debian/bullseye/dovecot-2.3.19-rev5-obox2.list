@@ -1,0 +1,2 @@
+# dovecot-2.3.19-rev5 Debian Bullseye (11.0) - OX Dovecot Pro Object Storage plug-in
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.19/obox2/DebianBullseye ./
