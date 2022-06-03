@@ -4,6 +4,8 @@
 Compiling Dovecot From Sources
 ==============================
 
+.. versionchanged:: v2.4.0;v3.0.0 OpenSSL 1.0.2 or newer is required to build Dovecot.
+
 For most people it is enough to do:
 
 .. code-block:: none
