@@ -7,7 +7,7 @@ OS Configuration
 The default Linux configurations are usually quite good. The only things needed
 to check are:
 
-* ``/proc/sys/fs/inotify/max_user_watches``and ``max_user_instances`` need to
+* ``/proc/sys/fs/inotify/max_user_watches`` and ``max_user_instances`` need to
   be large enough to handle all the IDLEing IMAP processes.
 
   The default Dovecot-EE init script already attempts to set these values
