@@ -13,6 +13,8 @@ Settings
 
    settings/plugin/index
 
+   settings/hacluster
+
    settings/pigeonhole
 
    settings/pigeonhole-ext/index

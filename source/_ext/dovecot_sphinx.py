@@ -291,10 +291,37 @@ class PigeonholeSettingDomain(DovecotSettingDomain):
   }
 
 
+class HaclusterSettingDirective(DovecotCoreSettingDirective):
+
+  """Plugin information is ignored in this class, for now"""
+  pass
+
+class HaclusterSettingIndex(DovecotSettingIndex):
+
+  name = 'hacluster_setting'
+  localname = 'Dovecot Hacluster Settings Index'
+  shortname = 'Hacluster'
+
+class HaclusterSettingDomain(DovecotSettingDomain):
+
+  name = 'hacluster'
+  label = 'Dovecot Hacluster Settings'
+  set_prefix = 'hacluster_setting'
+
+  directives = {
+      'setting': HaclusterSettingDirective,
+      'setting_link': DovecotSettingLinkDirective
+  }
+  indices = {
+      HaclusterSettingIndex
+  }
+
+
 def setup(app):
   app.add_domain(DovecotCoreSettingDomain)
   app.add_domain(DovecotPluginSettingDomain)
   app.add_domain(PigeonholeSettingDomain)
+  app.add_domain(HaclusterSettingDomain)
 
   return {
     'version': sphinx.__display_version__,

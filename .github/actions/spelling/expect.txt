@@ -441,6 +441,7 @@ genhtml
 geninfo
 genkey
 genpkey
+geodb
 getacl
 getenv
 gethostbyname
@@ -475,6 +476,7 @@ gui
 GVy
 gzip
 halon
+hacluster
 haproxy
 hara
 hardcoded
@@ -657,6 +659,7 @@ lmtp
 lmtpd
 lmtponly
 lmtptest
+localdb
 localhost
 localpart
 localtoc
