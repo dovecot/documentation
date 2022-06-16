@@ -14,7 +14,8 @@ Settings
    :plugin: mail-crypt
    :values: @boolean
 
-   If true (``1`` or ``y``), require secure key sharing.
+   If enabled, you cannot share a key to groups or someone without a public
+   key.
 
 
 .. dovecot_plugin:setting:: mail_crypt_curve
