@@ -10,7 +10,7 @@ Settings
 ========
 
 .. dovecot_plugin:setting:: mail_crypt_acl_require_secure_key_sharing
-   :default: 0
+   :default: no
    :plugin: mail-crypt
    :values: @boolean
 
