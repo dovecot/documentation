@@ -2044,6 +2044,14 @@ at the actual RCPT command where the server can deny the recipient.
 | error                | Error message for the reply if it is a failure. There |
 |                      | is no field for a success message.                    |
 +----------------------+-------------------------------------------------------+
+| dest_host            | LMTP proxying only: Proxy destination host name       |
+|                      |                                                       |
+|                      | .. versionadded:: v2.4.0;v3.0.0                       |
++----------------------+-------------------------------------------------------+
+| dest_ip              | LMTP proxying only: Proxy destination IP address      |
+|                      |                                                       |
+|                      | .. versionadded:: v2.4.0;v3.0.0                       |
++----------------------+-------------------------------------------------------+
 
 SMTP Submit
 ===========
