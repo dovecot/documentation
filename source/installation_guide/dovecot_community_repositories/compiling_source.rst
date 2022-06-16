@@ -64,9 +64,6 @@ the following software/packages installed:
 
 -  ``gettext``
 
--  ``pandoc`` (not strictly required - you can avoid it by using:
-   ``PANDOC=false ./configure``)
-
 -  GNU make.
 
 It is advisable to add ``--enable-maintainer-mode`` to the ``configure``
