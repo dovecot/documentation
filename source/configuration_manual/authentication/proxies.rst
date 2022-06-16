@@ -52,7 +52,9 @@ addition of proxy field. The common fields to use for both proxying ways are:
 * ``proxy_mech=s``: Tell client to use this SASL authentication mechanism when
   logging in.
 * ``proxy_timeout=`` <:ref:`time_msecs`>: Abort connection after this much time has passed.
-  This overrides the default :dovecot_core:ref:`login_proxy_timeout`.
+  This overrides the default :dovecot_core:ref:`login_proxy_timeout`. This
+  setting applies only to proxying via login processes, not to lmtp or
+  doveadm processes.
 
   .. versionchanged:: v2.3 Added support for milliseconds.
 

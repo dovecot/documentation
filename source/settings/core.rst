@@ -1849,6 +1849,8 @@ See :ref:`settings` for list of all setting groups.
    This can be overwritten by :ref:`proxy_timeout <authentication-proxies>`
    passdb extra field.
 
+   This setting applies only to proxying via login processes, not to lmtp or
+   doveadm processes.
 
 .. dovecot_core:setting:: login_source_ips
    :values: @ip_addresses
