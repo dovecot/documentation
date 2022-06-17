@@ -457,6 +457,7 @@ GETSCRIPT
 gettext
 github
 gitlab
+glibc
 globals
 Gluster
 gmail
@@ -780,6 +781,7 @@ MULTIAPPEND
 multiline
 multiscript
 murchison
+musl
 mutf
 mybox
 mydomain
@@ -875,8 +877,10 @@ oldkey
 oldname
 oldstats
 onelevel
+onlinepubs
 opendir
 opendirectory
+opengroup
 openid
 openldap
 openmetrics
@@ -1211,6 +1215,7 @@ subvalue
 sudo
 sudoers
 SUSE
+sustainability
 svbin
 swapoff
 swappiness
