@@ -10,11 +10,12 @@ Settings
 ========
 
 .. dovecot_plugin:setting:: mail_crypt_acl_require_secure_key_sharing
-   :default: 0
+   :default: no
    :plugin: mail-crypt
    :values: @boolean
 
-   If true (``1`` or ``y``), require secure key sharing.
+   If enabled, you cannot share a key to groups or someone without a public
+   key.
 
 
 .. dovecot_plugin:setting:: mail_crypt_curve
@@ -81,8 +82,7 @@ Settings
    :values: @boolean
    :changed: v2.4;v3.0  Changed the value type to be boolean. Earlier versions evaluated all values as true.
 
-   If true (setting exists with any value), require user key encryption
-   with password.
+   If true, require user key encryption with password.
 
 
 .. dovecot_plugin:setting:: mail_crypt_save_version
