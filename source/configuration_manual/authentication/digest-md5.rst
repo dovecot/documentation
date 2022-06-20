@@ -32,12 +32,11 @@ than one realm to choose from. Even if this was NOT one of the choices
 you provided (KMail, others?). In both cases the user never sees the
 advertised realms.
 
-Note that the (badly named) :dovecot_core:ref:`auth_default_realm` setting
-doesn't work well with Digest-MD5. It doesn't actually specify a default realm
-or have anything to do with Digest-MD5 realms, but rather it appends
-``@auth_default_realm`` to the username if it's missing the ``@domain`` part.
-This will break Digest-MD5 authentication, because the client didn't use the
-``@auth_default_realm`` part in the hash calculations.
+.. warning:: Any settings that modify the username before the passdb lookup (e.g.
+             :dovecot_core:ref:`auth_default_domain`) will not work with Digest-MD5
+             password scheme, because the password hash was calculated using the
+             unmodified username. Any username modification will result in hash
+             mismatch.
 
 DIGEST-MD5 scheme
 ^^^^^^^^^^^^^^^^^
