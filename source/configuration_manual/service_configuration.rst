@@ -349,16 +349,6 @@ the executable location with a priority modifier, such as:
      executable = /usr/bin/nice -n 10 /usr/libexec/dovecot/indexer-worker
    }
 
-ipc
-^^^^^
-IPC hub process.
-
-   * **process_limit=1**, because there can be only one hub.
-
-   * **chroot=empty** and **user=$default_internal_user**, because it doesn't need any files and there are no outbound connections.
-
-The `ipc` UNIX socket can be used to send any commands to other processes, such as killing a specific user's connection. It is somewhat security sensitive.
-
 lmtp
 ^^^^^
 LMTP process for delivering new mails.
