@@ -93,9 +93,9 @@ Install schema.xml and solrconfig.xml
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Copy
-`doc/solr-config-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/master/doc/solr-config-7.7.0.xml>`_
+`doc/solr-config-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/main/doc/solr-config-7.7.0.xml>`_
 and
-`doc/solr-schema-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/master/doc/solr-schema-7.7.0.xml>`_
+`doc/solr-schema-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/main/doc/solr-schema-7.7.0.xml>`_
 (Since Dovecot 2.3.6+) to ``/var/solr/data/dovecot/conf/`` as
 ``solrconfig.xml`` and ``schema.xml``. The ``managed-schema`` file is
 generated based on ``schema.xml``.
