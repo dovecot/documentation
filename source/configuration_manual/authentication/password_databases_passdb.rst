@@ -57,9 +57,9 @@ with non-plaintext :ref:`authentication-authentication_mechanisms`.
 Databases that belong to this category are:
 
 * **PAM**: Pluggable Authentication Modules. See :ref:`authentication-pam`.
-* **BSDAuth**: BSD authentication. See :ref:`authentication-bsdauth`.
 * **IMAP**: Authenticate against remote IMAP server. See :ref:`imap`.
 * **OAuth2**: Authenticate against oauth2 provider. See :ref:`authentication-oauth2`.
+* **BSDAuth**: BSD authentication (deprecated, unsupported). See :ref:`authentication-bsdauth`.
 
   .. versionadded:: v2.2.29
 
