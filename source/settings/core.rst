@@ -86,13 +86,19 @@ See :ref:`settings` for list of all setting groups.
    .. note:: Enabling this enables :dovecot_core:ref:`auth_debug` as well.
 
 
-.. dovecot_core:setting:: auth_default_realm
+.. dovecot_core:setting:: auth_default_domain
+   :added: v2.4.0;v3.0.0
    :values: @string
 
    This setting indicates the default realm/domain to use if none has
    been specified. The setting is used for both SASL realms
    and appending an @domain element to the username in plaintext logins.
 
+.. dovecot_core:setting:: auth_default_realm
+   :removed: v2.4.0;v3.0.0
+   :values: @string
+
+   Renamed to :dovecot_core:ref:`auth_default_domain`
 
 .. dovecot_core:setting:: auth_failure_delay
    :default: 2secs
