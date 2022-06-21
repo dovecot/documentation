@@ -171,6 +171,8 @@ Settings
        }
      }
 
+   .. note:: :dovecot_plugin:ref:`fts_decoder` and :dovecot_plugin:ref:`fts_tika`
+             cannot be used simultaneously
 
 .. dovecot_plugin:setting:: fts_enforced
    :added: v2.2.19
@@ -453,6 +455,8 @@ Settings
        fts_tika = http://tikahost:9998/tika/
      }
 
+   .. note:: :dovecot_plugin:ref:`fts_decoder` and :dovecot_plugin:ref:`fts_tika`
+             cannot be used simultaneously
 
 .. dovecot_plugin:setting:: fts_tokenizers
    :default: generic email-address

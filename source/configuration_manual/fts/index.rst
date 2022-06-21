@@ -176,6 +176,8 @@ to UTF-8 plaintext or Apache Tika server.
 * :dovecot_plugin:ref:`fts_decoder`: Use decoder script.
 * :dovecot_plugin:ref:`fts_tika`: Use Apache Tika server.
 
+.. note:: :dovecot_plugin:ref:`fts_decoder` and :dovecot_plugin:ref:`fts_tika`
+          cannot be used simultaneously
 
 Rescan
 ------
