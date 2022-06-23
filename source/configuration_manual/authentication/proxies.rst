@@ -148,19 +148,17 @@ Forwarding fields
 .. versionadded:: v2.2.29
 
 You can forward arbitrary variables by returning them prefixed with
-``forward_``. Dovecot will use protocol dependant way to forward these
-variables forward and they will appear on the other side as
-``forward_variable`` Currently ``IMAP/POP3`` only feature. This feature
-requires that the sending host is in
-:dovecot_core:ref:`login_trusted_networks`. For IMAP the
-feature works by providing the variables as part of ID command, such as ``i ID
-( ... x-forward-var value)``.
+``forward_``. Dovecot will use a protocol-dependent extension to forward these
+variables to the next hop. The next hop imports these to the auth request as
+passdb extra fields, so they are visible in e.g. ``%{passdb:forward_variable}``.
+If the proxying continues, all these fields are further forwarded to the next
+hop again.
 
-For POP3 the forwarding mechanism uses ``XCLIENT`` with ``FORWARD=<base64
-encoded blob of forwarded variables>``
+This feature requires that the sending host is in
+:dovecot_core:ref:`login_trusted_networks`.
 
-See :ref:`forwarding_parameters` for more details on
-forwarding.
+See :ref:`forwarding_parameters` for more details on how this is implemented
+for different protocols.
 
 Moving users between backends/clusters
 ======================================
