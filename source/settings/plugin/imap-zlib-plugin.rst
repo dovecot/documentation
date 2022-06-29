@@ -27,6 +27,5 @@ Settings
 
 
 .. dovecot_plugin:setting:: imap_zlib_compression_level
-   :hdr_only: yes
    :plugin: imap-zlib
    :removed: v2.3.15 Now called :dovecot_plugin:ref:`imap_compress_<algorithm>_level`
