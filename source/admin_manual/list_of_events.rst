@@ -2601,6 +2601,28 @@ indexes in metacache.
 | error                    | Error message if the rescan/rebuild failed           |
 +--------------------------+------------------------------------------------------+
 
+
+obox_save_throttling
+^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.4.0;3.0.0
+
+Obox is throttling the number of concurrent saves/copies.
+This event is used to expose externally the status of the internal parallelism,
+i.e. to let tests asses if we can actually reach the degree of parallelism
+expected through :dovecot_plugin:ref:`obox_max_parallel_writes` and
+:dovecot_plugin:ref:`obox_max_parallel_copies` or instead anything chokes the
+performance to less optimal levels.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| pending_save        | Number of message saves pending completion             |
++---------------------+--------------------------------------------------------+
+| pending_copy        | Number of message copies pending completion            |
++---------------------+--------------------------------------------------------+
+
+
 fs-dictmap
 ----------
 
