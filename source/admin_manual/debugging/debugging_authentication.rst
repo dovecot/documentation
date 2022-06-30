@@ -4,7 +4,14 @@
 Debugging Authentication
 ========================
 
-Most importantly set ``auth_debug=yes``, which makes Dovecot log a debug line for just about anything related to authentication. If you're having problems with passwords, you can also set ``auth_debug_passwords=yes`` which will log them in plaintext. After that you'll see in the logs exactly what dovecot-auth is doing, and that should help you to fix the problem.
+Most importantly set :dovecot_core:ref:`log_debug = category=auth <log_debug>`,
+which makes Dovecot log a debug line for just about anything related to
+authentication.
+
+If you're having problems with passwords, you can also set
+:dovecot_core:ref:`auth_debug_passwords=yes <auth_debug_passwords>` which
+will log them in plaintext. After that you'll see in the logs exactly what
+dovecot-auth is doing, and that should help you to fix the problem.
 
 For easily testing authentication, use:
 
@@ -15,7 +22,7 @@ For easily testing authentication, use:
 For looking up userdb information for a user, use:
 
 .. code-block:: none
-   
+
    doveadm user user@domain
 
 For simulating a full login with both passdb and userdb lookup, use:

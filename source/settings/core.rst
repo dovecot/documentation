@@ -84,11 +84,17 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: auth_debug
+   :changed: v2.4.0;v3.0.0
    :default: no
    :values: @boolean
 
    Enables all authentication debug logging (also enables
    :dovecot_core:ref:`auth_verbose`). Passwords are logged as ``<hidden>``.
+
+   .. note::
+      The setting is obsolete, and kept only for backwards compatibility.
+      Use ``log_debug = category=auth`` instead.
+      (see :dovecot_core:ref:`log_debug`)
 
 
 .. dovecot_core:setting:: auth_debug_passwords
@@ -99,8 +105,9 @@ See :ref:`settings` for list of all setting groups.
    mismatches, the passwords and the scheme used are logged so that the
    problem can be debugged.
 
-   .. note:: Enabling this enables :dovecot_core:ref:`auth_debug` as well.
+   .. note:: You also need to enable ``log_debug = category=auth``
 
+   See :dovecot_core:ref:`log_debug`
 
 .. dovecot_core:setting:: auth_default_domain
    :added: v2.4.0;v3.0.0
@@ -471,9 +478,6 @@ See :ref:`settings` for list of all setting groups.
    Adjust log verbosity.
 
    If ``yes``, log unsuccessful authentication attempts and why they failed.
-
-   Explicitly setting :dovecot_core:ref:`auth_debug` will override this
-   setting.
 
 
 .. dovecot_core:setting:: auth_verbose_passwords

@@ -81,7 +81,7 @@ If you're wondering why per-user quota isn't working:
 * Check that :ref:`dovecot-lda <lda>` is called with ``-d`` parameter.
 * Check that you're not using :ref:`authentication-static_user_database`.
 * Check that ``quota_rule`` setting is properly returned by userdb. Enable
-  ``auth_debug = yes`` and ``mail_debug = yes`` to see this.
+  ``log_debug = category=auth`` and ``mail_debug = yes`` to see this.
 
 For example:
 
@@ -402,7 +402,7 @@ admin. Normally this means that a master user must log in with
 ``userdb_admin = y`` set in the master passdb. The changing is done via
 dict_set() command, so you must configure the ``quota_set`` setting to point
 to some dictionary where your quota limit exists. Usually this is in SQL,
-e.g.: 
+e.g.:
 
 dovecot.conf:
 
