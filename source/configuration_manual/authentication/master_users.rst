@@ -144,7 +144,7 @@ Testing
   1 login loginuser*masteruser masterpass
   1 OK Logged in.
 
-If you had any problems, set ``auth_debug=yes`` and look at the logs.
+If you had any problems, set ``log_debug = category=auth`` and look at the logs.
 
 Master passwords
 ^^^^^^^^^^^^^^^^^^
