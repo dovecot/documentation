@@ -19,7 +19,7 @@ Target Platform
 As part of improving maintainability and sustainability of the code this
 project defines a target platform specification and a minimum language standard
 beginning with version v2.4.0. As a platform specification the target is
-:ref:`POSIX.1-2008
+`POSIX.1-2008
 <https://pubs.opengroup.org/onlinepubs/9699919799.2008edition/>`. The code
 requires a C99/C11 compatible compiler optimally with GNU extensions available.
 Currently glibc 2.17 is assumed to be the lowest supported C Standard library
