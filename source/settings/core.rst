@@ -26,6 +26,22 @@ See :ref:`settings` for list of all setting groups.
    This specifies the username to be used for users logging in with the
    ANONYMOUS SASL mechanism.
 
+.. dovecot_core:setting:: auth_allow_cleartext
+   :default: no
+   :values: @boolean
+   :added: v2.4;v3.0
+
+   If ``no``, disables the LOGIN command and all other plaintext
+   authentication unless SSL/TLS is used (LOGINDISABLED capability) or the
+   connection is "secured":
+
+     * Client IP is in :dovecot_core:ref:`login_trusted_networks`
+     * Client IP is from localhost, and it's not coming from HAProxy listener
+
+   See :ref:`dovecot_ssl_configuration` for more detailed explanation of how
+   this setting interacts with the :dovecot_core:ref:`ssl` setting.
+
+   This setting replaces the ``disable_plaintext_auth`` setting.
 
 .. dovecot_core:setting:: auth_cache_negative_ttl
    :default: hour
@@ -796,21 +812,6 @@ See :ref:`settings` for list of all setting groups.
    ``%{username}``, ``%n`` Username
    ``%{domain}``, ``%d``   Domain
    ======================= ==========================
-
-
-.. dovecot_core:setting:: disable_plaintext_auth
-   :default: yes
-   :values: @boolean
-
-   If ``yes``, disables the LOGIN command and all other plaintext
-   authentication unless SSL/TLS is used (LOGINDISABLED capability) or the
-   connection is "secured":
-
-     * Client IP is in :dovecot_core:ref:`login_trusted_networks`
-     * Client IP is from localhost, and it's not coming from HAProxy listener
-
-   See :ref:`dovecot_ssl_configuration` for more detailed explanation of how
-   this setting interacts with the :dovecot_core:ref:`ssl` setting.
 
 
 .. dovecot_core:setting:: dotlock_use_excl
@@ -1884,7 +1885,7 @@ See :ref:`settings` for list of all setting groups.
 
    Client connections from trusted networks are also treated as "secured", i.e.
    the same as if they had been using SSL/TLS. This affects the
-   :dovecot_core:ref:`ssl` and :dovecot_core:ref:`disable_plaintext_auth`
+   :dovecot_core:ref:`ssl` and :dovecot_core:ref:`auth_allow_cleartext`
    settings. It also marks the connection as "secured" for all auth lookups,
    which also affects the ``%{secured}`` :ref:`variable <config_variables>`.
 
@@ -1892,7 +1893,7 @@ See :ref:`settings` for list of all setting groups.
    checks.
 
    Plaintext authentication is always allowed for trusted networks
-   (:dovecot_core:ref:`disable_plaintext_auth` is ignored).
+   (:dovecot_core:ref:`auth_allow_cleartext` is ignored).
 
    The details of how this setting works depends on the used protocol:
 
@@ -3161,7 +3162,7 @@ See :ref:`settings` for list of all setting groups.
 
      SSL/TLS is required for all imap, pop3, managesieve and
      submission protocol client connections. This differs from
-     :dovecot_core:ref:`disable_plaintext_auth` in that even non-plaintext
+     :dovecot_core:ref:`auth_allow_cleartext` in that even non-plaintext
      authentication mechanisms aren't allowed without SSL/TLS.
 
      Note that SSL is still not required for "secured" connections:

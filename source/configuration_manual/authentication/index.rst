@@ -100,7 +100,7 @@ the same user from the same IP address (10 = 10 IMAP + 10 POP3)
 .. parsed-literal::
 
   :dovecot_core:ref:`ssl` = no
-  :dovecot_core:ref:`disable_plaintext_auth` = no
+  :dovecot_core:ref:`auth_allow_cleartext` = yes
 
 ``Proxy`` or ``Director`` already decrypted the SSL connections. The Backends
 will always see only plaintext connections.

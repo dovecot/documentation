@@ -40,7 +40,7 @@ If you want to configure SSL, see :ref:`SSL <ssl>`.
 
    # Disable SSL for now.
    ssl = no
-   disable_plaintext_auth = no
+   auth_allow_cleartext = yes
 
    # We're using Maildir format
    mail_location = maildir:~/Maildir
