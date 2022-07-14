@@ -54,8 +54,8 @@ SSL port deprecation never really happened, probably because of a few reasons:
 
 * Some admins don't even know about STARTTLS.
 * Some admins want to require SSL/TLS, but don't realize that this is also
-  possible with STARTTLS (Dovecot has ``disable_plaintext_auth=yes`` and
-  ``ssl=required settings``).
+  possible with STARTTLS (Dovecot has :dovecot_core:ref:`disable_plaintext_auth=yes <disable_plaintext_auth>` and
+  :dovecot_core:ref:`ssl=required <ssl>` settings).
 * Some admins understand everything, but still prefer to allow only SSL ports
   (maybe with a firewall). This could be because it makes it easier to ensure
   that no information is leaked, because SSL/TLS handshake happens immediately.
