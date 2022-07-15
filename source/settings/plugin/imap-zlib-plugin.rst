@@ -6,6 +6,14 @@ imap-zlib plugin
 
 See :ref:`imap_compress` for an overview of Dovecot's IMAP compression support.
 
+.. note::
+
+  The imap-zlib plugin has been integrated into the main imap functionality of
+  dovecot with version 2.4.0/3.0.0. The ``COMPRESS`` IMAP extension is now
+  automatically enabled. Furthermore Dovecot is now required to be compiled
+  with the ``zlib`` library, which provides the ``deflate`` compression
+  mechanism used by this IMAP extension.
+
 Settings
 ========
 
