@@ -8,7 +8,7 @@ To compile support for this driver. you need sqlite library and headers.
 
 .. versionchanged:: v2.4/v3.0
 
-   Prior to v2.3.18, Dovecot uses the whole value as filename to connect,
+   Prior to v2.4, Dovecot uses the whole value as filename to connect,
    whitespace included.
 
    This was changed to support options, so it will use the first encountered
