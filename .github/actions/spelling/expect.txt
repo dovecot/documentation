@@ -1215,6 +1215,7 @@ sysconfig
 syscr
 sysctl
 syscw
+sysexits
 syslog
 syslogd
 sysreport
