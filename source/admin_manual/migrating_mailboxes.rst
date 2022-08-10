@@ -29,7 +29,7 @@ Things that you should consider in your config:
  * :ref:`Mail caching settings <mail_cache_settings>`
  * :dovecot_core:ref:`Attachment detection settings <mail_attachment_detection_options>`
  * :dovecot_core:ref:`Mailbox attribute settings <mail_attribute_dict>`
- * :ref:`Compression <zlib_plugin>` and :ref:`encryption <mail_crypt_plugin>` settings
+ * :ref:`Compression <mail_compress_plugin>` and :ref:`encryption <mail_crypt_plugin>` settings
  * :ref:`NFS related settings <nfs>`
 
 Sometimes, if your production configuration file has complex authentication flows, push notifications or other settings that might cause unwanted effects during migration,
