@@ -71,7 +71,7 @@ addition of proxy field. The common fields to use for both proxying ways are:
 
 You can use SSL/TLS connection to destination server by returning:
 
-* ``ssl=yes``: Use SSL and require a valid verified remote certificate. 
+* :dovecot:ref:`ssl=yes <ssl>`: Use SSL and require a valid verified remote certificate.
 
 .. WARNING:: Unless used carefully, this is an insecure setting! Before
              v2.0.16/v2.1.beta1 the host name isn't checked in any way against
@@ -79,10 +79,10 @@ You can use SSL/TLS connection to destination server by returning:
              use and allow your own private CA's certs, anything else is
              exploitable by a man-in-the-middle attack.
 
-.. Note:: ssl_client_ca_dir or ssl_client_ca_file aren't currently used for
+.. Note:: :dovecot_core:ref:`ssl_client_ca_dir` or dovecot_core:ref:`ssl_client_ca_file` aren't currently used for
           verifying the remote certificate, although ideally they will be in a
           future Dovecot version. For now you need to add the trusted remote
-          certificates to ssl_ca.
+          certificates to dovecot_core:ref:`ssl_ca`.
 
 .. Note:: LMTP proxying supports SSL/TLS only since v2.3.1 - for older versions
           any ssl/starttls extra field is ignored.
