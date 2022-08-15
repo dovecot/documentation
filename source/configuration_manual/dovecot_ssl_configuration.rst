@@ -149,7 +149,6 @@ Clients confirmed working with TLS SNI:
 
 Not working Clients:
 
-* K-9 on Droid X2 (maybe fixed in newer versions - see above)
 * Apple Mail (Mac OS X 10.10 and lower AND iOS 9.3 and lower)
 * Outlook for Mac version 15 (according to https://forums.cpanel.net/threads/mail-ssl-sni.454592/ )
 * Kindle Fire HD 8
@@ -173,32 +172,25 @@ and then use ``!include_try /etc/dovecot-private.conf`` in the main ``dovecot.co
 Chained SSL certificates
 ************************
 
-Put all the certificates in the :dovecot_core:ref:`ssl_cert` file. For example when using a certificate signed by TDC the correct order is:
+Put all the certificates in the :dovecot_core:ref:`ssl_cert` file in this order:
 
  #. Dovecot's public certificate
- #. TDC SSL Server CA
- #. TDC Internet Root CA
- #. Globalsign Partners CA
+ #. First Intermediate Certificate
+ #. Second Intermediate Certificate
+
+Most CA providers these days provide a "full chain" certificate file, which contains the required certificates in correct order.
+You should use this.
 
 SSL security settings
 *********************
 
-When Dovecot starts up for the first time, it generates new 512bit and 1024bit Diffie Hellman parameters and saves them into ``<prefix>/var/lib/dovecot/ssl-parameters.dat``. Dovecot v2.1.x and older regenerated them every week by default, but because the extra security gained by the regeneration is quite small, Dovecot v2.2 disabled the regeneration feature completely.
-
-
-.. Note:: Since v2.3.3+ Diffie-Hellman parameters have been made optional, and you are encouraged to disable non-ECC DH algorithms completely.
-
-From and up to version 2.2, you can specify the wanted DH parameters length using:
-
-.. code::
-
-  ssl_dh_parameters_length = 2048
-
-From version 2.3, you must specify path to DH parameters file using:
+From version 2.3 forward, you can specify path to DH parameters file using:
 
 .. code::
 
   ssl_dh = </path/to/dh.pem
+
+This is fully optional, and most modern clients do not need this.
 
 To generate new parameters file, you can use:
 
@@ -206,14 +198,6 @@ To generate new parameters file, you can use:
 
   # This might take a very long time. Run it on a machine with sufficient entropy.
   openssl dhparam 4096 > dh.pem
-
-You can also convert an old v2.2 parameters file with command:
-
-.. code::
-
-  dd if=/path/to/ssl-parameters.dat bs=1 skip=88 | openssl dhparam -inform DER
-
-This should work most of the times. If not, generate new file.
 
 By default Dovecot's allowed ciphers list contains:
 
@@ -223,13 +207,12 @@ By default Dovecot's allowed ciphers list contains:
 
 Disallowing more won't really gain any security for those using better ciphers, but it does prevent people from accidentally using insecure ciphers. See https://www.openssl.org/docs/manmaster/man1/ciphers.html for a list of the ciphers.
 
-You should usually prefer server ciphers and their order, so setting
+
+For TLSv1.3 server ciphers should not longer be preferred:
 
 .. code::
 
-  ssl_prefer_server_ciphers = yes
-
-is recommended.
+  ssl_prefer_server_ciphers = no
 
 SSL verbosity
 *************
