@@ -119,22 +119,22 @@ scheme is used.
 The password scheme can be overridden for each password by prefixing it with
 {SCHEME}, for example: ``{PLAIN}pass``.
 
-Non-plaintext authentication mechanisms
+Non-cleartext authentication mechanisms
 =======================================
 
 See :ref:`authentication-authentication_mechanisms` for explanation of auth mechanisms. Most
-installations use only plaintext mechanisms, so you can skip this section
+installations use only cleartext mechanisms, so you can skip this section
 unless you know you want to use them.
 
-The problem with non-plaintext auth mechanisms is that the password must be
-stored either in plaintext, or using a mechanism-specific scheme that's
-incompatible with all other non-plaintext mechanisms. In addition, the
+The problem with non-cleartext auth mechanisms is that the password must be
+stored either in cleartext, or using a mechanism-specific scheme that's
+incompatible with all other non-cleartext mechanisms. In addition, the
 mechanism-specific schemes often offer very little protection. This isn't a
 limitation of Dovecot, it's a requirement for the algorithms to even work.
 
 For example if you're going to use CRAM-MD5 authentication, the password needs
 to be stored in either PLAIN or CRAM-MD5 scheme. If you want to allow both
-CRAM-MD5 and DIGEST-MD5, the password must be stored in plaintext.
+CRAM-MD5 and DIGEST-MD5, the password must be stored in cleartext.
 
 In future it's possible that Dovecot could support multiple passwords in
 different schemes for a single user.
@@ -163,7 +163,7 @@ Other supported password schemes
 
 Strong schemes and mechanism-specific schemes are listed above.
 
-* **PLAIN**: Password is in plaintext.
+* **PLAIN**: Password is in cleartext.
 * **CRYPT**: Traditional DES-crypted password in ``/etc/passwd (e.g. "pass" =
   vpvKh.SaNbR6s)``
 
@@ -235,7 +235,7 @@ encoding that is used. You can override it for any scheme by adding a ".hex",
 * ``{SSHA.HEX}3f5ca6203f8cdaa44d9160575c1ee1d77abcf59ca5f852d1`` contains the
   password encoded to hex
 
-This can be especially useful with plaintext passwords to encode characters
+This can be especially useful with cleartext passwords to encode characters
 that would otherwise be illegal. For example in passwd-file you couldn't use a
 ":" character in the password without encoding it to base64 or hex. For
 example: {PLAIN}{\}:!" is the same as ``{PLAIN.b64}e1x9OiEiCg==``.
@@ -252,7 +252,7 @@ the salt as part of the hash.
 
 For most of the other salted password schemes (SMD5, SSHA*) the salt is stored
 after the password hash and its length can vary. When hashing the password,
-append the salt after the plaintext password, e.g.: SSHA256(pass, salt) =
+append the salt after the cleartext password, e.g.: SSHA256(pass, salt) =
 SHA256(pass + salt) + salt.
 
 For example with SSHA256 you know that the hash itself is 32 bytes (256 bits/8

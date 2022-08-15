@@ -8,9 +8,9 @@ Dovecot supports proxying IMAP, POP3, Submission (v2.3+), LMTP, and ManageSieve 
 
 The proxying can be done for all users, or only for some specific users. There are two ways to do the authentication:
 
-1. Forward the password to the remote server. The proxy may or may not perform authentication itself. This requires that the client uses only plaintext authentication, or alternatively the proxy has access to users' passwords in plaintext.
+1. Forward the password to the remote server. The proxy may or may not perform authentication itself. This requires that the client uses only cleartext authentication mechanism, or alternatively the proxy has access to users' passwords in cleartext.
 
-2. Let Dovecot proxy perform the authentication and login to remote server using the proxy's master password. This allows client to use also non-plaintext authentication.
+2. Let Dovecot proxy perform the authentication and login to remote server using the proxy's master password. This allows client to use also non-cleartext authentication mechanism.
 
 If the storage between sites is replicated, it's possible to do site failover. Deciding when to do a site failover can be either a manual process or it can be done via an automated watchdog. The failover shouldn't be done too quickly, because it will cause a large load spike when a lot of users start logging into the failover site where users have no local caches. So typically the watchdog script should wait at least 5 minutes to see if the network between sites comes back up before deciding that the other side is down.
 

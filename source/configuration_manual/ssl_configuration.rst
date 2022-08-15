@@ -9,7 +9,7 @@ For more details see:
 
 * :ref:`ssl`
 * :ref:`dovecot_ssl_configuration`
-: :dovecot_core:ref:`auth_allow_cleartext`
+* :dovecot_core:ref:`auth_allow_cleartext`
 
 .. code-block:: none
 

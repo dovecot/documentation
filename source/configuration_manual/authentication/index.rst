@@ -18,6 +18,18 @@ See also :ref:`authentication penalty <authentication-authentication_penalty>`
 handling for IP addresses. See also :ref:`authentication policy support <authentication-auth_policy>`
 for making policy based decisions.
 
+.. _authentication-cleartext_mechanisms:
+
+Cleartext mechanisms
+--------------------
+
+A cleartext mechanism is an authentication mechanism that contains users' passwords or
+credentials in non-encrypted and non-hashed format. For example, PLAIN, LOGIN or XOAUTH2 mechanisms
+contain credentials which an attacker can use to authenticate if they are captured.
+
+To protect against this, connection encryption with TLS (or some other mechanism) is required
+by default. See :dovecot_core:ref:`auth_allow_cleartext` for removing this requirement.
+
 Authentication mechanisms vs. password schemes
 ----------------------------------------------
 
@@ -40,9 +52,9 @@ different things.
    ``/etc/shadow``) where passwords looks like
    ``$1$oDMXOrCA$plmv4yuMdGhL9xekM.q.I/``.
 
--  Plaintext authentication mechanisms work with ALL password schemes.
+-  Cleartext authentication mechanisms work with ALL password schemes.
 
--  Non-plaintext authentication mechanisms require either PLAIN password
+-  Non-cleartext authentication mechanisms require either PLAIN password
    scheme or a mechanism-specific password scheme.
 
 
@@ -103,7 +115,7 @@ the same user from the same IP address (10 = 10 IMAP + 10 POP3)
   :dovecot_core:ref:`auth_allow_cleartext` = yes
 
 ``Proxy`` or ``Director`` already decrypted the SSL connections. The Backends
-will always see only plaintext connections.
+will always see only unencrypted connections.
 
 
 .. toctree::
