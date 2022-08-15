@@ -114,7 +114,7 @@ If you have multiple IPs available, this method is guaranteed to work with all c
     }
   }
 
-.. Note:: You will still need a top-level ``default`` ``ssl_key`` and ``ssl_cert`` as well, or you will receive errors.
+.. Note:: You will still need a top-level ``default`` :dovecot_core:ref:`ssl_key` and :dovecot_core_:ref:`ssl_cert` as well, or you will receive errors.
 
 
 .. code::
@@ -162,7 +162,7 @@ Password protected key files
 SSL key files may be password protected. There are two ways to provide Dovecot with the password:
 
  #. Starting Dovecot with ``dovecot -p`` asks the password. It's not stored anywhere, so this method prevents Dovecot from starting automatically at startup.
- #. ``ssl_key_password`` setting. Note that ``dovecot.conf`` is by default world-readable, so you probably shouldn't place it there directly. Instead you could store it in a different file, such as ``/etc/dovecot-private.conf`` containing:
+ #.  dovecot_core:ref:`ssl_key_password` setting. Note that ``dovecot.conf`` is by default world-readable, so you probably shouldn't place it there directly. Instead you could store it in a different file, such as ``/etc/dovecot-private.conf`` containing:
 
 .. code::
 
@@ -173,7 +173,7 @@ and then use ``!include_try /etc/dovecot-private.conf`` in the main ``dovecot.co
 Chained SSL certificates
 ************************
 
-Put all the certificates in the ``ssl_cert`` file. For example when using a certificate signed by TDC the correct order is:
+Put all the certificates in the :dovecot_core:ref:`ssl_cert` file. For example when using a certificate signed by TDC the correct order is:
 
  #. Dovecot's public certificate
  #. TDC SSL Server CA
