@@ -39,7 +39,7 @@ jobs:
     if: always() && needs.spelling.outputs.followup
     steps:
     - name: comment
-      uses: check-spelling/check-spelling@v0.0.20-alpha7
+      uses: check-spelling/check-spelling@prerelease
       with:
         checkout: true
         task: ${{ needs.spelling.outputs.followup }}
