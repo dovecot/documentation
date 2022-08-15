@@ -9,13 +9,13 @@ The proxying can be done for all users, or only for some specific users. There
 are two ways to do the authentication:
 
 1. Forward the password to the remote server. The proxy may or may not perform
-   authentication itself. This requires that the client uses only plaintext
+   authentication itself. This requires that the client uses only cleartext
    authentication, or alternatively the proxy has access to users' passwords in
-   plaintext.
+   cleartext.
 
 2. Let Dovecot proxy perform the authentication and login to remote server
    using the proxy's :ref:`authentication-master_users`. This allows client
-   to use also non-plaintext authentication.
+   to use also non-cleartext authentication.
 
 The proxy is configured pretty much the same way as :ref:`authentication-host`, with the
 addition of proxy field. The common fields to use for both proxying ways are:

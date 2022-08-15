@@ -164,8 +164,8 @@ set ``ssl = no``. Easiest way to get SSL certificates built is to use Dovecot's
 :ref:`ssl_configuration`.
 
 By default :dovecot_core:ref:`auth_allow_cleartext = no <auth_allow_cleartext>`, which means that Dovecot will fail
-the authentication if the client doesn't use SSL (or use non-plaintext
-authentication). This is recommended in most situations, since it prevents
+the authentication if the client doesn't use SSL (or use non-cleartext
+authentication mechanisms). This is recommended in most situations, since it prevents
 leaking passwords. However, if you don't offer SSL for some reason, you'll
 probably want to set :dovecot_core:ref:`auth_allow_cleartext = yes <auth_allow_cleartext>`.
 

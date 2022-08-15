@@ -9,7 +9,7 @@ itself a password database, but rather its configuration tells the system how
 exactly to do the authentication. Usually this means using the ``pam_unix.so``
 module, which authenticates user from the system's shadow password file.
 
-Because PAM is not an actual database, only plaintext authentication mechanisms
+Because PAM is not an actual database, only cleartext authentication mechanisms
 can be used with PAM. PAM cannot be used as a user database either (although
 static user templates could be used to provide the same effect). Usually PAM is
 used with :ref:`authentication-passwd` (NSS) or :ref:`user databases <authentication-static_user_database>`.

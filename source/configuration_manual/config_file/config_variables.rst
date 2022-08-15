@@ -406,7 +406,7 @@ Authentication variables
 |          |                       |                                                               |
 |          |                       | .. deprecated:: v2.3.13                                       |
 +----------+-----------------------+---------------------------------------------------------------+
-| %w       | password              | plaintext password from plaintext authentication mechanism    |
+| %w       | password              | cleartext password from cleartext authentication mechanism    |
 +----------+-----------------------+---------------------------------------------------------------+
 | %c       | secured               | "TLS" with established SSL/TLS connections, "secured" with    |
 |          |                       | localhost or :dovecot_core:ref:`login_trusted_networks`       |

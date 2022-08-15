@@ -16,7 +16,7 @@ See :ref:`settings` for list of all setting groups.
    If enabled, will emit warning to logs. If a disabled scheme is used,
    an error is logged.
 
-   Notably, any explicitly plaintext schemes (such as PLAIN), CRAM-MD5 and DIGEST-MD5 are
+   Notably, any explicitly cleartext schemes (such as PLAIN), CRAM-MD5 and DIGEST-MD5 are
    not affected by this setting.
 
 .. dovecot_core:setting:: auth_anonymous_username
@@ -31,7 +31,7 @@ See :ref:`settings` for list of all setting groups.
    :values: @boolean
    :added: v2.4;v3.0
 
-   If ``no``, disables the LOGIN command and all other plaintext
+   If ``no``, disables the LOGIN command and all other cleartext
    authentication unless SSL/TLS is used (LOGINDISABLED capability) or the
    connection is "secured":
 
@@ -115,7 +115,7 @@ See :ref:`settings` for list of all setting groups.
 
    This setting indicates the default realm/domain to use if none has
    been specified. The setting is used for both SASL realms
-   and appending an @domain element to the username in plaintext logins.
+   and appending an @domain element to the username in cleartext logins.
 
 .. dovecot_core:setting:: auth_default_realm
    :removed: v2.4.0;v3.0.0
@@ -492,7 +492,7 @@ See :ref:`settings` for list of all setting groups.
 
    ``plain``, ``yes``
 
-     Output plaintext password (NOT RECOMMENDED)
+     Output cleartext password (NOT RECOMMENDED)
 
    ``sha1``
 
@@ -3166,7 +3166,7 @@ See :ref:`settings` for list of all setting groups.
 
      SSL/TLS is required for all imap, pop3, managesieve and
      submission protocol client connections. This differs from
-     :dovecot_core:ref:`auth_allow_cleartext` in that even non-plaintext
+     :dovecot_core:ref:`auth_allow_cleartext` in that even non-cleartext
      authentication mechanisms aren't allowed without SSL/TLS.
 
      Note that SSL is still not required for "secured" connections:

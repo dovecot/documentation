@@ -10,7 +10,7 @@ authentication.
 
 If you're having problems with passwords, you can also set
 :dovecot_core:ref:`auth_debug_passwords=yes <auth_debug_passwords>` which
-will log them in plaintext. After that you'll see in the logs exactly what
+will log them in cleartext. After that you'll see in the logs exactly what
 dovecot-auth is doing, and that should help you to fix the problem.
 
 For easily testing authentication, use:

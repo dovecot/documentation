@@ -4,7 +4,7 @@
 Authentication (SASL) Mechanisms
 ================================
 
-Plaintext authentication
+Cleartext authentication
 ========================
 
 The simplest authentication mechanism is PLAIN. The client simply sends the
@@ -18,32 +18,32 @@ there's no problem with sending unencrypted password inside SSL secured
 connections. So if you're using SSL, you probably don't need to bother worrying
 about anything else than the PLAIN mechanism.
 
-Another plaintext mechanism is LOGIN. It's typically used only by SMTP servers
+Another cleartext mechanism is LOGIN. It's typically used only by SMTP servers
 to let Outlook clients perform SMTP authentication. Note that LOGIN mechanism
 is not the same as IMAP's LOGIN command. The LOGIN command is internally
 handled using PLAIN mechanism.
 
-Non-plaintext authentication
+Non-cleartext authentication
 ============================
 
-Non-plaintext mechanisms have been designed to be safe to use even without
+Non-cleartext mechanisms have been designed to be safe to use even without
 :ref:`ssl` encryption. Because of how they have
-been designed, they require access to the plaintext password or their own
+been designed, they require access to the cleartext password or their own
 special hashed version of it. This means that it's impossible to use
-non-plaintext mechanisms with commonly used DES or MD5 password hashes.
+non-cleartext mechanisms with password hashes.
 
-If you want to use more than one non-plaintext mechanism, the passwords must be
-stored as plaintext so that Dovecot is able to generate the required special
+If you want to use more than one non-cleartext mechanism, the passwords must be
+stored as cleartext so that Dovecot is able to generate the required special
 hashes for all the different mechanisms. If you want to use only one
-non-plaintext mechanism, you can store the passwords using the mechanism's own
+non-cleartext mechanism, you can store the passwords using the mechanism's own
 :ref:`authentication-password_schemes`.
 
 With success/failure password databases (see in
 :ref:`authentication-password_databases`) (e.g. PAM) it's not possible to use
-non-plaintext mechanisms at all, because they only support verifying a known
-plaintext password.
+non-cleartext mechanisms at all, because they only support verifying a known
+cleartext password.
 
-Dovecot supports the following non-plaintext mechanisms:
+Dovecot supports the following non-cleartext mechanisms:
 ********************************************************
 
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
@@ -62,7 +62,7 @@ Dovecot supports the following non-plaintext mechanisms:
 | SCRAM-SHA-256                                                                | Stronger replacement for SCRAM-SHA-1. https://tools.ietf.org/html/rfc7677| .. versionadded:: 2.3.10 |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
 | APOP                                                                         | This is a POP3-specific authentication. Similar to                       |                          |
-|                                                                              | CRAM-MD5, but requires storing password in plaintext                     |                          |
+|                                                                              | CRAM-MD5, but requires storing password in cleartext                     |                          |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
 | `NTLM <https://wiki.dovecot.org/Authentication/Mechanisms/NTLM>`_            | Mechanism created by Microsoft and supported by their                    |                          |
 |                                                                              | clients                                                                  |                          |

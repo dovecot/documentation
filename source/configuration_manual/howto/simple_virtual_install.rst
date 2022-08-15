@@ -87,7 +87,7 @@ It also creates their home directories when the user logs in.
 Passwords
 ---------
 
-The passwords in the example passwd file are listed using plaintext scheme.
+The passwords in the example passwd file are listed using cleartext scheme.
 It's possible to use other :ref:`password schemes <authentication-password_schemes>` as well.
 For example sha256-crypt would be a pretty strong scheme.
 You can create them using ``doveadm pw`` utility, for example:
