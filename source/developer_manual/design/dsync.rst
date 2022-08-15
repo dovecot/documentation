@@ -77,8 +77,7 @@ seen the UID and cached another mail's contents for it. IMAP requires
 that message's contents must never change, so UIDs can't be reused. So
 whenever an UID conflict happens, dsync gives messages in both sides a
 new UID, because it can't know which message the client had seen, or
-perhaps user used two clients and both saw a different message. (This
-assumes a master/slave replication use case for dsync.)
+perhaps user used two clients and both saw a different message.
 
 The mutable metadata that dsync preserves is:
 
