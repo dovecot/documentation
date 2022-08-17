@@ -1071,7 +1071,7 @@ See :ref:`settings` for list of all setting groups.
       that the message is no longer on the server (note that the workaround
       does not help for OE6 if synchronization is set to Headers Only).
 
-    ``tb-extra-mailbox-sep``
+   ``tb-extra-mailbox-sep``
 
       Because ``LAYOUT=fs`` (mbox and dbox) confuses Thunderbird, causing
       extra / suffixes to mailbox names, Dovecot can be told to ignore
