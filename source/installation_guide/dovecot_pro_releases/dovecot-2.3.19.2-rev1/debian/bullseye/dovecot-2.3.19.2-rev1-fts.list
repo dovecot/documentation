@@ -1,0 +1,2 @@
+# dovecot-2.3.19.2-rev1 Debian Bullseye (11.0) - OX Dovecot Pro Full Text Search plug-in
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.19.2/fts/DebianBullseye ./
