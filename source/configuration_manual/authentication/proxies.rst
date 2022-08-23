@@ -71,7 +71,7 @@ addition of proxy field. The common fields to use for both proxying ways are:
 
 You can use SSL/TLS connection to destination server by returning:
 
-* :dovecot:ref:`ssl=yes <ssl>`: Use SSL and require a valid verified remote certificate.
+* :dovecot_core:ref:`ssl=yes <ssl>`: Use SSL and require a valid verified remote certificate.
 
 .. WARNING:: Unless used carefully, this is an insecure setting! Before
              v2.0.16/v2.1.beta1 the host name isn't checked in any way against

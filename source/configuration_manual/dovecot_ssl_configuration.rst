@@ -114,7 +114,7 @@ If you have multiple IPs available, this method is guaranteed to work with all c
     }
   }
 
-.. Note:: You will still need a top-level ``default`` :dovecot_core:ref:`ssl_key` and :dovecot_core_:ref:`ssl_cert` as well, or you will receive errors.
+.. Note:: You will still need a top-level ``default`` :dovecot_core:ref:`ssl_key` and :dovecot_core:ref:`ssl_cert` as well, or you will receive errors.
 
 
 .. code::
