@@ -213,7 +213,11 @@ Default values for auth_policy_request_attributes
 
    login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s session_id=%{session}
 
+.. versionadded:: v3.0.0;v2.4.0
 
+.. code-block:: none
+
+   login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s session_id=%{session} fail_type=%{fail_type}
 
 
 Response
