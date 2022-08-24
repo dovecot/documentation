@@ -255,6 +255,9 @@ The CDB dictionary doesn't support iteration yet.
 
   default_pass_scheme = BLF-CRYPT
 
+  passdb_objects = passdb
+  userdb_objects = userdb
+
 Complete example for authenticating via a UNIX socket
 =====================================================
 
@@ -309,6 +312,9 @@ is not strictly needed. It will be passed to socket.
   
   iterate_disable = yes
   #default_pass_scheme = plain
+
+  passdb_objects = passdb
+  userdb_objects = userdb
 
 Server process for answering Dict lookups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
