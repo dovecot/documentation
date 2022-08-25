@@ -118,6 +118,9 @@ Changed default settings
 | service/auth-worker/process_limit              | 1                          | 30               | Behaviour of process limit has changed for auth-worker,  it |
 |                                                |                            |                  | now behaves as it was supposed to.                          |
 +------------------------------------------------+----------------------------+------------------+-------------------------------------------------------------+
+| mail_location                                  |                            | ``NO-NOSELECT``  | ``NO-NOSELECT`` is the new default behavior. To revert to   |
+|                                                |                            |                  | the old default specify ``KEEP-NOSELECT``.                  |
++------------------------------------------------+----------------------------+------------------+-------------------------------------------------------------+
 
 Use Global ACL Files instead of Global ACL Directories
 ------------------------------------------------------
