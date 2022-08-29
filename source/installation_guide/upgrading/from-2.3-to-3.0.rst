@@ -104,6 +104,9 @@ Removed features and their replacements
 |                                                            | the :dovecot_core:ref:`namespace/mailbox/special_use` mailbox setting                    |
 |                                                            | and/or :ref:`Sieve filters <sieve>`.                                                     |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``obox_allow_inconsistency``                               | The setting has been removed as it caused problems with caching IMAP clients, which may  |
+|                                                            | lose emails permanently or otherwise become confused about their internal state.         |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 
 Changed default settings
