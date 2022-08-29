@@ -86,7 +86,7 @@ Removed features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``login_access_sockets``                                   | Use :ref:`authentication-lua_based_authentication` instead.                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| ``auth_debug``                                             | Use :dovecot_core:ref:`log_debug` filter instead. Example: ``log_debug=category=auth``   |
+| :dovecot_core:ref:`auth_debug`                             | Use :dovecot_core:ref:`log_debug` filter instead. Example: ``log_debug=category=auth``   |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | | ``auth_client_cache_flush_started``                      | These events were removed.                                                               |
 | | ``auth_client_cache_flush_finished``                     |                                                                                          |
