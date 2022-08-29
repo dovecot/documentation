@@ -75,16 +75,14 @@ Removed features and their replacements
 |                                                            | `dsync` has been a symlink to `doveadm` already, this release removed the symlink        |
 |                                                            | completely.                                                                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| :dovecot_core:ref:`login_access_sockets                    | Use :ref:`authentication-lua_based_authentication` instead.                              |
-| <login_access_sockets>`                                    | Dovecot will fail to start if this setting is present in configuration.                  |
+| :dovecot_core:ref:`login_access_sockets`                   | Use :ref:`authentication-lua_based_authentication` instead.                              |
+|                                                            | Dovecot will fail to start if this setting is present in configuration.                  |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | TCP wrapper support                                        | Use :ref:`authentication-lua_based_authentication` instead.                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | checkpassword auth database                                | Use :ref:`authentication-lua_based_authentication` instead.                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | IPC process                                                | Has been merged to anvil.                                                                |
-+------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| ``login_access_sockets``                                   | Use :ref:`authentication-lua_based_authentication` instead.                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | :dovecot_core:ref:`auth_debug`                             | Use :dovecot_core:ref:`log_debug` filter instead. Example: ``log_debug=category=auth``   |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
