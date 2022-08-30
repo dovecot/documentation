@@ -125,7 +125,7 @@ Changed default settings
 | :dovecot_core:ref:`mail_location`                     |                        | ``NO-NOSELECT`` | ``NO-NOSELECT`` is the new default behavior. To revert to   |
 |                                                       |                        |                 | the old default specify ``KEEP-NOSELECT``.                  |
 +-------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
-| :dovecot_plugin:ref:`fts_dovecot_mail_flush_interval` |                        |                 |                                                             |
+| :dovecot_plugin:ref:`fts_dovecot_mail_flush_interval` | 0                      | 10              |                                                             |
 +-------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
 | :dovecot_plugin:ref:`fts_dovecot_max_triplets`        | 0                      | 200             |                                                             |
 +-------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
