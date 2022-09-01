@@ -107,7 +107,8 @@ Removed features and their replacements
 | ``obox_allow_inconsistency``                               | The setting has been removed as it caused problems with caching IMAP clients, which may  |
 |                                                            | lose emails permanently or otherwise become confused about their internal state.         |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-
+| ``metacache_disable_merging``                              | Use :dovecot_plugin:ref:`metacache_index_merging=none <metacache_index_merging>` instead |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 Changed default settings
 ========================
