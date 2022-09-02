@@ -1,0 +1,248 @@
+.. _man-1_doveadm:
+
+=======
+doveadm
+=======
+
+NAME
+====
+
+doveadm - Dovecot's administration utility
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] *command* [*command_options*]
+[*command_arguments*]
+
+DESCRIPTION
+===========
+
+**doveadm** is the Dovecot administration tool. It can be used to
+manage various parts of Dovecot, as well as access users' mailboxes.
+
+Execute **doveadm help**, for a command usage listing.
+
+.. include:: global-options-formatter.inc
+
+COMMANDS
+========
+
+These commands work directly with Dovecot's master process.
+
+reload
+------
+
+**doveadm reload**
+
+Force :man:`dovecot(1)` to reload the configuration.
+
+stop
+----
+
+**doveadm stop**
+
+Stop :man:`dovecot(1)` and all its child processes.
+
+ADDITIONAL MASTER COMMANDS
+--------------------------
+
+**doveadm config**
+   :man:`doveconf(1)`, Dump Dovecot configuration.
+
+**doveadm director**
+   :man:`doveadm-director(1)`, Manage Dovecot directors (if used by proxy
+   servers).
+
+**doveadm exec**
+   :man:`doveadm-exec(1)`, Easily execute commands from Dovecot's
+   libexec_dir.
+
+**doveadm instance**
+   :man:`doveadm-instance(1)`, Manage the list of running Dovecot
+   instances.
+
+**doveadm kick**
+   :man:`doveadm-kick(1)`, Disconnect users by user name and/or IP
+   address.
+
+**doveadm log**
+   :man:`doveadm-log(1)`, Locate, test or reopen Dovecot's log files.
+
+**doveadm penalty**
+   :man:`doveadm-penalty(1)`, Show current penalties.
+
+**doveadm proxy**
+   :man:`doveadm-proxy(1)`, Handle Dovecot proxy connections.
+
+**doveadm who**
+   :man:`doveadm-who(1)`; Show who is logged in to the Dovecot server.
+
+AUTHENTICATION COMMANDS
+-----------------------
+
+**doveadm auth**
+   :man:`doveadm-auth(1)`, Test authentication for a user.
+
+**doveadm pw**
+   :man:`doveadm-pw(1)`, Dovecot's password hash generator.
+
+**doveadm user**
+   :man:`doveadm-user(1)`, Perform a user lookup in Dovecot's userdbs
+
+MAILBOX COMMANDS
+----------------
+
+**doveadm acl**
+   :man:`doveadm-acl(1)`, Manage Access Control List (ACL).
+
+**doveadm altmove**
+   :man:`doveadm-altmove(1)`, Move matching mails to the alternative
+   storage.
+
+**doveadm backup**
+   :man:`doveadm-sync(1)`, Dovecot's one-way mailbox synchronization
+   utility.
+
+**doveadm copy**
+   :man:`doveadm-move(1)`, Copy/move messages matching the given search query
+   into another mailbox.
+
+**doveadm deduplicate**
+   :man:`doveadm-deduplicate(1)`, Expunge duplicate messages.
+
+**doveadm dump**
+   :man:`doveadm-dump(1)`, Dump the content of Dovecot's binary mailbox
+   index/log.
+
+**doveadm expunge**
+   :man:`doveadm-expunge(1)`, Expunge messages matching given search
+   query.
+
+**doveadm fetch**
+   :man:`doveadm-fetch(1)`, Fetch messages matching given search query.
+
+**doveadm flags**
+   :man:`doveadm-flags(1)`, Add, remove or replace messages' flags.
+
+**doveadm force-resync**
+   :man:`doveadm-force-resync(1)`, Repair broken mailboxes, in case
+   Dovecot doesn't automatically do that.
+
+**doveadm fs**
+   :man:`doveadm-fs(1)`, Interact with the abstract mail storage
+   filesystem.
+
+**doveadm fts**
+   :man:`doveadm-fts(1)`, Manipulate the Full Text Search (FTS) index.
+
+**doveadm import**
+   :man:`doveadm-import(1)`, Import messages matching given search query.
+
+**doveadm index**
+   :man:`doveadm-index(1)`, Index messages in a given mailbox.
+
+**doveadm mailbox**
+   :man:`doveadm-mailbox(1)`, Various commands related to handling
+   mailboxes.
+
+**doveadm mailbox cryptokey**
+   :man:`doveadm-mailbox-cryptokey(1)`, Mail crypt plugin management.
+
+**doveadm move**
+   :man:`doveadm-move(1)` Move messages matching the given search query
+   into another mailbox.
+
+**doveadm purge**
+   :man:`doveadm-purge(1)` Remove messages with refcount=0 from mdbox
+   files.
+
+**doveadm quota**
+   :man:`doveadm-quota(1)`, Initialize/recalculate or show current quota
+   usage.
+
+**doveadm rebuild**
+   :man:`doveadm-rebuild(1)`, Rebuild index metadata from message data.
+
+**doveadm replicator**
+   :man:`doveadm-replicator(1)`, Manage users' mail replication.
+
+**doveadm save**
+   :man:`doveadm-save(1)`, Save email to users' mailboxes.
+
+**doveadm search**
+   :man:`doveadm-search(1)`, Show a list of mailbox GUIDs and message
+   UIDs matching given search query.
+
+**doveadm stats**
+   :man:`doveadm-stats(1)`, Inspect or reset stats.
+
+**doveadm sync**
+   :man:`doveadm-sync(1)`, Dovecot's two-way mailbox synchronization
+   utility.
+
+EXIT STATUS
+===========
+
+**doveadm** will exit with one of the following values:
+
+**0**
+   Selected command was executed successful.
+
+**64**
+   Command line usage error.
+
+**65**
+   Data format error or operation is not possible.
+
+**67**
+   User does not exist.
+
+**68**
+   Input file, address or other resource does not exist.
+
+**73**
+   Cannot create output file.
+
+**75**
+   There was some temporary error, check logs.
+
+**76**
+   Protocol error during remote host connection.
+
+**77**
+   Permission error.
+
+**78**
+   Configuration error.
+
+**127**
+  Unknown error.
+
+
+ENVIRONMENT
+===========
+
+**USER**
+   This environment variable is used to determine the *user* if a
+   command accepts a *user* but none was specified.
+
+FILES
+=====
+
+*@pkgsysconfdir@/dovecot.conf*
+   Dovecot's main configuration file.
+
+*@pkgsysconfdir@/conf.d/10-mail.conf*
+   Mailbox locations and namespaces.
+
+*@pkgsysconfdir@/conf.d/90-plugin.conf*
+   Plugin specific settings.
+
+.. include:: reporting-bugs.inc
+
+
+SEE ALSO
+========
+
+:man:`doveadm-help(1)`

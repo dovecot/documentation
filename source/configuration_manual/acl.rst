@@ -91,6 +91,8 @@ Per-mailbox ACLs are stored in ``dovecot-acl`` named file, which exists in:
 * :ref:`dbox_mbox_format`: dbox's mail directory (eg.
   ``~/dbox/INBOX/dbox-Mails/``).
 
+.. _acl-inheritance:
+
 ACL Inheritance
 ===============
 

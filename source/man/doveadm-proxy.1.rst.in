@@ -1,0 +1,30 @@
+.. _man-1_doveadm-proxy:
+
+=============
+doveadm-proxy
+=============
+
+NAME
+====
+
+doveadm-proxy - Handle Dovecot proxy connections (obsolete)
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] **proxy** *kick* [*OPTIONS*] [*ARGUMENTS*]
+
+**doveadm** [**-Dv**] [**-f** *formatter*] **proxy** *list* [*OPTIONS*] [*ARGUMENTS*]
+
+DESCRIPTION
+===========
+
+These commands are aliases to the :man:`doveadm-kick(1)` and
+:man:`doveadm-who(1)` commands.
+
+.. include:: reporting-bugs.inc
+
+SEE ALSO
+========
+
+:man:`doveadm(1)`.

@@ -1,0 +1,108 @@
+.. _man-1_doveadm-replicator:
+
+==================
+doveadm-replicator
+==================
+
+NAME
+====
+
+doveadm-replicator - Manage users' mail replication
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] **replicator** *command* [*OPTIONS*] [*ARGUMENTS*]
+
+DESCRIPTION
+===========
+
+The doveadm replicator *COMMANDS* can be used to manage the automated
+replication of users' mail.
+
+.. include:: global-options-formatter.inc
+
+This command uses by default the output formatter **flow** (without the
+*key* = prefix).
+
+Command specific *options*:
+
+**-a** *replicator_socket_path*
+   This option is used to specify an absolute path to an alternative
+   UNIX domain socket.
+
+By default :man:`doveadm(1)` will use the socket
+*@rundir@/replicator-doveadm*. The socket may be located in another
+directory, when the default *base_dir* setting was overridden in
+*@pkgsysconfdir@/dovecot.conf*.
+
+ARGUMENTS
+=========
+
+*user_mask*
+   Specifies for which users the command should be executed. In most
+   cases you would like to use patterns which contains wildcards, e.g.
+   \*@example.net for all users of the example.net domain, or simply
+   \* for all users.
+
+When the SQL userdb module is used make sure that the *iterate_query*
+setting in *@pkgsysconfdir@/dovecot-sql.conf.ext* matches your database
+layout. When using the LDAP userdb module, make sure that the
+*iterate_attrs* and *iterate_filter* settings in
+*@pkgsysconfdir@/dovecot-ldap.conf.ext* match your LDAP schema.
+Otherwise :man:`doveadm(1)` will be unable to iterate over all users.
+
+COMMANDS
+========
+
+replicator add
+--------------
+
+**doveadm replicator add** [**-a** *replicator_socket_path*] *user_mask*
+
+Add the specified user(s) to the replicator. If the *user_mask* contains
+"?" or "*" wildcards, the list of usernames is looked up from the
+*userdb*.
+
+replicator dsync-status
+-----------------------
+
+**doveadm replicator dsync-status** [**-a** *replicator_socket_path*]
+
+Show the status for the currently running dsync processes.
+
+replicator remove
+-----------------
+
+**doveadm replicator remove** [**-a** *replicator_socket_path*] *username*
+
+Remove the specified user from replicator.
+
+replicator replicate
+--------------------
+
+**doveadm replicator replicate** [**-a** *replicator_socket_path*] [**-f**] [**-p** *priority*] *user_mask*
+
+Start replication for the specified users now. If the -f parameter is
+given, full replication is done for the user. You can also specify the
+priority, which can be either **high or low.** If the user mask contains
+"?" or "*" wildcards, the list of usernames is looked up from the users
+that currently exist in replicator (not from the *userdb*).
+
+replicator status
+-----------------
+
+**doveadm replicator status** [**-a** *replicator_socket_path*] *user_mask*
+
+Show the replication status for users.
+
+.. include:: reporting-bugs.inc
+
+SEE ALSO
+========
+
+:man:`doveadm(1)`,
+
+Additional resources:
+
+-  https://doc.dovecot.org/configuration_manual/replication/
