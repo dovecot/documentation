@@ -1,0 +1,55 @@
+.. _man-1_doveadm-save:
+
+============
+doveadm-save
+============
+
+NAME
+====
+
+doveadm-save - Save email to a user's mailbox
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] **save** [**-S** *socket_path*] **-u** *user* [*-m* *mailbox*] [*mail-file*]
+
+**doveadm** [**-Dv**] **save** [**-S** *socket_path*] **-A** [*-m* *mailbox*] [*mail-file*]
+
+**doveadm** [**-Dv**] **save** [**-S** *socket_path*] **-F** *file* [*-m* *mailbox*] [*mail-file*]
+
+DESCRIPTION
+===========
+
+**doveadm save** can be used to save messages. This can be useful for
+scripts and for debugging. Sieve is not invoked for saved messages, but
+quota is enforced.
+
+.. include:: global-options.inc
+
+Command specific *options*:
+
+.. include:: option-A.inc
+
+.. include:: option-F-file.inc
+
+.. include:: option-S-socket.inc
+
+.. include:: option-u-user.inc
+
+**-m** *mailbox*
+   Store mail to specified mailbox instead of INBOX.
+
+EXAMPLE
+=======
+
+.. parsed-literal::
+
+   **echo "hello, world" | doveadm save -u testuser@testdomain**
+
+.. include:: reporting-bugs.inc
+
+SEE ALSO
+========
+
+:man:`doveadm(1)`

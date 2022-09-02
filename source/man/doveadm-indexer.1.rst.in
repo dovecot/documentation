@@ -1,0 +1,72 @@
+.. _man-1_doveadm-indexer:
+
+===============
+doveadm-indexer
+===============
+
+NAME
+====
+
+doveadm-indexer - Commands related to managing the indexer process
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] **indexer** *command* [*OPTIONS*] [*ARGUMENTS*]
+
+DESCRIPTION
+===========
+
+**doveadm indexer** can be used to manage the indexer process.
+
+.. include:: global-options-formatter.inc
+
+
+COMMANDS
+========
+
+indexer add
+-----------
+
+**doveadm indexer add** [**-h**] [**-n** *max_recent*] *user* *mailbox*
+
+Add indexing request for the given *user* and the *mailbox* to the
+indexer queue. It works the same as the **doveadm index -q** command.
+
+**-h**
+   Add the indexing request to the head of the queue. By default the
+   request is added to the tail of the queue.
+
+**-n** *max_recent*
+   An integer value, which specifies the maximum number of \\Recent
+   messages in mailboxes. If the mailbox contains more than *max_recent*
+   messages with \\Recent flag set, the mailbox will not be indexed.
+   This may be useful to avoid unnecessary indexing for large mailboxes
+   that are never opened.
+
+indexer remove
+--------------
+
+**doveadm indexer remove** *user_mask*
+
+Remove all indexer requests for the matching *user_mask*. It's possible
+to use wildcards. Requests that are currently processed by
+indexer-worker are not listed; use **doveadm kick** instead to kick
+them.
+
+indexer list
+------------
+
+**doveadm indexer list** *user_mask* [*mailbox_mask*]
+
+List all the queued indexing requests matching the *user_mask* (and the
+*mailbox_mask*). It's possible to use wildcards. Requests that are
+currently processed by indexer-worker are not listed; use **doveadm who** instead to see them.
+
+.. include:: reporting-bugs.inc
+
+
+SEE ALSO
+========
+
+:man:`doveadm(1)`
