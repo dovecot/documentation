@@ -131,6 +131,11 @@ Changed default settings
 | :dovecot_plugin:ref:`fts_dovecot_max_triplets`        | 0                      | 200             |                                                             |
 +-------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
 
+Doveadm mailbox commands
+------------------------
+``USER `` environment variable is no longer supported. All mail commands require providing ``-u``, ``-F`` or ``-A`` parameter.
+This will always be subject to user database lookup and requires access to auth userdb socket.
+
 Use Global ACL Files instead of Global ACL Directories
 ------------------------------------------------------
 
