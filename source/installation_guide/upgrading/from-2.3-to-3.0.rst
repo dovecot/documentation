@@ -109,6 +109,8 @@ Removed features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``metacache_disable_merging``                              | Use :dovecot_plugin:ref:`metacache_index_merging=none <metacache_index_merging>` instead |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``disable_plaintext_auth``                                 | This has been replaced with :dovecot_core:ref:auth_allow_cleartext setting.              |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 Changed default settings
 ========================
