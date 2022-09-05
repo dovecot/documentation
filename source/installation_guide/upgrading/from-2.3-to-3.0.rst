@@ -47,7 +47,7 @@ Removed features and their replacements
 | :dovecot_core:ref:`auth_worker_max_count                   | Use :ref:`service-specific process limit <service_configuration>`.                       |
 | <auth_worker_max_count>`                                   |                                                                                          |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| | fts-lucene                                               | Use :ref:`Flatcurve FTS <fts_backend_flatcurve>` or :ref:`Solr FTS <fts_backend_solr>`   |
+| | fts-lucene                                               | Use :ref:`Flatcurve FTS <fts_backend_flatcurve>` or :ref:`Solr FTS <fts_backend_solr>`.  |
 | | fts-squat                                                |                                                                                          |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | Weak password schemes                                      | Weak password schemes are disabled by default, you need to use                           |
@@ -69,7 +69,7 @@ Removed features and their replacements
 | Memcached dict driver                                      | Use :ref:`redis <dict-redis>` instead.                                                   |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | dsync: Remove -D parameter                                 | Parameter for disabling mailbox rename syncing removed.                                  |
-|                                                            | It hasn't been necessary for a long time, and it is broke                                |
+|                                                            | It hasn't been necessary for a long time, and it is broken.                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | dsync                                                      | Use `doveadm sync` instead.                                                              |
 |                                                            | `dsync` has been a symlink to `doveadm` already, this release removed the symlink        |
@@ -107,7 +107,8 @@ Removed features and their replacements
 | ``obox_allow_inconsistency``                               | The setting has been removed as it caused problems with caching IMAP clients, which may  |
 |                                                            | lose emails permanently or otherwise become confused about their internal state.         |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| ``metacache_disable_merging``                              | Use :dovecot_plugin:ref:`metacache_index_merging=none <metacache_index_merging>` instead |
+| ``metacache_disable_merging``                              | Use :dovecot_plugin:ref:`metacache_index_merging=none <metacache_index_merging>`         |
+|                                                            | instead.                                                                                 |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``disable_plaintext_auth``                                 | This has been replaced with :dovecot_core:ref:auth_allow_cleartext setting.              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
