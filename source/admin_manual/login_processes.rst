@@ -116,6 +116,3 @@ the imap-login process individually (in ``dovecot.conf``):
   service imap-login {
     executable = imap-login specific-login-socket
   }
-
-This can be especially useful when setting up a director ring to simplify
-socket paths for all available authentication processes.

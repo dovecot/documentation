@@ -4,8 +4,6 @@
 LDAP
 =====
 
-.. Note:: A director proxy doesn't need userdb configuration (unlike backends).
-
 There are two ways to do LDAP authentication:
 
 * `Password lookups
@@ -82,8 +80,6 @@ Active Directory
 When connecting to AD, you may need to use port 3268. Then again, not all LDAP
 fields are available in port 3268. Use whatever works.
 http://technet.microsoft.com/en-us/library/cc978012.aspx
-
-A director proxy doesn't need userdb configuration (unlike backends).
 
 .. code-block:: none
 

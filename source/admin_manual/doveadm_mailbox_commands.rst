@@ -4,8 +4,6 @@
 Doveadm Mailbox Commands
 =========================
 
-These commands should be run on one of the Dovecot directors. The director is then responsible for forwarding the command to be run in the correct backend. This guarantees that two backend servers don't attempt to modify the same user's mailbox at the same time (which might cause problems).
-
 .. versionchanged:: v3.0.0;v2.4.0
 
   All mail commands require providing ``-u``, ``-F`` or ``-A`` parameter. ``USER`` environment variable is no longer supported.

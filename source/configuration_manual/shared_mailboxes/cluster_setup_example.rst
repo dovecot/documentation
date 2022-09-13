@@ -20,26 +20,6 @@ Dovecot Proxy configuration snippet
           driver = static
         }
 
-Dovecot Director configuration snippet
---------------------------------------
-
-.. code-block::
-
-        director_servers = <director-ip>
-        director_mail_servers = <backend-ip>
-
-        passdb {
-          driver = static
-          master = yes
-          default_fields = proxy=y
-          args = password=imapcpass
-        }
-
-        passdb {
-          driver = static
-          args = proxy=y password=masterpass
-        }
-
 Dovecot Backend configuration snippet
 --------------------------------------
 

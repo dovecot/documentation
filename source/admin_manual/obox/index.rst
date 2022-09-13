@@ -73,7 +73,7 @@ There are some things that can be done to help problems caused by these:
 
    * If the user isn't found from the list at all, then it's definitely an old index that hasn't so far been accessed in this backend since Dovecot was started up.
 
-.. Note:: You can't currently use ``doveadm metacache clean`` to delete changed indexes. The only alternative is to just forcibly "rm -rf" the directory. However, if the user happens to be accessed during the "rm -rf" this can cause index corruption, which can have rather bad consequences (like redownloading all mails). This is why it should verify whether director currently points the user to this backend, and only rm -rf users whose backend is elsewhere.
+.. Note:: You can't currently use ``doveadm metacache clean`` to delete changed indexes. The only alternative is to just forcibly "rm -rf" the directory. However, if the user happens to be accessed during the "rm -rf" this can cause index corruption, which can have rather bad consequences (like redownloading all mails).
 
 Backend Crashes
 ^^^^^^^^^^^^^^^^
