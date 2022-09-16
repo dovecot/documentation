@@ -27,13 +27,13 @@ The fs-compress configuration format is:
 
 .. code-block:: none
 
-  compress:<zlib_save>:<zlib_save_level>
+  compress:<compress_save>:<compress_save_level>
 
-See :dovecot_plugin:ref:`zlib_save` for information on available compression
-algorithms.
+See :dovecot_plugin:ref:`compress_save <mail_compress_save>` for information on
+available compression algorithms.
 
-See :dovecot_plugin:ref:`zlib_save_level` for information on compression
-levels and defaults.
+See :dovecot_plugin:ref:`compress_save_level <mail_compress_save_level>` for
+information on compression levels and defaults.
 
 Optional compression
 --------------------

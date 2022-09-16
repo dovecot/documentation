@@ -33,7 +33,7 @@ such as ``%u`` in the SQL query.
 
 If all the passwords are in same format, you can use ``default_pass_scheme`` to
 specify it. Otherwise each password needs to be prefixed with
-``{password-scheme}``, for example ``{plain}plaintext-password``. See
+``{password-scheme}``, for example ``{plain}cleartext-password``. See
 :ref:`authentication-password_schemes` for a list of supported password schemes.
 
 By default MySQL does case-insensitive string comparisons, so you may have a

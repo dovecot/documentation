@@ -32,7 +32,7 @@ The list of sending states (left side of ``/``):
  * starttls: STARTTLS command
  * capability: CAPABILITY command. Only used if backend doesn't send it automatically
  * login: LOGIN command.
- * authenticate: AUTHENTICATE command. Sent if LOGIN command couldn't be used, e.g. because using master user login or non-plaintext authentication.
+ * authenticate: AUTHENTICATE command. Sent if LOGIN command couldn't be used, e.g. because using master user login or non-cleartext authentication mechanism.
  * auth-continue: SASL continuation sent for AUTHENTICATE command
 
 The list of received states (right side of ``/``):

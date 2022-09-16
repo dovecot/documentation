@@ -41,7 +41,7 @@ advertised realms.
 DIGEST-MD5 scheme
 ^^^^^^^^^^^^^^^^^
 
-Password must be stored in either plaintext or with DIGEST-MD5 scheme.
+Password must be stored in either cleartext or with DIGEST-MD5 scheme.
 See :ref:`authentication-password_schemes`.
 
 The Digest is the MD5 sum of the string "user:realm:password". So for

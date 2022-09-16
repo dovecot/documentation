@@ -83,17 +83,40 @@ Key                Value Description
                      The mapping between mailbox names and GUIDs exists in
                      ``dovecot.list.index*`` files.
 
-``NO-NOSELECT``    Automatically delete any ``\NoSelect`` mailboxes that have
+``KEEP-NOSELECT``  Do NOT automatically delete ``\NoSelect`` mailboxes that have
+                   no children. This was the default before v2.4.0;v3.0.0
+
+                   The current default is instead to
+                   automatically delete any ``\NoSelect`` mailboxes that have
                    no children. These mailboxes are sometimes confusing to
                    users. Also if a ``\NoSelect`` mailbox is attempted to be
                    created with ``CREATE box/``, it's created as selectable
-                   mailbox instead. (``LAYOUT=Maildir++`` always behaves this
-                   same way.)
+                   mailbox instead.
 
-                   .. versionadded:: v2.2.32
+                   **Note That** mailboxes using ``LAYOUT=fs``
+                   (either explicitly stated or from the defaults)
+                   always perform *renames* according to the default, regardless
+                   of the setting (dangling ``\NoSelect`` mailboxes are removed
+                   after renames)
+
+                   **Also Note That** mailboxes using ``LAYOUT=Maildir++``
+                   (either explicitly stated or from the defaults),
+                   always perform *deletes* according to the default, regardless
+                   of the setting (dangling ``\NoSelect`` mailboxes are removed
+                   after deletes).
+                   Additionally, the behavior of *rename* already noted for
+                   ``LAYOUT=fs`` applies as well.
+
+                   .. versionadded:: v2.4.0;v3.0.0
+
+``NO-NOSELECT``    **This is now the default behavior.**
+
+                   The setting is obsolete, and kept only for backwards compatibility.
 
                    .. versionchanged:: v2.3.19 Add support for using ``NO-NOSELECT``
                                        with LAYOUT=index
+                   .. versionchanged:: v2.4.0;v3.0.0 this is now the default.
+
 ``UTF-8``          Store mailbox names on disk using UTF-8 instead of
                    modified UTF-7 (mUTF-7).
 
@@ -173,7 +196,7 @@ Variable  Description
 ``%u``    Full username.
 
 ``%n``    User part in ``user@domain``; same as ``%u`` if there's no domain.
-   
+
 ``%d``    Domain part in ``user@domain``; empty if there's no domain.
 ========= ==================================================================
 
@@ -326,7 +349,7 @@ If you really don't want to set any home directory, you can use something like:
 
 .. code-block:: none
 
-   mail_location = maildir:/home/%u/Maildir 
+   mail_location = maildir:/home/%u/Maildir
 
 Per-User Mail Locations
 -----------------------
@@ -350,7 +373,7 @@ SQL
 
 .. code-block:: none
 
-   user_query = SELECT home, uid, gid, mail FROM users WHERE user = '%u' 
+   user_query = SELECT home, uid, gid, mail FROM users WHERE user = '%u'
 
 LDAP
 ^^^^
@@ -364,7 +387,7 @@ Passwd-file
 
 .. code-block:: none
 
-   user:{PLAIN}password:1000:1000::/home/user::userdb_mail=mbox:~/mail:INBOX=/var/mail/%u 
+   user:{PLAIN}password:1000:1000::/home/user::userdb_mail=mbox:~/mail:INBOX=/var/mail/%u
 
 Mixing Multiple Mailbox Formats
 -------------------------------

@@ -457,6 +457,7 @@ GETSCRIPT
 gettext
 github
 gitlab
+glibc
 globals
 Gluster
 gmail
@@ -475,8 +476,8 @@ gssapi
 gui
 GVy
 gzip
-halon
 hacluster
+halon
 haproxy
 hara
 hardcoded
@@ -662,6 +663,7 @@ lmtptest
 localdb
 localhost
 localpart
+localtime
 localtoc
 lockd
 lockdir
@@ -780,6 +782,7 @@ MULTIAPPEND
 multiline
 multiscript
 murchison
+musl
 mutf
 mybox
 mydomain
@@ -875,8 +878,10 @@ oldkey
 oldname
 oldstats
 onelevel
+onlinepubs
 opendir
 opendirectory
+opengroup
 openid
 openldap
 openmetrics
@@ -904,8 +909,8 @@ owm
 oxbuildkey
 oxpedia
 oxuser
+packagecloud
 pacman
-pandoc
 papersize
 params
 passdb
@@ -1211,6 +1216,7 @@ subvalue
 sudo
 sudoers
 SUSE
+sustainability
 svbin
 swapoff
 swappiness
@@ -1224,6 +1230,7 @@ sysconfig
 syscr
 sysctl
 syscw
+sysexits
 syslog
 syslogd
 sysreport

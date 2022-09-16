@@ -255,6 +255,9 @@ The CDB dictionary doesn't support iteration yet.
 
   default_pass_scheme = BLF-CRYPT
 
+  passdb_objects = passdb
+  userdb_objects = userdb
+
 Complete example for authenticating via a UNIX socket
 =====================================================
 
@@ -288,7 +291,8 @@ Auth configuration
 Dict configuration
 ^^^^^^^^^^^^^^^^^^
 
-The ``last dictionary name`` (``somewhere``) argument is redundant here.
+The last dictionary name (``somewhere``) argument is redundant here, and
+is not strictly needed. It will be passed to socket. 
 
 ``/etc/dovecot/dovecot-dict-auth.conf.ext``:
 
@@ -296,11 +300,21 @@ The ``last dictionary name`` (``somewhere``) argument is redundant here.
 
   uri = proxy:/var/run/auth_proxy_dovecot/socket:somewhere
 
-  # FIXME: obsolete configuration - should use the key { .. } instead
-  password_key = passdb/%u
-  user_key = userdb/%u
+  key passdb {
+     key = passdb/%u
+     format = json
+  }
+  
+  key userdb {
+     key = userdb/%u
+     format = json
+  }
+  
   iterate_disable = yes
   #default_pass_scheme = plain
+
+  passdb_objects = passdb
+  userdb_objects = userdb
 
 Server process for answering Dict lookups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

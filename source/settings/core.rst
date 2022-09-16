@@ -16,7 +16,7 @@ See :ref:`settings` for list of all setting groups.
    If enabled, will emit warning to logs. If a disabled scheme is used,
    an error is logged.
 
-   Notably, any explicitly plaintext schemes (such as PLAIN), CRAM-MD5 and DIGEST-MD5 are
+   Notably, any explicitly cleartext schemes (such as PLAIN), CRAM-MD5 and DIGEST-MD5 are
    not affected by this setting.
 
 .. dovecot_core:setting:: auth_anonymous_username
@@ -26,6 +26,22 @@ See :ref:`settings` for list of all setting groups.
    This specifies the username to be used for users logging in with the
    ANONYMOUS SASL mechanism.
 
+.. dovecot_core:setting:: auth_allow_cleartext
+   :default: no
+   :values: @boolean
+   :added: v2.4;v3.0
+
+   If ``no``, disables the LOGIN command and all other cleartext
+   authentication unless SSL/TLS is used (LOGINDISABLED capability) or the
+   connection is "secured":
+
+     * Client IP is in :dovecot_core:ref:`login_trusted_networks`
+     * Client IP is from localhost, and it's not coming from HAProxy listener
+
+   See :ref:`dovecot_ssl_configuration` for more detailed explanation of how
+   this setting interacts with the :dovecot_core:ref:`ssl` setting.
+
+   This setting replaces the ``disable_plaintext_auth`` setting.
 
 .. dovecot_core:setting:: auth_cache_negative_ttl
    :default: hour
@@ -68,11 +84,17 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: auth_debug
+   :changed: v2.4.0;v3.0.0
    :default: no
    :values: @boolean
 
    Enables all authentication debug logging (also enables
    :dovecot_core:ref:`auth_verbose`). Passwords are logged as ``<hidden>``.
+
+   .. note::
+      The setting is obsolete, and kept only for backwards compatibility.
+      Use ``log_debug = category=auth`` instead.
+      (see :dovecot_core:ref:`log_debug`)
 
 
 .. dovecot_core:setting:: auth_debug_passwords
@@ -83,8 +105,9 @@ See :ref:`settings` for list of all setting groups.
    mismatches, the passwords and the scheme used are logged so that the
    problem can be debugged.
 
-   .. note:: Enabling this enables :dovecot_core:ref:`auth_debug` as well.
+   .. note:: You also need to enable ``log_debug = category=auth``
 
+   See :dovecot_core:ref:`log_debug`
 
 .. dovecot_core:setting:: auth_default_domain
    :added: v2.4.0;v3.0.0
@@ -92,7 +115,7 @@ See :ref:`settings` for list of all setting groups.
 
    This setting indicates the default realm/domain to use if none has
    been specified. The setting is used for both SASL realms
-   and appending an @domain element to the username in plaintext logins.
+   and appending an @domain element to the username in cleartext logins.
 
 .. dovecot_core:setting:: auth_default_realm
    :removed: v2.4.0;v3.0.0
@@ -456,9 +479,6 @@ See :ref:`settings` for list of all setting groups.
 
    If ``yes``, log unsuccessful authentication attempts and why they failed.
 
-   Explicitly setting :dovecot_core:ref:`auth_debug` will override this
-   setting.
-
 
 .. dovecot_core:setting:: auth_verbose_passwords
    :default: no
@@ -472,7 +492,7 @@ See :ref:`settings` for list of all setting groups.
 
    ``plain``, ``yes``
 
-     Output plaintext password (NOT RECOMMENDED)
+     Output cleartext password (NOT RECOMMENDED)
 
    ``sha1``
 
@@ -798,21 +818,6 @@ See :ref:`settings` for list of all setting groups.
    ======================= ==========================
 
 
-.. dovecot_core:setting:: disable_plaintext_auth
-   :default: yes
-   :values: @boolean
-
-   If ``yes``, disables the LOGIN command and all other plaintext
-   authentication unless SSL/TLS is used (LOGINDISABLED capability) or the
-   connection is "secured":
-
-     * Client IP is in :dovecot_core:ref:`login_trusted_networks`
-     * Client IP is from localhost, and it's not coming from HAProxy listener
-
-   See :ref:`dovecot_ssl_configuration` for more detailed explanation of how
-   this setting interacts with the :dovecot_core:ref:`ssl` setting.
-
-
 .. dovecot_core:setting:: dotlock_use_excl
    :default: yes
    :values: @boolean
@@ -1066,7 +1071,7 @@ See :ref:`settings` for list of all setting groups.
       that the message is no longer on the server (note that the workaround
       does not help for OE6 if synchronization is set to Headers Only).
 
-    ``tb-extra-mailbox-sep``
+   ``tb-extra-mailbox-sep``
 
       Because ``LAYOUT=fs`` (mbox and dbox) confuses Thunderbird, causing
       extra / suffixes to mailbox names, Dovecot can be told to ignore
@@ -1884,7 +1889,7 @@ See :ref:`settings` for list of all setting groups.
 
    Client connections from trusted networks are also treated as "secured", i.e.
    the same as if they had been using SSL/TLS. This affects the
-   :dovecot_core:ref:`ssl` and :dovecot_core:ref:`disable_plaintext_auth`
+   :dovecot_core:ref:`ssl` and :dovecot_core:ref:`auth_allow_cleartext`
    settings. It also marks the connection as "secured" for all auth lookups,
    which also affects the ``%{secured}`` :ref:`variable <config_variables>`.
 
@@ -1892,7 +1897,7 @@ See :ref:`settings` for list of all setting groups.
    checks.
 
    Plaintext authentication is always allowed for trusted networks
-   (:dovecot_core:ref:`disable_plaintext_auth` is ignored).
+   (:dovecot_core:ref:`auth_allow_cleartext` is ignored).
 
    The details of how this setting works depends on the used protocol:
 
@@ -3161,7 +3166,7 @@ See :ref:`settings` for list of all setting groups.
 
      SSL/TLS is required for all imap, pop3, managesieve and
      submission protocol client connections. This differs from
-     :dovecot_core:ref:`disable_plaintext_auth` in that even non-plaintext
+     :dovecot_core:ref:`auth_allow_cleartext` in that even non-cleartext
      authentication mechanisms aren't allowed without SSL/TLS.
 
      Note that SSL is still not required for "secured" connections:

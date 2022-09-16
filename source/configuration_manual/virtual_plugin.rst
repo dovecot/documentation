@@ -134,6 +134,26 @@ The ``!-prefixed`` virtual mailbox is also selected from; you don't need to
 list it again without an ! or you'll get two copies of your messages in the
 virtual mailbox.
 
+IMAPSieve filters with virtual mailboxes
+----------------------------------------
+
+.. versionadded:: v2.4.0;v3.0.0
+
+When saving to a virtual mailbox is configured, imapsieve scripts act as if the
+save was done directly to the physical destination mailbox. For example if
+Virtual/All folder was configured with INBOX as the save destination, this
+sieve.before script would be run both when saving to INBOX and when saving to
+Virtual/All folder:
+
+.. code-block:: none
+
+  imapsieve_mailbox_name = INBOX # Virtual/All would NOT work
+  imapsieve_mailbox_causes = COPY
+  imapsieve_mailbox_before = /etc/dovecot/sieve.before
+
+Also, the ``"imap.mailbox`` environment always contains INBOX, even when
+saving via Virtual/All folder.
+
 Mailbox selection base on METADATA
 ==================================
 

@@ -64,7 +64,7 @@ Connection Settings
      Don't connect to the remote server until some command requires it. By
      default the server is connected to immediately on login.
 
-    .. versionadded:: v2.2.29
+     .. versionadded:: v2.2.29
 
    ``gmail-migration``
 

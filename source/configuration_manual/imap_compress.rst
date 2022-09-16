@@ -13,21 +13,10 @@ IMAP session.
 Settings
 ========
 
+.. versionremoved:: v2.4.0;v3.0.0
+
+  Configuration of the compression level and algorithm was dropped. The
+  extension is now enabled by default and configured with the default
+  compression level for the available mechanism.
+
 See :ref:`plugin-imap-zlib`.
-
-Configuration
--------------
-
-.. code-block:: none
-
-  protocol imap {
-    mail_plugins = $mail_plugins imap_zlib
-  }
-
-  plugin {
-    ## NOTE! Setting was called imap_zlib_compression_level before 2.3.15
-    ## imap_compress_<algorithm>_level = value
-    ##
-    imap_compress_deflate_level = 6
-  }
-

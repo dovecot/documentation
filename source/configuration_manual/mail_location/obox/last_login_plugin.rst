@@ -179,7 +179,7 @@ Find below the output of the command doveconf -n taken on the BE node, including
    dict {
    statsdb = cassandra:/etc/dovecot/statsdb-dict-cql.conf.ext
    }
-   disable_plaintext_auth = no
+   auth_allow_cleartext = yes
    mail_debug = yes
    mail_fsync = never
    mail_gid = vmail

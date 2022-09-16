@@ -83,7 +83,7 @@ fields are:
 ``passdb_need_plain``
    This mechanism uses passdb's ``verify_plain()`` function to verify
    the password's validity. This means that the mechanism has access to
-   the plaintext password. This is true only for plaintext mechanisms
+   the cleartext password. This is true only for cleartext mechanisms
    such as PLAIN and LOGIN. The main purpose of this flag is to make
    dovecot-auth complain at startup if there are no passdbs defined in
    the configuration file. Note that a configuration without any passdbs
@@ -183,9 +183,9 @@ SASL authentication in general works like:
 Credentials
 ~~~~~~~~~~~
 
-Most of the non-plaintext mechanisms need to verify the authentication
+Most of the non-cleartext mechanisms need to verify the authentication
 by using a special hash of the user's password. So either the passdb
-credentials lookup returns a plaintext password from which the hash can
+credentials lookup returns a cleartext password from which the hash can
 be created, or the hash directly. Both of these cases can be handled simply
 by calling ``auth_request_lookup_credentials()`` with the wanted password
 scheme.
@@ -200,13 +200,13 @@ Password schemes
    maybe in the passwords stored in passdb
    ("{scheme_name}password_hash").
 
-``password_verify(plaintext, params, raw_password, raw_password_size, error)``
-   Returns 1 if ``raw_password`` hash matches the plaintext password
-   given in ``plaintext`` parameter. The ``raw_password`` is in binary, i.e.
+``password_verify(cleartext, params, raw_password, raw_password_size, error)``
+   Returns 1 if ``raw_password`` hash matches the cleartext password
+   given in ``cleartext`` parameter. The ``raw_password`` is in binary, i.e.
    not hex or base64-encoded.
 
-``password_generate(plaintext, params, raw_password_r, raw_password_size_r)``
-   Returns the password hash for given plaintext password.
+``password_generate(cleartext, params, raw_password_r, raw_password_size_r)``
+   Returns the password hash for given cleartext password.
 
 The ``params`` can be used to specify some extra parameters:
 
@@ -260,7 +260,7 @@ for a description of passdbs and a list of already implemented ones.
    Close the connection to the password database and free all the used memory.
 
 ``iface.verify_plain(auth_request, password, callback)``
-   Check if the given plaintext password matches.
+   Check if the given cleartext password matches.
    ``auth_request->wanted_credentials_scheme == NULL`` always. When the
    verification is done, call the given callback with the result in ``result``
    parameter.
@@ -271,7 +271,7 @@ for a description of passdbs and a list of already implemented ones.
    ``passdb_handle_credentials()`` to finish the request.
 
 Plaintext authentication mechanisms typically call ``verify_plain()``,
-which is possible to implement with all the passdbs. Non-plaintext
+which is possible to implement with all the passdbs. Non-cleartext
 mechanisms typically call ``lookup_credentials()``, which isn't possible
 to implement always (eg. PAM). If it's not possible to implement
 ``lookup_credentials()``, the pointer can be left NULL.

@@ -40,7 +40,7 @@ port`` (imaps, pop3s, etc.), where the SSL handshake starts immediately when
 client connects, and only after the session is encrypted the regular protocol
 handling begins.
 
-Using two separate ports for plaintext and SSL connections was thought to be
+Using two separate ports for unencrypted and SSL connections was thought to be
 wasteful and adds complexity for clients which may wish to make use of SSL when
 it is advertised, so STARTTLS command was added and intended to deprecate the
 SSL ports.
@@ -54,12 +54,12 @@ SSL port deprecation never really happened, probably because of a few reasons:
 
 * Some admins don't even know about STARTTLS.
 * Some admins want to require SSL/TLS, but don't realize that this is also
-  possible with STARTTLS (Dovecot has ``disable_plaintext_auth=yes`` and
-  ``ssl=required settings``).
+  possible with STARTTLS (Dovecot has :dovecot_core:ref:`auth_allow_cleartext=no <auth_allow_cleartext>` and
+  :dovecot_core:ref:`ssl=required <ssl>` settings).
 * Some admins understand everything, but still prefer to allow only SSL ports
   (maybe with a firewall). This could be because it makes it easier to ensure
   that no information is leaked, because SSL/TLS handshake happens immediately.
-  Some clients unfortunately try to do plaintext authentication without
+  Some clients unfortunately try to do cleartext authentication without
   STARTTLS, even when IMAP server has told the client that it won't work.
   Besides, it requires fewer round-trips if you begin SSL upon connection when
   you know you want it, instead of connect, negotiate capabilities, insist on
