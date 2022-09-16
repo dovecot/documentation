@@ -457,6 +457,7 @@ GETSCRIPT
 gettext
 github
 gitlab
+glibc
 globals
 Gluster
 gmail
@@ -658,6 +659,7 @@ lmtponly
 lmtptest
 localhost
 localpart
+localtime
 localtoc
 lockd
 lockdir
@@ -897,6 +899,7 @@ owm
 oxbuildkey
 oxpedia
 oxuser
+packagecloud
 pacman
 pandoc
 papersize
