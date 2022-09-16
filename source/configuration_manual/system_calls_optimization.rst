@@ -27,7 +27,7 @@ A restart is required.
 See also:
 
 `GNU man page for the TZ environment variable
-<https://blog.packagecloud.io/set-environment-variable-save-thousands-of-system-calls/>`_
+<https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html>`_
 
 `Article explaining in detail the issue
 <https://blog.packagecloud.io/set-environment-variable-save-thousands-of-system-calls/>`_
