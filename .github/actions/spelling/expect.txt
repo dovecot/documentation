@@ -658,6 +658,7 @@ lmtponly
 lmtptest
 localhost
 localpart
+localtime
 localtoc
 lockd
 lockdir
@@ -897,8 +898,8 @@ owm
 oxbuildkey
 oxpedia
 oxuser
+packagecloud
 pacman
-pandoc
 papersize
 params
 passdb
