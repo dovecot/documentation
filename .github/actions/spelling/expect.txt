@@ -476,8 +476,8 @@ gssapi
 gui
 GVy
 gzip
-halon
 hacluster
+halon
 haproxy
 hara
 hardcoded
@@ -663,6 +663,7 @@ lmtptest
 localdb
 localhost
 localpart
+localtime
 localtoc
 lockd
 lockdir
@@ -908,8 +909,8 @@ owm
 oxbuildkey
 oxpedia
 oxuser
+packagecloud
 pacman
-pandoc
 papersize
 params
 passdb
