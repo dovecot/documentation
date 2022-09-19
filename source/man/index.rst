@@ -1,3 +1,5 @@
+.. _man-pages:
+
 ====================
 Dovecot manual pages
 ====================
