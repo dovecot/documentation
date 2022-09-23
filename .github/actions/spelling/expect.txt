@@ -157,6 +157,8 @@ CHECKSCRIPT
 chgrp
 chmod
 chown
+chronos
+chrony
 chroot
 chrooting
 CIDR
@@ -518,6 +520,7 @@ httplog
 hypervisor
 iam
 IAT
+ICAL
 icu
 idx
 IES
@@ -555,6 +558,7 @@ inodetofile
 inotify
 INTERNALDATE
 internalfail
+Interoperability
 interoperable
 inthread
 intmax
@@ -572,6 +576,9 @@ iredmail
 isps
 istream
 ITERINDEX
+itip
+jan
+jano
 javascript
 jeffpc
 jessie
@@ -969,6 +976,7 @@ ptr
 ptrace
 pubout
 pukki
+pushmail
 PUTSCRIPT
 pwd
 pwdfile
