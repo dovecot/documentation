@@ -108,6 +108,8 @@ DLOG (Debug log) [``dlog``]
 
 This will cause notifications to end up in your debug log.
 
+.. _push_notification_ox:
+
 OX (Open-Xchange) driver [``ox``]
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -494,3 +496,82 @@ Example with event code:
        e:log_info("Mailbox notify status " .. tostring(code))
      end
    end
+
+Chronos driver [``chronos``]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: v2.3.20;v3.0.0
+
+Similar to the :ref:`push_notification_ox` the Chronos backend supports sending
+notifications on MessageNew events in case the message contains a calendar
+invite. It is only available as part of :ref:`ox_dovecot_pro_releases`.
+
+This driver was designed for use with the `OX App Suite iCalendar
+Transport-Independent Interoperability Protocol (iTIP)
+<https://documentation.open-xchange.com/7.10.6/middleware/calendar/iTip.html#rest-api>`_,
+but can be used by any endpoint that implements the same API, not just OX App
+Suite.
+
+Configuration options:
+
+================= ======== =================== ============================================================================================================
+ Name             Required Type                Description
+================= ======== =================== ============================================================================================================
+ ``url``          **YES**  :ref:`string`       The HTTP end-point (URL + authentication information) to use for sending the push notification.
+                                               Contains authentication information needed for Basic Authentication (if any). Example:
+                                               ``http<s> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/chronos/v1/itip/pushmail"``
+
+                                               For HTTPS endpoints, system CAs are trusted by default, but internal CAs might need further configuration.
+
+                                               For further details on configuring the App Suite endpoint, see:
+                                               https://documentation.open-xchange.com/7.10.6/middleware/calendar/iTip.html#configuration2
+
+ ``max_retries``  NO       :ref:`uint`         The maximum number of retries to attempt to connect to the API endpoint. (DEFAULT: ``1``)
+
+ ``timeout``      No       :ref:`time_msecs`   Time before HTTP request to OX endpoint will timeout. (DEFAULT: ``2s``)
+
+ ``msg_max_size`` No       :ref:`size`         Maximum size a message may have to be considered for push notification sending. (DEFAULT: ``500kb``)
+================= ======== =================== ============================================================================================================
+
+Example configuration:
+
+.. code-block:: none
+
+  plugin {
+    push_notification_driver = chronos:url=http://login:pass@node1.domain.tld:8009/chronos/v1/itip/pushmail max_retries=2 timeout=2500ms msg_max_size=1mb
+  }
+
+Payload
+-------
+
+Push notification sent in JSON format with the following fields:
+
+=========== ====== ============================================================
+Name        Type   Description
+=========== ====== ============================================================
+``user``    string The username of the account receiving the message on the
+                   dovecot backend
+
+``event``   string RFC 5423 event type. Currently only "MessageNew" is expected.
+
+``folder``  string Mailbox name in which the message was saved. Can be other
+                   than INBOX, in case sieve filters are active. A trivial
+                   deduplication is enabled if the sieve script copies the
+                   files into different folders, then only for one of the
+                   messages a push notification will be sent.
+
+``body``    string Full message content of the mail, including headers and text.
+                   The field content is escaped to comply to the JSON format.
+
+=========== ====== ============================================================
+
+Example payload (``Content-Type: application/json; charset=utf-8``):
+
+.. code-block:: json
+
+  {
+    "user": "4@464646669",
+    "event": "MessageNew",
+    "folder": "INBOX",
+    "body": "From: user@example.com\nTo: user2@example.com\nSubject: calendar\nContent-Type: text/calendar\n\nICAL CONTENT\n"
+  }
