@@ -16,13 +16,20 @@ timezone file of your choice) for a process will save glibc from making those
 extra unnecessary system calls (Notice the column ``:`` prefix before the file
 path).
 
-The variable can be set either from the shell, i.e.
-``export TZ=:/etc/localtime``
-or directly from inside the dovecot configuration file
-``import_environment = $import_environment TZ=:/etc/localtime``
+The variable can be set either from the shell:
 
-Note that a simple reload is not sufficient for the change to take effect.
-A restart is required.
+::
+
+  export TZ=:/etc/localtime
+
+or directly from inside the dovecot configuration file:
+
+::
+
+  import_environment = $import_environment TZ=:/etc/localtime
+
+Note that a reload is not sufficient for the change to take effect. A restart
+is required.
 
 See also:
 
