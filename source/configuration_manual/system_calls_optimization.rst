@@ -5,7 +5,7 @@ System Calls Optimization
 =========================
 
 The use of the TZ environment variable can dramatically reduce the number
-of system system calls and kernel context switches performed by the application.
+of system calls and kernel context switches performed by the application.
 
 The ``localtime()`` function in glibc checks whether the ``TZ`` environment
 variable is set. If it is not set, then glibc will use the ``stat()`` system
