@@ -31,10 +31,10 @@ or directly from inside the dovecot configuration file:
 Note that a reload is not sufficient for the change to take effect. A restart
 is required.
 
-See also:
+.. seealso::
 
-`GNU man page for the TZ environment variable
-<https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html>`_
+  `GNU man page for the TZ environment variable
+  <https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html>`_
 
-`Article explaining in detail the issue
-<https://blog.packagecloud.io/set-environment-variable-save-thousands-of-system-calls/>`_
+  `Article explaining in detail the issue
+  <https://blog.packagecloud.io/set-environment-variable-save-thousands-of-system-calls/>`_
