@@ -35,7 +35,7 @@ you'll need to prefix each password with ``{<scheme>}``,
 
 .. code-block:: none
 
-  {PLAIN}plaintext-password or {PLAIN-MD5}1a1dc91c907325c69271ddf0c944bc72
+  {PLAIN}cleartext-password or {PLAIN-MD5}1a1dc91c907325c69271ddf0c944bc72
 
 
 Dovecot authenticates users against password databases. It can also be used to
@@ -52,14 +52,14 @@ Success/failure database
 These **databases** simply verify if the given password is correct for the
 user. Dovecot doesn't get the correct password from the database, it only gets
 a ``success`` or a ``failure`` reply. This means that these databases can't be used
-with non-plaintext :ref:`authentication-authentication_mechanisms`.
+with non-cleartext :ref:`authentication-authentication_mechanisms`.
 
 Databases that belong to this category are:
 
 * **PAM**: Pluggable Authentication Modules. See :ref:`authentication-pam`.
-* **BSDAuth**: BSD authentication. See :ref:`authentication-bsdauth`.
 * **IMAP**: Authenticate against remote IMAP server. See :ref:`imap`.
 * **OAuth2**: Authenticate against oauth2 provider. See :ref:`authentication-oauth2`.
+* **BSDAuth**: BSD authentication (deprecated, unsupported). See :ref:`authentication-bsdauth`.
 
   .. versionadded:: v2.2.29
 
@@ -76,7 +76,7 @@ lookup can return:
  * **password_noscheme**: Like ``password``, but if a password begins with
    ``{``, assume it belongs to the password itself instead of treating it as a
    :ref:`authentication-password_schemes` prefix. This is usually needed only if you use
-   plaintext passwords.
+   cleartext passwords.
 
 * **user**: Returning a user field can be used to change the username.
   Typically used only for case changes (e.g. ``UseR`` -> ``user``). See

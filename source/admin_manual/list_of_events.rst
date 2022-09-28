@@ -85,6 +85,15 @@ Root Categories
 +--------------------+---------------------------------------------------------+
 | smtp-submit        | SMTP submission client                                  |
 +--------------------+---------------------------------------------------------+
+| ssl                | SSL/TLS connections                                     |
++--------------------+---------------------------------------------------------+
+| ssl-client         | Incoming SSL/TLS connections                            |
++--------------------+---------------------------------------------------------+
+| ssl-server         | Outgoing SSL/TLS connections                            |
++--------------------+---------------------------------------------------------+
+| fs-dictmap         | :ref:`fs-dictmap <dictmap_configuration>`               |
++--------------------+---------------------------------------------------------+
+
 
 Storage Categories
 ==================
@@ -99,6 +108,8 @@ Storage Categories
 | mdbox              | mdbox storage                                           |
 +--------------------+---------------------------------------------------------+
 | sdbox              | sdbox storage                                           |
++--------------------+---------------------------------------------------------+
+| obox               | obox storage                                            |
 +--------------------+---------------------------------------------------------+
 | imapc              | imapc storage                                           |
 +--------------------+---------------------------------------------------------+
@@ -186,20 +197,6 @@ Dovecot Core
 
 Authentication Client
 =====================
-
-auth_client_cache_flush_started
--------------------------------
-
-*no particular fields*
-
-auth_client_cache_flush_finished
---------------------------------
-
-+--------------+------------------------------------------------------------+
-| Field        | Description                                                |
-+==============+============================================================+
-| error        | Error string if error occurred.                            |
-+--------------+------------------------------------------------------------+
 
 Common fields
 -------------
@@ -1012,6 +1009,13 @@ Mail storage service user
 +---------------------+------------------------------------------------------+
 | session             | Session ID for the storage session                   |
 +---------------------+------------------------------------------------------+
+| user                | Username of the user                                 |
++---------------------+------------------------------------------------------+
+| service             | Name of the service. Examples: ``imap``, ``pop3``,   |
+|                     | ``lmtp``, ...                                        |
+|                     |                                                      |
+|                     | .. versionadded:: v2.4.0;v3.0.0                      |
++---------------------+------------------------------------------------------+
 
 .. _event_mail_user:
 
@@ -1022,8 +1026,6 @@ Mail user
 | Field               | Description                                          |
 +=====================+======================================================+
 | Inherits from :ref:`event_mail_storage_service_user`                       |
-+---------------------+------------------------------------------------------+
-| user                | Username of the user                                 |
 +---------------------+------------------------------------------------------+
 
 mail_user_session_finished
@@ -1779,6 +1781,11 @@ dns_request_finished
 +---------------------+------------------------------------------------------+
 | Field               | Description                                          |
 +=====================+======================================================+
+| cached              | Set to ``yes`` or ``no`` depending if it was         |
+|                     | a cached reply or not.                               |
+|                     |                                                      |
+|                     | .. versionadded:: v2.4.0;v3.0.0                      |
++---------------------+------------------------------------------------------+
 | error               | Human readable error                                 |
 +---------------------+------------------------------------------------------+
 | error_code          | Error code usable with net_gethosterror()            |
@@ -2052,6 +2059,14 @@ at the actual RCPT command where the server can deny the recipient.
 +----------------------+-------------------------------------------------------+
 | error                | Error message for the reply if it is a failure. There |
 |                      | is no field for a success message.                    |
++----------------------+-------------------------------------------------------+
+| dest_host            | LMTP proxying only: Proxy destination host name       |
+|                      |                                                       |
+|                      | .. versionadded:: v2.4.0;v3.0.0                       |
++----------------------+-------------------------------------------------------+
+| dest_ip              | LMTP proxying only: Proxy destination IP address      |
+|                      |                                                       |
+|                      | .. versionadded:: v2.4.0;v3.0.0                       |
 +----------------------+-------------------------------------------------------+
 
 SMTP Submit
@@ -2602,9 +2617,33 @@ indexes in metacache.
 | error                    | Error message if the rescan/rebuild failed           |
 +--------------------------+------------------------------------------------------+
 
+
+obox_save_throttling
+^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.4.0;3.0.0
+
+Obox is throttling the number of concurrent saves/copies.
+This event is used to expose externally the status of the internal parallelism,
+i.e. to let tests asses if we can actually reach the degree of parallelism
+expected through :dovecot_plugin:ref:`obox_max_parallel_writes` and
+:dovecot_plugin:ref:`obox_max_parallel_copies` or instead anything chokes the
+performance to less optimal levels.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| pending_save        | Number of message saves pending completion             |
++---------------------+--------------------------------------------------------+
+| pending_copy        | Number of message copies pending completion            |
++---------------------+--------------------------------------------------------+
+
+
 fs-dictmap
 ----------
 
+
+.. _fs_dictmap_dict_write_uncertain:
 
 fs_dictmap_dict_write_uncertain
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2613,6 +2652,7 @@ fs_dictmap_dict_write_uncertain
 
 The event is sent whenever a dict write is uncertain.
 E.g. writes to Cassandra may eventually succeed even if the write initially appeared to fail.
+See also :ref:`fs_object_write_uncertain`
 
 +-----------------------+-------------------------------------------------------+
 | Field                 | Description                                           |
@@ -2718,6 +2758,28 @@ emit an event.
 +-----------------------+------------------------------------------------------+
 | deleted_count         | The count of deleted keys for the empty bucket.      |
 +-----------------------+------------------------------------------------------+
+
+.. _fs_object_write_uncertain:
+
+fs_object_write_uncertain
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: v2.4.0;v3.0.0
+
+The event is sent whenever an object write is uncertain.
+When a write HTTP operation times out actual outcome is uncertain.
+See also :ref:`fs_dictmap_dict_write_uncertain`.
+
++-----------------------+-------------------------------------------------------+
+| Field                 | Description                                           |
++=======================+=======================================================+
+| Inherits from :ref:`event_fs_file`                                            |
++-----------------------+-------------------------------------------------------+
+| cleanup               | ``success`` or ``failed``. Indicates if uncertain     |
+|                       |  write was cleaned (deleted) successfully             |
++-----------------------+-------------------------------------------------------+
+| error                 | Error message why the write initially failed          |
++-----------------------+-------------------------------------------------------+
 
 
 Dictionaries
@@ -2957,3 +3019,58 @@ Event emitted when number of triplets exceeds the limit defined by
 +---------------+--------------------------------------------------+
 | triplet_count | Number of triplets found                         |
 +---------------+--------------------------------------------------+
+
+*********
+HACluster
+*********
+
+hacluster
+=========
+
+hacluster_user_group_move_started
+---------------------------------
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| group                 | User group name.                                     |
++-----------------------+------------------------------------------------------+
+
+hacluster_user_group_move_finished
+----------------------------------
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| group                 | User group name.                                     |
++-----------------------+------------------------------------------------------+
+| moved_users           | Number of users moved successfully within this group.|
++-----------------------+------------------------------------------------------+
+| failed_users          | Number of users whose moving failed.                 |
++-----------------------+------------------------------------------------------+
+| error                 | Reason why group moving (partially) failed.          |
++-----------------------+------------------------------------------------------+
+
+hacluster_user_move_started
+---------------------------
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| user                  | Username being moved.                                |
++-----------------------+------------------------------------------------------+
+| dest_host             | Destination host where user is being moved to.       |
++-----------------------+------------------------------------------------------+
+
+hacluster_user_move_finished
+----------------------------
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| user                  | Username being moved.                                |
++-----------------------+------------------------------------------------------+
+| dest_host             | Destination host where user is being moved to.       |
++-----------------------+------------------------------------------------------+
+| error                 | Reason why user moving failed.                       |
++-----------------------+------------------------------------------------------+

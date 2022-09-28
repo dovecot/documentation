@@ -70,7 +70,7 @@ This should report "Verify return code: 0 (ok)".
 SASL binds
 **********
 
-It's possible to use SASL binds instead of the regular plaintext binds if your
+It's possible to use SASL binds instead of the regular simple binds if your
 LDAP library supports them. See the ``sasl_*`` settings in
 ``dovecot-ldap-example.conf``.
 

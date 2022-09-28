@@ -1,0 +1,91 @@
+.. _man-1_doveadm-fs:
+
+==========
+doveadm-fs
+==========
+
+NAME
+====
+
+doveadm-fs - Interact with the abstract mail storage filesystem
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] **fs** *command* [*ARGUMENTS*]
+
+DESCRIPTION
+===========
+
+The **doveadm fs** *commands* are used to abstractly interact with the
+storage backend defined in the Dovecot configuration. It allows access
+to the mailbox structure without needing to know details of how the
+storage backend is designed.
+
+.. include:: global-options-formatter.inc
+
+This command uses by default the **table** output formatter.
+
+If you have multiple fs drivers, you start by having the first driver in
+*fs-driver* and the rest of the pipeline as-is in *fs-args*.
+
+COMMANDS
+========
+
+fs copy
+-------
+
+**doveadm fs copy** *fs-driver* *fs-args* *source-path* *dest-path*
+
+Copy source path to the destination path.
+
+fs delete
+---------
+
+**doveadm fs delete** [**-R**] [**-n** *count*] *fs-driver* *fs-args* *path* [*path* ...]
+
+Delete all data associated with the path provided.
+
+fs get
+------
+
+**doveadm fs get** *fs-driver* *fs-args* *path*
+
+Retrieve data associated with the path provided.
+
+fs iter
+-------
+
+**doveadm fs iter** *fs-driver* *fs-args* *path*
+
+Iterate through all data files in the path provided.
+
+fs iter-dirs
+------------
+
+**doveadm fs iter-dirs** *fs-driver* *fs-args* *path*
+
+Iterate through all directories in the path provided.
+
+fs put
+------
+
+**doveadm fs put** [**-h** *hash*] *fs-driver* *fs-args* *input_path*
+*path*
+
+Store data at the path provided.
+
+fs stat
+-------
+
+**doveadm fs stat** *fs-driver* *fs-args* *path*
+
+Retrieve files status for the path provided. Currently, only the total
+size (in bytes) of the item is returned.
+
+.. include:: reporting-bugs.inc
+
+SEE ALSO
+========
+
+:man:`doveadm(1)`

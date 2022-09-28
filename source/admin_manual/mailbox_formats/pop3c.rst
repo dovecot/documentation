@@ -11,3 +11,7 @@ The remote POP3 mailbox is visible as the INBOX folder on the Dovecot side.
 
 For information on how to configure pop3c in Dovecot, see
 :ref:`pop3c_settings`.
+
+.. Note::
+
+   This mailbox format is not supported by :ref:`ox_dovecot_pro`.

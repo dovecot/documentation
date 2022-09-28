@@ -242,7 +242,9 @@ Login variables
 +----------+-----------------------+---------------------------------------------------------------+
 | %c       | secured               | "TLS" with established SSL/TLS connections, "TLS handshaking",|
 |          |                       | or "TLS [handshaking]: error text" if disconnecting due to TLS|
-|          |                       | error. "secured" with localhost connections. Otherwise empty. |
+|          |                       | error. "secured" with localhost or                            |
+|          |                       | :dovecot_core:ref:`login_trusted_networks` connections.       |
+|          |                       | Otherwise empty.                                              |
 +----------+-----------------------+---------------------------------------------------------------+
 | %k       | ssl_security          | TLS session security string. If HAProxy is configured and it  |
 |          |                       | terminated the TLS connection, contains "(proxied)".          |
@@ -250,7 +252,10 @@ Login variables
 | %e       | mail_pid              | PID for process that handles the mail session post-login      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | original_user         | Same as %{user}, except using the original username the client|
-|          |                       | sent before any changes by auth process                       |
+|          |                       | sent before any changes by auth process. With master user     |
+|          |                       | logins (also with                                             |
+|          |                       | :dovecot_core:ref:`auth_master_user_separator` based logins), |
+|          |                       | this contains only the original master username.              |
 |          |                       |                                                               |
 |          |                       | .. versionadded:: v2.3.14                                     |
 +----------+-----------------------+---------------------------------------------------------------+
@@ -401,11 +406,11 @@ Authentication variables
 |          |                       |                                                               |
 |          |                       | .. deprecated:: v2.3.13                                       |
 +----------+-----------------------+---------------------------------------------------------------+
-| %w       | password              | plaintext password from plaintext authentication mechanism    |
+| %w       | password              | cleartext password from cleartext authentication mechanism    |
 +----------+-----------------------+---------------------------------------------------------------+
-| %c       | secured               | "TLS" with established SSL/TLS connections, "TLS handshaking",|
-|          |                       | or "TLS [handshaking]: error text" if disconnecting due to TLS|
-|          |                       | error. "secured" with localhost connections. Otherwise empty. |
+| %c       | secured               | "TLS" with established SSL/TLS connections, "secured" with    |
+|          |                       | localhost or :dovecot_core:ref:`login_trusted_networks`       |
+|          |                       | connections. Otherwise empty.                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 | %k       | cert                  | "valid" if client had sent a valid client certificate,        |
 |          |                       | otherwise empty.                                              |

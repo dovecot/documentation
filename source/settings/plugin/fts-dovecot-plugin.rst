@@ -4,8 +4,7 @@
 fts-dovecot plugin
 ==================
 
-.. important:: The Dovecot FTS driver is a part of
-               :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>` only.
+.. important:: The Dovecot FTS driver is a part of :ref:`ox_dovecot_pro` only.
 
 .. seealso:: See :ref:`fts_backend_dovecot` for detailed information.
 

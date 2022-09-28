@@ -551,7 +551,7 @@ of a ``namespace`` block, with the format::
 The mailbox-name specifies the full mailbox name; if it has spaces, you can
 put it into quotes::
 
-  mailbox "Test Mailbox {
+  mailbox "Test Mailbox" {
     [...]
   }
 
@@ -589,12 +589,21 @@ Settings
    For IMAP and POP3 this happens after the client is already disconnected.
 
    For LMTP this happens when the user's mail delivery is finished. Note that
-   if there are multiple recipients this may delay delivering the mails to the
-   other recipients.
+   in case there are multiple recipients, autoexpunging is done only for some
+   of the recipients to prevent delays with the mail delivery: The last
+   recipient user is autoexpunged first. Next, the first recipient user is
+   autoexpunged (because the first user's mail was kept open in case it could
+   be directly copied to the other users). None of the middle recipient users
+   are autoexpunged.
 
    :dovecot_core:ref:`mailbox_list_index` = ``yes`` is highly recommended when
    using this setting, as it avoids actually opening the mailbox to see if
    anything needs to be expunged.
+
+   :dovecot_core:ref:`mail_always_cache_fields` = ``date.save`` is also
+   recommended when using this setting with sdbox or Maildir, as it avoids
+   using ``stat()`` to find out the mail's saved-timestamp. With mdbox and obox
+   formats this isn't necessary, since the saved-timestamp is always available.
 
 
 .. dovecot_core:setting:: namespace/mailbox/autoexpunge_max_mails

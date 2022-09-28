@@ -54,3 +54,18 @@ x-amz-id-2:[-a-zA-Z=;:/0-9+]*
 
 # ignore long runs of a single character:
 \b([A-Za-z])\g{-1}{3,}\b
+
+# dovecot specific ones
+abcdefghijklmnopqrstuvwxyz
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+BBAAAAAAAAAAAAAAAAAAAAAAB
+3a94c928d66ebe4bda04000015811c6a
+8aad0f0a30169f4bea620000ca356bad
+d88ff1001d4bf753a1b800001accfe22
+&U,BTFw-
+&ZeVnLIqe-
+-adnPNSx
+MTM1NDQ1WjAmMSQwIgYDjksadnjkasndjksandjksandjksandj5YXJlYS5vcmcw
+-fPRU
+-1fPRU
+fd95:4eed:38ba::25

@@ -255,6 +255,19 @@ Dovecot has a `lib-dict"` API for doing simple key-value lookups/updates in vari
 
    * The dict clients can do any kind of dict lookups and updates for all users, so they can be rather harmful if exposed to an attacker. That's why by default only root can connect to dict socket. Unfortunately that is too restrictive for all setups, so the permissions need to be changed so that Dovecot's mail processes (and only them) can connect to it.
 
+dict-expire
+^^^^^^^^^^^
+
+.. versionadded:: v2.4.0;v3.0.0
+
+This process periodically goes through configured dicts and deletes all
+expired rows in them. Currently this works only for dict-sql when expire_field
+has been configured.
+
+   * **process_limit=1**, because only one process should be running expires.
+
+   * **user** and other permissions should be the same as for the dict service.
+
 director
 ^^^^^^^^
 Director tracker process, which hooks into all auth-client and auth-userdb connections.
@@ -335,16 +348,6 @@ the executable location with a priority modifier, such as:
    service indexer-worker {
      executable = /usr/bin/nice -n 10 /usr/libexec/dovecot/indexer-worker
    }
-
-ipc
-^^^^^
-IPC hub process.
-
-   * **process_limit=1**, because there can be only one hub.
-
-   * **chroot=empty** and **user=$default_internal_user**, because it doesn't need any files and there are no outbound connections.
-
-The `ipc` UNIX socket can be used to send any commands to other processes, such as killing a specific user's connection. It is somewhat security sensitive.
 
 lmtp
 ^^^^^

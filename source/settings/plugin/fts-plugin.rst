@@ -171,6 +171,8 @@ Settings
        }
      }
 
+   .. note:: :dovecot_plugin:ref:`fts_decoder` and :dovecot_plugin:ref:`fts_tika`
+             cannot be used simultaneously
 
 .. dovecot_plugin:setting:: fts_enforced
    :added: v2.2.19
@@ -379,7 +381,8 @@ Settings
    the indexer is told to index the messages and is given this much time to do
    so. If this time limit is reached, an error is returned, indicating that
    the search timed out during waiting for the indexing to complete:
-   ``NO [INUSE] Timeout while waiting for indexing to finish``
+   ``NO [INUSE] Timeout while waiting for indexing to finish``. Note the
+   :dovecot_plugin:ref:`fts_enforced` setting does not change this behavior.
 
    A value of ``0`` means no timeout.
 
@@ -452,6 +455,8 @@ Settings
        fts_tika = http://tikahost:9998/tika/
      }
 
+   .. note:: :dovecot_plugin:ref:`fts_decoder` and :dovecot_plugin:ref:`fts_tika`
+             cannot be used simultaneously
 
 .. dovecot_plugin:setting:: fts_tokenizers
    :default: generic email-address
@@ -507,7 +512,7 @@ Settings
    ``kuromoji``
 
      .. important:: The kuromoji tokenizer is a part of
-                    :ref:`OX Dovecot Pro <ox_dovecot_pro_releases>` only.
+                    :ref:`ox_dovecot_pro` only.
 
      This tokenizer is used for Japanese text. This tokenizer
      utilizes Atilika Kuromoji tokenizer library to tokenize Japanese text.

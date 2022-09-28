@@ -110,6 +110,8 @@ Required Minimum Configuration
    #auth_policy_check_after_auth = yes
    #auth_policy_report_after_auth = yes
 
+.. _authentication-policy_password_hash_algorithm:
+
 Password hash algorithm
 =======================
 
@@ -168,6 +170,47 @@ produces
 
 for this to work.
 
+List of fields
+--------------
+
+All fields supported by :ref:`variables-auth` can be used. In addition, you can use following fields:
+
+``hashed_password``
+  User's password hashed with :ref:`authentication-policy_password_hash_algorithm`.
+
+``requested_username``
+  Username for regular logins. For master user logins, this is the requested login username (not the master username).
+
+``fail_type``
+  .. versionadded:: v3.0.0;v2.4.0
+
+  Will be the reason request failed. This can take one of
+
+  ``internal``
+     Dovecot internal processing error.
+  ``credentials``
+     The user's credentials were wrong.
+  ``account``
+     Account is not known.
+  ``expired``
+     User's password is expired.
+  ``disabled``
+     Account was disabled.
+  ``policy``
+      Login was rejected by policy server.
+
+Following fields are always present:
+
+``tls``
+   TLS protection level.
+
+``policy_reject``
+  Obsolete field indicating whether the request was rejected by policy server.
+
+``success``
+  Overall indicator whether the request succeeded or not.
+
+
 Default values for auth_policy_request_attributes
 -------------------------------------------------
 
@@ -213,7 +256,11 @@ Default values for auth_policy_request_attributes
 
    login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s session_id=%{session}
 
+.. versionadded:: v3.0.0;v2.4.0
 
+.. code-block:: none
+
+   login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s session_id=%{session} fail_type=%{fail_type}
 
 
 Response

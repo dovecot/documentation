@@ -23,8 +23,7 @@ In ``dovecot.conf`` put
   auth_mechanisms = $auth_mechanisms oauthbearer xoauth2
 
   passdb {
-
-  driver = oauth2
+    driver = oauth2
     mechanisms = xoauth2 oauthbearer
     args = /etc/dovecot/dovecot-oauth2.conf.ext
   }

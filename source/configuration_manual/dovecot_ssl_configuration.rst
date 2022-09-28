@@ -51,22 +51,22 @@ There are a couple of different ways to specify when SSL/TLS is required:
 
 * :dovecot_core:ref:`ssl=no <ssl>`: SSL/TLS is completely disabled.
 
-* :dovecot_core:ref:`ssl=yes <ssl>` and :dovecot_core:ref:`disable_plaintext_auth=no <disable_plaintext_auth>`: SSL/TLS is offered to the client, but the client isn't required to use it. The client is allowed to login with plaintext authentication even when SSL/TLS isn't enabled on the connection. This is insecure, because the plaintext password is exposed to the internet.
+* :dovecot_core:ref:`ssl=yes <ssl>` and :dovecot_core:ref:`auth_allow_cleartext=yes <auth_allow_cleartext>`: SSL/TLS is offered to the client, but the client isn't required to use it. The client is allowed to login with cleartext authentication even when SSL/TLS isn't enabled on the connection. This is insecure, because the cleartext password is exposed to the internet.
 
-* :dovecot_core:ref:`ssl=yes <ssl>` and :dovecot_core:ref:`disable_plaintext_auth=yes <disable_plaintext_auth>`: SSL/TLS is offered to the client, but the client isn't required to use it. The client isn't allowed to use plaintext authentication, unless SSL/TLS is enabled first. However, if non-plaintext authentication mechanisms are enabled they are still allowed even without SSL/TLS.
+* :dovecot_core:ref:`ssl=yes <ssl>` and :dovecot_core:ref:`auth_allow_cleartext=no <auth_allow_cleartext>`: SSL/TLS is offered to the client, but the client isn't required to use it. The client isn't allowed to use cleartext authentication, unless SSL/TLS is enabled first. However, if non-cleartext authentication mechanisms are enabled they are still allowed even without SSL/TLS.
   Depending on how secure they are, the authentication is either fully secure or it could have some ways for it to be attacked.
 
-* :dovecot_core:ref:`ssl=required <ssl>`: SSL/TLS is always required, even if non-plaintext authentication mechanisms are used. Any attempt to authenticate before SSL/TLS is enabled will cause an authentication failure. Note that this setting is unrelated to the STARTTLS command - either implicit SSL/TLS or STARTTLS command is allowed.
+* :dovecot_core:ref:`ssl=required <ssl>`: SSL/TLS is always required, even if non-cleartext authentication mechanisms are used. Any attempt to authenticate before SSL/TLS is enabled will cause an authentication failure. Note that this setting is unrelated to the STARTTLS command - either implicit SSL/TLS or STARTTLS command is allowed.
 
-  .. NOTE:: If you have only plaintext mechanisms enabled (e.g. :dovecot_core:ref:`auth_mechanisms = plain login <auth_mechanisms>`) and :dovecot_core:ref:`disable_plaintext_auth=yes <disable_plaintext_auth>`, :dovecot_core:ref:`ssl=yes <ssl>` and :dovecot_core:ref:`ssl=required <ssl>` are completely equivalent because in either case the authentication will fail unless SSL/TLS is enabled first.
+  .. NOTE:: If you have only cleartext mechanisms enabled (e.g. :dovecot_core:ref:`auth_mechanisms = plain login <auth_mechanisms>`) and :dovecot_core:ref:`auth_allow_cleartext=no <auth_allow_cleartext>`, :dovecot_core:ref:`ssl=yes <ssl>` and :dovecot_core:ref:`ssl=required <ssl>` are completely equivalent because in either case the authentication will fail unless SSL/TLS is enabled first.
 
-  .. NOTE:: With both :dovecot_core:ref:`ssl=yes <ssl>` and :dovecot_core:ref:`ssl=required <ssl>` it's still possible that the client attempts to do a plaintext authentication before enabling SSL/TLS, which exposes the plaintext password to the internet.
+  .. NOTE:: With both :dovecot_core:ref:`ssl=yes <ssl>` and :dovecot_core:ref:`ssl=required <ssl>` it's still possible that the client attempts to do a cleartext authentication before enabling SSL/TLS, which exposes the cleartext password to the internet.
 
-             Dovecot attempts to indicate this to the IMAP clients via the LOGINDISABLED capability, but many clients still ignore it and send the password anyway. There is unfortunately no way for Dovecot to prevent this behavior. The POP3 standard doesn't have an equivalent capability at all, so the POP3 clients can't even know if the server would accept a plaintext authentication.
+             Dovecot attempts to indicate this to the IMAP clients via the LOGINDISABLED capability, but many clients still ignore it and send the password anyway. There is unfortunately no way for Dovecot to prevent this behavior. The POP3 standard doesn't have an equivalent capability at all, so the POP3 clients can't even know if the server would accept a cleartext authentication.
 
-* The main difference between :dovecot_core:ref:`ssl=required <ssl>` and :dovecot_core:ref:`disable_plaintext_auth=yes <disable_plaintext_auth>` is that if :dovecot_core:ref:`ssl=required <ssl>`, it guarantees that the entire connection is protected against eavesdropping (SSL/TLS encrypts the rest of the connection), while :dovecot_core:ref:`disable_plaintext_auth=yes <disable_plaintext_auth>` only guarantees that the password is protected against eavesdropping (SASL mechanism is encrypted, but no SSL/TLS is necessarily used). Nowadays you most likely should be using SSL/TLS anyway for the entire connection, since the cost of SSL/TLS is cheap enough. Using both SSL/TLS and non-plaintext authentication would be the ideal situation since it protects the plaintext password even against man-in-the-middle attacks.
+* The main difference between :dovecot_core:ref:`ssl=required <ssl>` and :dovecot_core:ref:`auth_allow_cleartext=no <auth_allow_cleartext>` is that if :dovecot_core:ref:`ssl=required <ssl>`, it guarantees that the entire connection is protected against eavesdropping (SSL/TLS encrypts the rest of the connection), while :dovecot_core:ref:`auth_allow_cleartext=no <auth_allow_cleartext>` only guarantees that the password is protected against eavesdropping (SASL mechanism is encrypted, but no SSL/TLS is necessarily used). Nowadays you most likely should be using SSL/TLS anyway for the entire connection, since the cost of SSL/TLS is cheap enough. Using both SSL/TLS and non-cleartext authentication would be the ideal situation since it protects the cleartext password even against man-in-the-middle attacks.
 
-  .. Note:: The plaintext authentication is always allowed (and SSL not required) for connections from localhost, as they're assumed to be secure anyway. This applies to all connections where the local and the remote IP addresses are equal. Also IP ranges specified by :dovecot_core:ref:`login_trusted_networks` setting are assumed to be secure.
+  .. NOTE:: The cleartext authentication mechanisms are always allowed (and SSL not required) for connections from localhost, as they're assumed to be secure anyway. This applies to all connections where the local and the remote IP addresses are equal. IP ranges specified by :dovecot_core:ref:`login_trusted_networks` setting are assumed to be secure. If you want localhost to be trusted, it needs to be included in this setting. It is only considered secure automatically, not trusted.
 
 Multiple SSL certificates
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -114,7 +114,7 @@ If you have multiple IPs available, this method is guaranteed to work with all c
     }
   }
 
-.. Note:: You will still need a top-level ``default`` ``ssl_key`` and ``ssl_cert`` as well, or you will receive errors.
+.. Note:: You will still need a top-level ``default`` :dovecot_core:ref:`ssl_key` and :dovecot_core:ref:`ssl_cert` as well, or you will receive errors.
 
 
 .. code::
@@ -149,7 +149,6 @@ Clients confirmed working with TLS SNI:
 
 Not working Clients:
 
-* K-9 on Droid X2 (maybe fixed in newer versions - see above)
 * Apple Mail (Mac OS X 10.10 and lower AND iOS 9.3 and lower)
 * Outlook for Mac version 15 (according to https://forums.cpanel.net/threads/mail-ssl-sni.454592/ )
 * Kindle Fire HD 8
@@ -162,7 +161,7 @@ Password protected key files
 SSL key files may be password protected. There are two ways to provide Dovecot with the password:
 
  #. Starting Dovecot with ``dovecot -p`` asks the password. It's not stored anywhere, so this method prevents Dovecot from starting automatically at startup.
- #. ``ssl_key_password`` setting. Note that ``dovecot.conf`` is by default world-readable, so you probably shouldn't place it there directly. Instead you could store it in a different file, such as ``/etc/dovecot-private.conf`` containing:
+ #.  dovecot_core:ref:`ssl_key_password` setting. Note that ``dovecot.conf`` is by default world-readable, so you probably shouldn't place it there directly. Instead you could store it in a different file, such as ``/etc/dovecot-private.conf`` containing:
 
 .. code::
 
@@ -173,32 +172,25 @@ and then use ``!include_try /etc/dovecot-private.conf`` in the main ``dovecot.co
 Chained SSL certificates
 ************************
 
-Put all the certificates in the ``ssl_cert`` file. For example when using a certificate signed by TDC the correct order is:
+Put all the certificates in the :dovecot_core:ref:`ssl_cert` file in this order:
 
  #. Dovecot's public certificate
- #. TDC SSL Server CA
- #. TDC Internet Root CA
- #. Globalsign Partners CA
+ #. First Intermediate Certificate
+ #. Second Intermediate Certificate
+
+Most CA providers these days provide a "full chain" certificate file, which contains the required certificates in correct order.
+You should use this.
 
 SSL security settings
 *********************
 
-When Dovecot starts up for the first time, it generates new 512bit and 1024bit Diffie Hellman parameters and saves them into ``<prefix>/var/lib/dovecot/ssl-parameters.dat``. Dovecot v2.1.x and older regenerated them every week by default, but because the extra security gained by the regeneration is quite small, Dovecot v2.2 disabled the regeneration feature completely.
-
-
-.. Note:: Since v2.3.3+ Diffie-Hellman parameters have been made optional, and you are encouraged to disable non-ECC DH algorithms completely.
-
-From and up to version 2.2, you can specify the wanted DH parameters length using:
-
-.. code::
-
-  ssl_dh_parameters_length = 2048
-
-From version 2.3, you must specify path to DH parameters file using:
+From version 2.3 forward, you can specify path to DH parameters file using:
 
 .. code::
 
   ssl_dh = </path/to/dh.pem
+
+This is fully optional, and most modern clients do not need this.
 
 To generate new parameters file, you can use:
 
@@ -206,14 +198,6 @@ To generate new parameters file, you can use:
 
   # This might take a very long time. Run it on a machine with sufficient entropy.
   openssl dhparam 4096 > dh.pem
-
-You can also convert an old v2.2 parameters file with command:
-
-.. code::
-
-  dd if=/path/to/ssl-parameters.dat bs=1 skip=88 | openssl dhparam -inform DER
-
-This should work most of the times. If not, generate new file.
 
 By default Dovecot's allowed ciphers list contains:
 
@@ -223,13 +207,12 @@ By default Dovecot's allowed ciphers list contains:
 
 Disallowing more won't really gain any security for those using better ciphers, but it does prevent people from accidentally using insecure ciphers. See https://www.openssl.org/docs/manmaster/man1/ciphers.html for a list of the ciphers.
 
-You should usually prefer server ciphers and their order, so setting
+
+For TLSv1.3 server ciphers should not longer be preferred:
 
 .. code::
 
-  ssl_prefer_server_ciphers = yes
-
-is recommended.
+  ssl_prefer_server_ciphers = no
 
 SSL verbosity
 *************

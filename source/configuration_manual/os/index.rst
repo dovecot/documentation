@@ -7,7 +7,7 @@ OS Configuration
 The default Linux configurations are usually quite good. The only things needed
 to check are:
 
-* ``/proc/sys/fs/inotify/max_user_watches``and ``max_user_instances`` need to
+* ``/proc/sys/fs/inotify/max_user_watches`` and ``max_user_instances`` need to
   be large enough to handle all the IDLEing IMAP processes.
 
   The default Dovecot-EE init script already attempts to set these values
@@ -69,8 +69,9 @@ to check are:
   [oxuser@vmback2 ~]$ sudo mount | grep metacache
   /dev/sdc1 on /metacache type ext4 (rw,noatime,nodiratime,seclabel)
 
-* To further reduce iops on the metacache volume when using ``zlib`` or
-  ``mail_crypt``; point the dovecot temp directory to a tmpfs volume: 
+* To further reduce iops on the metacache volume when using the
+  :ref:`mail-compression-plugin <mail_compress_plugin>` or the
+  :ref:`mail_crypt_plugin`; point the dovecot temp directory to a tmpfs volume:
 
 .. code-block:: none
 

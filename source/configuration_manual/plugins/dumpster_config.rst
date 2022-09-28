@@ -4,8 +4,9 @@
 Dumpster Config
 ===============
 
-"Dumpster" is an Open-Xchange proprietary App Suite feature that will list
-messages stored in a single Dovecot :ref:`lazy_expunge_plugin` mailbox.
+.. note:: "Dumpster" is an Open-Xchange proprietary App Suite feature that
+   will list messages stored in a single Dovecot :ref:`lazy_expunge_plugin`
+   mailbox.
 
 This config moves the last copy of a message, when deleted, to a hidden
 ``EXPUNGED`` mailbox.  Messages in the ``EXPUNGED`` mailbox will be
@@ -32,15 +33,31 @@ Dumpster view).
      quota_rule = EXPUNGED:ignore
    }
 
-   local 127.0.0.2 {
+   protocol imap {
+     mail_plugins = $mail_plugins acl
      plugin {
-       acl = vfile:/etc/dovecot/lazy_expunge.acl
+       # Hide EXPUNGED by default
+       acl = vfile:/etc/dovecot/dovecot.acl
      }
    }
 
-   protocol imap {
-     mail_plugins = $mail_plugins acl
+   local 127.0.0.2 {
+     protocol imap {
+       plugin {
+         # Allow EXPUNGED to be accessed by App Suite
+         # Note: App Suite does not need to be able to list, as the EXPUNGED
+         # mailbox is not shown in mailbox listing; it is directly accessed
+         # via the Dumpster module
+         acl = vfile:/etc/dovecot/lazy_expunge.acl
+       }
+     }
    }
+
+`/etc/dovecot/dovecot.acl`:
+
+.. code-block:: none
+
+   EXPUNGED owner ip
 
 `/etc/dovecot/lazy_expunge.acl`:
 

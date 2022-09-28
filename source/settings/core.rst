@@ -11,12 +11,12 @@ See :ref:`settings` for list of all setting groups.
    :values: @boolean
 
    Controls whether password schemes marked as weak are allowed to be used.
-   See <authentication-password_schemes> for disabled by default schemes.
+   See :ref:`authentication-password_schemes` for disabled by default schemes.
 
    If enabled, will emit warning to logs. If a disabled scheme is used,
    an error is logged.
 
-   Notably, any explicitly plaintext schemes (such as PLAIN), CRAM-MD5 and DIGEST-MD5 are
+   Notably, any explicitly cleartext schemes (such as PLAIN), CRAM-MD5 and DIGEST-MD5 are
    not affected by this setting.
 
 .. dovecot_core:setting:: auth_anonymous_username
@@ -26,6 +26,22 @@ See :ref:`settings` for list of all setting groups.
    This specifies the username to be used for users logging in with the
    ANONYMOUS SASL mechanism.
 
+.. dovecot_core:setting:: auth_allow_cleartext
+   :default: no
+   :values: @boolean
+   :added: v2.4;v3.0
+
+   If ``no``, disables the LOGIN command and all other cleartext
+   authentication unless SSL/TLS is used (LOGINDISABLED capability) or the
+   connection is "secured":
+
+     * Client IP is in :dovecot_core:ref:`login_trusted_networks`
+     * Client IP is from localhost, and it's not coming from HAProxy listener
+
+   See :ref:`dovecot_ssl_configuration` for more detailed explanation of how
+   this setting interacts with the :dovecot_core:ref:`ssl` setting.
+
+   This setting replaces the ``disable_plaintext_auth`` setting.
 
 .. dovecot_core:setting:: auth_cache_negative_ttl
    :default: hour
@@ -57,12 +73,9 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: auth_cache_verify_password_with_worker
    :added: v2.2.34
+   :changed: v2.3.18 Fixed to work properly. Older versions lost passdb extra fields.
    :default: no
    :values: @boolean
-
-   .. Warning:: This feature doesn't currently work correctly when the passdb
-                lookup is done via auth-workers. The password is checked
-                correctly, but all the passdb extra fields are lost.
 
    The auth master process by default is responsible for the hash
    verifications. Setting this to yes moves the verification to auth-worker
@@ -71,11 +84,17 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: auth_debug
+   :changed: v2.4.0;v3.0.0
    :default: no
    :values: @boolean
 
    Enables all authentication debug logging (also enables
    :dovecot_core:ref:`auth_verbose`). Passwords are logged as ``<hidden>``.
+
+   .. note::
+      The setting is obsolete, and kept only for backwards compatibility.
+      Use ``log_debug = category=auth`` instead.
+      (see :dovecot_core:ref:`log_debug`)
 
 
 .. dovecot_core:setting:: auth_debug_passwords
@@ -86,16 +105,23 @@ See :ref:`settings` for list of all setting groups.
    mismatches, the passwords and the scheme used are logged so that the
    problem can be debugged.
 
-   .. note:: Enabling this enables :dovecot_core:ref:`auth_debug` as well.
+   .. note:: You also need to enable ``log_debug = category=auth``
 
+   See :dovecot_core:ref:`log_debug`
 
-.. dovecot_core:setting:: auth_default_realm
+.. dovecot_core:setting:: auth_default_domain
+   :added: v2.4.0;v3.0.0
    :values: @string
 
    This setting indicates the default realm/domain to use if none has
    been specified. The setting is used for both SASL realms
-   and appending an @domain element to the username in plaintext logins.
+   and appending an @domain element to the username in cleartext logins.
 
+.. dovecot_core:setting:: auth_default_realm
+   :removed: v2.4.0;v3.0.0
+   :values: @string
+
+   Renamed to :dovecot_core:ref:`auth_default_domain`
 
 .. dovecot_core:setting:: auth_failure_delay
    :default: 2secs
@@ -453,9 +479,6 @@ See :ref:`settings` for list of all setting groups.
 
    If ``yes``, log unsuccessful authentication attempts and why they failed.
 
-   Explicitly setting :dovecot_core:ref:`auth_debug` will override this
-   setting.
-
 
 .. dovecot_core:setting:: auth_verbose_passwords
    :default: no
@@ -469,7 +492,7 @@ See :ref:`settings` for list of all setting groups.
 
    ``plain``, ``yes``
 
-     Output plaintext password (NOT RECOMMENDED)
+     Output cleartext password (NOT RECOMMENDED)
 
    ``sha1``
 
@@ -795,17 +818,6 @@ See :ref:`settings` for list of all setting groups.
    ======================= ==========================
 
 
-.. dovecot_core:setting:: disable_plaintext_auth
-   :default: yes
-   :values: @boolean
-
-   If ``yes``, disables the LOGIN command and all other plaintext
-   authentication unless SSL/TLS is used (LOGINDISABLED capability).
-
-   See :ref:`dovecot_ssl_configuration` for more detailed explanation of how
-   this setting interacts with the :dovecot_core:ref:`ssl` setting.
-
-
 .. dovecot_core:setting:: dotlock_use_excl
    :default: yes
    :values: @boolean
@@ -929,6 +941,15 @@ See :ref:`settings` for list of all setting groups.
      Workaround for servers (e.g. Zimbra) that sometimes send FETCH replies
      containing no headers.
 
+   ``no-header-hashes``
+
+     When this setting is enabled and one dsync side doesn't support mail
+     GUIDs (i.e. imapc), there is no fallback to using header hashes. Instead,
+     dsync assumes that all mails with identical IMAP UIDs contain the same
+     mail contents. This can significantly improve dsync performance with some
+     IMAP servers that don't support caching Date/Message-ID headers.
+
+     .. versionadded:: v2.3.20
 
 .. dovecot_core:setting:: dsync_hashed_headers
    :added: v2.2.33
@@ -1050,7 +1071,7 @@ See :ref:`settings` for list of all setting groups.
       that the message is no longer on the server (note that the workaround
       does not help for OE6 if synchronization is set to Headers Only).
 
-    ``tb-extra-mailbox-sep``
+   ``tb-extra-mailbox-sep``
 
       Because ``LAYOUT=fs`` (mbox and dbox) confuses Thunderbird, causing
       extra / suffixes to mailbox names, Dovecot can be told to ignore
@@ -1839,6 +1860,8 @@ See :ref:`settings` for list of all setting groups.
    This can be overwritten by :ref:`proxy_timeout <authentication-proxies>`
    passdb extra field.
 
+   This setting applies only to proxying via login processes, not to lmtp or
+   doveadm processes.
 
 .. dovecot_core:setting:: login_source_ips
    :values: @ip_addresses
@@ -1864,11 +1887,17 @@ See :ref:`settings` for list of all setting groups.
    allows the client connection to tell the server what the original client's
    IP address was.
 
+   Client connections from trusted networks are also treated as "secured", i.e.
+   the same as if they had been using SSL/TLS. This affects the
+   :dovecot_core:ref:`ssl` and :dovecot_core:ref:`auth_allow_cleartext`
+   settings. It also marks the connection as "secured" for all auth lookups,
+   which also affects the ``%{secured}`` :ref:`variable <config_variables>`.
+
    This original client IP address is then used for logging and authentication
    checks.
 
    Plaintext authentication is always allowed for trusted networks
-   (:dovecot_core:ref:`disable_plaintext_auth` is ignored).
+   (:dovecot_core:ref:`auth_allow_cleartext` is ignored).
 
    The details of how this setting works depends on the used protocol:
 
@@ -2186,7 +2215,7 @@ See :ref:`settings` for list of all setting groups.
    :seealso: @mail_location;dovecot_core, @quick_configuration
    :values: @string
 
-   The are various possible ways of specifying this parameter and
+   There are various possible ways of specifying this parameter and
    :dovecot_core:ref:`mail_location`.
 
    The following example is one option when ``home=/var/vmail/domain/user/``
@@ -2317,11 +2346,32 @@ See :ref:`settings` for list of all setting groups.
    :default: 0
    :values: @uint
 
-   The maximum number of messages to keep open and prefetch to memory.
+   The number of messages to try to prefetch whenever possible. Depending on
+   the (remote) storage latency, this may significantly speed up performance
+   when reading many mails. The exact behavior depends on the mailbox format:
 
-   ``0`` indicates no limit should be applied.
+   * mbox, mdbox: No effect in behavior.
+   * sdbox, maildir: Call ``posix_fadvise(POSIX_FADV_WILLNEED)`` on mail files
+     to instruct kernel to read the whole files into memory.
+   * imapc: Combine multiple mail reads into the same remote imapc FETCH
+     command. For example with ``mail_prefetch_count=0`` reading two mails
+     would result in ``FETCH 1 BODY.PEEK[]`` and ``FETCH 2 BODY.PEEK[]``
+     commands, while with ``mail_prefetch_count=1`` they would be combined into
+     a single ``FETCH 1:2 BODY.PEEK[]`` command. The downside is that each mail
+     uses a file descriptor and disk space in :dovecot_core:ref:`mail_temp_dir`.
+   * obox: Read multiple mails in parallel from object storage to local disk
+     without waiting for previous reads to finish. The downside is that each
+     mail uses a file descriptor and disk space in
+     :dovecot_core:ref:`mail_temp_dir`.
 
-   Behavior is dependent on the operating system and mailbox format.
+     This setting is also the default for
+     :dovecot_plugin:ref:`obox_max_parallel_copies`,
+     :dovecot_plugin:ref:`obox_max_parallel_deletes` and
+     :dovecot_plugin:ref:`obox_max_parallel_writes`.
+
+   For imapc and obox formats a good value is likely between 10..100.
+
+   ``0`` means that no prefetching is done.
 
 
 .. dovecot_core:setting:: mail_privileged_group
@@ -3116,9 +3166,13 @@ See :ref:`settings` for list of all setting groups.
 
      SSL/TLS is required for all imap, pop3, managesieve and
      submission protocol client connections. This differs from
-     :dovecot_core:ref:`disable_plaintext_auth` in that even non-plaintext
+     :dovecot_core:ref:`auth_allow_cleartext` in that even non-cleartext
      authentication mechanisms aren't allowed without SSL/TLS.
 
+     Note that SSL is still not required for "secured" connections:
+
+     * Client IP is in :dovecot_core:ref:`login_trusted_networks`
+     * Client IP is from localhost, and it's not coming from HAProxy listener
 
 .. dovecot_core:setting:: ssl_alt_cert
    :added: v2.2.31

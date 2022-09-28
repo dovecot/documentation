@@ -6,3 +6,6 @@
 .DS_Store
 *.html
 __pycache__
+/source/man/*.1.rst
+/source/man/*.7.rst
+/source/man/*.inc

@@ -1,0 +1,93 @@
+.. _man-1_doveadm-search:
+
+==============
+doveadm-search
+==============
+
+NAME
+====
+
+doveadm-search - Show a list of mailbox GUIDs and message UIDs matching
+given search query.
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] **search** [**-S** *socket_path*] **-A** *search_query*
+
+**doveadm** [**-Dv**] [**-f** *formatter*] **search** [**-S** *socket_path*] **-F** *file search_query*
+
+**doveadm** [**-Dv**] [**-f** *formatter*] **search** [**-S** *socket_path*] **-u** *user search_query*
+
+DESCRIPTION
+===========
+
+The **search** command is used to find matching messages.
+:man:`doveadm(1)` will print the mailbox's guid and the message's uid
+for each match.
+
+When used with the **-A** or **-u** *wildcard* options,
+:man:`doveadm(1)` will print the fields **username**, **mailbox-guid**
+and **uid** for each matching message.
+
+In the first form, :man:`doveadm(1)` will executed the **search** action
+will be performed for all users.
+
+In the second form, the command will be performed for all users listed in
+the given *file*.
+
+In the last form, only matching mails of the given *user* (s) will be
+searched.
+
+.. include:: global-options-formatter.inc
+
+This command uses by default the output formatter **flow** (without the
+*key* = prefix).
+
+Command specific *options*:
+
+.. include:: option-A.inc
+
+.. include:: option-F-file.inc
+
+.. include:: option-S-socket.inc
+
+.. include:: option-u-user.inc
+
+ARGUMENTS
+=========
+
+*search_query*
+   Show messages matching this search query. See
+   :man:`doveadm-search-query(7)` for details.
+
+EXAMPLE
+=======
+
+This example demonstrates how to search in user bob's dovecot mailboxes
+all messages, which contains the word "todo" in the Subject: header.
+
+.. parsed-literal::
+
+   **doveadm search -u bob mailbox dovecot\* subject todo**
+   3a94c928d66ebe4bda04000015811c6a	8
+   3a94c928d66ebe4bda04000015811c6a	25
+   3a94c928d66ebe4bda04000015811c6a	45
+
+The search command is mainly useful when used together with *doveadm
+fetch* command. For example to save message bodies of all messages from
+INBOX that have "todo" in subject, use:
+
+.. parsed-literal::
+
+   **doveadm search -u bob mailbox INBOX subject todo** |
+   while read guid uid; do
+     **doveadm fetch -u bob body mailbox-guid $guid uid $uid** > msg.$uid
+   done
+
+.. include:: reporting-bugs.inc
+
+SEE ALSO
+========
+
+:man:`doveadm(1)`

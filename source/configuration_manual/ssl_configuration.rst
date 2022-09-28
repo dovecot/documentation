@@ -9,13 +9,7 @@ For more details see:
 
 * :ref:`ssl`
 * :ref:`dovecot_ssl_configuration`
-
-
-.. code-block:: none
-
-   disable_plaintext_auth = no
-
-Should we allow plaintext authentication or require clients to always use SSL/TLS?
+* :dovecot_core:ref:`auth_allow_cleartext`
 
 .. code-block:: none
 

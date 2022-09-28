@@ -9,13 +9,13 @@ The proxying can be done for all users, or only for some specific users. There
 are two ways to do the authentication:
 
 1. Forward the password to the remote server. The proxy may or may not perform
-   authentication itself. This requires that the client uses only plaintext
+   authentication itself. This requires that the client uses only cleartext
    authentication, or alternatively the proxy has access to users' passwords in
-   plaintext.
+   cleartext.
 
 2. Let Dovecot proxy perform the authentication and login to remote server
    using the proxy's :ref:`authentication-master_users`. This allows client
-   to use also non-plaintext authentication.
+   to use also non-cleartext authentication.
 
 The proxy is configured pretty much the same way as :ref:`authentication-host`, with the
 addition of proxy field. The common fields to use for both proxying ways are:
@@ -52,7 +52,9 @@ addition of proxy field. The common fields to use for both proxying ways are:
 * ``proxy_mech=s``: Tell client to use this SASL authentication mechanism when
   logging in.
 * ``proxy_timeout=`` <:ref:`time_msecs`>: Abort connection after this much time has passed.
-  This overrides the default :dovecot_core:ref:`login_proxy_timeout`.
+  This overrides the default :dovecot_core:ref:`login_proxy_timeout`. This
+  setting applies only to proxying via login processes, not to lmtp or
+  doveadm processes.
 
   .. versionchanged:: v2.3 Added support for milliseconds.
 
@@ -69,7 +71,7 @@ addition of proxy field. The common fields to use for both proxying ways are:
 
 You can use SSL/TLS connection to destination server by returning:
 
-* ``ssl=yes``: Use SSL and require a valid verified remote certificate. 
+* :dovecot_core:ref:`ssl=yes <ssl>`: Use SSL and require a valid verified remote certificate.
 
 .. WARNING:: Unless used carefully, this is an insecure setting! Before
              v2.0.16/v2.1.beta1 the host name isn't checked in any way against
@@ -77,10 +79,10 @@ You can use SSL/TLS connection to destination server by returning:
              use and allow your own private CA's certs, anything else is
              exploitable by a man-in-the-middle attack.
 
-.. Note:: ssl_client_ca_dir or ssl_client_ca_file aren't currently used for
+.. Note:: :dovecot_core:ref:`ssl_client_ca_dir` or dovecot_core:ref:`ssl_client_ca_file` aren't currently used for
           verifying the remote certificate, although ideally they will be in a
           future Dovecot version. For now you need to add the trusted remote
-          certificates to ssl_ca.
+          certificates to dovecot_core:ref:`ssl_ca`.
 
 .. Note:: LMTP proxying supports SSL/TLS only since v2.3.1 - for older versions
           any ssl/starttls extra field is ignored.
@@ -146,19 +148,17 @@ Forwarding fields
 .. versionadded:: v2.2.29
 
 You can forward arbitrary variables by returning them prefixed with
-``forward_``. Dovecot will use protocol dependant way to forward these
-variables forward and they will appear on the other side as
-``forward_variable`` Currently ``IMAP/POP3`` only feature. This feature
-requires that the sending host is in
-:dovecot_core:ref:`login_trusted_networks`. For IMAP the
-feature works by providing the variables as part of ID command, such as ``i ID
-( ... x-forward-var value)``.
+``forward_``. Dovecot will use a protocol-dependent extension to forward these
+variables to the next hop. The next hop imports these to the auth request as
+passdb extra fields, so they are visible in e.g. ``%{passdb:forward_variable}``.
+If the proxying continues, all these fields are further forwarded to the next
+hop again.
 
-For POP3 the forwarding mechanism uses ``XCLIENT`` with ``FORWARD=<base64
-encoded blob of forwarded variables>``
+This feature requires that the sending host is in
+:dovecot_core:ref:`login_trusted_networks`.
 
-See :ref:`forwarding_parameters` for more details on
-forwarding.
+See :ref:`forwarding_parameters` for more details on how this is implemented
+for different protocols.
 
 Moving users between backends/clusters
 ======================================

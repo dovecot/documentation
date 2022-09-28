@@ -139,9 +139,9 @@ There are several settings that control logging verbosity. By default they're al
 
 * :dovecot_core:ref:`auth_verbose=yes <auth_verbose>` enables logging all failed authentication attempts.
 
-* :dovecot_core:ref:`auth_debug=yes <auth_debug>` enables all authentication debug logging (also enables :dovecot_core:ref:`auth_verbose`). Passwords are logged as `<hidden>`.
+* :dovecot_core:ref:`log_debug = category=auth <log_debug>` enables all authentication debug logging (also enables :dovecot_core:ref:`auth_verbose`). Passwords are logged as `<hidden>`.
 
-* :dovecot_core:ref:`auth_debug_passwords=yes <auth_debug_passwords>` does everything that ``auth_debug=yes`` does, but it also removes password hiding (but only if you are not using PAM, since PAM errors aren't written to Dovecot's own logs).
+* :dovecot_core:ref:`auth_debug_passwords=yes <auth_debug_passwords>` removes password hiding (but only if you are not using PAM, since PAM errors aren't written to Dovecot's own logs).
 
 * :dovecot_core:ref:`mail_debug=yes <mail_debug>` enables all kinds of mail related debug logging, such as showing where Dovecot is looking for mails.
 

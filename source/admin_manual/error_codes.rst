@@ -3,7 +3,8 @@
 Doveadm Error/Exit Codes
 ========================
 
-Dovecot uses standard libc error codes. These codes are most useful to
+The ``doveadm`` and ``dovecot-lda`` tools use mostly ``sysexits.h`` compatible
+error codes. These codes can be useful to
 determine why dsync mail migration failed.
 
 ===== ============== =========================================================

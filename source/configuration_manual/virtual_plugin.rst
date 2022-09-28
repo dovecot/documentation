@@ -134,17 +134,25 @@ The ``!-prefixed`` virtual mailbox is also selected from; you don't need to
 list it again without an ! or you'll get two copies of your messages in the
 virtual mailbox.
 
-Sieve filters with virtual mailboxes
-====================================
+IMAPSieve filters with virtual mailboxes
+----------------------------------------
 
-Using the sieve plugin with virtual mailboxes will cause dovecot to output a
-fatal exception error in it's logs and crash. This is because sieve can't tell
-the difference between a virtual location and a maildir/mbox location due to
-the way it detects actions in the mailboxes.
+.. versionadded:: v2.4.0;v3.0.0
 
-If you use virtual mailboxes that are configured in sieve, make sure that they
-point to the namespace which has a maildir/mbox location and a unique prefix.
-If you don't, sieve will crash trying to copy a message to a virtual mailbox.
+When saving to a virtual mailbox is configured, imapsieve scripts act as if the
+save was done directly to the physical destination mailbox. For example if
+Virtual/All folder was configured with INBOX as the save destination, this
+sieve.before script would be run both when saving to INBOX and when saving to
+Virtual/All folder:
+
+.. code-block:: none
+
+  imapsieve_mailbox_name = INBOX # Virtual/All would NOT work
+  imapsieve_mailbox_causes = COPY
+  imapsieve_mailbox_before = /etc/dovecot/sieve.before
+
+Also, the ``"imap.mailbox`` environment always contains INBOX, even when
+saving via Virtual/All folder.
 
 Mailbox selection base on METADATA
 ==================================

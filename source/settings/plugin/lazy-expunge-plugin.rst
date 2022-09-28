@@ -64,10 +64,14 @@ Settings
    :plugin: lazy-expunge
    :values: @boolean
 
-   If true, only move to expunged storage if this is the last copy of the
-   message in the user's account.
+   If yes, only move to expunged storage if this is the last copy of the
+   message in the user's account. This prevents the same mail from being
+   duplicated in the lazy-expunge folder as the mail becomes expunged from
+   all the folders it existed in.
 
-   This setting works with the following mailbox formats:
+   This setting prevents copying mail to the lazy-expunge folder when using
+   the IMAP MOVE command. When using COPY/EXPUNGE, this setting prevents
+   duplicates only with the following mailbox formats:
 
    * :ref:`Maildir <maildir_mbox_format>` (with
      :dovecot_core:ref:`maildir_copy_with_hardlinks = yes <maildir_copy_with_hardlinks>`,
@@ -75,5 +79,5 @@ Settings
    * :ref:`sdbox/mdbox <dbox_mbox_format>`
    * :ref:`obox with fs-dictmap <dictmap_configuration>`
 
-   .. warning:: This setting does not work with obox without fs-dictmap (e.g.
+   .. warning:: This setting does not fully work with obox without fs-dictmap (e.g.
                 :ref:`S3-only <amazon_s3>` setup).

@@ -6,41 +6,41 @@ Mailbox Formats
 
 Mailbox formats supported by Dovecot:
 
-+------------------------+-------------+---------------------------------------+
-| Name                   | Tag         | Description                           |
-+========================+=============+=======================================+
-| :ref:`obox             | ``obox``    | OX Dovecot Pro object storage mailbox |
-| <obox_settings>`       |             | format. (Pro only)                    |
-+------------------------+-------------+---------------------------------------+
-| :ref:`mbox             | ``mbox``    | Traditional UNIX mailbox format.      |
-| <mbox_mbox_format>`    |             | Users' INBOX mailboxes are commonly   |
-|                        |             | stored in ``/var/spool/mail`` or      |
-|                        |             | ``/var/mail`` directory. Single file  |
-|                        |             | contains multiple messages.           |
-+------------------------+-------------+---------------------------------------+
-| :ref:`Maildir          | ``maildir`` | One file contains one message. A      |
-| <maildir_mbox_format>` |             | reliable choice since files are never |
-|                        |             | modified and all operations are       |
-|                        |             | atomic. The top-level Maildir         |
-|                        |             | directory contains the                |
-|                        |             | ``Maildir/cur``, ``Maildir/new``, and |
-|                        |             | ``Maildir/tmp`` subdirectories.       |
-+------------------------+-------------+------------------+--------------------+
-| :ref:`dbox             | ``sdbox``   | **single-dbox**, | Dovecot's own high |
-| <dbox_mbox_format>`    |             | one message per  | performance        |
-|                        |             | file.            | mailbox format.    |
-|                        +-------------+------------------+ Messages are       |
-|                        | ``mdbox``   | **multi-dbox**,  | stored in one or   |
-|                        |             | multiple         | more files, each   |
-|                        |             | messages per     | containing one or  |
-|                        |             | file.            | more messages.     |
-+------------------------+-------------+------------------+--------------------+
-| :ref:`imapc            | ``imapc``   | Use remote IMAP server as mail        |
-| <imapc_mbox_format>`   |             | storage.                              |
-+------------------------+-------------+---------------------------------------+
-| :ref:`pop3c            | ``pop3c``   | Use remote POP3 server as mail        |
-| <pop3c_mbox_format>`   |             | storage.                              |
-+------------------------+-------------+---------------------------------------+
++------------------------+-------------+---------------------------------------+------------------------------------+
+| Name                   | Tag         | Description                           | Supported in :ref:`ox_dovecot_pro` |
++========================+=============+=======================================+====================================+
+| :ref:`obox             | ``obox``    | OX Dovecot Pro object storage mailbox | ✅ yes                             |
+| <obox_settings>`       |             | format. (Pro only)                    |                                    |
++------------------------+-------------+---------------------------------------+------------------------------------+
+| :ref:`mbox             | ``mbox``    | Traditional UNIX mailbox format.      | ❌ no                              |
+| <mbox_mbox_format>`    |             | Users' INBOX mailboxes are commonly   |                                    |
+|                        |             | stored in ``/var/spool/mail`` or      |                                    |
+|                        |             | ``/var/mail`` directory. Single file  |                                    |
+|                        |             | contains multiple messages.           |                                    |
++------------------------+-------------+---------------------------------------+------------------------------------+
+| :ref:`Maildir          | ``maildir`` | One file contains one message. A      | ❌ no                              |
+| <maildir_mbox_format>` |             | reliable choice since files are never |                                    |
+|                        |             | modified and all operations are       |                                    |
+|                        |             | atomic. The top-level Maildir         |                                    |
+|                        |             | directory contains the                |                                    |
+|                        |             | ``Maildir/cur``, ``Maildir/new``, and |                                    |
+|                        |             | ``Maildir/tmp`` subdirectories.       |                                    |
++------------------------+-------------+------------------+--------------------+------------------------------------+
+| :ref:`dbox             | ``sdbox``   | **single-dbox**, | Dovecot's own high | ✅ yes                             |
+| <dbox_mbox_format>`    |             | one message per  | performance        |                                    |
+|                        |             | file.            | mailbox format.    |                                    |
+|                        +-------------+------------------+ Messages are       +------------------------------------+
+|                        | ``mdbox``   | **multi-dbox**,  | stored in one or   | ✅ yes                             |
+|                        |             | multiple         | more files, each   |                                    |
+|                        |             | messages per     | containing one or  |                                    |
+|                        |             | file.            | more messages.     |                                    |
++------------------------+-------------+------------------+--------------------+------------------------------------+
+| :ref:`imapc            | ``imapc``   | Use remote IMAP server as mail        | ✅ yes                             |
+| <imapc_mbox_format>`   |             | storage.                              |                                    |
++------------------------+-------------+---------------------------------------+------------------------------------+
+| :ref:`pop3c            | ``pop3c``   | Use remote POP3 server as mail        | ❌ no                              |
+| <pop3c_mbox_format>`   |             | storage.                              |                                    |
++------------------------+-------------+---------------------------------------+------------------------------------+
 
 The Tag column indicates the tag which is used at the beginning of a
 :ref:`mailbox location specification <mail_location_settings>`.
@@ -111,9 +111,8 @@ Shared Storage
 
 The recommended storage solution for large installations that require
 high-availability and scalable performance is object storage.
-:ref:`OX Dovecot Pro <ox_dovecot_pro_releases>` provides the
-:ref:`obox mailbox format <obox_settings>` to efficiently interact with
-selected object storage systems.
+:ref:`ox_dovecot_pro` provides the :ref:`obox mailbox format <obox_settings>`
+to efficiently interact with selected object storage systems.
 
 Dovecot allows keeping mails and index files in clustered filesystems.
 Dovecot does not specifically support any specific clustered solution - it

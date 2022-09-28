@@ -91,8 +91,8 @@ Only functions returning int can fail, others don't.
    -  mbox drops Dovecot's internal headers from the stream (X-UID:,
       Status:, etc.).
 
-   -  Plugins (e.g. zlib) can also hook into this call and modify the
-      input stream.
+   -  Plugins (e.g. :ref:`plugin-mail-compress`) can also hook into this call
+      and modify the input stream.
 
 Sometimes you might notice that some looked up field is actually
 corrupted. For example you might notice that input stream returns EOF
