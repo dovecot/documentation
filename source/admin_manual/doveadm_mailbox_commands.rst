@@ -37,4 +37,4 @@ These commands should be run on one of the Dovecot directors. The director is th
 
 More doveadm commands as well as information about the doveadm http api is here:  Doveadm HTTP API
 
-The man-pages also contain good descriptions of doveadm commands. Man-pages can be accessed online at e.g. https://wiki.dovecot.org/Tools/Doveadm
+The :ref:`man-pages <man-pages>` also contain good descriptions of doveadm commands.

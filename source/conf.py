@@ -174,11 +174,16 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'dovecot', u'Dovecot Documentation',
-     [author], 1)
-]
+#man_pages = [
+#    ('man/dovecot', 'dovecot', u'Dovecot Documentation',
+#     [author], 1)
+#]
 
+man_pages = []
+
+for man_page in os.listdir("man/"):
+    if man_page.endswith(".rst.in"):
+        man_pages.append(("man/%s" % man_page[0:-7], man_page[0:-9], u'', [author], int(man_page[-8:-7])))
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -186,7 +191,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Dovecot', u'Dovecot Documentation',
+    ('man/index', 'Dovecot', u'Dovecot Documentation',
      author, 'Dovecot', 'One line description of project.',
      'Miscellaneous'),
 ]

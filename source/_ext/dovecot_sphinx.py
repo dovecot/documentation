@@ -9,10 +9,12 @@ import sphinx
 from sphinx import addnodes
 from sphinx.directives import ObjectDescription
 from sphinx.domains import Domain, Index
-from sphinx.roles import XRefRole
+from sphinx.roles import XRefRole, AnyXRefRole
 from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
 from sphinx.util.nodes import make_refnode
+
+import re
 
 
 class DovecotDirective(ObjectDescription):
@@ -42,6 +44,7 @@ class DovecotSettingLinkDirective(DovecotDirective):
       ref = self._parse_rst_txt(':%s:ref:`%s`' % (self.domain, self.arguments[0]))
       ref.insert(0, nodes.Text('See: '))
       contentnode += ref
+
 
 class DovecotSettingDirective(DovecotDirective):
 
@@ -317,11 +320,31 @@ class HaclusterSettingDomain(DovecotSettingDomain):
   }
 
 
+class ManRole(XRefRole):
+    def process_link(self, env, refnode, has_explicit_title, title, target):
+        """Called after initial processing. We convert manpage (section) into
+        target link to man- namespace."""
+
+        g = re.match('^(.+)\s?[(](.+)[)]$', target)
+        if not g:
+            raise ValueError("Invalid target '%s'" % target)
+        return ('%s(%s)' % (g.group(1), g.group(2)), 'man-%s_%s' % (g.group(2), g.group(1)))
+
+    def result_nodes(self, document, env, node, is_ref):
+        """Ensure node object is a std reference with explicit title"""
+        node['refdomain'] = 'std'
+        node['reftype'] = 'ref'
+        node['refexplicit'] = True
+
+        return [node], []
+
+
 def setup(app):
   app.add_domain(DovecotCoreSettingDomain)
   app.add_domain(DovecotPluginSettingDomain)
   app.add_domain(PigeonholeSettingDomain)
   app.add_domain(HaclusterSettingDomain)
+  app.add_role('man', ManRole(warn_dangling=True, innernodeclass=nodes.strong))
 
   return {
     'version': sphinx.__display_version__,
