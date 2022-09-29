@@ -3,7 +3,8 @@
 pkgsysconfdir ?= /etc/dovecot
 rundir ?= /rundir
 pkglibexecdir ?= /usr/libexec/dovecot
-PAGES=$(patsubst %.in,%,$(wildcard *.rst.in)) $(patsubst %.in,%,$(wildcard *.inc.in))
+PAGES!=ls *.in
+PAGES:=$(PAGES:%.in=%)
 
 V ?= 0
 AM_DEFAULT_VERBOSITY ?= 0
@@ -12,7 +13,16 @@ am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN     " $@;
 am__v_GEN_1 =
 
-% : %.in ;
+.SUFFIXES: .rst .rst.in .inc .inc.in
+
+.rst.in.rst:
+	$(AM_V_GEN)sed \
+	  -e 's!@pkgsysconfdir@!$(pkgsysconfdir)!g' \
+	  -e 's!@rundir@!$(rundir)!g' \
+	  -e 's!@pkglibexecdir@!$(pkglibexecdir)!g' \
+	  $< > $@ || rm -f $@
+
+.inc.in.inc:
 	$(AM_V_GEN)sed \
 	  -e 's!@pkgsysconfdir@!$(pkgsysconfdir)!g' \
 	  -e 's!@rundir@!$(rundir)!g' \
