@@ -25,11 +25,19 @@ Name                                            Description
 :ref:`sql <dict-sql>`                           SQL
 =============================================== ===========================
 
-  .. versionadded:: v2.3.17
+.. _dict_pool:
+
+Connection Pooling
+------------------
+
+The :ref:`dict-sql` driver keeps a maximum of 10 unused SQL connections open
+(infinitely) and reuses them for SQL dict lookup requests.
+
+.. versionadded:: v2.3.17
 
 Starting version 2.3.17, the dict server process keeps the last 10 idle dict
 backends cached for maximum of 30 seconds. Practically this acts as a
-connection pool for dict-redis, dict-memcached and dict-ldap. Note that this
+connection pool for :ref:`dict-redis`, :ref:`dict-memcached` and :ref:`dict-ldap`. Note that this
 doesn't affect dict-sql, because it already had its own internal cache.
 
 
@@ -76,6 +84,8 @@ LDAP
 
 LDAP support is very similar to :ref:`dict-sql` support, but there is no write
 support.
+
+Note that the LDAP backend must be used via :ref:`dict-proxy`.
 
 See :ref:`authentication-ldap`.
 
@@ -249,6 +259,10 @@ Redis
 
 .. versionadded:: v2.2.9
 
+Note that Redis backend is recommended to be used via :ref:`dict-proxy` to
+support :ref:`connection pooling <dict_pool>`. Also, currently using Redis
+without proxying may cause crashes.
+
 .. code-block:: none
 
   redis:param=value:param2=value2:...
@@ -278,6 +292,8 @@ Supported parameters are:
 
 SQL
 ---
+
+Note that the SQL backend must be used via :ref:`dict-proxy`.
 
 .. code-block:: none
 
