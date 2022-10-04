@@ -11,4 +11,3 @@ Configuration Manual
    */index
    *
    stats/openmetrics
-   stats/old_statistics

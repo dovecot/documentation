@@ -26,7 +26,7 @@ Statistics Redesign
 The statistics code was redesigned.
 
   * Statistics is no longer optional - it is always there.
-  * The old "stats" plugin was renamed to :ref:`plugin-old-stats`.
+  * The old "stats" plugin was renamed to old_stats
   * The ``doveadm stats`` command was renamed to ``doveadm oldstats``.
 
      * There's a new ``doveadm stats`` command that isn't compatible with the old one.
