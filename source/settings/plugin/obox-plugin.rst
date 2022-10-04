@@ -47,8 +47,6 @@ Settings
    moved to another backend and soon back again, or if the user is
    simultaneously being accessed by multiple backends.
 
-   .. note:: Must be less than :dovecot_core:ref:`director_user_expire`.
-
 
 .. dovecot_plugin:setting:: metacache_max_grace
    :default: 1G
