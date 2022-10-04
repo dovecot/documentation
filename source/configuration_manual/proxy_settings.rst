@@ -10,7 +10,10 @@ See :ref:`authentication-proxies` for more details.
    
    login_trusted_networks = 10.0.0.0/8
 
-Include Dovecot Proxy's IP addresses/network so they can pass through the session ID and the client's original IP address. If Open-Xchange is connecting to Dovecot Directors, it's also useful to provide OX's IPs/network here for passing through its session ID and the web browser's original IP address.
+Include Dovecot Proxy's IP addresses/network so they can pass through the
+session ID and the client's original IP address. If OX AppSuite is used, it's
+also useful to provide AppSuite's IPs/network here for passing through its
+session ID and the web browser's original IP address.
 
 .. code-block:: none
 
