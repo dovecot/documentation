@@ -10,10 +10,10 @@ We have customers using OpenStack, KVM, VMware and others. We are in the end
 agnostic to the virtualization technology used, as long as there is no
 overcommitment of resources (see below).
 
-Dovecot comes in 3 layer architecture:
+:ref:`Dovecot v3.0 cluster architecture <dovecot_cluster_architecture>`
+contains 2 layers:
 
 * Proxies
-* Directors
 * Backends
 
 In physical machine based hosting there are usually number of CPUs per each
@@ -23,12 +23,11 @@ Sample configuration used in this article which is based on the needed
 concurrent connections of a sample use case.
 
 ========================== ============= =============== ==================
-   3 layer architecture      Instances       CPU Cores       Total cores
+   2 layer architecture      Instances       CPU Cores       Total cores
 ========================== ============= =============== ==================
  Proxy                          3             4                12
- Director                       3             4                12
  Backend                        8             8                64
- Total                         14            16                88
+ Total                         11            12                76
 ========================== ============= =============== ==================
 
 No over commitment of resources
@@ -70,22 +69,6 @@ system.
 The proxy layer can also be expanded by adding more instances of proxy nodes
 which is easy in virtualised environments.
 
-Director Virtualization
-^^^^^^^^^^^^^^^^^^^^^^^
-
-Director layer sizing for physical servers: 2-4 cores per instance. As 2 core
-physical machines are rare nowadays on servers, directors are ideal targets for
-virtualization. The director process is typically running on a single CPU, so
-to utilise the added cores there needs to be more processes assigned, one per
-core. Please see also `Virtualised Director sizing` below.
-
-Director layer can be expanded by adding CPUs and RAM therefore e.g. assigning
-multiple director processes, one per CPU core, utilising the extra cores on the
-system.
-
-The director layer can also be expanded by adding more instances of director
-nodes which is easy in virtualised environments.
-
 Backend Virtualization
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -111,7 +94,7 @@ to end users as there are less users being affected in any eventual guest OS
 maintenance.
 
 As an example for VM sizing for node types is an use case where concurrent
-sessions require 3 proxies, 3 directors and 8 backends.
+sessions require 3 proxies and 8 backends.
 
 Virtualised Proxy sizing
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -123,19 +106,6 @@ additional cores for login process which is one of the main processes on proxy.
 If any of the proxy nodes needs to be taken offline from production for e.g. OS
 upgrade, the effect is only 1/12 = 8,3% in the case of 12 single core proxy
 instances and 1/3 = 33,3% if there are 3 instances of 4 core proxies.
-
-Virtualised Director sizing
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Directors are not only talking in vertical mode (IMAP, POP, LMTP, doveadm) but
-also horizontally (ring communication). Therefore the recommended maximum
-amount of instances is 9 director nodes for a single director ring to not
-increase the latency of director ring communication excessively.
-
-Therefore if the concurrent connections as an example require 3 instances of 4
-CPU cores, it would be better to have 4 instances of 3 CPU cores to have less
-affect of any maintenance operations, but not to expand the ring to 12 nodes of
-each with a single CPU core.
 
 Virtualised Backend sizing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -152,7 +122,7 @@ Metacache in turn is the indexes and metadata which can be recovered from the
 object storage in the case of new virtual machine or new user login - or a new
 mail delivery - to a user whose data is not cached on the backend yet.
 
-Same principle applies for backends as is true for proxies and directors as
+Same principle applies for backends as is true for proxies as
 well: smaller instances are better than larger instances as the maintenance
 operations are then less disruptive if there are more smaller nodes.
 
@@ -170,7 +140,7 @@ It is advisable to not collect the same role to same physical machine. In other
 words not all proxies should be running on same physical node, but the physical
 node should have different Dovecot roles assigned to it.
 
-Recommendation is to collect Proxy, Director and Backend to same physical
+Recommendation is to collect Proxy and Backend to same physical
 machine. If the space allows (in terms of CPUs and RAM) there could be multiple
 times the same set per physical machine.
 
@@ -178,10 +148,9 @@ As an example using the same sizing of nodes as before, single physical machine
 could be sharing:
 
 ========================== ============= =============== ==================
-   3 layer architecture      Instances       CPU Cores       Total cores
+   2 layer architecture      Instances       CPU Cores       Total cores
 ========================== ============= =============== ==================
- Proxy                          1             3                3
- Director                       3             1                3
+ Proxy                          2             3                6
  Backend                        4             4                16
 
                                                                22
