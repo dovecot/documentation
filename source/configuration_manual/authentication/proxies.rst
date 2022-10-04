@@ -33,10 +33,10 @@ addition of proxy field. The common fields to use for both proxying ways are:
    IPs that are also considered to be the proxy's own IPs.
 
 * ``proxy_always`` can be used with ``proxy_maybe`` to conditionally do
-  proxying to specified remote host (host isn't self) or to let director assign
+  proxying to specified remote host (host isn't self) or to let cluster assign
   a backend host (host is self). So basically this setting just always sends
   the ``proxy`` extra field to login process, but not necessarily the host.
-  Useful when dividing users across multiple director clusters.
+  Useful when dividing users across multiple clusters.
 
 * ``host=s``: The destination server's IP address. This field is required.
 * ``source_ip=s``: The source IP address to use for outgoing connections.
@@ -173,7 +173,7 @@ A safe way to move users from one cluster to another is to do it like:
   users are moved at once.
 * Set ``host=<new host>`` :ref:`authentication-password_database_extra_fields`. This update
   should be atomic together with the ``delay_until`` field.
-* Use ``doveadm proxy kick`` or ``doveadm director kick`` to kick the user's
+* Use ``doveadm kick`` or ``doveadm cluster kick`` to kick the user's
   existing connections.
 
    * The processes may still continue running in the backend for a longer time.

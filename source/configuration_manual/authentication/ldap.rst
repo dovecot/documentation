@@ -4,8 +4,6 @@
 LDAP
 =====
 
-.. Note:: A director proxy doesn't need userdb configuration (unlike backends).
-
 There are two ways to do LDAP authentication:
 
 * `Password lookups
@@ -83,8 +81,6 @@ When connecting to AD, you may need to use port 3268. Then again, not all LDAP
 fields are available in port 3268. Use whatever works.
 http://technet.microsoft.com/en-us/library/cc978012.aspx
 
-A director proxy doesn't need userdb configuration (unlike backends).
-
 .. code-block:: none
 
   passdb {
@@ -94,8 +90,7 @@ A director proxy doesn't need userdb configuration (unlike backends).
 
 This enables LDAP to be used as passdb.
 
-The included ``dovecot-ldap-director.conf.ext`` can be used as template for the
-``/etc/dovecot/dovecot-ldap.conf.ext``. Its most important settings are:
+The important settings in ``/etc/dovecot/dovecot-ldap.conf.ext`` are:
 
 .. code-block:: none
 

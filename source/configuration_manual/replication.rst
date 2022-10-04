@@ -20,8 +20,7 @@ replicated back.
 
 Replication works only between server pairs. If you have a large
 cluster, you need multiple independently functioning Dovecot backend
-pairs. This means that :ref:`director <dovecot_director>` isn't
-supported with replication. The replication in general is a
+pairs. The replication in general is a
 bit resource intensive, so it's not recommended to be used in
 multi-million user installations.
 

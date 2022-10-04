@@ -101,8 +101,6 @@ have changed. This typically matters only when user is being moved to another
 backend and soon back again, or if the user is simultaneously being accessed
 by multiple backends. Default is 2 seconds.
 
-Must be less than :dovecot_core:ref:`director_user_expire` (Default: 15min).
-
 See :ref:`plugin-obox` for additional plugin options.
 
 See :ref:`obox_settings_advanced` for additional, advanced obox settings.

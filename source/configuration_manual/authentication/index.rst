@@ -58,12 +58,12 @@ different things.
    scheme or a mechanism-specific password scheme.
 
 
-Authentication in Proxies and Directors
----------------------------------------
+Authentication in Proxies
+-------------------------
 
 .. Note::
 
-  Proxy or Director already verifies the authentication (in the reference
+  Proxy already verifies the authentication (in the reference
   Dovecot architecture; password has been switched to a master password at this
   point), so we don't really need to do it again. We could, in fact, even avoid
   the password checking entirely, but for extra security it's still done in
@@ -85,7 +85,7 @@ phones.
     }
   }
 
-Disable authentication penalty. ``Proxy`` or ``Director`` already handled this.
+Disable authentication penalty. The proxy already handled this.
 
 .. parsed-literal::
 
@@ -98,8 +98,8 @@ userdb lookups).
 
   :dovecot_core:ref:`login_trusted_networks` = 10.0.0.0/24
 
-Space-separated list of IP/network ranges that contain the Dovecot Directors.
-This setting allows Directors to forward the client's original IP address and
+Space-separated list of IP/network ranges that contain the Dovecot Proxies.
+This setting allows Proxies to forward the client's original IP address and
 session ID to the Backends.
 
 .. parsed-literal::
@@ -114,8 +114,9 @@ the same user from the same IP address (10 = 10 IMAP + 10 POP3)
   :dovecot_core:ref:`ssl` = no
   :dovecot_core:ref:`auth_allow_cleartext` = yes
 
-``Proxy`` or ``Director`` already decrypted the SSL connections. The Backends
-will always see only unencrypted connections.
+``Proxy`` already decrypted the SSL connections. The Backends
+will always see only unencrypted connections (unless internal connections
+are also configured to use SSL).
 
 
 .. toctree::

@@ -52,7 +52,7 @@ specially:
 
   .. versionadded:: v2.2.26+/v2.3
 
-* **forward_<anything>**: In proxy/director, pass the variable to next hop as
+* **forward_<anything>**: In a proxy, pass the variable to the next hop (backend) as
   ``forward_<anything>``.
 
   .. versionadded:: v2.2.26+/v2.3
