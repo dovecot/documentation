@@ -200,7 +200,7 @@ If multiple backends do changes to the same mailbox at the same time, Dovecot wi
    doveadm metacache pull -u user@domain --latest-only --clean 10.0.0.5
 
 .. versionadded:: v2.4;v3.0 To allow easier migration of users and to support the new needs brought up with
-   the :ref:`hacluster architecture <setting-hacluster>` the ``doveadm metacache pull``
+   the :ref:`cluster architecture <setting-cluster>` the ``doveadm metacache pull``
    command was implemented. This command allows to pull the metacache for specific
    users(s) from another backend.
 

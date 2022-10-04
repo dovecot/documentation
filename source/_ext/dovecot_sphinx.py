@@ -294,29 +294,29 @@ class PigeonholeSettingDomain(DovecotSettingDomain):
   }
 
 
-class HaclusterSettingDirective(DovecotCoreSettingDirective):
+class ClusterSettingDirective(DovecotCoreSettingDirective):
 
   """Plugin information is ignored in this class, for now"""
   pass
 
-class HaclusterSettingIndex(DovecotSettingIndex):
+class ClusterSettingIndex(DovecotSettingIndex):
 
-  name = 'hacluster_setting'
-  localname = 'Dovecot Hacluster Settings Index'
-  shortname = 'Hacluster'
+  name = 'cluster_setting'
+  localname = 'Dovecot Cluster Settings Index'
+  shortname = 'cluster'
 
-class HaclusterSettingDomain(DovecotSettingDomain):
+class ClusterSettingDomain(DovecotSettingDomain):
 
-  name = 'hacluster'
-  label = 'Dovecot Hacluster Settings'
-  set_prefix = 'hacluster_setting'
+  name = 'cluster'
+  label = 'Dovecot Cluster Settings'
+  set_prefix = 'cluster_setting'
 
   directives = {
-      'setting': HaclusterSettingDirective,
+      'setting': ClusterSettingDirective,
       'setting_link': DovecotSettingLinkDirective
   }
   indices = {
-      HaclusterSettingIndex
+      ClusterSettingIndex
   }
 
 
@@ -343,7 +343,7 @@ def setup(app):
   app.add_domain(DovecotCoreSettingDomain)
   app.add_domain(DovecotPluginSettingDomain)
   app.add_domain(PigeonholeSettingDomain)
-  app.add_domain(HaclusterSettingDomain)
+  app.add_domain(ClusterSettingDomain)
   app.add_role('man', ManRole(warn_dangling=True, innernodeclass=nodes.strong))
 
   return {
