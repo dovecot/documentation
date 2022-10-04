@@ -1,7 +1,7 @@
 .. _storage_side_metadata:
 
 ============================
-Storage-Side Metadata
+Storage-Side Object Metadata
 ============================
 
 When saving data to object storage, Dovecot stores metadata associated with each blob for data recovery purposes.
