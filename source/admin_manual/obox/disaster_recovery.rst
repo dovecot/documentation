@@ -1,6 +1,6 @@
-========================
-Disaster Recovery
-========================
+===========================
+Cassandra Disaster Recovery
+===========================
 
 In the (extremely unlikely) case that all Cassandra data is lost, it is possible to recover this information by iterating through all objects stored in the object store. 
 A rough overview of the process is as follows (for Scality sproxyd):
