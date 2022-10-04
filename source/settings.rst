@@ -13,7 +13,7 @@ Settings
 
    settings/plugin/index
 
-   settings/hacluster
+   settings/cluster
 
    settings/pigeonhole
 

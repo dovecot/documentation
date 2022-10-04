@@ -3020,14 +3020,14 @@ Event emitted when number of triplets exceeds the limit defined by
 | triplet_count | Number of triplets found                         |
 +---------------+--------------------------------------------------+
 
-*********
-HACluster
-*********
+*******
+Cluster
+*******
 
-hacluster
-=========
+cluster
+=======
 
-hacluster_user_group_move_started
+cluster_user_group_move_started
 ---------------------------------
 
 +-----------------------+------------------------------------------------------+
@@ -3036,7 +3036,7 @@ hacluster_user_group_move_started
 | group                 | User group name.                                     |
 +-----------------------+------------------------------------------------------+
 
-hacluster_user_group_move_finished
+cluster_user_group_move_finished
 ----------------------------------
 
 +-----------------------+------------------------------------------------------+
@@ -3051,7 +3051,7 @@ hacluster_user_group_move_finished
 | error                 | Reason why group moving (partially) failed.          |
 +-----------------------+------------------------------------------------------+
 
-hacluster_user_move_started
+cluster_user_move_started
 ---------------------------
 
 +-----------------------+------------------------------------------------------+
@@ -3062,7 +3062,7 @@ hacluster_user_move_started
 | dest_host             | Destination host where user is being moved to.       |
 +-----------------------+------------------------------------------------------+
 
-hacluster_user_move_finished
+cluster_user_move_finished
 ----------------------------
 
 +-----------------------+------------------------------------------------------+
