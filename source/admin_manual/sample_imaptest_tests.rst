@@ -1,8 +1,8 @@
-.. _sample_tests:
+.. _sample_imaptest_tests:
 
-==================
-Sample Tests
-==================
+=====================
+Sample IMAPtest Tests
+=====================
 
 Functional Testing
 ^^^^^^^^^^^^^^^^^^

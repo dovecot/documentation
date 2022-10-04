@@ -14,5 +14,5 @@ It can be used to flood a server with random commands and it can also attempt to
 
    running_imaptest
 
-   sample_tests
+   sample_imaptest_tests
 
