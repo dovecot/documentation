@@ -7,6 +7,8 @@ Dovecot Backend
 The Dovecot Backend does all the hard work of reading and writing mails to
 storage and handling all of the ``IMAP/POP3/LMTP`` protocols.
 
+.. seealso:: :ref:`dovecot_cluster_architecture`
+
 Object Storage Format
 ---------------------
 
