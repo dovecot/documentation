@@ -193,7 +193,7 @@ applies automatically to Submission as well.
 .. IMPORTANT::
 
   Please note that the login proxy described here is configured between two
-  Dovecot servers (e.g. director frontend and mail storage backend). This is
+  Dovecot servers (e.g. proxy frontend and mail storage backend). This is
   not the way to configure the relay connection between the Dovecot submission
   service and the MTA! That is configured using the relay settings described in
   the previous section. If you get this wrong, things will seem to work (at
