@@ -4,11 +4,7 @@
 Statistics
 ==========
 
-This page is about the statistics support for Dovecot:
-
 .. versionadded:: v2.3
-
-For v2.1 and v2.2 see :ref:`old_statistics`.
 
 See :ref:`list_of_events` for list of all events that can be used in statistics.
 
