@@ -1,10 +1,25 @@
 .. _object_storage_mailbox_format_administration:
 
-=============================================
+============================================
 Object Storage Mailbox Format Administration
-=============================================
+============================================
 
 The object storage plugin administration is mainly related to making sure that the mail cache and the index cache perform efficiently and they don't take up all the disk space.
+
+.. toctree::
+   :maxdepth: 1
+
+   design
+   user_delete
+   backend_restart
+   storage_side_metadata
+   data_access_patterns
+   disaster_recovery
+   fs_dictmap_mapping
+   scality_key_format
+   sizing_information
+   s3_object_id_format
+   s3_api_url_calls
 
 Service Stop and Restart
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -18,7 +33,7 @@ When the dovecot service is stopped, it flushes all pending changes. Or in more 
 
 * ``doveadm kick '*'`` is used to kick all the existing imap, pop3 and managesieve connections.
 
-.. Note:: LMTP connections can't be kicked. However, they're assumed to finish rather quickly.
+  .. Note:: LMTP connections can't be kicked. However, they're assumed to finish rather quickly.
 
 * ``doveadm metacache flushall -i`` is run again to flush the important changes
 
@@ -38,12 +53,12 @@ Simple Upgrade
 The simplest way to upgrade Dovecot backend is to simply run ``yum upgrade`` or ``apt-get upgrade``. This causes very little downtime on that server, so most clients can successfully reconnect back to the server after getting disconnected. This method also has the advantage that all the caches are filled up for the users.
 
 Complex Upgrade
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 Sometimes in-place upgrades aren't wanted. Instead the backends are upgraded by first shutting down the backend, upgrading, and then bringing the server back up. See below for problems related to this.
 
 Problems with Backend Shutdown
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Users are moved to new backends with empty caches. Filling the caches causes temporary object storage IO spikes.
 
@@ -73,17 +88,17 @@ There are some things that can be done to help problems caused by these:
 
    * If the user isn't found from the list at all, then it's definitely an old index that hasn't so far been accessed in this backend since Dovecot was started up.
 
-.. Note:: You can't currently use ``doveadm metacache clean`` to delete changed indexes. The only alternative is to just forcibly "rm -rf" the directory. However, if the user happens to be accessed during the "rm -rf" this can cause index corruption, which can have rather bad consequences (like redownloading all mails). This is why it should verify whether director currently points the user to this backend, and only rm -rf users whose backend is elsewhere.
+.. Note:: You can't currently use ``doveadm metacache clean`` to delete changed indexes. The only alternative is to just forcibly ``rm -rf`` the directory. However, if the user happens to be accessed during the ``rm -rf`` this can cause index corruption, which can have rather bad consequences (like redownloading all mails). This is why it should verify whether director currently points the user to this backend, and only rm -rf users whose backend is elsewhere.
 
 Backend Crashes
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 Dovecot doesn't use metacache for users that were accessed before the backend crashed the last time. This is done using /var/lib/dovecot/reboots file. When starting up, Dovecot gets /proc's ctime and adds it to the reboots file. At a clean dovecot service shutdown this timestamp is marked to be "clean". Each .state file in metacache directories contains the /proc ctime when it was last modified. If opening metacache finds that there's been a crash since the last metacache write, the metacache directory is assumed to be corrupted and is deleted. Normally this works as expected and admin doesn't need to worry about this.
 
 Mail Fscache
-^^^^^^^^^^^^^
+^^^^^^^^^^^^
 
-The mail cache size is specified in the plugin { obox_fs } setting as the parameter to fscache, which is commonly set to 1-2 GB. See 4.1 fscache for more details how to configure it properly.
+The mail cache size is specified in the :dovecot_plugin:ref:`obox_fs` setting as the parameter to fscache, which is commonly set to 1-2 GB. See 4.1 fscache for more details how to configure it properly.
 
 If fscache runs out of disk space, most operations won't return user-visible failures (although errors are still logged). Currently the "mail prefetching" can't transparently handle such failures though, so these errors can result in user-visible failures.
 
@@ -106,11 +121,9 @@ This will update the fscache.log to contain the correct size. It also prints whe
 Many of our customers are running the doveadm fscache rescan command in a cronjob every hour. This makes sure that the fscache won't be wrong for too long.
 
 Index Metacache
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 The metacache index size is specified in the metacache_max_size setting. This should ideally be as large as possible to reduce both object storage GETs for the indexes and also local filesystem writes when the indexes are unpacked to local cache. Metacache is the most complicated part of the obox mailbox format.
-
-.. todo:: When or if the troubleshooting page is available publicly, add back this text: "which also means various things can go wrong with it. See Troubleshooting for a list of problems and their workarounds."
 
 Metacache is rarely large enough to contain indexes for all the users in the backend. This is why it also supports priorities, which attempts to keep the most useful information in the metacache longest to reduce the object storage IO. For example INBOX and Junk folders are usually accessed more often than other folders (due to mail deliveries), so they're prioritized higher than other folders. User's root indexes are prioritized the highest, mainly because they're always required whenever a user is accessed, but also because they're small enough that they can be cheaply kept in metacache for a long time. See 4. Obox Settings for more details about the priorities and their configuration. The metacache performance can be monitored by looking at the number of index GET and PUT requests. Metacache cleans are also logged by metacache-worker.
 
@@ -177,7 +190,8 @@ If a user no longer actually exists on filesystem, it can be removed from metaca
 
    doveadm metacache remove user@domain
 
-This command also supports wildcards, so you can remove e.g. "testuser*" or even "*" for everyone.
+This command also supports wildcards, so you can remove e.g. ``testuser*`` or
+even ``*`` for everyone.
 
 If multiple backends do changes to the same mailbox at the same time, Dovecot will eventually perform a dsync-merge for the indexes. Due to dsync being quite a complicated algorithm there's a chance that the merging may trigger a bug/crash that won't fix itself automatically. If this happens, the bug should be reported to get it properly fixed, but a quick workaround is to run:
 
@@ -185,29 +199,11 @@ If multiple backends do changes to the same mailbox at the same time, Dovecot wi
 
    doveadm metacache pull -u user@domain --latest-only --clean 10.0.0.5
 
-:added: v2.4;v3.0
+.. versionadded:: v2.4;v3.0 To allow easier migration of users and to support the new needs brought up with
+   the :ref:`hacluster architecture <setting-hacluster>` the ``doveadm metacache pull``
+   command was implemented. This command allows to pull the metacache for specific
+   users(s) from another backend.
 
+   .. code-block:: none
 
-To allow easier migration of users and to support the new needs brought up with
-the :ref:`hacluster architecture <setting-hacluster>` the `doveadm metacache pull`
-command was implemented. This command allows to pull the metacache for specific
-users(s) from another backend.
-
-.. code-block:: none
-
-   doveadm -o plugin/metacache_index_merging=none force-resync -u user@domain INBOX
-
-.. toctree::
-   :maxdepth: 1
-
-   design
-   user_delete
-   backend_restart
-   storage_side_metadata
-   data_access_patterns
-   disaster_recovery
-   fs_dictmap_mapping
-   scality_key_format
-   sizing_information
-   s3_object_id_format
-   s3_api_url_calls
+      doveadm -o plugin/metacache_index_merging=none force-resync -u user@domain INBOX
