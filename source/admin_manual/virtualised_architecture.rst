@@ -4,6 +4,12 @@
 Virtualised Architecture
 ==============================
 
+Dovecot can be run directly on physical hardware or virtualised using various virtualization technologies. 
+
+We have customers using OpenStack, KVM, VMware and others. We are in the end
+agnostic to the virtualization technology used, as long as there is no
+overcommitment of resources (see below).
+
 Dovecot comes in 3 layer architecture:
 
 * Proxies
