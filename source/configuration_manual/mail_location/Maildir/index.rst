@@ -209,14 +209,14 @@ Settings
    :default: no
    :values: @boolean
 
-   If enabled, don't include directories in a LIST response that begin with a
+   If enabled, don't include non-directory files in a LIST response that begin with a
    dot.  Thus, if disabled, Dovecot assumes that all the files beginning with
    a dot in the Maildir are Maildirs.
 
    You shouldn't have any non-directory files beginning with a dot in the
    Maildirs, but if you do you may need to set this to ``yes``, in which case
    Dovecot needs to ``stat()`` each directory entry, which degrades the
-   performance. Some filesystems provide the directory/non-directory status
+   performance. Some filesystems (e.g. ext4) provide the directory/non-directory status
    for free without having to ``stat()``. In those filesystems this setting is
    ignored.
 
