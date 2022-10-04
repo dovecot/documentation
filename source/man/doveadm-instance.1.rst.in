@@ -22,7 +22,7 @@ DESCRIPTION
 The **doveadm instance** commands are used to manage the list of Dovecot
 instances running on the server. In most installations there is only one
 Dovecot instance, but in some cases is may be useful to have more (e.g.
-running director proxy and backend in the same server).
+running proxy and backend in the same server).
 
 Instances are added to the list automatically when Dovecot is started.
 Each instance is uniquely identified by its *base_dir* setting.
