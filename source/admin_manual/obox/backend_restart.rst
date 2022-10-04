@@ -22,56 +22,18 @@ minimal user impact.
 Shutting down backend
 ---------------------
 
-#. Do this procedure 1 backend at a time.
+#. Use ``doveadm cluster backend update --load-factor 0 <backend host>`` so
+   no more user groups will be assigned to the backend.
 
-   This is to minimize the user impact.
+#. Use ``doveadm cluster backend evacuate <backend host>`` command to move
+   all the user groups out of the backend.
 
-#. In director set vhost count on that backend to 0.
+#. Wait for the evacuation to complete.
 
-   This is to stop director process from mapping new user sessions to this
-   backend and to notify dovemon that the backend is under maintenance.
+#. Optionally use ``doveadm cluster backend update --status standby --load-factor 100 <backend host>``
+   command to clarify the current state.
 
-   .. code-block:: none
-
-      doveadm director update <backend ip> 0
-
-#. Wait 15mins for disconnected user session hashes to expire.
-
-#. In director check how many users still mapped to backend.
-
-   .. code-block:: none
-
-      doveadm director status
-
-#. Disable service lmtp on the selected backend.
-
-   This is to minimize metacache changes while doing metacache flush.
-
-   .. code-block:: none
-
-      doveadm service stop lmtp
-
-#. Shut down dovecot on the selected backend
-
-   This will also flush metacache as long as dovecot-metacache-flush service
-   is not disabled.
-
-   .. code-block:: none
-
-      systemctl dovecot stop
-
-#. In director flush all user sessions in backend.
-
-   Backend is now shut down, we need to tell director layer to rehash the
-   sessions to remaining backends.
-
-   .. code-block:: none
-
-      doveadm director down <backend ip>
-      doveadm director flush <backend ip>
-
-#. Backend has now been removed from director ring and all user sessions are
-   rehashed to remaining backends.
+#. Shut down dovecot on the backend
 
 Now all sessions are gone and backend is ready for upgrade or major config
 change.
@@ -132,9 +94,8 @@ Starting up backend
 
 #. If all of the above commands succeed, backend can be put back to production.
 
-#. In director ring update backend status
+#. Add the backend to the cluster
 
    .. code-block:: none
 
-      doveadm director update <backend ip> 100
-      doveadm director up <backend ip>
+      doveadm cluster backend update --status online <backend host>
