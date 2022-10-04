@@ -50,10 +50,6 @@ ADDITIONAL MASTER COMMANDS
 **doveadm config**
    :man:`doveconf(1)`, Dump Dovecot configuration.
 
-**doveadm director**
-   :man:`doveadm-director(1)`, Manage Dovecot directors (if used by proxy
-   servers).
-
 **doveadm exec**
    :man:`doveadm-exec(1)`, Easily execute commands from Dovecot's
    libexec_dir.
