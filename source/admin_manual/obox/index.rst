@@ -206,7 +206,7 @@ users(s) from another backend.
    storage_side_metadata
    data_access_patterns
    disaster_recovery
-   file_system_to_dict_mapping
+   fs_dictmap_mapping
    scality_key_format
    sizing_information
    s3_object_id_format
