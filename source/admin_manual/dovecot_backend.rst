@@ -4,7 +4,14 @@
 Dovecot Backend
 ==================
 
-The Dovecot Backend does all the hard work of reading and writing mails to storage and handling all of the ``IMAP/POP3/LMTP`` protocols. Dovecot Backend is connected to the object storage where users' mails and mail indexes are stored.
+The Dovecot Backend does all the hard work of reading and writing mails to
+storage and handling all of the ``IMAP/POP3/LMTP`` protocols.
+
+Object Storage Format
+---------------------
+
+Dovecot Backend is connected to the object storage where users' mails and mail
+indexes are stored.
 
 As a user is connecting to Dovecot for reading mails, the user's mail indexes are fetched from the object storage and cached in local file system. The mail indexes are updated locally while the user does mailbox modifications. The modified local indexes are uploaded back to object storage on background every ``5 minutes``, except for ``LMTP`` mail deliveries. With ``LMTP`` mail deliveries the indexes are uploaded only every ``10th mail`` (see :dovecot_plugin:ref:`obox_max_rescan_mail_count`) to avoid unnecessary object storage writes. The index updates for ``LMTP`` deliveries don't contain anything that can't be recreated from the mails themselves.
 
