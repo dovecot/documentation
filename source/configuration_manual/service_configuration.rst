@@ -97,7 +97,7 @@ Limit the process's address space (both ``RLIMIT_DATA`` and ``RLIMIT_AS`` if ava
 
 There are 3 types of services that need to be optimized in different ways:
 
-1. Master services (e.g. auth, anvil, indexer, director, log):
+1. Master services (e.g. auth, anvil, indexer, log):
     Currently there isn't any easy way to optimize these. If these become a bottleneck, typically you need to run another Dovecot server. In some cases it may be possible to create multiple master processes and have each one be responsible for only specific users/processes, although this may also require some extra development.
 2. Services that do disk I/O or other blocking operations (e.g. imap, pop3, lmtp):
     These should have ``client_limit=1``, because any blocking operation will block all the other clients and cause unnecessary delays and even timeouts.
@@ -267,18 +267,6 @@ has been configured.
    * **process_limit=1**, because only one process should be running expires.
 
    * **user** and other permissions should be the same as for the dict service.
-
-director
-^^^^^^^^
-Director tracker process, which hooks into all auth-client and auth-userdb connections.
-
-   * **process_limit=1**, because only one process can keep track of everyone's state.
-
-   * **user=$default_internal_user**, because director doesn't access any files.
-
-   * **chroot** can't be set, because it still needs to be connect to auth process.
-
-   * Connections are basically proxying auth connections, so they have similar security considerations.
 
 dns_client
 ^^^^^^^^^^

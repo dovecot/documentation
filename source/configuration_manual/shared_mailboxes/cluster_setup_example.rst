@@ -16,19 +16,6 @@ Dovecot Proxy configuration snippet
 .. code-block::
 
         passdb {
-          args = proxy=y password=masterpass host=<director-ip>
-          driver = static
-        }
-
-Dovecot Director configuration snippet
---------------------------------------
-
-.. code-block::
-
-        director_servers = <director-ip>
-        director_mail_servers = <backend-ip>
-
-        passdb {
           driver = static
           master = yes
           default_fields = proxy=y
@@ -47,7 +34,7 @@ Dovecot Backend configuration snippet
 
         mail_plugins = $mail_plugins acl
 
-        imapc_host = <director-ip>
+        imapc_host = <proxy-load-balancer>
         imapc_password = imapcpass
         imapc_user = # empty defaults to shared user
         imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login

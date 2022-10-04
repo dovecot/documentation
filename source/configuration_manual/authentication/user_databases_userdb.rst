@@ -16,7 +16,7 @@ include:
 * Overriding settings for the user (almost any setting can be overridden)
 
 ===========================   ================   ===============
-Userdb lookups are done by:   Dovecot Director   Dovecot Backend
+Userdb lookups are done by:   Dovecot Proxy      Dovecot Backend
 ===========================   ================   ===============
 IMAP & POP3 logins            No                 Yes
 LMTP mail delivery            No                 Yes

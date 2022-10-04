@@ -6,12 +6,12 @@ Shared Mailboxes in Dovecot Cluster
 
 .. note:: This setup is supported from Dovecot version 2.3.15 and higher only
 
-As mentioned in :ref:`Director <dovecot_director>`, you can't have
+As mentioned in :ref:`dovecot_cluster_architecture`, you can't have
 multiple servers accessing the same user at the same time
 or it will lead into trouble. This can become problematic with shared
 mailboxes, because two users who are sharing a folder may run in
 different servers. The solution here is to access the shared folders via
-IMAP protocol, which passes through the Dovecot proxies/directors so the
+IMAP protocol, which passes through the Dovecot proxies so the
 actual filesystem access is done only by one server.
 
 There are some limitations for this kind of use case:
@@ -78,9 +78,9 @@ Additionally imapc must be configured accordingly on the backends:
    a simple setup ``imapc_master_user`` can also be just set to ``%u``
    (the logged in user).
  * :dovecot_core:ref:`imapc_password` must be set to the master password which
-   is configured on all backends and directors
+   is configured on all backends and proxies
  * :dovecot_core:ref:`imapc_host` must point to a load balancer's address that
-   connects to Dovecot director/proxy
+   connects to Dovecot proxy
  * :dovecot_core:ref:`imapc_features`: For the best performance and functionality,
    the setting should contain at least
    ``fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login``
@@ -91,7 +91,7 @@ Additionally imapc must be configured accordingly on the backends:
 
 ::
 
-   imapc_host = director-ip
+   imapc_host = proxy-load-balancer
    #imapc_user = # leave this empty. It'll be automatically filled with the destination username.
    imapc_password = master-secret
    imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login

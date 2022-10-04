@@ -16,8 +16,6 @@ standard variables everywhere.
 
 Example:
 
-Using :ref:`dovecot_director`
-
 .. code-block:: none
 
   passdb {

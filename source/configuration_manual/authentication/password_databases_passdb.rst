@@ -6,16 +6,17 @@ Password databases (passdb)
 
 Dovecot splits all authentication lookups into two categories:
 
-* passdb and userdb lookup
+* passdb lookup and
+* userdb lookup
 
-passdb lookup most importantly authenticate the user. They also provide any
+passdb lookup most importantly authenticates the user. They also provide any
 other pre-login information needed for users, such as:
 
  * Which server user is proxied to.
  * If user should be allowed to log in at all (temporarily or permanently).
 
 ============================   ===================   =================
-Passdb lookups are done by:      Dovecot Director     Dovecot Backend
+Passdb lookups are done by:      Dovecot Proxy        Dovecot Backend
 ============================   ===================   =================
 IMAP & POP3 logins                   Yes                  Yes
 LMTP mail delivery                   Yes                  Yes

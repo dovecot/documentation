@@ -9,7 +9,8 @@ accessing the same user simultaneously by different servers. That will
 result in more or less severe mailbox corruption. Note that this applies
 to all mailbox access, including mail delivery.
 
-* Use :ref:`Dovecot director <dovecot_director>` for clustering.
+* Use :ref:`dovecot_cluster_architecture` or assign users to specific backends
+  in the proxy's passdb lookups.
 * Use :ref:`lmtp_server` for mail deliveries.
 * Set :dovecot_core:ref:`mmap_disable` = ``yes``
 * Set :dovecot_core:ref:`mail_fsync` = ``always``
@@ -35,7 +36,7 @@ NFS mount options
 
 * ``nolock`` / ``local_lock=all``: This is possible to use as a slightly
   unsafe optimization. All file locking is handled only locally instead of via
-  NFS server. Assuming director works perfectly, there is no need to use
+  NFS server. Assuming users are never accessed simultaneously by multiple backends, there is no need to use
   locking across NFS. Each user only locks their own files, and the user should
   only be accessed by a single server at a time. Unfortunately, this doesn't
   work 100% of the time so in some rare situations the same user can become
@@ -57,7 +58,7 @@ Potential optimizations to use:
 
 * mdbox format is likely more efficient to use than the sdbox format. The
   downside is that it requires running periodic ``doveadm purge`` for each
-  user. This commands should be run via the doveadm directors so they are run
+  user. Theses commands should be run via a doveadm proxy so they are run
   in the proper backends.
 * Use ``mail_location = ...:VOLATILEDIR=/dev/shm/dovecot/%2.256Nu/%u`` to
   store some temporary files (e.g. lock files) in tmpfs rather than NFS.
@@ -85,10 +86,10 @@ clocks are synchronized. If the clocks are more than one second apart
 from each others and multiple computers access the same mailbox
 simultaneously, you may get errors.
 
-Clustering without director
-===========================
+Clustering without user stickiness
+==================================
 
-Some people are using Dovecot in a cluster without the director service.
+Some people are using Dovecot in a cluster without assigning users to specific backends.
 Below are some suggestions for improving the reliability of this
 configuration.
 
