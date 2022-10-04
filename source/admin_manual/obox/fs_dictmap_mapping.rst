@@ -1,10 +1,12 @@
-.. _file_system_to_dict_mapping:
+.. _fs_dictmap_mapping:
 
-=================================
-File system to dict mapping
-=================================
+=============================
+fs-dictmap filesystem mapping
+=============================
 
-fs-dictmap works by providing a view to Cassandra that ends up looking like a filesystem compatible with obox mailbox format. There are several hardcoded paths to make it possible. 
+The :ref:`fs-dictmap <dictmap_configuration>` driver works by providing a view
+to Cassandra that ends up looking like a filesystem, which is compatible with
+the obox mailbox format. There are several hardcoded paths to make it possible.
 The mapping between the filesystem and the dict keys is:
 
  ====================================   ============================================          ======================================
