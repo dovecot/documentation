@@ -16,7 +16,7 @@ There are two ways for master users to log in as other users:
    ID field.
 
 2. Specify both the master username and the login username in the same
-   username field. See :dovecot_core:ref:`master_user_separator` for the format
+   username field. See :dovecot_core:ref:`auth_master_user_separator` for the format
    of the string.
 
 Master users are configured by adding a new :ref:`authentication-password_databases`
