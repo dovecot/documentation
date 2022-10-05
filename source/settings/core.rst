@@ -117,14 +117,17 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: auth_master_user_separator
    :values: @string
 
-   If you want to allow master users to log in by specifying the master
-   username within the normal username string (i.e., not using the SASL
-   mechanism's support for it), you can specify the separator character here.
+   The separator to use to enable master users to login by specifying the
+   master username within the normal username string (i.e., not using the SASL
+   mechanism's master support).
 
    Example:
 
    .. code-block:: none
 
+     # Allows master login of the format <username>*<masteruser>
+     # E.g. if user = foo, and master_user = muser,
+     #   login username = foo*muser
      auth_master_user_separator = *
 
 
@@ -2553,20 +2556,11 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: master_user_separator
    :values: @string
+   :removed: v2.3.20
 
-   The separator to use to enable master users to login by specifying the
-   master username within the normal username string (i.e., not using the SASL
-   mechanism's master support).
-
-   Example:
-
-   .. code-block:: none
-
-     # Allows master login of the format <username>*<masteruser>
-     # E.g. if user = foo, and master_user = muser,
-     #   login username = foo*muser
-     master_user_separator = *
-
+   This setting was accidentally used by the director service. It has been
+   replaced by the :dovecot_core:ref:`auth_master_user_separator` setting. With
+   old Dovecot versions both the settings must be set to the same value.
 
 .. dovecot_core:setting_link:: mbox_dirty_syncs
 
