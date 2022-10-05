@@ -125,7 +125,9 @@ bugzilla
 Buildkey
 bzip
 bzlib
+cacert
 CACERTDIR
+CAfile
 calloc
 CANTCREAT
 CApath
@@ -185,14 +187,17 @@ copybox
 copybutton
 COPYUID
 coretest
+coreutils
 courierimapuiddb
 cov
+cpanel
 CPID
 cpp
 CPPFLAGS
 cql
 cqlsh
 crlf
+CRLs
 cron
 cronjob
 crt
@@ -248,6 +253,7 @@ desync
 devtools
 dfad
 DHd
+DHE
 Dhesi
 dhparam
 dictdiffmap
@@ -332,6 +338,7 @@ elsif
 emacs
 emaillookup
 emails
+encodestring
 endian
 endianness
 endif
@@ -718,6 +725,7 @@ Makefiles
 malloc
 managesieve
 managesieved
+manmaster
 manpage
 MARF
 markasjunk
@@ -750,10 +758,12 @@ messageguid
 metacache
 metacpan
 metadata
+metamail
 microsites
 microsoft
 middleware
 millisecs
+mimencode
 misconfigured
 missingok
 mkcert
@@ -762,6 +772,8 @@ mkfifo
 mkfs
 mkhomedir
 mmap
+mmencode
+MMIME
 modseq
 mountpoint
 mozilla
@@ -787,15 +799,18 @@ myfolder
 myfoldertoo
 myhostname
 mynetworks
+mypassword
 myrights
 myscript
 mysql
 mysqld
 myuser
+myusername
 nabble
 namespace
 NBF
 nbproc
+neomutt
 netmask
 Netscape
 newkey
@@ -827,6 +842,7 @@ NOHOST
 noindex
 NOINFERIORS
 NOINPUT
+noiv
 nolock
 nologin
 nonblock
@@ -921,6 +937,7 @@ pbkd
 pbkdf
 pdf
 pem
+perl
 pfs
 PGP
 pgsql
@@ -1096,6 +1113,7 @@ SENTSINCE
 seqno
 SERVERBUG
 servermetadata
+servername
 ses
 setacl
 SETACTIVE
@@ -1130,6 +1148,7 @@ smi
 smtp
 smtpd
 snarf
+sni
 SNI
 snowballstem
 snprintf
@@ -1279,6 +1298,8 @@ timsieved
 tinyca
 tinyint
 tld
+tldmypassword
+tldmyusername
 TLDR
 tls
 tmp
@@ -1461,5 +1482,3 @@ zlib
 ZMailer
 Zstandard
 zstd
-Zvcm
-ZXMw

@@ -40,17 +40,12 @@ ignore$
 ^\.github/
 ^source/_ext/
 ^source/_static/
-^\Qsource/admin_manual/debugging/debugging_authentication.rst\E$
-^\Qsource/configuration_manual/dovecot_ssl_configuration.rst\E$
-^\Qsource/configuration_manual/plugins/index.rst\E$
-^\Qsource/configuration_manual/plugins/var_expand_crypt_plugin.rst\E$
 ^\Qsource/configuration_manual/shared_mailboxes/_static/imapc.drawio\E$
 ^\Qsource/developer_manual/design/indexes/_static/lib-index.drawio\E$
 ^\Qsource/developer_manual/design/indexes/_static/mail-index-cache.drawio\E$
 ^\Qsource/developer_manual/design/indexes/_static/mail-index-log.drawio\E$
 ^\Qsource/developer_manual/design/indexes/_static/mail-index-map.drawio\E$
 ^\Qsource/developer_manual/design/_static/auth.drawio\E$
-^\Qsource/settings/plugin/snarf-plugin.rst\E$
 ^\QMakefile\E$
 ^\Qsource/man/Makefile\E$
 ^\Qsource/conf.py\E$
