@@ -55,6 +55,8 @@ specially:
 * **forward_<anything>**: In a proxy, pass the variable to the next hop (backend) as
   ``forward_<anything>``.
 
+  .. seealso:: :ref:`forward_fields`
+
   .. versionadded:: v2.2.26+/v2.3
 
 * **event_<name>**: Import ``name=value`` to login events.
