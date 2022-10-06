@@ -142,6 +142,8 @@ server side of the connection is already disconnected).
 :dovecot_core:ref:`login_proxy_max_disconnect_delay` setting in
 ``dovecot.conf`` controls this (disabled by default).
 
+.. _forward_fields:
+
 Forwarding fields
 =================
 
@@ -158,7 +160,13 @@ This feature requires that the sending host is in
 :dovecot_core:ref:`login_trusted_networks`.
 
 See :ref:`forwarding_parameters` for more details on how this is implemented
-for different protocols.
+for different protocols, which includes limits to the key and value lengths
+and counts.
+
+.. Note:: Most importantly the IMAP ID command restricts the forward key length
+   to just 20 bytes (excluding ``forward_`` prefix). Larger keys are silently
+   dropped.
+
 
 Moving users between backends/clusters
 ======================================

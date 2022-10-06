@@ -306,7 +306,7 @@ Login variables
 |          |                       | .. versionadded:: v2.2.19                                     |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | passdb:forward_<name> | Used by proxies to pass on extra fields to the next hop, see  |
-|          |                       | :ref:`authentication-proxies`                                 |
+|          |                       | :ref:`forward_fields`                                         |
 |          |                       |                                                               |
 |          |                       | .. versionadded:: v2.2.29                                     |
 +----------+-----------------------+---------------------------------------------------------------+
@@ -497,7 +497,7 @@ Authentication variables
 |          |                       | .. versionadded:: v2.2.29                                     |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | passdb:forward_<name> | Used by proxies to pass on extra fields to the next hop, see  |
-|          |                       | :ref:`authentication-proxies`                                 |
+|          |                       | :ref:`forward_fields`                                         |
 |          |                       |                                                               |
 |          |                       | .. versionadded:: v2.2.29                                     |
 +----------+-----------------------+---------------------------------------------------------------+
