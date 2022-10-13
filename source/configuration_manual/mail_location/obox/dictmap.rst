@@ -183,10 +183,12 @@ Dictmap Parameters
 |                                 | .. versionadded:: v2.3.2.1                                                   |
 +---------------------------------+------------------------------------------------------------------------------+
 | max-parallel-iter=<n>           | Describes how many parallel dict iterations can be created internally. The   |
-|                                 | default value is 1. Parallel iterations can especially help speed up reading |
-|                                 | huge folders.                                                                |
+|                                 | default value is 10. Parallel iterations can especially help speed up        |
+|                                 | reading huge folders.                                                        |
 |                                 |                                                                              |
 |                                 | .. versionadded:: v2.3.10                                                    |
+|                                 | .. versionchanged:: v3.0.0 Increased default to 10. Earlier versions run     |
+|                                 |                     with 1 as default.                                       |
 +---------------------------------+------------------------------------------------------------------------------+
 | cleanup-uncertain               | When enabled: If a write to Cassandra fails with uncertainty                 |
 |                                 | (:ref:`dictmap_cassandra_uncertain_writes`) Dovecot attempts to clean up.    |
