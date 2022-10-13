@@ -66,7 +66,24 @@ There are a couple of different ways to specify when SSL/TLS is required:
 
 * The main difference between :dovecot_core:ref:`ssl=required <ssl>` and :dovecot_core:ref:`auth_allow_cleartext=no <auth_allow_cleartext>` is that if :dovecot_core:ref:`ssl=required <ssl>`, it guarantees that the entire connection is protected against eavesdropping (SSL/TLS encrypts the rest of the connection), while :dovecot_core:ref:`auth_allow_cleartext=no <auth_allow_cleartext>` only guarantees that the password is protected against eavesdropping (SASL mechanism is encrypted, but no SSL/TLS is necessarily used). Nowadays you most likely should be using SSL/TLS anyway for the entire connection, since the cost of SSL/TLS is cheap enough. Using both SSL/TLS and non-cleartext authentication would be the ideal situation since it protects the cleartext password even against man-in-the-middle attacks.
 
-  .. NOTE:: The cleartext authentication mechanisms are always allowed (and SSL not required) for connections from localhost, as they're assumed to be secure anyway. This applies to all connections where the local and the remote IP addresses are equal. IP ranges specified by :dovecot_core:ref:`login_trusted_networks` setting are assumed to be secure. If you want localhost to be trusted, it needs to be included in this setting. It is only considered secure automatically, not trusted.
+  .. NOTE:: The cleartext authentication mechanisms are always allowed (and SSL not required) for connections from localhost, as they're assumed to be secure anyway. This applies to all connections where the local and the remote IP addresses are equal. Since v3.0.0;v2.4.0 IP ranges specified by :dovecot_core:ref:`login_trusted_networks` setting are no longer assumed to be secure. If you want localhost to be trusted, it needs to be included in this setting. It is only considered secure automatically, not trusted.
+
+HAProxy Proxy Protocol and ssl setting
+--------------------------------------
+
+Non-HAProxy connections
+  Localhost connections are always secured, because there is no network traffic outside the server. ssl=required does not require TLS connections within localhost, because there wouldn't gain any extra security.
+  :dovecot_core:ref:`login_trusted_networks` connections are considered secured, if ssl is not required. This is especially to allow Dovecot proxies to connect to backends without TLS and with cleartext connections.
+  This assumes that the local network is secured. If that is not the case, ssl=required can be used and then TLS is required also between Dovecot proxy and backend.
+
+Non-Dovecot proxy connections using HAProxy protocol
+  Proxy can act as a non-transparent load balancer, or it can also terminate TLS connections. If it doesn't terminate TLS connection, it's treated the same as a load balancer. If it does terminate TLS connection,
+  it's treated the same as Dovecot proxy connection from :dovecot_core:ref:`login_trusted_networks`. If proxy is running on localhost and it has terminated TLS connection, the connection will always be considered secured,
+  regardless of the ssl setting. If proxy is not running on localhost, but it has terminated TLS connection, this is effectively the same as if the connection was coming from another trusted Dovecot proxy.
+  So the connection will be considered secured only if ssl != required. Otherwise proxy has not terminated TLS connection, so the connection is not considered secured regardless of whether haproxy is running on localhost or not.
+  
+  For Dovecot to recognize that TLS termination has been performed, you need to configure proxy to use PROXYV2 protocol with SSL attributes. Consult your software/device manual on how to enable this. Also you need to
+  configure :dovecot_core:ref:`haproxy_trusted_networks` to include your proxy IP addresses.
 
 Multiple SSL certificates
 ^^^^^^^^^^^^^^^^^^^^^^^^^
