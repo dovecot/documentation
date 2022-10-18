@@ -65,3 +65,14 @@ For example if Dovecot is internally rebuilding caches for a single user, the
 1 GB fscache could quickly be filled only with that one user's emails. But if
 the fscache is slit over multiple directories, the other directories won't be
 affected and may still contain useful cache for other users.
+
+Limitations
+^^^^^^^^^^^
+
+The fscache plugin relies on filesystem usage information to be consistent.
+For example ZFS provides different information on block usage depending on
+when the information is queried, making fscache not work.
+
+.. versionchanged:: v2.3.20
+
+ZFS support has been currently explicitly disabled.
