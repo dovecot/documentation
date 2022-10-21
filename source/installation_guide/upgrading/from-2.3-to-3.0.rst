@@ -141,6 +141,9 @@ Removed features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``warn_slow_msecs``                                        | Deprecated dict proxy parameter. Use :ref:`slow_warn <dict-proxy>` setting instead.      |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| Dovecot director role                                      | This has been replaced with :ref:`Dovecot Cluster <dovecot_cluster_architecture>`,       |
+|                                                            | which is Pro-only feature.                                                               |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 Changed default settings
 ========================
