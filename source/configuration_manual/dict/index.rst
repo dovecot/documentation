@@ -374,6 +374,78 @@ You can also access multiple SQL fields. For example
   * ``INSERT INTO user_shares (from_user, to_user, dummy) VALUES ('$from',
     '$to', '$value') ON DUPLICATE KEY UPDATE dummy='$value'``
 
+SQL dict with mail_attribute_dict
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It's possible to implement :dovecot_core:ref:`mail_attribute_dict` also with
+SQL dict.
+
+.. warning:: Using shared attributes in mail_attribute_dict requires the
+             mailbox GUID to be unique between users. This is not the case when
+	     mails were migrated via imapc, because it uses a hash of the
+	     mailbox name as the GUID. So every migrated user would have
+	     exactly the same INBOX GUID, preventing the use of dict-sql. It is
+	     currently not possible to add a username as an additional unique
+	     identifier.
+
+.. code-block:: none
+
+  # CREATE TABLE mailbox_private_attributes (
+  #   username VARCHAR(255),
+  #   mailbox_guid VARCHAR(32),
+  #   attr_key VARCHAR(255),
+  #   value TEXT,
+  #   PRIMARY KEY (username, mailbox_guid, attr_key)
+  # )
+  map {
+    pattern = priv/$mailbox_guid/$key
+    table = mailbox_private_attributes
+    username_field = user
+    value_field = value
+
+    fields {
+      attr_key = $key
+      mailbox_guid = $mailbox_guid
+    }
+  }
+
+  # CREATE TABLE mailbox_shared_attributes (
+  #   mailbox_guid VARCHAR(32),
+  #   attr_key VARCHAR(255),
+  #   value TEXT,
+  #   PRIMARY KEY (mailbox_guid, attr_key)
+  # );
+  map {
+    pattern = shared/$mailbox_guid/$key
+    table = mailbox_shared_attributes
+    value_field = value
+
+    fields {
+      attr_key = $key
+      mailbox_guid = $mailbox_guid
+    }
+  }
+
+  # Due to a bug, it's also necessary for now to use the following table
+  # to catch accesses to /private and /shared root key lookups.
+  #
+  # CREATE TABLE mailbox_private_none (
+  #   username VARCHAR(255) DEFAULT "",
+  #   value TEXT,
+  #   PRIMARY KEY (username)
+  # ) ROW_FORMAT=DYNAMIC;
+  map {
+    pattern = priv/
+    table = mailbox_attributes_none
+    username_field = username
+    value_field = value
+  }
+  map {
+    pattern = shared/
+    table = mailbox_attributes_none
+    value_field = value
+  }
+
 See Also
 --------
 
