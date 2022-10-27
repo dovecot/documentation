@@ -2617,6 +2617,33 @@ metacache_user_clean_finished
 | error                 | Error message if the upload failed                   |
 +-----------------------+------------------------------------------------------+
 
+metacache_pull_started
+^^^^^^^^^^^^^^^^^^^^^^
+metacache_pull_finished
+^^^^^^^^^^^^^^^^^^^^^^^
+
++-----------------------+------------------------------------------------------+
+| Field                 | Description                                          |
++=======================+======================================================+
+| source_host           | From which host metacache is being pulled            |
++-----------------------+------------------------------------------------------+
+| type                  | "server" if the event is emitted by the host that    |
+|                       | metacache is being pulled from. (This host is        |
+|                       | "source_host")                                       |
+|                       |                                                      |
+|                       | "client" if the event is emitted by the host that    |
+|                       | is pulling metacache from "source_host"              |
++-----------------------+------------------------------------------------------+
+| exit_code             | exit_code for finished metacache pull commands. If   |
+|                       | the command finished successfully it is "0".         |
+|                       | The exit codes are the same as doveadm exit codes.   |
+|                       | See :ref:`doveadm_error_codes` fore more details on  |
+|                       | the exit codes.                                      |
++-----------------------+------------------------------------------------------+
+| error                 | error message if metacache pull failed               |
++-----------------------+------------------------------------------------------+
+
+
 obox_mailbox_rescan_started
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 obox_mailbox_rescan_finished
