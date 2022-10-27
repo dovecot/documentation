@@ -37,7 +37,7 @@ The :ref:`dict-sql` driver keeps a maximum of 10 unused SQL connections open
 
 Starting version 2.3.17, the dict server process keeps the last 10 idle dict
 backends cached for maximum of 30 seconds. Practically this acts as a
-connection pool for :ref:`dict-redis`, :ref:`dict-memcached` and :ref:`dict-ldap`. Note that this
+connection pool for :ref:`dict-redis`, :ref:`dict-memcached_ascii` and :ref:`dict-ldap`. Note that this
 doesn't affect dict-sql, because it already had its own internal cache.
 
 
