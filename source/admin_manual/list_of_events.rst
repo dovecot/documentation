@@ -70,6 +70,8 @@ Root Categories
 +--------------------+---------------------------------------------------------+
 | metacache          | obox metacache                                          |
 +--------------------+---------------------------------------------------------+
+| pop3               | pop3 process                                            |
++--------------------+---------------------------------------------------------+
 | push-notification  | push-notification plugin                                |
 |                    |                                                         |
 |                    | .. versionchanged:: v2.3.11 This was previously named   |
@@ -1481,6 +1483,30 @@ is read and the full response to the request has been sent to the client.
 | status_code         | HTTP result status code (integer).                   |
 +---------------------+------------------------------------------------------+
 
+POP3
+====
+
+.. _event_pop3_client:
+
+POP3 client
+-----------
+.. versionadded:: v2.4.0;v3.0.0
+
++---------------------+------------------------------------------------------+
+| Field               | Description                                          |
++=====================+======================================================+
+| user                | Username of the user                                 |
++---------------------+------------------------------------------------------+
+| session             | Session ID of the POP3 connection                    |
++---------------------+------------------------------------------------------+
+| local_ip            | POP3 connection's local (server) IP                  |
++---------------------+------------------------------------------------------+
+| local_port          | POP3 connection's local (server) port                |
++---------------------+------------------------------------------------------+
+| remote_ip           | POP3 connection's remote (client) IP                 |
++---------------------+------------------------------------------------------+
+| remote_port         | POP3 connection's remote (client) port               |
++---------------------+------------------------------------------------------+
 
 IMAP
 ====
