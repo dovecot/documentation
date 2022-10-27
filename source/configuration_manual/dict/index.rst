@@ -424,26 +424,6 @@ SQL dict.
     }
   }
 
-  # Due to a bug, it's also necessary for now to use the following table
-  # to catch accesses to /private and /shared root key lookups.
-  #
-  # CREATE TABLE mailbox_private_none (
-  #   username VARCHAR(255) DEFAULT "",
-  #   value TEXT,
-  #   PRIMARY KEY (username)
-  # ) ROW_FORMAT=DYNAMIC;
-  map {
-    pattern = priv/
-    table = mailbox_attributes_none
-    username_field = username
-    value_field = value
-  }
-  map {
-    pattern = shared/
-    table = mailbox_attributes_none
-    value_field = value
-  }
-
 See Also
 --------
 
