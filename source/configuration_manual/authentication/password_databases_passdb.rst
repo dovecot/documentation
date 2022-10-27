@@ -255,6 +255,7 @@ The result values that can be used:
 .. toctree::
   :maxdepth: 1
 
+  password_database_extra_fields
   proxies
   multiple_authentication_databases
   authentication_mechanisms
