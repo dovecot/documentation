@@ -17,7 +17,7 @@ Backend tracking
 
 This plugin keeps track of the user's last hostname in ``INDEX/.lasthost`` file, which exists in NFS.
 That file's inode and modification time is stored in ``LISTINDEX/.lasthost`` file, which exists locally under ``/dev/shm``.
-Whenever the user logs in, ``INDEX/.lasthost`` is compared to ``LISTINDEX/.lasthost` ` to see if it has changed.
+Whenever the user logs in, ``INDEX/.lasthost`` is compared to ``LISTINDEX/.lasthost`` to see if it has changed.
 If yes, delete ``LISTINDEX/dovecot.list.index*`` files and rewrite the ``LISTINDEX/.lasthost`` file.
 
 Migration
