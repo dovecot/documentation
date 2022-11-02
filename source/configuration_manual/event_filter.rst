@@ -92,6 +92,16 @@ A more complicated example::
   event=abc OR (event=def AND (category=imap OR category=lmtp) AND \
     NOT category=debug AND NOT (bytes_in<1024 OR bytes_out<1024))
 
+.. versionadded:: v2.4.0;v3.0.0 Sizes can be expressed using the unit values
+   ``B`` - which represents single byte values - as well as ``K``, ``M``, ``G``
+   and ``T`` which are all powers of 1024. If no unit is specified ``B`` is
+   used by default.
+
+For example::
+
+  (category=debug AND NOT (bytes_in<1K OR bytes_out<1K)) OR \
+    (event=abc AND (message_size>1G and message_size<1T))
+
 .. _event_filter_metric:
 
 Metric filter syntax
