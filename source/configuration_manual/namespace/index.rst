@@ -629,6 +629,9 @@ Settings
    but it's not a good idea to use other than the standard ones specified in
    the RFC.
 
+   .. versionchanged:: v2.4.0;v3.0.0 Using non-standard special-use flags will
+                       result in a warning message at startup.
+
    .. note:: Bug in v2.2.30-v2.2.33: if special-use flags are used,
              SPECIAL-USE needs to be added to post-login CAPABILITY response
              as RFC 6154 mandates. You can do this with
