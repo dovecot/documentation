@@ -529,9 +529,9 @@ Configuration options:
  ``max_retries``  NO       :ref:`uint`         The maximum number of times to retry a connection to the API endpoint. Setting it to 0 will disable retries.
                                                (DEFAULT: ``1``)
 
- ``timeout``      No       :ref:`time_msecs`   Time before HTTP request to the configured API endpoint will timeout. (DEFAULT: ``2s``)
+ ``timeout``      NO       :ref:`time_msecs`   Time before HTTP request to the configured API endpoint will timeout. (DEFAULT: ``2s``)
 
- ``msg_max_size`` No       :ref:`size`         Maximum size a message may have to be considered for push notification sending. (DEFAULT: ``500kb``)
+ ``msg_max_size`` NO       :ref:`size`         Maximum size a message may have to be considered for push notification sending. (DEFAULT: ``500kb``)
 ================= ======== =================== ============================================================================================================
 
 Example configuration:
