@@ -136,7 +136,7 @@ Configuration options:
 +------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
 | ``cache_lifetime``     | NO       | :ref:`time`       | Cache lifetime for the METADATA entry for a user. (DEFAULT: ``60 seconds``)                                                          |
 +------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
-| ``max_retries``        | NO       | :ref:`uint`       | The maximum number of retries to attempt to connect to OX endpoint. (DEFAULT: ``1``)                                                 |
+| ``max_retries``        | NO       | :ref:`uint`       | The maximum number of times to retry a connection to the OX endpoint. Setting it to 0 will disable retries. (DEFAULT: ``1``)         |
 +------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
 | ``timeout_msecs``      | NO       | :ref:`time_msecs` | Time before HTTP request to OX endpoint will timeout. (DEFAULT: ``2000``)                                                            |
 +------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
@@ -526,7 +526,8 @@ Configuration options:
                                                For further details on configuring the App Suite endpoint, see:
                                                https://documentation.open-xchange.com/7.10.6/middleware/calendar/iTip.html#configuration2
 
- ``max_retries``  NO       :ref:`uint`         The maximum number of retries to attempt to connect to the API endpoint. (DEFAULT: ``1``)
+ ``max_retries``  NO       :ref:`uint`         The maximum number of times to retry a connection to the API endpoint. Setting it to 0 will disable retries.
+                                               (DEFAULT: ``1``)
 
  ``timeout``      No       :ref:`time_msecs`   Time before HTTP request to OX endpoint will timeout. (DEFAULT: ``2s``)
 
