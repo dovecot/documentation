@@ -246,8 +246,10 @@ Login variables
 |          |                       | :dovecot_core:ref:`login_trusted_networks` connections.       |
 |          |                       | Otherwise empty.                                              |
 +----------+-----------------------+---------------------------------------------------------------+
-| %k       | ssl_security          | TLS session security string. If HAProxy is configured and it  |
-|          |                       | terminated the TLS connection, contains "(proxied)".          |
+| %k       | ssl_security          | TLS session security string.                                  |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.4.0;v3.0.0 If HAProxy is configured and  |
+|          |                       |    it terminated the TLS connection, contains "(proxied)".    |
 +----------+-----------------------+---------------------------------------------------------------+
 | %e       | mail_pid              | PID for process that handles the mail session post-login      |
 +----------+-----------------------+---------------------------------------------------------------+
