@@ -214,7 +214,16 @@ These fields are common for the rest of the authentication client events.
 +-------------------+-------------------------------------------------------------------------+
 | service           | Service name, such as imap3, pop3, lmtp.                                |
 +-------------------+-------------------------------------------------------------------------+
-| transport         | Transport security indicator (insecure, TLS, trusted).                  |
+| transport         | Client connection's transport security. If the connection is from       |
+|                   | a Dovecot proxy, this indicates the proxy connection's security         |
+|                   | rather than the end user client's. Values:                              |
+|                   |                                                                         |
+|                   |  * ``insecure``                                                         |
+|                   |  * ``secured``                                                          |
+|                   |  * ``TLS``                                                              |
+|                   |                                                                         |
+|                   | .. versionchanged:: v2.4.0;v3.0.0 Secure non-TLS connections (e.g.      |
+|                   |    from localhost) are now "secured" rather than "trusted".             |
 +-------------------+-------------------------------------------------------------------------+
 | session           | Session identifier.                                                     |
 +-------------------+-------------------------------------------------------------------------+
@@ -409,10 +418,16 @@ Common fields
 |                     |                                                                   |
 |                     | .. versionadded:: v2.3.12                                         |
 +---------------------+-------------------------------------------------------------------+
-| transport           | Client connection's transport security. Values:                   |
+| transport           | Client connection's transport security. If the connection is from |
+|                     | a Dovecot proxy, this indicates the proxy connection's security   |
+|                     | rather than the end user client's. Values:                        |
+|                     |                                                                   |
 |                     |  * ``insecure``                                                   |
-|                     |  * ``trusted``                                                    |
+|                     |  * ``secured``                                                    |
 |                     |  * ``TLS``                                                        |
+|                     |                                                                   |
+|                     | .. versionchanged:: v2.4.0;v3.0.0 Secure non-TLS connections (e.g.|
+|                     |    from localhost) are now "secured" rather than "trusted".       |
 +---------------------+-------------------------------------------------------------------+
 
 
