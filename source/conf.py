@@ -181,9 +181,13 @@ latex_documents = [
 
 man_pages = []
 
-for man_page in os.listdir("man/"):
-    if man_page.endswith(".rst.in"):
-        man_pages.append(("man/%s" % man_page[0:-7], man_page[0:-9], u'', [author], int(man_page[-8:-7])))
+for man_dir in os.listdir("."):
+    if os.path.isdir(man_dir) == False:
+        continue
+    if (man_dir == "man" or man_dir.endswith("-man")) and tags.tags.get(man_dir):
+        for man_page in os.listdir(man_dir):
+            if man_page.endswith(".rst.in"):
+                man_pages.append(("%s/%s" % (man_dir, man_page[0:-7]), man_page[0:-9], u'', [author], int(man_page[-8:-7])))
 
 # -- Options for Texinfo output ----------------------------------------------
 
