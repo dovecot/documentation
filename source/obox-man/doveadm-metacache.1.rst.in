@@ -1,0 +1,218 @@
+.. _man-1_doveadm-metacache:
+
+=================
+doveadm-metacache
+=================
+
+NAME
+====
+
+doveadm-metacache - Utility actions for Dovecot's local metacache
+storage
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] metacache *command* [*arguments*]
+
+DESCRIPTION
+===========
+
+**doveadm metacache** can be used to run actions that interact with and
+modify Dovecot's local metacache storage.
+
+.. include:: global-options-formatter.inc
+
+Command specific *options*:
+
+.. include:: option-A.inc
+
+.. include:: option-F-file.inc
+
+.. include:: option-S-socket.inc
+
+.. include:: option-u-user.inc
+
+
+PRIORITIES
+==========
+
+There are 4 priorities for index files:
+
+0. User root indexes (highest priority)
+
+1. FTS indexes
+
+2. INBOX and \\Junk folder indexes
+
+3. other folders' indexes (lowest priority)
+
+COMMANDS
+========
+
+metacache clean
+---------------
+
+**doveadm metacache clean** [**-A**\ \|\ **-u** *user*\ \|\ **-F**
+*file*] [**-S** *socket_path*] [**-d** *days*] [**-p** *min_priority*] [
+*namespace* ]
+
+Cleans old indexes for given users. If the indexes have not been flushed
+yet this command will fail.
+
+**-d**
+   Cleans metacache only if it hasn't been modified for specified number
+   of days.
+
+**-p**
+   Cleans metacache for given priority for the specified user(s).
+
+metacache flush
+---------------
+
+**doveadm metacache flush** [**-A**\ \|\ **-u** *user*\ \|\ **-F**
+*file*] [**-S** *socket_path*] [**-p** *min_priority*] [**-i**] [
+*namespace* ]
+
+Flushes metacache to storage for the given user(s).
+
+**-p**
+   Only flush changes that have at least min_priority. See PRIORITIES
+   for the various priorities you can use.
+
+**-i**
+   Only flush important changes.
+
+metacache flushall
+------------------
+
+**doveadm metacache flushall** [**-a** *metacache_socket_path*] [**-f**
+*userdb_field*] [**-i**] [ *user mask* ]
+
+Flush all matching users to storage. If no mask is specified, everything
+is flushed. WARNING: This can be expensive and long operation.
+
+**-a**
+   Specify alternative metacache socket. Not usually needed.
+
+**-f**
+   Use given field to match userdb. By default it's username
+
+**-i**
+   Only flush important changes.
+
+metacache list
+--------------
+
+**doveadm metacache list** [**-a** *metacache_socket_path*] [ *user mask*
+]
+
+List current metacache for matching users. If no mask is specified,
+lists all users' metacache.
+
+Output will contain
+
+-  The primary username
+
+-  Alternative usernames, if configured by returning user\_\* extra
+   fields from userdb
+
+-  This corresponds to the metacache_upload_interval setting.
+
+-  Filesystem device where the user is located in. Filesystems are
+   separately tracked by metacache, although currently support for
+   multiple filesystems doesn't work as well as it could.
+
+-  Disk space used by index files of this priority in metacache.
+
+-  UNIX timestamp of when the the index files of this priority were last
+   accessed in metacache.
+
+-  "none" means the index files have no changes done locally since they
+   were downloaded. "unimportant" means there are some changes, but
+   nothing that couldn't be regenerated if the server crashed.
+   "important" means that there are changes that would be lost in case
+   of a server crash. Currently the only important change is flag
+   changes.
+
+-  Last service that accessed this user. Note that metacache clean and
+   flush operations (via metacache-worker or doveadm) won't update this
+   field.
+
+-  Currently calculated weight when these indexes are cleaned up.
+   Smaller numbers are cleaned up before larger numbers. Sorting the
+   list output (with \|sort -n) by this field will show the order in
+   which the indexes would be cleaned. The cleanup weights are
+   recalculated whenever the indexes are being accessed.
+
+**-a**
+   Specify alternative metacache socket. Not usually needed.
+
+metacache refresh
+-----------------
+
+**doveadm metacache refresh** [**-A**\ \|\ **-u** *user*\ \|\ **-F**
+*file*] [**-S** *socket_path*] [ *namespace* ]
+
+Force refreshing metacache for the given user(s) the next time it's
+opened. The refresh is done for the user root index and all the folders.
+
+metacache remove
+----------------
+
+**doveadm metacache remove** [**-a** *metacache_socket_path*] *user mask*
+
+Remove metacache for matching users from metacache process. Mask is
+required parameter.
+
+**-a**
+   Specify alternative metacache socket. Not usually needed.
+
+metacache update userdb
+-----------------------
+
+**doveadm metacache update userdb** [**-a** *metacache_socket_path*]
+*username* *userdb_field* *value*
+
+Update alternative usernames (user\_\* fields) in **doveadm metacache
+list** output.
+
+metacache unpack
+----------------
+
+**doveadm metacache unpack** *bundle_file* *destination_dir*
+
+Unpack given bundle from storage to a given directory.
+
+metacache pull
+--------------
+
+**doveadm metacache pull** [**-A**\ \|\ **-u** *user*] [**-S**
+*socket_path*] [**---latest-only**] [**---clean**] *source_backend_host*
+
+Pull all metacache for given user(s) from source backend host.
+
+**--clean**
+   Metacache is cleaned for the user(s) that have been successfully
+   pulled.
+
+**--latest-only**
+   Pulling fails if there are newer bundles in storage than at source
+   backend host.
+
+EXAMPLE
+=======
+
+Some examples
+
+::
+
+   doveadm metacache flush -u user@domain
+
+
+.. include:: reporting-bugs.inc
+
+SEE ALSO
+========
+
+:man:`doveadm(1)` :man:`doveadm-obox(1)`
