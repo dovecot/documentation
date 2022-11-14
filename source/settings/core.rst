@@ -2935,7 +2935,8 @@ See :ref:`settings` for list of all setting groups.
    This setting affects the ``secured`` state of connections:
 
      * Dovecot-terminated TLS connections are always ``secured``.
-     * HAProxy-terminated TLS connections are always ``secured``.
+     * :ref:`HAProxy-terminated TLS connections <haproxy_tls_forward>` are
+       always ``secured``.
 
        * This is true even if HAProxy isn't running on the same server as
          Dovecot, and the connection between HAProxy and Dovecot isn't secured.
