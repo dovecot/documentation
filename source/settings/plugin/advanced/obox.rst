@@ -234,9 +234,13 @@ Settings
    :values: @boolean
 
    .. warning::
-      The setting has been removed as it caused problems with caching IMAP
-      clients, which may lose emails permanently or otherwise become confused
-      about their internal state.
+      The setting has been removed, because it could have caused various
+      problems with indexing. Most importantly if the root index bundles weren't
+      accessible, it could have created whole new INBOX and other folders.
+      In general it was also possible for FTS indexes to become desynchronized,
+      which required rebuilding them. Even if everything had worked properly,
+      performance could have been rather bad if many mails were missing from
+      the local indexes.
 
    Even in case of object storage errors, try to allow accessing the emails as
    well as possible. This especially means that if the local metacache already
