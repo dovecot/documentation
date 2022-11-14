@@ -246,6 +246,7 @@ deref
 dest
 destuser
 desync
+desynchronized
 devtools
 DHd
 DHE
