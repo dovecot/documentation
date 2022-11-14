@@ -242,9 +242,9 @@ Login variables
 +----------+-----------------------+---------------------------------------------------------------+
 | %c       | secured               | "TLS" with established SSL/TLS connections, "TLS handshaking",|
 |          |                       | or "TLS [handshaking]: error text" if disconnecting due to TLS|
-|          |                       | error. "secured" with localhost or                            |
-|          |                       | :dovecot_core:ref:`login_trusted_networks` connections.       |
-|          |                       | Otherwise empty.                                              |
+|          |                       | error. "secured" with                                         |
+|          |                       | :ref:`secured connections <secured_connections>`. Otherwise   |
+|          |                       | empty.                                                        |
 +----------+-----------------------+---------------------------------------------------------------+
 | %k       | ssl_security          | TLS session security string.                                  |
 |          |                       |                                                               |
@@ -411,8 +411,8 @@ Authentication variables
 | %w       | password              | cleartext password from cleartext authentication mechanism    |
 +----------+-----------------------+---------------------------------------------------------------+
 | %c       | secured               | "TLS" with established SSL/TLS connections, "secured" with    |
-|          |                       | localhost or :dovecot_core:ref:`login_trusted_networks`       |
-|          |                       | connections. Otherwise empty.                                 |
+|          |                       | :ref:`secured connections <secured_connections>`. Otherwise   |
+|          |                       | empty.                                                        |
 +----------+-----------------------+---------------------------------------------------------------+
 | %k       | cert                  | "valid" if client had sent a valid client certificate,        |
 |          |                       | otherwise empty.                                              |

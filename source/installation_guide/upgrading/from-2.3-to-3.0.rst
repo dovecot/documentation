@@ -112,6 +112,10 @@ Removed features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``disable_plaintext_auth``                                 | This has been replaced with :dovecot_core:ref:`auth_allow_cleartext` setting.            |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| :dovecot_core:ref:`ssl=required <ssl>`                     | Connections from :dovecot_core:ref:`login_trusted_networks` are now also required to     |
+|                                                            | be SSL/TLS encrypted with this setting. See also                                         |
+|                                                            | :ref:`secured connections <secured_connections>`.                                        |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 Changed default settings
 ========================

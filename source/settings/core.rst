@@ -33,10 +33,7 @@ See :ref:`settings` for list of all setting groups.
 
    If ``no``, disables the LOGIN command and all other cleartext
    authentication unless SSL/TLS is used (LOGINDISABLED capability) or the
-   connection is "secured":
-
-     * Client IP is in :dovecot_core:ref:`login_trusted_networks`
-     * Client IP is from localhost, and it's not coming from HAProxy listener
+   :ref:`connection is secured <secured_connections>`.
 
    See :ref:`dovecot_ssl_configuration` for more detailed explanation of how
    this setting interacts with the :dovecot_core:ref:`ssl` setting.
@@ -1748,19 +1745,18 @@ See :ref:`settings` for list of all setting groups.
 
    This setting is used for a few different purposes, but most importantly it
    allows the client connection to tell the server what the original client's
-   IP address was.
+   IP address was. This original client IP address is then used for logging
+   and authentication checks.
 
-   Client connections from trusted networks are also treated as "secured", i.e.
-   the same as if they had been using SSL/TLS. This affects the
-   :dovecot_core:ref:`ssl` and :dovecot_core:ref:`auth_allow_cleartext`
-   settings. It also marks the connection as "secured" for all auth lookups,
-   which also affects the ``%{secured}`` :ref:`variable <config_variables>`.
-
-   This original client IP address is then used for logging and authentication
-   checks.
-
-   Plaintext authentication is always allowed for trusted networks
+   Client connections from trusted networks are also treated as
+   :ref:`secured <secured_connections>`,
+   unless :dovecot_core:ref:`ssl` is ``required``. Plaintext authentication is
+   always allowed for secured connections
    (:dovecot_core:ref:`auth_allow_cleartext` is ignored).
+
+   Localhost connections are secured by default, but they are not
+   trusted by default. If you want localhost to be trusted, it needs to be
+   included in this setting.
 
    The details of how this setting works depends on the used protocol:
 
@@ -2934,10 +2930,36 @@ See :ref:`settings` for list of all setting groups.
      :dovecot_core:ref:`auth_allow_cleartext` in that even non-cleartext
      authentication mechanisms aren't allowed without SSL/TLS.
 
-     Note that SSL is still not required for "secured" connections:
+   .. _secured_connections:
 
-     * Client IP is in :dovecot_core:ref:`login_trusted_networks`
-     * Client IP is from localhost, and it's not coming from HAProxy listener
+   This setting affects the ``secured`` state of connections:
+
+     * Dovecot-terminated TLS connections are always ``secured``.
+     * HAProxy-terminated TLS connections are always ``secured``.
+
+       * This is true even if HAProxy isn't running on the same server as
+         Dovecot, and the connection between HAProxy and Dovecot isn't secured.
+	 The reasoning here is that this kind of a configuration is most likely
+	 intentional. If such connection wasn't treated ``secured``, it would
+	 prevent using ssl=required to enforce end clients to use TLS.
+
+     * Non-haproxy connections from localhost are always ``secured``.
+     * Localhost connections from HAProxy server to HAProxy are always
+       ``secured``.
+     * Other connections from :dovecot_core:ref:`login_trusted_networks` are
+       ``secured``, but only if ``ssl`` setting is not ``required``.
+
+       .. versionchanged:: v2.4.0;v3.0.0 With old versions these connections
+          were ``secured`` regardless of the ``ssl`` setting.
+     * Other connections from HAProxy are ``secured``, but only if ``ssl``
+       setting is not ``required``.
+
+       .. versionchanged:: v2.4.0;v3.0.0 With old versions these connections
+          were ``secured`` regardless of the ``ssl`` setting.
+
+   Connections that are ``secured`` are always allowed to use plaintext
+   authentication. Auth lookups will have the connection marked as ``secured``,
+   which also affects the ``%{secured}`` :ref:`variable <config_variables>`.
 
 .. dovecot_core:setting:: ssl_alt_cert
    :added: v2.2.31
