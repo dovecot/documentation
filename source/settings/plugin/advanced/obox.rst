@@ -229,6 +229,15 @@ Settings
    :plugin: obox
    :values: @boolean
 
+   .. warning::
+      This setting is not safe to use, because it could cause various
+      problems with indexing. Most importantly if the root index bundles weren't
+      accessible, it could have created whole new INBOX and other folders.
+      In general it was also possible for FTS indexes to become desynchronized,
+      which required rebuilding them. Even if everything had worked properly,
+      performance could have been rather bad if many mails were missing from
+      the local indexes.
+
    Even in case of object storage errors, try to allow accessing the emails as
    well as possible. This especially means that if the local metacache already
    has a copy of the indexes, they can be used to provide access to user's
