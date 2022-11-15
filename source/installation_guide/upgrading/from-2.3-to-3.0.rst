@@ -116,6 +116,25 @@ Removed features and their replacements
 |                                                            | be SSL/TLS encrypted with this setting. See also                                         |
 |                                                            | :ref:`secured connections <secured_connections>`.                                        |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``absolute_timeout_msecs``                                 | Deprecated HTTP-storage parameter. Use :ref:`absolute_timeout <http_storages>` setting   |
+|                                                            | instead.                                                                                 |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``connect_timeout_msecs``                                  | Deprecated HTTP-storage parameter. Use :ref:`connect_timeout <http_storages>` setting    |
+|                                                            | instead.                                                                                 |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``delete_timeout_msecs``                                   | Deprecated HTTP-storage parameter. Use :ref:`delete_timeout <http_storages>` setting     |
+|                                                            | instead.                                                                                 |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``read_timeout_msecs``                                     | Deprecated HTTP-storage parameter. Use :ref:`read_timeout <http_storages>` setting       |
+|                                                            | instead.                                                                                 |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``slow_warn_msecs``                                        | Deprecated HTTP-storage parameter. Use :ref:`slow_warn <http_storages>` setting instead. |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``timeout_msecs``                                          | Deprecated HTTP-storage parameter. Use :ref:`timeout <http_storages>` setting instead.   |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``write_timeout_msecs``                                    | Deprecated HTTP-storage parameter. Use :ref:`write_timeout <http_storages>` setting      |
+|                                                            | instead.                                                                                 |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 Changed default settings
 ========================
