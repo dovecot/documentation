@@ -415,6 +415,31 @@ Settings
      }
 
 
+.. dovecot_plugin:setting:: fts_stopwords_workaround
+   :added: v2.3.20
+   :plugin: fts
+   :default: auto
+   :values: yes, no, auto
+
+   When both multiple languages and stopwords are configured, stopwords in
+   combination with other terms do not always produce the desired result.
+
+   The recommended solution is to disable stopwords AND perform the fts
+   reindexing of the mailboxes (otherwise the results will be incorrect).
+
+   Exclusively as a temporary measure, the workaround changes the way the
+   queries are generated, mitigating the issue (but not resolving it entirely).
+
+   The workaround can be forced on (``yes``) or off (``no``).
+   With the default setting ``auto``, the workaround is enabled IF:
+
+   - multiple languages are configured for the user
+
+   - at least one of the languages has the stopword filter configured
+
+   With the setting ``auto`` the workaround is disabled automatically as
+   soon as the stopword filter is removed.
+
 .. dovecot_plugin:setting:: fts_tika
    :added: v2.2.13
    :plugin: fts
