@@ -545,7 +545,7 @@ Example configuration:
   mail_plugins = $mail_plugins notify push_notification push_notification_chronos
 
   plugin {
-    push_notification_driver = chronos:url=http://login:pass@node1.domain.tld:8009/chronos/v1/itip/pushmail max_retries=2 timeout=2500ms msg_max_size=1mb
+    push_notification_driver = chronos:url=http://login:pass@node1.domain.tld:8009/chronos/v1/itip/pushmail msg_max_size=1mb
   }
 
 Payload
