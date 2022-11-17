@@ -22,7 +22,7 @@ jobs:
         tar --transform=s,build/dirhtml,html, -cJf build/docs.txz build/dirhtml
         for dir in build/mans/*; do
           tag=$(basename $dir)
-          tar --transform=s,${dir},man -cJf build/$tag.txz $dir
+          tar --transform=s,${dir},man, -cJf build/$tag.txz $dir
         done
     - uses: dovecot/rsync-deployments@master
       with:
