@@ -11,17 +11,24 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
+    - name: Prepare environment
+      run: |
+        mkdir build
+        chmod 0777 build
     - uses: actions/checkout@v2
-    - uses: ammaraskar/sphinx-action@0.4
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        DOCS-FOLDER: "."
-        build-command: make dirhtml
+    - uses: dovecot/dovecot-sphinx-action@0.3
+    - name: Prepare tarballs
+      run: |
+        tar --strip-components=2 -cf build/docs.txz build/dirhtml
+        for dir in build/mans/*; do
+          tag=$(basename $dir)
+          tar --strip-components=2 -cf build/$tag.txz $dir
+        done
     - uses: dovecot/rsync-deployments@master
       with:
         RSYNC_OPTIONS: -azr --delete
         RSYNC_TARGET: docs@doc.dovecot.org:public_html/3.0/.
-        RSYNC_BASEDIR: /_build/.
+        RSYNC_BASEDIR: build/.
       if: env.DEPLOY_KEY
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
