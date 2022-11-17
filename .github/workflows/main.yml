@@ -19,10 +19,10 @@ jobs:
     - uses: dovecot/dovecot-sphinx-action@0.3
     - name: Prepare tarballs
       run: |
-        tar --strip-components=2 -cf build/docs.txz build/dirhtml
+        tar --transform=s,build/dirhtml,html, -cJf build/docs.txz build/dirhtml
         for dir in build/mans/*; do
           tag=$(basename $dir)
-          tar --strip-components=2 -cf build/$tag.txz $dir
+          tar --transform=s,${dir},man -cJf build/$tag.txz $dir
         done
     - uses: dovecot/rsync-deployments@master
       with:
