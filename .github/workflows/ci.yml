@@ -8,6 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Prepare manpages
+      run: |
+        for path in source/man source/*-man; do
+          if [ -d $path ]; then
+            make -C $path
+          fi
+        done
     - uses: ammaraskar/sphinx-action@0.4
       with:
          DOCS-FOLDER: "."
