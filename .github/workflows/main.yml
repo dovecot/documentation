@@ -28,7 +28,7 @@ jobs:
       with:
         RSYNC_OPTIONS: -azr --delete
         RSYNC_TARGET: docs@doc.dovecot.org:public_html/3.0/.
-        RSYNC_BASEDIR: build/.
+        RSYNC_BASEDIR: /build/.
       if: env.DEPLOY_KEY
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
