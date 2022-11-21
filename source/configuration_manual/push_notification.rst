@@ -512,7 +512,12 @@ Transport-Independent Interoperability Protocol (iTIP)
 but can be used by any endpoint that implements the same API, not just OX App
 Suite.
 
-Configuration options:
+Configuration
+-------------
+
+The chronos push notification handler requires the
+``push_notification_chronos`` plugin to be loaded in addition to the plugins
+discussed :ref:`above <push_notification-usage>`.
 
 ================= ======== =================== ============================================================================================================
  Name             Required Type                Description
@@ -537,8 +542,10 @@ Example configuration:
 
 .. code-block:: none
 
+  mail_plugins = $mail_plugins notify push_notification push_notification_chronos
+
   plugin {
-    push_notification_driver = chronos:url=http://login:pass@node1.domain.tld:8009/chronos/v1/itip/pushmail max_retries=2 timeout=2500ms msg_max_size=1mb
+    push_notification_driver = chronos:url=http://login:pass@node1.domain.tld:8009/chronos/v1/itip/pushmail msg_max_size=1mb
   }
 
 Payload
