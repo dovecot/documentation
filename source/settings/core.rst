@@ -665,6 +665,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: dict_db_config
    :values: @string
+   :removed: v2.4;v3.0
 
    Points to a Berkeley DB config file. Equivalent to adding
    ``DB_CONFIG=/path`` to :dovecot_core:ref:`import_environment`.

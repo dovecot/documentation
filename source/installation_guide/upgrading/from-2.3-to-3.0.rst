@@ -135,6 +135,8 @@ Removed features and their replacements
 | ``write_timeout_msecs``                                    | Deprecated HTTP-storage parameter. Use :ref:`write_timeout <http_storages>` setting      |
 |                                                            | instead.                                                                                 |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``dict_db_config``                                         | Berkeley DB is not supported anymore.                                                    |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 Changed default settings
 ========================
