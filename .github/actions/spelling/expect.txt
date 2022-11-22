@@ -622,6 +622,7 @@ letsencrypt
 LFs
 lgdb
 LHLO
+LGPL
 LIBADD
 libbzip
 libc
@@ -1190,6 +1191,7 @@ stddev
 stderr
 stdin
 stdout
+stephan
 STln
 STLS
 stopword
