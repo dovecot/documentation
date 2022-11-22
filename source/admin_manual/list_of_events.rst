@@ -3031,8 +3031,11 @@ Emitted when proxying has ended. Either successfully or with error.
 +---------------------+------------------------------------------------------+
 | disconnect_reason   | Reason for disconnection (empty = clean disconnect). |
 +---------------------+------------------------------------------------------+
-| idle_secs           | Number of seconds the connection was idling before   |
-|                     | getting disconnected.                                |
+| idle_usecs          | Number of microseconds the connection was idling     |
+|                     | before getting disconnected.                         |
+|                     |                                                      |
+|                     | .. versionchanged:: v2.4.0;v3.0.0 This was           |
+|                     |                     previously named idle_secs.      |
 +---------------------+------------------------------------------------------+
 | bytes_in            | Amount of data read from client, in bytes.           |
 +---------------------+------------------------------------------------------+
