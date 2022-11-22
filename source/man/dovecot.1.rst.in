@@ -130,7 +130,6 @@ FILES
 *@pkgsysconfdir@/conf.d/*.conf*
    Configuration files of different services and settings.
 
-
 .. include:: reporting-bugs.inc
 
 SEE ALSO
