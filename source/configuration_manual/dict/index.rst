@@ -428,6 +428,7 @@ SQL dict.
 
   # Due to a bug, it's also necessary for now to use the following table
   # to catch accesses to /private and /shared root key lookups.
+  # This is unnecessary in v2.3.20 and later:
   #
   # CREATE TABLE mailbox_private_none (
   #   username VARCHAR(255) DEFAULT "",
