@@ -70,7 +70,7 @@ Dovecot supports the following non-plaintext mechanisms:
 | GSS-SPNEGO                                                                   | A wrapper mechanism defined by                                           |                          |
 |                                                                              | `RFC 4178 <https://tools.ietf.org/html/rfc4178>`_.                       |                          |
 |                                                                              | Can be accessed via either GSSAPI or                                     |                          |
-|                                                                              | `Winbind <https://wiki.dovecot.org/Authentication/Mechanisms/Winbind>`_. |                          |
+|                                                                              | :ref:`Winbind <authentication-winbind>`.                                 |                          |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
 | `GSSAPI <https://wiki.dovecot.org/Authentication/Kerberos>`_                 | Kerberos v5 support.                                                     |                          |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
