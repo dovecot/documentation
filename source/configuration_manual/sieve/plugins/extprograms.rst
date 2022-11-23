@@ -89,7 +89,7 @@ being configured:
    Determines the end-of-line character sequence used for the data piped
    to external programs. The default is currently "crlf", which
    represents a sequence of the carriage return (CR) and line feed (LF)
-   characters. This matches the Internet Message Format (RFC5322) and
+   characters. This matches the Internet Message Format (:rfc:`5322`) and
    what Sieve itself uses as a line ending. Set this setting to "lf" to
    use a single LF character instead.
 

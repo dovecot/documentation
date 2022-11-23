@@ -40,7 +40,7 @@ ARGUMENTS
 =========
 
 *flags*
-   Message flags as described in RFC 3501, section 2.3.2 (Flags
+   Message flags as described in :rfc:`3501`, section 2.3.2 (Flags
    Message Attribute): **\\Answered**, **\\Deleted**, **\\Draft**,
    **\\Flagged**, **\\Recent** and **\\Seen**. And the IMAP keywords
    **$Forwarded**, **$MDNSent**, **$SubmitPending** and **$Submitted**

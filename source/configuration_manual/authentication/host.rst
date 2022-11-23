@@ -4,13 +4,12 @@
 Login referrals
 ===============
 
-Login referrals are an IMAP extension specified by `RFC 2221
-<https://tools.ietf.org/html/rfc2221>`_. Their purpose is to redirect clients
-to an different IMAP4 server in case of hardware failures or organizational
+Login referrals are an IMAP extension specified by :rfc:`2221`.
+Their purpose is to redirect clients to an different IMAP4 server in case of hardware failures or organizational
 changes. No client action is needed to invoke the LOGIN-REFERRALS capability:
 the redirection is triggered by the server and occurs transparently.
 
-A security consideration is in order. As also stated by RFC 2221, a man in the
+A security consideration is in order. As also stated by :rfc:`2221`, a man in the
 middle attack may use a rogue 'password catching' server to collect login data
 and redirect your clients to their own rogue IMAP4 server. Although this would
 be avoided by enforcing SSL/TLS. Login referrals are not supported by many

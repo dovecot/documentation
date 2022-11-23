@@ -14,8 +14,7 @@ the server version:
 RFC 8970
 --------
 
-Support for the RFC standard: `IMAP PREVIEW extension (RFC 8970)
-<https://tools.ietf.org/html/rfc8970>`_.
+Support for the standard: IMAP PREVIEW extension  :rfc:`8970`.
 
 .. versionadded:: v2.3.15
 
@@ -23,13 +22,13 @@ Support for the RFC standard: `IMAP PREVIEW extension (RFC 8970)
 PREVIEW w/algorithm (deprecated)
 --------------------------------
 
-This is support for a working draft of RFC 8970, where the preview algorithm
+This is support for a working draft of :rfc:`8970`, where the preview algorithm
 could be explicitly requested by the client.
 
 See: `<https://datatracker.ietf.org/doc/draft-ietf-extra-imap-fetch-preview/06/>`_
 
 This method of accessing the preview is deprecated, and should be replaced
-by the standard RFC 8970 usage.
+by the standard :rfc:`8970` usage.
 
 .. versionadded:: v2.3.7
 .. deprecated:: v2.3.15
@@ -38,13 +37,13 @@ by the standard RFC 8970 usage.
 SNIPPET (deprecated)
 --------------------
 
-This is support for a working draft of RFC 8970, when the extension was called
+This is support for a working draft of :rfc:`8970`, when the extension was called
 SNIPPET.
 
 See: `<https://www.ietf.org/archive/id/draft-slusarz-imap-fetch-snippet-00.txt>`_
 
 This method of accessing the preview is deprecated, and should be replaced
-by the standard RFC 8970 usage.
+by the standard :rfc:`8970` usage.
 
 .. versionadded:: v2.2.34
 .. deprecated:: v2.3.15

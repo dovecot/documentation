@@ -34,7 +34,7 @@ databases.
 
 The folder names use UTF-8 character set internally. All folder names must be
 valid UTF-8. With ``LAYOUT=fs`` and ``LAYOUT=Maildir++`` the folder names are
-stored in filesystem paths as mUTF-7 (see IMAP RFC 3501) mainly for legacy
+stored in filesystem paths as mUTF-7 (see IMAP :rfc:`3501`) mainly for legacy
 reasons. This can be changed by specifying the UTF8 parameter in
 :dovecot_core:ref:`mail_location`.
 

@@ -134,7 +134,7 @@ Local validation
 .. versionadded:: 2.3.11
 
 Local validation allows validating tokens without connecting to an oauth2 server.
-This requires that key issuer supports `JWT tokens (RFC 7519) <https://tools.ietf.org/html/rfc7519>`_.
+This requires that key issuer supports JWT tokens (:rfc:`7519`).
 
 You can put the validation keys into any :ref:`dictionary <dict>`.
 The lookup key used is ``/shared/<azp:default>/<alg>/<keyid:default>``.
@@ -224,7 +224,7 @@ OpenID.Discovery
 
 .. versionadded:: v2.3.16
 
-Support for `RFC 7628 <https://datatracker.ietf.org/doc/html/rfc7628#section-3.2.2>`_  OpenID Discovery (OIDC) can be achieved with
+Support for :rfc:`7628` OpenID Discovery (OIDC) can be achieved with
 ``openid_configuration_url`` setting. Setting this causes Dovecot to report OIDC configuration URL as ``openid-configuration`` element in error JSON.
 
 Full config file

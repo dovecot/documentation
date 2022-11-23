@@ -116,7 +116,7 @@ mailbox mutf7
 
 The **mailbox mutf7** command may be used to convert the international
 mailbox *name* into a modified version of the UTF-7 encoding and vice
-versa. See RFC 3501, section 5.1.3 (Mailbox International Naming
+versa. See :rfc:`3501#section-5.1.3` (Mailbox International Naming
 Convention).
 
 **-7**

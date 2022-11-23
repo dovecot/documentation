@@ -60,7 +60,7 @@ Settings
    A minimum of ``0`` indicates that users are allowed to make the Sieve
    interpreter send a vacation response message for every incoming message
    that meets the other reply criteria (refer to
-   `RFC5230 <https://tools.ietf.org/html/rfc5230>`_). A value of zero is not
+   :rfc:`5230`). A value of zero is not
    recommended.
 
 

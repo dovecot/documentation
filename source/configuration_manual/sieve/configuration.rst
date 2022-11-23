@@ -225,8 +225,8 @@ applicable):
 
 :dovecot_core:ref:`recipient_delimiter` = +
    The separator that is expected between the :user and :detail address
-   parts introduced by the `subaddress
-   extension <http://tools.ietf.org/html/rfc5233/>`_. This may also be
+   parts introduced by the subaddress
+   extension (:rfc:`5233`). This may also be
    a sequence of characters (e.g. '--'). The current implementation
    looks for the separator from the left of the localpart and uses the
    first one encountered. The :user part is left of the separator and
@@ -652,8 +652,7 @@ However, there are a few important differences in the supported Sieve language f
 -  The **imapflags** extension is now called **imap4flags**. The
    CMUSieve implementation is based on an `old imapflags draft
    specification <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_
-   that is not completely compatible with `RFC 5232
-   <http://tools.ietf.org/html/rfc5232/>`_. Particularly, the
+   that is not completely compatible with :rfc:`5232`. Particularly, the
    **mark** and **unmark** commands were removed from the new
    specification. For backwards compatibility, support for the old
    imapflags extension can be enabled using the
@@ -662,8 +661,7 @@ However, there are a few important differences in the supported Sieve language f
 -  The **notify** extension is now called **enotify**. The CMUSieve
    implementation is based on an `old notify draft
    specification <http://tools.ietf.org/html/draft-martin-sieve-notify-01>`_
-   that is not completely compatible with `RFC5425
-   <http://tools.ietf.org/html/rfc5435/>`_. Particularly, the
+   that is not completely compatible with :rfc:`5425`. Particularly, the
    **denotify** command and **$text$** substitutions were removed from
    the new specification. For backwards compatibility, support for the
    old imapflags extension can be enabled using the
@@ -687,8 +685,8 @@ However, there are a few important differences in the supported Sieve language f
 From Dovecot Sieve v0.1.x (Dovecot v1.2)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  The :pigeonhole:ref:`sieve_subaddress_sep` setting for the `Sieve subaddress
-   extension <http://tools.ietf.org/html/rfc5233/>`_ is now known as
+-  The :pigeonhole:ref:`sieve_subaddress_sep` setting for the Sieve subaddress
+   extension (:rfc:`5233`) is now known as
    :dovecot_core:ref:`recipient_delimiter`. Although
    :pigeonhole:ref:`sieve_subaddress_sep` is still
    recognized for backwards compatibility, it is recommended to update

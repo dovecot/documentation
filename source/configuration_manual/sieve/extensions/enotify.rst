@@ -5,8 +5,7 @@ Pigeonhole Sieve: Extension for Notifications
 =============================================
 
 
-The Sieve **enotify** extension
-(`RFC5435 <http://tools.ietf.org/html/rfc5435/>`_) adds the notify action to the Sieve language.
+The Sieve **enotify** extension :rfc:`5435` adds the notify action to the Sieve language.
 
 Configuration
 =============
