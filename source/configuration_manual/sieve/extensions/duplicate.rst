@@ -4,8 +4,7 @@
 Pigeonhole Sieve: Duplicate Extension
 =====================================
 
-The **duplicate** extension `RFC
-7352 <http://tools.ietf.org/html/rfc7352>`_ adds a new test command
+The **duplicate** extension :rfc:`7352` adds a new test command
 called ``duplicate`` to the Sieve language. This test adds the ability
 to detect duplications. The main application for this new test is
 handling duplicate deliveries commonly caused by mailing list

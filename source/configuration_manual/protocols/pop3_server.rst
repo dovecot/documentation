@@ -63,8 +63,8 @@ is (was?) especially useful for dialup connections which die in the middle of
 the download, because the half-dead connections won't keep the mailbox locked.
 
 Setting ``pop3_lock_session=yes`` makes Dovecot lock the mailbox for the whole
-session. This is also what the `POP3 RFC
-<https://www.ietf.org/rfc/rfc1939.txt>`_ specifies that should be done. If
+session. This is also what the POP3 :rfc:`1939`
+specifies that should be done. If
 another connection comes while the mailbox is locked, Dovecot waits until the
 locking times out (2 minutes with Maildir, ``mbox_lock_timeout`` with mbox). In
 future there will be a separate ``pop3_lock_timeout`` setting which allows

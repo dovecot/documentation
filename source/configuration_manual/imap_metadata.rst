@@ -4,8 +4,8 @@
 IMAP METADATA
 =============
 
-Dovecot supports the `IMAP METADATA extension (RFC 5464)
-<https://tools.ietf.org/html/rfc5464>`_, which allows per-mailbox, per-user
+Dovecot supports the IMAP METADATA extension (:rfc:`5464`),
+which allows per-mailbox, per-user
 data to be stored and accessed via IMAP commands.
 
 To activate metadata storage, a :ref:`dictionary <dict>` needs to be

@@ -46,11 +46,10 @@ History
 ^^^^^^^
 
 The history of mbox format, and a discussion of its historical use and
-generally agreed-upon conventions, can be found in `RFC 4155`_.
+generally agreed-upon conventions, can be found in :rfc:`4155`.
 
 Additionally, the `mbox Wikipedia`_ page also is a good resource.
 
-.. _`RFC 4155`: https://tools.ietf.org/html/rfc4155
 .. _`mbox Wikipedia`: https://en.wikipedia.org/wiki/Mbox
 
 .. _mbox_mbox_format_locking:
