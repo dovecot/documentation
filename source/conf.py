@@ -18,6 +18,8 @@ sys.path.append(os.path.abspath('./_ext'))
 # Increase recursion limit; needed for todo processing
 sys.setrecursionlimit(10000)
 
+from sphinx.environment import default_settings
+
 # -- Project information -----------------------------------------------------
 
 project = u'Dovecot'
@@ -213,3 +215,5 @@ epub_exclude_files = ['search.html']
 # -- Extension configuration -------------------------------------------------
 
 todo_include_todos = False
+
+default_settings['rfc_base_url'] = "https://datatracker.ietf.org/doc/html/"
