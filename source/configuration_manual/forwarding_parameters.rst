@@ -38,7 +38,7 @@ The parameters are forwarded as part of the ID command field-value list.
 
 .. code-block:: none
 
-  5 ID (x-originating-ip "127.0.0.1" x-originating-port "143" ...)
+  5 ID ("x-originating-ip" "127.0.0.1" "x-originating-port" "143" ...)
 
 Supported Fields
 ^^^^^^^^^^^^^^^^
