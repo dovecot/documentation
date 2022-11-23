@@ -65,7 +65,7 @@ Formats:
 Format Args:
 ^^^^^^^^^^^^
 
-* `time-rfc3339` - serialize timestamps as strings using the RFC 3339 format
+* `time-rfc3339` - serialize timestamps as strings using the :rfc:`3339` format
   (YYYY-MM-DDTHH:MM:SS.uuuuuuZ)
 * `time-unix` - serialize timestamps as a floating point number of seconds
   since the Unix epoch

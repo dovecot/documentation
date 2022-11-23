@@ -17,7 +17,7 @@ The Spam mailbox is defined and reported to the MUA via a Special-Use flag:
      }
    }
 
-Spam reporting messages are handled via :ref:`imapsieve plugin <pigeonhole_plugin_imapsieve>`.  A global configuration script is used to capture the event of moving messages in/out of the Spam mailbox; the script sends the message (via `RFC 5965 <https://tools.ietf.org/html/rfc5965>`_ compliant spam reporting format) to an external reporting e-mail address, using the `report extension <https://raw.githubusercontent.com/dovecot/pigeonhole/master/doc/rfc/spec-bosch-sieve-report.txt>`_.
+Spam reporting messages are handled via :ref:`imapsieve plugin <pigeonhole_plugin_imapsieve>`.  A global configuration script is used to capture the event of moving messages in/out of the Spam mailbox; the script sends the message using :rfc:`5965` compliant spam reporting format to an external reporting e-mail address, using the `report extension <https://raw.githubusercontent.com/dovecot/pigeonhole/master/doc/rfc/spec-bosch-sieve-report.txt>`_.
 
 .. code-block:: none
 

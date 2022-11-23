@@ -11,9 +11,8 @@ problems:
 -  User name and realm are part of the MD5 hash that's used for
    authentication.
 
-For these and other reasons `Digest-MD5 has been
-obsoleted <https://www.ietf.org/rfc/rfc6331.html>`_ by
-`SCRAM <https://www.ietf.org/rfc/rfc5802.html>`_.
+For these and other reasons Digest-MD5 has been obsoleted :rfc:`6331` by
+SCRAM :rfc:`5802`.
 
 Realms
 ^^^^^^

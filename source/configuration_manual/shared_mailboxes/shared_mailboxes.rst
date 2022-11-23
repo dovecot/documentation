@@ -235,8 +235,8 @@ You can use ``doveadm acl`` (see man page for usage details) to share mailboxes
 or it can be done using IMAP SETACL command. It is
 the only way to update the shared mailbox list dictionary.
 
-Below is a quick introduction to IMAP ACL commands. See `RFC
-4314 <http://www.ietf.org/rfc/rfc4314.txt>`_ for more details.
+Below is a quick introduction to IMAP ACL commands. See :rfc:`4314`
+for more details.
 
 -  ``MYRIGHTS <mailbox>``: Returns the user's current rights to the mailbox.
 
@@ -260,7 +260,7 @@ Below is a quick introduction to IMAP ACL commands. See `RFC
 
         -  ``user``: Matches the given user.
 
-The ``$group`` syntax is not a standard, but it is mentioned in RFC 4314
+The ``$group`` syntax is not a standard, but it is mentioned in :rfc:`4314`
 examples and is also understood by at least Cyrus IMAP. Having '``-``'
 before the identifier specifies negative rights.
 

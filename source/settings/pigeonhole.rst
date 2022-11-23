@@ -434,7 +434,7 @@ Sieve Plugin Settings
 
    The separator that is expected between the ``:user`` and ``:detail``
    address parts introduced by the
-   `subaddress extension <http://tools.ietf.org/html/rfc5233/>`_.
+   subaddress extension :rfc:`5233`.
 
    This may also be a sequence of characters (e.g. ``--``).
 

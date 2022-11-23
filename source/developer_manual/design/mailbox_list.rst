@@ -114,7 +114,7 @@ First the list operation is initialized with one of the init functions:
       processing the same mailbox multiple times.
 
 The patterns are IMAP-style patterns with '%' and '\*' wildcards as
-described by RFC 3501: '%' matches only up to next hierarchy separator,
+described by :rfc:`3501`: '%' matches only up to next hierarchy separator,
 while '\*' matches the rest of the string.
 
 These flags control what mailboxes are returned:

@@ -7,13 +7,13 @@ Push Notification Framework
 Introduction
 ============
 
-Dovecot's Push Notification framework exposes `RFC 5423 (Internet Message Store
-Events) <https://tools.ietf.org/html/rfc5423>`_ events that occur in Dovecot to
+Dovecot's Push Notification framework exposes :rfc:`5423` (Internet Message Store
+Events) events that occur in Dovecot to
 a system that can be used to report these events to external services.
 
 .. _push_notification-events:
 
-These events (see https://datatracker.ietf.org/doc/html/rfc5423#section-4.1
+These events (see :rfc:`5423#section-4.1`
 for descriptions) are available within the notification framework, although a
 driver may not implement all of them:
 
@@ -171,23 +171,23 @@ Push notification sent in JSON format with the following fields:
 ==================== ======= ===================================================
 Name                 Type    Description
 ==================== ======= ===================================================
-``event``            string  RFC 5423 event type (currently only "MessageNew")
+``event``            string  :rfc:`5423` event type (currently only "MessageNew")
 
 ``folder``           string  Mailbox name
 
-``from``             string  RFC 2822 address of the message sender
+``from``             string  :rfc:`2822` address of the message sender
                              (MIME-encoded), if applicable
 
 ``imap-uid``         integer UID of the message, if applicable
 
-``imap-uidvalidity`` integer RFC 3501 UIDVALIDITY value of the mailbox
+``imap-uidvalidity`` integer :rfc:`3501` UIDVALIDITY value of the mailbox
 
 ``snippet``          string  Snippet of the message body (UTF-8), if applicable
 
 ``subject``          string  Subject of the message (MIME-encoded), if
                              applicable
 
-``unseen``           integer RFC 3501 UNSEEN value of the mailbox
+``unseen``           integer :rfc:`3501` UNSEEN value of the mailbox
 
 ``user``             string  User identifier
 ==================== ======= ===================================================
@@ -560,7 +560,7 @@ Name        Type   Description
 ``user``    string The username of the account receiving the message on the
                    dovecot backend
 
-``event``   string RFC 5423 event type. Currently only "MessageNew" is expected.
+``event``   string :rfc:`5423` event type. Currently only "MessageNew" is expected.
 
 ``folder``  string Mailbox name in which the message was saved. Can be other
                    than INBOX, in case sieve filters are active. A trivial

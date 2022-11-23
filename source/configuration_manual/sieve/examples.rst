@@ -203,7 +203,7 @@ The virustest extension can be used in a similar manner:
 Plus Addressed mail filtering
 -----------------------------
 
-Using the `subaddress <http://tools.ietf.org/html/rfc5233/>`_
+Using the subaddress :rfc:`5233`
 extension, it is possible to match against the 'detail' part of an
 e-mail address, e.g. a '``+tag``' suffix to the local part of the
 address. This is for example useful when you don't want just any +tag to
@@ -219,7 +219,7 @@ user+spam@example.com into user's Spam folder.
    }
 
 The following more advanced example uses the
-`subaddress <http://tools.ietf.org/html/rfc5233/>`_ extension to handle
+subaddress :rfc:`5233` extension to handle
 recipient addresses structured as ``sales+<name>@company.com`` in a
 special way. The ``<name>`` part is extracted from the address using
 :ref:`variables <pigeonhole_extension_variables>` extension,
@@ -367,12 +367,12 @@ tree as follows:
 
 For example, in March 2013 this puts messages from the Dovecot mailing
 list in a folder called ``INBOX.Lists.2013.03.dovecot``. It combines the
-`date <http://tools.ietf.org/html/rfc5260#section-4>`_ and
+date :rfc:`5260#section-4` and
 :ref:`variables <pigeonhole_extension_variables>` extensions to
 extract the required date strings. Using the ``:create`` argument for
 the ``fileinto`` command, the indicated folder is created automatically
 if it doesn't exist. The ``:create`` argument is provided by the
-`mailbox <http://tools.ietf.org/html/rfc5490#section-3>`_ extension.
+mailbox :rfc:`5490#section-3` extension.
 
 Emulating :dovecot_core:ref:`lmtp_save_to_detail_mailbox=yes <lmtp_save_to_detail_mailbox>`
 -------------------------------------------------------------------------------------------
