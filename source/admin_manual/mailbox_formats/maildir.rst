@@ -146,8 +146,8 @@ Usage of Timestamps
 
 Timestamps of message files:
 
-* ``mtime`` is used as `IMAP INTERNALDATE, RFC 3501 [2.3.3]`_, and must never
-  change (see RFC 3501 [2.3.1.1, parenthesis 4]).
+* ``mtime`` is used as IMAP INTERNALDATE :rfc:`3501#section-2.3.3`, and must never
+  change (see :rfc:`RFC 3501 [2.3.1.1, parenthesis 4] <3501#section-2.3.1.1>`).
 * ``ctime`` is used as Dovecot's internal "save/copy date", unless the correct
   value is found from ``dovecot.index.cache``. This is used only by external
   commands, e.g. ``doveadm expunge savedbefore``.
@@ -180,7 +180,6 @@ Filename Examples
 |                                                                                                   | that folder's ``dovecot-keywords`` file.                 |
 +---------------------------------------------------------------------------------------------------+----------------------------------------------------------+
 
-.. _`IMAP INTERNALDATE, RFC 3501 [2.3.3]`: https://tools.ietf.org/html/rfc3501#section-2.3.3
 .. _`index files`: https://wiki.dovecot.org/IndexFiles
 
 .. _`maildir_and_filesystems`:

@@ -16,7 +16,7 @@ IMAP protocol
 -------------
 
 For IMAP protocol, this is done by extending the
-`ID (RFC 2971) <https://tools.ietf.org/html/rfc2971>`_ command.
+ID (:rfc:`2971`) command.
 
 * RFC Requirements
 

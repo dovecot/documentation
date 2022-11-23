@@ -5,22 +5,20 @@ Submission Server
 =================
 
 As of version 2.3.0, Dovecot provides an SMTP submission service, also known as
-a `Mail Submission Agent (MSA) <https://tools.ietf.org/html/rfc6409>`_. It is
+a Mail Submission Agent (MSA) :rfc:`6409`. It is
 currently implemented as a proxy that acts as a front-end for any :ref:`mta`,
 adding the necessary functionality required for a submission service: it adds
-the required `AUTH <https://tools.ietf.org/html/rfc4954>`_ support, avoiding
+the required AUTH :rfc:`4954` support, avoiding
 the need to configure the MTA for :ref:`SASL authentication <sasl>`. More SMTP
-capabilities like `CHUNKING <https://tools.ietf.org/html/rfc3030>`_ and `SIZE
-<https://tools.ietf.org/html/rfc1870>`_ are supported, without requiring the
-backend MTA supporting these extensions. Other capabilities like `8BITMIME
-<https://tools.ietf.org/html/rfc6152>`_ and `DSN
-<https://tools.ietf.org/html/rfc3461>`_ currently require support from the
+capabilities like CHUNKING :rfc:`3030` and SIZE :rfc:`1870` are supported, without requiring the
+backend MTA supporting these extensions. Other capabilities like 8BITMIME :rfc:`6152` and
+DS :rfc:`3461` currently require support from the
 backend/relay MTA.
 
-The most notable feature that the proxy adds is the `BURL capability
-<https://tools.ietf.org/html/rfc4468>`_. The main application of that
-capability — together with :ref:`IMAP <imap_server>` and  `URLAUTH
-<https://tools.ietf.org/html/rfc4467>`_ — is avoiding a duplicate upload of
+The most notable feature that the proxy adds is the BURL capability :rfc:`4468`.
+The main application of that
+capability — together with :ref:`IMAP <imap_server>` and URLAUTH :rfc:`4467` —
+is avoiding a duplicate upload of
 submitted e-mail messages; normally the message is both sent through SMTP and
 uploaded to the `Sent` folder through IMAP. Using BURL, the client can first
 upload the message to IMAP and then use BURL to make the SMTP server fetch the
@@ -46,19 +44,19 @@ Features
 The following SMTP capabilities are supported by the Dovecot submission
 service:
 
- * `8BITMIME <https://tools.ietf.org/html/rfc6152>`_ - Only if relay MTA provides
+ * 8BITMIME :rfc:`6152` - Only if relay MTA provides
    support
- * `AUTH <https://tools.ietf.org/html/rfc4954>`_
- * `BURL <https://tools.ietf.org/html/rfc4468>`_
- * `CHUNKING <https://tools.ietf.org/html/rfc3030>`_
- * `DSN <https://tools.ietf.org/html/rfc3461>`_ - Only if relay MTA provides
+ * AUTH :rfc:`4954`
+ * BURL :rfc:`4468`
+ * CHUNKING :rfc:`3030`
+ * DSN :rfc:`3461` - Only if relay MTA provides
    support
- * `ENHANCEDSTATUSCODES <https://tools.ietf.org/html/rfc2034>`_
- * `PIPELINING <https://tools.ietf.org/html/rfc2920>`_
- * `SIZE <https://tools.ietf.org/html/rfc1870>`_
- * `STARTTLS <https://tools.ietf.org/html/rfc3207>`_
- * `VRFY <https://tools.ietf.org/html/rfc5321>`_
- * `XCLIENT <http://www.postfix.org/XCLIENT_README.html>`_
+ * ENHANCEDSTATUSCODES :rfc:`2034`
+ * PIPELINING :rfc:`2920`
+ * SIZE :rfc:`1870`
+ * STARTTLS :rfc:`3207`
+ * VRFY :rfc:`5321`
+ * XCLIENT - See http://www.postfix.org/XCLIENT_README.html
 
 Configuration
 =============

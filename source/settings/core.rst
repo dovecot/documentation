@@ -1235,7 +1235,7 @@ See :ref:`settings` for list of all setting groups.
    :todo: Indicate imap AND metadata setting
    :values: @boolean
 
-   Dovecot supports the IMAP METADATA extension (RFC 5464), which allows
+   Dovecot supports the IMAP METADATA extension (:rfc:`5464`), which allows
    per-mailbox, per-user data to be stored and accessed via IMAP commands. Set
    this parameter's value to ``yes`` if you wish to activate the IMAP METADATA
    commands.
@@ -1274,7 +1274,7 @@ See :ref:`settings` for list of all setting groups.
    .. note::
 
       This setting is REQUIRED for the
-      `URLAUTH <https://tools.ietf.org/html/rfc4467>`_ extension to be active.
+      URLAUTH :rfc:`4467` extension to be active.
 
 
 .. dovecot_core:setting:: imap_urlauth_logout_format
@@ -2381,7 +2381,7 @@ See :ref:`settings` for list of all setting groups.
 
    The method for contacting the server administrator.
 
-   Per the METADATA standard (RFC 5464), this value MUST be a URI (e.g., a
+   Per the METADATA standard (:rfc:`5464`), this value MUST be a URI (e.g., a
    mailto: or tel: URL), but that requirement is not enforced by Dovecot.
 
    This value is accessible to authenticated users through the
@@ -3398,18 +3398,15 @@ See :ref:`settings` for list of all setting groups.
 
    ``SSLv3``
 
-     Support SSLv3+. (SHOULD NOT BE USED) (SSLv3 deprecated:
-     `RFC 7568 <https://datatracker.ietf.org/doc/html/rfc7568>`_)
+     Support SSLv3+. (SHOULD NOT BE USED) (SSLv3 deprecated: :rfc:`7568`)
 
    ``TLSv1``
 
-     Support TLSv1+. (default before v2.3.15) (TLSv1 deprecated:
-     `RFC 8996 <https://datatracker.ietf.org/doc/html/rfc8996>`_)
+     Support TLSv1+. (default before v2.3.15) (TLSv1 deprecated: :rfc:`8996`)
 
    ``TLSv1.1``
 
-     Support TLSv1.1+. (TLSv1.1 deprecated:
-     `RFC 8996 <https://datatracker.ietf.org/doc/html/rfc8996>`_)
+     Support TLSv1.1+. (TLSv1.1 deprecated: :rfc:`8996`)
 
    ``TLSv1.2``
 

@@ -4,11 +4,9 @@
 Pigeonhole: IMAPSieve Plugin
 ============================
 
-As defined in the base specification (`RFC
-5228 <http://tools.ietf.org/html/rfc5228>`_), the Sieve language is
+As defined in the base specification :rfc:`5228`, the Sieve language is
 used only during delivery. However, in principle, it can be used at any
-point in the processing of an email message. `RFC
-6785 <http://tools.ietf.org/html/rfc6785>`_ defines the use of Sieve
+point in the processing of an email message. :rfc:`6785` defines the use of Sieve
 filtering in IMAP, operating when messages are created or their
 attributes are changed. This feature extends both Sieve and IMAP.
 Therefore, Pigeonhole provides both an IMAP plugin and a Sieve plugin.
@@ -67,8 +65,7 @@ Note that the ``imapsieve`` extension can only be used in a Sieve script
 that is invoked from IMAP. When it is used in the active delivery
 script, it will cause runtime errors. To make a Sieve script suitable
 for both delivery and IMAP, the availability of the extension can be
-tested using the ``ihave`` test (`RFC
-5463 <http://tools.ietf.org/html/rfc5463>`_) as usual.
+tested using the ``ihave`` test :rfc:`5463` as usual.
 
 The following settings are recognized the "imap_sieve" plugin:
 
@@ -110,7 +107,7 @@ The following settings are recognized the "imap_sieve" plugin:
    Only execute the administrator Sieve scripts for the mailbox
    configured with ``imapsieve_mailboxXXX_name`` when one of the listed
    ``IMAPSIEVE``
-   `causes <https://tools.ietf.org/html/rfc6785#section-4.3>`_ apply
+   causes :rfc:`6785#section-4.3` apply
    (currently either ``APPEND``, ``COPY``, or ``FLAG``. This has no
    effect on the user script, which is always executed no matter the
    cause.
