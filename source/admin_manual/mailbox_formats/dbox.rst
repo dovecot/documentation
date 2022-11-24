@@ -229,14 +229,14 @@ are placed (e.g. copied or moved in the filesystem) in a mail location (and
 then "imported" by Dovecot).
 
 Therefore, it is (usually) **not** necessary, to strip any such mail headers
-at the MTA, MDA or LDA (as it is recommended with
+at the :ref:`MTA <mta>`, :ref:`MDA <mda>` or :ref:`LDA <lda>` (as it is recommended with
 :ref:`mbox <mbox_mbox_format>`).
 
-There is one exception: when
-:dovecot_core:ref:`pop3_reuse_xuidl = yes <pop3_reuse_xuidl>` (which is
-deprecated). In this case, the ``X-UIDL`` header is used for the POP3 UIDLs.
-Therefore, in this case it is recommended to strip the ``X-UIDL`` mail headers
-*case-insensitively* at the MTA, MDA or LDA.
+There is one exception, though, namely when
+:dovecot_core:ref:`pop3_reuse_xuidl = yes <pop3_reuse_xuidl>` (which
+is however deprecated): in this case ``X-UIDL`` is used for the POP3 UIDLs.
+Therefore, in this case, is recommended to strip the ``X-UIDL`` mail headers
+*case-insensitively* at the :ref:`MTA <mta>`, :ref:`MDA <mda>`, or :ref:`LDA <lda>`.
 
 Accessing Expunged Mails with mdbox
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
