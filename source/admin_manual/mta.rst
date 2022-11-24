@@ -8,7 +8,7 @@ MTA is an acronym for Mail Transport Agent. It is the software that works
 behind the scenes to transport E-Mail messages from one computer to another.
 MUAs (such as mutt, thunderbird, sylpheed, evolution, kmail) hand off newly
 sent messages to an MTA. MTAs talk to other MTAs, and either deliver mail
-locally or hand it off for delivery to an MDA/LDA if it was destined to the
+locally or hand it off for delivery to and :ref:`MDA <mda>`/:ref:`LDA <lda>` if it was destined to the
 local system.
 
 MTA is a generic term and usually refers to one of these popular software
@@ -47,5 +47,4 @@ them:
 These mail fetching utilities can be used to store mail for later retrieval by
 dovecot.
 
-Contrast this to the `message delivery agent (MDA)
-<https://wiki.dovecot.org/MDA>`_, sometimes called local delivery agent (LDA).
+Contrast this to the :ref:`message delivery agent (MDA) <mda>`, sometimes called local delivery agent (:ref:`LDA <lda>`).
