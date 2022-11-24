@@ -76,7 +76,7 @@ the ``-d`` parameter to do userdb lookups. There are two ways to solve this:
 Checkpassword Interface
 =======================
 
-The interface is specified in <http://cr.yp.to/checkpwd/interface.html>.
+The interface is specified in <https://cr.yp.to/checkpwd/interface.html>.
 However, here's a quick tutorial for writing a script:
 
  * Read ``<username> NUL <password> NUL`` from fd 3.

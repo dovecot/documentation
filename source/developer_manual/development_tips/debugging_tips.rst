@@ -144,12 +144,12 @@ libraries on the system. For example:
         grep '^0x.*/' | sed 's,^[^/]*,,' |
         xargs tar czf $dest --dereference $binary $core
 
-In v2.3.10+ there is dovecot-sysreport script that can do the same (and
+In v2.3.10+ there is `dovecot-sysreport <https://raw.githubusercontent.com/dovecot/core/master/src/util/dovecot-sysreport>` that can do the same (and
 more):
 
 ``dovecot-sysreport --core <binary> <core>``
 
-There's also http://dovecot.org/tools/core-tar.sh
+There's also https://dovecot.org/tools/core-tar.sh
 
 Usage: ``./core-tar.sh <binary> <core> <dest.tar.gz>``
 

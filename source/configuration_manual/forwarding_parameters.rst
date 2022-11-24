@@ -97,7 +97,7 @@ Field        Description
 SMTP/LMTP protocol
 ------------------
 
-See http://www.postfix.org/XCLIENT_README.html
+See https://www.postfix.org/XCLIENT_README.html
 
 Supported Fields (SMTP & LMTP)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

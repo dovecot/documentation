@@ -102,7 +102,7 @@ words match mostly non-substrings (which is common), using long enough
 full word indexing can improve the search performance a lot, especially
 when the word matches a lot of messages.
 
-The Squat name comes from `Cyrus IMAP <http://cyrusimap.web.cmu.edu/>`_
+The Squat name comes from `Cyrus IMAP <https://www.cyrusimap.org/>`_
 which implements slightly similar Squat indexes ("Search QUery Answer
 Tool"). Dovecot's implementation and file format however is completely
 different. The main visible difference is that Dovecot allows updating

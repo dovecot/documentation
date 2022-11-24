@@ -12,7 +12,7 @@ SSL
 LetsEncrypt has a good primer on mail server SSL certificates, see https://www.eff.org/deeplinks/2019/01/encrypting-web-encrypting-net-primer-using-certbot-secure-your-mailserver.
 
 SSL works pretty much the same universally, so for more information about SSL
-you can see for example `Apache's documentation <http://httpd.apache.org/docs/2.2/ssl/>`_
+you can see for example `Apache's documentation <https://httpd.apache.org/docs/2.4/ssl/>`_
 
 SSL, TLS and STARTTLS confusion
 -------------------------------
