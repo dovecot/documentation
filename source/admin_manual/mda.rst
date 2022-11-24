@@ -17,6 +17,6 @@ Common choices include:
 
 -  `maildrop <https://maildrop.cc>`_
 
--  `procmail <http://www.procmail.org/>`_ (appears to be unmaintained)
+-  `procmail <https://www.procmail.org/>`_ (appears to be unmaintained)
 
 -  :ref:`Dovecot's \`dovecot-lda\` LDA <lda>`

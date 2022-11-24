@@ -40,7 +40,7 @@ Example of an ACL:
 
    acl url_stats path_beg /stats
 
-This ACL is matched if the path of a request begins with ``/stats``. This would match a request of http://10.10.10.1/stats, for example. Here, url_stats is just the label given to the pattern. For more details on ACL please refer to the official `HAProxy documentation <http://www.haproxy.org/>`_
+This ACL is matched if the path of a request begins with ``/stats``. This would match a request of http://10.10.10.1/stats, for example. Here, url_stats is just the label given to the pattern. For more details on ACL please refer to the official `HAProxy documentation <https://www.haproxy.org/>`_
 
 .. _haproxy_tls_forward:
 

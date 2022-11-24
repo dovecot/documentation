@@ -320,7 +320,7 @@ Settings
        fts_filters_en = lowercase snowball english-possessive stopwords
      }
 
-.. _`Normalizer Format`: http://userguide.icu-project.org/transforms/general#TOC-Transliterator-Identifiers
+.. _`Normalizer Format`: https://unicode-org.github.io/icu/userguide/transforms/general/#transliterator-identifiers
 
 
 .. dovecot_plugin:setting:: fts_header_excludes

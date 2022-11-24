@@ -69,7 +69,7 @@ service:
  * SIZE :rfc:`1870`
  * STARTTLS :rfc:`3207`
  * VRFY :rfc:`5321`
- * XCLIENT - See http://www.postfix.org/XCLIENT_README.html
+ * XCLIENT - See https://www.postfix.org/XCLIENT_README.html
 
 Configuration
 =============
@@ -205,8 +205,8 @@ As of April 2019 there aren't many clients that support the BURL extension.
 
 =========== ============== ====================================================================================================================================================
 Client      Supports BURL? Notes
-Trojita     Yes            Mentioned `on the dovecot discussion list <http://dovecot.2317879.n4.nabble.com/New-Dovecot-service-SMTP-Submission-RFC6409-tp62117p62122.html>`_
-Thunderbird No             `Vote on bugzilla <https://bugzilla.mozilla.org/page.cgi?id=voting/user.html&bug_id=421779>`_
+Trojita     Yes            Mentioned `on the dovecot discussion list <https://dovecot.org/pipermail/dovecot/2017-December/110282.html>`_
+Thunderbird No             `Vote on bugzilla <https://bugzilla.mozilla.org/show_bug.cgi?id=421779>`_
 =========== ============== ====================================================================================================================================================
 
 See also
