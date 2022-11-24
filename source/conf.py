@@ -139,7 +139,6 @@ htmlhelp_basename = 'Dovecotdoc'
 
 html_css_files = [
  'https://s3-us-west-2.amazonaws.com/colors-css/2.2.0/colors.min.css',
- 'css/custom.css',
 ]
 
 
