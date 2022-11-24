@@ -252,7 +252,7 @@ example::
                     "since",
                     "30d"
                 ],
-                "reverse": 0,
+                "reverse": false,
                 "user": "samik"
             },
             "tag1"
@@ -262,7 +262,7 @@ example::
 .. code::
 
     curl  -v -X POST -u doveadm:secretpassword -H "Content-Type: application/json" \
-      -d '[["altmove",{"user":"samik","reverse":0,"query":["mailbox","INBOX/myfoldertoo","savedbefore","since","30d"]},"tag1"]] ' \
+      -d '[["altmove",{"user":"samik","reverse":false,"query":["mailbox","INBOX/myfoldertoo","savedbefore","since","30d"]},"tag1"]] ' \
       http://localhost:8080/doveadm/v1
 
 
@@ -2710,7 +2710,7 @@ parameters::
 +============+=========+========================+=================================+
 | socketPath | String  | Path to doveadm socket | /var/run/dovecot/doveadm-server |
 +------------+---------+------------------------+---------------------------------+
-| force      | Boolean | Do a forced kick?      | 0                               |
+| force      | Boolean | Do a forced kick?      | false                           |
 +------------+---------+------------------------+---------------------------------+
 | mask       | String  | Uid mask               | testuser001                     |
 +------------+---------+------------------------+---------------------------------+
@@ -2722,7 +2722,7 @@ example::
         [
             "kick",
             {
-                "force": 0,
+                "force": false,
                 "mask": "testuser001"
             },
             "tag1"
@@ -4345,7 +4345,7 @@ example::
         [
             "oboxUserDelete",
             {
-                "allUsers": 0,
+                "allUsers": false,
                 "socketPath": "",
                 "user": "testuser003",
                 "userFile": ""
@@ -4356,7 +4356,7 @@ example::
 
 .. code::
 
-    curl -v -u doveadm:secretpassword -X POST -H "Content-Type: application/json" -d '[["oboxUserDelete", {"allUsers":0,"user":"testuser003"}, "tag1"]] ' http://localhost:8080/doveadm/v1
+    curl -v -u doveadm:secretpassword -X POST -H "Content-Type: application/json" -d '[["oboxUserDelete", {"allUsers":false,"user":"testuser003"}, "tag1"]] ' http://localhost:8080/doveadm/v1
 
 
 response::
@@ -5370,7 +5370,7 @@ parameters::
 +=====================+==============+=======================================+=================================+
 | socketPath          | String       | Path to doveadm socket                | /var/run/dovecot/doveadm-server |
 +---------------------+--------------+---------------------------------------+---------------------------------+
-| separateConnections | Boolean      | Show each user connection in separate | 0                               |
+| separateConnections | Boolean      | Show each user connection in separate | false                           |
 |                     |              | entries                               |                                 |
 +---------------------+--------------+---------------------------------------+---------------------------------+
 | mask                | String array | Uid mask                              | testuser001                     |
@@ -5384,7 +5384,7 @@ example::
             "who",
             {
                 "mask": "",
-                "separateConnections": 0,
+                "separateConnections": false,
                 "socketPath": ""
             },
             "tag1"
