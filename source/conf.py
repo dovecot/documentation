@@ -13,6 +13,7 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os, sys
+import subprocess
 sys.path.append(os.path.abspath('./_ext'))
 
 # Increase recursion limit; needed for todo processing
@@ -26,11 +27,10 @@ project = u'Dovecot'
 copyright = u'Dovecot Authors'
 author = u'Dovecot Authors'
 
-# The short X.Y version
-version = u'2.3'
-# The full version, including alpha/beta/rc tags
-release = u'2.3.8'
-
+version = os.getenv('GITHUB_SHA')
+if not version:
+    version = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode()
+release = version
 
 # -- General configuration ---------------------------------------------------
 
