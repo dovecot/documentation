@@ -164,7 +164,7 @@ Mail Delivery Agent permissions
 When using Dovecot :ref:`LDA <lda>`, it uses all the same configuration
 files as IMAP/POP3, so you don't need to worry about it.
 
-When using an external MDA to deliver to a shared mailbox, you need to
+When using an external :ref:`MDA <mda>` to deliver to a shared mailbox, you need to
 make sure that the resulting files have proper permissions. For example
 with Procmail + Maildir, set ``UMASK=007`` in ``.procmailrc`` to make
 the delivered mail files group-readable. To get the file to use the

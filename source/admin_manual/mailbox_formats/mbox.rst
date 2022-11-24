@@ -171,8 +171,7 @@ metadata. It does sanity checks for them, so the headers may also be modified
 or removed completely. None of these headers are sent to IMAP/POP3 clients
 when they read the mail.
 
-**The MTA, MDA or LDA should strip all these headers case-insensitively before
-writing the mail to the mbox.**
+**The :ref:`MTA <mta>`, :ref:`MDA <mda>` or :ref:`LDA <lda>` should strip all these headers case-insensitively before writing the mail to the mbox.**
 
 Only the first message contains the X-IMAP or X-IMAPbase header. The
 difference is that when all the messages are deleted from mbox file, a pseudo
