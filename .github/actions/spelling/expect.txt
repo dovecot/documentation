@@ -92,6 +92,7 @@ AWSEC
 azp
 backend
 backtraces
+bantime
 barfoo
 basearch
 baseurl
@@ -177,7 +178,6 @@ cmake
 cmdlog
 cmds
 cmp
-cmu
 cmusieve
 cnf
 cnrilrgfclra
@@ -264,6 +264,7 @@ dictdiffmap
 dictmap
 dictrevmap
 dicts
+digestmd
 Diffie
 digestmd
 DIRNAME
@@ -332,7 +333,6 @@ ecprivkey
 ecpubkey
 editheader
 EDQUOT
-edu
 egid
 egrep
 ehlo
@@ -391,7 +391,7 @@ facebook
 FADV
 fadvise
 failover
-faqs
+failregex
 fcntl
 fcontext
 fdatasync
@@ -406,6 +406,7 @@ fieldvalue
 fileinto
 filepath
 filesystem
+findtime
 FIXME
 flagsmodseq
 flatcurve
@@ -585,13 +586,12 @@ iostream
 ipairs
 ipc
 ipt
+iptables
 iredmail
 isps
 istream
 ITERINDEX
 itip
-jan
-jano
 javascript
 jeffpc
 jessie
@@ -638,7 +638,6 @@ LDFLAGS
 ldif
 learntype
 leastconn
-lemonadeformobiles
 len
 letsencrypt
 letterpaper
@@ -694,12 +693,14 @@ locklessint
 logbsize
 logbufs
 logdev
+logpath
 logfile
 loghdr
 LOGINDISABLED
 loginuser
 loglevel
 LOGNAME
+logpath
 logrotate
 logsock
 lowercased
@@ -753,6 +754,7 @@ mathjax
 maxconn
 maxdepth
 maxlen
+maxretry
 Maxuid
 mbox
 mboxcl
@@ -760,7 +762,7 @@ mboxes
 mboxmetadata
 mboxo
 mboxrd
-MDA
+mda
 mdbox
 melnikov
 memarea
@@ -802,6 +804,7 @@ mtime
 MUAs
 MULTIAPPEND
 multiline
+multiport
 multiscript
 murchison
 mutf
@@ -816,7 +819,6 @@ myscript
 mysql
 mysqld
 myuser
-nabble
 namespace
 NBF
 nbproc
@@ -908,6 +910,7 @@ opensmtpd
 opensource
 openssl
 opie
+opsec
 optboolean
 optname
 OR'ing
@@ -1260,6 +1263,7 @@ syscw
 sysexits
 syslog
 syslogd
+syslogging
 sysreport
 systemctl
 systemd
@@ -1360,7 +1364,7 @@ unescape
 unhibernate
 unhibernated
 unhibernation
-Unicode
+unicode
 unixfrom
 unixtime
 unixtimedate
@@ -1434,7 +1438,7 @@ vname
 vnd
 VOLATILEDIR
 VPop
-vpopmail
+VPS
 vpv
 VRFY
 vsize
