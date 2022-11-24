@@ -52,7 +52,7 @@ dovecot-dict-cql.conf.ext:
    
    # (v2.2.26+) Use latency-aware routing
    # Existence of setting = yes; absence of setting = no
-   # See: http://datastax.github.io/cpp-driver/topics/configuration/#latency-aware-routing
+   # See: https://datastax.github.io/cpp-driver/topics/configuration/#latency-aware-routing
    # latency_aware_routing \
    
    # DEBUG: (v2.2.25+) Warning timeouts; if request takes longer than this amount of seconds, log query at WARN level

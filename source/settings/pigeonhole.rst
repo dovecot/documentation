@@ -197,7 +197,7 @@ Sieve Plugin Settings
       :pigeonhole:ref:`sieve setting <sieve>`.
 
    Directory for :personal
-   `include scripts <http://tools.ietf.org/html/draft-ietf-sieve-include-05>`_
+   `include scripts <https://datatracker.ietf.org/doc/html/draft-ietf-sieve-include-05>`_
    for the include extension.
 
    The Sieve interpreter only recognizes files that end with a .sieve

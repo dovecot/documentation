@@ -8,7 +8,7 @@ Dovecot has been designed to rather crash than continue in a potentially unsafe 
 
 Of course, all crashes are bugs that should eventually be fixed, so feel free to report them always even if they're not causing any visible problems. 
 
-Reporting crashes is usually best accompanied with a gdb backtrace as described in http://www.dovecot.org/bugreport.html
+Reporting crashes is usually best accompanied with a gdb backtrace as described in https://www.dovecot.org/bugreport.html
 
 Instead of crashing, there are have have been some rare bugs in Dovecot when some process could go into infinite loop, which causes the process to use 100% CPU. 
 

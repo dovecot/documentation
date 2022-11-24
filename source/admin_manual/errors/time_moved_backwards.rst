@@ -20,7 +20,7 @@ Time synchronization
 
 There are two choices for synchronizing your clock:
 
-1. Use `ntpd <http://www.ntp.org/>`_. It periodically checks the
+1. Use `ntpd <https://www.ntp.org/>`_. It periodically checks the
    current time from NTP server and slows down or speeds up the clock if
    necessary. Unlike ntpdate, it doesn't just move the time forwards or
    backwards (unless the difference is large).
@@ -33,7 +33,7 @@ There are two choices for synchronizing your clock:
          ``ntpd[17697]: time reset -2.075483 s``
 
 2. If ntpd doesn't work well (e.g. a bad network connection), you can
-   use `clockspeed <http://cr.yp.to/clockspeed.html>`_ or
+   use `clockspeed <https://cr.yp.to/clockspeed.html>`_ or
    `chrony <https://chrony.tuxfamily.org/>`_ as well.
 
 In some systems ntpd/ntpdate is run at boot, but only after Dovecot has
@@ -48,13 +48,13 @@ Bugs/Issues
 -  With Xen you should run ntpd only in dom0. Other domains should
    synchronize time automatically (see `this Xen
    FAQ <https://wiki.xenproject.org/wiki/Xen_Common_Problems>`_ and `this
-   thread <http://dovecot.org/list/dovecot/2009-October/043301.html>`_).
+   thread <https://dovecot.org/list/dovecot/2009-October/043301.html>`_).
 
 -  With VMware you follow the guidelines at the `VMware knowledge
-   base <http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&cmd=displayKC&externalId=1006427>`_.
+   base <https://kb.vmware.com/s/article/1006427>`_.
 
 -  `Time moved backwards by 4398
-   seconds <http://www.dovecot.org/list/dovecot/2008-June/031548.html>`_?
+   seconds <https://www.dovecot.org/list/dovecot/2008-June/031548.html>`_?
    Buggy kernel/hardware.
 
 What about Daylight Saving/Summer time?
@@ -62,7 +62,7 @@ What about Daylight Saving/Summer time?
 
 On Unix-like systems, time is stored internally as the number of seconds
 since January 1, 1970, 00:00:00 UTC (see `Unix_time on
-Wikipedia <http://www.wikipedia.com/wiki.phtml?title=Unix_time#>`_); concepts
+Wikipedia <https://en.wikipedia.org/wiki/Unix_time>`_); concepts
 such as time zones and daylight saving time are applied in user space by the C
 library, and will normally not have an impact on Dovecot's behavior.
 

@@ -17,7 +17,7 @@ Settings:
 
  * Renamed ``ssl_disable=yes`` to :dovecot_core:ref:`ssl=no <ssl>`.
  * Renamed ``auth_ntlm_use_winbind`` to :dovecot_core:ref:`auth_use_winbind`, which also determines if GSS-SPNEGO is handled by GSSAPI or winbind.
- * Removed ``login_greeting_capability``. The capabilities are now always sent `<LEMONADE <http://www.lemonadeformobiles.com/>`_ requires this and it's not that much extra traffic).
+ * Removed ``login_greeting_capability``. The capabilities are now always sent (LEMONADE :rfc:`4550` requires this and it's not that much extra traffic).
  * Removed ``auth_worker_max_request_count``. It was useful only with PAM, so it can now be specified in ``passdb pam { args = max_requests=n }``. The default is 100.
  * Removed ``umask``. It wasn't really used anywhere anymore.
 
