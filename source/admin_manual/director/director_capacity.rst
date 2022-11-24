@@ -17,7 +17,7 @@ This limitation is used for the following reasons (non-inclusive list):
 Benchmarking
 ^^^^^^^^^^^^^
 
-You can run a bunch of directors under a single dovecot instance with the config below. Load testing Perl script for it: http://dovecot.org/tools/director-test.pl
+You can run a bunch of directors under a single dovecot instance with the config below. Load testing Perl script for it: https://dovecot.org/tools/director-test.pl
 
 Configuration used for test: ``dovecot-director-test.conf``
 

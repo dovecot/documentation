@@ -176,7 +176,7 @@ applicable):
    starting with Pigeonhole version 0.1.7, this setting can use '+' and '-'
    to specify differences relative to the default. For example
    :pigeonhole:ref:`sieve_extensions` = ``+imapflags`` will enable the
-   `deprecated imapflags extension <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_
+   `deprecated imapflags extension <https://datatracker.ietf.org/doc/html/draft-melnikov-sieve-imapflags-03>`_
    in addition to all extensions enabled by default.
 
 :pigeonhole:ref:`sieve_global_extensions` = (v0.3+)
@@ -651,7 +651,7 @@ However, there are a few important differences in the supported Sieve language f
 
 -  The **imapflags** extension is now called **imap4flags**. The
    CMUSieve implementation is based on an `old imapflags draft
-   specification <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_
+   specification <https://datatracker.ietf.org/doc/html/draft-melnikov-sieve-imapflags-03>`_
    that is not completely compatible with :rfc:`5232`. Particularly, the
    **mark** and **unmark** commands were removed from the new
    specification. For backwards compatibility, support for the old
@@ -660,7 +660,7 @@ However, there are a few important differences in the supported Sieve language f
 
 -  The **notify** extension is now called **enotify**. The CMUSieve
    implementation is based on an `old notify draft
-   specification <http://tools.ietf.org/html/draft-martin-sieve-notify-01>`_
+   specification <https://datatracker.ietf.org/doc/html/draft-martin-sieve-notify-01>`_
    that is not completely compatible with :rfc:`5425`. Particularly, the
    **denotify** command and **$text$** substitutions were removed from
    the new specification. For backwards compatibility, support for the

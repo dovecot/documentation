@@ -116,7 +116,7 @@ file name to mark that it was compressed (e.g.
 ``1223212411.M907959P17184.host,S=3271:2,SZ``).
 
 Remember that the `Maildir specifications
-<http://cr.yp.to/proto/maildir.html>`_ require that the flags are sorted by
+<https://cr.yp.to/proto/maildir.html>`_ require that the flags are sorted by
 their ASCII value, although Dovecot itself doesn't care about that.
 
 Unlock the maildir by sending a TERM signal to the maildirlock process (killing

@@ -156,7 +156,7 @@ Timestamps of message files:
 Timestamps of ``cur`` and ``new`` directories:
 
 * ``mtime`` is used to detect changes of the mailbox and may force
-  regeneration of `index files`_.
+  regeneration of :ref:`index files <mail_index_file_format>`.
 * ``atime`` and ``ctime`` not used.
 
 Filename Examples
@@ -179,8 +179,6 @@ Filename Examples
 |                                                                                                   | **n** = IMAP tag #14 (0=a, 1=b, 2=c, etc) as defined in  |
 |                                                                                                   | that folder's ``dovecot-keywords`` file.                 |
 +---------------------------------------------------------------------------------------------------+----------------------------------------------------------+
-
-.. _`index files`: https://wiki.dovecot.org/IndexFiles
 
 .. _`maildir_and_filesystems`:
 

@@ -395,8 +395,8 @@ Translation from Procmail
 
 There exists a script which attempts to translate simple Procmail rules
 into Sieve rules:
-http://www.earth.ox.ac.uk/~steve/sieve/procmail2sieve.pl
-(`dovecot.org mirror <http://dovecot.org/tools/procmail2sieve.pl>`_)
+https://www.earth.ox.ac.uk/~steve/sieve/procmail2sieve.pl
+(`dovecot.org mirror <https://dovecot.org/tools/procmail2sieve.pl>`_)
 
 Here's the original post announcing it:
-http://dovecot.org/list/dovecot/2007-March/020895.html.
+https://dovecot.org/list/dovecot/2007-March/020895.html.

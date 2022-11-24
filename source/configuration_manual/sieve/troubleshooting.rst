@@ -110,7 +110,7 @@ instructions <sieve_configuration_from_cmusieve>` again.
 Often the 'author' of such scripts is an older or misconfigured Sieve
 GUI editor. For example, the
 `SieveRules <https://github.com/JohnDoh/Roundcube-Plugin-SieveRules-Managesieve#readme>`_
-plugin for the `RoundCube webmail IMAP client <http://roundcube.net/>`_
+plugin for the `RoundCube webmail IMAP client <https://roundcube.net/>`_
 has a configuration option to enable the correct behavior:
 
 ::
