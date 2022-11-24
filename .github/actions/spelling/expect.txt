@@ -87,6 +87,7 @@ AWSEC
 azp
 backend
 backtraces
+bantime
 barfoo
 basearch
 baseurl
@@ -169,7 +170,6 @@ cmake
 cmdlog
 cmds
 cmp
-cmu
 cmusieve
 cnf
 cnrilrgfclra
@@ -208,7 +208,6 @@ CUID
 currentdate
 currentmodule
 customflags
-Cwul
 CXX
 cydir
 cyrusimap
@@ -321,7 +320,6 @@ ecprivkey
 ecpubkey
 editheader
 EDQUOT
-edu
 egid
 egrep
 ehlo
@@ -379,6 +377,7 @@ facebook
 FADV
 fadvise
 failover
+failregex
 faqs
 fcntl
 fcontext
@@ -394,6 +393,7 @@ fieldvalue
 fileinto
 filepath
 filesystem
+findtime
 firstsaved
 FIXME
 flagsmodseq
@@ -468,7 +468,6 @@ grep
 gss
 gssapi
 gui
-GVy
 gzip
 halon
 haproxy
@@ -562,6 +561,7 @@ iops
 iostream
 ipairs
 ipt
+iptables
 iredmail
 isps
 istream
@@ -672,6 +672,7 @@ loghdr
 LOGINDISABLED
 loginuser
 LOGNAME
+logpath
 logrotate
 logsock
 lowercased
@@ -726,6 +727,7 @@ masteruser
 maxconn
 maxdepth
 maxlen
+maxretry
 Maxuid
 mbox
 mboxcl
@@ -733,7 +735,7 @@ mboxes
 mboxmetadata
 mboxo
 mboxrd
-MDA
+mda
 mdbox
 MDN
 melnikov
@@ -749,7 +751,6 @@ metacache
 metacpan
 metadata
 metamail
-microsites
 microsoft
 middleware
 millisecs
@@ -779,6 +780,7 @@ mtime
 MUAs
 MULTIAPPEND
 multiline
+multiport
 multiscript
 murchison
 musl
@@ -796,10 +798,8 @@ mysql
 mysqld
 myuser
 myusername
-nabble
 namespace
 NBF
-nbproc
 neomutt
 netmask
 Netscape
@@ -897,6 +897,7 @@ openssl
 opie
 optboolean
 optname
+opsec
 orcpt
 ORDEREDSUBJECT
 origbox
@@ -931,11 +932,11 @@ pfs
 PGP
 pgsql
 php
-phtml
 pid
 pidfile
 pidof
 Piljk
+pipermail
 pkcs
 pkey
 pkglibexecdir
@@ -993,7 +994,6 @@ pwdfile
 pwhash
 pwrite
 pygments
-QBS
 qmail
 QQACg
 QRESYNC
@@ -1089,7 +1089,6 @@ secretpassword
 seealso
 seekable
 SELEC
-selfservice
 semanage
 sendfile
 sendmail
@@ -1240,6 +1239,7 @@ syscw
 sysexits
 syslog
 syslogd
+syslogging
 sysreport
 systemctl
 systemd
@@ -1337,7 +1337,7 @@ unescape
 unhibernate
 unhibernated
 unhibernation
-Unicode
+unicode
 unixfrom
 unixtime
 unixtimedate
@@ -1408,6 +1408,7 @@ vmware
 vname
 vnd
 VOLATILEDIR
+VPS
 vpv
 VRFY
 vsize
