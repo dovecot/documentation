@@ -16,16 +16,14 @@ DS :rfc:`3461` currently require support from the
 backend/relay MTA.
 
 The most notable feature that the proxy adds is the BURL capability :rfc:`4468`.
-The main application of that
-capability — together with :ref:`IMAP <imap_server>` and URLAUTH :rfc:`4467` —
-is avoiding a duplicate upload of
-submitted e-mail messages; normally the message is both sent through SMTP and
-uploaded to the `Sent` folder through IMAP. Using BURL, the client can first
-upload the message to IMAP and then use BURL to make the SMTP server fetch the
-message from IMAP for submission, thereby avoiding a second upload. Few clients
-currently support the BURL capability, but once it becomes available on the
-server side, client developers will at least have some incentive to provide
-support for this feature.
+The main application of that capability — together with :ref:`IMAP <imap_server>`
+and URLAUTH :rfc:`4467` — is avoiding a duplicate upload of submitted e-mail
+messages; normally the message is both sent through SMTP and uploaded to the
+``Sent`` folder through IMAP. Using BURL, the client can first upload the message
+to IMAP and then use BURL to make the SMTP server fetch the message from IMAP for
+submission, thereby avoiding a second upload. Few clients currently support the
+BURL capability, but once it becomes available on the server side, client developers
+will at least have some incentive to provide support for this feature.
 
 .. NOTE::
 
