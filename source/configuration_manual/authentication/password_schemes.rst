@@ -29,6 +29,14 @@ complexity, minimum is 3. ARGON2ID is only available if your libsodium is
 recent enough. ARGON2 can require quite a hefty amount of virtual memory, so we
 recommend that you set service ``auth { vsz_limit = 2G }`` at least, or more.
 
+.. versionadded:: v2.4;v3.0
+
+**ARGON2** scheme is also accepted and processed according to the actual
+algorithm as described in the hash, e.g ``{ARGON2}$argon2id$...`` is recognized
+and processed properly as ARGON2I/ARGON2ID (as long as libsodium is recent enough
+to support it).
+
+
 **BLF-CRYPT**: This is the Blowfish crypt (bcrypt) scheme. It is generally
 considered to be very secure. The encrypted password will start with $2y$
 (other generators can generate passwords that have other letters after $2,
@@ -208,6 +216,10 @@ Other schemes
 * **PBKDF2**: PKCS5 Password hashing algorithm.
   Note that there is no standard encoding for this format, so this scheme may not be interoperable with other software.
   Dovecot implements it as "$1$salt$rounds$hash".
+
+.. versionadded:: v2.4;v3.0
+
+* **ARGON2**: ARGON2 password scheme, needs libsodium
 
 For some schemes (e.g. PLAIN-MD5, SHA) Dovecot is able to detect if the
 password hash is base64 or hex encoded, so both can be used. doveadm pw anyway
