@@ -1,7 +1,5 @@
 aad
-abcd
 ACCESSKEY
-accfe
 achara
 acl
 actimeo
@@ -22,7 +20,6 @@ alloc
 alloca
 alloconly
 allof
-alm
 alnum
 altmove
 altpath
@@ -41,7 +38,6 @@ apk
 apop
 apparmor
 Appe
-APPEN
 APPENDUID
 APY
 Archlinux
@@ -53,6 +49,7 @@ asdfgh
 aspx
 Atilika
 atime
+atimes
 atmail
 ATo
 attr
@@ -83,7 +80,6 @@ autotools
 auxw
 avc
 aws
-AWSEC
 azp
 backend
 backtraces
@@ -154,7 +150,9 @@ chown
 chronos
 chrony
 chroot
+chrooted
 chrooting
+chroots
 CIDR
 cifs
 cip
@@ -180,10 +178,8 @@ commitlog
 compat
 Compuserve
 concat
-CONDSTORE
 config
 copybox
-copybutton
 COPYUID
 coretest
 coreutils
@@ -196,6 +192,7 @@ CPPFLAGS
 cql
 cqlsh
 crlf
+CRLFs
 CRLs
 cron
 cronjob
@@ -225,12 +222,10 @@ dbname
 dbox
 dboxes
 dclocal
-DCMAKE
 dcrypt
 DDTHH
 debian
 debuginfo
-Ded
 deduplicate
 deeplinks
 deinit
@@ -249,11 +244,11 @@ dest
 destuser
 desync
 devtools
-dfad
 DHd
 DHE
 Dhesi
 dhparam
+dhparams
 dictdiffmap
 dictmap
 dictrevmap
@@ -268,7 +263,6 @@ dirsize
 displayname
 distros
 DKIM
-DLLVM
 dlog
 dlua
 DMARC
@@ -286,7 +280,6 @@ dotlocking
 dov
 doveadm
 doveauth
-dovebe
 doveconf
 dovecotpw
 dovelda
@@ -295,9 +288,6 @@ dovenull
 downsides
 DRhu
 droppriv
-drwx
-drwxrwsr
-drwxrwxrwx
 dsa
 dspam
 dsync
@@ -378,7 +368,6 @@ FADV
 fadvise
 failover
 failregex
-faqs
 fcntl
 fcontext
 fdatasync
@@ -386,7 +375,6 @@ fds
 fetc
 fetchmail
 FETCHs
-fffffffffffffcd
 fgrep
 fieldname
 fieldvalue
@@ -408,6 +396,7 @@ forwardfor
 fpdb
 fqdn
 frontend
+frontends
 FROP
 fsbench
 fscache
@@ -418,6 +407,7 @@ fsserver
 fstab
 fsuid
 fsync
+fsynced
 fsyncing
 fts
 ftscache
@@ -449,7 +439,6 @@ GETQUOTA
 GETQUOTAROOT
 GETSCRIPT
 gettext
-github
 gitlab
 glibc
 globals
@@ -475,6 +464,7 @@ hara
 hardcoded
 hardlink
 hardlinking
+hardlinks
 hasfrop
 hatv
 hba
@@ -523,7 +513,9 @@ imap
 imapc
 imapcpass
 imapd
+imapfilter
 imapflags
+imaps
 imapsieve
 imaptest
 imapwiki
@@ -544,6 +536,7 @@ inlines
 Inno
 ino
 inode
+inodes
 inodetofile
 inotify
 INTERNALDATE
@@ -611,12 +604,12 @@ ldap
 ldapi
 ldapmodify
 ldaprc
+ldaps
 LDBACCOUNT
 LDFLAGS
 ldif
 learntype
 leastconn
-lemonadeformobiles
 len
 letsencrypt
 LFs
@@ -626,6 +619,7 @@ LGPL
 LIBADD
 libbzip
 libc
+libcs
 libcurl
 libdovecot
 libexec
@@ -731,8 +725,10 @@ maxlen
 maxretry
 Maxuid
 mbox
+mboxchildfolders
 mboxcl
 mboxes
+mboxlocking
 mboxmetadata
 mboxo
 mboxrd
@@ -778,6 +774,7 @@ msgs
 msn
 mta
 mtime
+mtimes
 MUAs
 MULTIAPPEND
 multiline
@@ -787,7 +784,6 @@ murchison
 musl
 mutf
 mybox
-mydomain
 myfolder
 myfoldertoo
 myhostname
@@ -896,13 +892,12 @@ opensmtpd
 opensource
 openssl
 opie
+opsec
 optboolean
 optname
-opsec
-orcpt
-ORDEREDSUBJECT
-origbox
 OR'ing
+orcpt
+origbox
 ORing
 orld
 OSERROR
@@ -936,6 +931,7 @@ php
 pid
 pidfile
 pidof
+pids
 Piljk
 pipermail
 pkcs
@@ -945,7 +941,6 @@ pkgsysconfdir
 pki
 plaa
 plist
-plugin
 png
 popclient
 popcount
@@ -960,7 +955,6 @@ postrotate
 powerdns
 poweruser
 ppid
-Pprotocol
 pragma
 pread
 PREAUTH
@@ -994,7 +988,6 @@ pwd
 pwdfile
 pwhash
 pwrite
-pygments
 qmail
 QQACg
 QRESYNC
@@ -1062,7 +1055,6 @@ rst
 rsyslog
 rundir
 Rvdm
-rwsr
 rwstipekxa
 rwstipekxacd
 rwxt
@@ -1133,9 +1125,8 @@ smbfs
 smi
 smtp
 smtpd
+smtps
 snarf
-sni
-SNI
 snowballstem
 snprintf
 socketpath
@@ -1155,6 +1146,7 @@ spamc
 spamd
 spammer
 spamrep
+spams
 spamtest
 spamtestplus
 specialuse
@@ -1174,7 +1166,6 @@ sqluser
 src
 srv
 ssd
-ssh
 ssha
 ssl
 ssldir
@@ -1184,8 +1175,6 @@ standalone
 starttls
 STATEDIR
 staticbuf
-statsdb
-statstable
 Stax
 stddev
 stderr
@@ -1214,6 +1203,7 @@ STW
 subaddress
 subdomain
 subfolder
+subfolders
 subjwas
 subkey
 submissiond
@@ -1234,6 +1224,7 @@ symlinking
 sys
 sysadmin
 syscall
+syscalls
 sysconfig
 syscr
 sysctl
@@ -1247,6 +1238,7 @@ systemctl
 systemd
 TABLEGEN
 tarball
+tarballs
 targethost
 Tarpit
 tarpitted
@@ -1254,6 +1246,7 @@ tarpitting
 tclass
 tcontext
 tcp
+tcps
 tecadmin
 technet
 telnet
@@ -1309,14 +1302,15 @@ txn
 TYPECHECK
 typedef
 tzknvtr
-ubuntu
 uid
 uidgid
 uidl
 uidlist
 uidlpop
+uidls
 uidnext
 UIDPLUS
+uids
 uidv
 uidvalidity
 uint
@@ -1326,6 +1320,7 @@ umask
 umount
 unaccessed
 unalias
+unaliased
 uname
 unauth
 uncomment
@@ -1361,6 +1356,7 @@ uri
 url
 urlauth
 usec
+usecs
 usercache
 userdata
 userdb
@@ -1370,6 +1366,7 @@ userid
 userinfo
 userip
 username
+usernames
 usr
 utf
 utils
@@ -1427,6 +1424,7 @@ whitelisting
 Wietse
 wiki
 wikipedia
+wikis
 wildcards
 WILLNEED
 winbind
