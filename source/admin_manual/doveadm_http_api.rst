@@ -855,7 +855,7 @@ parameters::
 +============+=========+==========================================+=================================+
 | socketPath | String  | Path to doveadm socket                   | /var/run/dovecot/director-admin |
 +------------+---------+------------------------------------------+---------------------------------+
-| forceFlush | Boolean | Flag to make flush forced                | True                            |
+| forceFlush | Boolean | Flag to make flush forced                | true                            |
 +------------+---------+------------------------------------------+---------------------------------+
 | host       | String  | Backend ip address from doveadm director | 10.0.0.234                      |
 |            |         | status list                              |                                 |
@@ -993,9 +993,9 @@ parameters::
 | usersFile  | String  | Provide path to users list. One username | /etc/dovecot/userslist.txt      |
 |            |         | per line                                 |                                 |
 +------------+---------+------------------------------------------+---------------------------------+
-| hashMap    | Boolean | Output users as hashmap                  | True                            |
+| hashMap    | Boolean | Output users as hashmap                  | true                            |
 +------------+---------+------------------------------------------+---------------------------------+
-| userMap    | Boolean | Output users as userlist                 | True                            |
+| userMap    | Boolean | Output users as userlist                 | true                            |
 +------------+---------+------------------------------------------+---------------------------------+
 | host       | String  | Show only mappings to given host         | 10.0.0.234                      |
 +------------+---------+------------------------------------------+---------------------------------+
