@@ -170,7 +170,7 @@ need to implement. The methods that need to be implemented are:
 -  ``snapshot(prev_snapshot)`` creates a snapshot of the data that is
    currently available via i_stream_get_data(), merges it with
    prev_snapshot (if any) and returns the merged snapshot (see below
-   more more details).
+   for more details).
 
 There are some fields available. Below is a list of the most important ones.
 For a complete overview please see `istream-private.h`.
