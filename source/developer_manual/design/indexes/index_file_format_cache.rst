@@ -193,7 +193,7 @@ There are some issues with lockless reading:
    intended.
  * The ``mail_cache_header_fields.next_offset`` field can become updated, but
    this is written using :ref:`locklessint` which guarantees that the offset
-   can be trusted to be either fully updated or non-existent.
+   can be trusted to be either fully updated or nonexistent.
  * However, whenever writing to these cache headers, they need to be re-read
    after locking to make sure broken data won't be written back.
 
