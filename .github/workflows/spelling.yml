@@ -28,7 +28,7 @@ jobs:
     - name: check-spelling
       if: env.MERGE_FAILED != '1'
       id: spelling
-      uses: check-spelling/check-spelling@v0.0.20-alpha4
+      uses: check-spelling/check-spelling@v0.0.21
       with:
         suppress_push_for_open_pull_request: 1
         post_comment: 0
@@ -61,7 +61,7 @@ jobs:
         name: "check-spelling-comment-${{ github.run_id }}"
         path: /tmp/data
     - name: comment
-      uses: check-spelling/check-spelling@v0.0.20-alpha4
+      uses: check-spelling/check-spelling@v0.0.21
       with:
         experimental_apply_changes_via_bot: 1
         custom_task: comment
