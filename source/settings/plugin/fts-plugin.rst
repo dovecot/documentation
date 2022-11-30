@@ -306,7 +306,7 @@ Settings
 
    The list of headers to, respectively, include or exclude.
 
-   - The default is the pre-existing behavior, i.e. index all headers.
+   - The default is the preexisting behavior, i.e. index all headers.
    - ``includes`` take precedence over ``excludes``: if a header matches both,
      it is indexed.
    - The terms are case insensitive.
