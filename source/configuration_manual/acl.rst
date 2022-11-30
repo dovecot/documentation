@@ -72,7 +72,7 @@ Sample Configuration:
 Master users
 ============
 
-Master users have their own ACLs. They're not the the mailbox owners, so by
+Master users have their own ACLs. They're not the mailbox owners, so by
 default they have no permissions to any of the mailboxes. See
 :ref:`ACLs at Master users <authentication-master_users_acls>` for more
 information.
