@@ -10,7 +10,7 @@ Of course, all crashes are bugs that should eventually be fixed, so feel free to
 
 Reporting crashes is usually best accompanied with a gdb backtrace as described in https://www.dovecot.org/bugreport.html
 
-Instead of crashing, there are have have been some rare bugs in Dovecot when some process could go into infinite loop, which causes the process to use 100% CPU. 
+Instead of crashing, there have been some rare bugs in Dovecot when some process could go into infinite loop, which causes the process to use 100% CPU. 
 
 If you detect such processes, it would be very helpful again to get a gdb backtrace of the running process:
 
