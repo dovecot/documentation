@@ -504,7 +504,7 @@ this feature. If the name of the default script is equal to the name the
 client uses for the main script, it will initially see and read the
 default script when the user account is freshly created. The user can
 edit the script, and when the edited script is saved through the
-ManageSieve client, it will will override the default script. If the
+ManageSieve client, it will override the default script. If the
 user ever wants to revert to the default, the user only needs to delete
 the edited script and the default will reappear.
 
