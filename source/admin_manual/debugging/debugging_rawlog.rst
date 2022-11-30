@@ -33,7 +33,7 @@ Pre-login rawlog
 .. versionadded:: v2.3.2
 
 The pre-login rawlog is used before IMAP, POP3, Submission or ManageSieve
-client logs in to the post-login process. Note that LMTP and doveadm protocols
+client logs into the post-login process. Note that LMTP and doveadm protocols
 don't have a pre-login process.
 
 .. note:: SSL/TLS sessions are currently not decrypted to rawlogs.

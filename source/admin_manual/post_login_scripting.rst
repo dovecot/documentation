@@ -43,7 +43,7 @@ specified by the userdb lookup (ignoring user/group/chroot service settings).
 
 It's not currently possible to run post-login scripts in
 :ref:`authentication-proxies`, because
-they're not actually logging in to the local Dovecot. An alternative method
+they're not actually logging into the local Dovecot. An alternative method
 could be implemented some day, maybe as a plugin.
 
 Running environment
