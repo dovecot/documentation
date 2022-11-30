@@ -151,7 +151,7 @@ The output will have fields:
 
 * bytes-used(priority) : Disk space used by index files of this priority in metacache.
 
-* last-access(priority) : UNIX timestamp of when the the index files of this priority were last accessed in metacache.
+* last-access(priority) : UNIX timestamp of when the index files of this priority were last accessed in metacache.
 
  * changes : "none" means the index files have no changes done locally since they were downloaded. "unimportant" means there are some changes, but nothing that couldn't be regenerated if the server crashed. "important" means that there are changes that would be lost in case of a server crash. Currently the only important change is flag changes.
 

@@ -125,7 +125,7 @@ Output will contain
 
 -  Disk space used by index files of this priority in metacache.
 
--  UNIX timestamp of when the the index files of this priority were last
+-  UNIX timestamp of when the index files of this priority were last
    accessed in metacache.
 
 -  "none" means the index files have no changes done locally since they
