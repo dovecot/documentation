@@ -24,7 +24,7 @@ See :ref:`settings` for list of all setting groups.
    :default: 1G
    :values: @size
 
-   If ``dovecot.index.cache`` becomes becomes larger than this, it's truncated
+   If ``dovecot.index.cache`` becomes larger than this, it's truncated
    to empty size.
 
    .. warning:: The maximum value is 1 GB because the cache file format can't
