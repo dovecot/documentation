@@ -163,7 +163,7 @@ And would expect, when using fs posix, key at
    /etc/dovecot/keys/issuer.net-dovecot/ES256/Zm9vb2Jhcgo
 
 
-In key id and AZP field, ``/`` are escaped with ``%2f`` and ``%`` are escaped with with ``%25`` with any driver.
+In key id and AZP field, ``/`` are escaped with ``%2f`` and ``%`` are escaped with ``%25`` with any driver.
 This is because ``/`` is a dict key component delimiter.
 
 .. versionchanged:: v2.3.14.1
