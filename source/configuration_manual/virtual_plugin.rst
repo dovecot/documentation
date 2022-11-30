@@ -291,7 +291,7 @@ Namespace configuration:
   none of the namespaces have inbox=yes. This is because for IMAP users you
   want the inbox namespace to have ``inbox=yes``, but for POP3 users you want
   the virtual namespace to have ``inbox=yes``. This requires setting the
-  ``inbox=yes`` in userdb extra fields. For example with MySQL you can can do
+  ``inbox=yes`` in userdb extra fields. For example with MySQL you can do
   this like:
 
 .. code-block:: none
