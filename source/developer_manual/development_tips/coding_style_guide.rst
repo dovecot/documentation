@@ -346,7 +346,7 @@ Function parameters
 - Parameter naming follows variable naming, see Naming.
 
 - When you have parameters that used only to return values from the
-  function, they should have _r  suffix. If the the parameter is
+  function, they should have _r  suffix. If the parameter is
   updated (read and written), then it does not need the suffix.
 
 - In initialization functions, it is good idea to use struct
