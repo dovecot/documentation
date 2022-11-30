@@ -7,7 +7,7 @@ doveadm-who
 NAME
 ====
 
-doveadm-who - Show who is logged in to the Dovecot server
+doveadm-who - Show who is logged into the Dovecot server
 
 SYNOPSIS
 ========
