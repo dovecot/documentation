@@ -57,7 +57,7 @@ to "up" again as soon as the first round of tests succeed.
 At each cycle, dovemon waits for a configurable time (default is 3 seconds) to
 receive a reply from backend. In case the reply times out, doveadm adds another
 timeout period for the next round of polling. This is repeated until the max
-retries have been performed. In the default case where where 3 retries are
+retries have been performed. In the default case where 3 retries are
 performed with timeout set to 3s, dovemon waits for 3s, 6s, and 9s for first,
 second, and third polling results respectively. However, this does not affect
 the interval between polls i.e. start time of each polling is always at 10s
