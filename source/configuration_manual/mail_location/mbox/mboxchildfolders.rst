@@ -117,7 +117,7 @@ could think to put them in a specially-named file in the directory: ``foo/``.
 Then if we wanted to create a sub-folder of "foo" we would be fine because we
 could then do that. The rule would then be that messages go into the
 specially-named file in the directory corresponding to the mail folder name.
-We want want to choose a special name which would be unlikely to collide with
+We want to choose a special name which would be unlikely to collide with
 a folder name. We could think to use something like ``mBoX-MeSsAgEs``. Now,
 it turns out that you can configure Dovecot to do this using the ``DIRNAME``
 parameter:
