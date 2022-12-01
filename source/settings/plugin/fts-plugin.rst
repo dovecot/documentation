@@ -240,6 +240,11 @@ Settings
      Filter certain common and short words, which are usually useless for
      searching.
 
+     .. warning::
+        Using stopwords with multiple languages configured WILL cause some
+        searches to fail. The recommended solution is to NOT use the stopword
+        filter when multiple languages are present in the configuration.
+
      Settings:
 
        ``stopwords_dir``
