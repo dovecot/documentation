@@ -91,3 +91,13 @@ Upgrading Dovecot v2.3.x to v2.3.15
 Upgrading Dovecot v2.3.x to v2.3.16
 ===================================
  * :ref:`auth-worker service <service_configuration_auth_worker>` service\_count setting has been changed.
+
+Upgrading Dovecot v2.3.x to v2.3.20
+===================================
+ * :dovecot_plugin:ref:`fts_stopwords_workaround` has been introduced.
+   The default for the setting, ``auto``, activates some mitigations for the
+   problem of some searches failing to retrieve the expected result when
+   stopwords and multiple languages are used together.
+   To revert to the pre 2.3.20 behavior, set ``fts_stopwords_workaround = no``.
+   See the :dovecot_plugin:ref:`setting description <fts_stopwords_workaround>`
+   for more details.
