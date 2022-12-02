@@ -24,6 +24,7 @@ alloconly
 allof
 alm
 alnum
+ALPN
 altmove
 altpath
 altstorage
@@ -567,6 +568,8 @@ isps
 istream
 ITERINDEX
 itip
+ja3
+JA3
 jan
 jano
 javascript
@@ -857,6 +860,7 @@ notifempty
 notwhat
 nouser
 NOVALGRIND
+NPN
 nproc
 nscd
 nsend
@@ -1066,6 +1070,7 @@ rwsr
 rwstipekxa
 rwstipekxacd
 rwxt
+salesforce
 samik
 samitest
 sasl
