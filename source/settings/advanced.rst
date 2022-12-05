@@ -19,6 +19,50 @@ See :ref:`settings` for list of all setting groups.
    :ref:`Login variables <variables-login>` can be used.
 
 
+.. dovecot_core:setting:: mail_cache_max_header_name_length
+   :added: v2.4.0;v3.0.0
+   :default: 100
+   :values: @uint
+
+   Maximum header name length stored in the cache, where 0 stands for unlimited
+   (which is also the former behavior).
+
+   When enabled, the cache truncates the names to this length in memory and on
+   file. While the header name remains unchanged in the storage, all the headers
+   sharing the first ``mail_cache_max_header_name_length`` prefix characters are
+   de facto aliased and will be considered as the same header on cache fetch.
+
+   Also, attempting to fetch a specific aliased header will succeed even if
+   the header does not actually exist (this does NOT happen when the feature
+   is disable with explicitly with ``mail_cache_max_header_name_length = 0``)
+
+   Example: (``mail_cache_max_header_name_length = 5``)
+
+      If the mail contains the header ``X-name: value``, attempting to fetch
+      ``X-nam`` or ``X-names`` will also produce ``X-name: value`` as a result
+      (with the original header name, not the requested one).
+
+      Trying to fetch the mail text or the mail headers will properly return only
+      ``X-name: value``
+
+
+.. dovecot_core:setting:: mail_cache_max_headers_count
+   :added: v2.4.0;v3.0.0
+   :default: 100
+   :values: @uint
+
+   Maximum number of headers in ``yes``/``temp`` cache decision before the cache
+   refuses to promote more header decisions from ``no`` to ``temp``, where 0
+   stands for unlimited (which is also the former behavior).
+
+   When entries are rejected, the event
+   :ref:`event_mail_cache_decision_rejected` is emitted.
+
+   Also, while the cache's headers count is saturated, the effective value of
+   :dovecot_core:ref:`mail_cache_unaccessed_field_drop` is reduced to 1/4 of
+   of the specified one, in order to aid the cache to return within the limits.
+
+
 .. dovecot_core:setting:: mail_cache_max_size
    :added: v2.3.11
    :default: 1G
@@ -97,6 +141,11 @@ See :ref:`settings` for list of all setting groups.
                        setting only for dropping the field after it hadn't
                        been accessed for this long.
 
+   .. versionchanged:: v2.4.0;v3.0.0 If the cache header count is capped to
+                       :dovecot_core:ref:`mail_cache_max_headers_count` then the
+                       effective value is reduced to 1/4 of the configured value
+                       until enough headers expire for the cache to fall back
+                       inside the limits.
 
 .. dovecot_core:setting:: mail_index_log_rotate_max_size
    :default: 1M

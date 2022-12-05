@@ -1286,6 +1286,26 @@ A field's caching decision changed. The decisions are:
 | new_decision        | New cache decision: no, temp, yes                      |
 +---------------------+--------------------------------------------------------+
 
+.. _event_mail_cache_decision_rejected:
+
+mail_cache_decision_rejected
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The decision to promote a field (from ``no`` to ``temp``) was rejected.
+
++---------------------+--------------------------------------------------------+
+| Field               | Description                                            |
++=====================+========================================================+
+| field               | Cache field name (e.g. ``hdr.from``)                   |
++---------------------+--------------------------------------------------------+
+| reason              | Reason why the caching decision changed:               |
+|                     |                                                        |
+|                     | * ``too_many_headers``                                 |
+|                     |   - This can happen when the count  of headers in the  |
+|                     |   cache exceeds the maximum configured with            |
+|                     |   :dovecot_core:ref:`mail_cache_max_headers_count`.    |
++---------------------+--------------------------------------------------------+
+
 .. _event_mail_cache_purge_started:
 
 mail_cache_purge_started
