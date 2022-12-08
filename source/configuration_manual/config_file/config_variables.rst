@@ -516,7 +516,7 @@ You can apply a modifiers for each variable (e.g. %Us or %U{service} = POP3):
    reverse the username to get better hash value variety, e.g. `%3RHu`.
 
 * %{<hash
-  algorithm>;rounds=<n>,truncate=<bits>,salt=s,format=<hex|hexuc|base64|base64url>:field}
+  algorithm>;rounds=<n>,truncate=<bits>,salt=s,format=<hex|hexuc|base64>:field}
 
  * Generic hash function that outputs a hex (by default) or `base64` value.
    Hash algorithm is any of the supported ones, e.g. `md5`, `sha1`, `sha256`.
