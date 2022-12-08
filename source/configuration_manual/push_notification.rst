@@ -536,7 +536,7 @@ discussed :ref:`above <push_notification-usage>`.
 
  ``timeout``      NO       :ref:`time_msecs`   Time before HTTP request to the configured API endpoint will timeout. (DEFAULT: ``2s``)
 
- ``msg_max_size`` NO       :ref:`size`         Maximum size a message may have to be considered for push notification sending. (DEFAULT: ``500kb``)
+ ``msg_max_size`` NO       :ref:`size`         Maximum size a message may have to be considered for push notification sending. (DEFAULT: ``1mb``)
 ================= ======== =================== ============================================================================================================
 
 Example configuration:
@@ -546,7 +546,7 @@ Example configuration:
   mail_plugins = $mail_plugins notify push_notification push_notification_chronos
 
   plugin {
-    push_notification_driver = chronos:url=http://login:pass@node1.domain.tld:8009/chronos/v1/itip/pushmail msg_max_size=1mb
+    push_notification_driver = chronos:url=http://login:pass@node1.domain.tld:8009/chronos/v1/itip/pushmail msg_max_size=500kb
   }
 
 Payload
