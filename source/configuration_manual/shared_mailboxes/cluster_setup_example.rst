@@ -37,7 +37,9 @@ Dovecot Backend configuration snippet
         imapc_host = <proxy-load-balancer>
         imapc_password = imapcpass
         imapc_user = # empty defaults to shared user
-        imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login
+        # With v2.4.0;v3.0.0 the following features are enabled by default,
+        # prior to this version the following must be uncommented:
+        #imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login
 
         namespace shared {
           type = shared
