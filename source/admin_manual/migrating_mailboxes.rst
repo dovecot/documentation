@@ -151,10 +151,16 @@ Configure authentication on the source system to match your preference. Ensure b
 
 Configure IMAP client on the target system.
 
+.. versionchanged:: v2.4.0;v3.0.0 Some selected IMAPC features are auto-enabled
+                    by default. Please refer to :dovecot_core:ref:`imapc_features`
+                    for description on individual flags.
+
 Common settings::
 
   # these are supported by standard adhering servers
-  imapc_features = rfc822.size fetch-headers
+  # With v2.4.0;v3.0.0 the following features are enabled by default, prior to
+  # this version the following must be uncommented:
+  #imapc_features = rfc822.size fetch-headers
 
   # If the old IMAP server uses INBOX. namespace prefix, set:
   #imapc_list_prefix = INBOX

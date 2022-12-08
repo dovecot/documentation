@@ -49,22 +49,33 @@ Connection Settings
    A space-separated list of features, optimizations, and workarounds that can
    be enabled.
 
+   .. versionchanged:: v2.4.0;v3.0.0 Several features are now automatically
+                       enabled and the respective flags dropped. In their place
+                       new flags to disable these features were added.
+
    **Features**
 
-   ``acl``
+   ``no-acl``
 
-     When this feature is enabled and the imap-acl plugin is loaded, using a
-     remote location via imapc will make IMAP ACL commands (MYRIGHTS, GETACL,
-     SETACL, DELETEACL) proxied to the remote.
+     If the imap-acl plugin is loaded, the imapc acl feature is automatically
+     enabled. With it IMAP ACL commands (MYRIGHTS, GETACL, SETACL, DELETEACL)
+     are proxied to the imapc remote location. Note that currently these
+     commands are attempted to be used even if the remote IMAP server doesn't
+     advertise the ACL capability.
 
-     .. versionadded:: 2.3.15
+     To disable this feature either unload the imap-acl plugin or provide this
+     feature.
 
-   ``delay-login``
+     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had an "acl" feature,
+                         which is now enabled by default.
 
-     Don't connect to the remote server until some command requires it. By
-     default the server is connected to immediately on login.
+   ``no-delay-login``
 
-     .. versionadded:: v2.2.29
+     Immediately connect to the remote server. By default this is delayed until
+     a command requires a connection.
+
+     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had a "delay-login"
+                         feature, which is now enabled by default.
 
    ``gmail-migration``
 
@@ -74,11 +85,16 @@ Connection Settings
      emails in ``All Mails``). Add :dovecot_core:ref:`pop3_deleted_flag` to
      mails that don't exist in POP3 server.
 
-   ``modseq``
+   ``no-modseq``
 
-     Access ``MODSEQ`` and ``HIGHESTMODSEQ``
+     Disable access to ``MODSEQ`` and ``HIGHESTMODSEQ`` fields. By default
+     these fields are available if the remote server advertises the CONDSTORE
+     or the QRESYNC capability. If modseqs are disabled, or not supported by
+     the new server, they can still be used if imapc is configured to have
+     local index files.
 
-     .. versionadded:: 2.2.24
+     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had a "modseq" feature,
+                         which is now enabled by default.
 
    ``proxyauth``
 
@@ -100,24 +116,40 @@ Connection Settings
 
    **Optimizations**
 
-   ``fetch-bodystructure``
+   ``no-fetch-bodystructure``
 
-     Allow fetching ``BODY`` and ``BODYSTRUCTURE``
-     ``FETCH BODY.PEEK[HEADER.FIELDS (..)]``.
+     Disable fetching of IMAP ``BODY`` and ``BODYSTRUCTURE`` from the remote
+     server. Instead, the whole message body is fetched to regenerate them.
 
-   ``fetch-headers``
+     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had a
+                         "fetch-bodystructure" feature, which is now enabled by
+                         default.
 
-     Allow fetching specific message headers from remote server.
+   ``no-fetch-headers``
 
-     .. versionadded:: 2.2.30
+     Disable fetching of specific message headers from the remote server using
+     the IMAP ``FETCH BODY.PEEK[HEADER.FIELDS(...)]`` command. Instead, the
+     whole header is fetched and the wanted headers are parsed from it.
 
-   ``rfc822.size``
+     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had a "fetch-headers"
+                         feature, which is now enabled by default.
 
-     Allow passing through message sizes using ``FETCH RFC822.SIZE``.
+   ``no-fetch-size``
 
-   ``search``
+     Disable fetching of message sizes from the remote server using the IMAP
+     ``FETCH RFC822.SIZE`` command. Instead, the whole message body is fetched
+     to calculate the size.
 
-     Allow using ``SEARCH`` command.
+     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had a "rfc822.size"
+                         feature, which is now enabled by default.
+
+   ``no-search``
+
+     Disable searching messages using the IMAP ``SEARCH`` command. Instead, all
+     the message headers/bodies are fetched to perform the search locally.
+
+     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had a "search" feature,
+                         which is now enabled by default.
 
    **Workarounds**
 
