@@ -1328,7 +1328,6 @@ unaccessed
 unalias
 uname
 unauth
-uncoment
 uncomment
 uncompress
 uncompressing
