@@ -124,6 +124,24 @@ Settings
    number of index bundle uploads.
 
 
+.. dovecot_plugin:setting:: metacache_last_host_dict
+   :default: <empty>
+   :plugin: obox
+   :values: @string
+
+   If metacache_last_host_dict is configured to a valid
+   :ref:`dictionary uri<dict>`, obox looks up ``metacache_last_host`` key from
+   dict. This is meant to be used with :ref:`dovecot_cluster_architecture`.
+   The metacache_last_host value is kept in :cluster:ref:`cluster_geodb`.
+
+   If the lookup is successful and ``metacache_last_host`` is different from the
+   current host (:cluster:ref:`cluster_backend_name`), metacache is pulled from the
+   ``metacache_last_host`` backend. Obox also updates ``metacache_last_host``
+   to the given dict.
+
+.. versionadded:: v2.4;v3.0
+
+
 .. dovecot_plugin:setting:: obox_fs
    :plugin: obox
    :todo: Document this!
