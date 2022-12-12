@@ -18,17 +18,18 @@ Settings
 
    The following algorithms are supported:
 
-   ======== ================================================== =================
-   Name     Library (algorithm)                                Dovecot Support
-   ======== ================================================== =================
-   ``bz2``  `libbzip2 (bzip2) <http://sourceware.org/bzip2/>`_ v2.0+
-   ``gz``   `zlib (gzip) <https://www.zlib.net/>`_             v2.0+
-   ``lz4``  `liblz4 <https://www.lz4.org/>`_                   v2.2.11+
-   ``xz``   `liblzma <https://tukaani.org/xz/>`_               **DEPRECATED**
-                                                               (v2.2.9+ reading,                                                               v2.2.9-v2.3.13
-                                                               writing)
-   ``zstd`` `Zstandard <https://facebook.github.io/zstd/>`_    v2.3.12+
-   ======== ================================================== =================
+   ======== =================================================== =================
+   Name     Library (algorithm)                                 Dovecot Support
+   ======== =================================================== =================
+   ``bz2``  `libbzip2 (bzip2) <https://sourceware.org/bzip2/>`_ v2.0+
+   ``gz``   `zlib (gzip) <https://www.zlib.net/>`_              v2.0+
+   ``lz4``  `liblz4 <https://www.lz4.org/>`_                    v2.2.11+
+   ``xz``   `liblzma <https://tukaani.org/xz/>`_                **DEPRECATED**
+                                                                (v2.2.9+ reading,
+                                                                v2.2.9-v2.3.13
+                                                                writing)
+   ``zstd`` `Zstandard <https://facebook.github.io/zstd/>`_     v2.3.12+
+   ======== =================================================== =================
 
    Example:
 

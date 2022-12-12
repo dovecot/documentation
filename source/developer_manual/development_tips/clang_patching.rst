@@ -13,13 +13,13 @@ Source Repos
 ------------
 
 There are github mirrors, but you can clone directly from
-`llvm.org <http://llvm.org/>`_.
+`llvm.org <https://llvm.org/>`_.
 
 .. code-block:: sh
 
-   git clone http://llvm.org/git/llvm
+   git clone https://llvm.org/git/llvm
    cd tools
-   git clone http://llvm.org/git/clang
+   git clone https://llvm.org/git/clang
 
 Here are some hints on how to build/hack clang:
 
@@ -44,12 +44,12 @@ Here are some hints on how to build/hack clang:
 
 If you want to debug clang, you need to debug "clang -cc1" because
 otherwise it forks a new process and you can't do much with it. See
-http://clang.llvm.org/docs/FAQ.html#id2
+https://clang.llvm.org/docs/FAQ.html#id2
 
 Dovecot Patches
 ---------------
 
-Dovecot has some clang patches in http://dovecot.org/patches/clang/
+Dovecot has some clang patches in https://dovecot.org/patches/clang/
 
 These patches aid with sanity checking the dovecot build, e.g. static
 code analysis:

@@ -27,3 +27,9 @@ dl.dovecotsetting + dl.dovecotsetting {
 dl.dovecotsetting dd {
   margin-left: 15px;
 }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

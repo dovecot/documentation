@@ -102,4 +102,4 @@ And configure Postfix to use it:
 See also:
 ---------
 
-- http://www.postfix.org/SASL_README.html#server_dovecot
+- https://www.postfix.org/SASL_README.html#server_dovecot

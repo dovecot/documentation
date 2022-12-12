@@ -69,8 +69,8 @@ The following options are supported:
 Libraries
 ---------
 
-* `CLucene <http://sourceforge.net/projects/clucene/files/>`_: Get v2.3.3.4
+* `CLucene <https://sourceforge.net/projects/clucene/files/>`_: Get v2.3.3.4
   (not v0.9)
 * `libstemmer <http://snowball.tartarus.org/download.php>`_: Builds
   libstemmer.o, which you can rename to libstemmer.a
-* `textcat <http://textcat.sourceforge.net/>`_
+* `textcat <https://textcat.sourceforge.net/>`_

@@ -6,8 +6,8 @@ Namespaces
 ==========
 
 Dovecot supports fully configurable namespaces. Their original and primary
-purpose is to provide Namespace IMAP extension (`RFC
-2342 <http://www.faqs.org/rfcs/rfc2342.html>`_) support, which allows giving
+purpose is to provide Namespace IMAP extension (:rfc:`2342`)
+support, which allows giving
 IMAP clients hints about where to locate mailboxes and whether they're private,
 shared or public.
 
@@ -621,8 +621,8 @@ Settings
 .. dovecot_core:setting:: namespace/mailbox/special_use
    :values: @string
 
-   Space-separated list of SPECIAL-USE
-   (`RFC 6154 <http://www.faqs.org/rfcs/rfc6154.html>`_) flags to broadcast
+   Space-separated list of SPECIAL-USE (:rfc:`6154`)
+   flags to broadcast
    for the mailbox.
 
    There are no validity checks, so you could specify anything you want here,
@@ -634,7 +634,7 @@ Settings
 
    .. note:: Bug in v2.2.30-v2.2.33: if special-use flags are used,
              SPECIAL-USE needs to be added to post-login CAPABILITY response
-             as RFC 6154 mandates. You can do this with
+             as :rfc:`6154` mandates. You can do this with
              ``imap_capability = +SPECIAL-USE``
 
 

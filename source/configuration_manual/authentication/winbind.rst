@@ -5,7 +5,7 @@ Winbind mechanisms
 ==================
 
 Dovecot supports NTLM and GSS-SPNEGO authentication mechanisms using
-`Samba <http://www.samba.org>`_'s winbind daemon. It is useful when you
+`Samba <https://www.samba.org>`_'s winbind daemon. It is useful when you
 need to authenticate users against a Windows domain (either AD or NT).
 
 By default NTLM mechanism is handled internally. You can use winbind

@@ -8,8 +8,7 @@ SASL stands for "Simple Authentication and Security Layer". SASL itself is
 nothing more than a list of requirements for
 :ref:`authentication-authentication_mechanisms` and protocols to be
 SASL-compatible as described in
-`RFC 4422 <http://tools.ietf.org/html/rfc4422>`_. IMAP, POP3, SMTP, and
-ManageSieve protocols all have support for SASL.
+:rfc:`4422`. IMAP, POP3, SMTP, and ManageSieve protocols all have support for SASL.
 
 Many people confuse SASL with one specific SASL implementation: the Cyrus SASL
 library. Dovecot has its own SASL implementation which could (one day) be

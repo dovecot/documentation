@@ -8,7 +8,7 @@ Getting the sources
 -------------------
 
 You can download the latest released sources from the `Pigeonhole
-download page <http://pigeonhole.dovecot.org/download.html>`_.
+download page <https://pigeonhole.dovecot.org/download.html>`_.
 
 Alternatively, you can get the sources, including the most recent
 unreleased changes, from the the `GitHub repository <https://github.com/dovecot/pigeonhole>`_ :

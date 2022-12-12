@@ -78,7 +78,7 @@ really nice because Postfix doesn't need to query an external datasource
 (MySQL, LDAP...). Postfix maintain a local database with existing/non
 existing addresses (you can configure how long positive/negative results
 should be cached). `Postfix
-reject_unverified_recipient <http://www.postfix.org/ADDRESS_VERIFICATION_README.html>`_
+reject_unverified_recipient <https://www.postfix.org/ADDRESS_VERIFICATION_README.html>`_
 
 To use LMTP and dynamic address verification you must first get Dovecot
 working. Then you can configure Postfix to use LMTP and set

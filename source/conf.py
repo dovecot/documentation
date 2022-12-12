@@ -13,10 +13,13 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os, sys
+import subprocess
 sys.path.append(os.path.abspath('./_ext'))
 
 # Increase recursion limit; needed for todo processing
 sys.setrecursionlimit(10000)
+
+from sphinx.environment import default_settings
 
 # -- Project information -----------------------------------------------------
 
@@ -24,11 +27,10 @@ project = u'Dovecot'
 copyright = u'Dovecot Authors'
 author = u'Dovecot Authors'
 
-# The short X.Y version
-version = u'2.3'
-# The full version, including alpha/beta/rc tags
-release = u'2.3.8'
-
+version = os.getenv('GITHUB_SHA')
+if not version:
+    version = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode()
+release = version
 
 # -- General configuration ---------------------------------------------------
 
@@ -137,7 +139,6 @@ htmlhelp_basename = 'Dovecotdoc'
 
 html_css_files = [
  'https://s3-us-west-2.amazonaws.com/colors-css/2.2.0/colors.min.css',
- 'css/custom.css',
 ]
 
 
@@ -222,3 +223,5 @@ epub_exclude_files = ['search.html']
 # -- Extension configuration -------------------------------------------------
 
 todo_include_todos = False
+
+default_settings['rfc_base_url'] = "https://datatracker.ietf.org/doc/html/"

@@ -25,4 +25,4 @@ To solve this problem you can do only one of two things:
 2. Give the mail process access to the group (e.g. ``mail_access_groups=mail``
    setting). However, this is dangerous. `It allows users with shell access to
    read other users' INBOXes
-   <http://dovecot.org/list/dovecot-news/2008-March/000060.html>`_.
+   <https://dovecot.org/list/dovecot-news/2008-March/000060.html>`_.

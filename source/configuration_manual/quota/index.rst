@@ -22,14 +22,12 @@ Quota Root
 See :dovecot_plugin:ref:`quota` for the details on the syntax of the quota
 root setting.
 
-Quota root is a concept from `IMAP Quota specifications (RFC 2087)`_. Normally
+Quota root is a concept from IMAP Quota specifications (:rfc:`2087`). Normally
 you'll have only one quota root, but in theory there could be, e.g., "user
 quota" and "domain quota" roots. It's unspecified how the quota roots interact
 with each other (if at all). In some systems, for example, INBOX could have a
 completely different quota root from the rest of the mailboxes (e.g. INBOX in
 ``/var/mail/`` partition and others in ``/home/`` partition).
-
-.. _`IMAP Quota specifications (RFC 2087)`: https://tools.ietf.org/html/rfc2087
 
 .. _quota_configuration_rules:
 

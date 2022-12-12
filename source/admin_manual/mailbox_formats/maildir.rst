@@ -155,8 +155,8 @@ Usage of Timestamps
 
 Timestamps of message files:
 
-* ``mtime`` is used as `IMAP INTERNALDATE, RFC 3501 [2.3.3]`_, and must never
-  change (see RFC 3501 [2.3.1.1, parenthesis 4]).
+* ``mtime`` is used as IMAP INTERNALDATE :rfc:`3501#section-2.3.3`, and must never
+  change (see :rfc:`RFC 3501 [2.3.1.1, parenthesis 4] <3501#section-2.3.1.1>`).
 * ``ctime`` is used as Dovecot's internal "save/copy date", unless the correct
   value is found from ``dovecot.index.cache``. This is used only by external
   commands, e.g. ``doveadm expunge savedbefore``.
@@ -165,7 +165,7 @@ Timestamps of message files:
 Timestamps of ``cur`` and ``new`` directories:
 
 * ``mtime`` is used to detect changes of the mailbox and may force
-  regeneration of `index files`_.
+  regeneration of :ref:`index files <mail_index_file_format>`.
 * ``atime`` and ``ctime`` not used.
 
 Filename Examples
@@ -188,9 +188,6 @@ Filename Examples
 |                                                                                                   | **n** = IMAP tag #14 (0=a, 1=b, 2=c, etc) as defined in  |
 |                                                                                                   | that folder's ``dovecot-keywords`` file.                 |
 +---------------------------------------------------------------------------------------------------+----------------------------------------------------------+
-
-.. _`IMAP INTERNALDATE, RFC 3501 [2.3.3]`: https://tools.ietf.org/html/rfc3501#section-2.3.3
-.. _`index files`: https://wiki.dovecot.org/IndexFiles
 
 .. _`maildir_and_filesystems`:
 
@@ -392,14 +389,14 @@ Maildirs are placed (e.g., copied or moved in the filesystem) in a mail
 location (and then "imported" by dovecot).
 
 Therefore, it is (usually) **not** necessary, to strip any such mail headers
-at the MTA, MDA, or LDA (as is recommended with
+at the :ref:`MTA <mta>`, :ref:`MDA <mda>`, or :ref:`LDA <lda>` (as is recommended with
 :ref:`mbox <mbox_mbox_format>`).
 
 There is one exception, though, namely when
 :dovecot_core:ref:`pop3_reuse_xuidl = yes <pop3_reuse_xuidl>` (which
 is however deprecated): in this case ``X-UIDL`` is used for the POP3 UIDLs.
 Therefore, in this case, is recommended to strip the ``X-UIDL`` mail headers
-*case-insensitively* at the MTA, MDA, or LDA.
+*case-insensitively* at the :ref:`MTA <mta>`, :ref:`MDA <mda>`, or :ref:`LDA <lda>`.
 
 Procmail Problems
 ^^^^^^^^^^^^^^^^^

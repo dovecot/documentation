@@ -4,8 +4,7 @@
 IMAP Compression
 ================
 
-Dovecot supports the 
-`IMAP COMPRESS (RFC 4978) <https://tools.ietf.org/html/rfc4978>`_ extension.
+Dovecot supports the IMAP COMPRESS (:rfc:`4978`) extension.
 
 It allows an IMAP client to dynamically enable stream compression for an
 IMAP session.

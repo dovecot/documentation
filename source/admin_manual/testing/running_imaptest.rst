@@ -6,7 +6,7 @@ Running IMAPtest
 
 ``imaptest`` is publicly available opensource IMAP/POP3/LMTP testing tool that has been developed by Dovecot. 
 
-More information can be found from here `IMAP Server Tester <http://www.imapwiki.org/ImapTest>`_
+More information can be found from here `IMAP Server Tester <https://www.imapwiki.org/ImapTest>`_
 
 Sample LMTP / POP3 configuration
 

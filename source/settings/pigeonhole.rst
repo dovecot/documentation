@@ -197,7 +197,7 @@ Sieve Plugin Settings
       :pigeonhole:ref:`sieve setting <sieve>`.
 
    Directory for :personal
-   `include scripts <http://tools.ietf.org/html/draft-ietf-sieve-include-05>`_
+   `include scripts <https://datatracker.ietf.org/doc/html/draft-ietf-sieve-include-05>`_
    for the include extension.
 
    The Sieve interpreter only recognizes files that end with a .sieve
@@ -434,7 +434,7 @@ Sieve Plugin Settings
 
    The separator that is expected between the ``:user`` and ``:detail``
    address parts introduced by the
-   `subaddress extension <http://tools.ietf.org/html/rfc5233/>`_.
+   subaddress extension :rfc:`5233`.
 
    This may also be a sequence of characters (e.g. ``--``).
 
