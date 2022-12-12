@@ -275,7 +275,7 @@ redirected in the Sieve script shown above.
    MAILS=$(mysql -u$USER -p$PASS $DATABASE --batch --silent -e "SELECT count(*) as ile FROM sieve_count WHERE from_address='$1' AND DATE_SUB(now(),INTERVAL $2 SECOND) < date;")
    ADDRESULT=$(mysql -u$USER -p$PASS $DATABASE --batch --silent -e "INSERT INTO sieve_count (from_address, date) VALUES ('$1', NOW());")
 
-   # uncoment below to debug
+   # uncomment below to debug
    # echo User $1 sent $MAILS in last $2 s >> /usr/lib/dovecot/sieve-pipe/output.txt
    # echo Add result : $ADDRESULT >> /usr/lib/dovecot/sieve-pipe/output.txt
    # echo $MAILS
