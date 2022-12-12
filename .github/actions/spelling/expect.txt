@@ -1329,6 +1329,7 @@ unaliased
 uname
 unauth
 uncomment
+uncommented
 uncompress
 uncompressing
 unconfigured
