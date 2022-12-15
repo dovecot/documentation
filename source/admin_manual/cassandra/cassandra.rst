@@ -47,15 +47,15 @@ cluster key. Sometimes it may not have worked properly though, and Cassandra
 queries start failing (timing out) towards a specific cluster key due to too
 many tombstones. This can be repaired by getting rid of the tombstones:
 
- * Run Cassandra repair to make sure all tombstones are replicated
- * Change ``gc_grace_seconds`` to smaller value that includes the tombstones
-   (e.g. 1 day)
- * Run Cassandra compact
- * Change ``gc_grace_seconds`` back to the original value (10 days)
+ * Run Cassandra repair to make sure all tombstones are replicated.
+ * Change ``gc_grace_seconds`` to a smaller value that includes the tombstones
+   (e.g. 1 day).
+ * Run Cassandra compact.
+ * Change ``gc_grace_seconds`` back to the original value (10 days).
 
 Other potential changes that may help:
 
  * Enable ``page_size=1000`` in ``dovecot-dict-cql.conf.ext`` connect setting
    so large results would be paged into multiple queries.
- * Increase Cassandra's request timeout
- * Increase Cassandra's ``tombstone_failure_threshold``
+ * Increase Cassandra's request timeout.
+ * Increase Cassandra's ``tombstone_failure_threshold``.
