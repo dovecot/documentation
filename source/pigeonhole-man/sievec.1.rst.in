@@ -57,7 +57,7 @@ OPTIONS
 **-d**
    Don't write the binary to *out-file*, but write a textual dump of the
    binary instead. In this context, the *out-file* value '-' has special
-   meaning: it causes the the textual dump to be written to **stdout**.
+   meaning: it causes the textual dump to be written to **stdout**.
    The *out-file* argument may also be omitted, which has the same
    effect as '-'. The output is identical to what the
    :man:`sieve-dump(1)` command produces for a compiled Sieve binary

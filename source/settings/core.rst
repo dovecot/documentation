@@ -1298,7 +1298,7 @@ See :ref:`settings` for list of all setting groups.
    :todo: Indicate LDA setting
    :values: @boolean
 
-   Should LDA create a non-existent mailbox automatically when attempting to
+   Should LDA create a nonexistent mailbox automatically when attempting to
    save a mail message?
 
 
