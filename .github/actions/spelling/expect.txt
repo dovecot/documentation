@@ -179,6 +179,7 @@ commitlog
 compat
 Compuserve
 concat
+CONDSTORE
 config
 copybox
 COPYUID
