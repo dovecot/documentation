@@ -60,6 +60,8 @@ Dovecot supports calculating `JA3 hash <https://engineering.salesforce.com/tls-f
 This adds ``ssl_ja3`` and ``ssl_ja3_hash`` to :ref:`login variables <variables-login>`, to be used with :dovecot_core:ref:`login_log_format_elements`
 and ``ssl_ja3_hash`` for :ref:`authentication variables <variables-auth>`, to be used with e.g. :ref:`authentication-auth_policy`.
 
+To get JA3 values, you will need to use OpenSSL 1.1 or newer.
+
 Common JA3 hash databases usually use values provided by HTTP clients. Since IMAP, POP3 etc. do not currently use some of these extensions,
 you should not use these. They will not match.
 
