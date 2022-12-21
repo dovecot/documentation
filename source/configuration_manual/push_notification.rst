@@ -368,53 +368,56 @@ Functions:
 Example Scripts
 ---------------
 
-Simple example:
+Simple example with :py:mod:`dovecot.http.client`
 
 .. code-block:: lua
    :linenos:
 
-   -- To use:
-   --
-   -- plugin {
-   --   push_notification_driver = lua:file=/home/example/empty.lua
-   --   push_lua_url = http://push.notification.server/handler
-   -- }
-   --
-   -- server is sent a POST message to given url with parameters
-   --
+   local url = require 'socket.url'
 
-   local http = require("socket.http")
-   local url = require("socket.url")
+   local client = nil
 
-   function table_get(t, k, d)
+   function script_init()
+     client = dovecot.http.client({debug=True, timeout=10000})
+     return 0
+   end
+
+   local function table_get(t, k, d)
      return t[k] or d
    end
+
 
    function dovecot_lua_notify_begin_txn(user)
      return {messages={}, ep=user:plugin_getenv("push_lua_url"), username=user.username}
    end
 
+
    function dovecot_lua_notify_end_txn(ctx, success)
      local i, msg = next(ctx["messages"], nil)
      while i do
-       local r, c = http.request(ctx["ep"], "from=" .. url.escape(table_get(msg, "from", "")) .. "&to=" .. url.escape(table_get(msg, "to", "")) .. "&subject=" .. url.escape(table_get(msg, "subject", "")) .. "&snippet=" .. url.escape(table_get(msg, "snippet", "")) .. "&user=" .. url.escape(ctx["username"]))
-       if r and c/100 ~= 2 then
-         dovecot.i_error("lua-push: Remote error " .. tostring(c) .. " handling push notification")
+       local rq = client:request({url=ctx["ep"], method="POST"})
+       rq:set_payload("from=" .. url.escape(table_get(msg, "from", "")) .. "&to=" .. url.escape(table_get(msg, "to", "")) .. "&subject=" .. url.escape(table_get(msg, "subject", "")) .. "&snippet=" .. url.escape(tab
+   le_get(msg, "snippet", "")) .. "&user=" .. url.escape(ctx["username"]))
+       r = rq:submit()
+       if r and r:status()/100 ~= 2 then
+         dovecot.i_error("lua-push: Remote error " .. tostring(r:reason()) .. " handling push notification")
        end
-       if r == nil then
-         dovecot.i_error("lua-push: " .. c)
-       end
+
        i, msg = next(ctx["messages"], i)
      end
    end
+
 
    function dovecot_lua_notify_event_message_append(ctx, event)
      table.insert(ctx["messages"], event)
    end
 
+
    function dovecot_lua_notify_event_message_new(ctx, event)
      table.insert(ctx["messages"], event)
    end
+
+
 
 Example with event code:
 
@@ -431,8 +434,7 @@ Example with event code:
    -- server is sent a POST message to given url with parameters
    --
 
-   local http = require "socket.http"
-   local ltn12 = require "ltn12"
+   local client = nil
    local url = require "socket.url"
 
    function table_get(t, k, d)
@@ -440,6 +442,7 @@ Example with event code:
    end
 
    function script_init()
+     client = dovecot.http.client({debug=True, timeout=10000})
      return 0
    end
 
@@ -468,14 +471,10 @@ Example with event code:
        e:set_name("lua_notify_mail_finished")
        reqbody = "mailbox=" .. url.escape(msg.mailbox) .. "&from=" .. url.escape(table_get(msg, "from", "")) .. "&subject=" .. url.escape(table_get(msg, "subject", ""))
        e:log_debug(ctx.ep .. " - sending " .. reqbody)
-       res, code = http.request({method="POST",
-                     url=ctx.ep,
-                     source=ltn12.source.string(reqbody),
-                     headers={
-                       ["content-type"] = "application/x-www-form-url.escaped",
-                       ["content-length"] = tostring(#reqbody)
-                     }
-                    })
+       local rq = client:request({url=ctx["ep"], method="POST"})
+       rq:set_payload(reqbody)
+       rq:add_header("content-type", "application/x-www-form-url.escaped")
+       local code = rq:submit():status()
        e:add_int("result_code", code)
        e:log_info("Mail notify status " .. tostring(code))
      end
@@ -484,18 +483,15 @@ Example with event code:
        e:set_name("lua_notify_mailbox_finished")
        reqbody = "mailbox=" .. url.escape(state.mailbox) .. "&recent=" .. tostring(state.recent) .. "&unseen=" .. tostring(state.unseen) .. "&messages=" .. tostring(state.messages)
        e:log_debug(ctx.ep .. " - sending " .. reqbody)
-       res, code = http.request({method="POST",
-                     url=ctx.ep,
-                     source=ltn12.source.string(reqbody),
-                     headers={
-                       ["content-type"] = "application/x-www-form-url.escaped",
-                       ["content-length"] = tostring(#reqbody)
-                     }
-                    })
+       local rq = client:request({url=ctx["ep"], method="POST"})
+       rq:set_payload(reqbody)
+       rq:add_header("content-type", "application/x-www-form-url.escaped")
+       local code = rq:submit():status()
        e:add_int("result_code", code)
        e:log_info("Mailbox notify status " .. tostring(code))
      end
    end
+
 
 Chronos driver [``chronos``]
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
