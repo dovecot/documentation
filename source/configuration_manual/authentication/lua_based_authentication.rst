@@ -189,7 +189,8 @@ To configure userdb in dovecot, use
 Examples
 --------
 
-.. code-block:: none
+.. code-block:: lua
+  :linenos:
 
   function auth_passdb_lookup(req)
     if req.user == "testuser1" then
@@ -227,7 +228,8 @@ or multiple fields per user.
 If you only want to authenticate users, and don't care about user listing, you
 can use
 
-.. code-block:: none
+.. code-block:: lua
+  :linenos:
 
   function auth_passdb_lookup(req)
      for line in io.lines("/path/to/file") do
