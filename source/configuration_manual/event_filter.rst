@@ -78,6 +78,14 @@ There are some limitations on which operators work with what field types:
   It returns true if the key is one of the values in the list. If the value
   is an empty string, it returns true if the list is empty.
 
+.. versionchanged:: v2.4.0;v3.0.0 Event fields have specific types that
+                    constrain the possible values they can be filtered by. For
+                    example ``bytes_out`` and ``message_size`` are numeric and
+                    can only be matched against numeric values. Previously type
+                    mismatches were silently ignored, beginning with this
+                    version each type mismatch and unsupported operation
+                    generate a respective warning.
+
 For example, to match events with the event name ``abc``, one would use one of
 the following expressions.  Note that white space is not significant between
 tokens, and therefore the following are all equivalent::
