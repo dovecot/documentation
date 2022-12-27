@@ -1,0 +1,35 @@
+.. _man-1_doveadm-cluster-kick:
+
+====================
+doveadm-cluster-kick
+====================
+
+
+NAME
+====
+
+doveadm-cluster-kick - Disconnect user connections from cluster 
+
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster kick *user*
+
+
+DESCRIPTION
+===========
+
+**doveadm cluster kick** can be used to run disconnect user's connections from
+Dovecot Cluster.
+
+.. include:: global-options.inc
+
+.. include:: global-options-formatter.inc
+
+
+.. include:: reporting-bugs.inc
+
+SEE ALSO
+========
+:man:`doveadm-cluster(1)`
