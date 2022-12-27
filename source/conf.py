@@ -30,6 +30,7 @@ author = u'Dovecot Authors'
 version = os.getenv('GITHUB_SHA')
 if not version:
     version = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode()
+version = version[0:12]
 release = version
 
 # -- General configuration ---------------------------------------------------
