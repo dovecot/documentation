@@ -1,8 +1,8 @@
 .. _obox_man-pages:
 
-====================
-Dovecot manual pages
-====================
+==========================================
+Dovecot Object Storage Plugin manual pages
+==========================================
 
 .. toctree::
    :maxdepth: 1
