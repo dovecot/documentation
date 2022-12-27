@@ -1,0 +1,55 @@
+.. _man-1_doveadm-cluster:
+
+===============
+doveadm-cluster
+===============
+
+NAME
+====
+
+doveadm-cluster - Utility actions for Dovecot Cluster
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster *command* [*arguments*]
+
+DESCRIPTION
+===========
+
+**doveadm cluster** can be used to run actions that interact with and
+modify Dovecot Cluster.
+
+.. include:: global-options-formatter.inc
+
+COMMANDS
+========
+
+**doveadm cluster site**
+  :man:`doveadm-cluster-site(1)`, Site management commands
+
+**doveadm cluster backend**
+  :man:`doveadm-cluster-backend(1)`, Backend management commands
+
+**doveadm cluster group**
+  :man:`doveadm-cluster-group(1)`, User group management commands
+
+**doveadm cluster user**
+  :man:`doveadm-cluster-user(1)`, User management commands
+
+**doveadm cluster geodb**
+  :man:`doveadm-cluster-geodb(1)`, GeoDB management commands
+
+**doveadm cluster localdb**
+  :man:`doveadm-cluster-localdb(1)`, LocalDB management commands
+
+**doveadm cluster kick**
+  :man:`doveadm-cluster-kick(1)`, Disconnect user connections from cluster
+
+
+.. include:: reporting-bugs.inc
+
+SEE ALSO
+========
+
+:man:`doveadm(1)` :man:`dovecot-cluster(7)`

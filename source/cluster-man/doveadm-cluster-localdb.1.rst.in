@@ -1,0 +1,101 @@
+.. _man-1_doveadm-cluster-localdb:
+
+=======================
+doveadm-cluster-localdb
+=======================
+
+
+NAME
+====
+
+doveadm-cluster-localdb - Utility actions for Dovecot Cluster local cache.
+
+.. warning:: These commands are intended for testing and debugging purposes only, they should not be normally used.
+
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb user status *group* *user*
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb user list [ *mask* ]
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb user remove *group* *user*
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb group status *group*
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb group list [ *mask* ]
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb group remove *group*
+
+
+DESCRIPTION
+===========
+
+**doveadm cluster localdb** can be used to run actions that interact with and
+modify Dovecot Cluster local cache.
+
+.. include:: global-options.inc
+
+.. include:: global-options-formatter.inc
+
+
+COMMANDS
+========
+
+
+cluster localdb user status
+----------------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb user status *group* *user*
+
+Displays locally cached information about a user.
+
+
+cluster localdb user list
+-------------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb user list [ *mask* ]
+
+List users in local cache.
+
+
+cluster localdb user remove
+---------------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb user remove *group* *user*
+
+Remove locally cached information for a user.
+
+
+cluster localdb group status
+----------------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb group status *group*
+
+Display locally cached information about a group.
+
+
+cluster localdb group list
+--------------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb group list [ *mask* ]
+
+List groups in local cache.
+
+
+cluster localdb group remove
+----------------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb group remove *group*
+
+Remove locally cached information for a group.
+
+
+.. include:: reporting-bugs.inc
+
+
+SEE ALSO
+========
+
+:man:`doveadm-cluster(1)`
