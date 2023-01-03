@@ -707,6 +707,7 @@ mailfolders
 mailfrom
 mailhome
 Mailinglist
+mailinglist
 maillog
 mailserver
 mailstore
