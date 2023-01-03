@@ -12,6 +12,3 @@ Dovecot is an open source IMAP and POP3 email server for Linux/UNIX-like systems
    configuration_manual/index
    installation_guide/index
    developer_manual/index
-   Manual pages <man/index>
-   Obox-plugin manual pages <obox-man/index>
-   Pigeonhole-plugin manual pages <pigeonhole-man/index>
