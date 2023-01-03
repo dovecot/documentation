@@ -16,7 +16,7 @@ jobs:
         mkdir build
         chmod 0777 build
     - uses: actions/checkout@v2
-    - uses: dovecot/dovecot-sphinx-action@0.3
+    - uses: dovecot/dovecot-sphinx-action@0.4
     - name: Prepare tarballs
       run: |
         tar --transform=s,build/dirhtml,html, -cJf build/docs.txz build/dirhtml
