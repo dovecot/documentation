@@ -2143,7 +2143,7 @@ Events emitted when login process proxies a connection to a backend.
    :inherit: login_proxy_session
 
    Connection to proxy destination is established and user is successfully
-   logged in to the backend.
+   logged into the backend.
 
 
 .. dovecot_core:event:: proxy_session_finished
