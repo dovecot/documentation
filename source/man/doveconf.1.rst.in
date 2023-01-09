@@ -12,7 +12,7 @@ doveconf - Dovecot's configuration dumping utility
 SYNOPSIS
 ========
 
-**doveconf** [**-adnPNSx**] [**-c** *config-file*] [**-f** *filter*] [**-m** *module*]
+**doveconf** [**-adnPNSx**] [**-c** *config-file*] [**-f** *filter*]
 
 **doveconf** [**-n**] [**-c** *config-file*] *section_name* ...
 
@@ -71,11 +71,6 @@ OPTIONS
 
 **-h**
    Hide the setting's name, show only the setting's value.
-
-**-m** *module*
-   Show only settings for the given *module*.
-
-   e.g. **imap**, **imap-login**, **lmtp**, **pop3** or **pop3-login**
 
 **-n**
    Show only settings with non-default values.
