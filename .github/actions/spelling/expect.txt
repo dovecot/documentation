@@ -46,6 +46,7 @@ authuser
 authz
 autocreate
 autocreated
+autocreation
 Autocreation
 autoexpunge
 autoexpunged
@@ -299,6 +300,7 @@ genpkey
 geodb
 gethosterror
 getmail
+GETMETADATA
 GETSCRIPT
 Gluster
 gmatch
