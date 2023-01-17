@@ -1,0 +1,2 @@
+# dovecot-2.3.20-rev10 Debian Buster (10.0) - Dovecot Pro Full Text Search plug-in
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/fts/DebianBuster ./
