@@ -1,0 +1,4 @@
+# imap-proxyauth-plugin component requires separate OX License
+# Please contact to support@open-xchange.com to get access
+# dovecot-2.3.20-rev10 Debian Bullseye (11.0) - Dovecot Pro IMAP Proxy Authentication plug-in
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.20/plugin/imap-proxyauth-plugin/DebianBullseye ./
