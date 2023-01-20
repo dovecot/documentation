@@ -1,49 +1,49 @@
 [dovecot-2.3.9.2-rev1-libuv]
 name=RedHat Enterprise Linux 6 - UV library
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-libuv/stable/1.9.0/RHEL6
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
 [dovecot-2.3.9.2-rev1-cassandra-cpp-driver]
 name=RedHat Enterprise Linux 6 - DataStax C/C++ Driver for Apache Cassandra
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-cassandra-cpp-driver/stable/2.13.0/RHEL6
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
 [dovecot-2.3.9.2-rev1-libexttextcat]
 name=RedHat Enterprise Linux 6 - Extextcat library
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-libexttextcat/stable/3.4.4/RHEL6
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
 [dovecot-2.3.9.2-rev1-libsodium]
 name=RedHat Enterprise Linux 6 - Sodium library
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-libsodium/stable/1.0.16/RHEL6
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
 [dovecot-2.3.9.2-rev1-icu56]
 name=RedHat Enterprise Linux 6 - ICU4C 56
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-icu56/stable/56.1/RHEL6
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
 [dovecot-2.3.9.2-rev1-clucene]
 name=RedHat Enterprise Linux 6 - CLucene library
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-clucene/stable/2.3.3.4/RHEL6
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
 [dovecot-2.3.9.2-rev1-stemmer]
 name=RedHat Enterprise Linux 6 - Snowball stemming C library
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-stemmer/stable/1.0/RHEL6
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 

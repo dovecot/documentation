@@ -1,7 +1,7 @@
 [dovecot-2.3.17-rev8-dovecot-3rdparty_cassandra-cpp-driver]
 name=RedHat Enterprise Linux 8 - DataStax C/C++ Driver for Apache Cassandra
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.17/3rdparty/cassandra-cpp-driver/RHEL8
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 

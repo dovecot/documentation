@@ -3,7 +3,7 @@
 [dovecot-2.3.11.3-rev1-fts-jp-kuromoji-plugin]
 name=Amazon Linux 2 - OX Dovecot Pro Full Text Search Kuromoji Tokenizer for Japanese
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.11.3/plugin/fts-jp-kuromoji-plugin/AmazonLinux2
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
@@ -12,7 +12,7 @@ enabled=1
 [dovecot-2.3.11.3-rev1-dovecot-3rdparty_kuromoji]
 name=Amazon Linux 2 - Atilika Kuromoji Library
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.11.3/3rdparty/kuromoji/AmazonLinux2
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 priority=1
 enabled=1

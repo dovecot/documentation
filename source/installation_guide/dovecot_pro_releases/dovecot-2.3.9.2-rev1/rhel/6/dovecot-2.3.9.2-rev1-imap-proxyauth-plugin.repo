@@ -3,7 +3,7 @@
 [dovecot-2.3.9.2-rev1-imap-proxyauth-plugin]
 name=RedHat Enterprise Linux 6 - OX Dovecot Pro IMAP Proxy Authentication plug-in
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-imap-proxyauth-plugin/stable/2.3.9.2/RHEL6
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
