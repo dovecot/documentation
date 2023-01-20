@@ -3,7 +3,7 @@
 [dovecot-2.3.14.1-rev3-pigeonhole-sieve-zimbra-compat-plugin]
 name=RedHat Enterprise Linux 8 - OX Dovecot Pro Pigeonhole Sieve Zimbra compatibility plug-in
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.14.1/plugin/pigeonhole-sieve-zimbra-compat-plugin/RHEL8
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 

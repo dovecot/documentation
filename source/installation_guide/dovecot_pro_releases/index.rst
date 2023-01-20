@@ -11,7 +11,7 @@ and access to it requires a license.
 
 Version specific repositories for OX Dovecot Pro v2.3 are located at
 https://software.open-xchange.com/ and are signed with the
-http://software.open-xchange.com/oxbuildkey.pub key. For instructions on
+https://software.open-xchange.com/oxbuildkey.pub key. For instructions on
 key verification, please see
 https://oxpedia.org/wiki/index.php?title=Importing_OX_Buildkey.
 

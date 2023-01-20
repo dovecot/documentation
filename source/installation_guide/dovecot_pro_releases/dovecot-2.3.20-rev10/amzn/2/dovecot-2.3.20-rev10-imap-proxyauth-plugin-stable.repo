@@ -3,7 +3,7 @@
 [dovecot-2.3.20-rev10-imap-proxyauth-plugin]
 name=Amazon Linux 2 - Dovecot Pro IMAP Proxy Authentication plug-in
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/plugin/imap-proxyauth-plugin/AmazonLinux2
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
