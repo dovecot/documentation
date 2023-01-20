@@ -3,7 +3,7 @@
 [dovecot-2.3.11.2-rev2-fsserver]
 name=CentOS 8 - OX Dovecot Pro Object Storage Development Tools - fs-server backend
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.11.2/devtools/fsserver/CentOS8
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 

@@ -3,7 +3,7 @@
 [dovecot-2.3.17-rev8-fts-jp-kuromoji-plugin]
 name=CentOS 8 - OX Dovecot Pro Full Text Search Kuromoji Tokenizer for Japanese
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.17/plugin/fts-jp-kuromoji-plugin/CentOS8
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
@@ -12,7 +12,7 @@ enabled=1
 [dovecot-2.3.17-rev8-dovecot-3rdparty_kuromoji]
 name=CentOS 8 - Atilika Kuromoji Library
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.17/3rdparty/kuromoji/CentOS8
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 

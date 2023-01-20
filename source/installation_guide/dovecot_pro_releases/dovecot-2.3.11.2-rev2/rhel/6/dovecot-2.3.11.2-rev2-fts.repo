@@ -1,7 +1,7 @@
 [dovecot-2.3.11.2-rev2-fts]
 name=RedHat Enterprise Linux 6 - OX Dovecot Pro Full Text Search plug-in
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.11.2/fts/RHEL6
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 

@@ -3,7 +3,7 @@
 [dovecot-2.3.15-rev5-pigeonhole-sieve-zimbra-compat-plugin]
 name=CentOS 7 - OX Dovecot Pro Pigeonhole Sieve Zimbra compatibility plug-in
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.15/plugin/pigeonhole-sieve-zimbra-compat-plugin/CentOS7
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
