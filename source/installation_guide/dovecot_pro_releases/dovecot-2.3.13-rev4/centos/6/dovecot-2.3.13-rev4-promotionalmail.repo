@@ -3,7 +3,7 @@
 [dovecot-2.3.13-rev4-promotionalmail]
 name=CentOS 6 - OX Engage Dovecot plug-in
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.13/promotionalmail/CentOS6
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
