@@ -3,7 +3,7 @@
 [dovecot-2.3.20-rev10-fts-jp-kuromoji-plugin]
 name=RedHat Enterprise Linux 7 - Dovecot Pro Full Text Search Kuromoji Tokenizer for Japanese
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/plugin/fts-jp-kuromoji-plugin/RHEL7
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
@@ -12,7 +12,7 @@ enabled=1
 [dovecot-2.3.20-rev10-dovecot-3rdparty_kuromoji]
 name=RedHat Enterprise Linux 7 - Atilika Kuromoji Library
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/3rdparty/kuromoji/RHEL7
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 

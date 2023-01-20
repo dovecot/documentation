@@ -3,7 +3,7 @@
 [dovecot-2.3.9.4-rev1-cmdlog-plugin]
 name=RedHat Enterprise Linux 7 - OX Dovecot Pro Command Log plug-in
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.9.4/plugin/cmdlog-plugin/RHEL7
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
