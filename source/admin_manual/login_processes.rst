@@ -103,7 +103,7 @@ Configuring socket paths for login processes
 
 The authentication UNIX socket is "login" by default.
 
-The :dovecot_core:ref:`login_auth_socket_path` setting allows to configure this
+The :dovecot_core:ref:`login_socket_path` setting allows to configure this
 path for all login processes. For individual processes this can be overridden
 by supplying a parameter to the appropriate service's executable. The following
 example sets up the global socket "general-login-socket" but overrides this for
@@ -111,7 +111,7 @@ the imap-login process individually (in ``dovecot.conf``):
 
 .. code-block:: none
 
-  login_auth_socket_path = general-login-socket
+  login_socket_path = general-login-socket
 
   service imap-login {
     executable = imap-login specific-login-socket
