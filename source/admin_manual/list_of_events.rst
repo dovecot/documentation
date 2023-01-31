@@ -563,8 +563,8 @@ These events apply only for connections using the ``connection API``.
 .. dovecot_core:event:: client_connection_disconnected
    :inherit: client_connection_common
 
-   :field bytes_in: Amount of data read, in bytes.
-   :field bytes_out: Amount of data written, in bytes.
+   :field net_in_bytes @changed;v2.4.0,v3.0.0: Amount of data read, in bytes.
+   :field net_out_bytes @changed;v2.4.0,v3.0.0: Amount of data written, in bytes.
    :field reason: Disconnection reason.
 
    Client connection is terminated.
@@ -888,8 +888,8 @@ a client to an external service.
 
    :field attempts: Amount of individual HTTP request attempts (number of
      retries after failures + 1).
-   :field bytes_in: Amount of data read, in bytes.
-   :field bytes_out: Amount of data written, in bytes.
+   :field net_in_bytes @changed;v2.4.0,v3.0.0: Amount of data read, in bytes.
+   :field net_out_bytes @changed;v2.4.0,v3.0.0: Amount of data written, in bytes.
    :field dest_host: Destination host.
    :field dest_ip: Destination IP address.
    :field dest_port: Destination port.
@@ -953,8 +953,8 @@ requests (e.g. doveadm HTTP API).
    :added: v2.3.18
    :inherit: http_server
 
-   :field bytes_in: Amount of request data read, in bytes.
-   :field bytes_out: Amount of response data written, in bytes.
+   :field net_in_bytes @changed;v2.4.0,v3.0.0: Amount of request data read, in bytes.
+   :field net_out_bytes @changed;v2.4.0,v3.0.0: Amount of response data written, in bytes.
    :field status_code: HTTP result status code (integer).
 
    HTTP request is fully completed, i.e. the incoming request body is read and
@@ -1104,8 +1104,8 @@ IMAP Command
    :field running_usecs: How many usecs this command has spent running.
    :field lock_wait_usecs: How many usecs this command has spent waiting for
      locks.
-   :field bytes_in: Amount of data read, in bytes.
-   :field bytes_out: Amount of data written, in bytes.
+   :field net_in_bytes @changed;v2.4.0,v3.0.0: Amount of data read, in bytes.
+   :field net_out_bytes @changed;v2.4.0,v3.0.0: Amount of data written, in bytes.
 
    IMAP command is completed.
 
@@ -2187,8 +2187,8 @@ Events emitted when login process proxies a connection to a backend.
    :field idle_usecs: Number of seconds the connection was idling before
      getting disconnected.
      .. versionchanged:: v2.4.0;v3.0.0 This was previously named idle_secs.
-   :field bytes_in: Amount of data read from client, in bytes.
-   :field bytes_out: Amount of data written to client, in bytes.
+   :field net_in_bytes @changed;v2.4.0,v3.0.0: Amount of data read from client, in bytes.
+   :field net_out_bytes @changed;v2.4.0,v3.0.0: Amount of data written to client, in bytes.
 
    Connection to proxy destination has ended, either successfully or with
    error.
