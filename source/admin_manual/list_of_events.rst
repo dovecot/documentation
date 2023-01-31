@@ -974,6 +974,31 @@ POP3
    :field remote_port @added;v2.4.0,v3.0.0: POP3 connection's remote (client) port.
 
 
+.. dovecot_event:field_group:: pop3_command
+   :inherit: pop3_client
+
+   :field cmd_name @added;v2.4.0,v3.0.0: POP3 command name uppercased (e.g. ``UIDL``).
+   :field cmd_args @added;v2.4.0,v3.0.0: POP3 command's full parameters (e.g. ``1 1``).
+
+
+.. dovecot_core:event:: pop3_command_finished
+   :inherit: pop3_command
+   :added: v2.4.0;v3.0.0
+
+   :field reply: POP3 reply: Values:
+                                * ``OK``
+                                * ``FAIL``
+   :field net_in_bytes: Amount of data read for this command, in bytes.
+   :field net_out_bytes: Amount of data written for this command, in bytes.
+
+   POP3 command is completed.
+
+   This event is useful to track individual command usage, debug specific
+   sessions, and/or detect broken clients.
+
+   .. Note:: This event is currently not sent for pre-login POP3 commands.
+
+
 IMAP
 ====
 
