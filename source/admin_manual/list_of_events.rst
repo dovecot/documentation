@@ -672,6 +672,8 @@ Mail User
                  (Skipped in non-Linux environments.)
    :field syscw: Number of write syscalls
                  (Skipped in non-Linux environments.)
+   :field net_in_bytes @added;v2.4.0,v3.0.0: Bytes received during this session (for applicable processes.)
+   :field net_out_bytes @added;v2.4.0,v3.0.0: Bytes sent during this session (for applicable processes.)
 
 
 Mailbox
