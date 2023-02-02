@@ -21,6 +21,7 @@ fields'. Possibilities are:
   TAB-separated field. It's useful for userdbs which are a bit less flexible
   for returning a variable number of fields (e.g. SQL).
 * ``uidgid_file``: Get uid and gid for user based on the given filename.
+* ``event_<name>``: Import ``name=value`` to mail user event.
 * ``user``: User can be overridden (normally set in passdb, see
   :ref:`authentication-password_databases`).
 * ``noreplicate``: See :ref:`replication_configuration`.
