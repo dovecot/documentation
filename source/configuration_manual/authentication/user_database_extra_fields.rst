@@ -22,6 +22,10 @@ fields'. Possibilities are:
   for returning a variable number of fields (e.g. SQL).
 * ``uidgid_file``: Get uid and gid for user based on the given filename.
 
+* ``event_<name>``: Import ``name=value`` to mail user event.
+
+  .. versionadded:: v2.3.21
+
 It's possible to override settings from ``dovecot.conf`` (most commonly
 quota_rule to set per-user quota limits or also plugin-settings).
 

@@ -57,6 +57,10 @@ specially:
 
   .. versionadded:: v2.2.26+/v2.3
 
+* **event_<name>**: Import ``name=value`` to login events.
+
+  .. versionadded:: v2.3.21
+
 
 How to return these extra fields depends on the password database you use. See
 :ref:`authentication-password_databases` pages on how to do it. Some passdbs however
