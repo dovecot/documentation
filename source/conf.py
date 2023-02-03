@@ -30,6 +30,7 @@ author = u'Dovecot Authors'
 version = os.getenv('GITHUB_SHA')
 if not version:
     version = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode()
+version = version[0:12]
 release = version
 
 # -- General configuration ---------------------------------------------------
@@ -48,6 +49,7 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.todo',
     'sphinx_copybutton',
+    'sphinx_design',
     'sphinx_removed_in',
     'dovecot_sphinx',
 ]
@@ -124,9 +126,9 @@ html_static_path = ['_static/']
 html_sidebars = {
     '**': [
         'about.html',
+        'searchbox.html',
         'navigation.html',
         'relations.html',
-        'searchbox.html',
         'license.html',
     ]
 }

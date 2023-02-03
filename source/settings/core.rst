@@ -1298,7 +1298,7 @@ See :ref:`settings` for list of all setting groups.
    :todo: Indicate LDA setting
    :values: @boolean
 
-   Should LDA create a non-existent mailbox automatically when attempting to
+   Should LDA create a nonexistent mailbox automatically when attempting to
    save a mail message?
 
 
@@ -1600,7 +1600,7 @@ See :ref:`settings` for list of all setting groups.
    allowed for the incoming connection.
 
 
-.. dovecot_core:setting:: login_auth_socket_path
+.. dovecot_core:setting:: login_socket_path
    :values: @string
 
    Default socket path for all services' login processes. Can be overridden by

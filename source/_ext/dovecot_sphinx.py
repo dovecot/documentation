@@ -7,11 +7,10 @@ from docutils.statemachine import StringList
 
 import sphinx
 from sphinx import addnodes
-from sphinx.directives import ObjectDescription
+from sphinx.directives import ObjectDescription, SphinxDirective
 from sphinx.domains import Domain, Index
 from sphinx.roles import XRefRole, AnyXRefRole
 from sphinx.util import logging
-from sphinx.util.docutils import SphinxDirective
 from sphinx.util.nodes import make_refnode
 
 import re
@@ -21,16 +20,20 @@ class DovecotDirective(ObjectDescription):
 
   required_arguments = 1
 
-  def _parse_rst_txt(self, txt):
+  def _parse_rst(self, txt):
     node = nodes.Element()
     source, line = self.state_machine.get_source_and_line()
     vl = StringList()
-    vl.append(txt, '%s:%d' % (source, line))
+    for x in txt.splitlines():
+      vl.append(x, '%s:%d' % (source, line))
     self.state.nested_parse(vl, 0, node)
     return node.children[0]
 
   def _transform_content(self, contentnode):
     contentnode.parent['classes'].append('dovecotsetting')
+
+  def dovecot_anchor(self, sig):
+    return sig
 
 
 class DovecotSettingLinkDirective(DovecotDirective):
@@ -41,7 +44,7 @@ class DovecotSettingLinkDirective(DovecotDirective):
   def transform_content(self, contentnode):
       self._transform_content(contentnode)
 
-      ref = self._parse_rst_txt(':%s:ref:`%s`' % (self.domain, self.arguments[0]))
+      ref = self._parse_rst(':%s:ref:`%s`' % (self.domain, self.arguments[0]))
       ref.insert(0, nodes.Text('See: '))
       contentnode += ref
 
@@ -71,10 +74,7 @@ class DovecotSettingDirective(DovecotDirective):
     d = self.env.get_domain(self.domain)
     anchor = '{}-{}'.format(d.set_prefix, self.dovecot_anchor(sig))
     signode['ids'].append(anchor)
-    d.add_setting(sig, anchor)
-
-  def dovecot_anchor(self, sig):
-    return sig
+    d.add_entry(sig, anchor)
 
   def transform_content(self, contentnode):
     super().transform_content(contentnode)
@@ -85,7 +85,7 @@ class DovecotSettingDirective(DovecotDirective):
 
     for x in ('changed', 'removed', 'added'):
       if x in self.options:
-        contentnode.insert(0, self._parse_rst_txt('.. version%s:: %s' % (x, self.options.get(x))))
+        contentnode.insert(0, self._parse_rst('.. version%s:: %s' % (x, self.options.get(x))))
 
     par = nodes.paragraph(text='Default: ')
     if 'default' in self.options:
@@ -98,9 +98,9 @@ class DovecotSettingDirective(DovecotDirective):
 
         if x.startswith('@'):
           parts = x[1:].split(';', 2)
-          par += self._parse_rst_txt(':%s:ref:`%s`' % (parts[1] if len(parts) == 2 else 'std', parts[0])).children
+          par += self._parse_rst(':%s:ref:`%s`' % (parts[1] if len(parts) == 2 else 'std', parts[0])).children
         elif x.startswith('!'):
-          par += self._parse_rst_txt(x[1:]).children
+          par += self._parse_rst(x[1:]).children
         else:
           par += nodes.literal(text=x)
     else:
@@ -122,9 +122,9 @@ class DovecotSettingDirective(DovecotDirective):
 
         if x.startswith('@'):
           x = x[1:]
-          par += self._parse_rst_txt(':ref:`%s`' % x).children
+          par += self._parse_rst(':ref:`%s`' % x).children
         elif x.startswith('!'):
-          par += self._parse_rst_txt(x[1:]).children
+          par += self._parse_rst(x[1:]).children
         else:
           par += nodes.literal(text=x)
 
@@ -142,9 +142,9 @@ class DovecotSettingDirective(DovecotDirective):
         par = nodes.paragraph()
         if x.startswith('@'):
           parts = x[1:].split(';', 2)
-          par += self._parse_rst_txt(':%s:ref:`%s`' % (parts[1] if len(parts) == 2 else 'std', parts[0])).children
+          par += self._parse_rst(':%s:ref:`%s`' % (parts[1] if len(parts) == 2 else 'std', parts[0])).children
         elif x.startswith('!'):
-          par += self._parse_rst_txt(x[1:]).children
+          par += self._parse_rst(x[1:]).children
         else:
           par += nodes.literal(text=x)
 
@@ -153,7 +153,7 @@ class DovecotSettingDirective(DovecotDirective):
       contentnode += seealso
 
     if 'todo' in self.options:
-      contentnode += self._parse_rst_txt('.. todo:: %s' % (self.options.get('todo')))
+      contentnode += self._parse_rst('.. todo:: %s' % (self.options.get('todo')))
 
 class DovecotSettingIndex(Index):
 
@@ -176,10 +176,10 @@ class DovecotSettingIndex(Index):
 class DovecotSettingDomain(Domain):
 
   roles = {
-      'ref': XRefRole()
+    'ref': XRefRole()
   }
   initial_data = {
-      'settings': {},
+    'entry': {},
   }
 
   def resolve_xref(self, env, fromdocname, builder, typ, target, node,
@@ -208,12 +208,12 @@ class DovecotSettingDomain(Domain):
     return '{}.{}'.format(self.set_prefix, node.arguments[0])
 
   def get_objects(self):
-    for name, (docname, anchor) in list(self.data['settings'].items()):
+    for name, (docname, anchor, label) in list(self.data['entry'].items()):
       # name, dispname, type, docname, anchor, priority
-      yield name, name, self.label, docname, anchor, 0
+      yield name, name, label, docname, anchor, 0
 
-  def add_setting(self, signature, anchor):
-      self.data['settings'][signature] = (self.env.docname, anchor)
+  def add_entry(self, signature, anchor):
+      self.data['entry'][signature] = (self.env.docname, anchor, self.label)
 
 
 class DovecotPluginSettingDirective(DovecotSettingDirective):
@@ -253,19 +253,6 @@ class DovecotCoreSettingIndex(DovecotSettingIndex):
   localname = 'Dovecot Core Settings Index'
   shortname = 'Core'
 
-class DovecotCoreSettingDomain(DovecotSettingDomain):
-
-  name = 'dovecot_core'
-  label = 'Dovecot Core Settings'
-  set_prefix = 'core_setting'
-
-  directives = {
-      'setting': DovecotCoreSettingDirective,
-      'setting_link': DovecotSettingLinkDirective
-  }
-  indices = {
-      DovecotCoreSettingIndex
-  }
 
 
 class PigeonholeSettingDirective(DovecotCoreSettingDirective):
@@ -339,8 +326,207 @@ class ManRole(XRefRole):
         return [node], []
 
 
+class DovecotEventFieldDirectiveBase(SphinxDirective):
+
+  domain = 'dovecot_event'
+  has_content = True
+
+  def run(self):
+    self.assert_has_content()
+    self._run()
+
+    node = nodes.Element()
+    ret = []
+    self.state.nested_parse(self.content, self.content_offset, node)
+
+    for child in node:
+      if isinstance(child, nodes.field_list):
+        for field in child:
+          """ name = field[0], body = field[1] """
+          ftype, farg = field[0].astext().split(None, 1)
+          if ftype != 'field':
+            raise ValueError('Incorrect field type %s', ftype)
+          self._add_field(farg, field[1])
+
+    return ret
+
+  def _run(self):
+    pass
+
+  def _add_field(self, arg, body):
+    pass
+
+class DovecotEventFieldGlobalDirective(DovecotEventFieldDirectiveBase):
+
+  def _add_field(self, arg, body):
+    self.env.get_domain(self.domain).add_global_event_field(arg, body)
+
+class DovecotEventFieldGroupDirective(DovecotEventFieldDirectiveBase):
+
+  option_spec = {
+    'inherit': directives.unchanged,
+  }
+  required_arguments = 1
+
+  def _run(self):
+    if 'inherit' in self.options:
+      self.env.get_domain(self.domain).add_group_inherit_field(self.arguments[0], self.options.get('inherit'))
+
+  def _add_field(self, arg, body):
+    self.env.get_domain(self.domain).add_group_event_field(self.arguments[0], arg, body)
+
+class DovecotEventDirective(DovecotDirective):
+
+  required_arguments = 1
+  option_spec = {
+    'added': directives.unchanged,
+    'changed': directives.unchanged,
+    'inherit': directives.unchanged,
+    """ plugin is not currently used """
+    'plugin': directives.unchanged,
+    'removed': directives.unchanged,
+  }
+
+  def handle_signature(self, sig, signode):
+    signode += addnodes.desc_name(text=sig)
+    return sig
+
+  def add_target_and_index(self, name_cls, sig, signode):
+    anchor = '{}-{}'.format('event', self.dovecot_anchor(sig))
+    signode['ids'].append(anchor)
+    self.env.get_domain(self.domain).add_entry(sig, anchor)
+
+  def transform_content(self, contentnode):
+    super().transform_content(contentnode)
+    contentnode.parent['classes'].append('dovecotevent')
+
+    for x in ('changed', 'removed', 'added'):
+      if x in self.options:
+        contentnode.insert(0, self._parse_rst('.. version%s:: %s' % (x, self.options.get(x))))
+
+    table = nodes.table(cols=3)
+    group = nodes.tgroup()
+    head = nodes.thead()
+    body = nodes.tbody()
+
+    table += group
+    group += nodes.colspec(colwidth=1)
+    group += nodes.colspec(colwidth=5)
+    group += head
+    group += body
+
+    row = nodes.row()
+    row += nodes.entry('', nodes.paragraph('', nodes.Text("Field")))
+    row += nodes.entry('', nodes.paragraph('', nodes.Text("Description")))
+    head += row
+
+    d = self.env.get_domain('dovecot_event')
+    entries = []
+
+    for key, content in d.get_global_event_fields():
+      entries.append((key, content))
+
+    for key, content in d.get_event_fields(self.arguments[0]):
+      entries.append((key, content))
+
+    if 'inherit' in self.options:
+      for x in self.options.get('inherit').split(','):
+        for key, content in d.get_event_fields(x.strip()):
+          entries.append((key, content))
+
+    """ Go through and move all event-specific fields into description, and
+        then remove them from content. """
+    for node in contentnode.traverse(nodes.field_list):
+      for field in node:
+        """ name = field[0], body = field[1] """
+        ftype, farg = field[0].astext().split(None, 1)
+        if ftype == 'field':
+          entries.append((farg, field[1]))
+      node.parent.remove(node)
+
+    entries = sorted(entries, key=lambda entry: entry[0])
+
+    for (key, content) in entries:
+      parts = key.split(None, 1)
+      if len(parts) == 2:
+        subparts = parts[1].split(';', 1)
+        if len(subparts) != 2 or subparts[0] != '@added':
+          raise ValueError('Invalid field modifier %s', parts[1])
+        added = subparts[1]
+        key = parts[0]
+      else:
+        added = None
+
+      row = nodes.row()
+      row += nodes.entry('', nodes.literal(text=key))
+      entry = nodes.entry()
+      entry += content.children[0].deepcopy()
+      if added != None:
+        entry += self._parse_rst('.. versionadded:: %s' % (added))
+      row += entry
+      body += row
+
+    """ Create collapsible container for event fields """
+    collapse = self._parse_rst('.. dropdown:: View Event Fields\n :animate: fade-in')
+    collapse += table
+    contentnode += collapse
+
+class DovecotEventDomain(Domain):
+
+  name = 'dovecot_event'
+
+  initial_data = {
+    'global': {},
+    'group': {},
+    'inherit': {}
+  }
+
+  directives = {
+    'field_global': DovecotEventFieldGlobalDirective,
+    'field_group': DovecotEventFieldGroupDirective,
+  }
+
+  def get_global_event_fields(self):
+    for k, content in list(self.data['global'].items()):
+      yield k, content
+
+  def get_event_fields(self, key):
+    if key in self.data['inherit']:
+      self.get_event_fields(self.data['inherit'][key])
+    if key in self.data['group']:
+      for k, content in list(self.data['group'][key].items()):
+        yield k, content
+
+  def add_global_event_field(self, key, content):
+    self.data['global'][key] = content
+
+  def add_group_event_field(self, group, key, content):
+    if group not in self.data['group']:
+      self.data['group'][group] = {}
+    self.data['group'][group][key] = content
+
+  def add_group_inherit_field(self, group, key):
+    self.data['inherit'][group] = key
+
+class DovecotCoreDomain(DovecotSettingDomain):
+
+  name = 'dovecot_core'
+  label = 'Dovecot Core Settings'
+  set_prefix = 'core_setting'
+
+  directives = {
+      'event': DovecotEventDirective,
+      'setting': DovecotCoreSettingDirective,
+      'setting_link': DovecotSettingLinkDirective
+  }
+  indices = {
+      DovecotCoreSettingIndex
+  }
+
+
 def setup(app):
-  app.add_domain(DovecotCoreSettingDomain)
+  app.add_domain(DovecotCoreDomain)
+  app.add_domain(DovecotEventDomain)
   app.add_domain(DovecotPluginSettingDomain)
   app.add_domain(PigeonholeSettingDomain)
   app.add_domain(ClusterSettingDomain)

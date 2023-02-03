@@ -135,3 +135,56 @@ To reference Pigeonhole settings in Sphinx, use this:
 ```
 :pigeonhole:ref:`<setting_name>`
 ```
+
+### Events
+
+Dovecot-specific directives should be used to create event documentation.
+
+There are two helper functions that allow you to define inheritable field
+"groups" that an event can include by reference:
+
+```
+.. dovecot_event:field_global::
+
+   :field <field_name> <field_modification>: <field_description (reST)>
+   :field ...: ...
+   ...
+
+.. dovecot_event:field_group:: <group_identifier>
+   :inherit: <group_identifier>
+
+   :field <field_name> <field_modification>: <field_description (reST)>
+   :field ...: ...
+   ...
+```
+
+Events are defined using the ``dovecot_core:event`` directive:
+
+```
+.. dovecot_core:event:: <event_name>
+   :added: [vX.Y.Z <reST text>]
+   :changed: [vX.Y.Z <reST text>]
+   :inherit: [<group_identifier>[, <group_identifier>, ...]]
+   :plugin: <plugin-name>
+   :removed: [vX.Y.Z <reST text>]
+
+   :field <field_name>[ <field_modification>]: <field_description (reST)>
+   :field ...: ...
+   ...
+
+   ...Event description (reST)...
+```
+
+Field modifications current consist of the following type:
+
+```
+@added;vX.Y.Z = Version the field was added
+```
+
+#### Sphinx Event References
+
+To reference Dovecot events in Sphinx, use this:
+
+```
+:dovecot_core:ref:`<event_name>`
+```

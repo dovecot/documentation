@@ -72,7 +72,7 @@ ADDITIONAL MASTER COMMANDS
    :man:`doveadm-proxy(1)`, Handle Dovecot proxy connections.
 
 **doveadm who**
-   :man:`doveadm-who(1)`; Show who is logged in to the Dovecot server.
+   :man:`doveadm-who(1)`; Show who is logged into the Dovecot server.
 
 AUTHENTICATION COMMANDS
 -----------------------

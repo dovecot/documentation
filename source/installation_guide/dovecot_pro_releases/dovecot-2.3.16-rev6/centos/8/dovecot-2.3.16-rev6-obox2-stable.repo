@@ -1,7 +1,7 @@
 [dovecot-2.3.16-rev6-obox2]
 name=CentOS 8 - OX Dovecot Pro Object Storage plug-in
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/obox2/CentOS8
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 

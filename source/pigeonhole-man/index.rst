@@ -1,8 +1,8 @@
 .. _pigeonhole_man-pages:
 
-====================
-Dovecot manual pages
-====================
+======================================
+Dovecot Pigeonhole Plugin manual pages
+======================================
 
 .. toctree::
    :maxdepth: 1

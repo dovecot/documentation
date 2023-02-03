@@ -151,7 +151,7 @@ The output will have fields:
 
 * bytes-used(priority) : Disk space used by index files of this priority in metacache.
 
-* last-access(priority) : UNIX timestamp of when the the index files of this priority were last accessed in metacache.
+* last-access(priority) : UNIX timestamp of when the index files of this priority were last accessed in metacache.
 
  * changes : "none" means the index files have no changes done locally since they were downloaded. "unimportant" means there are some changes, but nothing that couldn't be regenerated if the server crashed. "important" means that there are changes that would be lost in case of a server crash. Currently the only important change is flag changes.
 
@@ -203,13 +203,14 @@ If multiple backends do changes to the same mailbox at the same time, Dovecot wi
 
 .. code-block:: none
 
-   doveadm metacache pull -u user@domain --latest-only --clean 10.0.0.5
+   doveadm -o plugin/metacache_index_merging=none force-resync -u user@domain INBOX
 
 .. versionadded:: v2.4;v3.0 To allow easier migration of users and to support the new needs brought up with
    the :ref:`dovecot_cluster_architecture` the ``doveadm metacache pull``
    command was implemented. This command allows to pull the metacache for specific
    users(s) from another backend.
 
-   .. code-block:: none
+.. code-block:: none
 
-      doveadm -o plugin/metacache_index_merging=none force-resync -u user@domain INBOX
+   doveadm metacache pull -u user@domain --latest-only --clean 10.0.0.5
+

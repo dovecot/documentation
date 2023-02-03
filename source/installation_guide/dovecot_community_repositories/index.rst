@@ -1,6 +1,6 @@
-.. _dovecot_community_repositories:
-
 .. image:: ../../_static/dovecot.png
+
+.. _dovecot_community_repositories:
 
 ===============================
 Dovecot community repositories

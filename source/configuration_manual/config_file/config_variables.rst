@@ -251,6 +251,15 @@ Login variables
 |          |                       | .. versionadded:: v2.4.0;v3.0.0 If HAProxy is configured and  |
 |          |                       |    it terminated the TLS connection, contains "(proxied)".    |
 +----------+-----------------------+---------------------------------------------------------------+
+|          | ssl_ja3               | :ref:`JA3 string <ssl_ja3>` composed from TLS Client Hello.   |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.4.0;v3.0.0                               |
++----------+-----------------------+---------------------------------------------------------------+
+|          | ssl_ja3_hash          | MD5 hash from :ref:`JA3 string <ssl_ja3>` composed from       |
+|          |                       | TLS Client Hello.                                             |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.4.0;v3.0.0                               |
++----------+-----------------------+---------------------------------------------------------------+
 | %e       | mail_pid              | PID for process that handles the mail session post-login      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | original_user         | Same as %{user}, except using the original username the client|
@@ -413,6 +422,10 @@ Authentication variables
 | %c       | secured               | "TLS" with established SSL/TLS connections, "secured" with    |
 |          |                       | :ref:`secured connections <secured_connections>`. Otherwise   |
 |          |                       | empty.                                                        |
++----------+-----------------------+---------------------------------------------------------------+
+|          | ssl_ja3_hash          | MD5 hash from JA3 string composed from TLS Client Hello.      |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.4.0;v3.0.0                               |
 +----------+-----------------------+---------------------------------------------------------------+
 | %k       | cert                  | "valid" if client had sent a valid client certificate,        |
 |          |                       | otherwise empty.                                              |

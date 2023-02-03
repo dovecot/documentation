@@ -1,7 +1,7 @@
 [dovecot-2.3.19-rev5-base]
 name=Amazon Linux 2 - OX Dovecot Pro Mail Server
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.19/base/AmazonLinux2
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 
