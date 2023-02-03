@@ -65,7 +65,7 @@ SEARCH KEYS
 ===========
 
 The following search keys from the specification of IMAP version 4
-revision 1 (see: RFC 3501, section 6.4.4) are supported:
+revision 1 (see: :rfc:`3501#section-6.4.4`) are supported:
 
 *sequence-set*
    Matches messages with the given sequence numbers. The

@@ -242,12 +242,23 @@ Login variables
 +----------+-----------------------+---------------------------------------------------------------+
 | %c       | secured               | "TLS" with established SSL/TLS connections, "TLS handshaking",|
 |          |                       | or "TLS [handshaking]: error text" if disconnecting due to TLS|
-|          |                       | error. "secured" with localhost or                            |
-|          |                       | :dovecot_core:ref:`login_trusted_networks` connections.       |
-|          |                       | Otherwise empty.                                              |
+|          |                       | error. "secured" with                                         |
+|          |                       | :ref:`secured connections <secured_connections>`. Otherwise   |
+|          |                       | empty.                                                        |
 +----------+-----------------------+---------------------------------------------------------------+
-| %k       | ssl_security          | TLS session security string. If HAProxy is configured and it  |
-|          |                       | terminated the TLS connection, contains "(proxied)".          |
+| %k       | ssl_security          | TLS session security string.                                  |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.4.0;v3.0.0 If HAProxy is configured and  |
+|          |                       |    it terminated the TLS connection, contains "(proxied)".    |
++----------+-----------------------+---------------------------------------------------------------+
+|          | ssl_ja3               | :ref:`JA3 string <ssl_ja3>` composed from TLS Client Hello.   |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.4.0;v3.0.0                               |
++----------+-----------------------+---------------------------------------------------------------+
+|          | ssl_ja3_hash          | MD5 hash from :ref:`JA3 string <ssl_ja3>` composed from       |
+|          |                       | TLS Client Hello.                                             |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.4.0;v3.0.0                               |
 +----------+-----------------------+---------------------------------------------------------------+
 | %e       | mail_pid              | PID for process that handles the mail session post-login      |
 +----------+-----------------------+---------------------------------------------------------------+
@@ -409,8 +420,12 @@ Authentication variables
 | %w       | password              | cleartext password from cleartext authentication mechanism    |
 +----------+-----------------------+---------------------------------------------------------------+
 | %c       | secured               | "TLS" with established SSL/TLS connections, "secured" with    |
-|          |                       | localhost or :dovecot_core:ref:`login_trusted_networks`       |
-|          |                       | connections. Otherwise empty.                                 |
+|          |                       | :ref:`secured connections <secured_connections>`. Otherwise   |
+|          |                       | empty.                                                        |
++----------+-----------------------+---------------------------------------------------------------+
+|          | ssl_ja3_hash          | MD5 hash from JA3 string composed from TLS Client Hello.      |
+|          |                       |                                                               |
+|          |                       | .. versionadded:: v2.4.0;v3.0.0                               |
 +----------+-----------------------+---------------------------------------------------------------+
 | %k       | cert                  | "valid" if client had sent a valid client certificate,        |
 |          |                       | otherwise empty.                                              |

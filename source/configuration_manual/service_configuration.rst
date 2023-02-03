@@ -118,6 +118,13 @@ path
 ^^^^
 Path to the file, relative to ``base_dir`` setting. This is also used as the section name.
 
+type 
+^^^^
+
+.. versionadded:: v2.4.0;v3.0.0
+
+Listener type. This string value has service-specific meaning and is used to distinguish different listener types that one service may employ. The default value is the empty string.
+
 user
 ^^^^
 Owner of the file. Defaults to 0 (root).
@@ -138,6 +145,13 @@ inet_listeners
 name
 ^^^^^
 Section name of this listener. It is meant to be descriptive for humans (e.g. `imap`, `imaps`).
+
+type
+^^^^
+
+.. versionadded:: v2.4.0;v3.0.0
+
+Listener type. This string value has service-specific meaning and is used to distinguish different listener types that one service may employ. The default value is the empty string.
 
 address
 ^^^^^^^
@@ -187,12 +201,12 @@ auth
 ^^^^^
 The master auth process. There are 4 types of auth client connections:
 
-   * **client**: Only :ref:`sasl` authentication is allowed. This can be safely exposed to entire world.
+   * **auth**: Only :ref:`sasl` authentication is allowed. This can be safely exposed to entire world.
    * **userdb**: userdb lookups and passdb lookups (without the password itself) can be done for any user, and a list of users can be requested. This may or may not be a security issue. Access to userdb lookup is commonly needed by dovecot-lda, doveadm and other tools.
    * **login**: Starts a two phase user login by performing authenticating (same as`client` type). Used by login processes.
    * **master**: Finishes the two phase user login by performing a userdb lookup (similar to "userdb" type). Used by post-login processes (e.g. imap, pop3).
 
-With UNIX listeners the client type is selected based on the filename after the last ``-`` in the filename. For example ``anything-userdb`` is of `userdb` type. The default type is `client` for inet listeners and unrecognized UNIX listeners. You can add as many client and userdb listeners as you want (and you probably shouldn't touch the login/master listeners).
+.. versionchanged:: v2.4.0;v3.0.0 The listener type is configured explicitly using the **type** field. For older versions the listener type is selected based on the (file)name after the last ``-`` in the name. For example ``anything-userdb`` is of `userdb` type. The default type is `auth` for unrecognized listeners. You can add as many `auth` and `userdb` listeners as you want (and you probably shouldn't touch the `login` and `master` listeners).
 
    * **client_limit** should be large enough to handle all the simultaneous connections.
      Dovecot attempts to verify that the limit is high enough at startup.

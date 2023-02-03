@@ -37,7 +37,7 @@ Settings
    carriage return (CR) and line feed (LF) characters.
 
    This matches the
-   `Internet Message Format (RFC5322) <https://tools.ietf.org/html/rfc5322>`_
+   Internet Message Format (:rfc:`5322`)
    and what Sieve itself uses as a line ending.
 
    Set this setting to ``lf`` to use a single LF character instead.

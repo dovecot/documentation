@@ -197,7 +197,7 @@ Sieve Plugin Settings
       :pigeonhole:ref:`sieve setting <sieve>`.
 
    Directory for :personal
-   `include scripts <http://tools.ietf.org/html/draft-ietf-sieve-include-05>`_
+   `include scripts <https://datatracker.ietf.org/doc/html/draft-ietf-sieve-include-05>`_
    for the include extension.
 
    The Sieve interpreter only recognizes files that end with a .sieve
@@ -349,6 +349,21 @@ Sieve Plugin Settings
    If set to ``0``, no limit on the total number of actions is enforced.
 
 
+.. pigeonhole:setting:: sieve_max_cpu_time
+   :added: v0.5.15
+   :default: 30s
+   :plugin: sieve
+   :values: @time
+
+   The maximum amount of CPU time that a Sieve script is allowed to use while
+   executing. If the execution exceeds this resource limit, the script ends with
+   an error, causing the implicit "keep" action to be executed.
+
+   This limit is not only enforced for a single script execution, but also
+   cumulatively for the last executions within a configurable timeout
+   (see :pigeonhole:ref:`sieve_resource_usage_timeout`).
+
+
 .. pigeonhole:setting:: sieve_max_redirects
    :changed: v0.3 In prior versions, ``0`` means the number of redirects is unlimited.
    :default: 4
@@ -362,6 +377,33 @@ Sieve Plugin Settings
 
    The meaning of 0 differs based on your version. For versions v0.3.0 and
    beyond this means that redirect is prohibited.
+
+
+.. pigeonhole:setting:: sieve_resource_usage_timeout
+   :added: v0.5.15
+   :default: 1h
+   :plugin: sieve
+   :values: @time
+
+   To prevent abuse, the Sieve interpreter can record resource usage of a Sieve
+   script execution in the compiled binary if it is significant. Currently, this
+   happens when CPU system + user time exceeds 1.5 seconds for one execution.
+   Such high resource usage is summed over time in the binary and once that
+   cumulative resource usage exceeds the limits (sieve_max_cpu_time), the Sieve
+   script is disabled in the binary for future execution, even if an individual
+   execution exceeded no limits.
+
+   If the last time high resource usage was recorded is older than
+   sieve_resource_usage_timeout, the resource usage in the binary is reset. This
+   means that the Sieve script is only disabled when the limits are cumulatively
+   exceeded within this timeout. With the default configuration this means that
+   the Sieve script is only disabled when the total CPU time of Sieve executions
+   that lasted more than 1.5 seconds exceeds 30 seconds in the last hour.
+
+   A disabled Sieve script can be reactivated by the user by uploading a new
+   version of the Sieve script after the excessive resource usage times out. An
+   administrator can force reactivation by forcing a script compile (e.g. using
+   the sievec command line tool).
 
 
 .. pigeonhole:setting:: sieve_max_script_size
@@ -434,7 +476,7 @@ Sieve Plugin Settings
 
    The separator that is expected between the ``:user`` and ``:detail``
    address parts introduced by the
-   `subaddress extension <http://tools.ietf.org/html/rfc5233/>`_.
+   subaddress extension :rfc:`5233`.
 
    This may also be a sequence of characters (e.g. ``--``).
 

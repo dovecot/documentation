@@ -16,7 +16,7 @@ IMAP protocol
 -------------
 
 For IMAP protocol, this is done by extending the
-`ID (RFC 2971) <https://tools.ietf.org/html/rfc2971>`_ command.
+ID (:rfc:`2971`) command.
 
 * RFC Requirements
 
@@ -38,7 +38,7 @@ The parameters are forwarded as part of the ID command field-value list.
 
 .. code-block:: none
 
-  5 ID (x-originating-ip "127.0.0.1" x-originating-port "143" ...)
+  5 ID ("x-originating-ip" "127.0.0.1" "x-originating-port" "143" ...)
 
 Supported Fields
 ^^^^^^^^^^^^^^^^
@@ -97,7 +97,7 @@ Field        Description
 SMTP/LMTP protocol
 ------------------
 
-See http://www.postfix.org/XCLIENT_README.html
+See https://www.postfix.org/XCLIENT_README.html
 
 Supported Fields (SMTP & LMTP)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -33,10 +33,7 @@ See :ref:`settings` for list of all setting groups.
 
    If ``no``, disables the LOGIN command and all other cleartext
    authentication unless SSL/TLS is used (LOGINDISABLED capability) or the
-   connection is "secured":
-
-     * Client IP is in :dovecot_core:ref:`login_trusted_networks`
-     * Client IP is from localhost, and it's not coming from HAProxy listener
+   :ref:`connection is secured <secured_connections>`.
 
    See :ref:`dovecot_ssl_configuration` for more detailed explanation of how
    this setting interacts with the :dovecot_core:ref:`ssl` setting.
@@ -668,6 +665,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: dict_db_config
    :values: @string
+   :removed: v2.4;v3.0
 
    Points to a Berkeley DB config file. Equivalent to adding
    ``DB_CONFIG=/path`` to :dovecot_core:ref:`import_environment`.
@@ -1118,7 +1116,7 @@ See :ref:`settings` for list of all setting groups.
    :todo: Indicate imap AND metadata setting
    :values: @boolean
 
-   Dovecot supports the IMAP METADATA extension (RFC 5464), which allows
+   Dovecot supports the IMAP METADATA extension (:rfc:`5464`), which allows
    per-mailbox, per-user data to be stored and accessed via IMAP commands. Set
    this parameter's value to ``yes`` if you wish to activate the IMAP METADATA
    commands.
@@ -1157,7 +1155,7 @@ See :ref:`settings` for list of all setting groups.
    .. note::
 
       This setting is REQUIRED for the
-      `URLAUTH <https://tools.ietf.org/html/rfc4467>`_ extension to be active.
+      URLAUTH :rfc:`4467` extension to be active.
 
 
 .. dovecot_core:setting:: imap_urlauth_logout_format
@@ -1300,7 +1298,7 @@ See :ref:`settings` for list of all setting groups.
    :todo: Indicate LDA setting
    :values: @boolean
 
-   Should LDA create a non-existent mailbox automatically when attempting to
+   Should LDA create a nonexistent mailbox automatically when attempting to
    save a mail message?
 
 
@@ -1602,7 +1600,7 @@ See :ref:`settings` for list of all setting groups.
    allowed for the incoming connection.
 
 
-.. dovecot_core:setting:: login_auth_socket_path
+.. dovecot_core:setting:: login_socket_path
    :values: @string
 
    Default socket path for all services' login processes. Can be overridden by
@@ -1748,19 +1746,18 @@ See :ref:`settings` for list of all setting groups.
 
    This setting is used for a few different purposes, but most importantly it
    allows the client connection to tell the server what the original client's
-   IP address was.
+   IP address was. This original client IP address is then used for logging
+   and authentication checks.
 
-   Client connections from trusted networks are also treated as "secured", i.e.
-   the same as if they had been using SSL/TLS. This affects the
-   :dovecot_core:ref:`ssl` and :dovecot_core:ref:`auth_allow_cleartext`
-   settings. It also marks the connection as "secured" for all auth lookups,
-   which also affects the ``%{secured}`` :ref:`variable <config_variables>`.
-
-   This original client IP address is then used for logging and authentication
-   checks.
-
-   Plaintext authentication is always allowed for trusted networks
+   Client connections from trusted networks are also treated as
+   :ref:`secured <secured_connections>`,
+   unless :dovecot_core:ref:`ssl` is ``required``. Plaintext authentication is
+   always allowed for secured connections
    (:dovecot_core:ref:`auth_allow_cleartext` is ignored).
+
+   Localhost connections are secured by default, but they are not
+   trusted by default. If you want localhost to be trusted, it needs to be
+   included in this setting.
 
    The details of how this setting works depends on the used protocol:
 
@@ -2274,7 +2271,7 @@ See :ref:`settings` for list of all setting groups.
 
    The method for contacting the server administrator.
 
-   Per the METADATA standard (RFC 5464), this value MUST be a URI (e.g., a
+   Per the METADATA standard (:rfc:`5464`), this value MUST be a URI (e.g., a
    mailto: or tel: URL), but that requirement is not enforced by Dovecot.
 
    This value is accessible to authenticated users through the
@@ -2934,10 +2931,37 @@ See :ref:`settings` for list of all setting groups.
      :dovecot_core:ref:`auth_allow_cleartext` in that even non-cleartext
      authentication mechanisms aren't allowed without SSL/TLS.
 
-     Note that SSL is still not required for "secured" connections:
+   .. _secured_connections:
 
-     * Client IP is in :dovecot_core:ref:`login_trusted_networks`
-     * Client IP is from localhost, and it's not coming from HAProxy listener
+   This setting affects the ``secured`` state of connections:
+
+     * Dovecot-terminated TLS connections are always ``secured``.
+     * :ref:`HAProxy-terminated TLS connections <haproxy_tls_forward>` are
+       always ``secured``.
+
+       * This is true even if HAProxy isn't running on the same server as
+         Dovecot, and the connection between HAProxy and Dovecot isn't secured.
+	 The reasoning here is that this kind of a configuration is most likely
+	 intentional. If such connection wasn't treated ``secured``, it would
+	 prevent using ssl=required to enforce end clients to use TLS.
+
+     * Non-haproxy connections from localhost are always ``secured``.
+     * Localhost connections from HAProxy server to HAProxy are always
+       ``secured``.
+     * Other connections from :dovecot_core:ref:`login_trusted_networks` are
+       ``secured``, but only if ``ssl`` setting is not ``required``.
+
+       .. versionchanged:: v2.4.0;v3.0.0 With old versions these connections
+          were ``secured`` regardless of the ``ssl`` setting.
+     * Other connections from HAProxy are ``secured``, but only if ``ssl``
+       setting is not ``required``.
+
+       .. versionchanged:: v2.4.0;v3.0.0 With old versions these connections
+          were ``secured`` regardless of the ``ssl`` setting.
+
+   Connections that are ``secured`` are always allowed to use plaintext
+   authentication. Auth lookups will have the connection marked as ``secured``,
+   which also affects the ``%{secured}`` :ref:`variable <config_variables>`.
 
 .. dovecot_core:setting:: ssl_alt_cert
    :added: v2.2.31
@@ -3217,13 +3241,11 @@ See :ref:`settings` for list of all setting groups.
 
    ``TLSv1``
 
-     Support TLSv1+. (default before v2.3.15) (TLSv1 deprecated:
-     `RFC 8996 <https://datatracker.ietf.org/doc/html/rfc8996>`_)
+     Support TLSv1+. (default before v2.3.15) (TLSv1 deprecated: :rfc:`8996`)
 
    ``TLSv1.1``
 
-     Support TLSv1.1+. (TLSv1.1 deprecated:
-     `RFC 8996 <https://datatracker.ietf.org/doc/html/rfc8996>`_)
+     Support TLSv1.1+. (TLSv1.1 deprecated: :rfc:`8996`)
 
    ``TLSv1.2``
 

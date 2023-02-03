@@ -50,7 +50,7 @@ done.
 .. code-block:: none
 
   plugin {
-    obox_fs = aws-s3:https://mails.s3.eu-central-1.amazonaws.com/?auth_role=s3access&region=eu-central-1
+    obox_fs = aws-s3:https://bucket-name.s3.region.amazonaws.com/?auth_role=s3access&region=region
   }
 
 When using IAM you must ensure that the ``fs-auth`` service has proper
@@ -176,9 +176,9 @@ With IAM:
 
    mail_location = obox:%8Mu/%u:INDEX=~/:CONTROL=~/
    plugin {
-     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:zstd:3:aws-s3:https://dovecot-mails.s3.eu-central-1.amazonaws.com/?region=eu-central-1&auth_role=s3access
-     obox_index_fs = compress:zstd:3:aws-s3:https://dovecot-mails.s3.eu-central-1.amazonaws.com/?region=eu-central-1&auth_role=s3access
-     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:aws-s3:https://dovecot-mails.s3.eu-central-1.amazonaws.com/%8Mu/%u/fts/?region=eu-central-1&auth_role=s3access
+     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:zstd:3:aws-s3:https://bucket-name.s3.region.amazonaws.com/?region=region&auth_role=s3access
+     obox_index_fs = compress:zstd:3:aws-s3:https://bucket-name.s3.region.amazonaws.com/?region=region&auth_role=s3access
+     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:aws-s3:https://bucket-name.s3.region.amazonaws.com/%8Mu/%u/fts/?region=region&auth_role=s3access
      obox_max_parallel_deletes = 1000
    }
    mail_uid = vmail
@@ -194,8 +194,8 @@ Without IAM:
 
    mail_location = obox:%8Mu/%u:INDEX=~/:CONTROL=~/
    plugin {
-     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:zstd:3:aws-s3:https://ACCESSKEY:SECRET@dovecot-mails.s3.eu-central-1.amazonaws.com/?region=eu-central-1&auth_role=s3access
-     obox_index_fs = compress:zstd:3:aws-s3:https://ACCESSKEY:SECRET@dovecot-mails.s3.eu-central-1.amazonaws.com/?region=eu-central-1&auth_role=s3access
-     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:aws-s3:https://ACCESSKEY:SECRET@dovecot-mails.s3.eu-central-1.amazonaws.com/%8Mu/%u/fts/?region=eu-central-1&auth_role=s3access
+     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:zstd:3:aws-s3:https://ACCESSKEY:SECRET@bucket-name.s3.region.amazonaws.com/?region=region&auth_role=s3access
+     obox_index_fs = compress:zstd:3:aws-s3:https://ACCESSKEY:SECRET@bucket-name.s3.region.amazonaws.com/?region=region&auth_role=s3access
+     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:aws-s3:https://ACCESSKEY:SECRET@bucket-name.s3.region.amazonaws.com/%8Mu/%u/fts/?region=region&auth_role=s3access
      obox_max_parallel_deletes = 1000
    }

@@ -75,8 +75,7 @@ syntax is like:
     <search program for these mailboxes>
   [etc..]]
 
-Mailbox patterns can contain `IMAP LIST-compatible
-<https://tools.ietf.org/html/rfc3501#section-6.3.8>`_ ``*`` and ``%``
+Mailbox patterns can contain IMAP LIST-compatible :rfc:`3501#section-6.3.8` ``*`` and ``%``
 wildcards. They are currently evaluated only when the virtual mailbox is being
 selected, so if more mailboxes are created during that they aren't noticed.
 
@@ -102,8 +101,7 @@ If you need to actually include a mailbox name that contains such prefix, you
 can currently just kludge it by using ``+`` prefix (if you don't care about the
 \Recent flags) and adding the mailbox name after that (e.g. ``+-box``).
 
-Search program is compatible with `IMAP SEARCH command
-<https://tools.ietf.org/html/rfc3501#section-6.4.4>`_. Besides the standard
+Search program is compatible with IMAP SEARCH command :rfc:`3501#section-6.4.4`. Besides the standard
 SEARCH key you may want to use X-MAILBOX key which matches the message's
 original mailbox.
 
@@ -293,7 +291,7 @@ Namespace configuration:
   none of the namespaces have inbox=yes. This is because for IMAP users you
   want the inbox namespace to have ``inbox=yes``, but for POP3 users you want
   the virtual namespace to have ``inbox=yes``. This requires setting the
-  ``inbox=yes`` in userdb extra fields. For example with MySQL you can can do
+  ``inbox=yes`` in userdb extra fields. For example with MySQL you can do
   this like:
 
 .. code-block:: none

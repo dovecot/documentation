@@ -66,7 +66,8 @@ There are a couple of different ways to specify when SSL/TLS is required:
 
 * The main difference between :dovecot_core:ref:`ssl=required <ssl>` and :dovecot_core:ref:`auth_allow_cleartext=no <auth_allow_cleartext>` is that if :dovecot_core:ref:`ssl=required <ssl>`, it guarantees that the entire connection is protected against eavesdropping (SSL/TLS encrypts the rest of the connection), while :dovecot_core:ref:`auth_allow_cleartext=no <auth_allow_cleartext>` only guarantees that the password is protected against eavesdropping (SASL mechanism is encrypted, but no SSL/TLS is necessarily used). Nowadays you most likely should be using SSL/TLS anyway for the entire connection, since the cost of SSL/TLS is cheap enough. Using both SSL/TLS and non-cleartext authentication would be the ideal situation since it protects the cleartext password even against man-in-the-middle attacks.
 
-  .. NOTE:: The cleartext authentication mechanisms are always allowed (and SSL not required) for connections from localhost, as they're assumed to be secure anyway. This applies to all connections where the local and the remote IP addresses are equal. IP ranges specified by :dovecot_core:ref:`login_trusted_networks` setting are assumed to be secure. If you want localhost to be trusted, it needs to be included in this setting. It is only considered secure automatically, not trusted.
+  .. NOTE:: The cleartext authentication mechanisms are always allowed (and SSL
+    not required) for :ref:`secured connections <secured_connections>`.
 
 Multiple SSL certificates
 ^^^^^^^^^^^^^^^^^^^^^^^^^

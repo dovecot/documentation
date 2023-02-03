@@ -3,7 +3,7 @@
 [dovecot-2.3.9.3-rev3-vault-plugin]
 name=RedHat Enterprise Linux 6 - OX Dovecot Pro Vault plug-in
 baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-vault-plugin/stable/2.3.9.3/RHEL6
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
+gpgkey=https://software.open-xchange.com/oxbuildkey.pub
 gpgcheck=1
 enabled=1
 

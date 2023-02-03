@@ -51,4 +51,4 @@ Authentication penalty tracking can be disabled completely with:
      }
    }
 
-Also you can have similar functionality with `fail2ban <http://wiki.dovecot.org/HowTo/Fail2Ban>`_.
+Also you can have similar functionality with :ref:`fail2ban <howto-fail2ban>`.

@@ -176,7 +176,7 @@ applicable):
    starting with Pigeonhole version 0.1.7, this setting can use '+' and '-'
    to specify differences relative to the default. For example
    :pigeonhole:ref:`sieve_extensions` = ``+imapflags`` will enable the
-   `deprecated imapflags extension <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_
+   `deprecated imapflags extension <https://datatracker.ietf.org/doc/html/draft-melnikov-sieve-imapflags-03>`_
    in addition to all extensions enabled by default.
 
 :pigeonhole:ref:`sieve_global_extensions` = (v0.3+)
@@ -225,8 +225,8 @@ applicable):
 
 :dovecot_core:ref:`recipient_delimiter` = +
    The separator that is expected between the :user and :detail address
-   parts introduced by the `subaddress
-   extension <http://tools.ietf.org/html/rfc5233/>`_. This may also be
+   parts introduced by the subaddress
+   extension (:rfc:`5233`). This may also be
    a sequence of characters (e.g. '--'). The current implementation
    looks for the separator from the left of the localpart and uses the
    first one encountered. The :user part is left of the separator and
@@ -311,6 +311,17 @@ Configurable Limits
    version. For versions v0.3.0 and beyond this means that redirect is
    prohibited. For older versions, however, this means that the number
    of redirects is *unlimited*, so be careful.
+
+:pigeonhole:ref:`sieve_max_cpu_time` = 30s (v0.5.15+)
+   The maximum amount of CPU time that a Sieve script is allowed to use while
+   executing. See :pigeonhole:ref:`sieve_max_cpu_time <sieve_max_cpu_time>`.
+
+:pigeonhole:ref:`sieve_resource_usage_timeout` = 1h (v0.5.15+)
+   To prevent abuse, the Sieve interpreter can record resource usage of a Sieve
+   script execution in the compiled binary if it is significant. If the last
+   time high resource usage was recorded is older than
+   sieve_resource_usage_timeout, the resource usage in the binary is reset. See
+   :pigeonhole:ref:`sieve_resource_usage_timeout <sieve_resource_usage_timeout>`.
 
 Extension-specific Configuration
 --------------------------------
@@ -504,7 +515,7 @@ this feature. If the name of the default script is equal to the name the
 client uses for the main script, it will initially see and read the
 default script when the user account is freshly created. The user can
 edit the script, and when the edited script is saved through the
-ManageSieve client, it will will override the default script. If the
+ManageSieve client, it will override the default script. If the
 user ever wants to revert to the default, the user only needs to delete
 the edited script and the default will reappear.
 
@@ -651,9 +662,8 @@ However, there are a few important differences in the supported Sieve language f
 
 -  The **imapflags** extension is now called **imap4flags**. The
    CMUSieve implementation is based on an `old imapflags draft
-   specification <http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03>`_
-   that is not completely compatible with `RFC 5232
-   <http://tools.ietf.org/html/rfc5232/>`_. Particularly, the
+   specification <https://datatracker.ietf.org/doc/html/draft-melnikov-sieve-imapflags-03>`_
+   that is not completely compatible with :rfc:`5232`. Particularly, the
    **mark** and **unmark** commands were removed from the new
    specification. For backwards compatibility, support for the old
    imapflags extension can be enabled using the
@@ -661,9 +671,8 @@ However, there are a few important differences in the supported Sieve language f
 
 -  The **notify** extension is now called **enotify**. The CMUSieve
    implementation is based on an `old notify draft
-   specification <http://tools.ietf.org/html/draft-martin-sieve-notify-01>`_
-   that is not completely compatible with `RFC5425
-   <http://tools.ietf.org/html/rfc5435/>`_. Particularly, the
+   specification <https://datatracker.ietf.org/doc/html/draft-martin-sieve-notify-01>`_
+   that is not completely compatible with :rfc:`5425`. Particularly, the
    **denotify** command and **$text$** substitutions were removed from
    the new specification. For backwards compatibility, support for the
    old imapflags extension can be enabled using the
@@ -687,8 +696,8 @@ However, there are a few important differences in the supported Sieve language f
 From Dovecot Sieve v0.1.x (Dovecot v1.2)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  The :pigeonhole:ref:`sieve_subaddress_sep` setting for the `Sieve subaddress
-   extension <http://tools.ietf.org/html/rfc5233/>`_ is now known as
+-  The :pigeonhole:ref:`sieve_subaddress_sep` setting for the Sieve subaddress
+   extension (:rfc:`5233`) is now known as
    :dovecot_core:ref:`recipient_delimiter`. Although
    :pigeonhole:ref:`sieve_subaddress_sep` is still
    recognized for backwards compatibility, it is recommended to update

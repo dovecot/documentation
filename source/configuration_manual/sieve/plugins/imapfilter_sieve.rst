@@ -6,7 +6,7 @@ Pigeonhole IMAP FILTER=SIEVE Plugin
 
 Normally, Sieve filters can either be applied at initial mail delivery
 or triggered by certain events in the Internet Message Access Protocol
-(``IMAPSIEVE``; `RFC 6785 <http://tools.ietf.org/html/rfc6785>`_). The
+(``IMAPSIEVE``; :rfc:`6785`). The
 user can configure which Sieve scripts to run at these instances, but it
 is not possible to trigger the execution of Sieve scripts manually.
 However, this could be very useful; e.g, to test new Sieve rules and to

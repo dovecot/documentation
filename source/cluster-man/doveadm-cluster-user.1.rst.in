@@ -1,0 +1,91 @@
+.. _man-1_doveadm-cluster-user:
+
+====================
+doveadm-cluster-user
+====================
+
+
+NAME
+====
+
+doveadm-cluster-user - Utility actions for Dovecot Cluster users
+
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster user access [ **-u** *user* ] | [ **-A** ] | [ **-f** *file* ] [ **-i** ]
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster user delete *user* [ *user* ... ]
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster user move [ **-\-direct** ] [ **-\-site** *site* ] *user* *group* [ *failover group* ]
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster user status *user*
+
+
+DESCRIPTION
+===========
+
+**doveadm cluster user** can be used to run actions that interact with
+Dovecot Cluster users.
+
+.. include:: global-options.inc
+
+.. include:: global-options-formatter.inc
+
+
+COMMANDS
+========
+
+
+cluster user access
+-------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster user access [ **-u** *user* ] | [ **-A** ] | [ **-f** *file* ] [ **-i** ]
+
+Perform cluster lookup for the user (or users). This command must be run from a backend, not a proxy.
+For now this command is mainly used internally to finish user group moves. Displays the host name of the backend which
+the user ended up.
+
+You can use the ``-i`` parameter to display backend's IP rather than host name.
+
+.. include:: option-A.inc
+
+.. include:: option-F-file.inc
+
+.. include:: option-u-user.inc
+
+
+cluster user delete
+-------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster user delete *user* [ *user* ... ]
+
+Deletes a user record from GeoDB. Can be used on multiple users.
+
+
+cluster user move
+-----------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster user move [ **-\-direct** ] [ **-\-site** *site* ] *user* *group* [ *failover group* ]
+
+Initiates moving user to a different user group which will finish in background.
+
+``--direct`` will only update GeoDB. This is intended for testing purposes only, and should not be used.
+
+
+cluster user status
+-------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster user status *user*
+
+Displays status information of a user.
+
+
+.. include:: reporting-bugs.inc
+
+
+SEE ALSO
+========
+
+:man:`doveadm-cluster(1)`

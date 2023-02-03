@@ -15,7 +15,7 @@ to act as a simple interface to the Xapian storage/search query
 functionality.
 
 This driver supports match scoring and substring matches (on by default),
-which means it is RFC 3501 (IMAP4rev1) compliant. This driver does not
+which means it is :rfc:`3501` (IMAP4rev1) compliant. This driver does not
 support fuzzy searches.
 
 The driver passes all of the ImapTest search tests.
@@ -90,7 +90,7 @@ Optional parameters
   :default: no
   :values: @boolean
 
-  If enabled, allows substring searches (RFC 3501 compliant). However, this
+  If enabled, allows substring searches (:rfc:`3501` compliant). However, this
   requires significant additional storage space. Most users today expect
   "Google-like" behavior, which is prefix searching, so substring searching is
   arguably not the modern expected behavior anyway. Therefore, even though it

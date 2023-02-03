@@ -1,0 +1,89 @@
+.. _man-1_doveadm-cluster-site:
+
+====================
+doveadm-cluster-site
+====================
+
+
+NAME
+====
+
+doveadm-cluster-site - Utility actions for Dovecot Cluster site
+
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site add [ **-\-tag** *tag* ] [ **-\-load-balancer** *host* ] *name*
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site remove *name*
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site update [ **-\-status** *online|offline|standby|evacuate* ] [ **-\-load-balancer** *host* ] *-\-self* | *name*
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site status *name*
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site list
+
+
+DESCRIPTION
+===========
+
+**doveadm cluster site** can be used to run actions that interact with and
+modify Dovecot Cluster sites.
+
+.. include:: global-options.inc
+
+.. include:: global-options-formatter.inc
+
+
+COMMANDS
+========
+
+
+cluster site add
+----------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site add [ **-\-tag** *tag* ] [ **-\-load-balancer** *host* ] *name*
+
+Adds a new site to cluster. Load balancer is the host or IP address where another site's proxy connects to do site to site connections.
+New sites are added in online state.
+
+
+cluster site remove
+-------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site remove *name*
+
+Remove a site. This currently has no safety checks, so be sure to remove first all of the site's backends and remove it from all users' preferred sites.
+
+
+cluster site update
+-------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site update [ **-\-status** *online|offline|standby|evacuate* ] [ **-\-load-balancer** *host* ] *-\-self* | *name*
+
+Update site status and load balancer. The ``--self`` parameter can be used to target the local site.
+
+
+SITE STATUS
+===========
+
+Online
+  The site is reachable and accepts connections.
+
+Offline
+  The site is unreachable.
+
+Standby
+  The site is reachable, but does not accept connections.
+
+Evacuate
+  The site is being evacuated of all users.
+
+
+.. include:: reporting-bugs.inc
+
+SEE ALSO
+========
+
+:man:`doveadm-cluster(1)`

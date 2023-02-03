@@ -4,16 +4,14 @@
 Pigeonhole Sieve: Vacation Extension
 ====================================
 
-The Sieve vacation extension
-(`RFC5230 <http://tools.ietf.org/html/rfc5230/>`_) defines a mechanism
+The Sieve vacation extension :rfc:`5230` defines a mechanism
 to generate automatic replies to incoming email messages. It takes
 various precautions to make sure replies are only sent when appropriate.
 Script authors can specify how often replies can be sent to a particular
 contact. In the original vacation extension, this interval is specified
 in days with a minimum of one day. When more granularity is necessary
 and particularly when replies must be sent more frequently than one day,
-the vacation-seconds extension
-(`RFC6131 <http://tools.ietf.org/html/rfc6131/>`_) can be used. This
+the vacation-seconds extension :rfc:`6131` can be used. This
 allows specifying the minimum reply interval in seconds with a minimum
 of zero (a reply is then always sent), depending on administrator
 configuration.
@@ -41,7 +39,7 @@ the ``plugin`` section (default values are indicated):
    and :seconds tags of the vacation command. A minimum of 0 indicates
    that users are allowed to make the Sieve interpreter send a vacation
    response message for every incoming message that meets the other
-   reply criteria (refer to RFC5230). A value of zero is however not
+   reply criteria (refer to :rfc:`5230`). A value of zero is however not
    recommended.
 
 :pigeonhole:ref:`sieve_vacation_max_period` = 0

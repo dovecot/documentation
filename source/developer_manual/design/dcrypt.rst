@@ -65,8 +65,7 @@ compressed form.
 Key formats
 -----------
 
-lib-dcrypt can consume keys in `PEM
-format <https://tools.ietf.org/html/rfc1421>`_ (with or without
+lib-dcrypt can consume keys in PEM format :rfc:`1421` (with or without
 password), and in Dovecot's special format intended for dict storage.
 
 Dovecot's format consists from unencrypted and encrypted keys. You can

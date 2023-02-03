@@ -15,15 +15,21 @@ div.dovecot-seealso p {
   margin: 0 0 0 15px;
 }
 
-dl.dovecotsetting {
+dl.dovecotsetting, dl.dovecotevent {
   margin-bottom: 10px;
 }
 
-dl.dovecotsetting + dl.dovecotsetting {
+dl.dovecotsetting + dl.dovecotsetting, dl.dovecotevent + dl.dovecotevent {
   border-top: 1px solid lightgray;
   padding-top: 10px;
 }
 
 dl.dovecotsetting dd {
   margin-left: 15px;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

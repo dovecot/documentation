@@ -72,11 +72,37 @@ The value comparison is case-insensitive, but the key is case-sensitive.
 There are some limitations on which operators work with what field types:
 
 * string: Only the ``=`` operator is supported.
+* ip: Only the ``=`` operator is supported.
+
+  * The IPs are matched in their parsed form, e.g. ``2001::1`` matches
+    ``2001:0:0:0:0:0:0:1``.
+  * The IPs can be matched against network bitmasks, e.g. ``127.0.0.0/8``
+    matches ``127.4.3.2``.
+  * Wildcards match the IP as if it was a string, i.e. ``2001::1*`` will match
+    the IPs ``2001::1`` and ``2001::1234``. However, ``2001:0:0:0:0:0:0:1*``
+    will not match either of them.
+  * Link-local addresses match only against the same interface, e.g.
+    ``"fe80::1%lo"`` won't match against ``"fe80::1%eth0"``. Note that the
+    ``%`` character needs to be inside a quoted string or event filter parsing
+    fails.
+
 * number: All operators are supported.
+
+  * Wildcards match the number as if it was a string, i.e. ``40*`` will match
+    numbers ``40`` and ``401``.
+
 * timestamp: No operators are supported.
 * a list of strings: Only the ``=`` operator is supported.
   It returns true if the key is one of the values in the list. If the value
   is an empty string, it returns true if the list is empty.
+
+.. versionchanged:: v2.4.0;v3.0.0 Event fields have specific types that
+                    constrain the possible values they can be filtered by. For
+                    example ``bytes_out`` and ``message_size`` are numeric and
+                    can only be matched against numeric values. Previously type
+                    mismatches were silently ignored, beginning with this
+                    version each type mismatch and unsupported operation
+                    generate a respective warning.
 
 For example, to match events with the event name ``abc``, one would use one of
 the following expressions.  Note that white space is not significant between
@@ -91,6 +117,20 @@ A more complicated example::
 
   event=abc OR (event=def AND (category=imap OR category=lmtp) AND \
     NOT category=debug AND NOT (bytes_in<1024 OR bytes_out<1024))
+
+.. versionadded:: v2.4.0;v3.0.0 Sizes can be expressed using the unit values
+   ``B`` - which represents single byte values - as well as ``KB``, ``MB``,
+   ``GB`` and ``TB`` which are all powers of 1024. If no unit is specified
+   ``B`` is used by default. All size units are case-insensitive. Additionally
+   times can be specified with the units ``milliseconds`` (abbrev. ``msecs``),
+   ``seconds`` (abbrev. ``secs``), ``minutes`` (abbrev. ``mins``), ``days``,
+   and ``weeks``.
+
+For example::
+
+  (category=debug AND NOT (bytes_in<1KB OR bytes_out<1KB)) OR \
+    (event=abc AND (message_size>1gb and message_size<1tB)) OR \
+    (event=def AND (duration<1mins))
 
 .. _event_filter_metric:
 

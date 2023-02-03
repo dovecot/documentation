@@ -108,13 +108,13 @@ ARGUMENTS
       Named header from the message.
 
    **imap.body**
-      IMAP BODY output of the message (see RFC 3501).
+      IMAP BODY output of the message (see :rfc:`3501`).
 
    **imap.bodystructure**
-      IMAP BODYSTRUCTURE output of the message (see RFC 3501).
+      IMAP BODYSTRUCTURE output of the message (see :rfc:`3501`).
 
    **imap.envelope**
-      IMAP ENVELOPE output of the message (see RFC 3501).
+      IMAP ENVELOPE output of the message (see :rfc:`3501`).
 
    **mailbox**
       Name of the mailbox, in which the message is stored. The name is

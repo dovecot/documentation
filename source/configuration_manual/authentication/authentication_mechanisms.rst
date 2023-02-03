@@ -59,7 +59,7 @@ Dovecot supports the following non-cleartext mechanisms:
 |                                                                              | (SCRAM) SAS and GSS-API Mechanisms.                                      |                          |
 |                                                                              | Intended as DIGEST-MD5 replacement.                                      |                          |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
-| SCRAM-SHA-256                                                                | Stronger replacement for SCRAM-SHA-1. https://tools.ietf.org/html/rfc7677| .. versionadded:: 2.3.10 |
+| SCRAM-SHA-256                                                                | Stronger replacement for SCRAM-SHA-1 :rfc:`7677`.                        | .. versionadded:: 2.3.10 |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
 | APOP                                                                         | This is a POP3-specific authentication. Similar to                       |                          |
 |                                                                              | CRAM-MD5, but requires storing password in cleartext                     |                          |
@@ -67,10 +67,9 @@ Dovecot supports the following non-cleartext mechanisms:
 | `NTLM <https://wiki.dovecot.org/Authentication/Mechanisms/NTLM>`_            | Mechanism created by Microsoft and supported by their                    |                          |
 |                                                                              | clients                                                                  |                          |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
-| GSS-SPNEGO                                                                   | A wrapper mechanism defined by                                           |                          |
-|                                                                              | `RFC 4178 <https://tools.ietf.org/html/rfc4178>`_.                       |                          |
+| GSS-SPNEGO                                                                   | A wrapper mechanism defined by :rfc:`4178`.                              |                          |
 |                                                                              | Can be accessed via either GSSAPI or                                     |                          |
-|                                                                              | `Winbind <https://wiki.dovecot.org/Authentication/Mechanisms/Winbind>`_. |                          |
+|                                                                              | :ref:`Winbind <authentication-winbind>`.                                 |                          |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
 | `GSSAPI <https://wiki.dovecot.org/Authentication/Kerberos>`_                 | Kerberos v5 support.                                                     |                          |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
@@ -84,7 +83,7 @@ Dovecot supports the following non-cleartext mechanisms:
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
 | EXTERNAL                                                                     | EXTERNAL SASL mechanism.                                                 |                          |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
-| OAUTHBEARER                                                                  | OAuth2 bearer authentication https://tools.ietf.org/html/rfc7628.        | .. versionadded:: 2.2.29 |
+| OAUTHBEARER                                                                  | OAuth2 bearer authentication :rfc:`7628`.                                | .. versionadded:: 2.2.29 |
 |                                                                              | See :ref:`authentication-oauth2`.                                        |                          |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------+
 | XOAUTH2                                                                      | `Google flavor OAUTHBEARER                                               | .. versionadded:: 2.2.29 |

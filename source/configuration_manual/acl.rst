@@ -72,7 +72,7 @@ Sample Configuration:
 Master users
 ============
 
-Master users have their own ACLs. They're not the the mailbox owners, so by
+Master users have their own ACLs. They're not the mailbox owners, so by
 default they have no permissions to any of the mailboxes. See
 :ref:`ACLs at Master users <authentication-master_users_acls>` for more
 information.
@@ -241,8 +241,7 @@ ID       Type                Description
 ``a``     admin           Administration rights to the mailbox (currently: ability to change ACLs for mailbox)
 ======== =============== ======================================================================================================================================================================================
 
-The ACLs are compatible with
-`RFC 4314 <https://tools.ietf.org/html/rfc4314>`_ (IMAP ACL extension).
+The ACLs are compatible with :rfc:`4314` (IMAP ACL extension).
 
 Unknown ACL letters are complained about, but unknown named ACLs are ignored.
 Named ACLs are mostly intended for future extensions.

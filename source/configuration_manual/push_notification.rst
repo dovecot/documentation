@@ -7,13 +7,13 @@ Push Notification Framework
 Introduction
 ============
 
-Dovecot's Push Notification framework exposes `RFC 5423 (Internet Message Store
-Events) <https://tools.ietf.org/html/rfc5423>`_ events that occur in Dovecot to
+Dovecot's Push Notification framework exposes :rfc:`5423` (Internet Message Store
+Events) events that occur in Dovecot to
 a system that can be used to report these events to external services.
 
 .. _push_notification-events:
 
-These events (see https://datatracker.ietf.org/doc/html/rfc5423#section-4.1
+These events (see :rfc:`5423#section-4.1`
 for descriptions) are available within the notification framework, although a
 driver may not implement all of them:
 
@@ -136,7 +136,7 @@ Configuration options:
 +------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
 | ``cache_lifetime``     | NO       | :ref:`time`       | Cache lifetime for the METADATA entry for a user. (DEFAULT: ``60 seconds``)                                                          |
 +------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
-| ``max_retries``        | NO       | :ref:`uint`       | The maximum number of retries to attempt to connect to OX endpoint. (DEFAULT: ``1``)                                                 |
+| ``max_retries``        | NO       | :ref:`uint`       | The maximum number of times to retry a connection to the OX endpoint. Setting it to 0 will disable retries. (DEFAULT: ``1``)         |
 +------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
 | ``timeout_msecs``      | NO       | :ref:`time_msecs` | Time before HTTP request to OX endpoint will timeout. (DEFAULT: ``2000``)                                                            |
 +------------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------+
@@ -171,23 +171,23 @@ Push notification sent in JSON format with the following fields:
 ==================== ======= ===================================================
 Name                 Type    Description
 ==================== ======= ===================================================
-``event``            string  RFC 5423 event type (currently only "MessageNew")
+``event``            string  :rfc:`5423` event type (currently only "MessageNew")
 
 ``folder``           string  Mailbox name
 
-``from``             string  RFC 2822 address of the message sender
+``from``             string  :rfc:`2822` address of the message sender
                              (MIME-encoded), if applicable
 
 ``imap-uid``         integer UID of the message, if applicable
 
-``imap-uidvalidity`` integer RFC 3501 UIDVALIDITY value of the mailbox
+``imap-uidvalidity`` integer :rfc:`3501` UIDVALIDITY value of the mailbox
 
 ``snippet``          string  Snippet of the message body (UTF-8), if applicable
 
 ``subject``          string  Subject of the message (MIME-encoded), if
                              applicable
 
-``unseen``           integer RFC 3501 UNSEEN value of the mailbox
+``unseen``           integer :rfc:`3501` UNSEEN value of the mailbox
 
 ``user``             string  User identifier
 ==================== ======= ===================================================
@@ -368,53 +368,56 @@ Functions:
 Example Scripts
 ---------------
 
-Simple example:
+Simple example with :py:mod:`dovecot.http.client`
 
 .. code-block:: lua
    :linenos:
 
-   -- To use:
-   --
-   -- plugin {
-   --   push_notification_driver = lua:file=/home/example/empty.lua
-   --   push_lua_url = http://push.notification.server/handler
-   -- }
-   --
-   -- server is sent a POST message to given url with parameters
-   --
+   local url = require 'socket.url'
 
-   local http = require("socket.http")
-   local url = require("socket.url")
+   local client = nil
 
-   function table_get(t, k, d)
+   function script_init()
+     client = dovecot.http.client({debug=True, timeout=10000})
+     return 0
+   end
+
+   local function table_get(t, k, d)
      return t[k] or d
    end
+
 
    function dovecot_lua_notify_begin_txn(user)
      return {messages={}, ep=user:plugin_getenv("push_lua_url"), username=user.username}
    end
 
+
    function dovecot_lua_notify_end_txn(ctx, success)
      local i, msg = next(ctx["messages"], nil)
      while i do
-       local r, c = http.request(ctx["ep"], "from=" .. url.escape(table_get(msg, "from", "")) .. "&to=" .. url.escape(table_get(msg, "to", "")) .. "&subject=" .. url.escape(table_get(msg, "subject", "")) .. "&snippet=" .. url.escape(table_get(msg, "snippet", "")) .. "&user=" .. url.escape(ctx["username"]))
-       if r and c/100 ~= 2 then
-         dovecot.i_error("lua-push: Remote error " .. tostring(c) .. " handling push notification")
+       local rq = client:request({url=ctx["ep"], method="POST"})
+       rq:set_payload("from=" .. url.escape(table_get(msg, "from", "")) .. "&to=" .. url.escape(table_get(msg, "to", "")) .. "&subject=" .. url.escape(table_get(msg, "subject", "")) .. "&snippet=" .. url.escape(tab
+   le_get(msg, "snippet", "")) .. "&user=" .. url.escape(ctx["username"]))
+       r = rq:submit()
+       if r and r:status()/100 ~= 2 then
+         dovecot.i_error("lua-push: Remote error " .. tostring(r:reason()) .. " handling push notification")
        end
-       if r == nil then
-         dovecot.i_error("lua-push: " .. c)
-       end
+
        i, msg = next(ctx["messages"], i)
      end
    end
+
 
    function dovecot_lua_notify_event_message_append(ctx, event)
      table.insert(ctx["messages"], event)
    end
 
+
    function dovecot_lua_notify_event_message_new(ctx, event)
      table.insert(ctx["messages"], event)
    end
+
+
 
 Example with event code:
 
@@ -431,8 +434,7 @@ Example with event code:
    -- server is sent a POST message to given url with parameters
    --
 
-   local http = require "socket.http"
-   local ltn12 = require "ltn12"
+   local client = nil
    local url = require "socket.url"
 
    function table_get(t, k, d)
@@ -440,6 +442,7 @@ Example with event code:
    end
 
    function script_init()
+     client = dovecot.http.client({debug=True, timeout=10000})
      return 0
    end
 
@@ -468,14 +471,10 @@ Example with event code:
        e:set_name("lua_notify_mail_finished")
        reqbody = "mailbox=" .. url.escape(msg.mailbox) .. "&from=" .. url.escape(table_get(msg, "from", "")) .. "&subject=" .. url.escape(table_get(msg, "subject", ""))
        e:log_debug(ctx.ep .. " - sending " .. reqbody)
-       res, code = http.request({method="POST",
-                     url=ctx.ep,
-                     source=ltn12.source.string(reqbody),
-                     headers={
-                       ["content-type"] = "application/x-www-form-url.escaped",
-                       ["content-length"] = tostring(#reqbody)
-                     }
-                    })
+       local rq = client:request({url=ctx["ep"], method="POST"})
+       rq:set_payload(reqbody)
+       rq:add_header("content-type", "application/x-www-form-url.escaped")
+       local code = rq:submit():status()
        e:add_int("result_code", code)
        e:log_info("Mail notify status " .. tostring(code))
      end
@@ -484,18 +483,15 @@ Example with event code:
        e:set_name("lua_notify_mailbox_finished")
        reqbody = "mailbox=" .. url.escape(state.mailbox) .. "&recent=" .. tostring(state.recent) .. "&unseen=" .. tostring(state.unseen) .. "&messages=" .. tostring(state.messages)
        e:log_debug(ctx.ep .. " - sending " .. reqbody)
-       res, code = http.request({method="POST",
-                     url=ctx.ep,
-                     source=ltn12.source.string(reqbody),
-                     headers={
-                       ["content-type"] = "application/x-www-form-url.escaped",
-                       ["content-length"] = tostring(#reqbody)
-                     }
-                    })
+       local rq = client:request({url=ctx["ep"], method="POST"})
+       rq:set_payload(reqbody)
+       rq:add_header("content-type", "application/x-www-form-url.escaped")
+       local code = rq:submit():status()
        e:add_int("result_code", code)
        e:log_info("Mailbox notify status " .. tostring(code))
      end
    end
+
 
 Chronos driver [``chronos``]
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -512,7 +508,12 @@ Transport-Independent Interoperability Protocol (iTIP)
 but can be used by any endpoint that implements the same API, not just OX App
 Suite.
 
-Configuration options:
+Configuration
+-------------
+
+The chronos push notification handler requires the
+``push_notification_chronos`` plugin to be loaded in addition to the plugins
+discussed :ref:`above <push_notification-usage>`.
 
 ================= ======== =================== ============================================================================================================
  Name             Required Type                Description
@@ -526,19 +527,22 @@ Configuration options:
                                                For further details on configuring the App Suite endpoint, see:
                                                https://documentation.open-xchange.com/7.10.6/middleware/calendar/iTip.html#configuration2
 
- ``max_retries``  NO       :ref:`uint`         The maximum number of retries to attempt to connect to the API endpoint. (DEFAULT: ``1``)
+ ``max_retries``  NO       :ref:`uint`         The maximum number of times to retry a connection to the API endpoint. Setting it to 0 will disable retries.
+                                               (DEFAULT: ``1``)
 
- ``timeout``      No       :ref:`time_msecs`   Time before HTTP request to OX endpoint will timeout. (DEFAULT: ``2s``)
+ ``timeout``      NO       :ref:`time_msecs`   Time before HTTP request to the configured API endpoint will timeout. (DEFAULT: ``2s``)
 
- ``msg_max_size`` No       :ref:`size`         Maximum size a message may have to be considered for push notification sending. (DEFAULT: ``500kb``)
+ ``msg_max_size`` NO       :ref:`size`         Maximum size a message may have to be considered for push notification sending. (DEFAULT: ``1mb``)
 ================= ======== =================== ============================================================================================================
 
 Example configuration:
 
 .. code-block:: none
 
+  mail_plugins = $mail_plugins notify push_notification push_notification_chronos
+
   plugin {
-    push_notification_driver = chronos:url=http://login:pass@node1.domain.tld:8009/chronos/v1/itip/pushmail max_retries=2 timeout=2500ms msg_max_size=1mb
+    push_notification_driver = chronos:url=http://login:pass@node1.domain.tld:8009/chronos/v1/itip/pushmail msg_max_size=500kb
   }
 
 Payload
@@ -552,7 +556,7 @@ Name        Type   Description
 ``user``    string The username of the account receiving the message on the
                    dovecot backend
 
-``event``   string RFC 5423 event type. Currently only "MessageNew" is expected.
+``event``   string :rfc:`5423` event type. Currently only "MessageNew" is expected.
 
 ``folder``  string Mailbox name in which the message was saved. Can be other
                    than INBOX, in case sieve filters are active. A trivial

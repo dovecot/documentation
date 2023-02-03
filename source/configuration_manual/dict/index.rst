@@ -230,7 +230,7 @@ Proxy
 
 .. code-block:: none
 
-  proxy:[<dict path>]:<destination dict>
+  proxy:[param=value:...][<dict path>]:<destination dict>
 
 Proxying is used to perform all dictionary accessing via the dict processes.
 (The dict processes exist only if dict proxying is used.) This is especially
@@ -248,6 +248,20 @@ The ``<destination dict>`` contains the dict name in the ``dict { .. }``
 settings. For example: ``proxy:dict-async:quota``.
 
 See :ref:`dict-proxy_process` for more information about the dict server.
+
+Supported parameters are:
+
++----------------------------------+----------+-----------------------------------------------+
+| Parameter                        | Required | Description                                   |
++----------------------------------+----------+-----------------------------------------------+
+| idle_timeout=<:ref:`time_msecs`> | NO       | How long to idle before disconnecting.        |
+|                                  |          | (default: 0; which means immediate disconnect |
+|                                  |          | after finishing the operation)                |
++----------------------------------+----------+-----------------------------------------------+
+| slow_warn=<:ref:`time_msecs`>    | NO       | Log a warning about lookups that take longer  |
+|                                  |          | than this interval.                           |
+|                                  |          | (default: 5s)                                 |
++----------------------------------+----------+-----------------------------------------------+
 
 
 .. _dict-redis:
@@ -278,6 +292,8 @@ Supported parameters are:
 | ``host``          | NO       | Redis server host (default: ``127.0.0.1``)    |
 +-------------------+----------+-----------------------------------------------+
 | ``port``          | NO       | Redis server port (default: ``11211``)        |
++------------------------------------------------------------------------------+
+| ``password``      | NO       | Redis Password (default: none)                |
 +-------------------+----------+-----------------------------------------------+
 | ``prefix``        | NO       | Prefix to add to all keys (default: none)     |
 +-------------------+----------+-----------------------------------------------+

@@ -13,10 +13,13 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os, sys
+import subprocess
 sys.path.append(os.path.abspath('./_ext'))
 
 # Increase recursion limit; needed for todo processing
 sys.setrecursionlimit(10000)
+
+from sphinx.environment import default_settings
 
 # -- Project information -----------------------------------------------------
 
@@ -24,11 +27,11 @@ project = u'Dovecot'
 copyright = u'Dovecot Authors'
 author = u'Dovecot Authors'
 
-# The short X.Y version
-version = u'2.3'
-# The full version, including alpha/beta/rc tags
-release = u'2.3.8'
-
+version = os.getenv('GITHUB_SHA')
+if not version:
+    version = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode()
+version = version[0:12]
+release = version
 
 # -- General configuration ---------------------------------------------------
 
@@ -46,6 +49,7 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.todo',
     'sphinx_copybutton',
+    'sphinx_design',
     'sphinx_removed_in',
     'dovecot_sphinx',
 ]
@@ -122,9 +126,9 @@ html_static_path = ['_static/']
 html_sidebars = {
     '**': [
         'about.html',
+        'searchbox.html',
         'navigation.html',
         'relations.html',
-        'searchbox.html',
         'license.html',
     ]
 }
@@ -137,7 +141,6 @@ htmlhelp_basename = 'Dovecotdoc'
 
 html_css_files = [
  'https://s3-us-west-2.amazonaws.com/colors-css/2.2.0/colors.min.css',
- 'css/custom.css',
 ]
 
 
@@ -181,9 +184,13 @@ latex_documents = [
 
 man_pages = []
 
-for man_page in os.listdir("man/"):
-    if man_page.endswith(".rst.in"):
-        man_pages.append(("man/%s" % man_page[0:-7], man_page[0:-9], u'', [author], int(man_page[-8:-7])))
+for man_dir in os.listdir("."):
+    if os.path.isdir(man_dir) == False:
+        continue
+    if (man_dir == "man" or man_dir.endswith("-man")) and tags.tags.get(man_dir):
+        for man_page in os.listdir(man_dir):
+            if man_page.endswith(".rst.in"):
+                man_pages.append(("%s/%s" % (man_dir, man_page[0:-7]), man_page[0:-9], u'', [author], int(man_page[-8:-7])))
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -218,3 +225,5 @@ epub_exclude_files = ['search.html']
 # -- Extension configuration -------------------------------------------------
 
 todo_include_todos = False
+
+default_settings['rfc_base_url'] = "https://datatracker.ietf.org/doc/html/"

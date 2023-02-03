@@ -12,7 +12,7 @@ Create ``/etc/yum.repos.d/dovecot.repo``
 
    [dovecot-2.3-latest]
    name=Dovecot 2.3 CentOS $releasever - $basearch
-   baseurl=http://repo.dovecot.org/ce-2.3-latest/centos/$releasever/RPMS/$basearch
+   baseurl=https://repo.dovecot.org/ce-2.3-latest/centos/$releasever/RPMS/$basearch
    gpgkey=https://repo.dovecot.org/DOVECOT-REPO-GPG
    gpgcheck=1
    enabled=1

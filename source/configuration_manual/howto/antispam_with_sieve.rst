@@ -34,7 +34,7 @@ Caveats and possible pitfalls
    setup, you should instead configure Spamassassin to use
    MySQL/PostgreSQL as a backend, unless you want a headache with file
    permissions and lock files. You can find instructions
-   `here <http://www.iredmail.org/docs/store.spamassassin.bayes.in.sql.html>`_.
+   `here <https://docs.iredmail.org/store.spamassassin.bayes.in.sql.html>`_.
    In this case, the ``-u`` parameter passed to ``sa-learn`` (and the
    relevant sieve variables) is obsolete and can be safely removed.
 

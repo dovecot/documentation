@@ -240,6 +240,11 @@ Settings
      Filter certain common and short words, which are usually useless for
      searching.
 
+     .. warning::
+        Using stopwords with multiple languages configured WILL cause some
+        searches to fail. The recommended solution is to NOT use the stopword
+        filter when multiple languages are present in the configuration.
+
      Settings:
 
        ``stopwords_dir``
@@ -320,7 +325,7 @@ Settings
        fts_filters_en = lowercase snowball english-possessive stopwords
      }
 
-.. _`Normalizer Format`: http://userguide.icu-project.org/transforms/general#TOC-Transliterator-Identifiers
+.. _`Normalizer Format`: https://unicode-org.github.io/icu/userguide/transforms/general/#transliterator-identifiers
 
 
 .. dovecot_plugin:setting:: fts_header_excludes
@@ -330,7 +335,7 @@ Settings
 
    The list of headers to, respectively, include or exclude.
 
-   - The default is the pre-existing behavior, i.e. index all headers.
+   - The default is the preexisting behavior, i.e. index all headers.
    - ``includes`` take precedence over ``excludes``: if a header matches both,
      it is indexed.
    - The terms are case insensitive.

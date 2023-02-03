@@ -87,7 +87,7 @@ lookup (without authentication) instead of a *userdb* lookup.
 auth test
 ---------
 
-**doveadm auth test** [**-a** *auth_socket_path*] [**-x** *auth_info*] *user* [*password*]
+**doveadm auth test** [**-a** *auth_socket_path*] [**-A** *sasl_mech*] [**-x** *auth_info*] *user* [*password*]
 
 Test authentication for the given user.
 
@@ -98,6 +98,37 @@ Test authentication for the given user.
    By default :man:`doveadm(1)` will use the socket *@rundir@/auth-client*.
    The socket may be located in another directory, when the default
    *base_dir* setting was overridden in *@pkgsysconfdir@/dovecot.conf*.
+
+**-A** *sasl_mech*
+   The SASL mechanism used for the authentication. By default PLAIN is used.
+
+.. include:: option-x.inc
+
+auth login
+----------
+
+**doveadm auth login** [**-a** *auth_socket_path*] [**-m** *auth_master_socket_path*] [**-A** *sasl_mech*] [**-x** *auth_info*] *user* [*password*]
+
+Test full login for the given user; i.e. performing both passdb lookup (authentication) and userdb lookup (login).
+
+**-a** *auth_socket_path*
+   This option is used to specify an absolute path to an alternative
+   UNIX domain socket.
+
+   By default :man:`doveadm(1)` will use the socket *@rundir@/auth-client*.
+   The socket may be located in another directory, when the default
+   *base_dir* setting was overridden in *@pkgsysconfdir@/dovecot.conf*.
+
+**-m** *auth_master_socket_path*
+   This option is used to specify an absolute path to an alternative
+   UNIX domain socket for the master socket.
+
+   By default :man:`doveadm(1)` will use the socket *@rundir@/auth-master*.
+   The socket may be located in another directory, when the default
+   *base_dir* setting was overridden in *@pkgsysconfdir@/dovecot.conf*.
+
+**-A** *sasl_mech*
+   The SASL mechanism used for the authentication. By default PLAIN is used.
 
 .. include:: option-x.inc
 

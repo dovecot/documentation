@@ -70,7 +70,7 @@ using :ref:`authentication-prefetch_userdb`.
 .. Note:: Boolean fields are true always if the field exists. So nodelay,
           ``nodelay=yes``, ``nodelay=no`` and ``nodelay=0`` all mean that the
           nodelay field is true. With SQL the field is considered to be
-          non-existent if its value is NULL.
+          nonexistent if its value is NULL.
 
 The following suffixes added to a field name are handled specially:
 

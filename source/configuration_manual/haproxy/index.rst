@@ -21,9 +21,9 @@ An example of a front-end :
 .. code-block:: none
 
    frontend front_dc_pop3
-   bind        :1110
-   mode        tcp
-   default_backend     back_dc_pop3
+      bind        :1110
+      mode        tcp
+      default_backend     back_dc_pop3
 
 This configures a frontend named ``front_dc_pop3``, which handles all incoming traffic on port 1110. This will send all traffic to the backends defined by ``back_dc_pop3``.
 
@@ -40,7 +40,21 @@ Example of an ACL:
 
    acl url_stats path_beg /stats
 
-This ACL is matched if the path of a request begins with ``/stats``. This would match a request of http://10.10.10.1/stats, for example. Here, url_stats is just the label given to the pattern. For more details on ACL please refer to the official `HAProxy documentation <http://www.haproxy.org/>`_
+This ACL is matched if the path of a request begins with ``/stats``. This would match a request of http://10.10.10.1/stats, for example. Here, url_stats is just the label given to the pattern. For more details on ACL please refer to the official `HAProxy documentation <https://www.haproxy.org/>`_
+
+.. _haproxy_tls_forward:
+
+TLS FORWARDING
+==============
+
+For Dovecot to recognize that TLS termination has been performed, you need to
+configure haproxy to use PROXYV2 protocol with SSL attributes. For example:
+
+.. code-block:: none
+
+  server s1 127.0.0.1:143 send-proxy-v2-ssl
+
+.. seealso:: :ref:`Secured connections <secured_connections>`
 
 BACKENDS
 =========
@@ -57,18 +71,18 @@ Here is an example of a two backend configurations, ``back_dc_pop3`` and ``back_
 .. code-block:: none
 
    backend back_dc_pop3
-   mode        tcp
-   balance     leastconn
-   option      allbackups
-   server 10.41.1.131 10.41.1.131:110 check inter 5s
-   server 10.41.1.116 10.41.1.116:110 check inter 5s
+      mode        tcp
+      balance     leastconn
+      option      allbackups
+      server 10.41.1.131 10.41.1.131:110 check inter 5s
+      server 10.41.1.116 10.41.1.116:110 check inter 5s
  
-backend back_dc_lmtp
-   mode        tcp
-   balance     leastconn
-   option      allbackups
-   server 10.41.1.131 10.41.1.131:24 check inter 5s
-   server 10.41.1.116 10.41.1.116:24 check inter 5s
+   backend back_dc_lmtp
+      mode        tcp
+      balance     leastconn
+      option      allbackups
+      server 10.41.1.131 10.41.1.131:24 check inter 5s
+      server 10.41.1.116 10.41.1.116:24 check inter 5s
 
 .. Note:: Details about load balancing methods and options are available in the haproxy documentation if you need more information.
 

@@ -81,20 +81,25 @@ Additionally imapc must be configured accordingly on the backends:
    is configured on all backends and proxies
  * :dovecot_core:ref:`imapc_host` must point to a load balancer's address that
    connects to Dovecot proxy
- * :dovecot_core:ref:`imapc_features`: For the best performance and functionality,
-   the setting should contain at least
-   ``fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login``
 
 .. versionadded:: 2.3.15 INDEXPVT for imapc is supported from 2.3.15 onwards.
                   In general INDEXPVT with imapc is only supported for non-obox
                   storages.
+
+.. versionchanged:: v2.4.0;v3.0.0 Some selected IMAPC features are auto-enabled
+                    by default. Please refer to :dovecot_core:ref:`imapc_features`
+                    for description on individual flags. Prior to this version
+                    you must enable at least the following features:
+                    ``fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login``
 
 ::
 
    imapc_host = proxy-load-balancer
    #imapc_user = # leave this empty. It'll be automatically filled with the destination username.
    imapc_password = master-secret
-   imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login
+   # With v2.4.0;v3.0.0 the following features are enabled by default, prior to
+   # this version the following must be uncommented:
+   #imapc_features = fetch-bodystructure fetch-headers rfc822.size search modseq acl delay-login
 
 
 As mentioned earlier the :ref:`acl <acl>` plugin must be loaded and configured

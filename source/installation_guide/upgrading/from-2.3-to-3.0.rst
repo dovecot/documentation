@@ -112,6 +112,35 @@ Removed features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``disable_plaintext_auth``                                 | This has been replaced with :dovecot_core:ref:`auth_allow_cleartext` setting.            |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| :dovecot_core:ref:`ssl=required <ssl>`                     | Connections from :dovecot_core:ref:`login_trusted_networks` are now also required to     |
+|                                                            | be SSL/TLS encrypted with this setting. See also                                         |
+|                                                            | :ref:`secured connections <secured_connections>`.                                        |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``absolute_timeout_msecs``                                 | Deprecated HTTP-storage parameter. Use :ref:`absolute_timeout <http_storages>` setting   |
+|                                                            | instead.                                                                                 |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``connect_timeout_msecs``                                  | Deprecated HTTP-storage parameter. Use :ref:`connect_timeout <http_storages>` setting    |
+|                                                            | instead.                                                                                 |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``delete_timeout_msecs``                                   | Deprecated HTTP-storage parameter. Use :ref:`delete_timeout <http_storages>` setting     |
+|                                                            | instead.                                                                                 |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``read_timeout_msecs``                                     | Deprecated HTTP-storage parameter. Use :ref:`read_timeout <http_storages>` setting       |
+|                                                            | instead.                                                                                 |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``slow_warn_msecs``                                        | Deprecated HTTP-storage parameter. Use :ref:`slow_warn <http_storages>` setting instead. |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``timeout_msecs``                                          | Deprecated HTTP-storage parameter. Use :ref:`timeout <http_storages>` setting instead.   |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``write_timeout_msecs``                                    | Deprecated HTTP-storage parameter. Use :ref:`write_timeout <http_storages>` setting      |
+|                                                            | instead.                                                                                 |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``dict_db_config``                                         | Berkeley DB is not supported anymore.                                                    |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``idle_msecs``                                             | Deprecated dict proxy parameter. Use :ref:`idle_timeout <dict-proxy>` setting instead.   |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``warn_slow_msecs``                                        | Deprecated dict proxy parameter. Use :ref:`slow_warn <dict-proxy>` setting instead.      |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 Changed default settings
 ========================
@@ -135,7 +164,10 @@ Changed default settings
 +------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
 | :ref:`max-parallel-iter<dictmap_configuration_parameters>` | 1                      | 10              |                                                             |
 +------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
-
+| :dovecot_core:ref:`mail_cache_max_headers_count`           | unlimited              | 100             | New feature, explicitly set to 0 for the old behavior       |
++------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
+| :dovecot_core:ref:`mail_cache_max_header_name_length`      | unlimited              | 100             | New feature, explicitly set to 0 for the old behavior       |
++------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
 
 Doveadm mailbox commands
 ------------------------
