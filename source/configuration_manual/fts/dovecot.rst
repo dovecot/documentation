@@ -21,6 +21,111 @@ fts indexes.
 
 See :ref:`plugin-fts` for generic FTS settings.
 
+.. _fts_dovecot_consistency_check:
+
+Consistency Checking
+^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: v2.3.21
+
+The FTS indexes can sometimes become out-of-sync with the actual mailbox. Some
+messages could be missing and some could be leaked. In theory it should not be
+possible to have missing mails in FTS, but there still seem to be some bugs
+left. Leaked messages (i.e. already deleted messages that still appear in FTS)
+are possible in case of unexpected crashes or storage errors.
+
+The consistency of FTS indexes can be checked using ``doveadm fts check fast``
+and ``doveadm fts check full`` commands. These are intended to be run in e.g.
+nightly batch jobs. The "fast" check is expected to be run nightly for all the
+users in local metacache, since it doesn't access object storage. However, it
+might not always have all the information for giving a reliable answer whether
+the FTS indexes are synced or not, in which case some of the numbers may be
+either "?" or "123?". There is a ``--refresh`` parameter, which can be used to
+do the necessary object storage accesses to give reliable results. However, at
+that point it might be better to just run a "full" check instead.
+
+After all backends in the cluster have been upgraded to the new Dovecot
+version, the :dovecot_plugin:ref:`fts_dovecot_message_count_stats` setting
+should be enabled. This allows per-folder results for the "fast" scan, which 
+makes the scan more reliable and more detailed. After the setting is enabled,
+all the triplets in fts.S files still need to be refreshed for the per-folder
+result to work. This happens for newly written triplets automatically, but
+eventually it is necessary to use the ``--refresh`` parameter (or some other
+method) to add the missing information for older triplets.
+
+When these checks are run nightly, it's possible to find out quickly when
+something breaks. This means it's possible to fix the FTS indexes before users
+notice that search isn't finding some messages. It also makes it easier for
+Dovecot developers to find and fix any remaining FTS bugs, because we can be
+sure that the bug happened within the last 24 hours and all the logs are still
+available during that time.
+
+The idea for the nightly script is to:
+
+ * Each backend runs ``doveadm fts check fast`` for all users that have recently
+   been accessed in the metacache.
+ * Sort the results so that users with the most missing messages are processed
+   first.
+
+    * Eventually also process users that don't have enough information locally,
+      so they aren't skipped forever.
+
+ * Start running ``doveadm fts check full`` for users to find exactly what
+   differences there really are.
+ * Run ``doveadm fts rescan`` followed by ``doveadm index`` to reindex users
+   that have missing mails. This unfortunately for now requires reindexing
+   all of the messages for the user.
+ * If the full check revealed that the differences weren't actually due to
+   missing messages, but for some other reason, store this information in a
+   tracking database so the user can be skipped. Although once all the users
+   with missing messages have been reindexed, the rest of the inconsistencies
+   would be good to fix as well.
+
+``doveadm fts check fast`` fields:
+
+autoindex
+    "yes" or "no" depending on whether the mailbox matches
+    :dovecot_plugin:ref:`fts_autoindex` settings.
+mailbox uidnext
+    The expected UID for the next message that is saved to the mailbox.
+    This can be compared against the "fts highest uid"+1.
+fts highest uid
+    The highest UID in the mailbox that has been FTS indexed.
+mailbox total count
+    Total number of messages in the mailbox, also including messages that
+    haven't even been attempted to be FTS indexed.
+expected fts count
+    Expected number of messages in FTS index, based on "fts highest uid" and
+    the current mailbox state.
+fts count
+    Actual number of messages in FTS index.
+fts expunges
+    Number of messages marked as expunged in the fts.X file, but not yet purged
+    from the FTS triplets. This is already included in the calculation to
+    produce the "fts count" field, so it's only for informative/debugging
+    purposes.
+
+``doveadm fts check full`` states:
+
+synced
+    Message exists in both mailbox and in FTS.
+synced_expunged
+    Message doesn't exist in mailbox, but it's correctly marked as expunged in FTS (but not yet purged out of the triplets).
+missing
+    Message exists in mailbox, but is missing from FTS. It needs to be reindexed.
+unexpunged
+    Message exists in mailbox, but it was already marked as expunged in FTS, although it's not yet purged from triplets. This isn't supposed to happen.
+missing_unexpunged
+    Message exists in mailbox, but it was already marked as expunged in FTS and already purged from triplets. This really isn't supposed to happen.
+leaked
+    Message doesn't exist in mailbox, but it exists in FTS. The same message may be leaked multiple times in different triplets (they are not counted as "duplicate").
+expunge_leaked
+    Message doesn't exist in mailbox or triplets, but it is marked as expunged in FTS. The messages were never removed from the fts.X file. There were various bugs that caused this to happen.
+duplicate
+    Message exists in mailbox, and multiple times in FTS. The first time is counted as "synced", "synced_expunged" or "unexpunged" while the other instances are "duplicate".
+
+See :man:`doveadm-fts(1)` for detailed list of parameters and command exit codes.
+
 Data Storage Engine
 ^^^^^^^^^^^^^^^^^^^
 
@@ -100,8 +205,8 @@ The precise techniques for doing lookups depends on whether it's an AND or
 an OR query. AND permits early aborts before any of the L file is even
 touched. OR invites no such optimization.
 
-Example Configuration:
-----------------------
+Example Configuration
+^^^^^^^^^^^^^^^^^^^^^
 
 Example configuration using OBOX::
 
