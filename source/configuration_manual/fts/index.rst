@@ -201,6 +201,10 @@ Note that currently most FTS backends don't properly implement the rescan.
 Instead, they simply delete all the FTS indexes. This may change in the
 future versions.
 
+In Dovecot Pro FTS backend there are ``doveadm fts check`` commands, which
+can be used to determine whether rescan is necessary. See
+:ref:`fts_dovecot_consistency_check` for details.
+
 
 Dovecot General FTS Configuration
 ---------------------------------
