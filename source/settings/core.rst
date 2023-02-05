@@ -2454,13 +2454,25 @@ See :ref:`settings` for list of all setting groups.
    :default: 1week
    :values: @time
 
-   How often Dovecot scans for and deletes stale temporary files.
-
-   These files are usually created only if Dovecot crashes when saving a
-   message.
+   How often Dovecot scans for and deletes stale temporary files. These files
+   exist only if Dovecot crashes while saving a message. This is just to make
+   sure such temporary files will eventually get deleted to avoid wasting disk
+   space. This scan happens independently for each folder, and it's done at the
+   time the folder is opened.
 
    A value of ``0`` means this scan never occurs.
 
+   The scanning is done only for these mailbox formats:
+   
+   * maildir: Delete all files having ctime older than 36 hours from ``tmp/``.
+     The scan is done if tmp/ directory's atime older than
+     ``mail_temp_scan_interval``.
+   * sdbox, mdbox: Delete ``.temp.*`` files having ctime older than 36 hours from
+     ``dbox-Mails/``. The scan is done if the ``last_temp_file_scan`` header
+     field in dovecot.index is older than ``mail_temp_scan_interval``.
+   * mdbox: Delete ``.temp.*`` files having ctime older than 36 hours from
+     ``storage/``. The scan is done if storage/ directory's atime is older than
+     ``mail_temp_scan_interval``.
 
 .. dovecot_core:setting:: mail_uid
    :seealso: @mail_gid;dovecot_core
