@@ -61,6 +61,10 @@ specially:
 
   .. versionadded:: v2.3.21
 
+.. versionchanged:: v3.0.0;v2.4.0
+   Extra fields can now also be set to empty string, while previously they were
+   changed to ``yes``. Extra fields without value (without ``=``) will default to
+   ``yes``.
 
 How to return these extra fields depends on the password database you use. See
 :ref:`authentication-password_databases` pages on how to do it. Some passdbs however
