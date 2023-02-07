@@ -312,6 +312,17 @@ Configurable Limits
    prohibited. For older versions, however, this means that the number
    of redirects is *unlimited*, so be careful.
 
+:pigeonhole:ref:`sieve_max_cpu_time` = 30s (v0.5.15+)
+   The maximum amount of CPU time that a Sieve script is allowed to use while
+   executing. See :pigeonhole:ref:`sieve_max_cpu_time <sieve_max_cpu_time>`.
+
+:pigeonhole:ref:`sieve_resource_usage_timeout` = 1h (v0.5.15+)
+   To prevent abuse, the Sieve interpreter can record resource usage of a Sieve
+   script execution in the compiled binary if it is significant. If the last
+   time high resource usage was recorded is older than
+   sieve_resource_usage_timeout, the resource usage in the binary is reset. See
+   :pigeonhole:ref:`sieve_resource_usage_timeout <sieve_resource_usage_timeout>`.
+
 Extension-specific Configuration
 --------------------------------
 

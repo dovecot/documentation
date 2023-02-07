@@ -201,6 +201,12 @@ Dictmap Parameters
 |                                 |                                                                              |
 |                                 | .. versionadded:: v2.3.12                                                    |
 +---------------------------------+------------------------------------------------------------------------------+
+| no-store-orig-path              | If this option is enabled the original file path is not stored as metadata.  |
+|                                 | The original path metadata is normally eventually visible to a fs backend    |
+|                                 | while the path is something different e.g. object ID.                        |
+|                                 |                                                                              |
+|                                 | .. versionadded:: v3.0.0                                                     |
++---------------------------------+------------------------------------------------------------------------------+
 
 
 Dict paths
