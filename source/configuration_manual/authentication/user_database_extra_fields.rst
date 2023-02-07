@@ -26,6 +26,11 @@ fields'. Possibilities are:
 
   .. versionadded:: v2.3.21
 
+.. versionchanged:: v3.0.0;v2.4.0
+   Extra fields can now also be set to empty string, while previously they were
+   changed to ``yes``. Extra fields without value (without ``=``) will default to
+   ``yes``.
+
 It's possible to override settings from ``dovecot.conf`` (most commonly
 quota_rule to set per-user quota limits or also plugin-settings).
 
