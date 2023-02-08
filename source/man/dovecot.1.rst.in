@@ -18,13 +18,13 @@ SYNOPSIS
 
 **dovecot -n** [**-c** *config-file*]
 
-**dovecot --build-options**
+**dovecot -\-build-options**
 
-**dovecot --help**
+**dovecot -\-help**
 
-**dovecot --hostdomain**
+**dovecot -\-hostdomain**
 
-**dovecot --version**
+**dovecot -\-version**
 
 **dovecot reload**
 
@@ -61,17 +61,17 @@ OPTIONS
    Prompt for the ssl key password for the configured *ssl_key* on
    startup.
 
-**--build-options**
+**-\-build-options**
    Show Dovecot's build options and exit successfully.
 
-**--help**
+**-\-help**
    Print a usage message to stdout and exit successfully.
 
-**--hostdomain**
+**-\-hostdomain**
    Shows the current *host*\ .\ *domain* name of the system. If the domain
    lookup should fail for some reason, only the hostname will be shown.
 
-**--version**
+**-\-version**
    Show Dovecot's version and exit successfully.
 
 COMMANDS

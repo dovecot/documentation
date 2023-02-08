@@ -12,7 +12,7 @@ dovecot-sysreport - Dovecot's system report utility
 SYNOPSIS
 ========
 
-**dovecot-sysreport** [ **-h|--help** ] [**-c|--core** [ *binary* ] *core* [...]] [ **-d|--destination** *dest*" ] [ **-k|--keeptemp** ]
+**dovecot-sysreport** [ **-h|-\-help** ] [**-c|-\-core** [ *binary* ] *core* [...]] [ **-d|-\-destination** *dest*" ] [ **-k|-\-keeptemp** ]
 
 DESCRIPTION
 ===========
@@ -26,24 +26,24 @@ core file along with its binary dependencies.
 OPTIONS
 =======
 
-**-h|--help**
+**-h|-\-help**
    Prints a help message.
 
-**-c|--config** *root_config_file*
+**-c|-\-config** *root_config_file*
    Sets the root file of the dovecot's configuration. If not set, it
    will be assumed to be in the default configuration path.
 
-**-o|--core** [ *binary* ] *core* *[...]*
+**-o|-\-core** [ *binary* ] *core* *[...]*
    Includes core files along with their dependencies extracted from the
    specified binary file.
 
-**-d|--destination** *dest*
+**-d|-\-destination** *dest*
    Sets the file location which the report archive should be put to. The
    default value is
    dovecot-sysreport-<hostname>-<current_timestamp>.tar.gz in the
    current path.
 
-**-k|--keeptemp**
+**-k|-\-keeptemp**
    If set, temp files would not be deleted at the end.
 
 .. include:: reporting-bugs.inc

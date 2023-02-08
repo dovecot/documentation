@@ -210,8 +210,8 @@ This command is used to unsubscribe one or more mailboxes.
 mailbox update
 --------------
 
-**doveadm mailbox update** [**-A** | **-u** *user* | **-F**] [**-S** *socket_path*] [**--mailbox-guid** *guid*] [**--uid-validity**
-*uid*] [**--min-next-uid** *uid*] [**--min-first-recent-uid** *uid*] [**--min-highest-modseq** *seq*] [**--min-highest-pvt-modseq** *seq*]
+**doveadm mailbox update** [**-A** | **-u** *user* | **-F**] [**-S** *socket_path*] [**-\-mailbox-guid** *guid*] [**-\-uid-validity**
+*uid*] [**-\-min-next-uid** *uid*] [**-\-min-first-recent-uid** *uid*] [**-\-min-highest-modseq** *seq*] [**-\-min-highest-pvt-modseq** *seq*]
 *mailbox* *...*
 
 This command is used to set UID validity, next UID, first recent UID and
@@ -234,24 +234,24 @@ automatically.
 mailbox cache decision
 ----------------------
 
-**doveadm mailbox cache decision** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**--all**]
-[**--fields** *list of fields*] [**--last-used** *unix timestamp*] [**--decision** *no|temp|yes*] *mailbox* *...*
+**doveadm mailbox cache decision** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**-\-all**]
+[**-\-fields** *list of fields*] [**-\-last-used** *unix timestamp*] [**-\-decision** *no|temp|yes*] *mailbox* *...*
 
 This command is used to list or change caching decisions for field(s) in
 mailbox(es). You can list decisions by leaving out decision and
 last-used parameters.
 
-**--all**
+**-\-all**
    List or change all fields.
 
-**--fields**
+**-\-fields**
    List or change these comma/space separated fields.
 
-**--decision**
+**-\-decision**
    Set field caching decision. Yes means it's always cached. Temp means
    it's provisionally cached. No means the field is not cached.
 
-**--last-used**
+**-\-last-used**
    Set field's last used timestamp.
 
 NOTE. This command cannot be used to add new fields to cache! You need
