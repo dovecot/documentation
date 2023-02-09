@@ -104,3 +104,17 @@ Settings
                       prefixes (e.g. ``4-``, ``3-10``)
    ``no``             No prefix searching is performed.
    ================== ==================================================
+
+.. dovecot_plugin:setting:: fts_dovecot_message_count_stats
+   :added: v2.3.21
+   :default: no
+   :plugin: fts-dovecot
+   :values: @string
+
+   Enable tracking per-folder message counts in fts.S stats file. This is
+   useful for the :ref:`"doveadm fts check fast" command
+   <fts_dovecot_consistency_check>` to return per-folder results. Note that
+   this changes the fts.S file format to be backwards incompatible, so this
+   should be enabled only after all backends in the cluster have been upgraded.
+   Old Dovecot versions won't fail when they see the new fts.S file, but it
+   needs to be regenerated, which can temporarily cause bad performance.
