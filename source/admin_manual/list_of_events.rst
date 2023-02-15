@@ -2127,6 +2127,70 @@ Events emitted by dictionary library and dictionary server.
    Dictionary server finishes transaction.
 
 
+Login
+=====
+
+.. dovecot_core:event:: login_aborted
+   :added: v2.4.0;v3.0.0
+
+   :field reason: Short reason, see the short to long reason mapping in the table below.
+   :field auth_successes: Number of successful authentications, which eventually failed due to other reasons.
+   :field auth_attempts: Total number of authentication attempts, both successful and failed.
+   :field auth_usecs: How long ago the first authentication attempt was started.
+   :field connected_usecs: How long ago the client connection was created.
+
+.. list-table::
+   :widths: 25 75
+   :header-rows: 1
+
+   * - Reason
+     - Description
+   * - ``anonymous_auth_disabled``
+     - Anonymous authentication is not allowed.
+   * - ``authorization_failed``
+     - Master user authentication succeeded, but authorization to access the requested login user wasn't allowed.
+   * - ``auth_aborted_by_client``
+     - Client started SASL authentication, but returned "*" reply to abort it.
+   * - ``auth_failed``
+     - Generic authentication failure. Possibly due to invalid username/password, but could have been some other unspecified reason also.
+   * - ``auth_nologin_referral``
+     - Authentication returned auth referral to redirect the client to another server. This is normally configured to be sent only when the client is a Dovecot proxy, which handles the redirection.
+   * - ``auth_process_comm_fail``
+     - Internal error communicating with the auth process.
+   * - ``auth_process_not_ready``
+     - Client disconnected before auth process was ready. This may indicate a hanging auth process if ``connected_usecs`` is large.
+   * - ``auth_waiting_client``
+     - Client started SASL authentication, but disconnected instead of sending the next SASL continuation reply.
+   * - ``cleartext_auth_disabled``
+     - Authentication using cleartext mechanism is not allowed at this point. It would be allowed if SSL/TLS was enabled.
+   * - ``client_ssl_cert_untrusted``
+     - Client sent an SSL certificate that is untrusted with :dovecot_core:ref:`auth_ssl_require_client_cert` set to ``yes``
+   * - ``client_ssl_cert_missing``
+     - Client didn't send SSL certificate, but :dovecot_core:ref:`auth_ssl_require_client_cert` is set to ``yes``
+   * - ``client_ssl_not_started``
+     - Client didn't even start SSL with :dovecot_core:ref:`auth_ssl_require_client_cert` set to ``yes``
+   * - ``internal_failure``
+     - Internal failure. The error log has more details.
+   * - ``invalid_base64``
+     - Client sent invalid base64 in SASL response.
+   * - ``invalid_mech``
+     - Unknown SASL authentication mechanism requested.
+   * - ``login_disabled``
+     - The user has the :ref:`nologin<authentication-nologin>` field set in passdb and is thereby not able to login.
+   * - ``no_auth_attempts``
+     - Client didn't send any authentication attempts.
+   * - ``password_expired``
+     - The user's password is expired.
+   * - ``process_full``
+     - :ref:`service_configuration-client_limit` and :ref:`service_configuration-process_limit` was hit and this login session was killed.
+   * - ``proxy_dest_auth_failed``
+     - Local authentication succeeded, but proxying failed to authenticate to the destination hop.
+   * - ``shutting_down``
+     - The process is shutting down so the login is aborted.
+   * - ``user_disabled``
+     - User is in deny passdb, or in some other way disabled passdb.
+
+
 Login Proxy
 ===========
 
