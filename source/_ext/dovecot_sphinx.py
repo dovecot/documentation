@@ -502,9 +502,7 @@ class DovecotEventDirective(DovecotDirective):
             body += row
 
         """ Create collapsible container for event fields """
-        collapse = self._parse_rst(
-            ".. dropdown:: View Event Fields\n :animate: fade-in"
-        )
+        collapse = self._parse_rst(".. dropdown:: View Event Fields")
         collapse += table
         contentnode += collapse
 

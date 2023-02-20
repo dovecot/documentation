@@ -35,7 +35,6 @@ Categories
 **********
 
 .. dropdown:: Root Categories
-   :animate: fade-in
 
    .. list-table::
       :widths: 25 75
@@ -117,7 +116,6 @@ Categories
         - Submission process
 
 .. dropdown:: Storage Categories
-   :animate: fade-in
 
    .. list-table::
       :widths: 25 75
@@ -145,7 +143,6 @@ Categories
         - pop3c storage
 
 .. dropdown:: Mailbox Categories
-   :animate: fade-in
 
    .. list-table::
       :widths: 25 75
@@ -159,7 +156,6 @@ Categories
         - Mail
 
 .. dropdown:: Sieve Categories
-   :animate: fade-in
 
    .. versionadded:: v2.3.11 makes the ``sieve`` category parent for the other
                      ``sieve-*`` categories.
@@ -183,7 +179,6 @@ Categories
         - Sieve storage
 
 .. dropdown:: SQL Categories
-   :animate: fade-in
 
    .. list-table::
       :widths: 25 75
