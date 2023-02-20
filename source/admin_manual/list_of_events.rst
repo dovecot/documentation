@@ -956,8 +956,11 @@ requests (e.g. doveadm HTTP API).
    the full response to the request has been sent to the client.
 
 
-POP3
-====
+..
+   Uncomment if there is an actual POP3 event.
+
+   POP3
+   ====
 
 .. dovecot_event:field_group:: pop3_client
 
