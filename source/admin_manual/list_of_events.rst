@@ -1008,9 +1008,9 @@ IMAP Client
    :field user: Username of the user.
    :field session: Session ID of the IMAP connection.
    :field local_ip @added;v2.3.9: IMAP connection's local (server) IP.
-   :field local_part @added;v2.3.9: IMAP connection's local (server) port.
+   :field local_port @added;v2.3.9: IMAP connection's local (server) port.
    :field remote_ip @added;v2.3.9: IMAP connection's remote (client) IP.
-   :field remote_part @added;v2.3.9: IMAP connection's remote (client) port.
+   :field remote_port @added;v2.3.9: IMAP connection's remote (client) port.
 
 
 .. dovecot_core:event:: imap_client_hibernated
