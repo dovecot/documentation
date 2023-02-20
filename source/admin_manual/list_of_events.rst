@@ -1113,6 +1113,28 @@ IMAP Command
    .. Note:: This event is currently not sent for pre-login IMAP commands.
 
 
+.. dovecot_core:event:: imap_id_received
+   :added: v2.4.0;v3.0.0
+   :inherit: imap_client
+
+   :field id_param_<param>: Received parameters. The event name is the lowercase
+                            parameter key prefixed with ``id_param_``, the value
+                            is the parameter value.
+   :field id_invalid<num>: Each key that contains invalid characters are
+                           enumerated starting with 1. Valid characters are
+                           latin alphabetic characters (= ``a`` .. ``z``),
+                           numerals (= ``0`` .. ``9``), the dash (= ``-``) and
+                           the underscore (= ``_``), every other character is
+                           considered invalid. The value of this field is the
+                           original parameter key including invalid characters,
+                           followed by a space character, and finally the
+                           original value concatenated into a single string.
+
+   This event is emitted when the IMAP ID command was received, both for pre-
+   as well as post-login. The parameters slightly differ for an unauthenticated
+   client, e.g. there is no user id.
+
+
 Mail Delivery
 =============
 
