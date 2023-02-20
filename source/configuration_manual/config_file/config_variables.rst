@@ -491,8 +491,8 @@ Authentication variables
 |          |                       | variable is populated with the client ID request as IMAP      |
 |          |                       | arglist.                                                      |
 |          |                       |                                                               |
-|          |                       | For directly logging the ID see                               |
-|          |                       | :dovecot_core:ref:`imap_id_log`.                              |
+|          |                       | For directly logging the ID see the                           |
+|          |                       | :dovecot_core:ref:`imap_id_received` event.                   |
 |          |                       |                                                               |
 |          |                       | .. versionadded:: v2.2.29                                     |
 +----------+-----------------------+---------------------------------------------------------------+

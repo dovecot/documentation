@@ -989,7 +989,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: imap_id_log
-   :todo: Indicate imap setting; Is there a list of ID fields?
+   :removed: v2.4.0;v3.0.0
    :values: @string
 
    The ID fields sent by the client that are output to the log.
