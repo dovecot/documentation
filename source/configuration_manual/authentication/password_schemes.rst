@@ -185,19 +185,31 @@ Strong schemes and mechanism-specific schemes are listed above.
    password, the rest are ignored. Other schemes may have other password length
    limitations (if they limit the password length at all).
 
+* **BLF-CRYPT**: Bcrypt based hash. ($2y$)
+* **DES-CRYPT**: Traditional DES based hash
+* **MD5-CRYPT**: MD5-based hash ($1$)
+* **SHA256-CRYPT**: SHA-256 based hash ($5$)
+* **SHA512-CRYPT**: SHA-512 based hash ($6$)
+* **OTP**: :rfc:`2289` based One-Time Password system.
+
+
 MD5 based schemes:
 ******************
 
 .. versionchanged:: v2.4;v3.0 Disabled by default.
 
+* **PLAIN-MD4**: MD4 sum of the password stored in hex.
+* **MD5**: Alias for MD5-CRYPT.
 * **PLAIN-MD5**: MD5 sum of the password stored in hex.
 * **LDAP-MD5**: MD5 sum of the password stored in base64.
 * **SMD5**: Salted MD5 sum of the password stored in base64.
+* **HMAC-MD5**: Alias CRAM-MD5.
 
 SHA based schemes (also see below for libc's SHA* support):
 ***********************************************************
 
-* **SHA**: SHA1 sum of the password stored in base64.
+* **SHA**: Alias for SHA1.
+* **SHA1**: SHA1 sum of the password stored in base64.
 * **SSHA**: Salted SHA1 sum of the password stored in base64.
 * **SHA256**: SHA256 sum of the password stored in base64. (v1.1 and later).
 * **SSHA256**: Salted SHA256 sum of the password stored in base64. (v1.2 and
