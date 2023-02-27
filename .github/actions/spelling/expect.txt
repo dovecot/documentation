@@ -6,6 +6,7 @@ actimeo
 addflag
 addhdr
 addhdrvar
+addprinc
 ADDRESULT
 ADH
 adminpass
@@ -382,7 +383,6 @@ isps
 istream
 ITERINDEX
 itip
-JA3
 jan
 jano
 jeffpc
@@ -393,6 +393,7 @@ johndoh
 joulu
 junkflag
 jvm
+kadmin
 kdump
 keeptemp
 keyid
@@ -400,16 +401,20 @@ keypair
 keyspace
 keytab
 KIB
+klist
 kludgy
 kmail
 korvatunturi
 KPOP
 krb
+ktadd
+ktpass
 ktrace
 kurkku
 kuromoji
 kuserok
 KVM
+KVNO
 LANMAN
 lasthost
 lastlogin
@@ -502,6 +507,7 @@ Makefiles
 managesieve
 managesieved
 manmaster
+mapuser
 MARF
 markasjunk
 masteradmin
@@ -657,6 +663,7 @@ packagecloud
 pacman
 passdb
 passthrough
+pasword
 Pbase
 pbkd
 pfs
@@ -687,6 +694,7 @@ precache
 precaching
 preinit
 PREREQ
+princ
 printfa
 prioritization
 Proactively
@@ -712,6 +720,7 @@ QRESYNC
 qwerty
 rackdc
 rampup
+randkey
 rawlog
 rchar
 rdineren
@@ -736,8 +745,8 @@ rescanned
 rescanning
 resolv
 resyncing
-RFCs
 resyncronized
+RFCs
 RHu
 RLIMIT
 Rnotation
@@ -789,6 +798,7 @@ servermetadata
 SETACTIVE
 setcred
 setra
+setspn
 sgid
 SHAREDDIR
 sharedmail
@@ -825,6 +835,7 @@ spamtestplus
 specialuse
 SPID
 splitrow
+spn
 spnego
 sproxy
 sproxyd
@@ -1031,4 +1042,3 @@ yourldap
 zimbra
 ZMailer
 Zstandard
-zstd
