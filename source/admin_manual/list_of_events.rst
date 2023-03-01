@@ -454,7 +454,8 @@ Most useful for debugging authentication flow.
 | passdb_name         | ``passdb { name }``, if it is configured.            |
 |                     | Otherwise, the driver name.                          |
 +---------------------+------------------------------------------------------+
-| passdb_id           | ID number of the passdb username                     |
+| passdb_id           | Internal ID number of the passdb. May be useful to   |
+|                     | identify the passdb if it has no name.               |
 |                     |                                                      |
 |                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
@@ -508,7 +509,8 @@ Most useful for debugging authentication flow.
 | userdb_name         | ``userdb { name }``, if it is configured.            |
 |                     | Otherwise, the driver name.                          |
 +---------------------+------------------------------------------------------+
-| userdb_id           | ID number of the userdb username                     |
+| userdb_id           | Internal ID number of the userdb. May be useful to   |
+|                     | identify the userdb if it has no name.               |
 |                     |                                                      |
 |                     | .. versionadded:: v2.3.9                             |
 +---------------------+------------------------------------------------------+
