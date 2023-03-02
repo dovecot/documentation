@@ -2459,8 +2459,12 @@ See :ref:`settings` for list of all setting groups.
 
    A value of ``0`` means this scan never occurs.
 
+   .. versionchanged:: 2.3.21 In order to prevent load spikes the actual
+      value of the setting is spread increasing it by 0..30%, based on a hash
+      of the username.
+
    The scanning is done only for these mailbox formats:
-   
+
    * maildir: Delete all files having ctime older than 36 hours from ``tmp/``.
      The scan is done if tmp/ directory's atime older than
      ``mail_temp_scan_interval``.
