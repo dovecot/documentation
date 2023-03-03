@@ -260,3 +260,10 @@ And re-configure the ACL plugin:
 Afterwards you can remove the old global ACL directory parent::
 
    rm -rf /etc/dovecot/acls/
+
+
+Changes to statistics
+---------------------
+
+ - The ``bytes_in`` and ``bytes_out`` field in several events have been renamed as ``net_in_bytes`` and ``net_out_bytes``.
+   Check :ref:`list_of_events` for details.
