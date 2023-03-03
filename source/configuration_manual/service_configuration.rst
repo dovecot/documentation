@@ -84,10 +84,22 @@ process_min_avail
 ^^^^^^^^^^^^^^^^^
 Minimum number of processes that always should be available to accept more client connections.
 
+Note that if ``client_limit=1``, this means there are always that many
+processes that are not doing anything. When a new process launches, one of the
+idling processes will accept the connection and a new idling process is
+launched.
+
  * For ``service_count=1`` processes this decreases the latency for handling new connections.
    This is usually not necessary to to be set.
    Large values might be useful in some special cases, like if there are a lot of POP3 users logging in exactly at the same time to check mails.
- * For ``service_count!=1`` processes it could be set to the number of CPU cores on the system to balance the load among them.
+ * For ``service_count!=1`` and ``client_limit>1`` processes it could be set to the number of CPU cores on the system to balance the load among them.
+   This is commonly used with ``*-login`` processes.
+ * For ``service_count!=1`` and ``client_limit=1`` processes it is likely not
+   useful to use this, and it might actually be worse for both performance and
+   latency. With these type of services the processes are already being reused,
+   so there are already some idling processes that can accept the new
+   connections. Using ``process_min_avail`` on top of that will just keep
+   launching new idling processes unnecessarily.
 
 .. _service_configuration-vsz_limit:
 
