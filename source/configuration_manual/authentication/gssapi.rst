@@ -50,7 +50,7 @@ Use klist on your Dovecot server to verify the keytab contains the expected resu
    Keytab name: FILE:/etc/krb5.keytab
    KVNO Principal
    ---- --------------------------------------------------------------------------
-      2 imap/hostname@REALM
+   2 imap/hostname@REALM
 
 Configuring Dovecot
 ===================
