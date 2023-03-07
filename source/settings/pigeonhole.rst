@@ -172,9 +172,6 @@ Sieve Plugin Settings
    script manually in that case using the sievec command line tool, as
    explained :ref:`here <sieve_usage-compiling_sieve_script>`.
 
-   This setting used to be called :pigeonhole:ref:`sieve_global_path`, but
-   that name is now deprecated.
-
 
 .. pigeonhole:setting:: sieve_default_name
    :added: v0.4.8
@@ -190,11 +187,7 @@ Sieve Plugin Settings
    :default: ~/sieve
    :plugin: sieve
    :values: @string
-
-   .. deprecated:: v0.3.1
-
-      This location is configured as part of
-      :pigeonhole:ref:`sieve setting <sieve>`.
+   :removed: v0.5 Replaced with the :pigeonhole:ref:`sieve setting <sieve>`.
 
    Directory for :personal
    `include scripts <https://datatracker.ietf.org/doc/html/draft-ietf-sieve-include-05>`_
@@ -272,14 +265,9 @@ Sieve Plugin Settings
 .. pigeonhole:setting:: sieve_global_dir
    :plugin: sieve
    :values: @string
+   :removed: v0.5 Replaced with the :pigeonhole:ref:`sieve_global setting <sieve_global>`.
 
-   .. deprecated:: v0.3.1
-
-      A more generic version of this setting called
-      :pigeonhole:ref:`sieve_global` has been added and allows locations
-      other than file system directories.
-
-   Directory for ``:global`` include scripts for the include extension.
+   Location for ``:global`` include scripts for the Sieve include extension.
 
    The Sieve interpreter only recognizes files that end with a .sieve
    extension, so the include extension expects a file called name.sieve to
@@ -313,10 +301,8 @@ Sieve Plugin Settings
 .. pigeonhole:setting:: sieve_global_path
    :plugin: sieve
    :values: @string
+   :removed: v0.5 Replaced with the :pigeonhole:ref:`sieve_default setting <sieve_default>`.
 
-   .. deprecated:: v0.2
-
-      Replaced by :pigeonhole:ref:`sieve_default`.
 
 .. pigeonhole:setting:: sieve_implicit_extensions
    :added: v0.4.13
