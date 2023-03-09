@@ -86,7 +86,7 @@ the ``plugin`` section (default values are indicated):
    Sieve script owner. Normally this is set to <>, which is the default
    in the specification. This is meant to prevent mail loops. However, 
    some mail servers block message with empty envelop sender (such as 
-   gmail), so it is recommended to set to `yes` instead.
+   gmail), so it is recommended to set to ``yes`` instead.
 
 Invalid values for the settings above will make the Sieve interpreter
 log a warning and revert to the default values.
