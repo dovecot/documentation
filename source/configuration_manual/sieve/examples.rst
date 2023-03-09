@@ -328,17 +328,16 @@ The lookup directories can be specified with:
 .. code-block::
 
    plugin {
-     # Directory for :personal include scripts. The default is to use home directory.
-     sieve_dir = %h/sieve
+     # Directory where the sieve include plugin retrieves :personal scripts from.
+     sieve = file:~/sieve;active=~/.dovecot.sieve
 
-     # Directory for :global include scripts (not to be confused with sieve_global_path).
+     # Directory for :global include scripts (not to be confused with sieve_default).
      # If unset, the include fails.
-     sieve_global_dir = /etc/dovecot/sieve/
+     sieve_global = /etc/dovecot/sieve/
    }
 
-Both :pigeonhole:ref:`sieve_dir` and :pigeonhole:ref:`sieve_global_dir` may
-also be overridden by
-:ref:`userdb extra fields <authentication-user_extra_field>`.
+Both :pigeonhole:ref:`sieve` and :pigeonhole:ref:`sieve_global` may also be
+overridden by :ref:`userdb extra fields <authentication-user_extra_field>`.
 
 It's not currently possible to use subdirectories for the scripts.
 Having a '/' character in the script name always fails the include. This
