@@ -1104,8 +1104,8 @@ IMAP Command
    :field running_usecs: How many usecs this command has spent running.
    :field lock_wait_usecs: How many usecs this command has spent waiting for
      locks.
-   :field net_in_bytes @changed;v2.4.0,v3.0.0: Amount of data read, in bytes.
-   :field net_out_bytes @changed;v2.4.0,v3.0.0: Amount of data written, in bytes.
+   :field net_in_bytes @changed;v2.4.0,v3.0.0: Amount of data read for this command, in bytes.
+   :field net_out_bytes @changed;v2.4.0,v3.0.0: Amount of data written for this command, in bytes.
 
    IMAP command is completed.
 
