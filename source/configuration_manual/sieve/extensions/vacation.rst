@@ -84,9 +84,9 @@ the ``plugin`` section (default values are indicated):
    This setting determines whether vacation messages are sent with the
    SMTP MAIL FROM envelope address set to the recipient address of the
    Sieve script owner. Normally this is set to <>, which is the default
-   as recommended in the specification. This is meant to prevent mail
-   loops. However, there are situations for which a valid sender address
-   is required and this setting can be used to accommodate for those.
+   in the specification. This is meant to prevent mail loops. However, 
+   some mail servers block message with empty envelop sender (such as 
+   gmail), so it is recommended to set to `yes` instead.
 
 Invalid values for the settings above will make the Sieve interpreter
 log a warning and revert to the default values.
