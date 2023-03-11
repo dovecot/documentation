@@ -20,7 +20,7 @@ Dovecot should work with Linux PAM, Solaris PAM, OpenPAM (FreeBSD) and ApplePAM
 Service name
 =============
 
-The PAM configuration is usually in the ``/etc/pam.d/ directory``, but some
+The PAM configuration is usually in the ``/etc/pam.d/`` directory, but some
 systems may use a single file, ``/etc/pam.conf``. By default Dovecot uses
 dovecot as the PAM service name, so the configuration is read from
 ``/etc/pam.d/dovecot``. You can change this by giving the wanted service name
