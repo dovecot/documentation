@@ -91,20 +91,21 @@ Per-mailbox ACLs are stored in ``dovecot-acl`` named file, which exists in:
 * :ref:`dbox_mbox_format`: dbox's mail directory (eg.
   ``~/dbox/INBOX/dbox-Mails/``).
 
-ACL Inheritance
-===============
+ACL Inheritance and Default ACLs
+================================
 
 Every time you create a new mailbox, it gets its ACLs from the parent mailbox.
 If you're creating a root-level mailbox, it uses the namespace's default ACLs.
 There is no actual inheritance, however: If you modify parent's ACLs, the
 child's ACLs stay the same. There is currently no support for ACL inheritance.
 
-* Maildir: Namespace's default ACLs are read from ``dovecot-acl`` file in the
-  namespace's mail root directory (e.g. ``/var/public/Maildir``). Note that
-  currently these default ACLs are used only when creating new mailboxes, they
-  aren't used for mailboxes without ACLs.
+There are default ACLs though:
 
-* See :dovecot_plugin:ref:`acl_defaults_from_inbox`.
+* In private namespace, the owner has all ACL rights for mailboxes in the
+  namespace.
+* In shared and public namespaces, there are no ACL rights by default.
+* However, optionally the default ACLs can be taken from the INBOX for private
+  and shared namespaces. See :dovecot_plugin:ref:`acl_defaults_from_inbox`.
 
 .. NOTE::
 
@@ -198,6 +199,7 @@ Where **identifier** is one of:
 * ``group=<group name>``
 * ``authenticated``
 * ``anyone`` (or ``anonymous``)
+* Negative rights can be given by prepending the identifier with ``-``
 
 The ACLS are processed in the precedence given above, so for example if you
 have given read-access to a group, you can still remove that from specific
@@ -215,6 +217,10 @@ example:
 Now if timo is in tempdisabled group, he has no access to the mailbox. This
 wouldn't be possible with a normal group identifier, because the ``user=timo``
 would override it.
+
+Negative rights can be used to remove rights. For example a user may be given
+full rights to all mailboxes, except some of the rights removed from some
+specific mailboxes.
 
 The currently supported ACLs are:
 
@@ -268,6 +274,13 @@ Prevent all users from deleting their Spam folder (notice no x flag)
 .. code-block:: none
 
   INBOX.Spam owner lrwstipeka
+
+Allow a masteruser full access to all mailboxes, except no access to INBOX:
+
+.. code-block:: none
+
+  * user=masteruser lrwstipekxa
+  INBOX -user=masteruser lrwstipekxa
 
 List Cache
 ==========
