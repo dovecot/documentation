@@ -124,7 +124,7 @@ expunge_leaked
 duplicate
     Message exists in mailbox, and multiple times in FTS. The first time is counted as "synced", "synced_expunged" or "unexpunged" while the other instances are "duplicate".
 
-See :man:`doveadm-fts(1)` for detailed list of parameters and command exit codes.
+See ``doveadm-fts(1)`` man page for detailed list of parameters and command exit codes.
 
 Data Storage Engine
 ^^^^^^^^^^^^^^^^^^^
