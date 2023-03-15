@@ -144,6 +144,8 @@ Removed features and their replacements
 | Dovecot director role                                      | This has been replaced with :ref:`Dovecot Cluster <dovecot_cluster_architecture>`,       |
 |                                                            | which is Pro-only feature.                                                               |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``imap_id_log`` setting.                                   | Replaced by the :dovecot_core:ref:`imap_id_received` event.                              |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 Changed default settings
 ========================
