@@ -468,22 +468,36 @@ class DovecotEventDirective(DovecotDirective):
         entries = sorted(entries, key=lambda entry: entry[0])
 
         for key, content in entries:
+            subparts = None
+            kind = None
             parts = key.split(None, 1)
             if len(parts) == 2:
                 subparts = parts[1].split(";", 1)
-                if len(subparts) != 2 or subparts[0] != "@added":
+                if len(subparts) != 2:
                     raise ValueError("Invalid field modifier %s", parts[1])
-                added = subparts[1]
+                kind = subparts[0][1:]
                 key = parts[0]
-            else:
-                added = None
 
             row = nodes.row()
             row += nodes.entry("", nodes.literal(text=key))
             entry = nodes.entry()
             entry += content.children[0].deepcopy()
-            if added is not None:
-                entry += self._parse_rst(".. versionadded:: %s" % (added))
+            if kind == None:
+                pass
+            elif kind == "added":
+                entry += self._parse_rst(
+                    ".. versionadded:: %s" % (subparts[1])
+                )
+            elif kind == "changed":
+                entry += self._parse_rst(
+                    ".. versionchanged:: %s" % (subparts[1])
+                )
+            elif kind == "removed":
+                entry += self._parse_rst(
+                    ".. versionremoved:: %s" % (subparts[1])
+                )
+            else:
+                raise ValueError("Invalid field modifier %s", subparts[1])
             row += entry
             body += row
 
