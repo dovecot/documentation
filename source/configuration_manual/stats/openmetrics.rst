@@ -43,6 +43,8 @@ These are called ``dovecot_build_info`` and ``process_start_time_seconds``.
 
 .. versionchanged:: 2.3.14 Metric timestamps are dropped.
 
+.. versionchanged:: v2.3.21 All fields listed in ``fields`` are exported too.
+
 Example
 =======
 

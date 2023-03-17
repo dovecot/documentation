@@ -25,6 +25,8 @@ In addition to the event filter, a list of fields that are included in the
 metrics can be specified using the ``fields`` setting.  All events have a
 default "duration" field that doesn't need to be listed explicitly.
 
+.. versionchanged:: v2.3.21 All fields listed in ``fields`` are exported to OpenMetrics as well.
+
 Finally, the ``group_by`` metric setting can be used to dynamically generate
 sub-metrics based on fields' values.
 
