@@ -534,10 +534,7 @@ See :ref:`settings` for list of all setting groups.
    :default: 1mins
    :values: @time
 
-   If a process is idle after this much time has elapsed, it is notified that
-   it should terminate itself if inactive.
-
-   This value can be overridden via the :ref:`service_configuration-idle_kill`
+   The default value to use for the :ref:`service_configuration-idle_kill`
    setting within service blocks.
 
 
