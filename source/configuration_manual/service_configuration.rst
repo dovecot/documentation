@@ -30,7 +30,19 @@ If non-empty, this service is enabled only when the protocol name is listed in p
 
 idle_kill
 ^^^^^^^^^
-If a process doesn't appear to be doing anything after this much time, notify it that it should kill itself if it's not doing anything. ``process_min_avail`` setting overrides this. If set to ``0``, ``default_idle_kill`` is used.
+
+Time interval between killing extra idling processes. During the interval
+the master process tracks the lowest number of idling processes for the
+service. Afterwards it sends SIGINT notification to that many idling
+processes. If the processes are still idling when receiving the signal,
+they shut down themselves.
+
+If set to ``0``, :dovecot_core:ref:`default_idle_kill` is used.
+
+Using ``4294967295 secs`` disables the idle-killing.
+
+.. versionchanged:: v2.4.0;v3.0.0 This behavior was redesigned to work better
+		    in busy servers.
 
 Service privileges
 ==================
