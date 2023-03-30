@@ -98,7 +98,7 @@ There are some limitations on which operators work with what field types:
 
 .. versionchanged:: v2.4.0;v3.0.0 Event fields have specific types that
                     constrain the possible values they can be filtered by. For
-                    example ``bytes_out`` and ``message_size`` are numeric and
+                    example ``net_out_bytes`` and ``message_size`` are numeric and
                     can only be matched against numeric values. Previously type
                     mismatches were silently ignored, beginning with this
                     version each type mismatch and unsupported operation
@@ -116,7 +116,7 @@ tokens, and therefore the following are all equivalent::
 A more complicated example::
 
   event=abc OR (event=def AND (category=imap OR category=lmtp) AND \
-    NOT category=debug AND NOT (bytes_in<1024 OR bytes_out<1024))
+    NOT category=debug AND NOT (net_in_bytes<1024 OR net_out_bytes<1024))
 
 .. versionadded:: v2.4.0;v3.0.0 Sizes can be expressed using the unit values
    ``B`` - which represents single byte values - as well as ``KB``, ``MB``,
@@ -128,7 +128,7 @@ A more complicated example::
 
 For example::
 
-  (category=debug AND NOT (bytes_in<1KB OR bytes_out<1KB)) OR \
+  (category=debug AND NOT (net_in_bytes<1KB OR net_out_bytes<1KB)) OR \
     (event=abc AND (message_size>1gb and message_size<1tB)) OR \
     (event=def AND (duration<1mins))
 
