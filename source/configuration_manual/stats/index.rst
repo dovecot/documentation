@@ -45,7 +45,7 @@ For example::
    metric imap_command {
      filter = event=imap_command_finished
 
-     fields = bytes_in bytes_out
+     fields = net_in_bytes net_out_bytes
      group_by = cmd_name tagged_reply_state
    }
 
@@ -187,7 +187,7 @@ range begins at ``min + 1`` and ends at ``min + step``, the next covers
 ``min + step + 1`` to ``min + (2 * step)``, and so on.  The last range
 covers ``max + 1`` to positive infinity.
 
-For example, given the specification ``bytes_out:linear:0:5000:1000``, the
+For example, given the specification ``net_out_bytes:linear:0:5000:1000``, the
 ranges would be:
 
 * (-inf, 0]
@@ -230,7 +230,7 @@ The above means:
    %95      95% of the IMAP commands took 188637 microseconds or less
 ========== ==================================================================================
 
-The other fields (than duration) track whatever that field represents. For example with imap_command_finished's bytes_in field could be tracking how many bytes were being used by the IMAP commands. Non-numeric fields can also be tracked, although only the ``count`` is relevant to those.
+The other fields (than duration) track whatever that field represents. For example with imap_command_finished's net_in_bytes field could be tracking how many bytes were being used by the IMAP commands. Non-numeric fields can also be tracked, although only the ``count`` is relevant to those.
 
 The list of fields can be specified with the ``-f`` parameter. The default is:
 
@@ -266,7 +266,7 @@ For example:
 
 .. code-block:: sh
 
-   doveadm stats add --description "IMAP SELECT commands" --exporter log-exporter --exporter-include "name timestamps" --fields "bytes_in bytes_out" --group-by "cmd_name tagged_reply_state" imap_cmd_select "event=imap_command_finished AND name=SELECT"
+   doveadm stats add --description "IMAP SELECT commands" --exporter log-exporter --exporter-include "name timestamps" --fields "net_in_bytes net_out_bytes" --group-by "cmd_name tagged_reply_state" imap_cmd_select "event=imap_command_finished AND name=SELECT"
 
 Metrics can be removed dynamically by running:
 

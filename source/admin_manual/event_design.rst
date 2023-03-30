@@ -125,7 +125,7 @@ The fields can be used for various purposes:
 
 Example:
 
-   if all the networking events include ``ip``, ``bytes_in`` and ``bytes_out`` fields, statistics can globally track how much network traffic Dovecot is doing from its own point of view, regardless of whether it's HTTP traffic or IMAP traffic or something else.
+   if all the networking events include ``ip``, ``net_in_bytes`` and ``net_out_bytes`` fields, statistics can globally track how much network traffic Dovecot is doing from its own point of view, regardless of whether it's HTTP traffic or IMAP traffic or something else.
 
 Current naming conventions:
 ----------------------------
@@ -140,9 +140,8 @@ Current naming conventions:
 
      .. NOTE:: These are all different from incoming connection's IP/port fields. This is because often everything starts from an incoming connection, which will be used as the root event. So we may want to filter e.g. outgoing HTTP events going to port 80 which were initiated from IMAP clients that connected to ``port 993`` ``(port=80 local_port=993)``
 
-* Connection reads/writes should be counted in ``bytes_in`` and ``bytes_out`` fields
-   * These fields were chosen over e.g. ``network_in/out`` because a lot of code is rather generic and can work over TCP/IP or UNIX sockets, or maybe even any other kind of iostreams. Using a generic ``bytes_in/out`` makes it simpler to count these. If further differentiation is wanted on statistics side, networking events can be filtered out with ``ip``.
-   * These fields are usually easiest updated with ``event_add_int(event, bytes_in, istream->v_offset)`` and ``event_add_int(event, bytes_out, ostream->offset)``. If iostreams aren't used, ``event_inc_int()`` maybe be easier.
+* Connection reads/writes should be counted in ``net_in_bytes`` and ``net_out_bytes`` fields
+   * These fields are usually easiest updated with ``event_add_int(event, net_in_bytes, istream->v_offset)`` and ``event_add_int(event, net_out_bytes, ostream->offset)``. If iostreams aren't used, ``event_inc_int()`` maybe be easier.
 
 * (Local) disk reads should have ``disk_read`` and ``disk_write`` fields
    * With remote filesystems like NFS it may be difficult to differentiate between disk IO and network IO. Generally the ``disk_read/write`` should be used for ``POSIX read()`` and ``write()`` calls from filesystem.
@@ -153,9 +152,9 @@ Current naming conventions:
 
 * error_code=<value> : Machine-readable error code for a failed operation. If set, the ``error`` field must also be set.
 
-.. Note:: Events shouldn't be sent every time when receiving/sending network traffic. Instead, the ``bytes_in/out`` fields should be updated internally so that whenever the next event is sent it will have an updated traffic number.
+.. Note:: Events shouldn't be sent every time when receiving/sending network traffic. Instead, the ``net_in/out_bytes`` fields should be updated internally so that whenever the next event is sent it will have an updated traffic number.
 
-          Generally it's not useful for events to be counting operations. Rather each operation should be a separate event, and the statistics code should be the one counting them. This way statistics can only be counting e.g. operations with ``duration > 1 sec``. If the statistics code was seeing only bulk operation counts this wouldn't be possible. The ``bytes_in/out`` and such fields are more of an exception, because it would be too inefficient to send individual events each time those were updated.
+          Generally it's not useful for events to be counting operations. Rather each operation should be a separate event, and the statistics code should be the one counting them. This way statistics can only be counting e.g. operations with ``duration > 1 sec``. If the statistics code was seeing only bulk operation counts this wouldn't be possible. The ``net_in/out_bytes`` and such fields are more of an exception, because it would be too inefficient to send individual events each time those were updated.
 
 .. Note:: Even though internally updating a field for an event's parent will be immediately visible to its children, the update won't be automatically sent to the stats process. We may need to fix this if it becomes a problem.
 

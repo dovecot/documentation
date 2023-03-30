@@ -87,8 +87,8 @@ whitespace between the various tokens.
          "imap"
       ],
       "fields" : {
-         "bytes_in" : 7,
-         "bytes_out" : 311,
+         "net_in_bytes" : 7,
+         "net_out_bytes" : 311,
          "last_run_time" : "2019-06-19T10:38:25.422709Z",
          "lock_wait_usecs" : 60,
          "name" : "SELECT",
@@ -106,7 +106,7 @@ Example tab-text
 
 .. code-block:: none
 
-   event:imap_command_finished        hostname:dovecot-dev    start_time:2019-06-19T10:38:25.422744Z  end_time:2019-06-19T10:38:25.424812Z    category:imap   field:user=jeffpc       field:session=xlBB1KqLz1isGwB+  field:tag=a0005 field:name=SELECT       field:tagged_reply_state=OK     field:tagged_reply=OK [READ-WRITE] Select completed     field:last_run_time=2019-06-19T10:38:25.422709Z field:running_usecs=1953        field:lock_wait_usecs=60        field:bytes_in=7        field:bytes_out=311
+   event:imap_command_finished        hostname:dovecot-dev    start_time:2019-06-19T10:38:25.422744Z  end_time:2019-06-19T10:38:25.424812Z    category:imap   field:user=jeffpc       field:session=xlBB1KqLz1isGwB+  field:tag=a0005 field:name=SELECT       field:tagged_reply_state=OK     field:tagged_reply=OK [READ-WRITE] Select completed     field:last_run_time=2019-06-19T10:38:25.422709Z field:running_usecs=1953        field:lock_wait_usecs=60        field:net_in_bytes=7        field:net_out_bytes=311
 
 Transports
 ^^^^^^^^^^
