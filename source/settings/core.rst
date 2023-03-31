@@ -534,6 +534,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: config_cache_size
    :default: 1 M
    :values: @size
+   :removed: 2.4.0,3.0.0
 
    The maximum size of the in-memory configuration cache.
 

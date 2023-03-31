@@ -161,6 +161,8 @@ Removed features and their replacements
 |                                                            | default. It can be disabled by ``no-cleanup-uncertain`` - see                            |
 |                                                            | :ref:`dictmap_configuration_parameters` for more details.                                |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| :dovecot_core:ref:`config_cache_size` setting.             | This is now unnecessary.                                                                 |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 Changed default settings
 ========================
