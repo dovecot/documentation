@@ -165,8 +165,8 @@ Removed features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | size.virtual                                               | size.virtual field is no longer written to dovecot.index.cache file as it is duplicating |
 |                                                            | vsize record in dovecot.index file. Reading of the field from old files is supported.    |
+| :dovecot_core:ref:`config_cache_size` setting.             | This is now unnecessary.                                                                 |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-
 
 Changed default settings
 ========================
