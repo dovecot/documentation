@@ -2165,6 +2165,7 @@ Login
    :field local_port: Local port.
    :field remote_ip: Remote IP address.
    :field remote_port: Remote port.
+   :field local_name: @added;v2.4.0,v3.0.0: TLS SNI hostname, if given.
    :field user: Full username.
    :field service: Name of service e.g. ``submission``, ``imap``.
 
