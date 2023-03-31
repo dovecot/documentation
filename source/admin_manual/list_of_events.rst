@@ -2150,8 +2150,18 @@ Events emitted by dictionary library and dictionary server.
 Login
 =====
 
+.. dovecot_event:field_group:: pre_login_client
+
+   :field local_ip: Local IP address.
+   :field local_port: Local port.
+   :field remote_ip: Remote IP address.
+   :field remote_port: Remote port.
+   :field user: Full username.
+   :field service: Name of service e.g. ``submission``, ``imap``.
+
 .. dovecot_core:event:: login_aborted
    :added: v2.4.0;v3.0.0
+   :inherit: pre_login_client
 
    :field reason: Short reason, see the short to long reason mapping in the table below.
    :field auth_successes: Number of successful authentications, which eventually failed due to other reasons.
@@ -2215,15 +2225,6 @@ Login Proxy
 ===========
 
 Events emitted when login process proxies a connection to a backend.
-
-.. dovecot_event:field_group:: pre_login_client
-
-   :field local_ip: Local IP address.
-   :field local_port: Local port.
-   :field remote_ip: Remote IP address.
-   :field remote_port: Remote port.
-   :field user: Full username.
-   :field service: Name of service e.g. ``submission``, ``imap``.
 
 .. dovecot_event:field_group:: login_proxy
    :inherit: pre_login_client
