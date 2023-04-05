@@ -1922,6 +1922,10 @@ See :ref:`settings` for list of all setting groups.
 
       SIS with immediate byte-by-byte comparison during saving.
 
+      .. versionchanged:: v2.4.0;v3.0.0 SIS is deprecated and writing of
+        SIS files is disabled. Reading is supported for now, any missing
+        SIS attachments are replaced with files filled with spaces.
+
    ``sis-queue posix``
 
       SIS with delayed comparison and de-duplication.
