@@ -27,6 +27,17 @@ Alternatively, you can migrate your data to new setup.
 .. seealso::
   :ref:`migrating_mailboxes`.
 
+Deprecated features and their replacements
+==========================================
+
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| Feature                                                    | Notes                                                                                    |
++============================================================+==========================================================================================+
+| :dovecot_core:ref:`fs-sis <mail_attachment_fs>`            | Saving new mails' attachments via fs-sis is disabled,                                    |
+|                                                            | but reading SIS attachments is still supported.                                          |
+|                                                            | Missing SIS attachments are replaced with files filled with spaces.                      |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+
 Removed features and their replacements
 =======================================
 
