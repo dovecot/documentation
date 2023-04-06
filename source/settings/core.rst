@@ -1920,11 +1920,11 @@ See :ref:`settings` for list of all setting groups.
 
    ``sis posix``
 
-      SiS with immediate byte-by-byte comparison during saving.
+      SIS with immediate byte-by-byte comparison during saving.
 
    ``sis-queue posix``
 
-      SiS with delayed comparison and de-duplication.
+      SIS with delayed comparison and de-duplication.
 
    :ref:`Mail user variables <variables-mail_user>` can be used.
 
