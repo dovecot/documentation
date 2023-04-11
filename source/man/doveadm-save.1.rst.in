@@ -12,11 +12,11 @@ doveadm-save - Save email to a user's mailbox
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **save** [**-S** *socket_path*] **-u** *user* [*-m* *mailbox*] [*mail-file*]
+**doveadm** [**-Dv**] **save** [**-S** *socket_path*] **-u** *user* [*-m* *mailbox*] [*-U* *uid*] [*-g* *guid*] [*-r* *received-date*] [*mail-file*]
 
-**doveadm** [**-Dv**] **save** [**-S** *socket_path*] **-A** [*-m* *mailbox*] [*mail-file*]
+**doveadm** [**-Dv**] **save** [**-S** *socket_path*] **-A** [*-m* *mailbox*] [*-U* *uid*] [*-g* *guid*] [*-r* *received-date*] [*mail-file*]
 
-**doveadm** [**-Dv**] **save** [**-S** *socket_path*] **-F** *file* [*-m* *mailbox*] [*mail-file*]
+**doveadm** [**-Dv**] **save** [**-S** *socket_path*] **-F** *file* [*-m* *mailbox*] [*-U* *uid*] [*-g* *guid*] [*-r* *received-date*] [*mail-file*]
 
 DESCRIPTION
 ===========
@@ -39,6 +39,17 @@ Command specific *options*:
 
 **-m** *mailbox*
    Store mail to specified mailbox instead of INBOX.
+
+**-U** *uid*
+    Save the mail using the given UID, if possible.
+
+**-g** *guid*
+    Save the mail using the given GUID.
+
+**-r** *received-date*
+    Save the mail using the given received-date timestamp. This is in the
+    "human timestamp" format as described by :man:`doveadm-search-query(7)`
+
 
 EXAMPLE
 =======
