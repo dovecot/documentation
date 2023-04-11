@@ -124,4 +124,4 @@ File format is described below
    ekh - (eof-maclen) payload data
 
 There is a small script for decrypting these files, see
-`decrypt.rb <https://wiki.dovecot.org/Design/Dcrypt?action=AttachFile&do=get&target=decrypt.rb>`_.
+`dcrypt-decrypt.rb <https://github.com/dovecot/tools/dcrypt-decrypt.rb>`__.
