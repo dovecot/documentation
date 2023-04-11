@@ -325,6 +325,7 @@ hdr
 hendrik
 hexblob
 hexuc
+hhmm
 highestmodseq
 HIGHESTPVTMODSEQ
 hostaddr
