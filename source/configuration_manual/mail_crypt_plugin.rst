@@ -340,7 +340,7 @@ Decrypting Files Encrypted with mail-crypt plugin
 =================================================
 
 You can use `decrypt.rb
-<https://gist.github.com/cmouse/882f2e2a60c1e49b7d343f5a6a2721de>`_ to decrypt
+<https://github.com/dovecot/tools/dcrypt-decrypt.rb>`__ to decrypt
 encrypted files.
 
 .. _fs_crypt:
