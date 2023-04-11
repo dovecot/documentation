@@ -232,7 +232,7 @@ DATE SPECIFICATION
 They can be used anywhere, where a *date specification* value is
 obligatory.
 
-*day* **-** *month* **-** *year*
+*dd-mon-yyyy*
    Default IMAP4rev1 date format.
 
    *day*
@@ -245,6 +245,22 @@ obligatory.
       four digits of year, e.g. **2007**.
 
    For example the "13th of April 2007" will be represented as **13-Apr-2007**.
+
+*dd-mon-yyyy hh:mm:ss [+-]zzzz*
+   Default IMAP4rev1 date-time format. See *dd-mon-yyyy* above for the date
+   format. For time format:
+
+   *hh*
+      the hour
+
+   *mm*
+      the minute
+
+   *ss*
+      the second
+
+   *[+-]zzzz*
+      the timezone as hhmm, e.g. **+0530**, **-0700**
 
 *interval*
    Combination of a positive integer *number* and a *time unit*.
