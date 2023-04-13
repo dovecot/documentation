@@ -1691,9 +1691,10 @@ Events emitted by the metacache library.
 
    :field metacache_status:
      Status of the refresh operation:
-       * refresh_changed: Bundles were listed in storage. New bundles were
-         found and downloaded.
-       * refresh_unchanged: Bundles were listed in storage, but no new changes
+       * refreshed_changed: Bundles were listed in storage. New bundles were
+         found and downloaded. This is used also when an existing mailbox is
+         first downloaded to metacache.
+       * refreshed_unchanged: Bundles were listed in storage, but no new changes
          were found.
        * kept: Local metacache was used without any storage operations.
        * created: A new user or mailbox is being created.
