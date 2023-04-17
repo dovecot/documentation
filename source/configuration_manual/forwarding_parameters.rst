@@ -54,6 +54,8 @@ Supported Fields
 +-------------------------------+----------------------------------------------+
 | ``x-connected-port``          | Server port address                          |
 +-------------------------------+----------------------------------------------+
+| ``x-connected-name``          | TLS SNI provided name.                       |
++-------------------------------+----------------------------------------------+
 | ``x-proxy-ttl``               | TTL which is reduced by each hop, loop       |
 |                               | prevention. When TTL drops to 0, the         |
 |                               | connection is dropped.                       |
@@ -89,6 +91,7 @@ Field        Description
 ``SESSION``  Session ID
 ``TTL``      TTL which is reduced by each hop, loop prevention. When TTL drops
              to 0, the connection is dropped.
+``DESTNAME`` Name provided by TLS SNI.
 ``FORWARD``  Base64-encoded, tab-separated list of ``key=value`` pairs to be
              forwarded to auth process. The keys and values are escaped using
              Dovecot's tab-escape format.
@@ -115,6 +118,7 @@ Field        Description
 ``LOGIN``    Original ``LOGIN`` value
 ``TIMEOUT``  Original ``TIMEOUT``
 ``PROTO``    Forwarded protocol: ``SMTP``, ``ESTMP``, or ``LMTP``.
+``DESTNAME`` Name provided by TLS SNI.
 ============ ===================================================================
 
 Supported Fields (*SMTP/Submission* ONLY)
@@ -128,6 +132,7 @@ Field        Description
              Dovecot's tab-escape format. This value is effectively limited
              to around 1000 bytes.
 ``SESSION``  Session ID
+``DESTNAME`` Name provided by TLS SNI.
 ============ ===================================================================
 
 LMTP

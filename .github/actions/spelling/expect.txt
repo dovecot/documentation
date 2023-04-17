@@ -175,6 +175,7 @@ deleteheader
 denotify
 dentries
 deref
+DESTNAME
 destuser
 desync
 desynchronized
