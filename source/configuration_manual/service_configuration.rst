@@ -142,7 +142,7 @@ path
 ^^^^
 Path to the file, relative to ``base_dir`` setting. This is also used as the section name.
 
-type 
+type
 ^^^^
 
 .. versionadded:: v2.4.0;v3.0.0
@@ -401,3 +401,13 @@ type=startup so that the (re)generation can be started immediately at startup wh
 stats
 ^^^^^
 Mail process statistics tracking. Its behavior is very similar to the anvil process, but anvil's data is of higher importance and lower traffic than stats, so stats are tracked in a separate process.
+
+  * **client_limit** should be large enough to handle all the simultaneous connections.
+    Dovecot attempts to verify that the limit is high enough at startup.
+    If it's not, it logs a warning such as:
+
+     * ``Warning: service stats { client_limit=1000 } is lower than required under max. load (7945)``
+
+     This is calculated by counting the process_limit of all the services,
+     because each of them has a persistent connection to stats.
+
