@@ -82,7 +82,7 @@ using :ref:`authentication-prefetch_userdb`.
           nodelay field is true. With SQL the field is considered to be
           nonexistent if its value is NULL.
 
-The following suffixes added to a field name are handled specially:
+The following suffixes, starting with an ':', added to a field name are handled specially:
 
 * :protected: Set this field only if it hasn't been set before.
 * :remove: Remove this field entirely.
