@@ -48,7 +48,7 @@ Configuration file example for `WSO2 Identity Server
 .. code-block:: none
 
   introspection_mode = post
-  introspection_url = https://adminuser:adminpass@server.name:port/oauth2/introspect
+  introspection_url = https://client_id:client_secret@server.name:port/oauth2/introspect
   username_attribute = username
   tls_ca_cert_file = /etc/ssl/certs/ca-certificates.crt
   active_attribute = active
@@ -209,6 +209,8 @@ Currently Dovecot oauth2 library implements the following features of JWT tokens
 * AUD support (this is checked against scope, if provided)
 * AZP support
 
+.. versionchanged:: 2.3.21  AUD check now checks client_id, not scope. If the token has scope field, this is checked for scope. KTY checking has been removed completely.
+
 The following algorithms are supported
 
 * HS256, HS384, HS512
@@ -226,6 +228,9 @@ OpenID.Discovery
 
 Support for :rfc:`7628` OpenID Discovery (OIDC) can be achieved with
 ``openid_configuration_url`` setting. Setting this causes Dovecot to report OIDC configuration URL as ``openid-configuration`` element in error JSON.
+
+.. versionchanged:: 2.3.21 OAuth2 error handling was made to always use OAUTH2 mechanisms errors, so ``openid-configuration`` would be emitted always.
+
 
 Full config file
 ******************
