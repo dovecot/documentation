@@ -12,7 +12,11 @@ Authentication is split into four parts:
 
 3. :ref:`Password databases (passdb) <authentication-password_databases>`
 
+ * :ref:`authentication-password_database_extra_fields`
+
 4. :ref:`User databases (userdb) <authentication-user_database>`
+
+ * :ref:`authentication-user_database_extra_fields`
 
 See also :ref:`authentication penalty <authentication-authentication_penalty>`
 handling for IP addresses. See also :ref:`authentication policy support <authentication-auth_policy>`
