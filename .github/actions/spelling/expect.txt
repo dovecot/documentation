@@ -41,6 +41,7 @@ Atilika
 atimes
 atmail
 ATo
+AUD
 auid
 authpriv
 authtok
@@ -429,6 +430,7 @@ korvatunturi
 KPOP
 krb
 ktrace
+KTY
 kurkku
 kuromoji
 kuserok
