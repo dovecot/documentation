@@ -39,6 +39,7 @@ Atilika
 atimes
 atmail
 ATo
+AUD
 auid
 authdb
 authpriv
@@ -416,6 +417,7 @@ krb
 ktadd
 ktpass
 ktrace
+KTY
 kurkku
 kuromoji
 kuserok
