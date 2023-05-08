@@ -84,10 +84,13 @@ using :ref:`authentication-prefetch_userdb`.
 
 The following suffixes added to a field name are handled specially:
 
-* :protected: Set this field only if it hasn't been set before.
-* :remove: Remove this field entirely.
+``:protected``
+  Set this field only if it hasn't been set before.
+``:remove``
+  Remove this field entirely.
 
-Examples:
+Examples
+--------
 
 SQL
 ^^^
