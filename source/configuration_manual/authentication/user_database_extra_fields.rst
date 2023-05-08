@@ -21,32 +21,36 @@ fields'. Possibilities are:
   TAB-separated field. It's useful for userdbs which are a bit less flexible
   for returning a variable number of fields (e.g. SQL).
 * ``uidgid_file``: Get uid and gid for user based on the given filename.
+* ``user``: User can be overridden (normally set in passdb, see
+  :ref:`authentication-password_databases`).
+* ``noreplicate``: See :ref:`replication_configuration`.
 
 * ``event_<name>``: Import ``name=value`` to mail user event.
 
   .. versionadded:: v2.3.21
 
-.. versionchanged:: v3.0.0;v2.4.0
-   Extra fields can now also be set to empty string, while previously they were
-   changed to ``yes``. Extra fields without value (without ``=``) will default to
-   ``yes``.
+These fields can be returned the exact same way as uid, gid, and home fields.
 
 It's possible to override settings from ``dovecot.conf`` (most commonly
-quota_rule to set per-user quota limits or also plugin-settings).
-
-* ``user``: User can be overridden (normally set in passdb, see
-  :ref:`authentication-password_databases`).
-* ``noreplicate``: See :ref:`replication_configuration`.
+``quota_rule`` to set per-user quota limits or also plugin-settings).
 
 The extra fields are also passed to :ref:`post_login_scripting`.
 
 The following suffixes added to a field name are handled specially:
 
-* ``:protected``: Set this field only if it hasn't been set before.
-* ``:remove``: Remove this field entirely.
+``:protected``
+  Set this field only if it hasn't been set before.
+``:remove``
+  Remove this field entirely.
 
-These fields can be returned the exact same way as uid, gid, and home fields.
-Below are examples for some user databases.
+For example you can return ``mail_plugins:remove`` to the ``mail_plugins``
+field. This differs from ``mail_plugins=`` in that the field is removed
+entirely (and default is used) instead of just being set to an empty value.
+
+.. versionchanged:: v3.0.0;v2.4.0
+   Extra fields can now also be set to empty string, while previously they were
+   changed to ``yes``. Extra fields without value (without ``=``) will default to
+   ``yes``.
 
 Overriding settings
 ===================
