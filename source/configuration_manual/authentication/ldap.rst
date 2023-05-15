@@ -81,8 +81,8 @@ When connecting to AD, you may need to use port 3268. Then again, not all LDAP
 fields are available in port 3268. Use whatever works.
 https://technet.microsoft.com/en-us/library/cc978012.aspx
 
-To enable LDAP
-**************
+LDAP Backend Configuration
+**************************
 
 .. code-block:: none
 
@@ -93,7 +93,11 @@ To enable LDAP
 
 This enables LDAP to be used as passdb.
 
-The important settings in ``/etc/dovecot/dovecot-ldap.conf.ext`` are:
+The included dovecot-ldap-backend.conf.ext can be used as template for the
+``/etc/dovecot/dovecot-ldap.conf.ext.`` Its most important settings are:
+
+Configure how the LDAP server is reached.
+(Active directory allows binding with username@domain):
 
 .. code-block:: none
 
@@ -102,15 +106,22 @@ The important settings in ``/etc/dovecot/dovecot-ldap.conf.ext`` are:
   dnpass = secret
   base = dc=example,dc=com
 
-Configure how the LDAP server is reached.
-Active directory allows binding with username@domain.
+Use LDAP authentication binding for verifying users' passwords:
 
 .. code-block:: none
 
   auth_bind_userdn = %u
   auth_bind = yes
 
-Use LDAP authentication binding for verifying users' passwords.
+Use auth worker processes to perform LDAP lookups in order to use multiple
+concurrent LDAP connections. Otherwise only a single LDAP connection is used.
+
+.. code-block:: none
+
+   blocking = yes
+
+Normalize the username to exactly the mailRoutingAddress field's value
+regardless of how the ``pass_filter`` found the user:
 
 .. code-block:: none
 
@@ -120,8 +131,23 @@ Use LDAP authentication binding for verifying users' passwords.
   =user=%{ldap:mailRoutingAddress},
   =password=%{ldap:userPassword}
 
-Normalize the username to exactly the mailRoutingAddress field's value
-regardless of how the ``pass_filter`` found the user.
+Returns userdb fields when prefetch userdb wasn't used (LMTP & doveadm).
+The username is again normalized in case ``user_filter`` found it via some
+other means:
+
+.. code-block:: none
+
+   user_attrs = \
+   =user=%{ldap:mailRoutingAddress}, \
+   =quota_rule=*:storage=%{ldap:messageQuotaHard}
+
+How to find the user for passdb lookup:
+.. code-block:: none
+
+   pass_filter = (mailRoutingAddress=%u)
+   user_filter = (mailRoutingAddress=%u)
+
+How to iterate through all the valid usernames:
 
 .. code-block:: none
 

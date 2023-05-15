@@ -34,15 +34,15 @@ Otherwise the binding is changed to the default DN before each user lookup.
   userPassword field in the LDAP server.
 
   An example of this is;
-  
+
   Assuming that the user assigned to ``dn`` is "cn=authuser,dc=test,dc=dovecot,dc=net".
-  
+
   1. Create below text file and save it as authuser_modify.ldif.
 
   .. code-block:: none
 
      dn: olcDatabase={2}hdb,cn=config
-     changetype: modify              
+     changetype: modify
      replace: olcAccess
      olcAccess: {0}to attrs=userPassword
        by self write
@@ -59,7 +59,7 @@ Otherwise the binding is changed to the default DN before each user lookup.
 
      ldapmodify  -Q -Y EXTERNAL -H ldapi:/// -f doveauth_access.ldif
 
-   
+
 .. _ldap_settings_auth-auth_bind_userdn:
 
 ``auth_bind_userdn``
@@ -121,7 +121,7 @@ See :ref:`authentication-password_schemes` for a list of supported schemes.
 - Values:  :ref:`string`
 
 Attributes to get a list of all users
-See also :ref:`authentication-ldap_backend_configuration`
+See also :ref:`authentication-ldap`
 
 Example:
 
@@ -139,7 +139,7 @@ Example:
 - Values:  :ref:`string`
 
 Filter to get a list of all users
-See also :ref:`authentication-ldap_backend_configuration`
+See also :ref:`authentication-ldap`
 
 Example:
 
@@ -147,7 +147,7 @@ Example:
 
    iterate_filter = (objectClass=smiMessageRecipient)
 
-  
+
 .. _ldap_settings_auth-pass_attrs:
 
 ``pass_attrs``
@@ -157,7 +157,7 @@ Example:
 - Values:  :ref:`string`
 
 Specify user attributes to be retrieved from LDAP in passdb look up.
-See also :ref:`authentication-ldap_backend_configuration`
+See also :ref:`authentication-ldap`
 
 Password checking attributes:
 * user: Virtual user name (user@domain), if you wish to change the user-given username to something else
@@ -192,7 +192,7 @@ string.
 - Values:  :ref:`string`
 
 Filter for password lookups (passdb lookup)
-See also :ref:`authentication-ldap_backend_configuration`
+See also :ref:`authentication-ldap`
 
 Example:
 
@@ -210,7 +210,7 @@ Example:
 - Values:  :ref:`string`
 
 Specify user attributes to be retrieved from LDAP (in userdb look up)
-See also :ref:`authentication-ldap_backend_configuration`
+See also :ref:`authentication-ldap`
 User attributes are given in LDAP-name=dovecot-internal-name list.
 The internal names are:
 
@@ -246,9 +246,9 @@ Example:
 - Values:  :ref:`string`
 
 Filter for user lookup (userdb lookup).
-See also :ref:`authentication-ldap_backend_configuration`
+See also :ref:`authentication-ldap`
 
-Below variables can be used.   
+Below variables can be used.
 
 ======== =============  ================================================================
 Variable Long name      Description
@@ -277,7 +277,7 @@ Example:
 This setting is obsolete, and ignored regardless of the value being configured.
 
 
-  
 
-   
+
+
 
