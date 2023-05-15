@@ -81,6 +81,9 @@ When connecting to AD, you may need to use port 3268. Then again, not all LDAP
 fields are available in port 3268. Use whatever works.
 https://technet.microsoft.com/en-us/library/cc978012.aspx
 
+To enable LDAP
+**************
+
 .. code-block:: none
 
   passdb {
@@ -126,4 +129,55 @@ regardless of how the ``pass_filter`` found the user.
   iterate_attrs = mailRoutingAddress=user
   iterate_filter = (objectClass= messageStoreRecipient)
 
-How to iterate through all the valid usernames.
+Ldap-specific Variables
+***********************
+
+The following variables can be used inside the ``dovecot-ldap.conf.ext`` files:
+
++----------------------------------------+-------------------------------------+
+| ``%{ldap}``                                                                  |
++----------------------------------------+-------------------------------------+
+| ``%{ldap:attrName:default}``           | Fetches a single-valued attribute.  |
+|                                        | If the attribute is not present,    |
+|                                        | the specified default is taken      |
+|                                        | instead.  If there are multiple     |
+|                                        | values, all except the first are    |
+|                                        | ignored (with warning).             |
++----------------------------------------+-------------------------------------+
+| ``%{ldap:attrName}``                   | If the default is omitted, empty    |
+|                                        | string ``""`` is assumed.           |
++----------------------------------------+-------------------------------------+
+| ``%{ldap_multi}``                                                            |
++----------------------------------------+-------------------------------------+
+| ``%{ldap_multi:attrName:sep:default}`` | Fetches a multi-valued attribute.   |
+|                                        | If the attribute is not present, the|
+|                                        | specified default is taken instead. |
+|                                        | If there are multiple values, they  |
+|                                        | are concatenated using sep as the   |
+|                                        | separator.                          |
++----------------------------------------+-------------------------------------+
+| ``%{ldap_multi:attrName:sep}``         | If the default is omitted, empty    |
+|                                        | string is assumed ``""``.           |
++----------------------------------------+-------------------------------------+
+| ``%{ldap_multi:attrName::default}``    | The default for the separator is a  |
+|                                        | single space ``" "``.               |
++----------------------------------------+-------------------------------------+
+| ``%{ldap_multi:attrName::}``           | How to specify a column ``":"`` as  |
+|                                        | separator, default is ``""``.       |
++----------------------------------------+-------------------------------------+
+| ``%{ldap_multi:attrName:::default}``   | How to specify a column ``":"`` as  |
+|                                        | separator, default explicitly       |
+|                                        | defined.                            |
++----------------------------------------+-------------------------------------+
+| ``%{ldap_multi:attrName:,}``           | How to specify a comma ``","`` as   |
+|                                        | separator, default is ``""``.       |
++----------------------------------------+-------------------------------------+
+| ``%{ldap_multi:attrName:,:default}``   | How to specify a comma ``","`` as   |
+|                                        | separator, default explicitly       |
+|                                        | defined.                            |
++----------------------------------------+-------------------------------------+
+| ``%{ldap_dn}``                                                               |
++----------------------------------------+-------------------------------------+
+| ``%{ldap_dn}``                         | Retrieves the Distinguished Name of |
+|                                        | the entry.                          |
++----------------------------------------+-------------------------------------+
