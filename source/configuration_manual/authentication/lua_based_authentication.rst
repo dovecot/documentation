@@ -29,6 +29,42 @@ For details about Dovecot Lua, see :ref:`lua`.
 When used in authentication, additional module dovecot.auth is added, which
 contains constants for passdb and userdb.
 
+Initialization
+^^^^^^^^^^^^^^
+
+.. versionadded:: v2.4.0;v3.0.0
+
+When passdb or userdb is initialized, there will be a lookup for initialization function.
+This is different from :func:`script_init`` which is called for all Lua scripts. For
+passdb, the function is :func:`auth_passdb_init` and for userdb, it is called
+:func:`auth_userdb_init`. The function is called with a table containing all parameters
+provided in the passdb/userdb args, except file name.
+
+This can be used to pass out initialization parameters from Dovecot.
+
+Example
+
+.. code:: lua
+
+  local password = nil
+
+  function auth_passdb_init(args)
+    password = args["password"]
+  end
+
+  function auth_passdb_lookup(req)
+    return dovecot.auth.PASSDB_RESULT_OK, { ["password"]=password }
+  end
+
+
+.. code:: none
+
+  passdb {
+    driver = lua
+    args = file=/etc/dovecot/auth.lua password={PLAIN}test
+  }
+
+
 List of constants
 -------------------
 
