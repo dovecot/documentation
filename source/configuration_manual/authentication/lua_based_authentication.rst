@@ -128,6 +128,7 @@ Additionally you can access
   failure
 
 Password database
+^^^^^^^^^^^^^^^^^
 
 Lua passdb supports two modes of function. It can behave as lookup database, or
 password verification database.
