@@ -379,7 +379,6 @@ Simple example with :py:mod:`dovecot.http.client`
 
    function script_init()
      client = dovecot.http.client({debug=True, timeout=10000})
-     return 0
    end
 
    local function table_get(t, k, d)
@@ -443,7 +442,6 @@ Example with event code:
 
    function script_init()
      client = dovecot.http.client({debug=True, timeout=10000})
-     return 0
    end
 
    function dovecot_lua_notify_begin_txn(user)
