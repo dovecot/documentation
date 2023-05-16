@@ -22,6 +22,12 @@ Regardless of the syntax used, matching is performed the same way:
 
 * Event names are compared using a case-sensitive wildcard match.  The
   wildcards supported are ``?`` and ``*``.
+
+   * If wildcard characters are needed as literal characters, they can be
+     escaped with the ``\`` character, e.g. ``\*``.
+
+     .. versionchanged:: v2.4.0;v3.0.0
+
 * Event location is compared in two parts: the file name is compared
   case-sensitively, and the line number is compared as an integer.  For a
   match to occur, the filename must match *and* the line number must either
