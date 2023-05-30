@@ -109,6 +109,72 @@ already deleted.
 **-8**
    Lists the mailboxes with UTF-8 encoding.
 
+mailbox metadata list
+---------------------
+
+**mailbox metadata list** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**-s**] [**-p**] *mailbox* [*key-prefix*]
+
+**-s**
+   Allows to specify *mailbox* "", which points to the server metadata instead of mailboxes' matadata.
+   It has no effect if mailbox is anything else than an empty string.
+
+**-p**
+   Prepend prefix.
+
+*mailbox*
+   The target mailbox (mandatory). If **-s** is specified, the empty string "" can be used to indicate access to server metadata.
+
+*key-prefix*
+   The key prefix to look for. All keys will be listed if not provided.
+
+mailbox metadata get
+--------------------
+
+**mailbox metadata get** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**-s**] *mailbox* *key*
+
+**-s**
+   Allows to specify *mailbox* "", which points to the server metadata instead of mailboxes' matadata.
+   It has no effect if mailbox is anything else than an empty string.
+
+*mailbox*
+   The target mailbox (mandatory). If **-s** is specified, the empty string "" can be used to indicate access to server metadata.
+
+*key*
+   The key to retrieve.
+
+mailbox metadata set
+--------------------
+
+**mailbox metadata set** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**-s**] *mailbox* *key* *value*
+
+**-s**
+   Allows to specify *mailbox* "", which points to the server metadata instead of mailboxes' matadata.
+   It has no effect if mailbox is anything else than an empty string.
+
+*mailbox*
+   The target mailbox (mandatory). If **-s** is specified, the empty string "" can be used to indicate access to server metadata.
+
+*key*
+   The key to set.
+
+*value*
+   The value to set.
+
+mailbox metadata unset
+----------------------
+
+**mailbox metadata unset** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**-s**] *mailbox* *key*
+
+**-s**
+   Allows to specify *mailbox* "", which points to the server metadata instead of mailboxes' matadata.
+   It has no effect if mailbox is anything else than an empty string.
+
+*mailbox*
+   The target mailbox (mandatory). If **-s** is specified, the empty string "" can be used to indicate access to server metadata.
+
+*key*
+   The key to unset.
+
 mailbox mutf7
 -------------
 
