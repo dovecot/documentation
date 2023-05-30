@@ -108,7 +108,7 @@ Removed features and their replacements
 |                                                            | :dovecot_plugin:ref:`mail_compress_save` as well as                                      |
 |                                                            | :dovecot_plugin:ref:`mail_compress_save_level` - instead.                                |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| Support for obsoleted :ref:authentication-dict settings    | Use non-obsolete ``key {}`` syntax.                                                      |
+| Support for obsoleted :ref:`authentication-dict` settings  | Use non-obsolete ``key {}`` syntax.                                                      |
 | ``passdb_key`` and ``userdb_key`` was removed.             |                                                                                          |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | mailbox-alias plugin                                       | Depending on the use case, non-direct may be                                             |
