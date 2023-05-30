@@ -955,6 +955,7 @@ unconfigured
 UNDRAFT
 unhibernate
 unhibernated
+unhibernating
 unhibernation
 unixtime
 unixtimedate

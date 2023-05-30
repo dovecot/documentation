@@ -3599,7 +3599,8 @@ See :ref:`settings` for list of all setting groups.
    If enabled, the ``ps`` command shows more verbose process details,
    including the username and IP address of the connected client.
 
-   This aids in seeing who is actually using the IMAP processes.
+   This aids in seeing who is actually using the server, as well as helps
+   debugging in case there are any problems. See :ref:`process_titles`.
 
 
 .. dovecot_core:setting:: verbose_ssl

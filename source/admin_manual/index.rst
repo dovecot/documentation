@@ -39,6 +39,7 @@ Administrative Manual
    obox/index
    pigeonhole_managesieve_server
    post_login_scripting
+   process_titles
    rfc
    running_dovecot
    sasl
