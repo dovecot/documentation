@@ -3,7 +3,8 @@
 SUBDIRS = source/man
 
 # You can set these variables from the command line.
-SPHINXOPTS    += -W
+O            ?= -t man
+SPHINXOPTS   += -W
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = _build
