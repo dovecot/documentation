@@ -18,7 +18,7 @@ Settings
 ========
 
 .. dovecot_plugin:setting:: imap_compress_<algorithm>_level
-   :changed: v2.3.15
+   :changed: 2.3.15
    :default: !<algorithm dependent>
    :plugin: imap-zlib
    :values: @uint

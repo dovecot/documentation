@@ -45,7 +45,7 @@ The list of received states (right side of ``/``):
  * auth-continue: AUTHENTICATE command asked for continuation (``+`` reply)
  * login: LOGIN or AUTHENTICATE command reply received
 
-.. versionchanged:: v2.3.8 Earlier versions had a bug and could have added
+.. dovecotchanged:: 2.3.8 Earlier versions had a bug and could have added
                     multiple ``+`` characters to the state, for example
 		    ``authenticate++/capability``. The extra ``+`` characters
 		    should be just ignored.

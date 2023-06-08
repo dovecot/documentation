@@ -70,7 +70,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: auth_cache_verify_password_with_worker
    :added: 2.2.34
-   :changed: v2.3.18 Fixed to work properly. Older versions lost passdb extra fields.
+   :changed: 2.3.18 Fixed to work properly. Older versions lost passdb extra fields.
    :default: no
    :values: @boolean
 
@@ -81,7 +81,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: auth_debug
-   :changed: v2.4.0;v3.0.0
+   :changed: 2.4.0,3.0.0
    :default: no
    :values: @boolean
 
@@ -2968,12 +2968,12 @@ See :ref:`settings` for list of all setting groups.
      * Other connections from :dovecot_core:ref:`login_trusted_networks` are
        ``secured``, but only if ``ssl`` setting is not ``required``.
 
-       .. versionchanged:: v2.4.0;v3.0.0 With old versions these connections
+       .. dovecotchanged:: 2.4.0,3.0.0 With old versions these connections
           were ``secured`` regardless of the ``ssl`` setting.
      * Other connections from HAProxy are ``secured``, but only if ``ssl``
        setting is not ``required``.
 
-       .. versionchanged:: v2.4.0;v3.0.0 With old versions these connections
+       .. dovecotchanged:: 2.4.0,3.0.0 With old versions these connections
           were ``secured`` regardless of the ``ssl`` setting.
 
    Connections that are ``secured`` are always allowed to use plaintext
@@ -3247,7 +3247,7 @@ See :ref:`settings` for list of all setting groups.
    ``ANY``
 
      .. dovecotadded:: 2.3.15
-     .. versionchanged:: v2.4.0;v3.0.0
+     .. dovecotchanged:: 2.4.0,3.0.0
 
      .. warning:: this value is meant for tests only.
                   It should not be used in any deployment of any value/relevance.

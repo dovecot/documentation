@@ -144,7 +144,7 @@ Metric filter syntax
 ^^^^^^^^^^^^^^^^^^^^
 
 .. dovecotadded:: 2.3.0
-.. versionchanged:: v2.3.12 filtering changed to use the common filter language
+.. dovecotchanged:: 2.3.12 filtering changed to use the common filter language
   (see :ref:`event_filter_new_lang`)
 
 Events can be filtered inside the ``metric`` blocks (see :ref:`statistics`)
@@ -205,7 +205,7 @@ Global filter syntax
 ^^^^^^^^^^^^^^^^^^^^
 
 .. dovecotadded:: 2.3.0
-.. versionchanged:: v2.3.12 filtering changed to use the common filter language
+.. dovecotchanged:: 2.3.12 filtering changed to use the common filter language
   (see :ref:`event_filter_new_lang`)
 
 Since v2.3.12, settings such as :dovecot_core:ref:`log_debug` use the common

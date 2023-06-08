@@ -187,7 +187,7 @@ Dictmap Parameters
 |                                 | reading huge folders.                                                        |
 |                                 |                                                                              |
 |                                 | .. dovecotadded:: 2.3.10                                                     |
-|                                 | .. versionchanged:: v3.0.0 Increased default to 10. Earlier versions run     |
+|                                 | .. dovecotchanged:: 3.0.0 Increased default to 10. Earlier versions run      |
 |                                 |                     with 1 as default.                                       |
 +---------------------------------+------------------------------------------------------------------------------+
 | cleanup-uncertain               | When enabled: If a write to Cassandra fails with uncertainty                 |

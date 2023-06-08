@@ -41,7 +41,7 @@ the API is too old to support your plugin. For example:
   #  error Must have at least v2.3.18
   #endif
 
-.. versionchanged:: v2.3.18 added the 3rd micro-version parameter.
+.. dovecotchanged:: 2.3.18 added the 3rd micro-version parameter.
 
 Dependencies
 ------------

@@ -374,7 +374,7 @@ Quota Virtual Sizes
 ^^^^^^^^^^^^^^^^^^^
 
 .. dovecotadded:: 2.2.19
-.. versionchanged:: v2.4;v3.0
+.. dovecotchanged:: 2.4.0,3.0.0
 
 See :dovecot_plugin:ref:`quota_vsizes`.
 

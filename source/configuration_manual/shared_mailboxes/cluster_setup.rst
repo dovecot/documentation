@@ -86,7 +86,7 @@ Additionally imapc must be configured accordingly on the backends:
                   In general INDEXPVT with imapc is only supported for non-obox
                   storages.
 
-.. versionchanged:: v2.4.0;v3.0.0 Some selected IMAPC features are auto-enabled
+.. dovecotchanged:: 2.4.0,3.0.0 Some selected IMAPC features are auto-enabled
                     by default. Please refer to :dovecot_core:ref:`imapc_features`
                     for description on individual flags. Prior to this version
                     you must enable at least the following features:

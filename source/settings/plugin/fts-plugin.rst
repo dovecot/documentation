@@ -93,7 +93,7 @@ Settings
        fts_autoindex_exclude3 = External Accounts/*
      }
 
-   .. versionchanged:: v2.4.0;v3.0.0 The ``fts_autoindex_exclude`` setting
+   .. dovecotchanged:: 2.4.0,3.0.0 The ``fts_autoindex_exclude`` setting
       matches also the namespace prefix in folder names. Previously the folder
       name was matched only without the namespace prefix.
 

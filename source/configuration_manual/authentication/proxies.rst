@@ -56,7 +56,7 @@ addition of proxy field. The common fields to use for both proxying ways are:
   setting applies only to proxying via login processes, not to lmtp or
   doveadm processes.
 
-  .. versionchanged:: v2.3 Added support for milliseconds.
+  .. dovecotchanged:: 2.3.0 Added support for milliseconds.
 
 * ``proxy_nopipelining``: Don't pipeline IMAP commands. This is a workaround
   for broken IMAP servers that hang otherwise.

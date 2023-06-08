@@ -36,7 +36,7 @@ Settings
      lazy_expunge_exclude = \Drafts
      lazy_expunge_exclude2 = External Accounts/*
 
-   .. versionchanged:: v2.4.0;v3.0.0 The  ``lazy_expunge_exclude`` setting
+   .. dovecotchanged:: 2.4.0,3.0.0 The  ``lazy_expunge_exclude`` setting
       matches also the namespace prefix in folder names. Previously the folder
       name was matched only without the namespace prefix.
 

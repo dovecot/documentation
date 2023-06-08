@@ -116,13 +116,13 @@ out dynamically. The behavior is now:
  * Whenever cache file is recreated (purged) it can cause some fields'
    decisions to change:
 
-    * .. versionchanged:: v2.3.11 Changes YES -> TEMP if the YES decision hasn't
+    * .. dovecotchanged:: 2.3.11 Changes YES -> TEMP if the YES decision hasn't
                           been reconfirmed for the last 30 days
                           (:dovecot_core:ref:`mail_cache_unaccessed_field_drop`).
                           Older versions changed the YES -> TEMP decision every
                           time the cache was purged, which could have happened
                           too early sometimes.
-    * .. versionchanged:: v2.3.11 Changes TEMP -> NO and drops the field if it
+    * .. dovecotchanged:: 2.3.11 Changes TEMP -> NO and drops the field if it
                           hasn't been accessed for the last 60 days (2 *
                           :dovecot_core:ref:`mail_cache_unaccessed_field_drop`).
                           Older versions dropped it after 30 days (1 *

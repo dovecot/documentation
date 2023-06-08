@@ -63,7 +63,7 @@ Settings
 
       mail_compress_save_level = 3
 
-   .. versionchanged:: v2.3.15
+   .. dovecotchanged:: 2.3.15
 
       Prior to v2.3.15, the compression level must be an integer in the range
       1 to 9 regardless of the algorithm selected. The default level is 6.

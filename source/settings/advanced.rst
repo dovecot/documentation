@@ -133,7 +133,7 @@ See :ref:`settings` for list of all setting groups.
 
    Specifies when cache decisions are downgraded.
 
-   .. versionchanged:: v2.3.11 Change caching decision from YES to TEMP after
+   .. dovecotchanged:: 2.3.11 Change caching decision from YES to TEMP after
                        this much time has passed. Drop the field entirely
                        after twice this much time has passed (i.e. 60 days by
                        default), regardless of whether the cache decision was
@@ -141,7 +141,7 @@ See :ref:`settings` for list of all setting groups.
                        setting only for dropping the field after it hadn't
                        been accessed for this long.
 
-   .. versionchanged:: v2.4.0;v3.0.0 If the cache header count is capped to
+   .. dovecotchanged:: 2.4.0,3.0.0 If the cache header count is capped to
                        :dovecot_core:ref:`mail_cache_max_headers_count` then the
                        effective value is reduced to 1/4 of the configured value
                        until enough headers expire for the cache to fall back

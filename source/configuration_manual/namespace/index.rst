@@ -629,7 +629,7 @@ Settings
    but it's not a good idea to use other than the standard ones specified in
    the RFC.
 
-   .. versionchanged:: v2.4.0;v3.0.0 Using non-standard special-use flags will
+   .. dovecotchanged:: 2.4.0,3.0.0 Using non-standard special-use flags will
                        result in a warning message at startup.
 
    .. note:: Bug in v2.2.30-v2.2.33: if special-use flags are used,

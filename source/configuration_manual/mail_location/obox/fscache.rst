@@ -73,4 +73,4 @@ The fscache plugin relies on filesystem usage information to be consistent.
 For example ZFS provides different information on block usage depending on
 when the information is queried, making fscache not work.
 
-.. versionchanged:: v2.3.20 ZFS support has been currently explicitly disabled.
+.. dovecotchanged:: 2.3.20 ZFS support has been currently explicitly disabled.

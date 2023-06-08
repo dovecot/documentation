@@ -28,7 +28,7 @@ Some of the extensions need to be explicitly enabled:
   * :ref:`namespaces`
   * :ref:`hibernation`
 
-.. versionchanged:: v2.4.0;v3.0.0
+.. dovecotchanged:: 2.4.0,3.0.0
 
   Before, the ``COMPRESS`` extension was available as the
   :ref:`plugin-imap-zlib` plugin, which needed to be explicitly enabled.

@@ -66,7 +66,7 @@ Settings
 
 .. dovecot_plugin:setting:: metacache_index_merging
    :added: 2.3.6
-   :changed: v2.4.0;v3.0.0 Removed ``v1`` option
+   :changed: 2.4.0,3.0.0 Removed ``v1`` option
    :default: v2
    :plugin: obox
    :values: @string

@@ -49,7 +49,7 @@ Connection Settings
    A space-separated list of features, optimizations, and workarounds that can
    be enabled.
 
-   .. versionchanged:: v2.4.0;v3.0.0 Several features are now automatically
+   .. dovecotchanged:: 2.4.0,3.0.0 Several features are now automatically
                        enabled and the respective flags dropped. In their place
                        new flags to disable these features were added.
 
@@ -66,7 +66,7 @@ Connection Settings
      To disable this feature either unload the imap-acl plugin or provide this
      feature.
 
-     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had an "acl" feature,
+     .. dovecotchanged:: 2.4.0,3.0.0 Earlier versions had an "acl" feature,
                          which is now enabled by default.
 
    ``no-delay-login``
@@ -74,7 +74,7 @@ Connection Settings
      Immediately connect to the remote server. By default this is delayed until
      a command requires a connection.
 
-     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had a "delay-login"
+     .. dovecotchanged:: 2.4.0,3.0.0 Earlier versions had a "delay-login"
                          feature, which is now enabled by default.
 
    ``gmail-migration``
@@ -93,7 +93,7 @@ Connection Settings
      the new server, they can still be used if imapc is configured to have
      local index files.
 
-     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had a "modseq" feature,
+     .. dovecotchanged:: 2.4.0,3.0.0 Earlier versions had a "modseq" feature,
                          which is now enabled by default.
 
    ``proxyauth``
@@ -121,7 +121,7 @@ Connection Settings
      Disable fetching of IMAP ``BODY`` and ``BODYSTRUCTURE`` from the remote
      server. Instead, the whole message body is fetched to regenerate them.
 
-     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had a
+     .. dovecotchanged:: 2.4.0,3.0.0 Earlier versions had a
                          "fetch-bodystructure" feature, which is now enabled by
                          default.
 
@@ -131,7 +131,7 @@ Connection Settings
      the IMAP ``FETCH BODY.PEEK[HEADER.FIELDS(...)]`` command. Instead, the
      whole header is fetched and the wanted headers are parsed from it.
 
-     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had a "fetch-headers"
+     .. dovecotchanged:: 2.4.0,3.0.0 Earlier versions had a "fetch-headers"
                          feature, which is now enabled by default.
 
    ``no-fetch-size``
@@ -140,7 +140,7 @@ Connection Settings
      ``FETCH RFC822.SIZE`` command. Instead, the whole message body is fetched
      to calculate the size.
 
-     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had a "rfc822.size"
+     .. dovecotchanged:: 2.4.0,3.0.0 Earlier versions had a "rfc822.size"
                          feature, which is now enabled by default.
 
    ``no-search``
@@ -148,7 +148,7 @@ Connection Settings
      Disable searching messages using the IMAP ``SEARCH`` command. Instead, all
      the message headers/bodies are fetched to perform the search locally.
 
-     .. versionchanged:: v2.4.0;v3.0.0 Earlier versions had a "search" feature,
+     .. dovecotchanged:: 2.4.0,3.0.0 Earlier versions had a "search" feature,
                          which is now enabled by default.
 
    **Workarounds**
