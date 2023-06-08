@@ -3,7 +3,7 @@
 Squat FTS Engine
 ================
 
-.. versionremoved:: 2.4.0;3.0.0
+.. dovecotremoved:: 2.4.0,3.0.0
 
 The main difference between Squat indexes and the others is that Squat
 provides support for substring searches, while pretty much all other FTS

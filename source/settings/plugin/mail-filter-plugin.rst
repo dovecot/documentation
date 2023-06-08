@@ -4,4 +4,4 @@
 mail-filter plugin
 ==================
 
-.. versionremoved:: 2.3.14
+.. dovecotremoved:: 2.3.14

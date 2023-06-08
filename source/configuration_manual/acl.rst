@@ -163,7 +163,7 @@ of every user to the user ``bar``.
 Global ACL directory (obsolete)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionremoved:: v3.0.0;v2.4.0
+.. dovecotremoved:: 2.4.0,3.0.0
 
 Global ACL directory is specified as a parameter to vfile backend in acl
 setting (``/etc/dovecot/acls/`` in the above example). They are looked up using

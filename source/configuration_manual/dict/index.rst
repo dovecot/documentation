@@ -159,7 +159,7 @@ Memcached (ASCII Protocol)
 --------------------------
 
 .. dovecotadded:: 2.2.9
-.. versionremoved:: v2.4.0;v3.0.0
+.. dovecotremoved:: 2.4.0,3.0.0
 
 .. note:: Users are advised to upgrade to Redis.
 
@@ -194,7 +194,7 @@ Memcached (Binary Protocol)
 ---------------------------
 
 .. dovecotadded:: 2.2.9
-.. versionremoved:: v2.4.0;v3.0.0
+.. dovecotremoved:: 2.4.0,3.0.0
 
 .. note:: Users are advised to upgrade to Redis.
 
