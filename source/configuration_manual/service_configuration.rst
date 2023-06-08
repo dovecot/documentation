@@ -74,6 +74,19 @@ Drop all privileges after forking, but before executing the binary. This is main
 Service limits
 ==============
 
+There are 3 types of services that need to be optimized in different ways:
+
+1. Master services (e.g. auth, anvil, indexer, log):
+    Currently there isn't any easy way to optimize these. If these become a bottleneck, typically you need to run another Dovecot server. In some cases it may be possible to create multiple master processes and have each one be responsible for only specific users/processes, although this may also require some extra development.
+2. Services that do disk I/O or other blocking operations (e.g. imap, pop3, lmtp):
+    These should have ``client_limit=1``, because any blocking operation will block all the other clients and cause unnecessary delays and even timeouts.
+    This means that ``process_limit`` specifies the maximum number of available parallel connections.
+
+3. Services that have no blocking operations (e.g. imap-login, pop3-login):
+    For best performance (but a bit less safety), these should have ``process_limit`` and ``process_min_avail`` set to the number of CPU cores, so each CPU will be busy serving the process but without unnecessary context switches.
+    Then ``client_limit`` needs to be set high enough to be able to serve all the needed connections (``max connections=process_limit * client_limit``).
+    ``service_count`` is commonly set to unlimited (0) for these services. Otherwise when the service_count is beginning to be reached, the total number of available connections will shrink. With very bad luck that could mean that all the processes are simply waiting for the existing connections to die away before the process can die and a new one can be created. Although this could be made less likely by setting ``process_limit`` higher than ``process_min_avail``, but that's still not a guarantee since each process could get a very long running connection and the ``process_limit`` would be eventually reached.
+
 .. _service_configuration-client_limit:
 
 client_limit
@@ -118,19 +131,6 @@ launched.
 vsz_limit
 ^^^^^^^^^
 Limit the process's address space (both ``RLIMIT_DATA`` and ``RLIMIT_AS`` if available). When the space is reached, some memory allocations may start failing with "Out of memory", or the kernel may kill the process with signal 9. This setting is mainly intended to prevent memory leaks from eating up all of the memory, but there can be also legitimate reasons why the process reaches this limit. For example a huge mailbox may not be accessed if this limit is too low. The default value (``18446744073709551615=2^64-1``) sets the limit to ``default_vsz_limit``, while 0 disables the limit entirely.
-
-There are 3 types of services that need to be optimized in different ways:
-
-1. Master services (e.g. auth, anvil, indexer, log):
-    Currently there isn't any easy way to optimize these. If these become a bottleneck, typically you need to run another Dovecot server. In some cases it may be possible to create multiple master processes and have each one be responsible for only specific users/processes, although this may also require some extra development.
-2. Services that do disk I/O or other blocking operations (e.g. imap, pop3, lmtp):
-    These should have ``client_limit=1``, because any blocking operation will block all the other clients and cause unnecessary delays and even timeouts.
-    This means that ``process_limit`` specifies the maximum number of available parallel connections.
-
-3. Services that have no blocking operations (e.g. imap-login, pop3-login):
-    For best performance (but a bit less safety), these should have ``process_limit`` and ``process_min_avail`` set to the number of CPU cores, so each CPU will be busy serving the process but without unnecessary context switches.
-    Then ``client_limit`` needs to be set high enough to be able to serve all the needed connections (``max connections=process_limit * client_limit``).
-    ``service_count`` is commonly set to unlimited (0) for these services. Otherwise when the service_count is beginning to be reached, the total number of available connections will shrink. With very bad luck that could mean that all the processes are simply waiting for the existing connections to die away before the process can die and a new one can be created. Although this could be made less likely by setting ``process_limit`` higher than ``process_min_avail``, but that's still not a guarantee since each process could get a very long running connection and the ``process_limit`` would be eventually reached.
 
 Service listeners
 =================
