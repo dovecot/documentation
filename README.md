@@ -36,13 +36,13 @@ Format:
 
 ```
 .. <directive name>:setting:: <setting name>
-   :added: [vX.Y.Z <reST text>]
-   :changed: [vX.Y.Z <reST text>]
+   :added: [X.Y.Z <reST text>]
+   :changed: [X.Y.Z <reST text>]
    :default: [<value1>, <value2>, ...]
    :domain: <domain-name>
    :hdr_only: [yes]
    :plugin: <plugin-name>
-   :removed: [vX.Y.Z <reST text>]
+   :removed: [X.Y.Z <reST text>]
    :seealso: [<value1>, <value2>, ...]
    :todo: [todo text]
    :values: [<value1>, <value2>, ...]
@@ -162,11 +162,11 @@ Events are defined using the ``dovecot_core:event`` directive:
 
 ```
 .. dovecot_core:event:: <event_name>
-   :added: [vX.Y.Z <reST text>]
-   :changed: [vX.Y.Z <reST text>]
+   :added: [X.Y.Z <reST text>]
+   :changed: [X.Y.Z <reST text>]
    :inherit: [<group_identifier>[, <group_identifier>, ...]]
    :plugin: <plugin-name>
-   :removed: [vX.Y.Z <reST text>]
+   :removed: [X.Y.Z <reST text>]
 
    :field <field_name>[ <field_modification>]: <field_description (reST)>
    :field ...: ...
@@ -188,3 +188,14 @@ To reference Dovecot events in Sphinx, use this:
 ```
 :dovecot_core:ref:`<event_name>`
 ```
+
+#### Dovecot Version Add/Change/Deprecated/Removed Directives
+
+Dovecot defines specific directives to handle add, change, deprecation, and
+removed actions:
+
+```
+.. dovecotadded:: 1.2.3[,4.5.6,...] Optional text
+.. dovecotchanged:: 1.2.3[,4.5.6,...] Optional text
+.. dovecotdeprecated:: 1.2.3[,4.5.6,...] Optional text
+.. dovecotremoved:: 1.2.3[,4.5.6,...] Optional text

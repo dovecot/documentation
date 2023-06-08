@@ -203,7 +203,11 @@ dov
 doveadm
 doveauth
 doveconf
+dovecotadded
+dovecotchanged
+dovecotdeprecated
 dovecotpw
+dovecotremoved
 dovelda
 dovemail
 dovenull

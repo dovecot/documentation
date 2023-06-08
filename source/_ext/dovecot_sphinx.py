@@ -8,6 +8,7 @@ import sphinx
 from sphinx import addnodes
 from sphinx.directives import ObjectDescription, SphinxDirective
 from sphinx.domains import Domain, Index
+from sphinx.domains.changeset import VersionChange
 from sphinx.roles import XRefRole
 from sphinx.util import logging
 from sphinx.util.nodes import make_refnode
@@ -86,7 +87,7 @@ class DovecotSettingDirective(DovecotDirective):
                 contentnode.insert(
                     0,
                     self._parse_rst(
-                        ".. version%s:: %s" % (x, self.options.get(x))
+                        ".. dovecot%s:: %s" % (x, self.options.get(x))
                     ),
                 )
 
@@ -316,6 +317,49 @@ class ClusterSettingDomain(DovecotSettingDomain):
         "setting_link": DovecotSettingLinkDirective,
     }
     indices = {ClusterSettingIndex}
+
+
+dovecot_versionlabel_mapping = {
+    'dovecotadded': 'versionadded',
+    'dovecotchanged': 'versionchanged',
+    'dovecotdeprecated': 'deprecated',
+    'dovecotremoved': 'versionremoved'
+}
+
+# If version begins with this string, it will be replaced by
+# the value text. First match wins, so more exact matches
+# should appear before more general matches.
+dovecot_product_mapping = {
+    '3.0': '%s (Pro)',
+    '2.4': '%s (CE)'
+}
+
+class DovecotVersionChange(VersionChange):
+
+    def run(self):
+        self.name = dovecot_versionlabel_mapping[self.name]
+
+        # TODO: - Link version to RNs/Version page
+        #       - Hide older versions (e.g. v2.2)
+
+        ret = []
+        for x in sorted(self.arguments[0].split(',')):
+            # Strip out 'v' prefix, if it exists
+            if x.startswith('v'):
+                x = x[1:]
+            # Version needs to always be major.minor.point
+            if len(x.split('.')) == 2:
+                x += '.0'
+            # Do product/version matching
+            for k,v in dovecot_product_mapping.items():
+                if x.startswith(k):
+                    x = v % x
+                    break
+
+            self.arguments[0] = x
+            ret += super().run()
+
+        return ret
 
 
 class ManRole(XRefRole):
@@ -554,6 +598,10 @@ class DovecotCoreDomain(DovecotSettingDomain):
 
 
 def setup(app):
+    app.add_directive('dovecotadded', DovecotVersionChange)
+    app.add_directive('dovecotchanged', DovecotVersionChange)
+    app.add_directive('dovecotdeprecated', DovecotVersionChange)
+    app.add_directive('dovecotremoved', DovecotVersionChange)
     app.add_domain(DovecotCoreDomain)
     app.add_domain(DovecotEventDomain)
     app.add_domain(DovecotPluginSettingDomain)
