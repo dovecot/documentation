@@ -124,11 +124,11 @@ Mail service user variables
 +----------+----------------+---------------------------------------------------------------+
 |          | lip            | Deprecated version of %{local_ip}                             |
 |          |                |                                                               |
-|          |                | .. deprecated:: v2.3.14                                       |
+|          |                | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+----------------+---------------------------------------------------------------+
 |          | rip            | Deprecated version of %{remote_ip}                            |
 |          |                |                                                               |
-|          |                | .. deprecated:: v2.3.14                                       |
+|          |                | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+----------------+---------------------------------------------------------------+
 
 .. _variables-mail_user:
@@ -197,38 +197,38 @@ Login variables
 +----------+-----------------------+---------------------------------------------------------------+
 |          | rip                   | Deprecated version of %{remote_ip}                            |
 |          |                       |                                                               |
-|          |                       | .. deprecated:: v2.3.14                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | lip                   | Deprecated version of %{local_ip}                             |
 |          |                       |                                                               |
-|          |                       | .. deprecated:: v2.3.14                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | rport                 | Deprecated version of %{remote_port}                          |
 |          |                       |                                                               |
-|          |                       | .. deprecated:: v2.3.14                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | lport                 | Deprecated version of %{local_port}                           |
 |          |                       |                                                               |
-|          |                       | .. deprecated:: v2.3.14                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_rip              | Deprecated version of %{real_remote_ip}                       |
 |          |                       |                                                               |
-|          |                       | .. deprecated:: v2.3.14                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_lip              | Deprecated version of %{real_local_ip}                        |
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.0                                       |
-|          |                       | .. deprecated:: v2.3.14                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_rport            | Deprecated version of %{real_remote_port}                     |
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.0                                       |
-|          |                       | .. deprecated:: v2.3.14                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_lport            | Deprecated version of %{real_local_port}                      |
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.0                                       |
-|          |                       | .. deprecated:: v2.3.14                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 | %p       | pid                   | process ID of the authentication client                       |
 +----------+-----------------------+---------------------------------------------------------------+
@@ -238,7 +238,7 @@ Login variables
 +----------+-----------------------+---------------------------------------------------------------+
 |          | mech                  | Deprecated version of %{mechanism}                            |
 |          |                       |                                                               |
-|          |                       | .. deprecated:: v2.3.14                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 | %c       | secured               | "TLS" with established SSL/TLS connections, "TLS handshaking",|
 |          |                       | or "TLS [handshaking]: error text" if disconnecting due to TLS|
@@ -281,17 +281,17 @@ Login variables
 |          | orig_user             | Deprecated version of %{original_user}                        |
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.6                                       |
-|          |                       | .. deprecated:: v2.3.14                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | orig_username         | Deprecated version of %{original_username}                    |
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.6                                       |
-|          |                       | .. deprecated:: v2.3.14                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | orig_username         | Deprecated version of %{original_domain}                      |
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.6                                       |
-|          |                       | .. deprecated:: v2.3.14                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | listener              | Socket listener name as specified in config file, which       |
 |          |                       | accepted the client connection.                               |
@@ -369,38 +369,38 @@ Authentication variables
 +----------+-----------------------+---------------------------------------------------------------+
 |          | rip                   | Deprecated version of %{remote_ip}                            |
 |          |                       |                                                               |
-|          |                       | .. deprecated:: v2.3.13                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | lip                   | Deprecated version of %{local_ip}                             |
 |          |                       |                                                               |
-|          |                       | .. deprecated:: v2.3.13                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | rport                 | Deprecated version of %{remote_port}                          |
 |          |                       |                                                               |
-|          |                       | .. deprecated:: v2.3.13                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | lport                 | Deprecated version of %{local_port}                           |
 |          |                       |                                                               |
-|          |                       | .. deprecated:: v2.3.13                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_rip              | Deprecated version of %{real_remote_ip}                       |
 |          |                       |                                                               |
-|          |                       | .. deprecated:: v2.3.13                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_lip              | Deprecated version of %{real_local_ip}                        |
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.0                                       |
-|          |                       | .. deprecated:: v2.3.13                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_rport            | Deprecated version of %{real_remote_port}                     |
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.0                                       |
-|          |                       | .. deprecated:: v2.3.13                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_lport            | Deprecated version of %{real_local_port}                      |
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.0                                       |
-|          |                       | .. deprecated:: v2.3.13                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 | %p       | pid                   | process ID of the authentication client                       |
 +----------+-----------------------+---------------------------------------------------------------+
@@ -415,7 +415,7 @@ Authentication variables
 +----------+-----------------------+---------------------------------------------------------------+
 |          | mech                  | Deprecated version of %{mechanism}                            |
 |          |                       |                                                               |
-|          |                       | .. deprecated:: v2.3.13                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 | %w       | password              | cleartext password from cleartext authentication mechanism    |
 +----------+-----------------------+---------------------------------------------------------------+
@@ -457,19 +457,19 @@ Authentication variables
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.6                                       |
 |          |                       | .. dovecotadded:: 2.2.13 Works in auth process.               |
-|          |                       | .. deprecated:: v2.3.13                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | orig_username         | Deprecated version of %{original_username}                    |
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.6                                       |
 |          |                       | .. dovecotadded:: 2.2.13 Works in auth process.               |
-|          |                       | .. deprecated:: v2.3.13                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | orig_username         | Deprecated version of %{original_domain}                      |
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.6                                       |
 |          |                       | .. dovecotadded:: 2.2.13 Works in auth process.               |
-|          |                       | .. deprecated:: v2.3.13                                       |
+|          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | passdb:<name>         | Return passdb extra field "name". %{passdb:name:default}      |
 |          |                       | returns "default" if "name" doesn't exist (not returned if    |

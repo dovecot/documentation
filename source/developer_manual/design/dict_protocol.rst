@@ -252,7 +252,7 @@ Possible responses include:
 COMMIT_ASYNC command
 ^^^^^^^^^^^^^^^^^^^^
 
-.. deprecated:: v2.2.24
+.. dovecotdeprecated:: 2.2.24
 .. versionremoved:: v2.4.0;v3.0.0
 
 Obsolete command to commit the transaction. This hasn't been used by the

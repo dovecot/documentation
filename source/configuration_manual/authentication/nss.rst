@@ -4,7 +4,7 @@
  NSS
 =====
 
-.. deprecated:: v2.3.0
+.. dovecotdeprecated:: 2.3.0
 
 .. NOTE:: This userdb is probably useless with Dovecot v2.0.12+, since it uses
           ``getpwnam_r()``, which supports error reporting.

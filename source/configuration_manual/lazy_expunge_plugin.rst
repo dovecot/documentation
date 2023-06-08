@@ -85,7 +85,7 @@ to access it at all.
 namespace
 ^^^^^^^^^
 
-.. deprecated:: v2.3.0
+.. dovecotdeprecated:: 2.3.0
 
 Expunged messages are moved to mailbox(es) within a defined namespace
 
