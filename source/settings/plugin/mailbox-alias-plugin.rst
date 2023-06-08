@@ -9,7 +9,7 @@ mailbox-alias plugin
   The mailbox-alias plugin is no longer supported nor available.
 
 .. dovecotadded:: 2.1.10
-.. versionremoved:: v2.4.0;v3.0.0
+.. dovecotremoved:: 2.4.0,3.0.0
 
 This plugin can be used to configure mailbox aliases, which on the filesystem
 level are symlinks to other mailboxes. This doesn't magically solve the problem

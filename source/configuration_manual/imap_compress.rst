@@ -12,7 +12,7 @@ IMAP session.
 Settings
 ========
 
-.. versionremoved:: v2.4.0;v3.0.0
+.. dovecotremoved:: 2.4.0,3.0.0
 
   Configuration of the compression level and algorithm was dropped. The
   extension is now enabled by default and configured with the default

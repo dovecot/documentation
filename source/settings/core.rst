@@ -115,7 +115,7 @@ See :ref:`settings` for list of all setting groups.
    and appending an @domain element to the username in cleartext logins.
 
 .. dovecot_core:setting:: auth_default_realm
-   :removed: v2.4.0;v3.0.0
+   :removed: 2.4.0,3.0.0
    :values: @string
 
    Renamed to :dovecot_core:ref:`auth_default_domain`
@@ -394,7 +394,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: auth_stats
    :added: 2.3.0
-   :removed: v3.0.0
+   :removed: 3.0.0
    :default: no
    :values: @boolean
 
@@ -662,7 +662,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: dict_db_config
    :values: @string
-   :removed: v2.4;v3.0
+   :removed: 2.4.0,3.0.0
 
    Points to a Berkeley DB config file. Equivalent to adding
    ``DB_CONFIG=/path`` to :dovecot_core:ref:`import_environment`.
@@ -989,7 +989,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: imap_id_log
-   :removed: v2.4.0;v3.0.0
+   :removed: 2.4.0,3.0.0
    :values: @string
 
    The ID fields sent by the client that are output to the log.
@@ -1355,7 +1355,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: lmtp_address_translate
-   :removed: v2.3.0
+   :removed: 2.3.0
    :todo: Indicate LMTP setting
    :values: @string
 
@@ -1588,7 +1588,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: login_access_sockets
    :values: @string
-   :removed: v2.4;v3.0
+   :removed: 2.4.0,3.0.0
 
    For blacklisting or whitelisting networks, supply a space-separated list of
    login-access-check sockets for this setting.
@@ -2463,7 +2463,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: master_user_separator
    :values: @string
-   :removed: v2.3.20
+   :removed: 2.3.20
 
    This setting was accidentally used by the director service. It has been
    replaced by the :dovecot_core:ref:`auth_master_user_separator` setting. With
@@ -3254,7 +3254,7 @@ See :ref:`settings` for list of all setting groups.
 
    ``SSLv3``
 
-     .. versionremoved:: v2.4.0;v3.0.0
+     .. dovecotremoved:: 2.4.0,3.0.0
 
    ``TLSv1``
 

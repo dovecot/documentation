@@ -253,7 +253,7 @@ COMMIT_ASYNC command
 ^^^^^^^^^^^^^^^^^^^^
 
 .. dovecotdeprecated:: 2.2.24
-.. versionremoved:: v2.4.0;v3.0.0
+.. dovecotremoved:: 2.4.0,3.0.0
 
 Obsolete command to commit the transaction. This hasn't been used by the
 dict client since v2.2.24.

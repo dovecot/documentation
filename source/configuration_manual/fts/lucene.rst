@@ -3,7 +3,7 @@
 Lucene FTS Engine
 =================
 
-.. versionremoved:: 2.4.0;3.0.0
+.. dovecotremoved:: 2.4.0,3.0.0
 
 .. seealso:: :ref:`fts_backend_solr`.
 

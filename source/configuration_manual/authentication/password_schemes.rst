@@ -148,12 +148,12 @@ In future it's possible that Dovecot could support multiple passwords in
 different schemes for a single user.
 
 +---------------+------------------------------------------------------------------------+--------------------------------+
-| LANMAN	| DES-based encryption. Used sometimes with NTLM mechanism.              |  .. versionremoved:: 2.3.13    |
+| LANMAN	| DES-based encryption. Used sometimes with NTLM mechanism.              |  .. dovecotremoved:: 2.3.13    |
 +---------------+------------------------------------------------------------------------+--------------------------------+
-| NTLM          | MD4 sum of the password stored in hex. Used with NTLM mechanism.       |  .. versionremoved:: 2.3.13    |
+| NTLM          | MD4 sum of the password stored in hex. Used with NTLM mechanism.       |  .. dovecotremoved:: 2.3.13    |
 |               |                                                                        |     Use GSSAPI instead         |
 +---------------+------------------------------------------------------------------------+--------------------------------+
-| RPA           | Used with RPA mechanism.                                               |  .. versionremoved:: 2.3.13    |
+| RPA           | Used with RPA mechanism.                                               |  .. dovecotremoved:: 2.3.13    |
 +---------------+------------------------------------------------------------------------+--------------------------------+
 | CRAM-MD5      | Used with CRAM-MD5 mechanism.                                          |                                |
 +---------------+------------------------------------------------------------------------+--------------------------------+

@@ -34,7 +34,7 @@ Settings
 .. dovecot_plugin:setting:: metacache_disable_merging
    :default: no
    :plugin: obox
-   :removed: v3.0.0
+   :removed: 3.0.0
    :seealso: @metacache_index_merging;dovecot_plugin
    :values: @boolean
 
@@ -230,7 +230,7 @@ Settings
 .. dovecot_plugin:setting:: obox_allow_inconsistency
    :default: no
    :plugin: obox
-   :removed: v3.0.0
+   :removed: 3.0.0
    :values: @boolean
 
    .. warning::
@@ -374,7 +374,7 @@ Settings
 .. dovecot_plugin:setting:: obox_use_object_ids
    :default: no
    :plugin: obox
-   :removed: v2.3.0
+   :removed: 2.3.0
    :values: @boolean
 
    Access objects directly via their IDs instead of by paths, if possible.

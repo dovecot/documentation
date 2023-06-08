@@ -7,7 +7,7 @@ Dovecot Lua Support
 Since v2.3.0 dovecot supports Lua scripting. Dovecot supports Lua 5.1 and
 Lua 5.3.
 
-.. versionremoved:: 2.3.15
+.. dovecotremoved:: 2.3.15
 
    Lua 5.2 support.
 

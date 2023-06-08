@@ -233,7 +233,7 @@ Settings
 
 .. dovecot_plugin:setting:: quota_vsizes
    :added: 2.2.19
-   :removed: v2.4;v3.0
+   :removed: 2.4.0,3.0.0
    :default: no
    :plugin: quota
    :values: @boolean

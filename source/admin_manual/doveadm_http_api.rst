@@ -4171,7 +4171,7 @@ parameters::
 doveadm oldstats dump
 =====================
 
-.. versionremoved:: v3.0.0;v2.4.0
+.. dovecotremoved:: 2.4.0,3.0.0
 
 
 Dump collected dovecot statistics
@@ -4294,7 +4294,7 @@ response::
 doveadm oldstats reset
 ======================
 
-.. versionremoved:: v3.0.0;v2.4.0
+.. dovecotremoved:: 2.4.0,3.0.0
 
 Reset dovecot statistics counters
 

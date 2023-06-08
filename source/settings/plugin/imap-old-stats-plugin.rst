@@ -4,7 +4,7 @@
 imap-old-stats plugin
 =====================
 
-.. versionremoved:: 3.0.0
+.. dovecotremoved:: 3.0.0
 
 .. seealso:: :ref:`statistics`.
 
