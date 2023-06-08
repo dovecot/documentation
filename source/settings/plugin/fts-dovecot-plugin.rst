@@ -13,7 +13,7 @@ Settings
 
 .. dovecot_plugin:setting:: fts_dovecot_mail_flush_interval
    :added: 2.3.5 defaults was 0
-   :changed: v3.0.0 defaults changes from 0 to 10
+   :changed: 3.0.0 defaults changes from 0 to 10
    :default: 10
    :plugin: fts-dovecot
    :values: @uint
@@ -26,7 +26,7 @@ Settings
 
 .. dovecot_plugin:setting:: fts_dovecot_max_triplets
    :added: 2.3.15 defaults was 0
-   :changed: v3.0.0 defaults changes from 0 to 200
+   :changed: 3.0.0 defaults changes from 0 to 200
    :default: 200
    :plugin: fts-dovecot
    :values: @uint

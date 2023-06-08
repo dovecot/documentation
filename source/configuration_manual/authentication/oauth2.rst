@@ -166,7 +166,7 @@ And would expect, when using fs posix, key at
 In key id and AZP field, ``/`` are escaped with ``%2f`` and ``%`` are escaped with ``%25`` with any driver.
 This is because ``/`` is a dict key component delimiter.
 
-.. versionchanged:: v2.3.14.1
+.. dovecotchanged:: 2.3.14.1
 
 When using dict-fs driver, if the path starts with ``.`` it will be escaped using two more dots.
 So any ``.`` turns into ``...``, and any ``..`` turns into ``....``.

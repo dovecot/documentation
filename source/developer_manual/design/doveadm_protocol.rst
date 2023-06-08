@@ -34,7 +34,7 @@ The server will send you back either:
 
 -  "-" means you need to authenticate first.
 
-.. versionchanged:: v2.2.34
+.. dovecotchanged:: 2.2.34
    Dovecot sends the "+" or "-" only after VERSION, while earlier versions
    sent it already before VERSION. This shouldn't change much practically,
    because the client was supposed to have sent the VERSION immediately anyway.

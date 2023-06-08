@@ -77,7 +77,7 @@ The parameters common to all object storages include:
 |                                       |``absolute_timeout`` it takes precedence, emits an error and prevents further retries. While the configured ``timeout`` value  |              |
 |                                       |determines how long HTTP responses are allowed to take before an error ascertained.                                            |              |
 |                                       |                                                                                                                               |              |
-|                                       |.. versionchanged:: 2.3.15 Earlier versions had the same initial retry(50ms), followed by doubling the wait time to            |              |
+|                                       |.. dovecotchanged:: 2.3.15 Earlier versions had the same initial retry(50ms), followed by doubling the wait time to            |              |
 |                                       |                    100ms, 200ms, 400ms and so forth.                                                                          |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | no_trace_headers=1                    |Set to 1 to not add X-Dovecot-User or X-Dovecot-Session headers to HTTP request Useful to correlate object                     | 0            |

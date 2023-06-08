@@ -113,9 +113,10 @@ Key                Value Description
 
                    The setting is obsolete, and kept only for backwards compatibility.
 
-                   .. versionchanged:: v2.3.19 Add support for using ``NO-NOSELECT``
+                   .. dovecotchanged:: 2.3.19 Add support for using ``NO-NOSELECT``
                                        with LAYOUT=index
-                   .. versionchanged:: v2.4.0;v3.0.0 this is now the default.
+
+                   .. dovecotchanged:: 2.4.0,3.0.0 this is now the default.
 
 ``UTF-8``          Store mailbox names on disk using UTF-8 instead of
                    modified UTF-7 (mUTF-7).
@@ -133,7 +134,7 @@ Key                Value Description
 
                    .. dovecotadded:: 2.2.32
 
-                   .. versionchanged:: v2.3.14 Conflicting separators are
+                   .. dovecotchanged:: 2.3.14 Conflicting separators are
                                        also escaped.
 
 ``CONTROL``        Specifies the location of control files.

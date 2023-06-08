@@ -106,11 +106,11 @@ Mail service user variables
 +----------+----------------+---------------------------------------------------------------+
 | %l       | local_ip       | local IP address                                              |
 |          |                |                                                               |
-|          |                | .. versionchanged:: v2.3.14 variable long name changed        |
+|          |                | .. dovecotchanged:: 2.3.14 variable long name changed         |
 +----------+----------------+---------------------------------------------------------------+
 | %r       | remote_ip      | remote IP address                                             |
 |          |                |                                                               |
-|          |                | .. versionchanged:: v2.3.14 variable long name changed        |
+|          |                | .. dovecotchanged:: 2.3.14 variable long name changed         |
 +----------+----------------+---------------------------------------------------------------+
 | %i       | uid            | UNIX user identifier of the user                              |
 +----------+----------------+---------------------------------------------------------------+

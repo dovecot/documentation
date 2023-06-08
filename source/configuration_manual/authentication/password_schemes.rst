@@ -175,7 +175,7 @@ Strong schemes and mechanism-specific schemes are listed above.
 * **CRYPT**: Traditional DES-crypted password in ``/etc/passwd (e.g. "pass" =
   vpvKh.SaNbR6s)``
 
-.. versionchanged:: v2.4;v3.0 DES and MD5 based crypt are disabled by default.
+.. dovecotchanged:: 2.4.0,3.0.0 DES and MD5 based crypt are disabled by default.
 
  * Dovecot uses libc's ``crypt()`` function, which means that CRYPT is usually
    able to recognize MD5-CRYPT and possibly also other password schemes. See
@@ -196,7 +196,7 @@ Strong schemes and mechanism-specific schemes are listed above.
 MD5 based schemes:
 ******************
 
-.. versionchanged:: v2.4;v3.0 Disabled by default.
+.. dovecotchanged:: 2.4.0,3.0.0 Disabled by default.
 
 * **PLAIN-MD4**: MD4 sum of the password stored in hex.
 * **MD5**: Alias for MD5-CRYPT.

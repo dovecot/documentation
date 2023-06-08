@@ -158,7 +158,7 @@ Settings
 
    This setting handles the object storage configuration for index bundles.
 
-   .. versionchanged:: v2.3.18 Fixed to work properly with fs-posix driver.
+   .. dovecotchanged:: 2.3.18 Fixed to work properly with fs-posix driver.
                        Earlier versions don't work correctly in all situations.
 
 

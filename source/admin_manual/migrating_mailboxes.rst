@@ -151,7 +151,7 @@ Configure authentication on the source system to match your preference. Ensure b
 
 Configure IMAP client on the target system.
 
-.. versionchanged:: v2.4.0;v3.0.0 Some selected IMAPC features are auto-enabled
+.. dovecotchanged:: 2.4.0,3.0.0 Some selected IMAPC features are auto-enabled
                     by default. Please refer to :dovecot_core:ref:`imapc_features`
                     for description on individual flags.
 

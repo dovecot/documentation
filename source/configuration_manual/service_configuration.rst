@@ -233,7 +233,7 @@ The master auth process. There are 4 types of auth client connections:
    * **login**: Starts a two phase user login by performing authenticating (same as`client` type). Used by login processes.
    * **master**: Finishes the two phase user login by performing a userdb lookup (similar to "userdb" type). Used by post-login processes (e.g. imap, pop3).
 
-.. versionchanged:: v2.4.0;v3.0.0 The listener type is configured explicitly using the **type** field. For older versions the listener type is selected based on the (file)name after the last ``-`` in the name. For example ``anything-userdb`` is of `userdb` type. The default type is `auth` for unrecognized listeners. You can add as many `auth` and `userdb` listeners as you want (and you probably shouldn't touch the `login` and `master` listeners).
+.. dovecotchanged:: 2.4.0,3.0.0 The listener type is configured explicitly using the **type** field. For older versions the listener type is selected based on the (file)name after the last ``-`` in the name. For example ``anything-userdb`` is of `userdb` type. The default type is `auth` for unrecognized listeners. You can add as many `auth` and `userdb` listeners as you want (and you probably shouldn't touch the `login` and `master` listeners).
 
    * **client_limit** should be large enough to handle all the simultaneous connections.
      Dovecot attempts to verify that the limit is high enough at startup.
@@ -271,7 +271,7 @@ Auth master process connects to auth worker processes. It is mainly used by pass
 
    * **service_count=0** counts the number of processed auth requests. This can be used to cycle the process after the specified number of auth requests (default is unlimited). The worker processes also stop after being idle for ``idle_kill`` seconds. Prior to v2.3.16, you should keep this as **1**.
 
-     .. versionchanged:: v2.3.16
+     .. dovecotchanged:: 2.3.16
 
 
 config
