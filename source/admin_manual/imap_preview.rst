@@ -31,7 +31,7 @@ This method of accessing the preview is deprecated, and should be replaced
 by the standard :rfc:`8970` usage.
 
 .. dovecotadded:: 2.3.7
-.. deprecated:: v2.3.15
+.. dovecotdeprecated:: 2.3.15
 
 --------------------
 SNIPPET (deprecated)
@@ -46,4 +46,4 @@ This method of accessing the preview is deprecated, and should be replaced
 by the standard :rfc:`8970` usage.
 
 .. dovecotadded:: 2.2.34
-.. deprecated:: v2.3.15
+.. dovecotdeprecated:: 2.3.15

@@ -1872,7 +1872,7 @@ See :ref:`settings` for list of all setting groups.
 
      Before v2.3.13 the detection was done only during save, not during fetch.
 
-     .. deprecated:: v2.3.13
+     .. dovecotdeprecated:: 2.3.13
 
    ``add-flags no-flags-on-fetch``
 

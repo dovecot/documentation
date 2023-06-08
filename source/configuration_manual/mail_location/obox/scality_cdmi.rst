@@ -28,7 +28,7 @@ The parameters are:
 +-----------------------------------+----------------------------------------------------------------------------------+--------------+
 | bulk_link                         |Set to 1 to enable using bulk link requests                                       | v2.2: 0      |
 |                                   |                                                                                  |              |
-|                                   |.. deprecated:: 2.2.36                                                            |              |
+|                                   |.. dovecotdeprecated:: 2.2.36                                                     |              |
 +-----------------------------------+----------------------------------------------------------------------------------+--------------+
 | use_listing                       |Use the Scality "listing" API rather than "readdir" API.                          | none         |
 |                                   |This improves listing performance.                                                |              |
