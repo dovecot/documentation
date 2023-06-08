@@ -4,7 +4,7 @@
 Event Reasons
 =============
 
-.. versionadded:: v2.3.18
+.. dovecotadded:: 2.3.18
 
 List of "reason_code" values that used by :ref:`events <list_of_events>`.
 The reason codes are always in <module>:<name> format.

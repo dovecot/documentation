@@ -24,7 +24,7 @@ The parameters are:
 +-----------------------------------+----------------------------------------------------------------------------------+--------------+
 | bulk_link_limit                   |Number of link operations supported within the same bulk link request.            | 1000         |
 |                                   |                                                                                  |              |
-|                                   |.. versionadded:: 2.2.36                                                          |              |
+|                                   |.. dovecotadded:: 2.2.36                                                          |              |
 +-----------------------------------+----------------------------------------------------------------------------------+--------------+
 | bulk_link                         |Set to 1 to enable using bulk link requests                                       | v2.2: 0      |
 |                                   |                                                                                  |              |
@@ -33,7 +33,7 @@ The parameters are:
 | use_listing                       |Use the Scality "listing" API rather than "readdir" API.                          | none         |
 |                                   |This improves listing performance.                                                |              |
 |                                   |                                                                                  |              |
-|                                   |.. versionadded:: 2.3.8                                                           |              |
+|                                   |.. dovecotadded:: 2.3.8                                                           |              |
 +-----------------------------------+----------------------------------------------------------------------------------+--------------+
 
 CDMI paths should have two levels of hash directories:

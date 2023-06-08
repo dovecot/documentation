@@ -29,7 +29,7 @@ complexity, minimum is 3. ARGON2ID is only available if your libsodium is
 recent enough. ARGON2 can require quite a hefty amount of virtual memory, so we
 recommend that you set service ``auth { vsz_limit = 2G }`` at least, or more.
 
-.. versionadded:: v2.4;v3.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 **ARGON2** scheme is also accepted and processed according to the actual
 algorithm as described in the hash, e.g ``{ARGON2}$argon2id$...`` is recognized
@@ -84,7 +84,7 @@ utility. For example:
 
   doveadm pw
 
-.. versionadded:: v2.3.0
+.. dovecotadded:: 2.3.0
 
 The scheme defaults to CRYPT (with the ``$2y$`` bcrypt format),
 but you can use ``-s`` to override it:
@@ -162,7 +162,7 @@ different schemes for a single user.
 +---------------+------------------------------------------------------------------------+--------------------------------+
 | SCRAM-SHA-1   | Used with SCRAM-SHA-1 mechanism.                                       |                                |
 +---------------+------------------------------------------------------------------------+--------------------------------+
-| SCRAM-SHA-256 | Stronger replacement for SCRAM-SHA-1                                   | .. versionadded:: 2.3.10       |
+| SCRAM-SHA-256 | Stronger replacement for SCRAM-SHA-1                                   | .. dovecotadded:: 2.3.10       |
 +---------------+------------------------------------------------------------------------+--------------------------------+
 
 
@@ -221,7 +221,7 @@ SHA based schemes (also see below for libc's SHA* support):
 Other schemes
 *************
 
-.. versionadded:: v2.3.0
+.. dovecotadded:: 2.3.0
 
 * **ARGON2I**: ARGON2i password scheme, needs libsodium
 * **ARGON2ID**: ARGON2id password scheme, needs libsodium
@@ -229,7 +229,7 @@ Other schemes
   Note that there is no standard encoding for this format, so this scheme may not be interoperable with other software.
   Dovecot implements it as "$1$salt$rounds$hash".
 
-.. versionadded:: v2.4;v3.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 * **ARGON2**: ARGON2 password scheme, needs libsodium
 

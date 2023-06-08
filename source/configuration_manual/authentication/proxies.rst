@@ -41,7 +41,7 @@ addition of proxy field. The common fields to use for both proxying ways are:
 * ``host=s``: The destination server's IP address. This field is required.
 * ``source_ip=s``: The source IP address to use for outgoing connections.
 
-  .. versionadded:: v2.2.14
+  .. dovecotadded:: 2.2.14
 
 * ``port=s``: The destination server's port. The default is 143 with IMAP and
   110 with POP3.
@@ -61,12 +61,12 @@ addition of proxy field. The common fields to use for both proxying ways are:
 * ``proxy_nopipelining``: Don't pipeline IMAP commands. This is a workaround
   for broken IMAP servers that hang otherwise.
 
-  .. versionadded:: v2.2.11
+  .. dovecotadded:: 2.2.11
 
 * ``proxy_not_trusted``: ``IMAP/POP3`` proxying never sends the ``ID/XCLIENT``
   command to remote.
 
-  .. versionadded:: v2.2.27
+  .. dovecotadded:: 2.2.27
 
 
 You can use SSL/TLS connection to destination server by returning:
@@ -116,7 +116,7 @@ simply ignore the updated CAPABILITY reply.
 Source IPs
 ==========
 
-.. versionadded:: v2.2.14
+.. dovecotadded:: 2.2.14
 
 If your proxy handles a lot of connections ``(~64k)`` to the same destination
 IP you may run out of TCP ports. The only way to work around this is to use
@@ -134,7 +134,7 @@ address in the setting, as explained here
 Disconnection delay
 ===================
 
-.. versionadded:: v2.2.19
+.. dovecotadded:: 2.2.19
 
 To avoid reconnection load spikes when a backend server dies, you can tell
 proxy to spread the client disconnections over a longer time period (after the
@@ -147,7 +147,7 @@ server side of the connection is already disconnected).
 Forwarding fields
 =================
 
-.. versionadded:: v2.2.29
+.. dovecotadded:: 2.2.29
 
 You can forward arbitrary variables by returning them prefixed with
 ``forward_``. Dovecot will use a protocol-dependent extension to forward these
@@ -171,7 +171,7 @@ and counts.
 Moving users between backends/clusters
 ======================================
 
-.. versionadded:: v2.2.25
+.. dovecotadded:: 2.2.25
 
 A safe way to move users from one cluster to another is to do it like:
 
@@ -202,7 +202,7 @@ If you have a lot of users, it helps to group some of them together and do the
 ID command forwarding
 =====================
 
-.. versionadded:: v2.2.29
+.. dovecotadded:: 2.2.29
 
 If you want to forward, for some reason, the IMAP ID command provided by the
 client, set

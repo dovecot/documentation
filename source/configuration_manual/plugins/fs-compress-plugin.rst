@@ -38,7 +38,7 @@ information on compression levels and defaults.
 Optional compression
 --------------------
 
-.. versionadded:: v2.2.34
+.. dovecotadded:: 2.2.34
 
 By default fs-compress requires that the mail is compressed with the specified
 algorithm.

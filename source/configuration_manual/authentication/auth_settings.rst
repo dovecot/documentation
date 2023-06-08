@@ -47,7 +47,7 @@ Specifies the amount of memory used for authentication caching (passdb and userd
 
    imap_id_retain = yes
 
-.. versionadded:: v2.2.29.1
+.. dovecotadded:: 2.2.29.1
 
 If ``imap_id_retain=yes``, ``imap-login`` will send the IMAP ID string to auth process. The variable ``%{client_id}`` will expand to the IMAP ID in the auth process. The ID string is also sent to the next hop when proxying.
 

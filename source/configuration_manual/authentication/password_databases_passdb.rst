@@ -62,7 +62,7 @@ Databases that belong to this category are:
 * **OAuth2**: Authenticate against oauth2 provider. See :ref:`authentication-oauth2`.
 * **BSDAuth**: BSD authentication (deprecated, unsupported). See :ref:`authentication-bsdauth`.
 
-  .. versionadded:: v2.2.29
+  .. dovecotadded:: 2.2.29
 
 
 Lookup database
@@ -111,7 +111,7 @@ lookup can return:
   :ref:`authentication-static_password_database`.
 * **Lua**: Lua script for authentication. See: :ref:`authentication-lua_based_authentication`.
 
-  .. versionadded:: v2.3.0
+  .. dovecotadded:: 2.3.0
 
 
 See :ref:`authentication-static_password_database`.
@@ -162,7 +162,7 @@ First we have the settings that provide content for the passdb lookup:
   :dovecot_core:ref:`auth_verbose` setting. (However, ``auth_debug=yes``
   overrides :dovecot_core:ref:`auth_verbose`.)
 
-  .. versionadded:: v2.2.24
+  .. dovecotadded:: 2.2.24
 
 
 Then we have the settings which specify when the passdb is used:
@@ -190,7 +190,7 @@ Then we have the settings which specify when the passdb is used:
   LOGIN``). Also ``none`` can be used to match for a non-authenticating passdb
   lookup.
 
-  .. versionadded:: v2.2.30
+  .. dovecotadded:: 2.2.30
 
 * **username_filter**: Skip, if non-empty and the username doesn't match the
   filter. This is mainly used to assign specific passdbs to specific domains.
@@ -199,7 +199,7 @@ Then we have the settings which specify when the passdb is used:
   there can also be negative matches preceded by ``!``. If any of the negative
   filters matches, the filter won't succeed.
 
-  .. versionadded:: v2.2.30
+  .. dovecotadded:: 2.2.30
 
 Example:
 

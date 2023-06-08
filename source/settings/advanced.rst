@@ -20,7 +20,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: mail_cache_max_header_name_length
-   :added: v2.4.0;v3.0.0
+   :added: 2.4.0,3.0.0
    :default: 100
    :values: @uint
 
@@ -47,7 +47,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: mail_cache_max_headers_count
-   :added: v2.4.0;v3.0.0
+   :added: 2.4.0,3.0.0
    :default: 100
    :values: @uint
 
@@ -64,7 +64,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: mail_cache_max_size
-   :added: v2.3.11
+   :added: 2.3.11
    :default: 1G
    :values: @size
 

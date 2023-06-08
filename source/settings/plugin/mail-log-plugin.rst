@@ -10,7 +10,7 @@ Settings
 ========
 
 .. dovecot_plugin:setting:: mail_log_cached_only
-   :added: v2.2.28
+   :added: 2.2.28
    :default: no
    :plugin: mail-log
    :values: @boolean

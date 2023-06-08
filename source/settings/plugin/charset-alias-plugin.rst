@@ -4,7 +4,7 @@
 charset-alias plugin
 ====================
 
-.. versionadded:: 2.2.34
+.. dovecotadded:: 2.2.34
 
 .. seealso:: See :ref:`charset_alias_plugin` for a plugin overview.
 

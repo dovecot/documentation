@@ -10,7 +10,7 @@ Settings
 ========
 
 .. dovecot_plugin:setting:: last_login_dict
-   :added: v2.2.14
+   :added: 2.2.14
    :plugin: last-login
    :values: @string
 
@@ -26,7 +26,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: last_login_key
-   :added: v2.2.14
+   :added: 2.2.14
    :default: last-login/%u
    :plugin: last-login
    :values: @string
@@ -36,7 +36,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: last_login_precision
-   :added: v2.2.14
+   :added: 2.2.14
    :default: s
    :plugin: last-login
    :values: s, ms, us, ns

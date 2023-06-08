@@ -3,7 +3,7 @@
 Authentication policy support
 =============================
 
-.. versionadded:: v2.2.27
+.. dovecotadded:: 2.2.27
 
 Dovecot supports external authentication policy server. This
 server can be used to decide whether the connecting user is permitted,
@@ -64,7 +64,7 @@ to work. To activate this feature, you need to configure it.
    specification (see attributes section below)
 
    -  *Default*: ``auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s``
-   -  .. versionadded:: v2.3.11
+   -  .. dovecotadded:: 2.3.11
 
      - *Default* : ``auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s session_id=%{session}``
 
@@ -158,7 +158,7 @@ produces
    {"login":"john.doe","pwhash":"1234","remote":"127.0.0.1", "attrs":{"cos":"premium"}}
 
 
-.. versionadded:: v2.2.29/v2.3
+.. dovecotadded:: 2.2.29
 
         You can include IMAP ID command result in auth policy
         requests, this is achieved with using ``%{client_id}``, which will expand to
@@ -182,7 +182,7 @@ All fields supported by :ref:`variables-auth` can be used. In addition, you can 
   Username for regular logins. For master user logins, this is the requested login username (not the master username).
 
 ``fail_type``
-  .. versionadded:: v3.0.0;v2.4.0
+  .. dovecotadded:: 2.4.0,3.0.0
 
   Will be the reason request failed. This can take one of
 
@@ -214,49 +214,49 @@ Following fields are always present:
 Default values for auth_policy_request_attributes
 -------------------------------------------------
 
-.. versionadded:: v2.2.25
+.. dovecotadded:: 2.2.25
 
 .. code-block:: none
 
    login=%{orig_username} pwhash=%{hashed_password} remote=%{real_rip}
 
-.. versionadded:: v2.2.30
+.. dovecotadded:: 2.2.30
 
 .. code-block:: none
 
    login=%{orig_username} pwhash=%{hashed_password} remote=%{real_rip} device_id=%{client_id} protocol=%s
 
-.. versionadded:: v2.2.34
+.. dovecotadded:: 2.2.34
 
 .. code-block:: none
 
    login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s
 
-.. versionadded:: v2.3.0 (note that 2.2 and 2.3 branches have been developed in parallel for a while)
+.. dovecotadded:: 2.3.0
 
 .. code-block:: none
 
    login=%{orig_username} pwhash=%{hashed_password} remote=%{real_rip} device_id=%{client_id} protocol=%s
 
-.. versionadded:: v2.3.1
+.. dovecotadded:: 2.3.1
 
 .. code-block:: none
 
    login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s
 
-.. versionadded:: v2.3.2
+.. dovecotadded:: 2.3.2
 
         The request contains 'tls' attribute when TLS has been
         used. TLS is also detected if it's offloaded by a load balancer that can
         provide this information using HAProxy v2 protocol to dovecot.
 
-.. versionadded:: v2.3.11
+.. dovecotadded:: 2.3.11
 
 .. code-block:: none
 
    login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s session_id=%{session}
 
-.. versionadded:: v3.0.0;v2.4.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 .. code-block:: none
 

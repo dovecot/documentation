@@ -66,7 +66,7 @@ Key                Value Description
                      directories. Mainly useful when the ``INDEX`` storage is
                      on a faster storage. It takes no value.
 
-                   .. versionadded:: v2.2.32
+                   .. dovecotadded:: 2.2.32
 
 ``INBOX``          Location of the INBOX path.
 
@@ -107,7 +107,7 @@ Key                Value Description
                    Additionally, the behavior of *rename* already noted for
                    ``LAYOUT=fs`` applies as well.
 
-                   .. versionadded:: v2.4.0;v3.0.0
+                   .. dovecotadded:: 2.4.0,3.0.0
 
 ``NO-NOSELECT``    **This is now the default behavior.**
 
@@ -131,7 +131,7 @@ Key                Value Description
                    remote server uses a different hierarchy separator and has
                    folder names containing the local separator.
 
-                   .. versionadded:: v2.2.32
+                   .. dovecotadded:: 2.2.32
 
                    .. versionchanged:: v2.3.14 Conflicting separators are
                                        also escaped.
@@ -143,7 +143,7 @@ Key                Value Description
                    exist permanently. This is especially useful to avoid
                    creating lock files to NFS or other remote filesystems.
 
-                   .. versionadded:: v2.2.32
+                   .. dovecotadded:: 2.2.32
 
 ``SUBSCRIPTIONS``  Specifies the filename used for storing subscriptions. The
                    default is ``subscriptions``. If you're trying to avoid
@@ -177,7 +177,7 @@ Key                Value Description
                              which with some mailbox formats lost the mails
                              until force-resync was used.
 
-                   .. versionadded:: v2.2.8
+                   .. dovecotadded:: 2.2.8
 
 ``ALT``            Specifies the
                    :ref:`alternate storage <dbox_settings_alt_storage>` path.
@@ -252,7 +252,7 @@ generated on every access.
 Private Index Files
 ^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: v2.2
+.. dovecotadded:: 2.2.0
 
 The recommended way to enable private flags for shared mailboxes is to create
 private indexes with ``:INDEXPVT=<path>``. See :ref:`public_shared_mailboxes`

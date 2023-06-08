@@ -8,7 +8,7 @@ mailbox-alias plugin
 
   The mailbox-alias plugin is no longer supported nor available.
 
-.. versionadded:: v2.1.10
+.. dovecotadded:: 2.1.10
 .. versionremoved:: v2.4.0;v3.0.0
 
 This plugin can be used to configure mailbox aliases, which on the filesystem

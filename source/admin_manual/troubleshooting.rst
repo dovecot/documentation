@@ -10,7 +10,7 @@ You can also use ``dovecot-sysreport`` tool to send information about the
 system having troubles. Before posting it publicly, make sure the exported
 configuration doesn't have anything sensitive in it.
 
-  .. versionadded:: v2.3.10
+  .. dovecotadded:: 2.3.10
 
 
 Some of the known issues and workarounds:

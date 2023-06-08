@@ -578,7 +578,7 @@ Settings
 
 
 .. dovecot_core:setting:: namespace/mailbox/autoexpunge
-   :added: v2.2.20
+   :added: 2.2.20
    :default: 0
    :seealso: @namespace/mailbox/autoexpunge_max_mails;dovecot_core
    :values: @time
@@ -607,7 +607,7 @@ Settings
 
 
 .. dovecot_core:setting:: namespace/mailbox/autoexpunge_max_mails
-   :added: v2.2.25
+   :added: 2.2.25
    :default: 0
    :values: @uint
 

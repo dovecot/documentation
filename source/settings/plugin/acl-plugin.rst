@@ -59,7 +59,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: acl_defaults_from_inbox
-   :added: v2.2.2
+   :added: 2.2.2
    :default: no
    :plugin: acl
    :values: @boolean
@@ -72,7 +72,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: acl_globals_only
-   :added: v2.2.31
+   :added: 2.2.31
    :default: no
    :plugin: acl
    :values: @boolean
@@ -97,7 +97,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: acl_ignore_namespace
-   :added: v2.3.15
+   :added: 2.3.15
    :plugin: acl
    :values: @string
 

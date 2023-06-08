@@ -4,7 +4,7 @@
 Quota Backend: count
 ====================
 
-.. versionadded:: 2.2.19
+.. dovecotadded:: 2.2.19
 
 The ``count`` quota backend tracks the quota internally within Dovecot's index
 files. It is the **RECOMMENDED** way of calculating quota on recent Dovecot

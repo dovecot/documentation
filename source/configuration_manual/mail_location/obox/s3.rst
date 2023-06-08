@@ -95,7 +95,7 @@ to pretty massive resources on our side without gymnastics on our end."
 Deleting multiple objects per request
 -------------------------------------
 
-  .. versionadded:: 2.3.10
+  .. dovecotadded:: 2.3.10
 
 The S3 drivers support bulk-delete requests. The ``bulk-delete`` option is
 enabled by default to delete up to 1000 keys with one request. To change this

@@ -209,7 +209,7 @@ Long lines
 ^^^^^^^^^^
 It's possible to split the setting values into multiple lines. Unfortunately this was broken for a long time, so outside `*.conf.ext` files this works only in
 
-.. versionadded:: v2.2.22
+.. dovecotadded:: 2.2.22
 
 .. code-block:: none
 
@@ -297,7 +297,7 @@ referred to; that is ``$sieve_extensions`` won't work.
 Environment variables
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: v2.3.14
+.. dovecotadded:: 2.3.14
 
 It is possible use ``$ENV:name`` to expand values from environment.
 Expansion only works when it's surrounded by spaces, and is not inside ``"quotes"`` or ``'quotes'``.

@@ -43,7 +43,7 @@ Regardless of the syntax used, matching is performed the same way:
 Unified Filter Language
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: v2.3.12
+.. dovecotadded:: 2.3.12
 
 The unified event filtering language is a SQL-like boolean expression that
 supports the ``AND``, ``OR``, and ``NOT`` boolean operators, the ``=``,
@@ -124,7 +124,7 @@ A more complicated example::
   event=abc OR (event=def AND (category=imap OR category=lmtp) AND \
     NOT category=debug AND NOT (net_in_bytes<1024 OR net_out_bytes<1024))
 
-.. versionadded:: v2.4.0;v3.0.0 Sizes can be expressed using the unit values
+.. dovecotadded:: 2.4.0,3.0.0 Sizes can be expressed using the unit values
    ``B`` - which represents single byte values - as well as ``KB``, ``MB``,
    ``GB`` and ``TB`` which are all powers of 1024. If no unit is specified
    ``B`` is used by default. All size units are case-insensitive. Additionally
@@ -143,7 +143,7 @@ For example::
 Metric filter syntax
 ^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: v2.3
+.. dovecotadded:: 2.3.0
 .. versionchanged:: v2.3.12 filtering changed to use the common filter language
   (see :ref:`event_filter_new_lang`)
 
@@ -204,7 +204,7 @@ the string ``testuser``, and ``status_code`` equal to 200::
 Global filter syntax
 ^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: v2.3
+.. dovecotadded:: 2.3.0
 .. versionchanged:: v2.3.12 filtering changed to use the common filter language
   (see :ref:`event_filter_new_lang`)
 

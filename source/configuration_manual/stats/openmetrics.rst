@@ -2,7 +2,7 @@
 OpenMetrics exporter for statistics
 ===================================
 
-.. versionadded:: 2.3.11
+.. dovecotadded:: 2.3.11
 
 Basic configuration
 ===================

@@ -121,7 +121,7 @@ are supported:
       configured for authentication using a TLS certificate (Thunderbird for
       example).
 
-      .. versionadded:: v2.3.18
+      .. dovecotadded:: 2.3.18
 
    **mailbox-for-path**
       Allow using bare Mailbox syntax (i.e., without ``<...>``) instead of full path

@@ -4,9 +4,9 @@
 Events Design
 =============
 
-.. versionadded:: v2.3
+.. dovecotadded:: 2.3.0
 
-Dovecot introduces events, which improves both logging and statistics. 
+Dovecot introduces events, which improves both logging and statistics.
 
 See also:
 

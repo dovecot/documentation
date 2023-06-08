@@ -117,7 +117,7 @@ Settings
       - special-use flags (e.g. ``\Trash``)
 
 .. dovecot_plugin:setting:: fts_autoindex_max_recent_msgs
-   :added: v2.2.9
+   :added: 2.2.9
    :default: 0
    :plugin: fts
    :seealso: @fts_autoindex;dovecot_plugin
@@ -146,7 +146,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: fts_decoder
-   :added: v2.1
+   :added: 2.1.0
    :plugin: fts
    :values: @string
 
@@ -175,7 +175,7 @@ Settings
              cannot be used simultaneously
 
 .. dovecot_plugin:setting:: fts_enforced
-   :added: v2.2.19
+   :added: 2.2.19
    :default: no
    :plugin: fts
    :values: yes, no, body
@@ -210,7 +210,7 @@ Settings
      behavior as with ``no``). If FTS lookup or indexing fails, the search
      fails.
 
-     .. versionadded:: v2.3.7
+     .. dovecotadded:: 2.3.7
 
    Note that only the ``yes`` value guarantees consistent search results. In
    other cases it's possible that the search results will be different
@@ -329,7 +329,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: fts_header_excludes
-   :added: v2.3.18
+   :added: 2.3.18
    :plugin: fts
    :values: @string
 
@@ -371,7 +371,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: fts_header_includes
-   :added: v2.3.18
+   :added: 2.3.18
    :plugin: fts
    :seealso: @fts_header_excludes;dovecot_plugin
    :values: @string
@@ -446,7 +446,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: fts_tika
-   :added: v2.2.13
+   :added: 2.2.13
    :plugin: fts
    :values: @string
 

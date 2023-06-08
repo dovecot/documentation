@@ -76,7 +76,7 @@ Commonly you want to install at least:
 Installation for Amazon Linux 2
 ===============================
 
-.. versionadded:: v2.3.3
+.. dovecotadded:: 2.3.3
 
 OX Dovecot Pro supports Amazon Linux 2. Earlier versions of Amazon Linux are
 not supported.

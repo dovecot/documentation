@@ -93,7 +93,7 @@ configuration. In tokenizers the order is “right to left”.
 Base64 detection
 ----------------
 
-.. versionadded:: v2.3.18
+.. dovecotadded:: 2.3.18
 
 Base64 sequences are looked for in the tokenization buffer and skipped when detected.
 

@@ -82,7 +82,7 @@ Additionally imapc must be configured accordingly on the backends:
  * :dovecot_core:ref:`imapc_host` must point to a load balancer's address that
    connects to Dovecot proxy
 
-.. versionadded:: 2.3.15 INDEXPVT for imapc is supported from 2.3.15 onwards.
+.. dovecotadded:: 2.3.15 INDEXPVT for imapc is supported from 2.3.15 onwards.
                   In general INDEXPVT with imapc is only supported for non-obox
                   storages.
 

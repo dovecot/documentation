@@ -56,7 +56,7 @@ mailbox. The virtual-attachments mailboxes can be auto created
 Storage location with obox
 --------------------------
 
-.. versionadded:: 2.3.17
+.. dovecotadded:: 2.3.17
 
 When using the virtual-attachments plugin with obox, the virtual INDEX location
 must point to a directory named “virtual-attachments” in the user home directory.

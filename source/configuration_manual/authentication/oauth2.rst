@@ -4,7 +4,7 @@
 Open Authentication v2.0 database
 =================================
 
-.. versionadded:: v2.2.28
+.. dovecotadded:: 2.2.28
 
 This database works with a oauth2 provider such as google or facebook. You are
 recommended to use xoauth2 or oauthbearer :ref:`authentication-authentication_mechanisms` with
@@ -79,7 +79,7 @@ or with proxy authentication, put into ``dovecot-oauth2.conf.ext``
 Proxy with password grant
 *************************
 
-.. versionadded:: v2.3.6
+.. dovecotadded:: 2.3.6
 
 If you want to configure proxy to get token and pass it to backend
 
@@ -131,7 +131,7 @@ put into ``dovecot-oauth2.plain.conf.ext``
 Local validation
 ****************
 
-.. versionadded:: 2.3.11
+.. dovecotadded:: 2.3.11
 
 Local validation allows validating tokens without connecting to an oauth2 server.
 This requires that key issuer supports JWT tokens (:rfc:`7519`).
@@ -222,7 +222,7 @@ ES supports any curve supported by OpenSSL for this purpose.
 OpenID.Discovery
 ****************
 
-.. versionadded:: v2.3.16
+.. dovecotadded:: 2.3.16
 
 Support for :rfc:`7628` OpenID Discovery (OIDC) can be achieved with
 ``openid_configuration_url`` setting. Setting this causes Dovecot to report OIDC configuration URL as ``openid-configuration`` element in error JSON.

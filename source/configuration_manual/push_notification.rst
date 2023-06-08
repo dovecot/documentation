@@ -214,7 +214,7 @@ Example (``Content-Type: application/json; charset=utf-8``):
 Lua [``lua``]
 ^^^^^^^^^^^^^
 
-.. versionadded:: v2.3.4
+.. dovecotadded:: 2.3.4
 
 You can use Lua to write custom push notification handlers.
 
@@ -494,7 +494,7 @@ Example with event code:
 Chronos driver [``chronos``]
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: v2.4.0;v3.0.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 Similar to the :ref:`push_notification_ox` the Chronos backend supports sending
 notifications on MessageNew events in case the message contains a calendar

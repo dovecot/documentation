@@ -82,7 +82,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: quota_max_mail_size
-   :added: v2.2.29
+   :added: 2.2.29
    :default: 0
    :plugin: quota
    :seealso: @quota_configuration_max_mail_size
@@ -95,7 +95,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: quota_over_flag
-   :added: v2.2.16
+   :added: 2.2.16
    :plugin: quota
    :seealso: @quota_configuration_overquota_flag
    :values: @string
@@ -111,7 +111,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: quota_over_flag_lazy_check
-   :added: v2.2.25
+   :added: 2.2.25
    :default: no
    :plugin: quota
    :values: @boolean
@@ -124,7 +124,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: quota_over_flag_value
-   :added: v2.2.16
+   :added: 2.2.16
    :plugin: quota
    :seealso: @quota_configuration_overquota_flag
    :values: @string
@@ -136,7 +136,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: quota_over_script
-   :added: v2.2.16
+   :added: 2.2.16
    :plugin: quota
    :values: @string
 
@@ -232,7 +232,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: quota_vsizes
-   :added: v2.2.19
+   :added: 2.2.19
    :removed: v2.4;v3.0
    :default: no
    :plugin: quota

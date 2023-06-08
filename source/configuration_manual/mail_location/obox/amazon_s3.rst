@@ -28,7 +28,7 @@ This document covers configuration specific to the Amazon Web Services S3
 IAM authentication
 ------------------
 
-.. versionadded:: 2.3.10
+.. dovecotadded:: 2.3.10
 
 Dovecot supports AWS Identity and Access Management (IAM) for authenticating
 requests to AWS S3 using the AWS EC2 Instance Metadata Service (IMDS), solely
@@ -148,7 +148,7 @@ can be used by adding the region parameter to the S3 URL:
 aws-s3 scheme
 -------------
 
-.. versionadded:: 2.3.10
+.. dovecotadded:: 2.3.10
 
 Using the ``aws-s3`` scheme is a simpler way to configure the S3 driver for
 AWS. Currently it's the same as using the ``s3`` scheme with the following

@@ -2432,7 +2432,7 @@ parameters::
 | prepend-prefix | Boolean | Prepend metadata type prefix          |                                 |
 |                |         | ("/shared" or "/private") to name     |                                 |
 |                |         |                                       |                                 |
-|                |         | .. versionadded:: v2.3.14             |                                 |
+|                |         | .. dovecotadded:: 2.3.14              |                                 |
 +----------------+---------+---------------------------------------+---------------------------------+
 
 
@@ -3504,7 +3504,7 @@ response::
 
 .. note::
 
-   .. versionadded:: v2.3.12.1 This command returns a specific exit code (65)
+   .. dovecotadded:: 2.3.12.1 This command returns a specific exit code (65)
         in the failure response, if the deletion is not possible as the index
         is still open in another process.
 

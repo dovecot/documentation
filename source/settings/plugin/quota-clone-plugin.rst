@@ -4,7 +4,7 @@
 quota-clone plugin
 ==================
 
-.. versionadded:: v2.2.17
+.. dovecotadded:: 2.2.17
 
 .. seealso:: :ref:`quota_clone_plugin`
 
@@ -32,7 +32,7 @@ Settings
 .. dovecot_plugin:setting:: quota_clone_unset
    :plugin: quota-clone
    :values: @boolean
-   :added: v2.4;v3.0
+   :added: 2.4.0,3.0.0
 
    Unset quota information before updating. This is needed with some dict backends
    that do not support upserting, such as SQL with older SQLite.

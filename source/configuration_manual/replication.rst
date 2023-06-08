@@ -260,7 +260,7 @@ dovecot.conf:
 dsync parameters
 ----------------
 
-.. versionadded:: v2.2.9
+.. dovecotadded:: 2.2.9
 
 You can configure what parameters replicator uses for the
 ``doveadm sync`` command:

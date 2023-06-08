@@ -4,7 +4,7 @@
 Quota Clone Plugin
 ==================
 
-.. versionadded:: v2.2.17
+.. dovecotadded:: 2.2.17
 
 Quota clone plugin is useful when you want to store everybody's current quota
 usage to a database, but you don't want to use the database as the

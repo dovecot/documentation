@@ -15,7 +15,7 @@ Available driver settings:
 
  * ssl_ca_dir=<path>
 
-   .. versionadded:: v2.2.30
+   .. dovecotadded:: 2.2.30
 
 * ssl_ca_file=<path>
 * allow_invalid_cert=yes|no : Whether to allow authentication even if the
