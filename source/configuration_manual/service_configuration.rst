@@ -148,7 +148,7 @@ Path to the file, relative to ``base_dir`` setting. This is also used as the sec
 type
 ^^^^
 
-.. versionadded:: v2.4.0;v3.0.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 Listener type. This string value has service-specific meaning and is used to distinguish different listener types that one service may employ. The default value is the empty string.
 
@@ -176,7 +176,7 @@ Section name of this listener. It is meant to be descriptive for humans (e.g. `i
 type
 ^^^^
 
-.. versionadded:: v2.4.0;v3.0.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 Listener type. This string value has service-specific meaning and is used to distinguish different listener types that one service may employ. The default value is the empty string.
 
@@ -299,7 +299,7 @@ Dovecot has a `lib-dict"` API for doing simple key-value lookups/updates in vari
 dict-expire
 ^^^^^^^^^^^
 
-.. versionadded:: v2.4.0;v3.0.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 This process periodically goes through configured dicts and deletes all
 expired rows in them. Currently this works only for dict-sql when expire_field

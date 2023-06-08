@@ -48,7 +48,7 @@ This algorithm is usable both with EC and RSA keys.
 Technical Requirements
 ======================
 
-.. versionadded:: v2.2.27
+.. dovecotadded:: 2.2.27
 
 Using per-folder keys is not considered production quality, but global keys are
 fine.
@@ -372,7 +372,7 @@ FS driver syntax::
 .. versionchanged:: v2.3.19
   You can now leave all parameters out of mail-crypt. Prior to this, you would always have to specify them.
 
-.. versionadded:: v2.3.19
+.. dovecotadded:: 2.3.19
 
    ``maybe`` was added
 

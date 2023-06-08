@@ -45,7 +45,7 @@ If you prefer to use Maildir++ layout instead, you can simply append
 Storage location with obox
 --------------------------
 
-.. versionadded:: v2.3.17
+.. dovecotadded:: 2.3.17
 
 When using the virtual plugin with obox, the virtual INDEX location must point
 to a directory named "virtual" in the user home directory. This way the virtual
@@ -135,7 +135,7 @@ virtual mailbox.
 IMAPSieve filters with virtual mailboxes
 ----------------------------------------
 
-.. versionadded:: v2.4.0;v3.0.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 When saving to a virtual mailbox is configured, imapsieve scripts act as if the
 save was done directly to the physical destination mailbox. For example if
@@ -155,7 +155,7 @@ saving via Virtual/All folder.
 Mailbox selection base on METADATA
 ==================================
 
-.. versionadded:: v2.2.22
+.. dovecotadded:: 2.2.22
 
 Instead of a mailbox name, you can specify a metadata filter:
 

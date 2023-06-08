@@ -6,7 +6,7 @@ Dovecot Cluster Architecture
 
 .. Note:: This is a Dovecot Pro v3.0 feature.
 
-.. versionadded:: v3.0.0
+.. dovecotadded:: 3.0.0
 
 The Dovecot Cluster Architecture in v3.0 replaces the director component in
 older Dovecot versions with a new cluster service. The cluster service provides:

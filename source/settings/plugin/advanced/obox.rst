@@ -50,7 +50,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: metacache_disable_secondary_indexes
-   :added: v2.3.17
+   :added: 2.3.17
    :default: no
    :plugin: obox
    :values: @boolean
@@ -65,7 +65,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: metacache_index_merging
-   :added: v2.3.6
+   :added: 2.3.6
    :changed: v2.4.0;v3.0.0 Removed ``v1`` option
    :default: v2
    :plugin: obox
@@ -249,7 +249,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: obox_allow_nonreproducible_uids
-   :added: v2.3.6
+   :added: 2.3.6
    :default: no
    :plugin: obox
    :values: @boolean
@@ -302,7 +302,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: obox_dont_use_object_ids
-   :added: v2.3.0
+   :added: 2.3.0
    :default: no
    :plugin: obox
    :values: @boolean

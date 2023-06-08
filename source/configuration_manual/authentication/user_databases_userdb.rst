@@ -64,7 +64,7 @@ Currently supported user databases are:
   required user database information. See :ref:`authentication-prefetch_userdb`
 * **Lua**: Lua script for authentication. See :ref:`authentication-lua_based_authentication`.
 
-  .. versionadded:: v2.3.0
+  .. dovecotadded:: 2.3.0
 
 Userdb settings
 ================
@@ -106,13 +106,13 @@ First we have the settings that provide content for the userdb lookup:
 For example useful with userdb passwd for overriding e.g. home directory or the
 ``uid`` or ``gid``. See :ref:`authentication-passwd`.
 
-.. versionadded:: v2.2.24
+.. dovecotadded:: 2.2.24
 
 * ``auth_verbose``: If this is explicitly set to yes or no, it overrides the
   global :dovecot_core:ref:`auth_verbose` setting. (However,
   ``auth_debug=yes`` overrides the ``auth_verbose`` setting.)
 
-.. versionadded:: v2.2.10
+.. dovecotadded:: 2.2.10
 
 Then we have the setting which specify when the userdb is used:
 
@@ -124,7 +124,7 @@ Then we have the setting which specify when the userdb is used:
 
 And finally we can control what happens when we're finished with this userdb:
 
-.. versionadded:: v2.2.10
+.. dovecotadded:: 2.2.10
 
 * ``result_success``: What to do if the user was found from the userdb
   (default: return-ok)

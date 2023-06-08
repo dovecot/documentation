@@ -4,7 +4,7 @@
 welcome plugin
 ==============
 
-.. versionadded:: 2.2.25
+.. dovecotadded:: 2.2.25
 
 .. seealso:: :ref:`welcome_plugin`
 

@@ -54,7 +54,7 @@ It's anyway possible to configure it by using ``local_name imap.example.com {}``
 JA3 identifier
 --------------
 
-.. versionadded:: v2.4.0;v3.0.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 Dovecot supports calculating `JA3 hash <https://engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967/>`__ for checking client TLS implementation.
 This adds ``ssl_ja3`` and ``ssl_ja3_hash`` to :ref:`login variables <variables-login>`, to be used with :dovecot_core:ref:`login_log_format_elements`

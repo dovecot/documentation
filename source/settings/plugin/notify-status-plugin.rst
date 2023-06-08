@@ -4,7 +4,7 @@
 notify-status plugin
 ====================
 
-.. versionadded:: v2.2.33
+.. dovecotadded:: 2.2.33
 
 .. seealso:: See :ref:`notify_status_plugin` for configuration information.
 

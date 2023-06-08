@@ -6,7 +6,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: auth_allow_weak_schemes
-   :added: v2.4;v3.0
+   :added: 2.4.0,3.0.0
    :default: no
    :values: @boolean
 
@@ -29,7 +29,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: auth_allow_cleartext
    :default: no
    :values: @boolean
-   :added: v2.4;v3.0
+   :added: 2.4.0,3.0.0
 
    If ``no``, disables the LOGIN command and all other cleartext
    authentication unless SSL/TLS is used (LOGINDISABLED capability) or the
@@ -69,7 +69,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: auth_cache_verify_password_with_worker
-   :added: v2.2.34
+   :added: 2.2.34
    :changed: v2.3.18 Fixed to work properly. Older versions lost passdb extra fields.
    :default: no
    :values: @boolean
@@ -107,7 +107,7 @@ See :ref:`settings` for list of all setting groups.
    See :dovecot_core:ref:`log_debug`
 
 .. dovecot_core:setting:: auth_default_domain
-   :added: v2.4.0;v3.0.0
+   :added: 2.4.0,3.0.0
    :values: @string
 
    This setting indicates the default realm/domain to use if none has
@@ -393,7 +393,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: auth_stats
-   :added: v2.3.0
+   :added: 2.3.0
    :removed: v3.0.0
    :default: no
    :values: @boolean
@@ -471,7 +471,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: auth_verbose
-   :added: v2.2.24
+   :added: 2.2.24
    :default: no
    :values: @boolean
 
@@ -739,7 +739,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: doveadm_ssl
-   :added: v2.3.9
+   :added: 2.3.9
    :default: no
    :values: no, ssl, starttls
 
@@ -775,7 +775,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: dsync_commit_msgs_interval
-   :added: v2.2.30
+   :added: 2.2.30
    :default: 100
    :todo: Indicate dsync setting
    :values: @uint
@@ -785,7 +785,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: dsync_features
-   :added: v2.2.26
+   :added: 2.2.26
    :todo: Indicate dsync setting
    :values: @string
 
@@ -807,10 +807,10 @@ See :ref:`settings` for list of all setting groups.
      mail contents. This can significantly improve dsync performance with some
      IMAP servers that don't support caching Date/Message-ID headers.
 
-     .. versionadded:: v2.3.20
+     .. dovecotadded:: 2.3.20
 
 .. dovecot_core:setting:: dsync_hashed_headers
-   :added: v2.2.33
+   :added: 2.2.33
    :default: Date Message-ID
    :todo: Indicate dsync setting
    :values: @string
@@ -998,7 +998,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: imap_id_retain
-   :added: v2.2.29
+   :added: 2.2.29
    :default: no
    :todo: Indicate imap setting
    :values: @boolean
@@ -1037,7 +1037,7 @@ See :ref:`settings` for list of all setting groups.
    ``revision``      Short commit hash of Dovecot git source tree HEAD (same
                      as the commit hash reported in ``dovecot --version``)
 
-                     .. versionadded:: v2.3.10
+                     .. dovecotadded:: 2.3.10
    ================= ==========================================================
 
    Example:
@@ -1057,7 +1057,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: imap_literal_minus
-   :added: v2.2.25
+   :added: 2.2.25
    :default: no
    :todo: Indicate imap setting
    :values: @boolean
@@ -1346,7 +1346,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: lmtp_add_received_header
-   :added: v2.3.9
+   :added: 2.3.9
    :default: yes
    :todo: Indicate LMTP setting
    :values: @boolean
@@ -1361,7 +1361,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: lmtp_client_workarounds
-   :added: v2.3.9
+   :added: 2.3.9
    :todo: Indicate LMTP setting
    :values: @string
 
@@ -1414,7 +1414,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: lmtp_proxy_rawlog_dir
-   :added: v2.3.2
+   :added: 2.3.2
    :seealso: @debugging_rawlog
    :todo: Indicate LMTP setting
    :values: @string
@@ -1427,7 +1427,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: lmtp_rawlog_dir
-   :added: v2.3.2
+   :added: 2.3.2
    :seealso: @debugging_rawlog
    :todo: Indicate LMTP setting
    :values: @string
@@ -1472,7 +1472,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: lmtp_verbose_replies
-   :added: v2.3.18
+   :added: 2.3.18
    :default: no
    :values: @boolean
 
@@ -1679,7 +1679,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: login_proxy_max_reconnects
-   :added: v2.3.12
+   :added: 2.3.12
    :default: 3
    :values: @uint
 
@@ -1696,7 +1696,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: login_proxy_rawlog_dir
-   :added: v2.3.17
+   :added: 2.3.17
    :seealso: @debugging_rawlog
    :values: @string
 
@@ -1706,7 +1706,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: login_proxy_timeout
-   :added: v2.3.12
+   :added: 2.3.12
    :default: 30 secs
    :values: @time_msecs
 
@@ -1864,7 +1864,7 @@ See :ref:`settings` for list of all setting groups.
      ``imap.bodystructure`` has to be in cache already, or if mail body is
      opened in any case.
 
-     .. versionadded:: v2.3.13
+     .. dovecotadded:: 2.3.13
 
    ``add-flags-on-save``
 
@@ -1879,7 +1879,7 @@ See :ref:`settings` for list of all setting groups.
      Flags are added during save, but not during fetch. This option will
      likely be removed in a later release.
 
-     .. versionadded:: v2.3.13
+     .. dovecotadded:: 2.3.13
 
    ``content-type=<type|!type>``
 
@@ -2747,7 +2747,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: process_shutdown_filter
    :values: @string
 
-   .. versionadded:: 2.3.19
+   .. dovecotadded:: 2.3.19
 
    Filter to specify which events shutdown the process after finishing the
    current connections. This is mainly intended to save memory by preventing
@@ -2786,7 +2786,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: rawlog_dir
-   :added: v2.2.26
+   :added: 2.2.26
    :seealso: @debugging_rawlog
    :values: @string
 
@@ -2849,7 +2849,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: replication_dsync_parameters
-   :added: v2.2.29
+   :added: 2.2.29
    :default: -d -N -l 30 -U
    :seealso: @replicator;dovecot_core
    :todo: Indicate replicator setting
@@ -2981,7 +2981,7 @@ See :ref:`settings` for list of all setting groups.
    which also affects the ``%{secured}`` :ref:`variable <config_variables>`.
 
 .. dovecot_core:setting:: ssl_alt_cert
-   :added: v2.2.31
+   :added: 2.2.31
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
    :values: @string
 
@@ -2998,7 +2998,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: ssl_alt_key
-   :added: v2.2.31
+   :added: 2.2.31
    :seealso: @ssl;dovecot_core, @ssl_alt_cert;dovecot_core, @dovecot_ssl_configuration
    :values: @string
 
@@ -3084,7 +3084,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: ssl_cipher_suites
-   :added: v2.3.15
+   :added: 2.3.15
    :default: !<OpenSSL version specific>
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
    :values: @string
@@ -3181,7 +3181,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: ssl_dh
-   :added: v2.3.0
+   :added: 2.3.0
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
    :values: @string
 
@@ -3246,7 +3246,7 @@ See :ref:`settings` for list of all setting groups.
 
    ``ANY``
 
-     .. versionadded:: v2.3.15
+     .. dovecotadded:: 2.3.15
      .. versionchanged:: v2.4.0;v3.0.0
 
      .. warning:: this value is meant for tests only.
@@ -3272,13 +3272,13 @@ See :ref:`settings` for list of all setting groups.
 
      Support TLSv1.3+.
 
-     .. versionadded:: v2.3.15
+     .. dovecotadded:: 2.3.15
 
    ``LATEST``
 
      Support only the latest version available.
 
-     .. versionadded:: v2.3.15
+     .. dovecotadded:: 2.3.15
 
 
 .. dovecot_core:setting:: ssl_options
@@ -3351,7 +3351,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: submission_add_received_header
-   :added: v2.3.19,v3.0.0
+   :added: 2.3.19
    :default: yes
    :values: @boolean
 
@@ -3375,7 +3375,7 @@ See :ref:`settings` for list of all setting groups.
      authentication when configured for authentication using a TLS certificate
      (Thunderbird for example).
 
-     .. versionadded:: v2.3.18
+     .. dovecotadded:: 2.3.18
 
    ``mailbox-for-path``
 

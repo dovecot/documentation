@@ -4,7 +4,7 @@
 Event Export
 =============
 
-.. versionadded:: v2.3.7
+.. dovecotadded:: 2.3.7
 
 
 There are two parts to the configuration: 

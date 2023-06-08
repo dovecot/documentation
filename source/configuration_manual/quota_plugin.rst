@@ -29,14 +29,14 @@ There are different quota backends that Dovecot can use:
 +==========================+===================================================+
 | :ref:`count              | Store quota usage within Dovecot's index files.   |
 | <quota_backend_count>`   |                                                   |
-|                          | .. versionadded:: v2.2.19                         |
+|                          | .. dovecotadded:: 2.2.19                          |
 +--------------------------+---------------------------------------------------+
 | :ref:`fs                 | Filesystem quota.                                 |
 | <quota_backend_fs>`      |                                                   |
 +--------------------------+---------------------------------------------------+
 | :ref:`imapc              | Use quota from remote IMAP server with imapc.     |
 | <quota_backend_imapc>`   |                                                   |
-|                          | .. versionadded:: v2.2.30                         |
+|                          | .. dovecotadded:: 2.2.30                          |
 +--------------------------+---------------------------------------------------+
 | :ref:`maildir            | Store quota usage in Maildir++ maildirsize        |
 | <quota_backend_maildir>` | files. This is the most commonly used quota for   |

@@ -49,7 +49,7 @@ Starting up backend
 
    * Rescan metacache:
 
-     .. versionadded:: v2.3.7
+     .. dovecotadded:: 2.3.7
 
      .. code-block:: none
 

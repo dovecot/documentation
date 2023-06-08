@@ -47,7 +47,7 @@ The parameters are:
 |                                 | consideration of the overall throughput of the platform  |
 |                                 | are recommended before using it.                         |
 |                                 |                                                          |
-|                                 | .. versionadded:: 2.3.15                                 |
+|                                 | .. dovecotadded:: 2.3.15                                 |
 +---------------------------------+----------------------------------------------------------+
 
 Dovecot uses its own Scality key format, which encodes the object type also to

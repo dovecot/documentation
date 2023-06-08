@@ -138,7 +138,7 @@ by administrator, so users shouldn't be able to override them.
 Global ACL file
 ^^^^^^^^^^^^^^^
 
-.. versionadded:: v2.2.11
+.. dovecotadded:: 2.2.11
 
 Global ACL file path is specified as a parameter to vfile backend in :dovecot_plugin:ref:`acl <acl>`
 setting (``/etc/dovecot/dovecot-acl`` in the above example). The file contains

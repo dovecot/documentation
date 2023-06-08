@@ -31,7 +31,7 @@ Connection Pooling
 The :ref:`dict-sql` driver keeps a maximum of 10 unused SQL connections open
 (infinitely) and reuses them for SQL dict lookup requests.
 
-.. versionadded:: v2.3.17
+.. dovecotadded:: 2.3.17
 
 Starting version 2.3.17, the dict server process keeps the last 10 idle dict
 backends cached for maximum of 30 seconds. Practically this acts as a
@@ -57,7 +57,7 @@ for large databases, but good for small ones such as a single user's quota.
 Filesystem (lib-fs wrapper)
 ---------------------------
 
-.. versionadded:: v2.2.11
+.. dovecotadded:: 2.2.11
 
 .. code-block:: none
 
@@ -78,7 +78,7 @@ Would create a separate file under ``/var/lib/dovecot/dict`` for each key.
 LDAP
 ----
 
-.. versionadded:: v2.2.24
+.. dovecotadded:: 2.2.24
 
 LDAP support is very similar to :ref:`dict-sql` support, but there is no write
 support.
@@ -158,7 +158,7 @@ To do a more complex search:
 Memcached (ASCII Protocol)
 --------------------------
 
-.. versionadded:: v2.2.9
+.. dovecotadded:: 2.2.9
 .. versionremoved:: v2.4.0;v3.0.0
 
 .. note:: Users are advised to upgrade to Redis.
@@ -193,7 +193,7 @@ Supported parameters are:
 Memcached (Binary Protocol)
 ---------------------------
 
-.. versionadded:: v2.2.9
+.. dovecotadded:: 2.2.9
 .. versionremoved:: v2.4.0;v3.0.0
 
 .. note:: Users are advised to upgrade to Redis.
@@ -269,7 +269,7 @@ Supported parameters are:
 Redis
 -----
 
-.. versionadded:: v2.2.9
+.. dovecotadded:: 2.2.9
 
 Note that Redis backend is recommended to be used via :ref:`dict-proxy` to
 support :ref:`connection pooling <dict_pool>`. Also, currently using Redis

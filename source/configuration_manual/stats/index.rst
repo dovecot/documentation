@@ -4,7 +4,7 @@
 Statistics
 ==========
 
-.. versionadded:: v2.3
+.. dovecotadded:: 2.3.0
 
 See :ref:`list_of_events` for list of all events that can be used in statistics.
 
@@ -54,7 +54,7 @@ For example::
 Group by
 ^^^^^^^^
 
-.. versionadded:: v2.3.10 adds support for implicit discrete aggregation
+.. dovecotadded:: 2.3.10 adds support for implicit discrete aggregation
 .. versionchanged:: v2.3.11 adds support for explicit aggregation functions
 
 The ``group_by`` metric setting allows dynamic hierarchical metric
@@ -248,7 +248,7 @@ The stats counters are reset whenever the stats process is started, which also m
 
 Modifying Statistics Dynamically
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. versionadded:: v2.3.17
+.. dovecotadded:: 2.3.17
 
 Metrics can be added or removed dynamically. The changes do not persist after configuration reload.
 

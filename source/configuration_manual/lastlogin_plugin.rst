@@ -4,7 +4,7 @@
 Last Login Plugin
 =================
 
-.. versionadded:: 2.2.14
+.. dovecotadded:: 2.2.14
 
 This plugin can be used to update user's last-login timestamp in a configured
 dictionary.

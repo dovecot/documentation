@@ -16,7 +16,7 @@ RFC 8970
 
 Support for the standard: IMAP PREVIEW extension  :rfc:`8970`.
 
-.. versionadded:: v2.3.15
+.. dovecotadded:: 2.3.15
 
 --------------------------------
 PREVIEW w/algorithm (deprecated)
@@ -30,7 +30,7 @@ See: `<https://datatracker.ietf.org/doc/draft-ietf-extra-imap-fetch-preview/06/>
 This method of accessing the preview is deprecated, and should be replaced
 by the standard :rfc:`8970` usage.
 
-.. versionadded:: v2.3.7
+.. dovecotadded:: 2.3.7
 .. deprecated:: v2.3.15
 
 --------------------
@@ -45,5 +45,5 @@ See: `<https://www.ietf.org/archive/id/draft-slusarz-imap-fetch-snippet-00.txt>`
 This method of accessing the preview is deprecated, and should be replaced
 by the standard :rfc:`8970` usage.
 
-.. versionadded:: v2.2.34
+.. dovecotadded:: 2.2.34
 .. deprecated:: v2.3.15

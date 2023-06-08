@@ -29,23 +29,23 @@ The parameters common to all object storages include:
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | absolute_timeout=<:ref:`time_msecs`>  |Maximum total time for an HTTP request to finish. Overrides all timeout configuration                                          | none         |
 |                                       |                                                                                                                               |              |
-|                                       |.. versionadded:: 2.3.0                                                                                                        |              |
+|                                       |.. dovecotadded:: 2.3.0                                                                                                        |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | addhdr=<name>:<value>                 |Add the specified header to all HTTP requests.                                                                                 | none         |
 |                                       |                                                                                                                               |              |
-|                                       |.. versionadded:: 2.3.10 Can be specified multiple times.                                                                      |              |
+|                                       |.. dovecotadded:: 2.3.10 Can be specified multiple times.                                                                      |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | addhdrvar=<name>:<variable>           |Add the specified header to all HTTP requests and set the value to the expanded variables value.                               | none         |
 |                                       |                                                                                                                               |              |
 |                                       |                                                                                                                               |              |
-|                                       |.. versionadded:: 2.3.10                                                                                                       |              |
+|                                       |.. dovecotadded:: 2.3.10                                                                                                       |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | bucket=<n>                            |Used by some backends to specify the bucket to save the data into                                                              | none         |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | bulk_delete_limit=<n>                 |Number of deletes supported within the same bulk delete request. 0 disables bulk deletes. Note that this setting works only    | scality: 1000|
 |                                       |for the backends that support bulk deletion.                                                                                   | s3: 1000     |
 |                                       |                                                                                                                               |              |
-|                                       |.. versionadded:: 2.2.36                                                                                                       |              |
+|                                       |.. dovecotadded:: 2.2.36                                                                                                       |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | bulk_delete=1                         |Set to 1 if backend supports  bulk deletes                                                                                     | v2.2: 0      |
 |                                       |                                                                                                                               |              |
@@ -53,19 +53,19 @@ The parameters common to all object storages include:
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | connect_timeout=<:ref:`time_msecs`>   |Timeout for establishing a TCP connection                                                                                      | timeout      |
 |                                       |                                                                                                                               |              |
-|                                       |.. versionadded:: 2.3.0                                                                                                        |              |
+|                                       |.. dovecotadded:: 2.3.0                                                                                                        |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | delete_max_retries=<n>                |Max number of HTTP request retries for delete actions                                                                          | max_retries  |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | delete_timeout=<:ref:`time_msecs`>    |Timeout for sending a delete HTTP response                                                                                     | timeout      |
 |                                       |                                                                                                                               |              |
-|                                       |.. versionadded:: 2.3.0                                                                                                        |              |
+|                                       |.. dovecotadded:: 2.3.0                                                                                                        |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | loghdr=<name>                         |Headers with the given name in HTTP responses are logged as part of any error, debug or warning messages related to the HTTP   | none         |
 |                                       |request. These headers are also included in the http_request_finished event as fields prefixed with ``http_hdr_``.             |              |
 |                                       |Can be specified multiple times.                                                                                               |              |
 |                                       |                                                                                                                               |              |
-|                                       |.. versionadded:: 2.3.10                                                                                                       |              |
+|                                       |.. dovecotadded:: 2.3.10                                                                                                       |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | max_connect_retries=<n>               |Number of connect retries                                                                                                      | 2            |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
@@ -87,23 +87,23 @@ The parameters common to all object storages include:
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | read_timeout=<:ref:`time_msecs`>      |Timeout for a receiving reada HTTP response                                                                                    | timeout      |
 |                                       |                                                                                                                               |              |
-|                                       |.. versionadded:: 2.3.0                                                                                                        |              |
+|                                       |.. dovecotadded:: 2.3.0                                                                                                        |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | reason_header_max_length=<n>          |Maximum length for X-Dovecot-Reason HTTP header If header is present, it contains information why obox operation is being done | 0            |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | slow_warn=<:ref:`time_msecs`>         |Log a warning about any HTTP request that takes longer than this time                                                          | 5s           |
 |                                       |                                                                                                                               |              |
-|                                       |.. versionadded:: 2.3.0                                                                                                        |              |
+|                                       |.. dovecotadded:: 2.3.0                                                                                                        |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | timeout=<:ref:`time_msecs`>           |Default timeout for HTTP responses, unless overwritten by the read/write/delete_timeout_msecs                                  | 10s          |
 |                                       |                                                                                                                               |              |
-|                                       |.. versionadded:: 2.3.0                                                                                                        |              |
+|                                       |.. dovecotadded:: 2.3.0                                                                                                        |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | write_max_retries=<n>                 |Max number of HTTP request retries for write actions                                                                           | max_retries  |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 | write_timeout=<:ref:`time_msecs`>     |Timeout for a write HTTP response                                                                                              | timeout      |
 |                                       |                                                                                                                               |              |
-|                                       |.. versionadded:: 2.3.0                                                                                                        |              |
+|                                       |.. dovecotadded:: 2.3.0                                                                                                        |              |
 +---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+--------------+
 
 Dovecot sends the following HTTP headers towards storage. They should be logged for troubleshooting purposes:

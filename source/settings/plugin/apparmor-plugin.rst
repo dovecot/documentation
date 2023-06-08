@@ -4,7 +4,7 @@
 apparmor plugin
 ===============
 
-.. versionadded:: v2.2.32
+.. dovecotadded:: 2.2.32
 
 .. seealso:: See :ref:`apparmor_plugin` for a plugin overview.
 

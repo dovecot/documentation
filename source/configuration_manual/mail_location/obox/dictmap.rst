@@ -157,7 +157,7 @@ Dictmap Parameters
 |                                 | in <prefix>/<objectid>. This setting should be used in obox_fs for storing   |
 |                                 | mails under <prefix>. For example storage-objectid-prefix=%u/mails/          |
 |                                 |                                                                              |
-|                                 | .. versionadded:: v2.3.2.1                                                   |
+|                                 | .. dovecotadded:: 2.3.2.1                                                    |
 +---------------------------------+------------------------------------------------------------------------------+
 | storage-passthrough-paths=      | Use fake object IDs with object storage that internally uses path. Assume    |
 | full|read-only                  | that object ID is the same as the path. Objects can't be copied within the   |
@@ -170,7 +170,7 @@ Dictmap Parameters
 |                                 |   is still written to the dict as the object ID, even though it's not used   |
 |                                 |   (except potentially by an older Dovecot version).                          |
 |                                 |                                                                              |
-|                                 | .. versionadded:: v2.3.2.1                                                   |
+|                                 | .. dovecotadded:: 2.3.2.1                                                    |
 +---------------------------------+------------------------------------------------------------------------------+
 | storage-objectid-migrate        | This is expected to be used with storage-objectid-prefix when adding         |
 |                                 | fs-dictmap for an existing installation. The newly created object IDs have   |
@@ -180,13 +180,13 @@ Dictmap Parameters
 |                                 | Migrated object IDs can't be copied directly within dict - they'll be first  |
 |                                 | copied to a new object ID using the parent fs.                               |
 |                                 |                                                                              |
-|                                 | .. versionadded:: v2.3.2.1                                                   |
+|                                 | .. dovecotadded:: 2.3.2.1                                                    |
 +---------------------------------+------------------------------------------------------------------------------+
 | max-parallel-iter=<n>           | Describes how many parallel dict iterations can be created internally. The   |
 |                                 | default value is 10. Parallel iterations can especially help speed up        |
 |                                 | reading huge folders.                                                        |
 |                                 |                                                                              |
-|                                 | .. versionadded:: v2.3.10                                                    |
+|                                 | .. dovecotadded:: 2.3.10                                                     |
 |                                 | .. versionchanged:: v3.0.0 Increased default to 10. Earlier versions run     |
 |                                 |                     with 1 as default.                                       |
 +---------------------------------+------------------------------------------------------------------------------+
@@ -199,7 +199,7 @@ Dictmap Parameters
 |                                 | the uncertainly written Cassandra keys is also attempted.                    |
 |                                 | Copying never attempts to delete anything from object storage.               |
 |                                 |                                                                              |
-|                                 | .. versionadded:: v2.3.12                                                    |
+|                                 | .. dovecotadded:: 2.3.12                                                     |
 +---------------------------------+------------------------------------------------------------------------------+
 | no-store-orig-path              | If this option is enabled the original file path is not stored as metadata.  |
 |                                 | The original path metadata is normally eventually visible to a fs backend    |

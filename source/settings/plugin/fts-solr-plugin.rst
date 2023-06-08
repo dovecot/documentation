@@ -40,7 +40,7 @@ Settings
 
    ``rawlog_dir=<directory>``
 
-     .. versionadded:: 2.3.6
+     .. dovecotadded:: 2.3.6
 
      * Default: <empty>
      * Values:  :ref:`string`
@@ -49,7 +49,7 @@ Settings
 
    ``batch_size``
 
-     .. versionadded:: 2.3.6
+     .. dovecotadded:: 2.3.6
 
      * Default: ``1000``
      * Values:  :ref:`uint`
@@ -63,7 +63,7 @@ Settings
 
    ``soft_commit=yes|no``
 
-     .. versionadded:: 2.3.6
+     .. dovecotadded:: 2.3.6
 
      * Default: ``yes``
      * Values:  :ref:`boolean`

@@ -288,7 +288,7 @@ quota, you can use something like:
 Overquota-flag
 ^^^^^^^^^^^^^^
 
-.. versionadded:: v2.2.16
+.. dovecotadded:: 2.2.16
 
 Quota warning scripts can be used to set an overquota-flag to userdb (e.g.
 LDAP) when user goes over/under quota. This flag can be used by MTA to reject
@@ -354,7 +354,7 @@ To change the quota grace, use:
 Maximum Saved Mail Size
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: v2.2.29
+.. dovecotadded:: 2.2.29
 
 See :dovecot_plugin:ref:`quota_grace`.
 
@@ -373,7 +373,7 @@ would later on fail on the MTA side anyway.
 Quota Virtual Sizes
 ^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: v2.2.19
+.. dovecotadded:: 2.2.19
 .. versionchanged:: v2.4;v3.0
 
 See :dovecot_plugin:ref:`quota_vsizes`.

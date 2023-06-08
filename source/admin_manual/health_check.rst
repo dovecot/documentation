@@ -27,7 +27,7 @@ Options
          the output. Be extremely careful when modifying the `health-check.sh`
          script or implementing your own.
 
-         .. versionadded:: v2.3.8
+         .. dovecotadded:: 2.3.8
 
  * `-e`: The `-e` parameter can be used when using normal script mode. It
          allows to define a list of environment variables which can be

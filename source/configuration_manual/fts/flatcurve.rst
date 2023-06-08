@@ -3,7 +3,7 @@
 Flatcurve FTS Engine
 ====================
 
-.. versionadded:: 2.4.0
+.. dovecotadded:: 2.4.0
 
 Requires Xapian 1.4+ `<https://xapian.org/download/>`_ to work properly.
 

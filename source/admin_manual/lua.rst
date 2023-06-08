@@ -80,14 +80,14 @@ Lua API
 
    Generate new event with lua script as parent.
 
-   .. versionadded:: v2.3.4
+   .. dovecotadded:: 2.3.4
 
 .. py:function:: event(parent)
    :noindex:
 
    Generate new event with given parent event.
 
-   .. versionadded:: v2.3.4
+   .. dovecotadded:: 2.3.4
 
 .. py:function:: restrict_global_variables(toggle)
 
@@ -105,7 +105,7 @@ Lua API
 
    :param boolean toggle: Enable or disable defining new global variables
 
-   .. versionadded:: v2.3.17
+   .. dovecotadded:: 2.3.17
 
 .. py:currentmodule:: dovecot.http
 
@@ -140,12 +140,12 @@ Lua API
    :param string user_agent: User-Agent: header. (Default: none)
    :return: An http_client object.
 
-   .. versionadded:: 2.3.19
+   .. dovecotadded:: 2.3.19
 
 object http_client
 ^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.3.19
+.. dovecotadded:: 2.3.19
 
 .. py:currentmodule:: http_client
 
@@ -162,7 +162,7 @@ object http_client
 object http_request
 ^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.3.19
+.. dovecotadded:: 2.3.19
 
 .. py:currentmodule:: http_request
 
@@ -195,7 +195,7 @@ object http_request
 object http_response
 ^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.3.19
+.. dovecotadded:: 2.3.19
 
 .. py:currentmodule:: http_response
 
@@ -407,7 +407,7 @@ Functions:
 
    :param str key: Key to unset
 
-   .. versionadded:: v2.3.17
+   .. dovecotadded:: 2.3.17
 
 .. py:function::  set_timestamp({tv_sec=seconds, tv_nsec=nanoseconds})
 
@@ -417,7 +417,7 @@ Functions:
    :param int seconds: UNIX timestamp
    :param int nanoseconds: Nanoseconds part of the timestamp
 
-   .. versionadded:: v2.3.17
+   .. dovecotadded:: 2.3.17
 
 .. py:function::  commit()
 
@@ -432,7 +432,7 @@ object dns_client
 
 .. py:currentmodule:: dns_client
 
-.. versionadded:: v2.4;v3.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 .. note:: Currently this object cannot be created within the Lua code itself.
 
@@ -455,7 +455,7 @@ Functions:
 mail-lua
 ^^^^^^^^
 
-.. versionadded:: v2.3.4
+.. dovecotadded:: 2.3.4
 
 mail-lua is a plugin that can be loaded to provide API for mail storage Lua
 plugins. Mail-lua provides a common script to be used in mail storage instead
@@ -547,19 +547,19 @@ Following constants are specified:
 
    String constant ``vendor/vendor.dovecot/``
 
-   .. versionadded:: 2.3.7
+   .. dovecotadded:: 2.3.7
 
 .. c:enum::  MAILBOX_ATTRIBUTE_PREFIX_DOVECOT_PVT
 
     String constant ``vendor/vendor.dovecot/pvt/``
 
-    .. versionadded:: 2.3.7
+    .. dovecotadded:: 2.3.7
 
 .. c:enum::  MAILBOX_ATTRIBUTE_PREFIX_DOVECOT_PVT_SERVER
 
     String constant ``vendor/vendor.dovecot/pvt/server/``
 
-    .. versionadded:: 2.3.7
+    .. dovecotadded:: 2.3.7
 
 
 object mail_user
@@ -601,7 +601,7 @@ Functions
 
    :param str key: Metadata key, must begin with /private/ or /shared/
 
-   .. versionadded:: 2.3.7
+   .. dovecotadded:: 2.3.7
 
 .. py:function:: metadata_set(key, value)
 
@@ -610,7 +610,7 @@ Functions
    :param str key: Metadata key, must begin with /private/ or /shared/
    :param str value: Value to set, nil unsets value
 
-   .. versionadded:: 2.3.7
+   .. dovecotadded:: 2.3.7
 
 .. py:function:: metadata_unset(key)
 
@@ -618,7 +618,7 @@ Functions
 
    :param str key: Metadata key, must begin with /private/ or /shared/
 
-   .. versionadded:: 2.3.7
+   .. dovecotadded:: 2.3.7
 
 .. py:function:: metadata_list(prefix, prefix, prefix...)
 
@@ -626,7 +626,7 @@ Functions
 
    :param str prefix: Metadata prefix, must begin with /private/ or /shared/
 
-   .. versionadded:: 2.3.7
+   .. dovecotadded:: 2.3.7
 
 Variables
 ---------
@@ -732,7 +732,7 @@ Functions
 
    :param str key: Metadata key, must begin with /private/ or /shared/
 
-   .. versionadded:: 2.3.7
+   .. dovecotadded:: 2.3.7
 
 .. py:function:: metadata_set(key, value)
    :noindex:
@@ -742,7 +742,7 @@ Functions
    :param str key: Metadata key, must begin with /private/ or /shared/
    :param str value: Value to set, nil unsets value
 
-   .. versionadded:: 2.3.7
+   .. dovecotadded:: 2.3.7
 
 .. py:function:: metadata_unset(key)
    :noindex:
@@ -751,7 +751,7 @@ Functions
 
    :param str key: Metadata key, must begin with /private/ or /shared/
 
-   .. versionadded:: 2.3.7
+   .. dovecotadded:: 2.3.7
 
 .. py:function:: metadata_list(prefix, prefix, prefix...)
    :noindex:
@@ -760,7 +760,7 @@ Functions
 
    :param str prefix: Metadata prefix, must begin with /private/ or /shared/
 
-   .. versionadded:: 2.3.7
+   .. dovecotadded:: 2.3.7
 
 Variables
 ---------

@@ -139,7 +139,7 @@ Settings
    ``metacache_last_host`` backend. Obox also updates ``metacache_last_host``
    to the given dict.
 
-.. versionadded:: v2.4;v3.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 
 .. dovecot_plugin:setting:: obox_fs

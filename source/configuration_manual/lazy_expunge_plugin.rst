@@ -38,7 +38,7 @@ Storage Locations
 mailbox
 ^^^^^^^
 
-.. versionadded:: v2.2.24
+.. dovecotadded:: 2.2.24
 
 Messages that are expunged are moved to a single mailbox.
 

@@ -19,7 +19,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: lazy_expunge_exclude
-   :added: v2.3.17
+   :added: 2.3.17
    :plugin: lazy-expunge
    :values: @string
 

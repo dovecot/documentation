@@ -4,7 +4,7 @@
 mail-lua plugin
 ===============
 
-.. versionadded:: v2.3.4
+.. dovecotadded:: 2.3.4
 
 .. seealso:: :ref:`lua`
 
@@ -16,7 +16,7 @@ Settings
 ========
 
 .. dovecot_plugin:setting:: mail_lua_script
-   :added: v2.3.4
+   :added: 2.3.4
    :plugin: mail-lua
    :values: @string
 

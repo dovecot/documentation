@@ -4,7 +4,7 @@
 notify-status plugin
 ====================
 
-.. versionadded:: v2.2.33
+.. dovecotadded:: 2.2.33
 
 This plugin updates a :ref:`dictionary <dict>` with mailbox status information
 every time a mailbox changes.

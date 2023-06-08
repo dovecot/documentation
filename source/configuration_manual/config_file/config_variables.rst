@@ -45,13 +45,13 @@ If :ref:`var_expand_crypt_plugin` is loaded, these also work globally:
 +-------------------------------+-----------------------------+
 | Long name                     | Description                 |
 +===============================+=============================+
-| encrypt; <parameters>:<field> | Encrypt field (v2.2.29+)    |
+| encrypt; <parameters>:<field> | Encrypt field               |
 |                               |                             |
-|                               | .. versionadded:: v2.2.29   |
+|                               | .. dovecotadded:: 2.2.29    |
 +-------------------------------+-----------------------------+
 | decrypt; <parameters>:<field> | Decrypt field               |
 |                               |                             |
-|                               | .. versionadded:: v2.2.29   |
+|                               | .. dovecotadded:: 2.2.29    |
 +-------------------------------+-----------------------------+
 
 .. _variables-user:
@@ -81,15 +81,15 @@ Variables that are work nearly everywhere where there is a username:
 |          |                | authentication, this value contains the original username.    |
 |          |                | Otherwise the same as %{user}.                                |
 |          |                |                                                               |
-|          |                | .. versionadded:: v2.2.11                                     |
+|          |                | .. dovecotadded:: 2.2.11                                      |
 +----------+----------------+---------------------------------------------------------------+
 |          | auth_username  | user part in %{auth_user}                                     |
 |          |                |                                                               |
-|          |                | .. versionadded:: v2.2.11                                     |
+|          |                | .. dovecotadded:: 2.2.11                                      |
 +----------+----------------+---------------------------------------------------------------+
 |          | auth_domain    | domain part in %{auth_user}                                   |
 |          |                |                                                               |
-|          |                | .. versionadded:: v2.2.11                                     |
+|          |                | .. dovecotadded:: 2.2.11                                      |
 +----------+----------------+---------------------------------------------------------------+
 
 .. _variables-mail_service_user:
@@ -120,7 +120,7 @@ Mail service user variables
 |          |                | returns "default" if "name" doesn't exist (not returned if    |
 |          |                | name exists but is empty)                                     |
 |          |                |                                                               |
-|          |                | .. versionadded:: v2.2.19                                     |
+|          |                | .. dovecotadded:: 2.2.19                                      |
 +----------+----------------+---------------------------------------------------------------+
 |          | lip            | Deprecated version of %{local_ip}                             |
 |          |                |                                                               |
@@ -159,41 +159,41 @@ Login variables
 +----------+-----------------------+---------------------------------------------------------------+
 |          | local_name            | TLS SNI hostname, if given                                    |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.26                                     |
+|          |                       | .. dovecotadded:: 2.2.26                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 | %l       | local_ip              | local IP address                                              |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.14 For older versions use %{lip}       |
+|          |                       | .. dovecotadded:: 2.3.14 For older versions use %{lip}        |
 +----------+-----------------------+---------------------------------------------------------------+
 | %r       | remote_ip             | remote IP address                                             |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.14 For older versions use %{rip}       |
+|          |                       | .. dovecotadded:: 2.3.14 For older versions use %{rip}        |
 +----------+-----------------------+---------------------------------------------------------------+
 | %a       | local_port            | local port                                                    |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.14 For older versions use %{lport}     |
+|          |                       | .. dovecotadded:: 2.3.14 For older versions use %{lport}      |
 +----------+-----------------------+---------------------------------------------------------------+
 | %b       | remote_port           | remote port                                                   |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.14 For older versions use %{rport}     |
+|          |                       | .. dovecotadded:: 2.3.14 For older versions use %{rport}      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_remote_ip        | Same as %{remote_ip}, except in proxy setups contains the     |
 |          |                       | remote proxy's IP instead of the client's IP                  |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.14 For older versions use %{real_rip}  |
+|          |                       | .. dovecotadded:: 2.3.14 For older versions use %{real_rip}   |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_local_ip         | Same as %{local_ip}, except in proxy setups contains the local|
 |          |                       | proxy's IP instead of the remote proxy's IP                   |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.14 For older versions use %{real_lip}  |
+|          |                       | .. dovecotadded:: 2.3.14 For older versions use %{real_lip}   |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_remote_port      | Similar to %{real_rip} except for port instead of IP          |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.14 For older versions use %{real_rport}|
+|          |                       | .. dovecotadded:: 2.3.14 For older versions use %{real_rport} |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_local_port       | Similar to %{real_lip} except for port instead of IP          |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.14 For older versions use %{real_lport}|
+|          |                       | .. dovecotadded:: 2.3.14 For older versions use %{real_lport} |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | rip                   | Deprecated version of %{remote_ip}                            |
 |          |                       |                                                               |
@@ -217,24 +217,24 @@ Login variables
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_lip              | Deprecated version of %{real_local_ip}                        |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.0                                      |
+|          |                       | .. dovecotadded:: 2.2.0                                       |
 |          |                       | .. deprecated:: v2.3.14                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_rport            | Deprecated version of %{real_remote_port}                     |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.0                                      |
+|          |                       | .. dovecotadded:: 2.2.0                                       |
 |          |                       | .. deprecated:: v2.3.14                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_lport            | Deprecated version of %{real_local_port}                      |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.0                                      |
+|          |                       | .. dovecotadded:: 2.2.0                                       |
 |          |                       | .. deprecated:: v2.3.14                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 | %p       | pid                   | process ID of the authentication client                       |
 +----------+-----------------------+---------------------------------------------------------------+
 | %m       | mechanism             | :ref:`authentication-authentication_mechanisms` e.g. PLAIN    |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.14                                     |
+|          |                       | .. dovecotadded:: 2.3.14                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | mech                  | Deprecated version of %{mechanism}                            |
 |          |                       |                                                               |
@@ -248,17 +248,17 @@ Login variables
 +----------+-----------------------+---------------------------------------------------------------+
 | %k       | ssl_security          | TLS session security string.                                  |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.4.0;v3.0.0 If HAProxy is configured and  |
+|          |                       | .. dovecotadded:: 2.4.0,3.0.0 If HAProxy is configured and    |
 |          |                       |    it terminated the TLS connection, contains "(proxied)".    |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | ssl_ja3               | :ref:`JA3 string <ssl_ja3>` composed from TLS Client Hello.   |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.4.0;v3.0.0                               |
+|          |                       | .. dovecotadded:: 2.4.0,3.0.0                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | ssl_ja3_hash          | MD5 hash from :ref:`JA3 string <ssl_ja3>` composed from       |
 |          |                       | TLS Client Hello.                                             |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.4.0;v3.0.0                               |
+|          |                       | .. dovecotadded:: 2.4.0,3.0.0                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 | %e       | mail_pid              | PID for process that handles the mail session post-login      |
 +----------+-----------------------+---------------------------------------------------------------+
@@ -268,47 +268,47 @@ Login variables
 |          |                       | :dovecot_core:ref:`auth_master_user_separator` based logins), |
 |          |                       | this contains only the original master username.              |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.14                                     |
+|          |                       | .. dovecotadded:: 2.3.14                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | original_username     | Same as %{username}, except using the original username       |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.14                                     |
+|          |                       | .. dovecotadded:: 2.3.14                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | original_domain       | Same as %{domain}, except using the original username         |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.14                                     |
+|          |                       | .. dovecotadded:: 2.3.14                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | orig_user             | Deprecated version of %{original_user}                        |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.6                                      |
+|          |                       | .. dovecotadded:: 2.2.6                                       |
 |          |                       | .. deprecated:: v2.3.14                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | orig_username         | Deprecated version of %{original_username}                    |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.6                                      |
+|          |                       | .. dovecotadded:: 2.2.6                                       |
 |          |                       | .. deprecated:: v2.3.14                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | orig_username         | Deprecated version of %{original_domain}                      |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.6                                      |
+|          |                       | .. dovecotadded:: 2.2.6                                       |
 |          |                       | .. deprecated:: v2.3.14                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | listener              | Socket listener name as specified in config file, which       |
 |          |                       | accepted the client connection.                               |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.19                                     |
+|          |                       | .. dovecotadded:: 2.2.19                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | passdb:<name>         | Return passdb extra field "name". %{passdb:name:default}      |
 |          |                       | returns "default" if "name" doesn't exist (not returned if    |
 |          |                       | name exists but is empty). Note that this doesn't work in     |
 |          |                       | passdb/userdb ldap's pass_attrs or user_attrs.                |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.19                                     |
+|          |                       | .. dovecotadded:: 2.2.19                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | passdb:forward_<name> | Used by proxies to pass on extra fields to the next hop, see  |
 |          |                       | :ref:`forward_fields`                                         |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.29                                     |
+|          |                       | .. dovecotadded:: 2.2.29                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 
 .. _variables-auth:
@@ -323,49 +323,49 @@ Authentication variables
 +----------+-----------------------+---------------------------------------------------------------+
 |          | domain_first          | For "username@domain_first@domain_last" style usernames       |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.6                                      |
+|          |                       | .. dovecotadded:: 2.2.6                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | domain_last           | For "username@domain_first@domain_last" style usernames       |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.6                                      |
+|          |                       | .. dovecotadded:: 2.2.6                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | local_name            | TLS SNI hostname, if given                                    |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.26                                     |
+|          |                       | .. dovecotadded:: 2.2.26                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 | %l       | local_ip              | local IP address                                              |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.13 For older versions use %{lip}       |
+|          |                       | .. dovecotadded:: 2.3.13 For older versions use %{lip}        |
 +----------+-----------------------+---------------------------------------------------------------+
 | %r       | remote_ip             | remote IP address                                             |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.13 For older versions use %{rip}       |
+|          |                       | .. dovecotadded:: 2.3.13 For older versions use %{rip}        |
 +----------+-----------------------+---------------------------------------------------------------+
 | %a       | local_port            | local port                                                    |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.13 For older versions use %{lport}     |
+|          |                       | .. dovecotadded:: 2.3.13 For older versions use %{lport}      |
 +----------+-----------------------+---------------------------------------------------------------+
 | %b       | remote_port           | remote port                                                   |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.13 For older versions use %{rport}     |
+|          |                       | .. dovecotadded:: 2.3.13 For older versions use %{rport}      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_remote_ip        | Same as %{remote_ip}, except in proxy setups contains the     |
 |          |                       | remote proxy's IP instead of the client's IP                  |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.13 For older versions use %{real_rip}  |
+|          |                       | .. dovecotadded:: 2.3.13 For older versions use %{real_rip}   |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_local_ip         | Same as %{local_ip}, except in proxy setups contains the local|
 |          |                       | proxy's IP instead of the remote proxy's IP                   |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.13 For older versions use %{real_lip}  |
+|          |                       | .. dovecotadded:: 2.3.13 For older versions use %{real_lip}   |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_remote_port      | Similar to %{real_rip} except for port instead of IP          |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.13 For older versions use %{real_rport}|
+|          |                       | .. dovecotadded:: 2.3.13 For older versions use %{real_rport} |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_local_port       | Similar to %{real_lip} except for port instead of IP          |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.13 For older versions use %{real_lport}|
+|          |                       | .. dovecotadded:: 2.3.13 For older versions use %{real_lport} |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | rip                   | Deprecated version of %{remote_ip}                            |
 |          |                       |                                                               |
@@ -389,17 +389,17 @@ Authentication variables
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_lip              | Deprecated version of %{real_local_ip}                        |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.0                                      |
+|          |                       | .. dovecotadded:: 2.2.0                                       |
 |          |                       | .. deprecated:: v2.3.13                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_rport            | Deprecated version of %{real_remote_port}                     |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.0                                      |
+|          |                       | .. dovecotadded:: 2.2.0                                       |
 |          |                       | .. deprecated:: v2.3.13                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | real_lport            | Deprecated version of %{real_local_port}                      |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.0                                      |
+|          |                       | .. dovecotadded:: 2.2.0                                       |
 |          |                       | .. deprecated:: v2.3.13                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 | %p       | pid                   | process ID of the authentication client                       |
@@ -407,11 +407,11 @@ Authentication variables
 |          | session_pid           | For user logins: The PID of the IMAP/POP3 process handling the|
 |          |                       | session.                                                      |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.7                                      |
+|          |                       | .. dovecotadded:: 2.2.7                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 | %m       | mechanism             | :ref:`authentication-authentication_mechanisms` e.g. PLAIN    |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.13                                     |
+|          |                       | .. dovecotadded:: 2.3.13                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | mech                  | Deprecated version of %{mechanism}                            |
 |          |                       |                                                               |
@@ -425,7 +425,7 @@ Authentication variables
 +----------+-----------------------+---------------------------------------------------------------+
 |          | ssl_ja3_hash          | MD5 hash from JA3 string composed from TLS Client Hello.      |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.4.0;v3.0.0                               |
+|          |                       | .. dovecotadded:: 2.4.0,3.0.0                                 |
 +----------+-----------------------+---------------------------------------------------------------+
 | %k       | cert                  | "valid" if client had sent a valid client certificate,        |
 |          |                       | otherwise empty.                                              |
@@ -438,37 +438,37 @@ Authentication variables
 +----------+-----------------------+---------------------------------------------------------------+
 |          | master_user           | For master user logins: The master username                   |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.7                                      |
+|          |                       | .. dovecotadded:: 2.2.7                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | original_user         | Same as %{user}, except using the original username the client|
 |          |                       | sent before any changes by auth process                       |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.13                                     |
+|          |                       | .. dovecotadded:: 2.3.13                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | original_username     | Same as %{username}, except using the original username       |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.13                                     |
+|          |                       | .. dovecotadded:: 2.3.13                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | original_domain       | Same as %{domain}, except using the original username         |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.3.13                                     |
+|          |                       | .. dovecotadded:: 2.3.13                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | orig_user             | Deprecated version of %{original_user}                        |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.6                                      |
-|          |                       | .. versionadded:: v2.2.13 Works in auth process.              |
+|          |                       | .. dovecotadded:: 2.2.6                                       |
+|          |                       | .. dovecotadded:: 2.2.13 Works in auth process.               |
 |          |                       | .. deprecated:: v2.3.13                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | orig_username         | Deprecated version of %{original_username}                    |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.6                                      |
-|          |                       | .. versionadded:: v2.2.13 Works in auth process.              |
+|          |                       | .. dovecotadded:: 2.2.6                                       |
+|          |                       | .. dovecotadded:: 2.2.13 Works in auth process.               |
 |          |                       | .. deprecated:: v2.3.13                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | orig_username         | Deprecated version of %{original_domain}                      |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.6                                      |
-|          |                       | .. versionadded:: v2.2.13 Works in auth process.              |
+|          |                       | .. dovecotadded:: 2.2.6                                       |
+|          |                       | .. dovecotadded:: 2.2.13 Works in auth process.               |
 |          |                       | .. deprecated:: v2.3.13                                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | passdb:<name>         | Return passdb extra field "name". %{passdb:name:default}      |
@@ -476,7 +476,7 @@ Authentication variables
 |          |                       | name exists but is empty). Note that this doesn't work in     |
 |          |                       | passdb/userdb ldap's pass_attrs or user_attrs.                |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.19                                     |
+|          |                       | .. dovecotadded:: 2.2.19                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | userdb:<name>         | Return userdb extra field "name". Note that this can also be  |
 |          |                       | used in passdbs to access any userdb_* extra fields added by  |
@@ -485,7 +485,7 @@ Authentication variables
 |          |                       | but is empty). Note that this doesn't work in passdb/userdb   |
 |          |                       | ldap's pass_attrs or user_attrs.                              |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.19                                     |
+|          |                       | .. dovecotadded:: 2.2.19                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | client_id             | If :dovecot_core:ref:`imap_id_retain` is enabled this         |
 |          |                       | variable is populated with the client ID request as IMAP      |
@@ -494,12 +494,12 @@ Authentication variables
 |          |                       | For directly logging the ID see the                           |
 |          |                       | :dovecot_core:ref:`imap_id_received` event.                   |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.29                                     |
+|          |                       | .. dovecotadded:: 2.2.29                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | passdb:forward_<name> | Used by proxies to pass on extra fields to the next hop, see  |
 |          |                       | :ref:`forward_fields`                                         |
 |          |                       |                                                               |
-|          |                       | .. versionadded:: v2.2.29                                     |
+|          |                       | .. dovecotadded:: 2.2.29                                      |
 +----------+-----------------------+---------------------------------------------------------------+
 | %!       |                       | Internal ID number of the current passdb/userdb.              |
 +----------+-----------------------+---------------------------------------------------------------+
@@ -525,7 +525,7 @@ You can apply a modifiers for each variable (e.g. %Us or %U{service} = POP3):
  * This is "New Hash", based on MD5 to give better distribution of values (no
    need for any string reversing kludges either).
 
-   .. versionadded:: v2.2.3
+   .. dovecotadded:: 2.2.3
 
 * %H - Same as %N, but use "old hash" (not recommended anymore)
 
@@ -546,7 +546,7 @@ You can apply a modifiers for each variable (e.g. %Us or %U{service} = POP3):
 
      %{sha256:user} or %{md5;truncate=32:user}.
 
-   .. versionadded:: v2.2.27
+   .. dovecotadded:: 2.2.27
 
 * %M - return the string's MD5 sum as hex.
 * %D - return "sub.domain.org" as "sub,dc=domain,dc=org" (for LDAP queries)
@@ -575,7 +575,7 @@ If the width is negative, it counts from the end.
 
   `%0.-2u` gives all but the last two characters from the username.
 
-   .. versionadded:: none v2.2.13
+   .. dovecotadded:: 2.2.13
 
 The modifiers are applied from left-to-right order, except the substring is
 always taken from the final string.
@@ -583,7 +583,7 @@ always taken from the final string.
 Conditionals
 ------------
 
-.. versionadded:: v2.2.33
+.. dovecotadded:: 2.2.33
 
 It's possible to use conditionals in variable expansion. The generic syntax is
 

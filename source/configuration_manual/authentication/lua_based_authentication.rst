@@ -4,7 +4,7 @@
 Lua based authentication
 ========================
 
-.. versionadded:: v2.3.0
+.. dovecotadded:: 2.3.0
 
 You can implement passdb and userdb using `Lua <https://www.lua.org/>`_ script.
 
@@ -104,7 +104,7 @@ Functions:
 * auth_request#event() - Returns child event for the auth request, can be used
   for logging and other events. Comes with a prefix.
 
-  .. versionadded:: v2.3.7
+  .. dovecotadded:: 2.3.7
 
 
 Subtables:

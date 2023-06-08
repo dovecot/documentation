@@ -11,7 +11,7 @@ specially:
   :ref:`authentication-user_extra_field`.
 * **login_user**: Master passdb can use this to change the username.
 
-  .. versionadded:: v2.2.13
+  .. dovecotadded:: 2.2.13
 
 * **allow_nets**: Allow user to log in from only specified IPs (checks against remote client IP). See :ref:`authentication-allow_nets`.
 
@@ -31,37 +31,37 @@ specially:
   this field.
 * **fail**: If set, explicitly fails the passdb lookup.
 
-  .. versionadded:: v2.2.22
+  .. dovecotadded:: 2.2.22
 
 * **k5principals**: if using ``auth_mechanisms = gssapi`` , may contain
   Kerberos v5 principals allowed to map to the current user, bypassing the
   internal call to ``krb5_kuserok()`` . The database must support credentials
   lookup.
 
-  .. versionadded:: v2.2
+  .. dovecotadded:: 2.2.0
 
 * **delay_until=** ``<UNIX timestamp>[+<max random secs>]`` : Delay login until
   this time. The timestamp must be less than 5 minutes into future or the login
   will fail with internal error. The extra random seconds can be used to avoid
   a load spike of everybody getting logged in at exactly the same time.
 
-  .. versionadded:: v2.2.25
+  .. dovecotadded:: 2.2.25
 
 * **noauthenticate**: Do not perform any authentication, just store extra
   fields if user is found.
 
-  .. versionadded:: v2.2.26+/v2.3
+  .. dovecotadded:: 2.2.26
 
 * **forward_<anything>**: In a proxy, pass the variable to the next hop (backend) as
   ``forward_<anything>``.
 
   .. seealso:: :ref:`forward_fields`
 
-  .. versionadded:: v2.2.26+/v2.3
+  .. dovecotadded:: 2.2.26
 
 * **event_<name>**: Import ``name=value`` to login events.
 
-  .. versionadded:: v2.3.21
+  .. dovecotadded:: 2.3.21
 
 .. versionchanged:: v3.0.0;v2.4.0
    Extra fields can now also be set to empty string, while previously they were

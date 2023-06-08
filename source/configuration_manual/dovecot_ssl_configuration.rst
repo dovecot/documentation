@@ -75,7 +75,7 @@ Multiple SSL certificates
 Different certificates per algorithm
 ************************************
 
-.. versionadded:: v2.2.31
+.. dovecotadded:: 2.2.31
 
 You can specify alternative ssl certificate that will be used if the algorithm differs from the primary certificate. This is useful when migrating to e.g. ECDSA certificate.
 

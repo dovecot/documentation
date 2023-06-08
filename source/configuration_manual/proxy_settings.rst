@@ -25,7 +25,7 @@ Enable LMTP to do proxying by doing passdb lookups (instead of only userdb looku
    
    login_proxy_max_disconnect_delay = 30 secs
 
-.. versionadded:: v2.2.19
+.. dovecotadded:: 2.2.19
 
 This setting is used to avoid load spikes caused by reconnecting clients after a backend server has died or been restarted. Instead of disconnecting all the clients at the same time, the disconnections are spread over longer time period.
 
@@ -33,7 +33,7 @@ This setting is used to avoid load spikes caused by reconnecting clients after a
    
    #doveadm_password =
 
-.. versionadded:: v2.3.9
+.. dovecotadded:: 2.3.9
 
 :dovecot_core:ref:`doveadm_ssl`: setting can be used to specify SSL mode to use when doing doveadm proxying.
 Can be overridden with ssl and starttls :ref:`proxy flags <authentication-proxies>`.

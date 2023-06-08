@@ -12,7 +12,7 @@ Settings
 ========
 
 .. dovecot_plugin:setting:: fts_dovecot_mail_flush_interval
-   :added: v2.3.5 defaults was 0
+   :added: 2.3.5 defaults was 0
    :changed: v3.0.0 defaults changes from 0 to 10
    :default: 10
    :plugin: fts-dovecot
@@ -25,7 +25,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: fts_dovecot_max_triplets
-   :added: v2.3.15 defaults was 0
+   :added: 2.3.15 defaults was 0
    :changed: v3.0.0 defaults changes from 0 to 200
    :default: 200
    :plugin: fts-dovecot
@@ -37,7 +37,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: fts_dovecot_min_merge_l_file_size
-   :added: v2.3.5
+   :added: 2.3.5
    :default: 128 kB
    :plugin: fts-dovecot
    :values: @size
@@ -86,7 +86,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: fts_dovecot_prefix
-   :added: v2.3.5
+   :added: 2.3.5
    :default: no
    :plugin: fts-dovecot
    :values: @string
@@ -106,7 +106,7 @@ Settings
    ================== ==================================================
 
 .. dovecot_plugin:setting:: fts_dovecot_message_count_stats
-   :added: v2.3.21
+   :added: 2.3.21
    :default: no
    :plugin: fts-dovecot
    :values: @string
