@@ -108,7 +108,7 @@ Sieve Plugin Settings
    script (the script executed at delivery).  The location of this symbolic
    link can be configured using the ``;active=<path>`` option.
 
-   .. versionchanged:: v0.3.1
+   .. dovecotchanged:: pigeonhole-0.3.1
 
       For Pigeonhole versions before v0.3.1, this setting can only be a
       filesystem path pointing to a script file, or - when ManageSieve is
@@ -156,7 +156,7 @@ Sieve Plugin Settings
 
 
 .. pigeonhole:setting:: sieve_default
-   :added: v0.3.0
+   :added: pigeonhole-0.3.0
    :plugin: sieve
    :values: @string
 
@@ -174,7 +174,7 @@ Sieve Plugin Settings
 
 
 .. pigeonhole:setting:: sieve_default_name
-   :added: v0.4.8
+   :added: pigeonhole-0.4.8
    :plugin: sieve
    :seealso: @pigeonhole_configuration_visible_default_script
    :values: @string
@@ -187,7 +187,7 @@ Sieve Plugin Settings
    :default: ~/sieve
    :plugin: sieve
    :values: @string
-   :removed: v0.5 Replaced with the :pigeonhole:ref:`sieve setting <sieve>`.
+   :removed: pigeonhole-0.5.0 Replaced with the :pigeonhole:ref:`sieve setting <sieve>`.
 
    Directory for :personal
    `include scripts <https://datatracker.ietf.org/doc/html/draft-ietf-sieve-include-05>`_
@@ -202,7 +202,7 @@ Sieve Plugin Settings
 
 
 .. pigeonhole:setting:: sieve_discard
-   :added: v0.4.16
+   :added: pigeonhole-0.4.16
    :plugin: sieve
    :values: @string
 
@@ -252,7 +252,7 @@ Sieve Plugin Settings
 
 
 .. pigeonhole:setting:: sieve_global
-   :added: v0.3.1
+   :added: pigeonhole-0.3.1
    :plugin: sieve
    :values: @string
 
@@ -265,7 +265,7 @@ Sieve Plugin Settings
 .. pigeonhole:setting:: sieve_global_dir
    :plugin: sieve
    :values: @string
-   :removed: v0.5 Replaced with the :pigeonhole:ref:`sieve_global setting <sieve_global>`.
+   :removed: pigeonhole-0.5.0 Replaced with the :pigeonhole:ref:`sieve_global setting <sieve_global>`.
 
    Location for ``:global`` include scripts for the Sieve include extension.
 
@@ -275,7 +275,7 @@ Sieve Plugin Settings
 
 
 .. pigeonhole:setting:: sieve_global_extensions
-   :added: v0.3
+   :added: pigeonhole-0.3.0
    :default: @sieve_extensions;pigeonhole
    :plugin: sieve
    :values: @string
@@ -301,11 +301,11 @@ Sieve Plugin Settings
 .. pigeonhole:setting:: sieve_global_path
    :plugin: sieve
    :values: @string
-   :removed: v0.5 Replaced with the :pigeonhole:ref:`sieve_default setting <sieve_default>`.
+   :removed: pigeonhole-0.5.0 Replaced with the :pigeonhole:ref:`sieve_default setting <sieve_default>`.
 
 
 .. pigeonhole:setting:: sieve_implicit_extensions
-   :added: v0.4.13
+   :added: pigeonhole-0.4.13
    :plugin: sieve
    :values: @string
 
@@ -336,7 +336,7 @@ Sieve Plugin Settings
 
 
 .. pigeonhole:setting:: sieve_max_cpu_time
-   :added: v0.5.15
+   :added: pigeonhole-0.5.15
    :default: 30s
    :plugin: sieve
    :values: @time
@@ -351,7 +351,7 @@ Sieve Plugin Settings
 
 
 .. pigeonhole:setting:: sieve_max_redirects
-   :changed: v0.3 In prior versions, ``0`` means the number of redirects is unlimited.
+   :changed: pigeonhole-0.3.0 In prior versions, ``0`` means the number of redirects is unlimited.
    :default: 4
    :plugin: sieve
    :values: @uint
@@ -366,7 +366,7 @@ Sieve Plugin Settings
 
 
 .. pigeonhole:setting:: sieve_resource_usage_timeout
-   :added: v0.5.15
+   :added: pigeonhole-0.5.15
    :default: 1h
    :plugin: sieve
    :values: @time
@@ -417,7 +417,7 @@ Sieve Plugin Settings
 
 
 .. pigeonhole:setting:: sieve_redirect_envelope_from
-   :added: v0.4.4
+   :added: pigeonhole-0.4.4
    :default: sender
    :plugin: sieve
    :values: @string
@@ -441,7 +441,7 @@ Sieve Plugin Settings
                        If that setting is not configured, ``user_email`` is
                        equal to ``sender``.
 
-                       .. versionadded:: 0.4.14
+                       .. dovecotadded:: pigeonhole-0.4.14
    ``postmaster``      The :dovecot_core:ref:`postmaster_address` configured
                        for LDA/LMTP.
    ``<user@domain>``   Redirected messages are always sent from
@@ -457,7 +457,7 @@ Sieve Plugin Settings
 .. pigeonhole:setting:: sieve_subaddress_sep
    :default: +
    :plugin: sieve
-   :removed: v0.2 Replaced with :dovecot_core:ref:`recipient_delimiter`
+   :removed: pigeonhole-0.2.0 Replaced with :dovecot_core:ref:`recipient_delimiter`
    :values: @string
 
    The separator that is expected between the ``:user`` and ``:detail``
@@ -528,7 +528,7 @@ Sieve Plugin Settings
 
 
 .. pigeonhole:setting:: sieve_user_email
-   :added: v0.4.14
+   :added: pigeonhole-0.4.14
    :plugin: sieve
    :values: @string
 
