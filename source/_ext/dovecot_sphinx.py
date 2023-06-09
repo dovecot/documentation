@@ -349,17 +349,28 @@ class DovecotVersionChange(VersionChange):
             raise ValueError(f'Version string should not contain ";": {x}')
 
         for x in sorted(self.arguments[0].split(',')):
+            # Remove "pigeonhole-" prefix
+            if x.startswith('pigeonhole-'):
+                x = x[11:]
+                pigeonhole = True
+            else:
+                pigeonhole = False
+
             # 'v' prefix is invalid
             if x.startswith('v'):
                 raise ValueError(f'Version should not start with v: {x}')
             # Version needs to always be major.minor.point
             if len(x.split('.')) == 2:
                 raise ValueError(f'Version should be in the format x.y.z: {x}')
+
             # Do product/version matching
-            for k,v in dovecot_product_mapping.items():
-                if x.startswith(k):
-                    x = v % x
-                    break
+            if pigeonhole:
+                x = f'{x} (Pigeonhole)'
+            else:
+                for k,v in dovecot_product_mapping.items():
+                    if x.startswith(k):
+                        x = v % x
+                        break
 
             self.arguments[0] = x
             ret += super().run()

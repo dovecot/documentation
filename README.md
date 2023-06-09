@@ -199,3 +199,6 @@ removed actions:
 .. dovecotchanged:: 1.2.3[,4.5.6,...] Optional text
 .. dovecotdeprecated:: 1.2.3[,4.5.6,...] Optional text
 .. dovecotremoved:: 1.2.3[,4.5.6,...] Optional text
+
+Note: For pigeonhole specific versions, preface the version with "pigeonhole-",
+e.g. "pigeonhole-0.4.14".

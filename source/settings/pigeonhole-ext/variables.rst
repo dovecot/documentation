@@ -8,7 +8,7 @@ Settings
 --------
 
 .. pigeonhole:setting:: sieve_variables_max_scope_size
-   :added: v0.5.0
+   :added: pigeonhole-0.5.0
    :default: 255
    :plugin: yes
    :values: @uint
@@ -23,7 +23,7 @@ Settings
 
 
 .. pigeonhole:setting:: sieve_variables_max_variable_size
-   :added: v0.5.0
+   :added: pigeonhole-0.5.0
    :default: 4k
    :plugin: yes
    :values: @size
