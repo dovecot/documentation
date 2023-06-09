@@ -343,13 +343,18 @@ class DovecotVersionChange(VersionChange):
         #       - Hide older versions (e.g. v2.2)
 
         ret = []
+
+        # Use of ';' to separate versions is now deprecated
+        if self.arguments[0].find(';') != -1:
+            raise ValueError(f'Version string should not contain ";": {x}')
+
         for x in sorted(self.arguments[0].split(',')):
-            # Strip out 'v' prefix, if it exists
+            # 'v' prefix is invalid
             if x.startswith('v'):
-                x = x[1:]
+                raise ValueError(f'Version should not start with v: {x}')
             # Version needs to always be major.minor.point
             if len(x.split('.')) == 2:
-                x += '.0'
+                raise ValueError(f'Version should be in the format x.y.z: {x}')
             # Do product/version matching
             for k,v in dovecot_product_mapping.items():
                 if x.startswith(k):
