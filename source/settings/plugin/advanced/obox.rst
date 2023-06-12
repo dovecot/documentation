@@ -336,9 +336,14 @@ Settings
    :plugin: obox
    :values: @uint
 
-   Upload indexes after this many mails have been saved since the last upload.
-   A higher value reduces the number of uploads, but increases the number of
-   mail downloads to fill the caches after a backend crash.
+   Keep a maximum of this many newly saved mails in local metacache indexes
+   before metacache is flushed to object storage. For example with a value of
+   10, every 11th mail triggers a metacache flush. Note that the flush isn't
+   immediate - it will happen in the background some time within the next
+   :dovecot_plugin:ref:`metacache_upload_interval`.
+
+   A higher value reduces the number of index bundle uploads, but increases the
+   number of mail downloads to fill the caches after a backend crash.
 
 
 .. dovecot_plugin:setting:: obox_no_pop3_backend_uidls
