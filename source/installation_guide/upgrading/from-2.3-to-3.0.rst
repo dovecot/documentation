@@ -157,6 +157,10 @@ Removed features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``imap_id_log`` setting.                                   | Replaced by the :dovecot_core:ref:`imap_id_received` event.                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``no-cleanup-uncertain``                                   | Previously cleanup-uncertain needed to be explicitly enabled, now it is enabled by       |
+|                                                            | default. It can be disabled by ``no-cleanup-uncertain`` - see                            |
+|                                                            | :ref:`dictmap_configuration_parameters` for more details.                                |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 Changed default settings
 ========================
