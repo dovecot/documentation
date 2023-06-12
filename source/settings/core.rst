@@ -3176,11 +3176,10 @@ See :ref:`settings` for list of all setting groups.
    valid.
 
    These CAs are also used by some processes for validating outgoing SSL
-   connections, i.e. performing the same function as
-   :dovecot_core:ref:`ssl_client_ca_file`.
-
-   This is mainly important for imap-login, pop3-login, etc. processes which
-   are chrooted and can't access the CA files outside the chroot.
+   connections in addition to :dovecot_core:ref:`ssl_client_ca_file` and
+   :dovecot_core:ref:`ssl_client_ca_dir`. This is mainly important for
+   ``imap-login``, ``pop3-login``, etc. processes which are chrooted and can't
+   access the CA files outside the chroot.
 
    Note that mail processes (imap, pop3, etc.) don't read this setting to save
    memory, because the CAs can be large and there can be many mail processes.
@@ -3191,6 +3190,7 @@ See :ref:`settings` for list of all setting groups.
 
       ssl_ca = </etc/dovecot/ca.crt
       ssl_verify_client_cert = yes
+      auth_ssl_require_client_cert = yes
 
 
 .. dovecot_core:setting:: ssl_cert
@@ -3228,23 +3228,30 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: ssl_cipher_list
    :default: ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH
-   :seealso: @ssl;dovecot_core, @ssl_min_protocol;dovecot_core, @dovecot_ssl_configuration
+   :seealso: @ssl;dovecot_core, @ssl_cipher_suites;dovecot_core, @ssl_min_protocol;dovecot_core, @dovecot_ssl_configuration
    :values: @string
 
-   The list of SSL ciphers to use, in order of preference.
+   The list of SSL ciphers to use for TLSv1.2 and below connections, in order
+   of preference. Use :dovecot_core:ref:`ssl_cipher_suites` for TLSv1.3
+   connections.
 
    You do not need to edit this setting in order to disable specific SSL
    protocols; that is best done with :dovecot_core:ref:`ssl_min_protocol`
    instead.
 
+   This setting is used for both incoming and outgoing SSL connections.
 
 .. dovecot_core:setting:: ssl_cipher_suites
    :added: v2.3.15
    :default: !<OpenSSL version specific>
-   :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
+   :seealso: @ssl;dovecot_core, @ssl_cipher_list;dovecot_core, @dovecot_ssl_configuration
    :values: @string
 
-   The list of SSL cipher suites to use, in order of preference.
+   The list of SSL cipher suites to use for TLSv1.3 connections, in order of
+   preference. Use :dovecot_core:ref:`ssl_cipher_list` for TLSv1.2 and below
+   connections.
+
+   This setting is used for both incoming and outgoing SSL connections.
 
    See: https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites
 
@@ -3324,9 +3331,10 @@ See :ref:`settings` for list of all setting groups.
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
    :values: @string
 
-   Colon separated list of elliptic curves to use.
-
+   Colon separated list of elliptic curves to use, in order of preference.
    An empty value uses the defaults from the SSL library.
+
+   This setting is used for both incoming and outgoing SSL connections.
 
    Example:
 
@@ -3397,6 +3405,8 @@ See :ref:`settings` for list of all setting groups.
 
    The minimum SSL protocol version Dovecot accepts.
 
+   This setting is used for both incoming and outgoing SSL connections.
+
    Supported values are:
 
    ``ANY``
@@ -3441,6 +3451,8 @@ See :ref:`settings` for list of all setting groups.
 
    Additional options for SSL.
 
+   This setting is used for both incoming and outgoing SSL connections.
+
    Currently supported options are:
 
    ``compression``
@@ -3462,7 +3474,7 @@ See :ref:`settings` for list of all setting groups.
    :values: @boolean
 
    If enabled, give preference to the server's cipher list over a client's
-   list.
+   list. This setting is used only for server connections.
 
 
 .. dovecot_core:setting:: ssl_require_crl
@@ -3471,8 +3483,10 @@ See :ref:`settings` for list of all setting groups.
    :values: @boolean
 
    If enabled, the CRL check must succeed for presented SSL client
-   certificates. The CRL list is generally appended to the
-   :dovecot_core:ref:`ssl_ca` file.
+   certificate and any intermediate certificates. The CRL list is generally
+   appended to the :dovecot_core:ref:`ssl_ca` file.
+
+   This setting is used only for server connections.
 
 
 .. dovecot_core:setting:: ssl_verify_client_cert
@@ -3480,10 +3494,11 @@ See :ref:`settings` for list of all setting groups.
    :seealso: @ssl, @ssl;dovecot_core, @auth_ssl_require_client_cert;dovecot_core, @dovecot_ssl_configuration
    :values: @boolean
 
-   If enabled, the imap/pop3/etc. client is required to send an SSL
+   If enabled, the imap/pop3/etc. client is requested to send an SSL
    certificate.
 
-   .. note:: This setting doesn't yet require the certificate to be valid.
+   .. note:: This setting doesn't yet require the certificate to be valid or
+             to even exist. See :dovecot_core:ref:`auth_ssl_require_client_cert`.
 
 .. dovecot_core:setting:: state_dir
    :default: /var/lib/dovecot
