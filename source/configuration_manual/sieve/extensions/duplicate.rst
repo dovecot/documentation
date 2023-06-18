@@ -18,7 +18,7 @@ Previously, this extension was Dovecot-specific and available under the
 name ``vnd.dovecot.duplicate``. Specification for old version available
 `here <http://hg.rename-it.nl/dovecot-2.1-pigeonhole/raw-file/tip/doc/rfc/spec-bosch-sieve-duplicate.txt>`_.
 That implementation differs significantly from what is now published as
-:rfc:`7353`, but the original
+:rfc:`7352`, but the original
 extension is still supported for backwards compatibility.
 
 Configuration
