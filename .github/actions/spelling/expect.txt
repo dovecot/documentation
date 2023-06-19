@@ -767,6 +767,7 @@ mkhomedir
 mmap
 mmencode
 MMIME
+mnt
 modseq
 mountpoint
 mozilla
