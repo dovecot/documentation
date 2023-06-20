@@ -73,21 +73,21 @@ Note that there is no way to make this solution perfect:
    re-downloaded as new emails (duplicates).
 
 Also, there are 3 alternative ways of how mails can be imported into mailboxes:
- * Old recovered mails are imported on top of the newly received mails. The
-   downside here is that mails may now be sorted in a weird order. If the IMAP
-   client shows the mails in the saved order, the new received emails show up
-   as oldest emails. Although this may not be an issue, since many IMAP clients
-   sort the mails by either Date: header or the received timestamp (IMAP
-   INTERNALDATE).
- * New mails are imported on top of the old recovered mails. This avoids the
-   sorting problems, so it's likely the preferred method. The downside here is
-   that the IMAP/POP3 clients will have to re-download also the newly delivered
-   emails, as well as the old ones. Another issue with this is that some IMAP
-   clients might not show the old recovered mails without manually rebuilding
-   local caches, because the mails become inserted to the beginning of the
-   folders, which isn't allowed by the IMAP protocol.
+ #. Old recovered mails are imported on top of the newly received mails. The
+    downside here is that mails may now be sorted in a weird order. If the IMAP
+    client shows the mails in the saved order, the new received emails show up
+    as oldest emails. Although this may not be an issue, since many IMAP clients
+    sort the mails by either Date: header or the received timestamp (IMAP
+    INTERNALDATE).
+ #. New mails are imported on top of the old recovered mails. This avoids the
+    sorting problems, so it's likely the preferred method. The downside here is
+    that the IMAP/POP3 clients will have to re-download also the newly delivered
+    emails, as well as the old ones. Another issue with this is that some IMAP
+    clients might not show the old recovered mails without manually rebuilding
+    local caches, because the mails become inserted to the beginning of the
+    folders, which isn't allowed by the IMAP protocol.
 
-     * Another thing to keep mind mind here is that IMAP clients shouldn't see
+     * Another thing to keep mind here is that IMAP clients shouldn't see
        IMAP UIDs pointing to different emails before/after the merge. Otherwise
        their local cache could point to a different email, which could even
        cause the user to delete wrong messages. This shouldn't be an issue as
@@ -96,14 +96,15 @@ Also, there are 3 alternative ways of how mails can be imported into mailboxes:
        would all have higher UIDs (because the UIDNEXT value is not shrunk
        during index rebuild that clears out the mailbox).
 
- * New recovered mails are imported under a separate ``Recovered/`` folder,
-   i.e. there will be ``Recovered/INBOX``, ``Recovered/Sent``, etc. The user
-   will need to manually merge the folders. The upside here is that POP3
-   clients won't re-download any mails as duplicates, but otherwise it's not
-   much different from the 1st case.
+ #. New recovered mails are imported under a separate ``Recovered/`` folder,
+    i.e. there will be ``Recovered/INBOX``, ``Recovered/Sent``, etc. The user
+    will need to manually merge the folders. The upside here is that POP3
+    clients won't re-download any mails as duplicates, but otherwise it's not
+    much different from the 1st case.
 
-Example for the 2nd case where mail storage broke down, but a separate index
-storage is ok, and index storage supports snapshots:
+Example for the 2nd case ("New mails are imported on top of the old recovered
+mails") where mail storage broke down, but a separate index storage is ok, and
+index storage supports snapshots:
 
  * Snapshot the current index volume at the time of breakage
  * Make sure ``mail_location`` setting has ``ITERINDEX`` feature enabled, so
@@ -117,12 +118,12 @@ storage is ok, and index storage supports snapshots:
 
  * Once the original mail volume is recovered, first disable all user access
    and all new mail deliveries.
- * Snapshot again the index volume
- * Mount the old mail volume to the original mountpoint
+ * Create another snapshot of the index volume.
+ * Mount the old mail volume to the original mountpoint.
  * Replace the index volume with the first created snapshot. Now the storage
    looks exactly like it was at the time of breakage.
- * Mount the new mail volume to some temporary mountpoint
- * Mount the second index snapshot to some temporary mountpoint
+ * Mount the new mail volume to some temporary mountpoint.
+ * Mount the second index snapshot to some temporary mountpoint.
  * Use ``doveadm import`` to recover new mails:
 
    .. code-block::
