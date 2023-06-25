@@ -72,8 +72,6 @@ Variables that work nearly everywhere where there is a username:
 +----------+----------------+---------------------------------------------------------------+
 | %d       | domain         | domain part in user@domain, empty if user with no domain      |
 +----------+----------------+---------------------------------------------------------------+
-| %s       | service        | imap, pop3, smtp, lda (and doveadm, etc.)                     |
-+----------+----------------+---------------------------------------------------------------+
 |          | session        | session ID for this client connection (unique for 9 years)    |
 +----------+----------------+---------------------------------------------------------------+
 |          | auth_user      | SASL authentication ID (e.g. if master user login is done,    |
@@ -101,6 +99,8 @@ Mail service user variables
 | Variable | Long name      | Description                                                   |
 +==========+================+===============================================================+
 | See also :ref:`variables-global` and :ref:`variables-user`                                |
++----------+----------------+---------------------------------------------------------------+
+| %s       | service        | imap, pop3, smtp, lda (and doveadm, etc.)                     |
 +----------+----------------+---------------------------------------------------------------+
 | %p       | pid            | PID of the current process                                    |
 +----------+----------------+---------------------------------------------------------------+
@@ -156,6 +156,11 @@ Login variables
 | Variable | Long name             | Description                                                   |
 +==========+=======================+===============================================================+
 | See also :ref:`variables-global` and :ref:`variables-user`                                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | protocol              | imap, pop3, smtp, lda (and doveadm, etc.)                     |
+|          |                       |                                                               |
+|          |                       | .. dovecotadded:: 2.4.0,3.0.0 Renamed from %{service}         |
+|          |                       |                   variable.                                   |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | local_name            | TLS SNI hostname, if given                                    |
 |          |                       |                                                               |
@@ -320,6 +325,11 @@ Authentication variables
 | Variable | Long name             | Description                                                   |
 +==========+=======================+===============================================================+
 | See also :ref:`variables-global` and :ref:`variables-user`                                       |
++----------+-----------------------+---------------------------------------------------------------+
+|          | protocol              | imap, pop3, smtp, lda (and doveadm, etc.)                     |
+|          |                       |                                                               |
+|          |                       | .. dovecotadded:: 2.4.0,3.0.0 Renamed from %{service}         |
+|          |                       |                   variable.                                   |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | domain_first          | For "username@domain_first@domain_last" style usernames       |
 |          |                       |                                                               |
