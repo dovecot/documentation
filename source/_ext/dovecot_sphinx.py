@@ -26,7 +26,7 @@ class DovecotDirective(ObjectDescription):
         for x in txt.splitlines():
             vl.append(x, "%s:%d" % (source, line))
         self.state.nested_parse(vl, 0, node)
-        return node.children[0]
+        return node.children
 
     def _transform_content(self, contentnode):
         contentnode.parent["classes"].append("dovecotsetting")
@@ -44,7 +44,7 @@ class DovecotSettingLinkDirective(DovecotDirective):
 
         ref = self._parse_rst(
             ":%s:ref:`%s`" % (self.domain, self.arguments[0])
-        )
+        )[0]
         ref.insert(0, nodes.Text("See: "))
         contentnode += ref
 
@@ -105,9 +105,9 @@ class DovecotSettingDirective(DovecotDirective):
                     par += self._parse_rst(
                         ":%s:ref:`%s`"
                         % (parts[1] if len(parts) == 2 else "std", parts[0])
-                    ).children
+                    )
                 elif x.startswith("!"):
-                    par += self._parse_rst(x[1:]).children
+                    par += self._parse_rst(x[1:])
                 else:
                     par += nodes.literal(text=x)
         else:
@@ -129,9 +129,9 @@ class DovecotSettingDirective(DovecotDirective):
 
                 if x.startswith("@"):
                     x = x[1:]
-                    par += self._parse_rst(":ref:`%s`" % x).children
+                    par += self._parse_rst(":ref:`%s`" % x)
                 elif x.startswith("!"):
-                    par += self._parse_rst(x[1:]).children
+                    par += self._parse_rst(x[1:])
                 else:
                     par += nodes.literal(text=x)
 
@@ -152,9 +152,9 @@ class DovecotSettingDirective(DovecotDirective):
                     par += self._parse_rst(
                         ":%s:ref:`%s`"
                         % (parts[1] if len(parts) == 2 else "std", parts[0])
-                    ).children
+                    )
                 elif x.startswith("!"):
-                    par += self._parse_rst(x[1:]).children
+                    par += self._parse_rst(x[1:])
                 else:
                     par += nodes.literal(text=x)
 
