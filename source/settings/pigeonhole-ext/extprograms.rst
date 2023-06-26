@@ -4,7 +4,7 @@ Pigeonhole Sieve: Extprograms Plugin
 
 .. seealso:: :ref:`pigeonhole_plugin_extprograms`
 
-.. versionadded:: v0.3
+.. dovecotadded:: pigeonhole-0.3.0
 
 Settings
 --------

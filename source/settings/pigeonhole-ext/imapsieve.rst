@@ -6,7 +6,7 @@ Pigeonhole: IMAPSieve plugin
 
 .. seealso:: :ref:`pigeonhole_plugin_imapsieve`
 
-.. versionadded:: v0.4.14
+.. dovecotadded:: pigeonhole-0.4.14
 
 Settings
 --------

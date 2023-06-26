@@ -200,7 +200,7 @@ Dictmap Parameters
 |                                 | The original path metadata is normally eventually visible to a fs backend    |
 |                                 | while the path is something different e.g. object ID.                        |
 |                                 |                                                                              |
-|                                 | .. versionadded:: v3.0.0                                                     |
+|                                 | .. dovecotadded:: 3.0.0                                                      |
 +---------------------------------+------------------------------------------------------------------------------+
 
 
