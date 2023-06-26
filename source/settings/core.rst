@@ -366,7 +366,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: auth_ssl_require_client_cert
    :default: no
-   :seealso: @ssl_ca;dovecot_core, @ssl_verify_client_cert;dovecot_core, @dovecot_ssl_configuration
+   :seealso: @ssl_ca;dovecot_core, @ssl_request_client_cert;dovecot_core, @dovecot_ssl_configuration
    :values: @boolean
 
    If ``yes``, authentication fails when a valid SSL client certificate is not
@@ -3186,7 +3186,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: ssl_ca
-   :seealso: @ssl;dovecot_core, @ssl_client_require_valid_cert;dovecot_core, @ssl_verify_client_cert;dovecot_core, @dovecot_ssl_configuration
+   :seealso: @ssl;dovecot_core, @ssl_client_require_valid_cert;dovecot_core, @ssl_request_client_cert;dovecot_core, @dovecot_ssl_configuration
    :values: @string
 
    List of SSL CA certificates that are used to validate whether SSL
@@ -3207,7 +3207,7 @@ See :ref:`settings` for list of all setting groups.
    .. code-block:: none
 
       ssl_ca = </etc/dovecot/ca.crt
-      ssl_verify_client_cert = yes
+      ssl_request_client_cert = yes
       auth_ssl_require_client_cert = yes
 
 
@@ -3505,10 +3505,11 @@ See :ref:`settings` for list of all setting groups.
    This setting is used only for server connections.
 
 
-.. dovecot_core:setting:: ssl_verify_client_cert
+.. dovecot_core:setting:: ssl_request_client_cert
    :default: no
    :seealso: @ssl, @ssl;dovecot_core, @auth_ssl_require_client_cert;dovecot_core, @dovecot_ssl_configuration
    :values: @boolean
+   :changed: 2.4.0,3.0.0 Renamed from ssl_verify_client_cert setting.
 
    If enabled, the imap/pop3/etc. client is requested to send an SSL
    certificate.
