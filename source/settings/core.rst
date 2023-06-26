@@ -3718,8 +3718,10 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: verbose_ssl
    :default: no
    :values: @boolean
+   :removed: 2.4.0,3.0.0
 
-   If enabled, protocol-level SSL errors are logged.
+   If enabled, protocol-level SSL errors are logged. Same as
+   ``log_debug = category=ssl``.
 
 
 .. dovecot_core:setting:: version_ignore
