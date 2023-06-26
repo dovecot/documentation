@@ -59,7 +59,7 @@ If :ref:`var_expand_crypt_plugin` is loaded, these also work globally:
 User variables
 --------------
 
-Variables that are work nearly everywhere where there is a username:
+Variables that work nearly everywhere where there is a username:
 
 +----------+----------------+---------------------------------------------------------------+
 | Variable | Long name      | Description                                                   |
