@@ -26,7 +26,7 @@ Regardless of the syntax used, matching is performed the same way:
    * If wildcard characters are needed as literal characters, they can be
      escaped with the ``\`` character, e.g. ``\*``.
 
-     .. versionchanged:: v2.4.0;v3.0.0
+     .. dovecotchanged:: 2.4.0,3.0.0
 
 * Event location is compared in two parts: the file name is compared
   case-sensitively, and the line number is compared as an integer.  For a
@@ -102,7 +102,7 @@ There are some limitations on which operators work with what field types:
   It returns true if the key is one of the values in the list. If the value
   is an empty string, it returns true if the list is empty.
 
-.. versionchanged:: v2.4.0;v3.0.0 Event fields have specific types that
+.. dovecotchanged:: 2.4.0,3.0.0 Event fields have specific types that
                     constrain the possible values they can be filtered by. For
                     example ``net_out_bytes`` and ``message_size`` are numeric and
                     can only be matched against numeric values. Previously type

@@ -27,7 +27,7 @@ fields'. Possibilities are:
 
 * ``event_<name>``: Import ``name=value`` to mail user event.
 
-  .. versionadded:: v2.3.21
+  .. dovecotadded:: 2.3.21
 
 These fields can be returned the exact same way as uid, gid, and home fields.
 
@@ -47,7 +47,7 @@ For example you can return ``mail_plugins:remove`` to the ``mail_plugins``
 field. This differs from ``mail_plugins=`` in that the field is removed
 entirely (and default is used) instead of just being set to an empty value.
 
-.. versionchanged:: v3.0.0;v2.4.0
+.. dovecotchanged:: 2.4.0,3.0.0
    Extra fields can now also be set to empty string, while previously they were
    changed to ``yes``. Extra fields without value (without ``=``) will default to
    ``yes``.

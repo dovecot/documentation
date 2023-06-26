@@ -1922,7 +1922,7 @@ See :ref:`settings` for list of all setting groups.
 
       SIS with immediate byte-by-byte comparison during saving.
 
-      .. versionchanged:: v2.4.0;v3.0.0 SIS is deprecated and writing of
+      .. dovecotchanged:: 2.4.0,3.0.0 SIS is deprecated and writing of
         SIS files is disabled. Reading is supported for now, any missing
         SIS attachments are replaced with files filled with spaces.
 
@@ -2353,7 +2353,7 @@ See :ref:`settings` for list of all setting groups.
 
    A value of ``0`` means this scan never occurs.
 
-   .. versionchanged:: v2.4.0;v3.0.0 In order to prevent load spikes the actual
+   .. dovecotchanged:: 2.4.0,3.0.0 In order to prevent load spikes the actual
       value of the setting is spread increasing it by 0..30%, based on a hash
       of the username.
 

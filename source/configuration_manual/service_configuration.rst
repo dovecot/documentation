@@ -41,7 +41,7 @@ If set to ``0``, :dovecot_core:ref:`default_idle_kill` is used.
 
 Using ``4294967295 secs`` disables the idle-killing.
 
-.. versionchanged:: v2.3.21 This behavior was redesigned to work better
+.. dovecotchanged:: 2.3.21 This behavior was redesigned to work better
 		    in busy servers.
 
 Service privileges
