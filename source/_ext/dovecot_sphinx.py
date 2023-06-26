@@ -346,7 +346,7 @@ class DovecotVersionChange(VersionChange):
 
         # Use of ';' to separate versions is now deprecated
         if self.arguments[0].find(';') != -1:
-            raise ValueError(f'Version string should not contain ";": {x}')
+            raise ValueError(f'Version string should not contain ";": {self.arguments[0]}')
 
         for x in sorted(self.arguments[0].split(',')):
             # Remove "pigeonhole-" prefix
