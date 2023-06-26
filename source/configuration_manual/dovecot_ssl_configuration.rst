@@ -232,7 +232,7 @@ If you want to require clients to present a valid SSL certificate, you'll need t
 .. code::
 
   ssl_ca = </etc/ssl/ca.pem
-  ssl_verify_client_cert = yes
+  ssl_request_client_cert = yes
 
   auth_ssl_require_client_cert = yes
   # if you want to get username from certificate as well, enable this
