@@ -145,7 +145,7 @@ There are several settings that control logging verbosity. By default they're al
 
 * :dovecot_core:ref:`mail_debug=yes <mail_debug>` enables all kinds of mail related debug logging, such as showing where Dovecot is looking for mails.
 
-* :dovecot_core:ref:`verbose_ssl=yes <verbose_ssl>` enables logging SSL errors and warnings. Even without this setting if connection is closed because of an SSL error, the error is logged as the disconnection reason.
+* :dovecot_core:ref:`log_debug = category=ssl <log_debug>` enables debug logging for SSL connections. Even without this setting if connection is closed because of an SSL error, the error is logged as the disconnection reason.
 
 * :dovecot_core:ref:`auth_verbose_passwords=no|plain|sha1 <auth_verbose_passwords>` If authentication fails, this setting logs the used password. If you don't really need to know what the password itself was, but are more interested in knowing if the user is simply trying to use the wrong password every single time or if it's a brute force attack, you can set this to ``sha1`` and only the SHA1 of the password is logged. That's enough to know if the password is same or different between login attempts.
 
