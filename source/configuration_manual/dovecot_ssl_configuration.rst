@@ -220,7 +220,7 @@ SSL verbosity
 
 .. code::
 
-  verbose_ssl = yes
+  log_debug = category=ssl
 
 This will make Dovecot log all the problems it sees with SSL connections. Some errors might be caused by dropped connections, so it could be quite noisy.
 
