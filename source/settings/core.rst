@@ -3113,19 +3113,11 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: ssl_ca
    :seealso: @ssl;dovecot_core, @ssl_client_require_valid_cert;dovecot_core, @ssl_request_client_cert;dovecot_core, @dovecot_ssl_configuration
    :values: @string
+   :changed: 2.4.0,3.0.0 :dovecot_core:ref:`ssl_client_ca` setting was split out of this.
 
    List of SSL CA certificates that are used to validate whether SSL
    certificates presented by incoming imap/pop3/etc. client connections are
    valid.
-
-   These CAs are also used by some processes for validating outgoing SSL
-   connections in addition to :dovecot_core:ref:`ssl_client_ca_file` and
-   :dovecot_core:ref:`ssl_client_ca_dir`. This is mainly important for
-   ``imap-login``, ``pop3-login``, etc. processes which are chrooted and can't
-   access the CA files outside the chroot.
-
-   Note that mail processes (imap, pop3, etc.) don't read this setting to save
-   memory, because the CAs can be large and there can be many mail processes.
 
    Example:
 
@@ -3228,6 +3220,18 @@ See :ref:`settings` for list of all setting groups.
    It's better to either use :dovecot_core:ref:`ssl_client_ca_dir` setting or
    use a CA bundle that only contains the CAs that are actually necessary for
    the server operation.
+
+
+.. dovecot_core:setting:: ssl_client_ca
+   :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
+   :values: @string
+   :added: 2.4.0,3.0.0 Split out of :dovecot_core:ref:`ssl_ca` setting.
+
+   List of trusted SSL CA certificates. This is used in addition to
+   :dovecot_core:ref:`ssl_client_ca_file` and
+   :dovecot_core:ref:`ssl_client_ca_dir`. This is mainly useful to provide
+   CAs for proxying in login processes, which run chrooted and can't access
+   CA files outside the chroot.
 
 
 .. dovecot_core:setting:: ssl_client_cert

@@ -79,10 +79,12 @@ You can use SSL/TLS connection to destination server by returning:
              use and allow your own private CA's certs, anything else is
              exploitable by a man-in-the-middle attack.
 
-.. Note:: :dovecot_core:ref:`ssl_client_ca_dir` or dovecot_core:ref:`ssl_client_ca_file` aren't currently used for
-          verifying the remote certificate, although ideally they will be in a
-          future Dovecot version. For now you need to add the trusted remote
-          certificates to dovecot_core:ref:`ssl_ca`.
+.. Note:: Login processes don't currently use
+          :dovecot_core:ref:`ssl_client_ca_dir` or
+	  dovecot_core:ref:`ssl_client_ca_file` settings for verifying the
+	  remote certificate, mainly because login processes can't really read
+	  the files chrooted. You can instead use
+	  dovecot_core:ref:`ssl_client_ca`.
 
 .. Note:: LMTP proxying supports SSL/TLS only since v2.3.1 - for older versions
           any ssl/starttls extra field is ignored.
