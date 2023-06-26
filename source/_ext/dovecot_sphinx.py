@@ -481,7 +481,7 @@ class DovecotEventDirective(DovecotDirective):
                 contentnode.insert(
                     0,
                     self._parse_rst(
-                        ".. version%s:: %s" % (x, self.options.get(x))
+                        ".. dovecot%s:: %s" % (x, self.options.get(x))
                     ),
                 )
 
@@ -544,17 +544,9 @@ class DovecotEventDirective(DovecotDirective):
             entry += content.children[0].deepcopy()
             if kind == None:
                 pass
-            elif kind == "added":
+            elif kind == "added" or kind == 'changed' or kind == 'removed':
                 entry += self._parse_rst(
-                    ".. versionadded:: %s" % (subparts[1])
-                )
-            elif kind == "changed":
-                entry += self._parse_rst(
-                    ".. versionchanged:: %s" % (subparts[1])
-                )
-            elif kind == "removed":
-                entry += self._parse_rst(
-                    ".. versionremoved:: %s" % (subparts[1])
+                    ".. dovecot%s:: %s" % (kind, subparts[1])
                 )
             else:
                 raise ValueError("Invalid field modifier %s", subparts[1])
