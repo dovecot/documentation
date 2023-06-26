@@ -28,6 +28,11 @@ class DovecotDirective(ObjectDescription):
         self.state.nested_parse(vl, 0, node)
         return node.children
 
+    def _generate_ref(self, arg, prefix = None):
+        return self._parse_rst(
+            "%s:ref:`%s`" % ((":" + prefix) if prefix != None else "", arg)
+        )[0]
+
     def _transform_content(self, contentnode):
         contentnode.parent["classes"].append("dovecotsetting")
 
@@ -42,9 +47,7 @@ class DovecotSettingLinkDirective(DovecotDirective):
     def transform_content(self, contentnode):
         self._transform_content(contentnode)
 
-        ref = self._parse_rst(
-            ":%s:ref:`%s`" % (self.domain, self.arguments[0])
-        )[0]
+        ref = self._generate_ref(self.arguments[0], self.domain)
         ref.insert(0, nodes.Text("See: "))
         contentnode += ref
 
@@ -102,12 +105,11 @@ class DovecotSettingDirective(DovecotDirective):
 
                 if x.startswith("@"):
                     parts = x[1:].split(";", 2)
-                    par += self._parse_rst(
-                        ":%s:ref:`%s`"
-                        % (parts[1] if len(parts) == 2 else "std", parts[0])
-                    )
+                    par += self._generate_ref(
+                        parts[0], parts[1] if len(parts) == 2 else "std"
+                    ).children
                 elif x.startswith("!"):
-                    par += self._parse_rst(x[1:])
+                    par += self._parse_rst(x[1:])[0].children
                 else:
                     par += nodes.literal(text=x)
         else:
@@ -129,9 +131,9 @@ class DovecotSettingDirective(DovecotDirective):
 
                 if x.startswith("@"):
                     x = x[1:]
-                    par += self._parse_rst(":ref:`%s`" % x)
+                    par += self._generate_ref(x).children
                 elif x.startswith("!"):
-                    par += self._parse_rst(x[1:])
+                    par += self._parse_rst(x[1:])[0].children
                 else:
                     par += nodes.literal(text=x)
 
@@ -149,12 +151,11 @@ class DovecotSettingDirective(DovecotDirective):
                 par = nodes.paragraph()
                 if x.startswith("@"):
                     parts = x[1:].split(";", 2)
-                    par += self._parse_rst(
-                        ":%s:ref:`%s`"
-                        % (parts[1] if len(parts) == 2 else "std", parts[0])
-                    )
+                    par += self._generate_ref(
+                        parts[0], parts[1] if len(parts) == 2 else "std"
+                    ).children
                 elif x.startswith("!"):
-                    par += self._parse_rst(x[1:])
+                    par += self._parse_rst(x[1:])[0].children
                 else:
                     par += nodes.literal(text=x)
 
@@ -554,7 +555,7 @@ class DovecotEventDirective(DovecotDirective):
             body += row
 
         """ Create collapsible container for event fields """
-        collapse = self._parse_rst(".. dropdown:: View Event Fields")
+        collapse = self._parse_rst(".. dropdown:: View Event Fields")[0]
         collapse += table
         contentnode += collapse
 
