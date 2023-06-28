@@ -26,7 +26,12 @@ class DovecotDirective(ObjectDescription):
         for x in txt.splitlines():
             vl.append(x, "%s:%d" % (source, line))
         self.state.nested_parse(vl, 0, node)
-        return node.children[0]
+        return node.children
+
+    def _generate_ref(self, arg, prefix = None):
+        return self._parse_rst(
+            "%s:ref:`%s`" % ((":" + prefix) if prefix != None else "", arg)
+        )[0]
 
     def _transform_content(self, contentnode):
         contentnode.parent["classes"].append("dovecotsetting")
@@ -42,9 +47,7 @@ class DovecotSettingLinkDirective(DovecotDirective):
     def transform_content(self, contentnode):
         self._transform_content(contentnode)
 
-        ref = self._parse_rst(
-            ":%s:ref:`%s`" % (self.domain, self.arguments[0])
-        )
+        ref = self._generate_ref(self.arguments[0], self.domain)
         ref.insert(0, nodes.Text("See: "))
         contentnode += ref
 
@@ -102,12 +105,11 @@ class DovecotSettingDirective(DovecotDirective):
 
                 if x.startswith("@"):
                     parts = x[1:].split(";", 2)
-                    par += self._parse_rst(
-                        ":%s:ref:`%s`"
-                        % (parts[1] if len(parts) == 2 else "std", parts[0])
+                    par += self._generate_ref(
+                        parts[0], parts[1] if len(parts) == 2 else "std"
                     ).children
                 elif x.startswith("!"):
-                    par += self._parse_rst(x[1:]).children
+                    par += self._parse_rst(x[1:])[0].children
                 else:
                     par += nodes.literal(text=x)
         else:
@@ -129,9 +131,9 @@ class DovecotSettingDirective(DovecotDirective):
 
                 if x.startswith("@"):
                     x = x[1:]
-                    par += self._parse_rst(":ref:`%s`" % x).children
+                    par += self._generate_ref(x).children
                 elif x.startswith("!"):
-                    par += self._parse_rst(x[1:]).children
+                    par += self._parse_rst(x[1:])[0].children
                 else:
                     par += nodes.literal(text=x)
 
@@ -149,12 +151,11 @@ class DovecotSettingDirective(DovecotDirective):
                 par = nodes.paragraph()
                 if x.startswith("@"):
                     parts = x[1:].split(";", 2)
-                    par += self._parse_rst(
-                        ":%s:ref:`%s`"
-                        % (parts[1] if len(parts) == 2 else "std", parts[0])
+                    par += self._generate_ref(
+                        parts[0], parts[1] if len(parts) == 2 else "std"
                     ).children
                 elif x.startswith("!"):
-                    par += self._parse_rst(x[1:]).children
+                    par += self._parse_rst(x[1:])[0].children
                 else:
                     par += nodes.literal(text=x)
 
@@ -346,7 +347,7 @@ class DovecotVersionChange(VersionChange):
 
         # Use of ';' to separate versions is now deprecated
         if self.arguments[0].find(';') != -1:
-            raise ValueError(f'Version string should not contain ";": {x}')
+            raise ValueError(f'Version string should not contain ";": {self.arguments[0]}')
 
         for x in sorted(self.arguments[0].split(',')):
             # Remove "pigeonhole-" prefix
@@ -481,7 +482,7 @@ class DovecotEventDirective(DovecotDirective):
                 contentnode.insert(
                     0,
                     self._parse_rst(
-                        ".. version%s:: %s" % (x, self.options.get(x))
+                        ".. dovecot%s:: %s" % (x, self.options.get(x))
                     ),
                 )
 
@@ -544,17 +545,9 @@ class DovecotEventDirective(DovecotDirective):
             entry += content.children[0].deepcopy()
             if kind == None:
                 pass
-            elif kind == "added":
+            elif kind == "added" or kind == 'changed' or kind == 'removed':
                 entry += self._parse_rst(
-                    ".. versionadded:: %s" % (subparts[1])
-                )
-            elif kind == "changed":
-                entry += self._parse_rst(
-                    ".. versionchanged:: %s" % (subparts[1])
-                )
-            elif kind == "removed":
-                entry += self._parse_rst(
-                    ".. versionremoved:: %s" % (subparts[1])
+                    ".. dovecot%s:: %s" % (kind, subparts[1])
                 )
             else:
                 raise ValueError("Invalid field modifier %s", subparts[1])
@@ -562,7 +555,7 @@ class DovecotEventDirective(DovecotDirective):
             body += row
 
         """ Create collapsible container for event fields """
-        collapse = self._parse_rst(".. dropdown:: View Event Fields")
+        collapse = self._parse_rst(".. dropdown:: View Event Fields")[0]
         collapse += table
         contentnode += collapse
 

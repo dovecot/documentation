@@ -64,7 +64,7 @@ Dovecot supports the following non-cleartext mechanisms:
 | APOP                                                                         | This is a POP3-specific authentication. Similar to                       |                             |
 |                                                                              | CRAM-MD5, but requires storing password in cleartext                     |                             |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+-----------------------------+
-| NTLM                                                                         | Mechanism created by Microsoft and supported by their                    | .. versionremoved:: 2.3.13  |
+| NTLM                                                                         | Mechanism created by Microsoft and supported by their                    | .. dovecotremoved:: 2.3.13  |
 |                                                                              | clients                                                                  |                             |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+-----------------------------+
 | `GSS-SPNEGO <authentication-gssapi>`                                         | A wrapper mechanism defined by :rfc:`4178`.                              |                             |
@@ -72,7 +72,7 @@ Dovecot supports the following non-cleartext mechanisms:
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+-----------------------------+
 | `GSSAPI <authentication-gssapi>`                                             | Kerberos v5 support.                                                     |                             |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+-----------------------------+
-| RPA                                                                          | Compuserve RPA authentication mechanism.                                 | .. versionremoved:: 2.3.13  |
+| RPA                                                                          | Compuserve RPA authentication mechanism.                                 | .. dovecotremoved:: 2.3.13  |
 |                                                                              | Similar to DIGEST-MD5, but client support is rare.                       |                             |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+-----------------------------+
 | ANONYMOUS                                                                    | Support for logging in anonymously. This may be useful if you're         |                             |

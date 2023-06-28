@@ -16,7 +16,7 @@ Generic
   This can especially happen if the process is still attempting to connect to
   the stats socket.
 
-  .. versionadded:: v2.4.0;v3.0.0
+  .. dovecotadded:: 2.4.0,3.0.0
 ``[idling]``
   The process is not doing anything except waiting for a client to be served.
 ``[blocking on log write]``
@@ -40,7 +40,7 @@ log process
 mail processes
 --------------
 
-.. versionadded:: v2.4.0;v3.0.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 This means imap, pop3, submission and managesieve processes.
 
@@ -55,7 +55,7 @@ This means imap, pop3, submission and managesieve processes.
 imap process
 ------------
 
-.. versionadded:: v2.4.0;v3.0.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 ``[waiting on unhibernate client]``
   imap-hibernate process connected to the imap process, but it hasn't finished

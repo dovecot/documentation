@@ -32,7 +32,7 @@ contains constants for passdb and userdb.
 Initialization
 ^^^^^^^^^^^^^^
 
-.. versionadded:: v2.4.0;v3.0.0
+.. dovecotadded:: 2.4.0,3.0.0
 
 When passdb or userdb is initialized, there will be a lookup for initialization function.
 This is different from :func:`script_init`` which is called for all Lua scripts. For

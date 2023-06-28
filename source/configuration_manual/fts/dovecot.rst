@@ -26,7 +26,7 @@ See :ref:`plugin-fts` for generic FTS settings.
 Consistency Checking
 ^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: v2.3.21
+.. dovecotadded:: 2.3.21
 
 The FTS indexes can sometimes become out-of-sync with the actual mailbox. Some
 messages could be missing and some could be leaked. In theory it should not be

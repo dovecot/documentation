@@ -190,22 +190,17 @@ Dictmap Parameters
 |                                 | .. dovecotchanged:: 3.0.0 Increased default to 10. Earlier versions run      |
 |                                 |                     with 1 as default.                                       |
 +---------------------------------+------------------------------------------------------------------------------+
-| cleanup-uncertain               | When enabled: If a write to Cassandra fails with uncertainty                 |
-|                                 | (:ref:`dictmap_cassandra_uncertain_writes`) Dovecot attempts to clean up.    |
-|                                 | First it tries to delete the uncertainly written dict key. If that succeeded |
-|                                 | the deletion of the corresponding storage object is also attempted.          |
+| no-cleanup-uncertain            | When enabled: If a write to Cassandra fails with uncertainty                 |
+|                                 | (:ref:`dictmap_cassandra_uncertain_writes`) Dovecot does *not* attempt       |
+|                                 | to clean it up.                                                              |
 |                                 |                                                                              |
-|                                 | If a Cassandra write during copying a file fails uncertainly, a cleanup of   |
-|                                 | the uncertainly written Cassandra keys is also attempted.                    |
-|                                 | Copying never attempts to delete anything from object storage.               |
-|                                 |                                                                              |
-|                                 | .. dovecotadded:: 2.3.12                                                     |
+|                                 | .. dovecotadded:: 3.0.0                                                      |
 +---------------------------------+------------------------------------------------------------------------------+
 | no-store-orig-path              | If this option is enabled the original file path is not stored as metadata.  |
 |                                 | The original path metadata is normally eventually visible to a fs backend    |
 |                                 | while the path is something different e.g. object ID.                        |
 |                                 |                                                                              |
-|                                 | .. versionadded:: v3.0.0                                                     |
+|                                 | .. dovecotadded:: 3.0.0                                                      |
 +---------------------------------+------------------------------------------------------------------------------+
 
 
