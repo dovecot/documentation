@@ -161,6 +161,9 @@ Removed features and their replacements
 |                                                            | default. It can be disabled by ``no-cleanup-uncertain`` - see                            |
 |                                                            | :ref:`dictmap_configuration_parameters` for more details.                                |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``replicator``                                             | Use :ref:`NFS <nfs>` or some other shared filesystem instead.                            |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+
 
 Changed default settings
 ========================
