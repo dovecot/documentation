@@ -824,26 +824,6 @@ See :ref:`settings` for list of all setting groups.
    from the remote server.
 
 
-.. dovecot_core:setting:: dsync_remote_cmd
-   :default: ssh -l%{login} %{host} doveadm dsync-server -u%u -U
-   :todo: Indicate dsync setting
-   :values: @string
-
-   Command to replicate when the :ref:`replication <replication>` plug-in is
-   used.
-
-   Variables that can be used for this setting:
-
-   ======================= ===================================
-   Variable Name           Description
-   ======================= ===================================
-   :ref:`variables-global`
-   ``%{user}``, ``%u``     Username
-   ``%{login}``            Remote login name (from login@host)
-   ``%{host}``             Remote hostname (from login@host)
-   ======================= ===================================
-
-
 .. dovecot_core:setting:: first_valid_gid
    :default: 1
    :seealso: @last_valid_gid;dovecot_core
@@ -2848,61 +2828,6 @@ See :ref:`settings` for list of all setting groups.
    be used.
 
 
-.. dovecot_core:setting:: replication_dsync_parameters
-   :added: 2.2.29
-   :default: -d -N -l 30 -U
-   :seealso: @replicator;dovecot_core
-   :todo: Indicate replicator setting
-   :values: @string
-
-   The parameters used by the replicator for the doveadm sync (dsync) command.
-
-
-.. dovecot_core:setting:: replication_full_sync_interval
-   :default: 1day
-   :seealso: @replicator;dovecot_core
-   :todo: Indicate replicator setting
-   :values: @time
-
-   How often full synchronization is to be performed with the replicator.
-
-
-.. dovecot_core:setting:: replication_max_conns
-   :default: 10
-   :seealso: @replicator;dovecot_core
-   :todo: Indicate replicator setting
-   :values: @uint
-
-   How many dsyncs may be run in parallel for replicator.
-
-
-.. dovecot_core:setting:: replicator
-   :todo: Indicate replicator setting
-   :values: @string
-
-   The replicator host to be used in dsync operation.
-
-
-.. dovecot_core:setting:: replicator_host
-   :seealso: @replicator;dovecot_core
-   :todo: Indicate replicator setting
-   :values: @string
-
-   Specifies remote hostname or UNIX socket to connect for replicator process.
-   If :dovecot_core:ref:`replicator_port` is set to ``0``, then it will be
-   treated as UNIX socket.
-
-
-.. dovecot_core:setting:: replicator_port
-   :default: 0
-   :seealso: @replicator;dovecot_core
-   :todo: Indicate replicator setting
-   :values: @uint
-
-   The port indicated here is used by dsync for replication. If set to ``0``,
-   :dovecot_core:ref:`replicator_host` is interpreted as UNIX socket path.
-
-
 .. dovecot_core:setting:: sendmail_path
    :default: /usr/sbin/sendmail
    :values: @string
@@ -3348,11 +3273,10 @@ See :ref:`settings` for list of all setting groups.
    :values: @string
 
    The compile-time directory PKG_STATEDIR (typically /var/lib/dovecot)
-   is hard-coded as the location of things such as the ssl-parameters.dat
-   file and the replicator database. The PKG_STATEDIR value is taken as
-   the default state_dir setting but can be overridden - for instance,
-   if you wish to use the same binaries for a system daemon and a user
-   daemon.
+   is hard-coded as the location of state files. The PKG_STATEDIR value
+   is taken as the default state_dir setting but can be overridden - for
+   instance, if you wish to use the same binaries for a system daemon and
+   a user daemon.
 
    The settings ``state_dir = /home/foo/dovecot/state`` and
    ``base_dir = /home/foo/dovecot/run`` give an example of usage.

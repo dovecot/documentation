@@ -86,8 +86,6 @@ follows a status line:
    - ``NOPERM`` - Permission denied.
    - ``PROTOCOL`` - Protocol-related error.
    - ``DATAERR`` - Input data (e.g. command parameters) were wrong.
-   - ``NOREPLICATE`` - Replication is disabled for the user (doveadm sync
-     wasn't run). Used by the replicator process.
    - ``NOTFOUND`` - The command didn't find the requested object.
 
 Available Commands

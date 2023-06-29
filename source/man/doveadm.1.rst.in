@@ -160,9 +160,6 @@ MAILBOX COMMANDS
 **doveadm rebuild**
    :man:`doveadm-rebuild(1)`, Rebuild index metadata from message data.
 
-**doveadm replicator**
-   :man:`doveadm-replicator(1)`, Manage users' mail replication.
-
 **doveadm save**
    :man:`doveadm-save(1)`, Save email to users' mailboxes.
 

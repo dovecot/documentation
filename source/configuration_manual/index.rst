@@ -45,7 +45,6 @@ Configuration Manual
    quota_clone_plugin
    quota/index
    quota_plugin
-   replication
    resource_usage
    service_configuration
    shared_mailboxes

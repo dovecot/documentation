@@ -611,7 +611,6 @@ Nonspacing
 nopassword
 nopipelining
 nordirplus
-noreplicate
 noscheme
 nosearch
 noselect
