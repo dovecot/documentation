@@ -15,7 +15,7 @@ SYNOPSIS
 ========
 
 **doveadm** [**-Dv**] **sync** [**-u** *user* | **-A** | **-F**
-*file*] [**-S** *socket_path*] [**-1fPRU**] [**-l** *secs*] [**-r**
+*file*] [**-S** *socket_path*] [**-1fPR**] [**-l** *secs*] [**-r**
 *rawlog path*] [**-m** *mailbox*] [**-g** *mailbox guid*] [**-n**
 *namespace* | **-N**] [**-x** *exclude*] [**-a** *all mailbox*]
 [**-s** *state*] [**-T** *secs*] [**-t** *start date*] [**-e** *end
@@ -23,7 +23,7 @@ date*] [**-O** *sync flag*] [**-I** *max size*]
 **-d** | *destination*
 
 **doveadm** [**-Dv**] **backup** [**-u** *user* | **-A** | **-F**
-*file*] [**-S** *socket_path*] [**-fPRU**] [**-l** *secs*] [**-r**
+*file*] [**-S** *socket_path*] [**-fPR**] [**-l** *secs*] [**-r**
 *rawlog path*] [**-m** *mailbox*] [**-g** *mailbox guid*] [**-n**
 *namespace* | **-N**] [**-x** *exclude*] [**-a** *all mailbox*]
 [**-s** *state*] [**-T** *secs*] [**-t** *start date*] [**-e** *end
@@ -106,8 +106,6 @@ There are also three different synchronization algorithms:
       run. Based on this state dsync can send only the changes that
       happened after the previous dsync run. As long as the state or the
       mailboxes aren't corrupted this algorithm should work perfectly.
-      The replicator process uses this internally to perform most of the
-      synchronization.
 
 The syncing is done as perfectly as possible: an IMAP or a POP3 client
 shouldn't be able to notice any differences between the two mailboxes.
@@ -129,9 +127,7 @@ server processes to be running, except when using -u parameter to do a
 *userdb* lookup from auth process.
 
 dsync can sync either one or multiple users using the -u or -A
-parameters. For continuous replication you can use the Dovecot
-replicator process, which automatically runs dsync whenever messages
-have changed.
+parameters.
 
 .. include:: global-options.inc
 
@@ -166,10 +162,6 @@ Command specific *options*:
 **-T** *secs*
    Specify the time in seconds, how long :man:`doveadm(1)` should wait
    for stalled I/O operations. The default timeout is 600 seconds.
-
-**-U**
-   This is used internally by replicator to have dsync notify it when
-   the synchronization is finished.
 
 **-d**
    Use the default destination, which is looked up from the

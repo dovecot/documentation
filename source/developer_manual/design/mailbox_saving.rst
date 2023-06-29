@@ -26,7 +26,7 @@ the source message. The only exception is message's flags and keywords.
 If you want to preserve them, the easiest way is to call
 ``mailbox_save_copy_flags()``.
 
-Some metadata fields are mainly useful when you're replicating or
+Some metadata fields are mainly useful when you're
 restoring an existing mailbox and want to preserve metadata:
 
 ``mailbox_save_set_min_modseq()``

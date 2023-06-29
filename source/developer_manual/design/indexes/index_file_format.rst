@@ -99,7 +99,7 @@ There are several advantages to having a transaction log:
    especially) since a specific point in time:
 
     * QRESYNC extension
-    * doveadm sync (dsync) / replication
+    * doveadm sync (dsync)
 
  * obox index merging works better using the transaction log.
 

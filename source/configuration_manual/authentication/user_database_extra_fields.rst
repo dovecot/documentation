@@ -23,7 +23,6 @@ fields'. Possibilities are:
 * ``uidgid_file``: Get uid and gid for user based on the given filename.
 * ``user``: User can be overridden (normally set in passdb, see
   :ref:`authentication-password_databases`).
-* ``noreplicate``: See :ref:`replication_configuration`.
 
 * ``event_<name>``: Import ``name=value`` to mail user event.
 
