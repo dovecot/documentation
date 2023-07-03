@@ -693,6 +693,14 @@ Mail
    :field uid: Mail IMAP UID number.
 
 
+.. dovecot_core:event:: mail_metadata_accessed
+   :added: 2.4.0,3.0.0
+   :inherit: mail, mailbox
+
+   A mail was opened for reading its metadata. Note that this event is not
+   sent when mails' body is accessed.
+
+
 .. dovecot_core:event:: mail_opened
    :added: 2.3.15
    :inherit: mail, mailbox
