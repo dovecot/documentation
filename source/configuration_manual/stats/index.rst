@@ -56,6 +56,8 @@ Group by
 
 .. dovecotadded:: 2.3.10 adds support for implicit discrete aggregation
 .. dovecotchanged:: 2.3.11 adds support for explicit aggregation functions
+.. dovecotchanged:: 3.0.0,2.4.0
+	allows sub-metric names up to 256 bytes in total, before it was 32 per label
 
 The ``group_by`` metric setting allows dynamic hierarchical metric
 generation based on event fields' values.  Each field listed in the
