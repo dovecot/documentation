@@ -337,6 +337,7 @@ HIGHESTPVTMODSEQ
 hostaddr
 hostchange
 hostdomain
+hostip
 Hotspot
 howto
 htdigest
