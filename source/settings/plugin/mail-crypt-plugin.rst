@@ -11,7 +11,7 @@ Settings
 
 .. dovecot_plugin:setting:: mail_crypt_acl_require_secure_key_sharing
    :default: no
-   :plugin: mail-crypt
+   :plugin: mail-crypt-acl
    :values: @boolean
 
    If enabled, you cannot share a key to groups or someone without a public
