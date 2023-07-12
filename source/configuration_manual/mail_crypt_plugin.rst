@@ -320,6 +320,8 @@ encrypt new mail, use ``mail_crypt_save_version=0``:
     mail_crypt_global_private_key = <server.key
   }
 
+.. _mail_crypt_acl_plugin:
+
 mail-crypt-plugin and ACLs
 ==========================
 
@@ -329,9 +331,10 @@ global key can be provided with several different scopes:
 * Global scope: key is configured in ``dovecot.conf`` file
 * Per-user(group) scope: key is configured in userdb file
 
-With folder keys, key sharing can be done to single user, or multiple users.
-When key is shared to single user, and the user has public key available, the
-folder key is encrypted to recipient's public key.
+With folder keys, key sharing can be done to single user, or to multiple users.
+When a key is shared to a single user, and the user has a public key available, the
+folder key is encrypted using recipient's public key. This requires the
+``mail_crypt_acl`` plugin, which will enable accessing the encrypted shared folders.
 
 If you have :dovecot_plugin:ref:`mail_crypt_acl_require_secure_key_sharing`
 enabled, you can't share the key to groups or someone with no public key.
