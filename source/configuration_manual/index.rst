@@ -47,6 +47,7 @@ Configuration Manual
    quota/index
    quota_plugin
    resource_usage
+   security_tuning
    service_configuration
    shared_mailboxes
    sieve/index
