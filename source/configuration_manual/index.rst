@@ -59,5 +59,6 @@ Configuration Manual
    system_users
    virtual_attachments_plugin
    virtual_plugin
+   virtual_users
    welcome_plugin
    zlib_plugin
