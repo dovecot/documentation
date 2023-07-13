@@ -9,6 +9,7 @@ SSL
 
   certificate_creation
   certificate_client_importing
+  sni_support
 
 LetsEncrypt has a good primer on mail server SSL certificates, see https://www.eff.org/deeplinks/2019/01/encrypting-web-encrypting-net-primer-using-certbot-secure-your-mailserver.
 
