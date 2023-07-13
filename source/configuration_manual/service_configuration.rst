@@ -9,9 +9,13 @@ This page describes Dovecot's services comprehensively. Most admins don't need t
 Service basics
 ==============
 
+.. _service_configuration-executable:
+
 executable
 ^^^^^^^^^^
 The binary path to execute and its parameters. If the path doesn't begin with ``/``, it's relative to base_dir.
+
+.. _service_configuration-type:
 
 type
 ^^^^
@@ -21,6 +25,8 @@ Type of this service:
    * "startup" creates one process at startup. For example SSL parameters are generated at startup because of this, instead of only after the first SSL connection arrives.
    * "login" is used by login processes. The login processes have "all processes full" notification fd. It's used by the processes to figure out when no more client connections can be accepted because client and process limits have been reached. The login processes can then kill some of their oldest connections that haven't logged in yet.
    * "log", "config" and "anvil" are treated specially by these specific processes.
+
+.. _service_configuration-protocol:
 
 protocol
 ^^^^^^^^
@@ -47,25 +53,37 @@ Using ``4294967295 secs`` disables the idle-killing.
 Service privileges
 ==================
 
+.. _service_configuration-user:
+
 user
 ^^^^
 UNIX user (UID) which runs this process.`` default_login_user`` setting's value should be used for type=login processes and ``default_internal_user`` should be used for other processes that don't require root privileges.
+
+.. _service_configuration-group:
 
 group
 ^^^^^
 The primary UNIX group (GID) which runs this process.
 
+.. _service_configuration-extra_groups:
+
 extra_groups
 ^^^^^^^^^^^^
 Secondary UNIX groups that this process belongs to.
+
+.. _service_configuration-privileged_group:
 
 privileged_group
 ^^^^^^^^^^^^^^^^
 Secondary UNIX group, which is disabled by default, but can be enabled by the process. This setting is probably never needed directly. ``mail_privileged_group`` setting is a more user friendly way to use this setting for mail processes.
 
+.. _service_configuration-chroot:
+
 chroot
 ^^^^^^
 The processes are chrooted to this directory at startup. Relative to ``base_dir``.
+
+.. _service_configuration-drop_priv_before_exec:
 
 drop_priv_before_exec
 ^^^^^^^^^^^^^^^^^^^^^
@@ -93,6 +111,8 @@ client_limit
 ^^^^^^^^^^^^
 Maximum number of simultaneous client connections per process. Once this number of connections is received, the next incoming connection will prompt Dovecot to spawn another process. If set to ``0``, ``default_client_limit`` is used instead.
 
+.. _service_configuration-service_count:
+
 service_count
 ^^^^^^^^^^^^^
 
@@ -104,6 +124,8 @@ process_limit
 ^^^^^^^^^^^^^
 Maximum number of processes that can exist for this service.
 If set to ``0``, ``default_process_limit`` is used instead.
+
+.. _service_configuration-process_min_avail:
 
 process_min_avail
 ^^^^^^^^^^^^^^^^^
@@ -134,6 +156,8 @@ launched.
 vsz_limit
 ^^^^^^^^^
 Limit the process's address space (both ``RLIMIT_DATA`` and ``RLIMIT_AS`` if available). When the space is reached, some memory allocations may start failing with "Out of memory", or the kernel may kill the process with signal 9. This setting is mainly intended to prevent memory leaks from eating up all of the memory, but there can be also legitimate reasons why the process reaches this limit. For example a huge mailbox may not be accessed if this limit is too low. The default value (``18446744073709551615=2^64-1``) sets the limit to ``default_vsz_limit``, while 0 disables the limit entirely.
+
+.. _service_configuration-listeners:
 
 Service listeners
 =================
