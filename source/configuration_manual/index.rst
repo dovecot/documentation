@@ -37,6 +37,7 @@ Configuration Manual
    nfs
    notify_status_plugin
    os/index
+   performance_tuning
    plugins/index
    protocols/index
    proxy_settings
