@@ -56,6 +56,7 @@ Configuration Manual
    stats/index
    stats/openmetrics
    system_calls_optimization
+   system_users
    virtual_attachments_plugin
    virtual_plugin
    welcome_plugin
