@@ -287,3 +287,9 @@ How a message is read stored in mbox extension
   whenever ``From_`` comes first.
 * It removes the last blank line and deletes the quoting of ``>From_`` lines
   and ``>>From_`` lines and so on.
+
+
+See also
+========
+
+ - :ref:`known_issues_mbox_problems`
