@@ -6,14 +6,12 @@ LDAP
 
 There are two ways to do LDAP authentication:
 
-* `Password lookups
-  <https://wiki.dovecot.org/AuthDatabase/LDAP/PasswordLookups>`_
-* `Authentication binds
-  <https://wiki.dovecot.org/AuthDatabase/LDAP/AuthBinds>`_
+* :ref:`Password lookups <authentication-ldap_bind>`
+* :ref:`Authentication binds <authentication-ldap_passwords>`
 
 Both of these have their own advantages and disadvantages.
 
-* `LDAP as userdb <https://wiki.dovecot.org/AuthDatabase/LDAP/Userdb>`_ and
+* :ref:`LDAP as userdb <authentication-ldap_userdb>` and
   other common LDAP query settings.
 
 Configuration common to LDAP passdb and userdb
