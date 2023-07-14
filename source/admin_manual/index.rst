@@ -10,6 +10,7 @@ Administrative Manual
 
    cassandra/index
    chrooting
+   clients
    cluster/index
    debugging/index
    doveadm_http_api
