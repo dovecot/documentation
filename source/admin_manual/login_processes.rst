@@ -67,6 +67,8 @@ client.
   always kept around waiting for new connections.
 * ``vsz_limit`` should be fine at its default 64MB value.
 
+.. _login_processes_high_performance:
+
 High-performance mode
 =====================
 
