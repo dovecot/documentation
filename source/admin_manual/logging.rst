@@ -45,6 +45,8 @@ The warning and error messages go to the file specified by
 :dovecot_core:ref:`info_log_path` and debug messages goes to
 :dovecot_core:ref:`debug_log_path`.
 
+.. _dovecot_logging_syslog:
+
 Syslog
 ^^^^^^
 
