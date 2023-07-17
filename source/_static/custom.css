@@ -33,3 +33,7 @@ dl.dovecotsetting dd {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+div.body {
+  max-width: none;
+}
