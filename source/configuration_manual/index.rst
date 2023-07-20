@@ -37,6 +37,7 @@ Configuration Manual
    nfs
    notify_status_plugin
    os/index
+   performance_tuning
    plugins/index
    protocols/index
    proxy_settings
@@ -46,6 +47,7 @@ Configuration Manual
    quota/index
    quota_plugin
    resource_usage
+   security_tuning
    service_configuration
    shared_mailboxes
    sieve/index
@@ -54,7 +56,9 @@ Configuration Manual
    stats/index
    stats/openmetrics
    system_calls_optimization
+   system_users
    virtual_attachments_plugin
    virtual_plugin
+   virtual_users
    welcome_plugin
    zlib_plugin

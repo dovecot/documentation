@@ -10,6 +10,7 @@ Administrative Manual
 
    cassandra/index
    chrooting
+   clients
    cluster/index
    debugging/index
    doveadm_http_api
@@ -47,5 +48,6 @@ Administrative Manual
    submission_server
    system_users_used_by_dovecot
    testing
+   timeouts
    troubleshooting
    virtualised_architecture
