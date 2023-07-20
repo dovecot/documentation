@@ -3188,7 +3188,7 @@ parameters::
 doveadm metacache clean
 =======================
 
-Clean metacache content for given user or all users
+Clean metacache content for given user or all users.
 
 parameters::
 
@@ -3216,6 +3216,10 @@ parameters::
                 "type": "integer"
             },
             {
+                "name": "minPriority",
+                "type": "integer"
+            },
+            {
                 "name": "namespace",
                 "type": "string"
             }
@@ -3223,17 +3227,19 @@ parameters::
     }
 
 
-+------------+--------+------------------------+---------------------------------+
-| Parameter  | Type   | Description            | example                         |
-+============+========+========================+=================================+
-| socketPath | String | Path to doveadm socket | /var/run/dovecot/doveadm-server |
-+------------+--------+------------------------+---------------------------------+
++-------------+---------+---------------------------+---------------------------------+
+| Parameter   | Type    | Description               | example                         |
++=============+=========+===========================+=================================+
+| socketPath  | String  | Path to doveadm socket    | /var/run/dovecot/doveadm-server |
++-------------+---------+---------------------------+---------------------------------+
+| minPriority | Integer | Minimum priority to clean | Values: 1..4                    |
++------------+----------+---------------------------+---------------------------------+
 
 
 doveadm metacache flush
 =======================
 
-Flush metacache contents to storage for given user or all users
+Flush metacache contents to storage for given user or all users.
 
 parameters::
 
@@ -3256,23 +3262,35 @@ parameters::
                 "type": "string"
             },
             {
+                "name": "minPriority",
+                "type": "integer"
+            },
+            {
+                "name": "importantOnly",
+                "type": "boolean"
+            },
+            {
                 "name": "namespace",
                 "type": "string"
             }
         ]
     }
 
-+------------+--------+------------------------+---------------------------------+
-| Parameter  | Type   | Description            | example                         |
-+============+========+========================+=================================+
-| socketPath | String | Path to doveadm socket | /var/run/dovecot/doveadm-server |
-+------------+--------+------------------------+---------------------------------+
++---------------+---------+------------------------------+---------------------------------+
+| Parameter     | Type    | Description                  | example                         |
++===============+=========+==============================+=================================+
+| socketPath    | String  | Path to doveadm socket       | /var/run/dovecot/doveadm-server |
++---------------+---------+------------------------------+---------------------------------+
+| minPriority   | Integer | Minimum priority to clean    | Values: 1-4                     |
++---------------+---------+------------------------------+---------------------------------+
+| importantOnly | Boolean | Only flush important changes |                                 |
++---------------+---------+------------------------------+---------------------------------+
 
 
 doveadm metacache flushall
 ==========================
 
-Flush metacache to storage for all users
+Flush metacache to storage for all users.
 
 parameters::
 
@@ -3282,6 +3300,51 @@ parameters::
             {
                 "name": "socketPath",
                 "type": "string"
+            },
+            {
+                "name": "userdbField",
+                "type": "string"
+            },
+            {
+                "name": "importantOnly",
+                "type": "boolean"
+            },
+            {
+                "name": "mask",
+                "type": "string"
+            }
+        ]
+    }
+
+
++---------------+---------+------------------------------+---------------------------------+
+| Parameter     | Type    | Description                  | example                         |
++===============+=========+==============================+=================================+
+| socketPath    | String  | Path to doveadm socket       | /var/run/dovecot/doveadm-server |
++---------------+---------+------------------------------+---------------------------------+
+| userdbField   | String  | Field to match userdb        | Default: username               |
++---------------+---------+------------------------------+---------------------------------+
+| importantOnly | Boolean | Only flush important changes |                                 |
++---------------+---------+------------------------------+---------------------------------+
+
+
+doveadm metacache list
+======================
+
+List local metacache contents.
+
+parameters::
+
+    {
+        "command": "metacacheList",
+        "parameters": [
+            {
+                "name": "socketPath",
+                "type": "string"
+            },
+            {
+                "name": "mask",
+                "type": "string"
             }
         ]
     }
@@ -3294,15 +3357,68 @@ parameters::
 +------------+--------+------------------------+---------------------------------+
 
 
-doveadm metacache list
+doveadm metacache pull
 ======================
 
-List local metacache contents
+Pull all metacache for given user(s) from source backend host.
 
 parameters::
 
     {
-        "command": "metacacheList",
+        "command": "metacachePull",
+        "parameters": [
+            {
+                "name": "allUsers",
+                "type": "boolean"
+            },
+            {
+                "name": "socketPath",
+                "type": "string"
+            },
+            {
+                "name": "user",
+                "type": "string"
+            },
+            {
+                "name": "userFile",
+                "type": "string"
+            },
+            {
+                "name": "latestOnly",
+                "type": "boolean"
+            },
+            {
+                "name": "clean",
+                "type": "boolean"
+            },
+            {
+                "name": "sourceBackendHost",
+                "type": "string"
+            }
+        ]
+    }
+
+
++---------------+---------+--------------------------------------------------------------+---------------------------------+
+| Parameter     | Type    | Description                                                  | example                         |
++===============+=========+==============================================================+=================================+
+| socketPath    | String  | Path to doveadm socket                                       | /var/run/dovecot/doveadm-server |
++---------------+---------+--------------------------------------------------------------+---------------------------------+
+| latestOnly    | Boolean | Fail if newer bundles in storage than at source backend host |                                 |
++---------------+---------+--------------------------------------------------------------+---------------------------------+
+| clean         | Boolean | Clean for users that have been successfully pulled           |                                 |
++---------------+---------+--------------------------------------------------------------+---------------------------------+
+
+
+doveadm metacache refresh
+=========================
+
+Force refreshing metacache for the given user(s) the next time it’s opened. The refresh is done for the user root index and all the folders.
+
+parameters::
+
+    {
+        "command": "metacacheRefresh",
         "parameters": [
             {
                 "name": "socketPath",
@@ -3322,7 +3438,7 @@ parameters::
 doveadm metacache remove
 ========================
 
-Remove metacache for given mask
+Remove metacache for given user mask.
 
 parameters::
 
@@ -3348,10 +3464,43 @@ parameters::
 +------------+--------+------------------------+---------------------------------+
 
 
+doveadm metacache status
+========================
+
+Metacache status.
+
+parameters::
+
+    {
+        "command": "metacacheStatus",
+        "parameters": [
+            {
+                "name": "socketPath",
+                "type": "string"
+            },
+            {
+                "name": "bytes",
+                "type": "boolean"
+            },
+            {
+                "name": "roots",
+                "type": "boolean"
+            }
+        ]
+    }
+
+
++------------+--------+------------------------+---------------------------------+
+| Parameter  | Type   | Description            | example                         |
++============+========+========================+=================================+
+| socketPath | String | Path to doveadm socket | /var/run/dovecot/doveadm-server |
++------------+--------+------------------------+---------------------------------+
+
+
 doveadm metacache unpack
 ========================
 
-Unpack metacache index bundle to target directory
+Unpack metacache index bundle to target directory.
 
 parameters::
 
@@ -3368,6 +3517,43 @@ parameters::
             },
             {
                 "name": "destinationDirectory",
+                "type": "string"
+            }
+        ]
+    }
+
+
++------------+--------+------------------------+---------------------------------+
+| Parameter  | Type   | Description            | example                         |
++============+========+========================+=================================+
+| socketPath | String | Path to doveadm socket | /var/run/dovecot/doveadm-server |
++------------+--------+------------------------+---------------------------------+
+
+
+doveadm metacache update userdb
+===============================
+
+Update alternative usernames (user_* fields) in doveadm metacache list output.
+
+parameters::
+
+    {
+        "command": "metacacheUpdateUserdb",
+        "parameters": [
+            {
+                "name": "socketPath",
+                "type": "string"
+            },
+            {
+                "name": "username",
+                "type": "string"
+            },
+            {
+                "name": "userdbField",
+                "type": "string"
+            },
+            {
+                "name": "userdbValue",
                 "type": "string"
             }
         ]
