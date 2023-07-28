@@ -75,9 +75,9 @@ not be the active script, unless the **-a** option is present.
 sieve list
 ----------
 
-**doveadm sieve list** [**-A** | **-u** *user*] [**-S** *socket_path*] *scriptname*
+**doveadm sieve list** [**-A** | **-u** *user*] [**-S** *socket_path*]
 
-Use this command to get an overview of existing Sieve scripts.
+List existing Sieve scripts, and their active state.
 
 sieve rename
 ------------
