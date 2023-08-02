@@ -1,4 +1,4 @@
-**-S**\ *socket_path*
+**-S** *socket_path*
    The option's argument is either an absolute path to a local UNIX
    domain socket, or a hostname and port (*hostname*:*port*), in order
    to connect a remote host via a TCP socket.
