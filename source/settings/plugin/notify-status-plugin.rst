@@ -33,12 +33,13 @@ Settings
    :plugin: notify-status
    :values: @string
 
-   A mailbox pattern to exclude from status updates. Wildcards are acceptable.
+   A mailbox pattern to enable for status updates. Wildcards are acceptable.
 
-   By default, all mailboxes are processed.
+   By default, all mailboxes are processed. When defining one or more patterns
+   only mailboxes matching the pattern are enabled for status updates.
 
-   You can define multiple quota roots by appending an increasing number to the
-   setting label.
+   You can define multiple mailbox patterns by appending an increasing number
+   to the setting label.
 
    Example:
 
