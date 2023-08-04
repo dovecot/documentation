@@ -369,10 +369,10 @@ FS driver syntax::
 
   crypt:[maybe:][algo=<s>:][set_prefix=<n>:][private_key_path=/path:][public_key_path=/path:][password=password:]<parent fs>``
 
-.. dovecotchanged:: 2.3.19
+.. dovecotchanged:: 2.4.0,3.0.0
   You can now leave all parameters out of mail-crypt. Prior to this, you would always have to specify them.
 
-.. dovecotadded:: 2.3.19
+.. dovecotadded:: 2.4.0,3.0.0
 
    ``maybe`` was added
 
