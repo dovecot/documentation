@@ -268,7 +268,7 @@ For example:
 
 .. code-block:: sh
 
-   doveadm stats add --description "IMAP SELECT commands" --exporter log-exporter --exporter-include "name timestamps" --fields "net_in_bytes net_out_bytes" --group-by "cmd_name tagged_reply_state" imap_cmd_select "event=imap_command_finished AND name=SELECT"
+   doveadm stats add --description "IMAP SELECT commands" --exporter log-exporter --exporter-include "name timestamps" --fields "net_in_bytes net_out_bytes" --group-by "cmd_name tagged_reply_state" imap_cmd_select "event=imap_command_finished AND cmd_name=SELECT"
 
 Metrics can be removed dynamically by running:
 
