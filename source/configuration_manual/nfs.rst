@@ -25,6 +25,10 @@ to all mailbox access, including mail delivery.
 NFS mount options
 =================
 
+* ``actimeo``: This or the more specific settings can be used to control NFS
+  caching. Increasing this can reduce NFS traffic. It should be at least
+  60 seconds (``actimeo=60``).
+
 * ``nordirplus``: Disable readdirplus operations, which aren't needed by
   Dovecot. They can also slow down some NFS servers.
 
@@ -46,10 +50,6 @@ NFS mount options
   be possible if the ``nolock`` is enabled only for the index mountpoint.
   This can still increase the likelihood of index corruption (which can lose
   message flags), but locking won't prevent index corruption completely anyway.
-
-* ``actimeo``: This or the more specific settings can be used to control NFS
-  caching. The defaults are likely good enough, but you can try to increase
-  the caching time to reduce NFS traffic (e.g. ``actimeo=60``).
 
 Optimizations
 =============
