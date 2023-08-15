@@ -29,9 +29,9 @@ The list of cached fields depends on which IMAP clients are expected to be used.
 
    * IMAP ENVELOPE
 
-   * flags date.received size.virtual imap.bodystructure mime.parts hdr.importance hdr.x-priority hdr.references body.snippet hdr.x-open-xchange-share-url
+   * flags date.received imap.bodystructure mime.parts hdr.importance hdr.x-priority hdr.references body.snippet hdr.x-open-xchange-share-url
 
-* POP3 clients: size.virtual pop3.uidl pop3.order
+* POP3 clients: pop3.uidl pop3.order
 
 * iOS 9.3.1:
 
@@ -49,9 +49,6 @@ Fields
  * ``date.received``: Mail delivery date (IMAP INTERNALDATE)
  * ``date.save``: Mail save/copy date (mdbox and obox formats store this always in
    dovecot.index)
- * ``size.virtual``: Virtual message size (line feeds counted as CRLFs). This is
-   also often stored in dovecot.index file (especially when using
-   :ref:`count quota <quota_backend_count>`.).
  * ``size.physical``: Physical message size (line feeds exactly as they are
    stored in the stored mail). Note that the size is of the mail as plaintext,
    i.e. after decryption/compression. This is typically used by :ref:`fs <quota_backend_fs>` or :ref:`maildir <quota_backend_maildir>` quota.
