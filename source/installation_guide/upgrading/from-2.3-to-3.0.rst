@@ -163,6 +163,9 @@ Removed features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``replicator``                                             | Use :ref:`NFS <nfs>` or some other shared filesystem instead.                            |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| size.virtual                                               | size.virtual field is no longer written to dovecot.index.cache file as it is duplicating |
+|                                                            | vsize record in dovecot.index file. Reading of the field from old files is supported.    |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 
 Changed default settings
