@@ -775,7 +775,7 @@ parameters::
 |            |              | binary.<section> user mailbox mailbox-  |                                 |
 |            |              | guid seq uid guid flagsmodseq hdr body  |                                 |
 |            |              | body.snippet text text.utf8             |                                 |
-|            |              | size.physical size.virtualdate.received |                                 |
+|            |              | size.physical date.received             |                                 |
 |            |              | date.sent date.saved                    |                                 |
 |            |              | date.received.unixtime                  |                                 |
 |            |              | date.sent.unixtimedate.saved.unixtime   |                                 |
