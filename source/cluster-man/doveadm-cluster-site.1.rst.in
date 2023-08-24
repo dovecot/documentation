@@ -24,6 +24,8 @@ SYNOPSIS
 
 **doveadm** [**-Dv**] [**-f** *formatter*] cluster site list
 
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site init [ **-\-update** ] *-\-self* | *name*
+
 
 DESCRIPTION
 ===========
@@ -63,6 +65,17 @@ cluster site update
 **doveadm** [**-Dv**] [**-f** *formatter*] cluster site update [ **-\-status** *online|offline|standby|evacuate* ] [ **-\-load-balancer** *host* ] *-\-self* | *name*
 
 Update site status and load balancer. The ``--self`` parameter can be used to target the local site.
+
+
+cluster site init
+-------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site init [ **-\-update**] *-\-self* | *name*
+
+Initialise site by creating *cluster_default_group_count* user groups. The ``--self`` parameter can be used to target the local site.
+
+If ``--update`` is passed this command removes existing groups and recreates them. Users get their users_groups unassigned when running with
+``--update``.
 
 
 SITE STATUS
