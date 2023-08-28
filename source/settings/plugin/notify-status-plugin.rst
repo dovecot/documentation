@@ -11,12 +11,13 @@ notify-status plugin
 Settings
 --------
 
-.. dovecot_plugin:setting:: notify_status_dict
-   :plugin: notify-status
+.. dovecot_plugin:setting_filter:: notify_status
+   :filter: notify_status
+   :setting: dict_driver
    :values: @string
 
-   The URI of the dictionary to use. This MUST be set for the plugin to be
-   active.
+   The dict_driver to use. This is required to be set if it is not set in the
+   filter notify_status will try to use the globally defined dict_driver.
 
    See :ref:`dict` for how to configure dictionaries.
 
@@ -24,41 +25,45 @@ Settings
 
    .. code-block:: none
 
-     plugin {
-       notify_status_dict = proxy:dict-async:notify_status
+     notify_status {
+       dict_driver = proxy
+       dict_proxy_name = notify
      }
 
 
-.. dovecot_plugin:setting:: notify_status_mailbox
+.. dovecot_plugin:setting:: mailbox_notify_status
    :plugin: notify-status
-   :values: @string
+   :values: @boolean
 
-   A mailbox pattern to exclude from status updates. Wildcards are acceptable.
+   By default, all mailboxes are disabled
 
-   By default, all mailboxes are processed.
-
-   You can define multiple quota roots by appending an increasing number to the
-   setting label.
+   You can enable single mailboxes or mailbox wildcards by adding
+   notify_status = yes
 
    Example:
 
    .. code-block:: none
 
-     plugin {
-       notify_status_mailbox = Spam
-       notify_status_mailbox2 = Archive/*
+     mailbox INBOX {
+       notify_status = yes
+     }
+     mailbox Spam {
+       notify_status = yes
+     }
+     mailbox *BOX {
+       notify_status = yes
      }
 
 
 .. dovecot_plugin:setting:: notify_status_value
-   :default: {"messages":%%{messages},"unseen":%%{unseen}}
+   :default: {"messages":%{messages},"unseen":%{unseen}}
    :plugin: notify-status
    :values: @string
 
    A template of the string that will be written to the dictionary.
 
    The template supports variable substitution of the form
-   ``%%{variable_name}``.
+   ``%{variable_name}``.
 
    Supported variable substitutions:
 
