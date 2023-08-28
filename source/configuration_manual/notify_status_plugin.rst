@@ -19,7 +19,7 @@ See :ref:`plugin-notify-status`.
 
 This plugin requires that the :ref:`plugin-notify` be loaded.
 
-The values to store are listed at :dovecot_plugin:ref:`notify_status_mailbox`.
+The values to store are listed at :dovecot_plugin:ref:`mailbox_notify_status`.
 
 Dictionary Configuration
 ------------------------
@@ -35,14 +35,25 @@ Example
 
   mail_plugins = $mail_plugins notify notify_status
 
-  plugin {
-    notify_status_dict = proxy:dict-async:notify_status
-
-    # By default all mailboxes are added to dict. This can be limited with:
-    #notify_status_mailbox = INBOX
-    #notify_status_mailbox2 = pattern2/*
-    #...
+  notify_status {
+    dict_driver = proxy
+    dict_proxy_name = notify_status
+    dict_proxy_socket_path = dict-async
   }
+
+  # By default no mailbox is added to dict. To enable all notify_status for
+  # all mailboxes add:
+  mailbox_notify_status = yes
+
+  # If you keep the default mailbox_notify_status = no you can enable it per
+  # mailbox like this:
+  mailbox inbox {
+    notify_status = yes
+  }
+  mailbox TestBox {
+    notify_status = yes
+  }
+
 
 SQL dict Example
 ^^^^^^^^^^^^^^^^
