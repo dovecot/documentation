@@ -18,7 +18,7 @@ The home is optional. You can also return other :ref:`authentication-user_databa
 LDA and passdb lookup for user verification
 ===========================================
 
-Unless your MTA already verifies that the user exists before calling dovecot-lda, you'll most likely want dovecot-lda itself to verify the user's existence. Since dovecot-lda looks up the user only from the userdb, it of course doesn't work with static userdb because there is no list of users. Normally static userdb handles this by doing a passdb lookup instead. This works with most passdbs, with PAM being the most notable exception. If you want to avoid this user verification, you can add ``allow_all_users=yes`` :ref:`authentication-pam` to the args in which case the passdb lookup is skipped.
+Unless your MTA already verifies that the user exists before calling dovecot-lda, you'll most likely want dovecot-lda itself to verify the user's existence. Since dovecot-lda looks up the user only from the userdb, it of course doesn't work with static userdb because there is no list of users. Normally static userdb handles this by doing a passdb lookup instead. This works with most passdbs, with :ref:`authentication-pam` being the most notable exception. If you want to avoid this user verification, you can add ``allow_all_users=yes`` to the args in which case the passdb lookup is skipped.
 
 Example
 =======
