@@ -64,6 +64,8 @@ class DovecotSettingDirective(DovecotDirective):
         "seealso": directives.unchanged,
         "todo": directives.unchanged,
         "values": directives.unchanged,
+        "setting": directives.unchanged,
+        "filter": directives.unchanged,
     }
 
     def handle_signature(self, sig, signode):
@@ -168,6 +170,16 @@ class DovecotSettingDirective(DovecotDirective):
                 ".. todo:: %s" % (self.options.get("todo"))
             )
 
+        if "filter" in self.options:
+            par = nodes.paragraph(text="Filter: ")
+            par += nodes.Text(self.options.get("filter"))
+            blist += nodes.list_item("", par)
+
+        if "setting" in self.options:
+            par = nodes.paragraph(text="Required setting: ")
+            par += nodes.Text(self.options.get("setting"))
+            blist += nodes.list_item("", par)
+
 
 class DovecotSettingIndex(Index):
     def generate(self, docnames=None):
@@ -239,6 +251,11 @@ class DovecotPluginSettingDirective(DovecotSettingDirective):
         return "{}-{}".format(self.options.get("plugin").strip(), sig)
 
 
+class DovecotPluginSettingFilterDirective(DovecotSettingDirective):
+    def dovecot_anchor(self, sig):
+        return "{}-{}".format(self.options.get("filter").strip(), sig)
+
+
 class DovecotPluginSettingIndex(DovecotSettingIndex):
     name = "plugin_setting"
     localname = "Dovecot Plugin Settings Index"
@@ -252,6 +269,7 @@ class DovecotPluginSettingDomain(DovecotSettingDomain):
 
     directives = {
         "setting": DovecotPluginSettingDirective,
+        "setting_filter": DovecotPluginSettingFilterDirective,
         "setting_link": DovecotSettingLinkDirective,
     }
     indices = {DovecotPluginSettingIndex}
