@@ -2333,7 +2333,7 @@ See :ref:`settings` for list of all setting groups.
 
    A value of ``0`` means this scan never occurs.
 
-   .. dovecotchanged:: 2.4.0,3.0.0 In order to prevent load spikes the actual
+   .. dovecotchanged:: 2.3.21 In order to prevent load spikes the actual
       value of the setting is spread increasing it by 0..30%, based on a hash
       of the username.
 
