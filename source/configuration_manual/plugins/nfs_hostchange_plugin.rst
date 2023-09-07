@@ -1,3 +1,5 @@
+.. _nfs_hostchange:
+
 ======================
 NFS host change plugin
 ======================
