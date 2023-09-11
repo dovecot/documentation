@@ -168,6 +168,19 @@ required parameter.
 **-a**
    Specify alternative metacache socket. Not usually needed.
 
+metacache status
+----------------
+
+**doveadm metacache status** [**-a** *metacache_socket_path*] [ **--roots** ] [ **-b** ]
+
+Print statistics about metacache usage.
+
+**--roots**
+   Group the results by storage device instead than by time
+
+**-b**
+   Force the result to be shown in bytes.
+
 metacache update userdb
 -----------------------
 
