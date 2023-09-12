@@ -7,15 +7,15 @@ Push Notification Framework
 Introduction
 ============
 
-Dovecot's Push Notification framework exposes :rfc:`5423` (Internet Message Store
-Events) events that occur in Dovecot to
-a system that can be used to report these events to external services.
+Dovecot's Push Notification framework exposes :rfc:`5423` (Internet Message
+Store Events) events that occur in Dovecot to a system that can be used to
+report these events to external services.
 
 .. _push_notification-events:
 
-These events (see :rfc:`5423#section-4.1`
-for descriptions) are available within the notification framework, although a
-driver may not implement all of them:
+These events (see :rfc:`5423#section-4.1` for descriptions) are available
+within the notification framework, although a driver may not implement all of
+them:
 
 * FlagsClear
 * FlagsSet
@@ -43,7 +43,8 @@ Usage
 =====
 
 To use push notifications, both the ``notify`` and the ``push_notification``
-plugins need to be activated by defining in :dovecot_core:ref:`mail_plugins`.
+plugins need to be activated by defining them in
+:dovecot_core:ref:`mail_plugins`.
 
 This can either be set globally or restricted to the protocols where you
 want push notifications to be generated.  For example, to restrict to mail
