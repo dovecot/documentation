@@ -9,15 +9,27 @@ push-notification
 Settings
 ========
 
-.. dovecot_plugin:setting:: push_notification_driver
+.. dovecot_plugin:setting:: push_notification
    :plugin: push-notification
    :values: @string
 
-   The configuration value is the name of the driver, optionally
-   followed by an ``:`` and driver-specific options (see
-   :ref:`push_notification` for the list of drivers and options supported).
+   The configuration value is the name of the driver, see
+   :ref:`push_notification` for the list of drivers and options supported.
 
-   It is possible to specify multiple push notification drivers by adding a
-   sequential number to the ``push_notification_driver`` label, starting with
-   the number ``2``. There can be no numbering gaps for the labels; only the
-   drivers that appear in sequential order will be processed.
+   It is possible to specify multiple push notification drivers of the same
+   type by differentiating them via unique names. This allows for sending a
+   notification via the same driver to two different endpoints if possible.
+
+   Example:
+
+   .. code-block:: none
+
+    push_notification driver1 {
+      push_notification_driver = ox
+      push_notification_ox_url = http://example.com/foo
+    }
+
+    push_notification driver2 {
+      push_notification_driver = ox
+      push_notification_ox_url = http://example.com/foo
+    }
