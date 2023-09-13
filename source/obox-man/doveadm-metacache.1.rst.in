@@ -104,8 +104,8 @@ is flushed. WARNING: This can be expensive and long operation.
 metacache list
 --------------
 
-**doveadm metacache list** [**-a** *metacache_socket_path*] [ *user mask*
-]
+**doveadm metacache list** [**-a** *metacache_socket_path*] [ **-f**
+*userdb_field* ] [ *user mask* ]
 
 List current metacache for matching users. If no mask is specified,
 lists all users' metacache.
@@ -147,6 +147,9 @@ Output will contain
 
 **-a**
    Specify alternative metacache socket. Not usually needed.
+
+**-f**
+   Use given field to match userdb. By default it's username
 
 metacache refresh
 -----------------
