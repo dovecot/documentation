@@ -85,6 +85,9 @@ EXIT STATUS
 **64**
    Invalid parameter given. (EX_USAGE)
 
+**67**
+   Recipient user not known. (EX_NOUSER)
+
 **77**
    **-e** option was used and mail was rejected. Typically this happens
    when user is over quota and **quota_full_tempfail = no** is
