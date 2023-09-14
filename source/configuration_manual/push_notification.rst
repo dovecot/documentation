@@ -131,25 +131,25 @@ used by any push endpoint that implements this API, not just OX App Suite.
 
 Configuration options:
 
-+---------------------------------------------+----------+----------------+--------------------------------------------------------------------------------------------------------------------------------------+
-| Name                                        | Required | Type           | Description                                                                                                                          |
-+=============================================+==========+================+======================================================================================================================================+
-| ``push_notification_driver``                | **YES**  | :ref:`string`  | To identify this settings block the driver should get the value ``ox``.                                                              |
-+---------------------------------------------+----------+----------------+--------------------------------------------------------------------------------------------------------------------------------------+
-| ``push_notification_ox_url``                | **YES**  | :ref:`string`  | The HTTP end-point (URL + authentication information) to use is configured in the Dovecot configuration file.                        |
-|                                             |          |                | Contains authentication information needed for Basic Authentication (if any). Example:                                               |
-|                                             |          |                | ``http<s> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/preliminary/http-notify/v1/notify"``                |
-|                                             |          |                |                                                                                                                                      |
-|                                             |          |                | For HTTPS endpoints, system CAs are trusted by default, but internal CAs might need further configuration.                           |
-|                                             |          |                |                                                                                                                                      |
-|                                             |          |                | For further details on configuring the App Suite endpoint, see:                                                                      |
-|                                             |          |                | https://documentation.open-xchange.com/latest/middleware/mail/dovecot/dovecot_push.html#configuration-of-dovecot-http-notify-plug-in |
-+---------------------------------------------+----------+----------------+--------------------------------------------------------------------------------------------------------------------------------------+
-| ``push_notification_ox_cache_ttl``          | NO       | :ref:`time`    | Cache lifetime for the METADATA entry for a user. (DEFAULT: ``60 seconds``)                                                          |
-+---------------------------------------------+----------+----------------+--------------------------------------------------------------------------------------------------------------------------------------+
-| ``push_notification_ox_user_from_metadata`` | NO       | :ref:`boolean` | Use the user stored in the METADATA entry instead of the user sent by OX endpoint.                                                   |
-|                                             |          |                | (DEFAULT: user returned by endpoint response is used, i.e. ``no``)                                                                   |
-+---------------------------------------------+----------+----------------+--------------------------------------------------------------------------------------------------------------------------------------+
+=========================================== ======== ============== ====================================================================================================================================
+Name                                        Required Type           Description
+=========================================== ======== ============== ====================================================================================================================================
+``push_notification_driver``                **YES**  :ref:`string`  To identify this settings block the driver should get the value ``ox``.
+
+``push_notification_ox_url``                **YES**  :ref:`string`  The HTTP end-point (URL + authentication information) to use is configured in the Dovecot configuration file.
+                                                                    Contains authentication information needed for Basic Authentication (if any). Example:
+                                                                    ``http<s> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/preliminary/http-notify/v1/notify"``
+
+                                                                    For HTTPS endpoints, system CAs are trusted by default, but internal CAs might need further configuration.
+
+                                                                    For further details on configuring the App Suite endpoint, see:
+                                                                    https://documentation.open-xchange.com/latest/middleware/mail/dovecot/dovecot_push.html#configuration-of-dovecot-http-notify-plug-in
+
+``push_notification_ox_cache_ttl``          NO       :ref:`time`    Cache lifetime for the METADATA entry for a user. (DEFAULT: ``60 seconds``)
+
+``push_notification_ox_user_from_metadata`` NO       :ref:`boolean` Use the user stored in the METADATA entry instead of the user sent by OX endpoint.
+                                                                    (DEFAULT: user returned by endpoint response is used, i.e. ``no``)
+=========================================== ======== ============== ====================================================================================================================================
 
 Example configuration:
 
@@ -237,18 +237,20 @@ Lua push notification handler requires :ref:`mail_lua <plugin-mail-lua>` and
 ``push_notification_lua`` plugins to be loaded in addition to the plugins 
 discussed :ref:`above <push_notification-usage>`.
 
-+------------------------------+----------+---------------+--------------------------------------------------------------------------+
-| Name                         | Required | Type          | Description                                                              |
-+==============================+==========+===============+==========================================================================+
-| ``push_notification_driver`` | **YES**  | :ref:`string` | To identify this settings block the driver should get the value ``lua``. |
-+------------------------------+----------+---------------+--------------------------------------------------------------------------+
-| ``path``                     | NO       | :ref:`string` | The lua file to execute. If no script is specified,                      |
-|                              |          |               | :dovecot_plugin:ref:`mail_lua_script` will be used by default.           |
-|                              |          |               |                                                                          |
-|                              |          |               | This setting is optional as the driver first checks the environment      |
-|                              |          |               | ``push_notification_lua_script_path`` and loads it. This also means      |
-|                              |          |               | that this environment variable takes precedence over this setting.       |
-+------------------------------+----------+---------------+--------------------------------------------------------------------------+
+============================== ======== ============= =================================================================
+Name                           Required Type          Description
+============================== ======== ============= =================================================================
+``push_notification_driver``   **YES**  :ref:`string` To identify this settings block the driver should get the value
+                                                      ``lua``.
+
+``push_notification_lua_path`` NO       :ref:`string` The lua file to execute. If no script is specified,
+                                                      :dovecot_plugin:ref:`mail_lua_script` will be used by default.
+
+                                                      This setting is optional as the driver first checks the
+                                                      environment ``push_notification_lua_script_path`` and loads it.
+                                                      This also means that this environment variable takes precedence
+                                                      over this setting.
+============================== ======== ============= =================================================================
 
 .. code-block:: none
 
@@ -529,22 +531,22 @@ The chronos push notification handler requires the
 discussed :ref:`above <push_notification-usage>`.
 
 
-============================================= ========== =================== ============================================================================================================
-Name                                          Required   Type                Description
-============================================= ========== =================== ============================================================================================================
-``push_notification_driver``                  **YES**    :ref:`string`       To identify this settings block the driver should get the value ``chronos``.
+========================================== ========== ============= ============================================================================================================
+Name                                       Required   Type          Description
+========================================== ========== ============= ============================================================================================================
+``push_notification_driver``               **YES**    :ref:`string` To identify this settings block the driver should get the value ``chronos``.
 
-``push_notification_chronos_url``             **YES**    :ref:`string`       The HTTP end-point (URL + authentication information) to use for sending the push notification.
-                                                                             Contains authentication information needed for Basic Authentication (if any). Example:
-                                                                             ``http<s> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/chronos/v1/itip/pushmail"``
+``push_notification_chronos_url``          **YES**    :ref:`string` The HTTP end-point (URL + authentication information) to use for sending the push notification.
+                                                                    Contains authentication information needed for Basic Authentication (if any). Example:
+                                                                    ``http<s> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/chronos/v1/itip/pushmail"``
 
-                                                                             For HTTPS endpoints, system CAs are trusted by default, but internal CAs might need further configuration.
+                                                                    For HTTPS endpoints, system CAs are trusted by default, but internal CAs might need further configuration.
 
-                                                                             For further details on configuring the App Suite endpoint, see:
-                                                                             https://documentation.open-xchange.com/7.10.6/middleware/calendar/iTip.html#configuration2
+                                                                    For further details on configuring the App Suite endpoint, see:
+                                                                    https://documentation.open-xchange.com/7.10.6/middleware/calendar/iTip.html#configuration2
 
-``push_notification_chronos_msg_max_size``    NO         :ref:`size`         Maximum size a message may have to be considered for push notification sending. (DEFAULT: ``1mb``)
-============================================= ========== =================== ============================================================================================================
+``push_notification_chronos_msg_max_size`` NO         :ref:`size`   Maximum size a message may have to be considered for push notification sending. (DEFAULT: ``1mb``)
+========================================== ========== ============= ============================================================================================================
 
 Example configuration:
 
