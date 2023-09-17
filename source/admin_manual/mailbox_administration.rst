@@ -9,6 +9,8 @@ Mailbox Administration
 
    migrating_mailboxes
    importing_mailboxes
+   
+   migrating_from_courier
 
    doveadm_mailbox_commands
 

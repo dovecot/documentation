@@ -135,6 +135,7 @@ COPYUID
 coretest
 coreutils
 courierimapuiddb
+courierpop
 cov
 cpanel
 CPID
@@ -218,6 +219,7 @@ downsides
 DRhu
 Droid
 droppriv
+dsizelist
 dspam
 dsync
 dsyncing
@@ -699,9 +701,9 @@ opsec
 optboolean
 optname
 oqmgr
+OR'ing
 orcpt
 origbox
-OR'ing
 ORing
 orld
 OSERROR
@@ -1072,7 +1074,6 @@ Venema
 vfile
 vfuncs
 vgdb
-virtualdate
 virtualenv
 virtualised
 virustest
