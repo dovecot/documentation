@@ -17,6 +17,7 @@ obox drivers
  * :ref:`scality_cdmi`
  * :ref:`amazon_s3`
  * :ref:`s3_storages`
+ * :ref:`azure`
 
 
 obox plugin settings
