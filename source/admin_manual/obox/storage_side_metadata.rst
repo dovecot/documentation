@@ -13,9 +13,15 @@ The header name used is specific to the obox driver:
  ==========  ===============================
  Driver       Metadata Header
  ==========  ===============================
+  azure      x-ms-meta-<key>
   s3	     x-amz-meta-dovecot-<key>
   sproxyd    X-Object-meta-dovecot-<key>
  ==========  ===============================
+
+.. Note:: Azure enforces metadata names to adhere C# identifier naming
+          conventions. If a name does not comply it fails with:
+          400 The metadata specified is invalid. It has characters that
+          are not permitted.
 
 The metacache keys available are:
 

@@ -2,6 +2,7 @@ aad
 ACAP
 ACCESSKEY
 achara
+ACCOUNTNAME
 actimeo
 addflag
 addhdr
@@ -128,6 +129,7 @@ codahale
 codinghorror
 coi
 commitlog
+CONTAINERNAME
 Compuserve
 CONDSTORE
 copybox
