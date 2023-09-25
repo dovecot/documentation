@@ -67,6 +67,13 @@ cluster site update
 Update site status and load balancer. The ``--self`` parameter can be used to target the local site.
 
 
+cluster site list
+-----------------
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site list
+
+List all sites.
+
+
 cluster site init
 -------------------
 
