@@ -25,6 +25,9 @@ modify Dovecot Cluster.
 COMMANDS
 ========
 
+**doveadm cluster tag**
+  :man:`doveadm-cluster-tag(1)`, Tag management commands
+
 **doveadm cluster site**
   :man:`doveadm-cluster-site(1)`, Site management commands
 

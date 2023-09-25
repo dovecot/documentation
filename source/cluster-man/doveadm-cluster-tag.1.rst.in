@@ -1,0 +1,98 @@
+.. _man-1_doveadm-cluster-tag:
+
+====================
+doveadm-cluster-tag
+====================
+
+
+NAME
+====
+
+doveadm-cluster-tag - Utility actions for Dovecot Cluster tag
+
+
+SYNOPSIS
+========
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag create [ **-\-uuid** **uuid** ] *name*
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag delete *name|uuid*
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag update [ **-\-uuid** *uuid* ] [ **-\-name** *name* ] *name|uuid*
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag list
+
+
+DESCRIPTION
+===========
+
+**doveadm cluster tag** can be used to run actions that interact with and
+modify Dovecot Cluster tags.
+
+.. include:: global-options.inc
+
+.. include:: global-options-formatter.inc
+
+
+.. warning::
+
+  Currently there is no checks whether tags are being used or not. Changing
+  a tag UUID, or removing a tag that is in use, can cause problems.
+
+COMMANDS
+========
+
+
+cluster tag create 
+------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag create [ **-\-uuid** *uuid* ] *name*
+
+Creates a new tag for cluster. UUID can be provided, if not, it will be generated.
+
+cluster tag remove
+-------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag remove *name|uuid*
+
+Remove a tag. This currently has no safety checks, so be sure to remove first all of the tag's sites.
+
+
+cluster tag update
+-------------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag update [ **-\-uuid* *uuid* ] [ **-\-name** *name* ] *name|uuid*
+
+Change tag name or UUID. CAUTION: Changing UUID for tag that is being used by site(s), will cause problems.
+
+
+cluster tag list
+----------------
+
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag list
+
+List all tags.
+
+
+SITE STATUS
+===========
+
+Online
+  The tag is reachable and accepts connections.
+
+Offline
+  The tag is unreachable.
+
+Standby
+  The tag is reachable, but does not accept connections.
+
+Evacuate
+  The tag is being evacuated of all users.
+
+
+.. include:: reporting-bugs.inc
+
+SEE ALSO
+========
+
+:man:`doveadm-cluster(1)`
