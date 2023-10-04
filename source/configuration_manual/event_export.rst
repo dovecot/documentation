@@ -119,7 +119,7 @@ Currently, there are three transports:
 * `log` - send serialized event to syslog
 * `http-post` - send the serialized event as a HTTP POST payload to the URL
   specified in the ``transport_arg`` setting with a timeout specified by
-  ``transport_timeout``
+  ``transport_timeout``. Default is 250 milliseconds.
 * `file` - send serialized events to a file specified in
    the ``transport_arg`` setting.
 * `unix` - send serialised events to a unix socket specified in the
