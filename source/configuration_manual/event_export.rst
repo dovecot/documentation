@@ -120,6 +120,12 @@ Currently, there are three transports:
 * `http-post` - send the serialized event as a HTTP POST payload to the URL
   specified in the ``transport_arg`` setting with a timeout specified by
   ``transport_timeout``
+* `file` - send serialized events to a file specified in
+   the ``transport_arg`` setting.
+* `unix` - send serialised events to a unix socket specified in the
+    the ``transport_arg`` setting. The ``transport_timeout`` setting is
+    used to specify how long the unix socket connection can take.
+    Default is 250 milliseconds.
 
 The `drop` transport is useful when one wants to disable the event exporter
 temporarily.  Note that serialization still occurs, but the resulting
@@ -131,6 +137,9 @@ looking at the logs.
 Caution: It is possible for the stats process to consume a large amount of
 memory buffering the POST requests if the timeout for `http-post` is set
 very high, a lot of events are being generated, and the HTTP server is slow.
+
+To reopen the files created by `file` transport, see :man:doveadm-stats(1):
+reopen command.
 
 Event Definition
 ================
