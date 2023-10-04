@@ -22,6 +22,8 @@ SYNOPSIS
 
 **doveadm stats remove** *<name>*
 
+**doveadm stats reopen**
+
 DESCRIPTION
 ===========
 
@@ -34,6 +36,8 @@ DESCRIPTION
 **doveadm stats add** is used to add metrics to statistics
 
 **doveadm stats remove** is used to remove metrics from statistics
+
+**doveadm stats reopen** is used to reopen any file exporter files.
 
 OPTIONS
 =======
