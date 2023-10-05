@@ -43,11 +43,6 @@ to work. To activate this feature, you need to configure it.
 
    -  Example: ``Authorization: Basic <base64-encoded value>``
 
--  :dovecot_core:ref:`auth_policy_server_timeout_msecs`: Request timeout in
-    milliseconds
-
-   -  *Default*: ``auth_policy_server_timeout_msecs = 2000``
-
 -  :dovecot_core:ref:`auth_policy_hash_mech`: Hash mechanism to use for
    password, you can use any hash mechanism supported by Dovecot
    (md4,md5,sha1,sha256,sha512)
@@ -92,6 +87,16 @@ to work. To activate this feature, you need to configure it.
    authentication result
 
    -  *Default*: ``auth_policy_report_after_auth = yes``
+
+Auth policy overrides some of the default HTTP client settings:
+
+ * :dovecot_core:ref:`http_client_request_absolute_timeout` = 2s
+ * :dovecot_core:ref:`http_client_max_idle_time` = 10s
+ * :dovecot_core:ref:`http_client_max_parallel_connections` = 100
+ * :dovecot_core:ref:`http_client_user_agent` = dovecot/auth-policy-client
+
+You can override these and any other HTTP client or SSL settings by placing
+them inside :dovecot_core:ref:`auth_policy` named filter.
 
 Required Minimum Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
