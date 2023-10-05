@@ -40,7 +40,6 @@ Configuration file example for `Google
   introspection_url = https://www.googleapis.com/oauth2/v2/userinfo
   #force_introspection = yes
   username_attribute = email
-  tls_ca_cert_file = /etc/ssl/certs/ca-certificates.crt
 
 Configuration file example for `WSO2 Identity Server
 <https://wso2.com/identity-and-access-management/>`_
@@ -50,7 +49,6 @@ Configuration file example for `WSO2 Identity Server
   introspection_mode = post
   introspection_url = https://adminuser:adminpass@server.name:port/oauth2/introspect
   username_attribute = username
-  tls_ca_cert_file = /etc/ssl/certs/ca-certificates.crt
   active_attribute = active
   active_value = true
 
@@ -228,7 +226,19 @@ Support for :rfc:`7628` OpenID Discovery (OIDC) can be achieved with
 ``openid_configuration_url`` setting. Setting this causes Dovecot to report OIDC configuration URL as ``openid-configuration`` element in error JSON.
 
 Full config file
-******************
+****************
+
+Oauth2 overrides some of the default HTTP client and SSL settings:
+
+ * :dovecot_core:ref:`ssl_prefer_server_ciphers` = yes
+ * :dovecot_core:ref:`http_client_user_agent` = dovecot-oauth2-passdb/DOVECOT_VERSION
+ * :dovecot_core:ref:`http_client_max_idle_time` = 60s
+ * :dovecot_core:ref:`http_client_max_parallel_connections` = 10
+ * :dovecot_core:ref:`http_client_max_pipelined_requests` = 1
+ * :dovecot_core:ref:`http_client_request_max_attempts` = 1
+
+You can override these and any other HTTP client or SSL settings by placing
+them inside :dovecot_core:ref:`oauth2` named filter.
 
 .. code-block:: none
 
@@ -284,21 +294,3 @@ Full config file
 
   ## Enable debug logging
   # debug = no
-
-  ## Max parallel connections (how many simultaneous connections to open, increase this to
-  ## increase performance)
-  # max_parallel_connections = 10
-
-  ## Max pipelined requests (how many requests to send per connection, requires server-side support)
-  # max_pipelined_requests = 1
-
-  ## HTTP request raw log directory
-  # rawlog_dir = /tmp/oauth2
-
-  ## TLS settings
-  # tls_ca_cert_file = /path/to/ca-certificates.txt
-  # tls_ca_cert_dir = /path/to/certs/
-  # tls_cert_file = /path/to/client/cert
-  # tls_key_file = /path/to/client/key
-  # tls_cipher_suite = HIGH:!SSLv2
-  # tls_allow_invalid_cert = FALSE
