@@ -897,6 +897,168 @@ See :ref:`settings` for list of all setting groups.
    agent (such as the Message-ID: header) and in LMTP replies.
 
 
+.. dovecot_core:setting:: http_client_connect_timeout
+   :default: 0
+   :values: @time_msecs
+
+   Max time to wait for TCP connect and SSL handshake to finish before retrying.
+   0 (default) is to use :dovecot_core:ref:`http_client_request_timeout`.
+
+
+.. dovecot_core:setting:: http_client_delete_request_max_attempts
+   :default: 0
+   :values: @uint
+
+   If non-zero, override :dovecot_core:ref:`http_client_request_max_attempts`
+   for DELETE requests.
+
+
+.. dovecot_core:setting:: http_client_delete_request_timeout
+   :default: 0
+   :values: @time_msecs
+
+   If non-zero, override :dovecot_core:ref:`http_client_request_timeout`
+   for DELETE requests.
+
+
+.. dovecot_core:setting:: http_client_max_connect_attempts
+   :default: 0
+   :values: @uint
+
+   Maximum number of connection attempts to a host before all associated
+   requests fail.
+
+   If > 0, the maximum will be enforced across all IPs for that host,
+   meaning that IPs may be tried more than once eventually if the number
+   of IPs is smaller than the specified maximum attempts. If the number
+   of IPs is higher than the maximum attempts, not all IPs are tried.
+   If 0, all IPs are tried at most once.
+
+
+.. dovecot_core:setting:: http_client_max_idle_time
+   :default: 0
+   :values: @time_msecs
+
+   Maximum time a connection will idle. If parallel connections are
+   idle, the duplicates will end earlier based on how many idle
+   connections exist to that same service.
+
+
+.. dovecot_core:setting:: http_client_max_parallel_connections
+   :default: 1
+   :values: @uint
+
+   Maximum number of parallel connections per peer.
+
+
+.. dovecot_core:setting:: http_client_max_pipelined_requests
+   :default: 1
+   :values: @uint
+
+   Maximum number of pipelined requests per connection.
+
+
+.. dovecot_core:setting:: http_client_proxy_password
+   :values: @string
+
+   Password for HTTP proxy.
+
+
+.. dovecot_core:setting:: http_client_proxy_socket_path
+   :values: @string
+
+   UNIX socket path for HTTP proxy. Overrides
+   :dovecot_core:ref:`http_client_proxy_url`.
+
+
+.. dovecot_core:setting:: http_client_proxy_ssl_tunnel
+   :default: yes
+   :values: @boolean
+
+   If "no", the HTTP proxy delegates SSL negotiation to proxy, rather
+   than creating a CONNECT tunnel through the proxy for the SSL link.
+
+
+.. dovecot_core:setting:: http_client_proxy_url
+   :values: @string
+
+   URL for HTTP proxy. Ignored if
+   :dovecot_core:ref:`http_client_proxy_socket_path` is set.
+
+
+.. dovecot_core:setting:: http_client_proxy_username
+   :values: @string
+
+   Username for HTTP proxy.
+
+
+.. dovecot_core:setting:: http_client_rawlog_dir
+   :values: @string
+
+   Directory for writing raw log data for debugging purposes.
+
+
+.. dovecot_core:setting:: http_client_read_request_max_attempts
+   :default: 0
+   :values: @uint
+
+   If non-zero, override :dovecot_core:ref:`http_client_request_max_attempts`
+   for GET and HEAD requests.
+
+
+.. dovecot_core:setting:: http_client_read_request_timeout
+   :default: 0
+   :values: @time_msecs
+
+   If non-zero, override :dovecot_core:ref:`http_client_request_timeout`
+   for GET and HEAD requests.
+
+
+.. dovecot_core:setting:: http_client_request_absolute_timeout
+   :default: 0
+   :values: @uint
+
+   Max total time to wait for HTTP request to finish, including all retries.
+   0 means no limit.
+
+
+.. dovecot_core:setting:: http_client_request_max_attempts
+   :default: 1
+   :values: @uint
+
+   Maximum number of attempts for a request.
+
+
+.. dovecot_core:setting:: http_client_request_max_redirects
+   :default: 0
+   :values: @uint
+
+   Maximum number of redirects for a request. 0 = redirects refused.
+
+
+.. dovecot_core:setting:: http_client_request_timeout
+   :default: 1 mins
+   :values: @time_msecs
+
+   Max time to wait for HTTP request to finish before retrying.
+
+
+.. dovecot_core:setting:: http_client_write_request_max_attempts
+   :default: 0
+   :values: @uint
+
+   If non-zero, override :dovecot_core:ref:`http_client_request_max_attempts`
+   for PUT and POST requests.
+
+
+.. dovecot_core:setting:: http_client_write_request_timeout
+   :default: 0
+   :values: @time_msecs
+
+   If non-zero, override :dovecot_core:ref:`http_client_request_timeout`
+   for PUT and POST requests.
+
+
 .. dovecot_core:setting:: imap_capability
    :todo: Indicate imap setting
    :values: @string
