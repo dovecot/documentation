@@ -2178,7 +2178,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: mail_plugins
-   :seealso: @mail_plugin_dir;dovecot_core, @Example Usage <config_file_syntax-mail_plugins_example>
+   :seealso: @mail_plugin_dir;dovecot_core
    :values: @string
 
    A space-separated list of plugins to load.

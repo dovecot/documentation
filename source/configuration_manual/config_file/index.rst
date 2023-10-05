@@ -30,44 +30,60 @@ The syntax generally looks like this:
 
    settings_key = settings_value
 
-If Dovecot doesn't seem to be reading your configuration correctly, use `doveconf -n` to check how Dovecot actually parses it. You can also check more complex configurations by providing filters,
-
-Example:
-
-.. code-block:: none
-
-   doveconf -n -f service=imap -f local=10.0.0.1 -f remote=1.2.3.4
-
-Sections
-^^^^^^^^
-
-Sections look like this:
+The ``#`` character and everything after it are comments. Extra spaces and tabs
+are ignored, so if you need to use these, put the value inside quotes. The
+quote character inside a quoted string is escaped with ``\"``:
 
 .. code-block:: none
 
-   section optional_name {
-      section_setting_key = section_setting_value
-      subsection optional_subname {
-        subkey = subvalue
-      }
+   settings_key = "# char, \"quote\", and trailing whitespace  "
+
+If Dovecot doesn't seem to be reading your configuration correctly, use `doveconf -n` to check how Dovecot actually parses it.
+
+.. _named_filters:
+
+Named Filters
+^^^^^^^^^^^^^
+
+.. dovecotadded:: 2.4.0,3.0.0
+
+Since Dovecot v2.4 all settings are globals. There are several filters which
+can be used to restrict when the settings are used. There are "named filters"
+and "named list filters".
+
+Named filters are used to access settings in some specific situations. For
+example:
+
+.. code-block:: none
+
+   mail_attribute {
+     dict_driver = file
    }
 
-.. Note:: The sections must be currently written with the linefeeds as shown above.
+In this case when mail attributes are being accessed, the dict settings are
+looked up using the named filter called ``mail_attribute``. Note that named
+filters cannot have a name before the ``{``, i.e. ``mail_attribute foo {``
+will result in an error.
 
-So for example this doesn't work:
-
-.. code-block:: none
-
-   section optional_name { key = value } # DOES NOT WORK
-
-The sections can be optionally named. This is especially useful if you want to update the same section later on in the config.
-
-Example:
+Named list filters are similar to named filters, except there can be many of
+them, each with a unique name. For example:
 
 .. code-block:: none
 
    namespace inbox {
-      inbox = yes
+     prefix = INBOX/
+   }
+   namespace virtual {
+     prefix = Virtual/
+   }
+
+Both named and named list filters can be updated later on in the configuration.
+For example:
+
+.. code-block:: none
+
+   namespace inbox {
+     prefix = INBOX/
    }
    # ...
    # possibly included from another file:
@@ -76,11 +92,10 @@ Example:
         special_use = \Trash
       }
    }
-   # The namespaces get merged into the same inbox namespace.
+   # The namespace settings get merged into the same inbox namespace filter.
 
-Without naming the namespace it would have created a new namespace. The section name may also sometimes be used as part of the settings instead of simply a name.
-
-Example:
+The named list filter's name may also sometimes be used as part of the settings
+instead of simply a name. For example:
 
 .. code-block:: none
 
@@ -90,12 +105,40 @@ Example:
       }
    }
 
-Above the "auth-master" both uniquely identifies the section name, but also it names the UNIX socket path.
+Above the ``auth-master`` both uniquely identifies the filter name, but it also
+acts as the ``unix_listener_path`` setting.
 
-Filters
-^^^^^^^
+Settings inside filters are automatically attempted to be prefixed by the
+filter prefix to avoid repetition. For example:
 
-There are a few different filters that can be used to apply settings conditionally. The filters look exactly like sections, which may be a bit confusing. The currently supported filters are:
+.. code-block:: none
+
+   service imap {
+      inet_listener imaps {
+         ssl = yes
+      }
+   }
+
+The ``ssl`` setting is attempted to be looked up in this order:
+
+ * ``inet_listener_ssl``
+ * ``service_ssl``
+ * ``ssl``
+
+The first setting that exists is used.
+
+.. Note:: The filters must be currently written with the linefeeds as shown above.
+	  So for example this doesn't work:
+
+	  .. code-block:: none
+
+	     namespace inbox { prefix = INBOX/ } # DOES NOT WORK
+
+
+Connection Filters
+^^^^^^^^^^^^^^^^^^
+
+There are a few different connection/session related filters:
 
 * protocol <name>: Name of the service/protocol that is reading the settings. For example: imap, pop3, doveadm, lmtp, lda
 
@@ -144,6 +187,14 @@ Example:
 
 Similarly remote local filters override remote filters, which override local_name filters, which override protocol filters. In some situations Dovecot may also return an error if it detects that the same setting is being ambiguously set by multiple matching filters.
 
+Setting types
+^^^^^^^^^^^^^
+
+See :ref:`settings_types` for which types of settings are supported by the
+configuration. Note especially the :ref:`strlist` and :ref:`boollist` which
+look similar to named filters.
+
+
 Including config files
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -180,9 +231,7 @@ Example:
 .. code-block:: none
 
    protocol imap {
-      plugin {
-         !include imap-plugin-settings.conf
-      }
+     !include imap-settings.conf
    }
 
 .. _external_config_files:
@@ -245,54 +294,9 @@ Example:
    key2 = $key value2
    # Equivalent to key2 = value1 value2
 
-.. _config_file_syntax-mail_plugins_example:
-
-This is commonly used with :dovecot_core:ref:`mail_plugins` to easily add more
-plugins, e.g., inside IMAP protocol:
-
-.. code-block:: none
-
-   mail_plugins = acl quota
-   protocol imap {
-      mail_plugins = $mail_plugins imap_acl imap_quota
-   }
-
 However, you must be careful with the ordering of these in the configuration
 file, because the ``$variables`` are expanded immediately while parsing the
 config file and they're not updated later.
-
-For example this is a common problem:
-
-.. code-block:: none
-
-   # NON-WORKING EXAMPLE
-   # Enable ACL plugin:
-   mail_plugins = $mail_plugins acl
-   protocol imap {
-      mail_plugins = $mail_plugins imap_acl
-   }
-   # Enable quota plugin:
-   mail_plugins = $mail_plugins quota
-   protocol imap {
-     mail_plugins = $mail_plugins imap_quota
-   }
-
-   # The end result is:
-   # mail_plugins = " acl quota" - OK
-   # protocol imap {
-   #   mail_plugins = " acl imap_acl imap_quota" - NOT OK
-   # }
-
-   # v2.2.24+ also gives a warning about this:
-   # doveconf: Warning: /etc/dovecot/dovecot.conf line 8: Global setting mail_plugins won't change the setting inside an earlier filter at /etc/dovecot/dovecot.conf line 5 (if this is intentional, avoid this warning by moving the global setting before /etc/dovecot/dovecot.conf line 5)
-
-This is because the second mail_plugins change that added ``quota`` globally
-didn't update anything inside the existing ``protocol { .. }`` or other
-filters.
-
-Some variables exist in the plugin section only, such as
-:pigeonhole:ref:`sieve_extensions`. Those variables cannot be
-referred to; that is ``$sieve_extensions`` won't work.
 
 Environment variables
 ^^^^^^^^^^^^^^^^^^^^^
