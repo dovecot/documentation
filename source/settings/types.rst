@@ -13,20 +13,21 @@ Dovecot Settings Types
 String
 ------
 
-String settings are typically used with variable expansion to configure how
-something is logged. For example :dovecot_core:ref:`imap_logout_format`:
+Strings can contain any characters. Strings support :ref:`config_variables`,
+so if ``%`` character is wanted, it needs to be escaped as ``%%``.
+
+.. _string_novars:
+
+Non-variable strings are when :ref:`config_variables` aren't wanted
+to be used. Typically this is done when setting-specific %variables are wanted
+to be used instead. For example:
 
 .. code-block:: none
 
    imap_logout_format = in=%i out=%o
 
-The ``#`` character and everything after it are comments. Extra spaces and tabs
-are ignored, so if you need to use these, put the value inside quotes. The
-quote character inside a quoted string is escaped with ``\"``:
-
-.. code-block:: none
-
-   key = "# char, \"quote\", and trailing whitespace  "
+Here the ``%i`` and ``%o`` refer to variables specific to the
+:dovecot_core:ref:`imap_logout_format` setting.
 
 .. _uint:
 
@@ -108,3 +109,77 @@ URL
 ---
 
 Special type of :ref:`string` setting. Conforms to Uniform Resource Locators (URL) (:rfc:`1738`).
+
+.. _named_filter:
+
+Named Filter
+^^^^^^^^^^^^
+
+The settings inside the filter are used only in a specific situation. See
+:ref:`named_filters` for more details.
+
+.. _named_list_filter:
+
+Named List Filter
+^^^^^^^^^^^^^^^^^
+
+The settings inside the filter are used only in a specific situation. The
+filter has a unique name, which can be used to identify it within the list.
+See :ref:`named_filters` for more details.
+
+.. _strlist:
+
+String List
+-----------
+
+String list is a list of key=value pairs. Each key name is unique within the
+list (i.e. giving the same key multiple times overrides the previous one).
+The string list is configured similarly to :ref:`named_filters`:
+
+.. code-block:: none
+
+   fs_randomfail_ops {
+     read = 100
+     write = 50
+   }
+
+.. _boollist:
+
+Boolean List
+------------
+
+Boolean list is a list of key=yes/no pairs. Each key name is unique within the
+list (i.e. giving the same key multiple times overrides the previous one).
+The boolean list can be configured as a space or comma-separated list, which
+replaces the previous boolean list entirely. For example:
+
+.. code-block:: none
+
+   mail_plugins = quota imap_quota
+   mail_plugins = acl,imap_acl # removes quota and imap_quota
+
+Quotes are also supported:
+
+.. code-block:: none
+
+   doveadm_allowed_commands = "mailbox list" "mailbox create"
+
+The boolean list can also be configured to update an existing boolean list.
+For example:
+
+.. code-block:: none
+
+   mail_plugins = quota acl
+   protocol imap {
+     mail_plugins {
+       imap_quota = yes
+       imap_acl = yes
+     }
+   }
+   local 10.0.0.0/24 {
+     protocol imap {
+       mail_plugins {
+         imap_acl = no
+       }
+     }
+   }
