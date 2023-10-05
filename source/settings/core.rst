@@ -2678,6 +2678,13 @@ See :ref:`settings` for list of all setting groups.
    (i.e., if you use NFS or a clustered filesystem).
 
 
+.. dovecot_core:setting:: oauth2
+   :values: @named_filter
+
+   Filter for oauth2 specific settings. See
+   :ref:`authentication-oauth2`.
+
+
 .. dovecot_core:setting:: pop3_client_workarounds
    :todo: Indicate POP3 setting
    :values: @string
