@@ -112,7 +112,7 @@ Removed features and their replacements
 | ``passdb_key`` and ``userdb_key`` was removed.             |                                                                                          |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | mailbox-alias plugin                                       | Depending on the use case, non-direct may be                                             |
-|                                                            | the :dovecot_core:ref:`namespace/mailbox/special_use` mailbox setting                    |
+|                                                            | the :dovecot_core:ref:`mailbox_special_use` mailbox setting                              |
 |                                                            | and/or :ref:`Sieve filters <sieve>`.                                                     |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``obox_allow_inconsistency``                               | The setting has been removed as it caused problems with caching IMAP clients, which may  |
