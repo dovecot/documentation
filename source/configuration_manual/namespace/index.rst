@@ -29,16 +29,16 @@ inbox namespace is created automatically.
 Namespace configuration is defined within a dovecot configuration block with
 the format::
 
-  namespace <section-name> {
+  namespace <name> {
     [... namespace settings ...]
   }
 
-The optional section name is only used internally within configuration. It
+The namespace name is only used internally within configuration. It
 allows you to update an existing namespace - by repeating the namespace block
 and adding additional configuration settings - or allows userdb to override
 namespace settings for specific users, e.g.::
 
-  namespace/section-name/prefix=foo/
+  namespace/name/prefix=foo/
 
 Example configuration for default namespace::
 
@@ -52,21 +52,25 @@ Settings
 ========
 
 .. dovecot_core:setting:: namespace
-   :values: @string
+   :values: @named_list_filter
 
-   Name of the namespace.
+   Creates a new namespace to the list of namespaces. The filter name refers
+   to the :dovecot_core:ref:`namespace_name` setting.
 
-   Giving name is optional, but doing so enables referencing the configuration
-   later on.
-
-   Example, to name a namespace ``foo``::
+   Example::
 
      namespace foo {
        [...]
      }
 
+.. dovecot_core:setting:: namespace_name
 
-.. dovecot_core:setting:: namespace/alias_for
+   Name of the namespace. This is used only in configuration - it's not visible
+   to users.  The :dovecot_core:ref:`namespace` filter name refers to this
+   setting.
+
+
+.. dovecot_core:setting:: namespace_alias_for
    :values: @string
 
    Defines the namespace prefix for purposes of alias detection.
@@ -84,16 +88,16 @@ Settings
 
    Example::
 
-     namespace {
+     namespace alias {
        # If primary namespace has empty prefix
        alias_for =
 
-       # OR if primary namespace has ``prefix=INBOX/``
-       alias_for=INBOX/
+       # OR if primary namespace has prefix=INBOX/
+       alias_for = INBOX/
      }
 
 
-.. dovecot_core:setting:: namespace/disabled
+.. dovecot_core:setting:: namespace_disabled
    :default: no
    :values: @boolean
 
@@ -103,23 +107,23 @@ Settings
    namespaces.
 
 
-.. dovecot_core:setting:: namespace/hidden
+.. dovecot_core:setting:: namespace_hidden
    :default: no
    :values: @boolean
 
    If ``yes``, namespace will be hidden from IMAP NAMESPACE command.
 
 
-.. dovecot_core:setting:: namespace/ignore_on_failure
+.. dovecot_core:setting:: namespace_ignore_on_failure
    :default: no
    :values: @boolean
 
-   If namespace :dovecot_core:ref:`namespace/location` fails to load, by
+   If namespace :dovecot_core:ref:`namespace_location` fails to load, by
    default the entire session will fail to start. If this is set, this
    namespace will be ignored instead.
 
 
-.. dovecot_core:setting:: namespace/inbox
+.. dovecot_core:setting:: namespace_inbox
    :default: no
    :values: @boolean
 
@@ -129,9 +133,9 @@ Settings
    There can be only one namespace defined like this.
 
 
-.. dovecot_core:setting:: namespace/list
+.. dovecot_core:setting:: namespace_list
    :default: yes
-   :seealso: @namespace/hidden;dovecot_core
+   :seealso: @namespace_hidden;dovecot_core
    :values: yes, no, children
 
    Include this namespace in LIST output when listing its parent's folders.
@@ -153,7 +157,7 @@ Settings
    lazy-expunge/*`` lists all folders under it.
 
 
-.. dovecot_core:setting:: namespace/location
+.. dovecot_core:setting:: namespace_location
    :default: @mail_location;dovecot_core
    :values: @string
 
@@ -169,7 +173,7 @@ Settings
      }
 
 
-.. dovecot_core:setting:: namespace/order
+.. dovecot_core:setting:: namespace_order
    :default: 0
    :values: @uint
 
@@ -178,13 +182,13 @@ Settings
    Namespaces are automatically numbered if this setting does not exist.
 
 
-.. dovecot_core:setting:: namespace/prefix
+.. dovecot_core:setting:: namespace_prefix
    :values: @string
 
    Specifies prefix for namespace.
 
    .. note:: Must end with
-             :dovecot_core:ref:`hierarchy separator <namespace/separator>`.
+             :dovecot_core:ref:`hierarchy separator <namespace_separator>`.
 
    :ref:`Mail user variables <variables-mail_user>` can be used.
 
@@ -196,7 +200,7 @@ Settings
      }
 
 
-.. dovecot_core:setting:: namespace/separator
+.. dovecot_core:setting:: namespace_separator
    :default: !'.' for Maildir; '/' for other mbox formats
    :seealso: @namespace-hierarchy-separators
    :values: @string
@@ -219,7 +223,7 @@ Settings
      }
 
 
-.. dovecot_core:setting:: namespace/subscriptions
+.. dovecot_core:setting:: namespace_subscriptions
    :default: yes
    :values: @boolean
 
@@ -236,7 +240,7 @@ Settings
    prefix. If neither is found, an error is given.
 
 
-.. dovecot_core:setting:: namespace/type
+.. dovecot_core:setting:: namespace_type
    :default: private
    :values: private, shared, public
 
@@ -256,7 +260,7 @@ Settings
 Hierarchy Separators
 ====================
 
-:dovecot_core:ref:`Hierarchy separator <namespace/separator>` specifies the
+:dovecot_core:ref:`Hierarchy separator <namespace_separator>` specifies the
 character that is used to separate the parent mailbox from its child mailbox.
 For example if you have a mailbox "foo" with child mailbox "bar", the full
 path to the child mailbox would be "foo/bar" with ``/`` as the separator, and
@@ -541,24 +545,33 @@ on and setting ``subscriptions = no`` for the other namespaces:
 Mailbox Settings
 ================
 
-Mailbox configuration is defined within a dovecot configuration block, inside
-of a ``namespace`` block, with the format::
+Mailbox configuration is typically defined inside a ``namespace`` block, so
+it only applies to the specific namespace.
 
-  mailbox <mailbox-name> {
-    [... mailbox settings ...]
-  }
-
-The mailbox-name specifies the full mailbox name; if it has spaces, you can
-put it into quotes::
-
-  mailbox "Test Mailbox" {
-    [...]
-  }
 
 Settings
 ========
 
-.. dovecot_core:setting:: namespace/mailbox/auto
+.. dovecot_core:setting:: mailbox
+   :values: @named_list_filter
+
+   Creates a new mailbox to the list of mailboxes. The filter name refers
+   to the :dovecot_core:ref:`mailbox_name` setting.
+
+   If the mailbox name has spaces, you can put it into quotes::
+
+     mailbox "Test Mailbox" {
+       [...]
+     }
+
+
+.. dovecot_core:setting:: mailbox_name
+
+   Name of the mailbox being configured. The :dovecot_core:ref:`mailbox`
+   filter name refers to this setting.
+
+
+.. dovecot_core:setting:: mailbox_auto
    :default: no
    :values: create, no, subscribe
 
@@ -577,10 +590,10 @@ Settings
    subscriptions file, unless SUBSCRIBE command is explicitly used for them.
 
 
-.. dovecot_core:setting:: namespace/mailbox/autoexpunge
+.. dovecot_core:setting:: mailbox_autoexpunge
    :added: 2.2.20
    :default: 0
-   :seealso: @namespace/mailbox/autoexpunge_max_mails;dovecot_core
+   :seealso: @mailbox_autoexpunge_max_mails;dovecot_core
    :values: @time
 
    Expunge all mails in this mailbox whose saved-timestamp is older than this
@@ -606,7 +619,7 @@ Settings
    formats this isn't necessary, since the saved-timestamp is always available.
 
 
-.. dovecot_core:setting:: namespace/mailbox/autoexpunge_max_mails
+.. dovecot_core:setting:: mailbox_autoexpunge_max_mails
    :added: 2.2.25
    :default: 0
    :values: @uint
@@ -615,10 +628,10 @@ Settings
    messages.
 
    Once this threshold has been reached,
-   :dovecot_core:ref:`namespace/mailbox/autoexpunge` processing is done.
+   :dovecot_core:ref:`mailbox_autoexpunge` processing is done.
 
 
-.. dovecot_core:setting:: namespace/mailbox/special_use
+.. dovecot_core:setting:: mailbox_special_use
    :values: @string
 
    Space-separated list of SPECIAL-USE (:rfc:`6154`)
