@@ -182,6 +182,13 @@ See :ref:`settings` for list of all setting groups.
      auth_mechanisms = plain login
 
 
+.. dovecot_core:setting:: auth_policy
+   :values: @named_filter
+
+   Filter for auth policy specific settings. See
+   :ref:`authentication-auth_policy`.
+
+
 .. dovecot_core:setting:: auth_policy_check_after_auth
    :default: yes
    :seealso: @auth_policy_server_url;dovecot_core
@@ -300,13 +307,6 @@ See :ref:`settings` for list of all setting groups.
    .. code-block:: none
 
      auth_policy_server_api_header = Authorization: Basic d2ZvcmNlOnN1cGVy
-
-
-.. dovecot_core:setting:: auth_policy_server_timeout_msecs
-   :default: 2000
-   :values: @time_msecs
-
-   Auth policy request timeout.
 
 
 .. dovecot_core:setting:: auth_policy_server_url
