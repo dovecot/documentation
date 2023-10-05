@@ -83,17 +83,6 @@ the following words:
 
    So for example "d", "da", "day", "days" all mean the same.
 
-* Time Interval:
-
-   Combination of a positive integer number and a time unit. Available time
-   units are mentioned above. To match messages from last week, you may specify
-
-For example:
-
-.. code-block:: none
-
-   since 1w, since 1weeks or since 7days.
-
 .. _time_msecs:
 
 Millisecond Time
