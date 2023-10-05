@@ -10,6 +10,116 @@ See :ref:`settings` for list of all setting groups.
 
   These settings should not normally be changed.
 
+.. dovecot_core:setting:: http_client_auto_redirect
+   :default: yes
+   :values: @boolean
+
+   If yes, redirects are handled as long as
+   :dovecot_core:ref:`http_client_request_max_redirects` isn't reached. If no,
+   the redirect responses are handled as regular failure responses. This
+   setting should likely be changed only in the code, never in configuration.
+
+
+.. dovecot_core:setting:: http_client_auto_retry
+   :default: yes
+   :values: @boolean
+
+   If no, requests are not automatically retried by the generic HTTP client
+   code. It's still possible to retry the requests with explicit
+   ``http_client_request_try_retry()`` calls as long as
+   :dovecot_core:ref:`http_client_request_max_attempts` isn't reached. This
+   setting should likely be changed only in the code, never in configuration.
+
+.. dovecot_core:setting:: http_client_max_auto_retry_delay
+   :default: 0
+   :values: @time
+
+   Maximum acceptable delay in for automatically retrying/redirecting requests.
+   If a server sends a response with a Retry-After header that causes a delay
+   longer than this, the request is not automatically retried and the response
+   is returned.
+
+
+.. dovecot_core:setting:: http_client_connect_backoff_time
+   :default: 100 ms
+   :values: @time_msecs
+
+   Initial backoff time for retries. It's doubled at each connection failure.
+
+
+.. dovecot_core:setting:: http_client_connect_backoff_max_time
+   :default: 1 mins
+   :values: @time_msecs
+
+   Maximum backoff time for retries.
+
+
+.. dovecot_core:setting:: http_client_dns_client_socket_path
+   :default: dns-client
+   :values: @string
+
+   UNIX socket path to the dns-client service.
+
+
+.. dovecot_core:setting:: http_client_dns_ttl
+   :default: 30 mins
+   :values: @time_msecs
+
+   How long to cache DNS entries.
+
+
+.. dovecot_core:setting:: http_client_response_hdr_max_field_size
+   :default: 8 k
+   :values: @size
+
+   Response header limit: Max size for an individual field.
+
+
+.. dovecot_core:setting:: http_client_response_hdr_max_fields
+   :default: 50
+   :values: @uint
+
+   Response header limit: Max number of fields.
+
+
+.. dovecot_core:setting:: http_client_response_hdr_max_size
+   :default: 200 k
+   :values: @size
+
+   Response header limit: Max size for the entire response header.
+
+
+.. dovecot_core:setting:: http_client_socket_recv_buffer_size
+   :default: 0
+   :values: @size
+
+   The kernel receive buffer size for the connection sockets.
+   0 = kernel defaults.
+
+
+.. dovecot_core:setting:: http_client_socket_send_buffer_size
+   :default: 0
+   :values: @size
+
+   The kernel send buffer size for the connection sockets.
+   0 = kernel defaults.
+
+
+.. dovecot_core:setting:: http_client_soft_connect_timeout
+   :default: 0
+   :values: @time_msecs
+
+   Time to wait for TCP connect and SSL handshake to finish for the
+   first connection before trying the next IP in parallel.
+   0 = wait until current connection attempt finishes.
+
+
+.. dovecot_core:setting:: http_client_user_agent
+   :values: @string
+
+   User-Agent: header to send.
+
+
 .. dovecot_core:setting:: login_proxy_notify_path
    :default: proxy-notify
    :values: @string
