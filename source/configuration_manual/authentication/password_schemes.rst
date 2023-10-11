@@ -56,8 +56,8 @@ A few articles about why choosing a good password scheme is important:
 
 It's not possible to easily switch from one password scheme to another. The
 only practical way to do this is to wait until user logs in and change the
-password during the login. `This HOWTO
-<https://wiki.dovecot.org/HowTo/ConvertPasswordSchemes>`_ shows one way to do
+password during the login. :ref:`This HOWTO
+<howto-convert_password_schemes>` shows one way to do
 this.
 
 Generating encrypted passwords
