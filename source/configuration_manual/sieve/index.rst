@@ -29,6 +29,12 @@ Sieve
 
    troubleshooting
 
+   managesieve/configuration
+
+   managesieve/troubleshooting
+
+   managesieve/client_issues
+
 .. _sieve_plugins:
 
 Sieve extensions and plugins
