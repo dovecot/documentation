@@ -87,6 +87,8 @@ and multiple UIDs, it doesn't really matter what GIDs you use. You can,
 for example, use a single GID for all users, or create a separate GID
 for each user. See :ref:`system_users_used_by_dovecot` for more information.
 
+.. _virtual_users-homedir:
+
 Home directories
 ----------------
 

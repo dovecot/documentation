@@ -1,3 +1,5 @@
+.. _authentication-domain_lost:
+
 ====================
 Domain (%d) is empty
 ====================

@@ -17,7 +17,7 @@ For some POP3 servers it's possible to use the more efficient
              correctly. If the UIDL format is wrong, all the mails have to be
 	     re-migrated.
 
-.. seealso:: `Migrating from any IMAP/POP3 server to Dovecot via dsync <https://wiki.dovecot.org/Migration/Dsync>`_
+.. seealso:: :ref:`Migrating from any IMAP/POP3 server to Dovecot via dsync <migrating_mailboxes>`
 
 This plugin requires a :ref:`pop3c <pop3c_settings>` namespace configured
 for accessing the source POP3 server. For example:

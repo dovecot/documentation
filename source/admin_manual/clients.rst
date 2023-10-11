@@ -42,7 +42,7 @@ the beginning of the mbox file.
 
 In any case it's still a good idea to filter out X-UID: and other
 metadata headers in your MDA. :ref:`Dovecot's deliver <lda>` does
-this internally. See :ref:`known_issues_mbox_problems` for a list
+this internally. See :ref:`known_issues-mbox_problems` for a list
 of headers to filter out.
 
 Fixing

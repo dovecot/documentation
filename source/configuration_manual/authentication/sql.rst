@@ -54,7 +54,7 @@ meaning.
 
 You can't use multiple statements in one query, but you could use a stored
 procedure. If you want something like a last login update, use
-`PostLoginScripting <https://wiki.dovecot.org/PostLoginScripting>`_ instead.
+:ref:`post_login_scripting` instead.
 
 Password verification by SQL server
 ===================================

@@ -4,8 +4,7 @@
 Dovecot LDA
 ===========
 
-The Dovecot LDA is a `local delivery
-agent <https://wiki.dovecot.org/MDA>`_, which takes mail from an :ref:`mta`
+The Dovecot LDA is a :ref:`mail delivery agent <mda>`, which takes mail from an :ref:`mta`
 and delivers it to a user's mailbox, while keeping Dovecot index files up to
 date. Nowadays you should probably use the `LMTP server <lmtp_server>`
 instead, because it's somewhat easier to configure (especially related to

@@ -13,8 +13,8 @@ Currently the fallback works only with the PLAIN authentication mechanism.
 
 Often you also want a different mail location for system and virtual users. The
 best way to do this would be to always have mails stored below the home
-directory (`virtual users should have a home directory too
-<https://wiki.dovecot.org/VirtualUsers/Home>`_):
+directory (:ref:`virtual users should have a home directory too
+<virtual_users-homedir>`):
 
 * System users' mails: /home/user/Maildir
 * Virtual users' mails: /var/vmail/domain/user/Maildir

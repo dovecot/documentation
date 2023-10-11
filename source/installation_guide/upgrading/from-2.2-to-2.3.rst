@@ -118,7 +118,7 @@ Diffie-Hellman Parameters for SSL
 Other Changes
 -------------
 
- * Invalid :dovecot_core:ref:`postmaster_address` now causes a failure early on with sieve/imap_sieve plugin enabled. It still defaults to ``postmaster@%d``, which expands to invalid ``postmaster@`` address if your usernames do not contain a domain, or are converted into domainless usernames by passdb/userdb. See https://wiki.dovecot.org/DomainLost.
+ * Invalid :dovecot_core:ref:`postmaster_address` now causes a failure early on with sieve/imap_sieve plugin enabled. It still defaults to ``postmaster@%d``, which expands to invalid ``postmaster@`` address if your usernames do not contain a domain, or are converted into domainless usernames by passdb/userdb. See :ref:`authentication-domain_lost`.
  * Linux: Dovecot no longer enables core dumping for "setuid processes", which most of them are.
 
   * To enable them with Linux kernel v3.6+: Make sure core dumps get written to a globally shared directory and enable them with: ``sysctl -w fs.suid_dumpable=2``
