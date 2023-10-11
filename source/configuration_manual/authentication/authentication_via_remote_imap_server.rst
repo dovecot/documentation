@@ -22,8 +22,7 @@ Available driver settings:
   certificate isn't trusted. For v2.2 it defaults to "yes". (v2.2.30+)
 * rawlog_dir=<path>
 
-See also `HowTo/ImapcProxy <https://wiki.dovecot.org/HowTo/ImapcProxy>`_ for
-how to combine this with imapc storage.
+See also :ref:`howto-imapc_proxy` for how to combine this with imapc storage.
 
 Example
 =======
