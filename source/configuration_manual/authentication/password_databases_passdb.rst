@@ -48,7 +48,7 @@ support having both virtual users and also local system users (see
 :ref:`authentication-multiple_authentication_databases`).
 
 Success/failure database
-=========================
+========================
 
 These **databases** simply verify if the given password is correct for the
 user. Dovecot doesn't get the correct password from the database, it only gets
@@ -66,7 +66,7 @@ Databases that belong to this category are:
 
 
 Lookup database
-=================
+===============
 
 Dovecot does a lookup based on the username and possibly other information
 (e.g. IP address) and verifies the password validity itself. Fields that the
@@ -117,106 +117,161 @@ lookup can return:
 See :ref:`authentication-static_password_database`.
 
 Passdb setting
-================
+==============
 
-An example passdb passwd-file with its default settings:
+.. dovecot_core:setting:: passdb
+   :values: @named_list_filter
 
-.. code-block:: none
-
-  passdb {
-    driver = passwd-file
-    args = scheme=ssha256 /usr/local/etc/passwd.replica
-    default_fields =
-    override_fields =
-
-    deny = no
-    master = no
-    pass = no
-    skip = never
-    mechanisms =
-    username_filter =
-
-    result_failure = continue
-    result_internalfail = continue
-    result_success = return-ok
-
-    # v2.2.24+
-    auth_verbose = default
-  }
+   Creates a new :ref:`authentication-password_databases`. The filter name
+   refers to the :dovecot_core:ref:`passdb_name` setting. The
+   :dovecot_core:ref:`passdb_driver` setting is required to be set inside this
+   filter.
 
 
-First we have the settings that provide content for the passdb lookup:
+.. dovecot_core:setting:: passdb_name
+   :values: @string
 
-* **driver**: The passdb backend name
-* **args**: Arguments for the passdb backend. The format of this value depends
-  on the passdb driver. Each one uses different args.
-* **default_fields**: Passdb fields (and :ref:`authentication-password_database_extra_fields`
-  ) that are used, unless overwritten by the passdb backend. They are in format
-  ``key=value key2=value2 ....`` The values can contain :ref:`%variables
-  <config_variables>`. All %variables used here reflect the state BEFORE the
-  passdb lookup.
-* **override_fields**: Same as default_fields, but instead of providing the
-  default values, these values override what the passdb backend returned.
-  All %variables used here reflect the state AFTER the passdb lookup.
-* **auth_verbose**: If this is explicitly set to yes or no, it overrides the
-  :dovecot_core:ref:`auth_verbose` setting. (However, ``auth_debug=yes``
-  overrides :dovecot_core:ref:`auth_verbose`.)
-
-  .. dovecotadded:: 2.2.24
+   Name of the passdb. This is used only in configuration - it's not visible
+   to users.  The :dovecot_core:ref:`passdb` filter name refers to this
+   setting.
 
 
-Then we have the settings which specify when the passdb is used:
+.. dovecot_core:setting:: passdb_driver
+   :values: @string
 
-* **deny**: If ``yes``, used to provide ``denied users database``. If the user
-  is found from the passdb, the authentication will fail.
-* **master**: If ``yes``, used to provide :ref:`authentication-master_users`. The users listed in
-  the master passdb can log in as other users.
-
- * **pass**: This is an alias for ``result_success=continue`` as described
-   below. This was commonly used together with master passdb to specify that
-   even after a successful master user authentication, the authentication
-   should continue to the actual non-master passdb to lookup the user.
-
-* **skip**: Do we sometimes want to skip over this passdb?
-
- * never
- * authenticated: Skip if an earlier passdb already authenticated the user
-   successfully.
- * unauthenticated: Skip if user hasn't yet been successfully authenticated by
-   the previous passdbs.
-
-* **mechanisms**: Skip, if non-empty and the current auth mechanism is not
-  listed here. Space or comma-separated list of auth mechanisms (e.g. ``PLAIN
-  LOGIN``). Also ``none`` can be used to match for a non-authenticating passdb
-  lookup.
-
-  .. dovecotadded:: 2.2.30
-
-* **username_filter**: Skip, if non-empty and the username doesn't match the
-  filter. This is mainly used to assign specific passdbs to specific domains.
-  Space or comma-separated list of username filters that can have ``*`` or
-  ``?`` wildcards. If any of the filters matches, the filter succeeds. However,
-  there can also be negative matches preceded by ``!``. If any of the negative
-  filters matches, the filter won't succeed.
-
-  .. dovecotadded:: 2.2.30
-
-Example:
-
-.. code-block:: none
-
-  If the filter is *@example.com *@example2.com !user@example.com, any@example.com or user@example2.com matches but user@example.com won't match.
+   The driver used for this password database. See above for the list of
+   available drivers.
 
 
-And finally we can control what happens when we're finished with this passdb:
+.. dovecot_core:setting:: passdb_args
+   :values: @string
 
-* **result_success**: What to do if the authentication succeeded (default:
-  return-ok)
-* **result_failure**: What to do if authentication failed (default: continue)
-* **result_internalfail**: What to do if the passdb lookup had an internal
-  failure (default: continue). If any of the passdbs had an internal failure
-  and the final passdb also returns ``continue``, the authentication will fail
-  with ``internal error``.
+   Arguments for the passdb backend. The format of this value depends
+   on the passdb driver. Each one uses different args.
+
+
+.. dovecot_core:setting:: passdb_default_fields
+   :values: @string
+   :seealso: @passdb_override_fields;dovecot_core
+
+   Passdb fields (and :ref:`authentication-password_database_extra_fields`)
+   that are used, unless overwritten by the passdb driver. They are in format
+   ``key=value key2=value2 ....`` The values can contain :ref:`%variables
+   <config_variables>`. All %variables used here reflect the state BEFORE the
+   passdb lookup.
+
+
+.. dovecot_core:setting:: passdb_override_fields
+   :values: @string
+
+   Same as :dovecot_core:ref:`passdb_default_fields`, but instead of providing
+   the default values, these values override what the passdb backend returned.
+   All %variables used here reflect the state AFTER the passdb lookup.
+
+
+.. dovecot_core:setting:: passdb_mechanisms
+   :values: @string
+   :added: 2.2.30
+
+   Skip the passdb, if non-empty and the current auth mechanism is not listed
+   here. Space or comma-separated list of auth mechanisms (e.g. ``PLAIN LOGIN``).
+   Also ``none`` can be used to match for a non-authenticating passdb lookup.
+
+
+.. dovecot_core:setting:: passdb_username_filter
+   :values: @string
+   :added: 2.2.30
+
+   Skip the passdb, if non-empty and the username doesn't match the filter.
+   This is mainly used to assign specific passdbs to specific domains.
+   Space or comma-separated list of username filters that can have ``*`` or
+   ``?`` wildcards. If any of the filters matches, the filter succeeds. However,
+   there can also be negative matches preceded by ``!``. If any of the negative
+   filters matches, the filter won't succeed.
+
+   Example: If the filter is
+   ``*@example.com *@example2.com !user@example.com``, then ``any@example.com``
+   or ``user@example2.com`` matches, but ``user@example.com`` won't match.
+
+
+.. dovecot_core:setting:: passdb_skip
+   :values: never, authenticated, unauthenticated
+   :default: never
+
+   Do we sometimes want to skip over this passdb?
+
+   * never
+   * authenticated: Skip if an earlier passdb already authenticated the user
+     successfully.
+   * unauthenticated: Skip if user hasn't yet been successfully authenticated
+     by the previous passdbs.
+
+
+.. dovecot_core:setting:: passdb_result_success
+   :values: return-ok, return, return-fail, continue, continue-ok, continue-fail
+   :default: return-ok
+
+   What to do after the passdb authentication succeeded.
+   See :ref:`passdb_results`.
+
+
+.. dovecot_core:setting:: passdb_result_failure
+   :values: return-ok, return, return-fail, continue, continue-ok, continue-fail
+   :default: continue
+
+   What to do after the passdb authentication failed.
+   See :ref:`passdb_results`.
+
+.. dovecot_core:setting:: passdb_result_internalfail
+   :values: return-ok, return, return-fail, continue, continue-ok, continue-fail
+   :default: continue
+
+   What to do after the passdb authentication failed due to an internal error.
+   See :ref:`passdb_results`. If any of the passdbs had an internal failure
+   and the final passdb also returns ``continue``, the authentication will fail
+   with ``internal error``.
+
+
+.. dovecot_core:setting:: passdb_deny
+   :values: @boolean
+   :default: no
+
+   If ``yes``, used to provide "denied users database". If the user is found
+   from the passdb, the authentication will fail.
+
+
+.. dovecot_core:setting:: passdb_pass
+   :values: @boolean
+   :default: no
+
+   This is an alias for ``passdb_result_success=continue``. This was commonly
+   used together with master passdb to specify that even after a successful
+   master user authentication, the authentication should continue to the actual
+   non-master passdb to lookup the user.
+
+
+.. dovecot_core:setting:: passdb_master
+   :values: @boolean
+   :default: no
+
+   If ``yes``, used to provide :ref:`authentication-master_users`. The users
+   listed in the master passdb can log in as other users.
+
+
+.. dovecot_core:setting:: passdb_auth_verbose
+   :values: default, no, yes
+   :default: default
+   :added: 2.2.24
+
+   If this is explicitly set to yes or no, it overrides the global
+   :dovecot_core:ref:`auth_verbose` setting. (However, ``auth_debug=yes``
+   overrides :dovecot_core:ref:`auth_verbose`.)
+
+
+.. _passdb_results:
+
+Passdb Results
+^^^^^^^^^^^^^^
 
 .. WARNING::
 
@@ -237,13 +292,14 @@ The result values that can be used:
   continue to the next passdb. The following passdbs will still verify the
   password.
 * **continue**: Continue to the next passdb without changing the authentication
-  state. The initial state is failure. If this was set in ``result_success``,
+  state. The initial state is failure. If this was set in
+  :dovecot_core:ref:`passdb_result_success`,
   the following passdbs will skip password verification.
 
-.. NOTE:: when using ``continue*`` values on a master passdb (master = yes),
+.. NOTE:: When using ``continue*`` values on a master passdb (master = yes),
           execution will jump to the first non-master passdb instead of
-          continuing with the next master passdb (verified at lest up to
-          v2.2.27).
+          continuing with the next master passdb.
+
 
 .. toctree::
   :maxdepth: 1
