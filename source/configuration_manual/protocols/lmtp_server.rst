@@ -109,7 +109,7 @@ Using LMTP with different MTAs
 
 * :ref:`Postfix <howto-postfix_dovecot_lmtp>`
 
-* `Exim <https://wiki.dovecot.org/LMTP/Exim>`_
+* :ref:`Exim <howto-dovecot_lmtp_exim>`
 
 * `HALON <https://wiki.halon.io/LMTP>`_
 
