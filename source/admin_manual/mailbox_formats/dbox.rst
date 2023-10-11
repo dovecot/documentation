@@ -156,7 +156,7 @@ mails to other mdbox files (to the same files as where newly saved messages
 would also go), updates the map index and finally deletes the original file.
 So there is never any overwriting or file truncation.
 
-The purging can be invoked explicitly running :man:`doveadm-purge(1)`.
+The purging can be invoked explicitly running ``doveadm-purge``.
 
 There are several safety features built into dbox to avoid losing messages or
 their state if map index or mailbox index gets corrupted:
@@ -194,7 +194,7 @@ under ``mdbox``) is moved to alternate storage; everything else remains in
 the primary storage.
 
 Message data can be moved from primary storage to alternate storage using
-:man:`doveadm-altmove(1)`. (In theory you could also do this with some combination
+``doveadm-altmove``. (In theory you could also do this with some combination
 of cp/mv, but better not to go there unless you really need to. The updates
 must be atomic in any case, so cp won't work.)
 
@@ -240,7 +240,7 @@ Accessing Expunged Mails with mdbox
 ``mdbox_deleted`` storage can be used to access mdbox's all mails that are
 completely deleted (reference count = 0). The ``mdbox_deleted`` parameters
 should otherwise be exactly the same as ``mdbox``'s. Then you can use
-e.g. :man:`doveadm-fetch(1)` or :man:`doveadm-import(1)` commands to access the mails.
+e.g. ``doveadm-fetch`` or ``doveadm-import`` commands to access the mails.
 
 For example:
 

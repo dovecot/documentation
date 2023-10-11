@@ -6,12 +6,12 @@ System users used by Dovecot
 
 Dovecot typically requires 3 or more system users:
 
-* `root`: Dovecot is started as root.
+* ``root``: Dovecot is started as root.
 * ``dovenull``: Dovecot uses an unprivileged dovenull user for untrusted login
   processes.
 * ``dovecot``: Dovecot uses an unprivileged dovecot user for internal processes.
-* `auth user`: Password and user database lookups are done as auth user.
-* `mail user(s)`: Mails are accessed using yet another user. The mail user
+* ``auth user``: Password and user database lookups are done as auth user.
+* ``mail user(s)``: Mails are accessed using yet another user. The mail user
   should not be dovecot user.
 
 Using multiple users allows privilege separation, which makes it harder for
@@ -34,11 +34,11 @@ You can change the default ``dovenull`` user to something else from
 Dovecot user
 ============
 
-``dovecot`` user is used internally for unprivileged Dovecot processes. It should
-belong to its own private dovecot group. Mail files are not accessed as dovecot
-user, so you shouldn't give it access to mails.
+``dovecot`` user is used internally for unprivileged Dovecot processes.
+It should belong to its own private ``dovecot`` group. Mail files are
+not accessed as dovecot user, so you shouldn't give it access to mails.
 
-You can change the default dovecot user to something else from
+You can change the default ``dovecot`` user to something else from
 :dovecot_core:ref:`default_internal_user` setting.
 
 Mail users
