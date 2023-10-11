@@ -121,7 +121,7 @@ Next, type:
 
 ::
 
-   02 LOGIN username correctpassword
+   02 LOGIN username password
 
 And should see a list similar to this:
 

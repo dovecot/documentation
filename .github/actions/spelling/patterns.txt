@@ -156,3 +156,6 @@ key=[0-9a-f]+:\w+\}\s*=\s*(?:[0-9a-f$]+|pass)
 
 # ignore long runs of a single character:
 \b([A-Za-z])\g{-1}{3,}\b
+
+# directory permissions
+[d-][rs-][ws-][xts-][rs-][ws-][xts-]
