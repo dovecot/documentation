@@ -498,6 +498,19 @@ Sieve Plugin Settings
                  matched in those tests.
    ============= ===========================================================
 
+.. pigeonhole:setting:: sieve_quota_max_scripts
+   :plugin: sieve
+   :values: @uint
+
+   The maximum number of personal Sieve scripts a single user can have.
+   Default is 0, which is unlimited.
+
+.. pigeonhole:setting:: sieve_quota_max_storage
+   :plugin: sieve
+   :values: @uint
+
+   The maximum amount of disk storage a single user's scripts may
+   occupy. Default is 0, which is unlimited.
 
 .. pigeonhole:setting:: sieve_user_email
    :added: v0.4.14

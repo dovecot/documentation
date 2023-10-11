@@ -24,8 +24,6 @@ Configuration and Use
 =====================
 
 * :ref:`Download and Installation <sieve_installation>`
-* `Configuration
-  <https://wiki.dovecot.org/Pigeonhole/ManageSieve/Configuration>`_
-* `Troubleshooting
-  <https://wiki.dovecot.org/Pigeonhole/ManageSieve/Troubleshooting>`_
-* `Client Issues <https://wiki.dovecot.org/Pigeonhole/ManageSieve/Clients>`_
+* :ref:`Configuration <sieve_managesieve-configuration>`
+* :ref:`Troubleshooting <sieve_managesieve-troubleshooting>`
+* :ref:`Client Issues <sieve_managesieve-client_issues>`
