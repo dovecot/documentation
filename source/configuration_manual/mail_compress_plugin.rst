@@ -42,8 +42,7 @@ or .bz2 extension. There is no support for compression during saving.
 -----------------------
 
 Mails can be stored as compressed. Existing uncompressed mails can't currently
-be directly compressed (or vice versa). You could, however, use `dsync
-<https://wiki.dovecot.org/Tools/Doveadm/Sync>`_
+be directly compressed (or vice versa). You could, however, use :man:`doveadm-sync(1)`
 to copy all mails to another location (which saves them compressed) and then
 replace the original location with the new compressed location. You can do this
 by treating the operation the same as if you were migrating from one mailbox

@@ -292,4 +292,4 @@ How a message is read stored in mbox extension
 See also
 ========
 
- - :ref:`known_issues_mbox_problems`
+ - :ref:`known_issues-mbox_problems`

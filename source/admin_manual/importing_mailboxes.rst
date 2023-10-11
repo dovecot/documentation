@@ -4,7 +4,7 @@
 Importing mailboxes
 ===================
 
-For importing mails, dovecot has `doveadm import <https://wiki.dovecot.org/Tools/Doveadm/Import>`_ command.
+For importing mails, dovecot has the :man:`doveadm-import(1)` command.
 
 .. warning::
 
@@ -63,7 +63,7 @@ In some disaster recovery cases you may end up having mails for the same user
 in two different locations, and need to merge them. For example the storage
 goes down and fixing it takes a long time, so during the fixing you can let the
 users access their emails as an empty account, which can receive new mails.
-Later on you can use ``doveadm import`` to merge the mailboxes.
+Later on you can use :man:`doveadm-import(1)` to merge the mailboxes.
 
 Note that there is no way to make this solution perfect:
  * IMAP clients that have cached mails locally will delete their local caches
@@ -107,7 +107,7 @@ mails") where mail storage broke down, but a separate index storage is ok, and
 index storage supports snapshots:
 
  * Snapshot the current index volume at the time of breakage
- * Make sure ``mail_location`` setting has ``ITERINDEX`` feature enabled, so
+ * Make sure :dovecot_core:ref:`mail_location` setting has ``ITERINDEX`` feature enabled, so
    folder listing is done using the index volume rather than the mail volume.
  * Mount a new empty mail volume
 
@@ -124,13 +124,13 @@ index storage supports snapshots:
    looks exactly like it was at the time of breakage.
  * Mount the new mail volume to some temporary mountpoint.
  * Mount the second index snapshot to some temporary mountpoint.
- * Use ``doveadm import`` to recover new mails:
+ * Use :man:`doveadm-import(1)` to recover new mails:
 
    .. code-block::
 
      doveadm import -u user@example.com sdbox:/mnt/temp-mail-storage/user:INDEX=/mnt/temp-index-storage/user:CONTROL=/mnt/temp-index-storage/user:ITERINDEX "" all
 
-   If your normal ``mail_location`` has other settings, you may also want to
+   If your normal :dovecot_core:ref:`mail_location` has other settings, you may also want to
    specify them using some temporary locations. For example
    ``VOLATILEDIR=/tmp/doveadm-import/user:LISTINDEX=/tmp/doveadm-import/user/dovecot.list.index``
    and after importing delete the directories.

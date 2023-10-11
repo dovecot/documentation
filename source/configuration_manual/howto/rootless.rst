@@ -1,3 +1,5 @@
+.. _howto-rootless:
+
 =====================
 Rootless Installation
 =====================
