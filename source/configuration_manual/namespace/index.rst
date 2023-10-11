@@ -441,7 +441,7 @@ The alternative configuration is not recommended, as it may introduce issues:
   (Sent, Drafts etc) if the client settings refer to old paths while the server
   lists new paths.
 
-See also `Migration/Courier <https://wiki.dovecot.org/Migration/Courier>`_
+See also :ref:`migrating_mailboxes`
 
 Per-user Namespace Location From SQL
 ------------------------------------

@@ -11,7 +11,7 @@
 Email address to use in the From: field for outgoing email rejections. The
 ``%d`` variable expands to the recipient domain.
 
-See https://wiki.dovecot.org/DomainLost for details when this does not work.
+See :ref:`authentication-domain_lost` details when this does not work.
 
 .. code-block:: none
 

@@ -14,8 +14,7 @@ programs are restricted through administrator configuration.
 
 This plugin is only available for Pigeonhole
 v0.3 and higher (available for Dovecot v2.1). For Pigeonhole
-v0.4 this plugin is part of the release. This an evolution of the `Pipe
-plugin <https://wiki.dovecot.org/Pigeonhole/Sieve/Plugins/Pipe>`_
+v0.4 this plugin is part of the release. This is an evolution of the pipe plugin
 for Pigeonhole v0.2 and now provides the ``filter`` and ``execute`` commands
 (and corresponding extensions) in addition to the ``pipe`` command that
 was provided earlier by the Pipe plugin.
