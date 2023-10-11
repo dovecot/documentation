@@ -4,7 +4,7 @@
 Importing mailboxes
 ===================
 
-For importing mails, dovecot has the :man:`doveadm-import(1)` command.
+For importing mails, dovecot has the ``doveadm-import`` command.
 
 .. warning::
 
@@ -63,7 +63,7 @@ In some disaster recovery cases you may end up having mails for the same user
 in two different locations, and need to merge them. For example the storage
 goes down and fixing it takes a long time, so during the fixing you can let the
 users access their emails as an empty account, which can receive new mails.
-Later on you can use :man:`doveadm-import(1)` to merge the mailboxes.
+Later on you can use ``doveadm-import`` to merge the mailboxes.
 
 Note that there is no way to make this solution perfect:
  * IMAP clients that have cached mails locally will delete their local caches
@@ -124,7 +124,7 @@ index storage supports snapshots:
    looks exactly like it was at the time of breakage.
  * Mount the new mail volume to some temporary mountpoint.
  * Mount the second index snapshot to some temporary mountpoint.
- * Use :man:`doveadm-import(1)` to recover new mails:
+ * Use ``doveadm-import`` to recover new mails:
 
    .. code-block::
 
