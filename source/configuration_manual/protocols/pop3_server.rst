@@ -101,7 +101,7 @@ which the users don't really appreciate.
 
 Dovecot supports multiple different ways to set the UIDL format, mostly to make
 migrations from other POP3 servers transparent by preserving the old UIDL
-values. See `Migration <https://wiki.dovecot.org/Migration>`_ for how to set
+values. See :ref:`migrating_mailboxes` for how to set
 the UIDLs to be compatible with your previous POP3 server.
 
 For new POP3 servers, the easiest way to set up UIDLs is to use IMAP's
@@ -138,9 +138,9 @@ files in ways that Dovecot doesn't like, without causing the UIDLs to change.
 For example:
 
 * Inserting messages in the middle of mbox files (eg. restoring mbox files from
-  backups can cause `Expunged message reappeared` errors)
+  backups can cause ``Expunged message reappeared`` errors)
 * Reordering messages inside mbox
-* `Other random problems <https://wiki.dovecot.org/MboxProblems>`_ causing UID
+* :ref:`Other random problems <known_issues-mbox_problems>` causing UID
   renumbering (although you should figure out why they're happening)
 
 The MD5 summing method however doesn't work well if you receive two identical
