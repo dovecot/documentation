@@ -6,24 +6,23 @@ Dovecot LDA
 
 The Dovecot LDA is a :ref:`mail delivery agent <mda>`, which takes mail from an :ref:`mta`
 and delivers it to a user's mailbox, while keeping Dovecot index files up to
-date. Nowadays you should probably use the `LMTP server <lmtp_server>`
+date. Nowadays you should probably use the :ref:`LMTP server <lmtp_server>`
 instead, because it's somewhat easier to configure (especially related to
 permissions) and gives better performance.
 
 This page describes the common settings required to make LDA work. You
 should read it first, and then the MTA specific pages:
 
--  `LDA/Postfix <https://wiki.dovecot.org/LDA/Postfix>`_
--  `LDA/Exim <https://wiki.dovecot.org/LDA/Exim>`_
--  `LDA/Sendmail <https://wiki.dovecot.org/LDA/Sendmail>`_
--  `LDA/Qmail <https://wiki.dovecot.org/LDA/Qmail>`_
--  `LDA/ZMailer <https://wiki.dovecot.org/LDA/ZMailer>`_
+-  :ref:`Postfix <howto-dovecot_lda_postfix>`
+-  :ref:`Exim <howto-dovecot_lda_exim>`
+-  :ref:`Sendmail <howto-dovecot_lda_sendmail>`
+-  :ref:`Qmail <howto-dovecot_lda_qmail>`
+-  :ref:`ZMailer <howto-dovecot_lda_zmailer>`
 
 Main features of Dovecot LDA
-----------------------------
+============================
 
--  `Mailbox indexing during mail
-   delivery <https://wiki.dovecot.org/LDA/Indexing>`_, providing
+-  :ref:`Mailbox indexing during mail delivery <lda-indexing>`, providing
    faster mailbox access later
 
 -  :ref:`Quota enforcing by a plugin <quota_plugin>`
@@ -35,7 +34,7 @@ Main features of Dovecot LDA
    -  Vacation auto-reply
 
 Common configuration
---------------------
+====================
 
 The settings are listed in the example ``conf.d/15-lda.conf`` file. The
 important settings are:
@@ -63,7 +62,7 @@ password related settings to a separate file, which you include with
 ``!include_try`` and dovecot-lda skips them.
 
 Parameters
-----------
+==========
 
 Parameters accepted by dovecot-lda:
 
@@ -124,9 +123,9 @@ Parameters accepted by dovecot-lda:
    this parameter multiple times.
 
 Return values
--------------
+=============
 
-dovecot-lda will exit with one of the following values:
+:man:dovecot-lda(1): will exit with one of the following values:
 
 -  0 (EX_OK): Delivery was successful.
 
@@ -142,7 +141,7 @@ dovecot-lda will exit with one of the following values:
    all failures. See the log file for details.
 
 System users
-------------
+============
 
 You can use LDA with a few selected system users (ie. user is found from
 ``/etc/passwd`` / NSS) by calling dovecot-lda in the user's
@@ -153,14 +152,13 @@ You can use LDA with a few selected system users (ie. user is found from
    | "/usr/local/libexec/dovecot/dovecot-lda"
 
 This should work with any MTA which supports per-user ``.forward``
-files. For qmail's per-user setup, see
-`LDA/Qmail <https://wiki.dovecot.org/LDA/Qmail>`_.
+files. For qmail's per-user setup, see :ref:`howto-dovecot_lda_qmail`.
 
 This method doesn't require the authentication socket explained below
 since it's executed as the user itself.
 
 Virtual users
--------------
+=============
 
 With a lookup
 ~~~~~~~~~~~~~
@@ -275,7 +273,7 @@ sudo:
 instead of just plain ``/usr/local/libexec/dovecot/dovecot-lda``.
 
 Problems with dovecot-lda
--------------------------
+=========================
 
 -  If you are using :ref:`prefetch
    userdb <authentication-prefetch_userdb>`,
@@ -337,7 +335,7 @@ For using syslog with dovecot-lda, set the paths empty:
    }
 
 Plugins
--------
+=======
 
 -  Most of the :ref:`Dovecot plugins <setting-plugins>` work with dovecot-lda.
 
@@ -345,3 +343,60 @@ Plugins
 
 -  Sieve language support can be added with the :ref:`Pigeonhole Sieve
    plugin <sieve>`.
+
+.. _lda-indexing:
+
+LDA Indexing
+============
+
+LDA's indexing basically does two things while message is being saved:
+
+1. It updates the main index file.
+
+   -  This improves performance with :Ref:`mbox <mbox_mbox_format>`
+      format, especially if :dovecot_core:ref:`mbox_very_dirty_syncs=no <mbox_very_dirty_syncs>`.
+
+   -  With :ref:`Maildir <maildir_mbox_format>` the benefits of this are almost irrelevant.
+
+2. It updates the ``dovecot.index.cache`` file.
+
+Cache file
+~~~~~~~~~~
+
+The LDA also updates the cache file, which can be very useful with all
+mailbox formats. It means that when an IMAP client wants to fetch the
+message's metadata (e.g. some header fields), they're can be retrieved
+from the cache file and Dovecot doesn't have to open and parse the
+message file. There are some tradeoffs though:
+
+-  LDA indexing wastes disk I/O because it has to open and update index
+   files
+
+-  LDA indexing saves disk I/O because it already has the message body
+   in memory, so it doesn't need to read it from disk.
+
+-  IMAP indexing wastes disk I/O because it has to open and read message
+   files
+
+-  IMAP indexing may save disk I/O because IMAP process always has index
+   files opened, and many IMAP clients are configured to download all
+   new message bodies anyway, so the second time message bodies are read
+   they're already in memory
+
+So it depends on IMAP client if it's faster to use LDA or IMAP time
+indexing. In any case the user experience is typically faster with LDA
+indexing, because the message list metadata can be returned faster when
+it's pre-indexed.
+
+See :ref:`mail_location_settings-index_files` for more information about
+what the index files contain.
+
+Non-indexed mail delivery
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ignoring the benefits of cache file updates, the only thing left is the
+main index updates. As mentioned above, with Maildir format these
+benefits are very small. This also means that it's perfectly fine to use
+a non-Dovecot MDA to deliver mails that doesn't update indexes. Dovecot
+can efficiently see and index such new mails without doing anything
+expensive like "rebuilding indexes".
