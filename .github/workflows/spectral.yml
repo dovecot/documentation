@@ -10,7 +10,7 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       if: ${{ env.SPECTRAL_DSN != '' }}
     - name: Install and run Spectral CI
       uses: spectralops/spectral-github-action@v2
