@@ -15,7 +15,7 @@ virtual mailbox.
 
 Common choices include:
 
--  `maildrop <https://maildrop.cc>`__
+-  `maildrop <https://www.courier-mta.org/maildrop/download.html>`_
 
 -  `procmail <https://porkmail.org/era/procmail/>`__
 
