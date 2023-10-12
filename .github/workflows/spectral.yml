@@ -11,8 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      if: ${{ env.SPECTRAL_DSN != '' }}
     - name: Install and run Spectral CI
       uses: spectralops/spectral-github-action@v2
+      if: ${{ env.SPECTRAL_DSN != '' }}
       with:
         spectral-dsn: ${{ env.SPECTRAL_DSN }}
         spectral-args: scan --ok  --include-tags base,audit3
