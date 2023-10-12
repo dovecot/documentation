@@ -48,7 +48,7 @@ this method is that only Dovecot mail processes have access to the
 group, but nothing else, such as user's SSH session. For example a
 simple way to set up shared mailbox access for all system users is to
 make all mail dirs/files 0770/0660 mode and owned by group "sharedmail"
-and then set ``mail_access_groups=sharedmail``. Using more fine grained
+and then set ``mail_access_groups=sharedmail``. Using more fine-grained
 groups of course leaks less mail data in case there's a security hole in
 Dovecot.
 
