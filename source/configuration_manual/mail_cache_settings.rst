@@ -86,7 +86,7 @@ Nowadays there are three types of IMAP clients:
    into local cache. Afterwards they use only the local cache for accessing
    the metadata. They may download the message bodies later on though. These
    clients don't benefit from Dovecot's caching after they have downloaded
-   the metadata. For example Outlook, Thunderbird, OSX Mail.
+   the metadata. For example Outlook, Thunderbird, Mac OS X Mail.
  * Clients that work otherwise like the local clients described above, but
    don't download all mails locally (even their metadata). They may also use
    server-side search for mails. For example iOS Mail.

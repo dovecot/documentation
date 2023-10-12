@@ -904,7 +904,7 @@ See :ref:`settings` for list of all setting groups.
    ``delay-newmail``
 
       EXISTS/RECENT new-mail notifications are sent only in replies to NOOP
-      and CHECK commands. Some clients, such as pre-2.1 versions of OSX
+      and CHECK commands. Some clients, such as pre-2.1 versions of Mac OS X
       Mail, ignore them otherwise, and, worse, Outlook Express may report
       that the message is no longer on the server (note that the workaround
       does not help for OE6 if synchronization is set to Headers Only).
