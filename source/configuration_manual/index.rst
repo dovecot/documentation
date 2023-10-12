@@ -18,6 +18,7 @@ Configuration Manual
    event_export
    event_filter
    forwarding_parameters
+   fs/index
    fts/index
    general_backend_settings
    general_settings
