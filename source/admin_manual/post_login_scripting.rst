@@ -145,7 +145,7 @@ script in order to deny connection (after a successful login), like this:
 .. code-block:: none
 
   if [ "$USER" = "myuser" ] ; then
-    printf "* NO [ALERT] The user '$USER' can not login\r\n"
+    printf "* NO [ALERT] The user '$USER' cannot login\r\n"
     exit 0
   fi
 
