@@ -4,7 +4,7 @@
  Launchd plist file
 =========================
 
-This file is for MacOS X 10.4 and later. For 10.3 and earlier StartupItems must be used.
+This file is for Mac OS X 10.4 and later. For 10.3 and earlier StartupItems must be used.
 
 Save it under /Library/LaunchDaemons/ with .plist extension (e.g. org.dovecot.dovecot.plist, following naming conventions of Apple and other vendors). Ownership should be root:wheel.
 
