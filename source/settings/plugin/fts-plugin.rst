@@ -271,7 +271,7 @@ Settings
      The ``snowball`` filter also removes possessive suffixes from English, so
      if using ``snowball`` this filter is not needed. ``snowball`` likely
      produces better results, so this filter is advisable only when
-     ``snowball`` is not available or can not be used due to extreme CPU
+     ``snowball`` is not available or cannot be used due to extreme CPU
      performance requirements.
 
    ``contractions``

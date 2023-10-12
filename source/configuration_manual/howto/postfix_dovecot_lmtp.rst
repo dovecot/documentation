@@ -96,4 +96,4 @@ mail.
 
 .. note::
 
-   you can not use "reject_unverified_recipient" with "pipe" so this doesn't work with the Dovecot LDA "deliver".
+   you cannot use "reject_unverified_recipient" with "pipe" so this doesn't work with the Dovecot LDA "deliver".
