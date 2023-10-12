@@ -1,60 +1,85 @@
 # See https://github.com/check-spelling/check-spelling/wiki/Configuration-Examples:-patterns
 
-# hit-count: 2054 file-count: 828
-# Compiler flags
-(?:^|[\t ,"'`=(])-[DW](?=[A-Z]{2,}|[A-Z][a-z]|[a-z]{2,})
+# Automatically suggested patterns
+# hit-count: 11272 file-count: 2481
+# version suffix <word>v#
+(?:(?<=[A-Z]{2})V|(?<=[a-z]{2}|[A-Z]{2})v)\d+(?:\b|(?=[a-zA-Z_]))
 
-# hit-count: 12 file-count: 9
+# hit-count: 14 file-count: 6
+# hex digits including css/html color classes:
+(?:[\\0][xX]|\\u|[uU]\+|#x?|\%23)[0-9_a-fA-FgGrR]*?[a-fA-FgGrR]{2,}[0-9_a-fA-FgGrR]*(?:[uUlL]{0,3}|[iu]\d+)\b
+
+# hit-count: 13 file-count: 10
 # Wikipedia
 \ben\.wikipedia\.org/wiki/[-\w%.#]+
 
-# hit-count: 8 file-count: 5
+# hit-count: 11 file-count: 6
+# base64 encoded content, possibly wrapped in mime
+(?:^|[\s=;:?])[-a-zA-Z=;:/0-9+]{50,}(?:[\s=;:?]|$)
+
+# hit-count: 10 file-count: 8
+# GitHub SHAs (markdown)
+(?:\[`?[0-9a-f]+`?\]\(https:/|)/(?:www\.|)github\.com(?:/[^/\s"]+){2,}(?:/[^/\s")]+)(?:[0-9a-f]+(?:[-0-9a-zA-Z/#.]*|)\b|)
+
+# hit-count: 10 file-count: 4
+# githubusercontent
+/[-a-z0-9]+\.githubusercontent\.com/[-a-zA-Z0-9?&=_\/.]*
+
+# hit-count: 9 file-count: 6
 # hex runs
 \b[0-9a-fA-F]{16,}\b
+
+# hit-count: 8 file-count: 5
+# base64 encoded content
+([`'"])[-a-zA-Z=;:/0-9+]+=\g{-1}
+
+# hit-count: 6 file-count: 3
+# tar arguments
+\b(?:\\n|)g?tar(?:\.exe|)(?:(?:\s+--[-a-zA-Z]+|\s+-[a-zA-Z]+|\s[ABGJMOPRSUWZacdfh-pr-xz]+\b)(?:=[^ ]*|))+
+
+# hit-count: 5 file-count: 3
+# alternate markers if you run into latex and friends
+(?<!\\)\\[nrt](?=[a-z]{2,})(?=.*['"`])
 
 # hit-count: 4 file-count: 2
 # mailto urls
 mailto:[-a-zA-Z=;:/?%&0-9+@.]{3,}
 
+# hit-count: 4 file-count: 2
+# lower URL escaped characters
+\%[0-9a-f][a-f](?=[a-z]{2,})
+
+# hit-count: 4 file-count: 1
+# Amazon
+\bamazon\.com/[-\w]+/(?:dp/[0-9A-Z]+|)
+
+# hit-count: 2 file-count: 1
+# URL escaped characters
+\%[0-9A-F][A-F](?=[A-Za-z])
+
 # hit-count: 2 file-count: 1
 # IPv6
 \b(?:[0-9a-fA-F]{0,4}:){3,7}[0-9a-fA-F]{0,4}\b
 
-# hit-count: 1 file-count: 1
-# Amazon
-\bamazon\.com/[-\w]+/(?:dp/[0-9A-Z]+|)
+# hit-count: 2 file-count: 1
+# uuid:
+\b[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}\b
 
-# hit-count: 1 file-count: 1
-# Non-English
-[a-zA-Z]*[ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź][a-zA-Z]{3}[a-zA-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź]*
-
-# Automatically suggested patterns
 # hit-count: 1 file-count: 1
 # oracle
 \bdocs\.oracle\.com/[-0-9a-zA-Z./_?#&=]*
 
-# GitHub SHAs
-\bapi.github\.com/repos/[^/]+/[^/]+/[^/]+/[0-9a-f]+\b
+# hit-count: 1 file-count: 1
+# Non-English
+[a-zA-Z]*[ÀÁÂÃÄÅÆČÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæčçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź][a-zA-Z]{3}[a-zA-ZÀÁÂÃÄÅÆČÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæčçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź]*|[a-zA-Z]{3,}[ÀÁÂÃÄÅÆČÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæčçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź]|[ÀÁÂÃÄÅÆČÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæčçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź][a-zA-Z]{3,}
+
 (?:\[[0-9a-f]+\]\(https:/|)/(?:www\.|)github\.com/[^/]+/[^/]+(?:/[^/]+/[0-9a-f]+(?:[-0-9a-zA-Z/#.]*|)\b|)
-\bgithub\.com/[^/]+/[^/]+[@#][0-9a-f]+\b
-# githubusercontent
-/[-a-z0-9]+\.githubusercontent\.com/[-a-zA-Z0-9?&=_\/.]*
-# gist github
-/gist\.github\.com/[^/]+/[0-9a-f]+
-# git.io
-\bgit\.io/[0-9a-zA-Z]+
-# GitHub JSON
-"node_id": "[-a-zA-Z=;:/0-9+]*"
-# Contributor
-\[[^\]]+]\(https://github\.com/[^/]+\)
-# GHSA
-GHSA(?:-[0-9a-z]{4}){3}
 
 x-amz-request-id:[0-9A-F]+
 x-amz-id-2:[-a-zA-Z=;:/0-9+]*
 
 # mailbox
-/mailboxes/[0-9a-f]+(?:/[0-9a-f]+|/idx/bundle\.[0-9a-f]+\.[0-9a-f]+|)
+/mailboxes/[0-9a-f]{2,}(?:/[0-9a-f]+|/idx/bundle\.[0-9a-f]+\.[0-9a-f]+|)
 
 # {SCHEME}doveadm_password
 \`\`\{[^} ]+\}[^`]+\`
@@ -63,27 +88,11 @@ x-amz-id-2:[-a-zA-Z=;:/0-9+]*
 ([`'])\$[^`']+\g{-1}
 /(?:keys|shared|priv)/[-\w/.]*
 
-# URL escaped characters
-\%[0-9A-F]{2}
-
-# uuid:
-\b[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}\b
-
-# URL escaped characters
-\%[0-9A-F]{2}
-\%[0-9a-f]{2}
-
-# hex digits including css/html color classes:
-(?:[\\0][xX]|\\u|[uU]\+|#x?|\%23)[0-9a-fA-FgGrR_]{2,}(?:[uU]?[lL]{0,2}|u\d+)\b
+# Compiler flags
+(?:^|[\t ,"'`=(])-[DW](?=[A-Z]{2,}|[A-Z][a-z]|[a-z]{2,})
 
 # Compiler flags
 [\t "'`=]-[W]
-
-# tar arguments
-\b(?:\\n|)tar(?:\s+-[a-zA-Z]+|\s[a-z]+)+
-
-# <word>v#
-[Vv]\d+(?:\b|(?=[a-zA-Z_]))
 
 # dovecot specific ones
 
@@ -107,7 +116,6 @@ d88ff1001d4bf753a1b800001accfe22
 # Certificate
 ^\s*[-a-zA-Z=;:/0-9+\.]{64}$
 ^\s*[-a-zA-Z=;:/0-9+\.]{40,}=+$
--1?fPRU
 (?:[0-9a-f]{1,4}:){3}:\d+
 bXl1c2VybmFtZUBkb21haW4udGxkAG15dXNlcm5hbWVAZG9tYWluLnRsZABteXBhc3N3b3Jk
 dXNlcm5hbWUAdXNlcm5hbWUAcGFzc3dvcmQ=
@@ -121,17 +129,24 @@ key=[0-9a-f]+:\w+\}\s*=\s*(?:[0-9a-f$]+|pass)
 # Questionably acceptable forms of `in to`
 # Personally, I prefer `log into`, but people object
 # https://www.tprteaching.com/log-into-log-in-to-login/
-\b[Ll]og in to\b
+\b(?:[Ll]og|[Ss]ign) in to\b
+
+# to opt in
+\bto opt in\b
 
 # acceptable duplicates
 # ls directory listings
-[-bcdlpsw](?:[-r][-w][-Ssx]){3}\s+\d+\s+\S+\s+\S+\s+\d+\s+
+[-bcdlpsw](?:[-r][-w][-SsTtx]){3}[\.+*]?\s+\d+\s+\S+\s+\S+\s+\d+\s+
+# mount
+\bmount\s+-t\s+(\w+)\s+\g{-1}\b
 # C types and repeated CSS values
-\s(blah|center|div|inherit|long|LONG|none|normal|solid|thin|transparent|very)(?: \g{-1})+\s
+\s(auto|blah|center|div|inherit|long|LONG|none|normal|solid|thin|transparent|very)(?: \g{-1})+\s
+# C struct
+\bstruct\s+(\w+)\s+\g{-1}\b
 # go templates
-\s(\w+)\s+\g{-1}\s+\`(?:graphql|json|yaml):
-# javadoc / .net
-(?:[\\@](?:groupname|param)|(?:public|private)(?:\s+static|\s+readonly)*)\s+(\w+)\s+\g{-1}\s
+\s(\w+)\s+\g{-1}\s+\`(?:graphql|inject|json|yaml):
+# doxygen / javadoc / .net
+(?:[\\@](?:brief|groupname|t?param|return|retval)|(?:public|private|\[Parameter(?:\(.+\)|)\])(?:\s+static|\s+override|\s+readonly)*)(?:\s+\{\w+\}|)\s+(\w+)\s+\g{-1}\s
 
 # Commit message -- Signed-off-by and friends
 ^\s*(?:(?:Based-on-patch|Co-authored|Helped|Mentored|Reported|Reviewed|Signed-off)-by|Thanks-to): (?:[^<]*<[^>]*>|[^<]*)\s*$
