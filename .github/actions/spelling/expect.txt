@@ -15,6 +15,7 @@ AEAD
 Aildir
 aliasempty
 allbackups
+alloca
 alloconly
 altmove
 altpath
@@ -46,6 +47,7 @@ auid
 authpriv
 authtok
 authuser
+authz
 autocreate
 autocreated
 Autocreation
@@ -68,6 +70,7 @@ barfoo
 basearch
 bayes
 bcc
+BDAT
 bernat
 beupdatescript
 bindir
@@ -99,6 +102,7 @@ ccert
 cdb
 cdmi
 certbot
+CFLAGS
 Chales
 changetype
 chasquid
@@ -115,9 +119,11 @@ cifs
 cip
 cipe
 Ciphersuites
+CJK
 clockspeed
 clucene
 clusterfs
+cmake
 cmdlog
 cmds
 cmusieve
@@ -135,12 +141,14 @@ COPYUID
 coretest
 coreutils
 courierimapuiddb
+cov
 cpanel
 CPID
 CPPFLAGS
 cql
 cqlsh
 CRLFs
+CRLs
 crt
 ctlr
 currentdate
@@ -154,6 +162,7 @@ datalake
 datastack
 datastax
 datatracker
+dbg
 dbox
 dboxes
 dclocal
@@ -171,6 +180,7 @@ delaycompress
 deleteheader
 denotify
 dentries
+deref
 destuser
 desync
 desynchronized
@@ -235,6 +245,7 @@ egid
 EID
 Eing
 ekh
+emacs
 emaillookup
 endscript
 ENHANCEDSTATUSCODES
@@ -297,6 +308,7 @@ ftscache
 FULLDIRNAME
 fulltext
 gauner
+gcc
 gcda
 gcov
 gecos
@@ -315,6 +327,7 @@ Gluster
 gmatch
 gno
 gnomint
+GNUC
 gpg
 gpgcheck
 gpgkey
@@ -342,6 +355,7 @@ hostchange
 Hotspot
 hostdomain
 hostip
+Hotspot
 howto
 howtoforge
 htdigest
@@ -349,7 +363,9 @@ htiweb
 htpasswd
 httpchk
 httplog
+IAT
 ICAL
+idx
 IES
 ietf
 ifmail
@@ -376,6 +392,7 @@ INCLUDERC
 indexfiles
 INDEXPVT
 inka
+inlines
 Inno
 inodes
 inodetofile
@@ -564,7 +581,9 @@ microsites
 millisecs
 mimencode
 missingok
+mkcert
 mkhomedir
+mmap
 mmaped
 mmencode
 MMIME
@@ -582,6 +601,7 @@ MULTIAPPEND
 multiport
 multiscript
 murchison
+mutf
 muttmua
 muttrc
 mybox
@@ -592,12 +612,14 @@ myfoldertoo
 myhostname
 mynetworks
 mypassword
+myscript
 mysqld
 myuser
 myusername
 NBF
 nbproc
 neomutt
+newkey
 newlock
 newmail
 Newsgroups
@@ -605,6 +627,7 @@ newtok
 nexthop
 NFKD
 NEXTUID
+NFKD
 nfsmount
 ngrams
 ninf
@@ -622,6 +645,7 @@ nodetool
 nodiratime
 nodns
 noenforcing
+noindex
 NOINFERIORS
 noiv
 nolock
@@ -680,6 +704,7 @@ orcpt
 origbox
 ORing
 orld
+OSERROR
 OSFILE
 otherinstance
 otp
@@ -694,8 +719,11 @@ pacman
 pandoc
 passdb
 passthrough
+Pbase
 pbkd
+pcre
 pfs
+PGP
 pidfile
 pidof
 pids
@@ -729,6 +757,7 @@ procmailrc
 proctitle
 promotionalmail
 proofpoint
+PROT
 proxymap
 Ptest
 ptr
@@ -780,6 +809,7 @@ resyncronized
 RFCs
 rhel
 RHu
+RLIMIT
 rmail
 Rnotation
 roundcube
@@ -808,6 +838,7 @@ scality
 scontext
 scriptname
 sdbox
+sdc
 SDPS
 SEARCHRES
 seclabel
@@ -872,6 +903,7 @@ sqlpass
 sqlpool
 sqlquota
 sqluser
+srv
 ssd
 ssha
 ssldir
@@ -891,9 +923,14 @@ strfuncs
 strlcpy
 strocpy
 strp
+strsplit
+STW
 subaccounts
 subaddress
+subdomain
+subfolders
 subjwas
+subkey
 submissiond
 subname
 subsys
@@ -927,6 +964,7 @@ technet
 tempdisabled
 tempfail
 tempfailing
+templating
 Tenuring
 terabytes
 testaccounts
@@ -962,6 +1000,7 @@ tscript
 TTLs
 tukaani
 tuxfamily
+TYPECHECK
 typedef
 tzknvtr
 uidgid
@@ -978,6 +1017,7 @@ unaccessed
 unaliased
 unauth
 uncoment
+uncompressing
 unconfigured
 und
 unhibernate
@@ -1052,7 +1092,9 @@ webmail
 webpage
 wforce
 Wietse
+wikipedia
 wikis
+WILLNEED
 winbind
 worl
 wrappermode

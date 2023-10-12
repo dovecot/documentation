@@ -15,6 +15,7 @@ postgres
 jvm
 JVM
 JVMs
+mmaped
 plugin
 plugins
 sni
