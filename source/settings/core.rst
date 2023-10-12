@@ -361,7 +361,7 @@ See :ref:`settings` for list of all setting groups.
 
    The UNIX socket path to the master authentication server for finding users.
 
-   It is usually not necessary nor advisable to change the default.
+   It is usually neither necessary nor advisable to change the default.
 
 
 .. dovecot_core:setting:: auth_ssl_require_client_cert
