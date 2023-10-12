@@ -24,7 +24,7 @@ containing the command parameters are followed immediately without any
 whitespace in between.
 
 The commands available in dict protocol and their corresponding short name
-is shown in table bellow.
+is shown in table below.
 
 +--------------------+---------------------+
 | Command            | Command short name  |
