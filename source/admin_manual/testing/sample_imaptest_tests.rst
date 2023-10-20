@@ -208,7 +208,6 @@ imap_4m_profile.conf
      imap_idle = yes
      imap_fetch_immediate = UID RFC822.SIZE FLAGS BODY.PEEK[HEADER.FIELDS (From To Cc Bcc Subject Date Message-ID Priority X-Priority References Newsgroups In-Reply-To Content-Type)]
      imap_fetch_manual = RFC822.SIZE BODY[]
-     imap_status_interval = 5 min
    }
 
    client AppleMail {
@@ -217,7 +216,6 @@ imap_4m_profile.conf
      imap_idle = yes
      imap_fetch_immediate = INTERNALDATE UID RFC822.SIZE FLAGS BODY.PEEK[HEADER.FIELDS (date subject from to cc message-id in-reply-to references x-priority x-uniform-type-identifier x-universally-unique-identifier)] MODSEQ
      imap_fetch_manual = BODYSTRUCTURE BODY.PEEK[]
-     imap_status_interval = 5 min
    }
 
 
