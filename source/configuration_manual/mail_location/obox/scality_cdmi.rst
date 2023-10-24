@@ -96,7 +96,7 @@ fs-scality overrides some of the default HTTP client settings:
  * :dovecot_core:ref:`http_client_connect_timeout` = 5s
  * :dovecot_core:ref:`http_client_request_timeout` = 65s -
    Use a slightly higher timeout for requests than Scality's internal 60 second timeout.
- * :obox:ref:`fs_http_add_headers`/``X-Dovecot-Hash`` = ``%2Mu/%2.3Mu`` -
+ * :dovecot_plugin:ref:`fs_http_add_headers`/``X-Dovecot-Hash`` = ``%2Mu/%2.3Mu`` -
    This is important for CDMI load balancer stickiness.
 
 You can override these and any other HTTP client or SSL settings by placing

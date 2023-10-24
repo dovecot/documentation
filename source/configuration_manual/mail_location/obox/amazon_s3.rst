@@ -1,8 +1,8 @@
 .. _amazon_s3:
 
-================
+=========
 Amazon S3
-================
+=========
 
 This document covers configuration specific to the Amazon Web Services S3
 (Simple Storage Service). See also the base S3 configuration in
@@ -10,20 +10,27 @@ This document covers configuration specific to the Amazon Web Services S3
 
 .. code-block:: none
 
-   plugin {
-     # Basic configuration (v2.3.10+):
-     obox_fs = aws-s3:https://BUCKETNAME.s3.REGION.amazonaws.com/?auth_role=s3access&region=REGION&parameters
+   fs_driver = aws-s3
+   fs_s3_url = https://BUCKETNAME.s3.REGION.amazonaws.com/
+   fs_s3_auth_role = s3access
+   fs_s3_region = REGION
 
-     # Basic configuration (old versions):
-     #obox_fs = s3:https://ACCESSKEY:SECRET@BUCKETNAME.s3.REGION.amazonaws.com/?region=REGION&parameters
-   }
+.. _fs-aws-s3:
 
-+-------------------------+----------------------------------------------------+
-| Parameter               | Description                                        |
-+=========================+====================================================+
-| See :ref:`s3_storages` for all S3 parameters.                                |
-+-------------------------+----------------------------------------------------+
+AWS S3 Settings
+---------------
 
+See also :ref:`fs-http` and :ref:`fs-s3`.
+
+.. dovecot_plugin:setting_filter:: fs_aws_s3
+   :filter: fs_aws_s3
+   :plugin: obox
+   :values: @named_filter
+
+   Filter for AWS S3-specific settings. :dovecot_plugin:ref:`fs_s3` filter is also used.
+
+
+.. _aws_iam:
 
 IAM authentication
 ------------------
@@ -43,15 +50,16 @@ must be configured which allows trusted entities, EC2 in this case, to
 assume that role. The role (for example ``s3access``) that will be assumed must
 have the ``AmazonS3FullAccess`` policy attached.
 
-The ``auth_role`` can be configured as a URL parameter which specifies the IAM
-role to be assumed. If no ``auth_role`` is configured, no IAM lookup will be
+The :dovecot_plugin:ref:`fs_s3_auth_role` setting specifies the IAM role to be assumed.
+If no :dovecot_plugin:ref:`fs_s3_auth_role` is configured, no IAM lookup will be
 done.
 
 .. code-block:: none
 
-  plugin {
-    obox_fs = aws-s3:https://bucket-name.s3.region.amazonaws.com/?auth_role=s3access&region=region
-  }
+   fs_driver = aws-s3
+   fs_s3_url = https://bucket-name.s3.region.amazonaws.com/
+   fs_s3_auth_role = s3access
+   fs_s3_region = region
 
 When using IAM you must ensure that the ``fs-auth`` service has proper
 permissions/owner. Configure the user for the fs-auth listener to be the same
@@ -141,22 +149,23 @@ can be used by adding the region parameter to the S3 URL:
 
 .. code-block:: none
 
-  plugin {
-    obox_index_fs = https://ACCESSKEY:SECRET@BUCKETNAME.s3.eu-central-1.amazonaws.com/?region=eu-central-1
-  }
+  fs_driver = aws-s3
+  fs_s3_url = https://ACCESSKEY:SECRET@BUCKETNAME.s3.eu-central-1.amazonaws.com/
+  fs_s3_region = eu-central-1
 
-aws-s3 scheme
--------------
+aws-s3 backend
+--------------
 
 .. dovecotadded:: 2.3.10
 
-Using the ``aws-s3`` scheme is a simpler way to configure the S3 driver for
-AWS. Currently it's the same as using the ``s3`` scheme with the following
-URL parameters (see :ref:`http_storages`):
+Using the ``aws-s3`` backend is a simpler way to configure the S3 backend for
+AWS. Currently it's the same as using the :ref:`fs-s3` backend with the
+following default settings:
 
- * ``addhdrvar=x-amz-security-token:%{auth:token}`` - Enable using security
-   token if returned by IAM lookup.
- * ``loghdr=x-amz-request-id`` and ``loghdr=x-amz-id-2`` - Include the these
+ * :dovecot_plugin:ref:`fs_http_add_headers`/``x-amz-security-token`` = ``%{auth:token}`` -
+ * Enable using security token if returned by IAM lookup.
+ * :dovecot_plugin:ref:`fs_http_log_headers`/``x-amz-request-id`` = yes and
+   :dovecot_plugin:ref:`fs_http_log_headers`/``x-amz-id-2`` = yes - Include the these
    headers' values in all log messages related to the request. This additional
    information helps when Troubleshooting Amazon S3 See
    https://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonResponseHeaders.html
@@ -175,11 +184,39 @@ With IAM:
 .. code-block:: none
 
    mail_location = obox:%8Mu/%u:INDEX=~/:CONTROL=~/
-   plugin {
-     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:zstd:3:aws-s3:https://bucket-name.s3.region.amazonaws.com/?region=region&auth_role=s3access
-     obox_index_fs = compress:zstd:3:aws-s3:https://bucket-name.s3.region.amazonaws.com/?region=region&auth_role=s3access
-     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:aws-s3:https://bucket-name.s3.region.amazonaws.com/%8Mu/%u/fts/?region=region&auth_role=s3access
-     obox_max_parallel_deletes = 1000
+   fs_s3_url = https://bucket-name.s3.region.amazonaws.com/
+   fs_s3_region = region
+   fs_s3_auth_role = s3access
+   fs_compress_write_method = zstd
+   obox {
+     fs_driver = fscache
+     fs_fscache_size = 512M
+     fs_fscache_path = /var/cache/mails/%4Nu
+     fs_parent {
+       fs_driver = compress
+       fs_parent {
+         fs_driver = aws-s3
+       }
+     }
+   }
+   metacache {
+     fs_driver = compress
+     fs_parent {
+       fs_driver = aws-s3
+     }
+   }
+   fts_dovecot {
+     fs_driver = fts-cache
+     fs_s3_url = https://bucket-name.s3.region.amazonaws.com/%8Mu/%u/fts/
+     fs_parent {
+       fs_driver = fscache
+       fs_fscache_size = 512M
+       fs_fscache_path = /var/cache/fts/%4Nu
+       fs_driver = compress
+       fs_parent {
+         fs_driver = aws-s3
+       }
+     }
    }
    mail_uid = vmail
    service fs-auth {
@@ -188,14 +225,11 @@ With IAM:
      }
    }
 
-Without IAM:
+Without IAM add the ACCESSKEY and SECRET to the URL:
 
 .. code-block:: none
 
-   mail_location = obox:%8Mu/%u:INDEX=~/:CONTROL=~/
-   plugin {
-     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:zstd:3:aws-s3:https://ACCESSKEY:SECRET@bucket-name.s3.region.amazonaws.com/?region=region&auth_role=s3access
-     obox_index_fs = compress:zstd:3:aws-s3:https://ACCESSKEY:SECRET@bucket-name.s3.region.amazonaws.com/?region=region&auth_role=s3access
-     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:aws-s3:https://ACCESSKEY:SECRET@bucket-name.s3.region.amazonaws.com/%8Mu/%u/fts/?region=region&auth_role=s3access
-     obox_max_parallel_deletes = 1000
+   fs_s3_url = https://ACCESSKEY:SECRET@bucket-name.s3.region.amazonaws.com/
+   fts_dovecot {
+     fs_s3_url = https://ACCESSKEY:SECRET@bucket-name.s3.region.amazonaws.com/%8Mu/%u/fts/
    }
