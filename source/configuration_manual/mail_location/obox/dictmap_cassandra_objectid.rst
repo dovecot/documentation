@@ -6,7 +6,8 @@ fs-dictmap/Cassandra mappings for Object ID based storages
 
 These mappings can be used with:
  * :ref:`scality_sproxyd`
- * Any other object storage when using "storage-objectid-prefix" option
+ * Any other object storage when using
+   :dovecot_plugin:ref:`fs_dictmap_storage_objectid_prefix` setting.
 
 Cassandra keyspace
 ------------------
