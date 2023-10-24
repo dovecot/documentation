@@ -12,7 +12,7 @@ doveadm-mailbox-cryptokey - Mail crypt plugin management
 SYNOPSIS
 ========
 
-**doveadm** [**-o** *plugin/mail_crypt_private_password=password* [**-Dv**] [**-f** *formatter*]
+**doveadm** [**-o** *crypt_user_key_password=password* [**-Dv**] [**-f** *formatter*]
 *mailbox cryptokey export|generate|list|password* [*options*] [*arguments*]
 
 DESCRIPTION
@@ -28,7 +28,7 @@ OPTIONS
 
 .. include:: global-options-formatter.inc
 
-**-o** *plugin/mail_crypt_private_password=password*
+**-o** *crypt_user_key_password=password*
    Dovecot option, needed if you use password protected keys
 
 Command specific *options*:
