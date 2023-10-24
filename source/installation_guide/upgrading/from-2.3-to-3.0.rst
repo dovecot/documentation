@@ -104,9 +104,8 @@ Removed features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | :ref:`plugin-imap-zlib`                                    | The IMAP ``COMPRESS`` extension is now automatically enabled. See :ref:`imap_compress`.  |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| Renamed ``zlib plugin`` and relevant configuration items   | Use :ref:`plugin-mail-compress` - with the configuration items                           |
-|                                                            | :dovecot_plugin:ref:`mail_compress_save` as well as                                      |
-|                                                            | :dovecot_plugin:ref:`mail_compress_save_level` - instead.                                |
+| Renamed ``zlib plugin`` and relevant configuration items   | Use :ref:`plugin-mail-compress` - with the                                               |
+|                                                            | :dovecot_plugin:ref:`mail_compress_write_method` setting instead.                        |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | Support for obsoleted :ref:`authentication-dict` settings  | Use non-obsolete ``key {}`` syntax.                                                      |
 | ``passdb_key`` and ``userdb_key`` was removed.             |                                                                                          |
