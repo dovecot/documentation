@@ -145,7 +145,8 @@ Each Dovecot Backend server always writes only a single such object per folder,
 which allows storing them with (user, folder, host) primary key and updating
 the rows on changes, instead of inserting & deleting the rows.
 
-The fs-dictmap ``diff-table`` parameter enables this behavior.
+The fs-dictmap :dovecot_plugin:ref:`fs_dictmap_diff_table` setting enables
+this behavior.
 
 Diff-table requires these additional tables to exist in Cassandra:
 
@@ -161,7 +162,8 @@ Reference counting allows a single mail object to be stored in multiple
 mailboxes, without the need to create a new copy of the message data in object
 storage. There are two downsides to it though:
 
-The fs-dictmap ``refcounting-table`` parameter enables this behavior.
+The fs-dictmap :dovecot_plugin:ref:`fs_dictmap_refcounting_table` setting
+enables this behavior.
 
  * It requires an additional large Cassandra table that keeps track of the
    references.
