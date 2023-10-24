@@ -9,7 +9,7 @@ mail-crypt plugin
 Settings
 ========
 
-.. dovecot_plugin:setting:: mail_crypt_acl_require_secure_key_sharing
+.. dovecot_plugin:setting:: crypt_acl_require_secure_key_sharing
    :default: no
    :plugin: mail-crypt
    :values: @boolean
@@ -18,7 +18,7 @@ Settings
    key.
 
 
-.. dovecot_plugin:setting:: mail_crypt_curve
+.. dovecot_plugin:setting:: crypt_user_key_curve
    :plugin: mail-crypt
    :values: @string
 
@@ -31,73 +31,107 @@ Settings
    .. code-block:: none
 
      plugin {
-       mail_crypt_curve = secp521r1
+       crypt_user_key_curve = secp521r1
      }
 
    This must be set if you wish to use folder keys rather than global keys.
 
    With global keys (either RSA or EC keys), all keying material is taken
-   from the plugin environment and no key generation is performed.
+   from the settings and no key generation is performed.
 
    In folder-keys mode, a key pair is generated for the user, and a
    folder-specific key pair is generated. The latter is encrypted by means of
    the user's key pair.
 
 
-.. dovecot_plugin:setting:: mail_crypt_global_private_key
+.. dovecot_plugin:setting:: crypt_global_private_keys
+   :plugin: mail-crypt
+   :values: @named_list_filter
+
+   List of private key(s) to decrypt files. Add 
+   :dovecot_plugin:ref:`crypt_private_key` and optionally
+   :dovecot_plugin:ref:`crypt_private_key_password` inside each filter.
+
+.. dovecot_plugin:setting:: crypt_global_public_key
    :plugin: mail-crypt
    :values: @string
 
-   Private key(s) to decrypt files. Key(s) must be in PEM format, using pkey
-   format.
+   Public key to encrypt files. Key must be in
+   :ref:`PEM pkey format <pkey_format>`. The PEM key may additionally be
+   base64-encoded into a single line, which can make it easier to store into
+   userdb extra fields.
 
-   You can define multiple keys by appending an increasing number to the
-   setting label.
+
+.. dovecot_plugin:setting:: crypt_global_private_key
+   :plugin: mail-crypt
+   :values: @named_list_filter
+
+   List of global private key(s) to decrypt mails. Add
+   :dovecot_plugin:ref:`crypt_private_key` and optionally
+   :dovecot_plugin:ref:`crypt_private_key_password` inside each filter.
 
 
-.. dovecot_plugin:setting:: mail_crypt_global_public_key
+.. dovecot_plugin:setting:: crypt_user_key_encryption_key
+   :plugin: mail-crypt
+   :values: @named_list_filter
+
+   List of private key(s) to decrypt user's master private key. Add
+   :dovecot_plugin:ref:`crypt_private_key` and optionally
+   :dovecot_plugin:ref:`crypt_private_key_password` inside each filter.
+
+
+.. dovecot_plugin:setting:: crypt_user_key_password
    :plugin: mail-crypt
    :values: @string
 
-   Public key to encrypt files. Key must be in PEM format, using pkey format.
+   Password to decrypt user's master private key.
 
 
-.. dovecot_plugin:setting:: mail_crypt_private_key
-   :plugin: mail-crypt
-   :values: @string
-
-   Private key to decrypt user's master key. Key must be in PEM format, using
-   pkey format.
-
-
-.. dovecot_plugin:setting:: mail_crypt_private_password
-   :plugin: mail-crypt
-   :values: @string
-
-   Password to decrypt user's master key or environment private key.
-
-
-.. dovecot_plugin:setting:: mail_crypt_require_encrypted_user_key
+.. dovecot_plugin:setting:: crypt_user_key_require_encrypted
    :plugin: mail-crypt
    :values: @boolean
-   :changed: 2.4.0,3.0.0  Changed the value type to be boolean. Earlier versions evaluated all values as true.
 
-   If true, require user key encryption with password.
+   If yes, require user's master private key to be encrypted with
+   :dovecot_plugin:ref:`crypt_user_key_password` or
+   :dovecot_plugin:ref:`crypt_user_key_encryption_key`. If they are unset, new
+   user key generation will fail. This setting doesn't affect already existing
+   non-encrypted keys.
 
 
-.. dovecot_plugin:setting:: mail_crypt_save_version
-   :default: 2
+.. dovecot_plugin:setting:: crypt_write_algorithm
    :plugin: mail-crypt
-   :values: @uint
+   :values: @string
+   :default: aes-256-gcm-sha256
 
-   Sets the version of the mail_crypt compatibility desired.
+   Set the encryption algorithm. If empty, new mails are not encrypted, but
+   existing mails can still be decrypted.
 
-   Options:
 
-   ======== ================================================
-   Version  Description
-   ======== ================================================
-   ``0``    Decryption is active; no encryption occurs.
-   ``1``    Do not use (implemented for legacy reasons only)
-   ``2``    Encryption and decryption are active.
-   ======== ================================================
+.. dovecot_plugin:setting:: crypt_private_key_name
+   :plugin: mail-crypt
+   :values: @string
+
+   Name of the private key inside
+   :dovecot_plugin:ref:`crypt_global_private_keys` or
+   :dovecot_plugin:ref:`crypt_user_key_encryption_key`.
+
+
+.. dovecot_plugin:setting:: crypt_private_key
+   :plugin: mail-crypt
+   :values: @string
+
+   Private key in :ref:`PEM pkey format <pkey_format>`. The PEM key may
+   additionally be base64-encoded into a single line, which can make it easier
+   to store into userdb extra fields.
+
+   Used inside :dovecot_plugin:ref:`crypt_global_private_keys` and
+   :dovecot_plugin:ref:`crypt_user_key_encryption_key` lists.
+
+
+.. dovecot_plugin:setting:: crypt_private_key_password
+   :plugin: mail-crypt
+   :values: @string
+
+   Password to decrypt :dovecot_plugin:ref:`crypt_private_key`.
+
+
