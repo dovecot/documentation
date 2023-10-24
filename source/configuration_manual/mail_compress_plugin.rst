@@ -22,11 +22,8 @@ Sample Configuration:
   # Enable compression plugin globally for reading/writing:
   mail_plugins = $mail_plugins mail_compress
 
-  # Enable these only if you want compression while saving:
-  plugin {
-    mail_compress_save = zstd
-    mail_compress_save_level = 3
-  }
+  # Enable compressing the mails while saving (not just reading):
+  mail_compress_write_method = zstd
 
 Interaction with Mailbox Formats
 ================================

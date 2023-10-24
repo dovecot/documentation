@@ -6,67 +6,76 @@ mail-compress plugin
 
 .. seealso:: See :ref:`mail_compress_plugin` for a plugin overview.
 
-Settings
-^^^^^^^^
+.. _compress_methods:
 
-.. dovecot_plugin:setting:: mail_compress_save
-   :plugin: compress
-   :values: @string
+Compression methods
+-------------------
 
-   The compression algorithm to use.  This setting is REQUIRED - if empty, the
-   plugin is disabled.
+The following methods are supported:
 
-   The following algorithms are supported:
-
-   ======== =================================================== =================
-   Name     Library (algorithm)                                 Dovecot Support
-   ======== =================================================== =================
-   ``bz2``  `libbzip2 (bzip2) <https://sourceware.org/bzip2/>`_ v2.0+
-   ``gz``   `zlib (gzip) <https://www.zlib.net/>`_              v2.0+
-   ``lz4``  `liblz4 <https://www.lz4.org/>`_                    v2.2.11+
-   ``xz``   `liblzma <https://tukaani.org/xz/>`_                **DEPRECATED**
+=========== =================================================== =================
+Name        Library (method)                                    Dovecot Support
+=========== =================================================== =================
+``bz2``     `libbzip2 (bzip2) <https://sourceware.org/bzip2/>`_ v2.0+
+``gz``      `zlib (gzip) <https://www.zlib.net/>`_              v2.0+
+``deflate`` `zlib (gzip) <https://www.zlib.net/>`_              v2.0+
+``lz4``     `liblz4 <https://www.lz4.org/>`_                    v2.2.11+
+``xz``      `liblzma <https://tukaani.org/xz/>`_                **DEPRECATED**
                                                                 (v2.2.9+ reading,
                                                                 v2.2.9-v2.3.13
                                                                 writing)
-   ``zstd`` `Zstandard <https://facebook.github.io/zstd/>`_     v2.3.12+
-   ======== =================================================== =================
+``zstd``    `Zstandard <https://facebook.github.io/zstd/>`_     v2.3.12+
+=========== =================================================== =================
+
+Settings
+^^^^^^^^
+
+.. dovecot_plugin:setting:: mail_compress_write_method
+   :plugin: compress
+   :values: @string
+
+   The :ref:`compression method <compress_methods>` to use for writing
+   new mails. If empty, new mails are written without compression, but old
+   mails can still be read.
 
    Example:
 
    .. code-block:: none
 
-      mail_compress_save = zstd
+      mail_compress_write_method = zstd
 
 
-.. dovecot_plugin:setting:: mail_compress_save_level
-   :default: !<algorithm dependent>
+.. dovecot_plugin:setting:: compress_gz_level
+   :default: 6
    :plugin: mail_compress
    :values: @uint
 
-   The compression level to use.  This value is dependent on the algorithm
-   chosen in :dovecot_plugin:ref:`mail_compress_save`.
+   The compression level to use for gz compression. Must be between
+   0 (no compression) and 9.
 
-   The following levels are supported:
 
-   ======== ================== ============= =======
-   Name     Minimum            Default       Maximum
-   ======== ================== ============= =======
-   ``bz2``  1                  9             9
-   ``gz``   0 (no compression) 6             9
-   ``lz4``  1                  1             9
-   ``zstd`` 1                  3             22
-   ======== ================== ============= =======
+.. dovecot_plugin:setting:: compress_deflate_level
+   :default: 6
+   :plugin: mail_compress
+   :values: @uint
 
-   Example:
+   The compression level to use for deflate compression. Must be between
+   0 (no compression) and 9.
 
-   .. code-block:: none
 
-      mail_compress_save_level = 3
+.. dovecot_plugin:setting:: compress_bz2_block_size_100k
+   :default: 9
+   :plugin: mail_compress
+   :values: @uint
 
-   .. dovecotchanged:: 2.3.15
+   The compression block size to use. Must be between 1 (100 000 bytes) and
+   9 (900 000 bytes).
 
-      Prior to v2.3.15, the compression level must be an integer in the range
-      1 to 9 regardless of the algorithm selected. The default level is 6.
-      This value may not make sense with compression algorithms other than gz
-      and bz2. For example, zstd supports levels from 1 to 22 in latest
-      versions.
+
+.. dovecot_plugin:setting:: compress_zstd_level
+   :default: 3
+   :plugin: mail_compress
+   :values: @uint
+
+   The compression level to use for zstd compression. Must be between
+   1 and 22.

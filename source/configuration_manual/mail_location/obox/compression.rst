@@ -30,10 +30,7 @@ Example:
 
   # NOTE: Using this has some trade-offs with obox installations, see below.
   mail_plugins = $mail_plugins mail_compress
-  plugin {
-    mail_compress_save = <algorithm>
-    mail_compress_save_level = <level>
-  }
+  mail_compress_write_method = <algorithm>
 
 However, the problem with this with obox is that the mail files are written
 compressed to fscache. On one hand this increases the fscache's file, but on
@@ -47,6 +44,6 @@ the mails from there doesn't require writing to
 :dovecot_core:ref:`mail_temp_dir`.
 
 Compression status of email object data is auto-detected. Therefore,
-:dovecot_plugin:ref:`mail_compress_save` may safely be added to a currently
+:dovecot_plugin:ref:`mail_compress_write_method` may safely be added to a currently
 existing system; existing non-compressed mail objects will be identified
 correctly.
