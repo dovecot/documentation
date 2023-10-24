@@ -59,9 +59,7 @@ fine.
   encryption with care and backups.
 
 This page assumes you are using configuring mail encryption from scratch with
-a recent version of Dovecot.  If you are upgrading from an older version,
-see :dovecot_plugin:ref:`mail_crypt_save_version` for possible backwards
-compatibility issues.
+a recent version of Dovecot.
 
 
 Settings
@@ -69,35 +67,33 @@ Settings
 
 See :ref:`plugin-mail-crypt`.
 
-Plugin settings may also be dynamically set via
+Per-user settings may be returned by
 :ref:`authentication-user_database_extra_fields`. To provide
-:dovecot_plugin:ref:`mail_crypt_global_private_key` and
-:dovecot_plugin:ref:`mail_crypt_global_public_key` as userdb attributes, you
-can base64 encode the original contents, such as PEM file. For example,
+:dovecot_plugin:ref:`crypt_global_private_key` or
+:dovecot_plugin:ref:`crypt_global_public_key` as a single line userdb
+attribute, you can base64 encode the original PEM key contents. For example,
 
 .. code-block:: none
 
   cat ecprivkey.pem | base64 -w0
 
-All external keys must be in PEM format, using pkey format.
+All configured keys must be in :ref:`PEM format <pkey_format>`.
 
 Modes Of Operation
 ==================
 
 Mail crypt plugin can operate using **either** global keys or folder keys.
-Using both is not supported. To perform any encryption,
-:dovecot_plugin:ref:`mail_crypt_save_version` must be specified and non-zero.
+Using both is not supported.
 
-Folder Keys
------------
+Folder Keys Mode
+----------------
 
-In this mode, the user is generated a key pair, and each folder is generated a
+In this mode, the user is generated a key pair. Then each folder is generated a
 key pair, which is encrypted using the user's key pair. A user can have more
-than one key pair but only one can be active.
+than one key pair, but only one can be active.
 
-:dovecot_plugin:ref:`mail_crypt_save_version` must be ``2``.
 
-:dovecot_plugin:ref:`mail_crypt_curve` must be set.
+:dovecot_plugin:ref:`crypt_user_key_curve` must be set.
 
 :dovecot_core:ref:`mail_attribute_dict` must be set, as is is used to store the
 keys.
@@ -105,7 +101,7 @@ keys.
 Unencrypted User Keys
 ^^^^^^^^^^^^^^^^^^^^^
 
-In this version of the folder keys mode, the users private key is stored
+In this version of the folder keys mode, the user's private key is stored
 unencrypted on the server.
 
 Example config for folder keys with Maildir:
@@ -115,10 +111,7 @@ Example config for folder keys with Maildir:
   mail_attribute_dict = file:%h/Maildir/dovecot-attributes
   mail_plugins = $mail_plugins mail_crypt
 
-  plugin {
-    mail_crypt_curve = secp521r1
-    mail_crypt_save_version = 2
-  }
+  crypt_user_key_curve = secp521r1
 
 Encrypted User Keys
 ^^^^^^^^^^^^^^^^^^^
@@ -133,11 +126,8 @@ Example config for mandatory encrypted folder keys with Maildir:
   mail_attribute_dict = file:%h/Maildir/dovecot-attributes
   mail_plugins = $mail_plugins mail_crypt
 
-  plugin {
-    mail_crypt_curve = secp521r1
-    mail_crypt_save_version = 2
-    mail_crypt_require_encrypted_user_key = yes
-  }
+  crypt_user_key_curve = secp521r1
+  crypt_user_key_require_encrypted = yes
 
 The password that is used to decrypt the users master/private key, must be
 provided via password query:
@@ -146,15 +136,17 @@ provided via password query:
 
   # File: /etc/dovecot/dovecot-sql.conf.ext
 
-  password_query = SELECT \
-    email as user, password, \
-    '%w' AS userdb_mail_crypt_private_password \
-    FROM virtual_users  WHERE email='%u';
+  password_query = \
+    SELECT \
+      email as user, password, \
+      '%Mw' AS userdb_crypt_user_key_password \
+    FROM virtual_users \
+    WHERE email='%u'
 
-Choosing encryption key
------------------------
+Choosing encryption password
+----------------------------
 
-DO NOT use password directly. It can contain % which is interpreted as
+DO NOT use password directly. It can contain ``%`` which is interpreted as
 variable expansion and can cause errors. Also, it might be visible in
 debug logging. Suggested approaches are base64 encoding, hex encoding
 or hashing the password. With hashing, you get the extra benefit that
@@ -176,7 +168,7 @@ user's password. The benefit is that it can be easier to do key management
 when you can do the EC re-encryption steps in case of password change in your
 user database instead of dovecot's database.
 
-You should not configure :dovecot_plugin:ref:`mail_crypt_curve` when using global keys.
+:dovecot_plugin:ref:`crypt_user_key_curve` must be empty when using global keys.
 
 RSA key
 -------
@@ -213,11 +205,10 @@ These keys can then be used with this configuration:
 
   mail_plugins = $mail_plugins mail_crypt
 
-  plugin {
-    mail_crypt_global_private_key = <rsaprivkey.pem
-    mail_crypt_global_private_password = qwerty
-    mail_crypt_global_public_key = <rsapubkey.pem
-    mail_crypt_save_version = 2
+  crypt_global_public_key = <rsapubkey.pem
+  crypt_global_private_key main {
+    crypt_private_key = <rsaprivkey.pem
+    crypt_private_password = qwerty
   }
 
 .. _mail_crypt_plugin_elliptic_curve_key:
@@ -250,11 +241,12 @@ These keys can now be used with this configuration:
 
   mail_plugins = $mail_plugins mail_crypt
 
-  plugin {
-    mail_crypt_global_private_key = <ecprivkey.pem
-    mail_crypt_global_public_key = <ecpubkey.pem
-    mail_crypt_save_version = 2
+  crypt_global_public_key = <ecpubkey.pem
+  crypt_global_private_key main {
+    crypt_private_key = <ecprivkey.pem
   }
+
+.. _pkey_format:
 
 Converting EC key to PKEY
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -296,28 +288,27 @@ Hence, this is possible:
 
 .. code-block:: none
 
+  mail_plugins = $mail_plugins mail_crypt
+  crypt_global_private_key main {
+    # create the filter, but leave its settings empty
+  }
+
   passdb {
     driver = static
-    args = password=pass mail_crypt_global_public_key=<content of ecpubkey.pem> mail_crypt_global_private_key=<content of ecprivkey.pem>
+    args = password=pass crypt_global_public_key=<content of ecpubkey.pem> crypt_global_private_key/main/private_key=<content of ecprivkey.pem>
   }
 
-  mail_plugins = $mail_plugins mail_crypt
-
-  plugin {
-    mail_crypt_save_version = 2
-  }
-
-Read-only Mode (``mail_crypt_save_version = 0``)
-================================================
+Read-only Mode
+==============
 
 If you have encrypted mailboxes that you need to read, but no longer want to
-encrypt new mail, use ``mail_crypt_save_version=0``:
+encrypt new mail, use empty :dovecot_plugin:ref:`crypt_write_algorithm` setting:
 
 .. code-block:: none
 
-  plugin {
-    mail_crypt_save_version = 0
-    mail_crypt_global_private_key = <server.key
+  crypt_write_algorithm =
+  crypt_global_private_key main {
+    crypt_private_key = <server.key
   }
 
 mail-crypt-plugin and ACLs
@@ -333,7 +324,7 @@ With folder keys, key sharing can be done to single user, or multiple users.
 When key is shared to single user, and the user has public key available, the
 folder key is encrypted to recipient's public key.
 
-If you have :dovecot_plugin:ref:`mail_crypt_acl_require_secure_key_sharing`
+If you have :dovecot_plugin:ref:`crypt_acl_require_secure_key_sharing`
 enabled, you can't share the key to groups or someone with no public key.
 
 Decrypting Files Encrypted with mail-crypt plugin
@@ -343,69 +334,47 @@ You can use `decrypt.rb
 <https://github.com/dovecot/tools/dcrypt-decrypt.rb>`__ to decrypt
 encrypted files.
 
-.. _fs_crypt:
+.. _fs-crypt:
 
-fs-crypt and fs-mail-crypt
-==========================
+fs-crypt
+========
 
-The fs-crypt is a lib-fs wrapper that can encrypt and decrypt files. It works
-similarly to the fs-compress wrapper. It can be used to encrypt e.g.:
+The fs-crypt is a :ref:`lib-fs wrapper <fs>` that can encrypt and decrypt files.
+It works similarly to the :ref:`fs-compress wrapper <fs-compress>`.
+It can be used to encrypt e.g.:
 
 * FTS index objects (fts_dovecot_fs)
 * External mail attachments (mail_attachment_fs)
 
-fs-crypt comes in two flavors, ``mail-crypt`` and ``crypt``. (The differences
-between the two are technical and related to internal code contexts.)
-
-Note that fs-[mail-]crypt and the fs-compress wrapper can be also combined.
+Note that fs-crypt and the fs-compress wrapper can be also combined.
 Please make sure that compression is always applied before encryption. See
 :ref:`plugin-fs-compress` for an example and more details about compression.
 
-Currently the fs-crypt plugin requires that all the files it reads are
-encrypted. If it sees an unencrypted file it'll fail to read it. The plan is to
-fix this later.
+fs-crypt settings
+-----------------
 
-FS driver syntax::
+See :ref:`plugin-mail-crypt` for generic mail-crypt settings.
 
-  crypt:[maybe][algo=<s>:][set_prefix=<n>:][private_key_path=/path:][public_key_path=/path:][password=password:]<parent fs>``
+.. dovecot_plugin:setting:: fs_crypt_read_plain_fallback
+   :plugin: mail-crypt
+   :values: @boolean
+   :default: no
 
-.. dovecotchanged:: 2.3.19
-  You can now leave all parameters out of mail-crypt. Prior to this, you would always have to specify them.
+   If enabled, files that are not encrypted are returned as-is. By default
+   it results in a read error.
 
-.. dovecotadded:: 2.3.19
-
-   ``maybe`` was added
-
-where:
-
-===================== ===========================================================
-Key                   Value
-===================== ===========================================================
-``maybe``             Allow missing encryption keys.
-``algo``              Encryption algorithm. Default is ``aes-256-gcm-sha256``.
-``password``          Password for decrypting public key.
-``private_key_path``  Path to private key.
-``public_key_path``   Path to public key.
-``set_prefix``        Read ``<set_prefix>_public_key`` and
-                      ``<set_prefix>_private_key``. Default is
-                      ``mail_crypt_global``.
-===================== ===========================================================
-
-Example:
-
-.. code-block:: none
-
-  plugin {
-    fts_index_fs = crypt:set_prefix=fscrypt_index:posix:prefix=/tmp/fts
-    fscrypt_index_public_key = <server.pub
-    fscrypt_index_private_key = <server.key
-  }
 
 To encrypt/decrypt files manually, you can use
 
 .. code-block:: none
 
-  doveadm fs get/put crypt private_key_path=foo:public_key_path=foo2:posix:prefix=/path/to/files/root path/to/file
+  doveadm \
+    -o fs_driver=crypt \
+    -o fs_parent/fs_driver=posix \
+    -o crypt_private_key="$(cat pubkey.pem)" \
+    -o crypt_global_private_key=main \
+    -o crypt_global_private_key/main/crypt_private_key="$(cat privkey.pem)" \
+    fs get/put '' path/to/input-file [/path/to/output-file]
 
 doveadm plugin
 ==============
@@ -417,7 +386,7 @@ The following commands are made available via doveadm.
 
 .. code-block:: none
 
-  doveadm [-o plugin/mail_crypt_private_password=some_password] mailbox cryptokey generate [-u username | -A] [-Rf] [-U] mailbox-mask [mailbox-mask ...]
+  doveadm [-o crypt_user_key_password=some_password] mailbox cryptokey generate [-u username | -A] [-Rf] [-U] mailbox-mask [mailbox-mask ...]
 
 Generate new keypair for user or folder.
 
@@ -461,7 +430,7 @@ Will list all keys for user or mailbox.
 
 .. code-block:: none
 
-  doveadm [-o plugin/mail_crypt_private_password=some_password] mailbox cryptokey export [-u username | -A] [-U] mailbox-mask [mailbox-mask ...]
+  doveadm [-o crypt_user_key_password=some_password] mailbox cryptokey export [-u username | -A] [-U] mailbox-mask [mailbox-mask ...]
 
 * -u - Username or mask to operate on
 * -A - All users
