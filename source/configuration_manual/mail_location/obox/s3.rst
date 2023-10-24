@@ -14,42 +14,113 @@ This document covers the S3 compatible storage services, which are not supported
 
 .. code-block:: none
 
-   plugin {
-     # Basic configuration:
-     obox_fs = s3:https://ACCESSKEY:SECRET@s3.example.com/?parameters
-   }
-
-The parameters are:
-
-+-------------------------+----------------------------------------------------+
-| Parameter               | Description                                        |
-+=========================+====================================================+
-| See :ref:`http_storages` for common parameters                               |
-+-------------------------+----------------------------------------------------+
-| region                  | Specify region name for AWS S3 bucket. When this   |
-|                         | is specified, Dovecot starts using v4 signatures.  |
-|                         | (The default is to use v2 signatures.)             |
-+-------------------------+----------------------------------------------------+
-| auth_role               | Perform AWS IAM lookup using this role name. See   |
-|                         | :ref:`amazon_s3` for details.                      |
-+-------------------------+----------------------------------------------------+
-| auth_host               | IAM hostname and port. The default is              |
-|                         | 169.254.169.254:80. Normally there is no reason to |
-|                         | change this. This is mainly intended for testing.  |
-+-------------------------+----------------------------------------------------+
+   # Basic configuration:
+   fs_driver = s3
+   fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/
 
 Bucket name
 -----------
 
 There are two ways to specify the bucket name:
 
- * path-style: S3 requests' path begins with the bucket parameter. This is
-   configured with the bucket parameter. For example:
-   ``https://s3.example.com/?bucket=BUCKETNAME`` will result in requests looking
-   like ``https://s3.example.com/BUCKETNAME/object-path``
+ * path-style: S3 requests' path begins with the :dovecot_plugin:ref:`fs_s3_bucket`
+   setting. For example ``fs_s3_bucket=BUCKETNAME`` will result in requests
+   looking like ``https://s3.example.com/BUCKETNAME/object-path``
  * virtual-hosted-style: The first subdomain in the URL specifies the bucket.
    AWS supports only this style for new buckets. For example
    For example ``https://BUCKETNAME.s3.example.com``
+
+.. _fs-s3:
+
+S3 Settings
+-----------
+
+See also :ref:`fs-http`.
+
+.. dovecot_plugin:setting_filter:: fs_s3
+   :filter: fs_s3
+   :plugin: obox
+   :values: @named_filter
+
+   Filter for S3-specific settings.
+
+
+.. dovecot_plugin:setting:: fs_s3_url
+   :plugin: obox
+   :values: @string
+
+   URL for accessing the S3 storage. For example
+   ``https://BUCKETNAME.s3.example.com``.
+
+
+.. dovecot_plugin:setting:: fs_s3_region
+   :plugin: obox
+   :values: @string
+
+   Specify region name for AWS S3 bucket. When this is specified, Dovecot
+   starts using v4 signatures. (The default is to use v2 signatures.)
+
+
+.. dovecot_plugin:setting:: fs_s3_auth_host
+   :plugin: obox
+   :values: @string
+   :default: 169.254.169.254
+
+   AWS IAM hostname. Normally there is no reason to change this. This is
+   mainly intended for testing.
+
+
+.. dovecot_plugin:setting:: fs_s3_auth_port
+   :plugin: obox
+   :values: @uint
+   :default: 80
+
+   AWS IAM port. Normally there is no reason to change this. This is
+   mainly intended for testing.
+
+
+.. dovecot_plugin:setting:: fs_s3_auth_role
+   :plugin: obox
+   :values: @string
+
+   If not empty, perform AWS IAM lookup using this role name.
+   See :ref:`aws_iam` for details.
+
+
+.. dovecot_plugin:setting:: fs_s3_bucket
+   :plugin: obox
+   :values: @string
+
+   S3 bucket name added to the request path.
+
+
+.. dovecot_plugin:setting:: fs_s3_bulk_delete_limit
+   :plugin: obox
+   :values: @uint
+   :default: 1000
+
+   Number of deletes supported within the same bulk delete request. 0 disables
+   bulk deletes.
+
+.. _s3_http_settings:
+
+Default HTTP Settings
+---------------------
+
+fs-s3 overrides some of the default HTTP client settings:
+
+ * :dovecot_core:ref:`http_client_max_idle_time` = 1s
+ * :dovecot_core:ref:`http_client_max_parallel_connections` = 10
+ * :dovecot_core:ref:`http_client_max_connect_attempts` = 3
+ * :dovecot_core:ref:`http_client_request_max_redirects` = 2
+ * :dovecot_core:ref:`http_client_request_max_attempts` = 5
+ * :dovecot_core:ref:`http_client_connect_backoff_max_time` = 1s
+ * :dovecot_core:ref:`http_client_user_agent` = Dovecot/VERSION
+ * :dovecot_core:ref:`http_client_connect_timeout` = 5s
+ * :dovecot_core:ref:`http_client_request_timeout` = 10s
+
+You can override these and any other HTTP client or SSL settings by placing
+them inside :dovecot_plugin:ref:`fs_s3` named filter.
 
 .. _s3_example_configuration:
 
@@ -62,11 +133,40 @@ AWS S3 specific example configurations.
 .. code-block:: none
 
    mail_location = obox:%8Mu/%u:INDEX=~/:CONTROL=~/
-   plugin {
-     obox_fs = fscache:512M:/var/cache/mails/%4Nu:compress:zstd:3:s3:https://ACCESSKEY:SECRET@s3.example.com/?bucket=mails
-     obox_index_fs = compress:zstd:3:s3:https://ACCESSKEY:SECRET@s3.example.com/?bucket=mails
-     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:s3:https://s3.example.com/%8Mu/%u/fts/?bucket=mails
-     obox_max_parallel_deletes = 1000
+   fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/
+   fs_s3_bucket = mails
+   fs_s3_region = region
+   fs_s3_auth_role = s3access
+   fs_compress_write_method = zstd
+   obox {
+     fs_driver = fscache
+     fs_fscache_size = 512M
+     fs_fscache_path = /var/cache/mails/%4Nu
+     fs_parent {
+       fs_driver = compress
+       fs_parent {
+         fs_driver = s3
+       }
+     }
+   }
+   metacache {
+     fs_driver = compress
+     fs_parent {
+       fs_driver = s3
+     }
+   }
+   fts_dovecot {
+     fs_driver = fts-cache
+     fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/%8Mu/%u/fts/
+     fs_parent {
+       fs_driver = fscache
+       fs_fscache_size = 512M
+       fs_fscache_path = /var/cache/fts/%4Nu
+       fs_driver = compress
+       fs_parent {
+         fs_driver = s3
+       }
+     }
    }
 
 We'll use the first 8 characters of the hex representation of the MD5 hash of
@@ -82,7 +182,8 @@ a given prefix. Copying performance is also important. Many S3 storages either
 don't implement the listing at all, or it's only used for disaster recovery
 type of purposes to list all objects. If this is the case, you can still use
 the storage together with :ref:`dictmap_configuration`. See especially the
-``storage-objectid-prefix`` and ``storage-passthrough-paths`` parameters.
+:dovecot_plugin:ref:`fs_dictmap_storage_objectid_prefix` and
+:dovecot_plugin:ref:`fs_dictmap_storage_passthrough_paths` settings.
 
 Google Cloud Storage
 --------------------
@@ -97,14 +198,13 @@ Deleting multiple objects per request
 
   .. dovecotadded:: 2.3.10
 
-The S3 drivers support bulk-delete requests. The ``bulk-delete`` option is
-enabled by default to delete up to 1000 keys with one request. To change this
-behaviour refer to ``bulk_delete_limit`` at :ref:`http_storages`. To actually
-delete that many mails in a single request, you must also set
-:dovecot_plugin:ref:`obox_max_parallel_deletes`:
+The S3 drivers support bulk-delete requests. The
+:dovecot_plugin:ref:`fs_s3_bulk_delete_limit` setting is enabled by default to delete up
+to 1000 keys with one request. To actually delete that many mails in a single
+request, you must also set :dovecot_plugin:ref:`obox_max_parallel_deletes`:
 
 .. code-block:: none
 
      obox_max_parallel_deletes = 1000
 
-This value should be the same as ``bulk_delete_limit`` or lower.
+This value should be the same as :dovecot_plugin:ref:`fs_s3_bulk_delete_limit` or lower.
