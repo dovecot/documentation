@@ -1,17 +1,28 @@
 .. _fscache:
 
-=============
+=======
 fscache
-=============
+=======
 
 .. code-block:: none
 
-  plugin {
-    obox_fs = fscache:2G:/var/cache/mails:…
-    # Or split users to multiple directories (4 x 512MB = 2 GB total):
-    obox_fs = fscache:512M:/var/cache/mails/%4Nu:…
+  obox {
+    fs_driver = fscache
+    fs_fscache_size = 2G
+    fs_fscache_path = /var/cache/mails
+    fs_parent {
+      # ...
+    }
   }
-
+  # Or split users to multiple directories (4 x 512MB = 2 GB total):
+  obox {
+    fs_driver = fscache
+    fs_fscache_size = 512M
+    fs_fscache_path = /var/cache/mails/%4Nu
+    fs_parent {
+      # ...
+    }
+  }
 
 All of the object storage Backends should be set up to use fscache with at
 least some amount of disk space, otherwise some operations will be very
@@ -65,6 +76,25 @@ For example if Dovecot is internally rebuilding caches for a single user, the
 1 GB fscache could quickly be filled only with that one user's emails. But if
 the fscache is slit over multiple directories, the other directories won't be
 affected and may still contain useful cache for other users.
+
+.. _fs-fscache:
+
+fscache Settings
+----------------
+
+.. dovecot_plugin:setting:: fs_fscache_size
+   :plugin: obox
+   :values: @size
+   :default: 0
+
+   Size of the fscache.
+
+.. dovecot_plugin:setting:: fs_fscache_path
+   :plugin: obox
+   :values: @string
+
+   Path to the fscache.
+
 
 Limitations
 ^^^^^^^^^^^
