@@ -179,6 +179,8 @@ for L files).
 Maxuid stats for every mailbox_guid in each triplet are also cached in the
 same file. This helps give fast answers to some common queries.
 
+.. _fs-fts-cache:
+
 FTS Caches
 ^^^^^^^^^^
 
@@ -212,7 +214,15 @@ Example configuration using OBOX::
 
   #These are assumed below,
   #mail_location = obox:%2Mu/%2.3Mu/%u:INDEX=~/:CONTROL=~/
-  #obox_fs = fscache:512M:/var/cache/mails/%4Nu:s3:http://mails.s3.example.com/
+  fs_s3_url = http://mails.s3.example.com/
+  obox {
+    fs_driver = fscache
+    fs_fscache_size = 512M
+    fs_fscache_path = /var/cache/mails/%4Nu
+    fs_parent {
+      fs_driver = s3
+    }
+  }
 
   mail_plugins = $mail_plugins fts fts_dovecot
 
@@ -224,13 +234,27 @@ Example configuration using OBOX::
 
     # Local filesystem example:
     # Use local filesystem storing FTS indexes
-    #fts_dovecot_fs = posix:prefix=%h/fts/
+    fts_dovecot {
+      fs_driver = posix
+      fs_posix_prefix = %h/fts/
+    }
 
     # OBOX example:
-    # Keep this the same as obox_fs plus the root "directory" in mail_location
+    # Keep URL the same as obox plus the root "directory" in mail_location
     # setting. Then append e.g. /fts/
-    # Example: s3:http://<ip.address.>/%2Mu/%2.3Mu/%u/fts/
-    fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:s3:http://fts.s3.example.com/%2Mu/%2.3Mu/%u/fts/
+    # Example: http://<ip.address.>/%2Mu/%2.3Mu/%u/fts/
+    fts_dovecot {
+      fs_driver = fts-cache
+      fs_parent {
+        fs_driver = fscache
+	fs_fscache_size = 512M
+	fs_fscache_path = /var/cache/fts/%4Nu
+	fs_parent {
+	  fs_driver = s3
+	  fs_s3_url = http://fts.s3.example.com/%2Mu/%2.3Mu/%u/fts/
+	}
+      }
+    }
 
     # Detected languages. Languages that are not recognized, default to the
     # first enumerated language, i.e. en.
