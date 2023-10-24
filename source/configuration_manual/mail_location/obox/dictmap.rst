@@ -34,14 +34,57 @@ Cassandra/sproxyd Example Configuration
 .. code-block:: none
 
    mail_location = obox:%u:INDEX=~/:CONTROL=~/
-   plugin {
-     # Without lazy_expunge plugin:
-     obox_fs = fscache:512M:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; refcounting-table:lockdir=/tmp:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11
-     # With lazy_expunge plugin:
-     #obox_fs = fscache:512M:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; refcounting-table:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11
 
-     obox_index_fs = compress:zstd:3:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; diff-table
-     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=1&reason_header_max_length=200 ; dict-prefix=%u/fts/
+   fs_sproxyd_url = http://sproxyd.scality.example.com/
+   fs_sproxyd_class = 2
+   fs_http_reason_header_max_length = 200
+   fs_compress_write_method = zstd
+   obox {
+     fs_driver = fscache
+     fs_fscache_size = 512M
+     fs_fscache_path = /var/cache/mails/%4Nu
+     fs_parent {
+       fs_driver = dictmap
+       dict_driver = proxy
+       dict_proxy_name = cassandra
+       dict_proxy_socket_path = dict-async
+       #fs_dictmap_lock_path = /tmp # Set only without lazy_expunge plugin
+       fs_parent {
+	 fs_driver = sproxyd
+       }
+     }
+   }
+   metacache {
+     fs_driver = compress
+     fs_parent {
+       fs_driver = dictmap
+       dict_driver = proxy
+       dict_proxy_name = cassandra
+       dict_proxy_socket_path = dict-async
+       fs_parent {
+         fs_driver = sproxyd
+       }
+     }
+   }
+   fts_dovecot {
+     fs_driver = fts-cache
+     fs_parent {
+       fs_driver = fscache
+       fs_fscache_size = 512M
+       fs_fscache_path = /var/cache/fts/%4Nu
+       fs_driver = compress
+       fs_parent {
+	 fs_driver = dictmap
+	 dict_driver = proxy
+	 dict_proxy_name = cassandra
+	 dict_proxy_socket_path = dict-async
+	 fs_dictmap_dict_prefix = %u/fts/
+	 fs_parent {
+	   fs_driver = sproxyd
+	   fs_sproxyd_class = 1
+	 }
+       }
+     }
    }
 
 It's highly recommended to use :ref:`lazy_expunge_plugin` with dictmap.
@@ -94,108 +137,198 @@ queries start failing with "All connections on all I/O threads are busy" error.
 
 .. _dictmap_configuration_parameters:
 
-Dictmap Parameters
-------------------
+.. _fs-dictmap:
 
-+---------------------------------+------------------------------------------------------------------------------+
-| Parameter                       | Description                                                                  |
-+---------------------------------+------------------------------------------------------------------------------+
-| refcounting-table	          | Enable reference counted objects. Reference counting allows a single mail    |
-|                                 | object to be stored in multiple mailboxes, without the need to create a new  |
-|                                 | copy of the message data in object storage. See                              |
-|                                 | :ref:`dictmap_cassandra_refcounting_table`                                   |
-+---------------------------------+------------------------------------------------------------------------------+
-| lockdir=<path>                  | If refcounting is enabled, use this directory for creating lock files to     |
-|                                 | objects while they're being copied or deleted. This attempts to prevent race |
-|                                 | conditions where an object copy and delete runs simultaneously and both      |
-|                                 | succeed, but the copied object no longer exists. This can't be fully         |
-|                                 | prevented if different servers do this concurrently. If lazy_expunge is used,|
-|                                 | this setting isn't really needed, because such race conditions are           |
-|                                 | practically nonexistent. Not using the setting will improve performance by   |
-|                                 | avoiding a Cassandra SELECT when copying mails.                              |
-+---------------------------------+------------------------------------------------------------------------------+
-| diff-table	                  | Store diff & self index bundle objects to a separate table. This is a        |
-|                                 | Cassandra-backend optimization. See :ref:`dictmap_cassandra_diff_table`      |
-+---------------------------------+------------------------------------------------------------------------------+
-| delete-dangling-links	          | If an object exists in dict, but not in storage, delete it automatically from|
-|                                 | dict when it's noticed. This setting isn't safe to use by default, because   |
-|                                 | storage may return "object doesn't exist" errors only temporarily during     |
-|                                 | split brain.                                                                 |
-+---------------------------------+------------------------------------------------------------------------------+
-| bucket-size=<n>	          | Separate email objects into buckets, where each bucket can have a maximum of |
-|                                 | <n> emails. This should be set to 10000 with Cassandra to avoid the partition|
-|                                 | becoming too large when there are a lot of emails.                           |
-+---------------------------------+------------------------------------------------------------------------------+
-| bucket-deleted-days=<days>      | Track Cassandra's tombstones in buckets.cache file to avoid creating         |
-|                                 | excessively large buckets when a lot of mails are saved and deleted in a     |
-|                                 | folder. The <days> should be one day longer than gc_grace_seconds for the    |
-|                                 | user_mailbox_objects table.By default this is 10 days, so in that case       |
-|                                 | bucket-deleted-days=11 should be used.When determining whether bucket-size is|
-|                                 | reached and a new one needs to be created, with this setting the tombstones  |
-|                                 | are also taken into account. This tracking is preserved only as long as the  |
-|                                 | buckets.cache exists. It's also not attempted to be preserved when moving    |
-|                                 | users between backends. This means that it doesn't work perfectly in all     |
-|                                 | situations, but it should still be good enough to prevent the worst offenses.|
-+---------------------------------+------------------------------------------------------------------------------+
-| bucket-cache=<path>	          | Required when bucket-size is set. Bucket counters are cached in this file.   |
-|                                 | This path should be located under the obox indexes directory (on the SSD     |
-|                                 | backed cache mount point; e.g. %h/buckets.cache)                             |
-+---------------------------------+------------------------------------------------------------------------------+
-| nlinks-limit=<n>                | Defines the maximum number of results returned from a dictionary iteration   |
-|                                 | lookup (i.e. Cassandra CQL query) when checking the number of links to an    |
-|                                 | object. Limiting this may improve performance. Currently Dovecot only cares  |
-|                                 | whether the link count is 0, 1 or "more than 1" so for a bit of extra safety |
-|                                 | we recommend nlinks-limit=3.                                                 |
-+---------------------------------+------------------------------------------------------------------------------+
-| delete-timestamp=+<:ref:`time`> | Increase Cassandra's DELETE timestamp by this much. This is useful to        |
-|                                 | make sure the DELETE isn't ignored because Dovecot backends' times are       |
-|                                 | slightly different. Recommendation is to use delete-timestamp=+10s           |
-+---------------------------------+------------------------------------------------------------------------------+
-| storage-objectid-prefix=<prefix>| Use fake object IDs with object storage that internally uses paths. This     |
-|                                 | makes their performance much better, since it allows caching object IDs in   |
-|                                 | Dovecot index files and copying them via dict. This works by storing objects |
-|                                 | in <prefix>/<objectid>. This setting should be used in obox_fs for storing   |
-|                                 | mails under <prefix>. For example storage-objectid-prefix=%u/mails/          |
-|                                 |                                                                              |
-|                                 | .. dovecotadded:: 2.3.2.1                                                    |
-+---------------------------------+------------------------------------------------------------------------------+
-| storage-passthrough-paths=      | Use fake object IDs with object storage that internally uses path. Assume    |
-| full|read-only                  | that object ID is the same as the path. Objects can't be copied within the   |
-|                                 | dict. This setting should be used for obox_index_fs and fts_dovecot_fs,      |
-|                                 | because they don't need to support copying objects.                          |
-|                                 |                                                                              |
-|                                 | * With "full" the object ID is written to dict as an empty value (because    |
-|                                 |   it's not used).                                                            |
-|                                 | * The "read-only" can be used for backwards compatibility so that the path   |
-|                                 |   is still written to the dict as the object ID, even though it's not used   |
-|                                 |   (except potentially by an older Dovecot version).                          |
-|                                 |                                                                              |
-|                                 | .. dovecotadded:: 2.3.2.1                                                    |
-+---------------------------------+------------------------------------------------------------------------------+
-| storage-objectid-migrate        | This is expected to be used with storage-objectid-prefix when adding         |
-|                                 | fs-dictmap for an existing installation. The newly created object IDs have   |
-|                                 | <storage-objectid-prefix>/<object-id> path while the migrated object IDs     |
-|                                 | have <user>/mailboxes/<mailbox-guid>/<oid> path. The newly created object    |
-|                                 | IDs can be detected from the 0x80 bit in the object ID's extra-data.         |
-|                                 | Migrated object IDs can't be copied directly within dict - they'll be first  |
-|                                 | copied to a new object ID using the parent fs.                               |
-|                                 |                                                                              |
-|                                 | .. dovecotadded:: 2.3.2.1                                                    |
-+---------------------------------+------------------------------------------------------------------------------+
-| max-parallel-iter=<n>           | Describes how many parallel dict iterations can be created internally. The   |
-|                                 | default value is 10. Parallel iterations can especially help speed up        |
-|                                 | reading huge folders.                                                        |
-|                                 |                                                                              |
-|                                 | .. dovecotadded:: 2.3.10                                                     |
-|                                 | .. dovecotchanged:: 3.0.0 Increased default to 10. Earlier versions run      |
-|                                 |                     with 1 as default.                                       |
-+---------------------------------+------------------------------------------------------------------------------+
-| no-cleanup-uncertain            | When enabled: If a write to Cassandra fails with uncertainty                 |
-|                                 | (:ref:`dictmap_cassandra_uncertain_writes`) Dovecot does *not* attempt       |
-|                                 | to clean it up.                                                              |
-|                                 |                                                                              |
-|                                 | .. dovecotadded:: 3.0.0                                                      |
-+---------------------------------+------------------------------------------------------------------------------+
+FS-dictmap Settings
+-------------------
+
+.. dovecot_plugin:setting:: fs_dictmap_bucket_cache_path
+   :plugin: obox
+   :values: @string
+   :default: <empty>, :dovecot_plugin:ref:`obox` { %{home}/buckets.cache }
+
+   Required when bucket-size is set. Bucket counters are cached in this file.
+   This path should be located under the obox indexes directory (on the SSD
+   backed cache mount point; e.g. ``%h/buckets.cache``).
+
+
+.. dovecot_plugin:setting:: fs_dictmap_dict_prefix
+   :plugin: obox
+   :values: @string
+
+   Prefix that is added to all dict keys.
+
+
+.. dovecot_plugin:setting:: fs_dictmap_lock_path
+   :plugin: obox
+   :values: @string
+
+   If :dovecot_plugin:ref:`fs_dictmap_refcounting_table` is enabled, use this directory
+   for creating lock files to objects while they're being copied or deleted.
+   This attempts to prevent race conditions where an object copy and delete
+   runs simultaneously and both succeed, but the copied object no longer
+   exists. This can't be fully prevented if different servers do this
+   concurrently. If lazy_expunge is used, this setting isn't really needed,
+   because such race conditions are practically nonexistent. Not using the
+   setting will improve performance by avoiding a Cassandra SELECT when
+   copying mails.
+
+
+.. dovecot_plugin:setting:: fs_dictmap_storage_objectid_prefix
+   :plugin: obox
+   :values: @string
+   :seealso: fs_dictmap_storage_passthrough_paths;obox
+
+   Use fake object IDs with object storage that internally uses paths. This
+   makes their performance much better, since it allows caching object IDs in
+   Dovecot index files and copying them via dict. This works by storing objects
+   in ``<prefix>/<objectid>``. This setting should be used inside
+   :dovecot_plugin:ref:`obox` named filter for storing mails under ``<prefix>``
+   (but not for metacache or fts). For example
+   ``fs_dictmap_storage_objectid_prefix = %u/mails/``
+
+
+.. dovecot_plugin:setting:: fs_dictmap_storage_objectid_migrate
+   :plugin: obox
+   :values: @boolean
+   :default: no
+
+   This is expected to be used with storage-objectid-prefix when adding
+   fs-dictmap for an existing installation. The newly created object IDs have
+   ``<storage-objectid-prefix>/<object-id>`` path while the migrated object IDs
+   have ``<user>/mailboxes/<mailbox-guid>/<oid>`` path. The newly created object
+   IDs can be detected from the 0x80 bit in the object ID's extra-data.
+   Migrated object IDs can't be copied directly within dict - they'll be first
+   copied to a new object ID using the parent fs.
+
+
+.. dovecot_plugin:setting:: fs_dictmap_storage_passthrough_paths
+   :plugin: obox
+   :values: none, full, read-only
+   :default: none
+   :seealso: fs_dictmap_storage_objectid_prefix;obox
+
+   Use fake object IDs with object storage that internally uses path. Assume
+   that object ID is the same as the path. Objects can't be copied within the
+   dict. This setting should be used inside :dovecot_plugin:ref:`metacache` and
+   :dovecot_core:ref:`fts_dovecot_fs` named filters, because they don't need to support
+   copying objects. For mails, use
+   :dovecot_plugin:ref:`fs_dictmap_storage_objectid_prefix` instead.
+
+   * With "full" the object ID is written to dict as an empty value (because
+     it's not used).
+   * The "read-only" can be used for backwards compatibility so that the path
+     is still written to the dict as the object ID, even though it's not used
+     (except potentially by an older Dovecot version).
+
+
+.. dovecot_plugin:setting:: fs_dictmap_delete_timestamp
+   :plugin: obox
+   :values: @time_msecs
+   :default: 10s
+
+   Increase Cassandra's DELETE timestamp by this much. This is useful to
+   make sure the DELETE isn't ignored because Dovecot backends' times are
+   slightly different.
+
+
+.. dovecot_plugin:setting:: fs_dictmap_bucket_size
+   :plugin: obox
+   :values: @uint
+   :default: 0, :dovecot_plugin:ref:`obox` { 10000 }
+
+   Separate email objects into buckets, where each bucket can have a maximum of
+   this many emails. This should be set to 10000 with Cassandra to avoid the
+   partition becoming too large when there are a lot of emails.
+
+
+.. dovecot_plugin:setting:: fs_dictmap_bucket_deleted_days
+   :plugin: obox
+   :values: @uint
+   :default: 0, :dovecot_plugin:ref:`obox` { 11 }
+
+   Track Cassandra's tombstones in ``buckets.cache`` file to avoid creating
+   excessively large buckets when a lot of mails are saved and deleted in a
+   folder. The value should be one day longer than ``gc_grace_seconds`` for the
+   ``user_mailbox_objects`` table. By default this is 10 days, so in that case
+   ``fs_dictmap_bucket_deleted_days = 11`` should be used. When determining
+   whether :dovecot_plugin:ref:`fs_dictmap_bucket_size` is reached and a new one needs to
+   be created, with this setting the tombstones are also taken into account.
+   This tracking is preserved only as long as the ``buckets.cache`` exists.
+
+
+.. dovecot_plugin:setting:: fs_dictmap_nlinks_limit
+   :plugin: obox
+   :values: @uint
+   :default: 0, :dovecot_plugin:ref:`obox` { 3 }
+
+   Defines the maximum number of results returned from a dictionary iteration
+   lookup (i.e. Cassandra CQL query) when checking the number of links to an
+   object. Limiting this may improve performance. Currently Dovecot only cares
+   whether the link count is 0, 1 or "more than 1" so for a bit of extra safety
+   we recommend setting it to 3.
+
+
+.. dovecot_plugin:setting:: fs_dictmap_max_parallel_iter
+   :plugin: obox
+   :values: @uint
+   :default: 10
+   :changed: 3.0.0 Increased default from 1 to 10.
+
+   Describes how many parallel dict iterations can be created internally. The
+   default value is 10. Parallel iterations can especially help speed up
+   reading huge folders.
+
+
+.. dovecot_plugin:setting:: fs_dictmap_refcounting_index
+   :plugin: obox
+   :values: @boolean
+   :seealso: fs_dictmap_refcounting_table;obox
+   :default: no
+
+   Similar to the :dovecot_plugin:ref:`fs_dictmap_refcounting_table` setting, but
+   instead of using a reverse table to track the references, assume that the
+   database has a reverse index set up.
+
+
+.. dovecot_plugin:setting:: fs_dictmap_refcounting_table
+   :plugin: obox
+   :values: @boolean
+   :default: no, :dovecot_plugin:ref:`obox` { yes }
+
+   Enable reference counted objects. Reference counting allows a single mail
+   object to be stored in multiple mailboxes, without the need to create a new
+   copy of the message data in object storage. See
+   :ref:`dictmap_cassandra_refcounting_table`
+
+
+.. dovecot_plugin:setting:: fs_dictmap_diff_table
+   :plugin: obox
+   :values: @boolean
+   :default: no, :dovecot_plugin:ref:`metacache` { yes }
+
+   Store diff & self index bundle objects to a separate table. This is a
+   Cassandra-backend optimization. See :ref:`dictmap_cassandra_diff_table`
+
+
+.. dovecot_plugin:setting:: fs_dictmap_delete_dangling_links
+   :plugin: obox
+   :values: @boolean
+   :default: no
+
+   If an object exists in dict, but not in storage, delete it automatically from
+   dict when it's noticed. This setting isn't safe to use by default, because
+   storage may return "object doesn't exist" errors only temporarily during
+   split brain.
+
+
+.. dovecot_plugin:setting:: fs_dictmap_cleanup_uncertain
+   :plugin: obox
+   :values: @boolean
+   :default: yes
+
+   If a write to Cassandra fails with uncertainty
+   (:ref:`dictmap_cassandra_uncertain_writes`) Dovecot attempts to clean it up.
 
 
 Dict paths
