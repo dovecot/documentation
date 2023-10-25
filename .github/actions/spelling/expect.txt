@@ -44,6 +44,7 @@ authuser
 autocreate
 autocreated
 Autocreation
+autodelete
 autoexpunge
 autoexpunged
 autoexpunging
@@ -77,6 +78,7 @@ blockdev
 bodystructure
 Boehm
 Bokmal
+boollist
 bootup
 BROKENCHAR
 bsdauth
@@ -281,6 +283,7 @@ firstsaved
 flagsmodseq
 flatcurve
 flushall
+foofilename
 foop
 foos
 foreverypart
@@ -530,6 +533,7 @@ lwq
 maclen
 madboa
 mailauth
+MAILBOXDIR
 mailboxdir
 mailboxguid
 mailboxlog
@@ -684,6 +688,7 @@ notls
 notwhat
 nouser
 NOVALGRIND
+novars
 nproc
 nscd
 nsend
@@ -776,6 +781,7 @@ PREREQ
 princ
 printfa
 prioritization
+privkey
 Proactively
 procmail
 procmailrc
@@ -802,6 +808,7 @@ qwerty
 rackdc
 rampup
 randkey
+randomfail
 rawlog
 rchar
 rdineren
@@ -934,6 +941,7 @@ sqlpool
 sqlquota
 sqluser
 ssd
+SSHA
 ssha
 ssldir
 sstable
@@ -950,6 +958,7 @@ strdup
 strescape
 strfuncs
 strlcpy
+strlist
 strocpy
 strp
 subaccounts
