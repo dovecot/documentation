@@ -39,7 +39,7 @@ accessing them.
 
 This decompression uses a temporary file that is written to
 :dovecot_core:ref:`mail_temp_dir`. By using the ``compress`` fs wrapper after ``fscache`` in
-:dovecot_plugin:ref:`obox_fs` line the mails are stored uncompressed in ``fscache``, and reading
+:dovecot_plugin:ref:`obox` line the mails are stored uncompressed in ``fscache``, and reading
 the mails from there doesn't require writing to
 :dovecot_core:ref:`mail_temp_dir`.
 

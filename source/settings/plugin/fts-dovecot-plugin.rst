@@ -51,15 +51,15 @@ Settings
    storage.
 
 
-.. dovecot_plugin:setting:: fts_dovecot_fs
+.. dovecot_plugin:setting_filter:: fts_dovecot
+   :filter: fts_dovecot
+   :setting: fs_driver
    :plugin: fts-dovecot
-   :seealso: @obox_fs;dovecot_plugin, @mail_location;dovecot_core
-   :values: @string
+   :seealso: @obox;dovecot_plugin, @mail_location;dovecot_core
+   :values: @named_filter
 
-   Define the location for the fts cache and indexes path on remote
-   filesystems.
-
-   It must be somewhat synchronized with :dovecot_plugin:ref:`obox_fs` and
+   Named filter for initializing :ref:`FS driver <fs>` for FTS indexes.
+   It must be somewhat synchronized with :dovecot_plugin:ref:`obox` and
    :dovecot_core:ref:`mail_location`.
 
    It is strongly recommended to use :ref:`fscache` to speed up
@@ -76,7 +76,10 @@ Settings
 
      plugin {
        fts = dovecot
-       fts_dovecot_fs = posix:prefix=/var/fts/%u/
+     }
+     fts_dovecot {
+       fs_driver = posix
+       fs_posix_prefix = /var/fts/%u
      }
 
    Example configurations for different object storage backends:
