@@ -27,9 +27,9 @@ Dumpster view).
    }
 
    mail_plugins = $mail_plugins lazy_expunge
+   lazy_expunge_mailbox = EXPUNGED
+   lazy_expunge_only_last_instance = yes
    plugin {
-     lazy_expunge = EXPUNGED
-     lazy_expunge_only_last_instance = yes
      quota_rule = EXPUNGED:ignore
    }
 
