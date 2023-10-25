@@ -54,6 +54,16 @@ Configuration file example for `WSO2 Identity Server
   active_attribute = active
   active_value = true
 
+Configuration file example for `Microsoft Identity Platform <https://learn.microsoft.com/en-us/entra/identity-platform/userinfo>`
+
+.. code-block:: none
+
+  introspection_mode = auth
+  introspection_url = https://graph.microsoft.com/v1.0/me
+  # this can vary on your settings
+  username_attribute = mail
+  tls_ca_cert_file = /etc/ssl/certs/ca-certificates.crt
+
 Proxy
 *****
 
