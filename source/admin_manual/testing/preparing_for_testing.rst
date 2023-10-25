@@ -32,7 +32,7 @@ Increase the maximum user connections per IP
 
 Object Storage
 ^^^^^^^^^^^^^^
-Reducing the fscache value in ``obox_fs`` will result in more load for your storage platform. The fscache / ftscache should always be on ``tmpfs``.  
+Reducing the fscache value in :dovecot_plugin:ref:`obox` will result in more load for your storage platform. The fscache / ftscache should always be on ``tmpfs``.
 
 Troubleshooting
 ^^^^^^^^^^^^^^^

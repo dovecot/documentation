@@ -104,7 +104,7 @@ Dovecot doesn't use metacache for users that were accessed before the backend cr
 Mail Fscache
 ^^^^^^^^^^^^
 
-The mail cache size is specified in the :dovecot_plugin:ref:`obox_fs` setting as the parameter to fscache, which is commonly set to 1-2 GB. See 4.1 fscache for more details how to configure it properly.
+The mail cache size is specified in the :dovecot_plugin:ref:`obox` setting as the parameter to fscache, which is commonly set to 1-2 GB. See :ref:`fscache` for more details how to configure it properly.
 
 If fscache runs out of disk space, most operations won't return user-visible failures (although errors are still logged). Currently the "mail prefetching" can't transparently handle such failures though, so these errors can result in user-visible failures.
 
