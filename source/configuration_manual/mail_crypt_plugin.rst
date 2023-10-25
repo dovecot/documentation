@@ -343,8 +343,8 @@ The fs-crypt is a :ref:`lib-fs wrapper <fs>` that can encrypt and decrypt files.
 It works similarly to the :ref:`fs-compress wrapper <fs-compress>`.
 It can be used to encrypt e.g.:
 
-* FTS index objects (fts_dovecot_fs)
-* External mail attachments (mail_attachment_fs)
+* FTS index objects (:dovecot_plugin:ref:`fts_dovecot`)
+* External mail attachments (:dovecot_core:ref:`mail_attachment`)
 
 Note that fs-crypt and the fs-compress wrapper can be also combined.
 Please make sure that compression is always applied before encryption. See

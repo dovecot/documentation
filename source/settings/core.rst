@@ -2067,21 +2067,22 @@ See :ref:`settings` for list of all setting groups.
    :ref:`Mail user variables <variables-mail_user>` can be used.
 
 
-.. dovecot_core:setting:: mail_attachment_fs
-   :default: sis posix
+.. dovecot_core:setting_filter:: mail_attachment
+   :filter: mail_attachment
+   :setting: fs_driver
    :seealso: @mail_attachment_dir;dovecot_core
-   :values: posix, sis posix, sis-queue posix
+   :values: @named_filter
 
-   Which filesystem type to use for saving attachments.
+   Named filter for initializing :ref:`FS driver <fs>` for external attachments.
 
-   Options:
+   Commonly used options:
 
    ``posix``
 
       No single-instance storage done (this option might simplify the
       filesystem's own de-duplication operations).
 
-   ``sis posix``
+   ``sis``
 
       SIS with immediate byte-by-byte comparison during saving.
 
@@ -2089,11 +2090,13 @@ See :ref:`settings` for list of all setting groups.
         SIS files is disabled. Reading is supported for now, any missing
         SIS attachments are replaced with files filled with spaces.
 
-   ``sis-queue posix``
+   ``sis-queue``
 
       SIS with delayed comparison and de-duplication.
 
-   :ref:`Mail user variables <variables-mail_user>` can be used.
+      .. dovecotchanged:: 2.4.0,3.0.0 SIS is deprecated and writing of
+        SIS files is disabled. Reading is supported for now, any missing
+        SIS attachments are replaced with files filled with spaces.
 
 
 .. dovecot_core:setting:: mail_attachment_hash
