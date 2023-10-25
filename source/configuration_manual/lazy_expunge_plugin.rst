@@ -48,7 +48,7 @@ You probably also want to hide it with an :ref:`ACL <acl>` from the user, if
 recovery is only expected to be an action performed by an admin/operator.
 
 To move to a mailbox, do NOT add a trailing delimiter to the
-:dovecot_plugin:ref:`lazy_expunge` setting.
+:dovecot_plugin:ref:`lazy_expunge_mailbox` setting.
 
 Example configuration:
 
@@ -61,11 +61,11 @@ Example configuration:
     }
   }
 
+  # Move messages to an .EXPUNGED mailbox
+  lazy_expunge_mailbox = .EXPUNGED
+
   mail_plugins = $mail_plugins lazy_expunge acl
   plugin {
-    # Move messages to an .EXPUNGED mailbox
-    lazy_expunge = .EXPUNGED
-
     # Define ACL so that user cannot list the .EXPUNGED mailbox
     acl = vfile:/etc/dovecot/dovecot.acl
 
@@ -81,82 +81,6 @@ Where ``/etc/dovecot/dovecot.acl`` contains:
 
 You could also leave the permissions empty if you don't want to allow clients
 to access it at all.
-
-namespace
-^^^^^^^^^
-
-.. dovecotdeprecated:: 2.3.0
-
-Expunged messages are moved to mailbox(es) within a defined namespace
-
-When a message is expunged from mailbox ``<name>``, it's moved to a mailbox
-``<name>`` in the expunge namespace. When an entire mailbox ``<name>`` is
-deleted, it's moved to this namespace as ``<name>``. If the mailbox already
-exists in the expunge namespace, the contents are merged.
-
-To move to a namespace, you MUST add a trailing delimiter to the
-``lazy_expunge`` argument.  Example: if the namespace delimiter is ``/``,
-and you want to move to the ``.EXPUNGED`` namespace, then the
-:dovecot_plugin:ref:`lazy_expunge` setting should be set to
-``.EXPUNGED/``.
-
-Example configuration:
-
-.. code-block:: none
-
-  # Default namespace
-  namespace {
-    prefix =
-    separator = /
-    inbox = yes
-  }
-
-  # Namespace for lazy_expunge plugin
-  namespace {
-    prefix = .EXPUNGED/
-    hidden = yes
-    list = no
-    separator = /
-    location = maildir:~/Maildir/expunged
-  }
-
-  mail_plugins = $mail_plugins lazy_expunge
-  plugin {
-    # Move expunged messages into the .EXPUNGED namespace
-    lazy_expunge = .EXPUNGED/
-  }
-
-mdbox
-"""""
-
-With `mdbox <dbox_mbox_format>`, use different
-``MAILBOXDIRs`` (so copying between namespaces works quickly within the same
-storage), but otherwise exactly the same paths (``INDEX``, ``control``):
-
-.. code-block:: none
-
-  # Default namespace
-  namespace {
-    prefix =
-    inbox = yes
-    location = mdbox:~/mdbox:INDEX=/var/index/%d/%n
-    separator = /
-  }
-
-  # lazy_expunge namespace(s)
-  namespace {
-    prefix = .EXPUNGED/
-    hidden = yes
-    list = no
-    separator = /
-    subscriptions = no
-
-    location = mdbox:~/mdbox:INDEX=/var/index/%d/%n:MAILBOXDIR=expunged
-
-    # If mailbox_list_index=yes is enabled, it needs a separate index file
-    # (v2.2.28+):
-    #location = mdbox:~/mdbox:INDEX=/var/index/%d/%n:MAILBOXDIR=expunged:LISTINDEX=expunged.list.index
-  }
 
 Copy Only the Last Instance
 ---------------------------
@@ -231,8 +155,8 @@ setting.
 .. code-block:: none
 
    mail_plugins = $mail_plugins lazy_expunge
+  lazy_expunge_mailbox = .EXPUNGED
    plugin {
-     lazy_expunge = .EXPUNGED
      # If Cassandra w/obox is used:
      obox_track_copy_flags = yes
   }
