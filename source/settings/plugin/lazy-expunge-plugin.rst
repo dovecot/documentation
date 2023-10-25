@@ -9,55 +9,28 @@ lazy-expunge plugin
 Settings
 ^^^^^^^^
 
-.. dovecot_plugin:setting:: lazy_expunge
+.. dovecot_plugin:setting:: lazy_expunge_mailbox
    :plugin: lazy-expunge
    :seealso: @lazy_expunge_plugin-storage_locations
    :values: @string
 
-   The mailbox/namespace to move messages to when expunged. This setting MUST
+   The mailbox to move messages to when expunged. This setting MUST
    be defined or else lazy-expunge plugin will not be active.
 
-
-.. dovecot_plugin:setting:: lazy_expunge_exclude
-   :added: 2.3.17
-   :plugin: lazy-expunge
-   :values: @string
-
-   Mailbox name/wildcard to exclude from lazy expunging.
-
-   Use either mailbox names or refer to them using special-use flags (e.g.
-   ``\Trash``).
-
-   To exclude additional mailboxes, add sequential numbers to the end of the
-   plugin name. For example:
+   Specific mailboxes can be excluded by clearing this setting for those
+   mailboxes or namespaces, e.g.:
 
    .. code-block:: none
 
-     lazy_expunge_exclude = \Drafts
-     lazy_expunge_exclude2 = External Accounts/*
-
-   .. dovecotchanged:: 2.4.0,3.0.0 The  ``lazy_expunge_exclude`` setting
-      matches also the namespace prefix in folder names. Previously the folder
-      name was matched only without the namespace prefix.
-
-      Namespaces match as follows:
-
-      - The full folder name, including the namespace prefix.
-
-        For example ``lazy_expunge_exclude = Public/incoming``
-        would match the ``incoming`` folder in the ``Public/`` namespace.
-
-      - For ``inbox=yes`` namespace, the folder name without the namespace prefix.
-
-        For example ``lazy_expunge_exclude = incoming`` would match the ``incoming``
-        folder in the INBOX namespace, but not in the ``Public/`` namespace.
-
-      - The folder names support ``*`` and ``?`` wildcards.
-
-      Namespace prefixes must NOT be specified and will not match for:
-
-      - the ``INBOX`` folder
-      - special-use flags (e.g. ``\Trash``)
+      lazy_expunge_mailbox = .EXPUNGED
+      namespace inbox {
+	mailbox Drafts {
+	  lazy_expunge_mailbox =
+	}
+      }
+      namespace "External accounts" {
+	lazy_expunge_mailbox =
+      }
 
 .. dovecot_plugin:setting:: lazy_expunge_only_last_instance
    :default: no
