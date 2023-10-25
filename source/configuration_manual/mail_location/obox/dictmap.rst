@@ -96,9 +96,7 @@ minutes should be a rather safe minimum.
 .. code-block:: none
 
    mail_plugins = $mail_plugins lazy_expunge
-   plugin {
-     lazy_expunge = DUMPSTER
-   }
+   lazy_expunge_mailbox = DUMPSTER
    namespace inbox {
      mailbox DUMPSTER {
        autoexpunge = 7 days
