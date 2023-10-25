@@ -246,6 +246,11 @@ class DovecotSettingDomain(Domain):
         self.data["entry"][signature] = (self.env.docname, anchor, self.label)
 
 
+class DovecotCoreSettingFilterDirective(DovecotSettingDirective):
+    def dovecot_anchor(self, sig):
+        return "{}-{}".format(self.options.get("filter").strip(), sig)
+
+
 class DovecotPluginSettingDirective(DovecotSettingDirective):
     def dovecot_anchor(self, sig):
         return "{}-{}".format(self.options.get("plugin").strip(), sig)
@@ -619,6 +624,7 @@ class DovecotCoreDomain(DovecotSettingDomain):
     directives = {
         "event": DovecotEventDirective,
         "setting": DovecotCoreSettingDirective,
+        "setting_filter": DovecotCoreSettingFilterDirective,
         "setting_link": DovecotSettingLinkDirective,
     }
     indices = {DovecotCoreSettingIndex}
