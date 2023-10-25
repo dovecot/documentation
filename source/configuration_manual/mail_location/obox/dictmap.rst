@@ -211,7 +211,7 @@ FS-dictmap Settings
    Use fake object IDs with object storage that internally uses path. Assume
    that object ID is the same as the path. Objects can't be copied within the
    dict. This setting should be used inside :dovecot_plugin:ref:`metacache` and
-   :dovecot_core:ref:`fts_dovecot_fs` named filters, because they don't need to support
+   :dovecot_plugin:ref:`fts_dovecot` named filters, because they don't need to support
    copying objects. For mails, use
    :dovecot_plugin:ref:`fs_dictmap_storage_objectid_prefix` instead.
 

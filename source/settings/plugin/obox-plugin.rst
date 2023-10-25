@@ -142,24 +142,24 @@ Settings
 .. dovecotadded:: 2.4.0,3.0.0
 
 
-.. dovecot_plugin:setting:: obox_fs
+.. dovecot_plugin:setting_filter:: obox
+   :filter: obox
    :plugin: obox
-   :todo: Document this!
-   :values: @string
+   :setting: fs_driver
+   :values: @named_filter
+   :seealso: @metacache;dovecot_plugin
 
-   This setting handles the basic Object Storage configuration.
+   Named filter for initializing :ref:`FS driver <fs>` for obox mails.
 
 
-.. dovecot_plugin:setting:: obox_index_fs
-   :default: @obox_fs;dovecot_plugin
+.. dovecot_plugin:setting_filter:: metacache
+   :filter: metacache
    :plugin: obox
-   :todo: Document this!
-   :values: @string
+   :setting: fs_driver
+   :values: @named_filter
+   :seealso: @obox;dovecot_plugin
 
-   This setting handles the object storage configuration for index bundles.
-
-   .. dovecotchanged:: 2.3.18 Fixed to work properly with fs-posix driver.
-                       Earlier versions don't work correctly in all situations.
+   Named filter for initializing :ref:`FS driver <fs>` for obox index bundles.
 
 
 .. dovecot_plugin:setting:: obox_max_parallel_copies
