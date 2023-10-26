@@ -143,6 +143,13 @@ Connection Settings
      .. dovecotchanged:: 2.4.0,3.0.0 Earlier versions had a "rfc822.size"
                          feature, which is now enabled by default.
 
+   ``no-metadata``
+
+     Disable the detection of the ``METADATA`` capability from the remote server.
+     the client will receive a ``NO [UNAVAILABLE]`` response for any request
+     that requires access to metadata on the remote server (the same happens if
+     the server does not announce the capability at all).
+
    ``no-search``
 
      Disable searching messages using the IMAP ``SEARCH`` command. Instead, all
