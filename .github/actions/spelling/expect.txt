@@ -239,6 +239,7 @@ effinger
 egid
 EID
 Eing
+eip
 ekh
 emacs
 emaillookup
@@ -868,6 +869,7 @@ seqno
 SERVERBUG
 servermetadata
 SETACTIVE
+setcap
 setcred
 setra
 setspn

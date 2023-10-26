@@ -48,6 +48,30 @@ example configuration file exists in
 ``~/dovecot/share/doc/dovecot/example-config/`` and needs to be copied
 to ``~/dovecot/etc/dovecot/``.
 
+Add capabilities
+----------------
+
+Modern linux systems support capabilities which allows you to permit
+selective rights to processes. This allows you to run dovecot rootless
+without losing chroot and privileged ports.
+
+Use following commands to enable this
+
+.. code:: bash
+
+  setcap cap_net_bind_service+ep ~/dovecot/sbin/dovecot
+  setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/script-login
+  setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/imap-urlauth-login
+  setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/submission-login
+  setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/managesieve-login
+  setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/pop3-login
+  setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/imap-login
+  setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/lmtp
+  setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/anvil
+
+  # if you have installed managesieve
+  setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/managesieve-login
+
 Configuration
 -------------
 
@@ -61,7 +85,8 @@ The important settings to change for rootless installation are:
       default_login_user = user
       default_internal_group = group
 
--  Remove default chrooting from all services:
+-  Remove default chrooting from all services, this is optional if you want
+   to use Linux capabilities instead.
 
    ::
 
@@ -75,7 +100,8 @@ The important settings to change for rootless installation are:
         chroot = 
       }
 
--  Change listener ports:
+-  Change listener ports, this is optional if you want to use Linux
+   capabilities instead
 
    ::
 
