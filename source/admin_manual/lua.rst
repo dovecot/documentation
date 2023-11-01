@@ -118,20 +118,20 @@ Lua API
    :param int connect_backoff_max_time_msecs: Maximum backoff time. (Default: 60 000 msec)
    :param int connect_timeout_msecs: Max time to wait for connect() (and SSL handshake) to finish before retrying (Default: request_timeout_msecs)
    :param event event_parent: Parent event to use.
-   :param int max_attempts: Maximum number of attempts for a request (Default: until absolute timeout)
+   :param int max_attempts: Maximum number of attempts for a request (Default: 1)
    :param int max_auto_retry_delay_secs: Maximum acceptable delay in seconds for automatically retrying/redirecting requests.
        If a server sends a response with a Retry-After header that causes a delay longer than this, the request is not automatically retried and the response is returned.
    :param int max_connect_attempts: Maximum number of connection attempts to a host before all associated requests fail.
        If > 1, the maximum will be enforced across all IPs for that host, meaning that IPs may be tried more than once eventually if the number
        of IPs is smaller than the specified maximum attempts. If the number of IPs is higher than the maximum attempts, not all IPs are tried. If <= 1, all
        IPs are tried at most once.
-   :param int max_idle_time_msecs: Maximum time a connection will idle.
+   :param int max_idle_time_msecs: Maximum time a connection will idle before disconnecting.
        If parallel connections are idle, the duplicates will end earlier based on how many idle connections exist
        to that same service
    :param int max_redirects: Maximum number of redirects for a request (Default: 0; redirects refused)
    :param string proxy_url: Proxy URL to use, can include username and password.
-   :param int request_absolute_timeout_msecs: Max total time to wait for HTTP request to finish. (Default: 0; no timeout)
-   :param int request_timeout_msecs: Max time to wait for connect() (and SSL handshake) to finish before retrying (Default: 60 000 msec).
+   :param int request_absolute_timeout_msecs: Max total time to wait for HTTP request to finish, including retries and everything else. (Default: 0; no timeout)
+   :param int request_timeout_msecs: Max time to wait for HTTP response before retrying (Default: 60 000 msec).
    :param int soft_connect_timeout_msecs: Time to wait for connect() (and SSL handshake) to finish for the first connection before trying the next IP in parallel (Default: 0; wait until current connection attempt finishes)
    :param string rawlog_dir: Directory for writing raw log data for debugging purposes. Must be writable by the process creating this log.
    :param string user_agent: User-Agent: header. (Default: none)
