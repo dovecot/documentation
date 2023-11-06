@@ -15,7 +15,7 @@ jobs:
       run: |
         mkdir build
         chmod 0777 build
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: dovecot/dovecot-sphinx-action@0.4
     - name: Prepare tarballs
       run: |
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/release-2.3'
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: ammaraskar/sphinx-action@0.4
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
