@@ -1,6 +1,5 @@
 aad
 ACCESSKEY
-ACCOUNTNAME
 achara
 actimeo
 addflag
@@ -8,9 +7,7 @@ addhdr
 addhdrvar
 ADDRESULT
 ADH
-adminpass
 admins
-adminuser
 AEAD
 Aildir
 aliasempty
@@ -42,7 +39,6 @@ Atilika
 atimes
 atmail
 ATo
-AUD
 auid
 authpriv
 authtok
@@ -135,7 +131,6 @@ coi
 commitlog
 Compuserve
 CONDSTORE
-CONTAINERNAME
 copybox
 COPYUID
 coretest
@@ -213,10 +208,8 @@ dov
 doveadm
 doveauth
 doveconf
-dovecotadded
 dovecotdirector
 dovecotpw
-dovecotremoved
 dovelda
 dovemail
 dovemon
@@ -322,7 +315,6 @@ getmail
 getmailbird
 GETSCRIPT
 Globalsign
-gitlab
 Gluster
 gmatch
 gno
@@ -353,8 +345,6 @@ hordeauth
 hostaddr
 hostchange
 Hotspot
-hostdomain
-hostip
 Hotspot
 howto
 howtoforge
@@ -416,8 +406,6 @@ JMK
 johndoh
 joulu
 junkflag
-jvm
-kadmin
 kde
 kdump
 Kek
@@ -584,7 +572,6 @@ missingok
 mkcert
 mkhomedir
 mmap
-mmaped
 mmencode
 MMIME
 modseq
@@ -626,9 +613,7 @@ Newsgroups
 newtok
 nexthop
 NFKD
-NEXTUID
 NFKD
-nfsmount
 ngrams
 ninf
 NLEVEL
@@ -805,9 +790,6 @@ rescanned
 rescanning
 resolv
 resyncing
-resyncronized
-RFCs
-rhel
 RHu
 RLIMIT
 rmail
@@ -1017,7 +999,6 @@ unaccessed
 unaliased
 unauth
 uncoment
-uncompressing
 unconfigured
 und
 unhibernate
