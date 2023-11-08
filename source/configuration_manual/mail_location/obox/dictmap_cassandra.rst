@@ -76,12 +76,11 @@ dovecot-dict-cql.conf.ext:
    # page_size=500 \
    
    # DEBUG: Set log level
-   # log_level=2 \
-   
+   # log_level=debug \
    
    # DEBUG: Output all Cassandra queries to log at DEBUG level
    # Existence of setting = yes; absence of setting = no
-   # debug_queries \
+   # debug_queries=yes \
    
    # DEBUG: Output internal metrics in JSON format to this file.
    # Format of data can be found at the end of this document.
