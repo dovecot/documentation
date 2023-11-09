@@ -341,9 +341,9 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: auth_realms
-   :values: @string
+   :values: @boollist
 
-   This setting supplies a space-separated list of realms for those SASL
+   This setting supplies a list of realms for those SASL
    authentication mechanisms that need them. Realms are an integral part of
    Digest-MD5.
 
