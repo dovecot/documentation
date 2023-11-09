@@ -1033,10 +1033,9 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: imap_client_workarounds
    :todo: Indicate imap setting
-   :values: @string
+   :values: @boollist
 
-   Workarounds for various IMAP client bugs can be enabled here. The list is
-   space-separated.
+   Workarounds for various IMAP client bugs can be enabled here.
 
    The following values are currently supported:
 
