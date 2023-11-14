@@ -261,13 +261,14 @@ Supported Options
 .. dovecot_core:setting:: version
    :default: !Depends on driver version.
    :domain: sql-cassandra
-   :values: v3, v4, v5
+   :values: 3, 4, 5
 
-   Cassandra driver version to use. It is good idea to specify this to avoid
-   warnings about version handshake.
+   Cassandra protocol version to use. It is good idea to specify this to avoid
+   warnings about version handshake if the driver supports a higher protocol
+   version than the server.
 
    .. note:: If you want to use server-side prepared statements, you need to
-             use at least ``v3``.
+             use at least ``4``.
 
 
 .. dovecot_core:setting:: warn_timeout
