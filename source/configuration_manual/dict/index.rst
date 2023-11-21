@@ -362,7 +362,7 @@ For example when using dict for a per-user quota value the map looks like:
     '$value') ON DUPLICATE KEY UPDATE quota_bytes='$value'``
 
 You can also access multiple SQL fields. For example
-:dovecot_plugin:ref:`acl_shared_dict` can contain:
+:dovecot_plugin:ref:`acl_sharing_map` can contain:
 
 .. code-block:: none
 
@@ -377,7 +377,7 @@ You can also access multiple SQL fields. For example
     }
   }
 
-* The ``acl_shared_dict`` always uses ``1`` as the value, so here the
+* The :dovecot_plugin:ref:`acl_sharing_map` always uses ``1`` as the value, so here the
   ``value_field`` is called ``dummy``.
 * The SQL ``from_user`` and ``to_user`` fields are the interesting ones.
   Typically the extra fields would be part of the primary key.

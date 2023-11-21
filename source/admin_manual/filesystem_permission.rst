@@ -175,7 +175,7 @@ set its setgid bit (``chmod g+s``).
 Dictionary files
 ----------------
 
-Created dictionary files (e.g. ``acl_shared_dict = file:...``) also base
+Created dictionary files (e.g. ``acl_sharing_map``) also base
 their initial permissions on parent directory's permissions. After the
 initial creation, the permissions are permanently preserved. So if you
 want to use different permissions, just chown/chmod the file.

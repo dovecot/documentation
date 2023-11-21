@@ -53,21 +53,45 @@ Sample Configuration:
     mail_plugins = $mail_plugins imap_acl
   }
 
-  plugin {
-    acl = vfile
+  acl_driver = vfile
+  # If enabled, don't try to find dovecot-acl files from mailbox directories.
+  # This reduces unnecessary disk I/O when only global ACLs are used.
+  # (v2.2.31+)
+  acl_globals_only = yes
 
-    # If enabled, don't try to find dovecot-acl files from mailbox directories.
-    # This reduces unnecessary disk I/O when only global ACLs are used.
-    # (v2.2.31+)
-    #acl_globals_only = yes
+  namespace inbox {
+    inbox = yes
+    mailbox Foo {
+       acl owner {
+         rights = lr
+       }
+    }
 
-    # Namespace prefix to ignore. Use counter to ignore multiple, e.g. acl_ignore_namespace2
-    #acl_ignore_namespace =
-
-    # Dict for mapping which users have shared mailboxes to each other.
-    #acl_shared_dict =
+    acl user=admin {
+      rights = lwristepai
+    }
+    ## Set this to yes to ignore ACLs for this namespace
+    #acl_ignore=yes
   }
 
+  ## setting ACLs here will affect all shared mailboxes
+  namespace shared {
+     mailbox Public {
+        acl anyone {
+          rights = lr
+        }
+     }
+  }
+
+  # Dict for mapping which users have shared mailboxes to each other.
+  #acl_sharing_map {
+  #  dict_driver = file
+  #  dict_file_path = /var/lib/dovecot/dovecot-acl.db
+  #}
+
+  # ACL username
+  # defaults to master_user, but if it expands to empty, will use current user.
+  #acl_username = %{master_user}
 
 Master users
 ============
@@ -140,6 +164,8 @@ Global ACL file
 
 .. dovecotadded:: 2.2.11
 
+.. note:: This setting is deprecated since v2.4.0/v3.0.0 in favor of configuration-file embedded settings.
+
 Global ACL file path is specified as a parameter to vfile backend in :dovecot_plugin:ref:`acl <acl>`
 setting (``/etc/dovecot/dovecot-acl`` in the above example). The file contains
 otherwise the same data as regular per-mailbox ``dovecot-acl`` files, except
@@ -188,6 +214,8 @@ you can instead create a .DEFAULT file for ``foo``:
 
 * foo: ``/etc/dovecot/acls/foo/.DEFAULT``
 * foo/bar: ``/etc/dovecot/acls/foo/bar``
+
+.. _acl-file_format:
 
 ACL File Format
 ===============
@@ -308,10 +336,11 @@ Placing the ACL file makes the ACL effective, but Dovecot doesn't take care of
 the user to shared mailboxes mapping out of the box, and as a result, it won't
 publish shared mailboxes to clients if this is not set up. You have to
 configure this manually by defining an appropriate :ref:`dictionary <dict>` to
-store the map using :dovecot_plugin:ref:`acl_shared_dict setting <acl_shared_dict>`.
+store the map using :dovecot_plugin:ref:`acl_sharing_map setting <acl_sharing_map>`.
 
 .. code::
 
-   plugin {
-      acl_shared_dict = file:/var/lib/dovecot/dovecot-acl.db
+   acl_sharing_map {
+     dict_driver = file
+     dict_file_path = /var/lib/dovecot/dovecot-acl.db
    }
