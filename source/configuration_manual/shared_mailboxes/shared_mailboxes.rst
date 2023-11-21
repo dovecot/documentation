@@ -39,9 +39,8 @@ To enable mailbox sharing, you'll need to create a shared namespace. See
    protocol imap {
      mail_plugins = $mail_plugins imap_acl
    }
-   plugin {
-     acl = vfile
-   }
+
+   acl = vfile
 
 This creates a shared/ namespace under which each user's mailboxes are.
 If you have multiple domains and allow sharing between them, you might
@@ -105,15 +104,16 @@ rebuild this dictionary, so make sure it doesn't get lost. If it does,
 each user having shared mailboxes must use the IMAP SETACL command (see
 below) to get the dictionary updated for themselves.
 
-See :dovecot_plugin:ref:`acl_shared_dict` for plugin setting information.
+See :dovecot_plugin:ref:`acl_sharing_map` for plugin setting information.
 
 You could use any dictionary backend, including SQL or Cassandra, but a
 simple flat file should work pretty well too:
 
 ::
 
-   plugin {
-     acl_shared_dict = file:/var/lib/dovecot/db/shared-mailboxes.db
+   acl_sharing_map {
+     dict_driver = file
+     dict_file_path = file:/var/lib/dovecot/db/shared-mailboxes.db
    }
 
 The IMAP processes must be able to write to the ``db/`` directory. If
@@ -127,9 +127,9 @@ each domain:
 
 ::
 
-   plugin {
-     # assumes mailboxes are in /var/mail/%d/%n:
-     acl_shared_dict = file:/var/mail/%d/shared-mailboxes.db
+   acl_sharing_map {
+     dict_driver = file
+     dict_file_path = file:/var/mail/%d/shared-mailboxes.db
    }
 
 Using SQL dictionary
@@ -139,8 +139,9 @@ Using SQL dictionary
 
 ::
 
-   plugin {
-     acl_shared_dict = proxy::acl
+   acl_sharing_map {
+     dict_driver = proxy
+     dict_proxy_name = acl
    }
 
    dict {

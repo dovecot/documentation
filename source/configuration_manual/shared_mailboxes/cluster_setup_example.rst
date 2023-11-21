@@ -30,7 +30,7 @@ Dovecot Proxy configuration snippet
 Dovecot Backend configuration snippet
 --------------------------------------
 
-.. code-block::
+.. code-block:: none
 
         mail_plugins = $mail_plugins acl
 
@@ -48,8 +48,9 @@ Dovecot Backend configuration snippet
           list = children
           subscriptions = no
           mail_driver = imapc
-	  mail_path = ~/shared/%{owner_user}
-	  mail_index_private_path = ~/shared-pvt/%{owner_user}
+          mail_path = ~/shared/%{owner_user}
+          mail_index_private_path = ~/shared-pvt/%{owner_user}
+          acl_ignore = yes
         }
 
         namespace inbox {
@@ -74,10 +75,10 @@ Dovecot Backend configuration snippet
           acl-mysql = mysql:/etc/dovecot/dovecot-acl-dict-sql.conf.ext
         }
 
-        plugin {
-          acl = vfile
-          acl_ignore_namespace = shared/*
-          acl_shared_dict = proxy:dict:acl-mysql
+        acl_driver = vfile
+        acl_sharing_map {
+           dict_driver = proxy
+           dict_proxy_name = acl-mysql
         }
 
         protocol imap {
