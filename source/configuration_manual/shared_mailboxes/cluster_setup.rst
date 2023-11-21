@@ -107,11 +107,15 @@ accordingly:
 
     mail_plugins = $mail_plugins acl
 
-    plugin {
-      acl = vfile
-      # Added in 2.3.15
-      acl_ignore_namespace = shared/*
-      acl_shared_dict = $your_prefered_shared_dict
+    acl_driver = vfile
+    acl_sharing_map {
+      <your preferred sharing dict>
+    }
+
+    namespace shared {
+       prefix = shared/
+       separator = /
+       acl_ignore = yes
     }
 
     # In order to be able to issue ACL commands over imap, imap_acl must be loaded
@@ -121,7 +125,7 @@ accordingly:
 
 
 The :ref:`acl <acl>` plugin must be told to ignore the shared namespace and all
-its children using the :dovecot_plugin:ref:`acl_ignore_namespace` setting.
+its children using the :dovecot_plugin:ref:`acl_ignore` setting.
 
 The shared dictionary needs to be accessible from all the backends. The
 possibilities for it are:
