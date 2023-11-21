@@ -187,9 +187,7 @@ See :ref:`ACL <acl>` for more information about ACLs.
      list = children
    }
 
-   plugin {
-     acl = vfile
-   }
+   acl_driver = vfile
 
 It's important that the namespace type is "public" regardless of whether
 you set the namespace prefix to "shared." or something else.
@@ -198,5 +196,5 @@ After this you have to place ``dovecot-acl`` files in every
 mailbox/folder below ``/var/mail/public`` with rights for that folder
 (e.g. ``user=someone lr``).
 
-The :dovecot_plugin:ref:`acl_shared_dict` setting is not relevant for
+The :dovecot_plugin:ref:`acl_sharing_map` setting is not relevant for
 public mailboxes (only for shared).

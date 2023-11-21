@@ -64,8 +64,7 @@ Removed features and their replacements
 | Weak password schemes                                      | Weak password schemes are disabled by default, you need to use                           |
 |                                                            | :dovecot_core:ref:`auth_allow_weak_schemes` to enable them.                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| Global ACL directory                                       | Use :ref:`acl-global_acl_file` instead.                                                  |
-|                                                            | Check `Use Global ACL Files instead of Global ACL Directories`_ for details on migration.|
+| Global ACL directory                                       | `Use inline ACLs instead of Global ACL Directories`.                                     |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``ssl-parameters.dat``                                     | This file is no longer converted automatically by config process, you need to set        |
 |                                                            | :dovecot_core:ref:`ssl_dh` setting if you need non-ECC Diffie-Hellman.                   |
@@ -228,17 +227,8 @@ Doveadm mailbox commands
 ``USER `` environment variable is no longer supported. All mail commands require providing ``-u``, ``-F`` or ``-A`` parameter.
 This will always be subject to user database lookup and requires access to auth userdb socket.
 
-Use Global ACL Files instead of Global ACL Directories
-------------------------------------------------------
-
-To migrate the ACL directories into their respective files you have to do the
-following:
-
-#. create a new consolidated :ref:`acl-global_acl_file`,
-#. for each subdirectory in the currently configured ACL directory add a line
-   starting with the mailbox name followed by the appropriate content,
-#. change the vfile parameter to the new ACL file, and finally
-#. remove the old ACL directory parent.
+Use inline ACLs instead of Global ACL files or directories
+-----------------------------------------------------------
 
 Example
 ^^^^^^^
@@ -279,24 +269,50 @@ With the following starting configuration:
 
    user=kim lrw
 
-You have to create the new ACL file:
+You have to create the new ACLs to config
 
 .. code-block:: none
 
-   # /etc/dovecot/dovecot-acl
-
-   # previously from /etc/dovecot/acls/INBOX
-   INBOX owner lrwstipekxa
-   INBOX anyone lr
-   INBOX user=kim l
-   # previously from /etc/dovecot/acls/foo/.DEFAULT
-   INBOX/foo user=timo lr
-   INBOX/foo user=kim lrw
-   # previously from /etc/dovecot/acls/foo/bar
-   INBOX/foo/bar user=kim lrw
+   namespace inbox {
+      # previously from /etc/dovecot/acls/INBOX
+      mailbox INBOX {
+         acl owner {
+            rights = lrwstipekxa
+         }
+         acl anyone {
+            rights = lr
+         }
+         acl user=kim {
+            rights = l
+         }
+      }
+      # previously from /etc/dovecot/acls/foo/.DEFAULT
+      mailbox INBOX/foo {
+         acl user=timo {
+            rights = lr
+         }
+         acl user=kim {
+            rights = lrw
+         }
+      }
+      # previously from /etc/dovecot/acls/foo/bar
+      mailbox INBOX/foo/bar {
+         acl user=kim {
+            rights = lrw
+         }
+      }
+   }
 
 Note that at this point you could simplify specific rules, e.g. use mailbox
-name wildcards to replace lines for a specific user: ``INBOX/* user=kim lrw``.
+name wildcards to replace lines for a specific user:
+
+.. code-block:: none
+
+   mailbox INBOX/* {
+      acl user=kim {
+        rights = lrw
+      }
+   }
 
 And re-configure the ACL plugin:
 
@@ -304,9 +320,8 @@ And re-configure the ACL plugin:
 
    # dovecot.conf
 
-   plugin {
-     acl = vfile:/etc/dovecot/dovecot-acl
-   }
+   acl_driver = vfile
+   acl_globals_only = yes
 
 Afterwards you can remove the old global ACL directory parent::
 
