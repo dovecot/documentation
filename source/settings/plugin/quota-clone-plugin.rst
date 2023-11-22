@@ -11,12 +11,15 @@ quota-clone plugin
 Settings
 ========
 
-.. dovecot_plugin:setting:: quota_clone_dict
+.. dovecot_plugin:setting_filter:: quota_clone
+   :filter: quota_clone
    :plugin: quota-clone
-   :values: @string
+   :setting: dict_driver
+   :values: @named_filter
+   :added: 2.4.0,3.0.0
 
-   The dictionary to update with quota clone information. This must be set for
-   the plugin to be active.
+   Named filter for initializing dictionary used to update with quota clone
+   information.
 
    See :ref:`dict` for dictionary configuration.
 
@@ -24,9 +27,11 @@ Settings
 
    .. code-block:: none
 
-     plugin {
-       quota_clone_dict = redis:host=127.0.0.1:port=6379
-     }
+      dict_redis_host = 127.0.0.1
+      dict_redis_port = 6379
+      quota_clone {
+        dict_driver = redis
+      }
 
 
 .. dovecot_plugin:setting:: quota_clone_unset
