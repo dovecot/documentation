@@ -43,7 +43,7 @@ After end user has ended contract with the service provider providing mailbox se
      which wasn't cleaned. These metacaches should become cleaned when disk
      space pressure pushes them out.
    * Any other dict data that is not deleted automatically while folders or
-     mails are deleted (e.g. :dovecot_plugin:ref:`quota_clone_dict`,
+     mails are deleted (e.g. :dovecot_plugin:ref:`quota_clone`,
      :dovecot_plugin:ref:`last_login_dict`)
 
 #. After the user's data is deleted the user can be removed from userdb.
