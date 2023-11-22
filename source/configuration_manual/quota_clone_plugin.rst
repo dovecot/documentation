@@ -43,9 +43,15 @@ Example
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins quota quota_clone
-  plugin {
-    quota_clone_dict = redis:host=127.0.0.1:port=6379
+  mail_plugins {
+    quota = yes
+    quota_clone = yes
+  }
+
+  dict_redis_host = 127.0.0.1
+  dict_redis_port = 6379
+  quota_clone {
+    dict_driver = redis
   }
 
 
@@ -57,6 +63,7 @@ More complex example using SQL:
     mysql = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
   }
 
-  plugin {
-     quota_clone_dict = proxy::mysql
+  quota_clone {
+    dict_driver = proxy
+    dict_proxy_name = mysql
   }
