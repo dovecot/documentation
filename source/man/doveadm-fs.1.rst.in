@@ -46,6 +46,11 @@ fs delete
 
 Delete all data associated with the path provided.
 
+**-R**
+  Recursively delete files.
+**-n** *count*
+  Maximum number of parallel operations to perform.
+
 fs get
 ------
 
@@ -74,6 +79,12 @@ fs put
 *path*
 
 Store data at the path provided.
+
+**-h** *hash*
+  Save provided hash as content hash. Must be either MD5 or SHA256 in hexdigits.
+**-m** *key=value*
+  Assign a value to a metadata. Can be provided as many times as needed. Requires
+  either metawrap as driver or metadata capable FS-driver.
 
 fs stat
 -------
