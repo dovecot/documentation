@@ -281,6 +281,22 @@ You must convert it to pkey format with:
 
 Then newkey.pem can be used with mail-crypt-plugin.
 
+Using Edwards curve DSA (EdDSA)
+-------------------------------
+
+.. dovecotadded:: 2.4.0,3.0.0
+
+You can use EdSDA keys by using algorithm X25519 or X448 (case sensitive).
+
+To generate a suitable keypair, use
+
+.. code-block:: none
+
+  openssl genpkey -algorithm X448 -out edprivkey.pem
+  openssl pkey -in private.pem -pubout -out edpubkey.pem
+
+Note that ED25519 keys are not suitable for X25519.
+
 Base64-encoded Keys
 ===================
 
