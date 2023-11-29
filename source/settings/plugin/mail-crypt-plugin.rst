@@ -43,6 +43,7 @@ Settings
    folder-specific key pair is generated. The latter is encrypted by means of
    the user's key pair.
 
+   For EdDSA, you need to use X448 or X25519, case sensitive.
 
 .. dovecot_plugin:setting:: mail_crypt_global_private_key
    :plugin: mail-crypt
