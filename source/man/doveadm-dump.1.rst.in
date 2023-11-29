@@ -12,7 +12,7 @@ doveadm-dump - Dump the content of Dovecot's binary mailbox index/log
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **dump** [**-t** *type*] *path*
+**doveadm** [**-Dv**] **dump** [**-t** *type*] *path* [ *type-specific args* ]
 
 DESCRIPTION
 ===========
@@ -52,8 +52,24 @@ Command specific *options*:
    **dcrypt-file**
       Dump metadata of a dcrypt encrypted file.
 
+      *type-specific args*
+
+      **private_key**\ =\ */path*
+         to decrypt file contents.
+      **password**\ =\ *secret*
+         to decrypt private key.
+
    **dcrypt-key**
       Dump metadata of a dcrypt key.
+
+      *type-specific args*
+
+      **private_key**\ =\ */path*
+         to decrypt file contents.
+      **password**\ =\ *secret*
+         to decrypt private key.
+      **dump**\ =\ *pem|dovecot|jwk*
+         to specify format to dump in.
 
    **index**
       => dovecot.index, dovecot.map.index
