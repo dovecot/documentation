@@ -23,6 +23,9 @@ The parameters are:
 | See :ref:`http_storages` for common parameters                                             |
 +---------------------------------+----------------------------------------------------------+
 
+.. Note:: Please note that the Dovecot format for configuring a Azure URI is
+          different from what is used in Microsoft documentation. This is
+          especially relevant for the position of ACCOUNTNAME and CONTAINERNAME.
 
 Debugging
 ---------
