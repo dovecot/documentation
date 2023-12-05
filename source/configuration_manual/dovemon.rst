@@ -117,11 +117,11 @@ Test accounts file: ``/etc/dovecot/dovemon.testaccounts.yml``
 .. code-block:: none
 
    10.2.2.75:
-   username: user0001
-   password: tosivaikeasalasana
+     username: user0001
+     password: tosivaikeasalasana
    10.2.2.76:
-   username: user0002
-   password: tosivaikeasalasana
+     username: user0002
+     password: tosivaikeasalasana
 
 
 For master user authentication, the ``auth`` setting in ``dovemon.yml`` should
@@ -130,9 +130,9 @@ be set to ``sasl``. Test accounts file:
 .. code-block:: none
 
    10.2.2.75:
-   username: user0001
-   masteruser: masteruser
-   password: masterpassword
+     username: user0001
+     masteruser: masteruser
+     password: masterpassword
 
 
 This file allows configuring a separate test account for each backend. The
