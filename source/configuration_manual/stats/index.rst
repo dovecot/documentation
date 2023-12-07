@@ -12,55 +12,100 @@ Dovecot supports gathering statistics from events (see :ref:`event_design`).
 Currently there are no statistics logged by default, and therefore they must
 be explicitly added using the ``metric`` configuration blocks.
 
-The event filter settings are the only required settings in a metric block.
-The filter specifies which events should be used when calculating the
+The event ``filter`` setting is the only required setting in a metric block.
+It specifies which events should be used when calculating the
 statistics for a given metric block.  Event filtering is described in detail
 in :ref:`event_filter_metric`.
 
-In addition to the event filter, a list of fields that are included in the
-metrics can be specified using the ``fields`` setting.  All events have a
-default "duration" field that doesn't need to be listed explicitly.
+Note that Dovecot also has many unnamed events. These aren't generally useful
+for statistics, but in some situations they may become visible in statistics.
+To avoid surprises, it's a good idea to always specify ``event=name`` in the
+filter setting. You can also use ``event=*`` to match all named events.
 
-.. dovecotchanged:: 2.3.21 All fields listed in ``fields`` are exported to OpenMetrics as well.
+Settings
+========
 
-Finally, the ``group_by`` metric setting can be used to dynamically generate
-sub-metrics based on fields' values.
+.. dovecot_core:setting:: metric
+   :values: @named_list_filter
 
-In general, the metric block has the form:
+   Creates a new metric. The filter name refers to the
+   :dovecot_core:ref:`metric_name` setting.
 
-.. code-block:: none
 
-   metric name {
-     ...filter related settings...
+.. dovecot_core:setting:: metric_name
+   :values: @string
 
-     # List of fields in event parameters that are included in the metrics.
-     fields = abc def
+   Name of the metric. It is visible in statistics outputs.
 
-     # List of fields to group events by into auto-generated sub-metrics.
-     group_by = field another-field
-   }
 
-For example::
+.. dovecot_core:setting:: metric_fields
+   :values: @boollist
 
-   metric imap_command {
-     filter = event=imap_command_finished
+   A list of fields included in the metric. All events have a default
+   "duration" field that does not need to be listed explicitly.
 
-     fields = net_in_bytes net_out_bytes
-     group_by = cmd_name tagged_reply_state
-   }
+   .. dovecotchanged:: 2.4.0,3.0.0 All listed fields are exported to OpenMetrics as well.
+
+
+.. dovecot_core:setting:: metric_group_by
+   :values: @boollist
+
+   This can be used to dynamically generate sub-metrics based on fields'
+   values. See :ref:`statistics_group_by` for more details and examples.
+
+
+.. dovecot_core:setting:: metric_filter
+   :values: @string
+
+   :ref:`Event filter <event_filter_metric>` that matches the events belonging
+   to this metric.
+
+
+.. dovecot_core:setting:: metric_exporter
+   :values: @string
+
+   Export events matching the filter with this
+   :ref:`event exporter <event_export>`. Refers to the
+   :dovecot_core:ref:`event_exporter_name` setting. If empty, the events are
+   used only for statistics, and no exporting is done.
+
+
+.. dovecot_core:setting:: metric_exporter_include
+   :default: name hostname timestamps categories fields
+   :values: @boollist
+
+   Specifies which parts of the event are exported to the serialized event:
+
+   * ``name`` - The name of the event
+   * ``hostname`` - The name of the host generating this event
+   * ``timestamps`` - The event start and end timestamps
+   * ``categories`` - A set of categories associated with this event
+   * ``fields`` - The fields associated with this event; the fields that will be
+     exported are defined by the :dovecot_core:ref:`metric_fields` setting.
+
+   For example, ``exporter_include=name hostname timestamps`` includes just the 3
+   specified parts, while ``exporter_include=`` includes nothing - the exported
+   event will be empty (e.g., ``{}`` in JSON).
+
+.. dovecot_core:setting:: metric_description
+   :values: @string
+
+   Human-readable description of the metric. This is included in the HELP text
+   sent to OpenMetrics.
+
 
 .. _statistics_group_by:
 
 Group by
-^^^^^^^^
+========
 
 .. dovecotadded:: 2.3.10 adds support for implicit discrete aggregation
 .. dovecotchanged:: 2.3.11 adds support for explicit aggregation functions
 .. dovecotchanged:: 3.0.0,2.4.0
 	allows sub-metric names up to 256 bytes in total, before it was 32 per label
 
-The ``group_by`` metric setting allows dynamic hierarchical metric
-generation based on event fields' values.  Each field listed in the
+The :dovecot_core:ref:`metric_group_by` setting allows dynamic hierarchical
+metric generation based on event fields' values.  Each field listed in the
 ``group_by`` generates one level of "sub-metrics".  These automatically
 generated metrics are indistinguishable from those statically defined
 in the config file.
@@ -204,7 +249,7 @@ See the description of the :ref:`statistics_exponential_quantization`
 aggregation function for how metric names are formed from these ranges.
 
 Listing Statistics
-^^^^^^^^^^^^^^^^^^
+==================
 
 The gathered statistics are available by running:
 
@@ -249,7 +294,8 @@ It's also possible to specify other percentiles than just 95%, for example:
 The stats counters are reset whenever the stats process is started, which also means a dovecot reload will reset statistics. Using ``doveadm stats -r`` parameter will also reset the statistics atomically after they're dumped.
 
 Modifying Statistics Dynamically
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+================================
+
 .. dovecotadded:: 2.3.17
 
 Metrics can be added or removed dynamically. The changes do not persist after configuration reload.
@@ -260,9 +306,11 @@ Metrics can be added dynamically by running:
 
    doveadm stats add [--description <string>] [--exporter <name> [--exporter-include <field>]] [--fields <fields>] [--group-by <fields>] <name> <filter>
 
-* ``exporter`` and ``exporter-include`` parameters are described in :ref:`filtering-events-label`.
-* ``fields`` and ``group-by`` are described :ref:`here<statistics>`
-* ``<filter>`` syntax is described in :ref:`event_filter_metric`.
+* ``exporter``: See :dovecot_core:ref:`metric_exporter`
+* ``exporter-include``: See :dovecot_core:ref:`metric_exporter_include`
+* ``fields``: See :dovecot_core:ref:`metric_fields`
+* ``group-by``: See :dovecot_core:ref:`metric_group_by`
+* ``<filter>``: See :dovecot_core:ref:`metric_filter`
 
 For example:
 
@@ -282,11 +330,11 @@ For example:
 
    doveadm stats remove imap_cmd_select
 
-Examples:
----------
+Examples
+========
 
 IMAP command statistics
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 .. code-block:: none
 
@@ -315,7 +363,7 @@ IMAP command statistics
 .. _stats_push_notifications:
 
 Push notifications
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. code-block:: none
 
