@@ -23,9 +23,9 @@ See also:
 Exporter Definition
 ===================
 
-The ``event_exporter`` block defines how :ref:`events <list_of_events>`
-should be exported.  The basic definition is split into two orthogonal parts:
-the format and the transport.
+The :dovecot_core:ref:`event_exporter` named list filter defines how
+:ref:`events <list_of_events>` should be exported. The basic definition is
+split into two orthogonal parts: the format and the transport.
 
 The format and its arguments specify *how* an event is serialized, while the
 transport and its arguments specify *where* the serialized event is sent.
@@ -33,8 +33,8 @@ transport and its arguments specify *where* the serialized event is sent.
 In both cases, the behavior is `tweaked` via the corresponding arguments
 setting.
 
-For example, the following block defines an exporter that uses the `foo`
-transport and `json` format:
+For example, the following block defines an exporter that uses the ``foo``
+transport and ``json`` format:
 
 .. code-block:: none
 
@@ -45,6 +45,57 @@ transport and `json` format:
      transport_args = bar
      transport_timeout = 500msec
    }
+
+Settings
+========
+
+.. dovecot_core:setting:: event_exporter
+   :values: @named_list_filter
+
+   Creates a new event exporter. The filter name refers to the
+   :dovecot_core:ref:`event_exporter_name` setting.
+
+
+.. dovecot_core:setting:: event_exporter_name
+   :values: @string
+
+   Name of the event exporter. It is referred by the
+   :dovecot_core:ref:`metric_exporter` settings.
+
+
+.. dovecot_core:setting:: event_exporter_transport
+   :values: @string
+
+   The transport to use. See :ref:`event_exporter_transports`.
+
+
+.. dovecot_core:setting:: event_exporter_transport_args
+   :values: @string
+
+   The transport arguments to use. See :ref:`event_exporter_transports`.
+
+
+.. dovecot_core:setting:: event_exporter_transport_timeout
+   :values: @time_msecs
+
+   Abort the http-post request after this timeout.
+
+
+.. dovecot_core:setting:: event_exporter_format
+   :values: @string
+
+   Format used for serializing the event. See
+   :ref:`event_exporter_formats`.
+
+
+.. dovecot_core:setting:: event_exporter_format_args
+   :values: @string
+
+   Format-specific arguments used for serializing the event. See
+   :ref:`event_exporter_formats`.
+
+
+.. _event_exporter_formats:
 
 Formats
 ^^^^^^^
@@ -108,6 +159,8 @@ Example tab-text
 
    event:imap_command_finished        hostname:dovecot-dev    start_time:2019-06-19T10:38:25.422744Z  end_time:2019-06-19T10:38:25.424812Z    category:imap   field:user=jeffpc       field:session=xlBB1KqLz1isGwB+  field:tag=a0005 field:cmd_name=SELECT       field:tagged_reply_state=OK     field:tagged_reply=OK [READ-WRITE] Select completed     field:last_run_time=2019-06-19T10:38:25.422709Z field:running_usecs=1953        field:lock_wait_usecs=60        field:net_in_bytes=7        field:net_out_bytes=311
 
+.. _event_exporter_transports:
+
 Transports
 ^^^^^^^^^^
 
@@ -156,37 +209,10 @@ filter, etc.) specified in the metric block.
 Filtering Events
 ^^^^^^^^^^^^^^^^
 
-One uses the `metric` block settings documented in :ref:`statistics` to
-select and filter the event to be exported.
-
-`exporter`
-^^^^^^^^^^
-
-The `exporter` setting identifies which exporter should be used to export this
-event.  If the setting is not specified, this event is *not* exported.  (This
-is to allow certain metrics to be used only for statistics.)
-
-`exporter_include`
-^^^^^^^^^^^^^^^^^^
-
-There are five possible parts that can be included in a serialized event:
-
-* `name` - the name of the event
-* `hostname` - the name of the host generating this event
-* `timestamps` - the event start and end timestamps
-* `categories` - a set of categories associated with this event
-* `fields` - the fields associated with this event; the fields that will be
-             exported are defined by the :ref:`fields <statistics>` setting in
-             the parent `metric` block
-
-The `exporter_include` setting is made up of these tokens which control what
-parts of an event are exported.  It can be set to any set of those
-(including empty set) and the order doesn't matter.  It defaults to all 5
-tokens.
-
-For example, ``exporter_include=name hostname timestamps`` includes just the 3
-specified parts, while ``exporter_include=`` includes nothing - the exported
-event will be empty (e.g., ``{}`` in JSON).
+One uses the ``metric`` block settings documented in :ref:`statistics` to
+select and filter the event to be exported. See
+:dovecot_core:ref:`metric_exporter` and
+:dovecot_core:ref:`metric_exporter_include` settings.
 
 Example Configs
 ===============
