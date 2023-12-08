@@ -12,7 +12,7 @@ example configuration.
 
    plugin {
      # Basic configuration:
-     obox_fs = azure:https://ACCOUNTNAME:SHARED_KEY@CONTAINERNAME.blob.core.windows.net/
+     obox_fs = azure:https://ACCOUNTNAME:SHARED_KEY_BASE64@CONTAINERNAME.blob.core.windows.net/
    }
 
 The parameters are:
@@ -38,7 +38,7 @@ details see :ref:`http_storages`)
 
   plugin {
   # Debugging configuration:
-     obox_fs = azure:https://ACCOUNTNAME:SHARED_KEY@CONTAINERNAME.blob.core.windows.net/?loghdr=x-ms-client-request-id&loghdr=x-ms-request-id
+     obox_fs = azure:https://ACCOUNTNAME:SHARED_KEY_BASE64@CONTAINERNAME.blob.core.windows.net/?loghdr=x-ms-client-request-id&loghdr=x-ms-request-id
    }
 
 This configuration makes sure that the ``x-ms-client-request-id`` header is
