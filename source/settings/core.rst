@@ -629,7 +629,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: deliver_log_format
    :default: msgid=%m: %$
-   :values: @string
+   :values: @string_novars
 
    The format to use for logging mail deliveries.
 
@@ -1211,7 +1211,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: imap_logout_format
    :default: in=%i out=%o deleted=%{deleted} expunged=%{expunged} trashed=%{trashed} hdr_count=%{fetch_hdr_count} hdr_bytes=%{fetch_hdr_bytes} body_count=%{fetch_body_count} body_bytes=%{fetch_body_bytes}
    :todo: Indicate imap setting
-   :values: @string
+   :values: @string_novars
 
    This setting specifies the IMAP logout format string. Supported variables
    are:
@@ -1304,7 +1304,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: imap_urlauth_logout_format
    :default: in=%i out=%o
    :todo: Indicate imap setting
-   :values: @string
+   :values: @string_novars
 
    Specifies the logout format used with the URLAUTH extension in IMAP
    operation.
@@ -1725,7 +1725,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: log_timestamp
    :default: %b %d %H:%M:%S
-   :values: @string
+   :values: @string_novars
 
    The prefix for each line written to the log file.
 
@@ -1769,7 +1769,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: login_log_format
    :default: %$: %s
-   :values: @string
+   :values: @string_novars
 
    The formatting of login log messages.
 
@@ -1788,7 +1788,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: login_log_format_elements
    :default: user=<%u> method=%m rip=%r lip=%l mpid=%e %c session=<%{session}>
    :todo: Provide join example
-   :values: @string
+   :values: @string_novars
 
    A space-separated list of elements of the login log formatting.
 
@@ -2763,7 +2763,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: pop3_logout_format
    :default: top=%t/%p retr=%r/%b del=%d/%m size=%s
    :todo: Indicate POP3 setting
-   :values: @string
+   :values: @string_novars
 
    The string to display to the client on POP3 logout (informational only).
 
@@ -2841,7 +2841,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: pop3_uidl_format
    :default: %08Xu%08Xv
    :todo: Indicate POP3 setting
-   :values: @string
+   :values: @string_novars
 
    The POP3 unique mail identifier (UIDL) format to use.
 
@@ -2975,7 +2975,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: rejection_reason
    :default: Your message to <%t> was automatically rejected:%n%r
    :todo: Indicate LDA AND LMTP setting
-   :values: @string
+   :values: @string_novars
 
    A human-readable message for the recipients of bounce messages.
 
@@ -2998,7 +2998,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: rejection_subject
    :default: Rejected: %s
    :seealso: @rejection_reason;dovecot_core
-   :values: @string
+   :values: @string_novars
 
    The Subject: header to use for bounce messages.
 
@@ -3522,7 +3522,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: submission_logout_format
    :default: in=%i out=%o
    :todo: Indicate submission setting
-   :values: @string
+   :values: @string_novars
 
    The SMTP Submission logout format string.
 
