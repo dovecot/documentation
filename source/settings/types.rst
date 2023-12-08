@@ -37,6 +37,8 @@ Unsigned integer
 Unsigned integer is a number between 0..4294967295, although specific settings
 may have additional restrictions.
 
+The value can also be "unlimited", which translates to 4294967295.
+
 .. _boolean:
 
 Boolean
@@ -67,6 +69,8 @@ type is case insensitive. The following suffixes can be used to define size:
 The values can optionally be followed by "I" or "IB". For example K = KI = KIB.
 The size value type is base 2, meaning a kilobyte equals 1024 bytes.
 
+The value can also be "unlimited".
+
 .. _time:
 
 Time
@@ -83,6 +87,8 @@ the following words:
 .. Note::
 
    So for example "d", "da", "day", "days" all mean the same.
+
+The value can also be "infinite".
 
 .. _time_msecs:
 
