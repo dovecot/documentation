@@ -27,7 +27,7 @@ Global Settings
 
 .. pigeonhole:setting:: managesieve_logout_format
    :default: bytes=%i/%o
-   :values: @string
+   :values: @string_novars
 
    Specifies the string pattern used to compose the logout message of an
    authenticated session. The following substitutions are available:
