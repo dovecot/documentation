@@ -58,7 +58,7 @@ Settings
 .. dovecot_plugin:setting:: notify_status_value
    :default: {"messages":%{messages},"unseen":%{unseen}}
    :plugin: notify-status
-   :values: @string
+   :values: @string_novars
 
    A template of the string that will be written to the dictionary.
 
