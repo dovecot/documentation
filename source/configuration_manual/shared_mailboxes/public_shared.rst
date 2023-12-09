@@ -93,7 +93,7 @@ namespace with empty prefix, create one:
           subscriptions = yes
           hidden = yes
           list = no
-          alias_for = INBOX/ # the INBOX namespace's prefix
+          alias_for = inbox # the INBOX namespace's name
           location = <same as mail_location>:SUBSCRIPTIONS=subscriptions-shared
         }
 
