@@ -95,7 +95,7 @@ than one key pair, but only one can be active.
 
 :dovecot_plugin:ref:`crypt_user_key_curve` must be set.
 
-:dovecot_core:ref:`mail_attribute_dict` must be set, as is is used to store the
+:dovecot_core:ref:`mail_attribute` must be set, as is is used to store the
 keys.
 
 Unencrypted User Keys
@@ -108,7 +108,10 @@ Example config for folder keys with Maildir:
 
 .. code-block:: none
 
-  mail_attribute_dict = file:%h/Maildir/dovecot-attributes
+  mail_attribute {
+    dict_driver = file
+    dict_file_path = %h/Maildir/dovecot-attributes
+  }
   mail_plugins = $mail_plugins mail_crypt
 
   crypt_user_key_curve = secp521r1
@@ -123,7 +126,10 @@ Example config for mandatory encrypted folder keys with Maildir:
 
 .. code-block:: none
 
-  mail_attribute_dict = file:%h/Maildir/dovecot-attributes
+  mail_attribute {
+    dict_driver = file
+    dict_file_path = %h/Maildir/dovecot-attributes
+  }
   mail_plugins = $mail_plugins mail_crypt
 
   crypt_user_key_curve = secp521r1
