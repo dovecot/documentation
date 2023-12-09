@@ -552,28 +552,6 @@ See :ref:`settings` for list of all setting groups.
    The log file to use for debug messages.
 
 
-.. dovecot_core:setting:: default_client_limit
-   :default: 1000
-   :values: @uint
-
-   The maximum number of simultaneous client connections per process for a
-   service.
-
-   Once this number of connections is reached, the next incoming connection
-   prompts spawning of another process.
-
-   This value can be overridden via the
-   :ref:`service_configuration-client_limit` setting within service blocks.
-
-
-.. dovecot_core:setting:: default_idle_kill
-   :default: 1mins
-   :values: @time
-
-   The default value to use for the :ref:`service_configuration-idle_kill`
-   setting within service blocks.
-
-
 .. dovecot_core:setting:: default_internal_group
    :default: dovecot
    :seealso: @default_internal_user;dovecot_core
@@ -602,29 +580,6 @@ See :ref:`settings` for list of all setting groups.
 
    This is the least trusted user in Dovecot: this user should not have access
    to anything at all.
-
-
-.. dovecot_core:setting:: default_process_limit
-   :default: 100
-   :values: @uint
-
-   The maximum number of processes that may exist for a service.
-
-   This value can be overridden via the
-   :ref:`service_configuration-process_limit` setting within service blocks.
-
-
-.. dovecot_core:setting:: default_vsz_limit
-   :default: 256M
-   :values: @size
-
-   The default virtual memory size limit for service processes.
-
-   Designed to catch processes that leak memory so that they can be terminated
-   before they use up all the available resources.
-
-   This value can be overridden via the :ref:`service_configuration-vsz_limit`
-   setting within service blocks.
 
 
 .. dovecot_core:setting:: deliver_log_format

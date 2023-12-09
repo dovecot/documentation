@@ -18,6 +18,9 @@ so if ``%`` character is wanted, it needs to be escaped as ``%%``.
 
 .. _string_novars:
 
+String without variables
+------------------------
+
 Non-variable strings are when :ref:`config_variables` aren't wanted
 to be used. Typically this is done when setting-specific %variables are wanted
 to be used instead. For example:
@@ -38,6 +41,14 @@ Unsigned integer is a number between 0..4294967295, although specific settings
 may have additional restrictions.
 
 The value can also be "unlimited", which translates to 4294967295.
+
+.. _uint_oct:
+
+Octal unsigned integer
+----------------------
+
+Same as :ref:`uint`, but if the value is prefixed with ``0``, the number is
+read as octal (instead of decimal).
 
 .. _boolean:
 
