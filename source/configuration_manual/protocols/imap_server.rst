@@ -18,7 +18,7 @@ Some of the extensions need to be explicitly enabled:
 * SPECIAL-USE
 * NOTIFY: Set :dovecot_core:ref:`mailbox_list_index` to ``yes``
 * URLAUTH: Set :dovecot_core:ref:`imap_urlauth_host` and
-  :dovecot_core:ref:`mail_attribute_dict`
+  :dovecot_core:ref:`mail_attribute`
 
 .. seealso::
 
