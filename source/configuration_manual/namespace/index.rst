@@ -64,6 +64,7 @@ Settings
      }
 
 .. dovecot_core:setting:: namespace_name
+   :values: @string
 
    Name of the namespace. This is used only in configuration - it's not visible
    to users.  The :dovecot_core:ref:`namespace` filter name refers to this
