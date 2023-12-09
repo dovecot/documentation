@@ -28,7 +28,7 @@ Things that you should consider in your config:
  * :ref:`Quota <quota>` without rules (to make sure quota gets calculated, but not enforced)
  * :ref:`Mail caching settings <mail_cache_settings>`
  * :dovecot_core:ref:`Attachment detection settings <mail_attachment_detection_options>`
- * :dovecot_core:ref:`Mailbox attribute settings <mail_attribute_dict>`
+ * :dovecot_core:ref:`Mailbox attribute settings <mail_attribute>`
  * :ref:`Compression <mail_compress_plugin>` and :ref:`encryption <mail_crypt_plugin>` settings
  * :ref:`NFS related settings <nfs>`
 
