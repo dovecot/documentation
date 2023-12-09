@@ -2219,7 +2219,7 @@ Login
    * - ``password_expired``
      - The user's password is expired.
    * - ``process_full``
-     - :ref:`service_configuration-client_limit` and :ref:`service_configuration-process_limit` was hit and this login session was killed.
+     - :dovecot_core:ref:`service_client_limit` and :dovecot_core:ref:`service_process_limit` was hit and this login session was killed.
    * - ``proxy_dest_auth_failed``
      - Local authentication succeeded, but proxying failed to authenticate to the destination hop.
    * - ``shutting_down``
