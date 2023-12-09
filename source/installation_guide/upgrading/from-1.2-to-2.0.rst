@@ -43,8 +43,7 @@ Other major changes
  * dbox: v2.0 format is slightly different, but backwards compatible. The main problem is that v2.0 no longer supports maildir-dbox hybrid resulting from "fast Maildir migration". If you have any Maildir files in your dbox, you need to convert them somehow `some examples <https://dovecot.org/list/dovecot/2010-September/053012.html>`_ . You might also consider using ``dsync`` to get rid of the old unused metadata in your dbox files.
  * Pre-login and post-login CAPABILITY reply is now different. `Dovecot expects clients to recognize new automatically sent capabilities. <https://dovecot.org/list/dovecot/2010-April/048147.html>`_ This should work with all commonly used clients, but some rarely used clients might have problems. Either get the client fixed, or set :dovecot_core:ref:`imap_capability` manually.
  * ManageSieve protocol :rfc:`5804` was assigned an official port by IANA: 4190. This is used by Pigeonhole by default now. If you want to listen also on the old 2000 port, add an ``inet_listener`` with
-   ``port = 2000`` to the ``managesieve-login`` service. See
-   :ref:`service_configuration_inet_listeners`.
+   ``port = 2000`` to the ``managesieve-login`` service.
  * ``dovecot --exec-mail imap`` has been replaced by simply running "imap" binary. You can also use ``imap -u <username>`` to access other users' mails more easily.
 
 LDA

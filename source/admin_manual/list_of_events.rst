@@ -2228,6 +2228,8 @@ Login
      - The user's password is expired.
    * - ``process_full``
      - :ref:`service_configuration-client_limit` and :ref:`service_configuration-process_limit` was hit and this login session was killed.
+   * - ``proxy_dest_auth_failed``
+     - Local authentication succeeded, but proxying failed to authenticate to the destination hop.
    * - ``shutting_down``
      - The process is shutting down so the login is aborted.
    * - ``user_disabled``
