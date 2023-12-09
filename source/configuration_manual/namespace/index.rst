@@ -74,7 +74,7 @@ Settings
 .. dovecot_core:setting:: namespace_alias_for
    :values: @string
 
-   Defines the namespace prefix for purposes of alias detection.
+   Refers to an alias namespace's :dovecot_core:ref:`namespace_name`.
 
    If multiple namespaces point to the same location, they should be marked as
    aliases against one primary namespace. This avoids duplicating work for
@@ -89,12 +89,13 @@ Settings
 
    Example::
 
+     namespace inbox {
+       prefix =
+       ...
+     }
      namespace alias {
-       # If primary namespace has empty prefix
-       alias_for =
-
-       # OR if primary namespace has prefix=INBOX/
-       alias_for = INBOX/
+       prefix = INBOX/
+       alias_for = inbox
      }
 
 
@@ -381,21 +382,21 @@ mails using their existing namespace settings in clients.
     prefix = mail/
     hidden = yes
     list = no
-    alias_for =
+    alias_for = inbox
   }
   namespace compat2 {
     separator = /
     prefix = ~/mail/
     hidden = yes
     list = no
-    alias_for =
+    alias_for = inbox
   }
   namespace compat3 {
     separator = /
     prefix = ~%u/mail/
     hidden = yes
     list = no
-    alias_for =
+    alias_for = inbox
   }
 
 Backwards Compatibility: Courier IMAP
@@ -428,7 +429,7 @@ can continue using it while new clients will use the empty prefix namespace:
     inbox = no
     hidden = yes
     list = no
-    alias_for =
+    alias_for = inbox
   }
 
 The ``separator=/`` allows the INBOX to have child mailboxes. Otherwise with
