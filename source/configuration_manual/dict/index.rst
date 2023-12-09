@@ -388,13 +388,13 @@ You can also access multiple SQL fields. For example
   * ``INSERT INTO user_shares (from_user, to_user, dummy) VALUES ('$from',
     '$to', '$value') ON DUPLICATE KEY UPDATE dummy='$value'``
 
-SQL dict with mail_attribute_dict
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SQL dict with mail_attribute
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It's possible to implement :dovecot_core:ref:`mail_attribute_dict` also with
+It's possible to implement :dovecot_core:ref:`mail_attribute` also with
 SQL dict.
 
-.. warning:: Using shared attributes in mail_attribute_dict requires the
+.. warning:: Using shared attributes in ``mail_attribute`` requires the
              mailbox GUID to be unique between users. This is not the case when
 	     mails were migrated via imapc, because it uses a hash of the
 	     mailbox name as the GUID. So every migrated user would have

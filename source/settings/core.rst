@@ -1262,14 +1262,17 @@ See :ref:`settings` for list of all setting groups.
    commands.
 
    .. note:: If activated, a dictionary needs to be configured, via the
-             :dovecot_core:ref:`mail_attribute_dict` setting.
+             :dovecot_core:ref:`mail_attribute` setting.
 
    Example:
 
    .. code-block:: none
 
      # Store METADATA information within user's Maildir directory
-     mail_attribute_dict = file:%h/Maildir/dovecot-attributes
+     mail_attribute {
+       dict_driver = file
+       dict_file_path = %h/Maildir/dovecot-attributes
+     }
 
      protocol imap {
        imap_metadata = yes
@@ -2101,22 +2104,24 @@ See :ref:`settings` for list of all setting groups.
    Attachments below this size will not be saved externally.
 
 
-.. dovecot_core:setting:: mail_attribute_dict
+.. dovecot_core:setting:: mail_attribute
    :seealso: @imap_metadata;dovecot_core
-   :todo: Indicate metadata setting
-   :values: @string
+   :values: @named_filter
 
-   The dictionary to be used for key=value mailbox attributes.
+   Named filter for initializing :ref:`dict driver <dict>` for server and
+   mailbox attributes (key=value).
 
-   This is used by the URLAUTH and METADATA extensions.
-
-   :ref:`Mail user variables <variables-mail_user>` can be used.
+   This is used by the URLAUTH and METADATA extensions, as well as various 
+   other features.
 
    Example:
 
    .. code-block:: none
 
-     mail_attribute_dict = file:%h/dovecot-attributes
+     mail_attribute {
+       dict_driver = file
+       dict_file_path = %h/dovecot-attributes
+     }
 
 
 .. dovecot_core:setting:: mail_cache_fields
