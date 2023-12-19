@@ -70,7 +70,7 @@ There are a couple of different ways to specify when SSL/TLS is required:
     not required) for :ref:`secured connections <secured_connections>`.
 
 Multiple SSL certificates
-^^^^^^^^^^^^^^^^^^^^^^^^^
+=========================
 
 Different certificates per algorithm
 ************************************
@@ -274,7 +274,8 @@ You may also force the username to be taken from the certificate by setting ``au
 You may also want to disable the password checking completely. Doing this currently circumvents Dovecot's security model so it's not recommended to use it, but it is possible by making the passdb allow logins using any password (typically requiring `nopassword extra field to be returned <authentication-password_database_extra_fields>`).
 
 Testing
-^^^^^^^
+=======
+
 Try out your new setup:
 
 .. code::
@@ -420,7 +421,7 @@ either :dovecot_core:ref:`ssl_client_ca_dir` or
 .. _ssl_ja3:
 
 JA3 identifier
-^^^^^^^^^^^^^^
+==============
 
 .. dovecotadded:: 2.4.0,3.0.0
 
