@@ -20,7 +20,7 @@ The most important SSL settings are (in ``conf.d/10-ssl.conf``):
 
 .. Warning:: The ``<`` is mandatory. It indicates that the variable should contain contents of the file, instead of the file name. Not using it will cause an error.
 
-The certificate file can be world-readable, since it doesn't contain anything sensitive (in fact it's sent to each connecting SSL client). The key file's permissions should be restricted to only root (and possibly ssl-certs group or similar if your OS uses such). 
+The certificate file can be world-readable, since it doesn't contain anything sensitive (in fact it's sent to each connecting SSL client). The key file's permissions should be restricted to only root (and possibly ssl-certs group or similar if your OS uses such).
 
 Dovecot opens both of these files while still running as root, so you don't need to give Dovecot any special permissions to read them (in fact: **do not give dovecot user any permissions to the key file**).
 
@@ -128,7 +128,7 @@ With client TLS SNI (Server Name Indication) support
 
 It is important to note that having multiple SSL certificates per IP will not be compatible with all clients, especially mobile ones. It is a TLS SNI limitation.
 
-.. code-block:: none 
+.. code-block:: none
 
   local_name imap.example.org {
     ssl_cert = </etc/ssl/certs/imap.example.org.crt
@@ -238,7 +238,7 @@ If you want to require clients to present a valid SSL certificate, you'll need t
   # if you want to get username from certificate as well, enable this
   #auth_ssl_username_from_cert = yes
 
-The CA file should contain the certificate(s) followed by the matching CRL(s). 
+The CA file should contain the certificate(s) followed by the matching CRL(s).
 
 .. Note:: The CRLs are required to exist. For a multi-level CA place the certificates in this order:
 
