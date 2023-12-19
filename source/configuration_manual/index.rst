@@ -53,7 +53,6 @@ Configuration Manual
    shared_mailboxes
    sieve/index
    spam_reporting
-   ssl_configuration
    stats/index
    stats/openmetrics
    system_calls_optimization

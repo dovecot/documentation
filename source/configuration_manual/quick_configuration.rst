@@ -161,7 +161,7 @@ SSL and Plaintext Authentication
 If you intend to use SSL, set ``ssl_cert`` and ``ssl_key`` settings. Otherwise
 set ``ssl = no``. Easiest way to get SSL certificates built is to use Dovecot's
 :file:`doc/mkcert.sh` script. For more information see
-:ref:`ssl_configuration`.
+:ref:`dovecot_ssl_configuration`.
 
 By default :dovecot_core:ref:`auth_allow_cleartext = no <auth_allow_cleartext>`, which means that Dovecot will fail
 the authentication if the client doesn't use SSL (or use non-cleartext
