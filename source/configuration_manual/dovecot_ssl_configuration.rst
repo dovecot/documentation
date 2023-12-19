@@ -140,6 +140,9 @@ It is important to note that having multiple SSL certificates per IP will not be
   }
   # ..etc..
 
+Client Support
+^^^^^^^^^^^^^^
+
 Clients confirmed working with TLS SNI:
 
 * Thunderbird (Linux)
