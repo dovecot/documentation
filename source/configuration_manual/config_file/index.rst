@@ -144,7 +144,7 @@ There are a few different connection/session related filters:
 
 * remote <ip/network>: Remote client's IP/network. For non-TCP connections this will never match. For example 10.0.0.1 or 10.0.0.0/16.
 
-* local_name <name>: Matches TLS connection's SNI name, if it's sent by the client. Commonly used to `configure multiple TLS certificates <dovecot_ssl_configuration>`
+* local_name <name>: Matches TLS connection's SNI name, if it's sent by the client. Commonly used to :ref:`configure multiple TLS certificates <dovecot_ssl_configuration>`.
 
 * local <ip/range>: Locally connected IP/network. For non-TCP connections this will never match. For example 127.0.0.1 or 10.0.0.0/16.
 
