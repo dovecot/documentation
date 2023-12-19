@@ -126,7 +126,12 @@ If you have multiple IPs available, this method is guaranteed to work with all c
 With client TLS SNI (Server Name Indication) support
 ****************************************************
 
-It is important to note that having multiple SSL certificates per IP will not be compatible with all clients, especially mobile ones. It is a TLS SNI limitation.
+The SNI mechanism allows a server to present different hosts via a common
+connection, that the client can request by name. These are set up using the
+``local_name`` filter.
+
+It is important to note that having multiple SSL certificates per IP will not be
+compatible with all clients, especially mobile ones. It is a TLS SNI limitation.
 
 .. code-block:: none
 
@@ -139,6 +144,13 @@ It is important to note that having multiple SSL certificates per IP will not be
     ssl_key = </etc/ssl/private/imap.example2.org.key
   }
   # ..etc..
+
+Using SNI a server can reload different SSL certificates and other related
+settings (e.g. :dovecot_core:ref:`login_greeting` or
+:dovecot_core:ref:`postmaster_address`). The reloading of settings based on SNI
+is supported for IMAP, SMTP and LMTP.
+
+.. dovecotadded:: 2.4.0,3.0.0
 
 Client Support
 ^^^^^^^^^^^^^^
