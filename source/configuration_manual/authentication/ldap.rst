@@ -6,8 +6,8 @@ LDAP
 
 There are two ways to do LDAP authentication:
 
-* :ref:`Password lookups <authentication-ldap_bind>`
-* :ref:`Authentication binds <authentication-ldap_passwords>`
+* :ref:`Password lookups <authentication-ldap_passwords>`
+* :ref:`Authentication binds <authentication-ldap_bind>`
 
 Both of these have their own advantages and disadvantages.
 
