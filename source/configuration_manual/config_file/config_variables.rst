@@ -30,13 +30,8 @@ Global variables that work everywhere are:
 | system:<name>  | Get a system variable, see :ref:`below <variables-system-variables>`        |
 |                | for list of supported names.                                                |
 +----------------+-----------------------------------------------------------------------------+
-| uid            | Effective UID of the current process NOTE: This is overridden for           |
-|                | :ref:`mail service user variables <variables-mail_service_user>`.           |
-+----------------+-----------------------------------------------------------------------------+
-| gid            | Effective GID of the current process NOTE: This is overridden for           |
-|                | :ref:`mail service user variables <variables-mail_service_user>`.           |
-+----------------+-----------------------------------------------------------------------------+
-| pid            | PID of the current process (e.g. login or imap/pop3 process).               |
+| process:<name> | Get a process variable, see :ref:`below <variables-process-variables>`      |
+|                | for list of supported names.                                                |
 +----------------+-----------------------------------------------------------------------------+
 
 If :ref:`var_expand_crypt_plugin` is loaded, these also work globally:
@@ -65,6 +60,18 @@ Supported system variables
 ``hostname``
   Hostname (without domain). Can be overridden with ``DOVECOT_HOSTNAME`` environment variable.
   This needs to be included in :dovecot_core:ref:`import_environment`.
+
+.. _variables-process-variables:
+
+Supported process variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``pid``
+  Current process ID.
+``uid``
+  Effective user ID of the current process.
+``gid``
+  Effective group ID of the current process.
 
 .. _variables-user:
 
@@ -114,8 +121,6 @@ Mail service user variables
 +==========+================+===============================================================+
 | See also :ref:`variables-global` and :ref:`variables-user`                                |
 +----------+----------------+---------------------------------------------------------------+
-| %p       | pid            | PID of the current process                                    |
-+----------+----------------+---------------------------------------------------------------+
 | %l       | local_ip       | local IP address                                              |
 |          |                |                                                               |
 |          |                | .. dovecotchanged:: 2.3.14 variable long name changed         |
@@ -123,10 +128,6 @@ Mail service user variables
 | %r       | remote_ip      | remote IP address                                             |
 |          |                |                                                               |
 |          |                | .. dovecotchanged:: 2.3.14 variable long name changed         |
-+----------+----------------+---------------------------------------------------------------+
-| %i       | uid            | UNIX user identifier of the user                              |
-+----------+----------------+---------------------------------------------------------------+
-|          | gid            | UNIX group identifier of the user                             |
 +----------+----------------+---------------------------------------------------------------+
 |          | userdb:<name>  | Return userdb extra field "name". %{userdb:name:default}      |
 |          |                | returns "default" if "name" doesn't exist (not returned if    |
