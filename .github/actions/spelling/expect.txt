@@ -234,6 +234,8 @@ econds
 ecprivkey
 ecpubkey
 editheader
+edprivkey
+edpubkey
 effinger
 egid
 EID
@@ -586,7 +588,6 @@ missingok
 mkcert
 mkhomedir
 mmap
-mmaped
 mmencode
 MMIME
 modseq
@@ -701,9 +702,9 @@ opsec
 optboolean
 optname
 oqmgr
-OR'ing
 orcpt
 origbox
+OR'ing
 ORing
 orld
 OSERROR
