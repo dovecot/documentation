@@ -19,26 +19,25 @@ Global variables
 
 Global variables that work everywhere are:
 
-+------------+-----------------------------------------------------------------------------+
-| Long name  |  Description                                                                |
-+============+=============================================================================+
-| %%         | '%' character. See :ref:`user_shared_mailboxes`                             |
-|            | for further information about %% variables                                  |
-+------------+-----------------------------------------------------------------------------+
-| env:<name> | Environment variable <name>                                                 |
-+------------+-----------------------------------------------------------------------------+
-| uid        | Effective UID of the current process NOTE: This is overridden for           |
-|            | :ref:`mail service user variables <variables-mail_service_user>`.           |
-+------------+-----------------------------------------------------------------------------+
-| gid        | Effective GID of the current process NOTE: This is overridden for           |
-|            | :ref:`mail service user variables <variables-mail_service_user>`.           |
-+------------+-----------------------------------------------------------------------------+
-| pid        | PID of the current process (e.g. login or imap/pop3 process).               |
-+------------+-----------------------------------------------------------------------------+
-| hostname   | Hostname (without domain). Can be overridden with DOVECOT_HOSTNAME          |
-|            | environment variable. NOTE: This is overridden for                          |
-|            | :ref:`mail user variables <variables-mail_user>`.                           |
-+------------+-----------------------------------------------------------------------------+
++----------------+-----------------------------------------------------------------------------+
+| Long name      |  Description                                                                |
++================+=============================================================================+
+| %%             | '%' character. See :ref:`user_shared_mailboxes`                             |
+|                | for further information about %% variables                                  |
++----------------+-----------------------------------------------------------------------------+
+| env:<name>     | Environment variable <name>                                                 |
++----------------+-----------------------------------------------------------------------------+
+| system:<name>  | Get a system variable, see :ref:`below <variables-system-variables>`        |
+|                | for list of supported names.                                                |
++----------------+-----------------------------------------------------------------------------+
+| uid            | Effective UID of the current process NOTE: This is overridden for           |
+|                | :ref:`mail service user variables <variables-mail_service_user>`.           |
++----------------+-----------------------------------------------------------------------------+
+| gid            | Effective GID of the current process NOTE: This is overridden for           |
+|                | :ref:`mail service user variables <variables-mail_service_user>`.           |
++----------------+-----------------------------------------------------------------------------+
+| pid            | PID of the current process (e.g. login or imap/pop3 process).               |
++----------------+-----------------------------------------------------------------------------+
 
 If :ref:`var_expand_crypt_plugin` is loaded, these also work globally:
 
@@ -53,6 +52,19 @@ If :ref:`var_expand_crypt_plugin` is loaded, these also work globally:
 |                               |                             |
 |                               | .. dovecotadded:: 2.2.29    |
 +-------------------------------+-----------------------------+
+
+.. _variables-system-variables:
+
+Supported system variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``cpu_count``
+  Number of CPUs available. Works only on Linux and FreeBSD-like systems.
+  Can be overridden with ``NCPU`` environment variable.
+  This needs to be included in :dovecot_core:ref:`import_environment`.
+``hostname``
+  Hostname (without domain). Can be overridden with ``DOVECOT_HOSTNAME`` environment variable.
+  This needs to be included in :dovecot_core:ref:`import_environment`.
 
 .. _variables-user:
 
