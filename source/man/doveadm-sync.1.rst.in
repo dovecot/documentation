@@ -20,7 +20,7 @@ SYNOPSIS
 *namespace* | **-N**] [**-x** *exclude*] [**-a** *all mailbox*]
 [**-s** *state*] [**-T** *secs*] [**-t** *start date*] [**-e** *end
 date*] [**-O** *sync flag*] [**-I** *max size*]
-**-d** | *destination*
+[**-p** *setting=value*] *destination*
 
 **doveadm** [**-Dv**] **backup** [**-u** *user* | **-A** | **-F**
 *file*] [**-S** *socket_path*] [**-fPR**] [**-l** *secs*] [**-r**
@@ -28,7 +28,7 @@ date*] [**-O** *sync flag*] [**-I** *max size*]
 *namespace* | **-N**] [**-x** *exclude*] [**-a** *all mailbox*]
 [**-s** *state*] [**-T** *secs*] [**-t** *start date*] [**-e** *end
 date*] [**-O** *sync flag*] [**-I** *max size*]
-**-d** | *destination*
+[**-p** *setting=value*] *destination*
 
 DESCRIPTION
 ===========
@@ -145,8 +145,8 @@ Command specific *options*:
    Do full synchronization.
 
 **-N**
-   Synchronize all the available namespaces. By default only namespaces
-   that don't have explicit location setting are synchronized.
+   Synchronize all the available namespaces. By default only the inbox=yes
+   namespace is synchronized.
 
 **-P**
    Run a :man:`doveadm-purge(1)` for the destination (remote) storage
@@ -163,9 +163,8 @@ Command specific *options*:
    Specify the time in seconds, how long :man:`doveadm(1)` should wait
    for stalled I/O operations. The default timeout is 600 seconds.
 
-**-d**
-   Use the default destination, which is looked up from the
-   *mail_replica userdb* extra field.
+**-p** *setting*\ **=**\ *value*
+   Overrides the configuration *setting* for destination storage.
 
 **-g** *mailbox_guid*
    Same as -m, but find the mailbox to be synchronized by its GUID
@@ -226,8 +225,9 @@ ARGUMENTS
    This argument specifies the synchronized destination. It can be one
    of:
 
-   location
-      Same as *mail_location* setting, e.g. maildir:~/Maildir
+   *mail_driver:mail_path*
+      Uses the storage specified by *mail_driver* and *mail_path*. Use the
+      **-p** parameter to specify additional settings.
 
    **remote:** *login@host*
       Uses *dsync_remote_cmd* setting to connect to the remote host
@@ -294,20 +294,18 @@ If you need more complex parameters to ssh, you can use e.g.:
 CONVERTING
 ----------
 
-Assuming that the *mail_location* setting in
-*@pkgsysconfdir@/conf.d/10-mail.conf* is set to: **mail_location =
-mdbox:~/mdbox**, a logged in system user may convert her/his mails from
-its Maildir in her/his home directory to the mdbox mailbox format. The
-user has to execute the command:
+Example to convert mails from Maildir format to the format specified in
+configuration file:
 
 .. parsed-literal::
 
-      **doveadm sync maildir:~/Maildir**
+      **doveadm backup -u user maildir:~/Maildir**
 
 If you want to do this without any downtime, you can do the conversion
 one user at a time. Initially:
 
-   -  Configuration uses **mail_location = maildir:~/Maildir**
+   -  Configuration uses **mail_driver = maildir** and
+      **mail_path = ~/Maildir**
 
    -  Set up the possibility of doing per-user mail location using
       *userdb* extra fields.
@@ -320,7 +318,8 @@ Then for each user:
       have taken a while and new changes could have occurred during it.
       This second time only applies changes, so it should be fast.
 
-   3. Update mail extra field in userdb to **mdbox:~/mdbox**. If you're
+   3. Update userdb to return the wanted new mail format configuration.
+      For example: **mail_driver=mdbox** and **mail_path = ~/mdbox**. If you're
       using auth cache, you need to flush it, e.g. **doveadm auth cache
       flush**.
 
@@ -332,8 +331,8 @@ Then for each user:
       because the user's mail location has been changed and all existing
       processes using it have been killed.
 
-Once all users have been converted, you can set the default
-*mail_location* to mdbox and remove the per-user mail locations from
+Once all users have been converted, you can update the global *mail_driver*
+and *mail_path* settings and remove the per-user mail locations from
 *userdb*.
 
 .. include:: reporting-bugs.inc
