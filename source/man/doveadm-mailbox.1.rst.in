@@ -50,8 +50,7 @@ mailbox create
 **doveadm mailbox create** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**-g** *guid*] [**-s**] *mailbox*...
 
 This command is used to create one or more mailboxes. The mailbox format
-of the created mailboxes depends on the *mail_location* setting, or the
-user's *mail* field, returned by the userdb.
+of the created mailboxes depends on the *mail_driver* setting.
 
 **-g** *guid*
    Create the mailbox with the specified GUID.
