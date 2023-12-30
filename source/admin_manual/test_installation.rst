@@ -146,7 +146,7 @@ It should contain the mail that you sent to yourself in
 
 If anything goes wrong, set :dovecot_core:ref:`log_debug = category=mail <log_debug>` and try again. The log
 file should now contain debugging information of where Dovecot is trying
-to find the mails. Fix :dovecot_core:ref:`mail_location` setting and try again.
+to find the mails. Fix :ref:`mail_location_settings` and try again.
 
 Check that it finds other mailboxes
 ===================================
@@ -162,7 +162,7 @@ finds them:
    c OK List completed.
 
 If they weren't found, set :dovecot_core:ref:`log_debug = category=mail <log_debug>` and look at the
-debugging information. Fix :dovecot_core:ref:`mail_location` setting and try again.
+debugging information. Fix :ref:`mail_location_settings` and try again.
 
 Check out some other IMAP commands
 ==================================
