@@ -15,7 +15,8 @@ specified with:
 
 .. code-block:: none
 
-  mail_location = maildir:~/Maildir
+  mail_driver = maildir
+  mail_path = ~/Maildir
 
 Directory Layout
 ^^^^^^^^^^^^^^^^
@@ -24,31 +25,30 @@ By default, Dovecot uses Maildir++ directory layout. This means that all
 mailboxes are stored in a single directory and prefixed with a dot. For
 example:
 
-* Maildir/.folder/
-* Maildir/.folder.subfolder/
+* ``Maildir/.folder/``
+* ``Maildir/.folder.subfolder/``
 
 If you want Maildirs to use hierarchical directories, such as:
 
-* Maildir/folder/
-* Maildir/folder/subfolder/
+* ``Maildir/folder/``
+* ``Maildir/folder/subfolder/``
 
 you'll need to enable fs layout:
 
 .. code-block:: none
 
-  mail_location = maildir:~/Maildir:LAYOUT=fs
+  mailbox_list_layout = fs
 
-Default ``mail_location`` Keys
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Default mail settings
+^^^^^^^^^^^^^^^^^^^^^
 
-For Maildir, the default :ref:`mail_location_settings-keys` are:
-
-================ =============
-Key              Default Value
-================ =============
-``FULLDIRNAME``  <empty>
-================ =============
-
+ * :dovecot_core:ref:`mail_path` = ``%{home}/Maildir``
+ * :dovecot_core:ref:`mailbox_list_layout` = maildir++
+ * :dovecot_core:ref:`mail_inbox_path` = ``.`` with fs and maildir++ layouts.
+   This is used to store INBOX into the ``~/Maildir/`` directory root instead
+   of ``~/Maildir/.INBOX/``.
+ 
+ 
 .. _maildir_settings_control_files:
 
 Control Files
@@ -74,11 +74,13 @@ Dovecot cannot currently handle not being able to write the control files, so
 it will cause problems with :ref:`filesystem quota <quota_backend_fs>`. To
 avoid problems with this,
 you should place control files into a partition where quota isn't checked. You
-can specify this by adding ``:CONTROL=<path>`` to ``mail_location``:
+can specify this with :dovecot_core:ref:`mail_control_path` setting:
 
 .. code-block:: none
 
-  mail_location = maildir:~/Maildir:CONTROL=/var/no-quota/%u
+  mail_driver = maildir
+  mail_path = ~/Maildir
+  mail_control_path = /var/no-quota/%u
 
 Index Files
 ^^^^^^^^^^^
@@ -90,7 +92,9 @@ change the index path. Example:
 
 .. code-block:: none
 
-  mail_location = maildir:~/Maildir:INDEX=/var/indexes/%u
+  mail_driver = maildir
+  mail_path = ~/Maildir
+  mail_index_path = /var/indexes/%u
 
 Optimizations
 ^^^^^^^^^^^^^
@@ -107,11 +111,11 @@ See :ref:`maildir_and_filesystems`.
 Mailbox Directory Name
 ^^^^^^^^^^^^^^^^^^^^^^
 
-When using ``LAYOUT=fs``, there is a potential for naming collisions between
+When using ``mailbox_list_layout=fs``, there is a potential for naming collisions between
 Maildir's ``new/``, ``cur/``, and ``tmp/`` subdirectories, and mail folders
 of the same names.
 
-For example, consider a mail folder ``foo/bar``. Under ``LAYOUT=fs``, data
+For example, consider a mail folder ``foo/bar``. Under ``mailbox_list_layout=fs``, data
 for this mail folder will be stored under Maildir's usual three directories
 ``~/Maildir/foo/bar/{new,cur,tmp}/``. If the user then tries to create a mail
 folder ``foo/bar/new``, this would then imply that data should be stored in
@@ -119,12 +123,16 @@ Maildir's three directories ``~/Maildir/foo/bar/new/{new,cur,tmp}/``. But
 this would overlap Maildir's ``new/`` subdirectory of mail folder ``foo/bar``.
 
 This may not be a problem in many installations, but if a risk of collisions
-with Maildir's three subdirectory names is perceived, then the ``DIRNAME``
-parameter can be used. For example, if we specify mail location as:
+with Maildir's three subdirectory names is perceived, then the
+:dovecot_core:ref:`mailbox_directory_name` setting can be used. For example,
+if we specify mail location as:
 
 .. code-block:: none
 
-  mail_location = maildir:~/Maildir:LAYOUT=fs:DIRNAME=mAildir
+  mail_driver = maildir
+  mail_path = ~/Maildir
+  mailbox_list_layout = fs
+  mailbox_directory_name = mAildir
 
 then this will push Maildir's ``new/``, ``cur/``, and ``tmp/`` subdirectories
 down into a subdirectory ``mAildir/``, so a mail folder ``foo/bar`` would be
@@ -133,13 +141,16 @@ stored at ``~/Maildir/foo/bar/mAildir/{new,cur,tmp}/``. A mail folder
 ``~/Maildir/foo/bar/new/mAildir/{new,cur,tmp}/``, which would then have no
 overlap with the mail folder ``foo/bar``.
 
-``DIRNAME`` affects INBOX slightly differently. Without ``DIRNAME``, INBOX
-will be stored at ``~/Maildir/{new,cur,tmp}/``, but when ``DIRNAME`` is
-specified, we get an extra path component ``INBOX/`` immediately prior to the
-``DIRNAME`` value, so in the example above INBOX would be stored at
+:dovecot_core:ref:`mailbox_directory_name` affects INBOX slightly differently.
+If unset, INBOX will be stored at ``~/Maildir/{new,cur,tmp}/``, but when
+:dovecot_core:ref:`mailbox_directory_name` is specified, we get an extra path
+component ``INBOX/`` immediately prior to the
+``mailbox_directory_name`` value, so in the example above INBOX would be stored at
 ``~/Maildir/INBOX/mAildir/{new,cur,tmp}/``.
 
-The value for ``DIRNAME`` should be chosen carefully so as to minimise the chances of clashing with mail folder names. In the example here, unusual upper/lower casing has been used.
+The value for ``mailbox_directory_name`` should be chosen carefully so as to
+minimise the chances of clashing with mail folder names. In the example here,
+unusual upper/lower casing has been used.
 
 Multiple Namespaces pointing to INBOX
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -152,7 +163,9 @@ For example:
 
 .. code-block:: none
 
-  mail_location = maildir:~/Maildir:LAYOUT=fs
+  mail_driver = maildir
+  mail_path = ~/Maildir
+  mailbox_list_layout = fs
   namespace inbox {
     inbox = yes
     prefix = INBOX/
@@ -163,16 +176,17 @@ For example:
     prefix =
     separator = /
     alias_for = inbox
-    location = maildir:~/Maildir:LAYOUT=fs # Alias location
     subscriptions = yes
   }
 
 The solution is to disable ``dovecot.list.index`` for the alias namespace. In
-the above example, this is done by changing the "Alias location" line to:
+the above example, this is done by adding:
 
 .. code-block:: none
 
-  location = maildir:~/Maildir:LAYOUT=fs:LISTINDEX=
+  namespace empty {
+    mailbox_list_index_prefix =
+  }
 
 Settings
 ^^^^^^^^
