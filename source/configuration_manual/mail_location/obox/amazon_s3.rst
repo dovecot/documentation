@@ -105,7 +105,8 @@ Dispersion prefix
 
 .. code-block:: none
 
-   mail_location = obox:%8Mu/%u:INDEX=~/:CONTROL=~/
+   mail_driver = obox
+   mail_path = %8Mu/%u
 
 As also explained in :ref:`s3_storages`, AWS can internally shard data much more
 efficiently by including a dispersion prefix in all S3 paths. Without this the
@@ -183,7 +184,8 @@ With IAM:
 
 .. code-block:: none
 
-   mail_location = obox:%8Mu/%u:INDEX=~/:CONTROL=~/
+   mail_driver = obox
+   mail_path = %8Mu/%u
    fs_s3_url = https://bucket-name.s3.region.amazonaws.com/
    fs_s3_region = region
    fs_s3_auth_role = s3access

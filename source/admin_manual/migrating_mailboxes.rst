@@ -200,7 +200,7 @@ Individual password::
 
 You can verify that the settings are done correctly with::
 
-  doveadm -o imapc_password=password -o mail_location=imapc: mailbox list -u user
+  doveadm -o imapc_password=password -o mail_driver=imapc -o mail_path= mailbox list -u user
 
 POP3 notes
 ----------
@@ -229,7 +229,8 @@ If you need to retain POP3 support on your new system, you should use :ref:`plug
 
   namespace {
     prefix = POP3-MIGRATION-NS/
-    location = pop3c:
+    mail_driver = pop3c
+    mail_path = 
     list = no
     hidden = yes
   }

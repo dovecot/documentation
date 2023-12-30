@@ -28,7 +28,8 @@ Then, you'll have to create a :ref:`namespaces` for the virtual mailboxes, for e
   namespace {
     prefix = virtual/
     separator = /
-    location = virtual:~/Maildir/virtual
+    mail_driver = virtual
+    mail_path = ~/Maildir/virtual
   }
 
 After this you can create virtual mailboxes under ``~/Maildir/virtual``. By
@@ -37,8 +38,8 @@ default it uses the `fs` layout, so you can create directories such as:
 * INBOX: ``~/Maildir/virtual/INBOX/``
 * Sub/mailbox: ``~/Maildir/virtual/Sub/mailbox/``
 
-If you prefer to use Maildir++ layout instead, you can simply append
-``:LAYOUT=maildir++`` to the location.
+If you prefer to use Maildir++ layout instead, set
+:dovecot_core:ref:`mailbox_list_layout` = maildir++
 
 .. _virtual_plugin_obox_secondary_indexes:
 
@@ -54,7 +55,9 @@ user moves between backends or when metacache is cleaned.
 
 .. code-block:: none
 
-        location = virtual:/etc/dovecot/virtual:INDEX=~/virtual
+    mail_driver = virtual
+    mail_path = /etc/dovecot/virtual
+    mail_index_path = ~/virtual
 
 The virtual indexes will be stored in the user root bundle.
 
@@ -273,7 +276,9 @@ Namespace configuration:
   namespace virtual {
     prefix = virtual/
     separator = /
-    location = virtual:/etc/dovecot/virtual:INDEX=~/Maildir/virtual
+    mail_driver = virtual
+    mail_path = /etc/dovecot/virtual
+    mail_index_path = ~/Maildir/virtual
     list = no
     hidden = yes
   }

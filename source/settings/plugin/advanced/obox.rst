@@ -391,7 +391,7 @@ Settings
 
 
 .. dovecot_plugin:setting:: obox_username
-   :default: @mail_location;dovecot_core
+   :default: @mail_path;dovecot_core
    :plugin: obox
    :values: @string
 

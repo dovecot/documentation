@@ -114,6 +114,10 @@ Removed features and their replacements
 |                                                            | the :dovecot_core:ref:`mailbox_special_use` mailbox setting                              |
 |                                                            | and/or :ref:`Sieve filters <sieve>`.                                                     |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| listescape plugin                                          | :dovecot_core:ref:`mailbox_list_storage_escape_char` setting                             |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``mail_location`` / ``mail`` setting & userdb field        | Split into multiple :ref:`mail_* settings <mail_location_settings>`                      |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``obox_allow_inconsistency``                               | The setting has been removed as it caused problems with caching IMAP clients, which may  |
 |                                                            | lose emails permanently or otherwise become confused about their internal state.         |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
@@ -190,10 +194,10 @@ Changed default settings
    - 1
    - 30
    - Behaviour of process limit has changed for auth-worker,  it now behaves as it was supposed to.
- * - :dovecot_core:ref:`mail_location`
-   - 
-   - ``NO-NOSELECT``
-   - ``NO-NOSELECT`` is the new default behavior. To revert to the old default specify ``KEEP-NOSELECT``.
+ * - :dovecot_core:ref:`mailbox_list_drop_noselect`
+   - no
+   - yes
+   - ``\NoSelect`` folders are now dropped by default
  * - :dovecot_plugin:ref:`fts_dovecot_mail_flush_interval`
    - 0
    - 10
@@ -218,7 +222,6 @@ Changed default settings
    - ``%s(%u)<%{pid}><%{session}>:``
    - ``%s(%u)<%{process:pid}><%{session}>:``
    - Uses new process key
-
 
 Doveadm mailbox commands
 ------------------------

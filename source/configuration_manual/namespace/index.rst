@@ -120,7 +120,7 @@ Settings
    :default: no
    :values: @boolean
 
-   If namespace :dovecot_core:ref:`namespace_location` fails to load, by
+   If namespace's storage initialization fails, by
    default the entire session will fail to start. If this is set, this
    namespace will be ignored instead.
 
@@ -157,22 +157,6 @@ Settings
    for them. For example, if this setting is ``no``, using ``LIST "" *`` with
    namespace prefix "lazy-expunge/" won't list it, but using ``LIST ""
    lazy-expunge/*`` lists all folders under it.
-
-
-.. dovecot_core:setting:: namespace_location
-   :default: @mail_location;dovecot_core
-   :values: @string
-
-   Specifies driver and parameters for physical mailbox storage. It allows an
-   override of the ``mail_location`` setting for a namespace.
-
-   :ref:`Mail user variables <variables-mail_user>` can be used.
-
-   Example::
-
-     namespace {
-       location = sdbox:/archive/%u
-     }
 
 
 .. dovecot_core:setting:: namespace_order
@@ -277,25 +261,25 @@ However, changing the separator doesn't change the on-disk "layout separator".
 Example:
 
 ================================ =========== ======= ============ ===================
-``mail_location``                Layout Sep. NS Sep. Mailbox Name Directory
+``mailbox_list_layout``          Layout Sep. NS Sep. Mailbox Name Directory
 ================================ =========== ======= ============ ===================
-``maildir:~/Maildir``            .           .       foo.bar      ~/Maildir/.foo.bar/
-``maildir:~/Maildir``            .           /       foo/bar      ~/Maildir/.foo.bar/
-``maildir:~/Maildir:LAYOUT=fs``  /           .       foo.bar      ~/Maildir/foo/bar/
-``maildir:~/Maildir:LAYOUT=fs``  /           /       foo/bar      ~/Maildir/foo/bar/
+Maildir++ (default)              .           .       foo.bar      ~/Maildir/.foo.bar/
+Maildir++ (default)              .           /       foo/bar      ~/Maildir/.foo.bar/
+fs                               /           .       foo.bar      ~/Maildir/foo/bar/
+fs                               /           /       foo/bar      ~/Maildir/foo/bar/
 ================================ =========== ======= ============ ===================
 
 .. Note::
 
     The "namespace separator" changes only the "mailbox name", but doesn't
     change the directory where the mails are stored. The "layout separator" can
-    only be changed by changing :ref:`LAYOUT <mail_location_settings-keys>`,
+    only be changed by changing :dovecot_core:ref:`mailbox_list_layout`,
     which also affects the entire directory structure.
 
 The layout separator also restricts the mailbox names. For example if the
 layout separator is ``.``, you can't just set separator to ``/`` and create a
 mailbox named `foo.bar`. If you need to do this, you can use
-:ref:`listescape_plugin` to escape the mailbox names.
+:dovecot_core:ref:`mailbox_list_storage_escape_char` to escape the mailbox names.
 
 A commonly used separator is ``/``. It probably causes the least amount of
 trouble with different IMAP clients. The ``^`` separator is troublesome with
@@ -323,7 +307,7 @@ currently no way to simply add a namespace.
 
   userdb {
     driver = static
-    args = namespace=inbox,special namespace/special/location=sdbox:/var/special/%u namespace/special/prefix=special/
+    args = namespace=inbox,special namespace/special/mail_path=/var/special/%u namespace/special/prefix=special/
   }
 
 Dovecot Support for Shared Mailboxes
@@ -345,7 +329,9 @@ namespaces:
   namespace {
     separator = /
     prefix = "#mbox/"
-    location = mbox:~/mail:INBOX=/var/mail/%u
+    mail_driver = mbox
+    mail_path = ~/mail
+    mail_inbox_path = /var/mail/%u
     inbox = yes
     hidden = yes
     list = no
@@ -353,7 +339,8 @@ namespaces:
   namespace {
     separator = /
     prefix =
-    location = maildir:~/Maildir
+    mail_driver = maildir
+    mail_path = ~/Maildir
   }
 
 Without the ``list = no`` setting in the first namespace, clients would see the
@@ -472,12 +459,12 @@ Then you have an SQL table like:
     ..
   )
 
-Now if you want to set the namespace location from the Namespaces table, use
-something like:
+Now if you want to set the namespace's :dovecot_core:ref:`mail_path` from the
+Namespaces table, use something like:
 
 .. code-block:: sql
 
-  user_query = SELECT Location as 'namespace/docs/location' FROM Namespaces WHERE ..
+  user_query = SELECT Location as 'namespace/docs/mail_path' FROM Namespaces WHERE ..
 
 If you follow some advice to separate your "INBOX", "shared/" and "public/"
 namespaces by choosing "INBOX/" as your prefix for the inboxes you will see,
@@ -500,7 +487,6 @@ on and setting ``subscriptions = no`` for the other namespaces:
 
   namespace inbox {
     inbox = yes
-    location =
     subscriptions = no
 
     mailbox Drafts {
@@ -528,7 +514,9 @@ on and setting ``subscriptions = no`` for the other namespaces:
   namespace {
     type = shared
     prefix = shared/%%u/
-    location = mdbox:%%h/mdbox:INDEXPVT=%h/mdbox/shared
+    mail_driver = mdbox
+    mail_path = %{owner_home}/mdbox
+    mail_index_private_path = ~/mdbox/shared
     list = children
     subscriptions = no
   }
@@ -536,7 +524,9 @@ on and setting ``subscriptions = no`` for the other namespaces:
     type = public
     separator = /
     prefix = public/
-    location = mdbox:/usr/local/mail/public/mdbox:INDEXPVT=%h
+    mail_driver = mdbox
+    mail_path = /usr/local/mail/public/mdbox
+    mail_index_private_path = ~/mdbox/public
     subscriptions = no
     list = children
   }

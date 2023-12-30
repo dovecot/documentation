@@ -213,7 +213,10 @@ Example Configuration
 Example configuration using OBOX::
 
   #These are assumed below,
-  #mail_location = obox:%2Mu/%2.3Mu/%u:INDEX=~/:CONTROL=~/
+  # mail_driver = obox
+  # mail_path = %2Mu/%2.3Mu/%u
+  # mail_index_path = ~/
+  # mail_control_path = ~/
   fs_s3_url = http://mails.s3.example.com/
   obox {
     fs_driver = fscache
@@ -240,8 +243,8 @@ Example configuration using OBOX::
     }
 
     # OBOX example:
-    # Keep URL the same as obox plus the root "directory" in mail_location
-    # setting. Then append e.g. /fts/
+    # Keep URL the same as obox plus the mail_path setting.
+    # Then append e.g. /fts/
     # Example: http://<ip.address.>/%2Mu/%2.3Mu/%u/fts/
     fts_dovecot {
       fs_driver = fts-cache
