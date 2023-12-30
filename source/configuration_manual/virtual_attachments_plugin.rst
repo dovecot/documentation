@@ -27,13 +27,16 @@ for example:
   namespace virtual {
     prefix = virtual/
     separator = /
-    location = virtual:/etc/dovecot/virtual:INDEX=~/virtual
+    mail_driver = virtual
+    mail_path = /etc/dovecot/virtual
+    mail_index_path = ~/virtual
   }
 
   namespace virtual-attachments {
     prefix = virtual-attachments/
     separator = /
-    location = attachments:~/virtual-attachments
+    mail_driver = attachments
+    mail_path = ~/virtual-attachments
 
     mailbox virtual/All {
       auto = create
@@ -58,15 +61,16 @@ Storage location with obox
 
 .. dovecotadded:: 2.3.17
 
-When using the virtual-attachments plugin with obox, the virtual INDEX location
-must point to a directory named “virtual-attachments” in the user home directory.
+When using the virtual-attachments plugin with obox, the virtual index files
+must be in a directory named "virtual-attachments" in the user home directory.
 This way the virtual-attachments indexes are added to the obox root index
 bundles and will be preserved when user moves between backends or when
 metacache is cleaned.
 
 .. code-block:: none
 
-        location = attachments:~/virtual-attachments
+        mail_driver = attachments
+	mail_path = ~/virtual-attachments
 
 The virtual-attachments indexes & cache will be stored in the user root bundle.
 

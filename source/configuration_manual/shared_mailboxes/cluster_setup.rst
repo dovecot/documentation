@@ -35,7 +35,7 @@ have any special privileges. It's just used to get ACLs applied correctly
 using permissions of the master user (the logged in user). It is supported
 to access shared mailboxes of users which live on other backends via the IMAP
 protocol. For this purpose shared mailboxes in a cluster must be accessed via
-another namespace which has ``location`` configured to use ``imapc``.
+another namespace which has ``mail_driver`` configured to use ``imapc``.
 
 It is recommended to disable shared namespaces for master users so you should
 add ``userdb_namespace/shared/disabled=yes`` to your master passdb as
@@ -59,17 +59,19 @@ in this mailbox ``someone1`` would access a mailbox with the name
      prefix = shared/%%u/
      list = children
      subscriptions = no
-     # Use INDEXPVT to enable per-user \Seen flags.
-     # If running earlier versions than 2.3.15, or earlier than 2.3.17 with obox
-     # storage INDEXPVT is not supported.
-     location = imapc:~/shared/%%u:INDEXPVT=~/shared-pvt/%%u
+
+     mail_driver = imapc
+     mail_path = ~/shared/%{owner_user}
+     # Use private indexes to enable per-user \Seen flags:
+     mail_index_private_path = ~/shared-pvt/%{owner_user}
    }
 
-.. note:: Obox relies on having the INDEXPVT directory configured to ``~/shared-pvt``
-          otherwise the private indexes are not tracked by metacache and can
+.. note:: Obox relies on having the :dovecot_core:ref:`mail_index_private_path`
+          configured to ``~/shared-pvt``.
+          Otherwise the private indexes are not tracked by metacache and can
           get lost if user changes backends.
 
-.. note:: See :ref:`user_shared_mailboxes_vs` for an explanation more details on the used variables.
+.. note:: See :ref:`user_shared_mailboxes` for an explanation more details on the used variables.
 
 Additionally imapc must be configured accordingly on the backends:
  * On backends either passdb or userdb for non-master users must return
@@ -81,10 +83,6 @@ Additionally imapc must be configured accordingly on the backends:
    is configured on all backends and proxies
  * :dovecot_core:ref:`imapc_host` must point to a load balancer's address that
    connects to Dovecot proxy
-
-.. dovecotadded:: 2.3.15 INDEXPVT for imapc is supported from 2.3.15 onwards.
-                  In general INDEXPVT with imapc is only supported for non-obox
-                  storages.
 
 .. dovecotchanged:: 2.4.0,3.0.0 Some selected IMAPC features are auto-enabled
                     by default. Please refer to :dovecot_core:ref:`imapc_features`

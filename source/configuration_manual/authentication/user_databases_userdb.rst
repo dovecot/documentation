@@ -32,18 +32,14 @@ The user database lookup can return these fields:
 * **home**: User's home directory, overrides the global
   :dovecot_core:ref:`mail_home` setting.
   Although not required, it's highly recommended even for virtual users.
-* Optional extra fields:
+* Optional :ref:`authentication-user_database_extra_fields`:
 
  * **user**: Changes the username (can also be done by the passdb lookup)
  * Overwriting all mail-related settings, for example:
 
-  * **mail**: Mail location, overrides the global
-    :dovecot_core:ref:`mail_location` setting.
-    See: :ref:`mail_location_settings`
-  * **quota_rule** to specify per-user quota limit
-
  * The extra fields are also passed to post-login scripts. See
    :ref:`post_login_scripting`.
+ * Overriding settings in ``dovecot.conf``
 
 The user and password databases (See :ref:`authentication-password_databases`) may be
 the same or they may be different depending on your needs. You can also have

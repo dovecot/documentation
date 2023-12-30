@@ -34,7 +34,7 @@ Mail handling
  * Index files have slightly changed as well. Upgrading to v1.1 should go transparently, but moving back to v1.0 might again cause some errors. v1.0.8 fixes some assert-crashes that were caused by reading v1.1-generated index files.
  * :dovecot_core:ref:`dotlock_use_excl=yes <dotlock_use_excl>` is default nowadays. If you're still using an ancient NFSv2 setup, you'll need to set this to "no".
  * mbox: Delete existing dovecot.index.cache files from all mailboxes. Otherwise you may see some errors in logs.
- * ``default_mail_env`` has been renamed to :dovecot_core:ref:`mail_location` (since v1.0.rc11 already).
+ * ``default_mail_env`` has been renamed to ``mail_location`` (since v1.0.rc11 already).
  * Namespaces:
 
    * deliver now supports namespaces. If you use namespace prefixes or a non-default separator and you deliver to non-INBOXes, deliver will now have to use the configured prefix and separators.

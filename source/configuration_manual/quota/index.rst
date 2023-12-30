@@ -166,7 +166,7 @@ setting. For example:
   namespace {
     type = public
     prefix = Public/
-    #location = ..
+    #mail_path = ..
   }
 
   plugin {
@@ -187,7 +187,7 @@ parameter to quota setting. For example:
   namespace {
     type = private
     prefix = Archive/
-    #location = ..
+    #mail_path = ..
   }
 
   plugin {

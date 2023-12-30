@@ -136,7 +136,8 @@ and in dovecot.conf:
 
 ::
 
-   mail_location = maildir:/var/vmail/%d/%n/Maildir
+   mail_driver = maildir
+   mail_path = /var/vmail/%d/%n/Maildir
    mail_access_groups = dovemail
 
 The end result should look like this:
@@ -146,15 +147,15 @@ The end result should look like this:
    drwxrwsr-x 3 user dovemail 60 Oct 24 12:04 domain.example.com/
    drwx--S--- 3 user user 60 Oct 24 12:04 domain.example.com/user/
 
-Note that this requires that the mail_location setting is in its
-explicit format with %variables. Using ``maildir:~/Maildir`` won't work,
+Note that this requires that the :dovecot_core:ref:`mail_path` setting is in its
+explicit format with %variables. Using ``~/Maildir`` won't work,
 because Dovecot can't really know how far down it should copy the
 permissions from.
 
 Permissions to new user home directories
 ----------------------------------------
 
-When mail_location begins with ``%h`` or ``~/``, its permissions are
+When :dovecot_core:ref:`mail_path` begins with ``%{home}`` or ``~/``, its permissions are
 copied from the first existing parent directory if it has setgid-bit
 set. This isn't done when the path contains any other %variables.
 

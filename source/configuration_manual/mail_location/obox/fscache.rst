@@ -34,8 +34,8 @@ from the cache. Ideally the mail objects would usually stay in the fscache for
 several seconds during production load.
 
 Other than that, the fscache doesn't usually need to be very large. It's more
-useful to give the extra disk space to metacache (``INDEX`` path in
-``mail_location`` setting).
+useful to give the extra disk space to metacache
+(:dovecot_core:ref:`mail_index_path` setting).
 
 .. Note::
 

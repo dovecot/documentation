@@ -32,7 +32,8 @@ Settings
    *per-mailbox*
 
      Each mailbox has separate ACL rules. They are stored in a ``dovecot-acl``
-     file in each mailbox (or ``CONTROL``) directory. This is the default.
+     file in each mailbox (or :dovecot_core:ref:`mail_control_path`) directory.
+     This is the default.
 
    This backend has the following options:
 

@@ -9,8 +9,6 @@ A user database lookup typically returns uid, gid and home fields. See
 Other fields may also be stored in the userdb, and these are called 'extra
 fields'. Possibilities are:
 
-* ``mail`` :ref:`mail_location_settings`, overrides
-  the global :dovecot_core:ref:`mail_location` setting.
 * ``nice``: Set the mail process's priority to be the given value.
 * ``chroot``: Chroot to given directory. Overrides
   :dovecot_core:ref:`mail_chroot` setting in ``dovecot.conf``.
@@ -30,8 +28,9 @@ fields'. Possibilities are:
 
 These fields can be returned the exact same way as uid, gid, and home fields.
 
-It's possible to override settings from ``dovecot.conf`` (most commonly
-``quota_rule`` to set per-user quota limits or also plugin-settings).
+It's also possible to override settings from ``dovecot.conf``. For example
+:dovecot_core:ref:`mail_path` and ``quota_rule`` settings are commonly
+overridden to provide per-user mail path or quota limit.
 
 The extra fields are also passed to :ref:`post_login_scripting`.
 
@@ -79,7 +78,6 @@ name and key with ``/``. For example:
   namespace default {
     inbox = yes
     separator = .
-    location = maildir:~/Maildir
   }
 
 The separator setting can be overridden by returning
