@@ -1049,7 +1049,7 @@ See :ref:`settings` for list of all setting groups.
 
    ``tb-extra-mailbox-sep``
 
-      Because ``LAYOUT=fs`` (mbox and dbox) confuses Thunderbird, causing
+      Because :dovecot_core:ref:`mailbox_list_layout` = fs (mbox and dbox) confuses Thunderbird, causing
       extra / suffixes to mailbox names, Dovecot can be told to ignore
       the superfluous character instead of judging the mailbox name to be
       invalid.
@@ -1057,7 +1057,7 @@ See :ref:`settings` for list of all setting groups.
    ``tb-lsub-flags``
 
       Without this workaround, Thunderbird doesn't immediately recognize
-      that LSUB replies with ``LAYOUT=fs`` aren't selectable, and users may
+      that LSUB replies with :dovecot_core:ref:`mailbox_list_layout` = fs aren't selectable, and users may
       receive pop-ups with not selectable errors. Showing \Noselect flags for
       these replies (e.g., in mbox use) causes them to be grayed out.
 
@@ -2172,13 +2172,15 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: mail_full_filesystem_access
+   :seealso: @mailbox_list_validate_fs_names;dovecot_core
    :default: no
    :values: @boolean
 
    Allow full filesystem access to clients?
 
    If enabled, no access checks are performed other than what the operating
-   system does for the active UID/GID.
+   system does for the active UID/GID. This also disables the
+   :dovecot_core:ref:`mailbox_list_validate_fs_names` setting.
 
    This setting works with both :ref:`Maildir <maildir_mbox_format>` and
    :ref:`mbox <mbox_mbox_format>`, allowing you to prefix mailbox names with
@@ -2199,37 +2201,22 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: mail_home
-   :seealso: @mail_location;dovecot_core, @quick_configuration
+   :seealso: @mail_path;dovecot_core, @quick_configuration
    :values: @string
 
    There are various possible ways of specifying this parameter and
-   :dovecot_core:ref:`mail_location`.
+   :dovecot_core:ref:`mail_path`.
 
-   The following example is one option when ``home=/var/vmail/domain/user/``
-   and ``mail=/var/vmail/domain/user/mail/``:
+   The following example is one option when home is in ``/var/vmail/domain/user/``
+   and mails are in ``/var/vmail/domain/user/mail/``:
 
    .. code-block:: none
 
      mail_home = /var/vmail/%d/%n
-     mail_location = maildir:~/mail
+     mail_path = ~/mail
 
    :ref:`Mail service user variables <variables-mail_service_user>` can be
    used.
-
-
-.. dovecot_core:setting:: mail_location
-   :seealso: @mail_location_settings
-   :values: @string
-
-   This setting indicates the location for users' mailboxes.
-
-   For an empty value, Dovecot attempts to find the mailboxes
-   automatically (looking at ``~/Maildir, /var/mail/username, ~/mail, and
-   ~/Mail``, in that order). However, auto-detection commonly fails for
-   users whose mail directory hasn't yet been created, so you should
-   explicitly state the full location here, if possible.
-
-   :ref:`Mail user variables <variables-mail_user>` can be used.
 
 
 .. dovecot_core:setting:: mail_log_prefix

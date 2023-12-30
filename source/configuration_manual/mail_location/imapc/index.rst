@@ -13,10 +13,11 @@ Mail Location Configuration Examples
 .. code-block:: none
 
   # In-memory index files:
-  mail_location = imapc:
+  mail_driver = imapc
+  mail_path = 
 
   # Store index files locally:
-  mail_location = imapc:~/imapc
+  mail_path = ~/imapc
 
 Connection Settings
 ^^^^^^^^^^^^^^^^^^^

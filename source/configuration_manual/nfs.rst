@@ -60,22 +60,23 @@ Potential optimizations to use:
   downside is that it requires running periodic ``doveadm purge`` for each
   user. Theses commands should be run via a doveadm proxy so they are run
   in the proper backends.
-* Use ``mail_location = ...:VOLATILEDIR=/dev/shm/dovecot/%2.256Nu/%u`` to
+* Use :dovecot_core:ref:`mail_volatile_path` = ``/dev/shm/dovecot/%2.256Nu/%u`` to
   store some temporary files (e.g. lock files) in tmpfs rather than NFS.
-* Use ``mail_location = ...:LISTINDEX=/dev/shm/dovecot/%2.256Nu/%u/dovecot.list.index``
+* Use :dovecot_core:ref:`mailbox_list_index_prefix` = ``/dev/shm/dovecot/%2.256Nu/%u/dovecot.list.index``
   to store mailbox list indexes in tmpfs rather than NFS. This makes moving
   the users between backends more expensive though. It also needs a way to
   delete the list indexes for users that have already moved to different
   backends.
-* Use ``mail_location = ...:INDEX=/fast/%2.256Nu/%u:ITERINDEX`` to use
+* Use :dovecot_core:ref:`mail_index_path` = ``/fast/%2.256Nu/%u`` to use
   "smaller fast storage" for index files and "larger slow storage" for mail
-  files. The ``ITERINDEX`` is used to list mailboxes via the fast index
-  storage rather than the slow mail storage.
-* Use ``mail_location = ...:ALT=/slow/%2.256Nu/%u:NOALTCHECK`` to use
+  files. Also use :dovecot_core:ref:`mailbox_list_iter_from_index_dir` = yes
+  to list mailboxes via the fast index storage rather than the slow mail
+  storage.
+* Use :dovecot_core:ref:`mail_alt_path` = /slow/%2.256Nu/%u`` to use
   "smaller fast storage" for new mails and "larger slow storage" for old
-  mails. The ``doveadm altmove`` command needs to be run periodically. The
-  ``NOALTCHECK`` disables a sanity check to make sure alt storage path doesn't
-  unexpectedly change.
+  mails. The ``doveadm altmove`` command needs to be run periodically. Also use
+  :dovecot_core:ref:`mail_alt_check` = no to disable a sanity check to make sure
+  alt storage path doesn't unexpectedly change.
 * See the NFS mount options above.
 
 Clock synchronization
@@ -121,5 +122,7 @@ configuration.
       index files::
 
           protocol lda {
-            mail_location = maildir:~/Maildir:INDEX=MEMORY
+            mail_driver = maildir
+	    mail_path = ~/Maildir
+	    mail_index_path = MEMORY
           }

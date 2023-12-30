@@ -33,7 +33,7 @@ Cassandra/sproxyd Example Configuration
 
 .. code-block:: none
 
-   mail_location = obox:%u:INDEX=~/:CONTROL=~/
+   mail_driver = obox
 
    fs_sproxyd_url = http://sproxyd.scality.example.com/
    fs_sproxyd_class = 2

@@ -288,9 +288,8 @@ inside ``~/Maildir`` directory:
 * ``~/Maildir/.folder.subfolder/`` is a subfolder of a folder (i.e.
   ``folder/subfolder``).
 
-You can also optionally use the ``fs`` layout by appending ``:LAYOUT=fs`` to
-:ref:`mail_location <mail_location_settings>`. This makes the folder structure
-look like:
+You can also optionally use the :dovecot_core:ref:`mailbox_list_layout` = ``fs``.
+This makes the folder structure look like:
 
 * ``~/Maildir/new``, ``~/Maildir/cur`` and ``~/Maildir/tmp`` directories
   contain the messages for INBOX, just like with Maildir++.

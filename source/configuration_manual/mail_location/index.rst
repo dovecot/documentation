@@ -63,7 +63,9 @@ Settings
 
    .. code-block:: none
 
-      mail_location = maildir:~/Maildir:INBOX=~/Maildir/.INBOX
+      mail_driver = maildir
+      mail_path = ~/Maildir
+      mail_inbox_path = ~/Maildir/.INBOX
 
 
 .. dovecot_core:setting:: mail_index_path

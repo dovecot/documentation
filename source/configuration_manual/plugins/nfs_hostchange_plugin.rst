@@ -15,10 +15,10 @@ Backends should also delete local mailbox list indexes that haven't been accesse
 Backend tracking
 ================
 
-This plugin keeps track of the user's last hostname in ``INDEX/.lasthost`` file, which exists in NFS.
-That file's inode and modification time is stored in ``LISTINDEX/.lasthost`` file, which exists locally under ``/dev/shm``.
-Whenever the user logs in, ``INDEX/.lasthost`` is compared to ``LISTINDEX/.lasthost`` to see if it has changed.
-If yes, delete ``LISTINDEX/dovecot.list.index*`` files and rewrite the ``LISTINDEX/.lasthost`` file.
+This plugin keeps track of the user's last hostname in ``mail_index_path/.lasthost`` file, which exists in NFS.
+That file's inode and modification time is stored in ``mailbox_list_index_prefix/.lasthost`` file, which exists locally under ``/dev/shm``.
+Whenever the user logs in, ``mail_index_path/.lasthost`` is compared to ``mailbox_list_index_prefix/.lasthost`` to see if it has changed.
+If yes, delete ``mailbox_list_index_prefix/dovecot.list.index*`` files and rewrite the ``mailbox_list_index_prefix/.lasthost`` file.
 
 Migration
 =========
@@ -29,15 +29,15 @@ To avoid large NFS disk I/O spikes, the existing ``dovecot.list.index*`` files s
 
 If ``nfs_hostchange_migration=yes``:
 
- * ``stat(INDEX/dovecot.list.index.log)`` is done to see if a backend without nfs_hostchange plugin has accessed the user.
-   If the ``stat()`` succeeds to find the file, the local ``LISTINDEX/.lasthost`` and ``LISTINDEX/dovecot.list.index*`` are deleted.
- * If ``LISTINDEX/.lasthost`` doesn't now exist, ``INDEX/dovecot.list.index*`` are copied to local ``/dev/shm``.
-   ``INDEX/dovecot.list.index*`` files are then deleted.
+ * ``stat(mail_index_path/dovecot.list.index.log)`` is done to see if a backend without nfs_hostchange plugin has accessed the user.
+   If the ``stat()`` succeeds to find the file, the local ``mailbox_list_index_prefix/.lasthost`` and ``mailbox_list_index_prefix/dovecot.list.index*`` are deleted.
+ * If ``mailbox_list_index_prefix/.lasthost`` doesn't now exist, ``mail_index_path/dovecot.list.index*`` are copied to local ``/dev/shm``.
+   ``mail_index_path/dovecot.list.index*`` files are then deleted.
 
 Note that using the migration setting introduces the extra ``stat()`` call to NFS, so once most users have been accessed this setting should be disabled.
 
 There should be also a cronjob that deletes old users from the local ``/dev/shm``.
-It should be done with ``LISTINDEX/.lasthost`` locked.
+It should be done with ``mailbox_list_index_prefix/.lasthost`` locked.
 This plugin introduces a new ``doveadm nfs usercache clean <age> <user dir>`` command, which can be used e.g.::
 
   doveadm nfs usercache clean 7days /dev/shm/dovecot/00/testuser
@@ -51,7 +51,7 @@ Configuration
 
 .. code:: none
 
-  mail_location = ...:LISTINDEX=/dev/shm/dovecot-listindex/%2.256Nu/%u/dovecot.list.index
+  mailbox_list_index_prefix = /dev/shm/dovecot-listindex/%2.256Nu/%u/dovecot.list.index
   mail_plugins = $mail_plugins nfs_hostchange
   
   plugin {

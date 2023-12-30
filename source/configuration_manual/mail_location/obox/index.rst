@@ -156,7 +156,8 @@ Enable mailbox list indexes. This is required with obox format.
 
    mailbox_list_index_include_inbox = yes
 
-If LISTINDEX resides in tmpfs, INBOX status should be included in list index.
+If :dovecot_core:ref:`mailbox_list_index_prefix` resides in tmpfs, INBOX
+status should be included in list index.
 
 .. toctree::
    :maxdepth: 1

@@ -132,7 +132,8 @@ AWS S3 specific example configurations.
 
 .. code-block:: none
 
-   mail_location = obox:%8Mu/%u:INDEX=~/:CONTROL=~/
+   mail_driver = obox
+   mail_path = %8Mu/%u
    fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/
    fs_s3_bucket = mails
    fs_s3_region = region

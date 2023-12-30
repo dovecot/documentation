@@ -22,8 +22,9 @@ You need to create group vmail and user vmail.
 
 .. code-block:: none
 
-  mail_home=/srv/mail/%Lu
-  mail_location=sdbox:~/Mail
+  mail_home = /srv/mail/%Lu
+  mail_driver = sdbox
+  mail_path = ~/Mail
 
   ## this is sometimes needed
   #first_valid_uid = uid-of-vmail-user
@@ -126,8 +127,8 @@ Mail Location
 -------------
 
 You can let Dovecot do its automatic mail location detection but if that
-doesn't work you can set the location manually in ``mail_location`` setting.
-See :ref:`mail_location_settings` for more information.
+doesn't work you can set the location manually with
+:ref:`mail_location_settings`.
 
 Mbox
 ----

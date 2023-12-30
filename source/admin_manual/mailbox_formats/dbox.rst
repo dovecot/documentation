@@ -54,10 +54,9 @@ both ``sdbox`` and ``mdbox``.
 In these tables ``<root>`` is shorthand for the mail location root directory
 on the filesystem.
 
-Index files can be stored in a different location by using the ``INDEX``
-parameter in the mail location specification. If the ``INDEX``
-parameter is specified, it will override the mail location root for index files
-and the "map index" file (``mdbox only``).
+Index files can be stored in a different location by using the
+:dovecot_core:ref:`mail_index_path` setting. If specified, it will override
+the mail location root for index files and mdbox's "map index" file.
 
 ====================================================== =========================
 Location                                               Description
@@ -190,8 +189,7 @@ dbox supports looking up files from "altpath" if they're not found from the
 primary path. This means that it's possible to move older mails that are
 rarely accessed to cheaper (slower) storage.
 
-To enable this functionality, use the ``ALT`` parameter in the
-:dovecot_core:ref:`mail location <mail_location>`.
+To enable this functionality, use the :dovecot_core:ref:`mail_alt_path` setting.
 See :ref:`alternate storage configuration <dbox_settings_alt_storage>`.
 
 When messages are moved from primary storage to alternate storage, only the
@@ -254,8 +252,8 @@ For example:
 
 .. code-block:: none
 
-  # If you have mail_location=mdbox:~/mdbox:INDEX=/var/index/%u
-  doveadm import mdbox_deleted:~/mdbox:INDEX=/var/index/%u "" subject oops
+  # If you have mail_path=~/mdbox, mail_index_path=/var/index/%u
+  doveadm import -p /var/index/%u mdbox_deleted:~/mdbox "" subject oops
 
 This finds a deleted mail with subject "oops" and imports it into INBOX.
 
