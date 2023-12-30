@@ -50,8 +50,8 @@ Alternate Storage
 See :ref:`dbox alternate storage <dbox_mbox_format_alt_storage>` for further
 information.
 
-To specify an alternate storage area, use the ``ALT`` parameter in the mail
-location. For example:
+To specify an alternate storage area, use the
+:dovecot_core:ref:`mail_alt_path` setting. For example:
 
 .. code-block:: none
 

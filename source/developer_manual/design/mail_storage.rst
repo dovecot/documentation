@@ -54,8 +54,7 @@ Methods that mail storage backends need to implement are:
 ``autodetect(ns, set)``
    Returns TRUE if based on the given settings
    it looks like this storage should be handling the namespace. This is
-   done when mail_location doesn't explicitly specify the mailbox
-   format.
+   done when mail_driver isn't explicitly set.
 
 ``mailbox_alloc()``
    Allocate memory for :ref:`mailbox <lib-storage_mailbox>`.

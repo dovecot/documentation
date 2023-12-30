@@ -10,14 +10,15 @@ To enable mailbox sharing, you'll need to create a shared namespace. See
 ::
 
    # User's private mail location.
-   mail_location = maildir:~/Maildir
+   mail_driver = maildir
+   mail_path = ~/Maildir
 
    # When creating any namespaces, you must also have a private namespace:
    namespace {
      type = private
      separator = /
      prefix =
-     #location defaults to mail_location.
+     # use global mail_path
      inbox = yes
    }
 
@@ -25,10 +26,11 @@ To enable mailbox sharing, you'll need to create a shared namespace. See
      type = shared
      separator = /
      prefix = shared/%%u/
-     # a) Per-user seen flags. Maildir indexes are shared. (INDEXPVT requires v2.2+)
-     location = maildir:%%h/Maildir:INDEXPVT=~/Maildir/shared/%%u
-     # b) Per-user seen flags. Maildir indexes are not shared. If users have direct filesystem level access to their mails, this is a safer option:
-     #location = maildir:%%h/Maildir:INDEX=~/Maildir/shared/%%u:INDEXPVT=~/Maildir/shared/%%u
+     mail_path = %{owner_home}/Maildir
+     mail_index_private_path = ~/Maildir/shared/%{owner_user}
+     # If users have direct filesystem level access to their mails, it's safer
+     # to not share the index files between users:
+     #mail_index_path = ~/Maildir/shared/%{owner_user}
      subscriptions = no
      list = children
    }
@@ -51,60 +53,27 @@ instead use ``prefix=shared/%%n/``.
 user, the "shared" directory isn't listed by the LIST command. If you
 wish it to be visible always, you can set ``list=yes``.
 
-The ``location`` setting specifies how to access other users' mailboxes.
-If you use %%h, the user's home directory is asked from auth process via
-auth-userdb socket. See :ref:`lda` for how to configure the socket.
-If the users' mailboxes can be found using a
-template, it's faster not to use the ``%%h``. For example:
+The sharing user can be accessed with ``%{owner_user}``, ``%{owner_username}``
+and ``%{owner_domain}`` variables. The sharing user's home directory can also
+be looked up via :ref:`authentication-user_database` using ``%{owner_home}``
+variable. These can be used in :ref:`mail_location_settings`.
+If the users' mailboxes can be found using a template, it's a bit more
+efficient to not use ``%{owner_home}``. For example:
 
 ::
 
-     location = maildir:/var/mail/%%d/%%n/Maildir:INDEXPVT=~/Maildir/shared/%%u
+     mail_driver = maildir
+     mail_path = /var/mail/%{owner_domain}/%{owner_username}/Maildir
+     mail_index_private_path = ~/Maildir/shared/%{owner_user}
 
-
-.. _user_shared_mailboxes_vs:
-
-% vs %%
--------
-
-``%var`` expands to the logged in user's variable, while ``%%var`` expands to
-the other users' variables. For example if your name is "myself" and
-"someone1" and "someone2" have shared mailboxes to you, the variables
-could be expanded like:
-
--  ``%u`` expands to "myself"
-
--  ``%%u`` expands to "someone1" or "someone2"
-
--  ``%h`` might expand to "/home/myself"
-
--  ``%%h`` might expand to "/home/someone1" or "/home/someone2"
-
--  ``~/`` equals ``%h/``
-
-Note that in e.g. mail_location setting you might need both. For example
-in:
-
-::
-
-   mail_location = maildir:%%h/Maildir:INDEXPVT=%h/Maildir/shared/%%u
-
-What it means is:
-
--  ``%%h/Maildir`` points to the other user's Maildir, e.g.
-   "/home/someone1".
-
--  ``:INDEXPVT=%h/Maildir/shared/%%u`` points to a per-user directory under
-   your own Maildir, e.g. "/home/myself/Maildir/someone1" or
-   "/home/myself/Maildir/someone2". This is necessary for storing
-   per-user seen flags.
 
 dbox
 ----
 
 With dbox the index files are a very important part of the mailboxes.
-You must not try to change ``:INDEX=`` to a user-specific location. This will
-only result in mailbox corruption. (INDEXPVT can be used though.)
+You must not try to change :dovecot_core:ref:`mail_index_path` to a
+user-specific location. This will only result in mailbox corruption.
+(:dovecot_core:ref:`mail_index_private_path` can be used though.)
 
 Filesystem permissions
 ----------------------

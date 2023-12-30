@@ -13,10 +13,11 @@ Mail Location Configuration Examples
 .. code-block:: none
 
   # In-memory index files:
-  mail_location = pop3c:
+  mail_driver = pop3c
+  mail_path = 
 
   # Store index files locally:
-  mail_location = pop3c:~/pop3c
+  mail_path = ~/pop3c
 
 Connection Settings
 ===================

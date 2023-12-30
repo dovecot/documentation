@@ -16,7 +16,8 @@ CDMI paths should have two levels of hash directories:
 
 .. code-block:: none
 
-   mail_location = obox:%2Mu/%2.3Mu/%u:INDEX=~/:CONTROL=~/
+   mail_driver = obox
+   mail_path = %2Mu/%2.3Mu/%u
 
 We'll use 2 + 3 chars of the MD5 of the username at the beginning of each
 object path to improve performance. These directories should be pre-created to
@@ -107,7 +108,8 @@ Example configuration
 
 .. code-block:: none
 
-   mail_location = obox:%2Mu/%2.3Mu/%u:INDEX=~/:CONTROL=~/
+   mail_driver = obox
+   mail_path = %2Mu/%2.3Mu/%u
    fs_scality_url = http://scality.example.com/
    fs_scality_use_listing = yes
    fs_compress_write_method = zstd

@@ -47,12 +47,13 @@ Dovecot Backend configuration snippet
           separator = /
           list = children
           subscriptions = no
-          location = imapc:~/shared/%%u:INDEXPVT=~/shared-pvt/%%u
+          mail_driver = imapc
+	  mail_path = ~/shared/%{owner_user}
+	  mail_index_private_path = ~/shared-pvt/%{owner_user}
         }
 
         namespace inbox {
           inbox = yes
-          location =
         }
 
         passdb {

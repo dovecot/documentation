@@ -26,8 +26,8 @@ Index Files
 It's a good idea to keep index files in a partition where there are no
 filesystem quota limits. The index files exist to speed up mailbox
 operations, so Dovecot runs more slowly if it can't keep them updated. You can
-specify the index file location by appending ``:INDEX=/somewhere`` to
-:ref:`mail_location_settings`.
+specify the index file location with :dovecot_core:ref:`mail_index_path`
+setting.
 
 Dovecot can handle "out of disk space" errors in index file handling and
 transparently move to in-memory indexes. It'll use the in-memory indexes until
@@ -49,7 +49,10 @@ Example preferred configuration:
 
 .. code-block:: none
 
-  mail_location = mbox:~/mail:INBOX=/var/mail/%u:INDEX=/var/no-quotas/index/%u
+  mail_driver = mbox
+  mail_path = ~/mail
+  mail_inbox_path = /var/mail/%u
+  mail_index_path = /var/no-quotas/index/%u
 
 Maildir
 -------
@@ -59,17 +62,20 @@ file. If it can't do this, it can give an error when opening the mailbox,
 making it impossible to expunge any mails.
 
 Currently the only way to avoid this is to use a separate partition for the
-uidlist files where there are no filesystem quota limits. You can do this by
-appending ``:CONTROL=/somewhere`` to :ref:`mail_location_settings`.
+uidlist files where there are no filesystem quota limits. You can do this with
+the :dovecot_core:ref:`mail_control_path` setting.
 
 Example preferred configuration:
 
 .. code-block:: none
 
-  mail_location = maildir:~/Maildir:INDEX=/var/no-quotas/index/%u:CONTROL=/var/no-quotas/control/%u
+  mail_driver = maildir
+  mail_path = ~/Maildir
+  mail_index_path = /var/no-quotas/index/%u
+  mail_control_path = /var/no-quotas/control/%u
 
 Note that if you change the location of the control files, Dovecot will look
-in the new ``CONTROL`` directory (``/var/no-quotas/control/%u``) for the
+in the new control path directory (``/var/no-quotas/control/%u``) for the
 subscriptions file.
 
 Driver Parameters

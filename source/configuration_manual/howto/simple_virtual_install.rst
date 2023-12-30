@@ -43,7 +43,8 @@ If you want to configure SSL, see :ref:`SSL <ssl>`.
    auth_allow_cleartext = yes
 
    # We're using Maildir format
-   mail_location = maildir:~/Maildir
+   mail_driver = maildir
+   mail_path = ~/Maildir
 
    # If you're using POP3, you'll need this:
    pop3_uidl_format = %g

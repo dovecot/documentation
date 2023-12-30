@@ -53,7 +53,7 @@ If you have only read privileges, you can try using in-memory indexes.
 
 ::
 
-  doveadm import -u destuser maildir:/opt/backup/destuser/Maildir:INDEX=MEMORY "" ALL
+  doveadm import -u destuser -p mail_index_path=MEMORY maildir:/opt/backup/destuser/Maildir "" ALL
 
 
 Merging Storages
@@ -107,14 +107,14 @@ mails") where mail storage broke down, but a separate index storage is ok, and
 index storage supports snapshots:
 
  * Snapshot the current index volume at the time of breakage
- * Make sure ``mail_location`` setting has ``ITERINDEX`` feature enabled, so
+ * Make sure :dovecot_core:ref:`mailbox_list_iter_from_index_dir` setting is enabled, so
    folder listing is done using the index volume rather than the mail volume.
  * Mount a new empty mail volume
 
     * The first time IMAP/POP3 client attempts to access an existing mail,
       Dovecot rebuilds the indexes for the folder. This makes the folder look
-      empty. The folder structure is preserved, as long as ``ITERINDEX``
-      setting is used.
+      empty. The folder structure is preserved, as long as
+      :dovecot_core:ref:`mailbox_list_iter_from_index_dir` setting is enabled.
 
  * Once the original mail volume is recovered, first disable all user access
    and all new mail deliveries.
@@ -128,9 +128,13 @@ index storage supports snapshots:
 
    .. code-block::
 
-     doveadm import -u user@example.com sdbox:/mnt/temp-mail-storage/user:INDEX=/mnt/temp-index-storage/user:CONTROL=/mnt/temp-index-storage/user:ITERINDEX "" all
+     doveadm import -u user@example.com \
+       -p /mnt/temp-index-storage/user \
+       -p /mnt/temp-index-storage/user \
+       -p mailbox_list_iter_from_index_dir \
+       sdbox:/mnt/temp-mail-storage/user "" all
 
-   If your normal ``mail_location`` has other settings, you may also want to
-   specify them using some temporary locations. For example
-   ``VOLATILEDIR=/tmp/doveadm-import/user:LISTINDEX=/tmp/doveadm-import/user/dovecot.list.index``
+   If your have other :ref:`mail location settings <mail_location_settings>`,
+   you may also want to specify them using some temporary locations. For example
+   ``-p mail_volatile_path=/tmp/doveadm-import/user -p mailbox_list_index_prefix=/tmp/doveadm-import/user/dovecot.list.index``
    and after importing delete the directories.

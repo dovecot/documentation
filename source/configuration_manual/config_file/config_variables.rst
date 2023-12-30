@@ -1,16 +1,16 @@
 .. _config_variables:
 
-======================
+================
 Config Variables
-======================
+================
 
 You can use special variables in several places:
 
-* mail_location setting and namespace locations
+* All settings, except of type :ref:`string_novars`. Most commonly used by
+  :ref:`mail_location_settings`.
 * static :ref:`authentication-user_database` and :ref:`passwd-file userdb <authentication-passwd_file>` template strings
 * :ref:`authentication-ldap` and :ref:`authentication-sql` :ref:`authentication-user_database` query strings
 * log prefix for imap/pop3 process
-* Plugin settings
 
 .. _variables-global:
 

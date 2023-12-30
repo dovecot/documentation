@@ -87,7 +87,7 @@ Per-mailbox ACLs are stored in ``dovecot-acl`` named file, which exists in:
 * :ref:`maildir_mbox_format`: The Maildir's mail directory (eg. ``~/Maildir,
   ~/Maildir/.folder/``).
 * :ref:`mbox_mbox_format`: Control directory. You should explicitly specify
-  ``:CONTROL=<path>`` in :dovecot_core:ref:`mail_location`.
+  :dovecot_core:ref:`mail_control_path`.
 * :ref:`dbox_mbox_format`: dbox's mail directory (eg.
   ``~/dbox/INBOX/dbox-Mails/``).
 

@@ -58,25 +58,32 @@ File                Description
 ``~/mail/inbox``    mbox file containing mail for INBOX
 =================== ============================================================
 
-This can be enabled by adding ``:LAYOUT=maildir++`` to the mail location:
+This can be enabled by using :dovecot_core:ref:`mailbox_list_layout` =
+maildir++:
 
 .. code-block:: none
 
   # Incomplete example. Do not use!
-  mail_location = mbox:~/mail:LAYOUT=maildir++
+  mail_driver = mbox
+  mail_path = ~/mail
+  mailbox_list_layout = maildir++
 
-However, there is a problem. Under mbox, setting ``LAYOUT=maildir++`` alone
+However, there is a problem. Under mbox, setting ``mailbox_list_layout=maildir++`` alone
 leaves Dovecot unable to place index files, which would likely result in
-performance issues. So when using ``LAYOUT=maildir++` with mbox, it is
-advisable to also configure ``INDEX``. Now, mail files (other than INBOX) all
+performance issues. So when using ``mailbox_list_layout=maildir++` with mbox, it is
+advisable to also configure :dovecot_core:ref:`mail_index_path`. Now, mail files (other than INBOX) all
 have names beginning with a dot, so if we like we can store other things in
 the ``~/mail`` directory by using names which do not begin with a dot. So we
-could think to use ``INDEX`` to store indexes at ``~/mail/index/``. Example:
+could think to use :dovecot_core:ref:`mail_index_path` to store indexes at
+``~/mail/index/``. Example:
 
 .. code-block:: none
 
   # Incomplete example. Do not use!
-  mail_location = mbox:~/mail:LAYOUT=maildir++:INDEX=~/mail/index
+  mail_driver = mbox
+  mail_path = ~/mail
+  mailbox_list_layout = maildir++
+  mail_index_path = ~/mail/index
 
 If we do this, then indexes will be kept at ``~/mail/index/`` and this will
 not clash with any names used for mail folders. There is one more thing we
@@ -84,7 +91,7 @@ may want to consider though. By default Dovecot will maintain a list of
 subscribed folders in a file ``.subscriptions`` under the mail location root.
 In this case that means it would end up at ``~/mail/.subscriptions``. This
 would then mean that it would be impossible to create a mail folder called
-"subscriptions". We can get around this by using the ``CONTROL`` parameter to
+"subscriptions". We can get around this by using the :dovecot_core:ref:`mail_control_path` setting
 move the ``.subscriptions`` file somewhere else, for example into the
 directory ``~/mail/control`` (again, choosing a name which doesn't begin with
 a dot so we don't collide with the names of mbox files storing mail folders).
@@ -94,12 +101,16 @@ That gives us:
 
   # Trick mbox configuration which allows a mail folder which contains both
   # messages and sub-folders
-  mail_location = mbox:~/mail:LAYOUT=maildir++:INDEX=~/mail/index:CONTROL=~/mail/control
+  mail_driver = mbox
+  mail_path = ~/mail
+  mailbox_list_layout = maildir++
+  mail_index_path = ~/mail/index
+  mail_control_path = ~/mail/control
 
 This then allows mail folders which contains both messages and sub-folders
 without possibility of naming collisions between mail folders and other data.
 
-There is one further wrinkle. Specifying ``:LAYOUT=maildir++`` for mbox
+There is one further wrinkle. Specifying ``mailbox_list_layout==maildir++`` for mbox
 changes the default hierarchy separator from a slash to a dot. This should
 not be a problem for IMAP clients as the hierarchy separator is exposed
 through IMAP. However anything which expects to just "know" that the
@@ -119,13 +130,15 @@ could then do that. The rule would then be that messages go into the
 specially-named file in the directory corresponding to the mail folder name.
 We want to choose a special name which would be unlikely to collide with
 a folder name. We could think to use something like ``mBoX-MeSsAgEs``. Now,
-it turns out that you can configure Dovecot to do this using the ``DIRNAME``
-parameter:
+it turns out that you can configure Dovecot to do this using the
+:dovecot_core:ref:`mailbox_directory_name` setting:
 
 .. code-block:: none
 
   # Incomplete example. Do not use!
-  mail_location = mbox:~/mail:DIRNAME=mBoX-MeSsAgEs
+  mail_driver = mbox
+  mail_path = ~/mail
+  mailbox_directory_name = mBoX-MeSsAgEs
 
 With that config, we would get a layout like this:
 
@@ -139,11 +152,11 @@ File                             Description
                                  "foo/bar"
 ================================ ===============================================
 
-However there is a problem. Under mbox, setting ``DIRNAME`` alone leaves
+However there is a problem. Under mbox, setting :dovecot_core:ref:`mailbox_directory_name` alone leaves
 Dovecot unable to place index files, which would likely result in performance
 issues, or worse, if the index directory gets created first, this will
-obstruct the creation of the mbox file. So when using ``DIRNAME`` with mbox,
-it is also necessary to configure ``INDEX``. The question then arises where
+obstruct the creation of the mbox file. So when using :dovecot_core:ref:`mailbox_directory_name` with mbox,
+it is also necessary to configure :dovecot_core:ref:`mail_index_path`. The question then arises where
 to put index files.
 
 Any directory under the ``~/mail`` directory could be considered as a mail
@@ -155,7 +168,7 @@ as few implementation-specific restrictions as possible.
 In addition, by default, Dovecot will create a file ``.subscriptions`` at the
 mail location root to hold a list of mailbox subscriptions. This would make it
 impossible to create a mail folder called ".subscriptions". But we can move
-the ``.subscriptions`` file to another directory by using the ``CONTROL``
+the ``.subscriptions`` file to another directory by using the :dovecot_core:ref:`mail_control_path`
 parameter. To get around these issues, we can add another directory layer
 which separates these purposes. For example:
 
@@ -163,7 +176,11 @@ which separates these purposes. For example:
 
   # Trick mbox configuration which allows a mail folder which contains both
   # messages and sub-folders
-  mail_location = mbox:~/mail/mailboxes:DIRNAME=mBoX-MeSsAgEs:INDEX=~/mail/index:CONTROL=~/mail/control
+  mail_driver = mbox
+  mail_path = ~/mail/mailboxes
+  mailbox_directory_name = mBoX-MeSsAgEs
+  mail_index_path = ~/mail/index
+  mail_control_path = ~/mail/control
 
 would result in the following layout:
 
