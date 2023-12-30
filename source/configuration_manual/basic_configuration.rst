@@ -112,7 +112,7 @@ get SSL configuration working and connect to Dovecot only using SSL.
 Mail Location
 -------------
 
-Set the :dovecot_core:ref:`mail_location`  in ``conf.d/10-mail.conf`` as determined by
+Set the :ref:`mail_location_settings` as determined by
 the instructions in :ref:`find_mail_location`.
 
 mbox
