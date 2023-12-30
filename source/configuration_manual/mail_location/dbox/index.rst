@@ -19,7 +19,8 @@ To use **single-dbox**, use the tag ``sdbox`` in the
 .. code-block:: none
 
   # single-dbox
-  mail_location = sdbox:~/dbox
+  mail_driver = sdbox
+  mail_path = ~/sdbox
 
 For backwards compatibility, ``dbox`` is an alias to ``sdbox`` in the mail
 location. (This usage is deprecated.)
@@ -30,19 +31,16 @@ To use **multi-dbox**, use the tag ``mdbox`` in the
 .. code-block:: none
 
   # multi-dbox
-  mail_location = mdbox:~/mdbox
+  mail_driver = mdbox
+  mail_path = ~/mdbox
 
-Default ``mail_location`` Keys
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Default mail settings
+^^^^^^^^^^^^^^^^^^^^^
 
-For dbox, the default :ref:`mail_location_settings-keys` are:
-
-================ ===============
-Key              Default Value
-================ ===============
-``MAILDIRBOX``   ``mailboxes/``
-``FULLDIRNAME``  ``dbox-Mails/``
-================ ===============
+ * :dovecot_core:ref:`mail_path` = ``%{home}/sdbox`` for sdbox, ``%{home}/mdbox`` for mdbox
+ * :dovecot_core:ref:`mailbox_list_layout` = fs
+ * :dovecot_core:ref:`mailbox_directory_name` = ``dbox-Mails``
+ * :dovecot_core:ref:`mailbox_root_directory_name` = ``mailboxes``
 
 .. _dbox_settings_alt_storage:
 
@@ -57,7 +55,9 @@ location. For example:
 
 .. code-block:: none
 
-  mail_location = mdbox:/var/vmail/%d/%n:ALT=/altstorage/vmail/%d/%n
+  mail_driver = mdbox
+  mail_path = /var/vmail/%d/%n
+  mail_alt_path = /altstorage/vmail/%d/%n
 
 will make Dovecot look for message data first under ``/var/vmail/%d/%n``
 ("primary storage"), and if it is not found there it will look under

@@ -43,8 +43,7 @@ Next create a new transport for dovecot-lda:
 
 LDA is now running using the local user's UID and GID. The mail is
 delivered to the location specified by
-:dovecot_core:ref:`mail_location`
-setting. Note that the above configuration doesn't do any
+:ref:`mail_location_settings`. Note that the above configuration doesn't do any
 :ref:`userdb <authentication-user_database>` lookups, so
 you can't have any per-user configuration. If you want that, see the
 virtual user setup below.

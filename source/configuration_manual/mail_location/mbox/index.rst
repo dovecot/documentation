@@ -20,7 +20,9 @@ For an installation such as this, the mail location is specified with:
 .. code-block:: none
 
   # %u is replaced with the username that logs in
-  mail_location = mbox:~/mail:INBOX=/var/mail/%u
+  mail_driver = mbox
+  mail_path = ~/mail
+  mail_inbox_path = /var/mail/%u
 
 It's in no way a requirement to have the INBOX in ``/var/mail/`` directory. In
 fact, this often just brings problems because Dovecot might not be able to
@@ -30,19 +32,17 @@ completely by just keeping everything in ``~/mail/``:
 .. code-block:: none
 
   # INBOX exists in ~/mail/inbox
-  mail_location = mbox:~/mail
+  mail_driver = mbox
+  mail_path = ~/mail
 
-Default ``mail_location`` Keys
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Default mail settings
+^^^^^^^^^^^^^^^^^^^^^
 
-For mbox, the default :ref:`mail_location_settings-keys` are:
-
-================ =============================================================
-Key              Default Value
-================ =============================================================
-``FULLDIRNAME``  <empty> (For mbox, this setting specifies the mailbox message
-                 file name)
-================ =============================================================
+ * :dovecot_core:ref:`mail_path` = ``%{home}/mail``
+ * :dovecot_core:ref:`mailbox_list_layout` = fs
+ * :dovecot_core:ref:`mailbox_subscriptions_filename` = ``.subscriptions``
+ * :dovecot_core:ref:`mail_inbox_path` = ``inbox`` with fs layout (so INBOX is
+   in ``~/mail/inbox`` rather than ``~/mail/INBOX``)
 
 Index Files
 ^^^^^^^^^^^
@@ -54,7 +54,10 @@ change the index path. Example:
 
 .. code-block:: none
 
-  mail_location = mbox:~/mail:INBOX=/var/mail/%u:INDEX=/var/indexes/%u
+  mail_driver = mbox
+  mail_path = ~/mail
+  mail_inbox_path = /var/mail/%u
+  mail_index_path = /var/indexes/%u
 
 Locking
 ^^^^^^^
@@ -126,11 +129,13 @@ completely.
 If you **really** want to use Dovecot as a plain POP3 server without index
 files, you can work around not having a per-user directory:
 
-* Set users' home directory in userdb to some empty non-writable directory,
-  for example ``/var/empty``
-* Modify :dovecot_core:ref:`mail_location` so that the mail root directory is also
-  the empty directory and append ``:INDEX=MEMORY`` to it. For example:
-  ``mail_location = mbox:/var/empty:INBOX=/var/mail/%u:INDEX=MEMORY``
+* Set users' home directory in an empty non-writable directory, e.g.
+  ``mail_home = /var/empty``
+* Set :dovecot_core:ref:`mail_path` to an empty non-writable directory, e.g.
+  ``mail_path = /var/empty``
+* Set :dovecot_core:ref:`mail_inbox_path`, e.g.
+  ``mail_inbox_path = /var/mail/%u``
+* Disable index files with :dovecot_core:ref:`mail_index_path` = MEMORY
 * Note that if you have IMAP users, they'll see ``/var/empty`` as the
   directory containing other mailboxes than INBOX. If the directory is
   writable, all the users will have their mailboxes shared.
@@ -138,7 +143,7 @@ files, you can work around not having a per-user directory:
 Directory Layout
 ^^^^^^^^^^^^^^^^
 
-By default Dovecot uses filesystem layout under mbox. This means that mail is
+By default Dovecot uses fs layout under mbox. This means that mail is
 stored in mbox files under hierarchical directories, for example:
 
 ================== =============================================================
@@ -154,8 +159,8 @@ which are subfolders of mailboxes containing messages.
 
 As an alternative, it is possible to configure Dovecot to store all mailboxes
 in a single directory with hierarchical levels separated by a dot. This can
-be configured by adding ``:LAYOUT=maildir++`` to the mail location. There
-are, however, some further considerations when doing this; see
+be configured by adding ``mailbox_list_layout=maildir++`` to the mail location.
+There are, however, some further considerations when doing this; see
 :ref:`mbox_child_folders` for some examples.
 
 .. _mbox_settings_control_files:
@@ -168,17 +173,19 @@ Under mbox format, Dovecot maintains the subscribed mailboxes list in a file
 in the example configuration this would be at ``~/mail/.subscriptions``.
 
 If you want to put this somewhere else, you can change the directory in which
-the ``.subscriptions`` file is kept by using the ``CONTROL`` parameter. For
-example:
+the ``.subscriptions`` file is kept by using the
+:dovecot_core:ref:`mail_control_path` setting. For example:
 
 .. code-block:: none
 
-  mail_location = mbox:~/mail:CONTROL=~/mail-control
+  mail_driver = mbox
+  mail_path = ~/mail
+  mail_control_path = ~/mail-control
 
 would store the subscribed mailboxes list at ``~/mail-control/.subscriptions``.
 
-One practical application of the ``CONTROL`` parameter is described at
-:ref:`mbox_child_folders`.
+One practical application of the :dovecot_core:ref:`mail_control_path` setting
+is described at :ref:`mbox_child_folders`.
 
 .. _mbox_settings_message_filename:
 
@@ -191,9 +198,9 @@ equivalent to the name of the mailbox. Under this scheme, it is not possible
 to have mailboxes which contain both messages and child mailboxes.
 
 However, the behaviour (for mailboxes other than INBOX) can be changed using
-the ``DIRNAME`` parameter. If the ``DIRNAME`` parameter is specified with a
-particular value, then Dovecot will store messages in a file with a name of
-that value, in a directory with a name equivalent to the mailbox name.
+the :dovecot_core:ref:`mailbox_directory_name` setting. If it is specified,
+Dovecot stores messages in a mbox file with a name of that value, in a
+directory with a name equivalent to the mailbox name.
 
 There are, however, some further considerations when doing this; see
 :ref:`mbox_child_folders` for an example.
