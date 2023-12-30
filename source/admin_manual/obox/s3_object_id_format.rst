@@ -11,7 +11,7 @@ URI Path we write to:
 ============================= ====================================================================================
 <key prefix> =                 From URL config [optional; empty if not specified]
 <bucketname> =                 Either from URL hostname or URL "bucket=" query parameter
-<dispersion prefix> =          From mail_location setting. Recommended value (see XXX)
+<dispersion prefix> =          From :dovecot_core:ref:`mail_path` setting. Recommended value (see XXX)
                                gives two levels of dispersion of the format: [0-9a-f]{2}/[0-9a-f]{3}
 <dovecot internal path> =      Dovecot internal path to file. Example: $user/mailboxes/$mailboxguid/$messageguid
 ============================= ====================================================================================

@@ -16,14 +16,15 @@ For example to create a public Maildir mailboxes, use:
 ::
 
    # User's private mail location
-   mail_location = maildir:~/Maildir
+   mail_driver = maildir
+   mail_path = ~/Maildir
 
    # When creating any namespaces, you must also have a private namespace:
    namespace {
      type = private
      separator = /
      prefix =
-     #location defaults to mail_location.
+     # use global mail_path
      inbox = yes
    }
 
@@ -31,7 +32,7 @@ For example to create a public Maildir mailboxes, use:
      type = public
      separator = /
      prefix = Public/
-     location = maildir:/var/mail/public
+     mail_path = /var/mail/public
      subscriptions = no
    }
 
@@ -53,7 +54,7 @@ Per-user \\Seen flag
 ----------------------------
 
 The recommended way to enable private flags for shared
-mailboxes is to create private indexes with :INDEXPVT=<path>. This
+mailboxes is to create private indexes with :dovecot_core:ref:`mail_index_private_path`. This
 creates dovecot.index.pvt[.log] files, which contain only the message
 UIDs and the private flags. Currently the list of private flags is
 hardcoded only to the \\Seen flag.
@@ -66,14 +67,16 @@ Example:
      type = public
      separator = /
      prefix = Public/
-     location = maildir:/var/mail/public:INDEXPVT=~/Maildir/public
+     mail_driver = maildir
+     mail_path = /var/mail/public
+     mail_index_private_path = ~/Maildir/public
      subscriptions = no
    }
 
 Maildir: Keyword sharing
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Make sure you don't try to use per-user CONTROL directory. Otherwise
+Make sure you don't try to use per-user :dovecot_core:ref:`mail_control_path` directory. Otherwise
 ``dovecot-keywords`` file doesn't get shared and keyword mapping breaks.
 
 Subscriptions
@@ -94,7 +97,7 @@ namespace with empty prefix, create one:
           hidden = yes
           list = no
           alias_for = inbox # the INBOX namespace's name
-          location = <same as mail_location>:SUBSCRIPTIONS=subscriptions-shared
+          mailbox_subscriptions_filename = subscriptions-shared
         }
 
 
@@ -112,7 +115,9 @@ you'll need to store index files elsewhere:
    namespace {
      type = public
      prefix = Public/
-     location = mbox:/var/mail/public/:INDEX=/var/indexes/public
+     mail_driver = mbox
+     mail_path = /var/mail/public/
+     mail_index_path = /var/indexes/public
      subscriptions = no
    }
 
@@ -125,13 +130,14 @@ Read-only Maildirs
 ~~~~~~~~~~~~~~~~~~
 
 If your Maildir is read-only, the control and index files still need to
-be created somewhere. You can specify the path for these by appending
-``:CONTROL=<path>:INDEX=<path>`` to mail location. The path may point to
+be created somewhere. You can specify the path for these with
+:dovecot_core:ref:`mail_control_path` and :dovecot_core:ref:`mail_index_path`
+settings. The path may point to
 a directory that is shared among all users, or to a per-user path. Note
 that if the Maildir has any keywords, the per-user control directory
 breaks the keywords since there is no ``dovecot-keywords`` file.
 
-When configuring multiple namespaces, the CONTROL/INDEX path must be
+When configuring multiple namespaces, the control/index path must be
 different for each namespace. Otherwise if namespaces have identically
 named mailboxes their control/index directories will conflict and cause
 all kinds of problems.
@@ -147,14 +153,20 @@ files, assuming you've set up permissions properly.
      type = public
      separator = /
      prefix = Public/
-     location = maildir:/var/mail/public:CONTROL=~/Maildir/public:INDEX=~/Maildir/public
+     mail_driver = maildir
+     mail_path = /var/mail/public
+     mail_control_path = ~/Maildir/public
+     mail_index_path = ~/Maildir/public
      subscriptions = no
    }
    namespace {
      type = public
      separator = /
      prefix = Team/
-     location = maildir:/var/mail/team:CONTROL=~/Maildir/team:INDEX=~/Maildir/team
+     mail_driver = maildir
+     mail_path = /var/mail/team
+     mail_control_path = ~/Maildir/team
+     mail_index_path = ~/Maildir/team
      subscriptions = no
    }
 
@@ -169,7 +181,8 @@ See :ref:`ACL <acl>` for more information about ACLs.
      type = public
      separator = .
      prefix = public.
-     location = maildir:/var/mail/public
+     mail_driver = maildir
+     mail_path = /var/mail/public
      subscriptions = no
      list = children
    }

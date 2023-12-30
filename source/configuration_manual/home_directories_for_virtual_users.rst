@@ -80,7 +80,8 @@ set:
 .. code-block:: none
 
   mail_home = /var/vmail/%d/%n
-  mail_location = maildir:~/mail
+  mail_driver = maildir
+  mail_path = ~/mail
 
 Examples
 ========
@@ -93,6 +94,6 @@ as a base for home directory:
 
 .. code-block:: none
 
-  user_attrs = .., mailDirectory=home=/var/vmail/%$
+  user_attrs = .., =home=/var/vmail/%{ldap:mailDirectory}
 
-Then just use ``mail_location=maildir:~/Maildir``.
+Then just use ``mail_path=~/Maildir``.

@@ -55,12 +55,12 @@ Settings
    :filter: fts_dovecot
    :setting: fs_driver
    :plugin: fts-dovecot
-   :seealso: @obox;dovecot_plugin, @mail_location;dovecot_core
+   :seealso: @obox;dovecot_plugin, @mail_location_settings
    :values: @named_filter
 
    Named filter for initializing :ref:`FS driver <fs>` for FTS indexes.
    It must be somewhat synchronized with :dovecot_plugin:ref:`obox` and
-   :dovecot_core:ref:`mail_location`.
+   :ref:`mail_location_settings`.
 
    It is strongly recommended to use :ref:`fscache` to speed up
    :ref:`obox <obox_settings>` and Dovecot FTS Engine operation.

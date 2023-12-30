@@ -27,7 +27,8 @@ for accessing the source POP3 server. For example:
    namespace pop3c {
      prefix = POP3-MIGRATION-NS/
      separator = /
-     location = pop3c:
+     mail_driver = pop3c
+     mail_path = 
      inbox = no
      list = no
      hidden = yes
