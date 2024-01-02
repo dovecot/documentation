@@ -1433,9 +1433,9 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: listen
    :default: \*, \:\:
-   :values: @ip_addresses
+   :values: @boollist
 
-   A comma-separated list of IP addresses or hostnames on which external network
+   A list of IP addresses or hostnames on which external network
    connections will be handled.
 
    ``*`` listens at all IPv4 interfaces, and ``::`` listens at all IPv6
@@ -1445,7 +1445,7 @@ See :ref:`settings` for list of all setting groups.
 
    .. code-block:: none
 
-     listen = 127.0.0.1, 192.168.0.1
+     listen = 127.0.0.1 192.168.0.1
 
 
 .. dovecot_core:setting:: lmtp_add_received_header

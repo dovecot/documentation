@@ -46,7 +46,7 @@ This is based on already having Dovecot already compiled and installed.
 
       protocols = imap
 
-      listen = *, ::
+      listen = * ::
 
       mail_location = imapc:~/imapc
       # Change the line below to reflect the IP address of your Exchange Server.

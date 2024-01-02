@@ -34,7 +34,7 @@ interfaces/addresses. The simplest way to do that would be using
 
    # doveconf protocols listen
    protocols = imap pop3 lmtp sieve
-   listen = *, ::
+   listen = * ::
 
 If the protocols setting doesn't contain ``imap`` then add it. Also make
 sure, that relevant ``!include`` or ``!include_try`` configuration lines
