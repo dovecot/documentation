@@ -124,7 +124,7 @@ user-context.
 
    service imap-login {
      inet_listener imap {
-     address = 1.2.3.4
+     listen = 1.2.3.4
      port = 143
      }
      inet_listener imaps {

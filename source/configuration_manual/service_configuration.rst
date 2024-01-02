@@ -302,12 +302,6 @@ Settings
    to distinguish different listener types that one service may employ.
 
 
-.. dovecot_core:setting:: inet_listener_address
-   :values: @ip_addresses
-
-   Overrides the :dovecot_core:ref:`listen` setting for this listener.
-
-
 .. dovecot_core:setting:: inet_listener_port
    :default: 0
    :values: !<0-65535>

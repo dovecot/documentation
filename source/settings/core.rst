@@ -1448,6 +1448,31 @@ See :ref:`settings` for list of all setting groups.
      listen = 127.0.0.1 192.168.0.1
 
 
+   The listen setting can be overridden for :dovecot_core:ref:`inet_listener` like this:
+
+   .. code-block:: none
+
+     service lmtp {
+       inet_listener lmtp {
+         listen = 192.168.0.25 192.168.0.33
+       }
+     }
+
+
+   It is also possible to extend the list of IP addresses configured globally
+   inside the :dovecot_core:ref:`inet_listener`:
+
+   .. code-block:: none
+
+     service imap-login {
+       inet_listener imap {
+         listen {
+             192.168.0.99 = yes
+         }
+       }
+     }
+
+
 .. dovecot_core:setting:: lmtp_add_received_header
    :added: 2.3.9
    :default: yes

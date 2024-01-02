@@ -30,7 +30,7 @@ You can configure LMTP to be listening on TCP or UNIX sockets:
 
    service lmtp {
       inet_listener lmtp {
-         address = 192.168.0.24 127.0.0.1 ::1
+         listen = 192.168.0.24 127.0.0.1 ::1
          port = 24
       }
 
