@@ -350,7 +350,7 @@ It works similarly to the :ref:`fs-compress wrapper <fs-compress>`.
 It can be used to encrypt e.g.:
 
 * FTS index objects (:dovecot_plugin:ref:`fts_dovecot`)
-* External mail attachments (:dovecot_core:ref:`mail_attachment`)
+* External mail attachments (:dovecot_core:ref:`mail_ext_attachment`)
 
 Note that fs-crypt and the fs-compress wrapper can be also combined.
 Please make sure that compression is always applied before encryption. See
