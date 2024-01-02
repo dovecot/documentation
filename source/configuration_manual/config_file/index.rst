@@ -65,6 +65,27 @@ looked up using the named filter called ``mail_attribute``. Note that named
 filters cannot have a name before the ``{``, i.e. ``mail_attribute foo {``
 will result in an error.
 
+Setting names that begin with the same prefix as a named filter will be
+treated as if they belong inside the named filter. For example all these
+settings are equivalent and modify the exact same setting:
+
+.. code-block:: none
+
+   auth_policy_server_url = example.com
+   auth_policy {
+     server_url = example.com
+     auth_policy_server_url = example.com
+   }
+
+Regardless of which method is used in ``dovecot.conf``, the ``doveconf``
+output will be:
+
+.. code-block:: none
+
+   auth_policy {
+     server_url = example.com
+   }
+
 Named list filters are similar to named filters, except there can be many of
 them, each with a unique name. For example:
 
