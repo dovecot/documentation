@@ -1992,7 +1992,7 @@ See :ref:`settings` for list of all setting groups.
      Do not consider any attachment with disposition inlined.
 
 
-.. dovecot_core:setting:: mail_attachment_dir
+.. dovecot_core:setting:: mail_ext_attachment_path
    :values: @string
 
    The directory in which to store mail attachments.
@@ -2005,10 +2005,10 @@ See :ref:`settings` for list of all setting groups.
    :ref:`Mail user variables <variables-mail_user>` can be used.
 
 
-.. dovecot_core:setting_filter:: mail_attachment
-   :filter: mail_attachment
+.. dovecot_core:setting_filter:: mail_ext_attachment
+   :filter: mail_ext_attachment
    :setting: fs_driver
-   :seealso: @mail_attachment_dir;dovecot_core
+   :seealso: @mail_ext_attachment_path;dovecot_core
    :values: @named_filter
 
    Named filter for initializing :ref:`FS driver <fs>` for external attachments.
@@ -2037,9 +2037,9 @@ See :ref:`settings` for list of all setting groups.
         SIS attachments are replaced with files filled with spaces.
 
 
-.. dovecot_core:setting:: mail_attachment_hash
+.. dovecot_core:setting:: mail_ext_attachment_hash
    :default: %{sha1}
-   :seealso: @mail_attachment_dir;dovecot_core
+   :seealso: @mail_ext_attachment_path;dovecot_core
    :values: %{md4}, %{md5}, %{sha1}, %{sha256}, %{sha512}, %{size}
 
    The hash format to use in attachment filenames when saving attachments
@@ -2051,9 +2051,9 @@ See :ref:`settings` for list of all setting groups.
    will return only the first 80 bits of the SHA256 output.
 
 
-.. dovecot_core:setting:: mail_attachment_min_size
+.. dovecot_core:setting:: mail_ext_attachment_min_size
    :default: 128k
-   :seealso: @mail_attachment_dir;dovecot_core
+   :seealso: @mail_ext_attachment_path;dovecot_core
    :values: @size
 
    Attachments below this size will not be saved externally.

@@ -33,7 +33,7 @@ Deprecated features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | Feature                                                    | Notes                                                                                    |
 +============================================================+==========================================================================================+
-| :dovecot_core:ref:`fs-sis <mail_attachment>`               | Saving new mails' attachments via fs-sis is disabled,                                    |
+| :dovecot_core:ref:`fs-sis <mail_ext_attachment>`           | Saving new mails' attachments via fs-sis is disabled,                                    |
 |                                                            | but reading SIS attachments is still supported.                                          |
 |                                                            | Missing SIS attachments are replaced with files filled with spaces.                      |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
