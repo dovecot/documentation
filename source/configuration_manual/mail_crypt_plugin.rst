@@ -403,8 +403,9 @@ To encrypt/decrypt files manually, you can use
 .. code-block:: none
 
   doveadm \
-    -o fs_driver=crypt \
-    -o fs_parent/fs_driver=posix \
+    -o fs=crypt,posix \
+    -o fs/crypt/fs_driver=crypt \
+    -o fs/posix/fs_driver=posix \
     -o crypt_private_key="$(cat pubkey.pem)" \
     -o crypt_global_private_key=main \
     -o crypt_global_private_key/main/crypt_private_key="$(cat privkey.pem)" \

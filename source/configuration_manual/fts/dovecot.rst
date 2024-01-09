@@ -219,11 +219,11 @@ Example configuration using OBOX::
   # mail_control_path = ~/
   fs_s3_url = http://mails.s3.example.com/
   obox {
-    fs_driver = fscache
-    fs_fscache_size = 512M
-    fs_fscache_path = /var/cache/mails/%4Nu
-    fs_parent {
-      fs_driver = s3
+    fs fscache {
+      fs_fscache_size = 512M
+      fs_fscache_path = /var/cache/mails/%4Nu
+    }
+    fs s3 {
     }
   }
 
@@ -240,8 +240,9 @@ Example configuration using OBOX::
   # Local filesystem example:
   # Use local filesystem storing FTS indexes
   fts_dovecot {
-    fs_driver = posix
-    fs_posix_prefix = %h/fts/
+    fs posix {
+      fs_posix_prefix = %h/fts/
+    }
   }
 
   # OBOX example:
@@ -249,13 +250,13 @@ Example configuration using OBOX::
   # Then append e.g. /fts/
   # Example: http://<ip.address.>/%2Mu/%2.3Mu/%u/fts/
   fts_dovecot {
-    fs_driver = fts-cache
-    fs_parent {
-      fs_driver = fscache
+    fs fts-cache {
+    }
+    fs fscache {
       fs_fscache_size = 512M
       fs_fscache_path = /var/cache/fts/%4Nu
-      fs_parent {
-      fs_driver = s3
+    }
+    fs s3 {
       fs_s3_url = http://fts.s3.example.com/%2Mu/%2.3Mu/%u/fts/
     }
   }

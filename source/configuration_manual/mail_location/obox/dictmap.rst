@@ -40,50 +40,47 @@ Cassandra/sproxyd Example Configuration
    fs_http_reason_header_max_length = 200
    fs_compress_write_method = zstd
    obox {
-     fs_driver = fscache
-     fs_fscache_size = 512M
-     fs_fscache_path = /var/cache/mails/%4Nu
-     fs_parent {
-       fs_driver = dictmap
+     fs fscache {
+       fs_fscache_size = 512M
+       fs_fscache_path = /var/cache/mails/%4Nu
+     }
+     fs dictmap {
        dict_driver = proxy
        dict_proxy_name = cassandra
        dict_proxy_socket_path = dict-async
        #fs_dictmap_lock_path = /tmp # Set only without lazy_expunge plugin
-       fs_parent {
-	 fs_driver = sproxyd
-       }
+     }
+     fs sproxyd {
      }
    }
    metacache {
-     fs_driver = compress
-     fs_parent {
-       fs_driver = dictmap
+     fs compress {
+     }
+     fs dictmap {
        dict_driver = proxy
        dict_proxy_name = cassandra
        dict_proxy_socket_path = dict-async
-       fs_parent {
-         fs_driver = sproxyd
-       }
+     }
+     fs sproxyd {
      }
    }
    fts_dovecot {
-     fs_driver = fts-cache
-     fs_parent {
-       fs_driver = fscache
+     fs fts-cache {
+     }
+     fs fscache {
        fs_fscache_size = 512M
        fs_fscache_path = /var/cache/fts/%4Nu
-       fs_driver = compress
-       fs_parent {
-	 fs_driver = dictmap
-	 dict_driver = proxy
-	 dict_proxy_name = cassandra
-	 dict_proxy_socket_path = dict-async
-	 fs_dictmap_dict_prefix = %u/fts/
-	 fs_parent {
-	   fs_driver = sproxyd
-	   fs_sproxyd_class = 1
-	 }
-       }
+     }
+     fs compress {
+     }
+     fs dictmap {
+       dict_driver = proxy
+       dict_proxy_name = cassandra
+       dict_proxy_socket_path = dict-async
+       fs_dictmap_dict_prefix = %u/fts/
+     }
+     fs sproxyd {
+       fs_sproxyd_class = 1
      }
    }
 
