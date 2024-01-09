@@ -298,16 +298,16 @@ Values From userdb
 ==================
 
 To change namespace settings from userdb, you need to return
-``namespace/<name>/setting=value``. To create a namespace, make sure you first
-return ``namespace=<name>[,<name>,...]`` and settings after this. Note that the
-``namespace`` setting must list all the namespaces that are used - there's
-currently no way to simply add a namespace.
+``namespace/<name>/setting+=value``. To create a namespace, make sure you first
+return ``namespace+=<name>[,<name>,...]`` and settings after this. This adds
+a new given namespace. Without ``+`` all the namespaces are replaced with the
+given list.
 
 ::
 
   userdb db1 {
     driver = static
-    args = namespace=inbox,special namespace/special/mail_path=/var/special/%u namespace/special/prefix=special/
+    args = namespace+=special namespace/special/mail_path=/var/special/%u namespace/special/prefix=special/
   }
 
 Dovecot Support for Shared Mailboxes
