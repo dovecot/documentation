@@ -155,6 +155,40 @@ The first setting that exists is used.
 
 	     namespace inbox { prefix = INBOX/ } # DOES NOT WORK
 
+Named Filter Overrides
+^^^^^^^^^^^^^^^^^^^^^^
+
+It's possible to add/update/replace named [list] filters via userdb settings or
+via ``-o`` command line parameters. For example if you have:
+
+.. code-block:: none
+
+   oauth2 {
+     http_client_request_max_attempts = 1
+   }
+
+This can be replaced with ``-o oauth2/http_client_request_max_attempts=2``
+command line parameters.
+
+Similarly for named list filters if you have:
+
+.. code-block:: none
+
+   namespace inbox {
+     separator = /
+   }
+
+This can be replaced with ``-o namespace/inbox/separator=.`` command line
+parameters.
+
+If you want to add a new named list filter, use
+``<setting name>+=<filter name>[,<filter name>,...]``. For example:
+``-o namespace+=second -o namespace/second/...=...``
+
+If you want to replace all the named list filters, use
+``<setting name>=<filter name>[,<filter name>,...]`` (i.e. without the ``+``).
+For example:
+``-o namespace=inbox,second -o namespace/second/...=...``
 
 Connection Filters
 ^^^^^^^^^^^^^^^^^^
