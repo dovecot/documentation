@@ -42,29 +42,27 @@ Example Configuration
 
   fs_compress_write_method = zstd
   obox {
-    fs_driver = fscache
-    fs_fscache_size = 512M
-    fs_fscache_path = /var/cache/mails/%4Nu
-    fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/
-    fs_s3_bucket = mails
-    fs_parent {
-      fs_driver = compress
-      fs_parent {
-        fs_driver = s3
-      }
+    fs fscache {
+      fs_fscache_size = 512M
+      fs_fscache_path = /var/cache/mails/%4Nu
+    }
+    fs compress {
+    }
+    fs s3 {
+      fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/
+      fs_s3_bucket = mails
     }
   }
   fts_dovecot {
-    fs_driver = fscache
-    fs_fscache_size = 512M
-    fs_fscache_path = /var/cache/fts/%4Nu
-    fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/%8Mu/%u/fts/
-    fs_s3_bucket = mails
-    fs_parent {
-      fs_driver = compress
-      fs_parent {
-        fs_driver = s3
-      }
+    fs fscache {
+      fs_fscache_size = 512M
+      fs_fscache_path = /var/cache/fts/%4Nu
+    }
+    fs compress {
+    }
+    fs s3 {
+      fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/%8Mu/%u/fts/
+      fs_s3_bucket = mails
     }
   }
 
@@ -75,23 +73,21 @@ fs-dictmap doesn't modify the object contents in any way:
 
   # compress before dictmap
   metacache {
-    fs_driver = compress
-    fs_parent {
-      fs_driver = dictmap
-      fs_parent {
-        fs_driver = sproxyd
-      }
+    fs compress {
+    }
+    fs dictmap {
+    }
+    fs sproxyd {
     }
   }
 
   # compress after dictmap
   metacache {
-    fs_driver = dictmap
-    fs_parent {
-      fs_driver = compress
-      fs_parent {
-        fs_driver = sproxyd
-      }
+    fs dictmap {
+    }
+    fs compress {
+    }
+    fs sproxyd {
     }
   }
 
@@ -100,18 +96,16 @@ With encryption enabled:
 .. code-block:: none
 
   obox {
-    fs_driver = fscache
-    fs_fscache_size = 512M
-    fs_fscache_path = /var/cache/mails/%4Nu
-    fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/
-    fs_s3_bucket = mails
-    fs_parent {
-      fs_driver = compress
-      fs_parent {
-        fs_driver = crypt
-	fs_parent {
-          fs_driver = s3
-	}
-      }
+    fs fscache {
+      fs_fscache_size = 512M
+      fs_fscache_path = /var/cache/mails/%4Nu
+    }
+    fs compress {
+    }
+    fs crypt {
+    }
+    fs s3 {
+      fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/
+      fs_s3_bucket = mails
     }
   }

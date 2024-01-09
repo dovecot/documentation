@@ -53,7 +53,7 @@ Settings
 
 .. dovecot_plugin:setting_filter:: fts_dovecot
    :filter: fts_dovecot
-   :setting: fs_driver
+   :setting: fs
    :plugin: fts-dovecot
    :seealso: @obox;dovecot_plugin, @mail_location_settings
    :values: @named_filter
@@ -80,7 +80,8 @@ Settings
      fts_driver = dovecot
 
      fts_dovecot {
-       fs_driver = posix
+       fs posix {
+       }
        fs_posix_prefix = /var/fts/%u
      }
 

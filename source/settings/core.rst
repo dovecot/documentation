@@ -2009,7 +2009,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting_filter:: mail_ext_attachment
    :filter: mail_ext_attachment
-   :setting: fs_driver
+   :setting: fs
    :seealso: @mail_ext_attachment_path;dovecot_core
    :values: @named_filter
 

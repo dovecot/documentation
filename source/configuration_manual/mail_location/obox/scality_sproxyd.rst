@@ -11,8 +11,9 @@ example configuration.
 .. code-block:: none
 
    # Basic configuration:
-   fs_driver = sproxyd
-   fs_sproxyd_url = http://scality.example.com/
+   fs sproxyd {
+     fs_sproxyd_url = http://scality.example.com/
+   }
 
 Dovecot uses its own Scality key format, which encodes the object type also to
 the key itself. See :ref:`scality_key_format`.
