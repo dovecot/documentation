@@ -10,10 +10,11 @@ This document covers configuration specific to the Amazon Web Services S3
 
 .. code-block:: none
 
-   fs_driver = aws-s3
-   fs_s3_url = https://BUCKETNAME.s3.REGION.amazonaws.com/
-   fs_s3_auth_role = s3access
-   fs_s3_region = REGION
+   fs aws-s3 {
+     fs_s3_url = https://BUCKETNAME.s3.REGION.amazonaws.com/
+     fs_s3_auth_role = s3access
+     fs_s3_region = REGION
+   }
 
 .. _fs-aws-s3:
 
@@ -56,10 +57,11 @@ done.
 
 .. code-block:: none
 
-   fs_driver = aws-s3
-   fs_s3_url = https://bucket-name.s3.region.amazonaws.com/
-   fs_s3_auth_role = s3access
-   fs_s3_region = region
+   fs aws-s3 {
+     fs_s3_url = https://bucket-name.s3.region.amazonaws.com/
+     fs_s3_auth_role = s3access
+     fs_s3_region = region
+   }
 
 When using IAM you must ensure that the ``fs-auth`` service has proper
 permissions/owner. Configure the user for the fs-auth listener to be the same
@@ -150,9 +152,10 @@ can be used by adding the region parameter to the S3 URL:
 
 .. code-block:: none
 
-  fs_driver = aws-s3
-  fs_s3_url = https://ACCESSKEY:SECRET@BUCKETNAME.s3.eu-central-1.amazonaws.com/
-  fs_s3_region = eu-central-1
+   fs aws-s3 {
+     fs_s3_url = https://ACCESSKEY:SECRET@BUCKETNAME.s3.eu-central-1.amazonaws.com/
+     fs_s3_region = eu-central-1
+   }
 
 aws-s3 backend
 --------------
@@ -191,33 +194,32 @@ With IAM:
    fs_s3_auth_role = s3access
    fs_compress_write_method = zstd
    obox {
-     fs_driver = fscache
-     fs_fscache_size = 512M
-     fs_fscache_path = /var/cache/mails/%4Nu
-     fs_parent {
-       fs_driver = compress
-       fs_parent {
-         fs_driver = aws-s3
-       }
+     fs fscache {
+       fs_fscache_size = 512M
+       fs_fscache_path = /var/cache/mails/%4Nu
+     }
+     fs compress {
+     }
+     fs aws-s3 {
      }
    }
    metacache {
-     fs_driver = compress
-     fs_parent {
-       fs_driver = aws-s3
+     fs compress {
+     }
+     fs aws-s3 {
      }
    }
    fts_dovecot {
-     fs_driver = fts-cache
-     fs_s3_url = https://bucket-name.s3.region.amazonaws.com/%8Mu/%u/fts/
-     fs_parent {
-       fs_driver = fscache
+     fs fts-cache {
+     }
+     fs fscache {
        fs_fscache_size = 512M
        fs_fscache_path = /var/cache/fts/%4Nu
-       fs_driver = compress
-       fs_parent {
-         fs_driver = aws-s3
-       }
+     }
+     fs compress {
+     }
+     fs aws-s3 {
+       fs_s3_url = https://bucket-name.s3.region.amazonaws.com/%8Mu/%u/fts/
      }
    }
    mail_uid = vmail

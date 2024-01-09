@@ -35,6 +35,48 @@ Name                                            Description
 :ref:`fts-cache <fs-fts-cache>`                 Local FTS cache
 =============================================== =============================
 
+FS Settings
+-----------
+
+.. dovecot_core:setting:: fs
+   :values: @named_list_filter
+
+   Creates a new fs to the list of filesystems. The filter name refers
+   to the :dovecot_core:ref:`fs_name` setting.
+
+   Example::
+
+     fs posix {
+       [...]
+     }
+
+   Since an empty :dovecot_core:ref:`fs_driver` defaults to ``fs_name``,
+   there is no need to specify ``fs_driver`` setting explicitly.
+
+   It's possible to specify the same fs multiple times by separating the
+   ``fs_name`` and ``fs_driver`` settings::
+
+     fs compress1 {
+       fs_driver = compress
+     }
+     fs compress2 {
+       fs_driver = compress
+     }
+
+
+.. dovecot_core:setting:: fs_name
+   :values: @string
+
+   Name of the fs. The :dovecot_core:ref:`fs_driver` setting defaults to this.
+
+
+.. dovecot_core:setting:: fs_driver
+   :values: @string
+   :default: @fs_name;dovecot_core
+
+   The fs driver to use. Defaults to :dovecot_core:ref:`fs_name`.
+
+
 .. _fs-posix:
 
 POSIX Filesystem
