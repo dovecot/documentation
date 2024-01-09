@@ -158,7 +158,7 @@ Settings
 .. dovecot_plugin:setting_filter:: obox
    :filter: obox
    :plugin: obox
-   :setting: fs_driver
+   :setting: fs
    :values: @named_filter
    :seealso: @metacache;dovecot_plugin
 
@@ -168,7 +168,7 @@ Settings
 .. dovecot_plugin:setting_filter:: metacache
    :filter: metacache
    :plugin: obox
-   :setting: fs_driver
+   :setting: fs
    :values: @named_filter
    :seealso: @obox;dovecot_plugin
 

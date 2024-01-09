@@ -7,21 +7,21 @@ fscache
 .. code-block:: none
 
   obox {
-    fs_driver = fscache
-    fs_fscache_size = 2G
-    fs_fscache_path = /var/cache/mails
-    fs_parent {
-      # ...
+    fs fscache {
+      fs_fscache_size = 2G
+      fs_fscache_path = /var/cache/mails
     }
+    #fs ... {
+    #}
   }
   # Or split users to multiple directories (4 x 512MB = 2 GB total):
   obox {
-    fs_driver = fscache
-    fs_fscache_size = 512M
-    fs_fscache_path = /var/cache/mails/%4Nu
-    fs_parent {
-      # ...
+    fs fscache {
+      fs_fscache_size = 512M
+      fs_fscache_path = /var/cache/mails/%4Nu
     }
+    #fs ... {
+    #}
   }
 
 All of the object storage Backends should be set up to use fscache with at
