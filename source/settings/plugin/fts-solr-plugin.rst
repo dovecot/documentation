@@ -9,72 +9,63 @@ fts-solr plugin
 Settings
 ========
 
-.. dovecot_plugin:setting:: fts_solr
+
+.. dovecot_plugin:setting:: fts_solr_batch_size
+   :plugin: fts-solr
+   :values: @uint
+   :default: 1000
+
+   Configures the number of mails sent to Solr in a single request.
+
+   * With :dovecot_plugin:ref:`fts_autoindex` = ``yes``, each new mail gets
+     separately indexed on arrival, so ``fts_solr_batch_size`` only matters
+     during the initial indexing of a mailbox.
+
+   * With :dovecot_plugin:ref:`fts_autoindex` = ``no``, new mails don't get
+     indexed on arrival, so ``fts_solr_batch_size`` is used when indexing
+     is triggered.
+
+.. dovecot_plugin:setting:: fts_solr_soft_commit
+   :plugin: fts-solr
+   :values: @boolean
+   :default: yes
+
+   Controls whether new mails are immediately searchable via Solr.
+
+   * See :ref:`fts_backend_solr-soft_commits` for additional information.
+
+
+.. dovecot_plugin:setting:: fts_solr_url
    :plugin: fts-solr
    :values: @string
 
-   Configuration of fts_solr driver.
+   Required base URL for Solr.
 
-   Format is a space separated list of options:
+   * Remember to add your core name if using solr 7+:
+     ``"/solr/dovecot/"``.
 
-   .. code-block:: none
 
-     fts_solr = [option1[=value1]] [option2[=value2]] [...]
+Example:
 
-   The following options are supported:
+.. code-block:: none
 
-   ``url=<url>``
+  fts_solr_url = http://solr.example.org:8983/solr/dovecot/
+  fts_solr_batch_size = 1000
 
-     * Default: ``https://localhost:8983/solr/dovecot/``
-     * Values:  :ref:`string`
-     * Required base URL for Solr.
 
-       * Remember to add your core name if using solr 7+:
-         ``"/solr/dovecot/"``.
+Troubleshooting
+===============
 
-   ``debug``
+Debug can be activated using:
 
-     * Default: no
-     * Values:  <existence> (if ``debug`` exists, it is enabled)
-     * Enable HTTP debugging. Writes to debug log.
+.. code-block:: none
 
-   ``rawlog_dir=<directory>``
+  log_debug = category=fts-solr
 
-     .. dovecotadded:: 2.3.6
+Rawlogs can be activated using:
 
-     * Default: <empty>
-     * Values:  :ref:`string`
-     * Enable rawlog debugging. Store HTTP exchanges between Dovecot and Solr
-       in this directory.
+.. code-block:: none
 
-   ``batch_size``
-
-     .. dovecotadded:: 2.3.6
-
-     * Default: ``1000``
-     * Values:  :ref:`uint`
-     * Configure the number of mails sent in single requests to Solr.
-
-       * With ``fts_autoindex=yes``, each new mail gets separately indexed on
-         arrival, so ``batch_size`` only matters when doing the initial
-         indexing of a mailbox.
-       * With ``fts_autoindex=no``, new mails don't get indexed on arrival, so
-         ``batch_size`` is used when indexing gets triggered.
-
-   ``soft_commit=yes|no``
-
-     .. dovecotadded:: 2.3.6
-
-     * Default: ``yes``
-     * Values:  :ref:`boolean`
-     * Controls whether new mails are immediately searchable via Solr.
-
-       * See :ref:`fts_backend_solr-soft_commits` for additional information.
-
-   Example:
-
-   .. code-block:: none
-
-     plugin {
-       fts_solr = url=http://solr.example.org:8983/solr/ debug batch_size=1000
-     }
+  fts_solr {
+    http_client_rawlog_dir = /path/to/writable/directory/solr-rawlogs
+  }
