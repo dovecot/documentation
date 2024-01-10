@@ -232,36 +232,65 @@ Example configuration using OBOX::
     fts_dovecot = yes
   }
 
-  plugin {
-    fts = dovecot
+  fts_driver = dovecot
 
-    # Fall back to built in search.
-    #fts_enforced = no
+  # Fall back to built in search.
+  #fts_enforced = no
 
-    # Local filesystem example:
-    # Use local filesystem storing FTS indexes
-    fts_dovecot {
-      fs_driver = posix
-      fs_posix_prefix = %h/fts/
-    }
+  # Local filesystem example:
+  # Use local filesystem storing FTS indexes
+  fts_dovecot {
+    fs_driver = posix
+    fs_posix_prefix = %h/fts/
+  }
 
-    # OBOX example:
-    # Keep URL the same as obox plus the mail_path setting.
-    # Then append e.g. /fts/
-    # Example: http://<ip.address.>/%2Mu/%2.3Mu/%u/fts/
-    fts_dovecot {
-      fs_driver = fts-cache
+  # OBOX example:
+  # Keep URL the same as obox plus the mail_path setting,
+  # Then append e.g. /fts/
+  # Example: http://<ip.address.>/%2Mu/%2.3Mu/%u/fts/
+  fts_dovecot {
+    fs_driver = fts-cache
+    fs_parent {
+      fs_driver = fscache
+      fs_fscache_size = 512M
+      fs_fscache_path = /var/cache/fts/%4Nu
       fs_parent {
-        fs_driver = fscache
-	fs_fscache_size = 512M
-	fs_fscache_path = /var/cache/fts/%4Nu
-	fs_parent {
-	  fs_driver = s3
-	  fs_s3_url = http://fts.s3.example.com/%2Mu/%2.3Mu/%u/fts/
-	}
-      }
+      fs_driver = s3
+      fs_s3_url = http://fts.s3.example.com/%2Mu/%2.3Mu/%u/fts/
+    }
+  }
+
+  # Proactively index mail as it is delivered or appended, not only when
+  # searching.
+  fts_autoindex=yes
+
+  # How many \Recent flagged mails a mailbox is allowed to have, before it
+  # is not autoindexed.
+  # This setting can be used to exclude mailboxes that are seldom accessed
+  # from automatic indexing.
+  fts_autoindex_max_recent_msgs=99
+
+  # Exclude mailboxes we do not wish to index automatically.
+  # These will be indexed on demand, if they are used in a search.
+  namespace inbox {
+    inbox = yes
+
+    mailbox spam {
+      special_use = \Junk
+      fts_autoindex_exclude = yes
     }
 
+    mailbox trash {
+      special_use = \Trash
+      fts_autoindex_exclude = yes
+    }
+
+    mailbox .DUMPSTER {
+      fts_autoindex_exclude = yes
+    }
+  }
+
+  plugin {
     # Detected languages. Languages that are not recognized, default to the
     # first enumerated language, i.e. en.
     fts_languages = en fr # English and French.
@@ -278,20 +307,5 @@ Example configuration using OBOX::
     # otherwise tokenize the text into "words".
     fts_tokenizers = generic email-address
     fts_tokenizer_generic = algorithm=simple
-
-    # Proactively index mail as it is delivered or appended, not only when
-    # searching.
-    fts_autoindex=yes
-
-    # How many \Recent flagged mails a mailbox is allowed to have, before it
-    # is not autoindexed.
-    # This setting can be used to exclude mailboxes that are seldom accessed
-    # from automatic indexing.
-    fts_autoindex_max_recent_msgs=99
-
-    # Exclude mailboxes we do not wish to index automatically.
-    # These will be indexed on demand, if they are used in a search.
-    fts_autoindex_exclude = \Junk
-    fts_autoindex_exclude2 = \Trash
-    fts_autoindex_exclude3 = .DUMPSTER
   }
+

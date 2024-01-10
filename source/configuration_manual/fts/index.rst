@@ -173,11 +173,10 @@ Indexing Attachments
 Attachments can be indexed either via a script that translates the attachment
 to UTF-8 plaintext or Apache Tika server.
 
-* :dovecot_plugin:ref:`fts_decoder`: Use decoder script.
-* :dovecot_plugin:ref:`fts_tika`: Use Apache Tika server.
+* :dovecot_plugin:ref:`fts_decoder_driver`
+* :dovecot_plugin:ref:`fts_decoder_script_socket_path`
+* :dovecot_plugin:ref:`fts_decoder_tika_url`
 
-.. note:: :dovecot_plugin:ref:`fts_decoder` and :dovecot_plugin:ref:`fts_tika`
-          cannot be used simultaneously
 
 Rescan
 ------

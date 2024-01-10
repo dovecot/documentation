@@ -73,48 +73,26 @@ Settings
 .. dovecot_plugin:setting:: fts_autoindex_exclude
    :plugin: fts
    :seealso: @fts_autoindex;dovecot_plugin
-   :values: @string
+   :values: @boolean
 
-   To exclude a mailbox from automatic indexing, it can be listed in this
-   setting.
+   You can disable autoindexing for a mailbox adding this flag:
 
-   To exclude additional mailboxes, add sequential numbers to the end of the
-   plugin name.
+   Example::
 
-   Use either mailbox names or special-use flags (e.g. ``\Trash``).
+      mailbox trash {
+        special_use = \Trash
+        fts_autoindex_exclude = yes
+      }
 
-   For example:
+      mailbox spam {
+        special_use = \Junk
+        fts_autoindex_exclude = yes
+      }
 
-   .. code-block:: none
+      mailbox storage/* {
+        fts_autoindex_exclude = yes
+      }
 
-     plugin {
-       fts_autoindex_exclude = \Junk
-       fts_autoindex_exclude2 = \Trash
-       fts_autoindex_exclude3 = External Accounts/*
-     }
-
-   .. dovecotchanged:: 2.4.0,3.0.0 The ``fts_autoindex_exclude`` setting
-      matches also the namespace prefix in folder names. Previously the folder
-      name was matched only without the namespace prefix.
-
-      Namespaces match as follows:
-
-      - The full folder name, including the namespace prefix.
-
-        For example ``fts_autoindex_exclude = Public/incoming``
-        would match the ``incoming`` folder in the ``Public/`` namespace.
-
-      - For ``inbox=yes`` namespace, the folder name without the namespace prefix.
-
-        For example ``fts_autoindex_exclude = incoming`` would match the ``incoming``
-        folder in the INBOX namespace, but not in the ``Public/`` namespace.
-
-      - The folder names support ``*`` and ``?`` wildcards.
-
-      Namespace prefixes must NOT be specified and will not match for:
-
-      - the ``INBOX`` folder
-      - special-use flags (e.g. ``\Trash``)
 
 .. dovecot_plugin:setting:: fts_autoindex_max_recent_msgs
    :added: 2.2.9
@@ -136,32 +114,33 @@ Settings
    Any folders excluded from automatic indexing will still be indexed, if a
    search on them is performed.
 
-   Example:
+   Example::
 
-   .. code-block:: none
-
-     plugin {
-       fts_autoindex_max_recent_msgs = 999
-     }
+     fts_autoindex_max_recent_msgs = 999
 
 
-.. dovecot_plugin:setting:: fts_decoder
+.. dovecot_plugin:setting:: fts_decoder_driver
+   :plugin: fts
+   :values: script, tika
+
+   Optional setting; if set, decode attachments to plaintext using
+   the selected service and index the resulting plaintext.
+
+
+.. dovecot_plugin:setting:: fts_decoder_script_socket_path
    :added: 2.1.0
    :plugin: fts
    :values: @string
 
-   Decode attachments to plaintext using this service and index the resulting
-   plaintext.
+   (previously named ``fts_decoder``)
+   Name of the script service used to decode the attachments.
 
    See the ``decode2text.sh`` script included in Dovecot for how to use this.
 
-   Example:
+   Example::
 
-   .. code-block:: none
-
-     plugin {
-       fts_decoder = decode2text
-     }
+     fts_decoder = script
+     decoder_script_socket_path = decode2text
 
      service decode2text {
        executable = script /usr/lib/dovecot/decode2text.sh
@@ -171,8 +150,15 @@ Settings
        }
      }
 
-   .. note:: :dovecot_plugin:ref:`fts_decoder` and :dovecot_plugin:ref:`fts_tika`
-             cannot be used simultaneously
+
+.. dovecot_plugin:setting:: fts_driver
+   :plugin: fts
+   :values: dovecot, solr, flatcurve
+
+   (previously named ``fts``)
+   Name of the backend implementation used to perform fts indexing.
+   If not specified, fts is disabled.
+
 
 .. dovecot_plugin:setting:: fts_enforced
    :added: 2.2.19
@@ -344,30 +330,46 @@ Settings
    - The asterisk can only be used at the end of the header name.
      Prefix and infix usage of asterisk are not supported.
 
-   Example:
+   Example::
 
-   .. code-block:: none
+     fts_header_excludes {
+       Received = yes
+       DKIM-* = yes
+       X-* = yes
+       Comments = yes
+     }
 
-     plugin {
-       fts_header_excludes = Received DKIM-* X-* Comments
-       fts_header_includes = X-Spam-Status Comments
+     fts_header_includes {
+       X-Spam-Status = yes
+       Comments = yes
      }
 
    - ``Received`` headers, all ``DKIM-`` headers and all ``X-`` experimental
      headers are excluded, with the following exceptions:
-
-     - ``Comments`` and ``X-Spam-Status`` are indexed anyway, as they match
-       **both** ``excludes`` and ``includes`` lists.
-     - All other headers are indexed.
+   - ``Comments`` and ``X-Spam-Status`` are indexed anyway, as they match
+     **both** the excludes and the includes. In this case, includes take
+     precedence.
+   - All other headers are indexed.
 
    Example::
 
-     plugin {
-       fts_header_excludes = *
-       fts_header_includes = From To Cc Bcc Subject Message-ID In-* X-CustomApp-*
+     fts_header_excludes {
+       * = yes
      }
 
-   - No headers are indexed, except those specified in the ``includes``.
+     fts_header_includes {
+       From = yes
+       To = yes
+       Cc = yes
+       Bcc = yes
+       Subject = yes
+       Message-ID = yes
+       In-* = yes
+       X-CustomApp-* = yes
+     }
+
+   - No headers are indexed, except those explicitly specified in
+     the includes.
 
 
 .. dovecot_plugin:setting:: fts_header_includes
@@ -445,23 +447,19 @@ Settings
      }
 
 
-.. dovecot_plugin:setting:: fts_tika
+.. dovecot_plugin:setting:: fts_decoder_tika_url
    :added: 2.2.13
    :plugin: fts
    :values: @string
 
+   (previously named ``fts_tika``)
    URL for `Apache Tika <https://tika.apache.org/>`_ decoder for attachments.
 
-   Example:
+   Example::
 
-   .. code-block:: none
+     fts_driver = tika
+     fts_decoder_tika_url = http://tikahost:9998/tika/
 
-     plugin {
-       fts_tika = http://tikahost:9998/tika/
-     }
-
-   .. note:: :dovecot_plugin:ref:`fts_decoder` and :dovecot_plugin:ref:`fts_tika`
-             cannot be used simultaneously
 
 .. dovecot_plugin:setting:: fts_tokenizers
    :default: generic email-address
