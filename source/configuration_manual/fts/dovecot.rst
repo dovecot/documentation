@@ -46,7 +46,7 @@ that point it might be better to just run a "full" check instead.
 
 After all backends in the cluster have been upgraded to the new Dovecot
 version, the :dovecot_plugin:ref:`fts_dovecot_message_count_stats` setting
-should be enabled. This allows per-folder results for the "fast" scan, which 
+should be enabled. This allows per-folder results for the "fast" scan, which
 makes the scan more reliable and more detailed. After the setting is enabled,
 all the triplets in fts.S files still need to be refreshed for the per-folder
 result to work. This happens for newly written triplets automatically, but
