@@ -44,7 +44,7 @@ with Dovecot.
 
 ::
 
-   sudo -u solr /opt/solr/bin/solr create -c dovecot 
+   sudo -u solr /opt/solr/bin/solr create -c dovecot
 
 The location of the files for the newly created instance on the
 filesystem varies between operating systems and installation methods.
@@ -152,7 +152,7 @@ command to Solr every few minutes.
 You may not need those if you are using a recent Solr (7+) or SolrCloud.
 The default configuration of Solr is to auto-commit every once in a
 while (~15sec) so commit is not necessary. Also, the default
-TieredMergePolicy in Solr will automatically purge removed documents later, 
+TieredMergePolicy in Solr will automatically purge removed documents later,
 so optimize is not necessary.
 
 Soft Commits
