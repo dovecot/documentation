@@ -115,10 +115,8 @@ Example Configuration
     fts_solr = yes
   }
 
-  plugin {
-    fts = solr
-    fts_solr = url=https://solr.example.org:8983/solr/dovecot/
-  }
+  fts_driver = solr
+  fts_solr_url = https://solr.example.org:8983/solr/dovecot/
 
 Important notes:
 
