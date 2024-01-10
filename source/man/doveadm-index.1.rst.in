@@ -34,10 +34,7 @@ using:
 
 .. parsed-literal::
 
-   plugin {
-     ...
-     fts_autoindex = yes
-   }
+   fts_autoindex = yes
 
 in *@pkgsysconfdir@/conf.d/90-plugin.conf*.
 
