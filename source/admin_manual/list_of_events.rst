@@ -2319,15 +2319,16 @@ cluster
 .. dovecot_core:event:: cluster_user_group_move_finished
    :added: 3.0.0
 
-.. dovecot_core:event:: cluster_user_move_started
-   :added: 3.0.0
-
    :field group: User group name.
-   :field moved_users: Number of users moved successfully within this
-     group.
+   :field moved_users: Number of users moved successfully within this group.
    :field failed_users: Number of users whose moving failed.
    :field error: Reason why group moving (partially) failed.
 
+.. dovecot_core:event:: cluster_user_move_started
+   :added: 3.0.0
+
+   :field user: Username being moved.
+   :field dest_host: Destination host where user is being moved to.
 
 .. dovecot_core:event:: cluster_user_move_finished
    :added: 3.0.0
