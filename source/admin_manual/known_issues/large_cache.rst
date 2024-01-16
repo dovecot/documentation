@@ -47,7 +47,7 @@ and:
 
 These usually happen because the dovecot.index.cache file is so large
 that it can't fit into the memory. The solution is usually to either the
-imap service's vsz_limit or default_vsz_limit to somewhat higher than the
+imap service's :dovecot_core:ref:`service_vsz_limit` to somewhat higher than the
 maximum cache file size (1 GB by default). For example to 1500M.
 
 An alternative solution to this is to reduce the maximum cache file size to
