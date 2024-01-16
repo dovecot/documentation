@@ -57,8 +57,11 @@ Configuring Dovecot
 
 Once you have a keytab, configure GSSAPI on Dovecot.
 
-::
-  auth_mechanisms = $auth_mechanisms gssapi
+.. code-block:: none
+
+  auth_mechanisms {
+    gssapi = yes
+  }
   auth_gssapi_hostname = hostname-from-spn # or "$ALL"
   auth_krb5_keytab = /etc/dovecot/keytab
 
