@@ -227,7 +227,10 @@ Example configuration using OBOX::
     }
   }
 
-  mail_plugins = $mail_plugins fts fts_dovecot
+  mail_plugins {
+    fts = yes
+    fts_dovecot = yes
+  }
 
   plugin {
     fts = dovecot

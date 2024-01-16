@@ -69,7 +69,9 @@ Dovecot configuration
 ::
 
    protocol imap {
-     mail_plugins = $mail_plugins imap_sieve
+     mail_plugins {
+       imap_sieve = yes
+     }
    }
 
    plugin {

@@ -64,7 +64,10 @@ Example configuration:
   # Move messages to an .EXPUNGED mailbox
   lazy_expunge_mailbox = .EXPUNGED
 
-  mail_plugins = $mail_plugins lazy_expunge acl
+  mail_plugins {
+    lazy_expunge = yes
+    acl = yes
+  }
   plugin {
     # Define ACL so that user cannot list the .EXPUNGED mailbox
     acl = vfile:/etc/dovecot/dovecot.acl
@@ -154,7 +157,9 @@ setting.
 
 .. code-block:: none
 
-   mail_plugins = $mail_plugins lazy_expunge
+   mail_plugins {
+     lazy_expunge = yes
+   }
   lazy_expunge_mailbox = .EXPUNGED
    plugin {
      # If Cassandra w/obox is used:

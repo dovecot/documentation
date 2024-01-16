@@ -33,7 +33,10 @@ Example
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins notify notify_status
+  mail_plugins {
+    notify = yes
+    notify_status = yes
+  }
 
   notify_status {
     dict_driver = proxy

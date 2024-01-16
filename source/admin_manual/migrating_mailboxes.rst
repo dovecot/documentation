@@ -236,7 +236,9 @@ If you need to retain POP3 support on your new system, you should use :ref:`plug
   }
 
   protocol doveadm {
-    mail_plugins = $mail_plugins pop3_migration
+    mail_plugins {
+      pop3_migration = yes
+    }
   }
 
   plugin {

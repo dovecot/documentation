@@ -11,7 +11,9 @@ First, you'll have to load the plugin:
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins virtual
+  mail_plugins {
+    virtual = yes
+  }
 
 Settings
 --------
