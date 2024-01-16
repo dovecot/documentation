@@ -24,7 +24,9 @@ You can configure LMTP to be listening on TCP or UNIX sockets:
 .. code-block:: none
 
    # add lmtp to protocols, otherwise its listeners are ignored
-   protocols = imap pop3 lmtp
+   protocols {
+     lmtp = yes
+   }
 
    service lmtp {
       inet_listener lmtp {

@@ -75,7 +75,7 @@ Configuration
 Submission Service
 ^^^^^^^^^^^^^^^^^^
 
-Just add ``submission`` to the ``protocols=`` setting and configure the relay
+Just add ``submission`` to the :dovecot_core:ref:`protocols` setting and configure the relay
 MTA server. The submission service is a login service, just like IMAP, POP3 and :ref:`pigeonhole_managesieve_server`, so clients
 are required to authenticate. The same :ref:`authentication configuration
 <authentication-authentication>` shall also apply to submission,
