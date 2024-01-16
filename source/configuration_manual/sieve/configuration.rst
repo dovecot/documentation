@@ -92,10 +92,14 @@ enable the Pigeonhole Sieve plugin in your configuration:
 ::
 
    protocol lda {
-     mail_plugins = $mail_plugins sieve
+     mail_plugins {
+       sieve = yes
+     }
    }
    protocol lmtp {
-     mail_plugins = $mail_plugins sieve
+     mail_plugins {
+       sieve = yes
+     }
    }
 
 The sieve plugin recognizes the following configuration options in the

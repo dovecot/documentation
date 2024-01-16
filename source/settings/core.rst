@@ -2293,9 +2293,9 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: mail_plugins
    :seealso: @mail_plugin_dir;dovecot_core
-   :values: @string
+   :values: @boollist
 
-   A space-separated list of plugins to load.
+   A list of mail plugins to load.
 
 
 .. dovecot_core:setting:: mail_prefetch_count

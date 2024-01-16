@@ -112,7 +112,9 @@ Example config for folder keys with Maildir:
     dict_driver = file
     dict_file_path = %h/Maildir/dovecot-attributes
   }
-  mail_plugins = $mail_plugins mail_crypt
+  mail_plugins {
+    mail_crypt = yes
+  }
 
   crypt_user_key_curve = secp521r1
 
@@ -130,7 +132,9 @@ Example config for mandatory encrypted folder keys with Maildir:
     dict_driver = file
     dict_file_path = %h/Maildir/dovecot-attributes
   }
-  mail_plugins = $mail_plugins mail_crypt
+  mail_plugins {
+    mail_crypt = yes
+  }
 
   crypt_user_key_curve = secp521r1
   crypt_user_key_require_encrypted = yes
@@ -209,7 +213,9 @@ These keys can then be used with this configuration:
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins mail_crypt
+  mail_plugins {
+    mail_crypt = yes
+  }
 
   crypt_global_public_key = <rsapubkey.pem
   crypt_global_private_key main {
@@ -245,7 +251,9 @@ These keys can now be used with this configuration:
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins mail_crypt
+  mail_plugins {
+    mail_crypt = yes
+  }
 
   crypt_global_public_key = <ecpubkey.pem
   crypt_global_private_key main {
@@ -310,7 +318,9 @@ Hence, this is possible:
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins mail_crypt
+  mail_plugins {
+    mail_crypt = yes
+  }
   crypt_global_private_key main {
     # create the filter, but leave its settings empty
   }

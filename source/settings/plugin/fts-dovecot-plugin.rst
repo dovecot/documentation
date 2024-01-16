@@ -72,7 +72,10 @@ Settings
 
    .. code-block:: none
 
-     mail_plugins = $mail_plugins fts fts_dovecot
+     mail_plugins {
+       fts = yes
+       fts_dovecot = yes
+     }
 
      plugin {
        fts = dovecot

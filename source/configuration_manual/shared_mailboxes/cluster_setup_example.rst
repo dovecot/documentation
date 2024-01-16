@@ -32,7 +32,9 @@ Dovecot Backend configuration snippet
 
 .. code-block::
 
-        mail_plugins = $mail_plugins acl
+        mail_plugins {
+	  acl = yes
+	}
 
         imapc_host = <proxy-load-balancer>
         imapc_password = imapcpass
@@ -81,11 +83,15 @@ Dovecot Backend configuration snippet
         }
 
         protocol imap {
-          mail_plugins = $mail_plugins imap_acl
+          mail_plugins {
+	    imap_acl = yes
+	  }
         }
 
         # If quota is used make sure to disable counting for shared namespace
-        #mail_plugins = $mail_plugins quota
+        #mail_plugins {
+	#  quota = yes
+	#}
         #plugin {
         #  quota = count:User storage:ns=
         #  quota_rule = *:storage=1G

@@ -39,7 +39,9 @@ The IMAP plugin is activated by adding it to the
 .. code-block:: none
 
   protocol imap {
-    mail_plugins = $mail_plugins imap_sieve
+    mail_plugins {
+      imap_sieve = yes
+    }
   }
 
 This will only enable support for administrator scripts. User scripts

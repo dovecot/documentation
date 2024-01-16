@@ -46,11 +46,15 @@ Sample Configuration:
 .. code-block:: none
 
   # Enable internal ACL support
-  mail_plugins = acl
+  mail_plugins {
+    acl = yes
+  }
 
   # Enable the IMAP ACL commands
   protocol imap {
-    mail_plugins = $mail_plugins imap_acl
+    mail_plugins {
+      imap_acl = yes
+    }
   }
 
   plugin {

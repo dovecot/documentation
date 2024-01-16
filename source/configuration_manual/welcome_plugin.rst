@@ -20,7 +20,9 @@ Example Configuration
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins welcome
+  mail_plugins {
+    welcome = yes
+  }
 
   plugin {
     welcome_script = welcome %u

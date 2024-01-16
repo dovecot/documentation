@@ -29,10 +29,14 @@ Example Configuration
 .. code-block:: none
 
   protocol imap {
-    mail_plugins = $mail_plugins last_login
+    mail_plugins {
+      last_login = yes
+    }
   }
   protocol pop3 {
-    mail_plugins = $mail_plugins last_login
+    mail_plugins {
+      last_login = yes
+    }
   }
 
   plugin {

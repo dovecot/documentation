@@ -103,9 +103,13 @@ Examples
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins quota
+  mail_plugins {
+    quota = yes
+  }
   protocol imap {
-    mail_plugins = mail_plugins imap_quota
+    mail_plugins {
+      imap_quota = yes
+    }
   }
 
   plugin {
