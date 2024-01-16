@@ -15,6 +15,6 @@ jobs:
             make -C $path
           fi
         done
-    - uses: ammaraskar/sphinx-action@0.4
+    - uses: dovecot/dovecot-sphinx-action@0.4
       with:
          DOCS-FOLDER: "."
