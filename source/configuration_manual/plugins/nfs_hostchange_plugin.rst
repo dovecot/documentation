@@ -54,7 +54,9 @@ Configuration
 .. code:: none
 
   mailbox_list_index_prefix = /dev/shm/dovecot-listindex/%2.256Nu/%u/dovecot.list.index
-  mail_plugins = $mail_plugins nfs_hostchange
+  mail_plugins {
+    nfs_hostchange = yes
+  }
   
   plugin {
     # until all backends have been upgraded and most users accessed:

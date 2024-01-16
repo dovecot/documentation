@@ -39,7 +39,10 @@ Example Configuration
 .. code-block:: none
 
    # Enable the plugin globally for all services
-   mail_plugins = $mail_plugins notify mail_log
+   mail_plugins {
+     notify = yes
+     mail_log = yes
+   }
 
    plugin {
      mail_log_events = delete undelete expunge mailbox_delete mailbox_rename

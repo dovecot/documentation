@@ -25,9 +25,12 @@ Enabling flatcurve is designed to be as easy as adding these lines:
 
 .. code-block:: none
 
-    mail_plugins = $mail_plugins fts fts_flatcurve
+    mail_plugins {
+      fts = yes
+      fts_flatcurve = yes
+    }
     plugin {
-        fts = flatcurve
+      fts = flatcurve
     }
 
 Optional parameters
@@ -102,7 +105,10 @@ FTS-Flatcurve Plugin Settings Example
 
 .. code-block:: none
 
-    mail_plugins = $mail_plugins fts fts_flatcurve
+    mail_plugins {
+      fts = yes
+      fts_flatcurve = yes
+    }
     plugin {
         fts = flatcurve
         # All of these are optional, and indicate the default values.

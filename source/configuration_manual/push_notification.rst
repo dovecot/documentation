@@ -53,12 +53,18 @@ delivery notifications only, this config should be used:
 .. code-block:: none
 
   protocol lmtp {
-    mail_plugins = $mail_plugins notify push_notification
+    mail_plugins {
+      notify = yes
+      push_notification = yes
+    }
   }
 
   # If notifications are also needed for LDA-based delivery, add:
   protocol lda {
-    mail_plugins = $mail_plugins notify push_notification
+    mail_plugins {
+      notify = yes
+      push_notification = yes
+    }
   }
 
 Settings
@@ -254,7 +260,12 @@ Name                           Required Type          Description
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins mail_lua notify push_notification push_notification_lua
+  mail_plugins {
+    mail_lua = yes
+    notify = yes
+    push_notification = yes
+    push_notification_lua = yes
+  }
 
   push_notification lua {
     push_notification_driver = lua
@@ -552,7 +563,11 @@ Example configuration:
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins notify push_notification push_notification_chronos
+  mail_plugins {
+    notify = yes
+    push_notification = yes
+    push_notification_chronos = yes
+  }
 
   push_notification chronos {
     push_notification_driver = chronos
