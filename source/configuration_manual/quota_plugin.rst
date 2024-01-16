@@ -87,7 +87,9 @@ Enable in configuration files, e.g.:
 .. code-block:: none
 
   # Enable quota plugin for tracking and enforcing the quota.
-  mail_plugins = $mail_plugins quota
+  mail_plugins {
+    quota = yes
+  }
 
 ``conf.d/20-imap.conf``:
 
@@ -96,7 +98,9 @@ Enable in configuration files, e.g.:
   protocol imap {
     # Enable the IMAP QUOTA extension, allowing IMAP clients to ask for the
     # current quota usage.
-    mail_plugins = $mail_plugins imap_quota
+    mail_plugins {
+      imap_quota = yes
+    }
   }
 
 ``conf.d/90-quota.conf``: (for use with the quota-status service)
@@ -175,9 +179,13 @@ To use the recommended ``count`` quota driver:
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins quota
+  mail_plugins {
+    quota = yes
+  }
   protocol imap {
-    mail_plugins = $mail_plugins imap_quota
+    mail_plugins {
+      imap_quota = yes
+    }
   }
 
   plugin {

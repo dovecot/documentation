@@ -110,7 +110,10 @@ Example Configuration
 
 ::
 
-  mail_plugins = $mail_plugins fts fts_solr
+  mail_plugins {
+    fts = yes
+    fts_solr = yes
+  }
 
   plugin {
     fts = solr

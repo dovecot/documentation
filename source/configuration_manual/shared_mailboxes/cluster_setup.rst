@@ -105,7 +105,9 @@ accordingly:
 
 ::
 
-    mail_plugins = $mail_plugins acl
+    mail_plugins {
+      acl = yes
+    }
 
     acl_driver = vfile
     acl_sharing_map {
@@ -120,7 +122,9 @@ accordingly:
 
     # In order to be able to issue ACL commands over imap, imap_acl must be loaded
     protocol imap {
-      mail_plugins = $mail_plugins imap_acl
+      mail_plugins {
+        imap_acl = yes
+      }
     }
 
 

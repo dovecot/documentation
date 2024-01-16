@@ -14,7 +14,10 @@ to be loaded:
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins virtual virtual_attachments
+  mail_plugins {
+    virtual = yes
+    virtual_attachments = yes
+  }
 
 Namespace configuration
 =======================

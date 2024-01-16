@@ -27,7 +27,9 @@ Settings:
    .. code-block:: none
 
      protocol lmtp {
-       mail_plugins = $mail_plugins vault
+       mail_plugins {
+         vault = yes
+       }
        plugin {
          vault_mailbox = ARCHIVE
        }

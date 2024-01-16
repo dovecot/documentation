@@ -51,7 +51,10 @@ here:
 
    protocol lmtp {
      postmaster_address = postmaster@domainname   # required
-     mail_plugins = quota sieve
+     mail_plugins {
+       quota = yes
+       sieve = yes
+     }
    }
 
 Postfix main.cf Configuration

@@ -26,7 +26,9 @@ Dumpster view).
      }
    }
 
-   mail_plugins = $mail_plugins lazy_expunge
+   mail_plugins {
+     lazy_expunge = yes
+   }
    lazy_expunge_mailbox = EXPUNGED
    lazy_expunge_only_last_instance = yes
    plugin {
@@ -34,7 +36,9 @@ Dumpster view).
    }
 
    protocol imap {
-     mail_plugins = $mail_plugins acl
+     mail_plugins {
+       acl = yes
+     }
      plugin {
        # Hide EXPUNGED by default
        acl = vfile:/etc/dovecot/dovecot.acl

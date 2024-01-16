@@ -44,7 +44,9 @@ The IMAP FILTER Sieve plugin is activated by adding it to the
 ::
 
   protocol imap {
-    mail_plugins = $mail_plugins imap_filter_sieve
+    mail_plugins {
+      imap_filter_sieve = yes
+    }
   }
 
 Note that enabling this plugin allows users to specify the Sieve script

@@ -115,7 +115,9 @@ like below:
   }
 
   # Add "quota_unified" to your mail_plugins
-  mail_plugins = $mail_plugins quota_unified
+  mail_plugins {
+    quota_unified = yes
+  }
 
   # Add the unified quota plugin (configured to use Cassandra "dict" driver)
   plugin {
