@@ -20,7 +20,10 @@ In ``dovecot.conf`` put
 
 .. code-block:: none
 
-  auth_mechanisms = $auth_mechanisms oauthbearer xoauth2
+  auth_mechanisms {
+    oauthbearer = yes
+    xoauth2 = yes
+  }
 
   passdb {
     driver = oauth2
