@@ -2866,12 +2866,21 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: protocols
    :default: imap pop3 lmtp
-   :values: @string
+   :values: @boollist
 
-   The list of protocols this node will support.
+   The list of protocols to enable. For example:
 
-   It takes a space-separated list of protocols (which are configured
-   separately) as its value.
+   .. code-block:: none
+
+      # Only IMAP protocol enabled:
+      protocols = imap
+      # Enable also LMTP protocol (on top of IMAP):
+      protocols {
+        lmtp = yes
+      }
+
+      # Disable all protocols:
+      protocols =
 
 
 .. dovecot_core:setting:: quota_full_tempfail
