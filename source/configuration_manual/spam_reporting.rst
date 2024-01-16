@@ -22,7 +22,9 @@ Spam reporting messages are handled via :ref:`imapsieve plugin <pigeonhole_plugi
 .. code-block:: none
 
    protocol imap {
-     mail_plugins = $mail_plugins imap_sieve
+     mail_plugins {
+       imap_sieve = yes
+     }
    }
    
    plugin {

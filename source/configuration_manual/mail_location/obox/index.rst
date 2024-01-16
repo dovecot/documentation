@@ -25,7 +25,9 @@ obox plugin settings
 
 .. code-block:: none
 
-   mail_plugins = $mail_plugins obox
+   mail_plugins {
+     obox = yes
+   }
 
 Enable obox plugin.
 

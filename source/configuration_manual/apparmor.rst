@@ -26,7 +26,9 @@ Sample Configuration
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins apparmor
+  mail_plugins {
+    apparmor = yes
+  }
 
   plugin {
     apparmor_hat = hat_name

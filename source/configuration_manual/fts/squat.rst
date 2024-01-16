@@ -120,7 +120,10 @@ Configuration
 
 ::
 
-   mail_plugins = $mail_plugins fts fts_squat
+   mail_plugins {
+     fts = yes
+     fts_squat = yes
+   }
 
    plugin {
      fts = squat
@@ -140,7 +143,11 @@ it might not be that good idea.
 
    protocol imap {
    ..
-     mail_plugins = fts fts_squat fts_solr
+     mail_plugins {
+       fts = yes
+       fts_squat = yes
+       fts_solr = yes
+     }
    }
    ...
    plugin {

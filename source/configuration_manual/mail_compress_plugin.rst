@@ -20,7 +20,9 @@ Sample Configuration:
 .. code-block:: none
 
   # Enable compression plugin globally for reading/writing:
-  mail_plugins = $mail_plugins mail_compress
+  mail_plugins {
+    mail_compress = yes
+  }
 
   # Enable compressing the mails while saving (not just reading):
   mail_compress_write_method = zstd

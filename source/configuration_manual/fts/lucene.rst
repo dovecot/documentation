@@ -40,7 +40,10 @@ Example config:
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins fts fts_lucene
+  mail_plugins {
+    fts = yes
+    fts_lucene = yes
+  }
 
   plugin {
     fts = lucene

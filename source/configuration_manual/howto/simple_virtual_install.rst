@@ -149,9 +149,13 @@ If you need to have :ref:`quota <quota>`, add this to ``dovecot.conf``:
 
 ::
 
-   mail_plugins = $mail_plugins quota
+   mail_plugins {
+     quota = yes
+   }
    protocol imap {
-     mail_plugins = $mail_plugins imap_quota
+     mail_plugins {
+       imap_quota = yes
+     }
    }
    plugin {
      quota = maildir

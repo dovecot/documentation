@@ -29,7 +29,9 @@ Example:
 .. code-block:: none
 
   # NOTE: Using this has some trade-offs with obox installations, see below.
-  mail_plugins = $mail_plugins mail_compress
+  mail_plugins {
+    mail_compress = yes
+  }
   mail_compress_write_method = <algorithm>
 
 However, the problem with this with obox is that the mail files are written

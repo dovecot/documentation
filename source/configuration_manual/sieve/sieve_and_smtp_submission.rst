@@ -26,5 +26,7 @@ sendmail binary.
 .. code-block:: none
 
   protocol lmtp {
-    mail_plugins = $mail_plugins sieve
+    mail_plugins {
+      sieve = yes
+    }
   }

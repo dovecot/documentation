@@ -21,7 +21,9 @@ Sample Configuration
 
 .. code-block:: none
 
-  mail_plugins = $mail_plugins charset_alias
+  mail_plugins {
+    charset_alias = yes
+  }
 
   plugin {
     charset_aliases = shift_jis=sjis-win euc-jp=eucjp-win iso-2022-jp=iso-2022-jp-3

@@ -37,7 +37,9 @@ Example configuration where "Sent" is the real mailbox and it has aliases
 
 .. code-block:: none
 
-   mail_plugins = $mail_plugins mailbox_alias
+   mail_plugins {
+     mailbox_alias = yes
+   }
    plugin {
      mailbox_alias_old = Sent
      mailbox_alias_new = Sent Messages
