@@ -74,6 +74,11 @@ Command specific *options*:
    **index**
       => dovecot.index, dovecot.map.index
 
+     *type-specific args*
+
+      **uid**\ =\ *number*
+        Dump only message with UID
+
    **log**
       => dovecot.index.log, dovecot.map.index.log
 
