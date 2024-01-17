@@ -15,7 +15,7 @@ This uses auth-worker processes:
 
 .. code-block:: none
 
-  passdb {
+  passdb db1 {
     driver = shadow
   }
 
@@ -37,7 +37,7 @@ really no need to use auth-workers. You can disable them with:
 
 .. code-block:: none
 
-  passdb {
+  passdb db1 {
     driver = shadow
     args = blocking=no
   }

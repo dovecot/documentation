@@ -19,11 +19,11 @@ Auth configuration
 
 .. code-block:: none
 
-  passdb {
+  passdb db1 {
     driver = dict
     args = /etc/dovecot/dovecot-dict-auth.conf
   }
-  userdb {
+  userdb db1 {
     driver = dict
     args = /etc/dovecot/dovecot-dict-auth.conf
   }
@@ -221,12 +221,12 @@ Auth configuration
     auth = cdb:/etc/dovecot/auth.cdb
   }
 
-  passdb {
+  passdb db1 {
     driver = dict
     args = /etc/dovecot/dovecot-cdb.conf
   }
 
-  userdb {
+  userdb db1 {
     driver = dict
     args = /etc/dovecot/dovecot-cdb.conf
   }
@@ -275,15 +275,15 @@ Auth configuration
 
 .. code-block:: none
 
-  passdb {
+  passdb db1 {
     driver = dict
     args = /etc/dovecot/dovecot-dict-auth.conf
   }
-  userdb {
+  userdb db1 {
     # optional
     driver = prefetch
   }
-  userdb {
+  userdb db2 {
     driver = dict
     args = /etc/dovecot/dovecot-dict-auth.conf
   }

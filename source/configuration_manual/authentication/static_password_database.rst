@@ -18,7 +18,7 @@ Example:
 
 .. code-block:: none
 
-  passdb {
+  passdb db1 {
     driver = static
     args = nopassword=y
     default_fields = proxy=y host=127.0.0.1
