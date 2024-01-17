@@ -297,7 +297,8 @@ In dovecot.conf, set:
 
 ::
 
-   mail_location = maildir:~/
+   mail_driver = maildir
+   mail_path = ~/
 
    passdb {
       driver = sql
