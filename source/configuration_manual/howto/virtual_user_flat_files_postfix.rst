@@ -31,8 +31,8 @@ public namespace.
 
 ::
 
-   #mail_location = mdbox:~/mdbox
-   mail_location = maildir:~/maildir
+   #mail_driver = mdbox
+   mail_driver = maildir
    mail_plugins = acl quota
    namespace {
      type = private
@@ -45,7 +45,9 @@ public namespace.
      type = public
      separator = /
      prefix = Public/
-     location = maildir:/var/vmail/public:LAYOUT=fs:INDEX=~/public
+     mail_path = /var/vmail/public
+     mailbox_list_layout = fs
+     mail_index_path = ~/public
      list = yes
      subscriptions = no
    }
