@@ -55,12 +55,12 @@ CPU usage optimization
       (via auth-worker processes), set
       :dovecot_core:ref:`auth_cache_verify_password_with_worker=yes <auth_cache_verify_password_with_worker>`. (v2.2.34+)
 
--  Services having :ref:`client_limit>1 <service_configuration-client_limit>`
-   and :ref:`process_limit>1 <service_configuration-process_limit>`, set
-   :ref:`process_min_avail <service_configuration-process_min_avail>` to the number of CPU cores.
+-  Services having :dovecot_core:ref:`service_client_limit` > 1
+   and :dovecot_core:ref:`service_process_limit` > 1, set
+   :dovecot_core:ref:`service_process_min_avail` to the number of CPU cores.
 
 -  To reduce forks by reusing existing processes for new requests
-   increase :ref:`service { service_count } <service_configuration-service_count>` from 1 to higher (e.g. 100)
+   increase :dovecot_core:ref:`service_service_count` from 1 to higher (e.g. 100)
    for imap and pop3 services. It's better not to set it too high or
    unlimited (0), because different users use different amounts of
    memory, and it's wasteful when a lot of processes end up having a lot
@@ -84,10 +84,10 @@ little.
 
 Note that these settings do not directly affect the memory usage:
 
--  :ref:`service { vsz_limit } <service_configuration-vsz_limit>`: These are simply safe guards against
+-  :dovecot_core:ref:`service_vsz_limit`: These are simply safe guards against
    potential memory leaks. If the process's virtual size reaches the
    limit, the process is killed by the kernel.
 
--  :ref:`service { process_limit } <service_configuration-process_limit>` and 
-   :ref:`service { client_limit } <service_configuration-client_limit>`: These are mostly to
+-  :dovecot_core:ref:`service_process_limit` and
+   :dovecot_core:ref:`service_client_limit`: These are mostly to
    avoid DoS attacks using up all your memory.
