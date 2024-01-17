@@ -563,6 +563,7 @@ missingok
 mkhomedir
 mmencode
 MMIME
+mnt
 modseq
 mountpoint
 mozilla
@@ -670,9 +671,9 @@ opsec
 optboolean
 optname
 oqmgr
+OR'ing
 orcpt
 origbox
-OR'ing
 ORing
 orld
 OSFILE
@@ -780,7 +781,7 @@ rmail
 Rnotation
 roundcube
 roundrobin
-rpa
+RPA
 rpms
 rport
 rquota
@@ -867,7 +868,7 @@ specialuse
 SPID
 splitrow
 spn
-spnego
+SPNEGO
 sproxy
 sproxyd
 sqlhost
