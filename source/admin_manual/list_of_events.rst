@@ -2222,12 +2222,35 @@ Login
      - The user's password is expired.
    * - ``process_full``
      - :ref:`service_configuration-client_limit` and :ref:`service_configuration-process_limit` was hit and this login session was killed.
-   * - ``proxy_dest_auth_failed``
-     - Local authentication succeeded, but proxying failed to authenticate to the destination hop.
    * - ``shutting_down``
      - The process is shutting down so the login is aborted.
    * - ``user_disabled``
      - User is in deny passdb, or in some other way disabled passdb.
+
+.. _proxy_error_codes :
+
+   ** Proxying error codes **
+
+.. list-table::
+   :widths: 25 75
+   :header-rows: 1
+
+   * - Reason
+     - Description
+   * - ``proxy_dest_connect_failed``
+     - Local authentication succeeded, but connection to destination hop failed.
+   * - ``proxy_dest_internal_failure``
+     - Local authentication succeeded, but internal failure occurred after that.
+   * - ``proxy_dest_remote_failure``
+     - Local authentication succeeded, but destination hop reported unspecified failure.
+   * - ``proxy_dest_protocol_failure``
+     - Local authentication succeeded, but destination hop unexpectedly violated the protocol standard.
+   * - ``proxy_dest_auth_failed``
+     - Local authentication succeeded, but proxying failed to authenticate to the destination hop.
+   * - ``proxy_dest_auth_temp_failed``
+     - Local authentication succeeded, but proxying failed to temporarily authenticate to the destination hop.
+   * - ``proxy_dest_redirected``
+     - Local authentication succeeded, but destination hop redirected to another host.
 
 
 Login Proxy
@@ -2273,6 +2296,7 @@ Events emitted when login process proxies a connection to a backend.
    :inherit: login_proxy_session
 
    :field error: If login to destination failed, contains the error.
+   :field error_code: If login to destination failed, contains the error_code.
    :field disconnect_side: Which side disconnected: ``client``, ``server``,
      ``proxy``.
    :field disconnect_reason: Reason for disconnection (empty = clean
@@ -2286,6 +2310,34 @@ Events emitted when login process proxies a connection to a backend.
    Connection to proxy destination has ended, either successfully or with
    error.
 
+   **List of error codes**
+
+.. list-table::
+   :widths: 25 75
+   :header-rows: 1
+
+   * - ``error_code``
+     - explanation
+   * - ``authorization_failed``
+     - User authorization failed.
+   * - ``temp_fail``
+     - Auth service reported temporary failure.
+   * - ``user_disabled``
+     - User is disabled.
+   * - ``password_expired``
+     - Password is expired.
+   * - ``invalid_base64``
+     - Challenge response was invalid BASE64.
+   * - ``login_disabled``
+     - Login is disabled.
+   * - ``invalid_mech``
+     - Used mechanism isn't supported.
+   * - ``cleartext_auth_disabled``
+     - Cleartext authentication is not enabled, use TLS.
+   * - ``anonymous_auth_disabled``
+     - Anonymous authentication is not enabled.
+
+Additionally :ref:`proxying errors <proxy_error_codes>` can occur.
 
 ***********
 FTS-Dovecot
