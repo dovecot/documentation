@@ -65,7 +65,7 @@ Usually UNIX systems are configured by default to deliver mails to
 decide to use these, or use the :ref:`maildir <maildir_mbox_format>` format instead.
 
 Dovecot detects the mailbox format and location automatically if
-:dovecot_core:ref:`mail_location` setting isn't set, but it's still a good idea to
+:dovecot_core:ref:`mail_driver` setting isn't set, but it's still a good idea to
 explicitly tell Dovecot where to find the mails. This ensures that
 Dovecot behaves correctly also when the user's mailbox doesn't exist at
 the moment (eg. a new user). If Dovecot can't figure out where the
@@ -87,7 +87,9 @@ manually with:
 
 ::
 
-   mail_location = mbox:~/mail:INBOX=/var/mail/%u
+   mail_driver = mbox
+   mail_path = ~/mail
+   mail_inbox_path = /var/mail/%u
 
 Remember that the first path after ``mbox:`` is the mailbox root
 directory, never try to give ``mbox:/var/mail/%u`` because that
@@ -108,7 +110,8 @@ this manually with:
 
 ::
 
-   mail_location = maildir:~/Maildir
+   mail_driver = maildir
+   mail_path = ~/Maildir
 
 See :ref:`maildir_mbox_format` for more information.
 

@@ -55,7 +55,7 @@ There are four possibilities why the error message could happen:
    -  This could happen if you let Dovecot do mailbox autodetection and
       it sometimes uses ``/var/mail/%u`` (when it exists) and other
       times ``~/mail/inbox``. Use an explicit
-      :dovecot_core:ref:`mail_location`
+      :dovecot_core:ref:`mail_inbox_path`
       setting to make sure the same INBOX is used.
 
    -  Another possibility is that you're sharing index files between
