@@ -52,11 +52,11 @@ If you want to configure SSL, see :ref:`SSL <ssl>`.
    # Authentication configuration:
    auth_verbose = yes
    auth_mechanisms = plain
-   passdb {
+   passdb db1 {
      driver = passwd-file
      args = /etc/dovecot/passwd
    }
-   userdb {
+   userdb db1 {
      driver = static
      args = uid=vmail gid=vmail home=/home/vmail/%u
    }

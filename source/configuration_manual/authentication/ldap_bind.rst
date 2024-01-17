@@ -76,11 +76,11 @@ symlink to the first one. For example:
 
 ::
 
-   passdb {
+   passdb db1 {
      driver = ldap
      args = /etc/dovecot/dovecot-ldap.conf.ext
    }
-   userdb {
+   userdb db1 {
      driver = ldap
      args = /etc/dovecot/dovecot-ldap-userdb.conf.ext
    }

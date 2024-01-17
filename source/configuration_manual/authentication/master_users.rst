@@ -72,13 +72,13 @@ Example configuration:
 .. code-block:: none
 
   auth_master_user_separator = *
-  passdb {
+  passdb db1 {
     driver = passwd-file
     args = /etc/dovecot/passwd.masterusers
     master = yes
     result_success = continue
   }
-  userdb {
+  userdb db1 {
     driver = passwd
   }
 
@@ -112,17 +112,17 @@ well:
 .. code-block:: none
 
   auth_master_user_separator = *
-  passdb {
+  passdb db1 {
     driver = sql
     args = /etc/dovecot/dovecot-sql-master.conf.ext
     master = yes
     result_success = continue
   }
-  passdb {
+  passdb db2 {
     driver = sql
     args = /etc/dovecot/dovecot-sql.conf.ext
   }
-  userdb {
+  userdb db1 {
     driver = sql
     args = /etc/dovecot/dovecot-sql.conf.ext
   }
@@ -155,13 +155,13 @@ exists and get other extra fields.
 .. code-block:: none
 
    # master password passdb
-   passdb {
+   passdb db1 {
       driver = static
       args = password=master-password
       result_success = continue
    }
    # primary passdb
-   passdb {
+   passdb db2 {
       driver = pam
    }
 
@@ -201,27 +201,27 @@ The dovecot.conf file for all 3 master user configurations will be as follows:
 
 .. code-block:: none
 
-  passdb {
+  passdb db1 {
     driver = sql
     args = /etc/dovecot/ownership-sql.conf
     master = yes
     result_success = continue
   }
 
-  passdb {
+  passdb db2 {
     driver = sql
     args = /etc/dovecot/domain-owner-sql.conf
     master = yes
     result_success = continue
   }
 
-  passdb {
+  passdb db3 {
     driver = sql
     args = /etc/dovecot/masteradmin-sql.conf
     master = yes
     result_success = continue
   }
-  passdb {
+  passdb db4 {
     args = /etc/dovecot/sql.conf
     driver = sql
   }

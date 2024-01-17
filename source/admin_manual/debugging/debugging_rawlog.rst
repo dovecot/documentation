@@ -94,7 +94,7 @@ If your userdb can't return a home directory directly, with v2.1+ you can add:
 
 .. code-block:: none
 
-   userdb {
+   userdb db1 {
       # ...
       default_fields = home=/home/%u
       # or temporarily even e.g. default_fields = home=/tmp/temp-home
