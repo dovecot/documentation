@@ -9,41 +9,68 @@ NAME
 
 doveadm-dict - Commands related to dictionary manipulation
 
+doveadm-mail-dict - Commands related to dictionary manipulation in user context
+
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **dict** *command* [**-u** *user*] *dict-uri* [*args*]
+**doveadm** [**-Dv**] [**-f** *formatter*] **dict** *command* [**-u** *user*] [*options*] *config-filter-name* [*arguments*]
+
+**doveadm** [**-Dv**] [**-f** *formatter*] **mail dict** *command* [*options*] *config-filter-name* [*arguments*]
 
 DESCRIPTION
 ===========
 
-**doveadm dict** can be used to query and modify dictionary entries.
+**doveadm dict** and **doveadm mail dict** can be used to query and modify dictionary entries.
+
+The **doveadm mail dict** commands can be used within a specific user context.
+This may be useful if e.g. userdb lookup returns user-specific dict settings.
+Otherwise the commands behave identically.
+
+*config-filter-name*
+    Filter name to use when looking up the dict settings. For example
+    *mail_attribute*, *quota_clone*. It's also
+    possible to use an empty filter name and specify the dict settings using
+    the **-o** parameters.
 
 .. include:: global-options-formatter.inc
+
+**doveadm dict** command specific *options*:
 
 **-u** *user*
     The user to use.
 
-*dict-uri*
-    The uri to the dictionary being manipulated.
+**doveadm mail dict** command specific *options*:
+
+.. include:: option-A.inc
+
+.. include:: option-F-file.inc
+
+.. include:: option-S-socket.inc
+
+.. include:: option-u-user.inc
 
 COMMANDS
 ========
 
-doveadm dict get
-----------------
+get
+---
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **dict** **get** [**-u** *user*] *dict-uri* *key*
+**doveadm dict get** [**-u** *user*] *config-filter-name* *key*
+
+**doveadm mail dict get** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] **get** *config-filter-name* *key*
 
 Fetch a key from a dictionary.
 
 *key*
     The key to fetch.
 
-doveadm dict iter
------------------
+iter
+----
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **dict** **iter** [**-u** *user*] [**-1RV**] *dict-uri* *prefix*
+**doveadm dict iter** [**-u** *user*] [**-1RV**] *config-filter-name* *prefix*
+
+**doveadm mail dict iter** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**-1RV**] *config-filter-name* *prefix*
 
 Find the keys matching the a prefix in a dictionary.
 
@@ -61,10 +88,12 @@ Find the keys matching the a prefix in a dictionary.
 
 List keys into the dictionary.
 
-doveadm dict inc
-----------------
+inc
+---
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **dict** **inc** [**-u** *user*] [**-t** *timestamp-msecs*] *dict-uri* *key* *diff*
+**doveadm dict inc** [**-u** *user*] [**-t** *timestamp-msecs*] *config-filter-name* *key* *diff*
+
+**doveadm mail dict inc** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**-t** *timestamp-msecs*] *config-filter-name* *key* *diff*
 
 Increment the value of a numeric key in the keys into the dictionary.
 
@@ -76,10 +105,12 @@ Increment the value of a numeric key in the keys into the dictionary.
 *diff*
     The amount of the increment.
 
-doveadm dict set
-----------------
+set
+---
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **dict** **set** [**-u** *user*] [**-t** *timestamp-msecs*] [**-e** *expire-secs*] *dict-uri* *key* *value*
+**doveadm dict set** [**-u** *user*] [**-t** *timestamp-msecs*] [**-e** *expire-secs*] *config-filter-name* *key* *value*
+
+**doveadm mail dict set** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**-t** *timestamp-msecs*] [**-e** *expire-secs*] *config-filter-name* *key* *value*
 
 Set/create keys into the dictionary.
 
@@ -95,10 +126,12 @@ Set/create keys into the dictionary.
 *value*
     The value to set.
 
-doveadm dict unset
-------------------
+unset
+-----
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **dict** **unset** [**-u** *user*] [**-t** *timestamp-msecs*] *dict-uri* *key*
+**doveadm dict unset** [**-u** *user*] [**-t** *timestamp-msecs*] *config-filter-name* *key*
+
+**doveadm mail dict unset** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**-t** *timestamp-msecs*] *config-filter-name* *key*
 
 Remove a key from the dictionary.
 
