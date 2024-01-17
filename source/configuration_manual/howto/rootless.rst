@@ -134,11 +134,11 @@ The important settings to change for rootless installation are:
 
    ::
 
-      passdb {
+      passdb db1 {
         driver = passwd-file
         args = /home/user/dovecot/etc/passwd
       }
-      userdb {
+      userdb db1 {
         driver = passwd
       }
 

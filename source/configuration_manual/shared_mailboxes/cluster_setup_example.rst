@@ -15,14 +15,14 @@ Dovecot Proxy configuration snippet
 
 .. code-block::
 
-        passdb {
+        passdb db1 {
           driver = static
           master = yes
           default_fields = proxy=y
           args = password=imapcpass
         }
 
-        passdb {
+        passdb db2 {
           driver = static
           args = proxy=y password=masterpass
         }
@@ -59,13 +59,13 @@ Dovecot Backend configuration snippet
           inbox = yes
         }
 
-        passdb {
+        passdb db1 {
           # masterpass is the normal users master password
           args = password=masterpass userdb_imapc_master_user=%{user}
           driver = static
         }
 
-        passdb {
+        passdb db2 {
           driver = static
           master = yes
           # imapcpass is the master password used for master logins (via imapc)

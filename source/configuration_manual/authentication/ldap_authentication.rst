@@ -8,14 +8,14 @@ See :ref:`LDAP <authentication-ldap>` for more details.
 
 .. code-block:: none
 
-  passdb {
+  passdb db1 {
     args = /etc/dovecot/dovecot-ldap.conf.ext
     driver = ldap
   }
-  userdb {
+  userdb db1 {
     driver = prefetch
   }
-  userdb {
+  userdb db2 {
     args = /etc/dovecot/dovecot-ldap.conf.ext
     driver = ldap
   }

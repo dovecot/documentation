@@ -17,7 +17,7 @@ disabling it:
 
 .. code-block:: none
 
-  userdb {
+  userdb db1 {
     driver = passwd
     args = blocking=no
   }
@@ -32,7 +32,7 @@ For example:
 
 .. code-block:: none
 
-  userdb {
+  userdb db1 {
     driver = passwd
     # Pre-v2.1:
     #args = home=/var/mail/%u mail=maildir:/var/mail/%u/Maildir

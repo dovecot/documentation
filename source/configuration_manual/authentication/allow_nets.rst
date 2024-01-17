@@ -35,7 +35,7 @@ Postfix to verify the email account:
 
 .. code-block:: none
 
-  passdb {
+  passdb db1 {
     driver = static
     args = password=test allow_nets=local,127.0.0.1/32
   }
