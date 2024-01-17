@@ -75,11 +75,11 @@ or mailbox formats.
 ::
 
    auth_mechanisms = plain
-   passdb {
+   passdb db1 {
      driver = passwd-file
      args = username_format=%u /var/vmail/auth.d/%d/passwd
    }
-   userdb {
+   userdb db1 {
      driver = passwd-file
      args = username_format=%u /var/vmail/auth.d/%d/passwd
    }

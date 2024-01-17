@@ -25,7 +25,7 @@ In ``dovecot.conf`` put
     xoauth2 = yes
   }
 
-  passdb {
+  passdb db1 {
     driver = oauth2
     mechanisms = xoauth2 oauthbearer
     args = /etc/dovecot/dovecot-oauth2.conf.ext
@@ -75,7 +75,7 @@ Without proxy authentication
 
 .. code-block:: none
 
-  passdb {
+  passdb db1 {
     driver = static
     args = nopassword=y proxy=y proxy_mech=%m ...
   }
@@ -98,13 +98,13 @@ passdb settings
 
 .. code-block:: none
 
-  passdb {
+  passdb db1 {
     driver = oauth2
     mechanisms = oauthbearer xoauth2
     args = /usr/local/etc/dovecot/dovecot-oauth2.token.conf.ext
   }
 
-  passdb {
+  passdb db2 {
     driver = oauth2
     mechanisms = plain login
     args = /usr/local/etc/dovecot/dovecot-oauth2.plain.conf.ext
