@@ -8,7 +8,7 @@ Static user database can be used when you want to use only single UID and GID va
 
 .. code-block:: none
 
- userdb {
+ userdb db1 {
   driver = static
   args = uid=<uid> gid=<gid> home=<dir template>
  }
@@ -25,7 +25,7 @@ Example
 
 .. code-block:: none 
 
- userdb {
+ userdb db1 {
   driver = static
   args = uid=500 gid=500 home=/home/%u
  }

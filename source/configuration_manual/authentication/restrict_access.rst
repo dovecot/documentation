@@ -14,7 +14,7 @@ Set PAM service name to ``%s``, ie.:
 
 ::
 
-   passdb {
+   passdb db1 {
      driver = pam
      args = %s
    }
@@ -59,7 +59,7 @@ You can create a deny passwd-file based on the service:
 
 ::
 
-   passdb {
+   passdb db1 {
      driver = passwd-file
      args = /etc/dovecot/deny.%s
      deny = yes

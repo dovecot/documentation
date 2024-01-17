@@ -28,7 +28,7 @@ like this:
 
 .. parsed-literal::
 
-   userdb {
+   userdb db1 {
      driver = passwd-file
      args = /etc/%s.passwd
    }

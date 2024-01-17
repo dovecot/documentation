@@ -33,7 +33,7 @@ Example
 
 .. code-block:: none
 
-  userdb {
+  userdb db1 {
     driver = nss
     args = service=ldap
   }
