@@ -35,9 +35,9 @@ the most useful optimization you can do.
 -  :dovecot_core:ref:`mail_prefetch_count` setting may be helpful with some mailbox
    formats
 
--  :dovecot_core:ref:`mail_location` ``= ...:VOLATILEDIR=/tmp/dovecot-volatile/%2.256Nu/%u``
+-  :dovecot_core:ref:`mail_volatile_path` ``= /tmp/dovecot-volatile/%2.256Nu/%u``
    moves e.g. lock files to the volatile directory. This is helpful
-   especially if mail_location otherwise points to a remote filesystem
+   especially if mail location otherwise points to a remote filesystem
    like NFS. (v2.2.32+)
 
 -  If the acl plugin is used, but only global ACLs are needed, set
