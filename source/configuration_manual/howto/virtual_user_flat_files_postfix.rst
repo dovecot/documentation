@@ -77,11 +77,11 @@ or mailbox formats.
    auth_mechanisms = plain
    passdb db1 {
      driver = passwd-file
-     args = username_format=%u /var/vmail/auth.d/%d/passwd
+     passwd_file_path = /var/vmail/auth.d/%d/passwd
    }
    userdb db1 {
      driver = passwd-file
-     args = username_format=%u /var/vmail/auth.d/%d/passwd
+     passwd_file_path = /var/vmail/auth.d/%d/passwd
    }
 
 ``/var/vmail/auth.d/<domain>/passwd``
