@@ -221,6 +221,10 @@ Passdb setting
    What to do after the passdb authentication succeeded.
    See :ref:`passdb_results`.
 
+   This is commonly used together with master passdb to specify that even after
+   a successful master user authentication, the authentication should continue
+   to the actual non-master passdb to lookup the user.
+
 
 .. dovecot_core:setting:: passdb_result_failure
    :values: return-ok, return, return-fail, continue, continue-ok, continue-fail
@@ -245,16 +249,6 @@ Passdb setting
 
    If ``yes``, used to provide "denied users database". If the user is found
    from the passdb, the authentication will fail.
-
-
-.. dovecot_core:setting:: passdb_pass
-   :values: @boolean
-   :default: no
-
-   This is an alias for ``passdb_result_success=continue``. This was commonly
-   used together with master passdb to specify that even after a successful
-   master user authentication, the authentication should continue to the actual
-   non-master passdb to lookup the user.
 
 
 .. dovecot_core:setting:: passdb_master
