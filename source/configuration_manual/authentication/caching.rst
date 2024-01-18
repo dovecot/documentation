@@ -66,7 +66,7 @@ Usually only the username uniquely identifies a user, but in some setups
 you may need something more, for example the remote IP address. For SQL
 and LDAP lookups Dovecot figures this out automatically by using all the
 used :ref:`variables <config_variables>` as the cache key. For example
-if your SQL query contains %s, %u and %r the cache entry is used only
+if your SQL query contains ``%{protocol}``, ``%{user}`` and ``%{remote_ip}`` the cache entry is used only
 if all of them (service name, username and remote IP) match for the new lookup.
 
 With other databases Dovecot doesn't know what could affect caching, so
@@ -84,7 +84,7 @@ use:
 
    passdb db1 {
      driver = pam
-     args = cache_key=%s%u *
+     args = cache_key=%{protocol}%u *
    }
 
 Password changing scenarios
