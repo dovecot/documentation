@@ -266,7 +266,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: auth_policy_request_attributes
-   :default: login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s
+   :default: login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%{protocol}
    :seealso: @auth_policy_server_url;dovecot_core
    :values: @string
 

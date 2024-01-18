@@ -24,7 +24,7 @@ The PAM configuration is usually in the ``/etc/pam.d/`` directory, but some
 systems may use a single file, ``/etc/pam.conf``. By default Dovecot uses
 dovecot as the PAM service name, so the configuration is read from
 ``/etc/pam.d/dovecot``. You can change this by giving the wanted service name
-in the ``args`` parameter. You can also set the service to ``%s`` in which case
+in the ``args`` parameter. You can also set the service to ``%{protocol}`` in which case
 Dovecot automatically uses either ``imap`` or ``pop3`` as the service,
 depending on the actual service the user is logging in to.
 
@@ -36,7 +36,7 @@ Here are a few examples:
 
   passdb db1 {
     driver = pam
-    args = %s
+    args = %{protocol}
   }
 
 * Use /etc/pam.d/mail:
@@ -138,11 +138,11 @@ well, so this can't be relied on. For this reason the ``cache_key`` must
 contain all the :ref:`config_variables` that may
 affect authentication. The commonly used variables are:
 
-* ``%u`` - Username. You'll most likely want to use this.
-* ``%s`` - Service. If you use * as the service name you'll most likely want to
+* ``%{user}`` - Username. You'll most likely want to use this.
+* ``%{protocol}`` - Service. If you use * as the service name you'll most likely want to
   use this.
-* ``%r`` - Remote IP address. Use this if you do any IP related checks.
-* ``%l`` - Local IP address. Use this if you do any checks based on the local
+* ``%{remote_ip}`` - Remote IP address. Use this if you do any IP related checks.
+* ``%{local_ip}`` - Local IP address. Use this if you do any checks based on the local
   IP address that was connected to.
 
 Examples:
