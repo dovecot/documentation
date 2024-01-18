@@ -54,7 +54,7 @@ If you want to configure SSL, see :ref:`SSL <ssl>`.
    auth_mechanisms = plain
    passdb db1 {
      driver = passwd-file
-     args = /etc/dovecot/passwd
+     passwd_file_path = /etc/dovecot/passwd
    }
    userdb db1 {
      driver = static
