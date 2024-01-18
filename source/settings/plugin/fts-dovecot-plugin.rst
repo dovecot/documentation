@@ -77,9 +77,8 @@ Settings
        fts_dovecot = yes
      }
 
-     plugin {
-       fts = dovecot
-     }
+     fts_driver = dovecot
+
      fts_dovecot {
        fs_driver = posix
        fs_posix_prefix = /var/fts/%u
