@@ -260,6 +260,14 @@ Passdb setting
    listed in the master passdb can log in as other users.
 
 
+.. dovecot_core:setting:: passdb_use_worker
+   :values: @boolean
+   :default: no (but overridden by some passdbs)
+
+   If ``yes``, run the passdb lookup in auth-worker process instead of the
+   main auth process.
+
+
 .. _passdb_results:
 
 Passdb Results
