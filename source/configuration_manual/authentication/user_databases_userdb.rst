@@ -153,6 +153,14 @@ Userdb settings
    with ``internal error``.
 
 
+.. dovecot_core:setting:: userdb_use_worker
+   :values: @boolean
+   :default: no (but overridden by some userdbs)
+
+   If ``yes``, run the userdb lookup in auth-worker process instead of the
+   main auth process.
+
+
 .. _userdb_results:
 
 Userdb Results
