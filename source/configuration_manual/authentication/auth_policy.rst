@@ -58,10 +58,10 @@ to work. To activate this feature, you need to configure it.
 -  :dovecot_core:ref:`auth_policy_request_attributes`: Request attributes
    specification (see attributes section below)
 
-   -  *Default*: ``auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s``
+   -  *Default*: ``auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%{protocol}``
    -  .. dovecotadded:: 2.3.11
 
-     - *Default* : ``auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s session_id=%{session}``
+     - *Default* : ``auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%{protocol} session_id=%{session}``
 
 -  :dovecot_core:ref:`auth_policy_reject_on_fail`: If policy request fails for
    some reason should users be rejected
@@ -108,7 +108,7 @@ Required Minimum Configuration
    #auth_policy_server_api_header = Authorization: Basic <base64-encoded value>
    #auth_policy_server_timeout_msecs = 2000
    #auth_policy_hash_mech = sha256
-   #auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s
+   #auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%%{protocol}
    #auth_policy_reject_on_fail = no
    #auth_policy_hash_truncate = 12
    #auth_policy_check_before_auth = yes
@@ -229,25 +229,25 @@ Default values for auth_policy_request_attributes
 
 .. code-block:: none
 
-   login=%{orig_username} pwhash=%{hashed_password} remote=%{real_rip} device_id=%{client_id} protocol=%s
+   login=%{orig_username} pwhash=%{hashed_password} remote=%{real_rip} device_id=%{client_id} protocol=%{protocol}
 
 .. dovecotadded:: 2.2.34
 
 .. code-block:: none
 
-   login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s
+   login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%{protocol}
 
 .. dovecotadded:: 2.3.0
 
 .. code-block:: none
 
-   login=%{orig_username} pwhash=%{hashed_password} remote=%{real_rip} device_id=%{client_id} protocol=%s
+   login=%{orig_username} pwhash=%{hashed_password} remote=%{real_rip} device_id=%{client_id} protocol=%{protocol}
 
 .. dovecotadded:: 2.3.1
 
 .. code-block:: none
 
-   login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s
+   login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%{protocol}
 
 .. dovecotadded:: 2.3.2
 
@@ -259,13 +259,13 @@ Default values for auth_policy_request_attributes
 
 .. code-block:: none
 
-   login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s session_id=%{session}
+   login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%{protocol} session_id=%{session}
 
 .. dovecotadded:: 2.4.0,3.0.0
 
 .. code-block:: none
 
-   login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s session_id=%{session} fail_type=%{fail_type}
+   login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%{protocol} session_id=%{session} fail_type=%{fail_type}
 
 
 Response

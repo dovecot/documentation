@@ -304,8 +304,8 @@ Namespace configuration:
 .. code-block:: none
 
   ser_query = SELECT ..., \
-    CASE '%s' WHEN 'pop3' THEN NULL ELSE 'yes' END AS 'namespace/inbox/inbox', \
-    CASE '%s' WHEN 'pop3' THEN 'yes' ELSE NULL END AS 'namespace/virtual/inbox' \
+    CASE '%{protocol}' WHEN 'pop3' THEN NULL ELSE 'yes' END AS 'namespace/inbox/inbox', \
+    CASE '%{protocol}' WHEN 'pop3' THEN 'yes' ELSE NULL END AS 'namespace/virtual/inbox' \
     WHERE ...
 
 Finally specify what the virtual INBOX looks like for POP3 users:
