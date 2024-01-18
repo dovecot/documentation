@@ -152,16 +152,6 @@ Userdb settings
    with ``internal error``.
 
 
-.. dovecot_core:setting:: userdb_auth_verbose
-   :values: default, no, yes
-   :default: default
-   :added: 2.2.24
-
-   If this is explicitly set to yes or no, it overrides the global
-   :dovecot_core:ref:`auth_verbose` setting. (However, ``auth_debug=yes``
-   overrides :dovecot_core:ref:`auth_verbose`.)
-
-
 .. _userdb_results:
 
 Userdb Results
