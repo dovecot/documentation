@@ -151,22 +151,23 @@ Passdb setting
 
 
 .. dovecot_core:setting:: passdb_default_fields
-   :values: @string
+   :values: @strlist
    :seealso: @passdb_override_fields;dovecot_core
 
    Passdb fields (and :ref:`authentication-password_database_extra_fields`)
-   that are used, unless overwritten by the passdb driver. They are in format
-   ``key=value key2=value2 ....`` The values can contain :ref:`%variables
-   <config_variables>`. All %variables used here reflect the state BEFORE the
-   passdb lookup.
+   that are used, unless overwritten by the passdb driver. The values can
+   contain :ref:`%variables <config_variables>`. All %variables used here
+   reflect the state **before** the current passdb lookup, and can refer to
+   fields returned by previous passdb lookups.
 
 
 .. dovecot_core:setting:: passdb_override_fields
-   :values: @string
+   :values: @strlist
 
    Same as :dovecot_core:ref:`passdb_default_fields`, but instead of providing
    the default values, these values override what the passdb backend returned.
-   All %variables used here reflect the state AFTER the passdb lookup.
+   All %variables used here reflect the state **after** the passdb lookup, and can
+   refer to fields returned by the current (and previous) passdb lookups.
 
 
 .. dovecot_core:setting:: passdb_mechanisms

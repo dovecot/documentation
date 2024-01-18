@@ -97,22 +97,23 @@ Userdb settings
 
 
 .. dovecot_core:setting:: userdb_default_fields
-   :values: @string
+   :values: @strlist
    :seealso: @userdb_override_fields;dovecot_core
 
    Userdb fields (and :ref:`authentication-user_database_extra_fields`)
-   that are used, unless overwritten by the userdb driver. They are in format
-   ``key=value key2=value2 ....`` The values can contain :ref:`%variables
-   <config_variables>`. All %variables used here reflect the state BEFORE the
-   userdb lookup.
+   that are used, unless overwritten by the userdb driver. The values can
+   contain :ref:`%variables <config_variables>`. All %variables used here
+   reflect the state **before** the current userdb lookup, and can refer to
+   fields returned by previous userdb lookups.
 
 
 .. dovecot_core:setting:: userdb_override_fields
-   :values: @string
+   :values: @strlist
 
-   :dovecot_core:ref:`userdb_default_fields`, but instead of providing the
-   default values, these values override what the userdb backend returned.
-   All %variables used here reflect the state AFTER the userdb lookup.
+   Same as :dovecot_core:ref:`userdb_default_fields`, but instead of providing
+   the default values, these values override what the userdb backend returned.
+   All %variables used here reflect the state **after** the userdb lookup, and can
+   refer to fields returned by the current (and previous) userdb lookups.
 
    For example useful with userdb passwd for overriding e.g. home directory or
    the ``uid`` or ``gid``. See :ref:`authentication-passwd`.
