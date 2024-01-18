@@ -170,6 +170,14 @@ Passdb setting
    refer to fields returned by the current (and previous) passdb lookups.
 
 
+.. dovecot_core:setting:: passdb_default_password_scheme
+   :values: @string
+   :default: PLAIN (but overridden by some passdbs)
+
+   The scheme that passwords are in the passdb, unless overridden by the
+   passdb entry (typically by prefixing with ``{SCHEME}``).
+
+
 .. dovecot_core:setting:: passdb_mechanisms
    :values: @boollist
    :added: 2.2.30
