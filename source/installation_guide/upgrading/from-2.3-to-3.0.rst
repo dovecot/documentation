@@ -169,6 +169,24 @@ Removed features and their replacements
 |                                                            | vsize record in dovecot.index file. Reading of the field from old files is supported.    |
 | :dovecot_core:ref:`config_cache_size` setting.             | This is now unnecessary.                                                                 |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``fts``                                                    | Replaced by :dovecot_plugin:ref:`fts_driver`.                                            |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| :dovecot_plugin:ref:`fts_autoindex_exclude`.               | Changed to boolean property of ``mailbox``.                                              |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``fts_decoder``                                            | Replaced by :dovecot_plugin:ref:`fts_decoder_driver` and                                 |
+|                                                            | :dovecot_plugin:ref:`fts_decoder_script_socket_path`.                                    |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| :dovecot_plugin:ref:`fts_header_excludes`,                 | Changed to boolean lists.                                                                |
+| :dovecot_plugin:ref:`fts_header_includes`.                 |                                                                                          |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``fts_tika``                                               | Replaced by :dovecot_plugin:ref:`fts_decoder_driver` and                                 |
+|                                                            | Replaced by :dovecot_plugin:ref:`fts_decoder_tika_url`.                                  |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``fts_solr``                                               | Replaced by :dovecot_plugin:ref:`fts_solr_url`,                                          |
+|                                                            | :dovecot_plugin:ref:`fts_solr_batch_size`, :dovecot_plugin:ref:`fts_solr_soft_commit`,   |
+|                                                            | :dovecot_core:ref:`http_client_rawlog_dir`                                               |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+
 
 Changed default settings
 ========================
