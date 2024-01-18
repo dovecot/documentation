@@ -19,7 +19,8 @@ For a user database, you need to set also uid, gid and preferably also home
 
 The password field can be in four formats:
 
-* ``password``: Assume CRYPT password scheme. See :ref:`authentication-password_schemes`.
+* ``password``: Assume :dovecot_core:ref:`passdb_default_password_scheme`
+  (CRYPT) password scheme. See :ref:`authentication-password_schemes`.
 * ``{SCHEME}password``: The password is in the given scheme. See
   :ref:`authentication-password_schemes`.
 * ``password[13]``: libpam-passwd file compatible format for CRYPT scheme. See
@@ -49,17 +50,24 @@ passwd-file filenames, for example:
   passdb db1 {
     driver = passwd-file
     # Each domain has a separate passwd-file:
-    args = /etc/auth/%d/passwd
+    passwd_file_path = /etc/auth/%d/passwd
   }
 
-Passwd-file args
-================
+Settings
+========
 
-* **scheme=<s>**: Allows you to specify the default :ref:`authentication-password_schemes`.
-  The default is CRYPT. This is available only for passdb.
-* **username_format=<s>**: Look up usernames using this format instead of the
-  full username (``%u``). If you want to enable user@domain logins but have
-  only ``user`` in the file, set this to %n.
+.. dovecot_core:setting:: passwd_file_path
+   :values: @string
+
+   Path to the passwd-file.
+
+Also global settings that are commonly overridden inside the passdb filter:
+
+ * :dovecot_core:ref:`passdb_default_password_scheme` specifies the default
+   password scheme to be used in the passwd-files.
+ * :dovecot_core:ref:`auth_username_format` changes the username that is
+   looked up from the passwd-file. For example ``auth_username_format = %{protocol}``
+   can be used to lookup the current protocol instead of the username.
 
 Examples
 ========
@@ -68,11 +76,14 @@ Examples
 
   passdb db1 {
     driver = passwd-file
-    args = scheme=plain-md5 username_format=%n /etc/imap.passwd
+    passdb_default_password_scheme = plain-md5
+    auth_username_format = %n
+    passwd_file_path = /etc/imap.passwd
   }
   userdb db1 {
     driver = passwd-file
-    args = username_format=%n /etc/imap.passwd
+    auth_username_format = %n
+    passwd_file_path = /etc/imap.passwd
     default_fields = uid=vmail gid=vmail home=/home/vmail/%u
   }
 
@@ -98,7 +109,7 @@ This file can be used as both a passwd and a userdb:
 
 .. code-block:: none
 
-  user:{plain}pass:1000:1000::/home/user::userdb_mail=maildir:~/Maildir allow_nets=192.168.0.0/24
+  user:{plain}pass:1000:1000::/home/user::userdb_mail_path=~/Maildir allow_nets=192.168.0.0/24
   user2:{plain}pass2:1001:1001::/home/user2
 
 FreeBSD /etc/master.passwd as passdb and userdb
@@ -143,9 +154,11 @@ other ``userdb`` and ``passdb`` sections
 
   passdb db1 {
     driver = passwd-file
-    args = username_format=%n /path/to/file-with-encrypted-passwords
+    auth_username_format = %n
+    passwd_file_path = /path/to/file-with-encrypted-passwords
   }
   userdb db1 {
     driver = passwd-file
-    args = username_format=%n /path/to/file-with-encrypted-passwords
+    auth_username_format = %n
+    passwd_file_path = /path/to/file-with-encrypted-passwords
   }
