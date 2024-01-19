@@ -188,7 +188,15 @@ class DovecotSettingIndex(Index):
         return content, True
 
 
-class DovecotSettingDomain(Domain):
+class DovecotAbstractDomain(Domain):
+    initial_data = {}
+
+    def merge_domaindata(self, docnames, otherdata):
+        for k in list(self.initial_data.keys()):
+            self.data[k].update(otherdata[k])
+
+
+class DovecotSettingDomain(DovecotAbstractDomain):
     roles = {"ref": XRefRole()}
     initial_data = {
         "entry": {},
@@ -560,7 +568,7 @@ class DovecotEventDirective(DovecotDirective):
         contentnode += collapse
 
 
-class DovecotEventDomain(Domain):
+class DovecotEventDomain(DovecotAbstractDomain):
     name = "dovecot_event"
 
     initial_data = {"global": {}, "group": {}, "inherit": {}}
