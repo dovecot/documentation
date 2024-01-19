@@ -4375,6 +4375,86 @@ response::
         is still open in another process.
 
 
+doveadm obox user wait
+======================
+
+Wait until there are no more sessions (imap, lmtp, etc.) accessing the user. If there are still sessions after timeout is reached, fail with exit code 65.
+
+parameters::
+
+    {
+        "command": "oboxUserWait",
+        "parameters": [
+            {
+                "name": "allUsers",
+                "type": "boolean"
+            },
+            {
+                "name": "socketPath",
+                "type": "string"
+            },
+            {
+                "name": "user",
+                "type": "string"
+            },
+            {
+                "name": "userFile",
+                "type": "string"
+            },
+            {
+                "name": "timeout",
+                "type": "integer"
+            },
+        ]
+    }
+
+
++------------+---------+------------------------+---------------------------------+
+| Parameter  | Type    | Description            | example                         |
++============+=========+========================+=================================+
+| socketPath | String  | Path to doveadm socket | /var/run/dovecot/doveadm-server |
++------------+---------+------------------------+---------------------------------+
+| timeout    | Integer | Timeout (in seconds)   | 30                              |
++------------+---------+------------------------+---------------------------------+
+
+
+example::
+
+    [
+        [
+            "oboxUserWait",
+            {
+                "allUsers": false,
+                "socketPath": "",
+                "user": "testuser003",
+                "userFile": ""
+            },
+            "tag1"
+        ]
+    ]
+
+.. code::
+
+    curl -v -u doveadm:secretpassword -X POST -H "Content-Type: application/json" -d '[["oboxUserWait", {"allUsers":false,"user":"testuser003"}, "tag1"]] ' http://localhost:8080/doveadm/v1
+
+
+response::
+
+    [
+        [
+            "doveadmResponse",
+            [],
+            "tag1"
+        ]
+    ]
+
+.. note::
+
+   .. versionadded:: 2.3.17 This command returns a specific exit code (65)
+        in the failure response, if sessions could not be kicked within the
+        timeout interval.
+
+
 doveadm penalty
 ===============
 
