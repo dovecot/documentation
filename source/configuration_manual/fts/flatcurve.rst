@@ -19,7 +19,7 @@ which means it is :rfc:`3501` (IMAP4rev1) compliant. This driver does not
 support fuzzy searches.
 
 The driver passes all of the ImapTest search tests.
-`<https://imapwiki.org/ImapTest>`_
+`<https://github.com/dovecot/imaptest/>`_
 
 Enabling flatcurve is designed to be as easy as adding these lines:
 
