@@ -316,6 +316,7 @@ getmailbird
 GETSCRIPT
 Globalsign
 Gluster
+gitlab
 gmatch
 gno
 gnomint
@@ -790,6 +791,7 @@ rescanned
 rescanning
 resolv
 resyncing
+rhel
 RHu
 RLIMIT
 rmail
