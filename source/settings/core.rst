@@ -1338,15 +1338,24 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: import_environment
-   :default: TZ CORE_OUTOFMEM CORE_ERROR
+   :default: TZ=%{env:TZ} CORE_OUTOFMEM=%{env:CORE_OUTOFMEM} CORE_ERROR=%{env:CORE_ERROR}
    :todo: Explain default variables
-   :values: @string
+   :values: @strlist
 
-   A list of environment variables, space-separated, that are preserved and
-   passed to all child processes.
+   A list of environment key=value pairs, that are preserved and passed to all
+   child processes.
 
-   It can include key = value pairs for assigning variables the desired value
-   upon Dovecot startup.
+   The value can be determined from the existing environment upon Dovecot
+   startup or directly specified.
+
+   Example:
+
+   .. code-block:: none
+
+     import_environment {
+       TZ = :/etc/localtime
+       TMPDIR = /dovecot-tmp
+     }
 
 
 .. dovecot_core:setting:: info_log_path
