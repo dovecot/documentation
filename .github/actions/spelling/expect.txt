@@ -6,7 +6,6 @@ achara
 actimeo
 addflag
 addhdr
-addhdrvar
 addprinc
 ADDRESULT
 ADH
@@ -80,7 +79,6 @@ Boehm
 Bokmal
 boollist
 bootup
-BROKENCHAR
 bsdauth
 BSDs
 bsearch
@@ -254,7 +252,6 @@ ESEARCH
 ESORT
 ESTMP
 ETRN
-etuid
 eucjp
 euid
 examplescripts
@@ -294,7 +291,6 @@ frontends
 FROP
 fsbench
 fscache
-fscrypt
 fsgid
 fsserver
 fsuid
@@ -383,9 +379,7 @@ INBO
 inbox
 inboxes
 INCLUDERC
-INDEXCACHE
 indexfiles
-INDEXPVT
 inetd
 inka
 Inno
@@ -403,7 +397,6 @@ ipt
 iredmail
 ispmail
 isps
-ITERINDEX
 itip
 jan
 jano
@@ -534,12 +527,10 @@ maclen
 madboa
 mailauth
 MAILBOXDIR
-mailboxdir
 mailboxguid
 mailboxlog
 mailboxname
 maildir
-MAILDIRBOX
 maildirlock
 maildirquota
 maildirsize
@@ -599,7 +590,6 @@ millisecs
 mimencode
 missingok
 mkhomedir
-mmap
 mmencode
 MMIME
 modseq
@@ -656,7 +646,6 @@ ninf
 NLEVEL
 nlinks
 noac
-NOALTCHECK
 noanonymous
 noatime
 noauthenticate
@@ -813,7 +802,6 @@ rawlog
 rchar
 rdineren
 rdparty
-reada
 readdirplus
 realloc
 realname
@@ -890,6 +878,7 @@ seqno
 SERVERBUG
 servermetadata
 setactive
+SETACTIVE
 setcred
 setra
 setspn
@@ -942,7 +931,6 @@ sqlquota
 sqluser
 ssd
 SSHA
-ssha
 ssldir
 sstable
 stackbuf
@@ -966,9 +954,7 @@ subaddress
 subaddresses
 subjwas
 submissiond
-subname
 Subtables
-subvalue
 sustainability
 svbin
 swapoff
@@ -1112,7 +1098,6 @@ vmm
 vmware
 vname
 vnd
-VOLATILEDIR
 VPS
 vpv
 vsize

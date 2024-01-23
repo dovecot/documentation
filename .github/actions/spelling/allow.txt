@@ -16,10 +16,12 @@ postgres
 jvm
 JVM
 JVMs
+mnt
 mmaped
 plugin
 plugins
 sni
 ssh
+SSHA
 ubuntu
 workarounds
