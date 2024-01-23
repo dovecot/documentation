@@ -170,13 +170,20 @@ Passdb setting
 
 
 .. dovecot_core:setting:: passdb_mechanisms
-   :values: @string
+   :values: @boollist
    :added: 2.2.30
 
    Skip the passdb, if non-empty and the current auth mechanism is not listed
-   here. Space or comma-separated list of auth mechanisms (e.g. ``PLAIN LOGIN``).
-   Also ``none`` can be used to match for a non-authenticating passdb lookup.
+   here. If the value contains ``none``, it matches for non-authenticating
+   passdb lookups. Example:
 
+   .. code-block:: none
+
+      passdb passwd-file {
+	driver = passwd-file
+	mechanisms = PLAIN LOGIN
+	# ...
+      }
 
 .. dovecot_core:setting:: passdb_username_filter
    :values: @string
