@@ -1338,7 +1338,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: import_environment
-   :default: TZ=%{env:TZ} CORE_OUTOFMEM=%{env:CORE_OUTOFMEM} CORE_ERROR=%{env:CORE_ERROR}
+   :default: TZ=%{env:TZ} CORE_OUTOFMEM=%{env:CORE_OUTOFMEM} CORE_ERROR=%{env:CORE_ERROR} PATH=%{env:PATH}
    :todo: Explain default variables
    :values: @strlist
 
