@@ -104,7 +104,9 @@ You can also set DEBUG environment to have rawlog log an info message why it's n
 
 .. code-block:: none
 
- import_environment=$import_environment DEBUG=1
+ import_environment {
+   DEBUG = 1
+ }
  
 Configuration
 -------------
