@@ -6,15 +6,11 @@ achara
 actimeo
 addflag
 addhdr
-addhdrvar
 addprinc
 ADDRESULT
 ADH
-admins
-AEAD
 Aildir
 allbackups
-alloca
 alloconly
 altmove
 altpath
@@ -38,13 +34,11 @@ asdfgh
 Atilika
 atimes
 atmail
-ATo
 auid
 authdb
 authpriv
 authtok
 authuser
-authz
 autocreate
 autocreated
 Autocreation
@@ -68,7 +62,6 @@ barfoo
 basearch
 bayes
 bcc
-BDAT
 bernat
 bindir
 bitfield
@@ -81,7 +74,6 @@ Boehm
 Bokmal
 boollist
 bootup
-BROKENCHAR
 bsdauth
 BSDs
 bsearch
@@ -100,7 +92,6 @@ ccert
 cdb
 cdmi
 certbot
-CFLAGS
 Chales
 changetype
 chasquid
@@ -116,11 +107,9 @@ cifs
 cip
 cipe
 Ciphersuites
-CJK
 clockspeed
 clucene
 clusterfs
-cmake
 cmdlog
 cmds
 cmusieve
@@ -138,14 +127,12 @@ COPYUID
 coretest
 coreutils
 courierimapuiddb
-cov
 cpanel
 CPID
 CPPFLAGS
 cql
 cqlsh
 CRLFs
-CRLs
 crt
 ctlr
 currentdate
@@ -159,7 +146,6 @@ datalake
 datastack
 datastax
 datatracker
-dbg
 dbox
 dboxes
 dclocal
@@ -176,7 +162,6 @@ delaycompress
 deleteheader
 denotify
 dentries
-deref
 DESTNAME
 destuser
 desync
@@ -243,9 +228,7 @@ effinger
 egid
 EID
 Eing
-eip
 ekh
-emacs
 emaillookup
 endscript
 ENHANCEDSTATUSCODES
@@ -260,7 +243,6 @@ ESEARCH
 ESORT
 ESTMP
 ETRN
-etuid
 eucjp
 euid
 examplescripts
@@ -298,7 +280,6 @@ frontends
 FROP
 fsbench
 fscache
-fscrypt
 fsgid
 fsserver
 fsuid
@@ -310,7 +291,6 @@ ftscache
 FULLDIRNAME
 fulltext
 gauner
-gcc
 gcda
 gcov
 gecos
@@ -328,7 +308,6 @@ Gluster
 gmatch
 gno
 gnomint
-GNUC
 gpg
 gpgcheck
 gpgkey
@@ -356,7 +335,6 @@ hostaddr
 hostchange
 hostdomain
 hostip
-Hotspot
 howto
 howtoforge
 htdigest
@@ -364,9 +342,7 @@ htiweb
 htpasswd
 httpchk
 httplog
-IAT
 ICAL
-idx
 IES
 ietf
 ifmail
@@ -389,11 +365,8 @@ INBO
 inbox
 inboxes
 INCLUDERC
-INDEXCACHE
 indexfiles
-INDEXPVT
 inka
-inlines
 Inno
 inodes
 inodetofile
@@ -409,7 +382,6 @@ ipt
 iredmail
 ispmail
 isps
-ITERINDEX
 itip
 jan
 jano
@@ -532,12 +504,10 @@ lugog
 maclen
 madboa
 MAILBOXDIR
-mailboxdir
 mailboxguid
 mailboxlog
 mailboxname
 maildir
-MAILDIRBOX
 maildirlock
 maildirquota
 maildirsize
@@ -590,9 +560,7 @@ metawrap
 millisecs
 mimencode
 missingok
-mkcert
 mkhomedir
-mmap
 mmencode
 MMIME
 modseq
@@ -609,7 +577,6 @@ MULTIAPPEND
 multiport
 multiscript
 murchison
-mutf
 muttmua
 muttrc
 mybox
@@ -620,27 +587,23 @@ myfoldertoo
 myhostname
 mynetworks
 mypassword
-myscript
 mysqld
 myuser
 myusername
 NBF
 neomutt
-newkey
 newlock
 newmail
 Newsgroups
 newtok
 nexthop
 NEXTUID
-NFKD
 nfsmount
 ngrams
 ninf
 NLEVEL
 nlinks
 noac
-NOALTCHECK
 noanonymous
 noatime
 noauthenticate
@@ -651,7 +614,6 @@ nodetool
 nodiratime
 nodns
 noenforcing
-noindex
 NOINFERIORS
 noiv
 nolock
@@ -713,7 +675,6 @@ origbox
 OR'ing
 ORing
 orld
-OSERROR
 OSFILE
 otherinstance
 otp
@@ -728,11 +689,8 @@ pacman
 pandoc
 passdb
 passthrough
-Pbase
 pbkd
-pcre
 pfs
-PGP
 pidfile
 pidof
 pids
@@ -770,10 +728,7 @@ procmailrc
 proctitle
 promotionalmail
 proofpoint
-PROT
 proxymap
-Ptest
-ptr
 pubout
 pukki
 pushmail
@@ -798,7 +753,6 @@ rawlog
 rchar
 rdineren
 rdparty
-reada
 readdirplus
 realloc
 realname
@@ -822,7 +776,6 @@ resyncronized
 RFCs
 rhel
 RHu
-RLIMIT
 rmail
 Rnotation
 roundcube
@@ -854,7 +807,6 @@ scality
 scontext
 scriptname
 sdbox
-sdc
 SDPS
 SEARCHRES
 seclabel
@@ -874,7 +826,6 @@ seqno
 SERVERBUG
 servermetadata
 SETACTIVE
-setcap
 setcred
 setra
 setspn
@@ -924,10 +875,8 @@ sqlpass
 sqlpool
 sqlquota
 sqluser
-srv
 ssd
 SSHA
-ssha
 ssldir
 sstable
 stackbuf
@@ -946,18 +895,11 @@ strlcpy
 strlist
 strocpy
 strp
-strsplit
-STW
 subaccounts
 subaddress
-subdomain
-subfolders
 subjwas
-subkey
 submissiond
-subname
 Subtables
-subvalue
 sustainability
 svbin
 swapoff
@@ -983,7 +925,6 @@ technet
 tempdisabled
 tempfail
 tempfailing
-templating
 Tenuring
 terabyte
 testdomain
@@ -1018,7 +959,6 @@ tscript
 TTLs
 tukaani
 tuxfamily
-TYPECHECK
 typedef
 tzknvtr
 uidgid
@@ -1034,7 +974,6 @@ UKS
 unaccessed
 unaliased
 unauth
-uncompressing
 unconfigured
 und
 UNDRAFT
@@ -1084,7 +1023,6 @@ Venema
 vfile
 vfuncs
 vgdb
-virtualenv
 virtualised
 virustest
 Vjcm
@@ -1096,7 +1034,6 @@ vmm
 vmware
 vname
 vnd
-VOLATILEDIR
 VPS
 vpv
 vsize
@@ -1109,9 +1046,7 @@ webmail
 webpage
 wforce
 Wietse
-wikipedia
 wikis
-WILLNEED
 winbind
 worl
 wrappermode
