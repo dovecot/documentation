@@ -145,7 +145,7 @@ There are several settings that control logging verbosity. By default they're al
 
 * :dovecot_core:ref:`auth_debug_passwords=yes <auth_debug_passwords>` removes password hiding (but only if you are not using PAM, since PAM errors aren't written to Dovecot's own logs).
 
-* :dovecot_core:ref:`mail_debug=yes <mail_debug>` enables all kinds of mail related debug logging, such as showing where Dovecot is looking for mails.
+* :dovecot_core:ref:`log_debug = category=mail <log_debug>` enables all kinds of mail related debug logging, such as showing where Dovecot is looking for mails.
 
 * :dovecot_core:ref:`verbose_ssl=yes <verbose_ssl>` enables logging SSL errors and warnings. Even without this setting if connection is closed because of an SSL error, the error is logged as the disconnection reason.
 

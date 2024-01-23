@@ -79,7 +79,7 @@ If you're wondering why per-user quota isn't working:
 * Check that :ref:`dovecot-lda <lda>` is called with ``-d`` parameter.
 * Check that you're not using :ref:`authentication-static_user_database`.
 * Check that ``quota_rule`` setting is properly returned by userdb. Enable
-  ``log_debug = category=auth`` and ``mail_debug = yes`` to see this.
+  :dovecot_core:ref:`log_debug = category=auth or category=mail <log_debug>` to see this.
 
 For example:
 
