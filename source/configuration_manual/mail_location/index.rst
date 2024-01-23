@@ -324,7 +324,7 @@ Mailbox Autocreation
 
 Autocreation is only triggered if :dovecot_core:ref:`mail_location` is
 correctly set. You'll see something like this if you enable
-:dovecot_core:ref:`debug logging <mail_debug>` (example for ``mbox`` mailbox
+:dovecot_core:ref:`debug logging <log_debug>` (example for ``mbox`` mailbox
 format):
 
 .. code-block:: none

@@ -36,7 +36,7 @@ Your MTA is not using Dovecot LDA or LMTP
    e.g. Exim or Postfix, for local message delivery. Most MTAs have
    their own local delivery agent, and without explicit configuration
    this is what is used. In that case, your Sieve scripts are simply
-   ignored. When you set :dovecot_core:ref:`mail_debug=yes <mail_debug>` in
+   ignored. When you set :dovecot_core:ref:`log_debug = category=sieve <log_debug>` in
    your configuration, your logs will show details of LDA and/or LMTP
    execution. The following is an example of the first few log lines of an LDA
    delivery:

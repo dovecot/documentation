@@ -35,4 +35,4 @@ Sample Configuration
 Debugging
 =========
 
-Enable :dovecot_core:ref:`mail_debug` to see context changes.
+Enable :dovecot_core:ref:`log_debug` to see context changes.

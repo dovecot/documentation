@@ -318,7 +318,7 @@ Troubleshooting
 ---------------
 
 -  Make sure the ``%`` and ``%%`` variables are specified correctly in the
-   namespace location. ``mail_debug=yes`` will help you see if Dovecot
+   namespace location. :dovecot_core:ref:`log_debug = category=mail <log_debug>` will help you see if Dovecot
    is trying to access correct paths.
 
 -  ``doveadm acl debug -u user@domain shared/user/box`` can be helpful
