@@ -1111,40 +1111,24 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: imap_id_send
-   :default: name *
+   :default: name=%{dovecot:name}
    :todo: Indicate imap setting
-   :values: @string
+   :values: @strlist
 
    Which ID field names and values to send to clients.
 
-   Using ``*`` as the value makes Dovecot use the default value.
-
-   There are currently defaults for the following fields:
-
-   ================= ==========================================================
-   Field             Default
-   ================= ==========================================================
-   ``name``          Name of distributed package (Default: ``Dovecot``)
-   ``version``       Dovecot version
-   ``os``            OS name reported by uname syscall (similar to ``uname -s``
-                     output)
-   ``os-version``    OS version reported by uname syscall (similar to ``uname
-                     -r`` output)
-   ``support-url``   Support webpage set in Dovecot distribution (Default:
-                     ``http://www.dovecot.org/``)
-   ``support-email`` Support email set in Dovecot distribution (Default:
-                     ``dovecot@dovecot.org``)
-   ``revision``      Short commit hash of Dovecot git source tree HEAD (same
-                     as the commit hash reported in ``dovecot --version``)
-
-                     .. dovecotadded:: 2.3.10
-   ================= ==========================================================
+   You can access default values by using
+   :ref:`variables-distribution-variables`.
 
    Example:
 
    .. code-block:: none
 
-     imap_id_send = "name" * "version" * support-url http://example.com/
+     imap_id_send {
+       name = %{dovecot:name}
+       version = %{dovecot:version}
+       support-url = http://example.com/
+     }
 
 
 .. dovecot_core:setting:: imap_idle_notify_interval
