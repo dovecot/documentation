@@ -26,7 +26,9 @@ or directly from inside the dovecot configuration file:
 
 ::
 
-  import_environment = $import_environment TZ=:/etc/localtime
+  import_environment {
+    TZ = :/etc/localtime
+  }
 
 Note that a reload is not sufficient for the change to take effect. A restart
 is required.

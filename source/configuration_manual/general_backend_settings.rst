@@ -35,7 +35,9 @@ user connection will be using both old and new configuration at the same time.
 
 .. code-block:: none
 
-  import_environment = $import_environment MALLOC_MMAP_THRESHOLD_=131072
+  import_environment {
+    MALLOC_MMAP_THRESHOLD_ = 131072
+  }
 
 Allocate all memory larger than 128 kB using mmap(). This allows the OS to free
 the memory afterwards. This is important for backends because there can be a

@@ -37,6 +37,8 @@ If enabled, everything except `save` event will log only the fields that can be 
 
 .. code-block:: none
 
-   import_environment = $import_environment MALLOC_MMAP_THRESHOLD_=131072
+   import_environment {
+     MALLOC_MMAP_THRESHOLD_ = 131072
+   }
 
 Avoid processes permanently using too much memory by having it use ``mmap()`` for ``>=128 kB`` memory allocations.
