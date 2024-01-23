@@ -19,20 +19,23 @@ Global variables
 
 Global variables that work everywhere are:
 
-+----------------+-----------------------------------------------------------------------------+
-| Long name      |  Description                                                                |
-+================+=============================================================================+
-| %%             | '%' character. See :ref:`user_shared_mailboxes`                             |
-|                | for further information about %% variables                                  |
-+----------------+-----------------------------------------------------------------------------+
-| env:<name>     | Environment variable <name>                                                 |
-+----------------+-----------------------------------------------------------------------------+
-| system:<name>  | Get a system variable, see :ref:`below <variables-system-variables>`        |
-|                | for list of supported names.                                                |
-+----------------+-----------------------------------------------------------------------------+
-| process:<name> | Get a process variable, see :ref:`below <variables-process-variables>`      |
-|                | for list of supported names.                                                |
-+----------------+-----------------------------------------------------------------------------+
++----------------+----------------------------------------------------------------------------------+
+| Long name      |  Description                                                                     |
++================+==================================================================================+
+| %%             | '%' character. See :ref:`user_shared_mailboxes`                                  |
+|                | for further information about %% variables                                       |
++----------------+----------------------------------------------------------------------------------+
+| env:<name>     | Environment variable <name>                                                      |
++----------------+----------------------------------------------------------------------------------+
+| system:<name>  | Get a system variable, see :ref:`below <variables-system-variables>`             |
+|                | for list of supported names.                                                     |
++----------------+----------------------------------------------------------------------------------+
+| process:<name> | Get a process variable, see :ref:`below <variables-process-variables>`           |
+|                | for list of supported names.                                                     |
++----------------+----------------------------------------------------------------------------------+
+| dovecot:<key>  | Get a distribution variable, see :ref:`below <variables-distribution-variables>` |
+|                | for a list of supported names.                                                   |
++----------------+----------------------------------------------------------------------------------+
 
 If :ref:`var_expand_crypt_plugin` is loaded, these also work globally:
 
@@ -60,6 +63,12 @@ Supported system variables
 ``hostname``
   Hostname (without domain). Can be overridden with ``DOVECOT_HOSTNAME`` environment variable.
   This needs to be included in :dovecot_core:ref:`import_environment`.
+``os``
+  OS name reported by ``uname()`` call.
+  (Similar to ``uname -s`` output.)
+``os-version``
+  OS version reported by ``uname()`` call.
+  (Similar to ``uname -r`` output.)
 
 .. _variables-process-variables:
 
@@ -72,6 +81,26 @@ Supported process variables
   Effective user ID of the current process.
 ``gid``
   Effective group ID of the current process.
+
+.. _variables-distribution-variables:
+
+Dovecot Distribution Attributes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``name``
+  Name of distributed package
+  (Default: ``Dovecot``)
+``version``
+  Dovecot version
+``support-url``
+  Support webpage set in Dovecot distribution
+  (Default: ``https://www.dovecot.org/``)
+``support-email``
+  Support email set in Dovecot distribution
+  (Default: ``dovecot@dovecot.org``)
+``revision``
+  Short commit hash of Dovecot git source tree HEAD
+  (same as the commit hash reported in ``dovecot --version``)
 
 .. _variables-user:
 
