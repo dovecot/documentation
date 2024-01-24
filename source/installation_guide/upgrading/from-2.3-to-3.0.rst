@@ -171,29 +171,51 @@ Removed features and their replacements
 Changed default settings
 ========================
 
-+------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
-| Key                                                        | Old                    | New             | Notes                                                       |
-+============================================================+========================+=================+=============================================================+
-| service/anvil/chroot                                       | empty                  | <no value>      | Anvil is no longer chrooted                                 |
-+------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
-| service/anvil/user                                         | $default_internal_user | <no value>      | Anvil runs as root                                          |
-+------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
-| service/auth-worker/process_limit                          | 1                      | 30              | Behaviour of process limit has changed for auth-worker,  it |
-|                                                            |                        |                 | now behaves as it was supposed to.                          |
-+------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
-| :dovecot_core:ref:`mail_location`                          |                        | ``NO-NOSELECT`` | ``NO-NOSELECT`` is the new default behavior. To revert to   |
-|                                                            |                        |                 | the old default specify ``KEEP-NOSELECT``.                  |
-+------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
-| :dovecot_plugin:ref:`fts_dovecot_mail_flush_interval`      | 0                      | 10              |                                                             |
-+------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
-| :dovecot_plugin:ref:`fts_dovecot_max_triplets`             | 0                      | 200             |                                                             |
-+------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
-| :ref:`max-parallel-iter<dictmap_configuration_parameters>` | 1                      | 10              |                                                             |
-+------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
-| :dovecot_core:ref:`mail_cache_max_headers_count`           | unlimited              | 100             | New feature, explicitly set to 0 for the old behavior       |
-+------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
-| :dovecot_core:ref:`mail_cache_max_header_name_length`      | unlimited              | 100             | New feature, explicitly set to 0 for the old behavior       |
-+------------------------------------------------------------+------------------------+-----------------+-------------------------------------------------------------+
+.. list-table::
+ :widths: 40 10 10 40
+ :header-rows: 1
+
+ * - Key
+   - Old
+   - New
+   - Notes
+ * - service/anvil/chroot
+   - empty
+   - <no value>
+   - Anvil is no longer chrooted
+ * - service/anvil/user
+   - $default_internal_user
+   - <no value>
+   - Anvil runs as root
+ * - service/auth-worker/process_limit
+   - 1
+   - 30
+   - Behaviour of process limit has changed for auth-worker,  it now behaves as it was supposed to.
+ * - :dovecot_core:ref:`mail_location`
+   - 
+   - ``NO-NOSELECT``
+   - ``NO-NOSELECT`` is the new default behavior. To revert to the old default specify ``KEEP-NOSELECT``.
+ * - :dovecot_plugin:ref:`fts_dovecot_mail_flush_interval`
+   - 0
+   - 10
+   -
+ * - :dovecot_plugin:ref:`fts_dovecot_max_triplets`
+   - 0
+   - 200
+   -
+ * - :ref:`max-parallel-iter<dictmap_configuration_parameters>`
+   - 1
+   - 10
+   -
+ * - :dovecot_core:ref:`mail_cache_max_headers_count`
+   - unlimited
+   - 100
+   - New feature, explicitly set to 0 for the old behavior
+ * - :dovecot_core:ref:`mail_cache_max_header_name_length`
+   - unlimited
+   - 100
+   - New feature, explicitly set to 0 for the old behavior
+
 
 Doveadm mailbox commands
 ------------------------
