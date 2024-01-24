@@ -215,6 +215,10 @@ Changed default settings
    - unlimited
    - 100
    - New feature, explicitly set to 0 for the old behavior
+ * - :dovecot_core:ref:`mail_log_prefix`
+   - ``%s(%u)<%{pid}><%{session}>:``
+   - ``%s(%u)<%{process:pid}><%{session}>:``
+   - Uses new process key
 
 
 Doveadm mailbox commands

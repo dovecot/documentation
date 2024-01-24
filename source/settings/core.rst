@@ -2087,7 +2087,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: mail_log_prefix
-   :default: %s(%u)<%{pid}><%{session}>:
+   :default: %s(%u)<%{process:pid}><%{session}>:
    :values: @string
 
    You can specify a log prefix for mail processes here.
