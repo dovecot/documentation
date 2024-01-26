@@ -48,6 +48,19 @@ Settings
    simultaneously being accessed by multiple backends.
 
 
+.. dovecot_plugin:setting:: metacache_forced_refresh_interval
+   :default: 8 hours
+   :plugin: obox
+   :values: @time
+
+   If the user indexes haven't been refreshed for this long time, force the
+   refresh. This is done by ignoring the
+   :dovecot_plugin:ref:`metacache_close_delay` setting (i.e. same as if it is 0).
+   This setting allows highly active users' indexes still to be refreshed once
+   in a while. (Although if the user has an active session 100% of the time,
+   the refresh cannot be done.)
+
+
 .. dovecot_plugin:setting:: metacache_max_grace
    :default: 1G
    :plugin: obox
