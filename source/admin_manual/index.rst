@@ -35,6 +35,7 @@ Administrative Manual
    mailbox_formats
    mda
    migrating_mailboxes
+   migrating_from_courier
    mta
    namespaces
    obox/index
