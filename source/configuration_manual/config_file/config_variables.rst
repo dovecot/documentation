@@ -243,8 +243,6 @@ Login variables
 |          |                       | .. dovecotadded:: 2.2.0                                       |
 |          |                       | .. dovecotdeprecated:: 2.3.14                                 |
 +----------+-----------------------+---------------------------------------------------------------+
-| %p       | pid                   | process ID of the authentication client                       |
-+----------+-----------------------+---------------------------------------------------------------+
 | %m       | mechanism             | :ref:`authentication-authentication_mechanisms` e.g. PLAIN    |
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.3.14                                      |
@@ -415,7 +413,7 @@ Authentication variables
 |          |                       | .. dovecotadded:: 2.2.0                                       |
 |          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
-| %p       | pid                   | process ID of the authentication client                       |
+| %p       | client_pid            | process ID of the authentication client                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | session_pid           | For user logins: The PID of the IMAP/POP3 process handling the|
 |          |                       | session.                                                      |
