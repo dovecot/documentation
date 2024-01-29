@@ -148,7 +148,7 @@ The end result should look like this:
    drwx--S--- 3 user user 60 Oct 24 12:04 domain.example.com/user/
 
 Note that this requires that the :dovecot_core:ref:`mail_path` setting is in its
-explicit format with %variables. Using ``~/Maildir`` won't work,
+explicit format with :ref:`%variables <config_variables>`. Using ``~/Maildir`` won't work,
 because Dovecot can't really know how far down it should copy the
 permissions from.
 
@@ -157,7 +157,7 @@ Permissions to new user home directories
 
 When :dovecot_core:ref:`mail_path` begins with ``%{home}`` or ``~/``, its permissions are
 copied from the first existing parent directory if it has setgid-bit
-set. This isn't done when the path contains any other %variables.
+set. This isn't done when the path contains any other :ref:`%variables <config_variables>`.
 
 Mail Delivery Agent permissions
 -------------------------------

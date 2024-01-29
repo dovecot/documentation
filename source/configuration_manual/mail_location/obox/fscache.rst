@@ -66,7 +66,7 @@ Multiple fscache directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It's possible to split fscaches over multiple independent directories by
-including %variables in the path. This is typically done based on username
+including :ref:`%variables <config_variables>` in the path. This is typically done based on username
 hashing, e.g. ``/var/fscache/%8Nu`` would use 8 fscache directories. This is
 especially recommended with larger fscaches (>10 GB). The main benefit of
 split fscaches is that any cache trashing caused by a few users will be

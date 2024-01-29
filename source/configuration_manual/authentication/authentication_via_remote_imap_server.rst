@@ -6,8 +6,8 @@ Authentication via remote IMAP server
 
 Available driver settings:
 
-* host=<template> : IP address or hostname. Allows %variables (e.g.
-  host=imap.%d)
+* host=<template> : IP address or hostname. Allows
+  :ref:`%variables <config_variables>` (e.g. ``host=imap.%d``)
 * port=<port>
 * username=<template> : The default is %u, but this could be changed to for
   example %n@example.com
