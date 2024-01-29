@@ -70,7 +70,7 @@ Otherwise the binding is changed to the default DN before each user lookup.
 
 If authentication binding is used, you can save one LDAP request per login
 if users' DN can be specified with a common template. The template can use
-the standard %variables (see :ref:`ldap_settings_auth-user_filter`).
+the standard :ref:`%variables <config_variables>` (see :ref:`ldap_settings_auth-user_filter`).
 Note that you can't use any pass_attrs if you use this setting.
 
 

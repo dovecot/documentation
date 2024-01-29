@@ -112,7 +112,7 @@ Userdb settings
 
    Same as :dovecot_core:ref:`userdb_default_fields`, but instead of providing
    the default values, these values override what the userdb backend returned.
-   All %variables used here reflect the state **after** the userdb lookup, and can
+   All :ref:`%variables <config_variables>` used here reflect the state **after** the userdb lookup, and can
    refer to fields returned by the current (and previous) userdb lookups.
 
    For example useful with userdb passwd for overriding e.g. home directory or

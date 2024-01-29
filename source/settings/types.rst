@@ -22,7 +22,8 @@ String without variables
 ------------------------
 
 Non-variable strings are when :ref:`config_variables` aren't wanted
-to be used. Typically this is done when setting-specific %variables are wanted
+to be used. Typically this is done when setting-specific
+:ref:`%variables <config_variables>` are wanted
 to be used instead. For example:
 
 .. code-block:: none
