@@ -93,7 +93,7 @@ If the ``ACCESSKEY`` or ``SECRET`` contains any special characters, they can be
 
 .. Note::
 
-  ``dovecot.conf`` handles %variable expansion internally as well, so % needs
+  ``dovecot.conf`` handles :ref:`%variable <config_variables>` expansion internally as well, so % needs
   to be escaped as %% and ':' needs to be escaped as %%3A. For example if the
   SECRET is "foo:bar" this would be encoded as
   ``https://ACCESSKEY:foo%%3Abar:s3.example.com/``. This double-%% escaping is
