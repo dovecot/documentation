@@ -21,7 +21,7 @@ See :ref:`pigeonhole_ldap` for the settings specific to LDAP Lookup for Sieve Sc
 - Default: <empty>
 - Values:  :ref:`string`
 
-LDAP base. %variables (see :ref:`config_variables`) can be used here.
+LDAP base. :ref:`%variables <config_variables>` can be used here.
 
 
 Example:

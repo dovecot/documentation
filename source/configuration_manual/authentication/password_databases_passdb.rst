@@ -166,7 +166,7 @@ Passdb setting
 
    Same as :dovecot_core:ref:`passdb_default_fields`, but instead of providing
    the default values, these values override what the passdb backend returned.
-   All %variables used here reflect the state **after** the passdb lookup, and can
+   All :ref:`%variables <config_variables>` used here reflect the state **after** the passdb lookup, and can
    refer to fields returned by the current (and previous) passdb lookups.
 
 
