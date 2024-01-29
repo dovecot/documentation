@@ -10,7 +10,7 @@ storage is accessed.
 Similarly the URL uses URL escaping, so for example if password is ``foo/bar``
 the URL is ``http://user:foo%2fbar@example.com/``.
 
-Additionally, because Dovecot expands %variables, the
+Additionally, because Dovecot expands :ref:`%variables <config_variables>`, the
 ``%`` needs to be escaped. So the final string would be e.g.:
 
 .. code-block:: none
