@@ -128,6 +128,23 @@ URL
 
 Special type of :ref:`string` setting. Conforms to Uniform Resource Locators (URL) (:rfc:`1738`).
 
+.. _file:
+
+File
+----
+
+Path to a file. The file contents are read already by the config process, so
+the file permissions don't usually matter. However, some callers need to open
+the file again (e.g. ``ssl_client_cert_file`` setting with MySQL) after the
+process has dropped root privileges.
+
+The file paths do not support :ref:`%variables <config_variables>`.
+
+All the "file" type settings end with a ``_file`` suffix. It's possible to give
+inline values (instead of a path to a file) for the setting by removing the
+``_file`` suffix. For example userdb could be returning
+``crypt_global_public_key=<public key content>`` without having to use files.
+
 .. _named_filter:
 
 Named Filter
