@@ -50,10 +50,10 @@ Settings
    :values: @named_list_filter
 
    List of private key(s) to decrypt files. Add 
-   :dovecot_plugin:ref:`crypt_private_key` and optionally
+   :dovecot_plugin:ref:`crypt_private_key_file` and optionally
    :dovecot_plugin:ref:`crypt_private_key_password` inside each filter.
 
-.. dovecot_plugin:setting:: crypt_global_public_key
+.. dovecot_plugin:setting:: crypt_global_public_key_file
    :plugin: mail-crypt
    :values: @string
 
@@ -68,7 +68,7 @@ Settings
    :values: @named_list_filter
 
    List of global private key(s) to decrypt mails. Add
-   :dovecot_plugin:ref:`crypt_private_key` and optionally
+   :dovecot_plugin:ref:`crypt_private_key_file` and optionally
    :dovecot_plugin:ref:`crypt_private_key_password` inside each filter.
 
 
@@ -77,7 +77,7 @@ Settings
    :values: @named_list_filter
 
    List of private key(s) to decrypt user's master private key. Add
-   :dovecot_plugin:ref:`crypt_private_key` and optionally
+   :dovecot_plugin:ref:`crypt_private_key_file` and optionally
    :dovecot_plugin:ref:`crypt_private_key_password` inside each filter.
 
 
@@ -117,7 +117,7 @@ Settings
    :dovecot_plugin:ref:`crypt_user_key_encryption_key`.
 
 
-.. dovecot_plugin:setting:: crypt_private_key
+.. dovecot_plugin:setting:: crypt_private_key_file
    :plugin: mail-crypt
    :values: @string
 
@@ -133,6 +133,6 @@ Settings
    :plugin: mail-crypt
    :values: @string
 
-   Password to decrypt :dovecot_plugin:ref:`crypt_private_key`.
+   Password to decrypt :dovecot_plugin:ref:`crypt_private_key_file`.
 
 
