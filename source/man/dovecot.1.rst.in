@@ -58,7 +58,7 @@ OPTIONS
    as *doveconf -n*.
 
 **-p**
-   Prompt for the ssl key password for the configured *ssl_key* on
+   Prompt for the ssl key password for the configured *ssl_key_file* on
    startup.
 
 **-\-build-options**

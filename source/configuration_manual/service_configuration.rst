@@ -459,7 +459,7 @@ Config process reads and parses the dovecot.conf file, and exports the parsed da
 
    * **user=root**, because the process needs to be able to reopen the config files during a config reload, and often some parts of the config having secrets are readable only by root.
 
-   * Only root should be able to connect to its UNIX listener, unless there are no secrets in the configuration. Passwords are obviously secrets, but less obviously ssl_key is also a secret, since it contains the actual SSL key data instead of only a filename.
+   * Only root should be able to connect to its UNIX listener, unless there are no secrets in the configuration. Passwords are obviously secrets, but less obviously ssl_key_file is also a secret, since it contains the actual SSL key data instead of only a filename.
 
 dict
 ^^^^
