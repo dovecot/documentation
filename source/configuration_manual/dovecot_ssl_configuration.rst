@@ -13,9 +13,9 @@ The most important SSL settings are (in ``conf.d/10-ssl.conf``):
 
   ssl = yes
   # Preferred permissions: root:root 0444
-  ssl_cert = </etc/ssl/certs/dovecot.pem
+  ssl_cert_file = /etc/ssl/certs/dovecot.pem
   # Preferred permissions: root:root 0400
-  ssl_key = </etc/ssl/private/dovecot.pem
+  ssl_key_file = /etc/ssl/private/dovecot.pem
 
 
 .. Warning:: The ``<`` is mandatory. It indicates that the variable should contain contents of the file, instead of the file name. Not using it will cause an error.
@@ -29,8 +29,8 @@ It's possible to keep the certificate and the key both in the same file:
 .. code::
 
   # Preferred permissions: root:root 0400
-  ssl_cert = </etc/ssl/dovecot.pem
-  ssl_key = </etc/ssl/dovecot.pem
+  ssl_cert_file = /etc/ssl/dovecot.pem
+  ssl_key_file = /etc/ssl/dovecot.pem
 
 It's also possible to use different certificates for IMAP and POP3. However its important to note that ``ssl = yes`` must be set globally if you require SSL for any protocol (or dovecot will not listen on the SSL ports), which in turn requires that a certificate and key are specified globally even if you intend to specify certificates per protocol.
 
@@ -39,12 +39,12 @@ The per protocol certificate settings override the global setting.:
 .. code::
 
   protocol imap {
-    ssl_cert = </etc/ssl/certs/imap.pem
-    ssl_key = </etc/ssl/private/imap.pem
+    ssl_cert_file = /etc/ssl/certs/imap.pem
+    ssl_key_file = /etc/ssl/private/imap.pem
   }
   protocol pop3 {
-    ssl_cert = </etc/ssl/certs/pop3.pem
-    ssl_key = </etc/ssl/private/pop3.pem
+    ssl_cert_file = /etc/ssl/certs/pop3.pem
+    ssl_key_file = /etc/ssl/private/pop3.pem
   }
 
 There are a couple of different ways to specify when SSL/TLS is required:
@@ -81,8 +81,8 @@ You can specify alternative ssl certificate that will be used if the algorithm d
 
 .. code::
 
-  ssl_alt_cert = </path/to/alternative/cert.pem
-  ssl_alt_key = </path/to/alternative/key.pem
+  ssl_alt_cert_file = /path/to/alternative/cert.pem
+  ssl_alt_key_file = /path/to/alternative/key.pem
 
 Different certificates per IP and protocol
 ******************************************
@@ -93,35 +93,35 @@ If you have multiple IPs available, this method is guaranteed to work with all c
 
   local 192.0.2.10 { # instead of IP you can also use hostname, which will be resolved
     protocol imap {
-      ssl_cert = </etc/ssl/dovecot/imap-01.example.com.cert.pem
-      ssl_key = </etc/ssl/dovecot/imap-01.example.com.key.pem
+      ssl_cert_file = /etc/ssl/dovecot/imap-01.example.com.cert.pem
+      ssl_key_file = /etc/ssl/dovecot/imap-01.example.com.key.pem
     }
 
     protocol pop3 {
-     ssl_cert = </etc/ssl/dovecot/pop-01.example.com.cert.pem
-     ssl_key = </etc/ssl/dovecot/pop-01.example.com.key.pem
+     ssl_cert_file = /etc/ssl/dovecot/pop-01.example.com.cert.pem
+     ssl_key_file = /etc/ssl/dovecot/pop-01.example.com.key.pem
     }
   }
 
   local 192.0.2.20 {
     protocol imap {
-      ssl_cert = </etc/ssl/dovecot/imap-02.example.com.cert.pem
-      ssl_key = </etc/ssl/dovecot/imap-02.example.com.key.pem
+      ssl_cert_file = /etc/ssl/dovecot/imap-02.example.com.cert.pem
+      ssl_key_file = /etc/ssl/dovecot/imap-02.example.com.key.pem
     }
 
     protocol pop3 {
-      ssl_cert = </etc/ssl/dovecot/pop-02.example.com.cert.pem
-      ssl_key = </etc/ssl/dovecot/pop-02.example.com.key.pem
+      ssl_cert_file = /etc/ssl/dovecot/pop-02.example.com.cert.pem
+      ssl_key_file = /etc/ssl/dovecot/pop-02.example.com.key.pem
     }
   }
 
-.. Note:: You will still need a top-level ``default`` :dovecot_core:ref:`ssl_key` and :dovecot_core:ref:`ssl_cert` as well, or you will receive errors.
+.. Note:: You will still need a top-level ``default`` :dovecot_core:ref:`ssl_key_file` and :dovecot_core:ref:`ssl_cert_file` as well, or you will receive errors.
 
 
 .. code::
 
   # doveconf -n
-  doveconf: Error: ssl enabled, but ssl_cert not set
+  doveconf: Error: ssl enabled, but ssl_cert_file not set
 
 With client TLS SNI (Server Name Indication) support
 ****************************************************
@@ -136,12 +136,12 @@ compatible with all clients, especially mobile ones. It is a TLS SNI limitation.
 .. code-block:: none
 
   local_name imap.example.org {
-    ssl_cert = </etc/ssl/certs/imap.example.org.crt
-    ssl_key = </etc/ssl/private/imap.example.org.key
+    ssl_cert_file = /etc/ssl/certs/imap.example.org.crt
+    ssl_key_file = /etc/ssl/private/imap.example.org.key
   }
   local_name imap.example2.org {
-    ssl_cert = </etc/ssl/certs/imap.example2.org.crt
-    ssl_key = </etc/ssl/private/imap.example2.org.key
+    ssl_cert_file = /etc/ssl/certs/imap.example2.org.crt
+    ssl_key_file = /etc/ssl/private/imap.example2.org.key
   }
   # ..etc..
 
@@ -188,7 +188,7 @@ and then use ``!include_try /etc/dovecot-private.conf`` in the main ``dovecot.co
 Chained SSL certificates
 ************************
 
-Put all the certificates in the :dovecot_core:ref:`ssl_cert` file in this order:
+Put all the certificates in the :dovecot_core:ref:`ssl_cert_file` file in this order:
 
  #. Dovecot's public certificate
  #. First Intermediate Certificate
@@ -200,11 +200,11 @@ You should use this.
 SSL security settings
 *********************
 
-From version 2.3 forward, you can specify path to DH parameters file using:
+You can specify path to DH parameters file using:
 
 .. code::
 
-  ssl_dh = </path/to/dh.pem
+  ssl_dh_file = /path/to/dh.pem
 
 This is fully optional, and most modern clients do not need this.
 
@@ -246,7 +246,7 @@ If you want to require clients to present a valid SSL certificate, you'll need t
 
 .. code::
 
-  ssl_ca = </etc/ssl/ca.pem
+  ssl_ca_file = /etc/ssl/ca.pem
   ssl_request_client_cert = yes
 
   auth_ssl_require_client_cert = yes
@@ -270,7 +270,16 @@ The certificates and the CRLs have to be in PEM format. To convert a DER format 
 
   openssl crl -in class3-revoke.crl -inform DER -outform PEM > class3-revoke.pem
 
-With the above settings if a client connects which doesn't present a certificate signed by one of the CAs in the ``ssl_ca`` file, Dovecot won't let the user log in. This could present a problem if you're using Dovecot to provide SASL authentication for an MTA (such as Postfix) which is not capable of supplying client certificates for SASL authentication. If you need Dovecot to provide SASL authentication to an MTA without requiring client certificates and simultaneously provide IMAP service to clients while requiring client certificates, you can put ``auth_ssl_require_client_cert=yes`` inside of a protocol block as shown below to make an exemption for SMTP SASL clients (such as Postfix).
+With the above settings if a client connects which doesn't present a
+certificate signed by one of the CAs in the :dovecot_core:ref:`ssl_ca_file`,
+Dovecot won't let the user log in. This could present a problem if you're
+using Dovecot to provide SASL authentication for an MTA (such as Postfix)
+which is not capable of supplying client certificates for SASL authentication.
+If you need Dovecot to provide SASL authentication to an MTA without requiring
+client certificates and simultaneously provide IMAP service to clients while
+requiring client certificates, you can put ``auth_ssl_require_client_cert=yes``
+inside of a protocol block as shown below to make an exemption for SMTP SASL
+clients (such as Postfix).
 
 .. code::
 
