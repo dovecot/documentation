@@ -368,7 +368,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: auth_ssl_require_client_cert
    :default: no
-   :seealso: @ssl_ca;dovecot_core, @ssl_request_client_cert;dovecot_core, @dovecot_ssl_configuration
+   :seealso: @ssl_ca_file;dovecot_core, @ssl_request_client_cert;dovecot_core, @dovecot_ssl_configuration
    :values: @boolean
 
    If ``yes``, authentication fails when a valid SSL client certificate is not
@@ -3370,10 +3370,10 @@ See :ref:`settings` for list of all setting groups.
    authentication. Auth lookups will have the connection marked as ``secured``,
    which also affects the ``%{secured}`` :ref:`variable <config_variables>`.
 
-.. dovecot_core:setting:: ssl_alt_cert
+.. dovecot_core:setting:: ssl_alt_cert_file
    :added: 2.2.31
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
-   :values: @string
+   :values: @file
 
    Alternative SSL certificate that will be used if the algorithm differs from
    the primary certificate.
@@ -3384,28 +3384,27 @@ See :ref:`settings` for list of all setting groups.
 
    .. code-block:: none
 
-     ssl_alt_cert = </path/to/alternative/cert.pem
+     ssl_alt_cert_file = /path/to/alternative/cert.pem
 
 
-.. dovecot_core:setting:: ssl_alt_key
+.. dovecot_core:setting:: ssl_alt_key_file
    :added: 2.2.31
-   :seealso: @ssl;dovecot_core, @ssl_alt_cert;dovecot_core, @dovecot_ssl_configuration
-   :values: @string
+   :seealso: @ssl;dovecot_core, @ssl_alt_cert_file;dovecot_core, @dovecot_ssl_configuration
+   :values: @file
 
-   Private key for :dovecot_core:ref:`ssl_alt_cert`.
+   Private key for :dovecot_core:ref:`ssl_alt_cert_file`.
 
    Example:
 
    .. code-block:: none
 
-      ssl_alt_key = </path/to/alternative/key.pem
-      ssl_alt_cert = </path/to/alternative/cert.pem
+      ssl_alt_key_file = /path/to/alternative/key.pem
+      ssl_alt_cert_file = /path/to/alternative/cert.pem
 
 
-.. dovecot_core:setting:: ssl_ca
+.. dovecot_core:setting:: ssl_ca_file
    :seealso: @ssl;dovecot_core, @ssl_client_require_valid_cert;dovecot_core, @ssl_request_client_cert;dovecot_core, @dovecot_ssl_configuration
-   :values: @string
-   :changed: 2.4.0,3.0.0 :dovecot_core:ref:`ssl_client_ca` setting was split out of this.
+   :values: @file
 
    List of SSL CA certificates that are used to validate whether SSL
    certificates presented by incoming imap/pop3/etc. client connections are
@@ -3415,27 +3414,26 @@ See :ref:`settings` for list of all setting groups.
 
    .. code-block:: none
 
-      ssl_ca = </etc/dovecot/ca.crt
+      ssl_ca_file = /etc/dovecot/ca.crt
       ssl_request_client_cert = yes
       auth_ssl_require_client_cert = yes
 
 
-.. dovecot_core:setting:: ssl_cert
-   :default: </etc/ssl/certs/dovecot.pem
-   :seealso: @ssl;dovecot_core, @ssl_key;dovecot_core, @dovecot_ssl_configuration
-   :values: @string
+.. dovecot_core:setting:: ssl_cert_file
+   :seealso: @ssl;dovecot_core, @ssl_key_file;dovecot_core, @dovecot_ssl_configuration
+   :values: @file
 
-   The PEM-encoded X.509 SSL/TLS certificate presented for incoming
+   Path to the PEM-encoded X.509 SSL/TLS certificate presented for incoming
    imap/pop3/etc. client connections.
 
-   The :dovecot_core:ref:`ssl_key` is also needed for the private certificate.
+   The :dovecot_core:ref:`ssl_key_file` is also needed for the private certificate.
 
    Example:
 
    .. code-block:: none
 
-      ssl_cert = </etc/ssl/private/dovecot.crt
-      ssl_key = </etc/ssl/private/dovecot.key
+      ssl_cert_file = /etc/ssl/private/dovecot.crt
+      ssl_key_file = /etc/ssl/private/dovecot.key
 
 
 .. dovecot_core:setting:: ssl_cert_username_field
@@ -3498,7 +3496,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: ssl_client_ca_file
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
-   :values: @string
+   :values: @file
 
    File containing the trusted SSL CA certificates. For example
    ``/etc/ssl/certs/ca-bundle.crt``.
@@ -3514,48 +3512,36 @@ See :ref:`settings` for list of all setting groups.
    the server operation.
 
 
-.. dovecot_core:setting:: ssl_client_ca
-   :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
-   :values: @string
-   :added: 2.4.0,3.0.0 Split out of :dovecot_core:ref:`ssl_ca` setting.
-
-   List of trusted SSL CA certificates. This is used in addition to
-   :dovecot_core:ref:`ssl_client_ca_file` and
-   :dovecot_core:ref:`ssl_client_ca_dir`. This is mainly useful to provide
-   CAs for proxying in login processes, which run chrooted and can't access
-   CA files outside the chroot.
-
-
-.. dovecot_core:setting:: ssl_client_cert
-   :seealso: @ssl;dovecot_core, @ssl_client_key;dovecot_core, @dovecot_ssl_configuration
-   :values: @string
+.. dovecot_core:setting:: ssl_client_cert_file
+   :seealso: @ssl;dovecot_core, @ssl_client_key_file;dovecot_core, @dovecot_ssl_configuration
+   :values: @file
 
    Public SSL certificate used for outgoing SSL connections. This is generally
    needed only when the server authenticates the client using the certificate.
 
-   :dovecot_core:ref:`ssl_client_key` is also needed for the private
+   :dovecot_core:ref:`ssl_client_key_file` is also needed for the private
    certificate.
 
    Example:
 
    .. code-block:: none
 
-      ssl_client_cert = </etc/dovecot/dovecot-client.crt
-      ssl_client_key = </etc/dovecot/dovecot-client.key
+      ssl_client_cert_file = /etc/dovecot/dovecot-client.crt
+      ssl_client_key_file = /etc/dovecot/dovecot-client.key
 
 
-.. dovecot_core:setting:: ssl_client_key
-   :seealso: @ssl;dovecot_core, @ssl_client_cert;dovecot_core, @dovecot_ssl_configuration
-   :values: @string
+.. dovecot_core:setting:: ssl_client_key_file
+   :seealso: @ssl;dovecot_core, @ssl_client_cert_file;dovecot_core, @dovecot_ssl_configuration
+   :values: @file
 
-   Private key for :dovecot_core:ref:`ssl_client_cert`.
+   Private key for :dovecot_core:ref:`ssl_client_cert_file`.
 
    Example:
 
    .. code-block:: none
 
-      ssl_client_cert = </etc/dovecot/dovecot-client.crt
-      ssl_client_key = </etc/dovecot/dovecot-client.key
+      ssl_client_cert_file = /etc/dovecot/dovecot-client.crt
+      ssl_client_key_file = /etc/dovecot/dovecot-client.key
 
 
 .. dovecot_core:setting:: ssl_crypto_device
@@ -3582,13 +3568,13 @@ See :ref:`settings` for list of all setting groups.
      ssl_curve_list = P-521:P-384:P-256
 
 
-.. dovecot_core:setting:: ssl_dh
+.. dovecot_core:setting:: ssl_dh_file
    :added: 2.3.0
    :seealso: @ssl;dovecot_core, @dovecot_ssl_configuration
    :values: @string
 
-   As of Dovecot v2.3, the path to the Diffie-Hellman parameters file must be
-   provided. This setting isn't needed if using only ECDSA certificates.
+   Path to the Diffie-Hellman parameters file. This setting isn't needed if
+   using only ECDSA certificates.
 
    You can generate a new parameters file by, for example, running
    ``openssl gendh 4096`` on a machine with sufficient entropy (this may take
@@ -3598,7 +3584,7 @@ See :ref:`settings` for list of all setting groups.
 
    .. code-block:: none
 
-     ssl_dh=</path/to/dh.pem
+     ssl_dh_file = /path/to/dh.pem
 
 
 .. dovecot_core:setting:: ssl_client_require_valid_cert
@@ -3609,25 +3595,25 @@ See :ref:`settings` for list of all setting groups.
    Require a valid certificate when connecting to external SSL services?
 
 
-.. dovecot_core:setting:: ssl_key
-   :seealso: @ssl;dovecot_core, @ssl_cert;dovecot_core, @ssl_key_password;dovecot_core, @dovecot_ssl_configuration
+.. dovecot_core:setting:: ssl_key_file
+   :seealso: @ssl;dovecot_core, @ssl_cert_file;dovecot_core, @ssl_key_password;dovecot_core, @dovecot_ssl_configuration
    :values: @string
 
-   The PEM-encoded X.509 SSL/TLS private key for :dovecot_core:ref:`ssl_cert`.
+   Path to the PEM-encoded X.509 SSL/TLS private key for :dovecot_core:ref:`ssl_cert_file`.
 
    Example:
 
    .. code-block:: none
 
-      ssl_cert = </etc/ssl/private/dovecot.crt
-      ssl_key = </etc/ssl/private/dovecot.key
+      ssl_cert_file = /etc/ssl/private/dovecot.crt
+      ssl_key_file = /etc/ssl/private/dovecot.key
 
 
 .. dovecot_core:setting:: ssl_key_password
-   :seealso: @ssl;dovecot_core, @ssl_key;dovecot_core, @dovecot_ssl_configuration
+   :seealso: @ssl;dovecot_core, @ssl_key_file;dovecot_core, @dovecot_ssl_configuration
    :values: @string
 
-   The password to use if :dovecot_core:ref:`ssl_key` is password-protected.
+   The password to use if :dovecot_core:ref:`ssl_key_file` is password-protected.
 
    Since this file is often world-readable, you may wish to specify the path
    to a file containing the password, rather than the password itself, by
@@ -3716,12 +3702,12 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: ssl_require_crl
    :default: yes
-   :seealso: @ssl;dovecot_core, @ssl_ca;dovecot_core, @dovecot_ssl_configuration
+   :seealso: @ssl;dovecot_core, @ssl_ca_file;dovecot_core, @dovecot_ssl_configuration
    :values: @boolean
 
    If enabled, the CRL check must succeed for presented SSL client
    certificate and any intermediate certificates. The CRL list is generally
-   appended to the :dovecot_core:ref:`ssl_ca` file.
+   appended to the :dovecot_core:ref:`ssl_ca_file` file.
 
    This setting is used only for server connections.
 

@@ -67,7 +67,7 @@ Removed features and their replacements
 | Global ACL directory                                       | `Use inline ACLs instead of Global ACL Directories`.                                     |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``ssl-parameters.dat``                                     | This file is no longer converted automatically by config process, you need to set        |
-|                                                            | :dovecot_core:ref:`ssl_dh` setting if you need non-ECC Diffie-Hellman.                   |
+|                                                            | :dovecot_core:ref:`ssl_dh_file` setting if you need non-ECC Diffie-Hellman.              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | License plugin                                             | This plugin has been removed and ``license_checksum`` setting is marked obsolete. Plugin |
 |                                                            | setting ``license_checksum`` has been also removed.                                      |

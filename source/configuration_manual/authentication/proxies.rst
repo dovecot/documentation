@@ -80,11 +80,10 @@ You can use SSL/TLS connection to destination server by returning:
              exploitable by a man-in-the-middle attack.
 
 .. Note:: Login processes don't currently use
-          :dovecot_core:ref:`ssl_client_ca_dir` or
-	  dovecot_core:ref:`ssl_client_ca_file` settings for verifying the
+          :dovecot_core:ref:`ssl_client_ca_dir` setting for verifying the
 	  remote certificate, mainly because login processes can't really read
 	  the files chrooted. You can instead use
-	  dovecot_core:ref:`ssl_client_ca`.
+	  dovecot_core:ref:`ssl_client_ca_file`.
 
 .. Note:: LMTP proxying supports SSL/TLS only since v2.3.1 - for older versions
           any ssl/starttls extra field is ignored.
@@ -98,8 +97,8 @@ You can use SSL/TLS connection to destination server by returning:
 * ``starttls=any-cert``: Combine starttls and ``ssl=any-cert``.
 
 Additionally you can also tell Dovecot to send SSL client certificate to the
-remote server using :dovecot_core:ref:`ssl_client_cert` and
-:dovecot_core:ref:`ssl_client_key` settings in dovecot.conf.
+remote server using :dovecot_core:ref:`ssl_client_cert_file` and
+:dovecot_core:ref:`ssl_client_key_file` settings in dovecot.conf.
 
 Set :dovecot_core:ref:`login_trusted_networks` to point to the proxies in the
 backends. This way you'll get the clients' actual IP addresses logged instead

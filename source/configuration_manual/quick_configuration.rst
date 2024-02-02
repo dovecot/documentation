@@ -42,11 +42,10 @@ You need to create group vmail and user vmail.
   }
 
   ssl=yes
-  ssl_cert=</path/to/cert.pem
-  ssl_key=</path/to/key.pem
-  # if you are using v2.3.0-v2.3.2.1 (or want to support non-ECC DH algorithms)
-  # since v2.3.3 this setting has been made optional.
-  #ssl_dh=</path/to/dh.pem
+  ssl_cert_file = /path/to/cert.pem
+  ssl_key_file = /path/to/key.pem
+  # if you want to support non-ECC DH algorithms:
+  #ssl_dh_file = /path/to/dh.pem
 
   namespace {
     inbox = yes
@@ -107,7 +106,7 @@ Hints about writing configuration files
 
 .. code-block:: none
 
-  ssl_cert = </etc/ssl/certs/imap.pem
+  ssl_cert_file = /etc/ssl/certs/imap.pem
 
 Authentication
 --------------
@@ -160,7 +159,7 @@ you want to enable more of them than the defaults.
 SSL and Plaintext Authentication
 --------------------------------
 
-If you intend to use SSL, set ``ssl_cert`` and ``ssl_key`` settings. Otherwise
+If you intend to use SSL, set :dovecot_core:ref:`ssl_cert_file` and :dovecot_core:ref:`ssl_key_file` settings. Otherwise
 set ``ssl = no``. Easiest way to get SSL certificates built is to use Dovecot's
 :file:`doc/mkcert.sh` script. For more information see
 :ref:`dovecot_ssl_configuration`.
@@ -171,7 +170,7 @@ authentication mechanisms). This is recommended in most situations, since it pre
 leaking passwords. However, if you don't offer SSL for some reason, you'll
 probably want to set :dovecot_core:ref:`auth_allow_cleartext = yes <auth_allow_cleartext>`.
 
-Since v2.3.3 you only need :dovecot_core:ref:`ssl_key` and :dovecot_core:ref:`ssl_cert`, leaving :dovecot_core:ref:`ssl_dh`
+Since v2.3.3 you only need :dovecot_core:ref:`ssl_key_file` and :dovecot_core:ref:`ssl_cert_file`, leaving :dovecot_core:ref:`ssl_dh_file`
 unset (and removing :file:`ssl-parameters.dat` if left over from 2.2
 configurations) will prevent using non-EC DH algorithms.
 

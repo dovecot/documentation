@@ -17,7 +17,7 @@ Settings Changes
  * Time interval based settings no longer default to "seconds". All numbers must explicitly be followed by the time unit (except 0). This is important, because some settings now support milliseconds as well.
  * ``fs-posix``: ``prefix=path`` parameter no longer automatically appends ``/`` to the path if it's not there. This allows using it properly as a prefix, instead of only a directory prefix. Make sure you have the ``/`` appended to the prefix, or the "dir/filename" will be accessed just as "dirnamename".
  * ``ssl_protocols`` setting was replaced by :dovecot_core:ref:`ssl_min_protocol`. Now you only specify the minimum ssl protocol version Dovecot accepts, defaulting to TLSv1.
- * ``ssl_parameters`` was replaced with :dovecot_core:ref:`ssl_dh`. See `Diffie-Hellman Parameters for SSL`.
+ * ``ssl_parameters`` was replaced with ``ssl_dh``. See `Diffie-Hellman Parameters for SSL`.
  * ``SSLv2`` is no longer supported as SSL protocol.
 
 Statistics Redesign
@@ -105,7 +105,7 @@ Changed Setting Defaults
 Diffie-Hellman Parameters for SSL
 ---------------------------------
 
- * ``ssl-parameters.dat`` file is now obsolete. You should use :dovecot_core:ref:`ssl_dh` setting instead: ``ssl_dh=</etc/dovecot/dh.pem``
+ * ``ssl-parameters.dat`` file is now obsolete. You should use ``ssl_dh`` setting instead: ``ssl_dh=</etc/dovecot/dh.pem``
 
    * You can convert an existing ssl-parameters.dat to dh.pem: ``dd if=/var/lib/dovecot/ssl-parameters.dat bs=1 skip=88 | openssl dhparam -inform der > /etc/dovecot/dh.pem``
 
