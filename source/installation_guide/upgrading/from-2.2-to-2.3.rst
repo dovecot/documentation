@@ -64,8 +64,10 @@ If the old behavior is still wanted, it's possible to do nowadays even more gene
    passdb db1 {
     driver = passwd-file
     auth_username_format = %{rip}
-     passwd_file_path = /etc/dovecot/passdb
-    default_fields = noauthenticate=y
+    passwd_file_path = /etc/dovecot/passdb
+    default_fields {
+      noauthenticate = y
+    }
    }
 
 

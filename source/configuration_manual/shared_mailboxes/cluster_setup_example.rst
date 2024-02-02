@@ -18,7 +18,9 @@ Dovecot Proxy configuration snippet
         passdb db1 {
           driver = static
           master = yes
-          default_fields = proxy=y
+          default_fields {
+	    proxy = y
+	  }
           args = password=imapcpass
         }
 

@@ -26,7 +26,7 @@ Field overriding and extra fields
 =================================
 
 It's possible to override fields from passwd and add :ref:`authentication-user_database_extra_fields` with templates, but in
-v2.1+ it's done in a better way by using ``override_fields``.
+v2.1+ it's done in a better way by using :dovecot_core:ref:`userdb_override_fields`.
 
 For example:
 
@@ -34,10 +34,11 @@ For example:
 
   userdb db1 {
     driver = passwd
-    # Pre-v2.1:
-    #args = home=/var/mail/%u mail=maildir:/var/mail/%u/Maildir
-    # v2.1+:
-    override_fields = home=/var/mail/%u mail=maildir:/var/mail/%u/Maildir
+    override_fields {
+      home = /var/mail/%u
+      mail_driver = maildir
+      mail_path = /var/mail/%u/Maildir
+    }
   }
 
 This uses the UID and GID fields from passwd, but home directory is overridden.

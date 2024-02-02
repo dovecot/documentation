@@ -37,7 +37,10 @@ You need to create group vmail and user vmail.
   userdb db1 {
     driver = passwd
     args = blocking=no
-    override_fields = uid=vmail gid=vmail
+    override_fields {
+      uid = vmail
+      gid = vmail
+    }
   }
 
   ssl=yes

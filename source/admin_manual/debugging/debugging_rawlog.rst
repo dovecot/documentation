@@ -96,8 +96,10 @@ If your userdb can't return a home directory directly, with v2.1+ you can add:
 
    userdb db1 {
       # ...
-      default_fields = home=/home/%u
-      # or temporarily even e.g. default_fields = home=/tmp/temp-home
+      default_fields {
+        home = /home/%u
+        # or temporarily even e.g. home = /tmp/temp-home
+      }
  }
 
 You can also set DEBUG environment to have rawlog log an info message why it's not doing anything:
