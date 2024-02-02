@@ -143,7 +143,7 @@ Example :ref:`authentication-passwd_file` entries:
 
   user:{plain}pass:1000:1000::/home/user::userdb_quota_rule=*:bytes=100M
   user2:{plain}pass2:1001:1001::/home/user2::userdb_quota_rule=*:bytes=200M
-  user3:{plain}pass3:1002:1002::/home/user3::userdb_mail=maildir:~/Maildir userdb_quota_rule=*:bytes=300M
+  user3:{plain}pass3:1002:1002::/home/user3::userdb_mail_driver=maildir userdb_quota_rule=*:bytes=300M
 
 passwd
 ------
