@@ -124,7 +124,9 @@ You can restrict the IP-Addresses allowed to connect via PAM:
 
   passdb db1 {
     driver = pam
-    override_fields = allow_nets=10.1.100.0/23,2001:db8:a0b:12f0::/64
+    override_fields {
+      allow_nets = 10.1.100.0/23,2001:db8:a0b:12f0::/64
+    }
   }
 
 Caching
