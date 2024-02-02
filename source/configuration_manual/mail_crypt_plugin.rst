@@ -70,7 +70,7 @@ See :ref:`plugin-mail-crypt`.
 Per-user settings may be returned by
 :ref:`authentication-user_database_extra_fields`. To provide
 :dovecot_plugin:ref:`crypt_global_private_key` or
-:dovecot_plugin:ref:`crypt_global_public_key` as a single line userdb
+:dovecot_plugin:ref:`crypt_global_public_key_file` as a single line userdb
 attribute, you can base64 encode the original PEM key contents. For example,
 
 .. code-block:: none
@@ -217,9 +217,9 @@ These keys can then be used with this configuration:
     mail_crypt = yes
   }
 
-  crypt_global_public_key = <rsapubkey.pem
+  crypt_global_public_key_file = rsapubkey.pem
   crypt_global_private_key main {
-    crypt_private_key = <rsaprivkey.pem
+    crypt_private_key_file = rsaprivkey.pem
     crypt_private_password = qwerty
   }
 
@@ -255,9 +255,9 @@ These keys can now be used with this configuration:
     mail_crypt = yes
   }
 
-  crypt_global_public_key = <ecpubkey.pem
+  crypt_global_public_key_file = ecpubkey.pem
   crypt_global_private_key main {
-    crypt_private_key = <ecprivkey.pem
+    crypt_private_key_file = ecprivkey.pem
   }
 
 .. _pkey_format:
@@ -339,7 +339,7 @@ encrypt new mail, use empty :dovecot_plugin:ref:`crypt_write_algorithm` setting:
 
   crypt_write_algorithm =
   crypt_global_private_key main {
-    crypt_private_key = <server.key
+    crypt_private_key_file = server.key
   }
 
 .. _mail_crypt_acl_plugin:
@@ -405,9 +405,9 @@ To encrypt/decrypt files manually, you can use
     -o fs=crypt,posix \
     -o fs/crypt/fs_driver=crypt \
     -o fs/posix/fs_driver=posix \
-    -o crypt_private_key="$(cat pubkey.pem)" \
+    -o crypt_private_key_file=pubkey.pem \
     -o crypt_global_private_key=main \
-    -o crypt_global_private_key/main/crypt_private_key="$(cat privkey.pem)" \
+    -o crypt_global_private_key/main/crypt_private_key_file=privkey.pem \
     fs get/put '' path/to/input-file [/path/to/output-file]
 
 doveadm plugin
