@@ -115,7 +115,7 @@ dovecot-ldap.conf:
 passwd-file
 ^^^^^^^^^^^
 
-Below are examples that show how to give two userdb extra fields (``mail`` and
+Below are examples that show how to give two userdb extra fields (``mail_driver`` and
 ``quota``). Note that all userdb extra fields must be prefixed with ``userdb_``,
 otherwise they're treated as passdb extra fields.
 

@@ -56,22 +56,22 @@ from "quotaBytes" LDAP attribute:
    user_attrs = \
      =quota_rule=\*:bytes=%{ldap:quotaBytes}
 
-Create a "mail" field with value ``maildir:/var/mail/<dir>/Maildir`` where
+Create a "mail_path" field with value ``/var/mail/<dir>/Maildir`` where
 ``<dir>`` comes from "sAMAccountName" LDAP attribute:
 
 ::
 
    user_attrs = \
-     =mail=maildir:/var/spool/vmail/%{ldap:sAMAccountName}/Maildir
+     =mail_path=/var/spool/vmail/%{ldap:sAMAccountName}/Maildir
 
 You can add static fields that aren't looked up from LDAP. For example
-create a "mail" field with value ``maildir:/var/vmail/%d/%n/Maildir``:
+create a "mail_path" field with value ``/var/vmail/%d/%n/Maildir``:
 
 ::
 
    user_attrs = \
      =quota_rule=*:bytes=%{ldap:quotaBytes}, \
-     =mail=maildir:/var/vmail/%d/%n/Maildir
+     =mail_path=/var/vmail/%d/%n/Maildir
 
 If you don't want a field to exist at all when its LDAP attribute
 doesn't exist, you can give the attribute name before the first "="
