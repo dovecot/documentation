@@ -80,7 +80,7 @@ Perform a user lookup for the users jane and john@example.com.
      uid       : 8001
      gid       : 8001
      home      : /home/jane
-     mail      : sdbox:~/sdbox
+     mail_path : /home/jane/sdbox
      plugins   : sieve
      quota_rule: \*:storage=150M
 
@@ -88,7 +88,7 @@ Perform a user lookup for the users jane and john@example.com.
      home      : /srv/mail/8/70312/79832
      uid       : 79832
      gid       : 70312
-     mail      : mdbox:~/mdbox
+     mail_path : /srv/mail/8/70312/79832/mdbox
 
 The next example shows a user lookup, using wildcards.
 
