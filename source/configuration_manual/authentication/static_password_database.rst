@@ -20,5 +20,8 @@ Example:
 
   passdb static {
     args = nopassword=y
-    default_fields = proxy=y host=127.0.0.1
+    default_fields {
+      proxy = y
+      host = 127.0.0.1
+    }
   }

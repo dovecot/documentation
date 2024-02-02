@@ -35,7 +35,10 @@ You need to create group vmail and user vmail.
 
   userdb passwd {
     args = blocking=no
-    override_fields = uid=vmail gid=vmail
+    override_fields {
+      uid = vmail
+      gid = vmail
+    }
   }
 
   ssl=yes

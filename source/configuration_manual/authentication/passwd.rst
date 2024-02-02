@@ -24,7 +24,7 @@ Field overriding and extra fields
 =================================
 
 It's possible to override fields from passwd and add :ref:`authentication-user_database_extra_fields` with templates, but in
-v2.1+ it's done in a better way by using ``override_fields``.
+v2.1+ it's done in a better way by using :dovecot_core:ref:`userdb_override_fields`.
 
 For example:
 
