@@ -60,20 +60,20 @@ Ways to set up home directory
 The directory layouts for home and mail directories could look like one of
 these (in the preferred order):
 
-1. Mail directory under home, for example: home= ``/var/vmail/domain/user/``
-   mail= ``/var/vmail/domain/user/mail/``
+1. Mail directory under home, for example: home = ``/var/vmail/domain/user/``
+   mail_path = ``/var/vmail/domain/user/mail/``
 2. Completely distinct home and mail directories:
-   home= ``/home/virtual/domain/user/`` mail= ``/var/vmail/domain/user/``
+   home = ``/home/virtual/domain/user/`` mail_path = ``/var/vmail/domain/user/``
 3. Home directory under mail, for example:
 
- * Maildir: home= ``/var/vmail/domain/user/home/``
-   mail= ``/var/vmail/domain/user/``
+ * Maildir: home = ``/var/vmail/domain/user/home/``
+   mail_path = ``/var/vmail/domain/user/``
  * mbox: There's really no good and safe way to do it.
 
 4. The home directory is the same as the mail directory.
 
-If for example home= ``/var/vmail/domain/user/``
-mail= ``/var/vmail/domain/user/mail/`` , 
+If for example home = ``/var/vmail/domain/user/``
+mail_path = ``/var/vmail/domain/user/mail/``,
 
 set:
 
