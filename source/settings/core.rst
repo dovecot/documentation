@@ -663,13 +663,6 @@ See :ref:`settings` for list of all setting groups.
    base64 encoded.
 
 
-.. dovecot_core:setting:: doveadm_http_rawlog_dir
-   :seealso: @debugging_rawlog
-   :values: @string
-
-   Directory where doveadm stores HTTP rawlogs.
-
-
 .. dovecot_core:setting:: doveadm_password
    :values: @string
 
@@ -686,6 +679,12 @@ See :ref:`settings` for list of all setting groups.
    The destination port to be used for the next doveadm proxying hop.
 
    A value of ``0`` means that proxying is not in use.
+
+
+.. dovecot_core:setting:: doveadm_server
+   :values: @named_filter
+
+   Filter for doveadm server specific settings.
 
 
 .. dovecot_core:setting:: doveadm_socket_path
@@ -3422,6 +3421,12 @@ See :ref:`settings` for list of all setting groups.
 
    The settings ``state_dir = /home/foo/dovecot/state`` and
    ``base_dir = /home/foo/dovecot/run`` give an example of usage.
+
+
+.. dovecot_core:setting:: stats_server
+   :values: @named_filter
+
+   Filter for stats server specific settings.
 
 
 .. dovecot_core:setting:: stats_writer_socket_path
