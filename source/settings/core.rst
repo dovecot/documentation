@@ -996,6 +996,26 @@ See :ref:`settings` for list of all setting groups.
    for PUT and POST requests.
 
 
+.. dovecot_core:setting:: http_server_rawlog_dir
+   :values: @string
+
+   Directory for writing raw log data for debugging purposes.
+
+
+.. dovecot_core:setting:: http_server_max_idle_time
+   :default: 0
+   :values: @time_msecs
+
+   Maximum time a connection will idle.
+
+
+.. dovecot_core:setting:: http_server_max_pipelined_requests
+   :default: 1
+   :values: @uint
+
+   Maximum number of pipelined requests per connection.
+
+
 .. dovecot_core:setting:: imap_capability
    :todo: Indicate imap setting
    :values: @string

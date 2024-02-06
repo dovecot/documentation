@@ -120,6 +120,63 @@ See :ref:`settings` for list of all setting groups.
    User-Agent: header to send.
 
 
+.. dovecot_core:setting:: http_server_max_target_length
+   :default: 8 k
+   :values: @size
+
+   Request target limit: Maximum length of the request target.
+
+
+.. dovecot_core:setting:: http_server_max_payload_size
+   :default: 10 G
+   :values: @size
+
+   Request payload limit: Max size for the request payload.
+
+
+.. dovecot_core:setting:: http_server_request_hdr_max_size
+   :default: 200 k
+   :values: @size
+
+   Request header limit: Max size for the entire request header.
+
+
+.. dovecot_core:setting:: http_server_request_hdr_max_field_size
+   :default: 8 k
+   :values: @size
+
+   Request header limit: Max size for an individual field.
+
+
+.. dovecot_core:setting:: http_server_request_hdr_max_fields
+   :default: 50
+   :values: @uint
+
+   Request header limit: Max number of fields.
+
+
+.. dovecot_core:setting:: http_server_default_host
+   :values: @string
+
+   Overwrite the local hostname with http_server_default_host.
+
+
+.. dovecot_core:setting:: http_server_socket_recv_buffer_size
+   :default: 0
+   :values: @size
+
+   The kernel receive buffer size for the connection sockets.
+   0 = kernel defaults.
+
+
+.. dovecot_core:setting:: http_server_socket_send_buffer_size
+   :default: 0
+   :values: @size
+
+   The kernel send buffer size for the connection sockets.
+   0 = kernel defaults.
+
+
 .. dovecot_core:setting:: login_proxy_notify_path
    :default: proxy-notify
    :values: @string
