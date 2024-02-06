@@ -103,7 +103,7 @@ Until SSL is configured, allow plaintext authentication in the
 
 ::
 
-   auth_allow_cleartext = yes
+   disable_plaintext_auth=no
 
 If you didn't use the temporary passwd-file created above, don't do this
 if you don't want your password to be sent in clear to network. Instead
