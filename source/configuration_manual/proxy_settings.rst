@@ -69,7 +69,7 @@ This setting configures the LMTP port to use.
 .. code-block:: none
 
    service imap-login {
-    service_count = 0
+    restart_request_count = 0
     client_limit = 10000
     process_min_avail = 4
     process_limit = 4
@@ -82,7 +82,7 @@ The ``client_limit`` setting should be increased to be as high as needed. The ma
 .. code-block:: none
 
    service pop3-login {
-    service_count = 0
+    restart_request_count = 0
     client_limit = 10000
     process_min_avail = 4
     process_limit = 4
