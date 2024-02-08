@@ -115,16 +115,16 @@ Settings
    one of the idling processes will accept the connection and a new idling
    process is launched.
 
-    * For ``service_service_count=1`` processes this decreases the latency for
+    * For :dovecot_core:ref:`service_restart_request_count=1 <service_restart_request_count>` processes this decreases the latency for
       handling new connections, because there's no need to wait for processes
       to fork. This is usually not necessary to to be set.
       Large :dovecot_core:ref:`service_process_min_avail` values might be
       useful in some special cases, like if there are a lot of POP3 users
       logging in exactly at the same time to check mails.
-    * For ``service_service_count!=1`` and ``service_client_limit>1`` processes
+    * For :dovecot_core:ref:`service_restart_request_count!=1 <service_restart_request_count>` and ``service_client_limit>1`` processes
       it could be set to the number of CPU cores on the system to balance the
       load among them. This is commonly used with ``*-login`` processes.
-    * For ``service_service_count!=1`` and ``service_client_limit=1`` processes
+    * For :dovecot_core:ref:`service_restart_request_count!=1 <service_restart_request_count>` and ``service_client_limit=1`` processes
       it is likely not useful to use this, because generally there are already
       some idling processes waiting to accept new connections. However, it's
       not harmful either, since :dovecot_core:ref:`service_process_min_avail`
@@ -148,7 +148,7 @@ Settings
    Dovecot to spawn another process.
 
 
-.. dovecot_core:setting:: service_service_count
+.. dovecot_core:setting:: service_restart_request_count
    :default: 0
    :values: @uint
 
@@ -369,7 +369,7 @@ There are 3 types of services that need to be optimized in different ways:
    switches. Then :dovecot_core:ref:`service_client_limit` needs to be set high
    enough to be able to serve all the needed connections
    (max connections = ``process_limit * client_limit``).
-   :dovecot_core:ref:`service_service_count` is commonly set to ``unlimited``
+   :dovecot_core:ref:`service_restart_request_count` is commonly set to ``unlimited``
    for these services. Otherwise when the limit is beginning to be reached,
    the total number of available connections will shrink. With very bad luck
    that could mean that all the processes are simply waiting for the existing
@@ -422,8 +422,8 @@ The master auth process. There are 4 types of auth client connections:
 
      This is calculated by counting the process_limit of every service that
      is enabled with the "protocol" setting (e.g. imap, pop3, lmtp).
-     Only services with service_count != 1 are counted, because they have
-     persistent connections to auth, while service_count=1 processes only do
+     Only services with :dovecot_core:ref:`restart_request_count != 1 <service_restart_request_count>` are counted, because they have
+     persistent connections to auth, while :dovecot_core:ref:`restart_request_count=1 <service_restart_request_count>` processes only do
      short-lived auth connections.
 
    * **process_limit=1**, because there can be only one auth master process.
@@ -448,7 +448,7 @@ Auth master process connects to auth worker processes. It is mainly used by pass
 
    * **chroot** could also be set if possible.
 
-   * **service_count=0** counts the number of processed auth requests. This can be used to cycle the process after the specified number of auth requests (default is unlimited). The worker processes also stop after being idle for ``idle_kill`` seconds. Prior to v2.3.16, you should keep this as **1**.
+   * **restart_request_count=0** counts the number of processed auth requests. This can be used to cycle the process after the specified number of auth requests (default is unlimited). The worker processes also stop after being idle for ``idle_kill`` seconds. Prior to v2.3.16, you should keep this as **1**.
 
      .. dovecotchanged:: 2.3.16
 
@@ -504,7 +504,7 @@ It's possible to run doveadm mail commands via doveadm server processes. This is
 
    * **client_limit=1**, because doveadm command execution is synchronous.
 
-   * **service_count=1** just in case there were any memory leaks. This could be set to some larger value (or 0) for higher performance.
+   * **restart_request_count=1** just in case there were any memory leaks. This could be set to some larger value (or 0) for higher performance.
 
    * **user=root**, but the privileges are (temporarily) dropped to the mail user's privileges after userdb lookup. If only a single UID is used, user can be set to the mail UID for higher security, because the process can't gain root privileges anymore.
 
@@ -514,7 +514,7 @@ Post-login process for handling IMAP/POP3/Submission/ManageSieve client connecti
 
    * **client_limit** may be increased from the default 1 to save some CPU and memory, but it also increases the latency when one process serving multiple clients it waiting for a long time for a lock or disk I/O. In future these waits may be reduced or avoided completely, but for now it's not safe to set this value higher than 1 in enterprise mail systems. For small mostly-idling hobbyist servers a larger number may work without problems.
 
-   * **service_count** can be changed from 1 if only a single UID is used for mail users. This is improves performance, but it's less secure, because bugs in code may leak email data from another user's earlier connection.
+   * **restart_request_count** can be changed from 1 if only a single UID is used for mail users. This is improves performance, but it's less secure, because bugs in code may leak email data from another user's earlier connection.
 
    * **process_limit** defaults to 1024, which means that the number of simultaneous connections for the protocol that this service handles (IMAP, POP3, Submission, or ManageSieve) is limited by this setting. If you expect more connections, increase this value.
 
