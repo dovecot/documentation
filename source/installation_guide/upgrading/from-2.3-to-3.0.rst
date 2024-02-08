@@ -186,6 +186,9 @@ Removed features and their replacements
 |                                                            | :dovecot_plugin:ref:`fts_solr_batch_size`, :dovecot_plugin:ref:`fts_solr_soft_commit`,   |
 |                                                            | :dovecot_core:ref:`http_client_rawlog_dir`                                               |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``service_count``                                          | Renamed to :dovecot_core:ref:`service_restart_request_count`.                            |
+|                                                            | The default value is set to ``unlimited``. Value ``0`` is now a configuration error.     |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 
 Changed default settings
