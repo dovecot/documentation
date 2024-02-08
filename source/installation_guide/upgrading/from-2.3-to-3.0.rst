@@ -169,6 +169,9 @@ Removed features and their replacements
 |                                                            | vsize record in dovecot.index file. Reading of the field from old files is supported.    |
 | :dovecot_core:ref:`config_cache_size` setting.             | This is now unnecessary.                                                                 |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``service_count``                                          | Renamed to :dovecot_core:ref:`service_restart_request_count`.                            |
+|                                                            | The default value is set to ``unlimited``. Value ``0`` is now a configuration error.     |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``fts``                                                    | Replaced by :dovecot_plugin:ref:`fts_driver`.                                            |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | :dovecot_plugin:ref:`fts_autoindex_exclude`.               | Changed to boolean property of ``mailbox``.                                              |
