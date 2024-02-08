@@ -52,10 +52,10 @@ forking less processes:
    mode <login_processes>`. This alone might be enough.
 
 -  You can also switch (most of the) other commonly forked processes to
-   be reused. For example ``service imap { service_count = 100 }``
+   be reused. For example ``service imap { restart_request_count = 100 }``
    reuses the imap process for 100 different IMAP connections before it
    dies. This is useful mainly for imap, pop3 and managesieve services.
-   It's better to avoid using ``service_count=0`` (unlimited) in case
+   It's better to avoid using :dovecot_core:ref:`restart_request_count=0 <service_restart_request_count>` (unlimited) in case
    there are memory leaks.
 
 -  You can pre-fork some idling processes to handle bursts with

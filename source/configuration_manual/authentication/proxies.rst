@@ -282,10 +282,10 @@ The important parts of ``dovecot.conf``:
 
   # If you want to trade a bit of security for higher performance, change these settings:
   service imap-login {
-    service_count = 0
+    restart_request_count = 0
   }
   service pop3-login {
-    service_count = 0
+    restart_request_count = 0
   }
 
   # If you are not moving mailboxes between hosts on a daily basis you can
