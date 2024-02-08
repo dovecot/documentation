@@ -149,14 +149,14 @@ Settings
 
 
 .. dovecot_core:setting:: service_restart_request_count
-   :default: 0
+   :default: unlimited
    :values: @uint
 
    Number of client connections to handle until the process kills itself.
-   ``0`` means unlimited. 1 means only a single connection is handled until
+   Use ``unlimited`` to keep the process alive. 1 means only a single connection is handled until
    the process is stopped - this is the most secure choice since there's no
    way for one connection's state to leak to the next one. For better
-   performance this can be set higher, but ideally not unlimited since more
+   performance this can be set higher, but ideally not ``unlimited`` since more
    complex services can have small memory leaks and/or memory fragmentation
    and the process should get restarted eventually. For example 100 or 1000
    can be good values.
@@ -448,7 +448,7 @@ Auth master process connects to auth worker processes. It is mainly used by pass
 
    * **chroot** could also be set if possible.
 
-   * **restart_request_count=0** counts the number of processed auth requests. This can be used to cycle the process after the specified number of auth requests (default is unlimited). The worker processes also stop after being idle for ``idle_kill`` seconds. Prior to v2.3.16, you should keep this as **1**.
+   * **restart_request_count=unlimited** counts the number of processed auth requests. This can be used to cycle the process after the specified number of auth requests (default is unlimited). The worker processes also stop after being idle for ``idle_kill`` seconds. Prior to v2.3.16, you should keep this as **1**.
 
      .. dovecotchanged:: 2.3.16
 
@@ -504,7 +504,7 @@ It's possible to run doveadm mail commands via doveadm server processes. This is
 
    * **client_limit=1**, because doveadm command execution is synchronous.
 
-   * **restart_request_count=1** just in case there were any memory leaks. This could be set to some larger value (or 0) for higher performance.
+   * **restart_request_count=1** just in case there were any memory leaks. This could be set to some larger value (or ``unlimited``) for higher performance.
 
    * **user=root**, but the privileges are (temporarily) dropped to the mail user's privileges after userdb lookup. If only a single UID is used, user can be set to the mail UID for higher security, because the process can't gain root privileges anymore.
 

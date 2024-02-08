@@ -76,12 +76,12 @@ You can enable high-performance mode with:
 .. code-block:: none
 
   service imap-login {
-    restart_request_count = 0
+    restart_request_count = unlimited
     process_min_avail = 4 # number of CPU cores
     vsz_limit = 1G
   }
   service pop3-login {
-    restart_request_count = 0
+    restart_request_count = unlimited
   }
 
 It works by using a number of long running login processes, each handling a
