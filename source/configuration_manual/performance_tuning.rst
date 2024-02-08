@@ -60,7 +60,7 @@ CPU usage optimization
    :dovecot_core:ref:`service_process_min_avail` to the number of CPU cores.
 
 -  To reduce forks by reusing existing processes for new requests
-   increase :dovecot_core:ref:`service_service_count` from 1 to higher (e.g. 100)
+   increase :dovecot_core:ref:`service_restart_request_count` from 1 to higher (e.g. 100)
    for imap and pop3 services. It's better not to set it too high or
    unlimited (0), because different users use different amounts of
    memory, and it's wasteful when a lot of processes end up having a lot
