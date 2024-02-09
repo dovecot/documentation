@@ -71,8 +71,14 @@ cluster user move
 **doveadm** [**-Dv**] [**-f** *formatter*] cluster user move [ **-\-direct** ] [ **-\-site** *site* ] *user* *group* [ *failover group* ]
 
 Initiates moving user to a different user group which will finish in background.
+The move is initialized by updating the ``moving_*`` fields in GeoDB.
+The next time the user is accessed triggers the actual moving by the
+original backend. This user access is also automatically triggered by running
+``doveadm cluster user access`` command.
 
-``--direct`` will only update GeoDB. This is intended for testing purposes only, and should not be used.
+``--direct`` will update the user's new site/group immediately to GeoDB without
+performing any user moving. This is intended for testing purposes only, and
+should not be used.
 
 
 cluster user status
