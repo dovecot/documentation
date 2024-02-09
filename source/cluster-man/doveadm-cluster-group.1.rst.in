@@ -54,9 +54,15 @@ cluster group move
 
 **doveadm** [**-Dv**] [**-f** *formatter*] cluster group move [ **-\-direct** ] *site* *group* *host*
 
-Initiate a user group move, which finishes on background.
+Initiate a user group move, which finishes on background. The move is
+initialized by updating the "moving" and "alt_backed_id" fields in GeoDB.
+The next time a user in the group is accessed triggers the actual moving by the
+original backend. This user access is also automatically triggered by running
+``doveadm cluster group access`` command in the group's original backend.
 
-``--direct`` will only update GeoDB. This is intended for testing purposes only, and should not be used.
+``--direct`` will update the group's new backend immediately to GeoDB without
+performing any user moving. This is intended for testing purposes only, and
+should not be used.
 
 
 cluster group status
