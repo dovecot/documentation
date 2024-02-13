@@ -1377,7 +1377,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_filters
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @boollist
 
    The list of filters to apply.
@@ -1481,7 +1481,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_filter_stopwords_dir
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @string
 
      Path to the directory containing stopword files. Stopword files are
@@ -1489,7 +1489,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_filter_normalized_icu_id
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @string
    :default: Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove
 
@@ -1503,7 +1503,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: language_tokenizers
    :default: generic email-address
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @boollist
 
    The list of tokenizers to use.
