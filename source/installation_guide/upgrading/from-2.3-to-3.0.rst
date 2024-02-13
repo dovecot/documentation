@@ -186,6 +186,23 @@ Removed features and their replacements
 |                                                            | :dovecot_plugin:ref:`fts_solr_batch_size`, :dovecot_plugin:ref:`fts_solr_soft_commit`,   |
 |                                                            | :dovecot_core:ref:`http_client_rawlog_dir`                                               |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``fts_language_config``                                    | Renamed to :dovecot_core:ref:`textcat_config_path`.                                      |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``fts_languages``                                          | Converted into :dovecot_core:ref:`language` blocks {}                                    |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``fts_filters``                                            | Split into :dovecot_core:ref:`language_filters`                                          |
+|                                                            | :dovecot_core:ref:`language_filter_normalizer_icu_id`                                    |
+|                                                            | :dovecot_core:ref:`language_filter_stopwords_dir`                                        |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``fts_tokenizers``                                         | Split into :dovecot_core:ref:`language_tokenizers`                                       |
+|                                                            | :dovecot_core:ref:`language_tokenizer_address_token_maxlen`                              |
+|                                                            | :dovecot_core:ref:`language_tokenizer_generic_algorithm`                                 |
+|                                                            | :dovecot_core:ref:`language_tokenizer_generic_token_maxlen`                              |
+|                                                            | :dovecot_core:ref:`language_tokenizer_generic_wb5a`                                      |
+|                                                            | :dovecot_core:ref:`language_tokenizer_kuromoji_icu_id`                                   |
+|                                                            | :dovecot_core:ref:`language_tokenizer_kuromoji_split_compounds`                          |
+|                                                            | :dovecot_core:ref:`language_tokenizer_kuromoji_token_maxlen`                             |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 
 Changed default settings
