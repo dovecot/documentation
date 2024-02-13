@@ -394,34 +394,9 @@ Settings
    A value of ``0`` means no timeout.
 
 
-.. dovecot_plugin:setting:: fts_language_config
-   :default: !<textcat dir>
-   :plugin: fts
-   :seealso: @fts_languages;dovecot_plugin
-   :values: @string
-
-   Path to the textcat/exttextcat configuration file, which lists the
-   supported languages.
-
-   This is recommended to be changed to point to a minimal version of a
-   configuration that supports only the languages listed in
-   :dovecot_plugin:ref:`fts_languages`.
-
-   Doing this improves language detection performance during indexing and also
-   makes the detection more accurate.
-
-   Example:
-
-   .. code-block:: none
-
-     plugin {
-       fts_language_config = /usr/share/libexttextcat/fpdb.conf
-     }
-
-
 .. dovecot_plugin:setting:: fts_languages
    :plugin: fts
-   :seealso: @fts_language_config;dovecot_plugin
+   :seealso: @textcat_config_path;dovecot_core
    :values: @string
 
    A space-separated list of languages that the full text search should
@@ -436,7 +411,7 @@ Settings
 
    .. note:: For better performance it's recommended to synchronize this
              setting with the textcat configuration file; see
-             :dovecot_plugin:ref:`fts_language_config`.
+             :dovecot_core:ref:`textcat_config_path`.
 
    Example:
 
