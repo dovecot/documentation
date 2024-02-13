@@ -1376,6 +1376,116 @@ See :ref:`settings` for list of all setting groups.
    name.
 
 
+.. dovecot_core:setting:: language_filters
+   :seealso: @fts_tokenization
+   :values: @boollist
+
+   The list of filters to apply.
+
+   Language specific filter chains can be specified with ``language_filters_<lang>``
+   (e.g. ``language_filters_en``).
+
+   Available filters:
+
+   ``lowercase``
+
+     Change all text to lower case. Supports UTF8, when compiled with libicu
+     and the library is installed. Otherwise only ASCII characters are
+     lowercased.
+
+   ``stopwords``
+
+     Filter certain common and short words, which are usually useless for
+     searching.
+
+     .. warning::
+        Using stopwords with multiple languages configured WILL cause some
+        searches to fail. The recommended solution is to NOT use the stopword
+        filter when multiple languages are present in the configuration.
+
+     Settings:
+
+       ``stopwords_dir``
+
+         Path to the directory containing stopword files. Stopword files are
+         looked up in ``”<path>”/stopwords_<lang>.txt``.
+
+     See :ref:`fts_languages` for list of stopword files that are currently
+     distributed with Dovecot.
+
+     More languages can be obtained from
+     `Apache Lucene <https://lucene.apache.org/>`_,
+     `Snowball stemmer <https://snowballstem.org/>`_, or
+     https://github.com/stopwords-iso/.
+
+   ``snowball``
+
+     Stemming tries to convert words to a common base form. A simple example
+     is converting “cars” to “car” (in English).
+
+     This stemmer is based on the
+     `Snowball stemmer <https://snowballstem.org/>`_ library.
+
+     See :ref:`fts_languages`
+
+   ``normalizer-icu``
+
+     Normalize text using libicu. This is potentially very resource intensive.
+
+     .. note:: Caveat for Norwegian: The default normalizer filter does not
+               modify ``U+00F8`` (Latin Small Letter O with Stroke). In some
+               configurations it might be desirable to rewrite it to e.g.
+               ``o``. Same goes for the upper case version. This can be done
+               by passing a modified ``id`` setting to the normalizer filter.
+               Similar cases can exist for other languages as well.
+
+     Settings:
+
+       ``id``
+
+         Description of the normalizing/transliterating rules to use.
+
+           * See `Normalizer Format`_ for syntax.
+           * Defaults to ``Any-Lower; NFKD; [: Nonspacing Mark :] Remove;
+             [\\x20] Remove``
+
+   ``english-possessive``
+
+     Remove trailing ``'s`` from English possessive form tokens. Any trailing
+     single ``'`` characters are already removed by tokenizing, whether this
+     filter is used or not.
+
+     The ``snowball`` filter also removes possessive suffixes from English, so
+     if using ``snowball`` this filter is not needed. ``snowball`` likely
+     produces better results, so this filter is advisable only when
+     ``snowball`` is not available or cannot be used due to extreme CPU
+     performance requirements.
+
+   ``contractions``
+
+     Removes certain contractions that can prefix words. The idea is to only
+     index the part of the token that conveys the core meaning.
+
+     Only works with French, so the language of the input needs to be
+     recognized by textcat as French.
+
+     It filters “qu'”, “c'”, “d'”, “l'”, “m'”, “n'”, “s'” and “t'”.
+
+     Do not use at the same time as ``generic`` tokenizer with
+     ``algorithm=tr29 wb5a=yes``.
+
+   Example:
+
+   .. code-block:: none
+
+     plugin {
+       language_filters = normalizer-icu snowball stopwords
+       language_filters_en = lowercase snowball english-possessive stopwords
+     }
+
+.. _`Normalizer Format`: https://unicode-org.github.io/icu/userguide/transforms/general/#transliterator-identifiers
+
+
 .. dovecot_core:setting:: last_valid_gid
    :default: 0
    :seealso: @first_valid_gid;dovecot_core
