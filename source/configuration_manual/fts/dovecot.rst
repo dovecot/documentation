@@ -298,11 +298,11 @@ Example configuration using OBOX::
 
     # This chain of filters first normalizes and lower cases the text, then
     #  stems the words and lastly removes stopwords.
-    fts_filters = normalizer-icu snowball stopwords
+    language_filters = normalizer-icu snowball stopwords
 
     # This chain of filters will first lowercase all text, stem the words,
     # remove possessive suffixes, and remove stopwords.
-    fts_filters_en = lowercase snowball english-possessive stopwords
+    language_filters_en = lowercase snowball english-possessive stopwords
 
     # These tokenizers will preserve addresses as complete search tokens, but
     # otherwise tokenize the text into "words".

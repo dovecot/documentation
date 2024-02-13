@@ -65,11 +65,11 @@ List of filters to apply. Filters can be language specific.
 
 Example::
 
-    fts_filters = normalizer-icu snowball stopwords
-    fts_filters_en = normalizer-icu snowball english-possessive stopwords
+    language_filters = normalizer-icu snowball stopwords
+    language_filters_en = normalizer-icu snowball english-possessive stopwords
 
 
-See :dovecot_plugin:ref:`fts_filters`
+See :dovecot_core:ref:`language_filters`
 
 
 On filter and tokenizer order
