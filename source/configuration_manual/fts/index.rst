@@ -94,7 +94,8 @@ Dovecot FTS Architecture
 ------------------------
 
 Dovecot splits the full text search functionality into two parts:
-a common tokenization library (lib-language) and backend indexing engine responsible for storing the tokens produced by the common library persistently.
+a common tokenization library (lib-language) and backend indexing engine
+responsible for storing the tokens produced by the common library persistently.
 
 Some of the FTS backends do their own internal tokenization, although it's
 possible to configure them to use the lib-language tokenization as well.
