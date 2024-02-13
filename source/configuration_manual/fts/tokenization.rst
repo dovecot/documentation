@@ -7,7 +7,7 @@ FTS Tokenization
 :ref:`fts_backend_dovecot` requires configuring FTS tokenization.
 Other FTS engines can also optionally use it.
 
-The lib-fts tokenization library works in the following way:
+The lib-language tokenization library works in the following way:
 
 #. Language detection: When indexing, the text language is attempted to be detected.
    If the detection fails, the first listed language is used.
