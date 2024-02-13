@@ -52,10 +52,10 @@ List of tokenizers to use.
 
 Example::
 
-    fts_tokenizers = generic email-address
+    language_tokenizers = generic email-address
     fts_tokenizer_generic = algorithm=simple
 
-See :dovecot_plugin:ref:`fts_tokenizers`
+See :dovecot_core:ref:`language_tokenizers`
 
 
 Filters
