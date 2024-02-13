@@ -1,4 +1,4 @@
-.. _fts_tokenization:
+.. _language_tokenization:
 
 ================
 FTS Tokenization
