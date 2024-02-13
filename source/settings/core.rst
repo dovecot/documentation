@@ -1393,10 +1393,7 @@ See :ref:`settings` for list of all setting groups.
 
      Settings:
 
-       ``stopwords_dir``
-
-         Path to the directory containing stopword files. Stopword files are
-         looked up in ``”<path>”/stopwords_<lang>.txt``.
+        * :dovecot_core:ref:`language_filter_stopwords_dir`
 
      See :ref:`fts_languages` for list of stopword files that are currently
      distributed with Dovecot.
@@ -1429,13 +1426,7 @@ See :ref:`settings` for list of all setting groups.
 
      Settings:
 
-       ``id``
-
-         Description of the normalizing/transliterating rules to use.
-
-           * See `Normalizer Format`_ for syntax.
-           * Defaults to ``Any-Lower; NFKD; [: Nonspacing Mark :] Remove;
-             [\\x20] Remove``
+       * :dovecot_core:ref:`language_filter_normalizer_icu_id`
 
    ``english-possessive``
 
@@ -1472,7 +1463,26 @@ See :ref:`settings` for list of all setting groups.
        filters = lowercase snowball english-possessive stopwords
     }
 
+
+.. dovecot_core:setting:: language_filter_normalizer_icu_id
+   :seealso: @fts_tokenization
+   :values: @string
+   :default: Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove
+
+    Description of the normalizing/transliterating rules to use.
+
+       * See `Normalizer Format`_ for syntax.
+
+
 .. _`Normalizer Format`: https://unicode-org.github.io/icu/userguide/transforms/general/#transliterator-identifiers
+
+
+.. dovecot_core:setting:: language_filter_stopwords_dir
+   :seealso: @fts_tokenization
+   :values: @string
+
+     Path to the directory containing stopword files. The files inside the
+     directory have names with the form ``/stopwords_<lang>.txt``.
 
 
 .. dovecot_core:setting:: language_tokenizers
@@ -1586,6 +1596,15 @@ See :ref:`settings` for list of all setting groups.
     language en {
       tokenizers = generic
     }
+
+
+.. dovecot_core:setting:: language_token_maxlen
+   :seealso: @language_tokenization
+   :values: @uint
+   :default: !<filter/tokenizer-specific>
+
+   Maximum length of token, before an arbitrary cut off is made.
+   The default value depends on the specific filter/tokenizer.
 
 
 .. dovecot_core:setting:: last_valid_gid
