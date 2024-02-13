@@ -4,7 +4,7 @@
 FTS Tokenization
 ================
 
-:ref:`fts_backend_dovecot` requires configuring FTS tokenization.
+:ref:`fts_backend_dovecot` requires configuring languages tokenization.
 Other FTS engines can also optionally use it.
 
 The lib-language tokenization library works in the following way:
@@ -24,12 +24,16 @@ The lib-language tokenization library works in the following way:
 
 #. Stopwords: A configurable list of words not to be indexed
 
+.. _language:
 
 Languages
 ^^^^^^^^^
 
-The setting :dovecot_core:ref:`language` lists languages FTS should
-detect.
+The setting :dovecot_core:ref:`language` declares the languages that
+need to be detected.
+
+Language names are given as ISO 639-1 alpha 2 codes (see table below).
+
 At least one language must be listed.
 The first language is the default language used in case detection fails.
 
@@ -40,15 +44,59 @@ textcat, see :dovecot_core:ref:`textcat_config_path`.
 
 Example::
 
-  plugin {
-    language = en de
+  language en {
   }
+  language de {
+  }
+
+Currently supported languages:
+
+Stemming support indicates whether the `snowball <https://snowballstem.org/>`_
+filter can be used.
+
+Stopwords support indicates whether a stopwords file is distributed with
+Dovecot.
+
++---------------+---------------------------------------+----------+-----------+
+| Language Code | Language                              | Stemming | Stopwords |
++===============+=======================================+==========+===========+
+| da            | Danish                                | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| de            | German                                | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| en            | English                               | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| es            | Spanish                               | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| fi            | Finnish                               | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| fr            | French                                | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| it            | Italian                               | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| ja            | Japanese                              | No       | No        |
+|               | (Requires separate Kuromoji license)  |          |           |
++---------------+---------------------------------------+----------+-----------+
+| nl            | Dutch                                 | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| no            | Norwegian (Bokmal & Nynorsk detected) | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| pt            | Portuguese                            | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| ro            | Romanian                              | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| ru            | Russian                               | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| sv            | Swedish                               | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
+| tr            | Turkish                               | Yes      | Yes       |
++---------------+---------------------------------------+----------+-----------+
 
 
 Tokenizers
 ^^^^^^^^^^
 
-List of tokenizers to use. Tokenizers can be language specific
+List of tokenizers to use. Tokenizers can be language specific.
 
 Example::
 
