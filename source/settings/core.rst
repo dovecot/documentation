@@ -2068,7 +2068,7 @@ See :ref:`settings` for list of all setting groups.
    Named filter for initializing :ref:`dict driver <dict>` for server and
    mailbox attributes (key=value).
 
-   This is used by the URLAUTH and METADATA extensions, as well as various 
+   This is used by the URLAUTH and METADATA extensions, as well as various
    other features.
 
    Example:
@@ -3653,6 +3653,28 @@ See :ref:`settings` for list of all setting groups.
    :values: @string
 
    The syslog facility used if you're logging to syslog.
+
+
+.. dovecot_core:setting:: textcat_config_path
+   :default: !<textcat dir>
+   :seealso: @fts_languages;dovecot_plugin
+   :values: @string
+
+   Path to the textcat/exttextcat configuration file, which lists the
+   supported languages.
+
+   This is recommended to be changed to point to a minimal version of a
+   configuration that supports only the languages listed in
+   :dovecot_plugin:ref:`fts_languages`.
+
+   Doing this improves language detection performance during indexing and also
+   makes the detection more accurate.
+
+   Example:
+
+   .. code-block:: none
+
+     textcat_config_path = /usr/share/libexttextcat/fpdb.conf
 
 
 .. dovecot_core:setting:: valid_chroot_dirs
