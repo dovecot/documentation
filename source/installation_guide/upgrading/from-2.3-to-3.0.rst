@@ -189,6 +189,19 @@ Removed features and their replacements
 | ``service_count``                                          | Renamed to :dovecot_core:ref:`service_restart_request_count`.                            |
 |                                                            | The default value is set to ``unlimited``. Value ``0`` is now a configuration error.     |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``fts_language_config``                                    | Renamed to :dovecot_core:ref:`textcat_config_path`.                                      |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``fts_languages``                                          | Converted into Renamed to :dovecot_core:ref:`language` blocks {}                         |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``fts_filters``                                            | Split into :dovecot_core:ref:`language_filters`                                          |
+|                                                            | :dovecot_core:ref:`language_filter_normalized_icu_id`                                    |
+|                                                            | :dovecot_core:ref:`language_filter_stopwords_dir`                                        |
+|                                                            | :dovecot_core:ref:`language_token_maxlen`                                                |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
+| ``fts_tokenizers``                                         | Split into :dovecot_core:ref:`language_tokenizer_generic_algorithm`                      |
+|                                                            | :dovecot_core:ref:`language_tokenizer_generic_explicit_prefix`                           |
+|                                                            | :dovecot_core:ref:`language_tokenizer_generic_wb5a`                                      |
++------------------------------------------------------------+------------------------------------------------------------------------------------------+
 
 
 Changed default settings
