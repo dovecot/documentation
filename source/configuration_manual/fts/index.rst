@@ -99,7 +99,7 @@ a common tokenization library (lib-fts) and backend indexing engine responsible 
 Some of the FTS backends do their own internal tokenization, although it's
 possible to configure them to use the lib-fts tokenization as well.
 
-See :ref:`fts_tokenization` for more details about configuring the
+See :ref:`language_tokenization` for more details about configuring the
 tokenization.
 
 All backends are implemented as plugins.
