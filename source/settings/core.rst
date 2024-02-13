@@ -1365,7 +1365,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_filters
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @boollist
 
    The list of filters to apply.
@@ -1467,7 +1467,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_filter_normalizer_icu_id
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @string
    :default: Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove
 
@@ -1480,7 +1480,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_filter_stopwords_dir
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @string
 
      Path to the directory containing stopword files. The files inside the
@@ -1489,7 +1489,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: language_tokenizers
    :default: generic email-address
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @boollist
 
    The list of tokenizers to use.
@@ -1562,7 +1562,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_tokenizer_address_token_maxlen
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @uint
    :default: 250
 
@@ -1570,7 +1570,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_tokenizer_generic_algorithm
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @string
    :default: simple
 
@@ -1584,7 +1584,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_tokenizer_generic_token_maxlen
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @uint
    :default: 30
 
@@ -1592,7 +1592,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_tokenizer_generic_wb5a
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @boolean
    :default: no
 
@@ -1607,7 +1607,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_tokenizer_kuromoji_icu_id
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @string
    :default: Any-NFKC
 
@@ -1623,7 +1623,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_tokenizer_kuromoji_split_compounds
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @boolean
    :default: yes
 
@@ -1637,7 +1637,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: language_tokenizer_kuromoji_token_maxlen
-   :seealso: @fts_tokenization
+   :seealso: @language_tokenization
    :values: @uint
    :default: 1024
 

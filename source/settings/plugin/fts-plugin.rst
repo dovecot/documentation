@@ -56,7 +56,7 @@ Currently supported languages:
 | tr            | Turkish                               | Yes      | Yes       |
 +---------------+---------------------------------------+----------+-----------+
 
-See also :ref:`fts_tokenization`
+See also :ref:`language_tokenization`
 
 Settings
 ^^^^^^^^
