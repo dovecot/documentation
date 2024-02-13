@@ -1468,7 +1468,7 @@ See :ref:`settings` for list of all setting groups.
      It filters “qu'”, “c'”, “d'”, “l'”, “m'”, “n'”, “s'” and “t'”.
 
      Do not use at the same time as ``generic`` tokenizer with
-     ``algorithm=tr29 wb5a=yes``.
+     ``language_tokenizer_generic_algorithm = tr29 language_tokenizer_generic_wb5a = yes``.
 
    Example:
 
@@ -1520,30 +1520,10 @@ See :ref:`settings` for list of all setting groups.
 
      Settings:
 
-       ``maxlen``
-
-         Maximum length of token, before an arbitrary cut off is made.
-         Defaults to FTS_DEFAULT_TOKEN_MAX_LENGTH. The default is probably OK.
-
-       ``algorithm``
-
-         Accepted values are ``simple`` or ``tr29``. It defines the method for
-         looking for word boundaries. Simple is faster and will work for many
-         texts, especially those using latin alphabets, but leaves corner
-         cases. The tr29 implements a version of Unicode technical report 29
-         word boundary lookup. It might work better with e.g. texts
-         containing Katakana or Hebrew characters, but it is not possible to
-         use a single algorithm for all existing languages. The default is
-         ``simple``.
-
-       ``wb5a``
-
-         Unicode TR29 rule WB5a setting to the tr29 tokenizer. Splits
-         prefixing contracted words from base word. E.g. “l'homme” → “l”
-         “homme”. Together with a language specific stopword list unnecessary
-         contractions can thus be filtered away. This is disabled by default
-         and only works with the TR29 algorithm. Enable by
-         ``fts_tokenizer_generic = algorithm=tr29 wb5a=yes``.
+       * :dovecot_core:ref:`language_tokenizer_generic_algorithm`
+       * :dovecot_core:ref:`language_tokenizer_generic_explicit_prefix`
+       * :dovecot_core:ref:`language_tokenizer_generic_wb5a`
+       * :dovecot_core:ref:`language_token_maxlen` (default value is ``254``)
 
    ``email-address``
 
@@ -1569,38 +1549,80 @@ See :ref:`settings` for list of all setting groups.
 
      Settings:
 
-      ``maxlen``
+       * :dovecot_core:ref:`language_tokenizer_kuromoji_split_compounds`
+       * :dovecot_core:ref:`language_tokenizer_kuromoji_id`
+       * :dovecot_core:ref:`language_token_maxlen` (default value is ``1024``).
 
-        Maximum length of token, before an arbitrary cut off is made.
-        The default value for the kuromoji tokenizer is ``1024``.
-
-      ``kuromoji_split_compounds``
-
-        This setting enables “search mode” in the Atilika Kuromoji library.
-        The setting defaults to enabled (i.e .1) and should not be changed
-        unless there is a compelling reason. To disable, set the value to 0.
-
-        .. note:: If this setting is changed, existing FTS indexes will
-                  produce unexpected results. The FTS indexes should be
-                  recreated in this case.
-
-      ``id``
-
-        Description of the normalizing/transliterating rules to use. See
-        `Normalizer Format` for syntax. Defaults to ``Any-NFKC`` which is
-        quite good for CJK text mixed with latin alphabet languages. It
-        transforms CJK characters to full-width encoding and transforms latin
-        ones to half-width. The NFKC transformation is described above.
-
-        .. note:: If this setting is changed, existing FTS indexes will
-                  produce unexpected results. The FTS indexes should be
-                  recreated in this case.
 
      We use the predefined set of stopwords which is recommended by Atilika.
      Those stopwords are reasonable and they have been made by tokenizing
      Japanese Wikipedia and have been reviewed by us. This set of stopwords is
      also included in the Apache Lucene and Solr projects and it is used by
      many Japanese search implementations.
+
+
+.. dovecot_core:setting:: language_tokenizer_generic_algorithm
+   :seealso: @language_tokenization
+   :values: @string
+   :default: simple
+
+   Accepted values are ``simple`` or ``tr29``. It defines the method for
+   looking for word boundaries. Simple is faster and will work for many
+   texts, especially those using latin alphabets, but leaves corner
+   cases. The tr29 implements a version of Unicode technical report 29
+   word boundary lookup. It might work better with e.g. texts
+   containing Katakana or Hebrew characters, but it is not possible to
+   use a single algorithm for all existing languages.
+
+
+.. dovecot_core:setting:: language_tokenizer_generic_explicit_prefix
+   :seealso: @language_tokenization
+   :values: @boolean
+
+   FIXME!
+
+
+.. dovecot_core:setting:: language_tokenizer_generic_wb5a
+   :seealso: @language_tokenization
+   :values: @boolean
+   :default: no
+
+   Unicode TR29 rule WB5a setting to the tr29 tokenizer. Splits
+   prefixing contracted words from base word. E.g. “l'homme” → “l”
+   “homme”. Together with a language specific stopword list unnecessary
+   contractions can thus be filtered away. This is disabled by default
+   and only works with the TR29 algorithm. Enable by
+   ``language_tokenizer_generic_algorithm = tr29 language_tokenizer_generic_wb5a = yes``.
+
+
+.. dovecot_core:setting:: language_tokenizer_kuromoji_split_compounds
+   :seealso: @language_tokenization
+   :values: @boolean
+   :default: yes
+
+   This setting enables “search mode” in the Atilika Kuromoji library.
+   The setting defaults to enabled (i.e .1) and should not be changed
+   unless there is a compelling reason. To disable, set the value to 0.
+
+   .. note:: If this setting is changed, existing FTS indexes will
+            produce unexpected results. The FTS indexes should be
+            recreated in this case.
+
+
+.. dovecot_core:setting:: language_tokenizer_kuromoji_id
+   :seealso: @language_tokenization
+   :values: @string
+   :default: Any-NFKC
+
+   Description of the normalizing/transliterating rules to use. See
+   `Normalizer Format` for syntax. Defaults to ``Any-NFKC`` which is
+   quite good for CJK text mixed with latin alphabet languages. It
+   transforms CJK characters to full-width encoding and transforms latin
+   ones to half-width. The NFKC transformation is described above.
+
+   .. note:: If this setting is changed, existing FTS indexes will
+            produce unexpected results. The FTS indexes should be
+            recreated in this case.
 
 
 .. dovecot_core:setting:: language_token_maxlen
