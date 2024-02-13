@@ -1376,6 +1376,34 @@ See :ref:`settings` for list of all setting groups.
    name.
 
 
+.. dovecot_core:setting:: language
+   :seealso: @textcat_config_path;dovecot_core
+   :values: @named_filter
+   :filter: language
+
+   Defines a language to be used in tokenization.
+
+   At least one language must be specified.
+
+   The language listed first is the default and is used when language
+   recognition fails.
+
+   The filters used for stemming and stopwords are language dependent.
+
+   .. note:: For better performance it's recommended to synchronize this
+             setting with the textcat configuration file; see
+             :dovecot_core:ref:`textcat_config_path`.
+
+   Example:
+
+   .. code-block:: none
+
+     language en {
+     }
+     language de {
+     }
+
+
 .. dovecot_core:setting:: language_filters
    :seealso: @language_tokenization
    :values: @boollist
@@ -1411,7 +1439,7 @@ See :ref:`settings` for list of all setting groups.
 
         * :dovecot_core:ref:`language_filter_stopwords_dir`
 
-     See :ref:`fts_languages` for list of stopword files that are currently
+     See :ref:`language` for list of stopword files that are currently
      distributed with Dovecot.
 
      More languages can be obtained from
@@ -1427,7 +1455,7 @@ See :ref:`settings` for list of all setting groups.
      This stemmer is based on the
      `Snowball stemmer <https://snowballstem.org/>`_ library.
 
-     See :ref:`fts_languages`
+     See :ref:`language`
 
    ``normalizer-icu``
 
@@ -3919,7 +3947,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: textcat_config_path
    :default: !<textcat dir>
-   :seealso: @fts_languages;dovecot_plugin
+   :seealso: @language;dovecot_core
    :values: @string
 
    Path to the textcat/exttextcat configuration file, which lists the
@@ -3927,7 +3955,7 @@ See :ref:`settings` for list of all setting groups.
 
    This is recommended to be changed to point to a minimal version of a
    configuration that supports only the languages listed in
-   :dovecot_plugin:ref:`fts_languages`.
+   :dovecot_core:ref:`language`.
 
    Doing this improves language detection performance during indexing and also
    makes the detection more accurate.

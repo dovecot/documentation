@@ -28,7 +28,7 @@ The lib-language tokenization library works in the following way:
 Languages
 ^^^^^^^^^
 
-The setting :dovecot_plugin:ref:`fts_languages` lists languages FTS should
+The setting :dovecot_core:ref:`language` lists languages FTS should
 detect.
 At least one language must be listed.
 The first language is the default language used in case detection fails.
@@ -41,19 +41,23 @@ textcat, see :dovecot_core:ref:`textcat_config_path`.
 Example::
 
   plugin {
-    fts_languages = en de
+    language = en de
   }
 
 
 Tokenizers
 ^^^^^^^^^^
 
-List of tokenizers to use.
+List of tokenizers to use. Tokenizers can be language specific
 
 Example::
 
-    language_tokenizers = generic email-address
-    fts_tokenizer_generic = algorithm=simple
+  language_tokenizers = generic email-address
+  language_tokenizer_generic_algorithm = simple
+
+  language en {
+    language_tokenizers = generic
+  }
 
 See :dovecot_core:ref:`language_tokenizers`
 
@@ -65,9 +69,11 @@ List of filters to apply. Filters can be language specific.
 
 Example::
 
-    language_filters = normalizer-icu snowball stopwords
-    language_filters_en = normalizer-icu snowball english-possessive stopwords
+  language_filters = normalizer-icu snowball stopwords
 
+  language en {
+    language_filters = normalizer-icu snowball english-possessive stopwords
+  }
 
 See :dovecot_core:ref:`language_filters`
 

@@ -291,22 +291,25 @@ Example configuration using OBOX::
     }
   }
 
-  plugin {
-    # Detected languages. Languages that are not recognized, default to the
-    # first enumerated language, i.e. en.
-    fts_languages = en fr # English and French.
+  # This chain of filters first normalizes and lower cases the text, then
+  #  stems the words and lastly removes stopwords.
+  language_filters = normalizer-icu snowball stopwords
 
-    # This chain of filters first normalizes and lower cases the text, then
-    #  stems the words and lastly removes stopwords.
-    language_filters = normalizer-icu snowball stopwords
+  # These tokenizers will preserve addresses as complete search tokens, but
+  # otherwise tokenize the text into "words".
 
+  language_tokenizers = generic email-address
+  language_tokenizer_generic_algorithm = simple
+
+  # Detected languages. Languages that are not recognized, default to the
+  # first enumerated language, i.e. en.
+  # English and French.
+
+  language en {
     # This chain of filters will first lowercase all text, stem the words,
     # remove possessive suffixes, and remove stopwords.
-    language_filters_en = lowercase snowball english-possessive stopwords
-
-    # These tokenizers will preserve addresses as complete search tokens, but
-    # otherwise tokenize the text into "words".
-    language_tokenizers = generic email-address
-    fts_tokenizer_generic = algorithm=simple
+    language_filters = lowercase snowball english-possessive stopwords
+  }
+  language fr {
   }
 
