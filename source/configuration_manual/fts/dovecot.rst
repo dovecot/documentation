@@ -306,7 +306,7 @@ Example configuration using OBOX::
 
     # These tokenizers will preserve addresses as complete search tokens, but
     # otherwise tokenize the text into "words".
-    fts_tokenizers = generic email-address
+    language_tokenizers = generic email-address
     fts_tokenizer_generic = algorithm=simple
   }
 
