@@ -1393,6 +1393,10 @@ See :ref:`settings` for list of all setting groups.
      and the library is installed. Otherwise only ASCII characters are
      lowercased.
 
+     Settings:
+
+       * :dovecot_core:ref:`language_token_maxlen` (default value is ``250``).
+
    ``stopwords``
 
      Filter certain common and short words, which are usually useless for
@@ -1405,10 +1409,7 @@ See :ref:`settings` for list of all setting groups.
 
      Settings:
 
-       ``stopwords_dir``
-
-         Path to the directory containing stopword files. Stopword files are
-         looked up in ``”<path>”/stopwords_<lang>.txt``.
+        * :dovecot_core:ref:`language_filter_stopwords_dir`
 
      See :ref:`fts_languages` for list of stopword files that are currently
      distributed with Dovecot.
@@ -1441,13 +1442,8 @@ See :ref:`settings` for list of all setting groups.
 
      Settings:
 
-       ``id``
-
-         Description of the normalizing/transliterating rules to use.
-
-           * See `Normalizer Format`_ for syntax.
-           * Defaults to ``Any-Lower; NFKD; [: Nonspacing Mark :] Remove;
-             [\\x20] Remove``
+        * :dovecot_core:ref:`language_filter_normalized_icu_id`
+        * :dovecot_core:ref:`language_token_maxlen` (default value is ``250``).
 
    ``english-possessive``
 
@@ -1482,6 +1478,25 @@ See :ref:`settings` for list of all setting groups.
        language_filters = normalizer-icu snowball stopwords
        language_filters_en = lowercase snowball english-possessive stopwords
      }
+
+
+.. dovecot_core:setting:: language_filter_stopwords_dir
+   :seealso: @fts_tokenization
+   :values: @string
+
+     Path to the directory containing stopword files. Stopword files are
+     looked up in ``”<path>”/stopwords_<lang>.txt``.
+
+
+.. dovecot_core:setting:: language_filter_normalized_icu_id
+   :seealso: @fts_tokenization
+   :values: @string
+   :default: Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove
+
+    Description of the normalizing/transliterating rules to use.
+
+       * See `Normalizer Format`_ for syntax.
+
 
 .. _`Normalizer Format`: https://unicode-org.github.io/icu/userguide/transforms/general/#transliterator-identifiers
 
@@ -1586,6 +1601,15 @@ See :ref:`settings` for list of all setting groups.
      Japanese Wikipedia and have been reviewed by us. This set of stopwords is
      also included in the Apache Lucene and Solr projects and it is used by
      many Japanese search implementations.
+
+
+.. dovecot_core:setting:: language_token_maxlen
+   :seealso: @language_tokenization
+   :values: @uint
+   :default: see note below
+
+   Maximum length of token, before an arbitrary cut off is made.
+   The default value depends on the specific filter/tokenizer.
 
 
 .. dovecot_core:setting:: last_valid_gid
