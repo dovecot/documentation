@@ -7,7 +7,7 @@ fts plugin
 .. seealso:: See :ref:`fts` for an overview of the Dovecot Full Text Search
              (FTS) system.
 
-.. _fts_languages:
+.. _language:
 
 FTS languages
 ^^^^^^^^^^^^^
@@ -281,34 +281,6 @@ Settings
    :dovecot_plugin:ref:`fts_enforced` setting does not change this behavior.
 
    A value of ``0`` means no timeout.
-
-
-.. dovecot_plugin:setting:: fts_languages
-   :plugin: fts
-   :seealso: @textcat_config_path;dovecot_core
-   :values: @string
-
-   A space-separated list of languages that the full text search should
-   detect.
-
-   At least one language must be specified.
-
-   The language listed first is the default and is used when language
-   recognition fails.
-
-   The filters used for stemming and stopwords are language dependent.
-
-   .. note:: For better performance it's recommended to synchronize this
-             setting with the textcat configuration file; see
-             :dovecot_core:ref:`textcat_config_path`.
-
-   Example:
-
-   .. code-block:: none
-
-     plugin {
-       fts_languages = en de
-     }
 
 
 .. dovecot_plugin:setting:: fts_decoder_tika_url
