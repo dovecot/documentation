@@ -14,7 +14,7 @@ doveadm-cluster-site - Utility actions for Dovecot Cluster site
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site add [ **-\-uuid** **uuid** ] [ **-\-tag** *tag* ] [ **-\-load-balancer** *host* ] *name*
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site add [ **-\-id** **id** ] [ **-\-tag** *tag* ] [ **-\-load-balancer** *host* ] *name*
 
 **doveadm** [**-Dv**] [**-f** *formatter*] cluster site remove *name*
 
@@ -45,7 +45,7 @@ COMMANDS
 cluster site add
 ----------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site add [ **-\-uuid** *uuid* ] [ **-\-tag** *tag* ] [ **-\-load-balancer** *host* ] *name*
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster site add [ **-\-id** *id* ] [ **-\-tag** *tag* ] [ **-\-load-balancer** *host* ] *name*
 
 Adds a new site to cluster. Load balancer is the host or IP address where another site's proxy connects to do site to site connections.
 New sites are added in online state. UUID should not be used unless you are re-adding the same site.

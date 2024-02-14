@@ -1,4 +1,4 @@
-.. _known_issues_mbox_problems:
+.. _known_issues-mbox_problems:
 
 =============
 mbox problems

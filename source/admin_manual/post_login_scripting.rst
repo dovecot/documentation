@@ -79,8 +79,7 @@ You can change any Dovecot settings using the above method.
 Changing user's password after login
 ====================================
 
-See `HowTo/ConvertPasswordSchemes
-<https://wiki.dovecot.org/HowTo/ConvertPasswordSchemes>`_
+See :ref:`howto-convert_password_schemes`
 
 Last-login tracking
 ===================

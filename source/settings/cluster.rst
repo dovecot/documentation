@@ -37,8 +37,13 @@ These settings are only for Dovecot proxies. Don't set them in backends.
 .. cluster:setting:: cluster_backend_test_username
    :values: @string
 
-   Username used for logging into backends to see if it's up or down.
-   ``%{backend_host}`` variable expands to the hostname of the backend.
+   This setting is used for two purposes:
+
+   #. Username used by proxy for logging into backends to see if it's up or
+      down. ``%{backend_host}`` variable expands to the hostname of the backend.
+   #. Username used by backend for running ``doveadm cluster group access``
+      command. This command just needs any existing user to work - it doesn't
+      matter that it's not actually in the accessed group.
 
 .. cluster:setting:: cluster_backend_test_password
    :values: @string

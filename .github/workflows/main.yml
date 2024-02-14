@@ -16,7 +16,7 @@ jobs:
         mkdir build
         chmod 0777 build
     - uses: actions/checkout@v4
-    - uses: dovecot/dovecot-sphinx-action@0.4
+    - uses: dovecot/dovecot-sphinx-action@0.11
     - name: Prepare tarballs
       run: |
         tar --transform=s,build/dirhtml,html, -cJf build/docs.txz build/dirhtml
@@ -37,16 +37,12 @@ jobs:
     if: github.ref == 'refs/heads/release-2.3'
     steps:
     - uses: actions/checkout@v4
-    - uses: ammaraskar/sphinx-action@0.4
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        DOCS-FOLDER: "."
-        build-command: make dirhtml
+    - uses: dovecot/dovecot-sphinx-action@0.11
     - uses: dovecot/rsync-deployments@master
       with:
         RSYNC_OPTIONS: -azr --delete
         RSYNC_TARGET: docs@doc.dovecot.org:public_html/2.3/.
-        RSYNC_BASEDIR: /_build/.
+        RSYNC_BASEDIR: /build/.
       if: env.DEPLOY_KEY
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}

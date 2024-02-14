@@ -6,40 +6,40 @@ System users used by Dovecot
 
 Dovecot typically requires 3 or more system users:
 
-* `root`: Dovecot is started as root.
-* `dovenull`: Dovecot uses an unprivileged dovenull user for untrusted login
+* ``root``: Dovecot is started as root.
+* ``dovenull``: Dovecot uses an unprivileged dovenull user for untrusted login
   processes.
-* `dovecot`: Dovecot uses an unprivileged dovecot user for internal processes.
-* `auth user`: Password and user database lookups are done as auth user.
-* `mail user(s)`: Mails are accessed using yet another user. The mail user
+* ``dovecot``: Dovecot uses an unprivileged dovecot user for internal processes.
+* ``auth user``: Password and user database lookups are done as auth user.
+* ``mail user(s)``: Mails are accessed using yet another user. The mail user
   should not be dovecot user.
 
 Using multiple users allows privilege separation, which makes it harder for
 attackers to compromise the whole system if a security hole is found from one
 component. However, if you really want to run everything under a single user,
-`it's possible <https://wiki.dovecot.org/HowTo/Rootless>`_.
+:ref:`it's possible <howto-rootless>`.
 
 Dovenull user
 =============
 
-`dovenull` user is used internally for processing users' logins. It shouldn't
+``dovenull`` user is used internally for processing users' logins. It shouldn't
 have access to any files, authentication databases or anything else either. It
 should belong to its own private **dovenull** group where no one else belongs
 to, and which doesn't have access to any files either (other than what Dovecot
 internally creates).
 
-You can change the default `dovenull` user to something else from
-``default_login_user`` setting.
+You can change the default ``dovenull`` user to something else from
+:dovecot_core:ref:`default_login_user` setting.
 
 Dovecot user
 ============
 
-`dovecot` user is used internally for unprivileged Dovecot processes. It should
-belong to its own private dovecot group. Mail files are not accessed as dovecot
-user, so you shouldn't give it access to mails.
+``dovecot`` user is used internally for unprivileged Dovecot processes.
+It should belong to its own private ``dovecot`` group. Mail files are
+not accessed as dovecot user, so you shouldn't give it access to mails.
 
-You can change the default dovecot user to something else from
-``default_internal_user`` setting.
+You can change the default ``dovecot`` user to something else from
+:dovecot_core:ref:`default_internal_user` setting.
 
 Mail users
 ==========
@@ -47,15 +47,15 @@ Mail users
 You can use one or more system users for accessing users' mails. Most
 configurations can be placed to two categories:
 
-1. `System users <https://wiki.dovecot.org/SystemUsers>`_ where each Dovecot
+1. :ref:`System users <system_users>` where each Dovecot
    user has their own system user in ``/etc/passwd``. For system user setups
    you generally don't have to worry about UIDs or GIDs, they are returned by
    the userdb passwd lookup.
-2. `Virtual users <https://wiki.dovecot.org/VirtualUsers>`_ where all Dovecot
+2. :ref:`Virtual users <virtual_users>` where all Dovecot
    users run under a single system user. Typically you'd set this with
-   ``mail_uid`` setting (e.g. ``mail_uid=vmail``). Note that you most likely
+   :dovecot_core:ref:`mail_uid` setting (e.g. ``mail_uid=vmail``). Note that you most likely
    don't want the userdb lookup to return any UID/GID, as they override the
-   ``mail_uid`` setting.
+   :dovecot_core:ref:`mail_uid` setting.
 
 However it's possible to use a setup that is anything between these two. For
 example use a separate system user for each domain. See below for more
@@ -83,7 +83,7 @@ There are a few things you should know about them:
 * By default Dovecot allows users to log in only with UID numbers 500 and
   above. This check tries to make sure that no-one can ever log in as daemons
   or other system users. If you're using an UID lower than 500, you'll need to
-  change the ``first_valid_uid`` setting.
+  change the :dovecot_core:ref:`first_valid_uid` setting.
 
 GIDs
 ====
@@ -114,7 +114,7 @@ version the whole GID list will be configurable without help from
 ``/etc/group``.
 
 It's also possible to give all the users access to extra groups with
-``mail_access_groups`` setting.
+:dovecot_core:ref:`mail_access_groups` setting.
 
 Authentication process user
 ===========================

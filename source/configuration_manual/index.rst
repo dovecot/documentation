@@ -11,6 +11,7 @@ Configuration Manual
    acl
    apparmor
    authentication/index
+   basic_configuration
    common_configuration
    config_file/index
    dict/index

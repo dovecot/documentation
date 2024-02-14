@@ -15,8 +15,8 @@ virtual mailbox.
 
 Common choices include:
 
--  `maildrop <https://maildrop.cc>`_
+-  `maildrop <https://www.courier-mta.org/maildrop/download.html>`_
 
--  `procmail <https://www.procmail.org/>`_ (appears to be unmaintained)
+-  `procmail <https://porkmail.org/era/procmail/>`__
 
--  :ref:`Dovecot's \`dovecot-lda\` LDA <lda>`
+-  :ref:`Dovecot's 'dovecot-lda' LDA <lda>`

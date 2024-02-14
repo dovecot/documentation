@@ -41,11 +41,12 @@ COMMANDS
 cluster user access
 -------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster user access [ **-u** *user* ] | [ **-A** ] | [ **-f** *file* ] [ **-i** ]
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster user access [ **-u** *user* | **-A** | **-F** *file* ] [ **-i** ]
 
-Perform cluster lookup for the user (or users). This command must be run from a backend, not a proxy.
-For now this command is mainly used internally to finish user group moves. Displays the host name of the backend which
-the user ended up.
+Perform cluster lookup for the user (or users). Displays the host name or
+IP address of the backend which the user ended up. This command can be run
+from either a proxy or a backend. This command is also used internally to
+finish user moves.
 
 You can use the ``-i`` parameter to display backend's IP rather than host name.
 
@@ -70,8 +71,14 @@ cluster user move
 **doveadm** [**-Dv**] [**-f** *formatter*] cluster user move [ **-\-direct** ] [ **-\-site** *site* ] *user* *group* [ *failover group* ]
 
 Initiates moving user to a different user group which will finish in background.
+The move is initialized by updating the ``moving_*`` fields in GeoDB.
+The next time the user is accessed triggers the actual moving by the
+original backend. This user access is also automatically triggered by running
+``doveadm cluster user access`` command.
 
-``--direct`` will only update GeoDB. This is intended for testing purposes only, and should not be used.
+``--direct`` will update the user's new site/group immediately to GeoDB without
+performing any user moving. This is intended for testing purposes only, and
+should not be used.
 
 
 cluster user status

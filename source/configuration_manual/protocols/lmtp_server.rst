@@ -88,7 +88,7 @@ For rawlogs, please see :ref:`debugging_rawlog`
 Plugins
 =======
 
-* Most of the `Dovecot plugins <https://wiki.dovecot.org/Plugins>`_ work with LMTP.
+* Most of the :ref:`Dovecot plugins <plugins>` work with LMTP.
 
 * Virtual quota can be enforced using :ref:`Quota plugin <quota>`.
 
@@ -107,9 +107,9 @@ To make address extension work with LMTP you must check these variables are set
 Using LMTP with different MTAs
 ==============================
 
-* `Postfix <https://wiki.dovecot.org/HowTo/PostfixDovecotLMTP>`_
+* :ref:`Postfix <howto-postfix_dovecot_lmtp>`
 
-* `Exim <https://wiki.dovecot.org/LMTP/Exim>`_
+* :ref:`Exim <howto-dovecot_lmtp_exim>`
 
 * `HALON <https://wiki.halon.io/LMTP>`_
 

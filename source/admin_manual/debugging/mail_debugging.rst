@@ -4,7 +4,7 @@
  Mail Debugging
 ==================
 
-Setting ``mail_debug=yes`` will make Dovecot log all kinds of things about mailbox initialization. Note that it won't increase error logging at all, so if you're having some random problems it's unlikely to provide any help.
+Setting :dovecot_core:ref:`log_debug` will make Dovecot log all kinds of things about mailbox initialization. Note that it won't increase error logging at all, so if you're having some random problems it's unlikely to provide any help.
 
 If there are any problems with a mailbox, Dovecot should automatically fix it. If that doesn't work for any reason, you can manually also request fixing a mailbox by running: ``doveadm force-resync -u user@domain INBOX``
 

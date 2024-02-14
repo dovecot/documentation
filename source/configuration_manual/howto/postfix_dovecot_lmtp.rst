@@ -1,3 +1,5 @@
+.. _howto-postfix_dovecot_lmtp:
+
 ========================
 Postfix and Dovecot LMTP
 ========================

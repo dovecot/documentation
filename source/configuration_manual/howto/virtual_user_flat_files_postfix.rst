@@ -218,7 +218,6 @@ Logging <dovecot_logging_syslog>` for more complex configurations.
 
    log_path = /var/log/dovecot.log
    info_log_path = /var/log/dovecot-info.log
-   mail_debug = no
 
 Syslog Logging
 ==============
@@ -229,7 +228,6 @@ Syslog Logging
 
    #log_path =
    #info_log_path =
-   mail_debug = no
    syslog_facility = local1
 
 ``/etc/rsyslog.conf``

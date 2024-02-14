@@ -19,26 +19,20 @@ Global variables
 
 Global variables that work everywhere are:
 
-+------------+-----------------------------------------------------------------------------+
-| Long name  |  Description                                                                |
-+============+=============================================================================+
-| %%         | '%' character. See :ref:`user_shared_mailboxes`                             |
-|            | for further information about %% variables                                  |
-+------------+-----------------------------------------------------------------------------+
-| env:<name> | Environment variable <name>                                                 |
-+------------+-----------------------------------------------------------------------------+
-| uid        | Effective UID of the current process NOTE: This is overridden for           |
-|            | :ref:`mail service user variables <variables-mail_service_user>`.           |
-+------------+-----------------------------------------------------------------------------+
-| gid        | Effective GID of the current process NOTE: This is overridden for           |
-|            | :ref:`mail service user variables <variables-mail_service_user>`.           |
-+------------+-----------------------------------------------------------------------------+
-| pid        | PID of the current process (e.g. login or imap/pop3 process).               |
-+------------+-----------------------------------------------------------------------------+
-| hostname   | Hostname (without domain). Can be overridden with DOVECOT_HOSTNAME          |
-|            | environment variable. NOTE: This is overridden for                          |
-|            | :ref:`mail user variables <variables-mail_user>`.                           |
-+------------+-----------------------------------------------------------------------------+
++----------------+-----------------------------------------------------------------------------+
+| Long name      |  Description                                                                |
++================+=============================================================================+
+| %%             | '%' character. See :ref:`user_shared_mailboxes`                             |
+|                | for further information about %% variables                                  |
++----------------+-----------------------------------------------------------------------------+
+| env:<name>     | Environment variable <name>                                                 |
++----------------+-----------------------------------------------------------------------------+
+| system:<name>  | Get a system variable, see :ref:`below <variables-system-variables>`        |
+|                | for list of supported names.                                                |
++----------------+-----------------------------------------------------------------------------+
+| process:<name> | Get a process variable, see :ref:`below <variables-process-variables>`      |
+|                | for list of supported names.                                                |
++----------------+-----------------------------------------------------------------------------+
 
 If :ref:`var_expand_crypt_plugin` is loaded, these also work globally:
 
@@ -53,6 +47,31 @@ If :ref:`var_expand_crypt_plugin` is loaded, these also work globally:
 |                               |                             |
 |                               | .. dovecotadded:: 2.2.29    |
 +-------------------------------+-----------------------------+
+
+.. _variables-system-variables:
+
+Supported system variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``cpu_count``
+  Number of CPUs available. Works only on Linux and FreeBSD-like systems.
+  Can be overridden with ``NCPU`` environment variable.
+  This needs to be included in :dovecot_core:ref:`import_environment`.
+``hostname``
+  Hostname (without domain). Can be overridden with ``DOVECOT_HOSTNAME`` environment variable.
+  This needs to be included in :dovecot_core:ref:`import_environment`.
+
+.. _variables-process-variables:
+
+Supported process variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``pid``
+  Current process ID.
+``uid``
+  Effective user ID of the current process.
+``gid``
+  Effective group ID of the current process.
 
 .. _variables-user:
 
@@ -102,8 +121,6 @@ Mail service user variables
 +==========+================+===============================================================+
 | See also :ref:`variables-global` and :ref:`variables-user`                                |
 +----------+----------------+---------------------------------------------------------------+
-| %p       | pid            | PID of the current process                                    |
-+----------+----------------+---------------------------------------------------------------+
 | %l       | local_ip       | local IP address                                              |
 |          |                |                                                               |
 |          |                | .. dovecotchanged:: 2.3.14 variable long name changed         |
@@ -111,10 +128,6 @@ Mail service user variables
 | %r       | remote_ip      | remote IP address                                             |
 |          |                |                                                               |
 |          |                | .. dovecotchanged:: 2.3.14 variable long name changed         |
-+----------+----------------+---------------------------------------------------------------+
-| %i       | uid            | UNIX user identifier of the user                              |
-+----------+----------------+---------------------------------------------------------------+
-|          | gid            | UNIX group identifier of the user                             |
 +----------+----------------+---------------------------------------------------------------+
 |          | userdb:<name>  | Return userdb extra field "name". %{userdb:name:default}      |
 |          |                | returns "default" if "name" doesn't exist (not returned if    |
@@ -229,8 +242,6 @@ Login variables
 |          |                       |                                                               |
 |          |                       | .. dovecotadded:: 2.2.0                                       |
 |          |                       | .. dovecotdeprecated:: 2.3.14                                 |
-+----------+-----------------------+---------------------------------------------------------------+
-| %p       | pid                   | process ID of the authentication client                       |
 +----------+-----------------------+---------------------------------------------------------------+
 | %m       | mechanism             | :ref:`authentication-authentication_mechanisms` e.g. PLAIN    |
 |          |                       |                                                               |
@@ -402,7 +413,7 @@ Authentication variables
 |          |                       | .. dovecotadded:: 2.2.0                                       |
 |          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
-| %p       | pid                   | process ID of the authentication client                       |
+| %p       | client_pid            | process ID of the authentication client                       |
 +----------+-----------------------+---------------------------------------------------------------+
 |          | session_pid           | For user logins: The PID of the IMAP/POP3 process handling the|
 |          |                       | session.                                                      |

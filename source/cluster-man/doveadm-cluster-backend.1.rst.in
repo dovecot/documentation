@@ -13,7 +13,7 @@ doveadm-cluster-backend - Utility actions for Dovecot Cluster backend
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend add [ **-\-uuid** *uuid* ] [ **-\-site** *host* ] *-\-self* | *name*
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend add [ **-\-id** *id* ] [ **-\-site** *host* ] *-\-self* | *name*
 
 **doveadm** [**-Dv**] [**-f** *formatter*] cluster backend remove *-\-self* | *host*
 
@@ -51,7 +51,7 @@ COMMANDS
 cluster backend add
 -------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend add [ **-\-uuid** *uuid* ] [ **-\-site** *host* ] *-\-self* | *name*
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend add [ **-\-id** *id* ] [ **-\-site** *host* ] *-\-self* | *name*
 
 Adds a new backend to cluster. New backends are added in standby state. UUID should not be used unless you are re-adding the same backend.
 

@@ -14,8 +14,7 @@ plugin. It's in the following format:
 
 For a password database it's enough to have only the user and password fields.
 For a user database, you need to set also uid, gid and preferably also home
-(see `VirtualUsers <https://wiki.dovecot.org/VirtualUsers>`_). (gecos) and
-(shell) fields are unused by Dovecot.
+(see :ref:`virtual_users`). (gecos) and (shell) fields are unused by Dovecot.
 
 The password field can be in four formats:
 

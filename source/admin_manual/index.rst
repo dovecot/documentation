@@ -21,6 +21,7 @@ Administrative Manual
    errors/index
    event_design
    event_reasons
+   find_mail_location
    filesystem_permission
    health_check
    imap_preview
@@ -47,6 +48,7 @@ Administrative Manual
    ssl/index
    submission_server
    system_users_used_by_dovecot
+   test_installation
    testing
    timeouts
    troubleshooting
