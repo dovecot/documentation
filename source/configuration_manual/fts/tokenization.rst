@@ -45,6 +45,7 @@ textcat, see :dovecot_core:ref:`textcat_config_path`.
 Example::
 
   language en {
+    default = yes
   }
   language de {
   }

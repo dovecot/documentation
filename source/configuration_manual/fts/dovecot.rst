@@ -302,13 +302,15 @@ Example configuration using OBOX::
   language_tokenizer_generic_algorithm = simple
 
   # Detected languages. Languages that are not recognized, default to the
-  # first enumerated language, i.e.
+  # default language, i.e.
 
-  language en { # English - 1st language is also the default for detection.
+  language en { # English
+    # the default for detection.
+    default = yes
     # This chain of filters will first lowercase all text, stem the words,
     # remove possessive suffixes, and remove stopwords.
     filters = lowercase snowball english-possessive stopwords
   }
-  language fr { # French - only used when detection identifies it
+  language fr { # French
   }
 
