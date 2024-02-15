@@ -1371,7 +1371,9 @@ See :ref:`settings` for list of all setting groups.
 
    Defines a language to be used in tokenization.
 
-   At least one language must be specified.
+   At least one language must be specified and one single language must be
+   flagged as the default language using
+   :dovecot_core:ref:`language_default` = ``yes``.
 
    The language listed first is the default and is used when language
    recognition fails.
@@ -1387,9 +1389,21 @@ See :ref:`settings` for list of all setting groups.
    .. code-block:: none
 
      language en {
+       default = yes
      }
      language de {
      }
+
+
+.. dovecot_core:setting:: language_default
+   :seealso: @language_tokenization
+   :values: @boolean
+   :default: no
+
+   The language marked as default will be used when language detection cannot
+   identify the proper language of the text being processed.
+
+   Exactly one language can/must be marked with this flag.
 
 
 .. dovecot_core:setting:: language_filters
