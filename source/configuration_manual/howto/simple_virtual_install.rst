@@ -56,7 +56,11 @@ If you want to configure SSL, see :ref:`SSL <ssl>`.
      passwd_file_path = /etc/dovecot/passwd
    }
    userdb static {
-     args = uid=vmail gid=vmail home=/home/vmail/%u
+     fields {
+       uid = vmail
+       gid = vmail
+       home = /home/vmail/%u
+     }
    }
 
 /etc/dovecot/passwd

@@ -251,7 +251,11 @@ get Dovecot running is to use the :ref:`static userdb <authentication-static_use
    passdb pam {
    }
    userdb static {
-     args = uid=vmail gid=vmail home=/var/mail/virtual/%d/%n
+     fields {
+        uid = vmail
+        gid = vmail
+        home = /var/mail/virtual/%d/%n
+     }
    }
 
 This makes Dovecot look up the mails from

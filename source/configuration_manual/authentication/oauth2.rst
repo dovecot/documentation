@@ -77,7 +77,12 @@ Without proxy authentication
 .. code-block:: none
 
   passdb static {
-    args = nopassword=y proxy=y proxy_mech=%m ...
+    fields {
+      nopassword = yes
+      proxy = yes
+      proxy_mech = %m
+      # ...
+    }
   }
 
 or with proxy authentication, put into ``dovecot-oauth2.conf.ext``

@@ -88,7 +88,11 @@ If you only want to use Kerberos ticket-based authentication:
    auth_krb5_keytab = /etc/dovecot/dovecot.keytab
 
    userdb static {
-     args = uid=vmail gid=vmail home=/var/vmail/%u
+    fields {
+       uid = vmail
+       gid = vmail
+       home = /var/vmail/%u
+     }
    }
 
 (In this virtual-hosting example, all mail is stored in

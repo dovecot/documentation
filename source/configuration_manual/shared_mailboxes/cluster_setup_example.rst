@@ -18,15 +18,18 @@ Dovecot Proxy configuration snippet
         passdb db1 {
           driver = static
           master = yes
-          default_fields {
-            proxy = y
-          }
-          args = password=imapcpass
+          password = imapcpass
+          fields {
+	    proxy = yes
+	  }
         }
 
         passdb db2 {
           driver = static
-          args = proxy=y password=masterpass
+          password = masterpass
+          fields {
+	    proxy = yes
+	  }
         }
 
 Dovecot Backend configuration snippet
@@ -63,15 +66,22 @@ Dovecot Backend configuration snippet
 
         passdb db1 {
           # masterpass is the normal users master password
-          args = password=masterpass userdb_imapc_master_user=%{user}
           driver = static
+          password = masterpass
+          fields {
+            userdb_imapc_master_user = %{user}
+          }
         }
 
         passdb db2 {
           driver = static
           master = yes
           # imapcpass is the master password used for master logins (via imapc)
-          args = password=imapcpass userdb_namespace/shared/disabled=yes userdb_acl_user=%{auth_user}
+          password = imapcpass
+          fields {
+            userdb_namespace/shared/disabled = yes
+            userdb_acl_user = %{auth_user}
+          }
         }
 
         dict_legacy {

@@ -328,7 +328,11 @@ Hence, this is possible:
   }
 
   passdb static {
-    args = password=pass crypt_global_public_key=<content of ecpubkey.pem> crypt_global_private_key/main/private_key=<content of ecprivkey.pem>
+    password = pass
+    fields {
+      crypt_global_public_key = <content of ecpubkey.pem>
+      crypt_global_private_key/main/private_key = <content of ecprivkey.pem>
+    }
   }
 
 Read-only Mode

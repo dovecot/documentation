@@ -36,7 +36,10 @@ Postfix to verify the email account:
 .. code-block:: none
 
   passdb static {
-    args = password=test allow_nets=local,127.0.0.1/32
+    password = test
+    fields  {
+      allow_nets = local,127.0.0.1/32
+    }
   }
 
 Otherwise, you will see this error in the log:

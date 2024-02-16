@@ -306,7 +306,10 @@ given list.
 ::
 
   userdb static {
-    args = namespace+=special namespace/special/mail_path=/var/special/%u namespace/special/prefix=special/
+    fields {
+        namespace+ = special namespace/special/mail_path=/var/special/%{username}
+        namespace/special/mail_path = /var/special/%{username}
+        namespace/special/prefix = special/
   }
 
 Dovecot Support for Shared Mailboxes
