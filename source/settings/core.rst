@@ -2966,6 +2966,12 @@ See :ref:`settings` for list of all setting groups.
    :ref:`authentication-oauth2`.
 
 
+.. dovecot_core:setting:: passdb_static_password
+   :values: @string
+   :added: 3.0.0
+
+   The static password to be used for all users authenticating using this passdb.
+
 .. dovecot_core:setting:: pop3_client_workarounds
    :todo: Indicate POP3 setting
    :values: @string
@@ -4031,6 +4037,12 @@ See :ref:`settings` for list of all setting groups.
 
      textcat_config_path = /usr/share/libexttextcat/fpdb.conf
 
+.. dovecot_core:setting:: userdb_static_allow_all_users
+   :values: @boolean
+   :added: 3.0.0
+   :default: no
+
+   Skip user existence verification via passdb lookup.
 
 .. dovecot_core:setting:: valid_chroot_dirs
    :values: @string

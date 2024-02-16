@@ -82,7 +82,10 @@ user lookup.
    }
 
    passdb static {
-      args = user=%Ld noauthenticate
+      fields {
+        user = %Ld
+        noauthenticate = yes
+      }
       skip = authenticated
    }
 
