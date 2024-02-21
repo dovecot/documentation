@@ -34,6 +34,14 @@ Proxy Settings
 
 These settings are only for Dovecot proxies. Don't set them in backends.
 
+.. cluster:setting:: cluster_proxy_check_backends
+   :default: yes
+   :values: @boolean
+
+   If enabled, this proxy runs checks to see whether backends are up or down.
+   If disabled, this proxy never sets any backends offline. This setting is
+   used only by proxies.
+
 .. cluster:setting:: cluster_backend_test_username
    :values: @string
 
