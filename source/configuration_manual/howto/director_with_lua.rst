@@ -98,8 +98,9 @@ If you wish to do authentication, you can do
   }
 
 
-If you are using MySQL or PostgreSQL, you can also install this directly on your proxy node(s),
-and skip having a centralized director node.
+If you have multiple Dovecot proxies, they all need the same data to route users to the correct
+backend. Therefore, if you use a database engine that supports data replication (such as MySQL or
+PostgreSQL), you can run the Lua script on each of your proxies.
 
 Operations
 ----------
