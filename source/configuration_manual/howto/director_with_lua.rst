@@ -27,7 +27,7 @@ This script can use any SQL driver supported by `Lua DBI <https://github.com/mwi
 
 If you have multiple Dovecot proxies, they all need the same data to route users to the correct
 backend. Therefore, if you use a database engine that supports data replication (such as MySQL or
-PostgreSQL), you can run the Lua script on each of your proxies.
+PostgreSQL), you can run the script on each of your proxies.
 
 You will need `Lua DBI <https://github.com/mwild1/luadbi>`_, and a database driver for it.
 For the shard version, you will need to install `CRC32 library <https://github.com/hjelmeland/luacrc32>`_.
@@ -68,6 +68,7 @@ And schema for the sharded version.
      PRIMARY KEY (backend_id, user_hash)
   );
 
+The user is routed to the backend in the `user_backend` table. If no entry exists, the script creates one.
 
 Configuration
 -------------
