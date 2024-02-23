@@ -68,7 +68,9 @@ And schema for the sharded version.
      PRIMARY KEY (backend_id, user_hash)
   );
 
-The user is routed to the backend in the `user_backend` table. If no entry exists, the script creates one.
+The user is routed to the backend in the `user_backend` table. If no entry exists, the script
+creates one. If you used Dovecot 2.x's `director_tag` functionality, you can create an entry
+yourself with the appropriate backend.
 
 Configuration
 -------------
