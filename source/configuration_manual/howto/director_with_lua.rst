@@ -105,5 +105,5 @@ PostgreSQL), you can run the Lua script on each of your proxies.
 Operations
 ----------
 
-There are no built-in tools in Dovecot to manage the state in the database, you need to
-build your own tooling.
+There are no built-in tools in Dovecot to manage the database (such as adding backends,
+kicking users, monitoring backends, etc.). You need to build your own tooling.
