@@ -17,9 +17,6 @@ The Lua script comes in two variants, first one simply does username <-> hostnam
 and can be found at `<https://github.com/dovecot/tools/blob/main/director.lua>`_.
 The second does sharding and can be found at `<https://github.com/dovecot/tools/blob/main/director-shard.lua>`_.
 
-In database, the backend\_ip field can be left empty when it's not needed.
-It can be used when your backend names cannot be resolved.
-
 The script can be run on a proxy directly, or one can have one dedicated proxy node acting
 as a Lua director node running the script.
 
