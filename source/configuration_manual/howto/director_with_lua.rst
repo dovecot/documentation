@@ -24,7 +24,10 @@ Prerequisites
 -------------
 
 This script can use any SQL driver supported by `Lua DBI <https://github.com/mwild1/luadbi>`_.
-If you want to use SQLite, or some other file based database, you can only run this on a single node.
+
+If you have multiple Dovecot proxies, they all need the same data to route users to the correct
+backend. Therefore, if you use a database engine that supports data replication (such as MySQL or
+PostgreSQL), you can run the Lua script on each of your proxies.
 
 You will need `Lua DBI <https://github.com/mwild1/luadbi>`_, and a database driver for it.
 For the shard version, you will need to install `CRC32 library <https://github.com/hjelmeland/luacrc32>`_.
@@ -97,10 +100,6 @@ If you wish to do authentication, you can do
     args = file=/etc/dovecot/director.lua noauthenticate
   }
 
-
-If you have multiple Dovecot proxies, they all need the same data to route users to the correct
-backend. Therefore, if you use a database engine that supports data replication (such as MySQL or
-PostgreSQL), you can run the Lua script on each of your proxies.
 
 Operations
 ----------
