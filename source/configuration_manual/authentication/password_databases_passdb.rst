@@ -170,6 +170,26 @@ Passdb setting
    refer to fields returned by the current (and previous) passdb lookups.
 
 
+.. dovecot_core:setting:: passdb_fields
+   :values: @strlist
+
+   Passdb fields (and :ref:`authentication-password_database_extra_fields`).
+   The values can contain :ref:`%variables <config_variables>`. All %variables
+   used here reflect the state **after** the current passdb lookup, and can
+   refer to fields returned by previous passdb lookups. Depending on the passdb
+   driver, it can also refer to variable fields returned by it (e.g.
+   ``%{ldap:fieldName}``). Example:
+
+   .. code-block:: none
+
+      passdb ldap {
+	fields {
+	  user = %{ldap:userId}
+	  proxy = yes
+	  host = %{ldap:proxyHost}
+	}
+      }
+
 .. dovecot_core:setting:: passdb_default_password_scheme
    :values: @string
    :default: PLAIN (but overridden by some passdbs)
