@@ -143,6 +143,14 @@ Userdb settings
 	}
       }
 
+.. dovecot_core:setting:: userdb_fields_import_all
+   :values: @boolean
+   :default: yes (except for userdb ldap)
+
+   If yes, import all fields returned by the userdb lookup. If no, require
+   :dovecot_core:ref:`userdb_fields` to explicitly add wanted fields.
+
+
 .. dovecot_core:setting:: userdb_skip
    :values: never, found, notfound
    :default: never
