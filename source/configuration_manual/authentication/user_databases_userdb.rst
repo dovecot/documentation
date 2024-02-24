@@ -121,6 +121,28 @@ Userdb settings
    For example useful with userdb passwd for overriding e.g. home directory or
    the ``uid`` or ``gid``. See :ref:`authentication-passwd`.
 
+
+.. dovecot_core:setting:: userdb_fields
+   :values: @strlist
+
+   Userdb fields (and :ref:`authentication-user_database_extra_fields`).
+   The values can contain :ref:`%variables <config_variables>`. All %variables
+   used here reflect the state **after** the current userdb lookup, and can
+   refer to fields returned by previous userdb lookups. Depending on the userdb
+   driver, it can also refer to variable fields returned by it (e.g.
+   ``%{ldap:fieldName}``). Example:
+
+   .. code-block:: none
+
+      userdb ldap {
+	fields {
+	  user = %{ldap:userId}
+	  home = /home/%{ldap:mailboxPath}
+	  uid = vmail
+	  gid = vmail
+	}
+      }
+
 .. dovecot_core:setting:: userdb_skip
    :values: never, found, notfound
    :default: never
