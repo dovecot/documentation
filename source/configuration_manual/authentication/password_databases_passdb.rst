@@ -194,6 +194,14 @@ Passdb setting
 	}
       }
 
+.. dovecot_core:setting:: passdb_fields_import_all
+   :values: @boolean
+   :default: yes (except for passdb ldap)
+
+   If yes, import all fields returned by the passdb lookup. If no, require
+   :dovecot_core:ref:`passdb_fields` to explicitly add wanted fields.
+
+
 .. dovecot_core:setting:: passdb_default_password_scheme
    :values: @string
    :default: PLAIN (but overridden by some passdbs)
