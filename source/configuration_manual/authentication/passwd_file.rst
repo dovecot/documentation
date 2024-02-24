@@ -68,6 +68,20 @@ Also global settings that are commonly overridden inside the passdb filter:
    looked up from the passwd-file. For example ``auth_username_format = %{protocol}``
    can be used to lookup the current protocol instead of the username.
 
+Variables
+=========
+
+:dovecot_core:ref:`passdb_fields` and :dovecot_core:ref:`userdb_fields` can use
+``%{passwd_file:<field>[:<default>]}`` variables to access the current passdb
+or userdb lookup's fields. The available fields are:
+
+ * ``uid``
+ * ``gid``
+ * ``home``
+ * Any specified extra fields. The ``userdb_`` prefixed fields are available
+   also in passdb lookups with the ``userdb_`` prefix. In userdb lookups
+   these same fields are available without the ``userdb_`` prefix.
+
 Examples
 ========
 
