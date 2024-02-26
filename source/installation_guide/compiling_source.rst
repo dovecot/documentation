@@ -225,10 +225,6 @@ The basic backends are built if the system is detected to support them:
 --with-pam
    Build with :ref:`PAM <authentication-pam>` support
 
---with-nss
-   Build with :ref:`NSS <authentication-nss>`
-   support
-
 --with-bsdauth
    Build with :ref:`BSD authentication <authentication-bsdauth>`
    support (if supported by your OS)
