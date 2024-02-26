@@ -21,7 +21,7 @@ Authentication
  * :ref:`authentication-passwd_file`: If you use ``%d`` in args, it no longer means that domain isn't looked up from the passwd-file. You'll need to add ``username_format=%n`` prefix to args (e.g. ``args = username_format=%n /etc/virtual.%d``).
  * Empty or NULL password no longer means "any password is valid". You'll also have to return "nopassword" field.
  * :ref:`authentication-pam`: There's no more ``blocking=yes`` setting, it's now always enabled. If you want to limit the number of lookups done by a dovecot-auth worker, change ``auth_worker_max_request_count`` setting. Setting it to 1 makes it work basically the same as the old ``blocking=no``.
- * :ref:`authentication-passwd`: The problem with passwd lookups is that temporary errors (e.g. LDAP server down) are returned as "user doesn't exist" errors. You may want to try the new :ref:`authentication-nss` userdb.
+ * :ref:`authentication-passwd`: The problem with passwd lookups is that temporary errors (e.g. LDAP server down) are returned as "user doesn't exist" errors. You may want to try the new ``nss`` userdb.
  * :ref:`authentication-sql` and :ref:`authentication-ldap`: ``user_global_uid`` and ``user_global_gid`` fields have been removed from their config files. Instead you can now use :dovecot_core:ref:`mail_uid` and :dovecot_core:ref:`mail_gid` settings in ``dovecot.conf``. This also means that it's no longer a requirement to specify a userdb at all (a dummy :ref:`authentication-static_user_database` is used internally).
 
 Mail handling
