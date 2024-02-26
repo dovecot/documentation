@@ -256,12 +256,12 @@ Enable the ``plain_pass`` variable in the auth-passwdfile configuration.
 
    passdb {
      driver = passwd-file
-     args = username_format=%u /var/vmail/auth.d/%d/passwd
+     args = /var/vmail/auth.d/%d/passwd
    }
 
    userdb {
      driver = passwd-file
-     args = username_format=%u /var/vmail/auth.d/%d/passwd
+     args = /var/vmail/auth.d/%d/passwd
      default_fields = plain_pass=%w
    }
 
