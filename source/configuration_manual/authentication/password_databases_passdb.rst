@@ -193,7 +193,6 @@ Passdb setting
    .. code-block:: none
 
       passdb passwd-file {
-	driver = passwd-file
 	mechanisms = PLAIN LOGIN
 	# ...
       }

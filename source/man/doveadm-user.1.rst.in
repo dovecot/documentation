@@ -28,8 +28,7 @@ like this:
 
 .. parsed-literal::
 
-   userdb db1 {
-     driver = passwd-file
+   userdb passwd-file {
      passwd_file_path = /etc/%{protocol}.passwd
    }
 

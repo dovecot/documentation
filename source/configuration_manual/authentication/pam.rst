@@ -34,8 +34,7 @@ Here are a few examples:
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = pam
+  passdb pam {
     args = %{protocol}
   }
 
@@ -43,8 +42,7 @@ Here are a few examples:
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = pam
+  passdb pam {
     args = mail
   }
 
@@ -58,8 +56,7 @@ like this:
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = pam
+  passdb pam {
     args = session=yes dovecot
   }
 
@@ -82,8 +79,7 @@ lookups done by the auth worker process before it dies:
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = pam
+  passdb pam {
     args = max_requests=100
   }
 
@@ -102,8 +98,7 @@ reply by setting:
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = pam
+  passdb pam {
     args = failure_show_msg=yes
   }
 
@@ -122,8 +117,7 @@ You can restrict the IP-Addresses allowed to connect via PAM:
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = pam
+  passdb pam {
     override_fields = allow_nets=10.1.100.0/23,2001:db8:a0b:12f0::/64
   }
 
@@ -151,8 +145,7 @@ Examples:
 
   # 1MB auth cache size
   auth_cache_size = 1024
-  passdb db1 {
-    driver = pam
+  passdb pam {
     # username and service
     args = cache_key=%u%s *
   }
@@ -161,8 +154,7 @@ Examples:
 
   # 1MB auth cache size
   auth_cache_size = 1024
-  passdb db1 {
-    driver = pam
+  passdb pam {
     # username, remote IP and local IP
     args = cache_key=%u%r%l dovecot
   }
@@ -218,8 +210,7 @@ the on that OS:
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = pam
+  passdb pam {
     args = login
   }
 
@@ -231,6 +222,5 @@ homedir mail storage, without resorting to a single virtual mail user or LDAP:
 
 .. code-block:: none
 
-  userdb db1 {
-    driver = passwd
+  userdb passwd {
   }

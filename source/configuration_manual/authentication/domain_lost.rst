@@ -77,27 +77,22 @@ user lookup.
 ::
 
    ## Your virtual passdb
-   passdb db1 {
-      driver = ldap
+   passdb ldap {
       args = /path/to/ldap/config
    }
 
-   passdb db2 {
-      driver = static
+   passdb static {
       args = user=%Ld noauthenticate
       skip = authenticated
    }
 
-   passdb db3 {
-      driver = pam
+   passdb pam {
       skip = authenticated
    }
 
-   userdb db1 {
-      driver = ldap
+   userdb ldap {
       args = /path/to/ldap/config
    }
 
-   userdb db2 {
-      driver = passwd
+   userdb passwd {
    }

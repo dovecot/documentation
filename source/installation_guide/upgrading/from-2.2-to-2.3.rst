@@ -61,8 +61,7 @@ Dovecot no longer disables auth penalty waits for clients connecting from localh
 
 If the old behavior is still wanted, it's possible to do nowadays even more generically with e.g. setting following as the first passdb::
 
-   passdb db1 {
-    driver = passwd-file
+   passdb passwd-file {
     auth_username_format = %{rip}
      passwd_file_path = /etc/dovecot/passdb
     default_fields = noauthenticate=y

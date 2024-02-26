@@ -59,8 +59,7 @@ Example
 
 .. code:: none
 
-  passdb db1 {
-    driver = lua
+  passdb lua {
     args = file=/etc/dovecot/auth.lua password={PLAIN}test
   }
 
@@ -184,8 +183,7 @@ To configure passdb in dovecot, use
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = lua
+  passdb lua {
     args = file=/path/to/lua blocking=yes # default is yes
   }
 
@@ -218,8 +216,7 @@ To configure userdb in dovecot, use
 
 .. code-block:: none
 
-  userdb db1 {
-    driver = lua
+  userdb lua {
     args = file=/path/to/lua blocking=yes # default is yes
   }
 

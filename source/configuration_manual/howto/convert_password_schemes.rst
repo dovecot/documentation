@@ -52,8 +52,7 @@ Example
 
 ::
 
-    userdb {
-     driver = prefetch
+    userdb prefetch {
    }
 
 *  Now reload dovecot, and see everything is still working
@@ -254,13 +253,11 @@ Enable the ``plain_pass`` variable in the auth-passwdfile configuration.
 
 .. code:: bash
 
-   passdb {
-     driver = passwd-file
+   passdb passwd-file {
      args = /var/vmail/auth.d/%d/passwd
    }
 
-   userdb {
-     driver = passwd-file
+   userdb passwd-file {
      args = /var/vmail/auth.d/%d/passwd
      default_fields = plain_pass=%w
    }

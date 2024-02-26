@@ -8,16 +8,13 @@ See :ref:`LDAP <authentication-ldap>` for more details.
 
 .. code-block:: none
 
-  passdb db1 {
+  passdb ldap {
     args = /etc/dovecot/dovecot-ldap.conf.ext
-    driver = ldap
   }
-  userdb db1 {
-    driver = prefetch
+  userdb prefetch {
   }
-  userdb db2 {
+  userdb ldap {
     args = /etc/dovecot/dovecot-ldap.conf.ext
-    driver = ldap
   }
 
 These enable ``LDAP`` to be used as ``passdb`` and ``userdb``. The userdb

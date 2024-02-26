@@ -305,8 +305,7 @@ given list.
 
 ::
 
-  userdb db1 {
-    driver = static
+  userdb static {
     args = namespace+=special namespace/special/mail_path=/var/special/%u namespace/special/prefix=special/
   }
 

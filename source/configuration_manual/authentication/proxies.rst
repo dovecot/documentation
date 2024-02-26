@@ -294,8 +294,7 @@ The important parts of ``dovecot.conf``:
   auth_cache_size = 4096
 
   auth_mechanisms = plain
-  passdb db1 {
-    driver = sql
+  passdb sql {
     args = /usr/local/etc/dovecot/dovecot-sql.conf.ext
   }
 
@@ -333,12 +332,10 @@ The important parts of ``dovecot.conf``:
 
   auth_mechanisms = plain
 
-  passdb db1 {
-    driver = sql
+  passdb sql {
     args = /usr/local/etc/dovecot/dovecot-sql.conf.ext
   }
   userdb sql {
-    driver = sql
     args = /usr/local/etc/dovecot/dovecot-sql.conf.ext
   }
 
