@@ -72,14 +72,12 @@ Example configuration:
 .. code-block:: none
 
   auth_master_user_separator = *
-  passdb db1 {
-    driver = passwd-file
+  passdb passwd-file {
     passwd_file_path = /etc/dovecot/passwd.masterusers
     master = yes
     result_success = continue
   }
-  userdb db1 {
-    driver = passwd
+  userdb passwd {
   }
 
 To grant the masteruser access to all Mailboxes, the ``dovecot-acl`` file can
@@ -112,18 +110,17 @@ well:
 .. code-block:: none
 
   auth_master_user_separator = *
-  passdb db1 {
+  passdb sql1 {
     driver = sql
     args = /etc/dovecot/dovecot-sql-master.conf.ext
     master = yes
     result_success = continue
   }
-  passdb db2 {
+  passdb sql2 {
     driver = sql
     args = /etc/dovecot/dovecot-sql.conf.ext
   }
-  userdb db1 {
-    driver = sql
+  userdb sql {
     args = /etc/dovecot/dovecot-sql.conf.ext
   }
 
@@ -155,14 +152,12 @@ exists and get other extra fields.
 .. code-block:: none
 
    # master password passdb
-   passdb db1 {
-      driver = static
+   passdb static {
       args = password=master-password
       result_success = continue
    }
    # primary passdb
-   passdb db2 {
-      driver = pam
+   passdb pam {
    }
 
 Advanced SQL Examples

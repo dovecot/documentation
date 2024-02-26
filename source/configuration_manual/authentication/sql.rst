@@ -17,8 +17,7 @@ Dovecot configuration
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = sql
+  passdb sql {
     args = /etc/dovecot/dovecot-sql.conf.ext
   }
 

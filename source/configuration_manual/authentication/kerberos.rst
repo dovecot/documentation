@@ -87,8 +87,7 @@ If you only want to use Kerberos ticket-based authentication:
    auth_mechanisms = gssapi
    auth_krb5_keytab = /etc/dovecot/dovecot.keytab
 
-   userdb db1 {
-     driver = static
+   userdb static {
      args = uid=vmail gid=vmail home=/var/vmail/%u
    }
 
@@ -104,11 +103,9 @@ ticket-based authentication, you will need something like:
    auth_gssapi_hostname = "$ALL"
    auth_mechanisms = gssapi
    auth_krb5_keytab = /etc/dovecot/dovecot.keytab
-   passdb db1 {
-     driver = pam
+   passdb pam {
    }
-   userdb db1 {
-     driver = passwd
+   userdb passwd {
    }
 
 (Note that in this example, you will also need to configure PAM to use
@@ -131,8 +128,7 @@ Then enable PAM passdb:
 
 ::
 
-   passdb db1 {
-     driver = pam
+   passdb pam {
    }
 
 Check ``/var/log/auth.log`` if you have any problems logging in. The

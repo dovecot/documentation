@@ -73,12 +73,10 @@ In ``conf.d/auth-passwdfile.conf.ext`` you should have:
 
 ::
 
-   passdb {
-     driver = passwd-file
+   passdb passwd-file {
      args = scheme=CRYPT /etc/dovecot/users
    }
-   userdb {
-     driver = passwd-file
+   userdb passwd-file {
      args = /etc/dovecot/users
    }
 

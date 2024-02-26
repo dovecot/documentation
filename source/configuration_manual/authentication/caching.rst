@@ -82,8 +82,7 @@ use:
 
 ::
 
-   passdb db1 {
-     driver = pam
+   passdb pam {
      args = cache_key=%{protocol}%u *
    }
 

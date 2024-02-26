@@ -46,8 +46,7 @@ passwd-file filenames, for example:
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = passwd-file
+  passdb passwd-file {
     # Each domain has a separate passwd-file:
     passwd_file_path = /etc/auth/%d/passwd
   }
@@ -73,14 +72,12 @@ Examples
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = passwd-file
+  passdb passwd-file {
     passdb_default_password_scheme = plain-md5
     auth_username_format = %n
     passwd_file_path = /etc/imap.passwd
   }
-  userdb db1 {
-    driver = passwd-file
+  userdb passwd-file {
     auth_username_format = %n
     passwd_file_path = /etc/imap.passwd
     default_fields = uid=vmail gid=vmail home=/home/vmail/%u
@@ -151,13 +148,11 @@ other ``userdb`` and ``passdb`` sections
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = passwd-file
+  passdb passwd-file {
     auth_username_format = %n
     passwd_file_path = /path/to/file-with-encrypted-passwords
   }
-  userdb db1 {
-    driver = passwd-file
+  userdb passwd-file {
     auth_username_format = %n
     passwd_file_path = /path/to/file-with-encrypted-passwords
   }

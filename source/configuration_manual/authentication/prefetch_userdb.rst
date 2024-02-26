@@ -32,16 +32,13 @@ SQL example
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = sql
+  passdb sql {
     args = /etc/dovecot/dovecot-sql.conf.ext
   }
-  userdb db1 {
-    driver = prefetch
+  userdb prefetch {
   }
   # The userdb below is used only by lda.
-  userdb db2 {
-    driver = sql
+  userdb sql {
     args = /etc/dovecot/dovecot-sql.conf.ext
   }
 
@@ -64,16 +61,13 @@ LDAP example
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = ldap
+  passdb ldap {
     args = /etc/dovecot/dovecot-ldap.conf.ext
   }
-  userdb db1 {
-    driver = prefetch
+  userdb prefetch {
   }
   # The userdb below is used only by LDA.
-  userdb db2 {
-    driver = ldap
+  userdb ldap {
     args = /etc/dovecot/dovecot-ldap.conf.ext
   }
 
