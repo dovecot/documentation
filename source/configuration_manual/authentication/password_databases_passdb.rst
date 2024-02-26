@@ -123,24 +123,28 @@ Passdb setting
    :values: @named_list_filter
 
    Creates a new :ref:`authentication-password_databases`. The filter name
-   refers to the :dovecot_core:ref:`passdb_name` setting. The
-   :dovecot_core:ref:`passdb_driver` setting is required to be set inside this
-   filter.
+   refers to the :dovecot_core:ref:`passdb_name` setting.
 
 
 .. dovecot_core:setting:: passdb_name
    :values: @string
 
-   Name of the passdb. This is used only in configuration - it's not visible
-   to users.  The :dovecot_core:ref:`passdb` filter name refers to this
-   setting.
+   Name of the passdb. The :dovecot_core:ref:`passdb` filter name refers to
+   this setting. If the :dovecot_core:ref:`passdb_driver` setting is empty,
+   the passdb_name is used as the driver. This allows doing e.g.:
+
+   .. code-block::
+
+      passdb passwd-file {
+	passwd_file_path = /etc/dovecot/passwd
+      }
 
 
 .. dovecot_core:setting:: passdb_driver
    :values: @string
 
-   The driver used for this password database. See above for the list of
-   available drivers.
+   The driver used for this password database. If empty, defaults to
+   :dovecot_core:ref:`passdb_name`. See above for the list of available drivers.
 
 
 .. dovecot_core:setting:: passdb_args

@@ -69,24 +69,28 @@ Userdb settings
    :values: @named_list_filter
 
    Creates a new :ref:`authentication-password_databases`. The filter name
-   refers to the :dovecot_core:ref:`userdb_name` setting. The
-   :dovecot_core:ref:`userdb_driver` setting is required to be set inside this
-   filter.
+   refers to the :dovecot_core:ref:`userdb_name` setting.
 
 
 .. dovecot_core:setting:: userdb_name
    :values: @string
 
-   Name of the userdb. This is used only in configuration - it's not visible
-   to users.  The :dovecot_core:ref:`userdb` filter name refers to this
-   setting.
+   Name of the userdb. The :dovecot_core:ref:`userdb` filter name refers to
+   this setting. If the :dovecot_core:ref:`userdb_driver` setting is empty,
+   the userdb_name is used as the driver. This allows doing e.g.:
+
+   .. code-block::
+
+      userdb passwd-file {
+	passwd_file_path = /etc/dovecot/passwd
+      }
 
 
 .. dovecot_core:setting:: userdb_driver
    :values: @string
 
-   The driver used for this password database. See above for the list of
-   available drivers.
+   The driver used for this password database. If empty, defaults to
+   :dovecot_core:ref:`userdb_name`. See above for the list of available drivers.
 
 
 .. dovecot_core:setting:: userdb_args
