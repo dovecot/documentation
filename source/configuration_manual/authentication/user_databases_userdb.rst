@@ -51,7 +51,6 @@ Currently supported user databases are:
   :ref:`authentication-passwd`.
 * **Passwd-file**: ``/etc/passwd``-like file in specified location. See
   :ref:`authentication-passwd_file`.
-* **NSS**: Name Service Switch. See :ref:`authentication-nss`.
 * **LDAP**: Lightweight Directory Access Protocol. See :ref:`authentication-ldap`
 * **SQL**: SQL database (PostgreSQL, MySQL, SQLite). See :ref:`authentication-sql`
 * **Dict**: Dict key-value database (Redis, etc.). See :ref:`authentication-dict`.
@@ -196,6 +195,5 @@ Related pages
 * :ref:`home_directories_for_virtual_users`
 * :ref:`authentication-passwd`
 * :ref:`authentication-passwd_file`
-* :ref:`authentication-nss`
 * :ref:`post_login_scripting`
 * :ref:`authentication-user_database_extra_fields`

@@ -5,8 +5,7 @@ Passwd
 ======
 
 User is looked up using ``getpwnam()`` call, which usually looks into
-``/etc/passwd`` file, but depending on :ref:`NSS <authentication-nss>`
-configuration it may also
+``/etc/passwd`` file, but depending on the NSS configuration it may also
 look up the user from eg. LDAP database.
 
 Most commonly used as a user database.
