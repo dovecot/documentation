@@ -31,9 +31,10 @@ Settings
 the username but also drops the domain. Use
 :dovecot_core:ref:`auth_username_format = %Lu <auth_username_format>` instead.
 
-:dovecot_core:ref:`auth_username_format` changes the username permanently, some
-user databases support using variables or ``username_format`` (see
-:ref:`authentication-passwd_file`). See also :ref:`authentication-virtual_and_system_users`.
+:dovecot_core:ref:`auth_username_format` changes the username permanently when
+used globally. If used inside passdb or userdb, it changes the username only
+for the duration of the lookup. See also
+:ref:`authentication-virtual_and_system_users`.
 
 SQL
 ---
