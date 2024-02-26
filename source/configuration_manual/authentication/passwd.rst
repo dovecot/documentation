@@ -33,10 +33,11 @@ For example:
 
   userdb db1 {
     driver = passwd
-    # Pre-v2.1:
-    #args = home=/var/mail/%u mail=maildir:/var/mail/%u/Maildir
-    # v2.1+:
-    override_fields = home=/var/mail/%u mail=maildir:/var/mail/%u/Maildir
+    override_fields {
+      home = /var/mail/%u
+      mail_driver = maildir
+      mail_path = /var/mail/%u/Maildir
+    }
   }
 
 This uses the UID and GID fields from passwd, but home directory is overridden.

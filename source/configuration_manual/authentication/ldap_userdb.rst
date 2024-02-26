@@ -83,7 +83,7 @@ character. For example this doesn't return "home" or "mail" fields if
    user_attrs = \
      =quota_rule=*:bytes=%{ldap:quotaBytes}, \
      mailboxPath=home=/home/%{ldap:mailboxPath}, \
-     mailboxPath=mail=maildir:~/Maildir
+     mailboxPath=mail_path=~/Maildir
 
 It's also possible to give default values to nonexistent attributes in
 v2.1.11+ by using e.g. ``%{ldap:userDomain:example.com}`` where if
