@@ -220,8 +220,7 @@ Their mail is kept in their home directory at
 The usernames in the passwd and shadow files are expected to contain
 only the user part, no domain. This is because the path itself already
 contained %d to specify the domain. If you want the files to contain
-full ``user@domain`` names, you can change username_format to %u or
-leave it out.
+full ``user@domain`` names, you can remove the ``auth_username_format``.
 
 Note that the default :dovecot_core:ref:`auth_username_format` is ``%Lu``.
 
@@ -231,12 +230,12 @@ Note that the default :dovecot_core:ref:`auth_username_format` is ``%Lu``.
    mail_path = /home/%d/%n/Maildir
    passdb db1 {
      driver = passwd-file
-     auth_username_format = %n
+     auth_username_format = %Ln
      passwd_file_path = /home/%d/etc/shadow
    }
    userdb db1 {
      driver = passwd-file
-     auth_username_format = %n
+     auth_username_format = %Ln
      passwd_file_path = /home/%d/etc/passwd
    }
 
