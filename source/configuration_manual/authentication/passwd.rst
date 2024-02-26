@@ -16,8 +16,7 @@ disabling it:
 
 .. code-block:: none
 
-  userdb db1 {
-    driver = passwd
+  userdb passwd {
     args = blocking=no
   }
 
@@ -31,8 +30,7 @@ For example:
 
 .. code-block:: none
 
-  userdb db1 {
-    driver = passwd
+  userdb passwd {
     override_fields {
       home = /var/mail/%u
       mail_driver = maildir

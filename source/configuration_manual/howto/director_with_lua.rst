@@ -80,8 +80,7 @@ First, and the most simple, is drop-in replacement for director with no authenti
 
 .. code::
 
-  passdb db1 {
-    driver = lua
+  passdb lua {
     args = file=/etc/dovecot/director.lua nopassword
     # or password=masterpass
     # you can include other keys here too, they will be
@@ -92,14 +91,12 @@ If you wish to do authentication, you can do
 
 .. code::
 
-  passdb db1 {
-    driver = pam
+  passdb pam {
     result_success = continue-ok
   }
 
-  passdb db2 {
+  passdb lua {
     skip = unauthenticated
-    driver = lua
     args = file=/etc/dovecot/director.lua noauthenticate
   }
 

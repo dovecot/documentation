@@ -135,13 +135,11 @@ dovecot.conf:
 
 ::
 
-   userdb db1 {
-     driver = ldap
+   userdb ldap {
      args = /etc/dovecot/dovecot-users-ldap.conf.ext
      result_success = continue-ok
    }
-   userdb db2 {
-     driver = ldap
+   userdb ldap {
      args = /etc/dovecot/dovecot-class-ldap.conf.ext
      skip = notfound
    }

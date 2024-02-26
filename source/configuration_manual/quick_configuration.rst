@@ -30,12 +30,10 @@ You need to create group vmail and user vmail.
   #first_valid_uid = uid-of-vmail-user
 
   # if you want to use system users
-  passdb db1 {
-    driver = pam
+  passdb pam {
   }
 
-  userdb db1 {
-    driver = passwd
+  userdb passwd {
     args = blocking=no
     override_fields = uid=vmail gid=vmail
   }

@@ -27,7 +27,6 @@ Authenticates users against remote IMAP server in IP address 192.168.1.123:
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = imap
+  passdb imap {
     args = host=192.168.1.123
   }

@@ -300,13 +300,11 @@ In dovecot.conf, set:
    mail_driver = maildir
    mail_path = ~/
 
-   passdb db1 {
-      driver = sql
+   passdb sql {
       args = /usr/local/etc/dovecot-sql.conf 
    }
 
-   userdb db1 {
-      driver = sql
+   userdb sql {
       args = /usr/local/etc/dovecot-sql.conf
    }
  

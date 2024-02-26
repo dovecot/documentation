@@ -84,9 +84,8 @@ LDAP Backend Configuration
 
 .. code-block:: none
 
-  passdb db1 {
+  passdb ldap {
     args = /etc/dovecot/dovecot-ldap.conf.ext
-    driver = ldap
   }
 
 This enables LDAP to be used as passdb.
@@ -256,13 +255,11 @@ dovecot.conf:
 
 .. code-block:: none
 
-   userdb db1 {
-     driver = ldap
+   userdb ldap {
      args = /etc/dovecot/dovecot-users-ldap.conf.ext
      result_success = continue-ok
    }
-   userdb db2 {
-     driver = ldap
+   userdb ldap {
      args = /etc/dovecot/dovecot-class-ldap.conf.ext
      skip = notfound
    }

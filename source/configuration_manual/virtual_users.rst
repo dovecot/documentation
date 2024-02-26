@@ -228,13 +228,11 @@ Note that the default :dovecot_core:ref:`auth_username_format` is ``%Lu``.
 
    mail_driver = maildir
    mail_path = /home/%d/%n/Maildir
-   passdb db1 {
-     driver = passwd-file
+   passdb passwd-file {
      auth_username_format = %Ln
      passwd_file_path = /home/%d/etc/shadow
    }
-   userdb db1 {
-     driver = passwd-file
+   userdb passwd-file {
      auth_username_format = %Ln
      passwd_file_path = /home/%d/etc/passwd
    }
@@ -250,11 +248,9 @@ get Dovecot running is to use the :ref:`static userdb <authentication-static_use
 
    mail_driver = maildir
    mail_path = ~/Maildir
-   passdb db1 {
-     driver = pam
+   passdb pam {
    }
-   userdb db1 {
-     driver = static
+   userdb static {
      args = uid=vmail gid=vmail home=/var/mail/virtual/%d/%n
    }
 

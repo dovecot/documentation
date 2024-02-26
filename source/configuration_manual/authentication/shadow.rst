@@ -15,8 +15,7 @@ This uses auth-worker processes:
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = shadow
+  passdb shadow {
   }
 
 By default the auth-worker processes are run as dovecot user though, which
@@ -37,7 +36,6 @@ really no need to use auth-workers. You can disable them with:
 
 .. code-block:: none
 
-  passdb db1 {
-    driver = shadow
+  passdb shadow {
     args = blocking=no
   }

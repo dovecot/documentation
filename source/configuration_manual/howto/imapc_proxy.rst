@@ -53,14 +53,12 @@ This is based on already having Dovecot already compiled and installed.
       imapc_host = 10.1.2.3
       imapc_port = 143
 
-      passdb {
-        driver = imap
+      passdb imap {
         # Change the line below to reflect the IP address of your Exchange Server.
         args = host=10.1.2.3
         default_fields = userdb_imapc_user=%u userdb_imapc_password=%w
       }
-      userdb {
-        driver = prefetch
+      userdb prefetch {
       }
 
       # /home/imapproxy is the home directory for the imapproxy user, and
