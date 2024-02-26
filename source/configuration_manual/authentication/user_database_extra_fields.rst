@@ -121,5 +121,5 @@ otherwise they're treated as passdb extra fields.
 
 .. code-block:: none
 
-  user:{plain}pass:1000:1000::/home/user::userdb_mail=mbox:~/mail userdb_quota_rule=*:storage=100M userdb_namespace/default/separator=/
-  user2:{plain}pass2:1001:1001::/home/user2::userdb_mail=maildir:~/Maildir userdb_quota_rule=*:storage=200M
+  user:{plain}pass:1000:1000::/home/user::userdb_mail_driver=mbox userdb_mail_path=~/mail userdb_quota_rule=*:storage=100M userdb_namespace/default/separator=/
+  user2:{plain}pass2:1001:1001::/home/user2::userdb_mail_driver=maildir userdb_mail_path=~/Maildir userdb_quota_rule=*:storage=200M
