@@ -879,7 +879,6 @@ seqno
 SERVERBUG
 servermetadata
 setactive
-SETACTIVE
 setcred
 setra
 setspn
