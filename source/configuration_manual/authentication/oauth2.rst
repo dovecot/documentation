@@ -10,6 +10,11 @@ This database works with a oauth2 provider such as google or facebook. You are
 recommended to use xoauth2 or oauthbearer :ref:`authentication-authentication_mechanisms` with
 this. The responses from endpoints must be JSON objects.
 
+.. dovecotchanged:: 2.4.0,3.0.0
+
+  OAuth2 mechanism no longer uses a passdb for token authentication. Grant password still
+  needs a oauth2 passdb.
+
 Configuration
 ^^^^^^^^^^^^^
 
@@ -25,10 +30,7 @@ In ``dovecot.conf`` put
     xoauth2 = yes
   }
 
-  passdb oauth2 {
-    mechanisms = xoauth2 oauthbearer
-    args = /etc/dovecot/dovecot-oauth2.conf.ext
-  }
+  auth_oauth2_config_file = etc/dovecot/dovecot-oauth2.conf.ext
 
 Backend
 *******
@@ -96,10 +98,7 @@ passdb settings
 
 .. code-block:: none
 
-  passdb oauth2 {
-    mechanisms = oauthbearer xoauth2
-    args = /usr/local/etc/dovecot/dovecot-oauth2.token.conf.ext
-  }
+  auth_oauth2_config_file = /usr/local/etc/dovecot/dovecot-oauth2.token.conf.ext
 
   passdb oauth2 {
     mechanisms = plain login
@@ -308,3 +307,6 @@ them inside :dovecot_core:ref:`oauth2` named filter.
 
   ## Enable debug logging
   # debug = no
+
+  ## Use worker to verity token
+  # blocking = yes
