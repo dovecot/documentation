@@ -1,7 +1,7 @@
 .. _installation_guide:
 
 ==================
-Installation guide
+Installation Guide
 ==================
 
 .. toctree::
@@ -17,24 +17,14 @@ Installation guide
 Target Platform
 ^^^^^^^^^^^^^^^
 
-As part of improving maintainability and sustainability of the code this
-project defines a target platform specification and a minimum language standard
-beginning with version v2.4.0. As a platform specification the target is
-`POSIX.1-2008
-<https://pubs.opengroup.org/onlinepubs/9699919799.2008edition/>`. The code
-requires a C99/C11 compatible compiler optimally with GNU extensions available.
-Currently glibc 2.17 is assumed to be the lowest supported C Standard library
-version, although others (e.g. older versions or musl) might work as well.
+As part of improving maintainability and sustainability, Dovecot has defined a target platform specification and a minimum language standard beginning with version v2.4.0.
 
-For the following OS/distributions :ref:`ox_dovecot_pro` packages are
-automatically built:
+The target platform specification is `POSIX.1-2008 <https://pubs.opengroup.org/onlinepubs/9699919799.2008edition/>`_.
 
-* CentOS 7
-* Debian 10 ("Buster")
-* Debian 11 ("Bullseye")
-* RHEL 8
-* Ubuntu 20
-* Amazon Linux 2
+A C99/C11 compatible compiler is required, optimally with GNU extensions available.
 
-Others - especially BSD derivatives (e.g. FreeBSD, OpenBSD, macOS, etc.) - are
-maintained on a best-effort base only.
+Currently glibc 2.17 is assumed to be the lowest supported C Standard library version, although others (e.g. older versions or musl) might work as well, although not explicitly tested.
+
+Dovecot CE is maintained and tested for Linux. Other distributions - especially BSD derivatives (e.g. FreeBSD, OpenBSD, macOS, etc.) - are maintained on a best-effort basis only.
+
+Other distributions - especially BSD derivatives (e.g. FreeBSD, OpenBSD, macOS, etc.) - are maintained on a best-effort basis only.
