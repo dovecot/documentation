@@ -1,10 +1,12 @@
 .. _sample_dovecot_init.d_script:
 
-====================================
-Sample Dovecot init.d script
-====================================
+============================
+Sample Dovecot init.d Script
+============================
 
-This is a basic init script that should work in all operating systems. Place it to /etc/init.d/dovecot and change the DAEMON path if needed.
+This is a basic init script that should work in all operating systems.
+
+Place it in ``/etc/init.d/dovecot`` and change the DAEMON path if needed.
 
 .. code-block:: none
 
