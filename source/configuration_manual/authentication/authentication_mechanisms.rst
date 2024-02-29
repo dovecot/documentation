@@ -82,9 +82,9 @@ Dovecot supports the following non-cleartext mechanisms:
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+-----------------------------+
 | EXTERNAL                                                                     | EXTERNAL SASL mechanism.                                                 |                             |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+-----------------------------+
-| `OAUTHBEARER <authentication-oauth2>`                                        | OAuth2 bearer authentication :rfc:`7628`.                                | .. dovecotadded:: 2.2.29    |
+| :ref:`OAUTHBEARER <authentication-oauth2>`                                   | OAuth2 bearer authentication :rfc:`7628`.                                | .. dovecotadded:: 2.2.29    |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+-----------------------------+
-| `XOAUTH2 <authentication-xoauth2>`                                           | `Google flavor OAUTHBEARER                                               | .. dovecotadded:: 2.2.29    |
+| :ref:`XOAUTH2 <authentication-oauth2>`                                       | `Google flavor OAUTHBEARER                                               | .. dovecotadded:: 2.2.29    |
 |                                                                              | <https://developers.google.com/gmail/imap/xoauth2-protocol>`_            |                             |
 +------------------------------------------------------------------------------+--------------------------------------------------------------------------+-----------------------------+
 
