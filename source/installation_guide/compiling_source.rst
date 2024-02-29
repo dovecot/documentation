@@ -1,6 +1,6 @@
-==============================
-Compiling Dovecot From Sources
-==============================
+=============================
+Compiling Dovecot From Source
+=============================
 
 .. todo:: Update this page
 
@@ -72,7 +72,7 @@ the following software/packages installed:
 -  ``pandoc`` (not strictly required - you can avoid it by using:
    ``PANDOC=false ./configure``)
 
-   .. dovecotremoved:: 3.0.0,2.4.0
+   .. dovecotremoved:: 2.4.0
 
 -  GNU make.
 
@@ -91,7 +91,7 @@ For later updates, you can use:
 ::
 
    git pull
-   make 
+   make
    sudo make install
 
 SSL/TLS Support
@@ -110,9 +110,9 @@ By default the SSL certificate is read from
 changed using the ``--with-ssldir=DIR`` configure option. Both can of
 course be overridden from the configuration file.
 
-You can use `Mozilla SSL Configuration Generator 
-<https://ssl-config.mozilla.org/#server=dovecot&version=2.3.16&config=modern&openssl=1.1.1k&guideline=5.7>`__
-to get a decent SSL configuration.
+You can use `Mozilla SSL Configuration Generator
+<https://ssl-config.mozilla.org/#server=dovecot&config=modern>`__
+to help create a default SSL configuration.
 
 Optional Configure Options
 ==========================
@@ -180,7 +180,7 @@ FTS options
 --with-flatcurve
    Flatcurve full text search
 
-   .. dovecotadded:: 3.0.0,2.4.0
+   .. dovecotadded:: 2.4.0
 
 --with-solr
    Build with Solr full text search support
@@ -210,7 +210,7 @@ different purposes.
    similar package)
 
 --with-mysql
-   Build with MySQL support (requires ``mysql-devel, ``libmysqlclient-dev``
+   Build with MySQL support (requires ``mysql-devel``, ``libmysqlclient-dev``
    or similar package)
 
 --with-sqlite
@@ -236,15 +236,15 @@ The basic backends are built if the system is detected to support them:
 Some backends require extra libraries and are not necessarily wanted, so
 they are built only if specifically enabled:
 
---with-sql(=plugin)
+``--with-sql(=plugin)``
    Build with generic SQL support (drivers are enabled separately, see above).
    You can also build this as a plugin.
 
---with-ldap(=plugin)
+``--with-ldap(=plugin)``
    Build with LDAP support (requires ``openldap-devel``, ``libldap2-dev`` or
    similar package). You can also build this as a plugin.
 
---with-gssapi(=plugin)
+``--with-gssapi(=plugin)``
    Build with GSSAPI authentication support (requires ``krb5-devel``,
    ``libkrb5-dev`` or similar package)
 
