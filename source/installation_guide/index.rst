@@ -10,7 +10,6 @@ Installation Guide
 
    compiling_source
    dovecot_pro_releases/index
-   dovecot_community_repositories/index
    upgrading/index
    startup_scripts/index
 
@@ -27,4 +26,9 @@ Currently glibc 2.17 is assumed to be the lowest supported C Standard library ve
 
 Dovecot CE is maintained and tested for Linux. Other distributions - especially BSD derivatives (e.g. FreeBSD, OpenBSD, macOS, etc.) - are maintained on a best-effort basis only.
 
-Other distributions - especially BSD derivatives (e.g. FreeBSD, OpenBSD, macOS, etc.) - are maintained on a best-effort basis only.
+Dovecot CE Repositories
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The Dovecot team provides packages of Dovecot components for various Linux distributions.
+
+Details can be found at: `<https://repo.dovecot.org/>`_.

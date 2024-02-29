@@ -21,7 +21,7 @@ Dovecot Pro users please use Open-Xchange support channels to receive support.
 Dovecot Community Edition
 =========================
 
-To get started, see :ref:`dovecot_community_repositories` and :ref:`quick_configuration`.
+To get started, see `<https://repo.dovecot.org/>`_ and :ref:`quick_configuration`.
 
 Please use the Dovecot mailing list dovecot(at)dovecot.org for questions
 about Dovecot Community Edition. You can post to the list without subscribing, the mail
