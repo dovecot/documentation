@@ -3,11 +3,18 @@
 Solr FTS Engine
 ===============
 
-`Solr <https://lucene.apache.org/solr/>`_ is a Lucene indexing server.
+`Solr <https://solr.apache.org/>`_ is a Lucene indexing server.
 Dovecot communicates to it using HTTP/XML queries.
 
-The steps described in this page are tested for Solr 7.7.0. For
-other versions, this these steps may need to be adjusted.
+.. note:: This documentation is written for Solr 7.7.0. You will need to
+          adapt if using a different version.
+
+          Installation and operation of a Solr system is outside the scope
+          of this documentation. Refer to the Solr documentation for further
+          information.
+
+          This documentation focuses on Dovecot-specific tasks that need to
+          be done to configure the system for FTS support.
 
 Compiling
 ---------
@@ -17,9 +24,7 @@ you need to add the ``--with-solr`` parameter to your invocation of the
 ``configure`` script. You will also need to have libexpat installed,
 including development headers (typically from a separate development
 package). Configuration will fail if ``--with-solr`` is enabled while
-libexpat headers cannot be found. Older versions of Dovecot also
-required libcurl for Solr support, but recent versions of Dovecot
-include a custom HTTP client.
+libexpat headers cannot be found.
 
 Configuration
 -------------
@@ -27,48 +32,23 @@ Configuration
 Solr Installation
 ~~~~~~~~~~~~~~~~~
 
-First, the Solr server needs to be installed. Most operating systems
-will have packages for this. The latest version can be downloaded and
-installed from official website, and here are instructions to install
-7.7.0 based on the howto `How to Install Apache Solr 7.5 on Debian
-9/8 <https://tecadmin.net/install-apache-solr-on-debian/>`_:
-
-::
-
-   wget https://www-eu.apache.org/dist/lucene/solr/7.7.0/solr-7.7.0.tgz
-   tar xzf solr-7.7.0.tgz solr-7.7.0/bin/install_solr_service.sh --strip-components=2
-   sudo bash ./install_solr_service.sh solr-7.7.0.tgz
+Using this FTS engine requires Solr to be installed. Most OS distributions
+have packages for this.
 
 To use Solr with Dovecot, it needs to configured specifically for use
 with Dovecot.
 
 ::
 
-   sudo -u solr /opt/solr/bin/solr create -c dovecot 
+   sudo -u solr /opt/solr/bin/solr create -c dovecot
 
-The location of the files for the newly created instance on the
-filesystem varies between operating systems and installation methods.
-For example, in Archlinux, the config files are located in
-``/opt/solr/server/solr/dovecot/conf`` and data files can be found in
-``/opt/solr/server/solr/dovecot/data``. When installed from tarball,
-these directories can be found in ``/var/solr/data/dovecot/``.
-
-Once the instance is created, you can start Solr. The means of starting,
-stopping and querying the status of the ``solr`` service varies between
-systems. For systemd, these commands are as follows:
-
-::
-
-   sudo systemctl stop solr
-   sudo systemctl start solr
-   sudo systemctl status solr
+Once the instance is created, you can start the Solr service.
 
 By default, the Solr administration page for the newly created instance
 is located at <https://localhost:8983/solr/#/~cores/dovecot>. It
 can be used to check the status of the Solr instance. Configuration
-errors are often most conveniently viewed here. Solr also writes log
-files. For a tarball installation, these can be found at
-``/var/solr/logs/``.
+errors are often most conveniently viewed here. Solr also writes log files,
+which can be used for debugging.
 
 Solr Configuration
 ~~~~~~~~~~~~~~~~~~
@@ -76,9 +56,10 @@ Solr Configuration
 There are three primary configuration files that need to be changed to
 accommodate the Dovecot FTS needs: the instance configuration file
 ``solrconfig.xml`` and the schema files ``schema.xml`` and
-``managed-schema`` used by the instance. These files are both located in
-the ``conf`` directory of the Solr instance (e.g.,
-``/var/solr/data/dovecot/conf/``).
+``managed-schema`` used by the instance.
+
+These files are both located in the ``conf`` directory of the Solr instance
+(e.g., ``/var/solr/data/dovecot/conf/``).
 
 Remove default core configuration files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -96,9 +77,8 @@ Copy
 `doc/solr-config-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/main/doc/solr-config-7.7.0.xml>`_
 and
 `doc/solr-schema-7.7.0.xml <https://raw.githubusercontent.com/dovecot/core/main/doc/solr-schema-7.7.0.xml>`_
-(Since Dovecot 2.3.6+) to ``/var/solr/data/dovecot/conf/`` as
-``solrconfig.xml`` and ``schema.xml``. The ``managed-schema`` file is
-generated based on ``schema.xml``.
+to ``/var/solr/data/dovecot/conf/`` as ``solrconfig.xml`` and ``schema.xml``.
+The ``managed-schema`` file is generated based on ``schema.xml``.
 
 Dovecot Plugin
 --------------
@@ -134,7 +114,7 @@ and to remove space used by deleted mails. Dovecot never asks Solr to
 optimize, so you should do this yourself. Perhaps a cronjob that sends
 the optimize-command to Solr every n hours.
 
-With v2.2.3+ Dovecot only does soft commits to the Solr index to improve
+Dovecot only does soft commits to the Solr index to improve
 performance. You must run a hard commit once in a while or Solr will
 keep increasing its transaction log sizes. For example send the commit
 command to Solr every few minutes.
@@ -143,13 +123,14 @@ command to Solr every few minutes.
 
    # Optimize should be run somewhat rarely, e.g. once a day
    curl https://<hostname/ip>:<port|default 8983>/solr/dovecot/update?optimize=true
+
    # Commit should be run pretty often, e.g. every minute
    curl https://<hostname/ip>:<port|default 8983>/solr/dovecot/update?commit=true
 
 You may not need those if you are using a recent Solr (7+) or SolrCloud.
 The default configuration of Solr is to auto-commit every once in a
 while (~15sec) so commit is not necessary. Also, the default
-TieredMergePolicy in Solr will automatically purge removed documents later, 
+TieredMergePolicy in Solr will automatically purge removed documents later,
 so optimize is not necessary.
 
 Soft Commits
@@ -265,7 +246,7 @@ it are:
       ``user_query = SELECT concat('url=https://', solr_host, ':8983/solr/dovecot/') AS fts_solr, ...``
 
 You can also use
-`SolrCloud <https://lucene.apache.org/solr/guide/7_6/solrcloud.html>`_,
+`SolrCloud <https://solr.apache.org/guide/7_7/solrcloud.html>`_,
 the clustered version of Solr, that allows you to scale up, and adds
 failover / high availability to your FTS system. Dovecot-solr works fine
 with a SolrCloud cluster as long as the solr schema is the right one.
@@ -275,14 +256,10 @@ External Tutorials
 
 External sites with tutorials on using Solr under Dovecot
 
--  `Installing Apache Solr with Dovecot for fulltext search results
-   (ATmail support
-   guide) <https://help.atmail.com/hc/en-us/articles/201566404-Installing-Apache-Solr-with-Dovecot-for-fulltext-search-results>`_
-
--  FreeBSD: <https://mor-pah.net/2016/08/15/dovecot-2-2-with-solr-6-or-5/>
+-  FreeBSD: `<https://mor-pah.net/2016/08/15/dovecot-2-2-with-solr-6-or-5/>`_
 
 -  Substring searches with ngrams:
-   <https://dovecot.org/list/dovecot/2011-May/059338.html>
+   `<https://dovecot.org/list/dovecot/2011-May/059338.html>`_
 
 Tips
 ----
