@@ -41,17 +41,12 @@ Name                           Description
                               Only available as part of
                               :ref:`ox_dovecot_pro`.
 :ref:`fts_backend_solr`       Interface to
-                              `Apache Solr <https://solr.apache.org/>`_.
+                              `Apache Solr <https://solr.apache.org/>`_;
+                              stores data remotely.
 :ref:`fts_backend_flatcurve`  `Xapian`_ based driver; stores data locally.
-                              Uses built-in Dovecot stemming library and new
-                              Dovecot 2.3 features (e.g. events).
 ============================= ================================================
 
-.. _`fts-flatcurve`: https://github.com/slusarz/dovecot-fts-flatcurve/
 .. _`Xapian`: https://xapian.org/
-
-.. seealso::
-  :ref:`fts-community_developed_plugins`
 
 Searching In Dovecot
 --------------------
@@ -108,17 +103,11 @@ All backends are implemented as plugins.
 Open-Source Dovecot Full Text Search Backends
 ---------------------------------------------
 
-Currently, Dovecot only maintains one open-source FTS driver: Solr.
+Currently, Dovecot maintains two open-source FTS drivers: Flatcurve and Solr.
 
-It uses `Apache Foundation SOLR search platform <https://solr.apache.org>`_,
-which in turn uses the Java implementation of the Lucene search library.
-This combination offers "Advanced Full text Search capabilities". These
-components run using Java virtual machine (JVM) environments and it is
-possible to scale an installation by adding more nodes running JVMs. However
-using JVMs is quite resource intensive compared to Dovecot native components
-and the achieved scaling comes at a high price as the number of required
-host systems quickly grows very large.
+:ref:`Flatcurve <fts_backend_flatcurve>` is designed as a simple, built-in option.  Data is stored locally in the mailbox storage location.
 
+:ref:`Solr <fts_backend_solr>` enables more advanced searching and storage options, but requires operation of an external server (and associated storage).
 
 OX Dovecot Pro Full Text Search Backend
 ---------------------------------------
@@ -204,30 +193,3 @@ Dovecot General FTS Configuration
 ---------------------------------
 
 See :ref:`plugin-fts` for settings.
-
-
-.. _fts-community_developed_plugins:
-
-Community Developed Plugins
----------------------------
-
-The Dovecot team does not maintain these plugins, and makes no guarantee about
-their compatibility or performance:
-
-===================== ==========================================================
-Name                  Link
-===================== ==========================================================
-``fts-elastic``       https://github.com/filiphanes/fts-elastic
-``fts-elasticsearch`` https://github.com/atkinsj/fts-elasticsearch
-``fts-xapian``        https://github.com/grosjo/fts-xapian
-===================== ==========================================================
-
-
-Removed FTS Plugins
--------------------
-
-.. toctree::
-  :maxdepth: 1
-
-  lucene
-  squat
