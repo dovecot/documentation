@@ -4,7 +4,9 @@
 FTS Tokenization
 ================
 
-:ref:`fts_backend_dovecot` requires configuring FTS tokenization.
+:ref:`fts_backend_dovecot` and :ref:`fts_backend_flatcurve` requires
+configuring FTS tokenization.
+
 Other FTS engines can also optionally use it.
 
 The lib-fts tokenization library works in the following way:
@@ -92,8 +94,6 @@ configuration. In tokenizers the order is “right to left”.
 
 Base64 detection
 ----------------
-
-.. dovecotadded:: 2.3.18
 
 Base64 sequences are looked for in the tokenization buffer and skipped when detected.
 
