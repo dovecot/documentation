@@ -251,6 +251,8 @@ class DovecotSettingDomain(DovecotAbstractDomain):
             yield name, name, label, docname, anchor, 0
 
     def add_entry(self, signature, anchor):
+        if 'entry' not in self.data:
+            self.data['entry'] = {}
         self.data["entry"][signature] = (self.env.docname, anchor, self.label)
 
 
