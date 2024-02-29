@@ -1,18 +1,11 @@
-=====================================
-Upgrading Dovecot from 2.3 to 2.4/3.0
-=====================================
+=================================
+Upgrading Dovecot from 2.3 to 2.4
+=================================
 
 .. contents::
    :depth: 1
    :local:
 
-
-About version numbers
-=====================
-
-With 2.4 / 3.0 release, the CE and Pro releases have different major version numbers.
-In documentation any reference to 2.4 applies to 3.0 as well,
-and usually (but not always) vice versa.
 
 Upgrade path
 ============
@@ -20,7 +13,7 @@ Upgrade path
 Before upgrading, please look at the list of removed features carefully.
 
 If you are doing in-place upgrade, ensure that you first upgrade to latest 2.3 release,
-and then upgrade to 2.4/3.0.
+and then upgrade to 2.4.
 
 Alternatively, you can migrate your data to new setup.
 
@@ -70,9 +63,6 @@ Removed features and their replacements
 | ``ssl-parameters.dat``                                     | This file is no longer converted automatically by config process, you need to set        |
 |                                                            | :dovecot_core:ref:`ssl_dh` setting if you need non-ECC Diffie-Hellman.                   |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| License plugin                                             | This plugin has been removed and ``license_checksum`` setting is marked obsolete. Plugin |
-|                                                            | setting ``license_checksum`` has been also removed.                                      |
-+------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | shadow auth driver                                         | Use :ref:`authentication-pam` instead.                                                   |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | old-stats plugin                                           | Use :ref:`new stats <statistics>` instead. ``auth_stats`` setting has been removed too.  |
@@ -114,12 +104,6 @@ Removed features and their replacements
 | mailbox-alias plugin                                       | Depending on the use case, non-direct may be                                             |
 |                                                            | the :dovecot_core:ref:`namespace/mailbox/special_use` mailbox setting                    |
 |                                                            | and/or :ref:`Sieve filters <sieve>`.                                                     |
-+------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| ``obox_allow_inconsistency``                               | The setting has been removed as it caused problems with caching IMAP clients, which may  |
-|                                                            | lose emails permanently or otherwise become confused about their internal state.         |
-+------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| ``metacache_disable_merging``                              | Use :dovecot_plugin:ref:`metacache_index_merging=none <metacache_index_merging>`         |
-|                                                            | instead.                                                                                 |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``disable_plaintext_auth``                                 | This has been replaced with :dovecot_core:ref:`auth_allow_cleartext` setting.            |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
@@ -192,17 +176,9 @@ Changed default settings
    - 30
    - Behaviour of process limit has changed for auth-worker,  it now behaves as it was supposed to.
  * - :dovecot_core:ref:`mail_location`
-   - 
+   -
    - ``NO-NOSELECT``
    - ``NO-NOSELECT`` is the new default behavior. To revert to the old default specify ``KEEP-NOSELECT``.
- * - :dovecot_plugin:ref:`fts_dovecot_mail_flush_interval`
-   - 0
-   - 10
-   -
- * - :dovecot_plugin:ref:`fts_dovecot_max_triplets`
-   - 0
-   - 200
-   -
  * - :ref:`max-parallel-iter<dictmap_configuration_parameters>`
    - 1
    - 10
