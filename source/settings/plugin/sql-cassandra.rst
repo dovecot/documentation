@@ -13,7 +13,7 @@ To compile support for this driver, you need to have DataStax C/C++ driver and h
 Supported Options
 =================
 
-.. dovecot_core:setting:: connect_timeout
+.. dovecot_core:setting:: cassandra_connect_timeout
    :default: 5s
    :domain: sql-cassandra
    :values: @time_msecs
@@ -21,27 +21,14 @@ Supported Options
    Connection timeout.
 
 
-.. dovecot_core:setting:: dbname
-   :domain: sql-cassandra
-   :hdr_only: yes
-
-   Alias for :dovecot_core:ref:`sql-cassandra;keyspace`.
-
-
-.. dovecot_core:setting:: debug_queries
+.. dovecot_core:setting:: cassandra_debug_queries
    :default: no
    :domain: sql-cassandra
    :values: @boolean
 
    Whether to log CQL queries.
 
-   .. note:: This setting behaves differently than other boolean settings.
-             The feature is enabled by presence of the keyword in connect
-             string, so to disable this feature, you must remove the keyword
-             completely.
-
-
-.. dovecot_core:setting:: delete_consistency
+.. dovecot_core:setting:: cassandra_delete_consistency
    :default: local-quorum
    :domain: sql-cassandra
    :seealso: @dictmap_cassandra_quorum_configuration
@@ -50,7 +37,7 @@ Supported Options
    Write consistency when deleting from the database.
 
 
-.. dovecot_core:setting:: delete_fallback_consistency
+.. dovecot_core:setting:: cassandra_delete_fallback_consistency
    :default: local-quorum
    :domain: sql-cassandra
    :seealso: @dictmap_cassandra_fallback_consistency
@@ -60,7 +47,7 @@ Supported Options
    consistency.
 
 
-.. dovecot_core:setting:: execution_retry_interval
+.. dovecot_core:setting:: cassandra_execution_retry_interval
    :default: 0
    :domain: sql-cassandra
    :seealso: !https://docs.datastax.com/en/developer/java-driver/4.13/manual/core/speculative_execution/
@@ -70,7 +57,7 @@ Supported Options
    speculative execution policy.
 
 
-.. dovecot_core:setting:: execution_retry_times
+.. dovecot_core:setting:: cassandra_execution_retry_times
    :default: 0
    :domain: sql-cassandra
    :seealso: !https://docs.datastax.com/en/developer/java-driver/4.13/manual/core/speculative_execution/
@@ -80,22 +67,22 @@ Supported Options
    speculative execution policy.
 
 
-.. dovecot_core:setting:: heartbeat_interval
-   :default: 5s
+.. dovecot_core:setting:: cassandra_heartbeat_interval
+   :default: 30s
    :domain: sql-cassandra
    :values: @time
 
    How often to send keepalive packets to cassandra nodes.
 
 
-.. dovecot_core:setting:: host
+.. dovecot_core:setting:: cassandra_hosts
    :domain: sql-cassandra
-   :values: @string
+   :values: @boollist
 
-   Host or IP address to connect. Can appear multiple times.
+   List of hosts or IP addresses to connect.
 
 
-.. dovecot_core:setting:: idle_timeout
+.. dovecot_core:setting:: cassandra_idle_timeout
    :default: 0
    :domain: sql-cassandra
    :values: @time_msecs
@@ -103,14 +90,14 @@ Supported Options
    How long to idle before disconnecting.
 
 
-.. dovecot_core:setting:: keyspace
+.. dovecot_core:setting:: cassandra_keyspace
    :domain: sql-cassandra
    :values: @string
 
    Specifies the keyspace name to use.
 
 
-.. dovecot_core:setting:: latency_aware_routing
+.. dovecot_core:setting:: cassandra_latency_aware_routing
    :default: no
    :domain: sql-cassandra
    :values: @boolean
@@ -118,12 +105,7 @@ Supported Options
    When turned on, latency-aware routing tracks the latency of queries to
    avoid sending new queries to poorly performing Cassandra nodes.
 
-   .. note:: The feature is enabled by presence of the keyword in connect
-             string, so to disable this feature, you must remove the keyword
-             completely.
-
-
-.. dovecot_core:setting:: log_level
+.. dovecot_core:setting:: cassandra_log_level
    :default: warn
    :domain: sql-cassandra
    :values: critical, error, warn, info, debug, trace
@@ -131,7 +113,7 @@ Supported Options
    Driver log level.
 
 
-.. dovecot_core:setting:: metrics
+.. dovecot_core:setting:: cassandra_metrics_path
    :domain: sql-cassandra
    :seealso: @cassandra_metrics_json_output
    :values: string
@@ -139,7 +121,7 @@ Supported Options
    Path where to write JSON metrics.
 
 
-.. dovecot_core:setting:: num_threads
+.. dovecot_core:setting:: cassandra_io_thread_count
    :default: !<driver dependent>
    :domain: sql-cassandra
    :values: @uint
@@ -147,8 +129,8 @@ Supported Options
    Set number of IO threads to handle query requests.
 
 
-.. dovecot_core:setting:: page_size
-   :default: -1
+.. dovecot_core:setting:: cassandra_page_size
+   :default: 0
    :domain: sql-cassandra
    :values: @uint
 
@@ -158,17 +140,17 @@ Supported Options
 
    This setting controls the size of each page.
 
-   Set to ``-1`` to disable.
+   Set to ``0`` to disable.
 
 
-.. dovecot_core:setting:: password
+.. dovecot_core:setting:: cassandra_password
    :domain: sql-cassandra
    :values: @string
 
    Password for authentication.
 
 
-.. dovecot_core:setting:: port
+.. dovecot_core:setting:: cassandra_port
    :default: 9042
    :domain: sql-cassandra
    :values: @uint
@@ -176,7 +158,7 @@ Supported Options
    CQL port to use.
 
 
-.. dovecot_core:setting:: read_consistency
+.. dovecot_core:setting:: cassandra_read_consistency
    :default: local-quorum
    :domain: sql-cassandra
    :seealso: @dictmap_cassandra_quorum_configuration
@@ -185,7 +167,7 @@ Supported Options
    Read consistency.
 
 
-.. dovecot_core:setting:: read_fallback_consistency
+.. dovecot_core:setting:: cassandra_read_fallback_consistency
    :default: local-quorum
    :domain: sql-cassandra
    :seealso: @dictmap_cassandra_fallback_consistency
@@ -194,7 +176,7 @@ Supported Options
    Read consistency if primary consistency fails.
 
 
-.. dovecot_core:setting:: request_timeout
+.. dovecot_core:setting:: cassandra_request_timeout
    :default: 60s
    :domain: sql-cassandra
    :values: @time_msecs
@@ -202,63 +184,23 @@ Supported Options
    How long to wait for a query to finish.
 
 
-.. dovecot_core:setting:: ssl_ca
+.. dovecot_core:setting:: cassandra_ssl
+   :default: no
    :domain: sql-cassandra
-   :values: @string
+   :values: @boolean
 
-   Path to SSL certificate authority file to use to validate peer certificate.
-
-
-.. dovecot_core:setting:: ssl_cert_file
-   :domain: sql-cassandra
-   :values: @string
-
-   Path to a certificate file to use for authenticating against the remote
-   server.
+   Whether to use SSL when connecting to Cassandra. Configure it using the
+   ``ssl_client_*`` settings.
 
 
-.. dovecot_core:setting:: ssl_private_key_file
-   :domain: sql-cassandra
-   :values: @string
-
-   Path to private key matching
-   :dovecot_core:ref:`sql-cassandra;ssl_cert_file` to use for authenticating
-   against the remote server.
-
-
-.. dovecot_core:setting:: ssl_verify
-   :default: none
-   :domain: sql-cassandra
-   :values: none, cert, cert-ip, cert-dns
-
-   Configure the peer certificate validation method.
-
-   Options:
-
-   ``none``
-     Disables validation.
-
-   ``cert``
-     Validate that the certificate is valid.
-
-   ``cert-ip``
-     Validate that the certificate is valid and has Common Name or Subject
-     Alternate Name for the IP address.
-
-   ``cert-dns``
-      Validate that the certificate is valid and has Common Name or Subject
-      Alternate Name that matches PTR resource record for the server's IP
-      address.
-
-
-.. dovecot_core:setting:: user
+.. dovecot_core:setting:: cassandra_user
    :domain: sql-cassandra
    :values: @string
 
    Username for authentication.
 
 
-.. dovecot_core:setting:: version
+.. dovecot_core:setting:: cassandra_protocol_version
    :default: !Depends on driver version.
    :domain: sql-cassandra
    :values: 3, 4, 5
@@ -271,7 +213,7 @@ Supported Options
              use at least ``4``.
 
 
-.. dovecot_core:setting:: warn_timeout
+.. dovecot_core:setting:: cassandra_warn_timeout
    :default: 5s
    :domain: sql-cassandra
    :values: @time_msecs
@@ -279,7 +221,7 @@ Supported Options
    Emit warning if query takes longer than this.
 
 
-.. dovecot_core:setting:: write_consistency
+.. dovecot_core:setting:: cassandra_write_consistency
    :default: local-quorum
    :domain: sql-cassandra
    :seealso: @dictmap_cassandra_quorum_configuration
@@ -288,7 +230,7 @@ Supported Options
    Write consistency when updating or inserting to the database.
 
 
-.. dovecot_core:setting:: write_fallback_consistency
+.. dovecot_core:setting:: cassandra_write_fallback_consistency
    :default: local-quorum
    :domain: sql-cassandra
    :seealso: @dictmap_cassandra_fallback_consistency
