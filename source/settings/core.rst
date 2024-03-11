@@ -3313,6 +3313,12 @@ See :ref:`settings` for list of all setting groups.
    to apply a security update, for example.
 
 
+.. dovecot_core:setting:: sql_driver
+   :values: @string
+
+   SQL driver to use for any SQL database accesses.
+
+
 .. dovecot_core:setting:: ssl
    :default: yes
    :seealso: @dovecot_ssl_configuration
