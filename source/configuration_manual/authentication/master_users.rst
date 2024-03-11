@@ -109,27 +109,24 @@ well:
 
 .. code-block:: none
 
+  sql_driver = mysql
+  mysql localhost {
+  }
+
   auth_master_user_separator = *
   passdb sql1 {
     driver = sql
-    args = /etc/dovecot/dovecot-sql-master.conf.ext
+    sql_query = SELECT password FROM users WHERE userid = '%u' and master_user = true
     master = yes
     result_success = continue
   }
   passdb sql2 {
     driver = sql
-    args = /etc/dovecot/dovecot-sql.conf.ext
+    sql_query = ...
   }
   userdb sql {
-    args = /etc/dovecot/dovecot-sql.conf.ext
+    sql_query = ...
   }
-
-``dovecot-sql-master.conf.ext`` would contain all the normal connection
-settings and a ``password_query``:
-
-.. code-block:: none
-
-  password_query = SELECT password FROM users WHERE userid = '%u' and master_user = true
 
 Testing
 ^^^^^^^^
