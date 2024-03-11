@@ -3534,7 +3534,8 @@ See :ref:`settings` for list of all setting groups.
    :seealso: @ssl;dovecot_core, @ssl_client_cert_file;dovecot_core, @dovecot_ssl_configuration
    :values: @file
 
-   Private key for :dovecot_core:ref:`ssl_client_cert_file`.
+   Private key for :dovecot_core:ref:`ssl_client_cert_file`. If it is password
+   protected, set the password with :dovecot_core:ref:`ssl_client_key_password`.
 
    Example:
 
@@ -3542,6 +3543,13 @@ See :ref:`settings` for list of all setting groups.
 
       ssl_client_cert_file = /etc/dovecot/dovecot-client.crt
       ssl_client_key_file = /etc/dovecot/dovecot-client.key
+
+
+.. dovecot_core:setting:: ssl_client_key_password
+   :seealso: @ssl;dovecot_core, @ssl_client_key_file;dovecot_core, @dovecot_ssl_configuration
+   :values: @string
+
+   Password for the :dovecot_core:ref:`ssl_client_key_file`.
 
 
 .. dovecot_core:setting:: ssl_crypto_device
