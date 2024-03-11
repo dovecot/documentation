@@ -293,17 +293,18 @@ The important parts of ``dovecot.conf``:
   auth_cache_size = 4096
 
   auth_mechanisms = plain
-  passdb sql {
-    args = /usr/local/etc/dovecot/dovecot-sql.conf.ext
+  sql_driver = mysql
+  mysql sqlhost1 {
   }
+  mysql sqlhost2 {
+  }
+  mysql_dbname = mail
+  mysql_user = dovecot
+  mysql_password = secret
 
-The important parts of ``dovecot-sql.conf.ext``:
-
-.. code-block:: none
-
-  driver = mysql
-  connect = host=sqlhost1 host=sqlhost2 dbname=mail user=dovecot password=secret
-  password_query = SELECT NULL AS password, 'Y' as nopassword, host, destuser, 'Y' AS proxy FROM proxy WHERE user = '%u'
+  passdb sql {
+    sql_query = SELECT NULL AS password, 'Y' as nopassword, host, destuser, 'Y' AS proxy FROM proxy WHERE user = '%u'
+  }
 
 Example proxy_maybe SQL configuration
 =====================================
@@ -331,25 +332,20 @@ The important parts of ``dovecot.conf``:
 
   auth_mechanisms = plain
 
+  sql_driver = mysql
+  mysql localhost {
+  }
+
   passdb sql {
-    args = /usr/local/etc/dovecot/dovecot-sql.conf.ext
+    sql_query = \
+      SELECT concat(user, '@', domain) AS user, password, host, 'Y' AS proxy_maybe \
+      FROM users WHERE user = '%n' AND domain = '%d'
   }
   userdb sql {
-    args = /usr/local/etc/dovecot/dovecot-sql.conf.ext
+    sql_query = \
+      SELECT user AS username, domain, home \
+      FROM users WHERE user = '%n' AND domain = '%d'
   }
-
-The important parts of ``dovecot-sql.conf.ext``:
-
-.. code-block:: none
-
-  driver = mysql
-
-  password_query = \
-    SELECT concat(user, '@', domain) AS user, password, host, 'Y' AS proxy_maybe \
-    FROM users WHERE user = '%n' AND domain = '%d'
-
-  user_query = SELECT user AS username, domain, home \
-    FROM users WHERE user = '%n' AND domain = '%d'
 
 Example proxy LDAP configuration
 ================================

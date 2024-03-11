@@ -32,27 +32,22 @@ SQL example
 
 .. code-block:: none
 
+  sql_driver = mysql
+  mysql localhost {
+  }
+
   passdb sql {
-    args = /etc/dovecot/dovecot-sql.conf.ext
+    sql_query = SELECT userid AS user, password, \
+      home AS userdb_home, uid AS userdb_uid, gid AS userdb_gid \
+      FROM users \
+      WHERE userid = '%u'
   }
   userdb prefetch {
   }
   # The userdb below is used only by lda.
   userdb sql {
-    args = /etc/dovecot/dovecot-sql.conf.ext
+    sql_query = SELECT home, uid, gid FROM users WHERE userid = '%u'
   }
-
-``dovecot-sql.conf.ext``:
-
-.. code-block:: none
-
-  password_query = SELECT userid AS user, password, \
-    home AS userdb_home, uid AS userdb_uid, gid AS userdb_gid \
-    FROM users \
-    WHERE userid = '%u'
-
-  # For LDA:
-  user_query = SELECT home, uid, gid FROM users WHERE userid = '%u'
 
 LDAP example
 ============

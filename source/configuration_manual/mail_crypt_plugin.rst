@@ -144,14 +144,14 @@ provided via password query:
 
 .. code-block:: none
 
-  # File: /etc/dovecot/dovecot-sql.conf.ext
-
-  password_query = \
-    SELECT \
-      email as user, password, \
-      '%Mw' AS userdb_crypt_user_key_password \
-    FROM virtual_users \
-    WHERE email='%u'
+  passdb sql {
+    sql_query = \
+      SELECT \
+	email as user, password, \
+	'%Mw' AS userdb_crypt_user_key_password \
+      FROM virtual_users \
+      WHERE email='%u'
+  }
 
 Choosing encryption password
 ----------------------------

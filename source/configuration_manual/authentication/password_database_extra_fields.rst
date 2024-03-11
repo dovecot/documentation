@@ -95,12 +95,12 @@ Examples
 SQL
 ^^^
 
-dovecot-sql.conf.ext:
-
 .. code-block:: none
 
-  password_query = SELECT userid as user, password, 'Y' as proxy, host \
-  FROM users WHERE userid = '%u'
+  passdb sql {
+    sql_query = SELECT userid as user, password, 'Y' as proxy, host \
+      FROM users WHERE userid = '%u'
+  }
 
 LDAP
 ^^^^^

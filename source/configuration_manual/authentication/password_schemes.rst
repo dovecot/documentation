@@ -108,15 +108,9 @@ or
 Default password schemes
 ========================
 
-Password databases have a default password scheme:
-
-:ref:`SQL <authentication-sql>` : See ``default_pass_scheme``
-setting in ``dovecot-sql.conf.ext``
-
-:ref:`authentication-ldap`: See ``default_pass_scheme`` setting in ``dovecot-ldap.conf.ext``
-
-:ref:`authentication-passwd_file` : CRYPT is used
-by default, but can be changed with ``scheme`` parameter in passdb args.
+Password databases get the default password scheme using the
+:dovecot_core:ref:`passdb_default_password_scheme` setting. However, there are
+exceptions:
 
 :ref:`authentication-passwd`: CRYPT is used by default and can't be changed currently.
 

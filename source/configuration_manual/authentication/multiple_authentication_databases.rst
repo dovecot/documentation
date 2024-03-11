@@ -42,9 +42,13 @@ dovecot.conf:
   mail_driver = maildir
   mail_path = ~/Maildir
 
+  sql_driver = mysql
+  mysql localhost {
+  }
+
   # try to authenticate using SQL database first
   passdb sql {
-    args = /etc/dovecot/dovecot-sql.conf.ext
+    sql_query = SELECT userid as user, password FROM users WHERE userid = '%u'
   }
   # fallback to PAM
   passdb pam {
@@ -52,15 +56,8 @@ dovecot.conf:
 
   # look up users from SQL first (even if authentication was done using PAM!)
   userdb sql {
-    args = /etc/dovecot/dovecot-sql.conf.ext
+    sql_query = SELECT uid, gid, '/var/vmail/%d/%n' as home FROM users WHERE userid = '%u'
   }
   # if not found, fallback to /etc/passwd
   userdb passwd {
   }
-
-dovecot-sql.conf.ext:
-
-.. code-block:: none
-
-  password_query = SELECT userid as user, password FROM users WHERE userid = '%u'
-  user_query = SELECT uid, gid, '/var/vmail/%d/%n' as home FROM users WHERE userid = '%u'

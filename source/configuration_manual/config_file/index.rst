@@ -299,7 +299,7 @@ Example:
 
 .. code-block:: none
 
-   passdb/userdb { args } for ldap/sql points to a dovecot-ldap.conf.ext and dovecot-sql.conf.ext.
+   passdb/userdb { args } for ldap points to a dovecot-ldap.conf.ext.
 
    dict { .. } points to dovecot-dict-*.conf.ext
 
