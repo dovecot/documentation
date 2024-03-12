@@ -16,7 +16,7 @@ SYNOPSIS
 
 **doveadm** [**-Dv**] [**-f** *formatter*] cluster user access [ **-u** *user* ] | [ **-A** ] | [ **-f** *file* ] [ **-i** ]
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster user delete *user* [ *user* ... ]
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster user delete *user*
 
 **doveadm** [**-Dv**] [**-f** *formatter*] cluster user move [ **-\-direct** ] [ **-\-site** *site* ] *user* *group* [ *failover group* ]
 
@@ -60,9 +60,9 @@ You can use the ``-i`` parameter to display backend's IP rather than host name.
 cluster user delete
 -------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster user delete *user* [ *user* ... ]
+**doveadm** [**-Dv**] [**-f** *formatter*] cluster user delete *user*
 
-Deletes a user record from GeoDB. Can be used on multiple users.
+Deletes a user record from GeoDB.
 
 
 cluster user move
