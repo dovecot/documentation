@@ -339,18 +339,18 @@ The value is read exactly as the entire contents of the file. This includes all 
 Variable expansion
 ^^^^^^^^^^^^^^^^^^
 
-It's possible to refer to other earlier settings as ``$name``.
+It's possible to refer to other earlier settings as ``$SET:name``.
 
 Example:
 
 .. code-block:: none
 
    key = value1
-   key2 = $key value2
+   key2 = $SET:key value2
    # Equivalent to key2 = value1 value2
 
 However, you must be careful with the ordering of these in the configuration
-file, because the ``$variables`` are expanded immediately while parsing the
+file, because the ``$SET:variables`` are expanded immediately while parsing the
 config file and they're not updated later.
 
 Environment variables

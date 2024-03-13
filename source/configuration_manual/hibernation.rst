@@ -29,18 +29,18 @@ Configuration
     # This may be insecure in some installations, which is why this isn't
     # done by default.
     unix_listener imap-master {
-      user = $default_internal_user
+      user = $SET:default_internal_user
     }
   }
 
   # The following is the default already in v2.3.1+:
   service imap {
-    extra_groups = $default_internal_group
+    extra_groups = $SET:default_internal_group
   }
   service imap-hibernate {
     unix_listener imap-hibernate {
       mode = 0660
-      group = $default_internal_group
+      group = $SET:default_internal_group
     }
   }
 
