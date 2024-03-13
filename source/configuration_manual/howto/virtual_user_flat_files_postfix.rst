@@ -159,7 +159,12 @@ Protocols
 ::
 
    protocol imap {
-     mail_plugins = $mail_plugins imap_acl imap_quota mail_log notify
+     mail_plugins = {
+       imap_acl = yes
+       imap_quota = yes
+       mail_log = yes
+       notify = yes
+     }
    }
 
 ``/etc/dovecot/conf.d/20-lmtp.conf``
@@ -168,7 +173,9 @@ Protocols
 
    protocol lmtp {
      postmaster_address = postmaster@domainname   # required on my debian
-     mail_plugins = $mail_plugins sieve
+     mail_plugins {
+       sieve = yes
+     }
    }
 
 Plugins
