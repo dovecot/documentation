@@ -125,7 +125,7 @@ auth process or auth worker process. They have different default users:
 .. code-block:: none
 
   service auth {
-    user = $default_internal_user
+    user = $SET:default_internal_user
   }
   service auth-worker {
     user = root
@@ -143,6 +143,6 @@ Even this doesn't need root access if the file is readable by shadow group:
 .. code-block:: none
 
   service auth-worker {
-    user = $default_internal_user
+    user = $SET:default_internal_user
     group = shadow
   }

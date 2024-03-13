@@ -21,7 +21,7 @@ use post-login service by editing ``conf.d/10-master.conf``:
     executable = script-login /usr/local/bin/postlogin.sh
 
     # the script process runs as the user specified here (v2.0.14+):
-    user = $default_internal_user
+    user = $SET:default_internal_user
     # this UNIX socket listener must use the same name as given to imap executable
     unix_listener imap-postlogin {
     }

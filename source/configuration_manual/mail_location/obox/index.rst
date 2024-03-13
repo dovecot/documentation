@@ -43,9 +43,9 @@ usage and number of used file descriptors.
 .. code-block:: none
 
    plugin {
-     obox_max_parallel_writes = $mail_prefetch_count
-     obox_max_parallel_copies = $mail_prefetch_count
-     obox_max_parallel_deletes = $mail_prefetch_count
+     obox_max_parallel_writes = $SET:mail_prefetch_count
+     obox_max_parallel_copies = $SET:mail_prefetch_count
+     obox_max_parallel_deletes = $SET:mail_prefetch_count
    }
 
 Override mail_prefetch_count setting for writes, copies, or deletes. They
