@@ -2255,6 +2255,21 @@ See :ref:`settings` for list of all setting groups.
      Except if HAProxy is used, then the original client IP address is used.
 
 
+.. dovecot_core:setting:: lua_file
+   :seealso: @lua_settings;dovecot_core
+   :values: @file
+
+   Path to lua script to be used. This is used by
+    * :ref:`mail_lua <plugin-mail-lua>`
+    * :ref:`Lua push notifications <lua_push_notifications>`
+    * :ref:`authentication-lua_based_authentication`
+
+.. dovecot_core:setting:: lua_settings
+   :seealso: @lua_file;dovecot_core
+   :values: @strlist
+
+   Key-value pairs that are passed as a table to lua script_init() function.
+
 .. dovecot_core:setting:: mail_access_groups
    :todo: Describe format; comma-separated list?
    :values: @string
