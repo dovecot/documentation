@@ -81,7 +81,10 @@ First, and the most simple, is drop-in replacement for director with no authenti
 .. code::
 
   passdb lua {
-    args = file=/etc/dovecot/director.lua nopassword
+    lua_file = /etc/dovecot/director.lua
+    fields {
+      nopassword = yes
+    }
     # or password=masterpass
     # you can include other keys here too, they will be
     # included in the response.
@@ -97,7 +100,10 @@ If you wish to do authentication, you can do
 
   passdb lua {
     skip = unauthenticated
-    args = file=/etc/dovecot/director.lua noauthenticate
+    lua_file = /etc/dovecot/director.lua
+    fields {
+      noauthenticate = yes
+    }
   }
 
 

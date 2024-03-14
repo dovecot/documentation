@@ -240,23 +240,19 @@ Configuration
 -------------
 
 Lua push notification handler requires :ref:`mail_lua <plugin-mail-lua>` and
-``push_notification_lua`` plugins to be loaded in addition to the plugins 
+``push_notification_lua`` plugins to be loaded in addition to the plugin
 discussed :ref:`above <push_notification-usage>`.
 
-============================== ======== ============= =================================================================
-Name                           Required Type          Description
-============================== ======== ============= =================================================================
-``push_notification_driver``   **YES**  :ref:`string` To identify this settings block the driver should get the value
-                                                      ``lua``.
+============================== ======== ===============  =================================================================
+Name                           Required Type             Description
+============================== ======== ===============  =================================================================
+``push_notification_driver``   **YES**  :ref:`string`    To identify this settings block the driver should get the value
+                                                         ``lua``.
 
-``push_notification_lua_path`` NO       :ref:`string` The lua file to execute. If no script is specified,
-                                                      :dovecot_plugin:ref:`mail_lua_script` will be used by default.
-
-                                                      This setting is optional as the driver first checks the
-                                                      environment ``push_notification_lua_script_path`` and loads it.
-                                                      This also means that this environment variable takes precedence
-                                                      over this setting.
-============================== ======== ============= =================================================================
+``lua_file``                    NO       :ref:`file`     The lua file to execute. See :dovecot_core:ref:`lua_file`.
+``lua_settings``                NO       :ref:`strlist`  Extra parameters to pass to the Lua script_init() function
+                                                         See :dovecot_core:ref:`lua_settings`.
+============================== ======== ===============  =================================================================
 
 .. code-block:: none
 
@@ -269,7 +265,10 @@ Name                           Required Type          Description
 
   push_notification lua {
     push_notification_driver = lua
-    push_notification_lua_path = /path/to/lua/script
+    lua_file = /path/to/lua/script
+    lua_settings {
+      extra_param = %{userdb:extra_param}
+    }
   }
 
 API Overview

@@ -34,13 +34,15 @@ Initialization
 
 .. dovecotadded:: 2.4.0,3.0.0
 
-When passdb or userdb is initialized, there will be a lookup for initialization function.
-This is different from :func:`script_init`` which is called for all Lua scripts. For
-passdb, the function is :func:`auth_passdb_init` and for userdb, it is called
-:func:`auth_userdb_init`. The function is called with a table containing all parameters
-provided in the passdb/userdb args, except file name.
+When passdb or userdb is initialized, there will be a lookup for a function to
+get the cache_key for the userdb or passdb. These functions are called
+func:`auth_passdb_get_cache_key` for passdbs and :func:`auth_userdb_get_cache_key`
+for userdbs.
 
-This can be used to pass out initialization parameters from Dovecot.
+The global :func:`script_init` function is called for all Lua scripts and can
+be used to pass arguments to the script using :dovecot_core:ref:`lua_settings`
+
+These settings can be used to pass out initialization parameters from Dovecot.
 
 Example
 
@@ -48,19 +50,29 @@ Example
 
   local password = nil
 
-  function auth_passdb_init(args)
+  function script_init(args)
     password = args["password"]
+    return 0
   end
 
   function auth_passdb_lookup(req)
     return dovecot.auth.PASSDB_RESULT_OK, { ["password"]=password }
   end
 
+  function auth_passdb_get_cache_key()
+    return "%{username}\t%{protocol}"
+  end
+
+The lua script to be used is given to the passdb using :dovecot_core:ref:`lua_file`
+setting.
 
 .. code:: none
 
   passdb lua {
-    args = file=/etc/dovecot/auth.lua password={PLAIN}test
+    lua_file = /etc/dovecot/auth.lua
+    lua_settings {
+      password = {PLAIN}test
+    }
   }
 
 
@@ -184,7 +196,8 @@ To configure passdb in dovecot, use
 .. code-block:: none
 
   passdb lua {
-    args = file=/path/to/lua blocking=yes # default is yes
+    lua_file = /path/to/lua
+    use_worker = yes # default is yes
   }
 
 By default, dovecot runs Lua scripts in auth-worker processes. If you do not
@@ -217,7 +230,8 @@ To configure userdb in dovecot, use
 .. code-block:: none
 
   userdb lua {
-    args = file=/path/to/lua blocking=yes # default is yes
+    lua_file = /path/to/lua
+    use_worker = yes # default is yes
   }
 
 Examples

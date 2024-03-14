@@ -15,17 +15,22 @@ plugins.
 Settings
 ========
 
-.. dovecot_plugin:setting:: mail_lua_script
-   :added: 2.3.4
+.. dovecot_plugin:setting_filter:: mail_lua
+   :filter: mail_lua
    :plugin: mail-lua
-   :values: @string
+   :values: @named_filter
+   :added: 2.4.0,3.0.0
 
-   Specify filename to load for user.
+   Named filter for initializing mail_lua settings
+   see :dovecot_core:ref:`lua_file` and :dovecot_core:ref:`lua_settings`
 
    Example:
 
    .. code-block:: none
 
-     plugin {
-       mail_lua_script = /etc/dovecot/user.lua
-     }
+      mail_lua {
+        lua_file = /etc/dovecot/user.lua
+        lua_settings {
+          extra_param = %{userdb:extra_param}
+        }
+      }
