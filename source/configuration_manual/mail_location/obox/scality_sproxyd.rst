@@ -12,7 +12,7 @@ example configuration.
 
    # Basic configuration:
    fs sproxyd {
-     fs_sproxyd_url = http://scality.example.com/
+     url = http://scality.example.com/
    }
 
 Dovecot uses its own Scality key format, which encodes the object type also to

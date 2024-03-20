@@ -21,7 +21,7 @@ Dovecot configuration
 
   passdb sql {
     sql_driver = ...
-    sql_query = ...
+    query = ...
   }
 
 Settings
@@ -98,7 +98,7 @@ You'll also need to return a non-NULL ``nopassword`` field. The password is in
 .. code-block:: none
 
   passdb sql {
-    sql_query = SELECT NULL AS password, 'Y' as nopassword, userid AS user \
+    query = SELECT NULL AS password, 'Y' as nopassword, userid AS user \
       FROM users WHERE userid = '%u' AND mysql_pass = password('%w')
   }
 
@@ -199,13 +199,13 @@ Add to your ``dovecot.conf`` file:
   #}
 
   passdb sql {
-    sql_query = SELECT userid AS username, domain, password \
+    query = SELECT userid AS username, domain, password \
       FROM users WHERE userid = '%n' AND domain = '%d'
   }
   userdb sql {
-    sql_query = SELECT home, uid, gid FROM users WHERE userid = '%n' AND domain = '%d'
+    query = SELECT home, uid, gid FROM users WHERE userid = '%n' AND domain = '%d'
     # For using doveadm -A:
-    sql_iterate_query = SELECT userid AS username, domain FROM users
+    iterate_query = SELECT userid AS username, domain FROM users
   }
 
 PostgreSQL
@@ -227,13 +227,13 @@ Add to your ``dovecot.conf`` file:
   }
 
   passdb sql {
-    sql_query = SELECT userid AS username, domain, password \
+    query = SELECT userid AS username, domain, password \
     FROM users WHERE userid = '%n' AND domain = '%d'
   }
   userdb sql {
-    sql_query = SELECT home, uid, gid FROM users WHERE userid = '%n' AND domain = '%d'
+    query = SELECT home, uid, gid FROM users WHERE userid = '%n' AND domain = '%d'
     # For using doveadm -A:
-    sql_iterate_query = SELECT userid AS username, domain FROM users
+    iterate_query = SELECT userid AS username, domain FROM users
   }
 
 SQLite
@@ -247,11 +247,11 @@ Add to your ``dovecot.conf`` file:
   sqlite_path = /path/to/sqlite.db
 
   passdb sql {
-    sql_query = SELECT userid AS username, domain, password \
+    query = SELECT userid AS username, domain, password \
     FROM users WHERE userid = '%n' AND domain = '%d'
   }
   userdb sql {
-    sql_query = SELECT home, uid, gid FROM users WHERE userid = '%n' AND domain = '%d'
+    query = SELECT home, uid, gid FROM users WHERE userid = '%n' AND domain = '%d'
     # For using doveadm -A:
-    sql_iterate_query = SELECT userid AS username, domain FROM users
+    iterate_query = SELECT userid AS username, domain FROM users
   }

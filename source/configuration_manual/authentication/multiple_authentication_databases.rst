@@ -48,7 +48,7 @@ dovecot.conf:
 
   # try to authenticate using SQL database first
   passdb sql {
-    sql_query = SELECT userid as user, password FROM users WHERE userid = '%u'
+    query = SELECT userid as user, password FROM users WHERE userid = '%u'
   }
   # fallback to PAM
   passdb pam {
@@ -56,7 +56,7 @@ dovecot.conf:
 
   # look up users from SQL first (even if authentication was done using PAM!)
   userdb sql {
-    sql_query = SELECT uid, gid, '/var/vmail/%d/%n' as home FROM users WHERE userid = '%u'
+    query = SELECT uid, gid, '/var/vmail/%d/%n' as home FROM users WHERE userid = '%u'
   }
   # if not found, fallback to /etc/passwd
   userdb passwd {

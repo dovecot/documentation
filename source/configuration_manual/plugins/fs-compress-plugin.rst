@@ -43,26 +43,26 @@ Example Configuration
   fs_compress_write_method = zstd
   obox {
     fs fscache {
-      fs_fscache_size = 512M
-      fs_fscache_path = /var/cache/mails/%4Nu
+      size = 512M
+      path = /var/cache/mails/%4Nu
     }
     fs compress {
     }
     fs s3 {
-      fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/
-      fs_s3_bucket = mails
+      url = https://ACCESSKEY:SECRET@s3.example.com/
+      bucket = mails
     }
   }
   fts_dovecot {
     fs fscache {
-      fs_fscache_size = 512M
-      fs_fscache_path = /var/cache/fts/%4Nu
+      size = 512M
+      path = /var/cache/fts/%4Nu
     }
     fs compress {
     }
     fs s3 {
-      fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/%8Mu/%u/fts/
-      fs_s3_bucket = mails
+      url = https://ACCESSKEY:SECRET@s3.example.com/%8Mu/%u/fts/
+      bucket = mails
     }
   }
 
@@ -97,15 +97,15 @@ With encryption enabled:
 
   obox {
     fs fscache {
-      fs_fscache_size = 512M
-      fs_fscache_path = /var/cache/mails/%4Nu
+      size = 512M
+      path = /var/cache/mails/%4Nu
     }
     fs compress {
     }
     fs crypt {
     }
     fs s3 {
-      fs_s3_url = https://ACCESSKEY:SECRET@s3.example.com/
-      fs_s3_bucket = mails
+      url = https://ACCESSKEY:SECRET@s3.example.com/
+      bucket = mails
     }
   }

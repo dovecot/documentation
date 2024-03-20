@@ -37,7 +37,7 @@ SQL example
   }
 
   passdb sql {
-    sql_query = SELECT userid AS user, password, \
+    query = SELECT userid AS user, password, \
       home AS userdb_home, uid AS userdb_uid, gid AS userdb_gid \
       FROM users \
       WHERE userid = '%u'
@@ -46,7 +46,7 @@ SQL example
   }
   # The userdb below is used only by lda.
   userdb sql {
-    sql_query = SELECT home, uid, gid FROM users WHERE userid = '%u'
+    query = SELECT home, uid, gid FROM users WHERE userid = '%u'
   }
 
 LDAP example

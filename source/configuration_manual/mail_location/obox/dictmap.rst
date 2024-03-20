@@ -41,14 +41,14 @@ Cassandra/sproxyd Example Configuration
    fs_compress_write_method = zstd
    obox {
      fs fscache {
-       fs_fscache_size = 512M
-       fs_fscache_path = /var/cache/mails/%4Nu
+       size = 512M
+       path = /var/cache/mails/%4Nu
      }
      fs dictmap {
        dict_driver = proxy
        dict_proxy_name = cassandra
        dict_proxy_socket_path = dict-async
-       #fs_dictmap_lock_path = /tmp # Set only without lazy_expunge plugin
+       #lock_path = /tmp # Set only without lazy_expunge plugin
      }
      fs sproxyd {
      }
@@ -68,8 +68,8 @@ Cassandra/sproxyd Example Configuration
      fs fts-cache {
      }
      fs fscache {
-       fs_fscache_size = 512M
-       fs_fscache_path = /var/cache/fts/%4Nu
+       size = 512M
+       path = /var/cache/fts/%4Nu
      }
      fs compress {
      }
@@ -77,7 +77,7 @@ Cassandra/sproxyd Example Configuration
        dict_driver = proxy
        dict_proxy_name = cassandra
        dict_proxy_socket_path = dict-async
-       fs_dictmap_dict_prefix = %u/fts/
+       dict_prefix = %u/fts/
      }
      fs sproxyd {
        fs_sproxyd_class = 1

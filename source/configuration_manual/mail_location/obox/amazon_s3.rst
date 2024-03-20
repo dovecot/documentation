@@ -195,8 +195,8 @@ With IAM:
    fs_compress_write_method = zstd
    obox {
      fs fscache {
-       fs_fscache_size = 512M
-       fs_fscache_path = /var/cache/mails/%4Nu
+       size = 512M
+       path = /var/cache/mails/%4Nu
      }
      fs compress {
      }
@@ -213,8 +213,8 @@ With IAM:
      fs fts-cache {
      }
      fs fscache {
-       fs_fscache_size = 512M
-       fs_fscache_path = /var/cache/fts/%4Nu
+       size = 512M
+       path = /var/cache/fts/%4Nu
      }
      fs compress {
      }

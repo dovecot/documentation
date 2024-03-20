@@ -98,7 +98,7 @@ SQL
 .. code-block:: none
 
   passdb sql {
-    sql_query = SELECT userid as user, password, 'Y' as proxy, host \
+    query = SELECT userid as user, password, 'Y' as proxy, host \
       FROM users WHERE userid = '%u'
   }
 

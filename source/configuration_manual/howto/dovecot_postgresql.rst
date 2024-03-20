@@ -311,11 +311,11 @@ In dovecot.conf, set:
 
    passdb sql {
      default_password_scheme = CRYPT
-     sql_query = SELECT userid as user, password FROM users WHERE userid = '%u'
+     query = SELECT userid as user, password FROM users WHERE userid = '%u'
    }
 
    userdb sql {
-     sql_query = SELECT '/home/'||home AS home, uid, gid FROM users WHERE userid = '%u'
+     query = SELECT '/home/'||home AS home, uid, gid FROM users WHERE userid = '%u'
    }
 
 Restart

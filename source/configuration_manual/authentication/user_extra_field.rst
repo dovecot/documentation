@@ -14,7 +14,7 @@ An example :dovecot_core:ref:`passdb_sql_query` would be:
 .. code-block:: none
 
   passdb sql {
-    sql_query = \
+    query = \
       SELECT concat(user, '@', domain) AS user, password \
       FROM users \
       WHERE user = '%n' and domain = '%d'
@@ -25,7 +25,7 @@ You can also update "username" and "domain" fields separately:
 .. code-block:: none
 
   passdb sql {
-    sql_query = \
+    query = \
       SELECT user AS username, domain, password \
       FROM users \
       WHERE user = '%n' and domain = '%d'
