@@ -81,8 +81,8 @@ Settings
 
      fts_dovecot {
        fs posix {
+         prefix = /var/fts/%u
        }
-       fs_posix_prefix = /var/fts/%u
      }
 
    Example configurations for different object storage backends:

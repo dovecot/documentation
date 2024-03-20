@@ -145,7 +145,7 @@ provided via password query:
 .. code-block:: none
 
   passdb sql {
-    sql_query = \
+    query = \
       SELECT \
 	email as user, password, \
 	'%Mw' AS userdb_crypt_user_key_password \

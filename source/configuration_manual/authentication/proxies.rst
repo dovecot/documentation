@@ -303,7 +303,7 @@ The important parts of ``dovecot.conf``:
   mysql_password = secret
 
   passdb sql {
-    sql_query = SELECT NULL AS password, 'Y' as nopassword, host, destuser, 'Y' AS proxy FROM proxy WHERE user = '%u'
+    query = SELECT NULL AS password, 'Y' as nopassword, host, destuser, 'Y' AS proxy FROM proxy WHERE user = '%u'
   }
 
 Example proxy_maybe SQL configuration
@@ -337,12 +337,12 @@ The important parts of ``dovecot.conf``:
   }
 
   passdb sql {
-    sql_query = \
+    query = \
       SELECT concat(user, '@', domain) AS user, password, host, 'Y' AS proxy_maybe \
       FROM users WHERE user = '%n' AND domain = '%d'
   }
   userdb sql {
-    sql_query = \
+    query = \
       SELECT user AS username, domain, home \
       FROM users WHERE user = '%n' AND domain = '%d'
   }

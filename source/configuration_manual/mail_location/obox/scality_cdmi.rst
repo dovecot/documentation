@@ -10,7 +10,7 @@ Scality-specific CDMI driver.
 
    # Basic configuration:
    fs scality {
-     fs_scality_url = http://scality.example.com/
+     url = http://scality.example.com/
    }
 
 CDMI paths should have two levels of hash directories:
@@ -116,8 +116,8 @@ Example configuration
    fs_compress_write_method = zstd
    obox {
      fs fscache {
-       fs_fscache_size = 512M
-       fs_fscache_path = /var/cache/mails/%4Nu
+       size = 512M
+       path = /var/cache/mails/%4Nu
      }
      fs compress {
      }
@@ -134,13 +134,13 @@ Example configuration
      fs fts-cache {
      }
      fs fscache {
-       fs_fscache_size = 512M
-       fs_fscache_path = /var/cache/fts/%4Nu
+       size = 512M
+       path = /var/cache/fts/%4Nu
      }
      fs compress {
      }
      fs scality {
-       fs_scality_url = http://scality.example.com/%8Mu/%u/fts/
+       url = http://scality.example.com/%8Mu/%u/fts/
      }
    }
    

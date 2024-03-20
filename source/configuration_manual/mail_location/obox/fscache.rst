@@ -8,8 +8,8 @@ fscache
 
   obox {
     fs fscache {
-      fs_fscache_size = 2G
-      fs_fscache_path = /var/cache/mails
+      size = 2G
+      path = /var/cache/mails
     }
     #fs ... {
     #}
@@ -17,8 +17,8 @@ fscache
   # Or split users to multiple directories (4 x 512MB = 2 GB total):
   obox {
     fs fscache {
-      fs_fscache_size = 512M
-      fs_fscache_path = /var/cache/mails/%4Nu
+      size = 512M
+      path = /var/cache/mails/%4Nu
     }
     #fs ... {
     #}
