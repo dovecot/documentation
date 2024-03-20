@@ -130,7 +130,7 @@ Above the ``auth-master`` both uniquely identifies the filter name, but it also
 acts as the ``unix_listener_path`` setting.
 
 Settings inside filters are automatically attempted to be prefixed by the
-filter prefix to avoid repetition. For example:
+innermost filter prefix to avoid repetition. For example:
 
 .. code-block:: none
 
@@ -142,8 +142,8 @@ filter prefix to avoid repetition. For example:
 
 The ``ssl`` setting is attempted to be looked up in this order:
 
+ * ``inet_listener_imaps_ssl``
  * ``inet_listener_ssl``
- * ``service_ssl``
  * ``ssl``
 
 The first setting that exists is used.
