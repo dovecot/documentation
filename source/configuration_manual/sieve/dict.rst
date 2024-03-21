@@ -138,7 +138,7 @@ Next, create a dict proxy service. Normally in
 
 ::
 
-   dict {
+   dict_legacy {
        sieve = pgsql:/etc/dovecot/dict-sieve-sql.conf.ext
    }
 

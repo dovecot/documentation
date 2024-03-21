@@ -409,7 +409,7 @@ dovecot.conf:
   plugin {
     quota_set = dict:proxy::sqlquota
   }
-  dict {
+  dict_legacy {
     sqlquota = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
   }
 

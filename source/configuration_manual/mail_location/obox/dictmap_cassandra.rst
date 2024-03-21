@@ -8,7 +8,7 @@ dovecot.conf:
 
 .. code-block:: none
 
-   dict {
+   dict_legacy {
     cassandra = cassandra:/etc/dovecot/dovecot-dict-cql.conf.ext
    }
 
