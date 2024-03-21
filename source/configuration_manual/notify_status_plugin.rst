@@ -39,9 +39,10 @@ Example
   }
 
   notify_status {
-    dict_driver = proxy
-    dict_proxy_name = notify_status
-    dict_proxy_socket_path = dict-async
+    dict proxy {
+      name = notify_status
+      socket_path = dict-async
+    }
   }
 
   # By default no mailbox is added to dict. To enable all notify_status for

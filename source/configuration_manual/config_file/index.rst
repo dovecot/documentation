@@ -57,7 +57,8 @@ example:
 .. code-block:: none
 
    mail_attribute {
-     dict_driver = file
+     dict file {
+     }
    }
 
 In this case when mail attributes are being accessed, the dict settings are

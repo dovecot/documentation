@@ -81,8 +81,9 @@ Dovecot Backend configuration snippet
 
         acl_driver = vfile
         acl_sharing_map {
-           dict_driver = proxy
-           dict_proxy_name = acl-mysql
+           dict proxy {
+             name = acl-mysql
+	   }
         }
 
         protocol imap {

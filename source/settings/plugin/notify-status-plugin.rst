@@ -26,8 +26,9 @@ Settings
    .. code-block:: none
 
      notify_status {
-       dict_driver = proxy
-       dict_proxy_name = notify
+       dict proxy {
+         name = notify
+       }
      }
 
 

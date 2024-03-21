@@ -21,8 +21,9 @@ Example:
 
   # Store METADATA information within user's Maildir directory
   mail_attribute {
-    dict_driver = file
-    dict_file_path = %h/Maildir/dovecot-attributes
+    dict file {
+      path = %h/Maildir/dovecot-attributes
+    }
   }
 
   protocol imap {

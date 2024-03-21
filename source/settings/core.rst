@@ -1230,8 +1230,9 @@ See :ref:`settings` for list of all setting groups.
 
      # Store METADATA information within user's Maildir directory
      mail_attribute {
-       dict_driver = file
-       dict_file_path = %h/Maildir/dovecot-attributes
+       dict file {
+         path = %h/Maildir/dovecot-attributes
+       }
      }
 
      protocol imap {
@@ -2425,8 +2426,9 @@ See :ref:`settings` for list of all setting groups.
    .. code-block:: none
 
      mail_attribute {
-       dict_driver = file
-       dict_file_path = %h/dovecot-attributes
+       dict file {
+         path = %h/dovecot-attributes
+       }
      }
 
 

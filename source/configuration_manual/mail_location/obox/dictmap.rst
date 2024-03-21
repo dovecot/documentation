@@ -45,9 +45,10 @@ Cassandra/sproxyd Example Configuration
        path = /var/cache/mails/%4Nu
      }
      fs dictmap {
-       dict_driver = proxy
-       dict_proxy_name = cassandra
-       dict_proxy_socket_path = dict-async
+       dict proxy {
+         name = cassandra
+         socket_path = dict-async
+       }
        #lock_path = /tmp # Set only without lazy_expunge plugin
      }
      fs sproxyd {
@@ -57,9 +58,10 @@ Cassandra/sproxyd Example Configuration
      fs compress {
      }
      fs dictmap {
-       dict_driver = proxy
-       dict_proxy_name = cassandra
-       dict_proxy_socket_path = dict-async
+       dict proxy {
+         name = cassandra
+         socket_path = dict-async
+       }
      }
      fs sproxyd {
      }
@@ -74,9 +76,10 @@ Cassandra/sproxyd Example Configuration
      fs compress {
      }
      fs dictmap {
-       dict_driver = proxy
-       dict_proxy_name = cassandra
-       dict_proxy_socket_path = dict-async
+       dict proxy {
+         name = cassandra
+         socket_path = dict-async
+       }
        dict_prefix = %u/fts/
      }
      fs sproxyd {
