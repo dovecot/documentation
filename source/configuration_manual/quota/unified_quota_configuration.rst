@@ -110,7 +110,7 @@ like below:
   }
 
   # Add the Cassandra mappings
-  dict {
+  dict_legacy {
     cassandra = cassandra:/etc/dovecot/dovecot-dict-cql.conf.ext
   }
 

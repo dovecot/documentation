@@ -301,7 +301,7 @@ Example:
 
    passdb/userdb { args } for ldap points to a dovecot-ldap.conf.ext.
 
-   dict { .. } points to dovecot-dict-*.conf.ext
+   dict_legacy { .. } points to dovecot-dict-*.conf.ext
 
 Although these external config files look similar to the main `dovecot.conf` file, they have quite a lot of differences in details. Their parsing is done with a completely different config parser, so things like `filters`, `$variables`, `!includes` and `<files` don't work.
 

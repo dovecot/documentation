@@ -147,7 +147,7 @@ For example:
 
 .. code-block:: none
 
-  dict {
+  dict_legacy {
     cassandra-userdb = cassandra:/etc/dovecot/dovecot-dict-userdb-cql.conf.ext
   }
 
@@ -215,7 +215,7 @@ Auth configuration
 .. code-block:: none
 
   # Access to the CDB has to go through a dict process.
-  dict {
+  dict_legacy {
     auth = cdb:/etc/dovecot/auth.cdb
   }
 

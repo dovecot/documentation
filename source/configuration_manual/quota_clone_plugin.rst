@@ -59,7 +59,7 @@ More complex example using SQL:
 
 .. code-block:: none
 
-  dict {
+  dict_legacy {
     mysql = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
   }
 

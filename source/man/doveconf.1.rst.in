@@ -136,7 +136,7 @@ This example demonstrates how to dump a whole configuration section.
 .. parsed-literal::
 
    **doveconf dict**
-   dict {
+   dict_legacy {
      quota_clone = pgsql:@pkgsysconfdir@/dovecot-dict-sql.conf.ext
    }
 

@@ -74,7 +74,7 @@ Dovecot Backend configuration snippet
           args = password=imapcpass userdb_namespace/shared/disabled=yes userdb_acl_user=%{auth_user}
         }
 
-        dict {
+        dict_legacy {
           # Any shared dictionary is suitable this is just an example using mysql
           acl-mysql = mysql:/etc/dovecot/dovecot-acl-dict-sql.conf.ext
         }

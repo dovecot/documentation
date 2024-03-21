@@ -135,7 +135,7 @@ In /etc/dovecot.conf:
 
 ::
 
-   dict {
+   dict_legacy {
        sieve = mysql:/etc/dovecot/pigeonhole-sieve.dict
    }
 
