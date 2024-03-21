@@ -179,11 +179,13 @@ object http_request
 
    :param string name: Name of the HTTP header.
 
-.. py:function:: set_payload(value)
+.. py:function:: set_payload(value, synchronous)
 
-   Set payload data to the request.
+   Set payload data to the request. Optionally you can set ``synchronous``,
+   which will cause 100 Continue header to be sent.
 
    :param string value: Payload of the request as string data.
+   :param boolean synchronous: Expect 100 Continue header before sending data. Defaults to false.
 
 .. py:function:: submit()
 
