@@ -23,6 +23,37 @@ Name                                            Description
 :ref:`sql <dict-sql>`                           SQL
 =============================================== ===========================
 
+Dict Settings
+-------------
+
+.. dovecot_core:setting:: dict
+   :values: @named_list_filter
+
+   Creates a new dict. The filter name refers to the
+   :dovecot_core:ref:`dict_name` setting.
+
+   Example::
+
+     dict file {
+       [...]
+     }
+
+   Since an empty :dovecot_core:ref:`dict_driver` defaults to ``dict_name``,
+   there is no need to specify ``dict_driver`` setting explicitly.
+
+
+.. dovecot_core:setting:: dict_name
+   :values: @string
+
+   Name of the dict. The :dovecot_core:ref:`dict_driver` setting defaults to this.
+
+
+.. dovecot_core:setting:: dict_driver
+   :values: @string
+   :default: @dict_name;dovecot_core
+
+   The dict driver to use. Defaults to :dovecot_core:ref:`dict_name`.
+
 .. _dict_pool:
 
 Connection Pooling
