@@ -116,8 +116,9 @@ simple flat file should work pretty well too:
 ::
 
    acl_sharing_map {
-     dict_driver = file
-     dict_file_path = file:/var/lib/dovecot/db/shared-mailboxes.db
+     dict file {
+       path = file:/var/lib/dovecot/db/shared-mailboxes.db
+     }
    }
 
 The IMAP processes must be able to write to the ``db/`` directory. If
@@ -132,8 +133,9 @@ each domain:
 ::
 
    acl_sharing_map {
-     dict_driver = file
-     dict_file_path = file:/var/mail/%d/shared-mailboxes.db
+     dict file {
+       path = file:/var/mail/%d/shared-mailboxes.db
+     }
    }
 
 Using SQL dictionary
@@ -144,8 +146,9 @@ Using SQL dictionary
 ::
 
    acl_sharing_map {
-     dict_driver = proxy
-     dict_proxy_name = acl
+     dict proxy {
+       name = acl
+     }
    }
 
    dict_legacy {

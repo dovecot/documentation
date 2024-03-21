@@ -109,8 +109,9 @@ Example config for folder keys with Maildir:
 .. code-block:: none
 
   mail_attribute {
-    dict_driver = file
-    dict_file_path = %h/Maildir/dovecot-attributes
+    dict file {
+      path = %h/Maildir/dovecot-attributes
+    }
   }
   mail_plugins {
     mail_crypt = yes
@@ -129,8 +130,9 @@ Example config for mandatory encrypted folder keys with Maildir:
 .. code-block:: none
 
   mail_attribute {
-    dict_driver = file
-    dict_file_path = %h/Maildir/dovecot-attributes
+    dict file {
+      path = %h/Maildir/dovecot-attributes
+    }
   }
   mail_plugins {
     mail_crypt = yes

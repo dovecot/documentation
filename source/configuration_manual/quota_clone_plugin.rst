@@ -51,7 +51,8 @@ Example
   dict_redis_host = 127.0.0.1
   dict_redis_port = 6379
   quota_clone {
-    dict_driver = redis
+    dict redis {
+    }
   }
 
 
@@ -64,6 +65,7 @@ More complex example using SQL:
   }
 
   quota_clone {
-    dict_driver = proxy
-    dict_proxy_name = mysql
+    dict proxy {
+      name = mysql
+    }
   }

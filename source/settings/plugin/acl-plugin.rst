@@ -170,8 +170,9 @@ Settings
    .. code-block:: none
 
      acl_sharing_map {
-       dict_driver = file
-       dict_file_path = /var/lib/dovecot/shared-mailboxes
+       dict file {
+         path = /var/lib/dovecot/shared-mailboxes
+       }
      }
 
 

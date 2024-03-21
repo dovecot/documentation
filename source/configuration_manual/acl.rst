@@ -89,8 +89,9 @@ Sample Configuration:
 
   # Dict for mapping which users have shared mailboxes to each other.
   #acl_sharing_map {
-  #  dict_driver = file
-  #  dict_file_path = /var/lib/dovecot/dovecot-acl.db
+  #  dict file {
+  #    path = /var/lib/dovecot/dovecot-acl.db
+  #  }
   #}
 
   # ACL username
@@ -345,6 +346,7 @@ store the map using :dovecot_plugin:ref:`acl_sharing_map setting <acl_sharing_ma
 .. code::
 
    acl_sharing_map {
-     dict_driver = file
-     dict_file_path = /var/lib/dovecot/dovecot-acl.db
+     dict file {
+       path = /var/lib/dovecot/dovecot-acl.db
+     }
    }
