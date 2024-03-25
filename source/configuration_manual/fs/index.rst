@@ -116,7 +116,8 @@ Settings
 
    If the last file in a directory is deleted, should the parent directory be
    automatically deleted? Using this setting makes the POSIX filesystem behave
-   more like an object storage would.
+   more like an object storage would. However, it can also delete the parent
+   directory hierarchy farther up than wanted.
 
 
 .. dovecot_core:setting:: fs_posix_fsync
