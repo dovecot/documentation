@@ -32,7 +32,7 @@ Otherwise the commands behave identically.
 
 *config-filter-name*
     Filter name to use when looking up the fs settings. For example
-    *mail_attachment*, *obox*, *metacache*, *fts_dovecot*. It's also
+    *mail_attachment*, *obox*, *metacache*, *fts/dovecot*. It's also
     possible to use an empty filter name and specify the fs settings using
     the **-o** parameters.
 

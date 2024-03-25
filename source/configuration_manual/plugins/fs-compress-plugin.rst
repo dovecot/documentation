@@ -53,7 +53,7 @@ Example Configuration
       bucket = mails
     }
   }
-  fts_dovecot {
+  fts dovecot {
     fs fscache {
       size = 512M
       path = /var/cache/fts/%4Nu

@@ -232,14 +232,12 @@ Example configuration using OBOX::
     fts_dovecot = yes
   }
 
-  fts_driver = dovecot
-
   # Fall back to built in search.
   #fts_enforced = no
 
   # Local filesystem example:
   # Use local filesystem storing FTS indexes
-  fts_dovecot {
+  fts dovecot {
     fs posix {
       prefix = %h/fts/
     }
@@ -249,7 +247,7 @@ Example configuration using OBOX::
   # Keep URL the same as obox plus the mail_path setting,
   # Then append e.g. /fts/
   # Example: http://<ip.address.>/%2Mu/%2.3Mu/%u/fts/
-  fts_dovecot {
+  fts dovecot {
     fs fts-cache {
     }
     fs fscache {

@@ -209,7 +209,7 @@ With IAM:
      fs aws-s3 {
      }
    }
-   fts_dovecot {
+   fts dovecot {
      fs fts-cache {
      }
      fs fscache {
@@ -234,6 +234,6 @@ Without IAM add the ACCESSKEY and SECRET to the URL:
 .. code-block:: none
 
    fs_s3_url = https://ACCESSKEY:SECRET@bucket-name.s3.region.amazonaws.com/
-   fts_dovecot {
+   fts dovecot {
      fs_s3_url = https://ACCESSKEY:SECRET@bucket-name.s3.region.amazonaws.com/%8Mu/%u/fts/
    }

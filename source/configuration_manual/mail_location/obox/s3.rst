@@ -156,7 +156,7 @@ AWS S3 specific example configurations.
      fs s3 {
      }
    }
-   fts_dovecot {
+   fts dovecot {
      fs fts-cache {
      }
      fs fscache {

@@ -66,7 +66,7 @@ Cassandra/sproxyd Example Configuration
      fs sproxyd {
      }
    }
-   fts_dovecot {
+   fts dovecot {
      fs fts-cache {
      }
      fs fscache {
