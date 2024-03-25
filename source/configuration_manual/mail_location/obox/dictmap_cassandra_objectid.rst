@@ -33,144 +33,193 @@ Cassandra keyspace
 Mapping
 -------
 
-Append the following to the ``dovecot-dict-cql.conf.ext`` file as described in
+Append the following to the ``dovecot-dict-cql.conf.inc`` file as described in
 :ref:`dictmap_cassandra`.
 
 .. code-block:: none
 
-  # WARNING: The order of the map {} sections is important here.
+  # WARNING: The order of the dict_map {} sections is important here.
   # Do NOT reorder them or the end result may not work.
-  map {
-    pattern = shared/dictmap/$user/idx/$object_name
-    table = user_index_objects
-    value_field = i
-    value_type = hexblob
-    fields {
-      u = $user
-      n = $object_name
+
+  dict_map shared/dictmap/$user/idx/$object_name {
+    sql_table = user_index_objects
+    value i {
+      type = hexblob
+    }
+
+    field u {
+      pattern = $user
+    }
+    field n {
+      pattern = $object_name
     }
   }
-  map {
-    pattern = shared/dictmap/$user/mailboxes/$mailbox_guid/idx/$object_name
-    table = user_mailbox_index_objects
-    value_field = i
-    value_type = hexblob
-    fields {
-      u = $user
-      g = ${hexblob:mailbox_guid}
-      n = $object_name
+
+  dict_map shared/dictmap/$user/mailboxes/$mailbox_guid/idx/$object_name {
+    sql_table = user_mailbox_index_objects
+    value i {
+      type = hexblob
+    }
+
+    field u {
+      pattern = $user
+    }
+    field g {
+      pattern = $mailbox_guid
+      type = hexblob
+    }
+    field n {
+      pattern = $object_name
     }
   }
-  map {
-    pattern = shared/dictmap/$user/mailboxes/$mailbox_guid/$bucket/$object_name
-    table = user_mailbox_objects
-    value_field = i
-    value_type = hexblob
-    fields {
-      u = $user
-      g = ${hexblob:mailbox_guid}
-      b = ${uint:bucket}
-      n = ${hexblob:object_name}
+
+  dict_map shared/dictmap/$user/mailboxes/$mailbox_guid/$bucket/$object_name {
+    sql_table = user_mailbox_objects
+    value i {
+      type = hexblob
+    }
+
+    field u {
+      pattern = $user
+    }
+    field g {
+      pattern = $mailbox_guid
+      type = hexblob
+    }
+    field b {
+      pattern = $bucket
+      type = uint
+    }
+    field n {
+      pattern = $object_name
+      type = hexblob
     }
   }
-  map {
-    pattern = shared/dictmap/$user/mailboxes/$mailbox_guid/max_bucket
-    table = user_mailbox_buckets
-    #value_field = b # for v2.3.13 and older
-    value_field = b,writetime(b) # for v2.3.14 and newer
-    #value_type = uint # for v2.3.13 and older
-    value_type = uint,uint # for v2.3.14 and newer
-    fields {
-      u = $user
-      g = ${hexblob:mailbox_guid}
+
+  dict_map shared/dictmap/$user/mailboxes/$mailbox_guid/max_bucket {
+    sql_table = user_mailbox_buckets
+    value b {
+      type = uint
+    }
+    value writetime(b) {
+      type = uint
+    }
+
+    field u {
+      pattern = $user
+    }
+    field g {
+      pattern = $mailbox_guid
+      type = hexblob
     }
   }
-  map {
-    pattern = shared/dictmap/$user/fts/$object_name
-    table = user_fts_objects
-    value_field = i
-    value_hexblob = yes
-    fields {
-      u = $user
-      n = $object_name
+
+  dict_map shared/dictmap/$user/fts/$object_name {
+    sql_table = user_fts_objects
+    value i {
+      type = hexblob
+    }
+
+    field u {
+      pattern = $user
+    }
+    field n {
+      pattern = $object_name
     }
   }
-  ### diff-table Settings ###
-  map {
-    pattern = shared/dictdiffmap/$user/idx/$host
-    table = user_index_diff_objects
-    value_field = m,writetime(m)
-    value_type = string,string
-    fields {
-      u = $user
-      h = $host
+
+  dict_map shared/dictdiffmap/$user/idx/$host {
+    sql_table = user_index_diff_objects
+    value m {
+    }
+
+    field u {
+      pattern = $user
+    }
+    field h {
+      pattern = $host
     }
   }
-  map {
-    pattern = shared/dictdiffmap/$user/mailboxes/$mailbox_guid/idx/$host
-    table = user_mailbox_index_diff_objects
-    value_field = m,writetime(m)
-    value_type = string,string
-    fields {
-      u = $user
-      g = ${hexblob:mailbox_guid}
-      h = $host
+
+  dict_map shared/dictdiffmap/$user/mailboxes/$mailbox_guid/idx/$host {
+    sql_table = user_mailbox_index_diff_objects
+    value m {
+    }
+
+    field u {
+      pattern = $user
+    }
+    field g {
+      pattern = $mailbox_guid
+      type = hexblob
+    }
+    field h {
+      pattern = $host
     }
   }
-  # For listing folder GUIDs during index rebuild:
-  map {
-    pattern = shared/dictmap/$user/mailboxes/$mailbox_guid
-    table = user_mailbox_index_diff_objects
-    value_field = m
-    fields {
-      u = $user
-      g = ${hexblob:mailbox_guid}
+
+  dict_map shared/dictmap/$user/mailboxes/$mailbox_guid {
+    sql_table = user_mailbox_index_diff_objects
+    value m {
+    }
+
+    field u {
+      pattern = $user
+    }
+    field g {
+      pattern = $mailbox_guid
+      type = hexblob
     }
   }
-  # Use ONLY if you don’t enable “diff-table” parameter.
-  #map {
-  #  pattern = shared/dictmap/$user/mailboxes/$mailbox_guid
-  #  table = user_mailbox_index_objects
-  #  value_field = i
-  #  value_type = hexblob
-  #
-  #  fields {
-  #    u = $user
-  #    g = ${hexblob:mailbox_guid}
-  #  }
-  #}
-  ### Reference Counting Settings ###
-  # For reverse set:
-  map {
-    pattern = shared/dictrevmap/$user/mailboxes/$mailbox_guid/$object_id
-    table = user_mailbox_objects_reverse
-    value_field = n
-    value_type = hexblob
-    fields {
-      u = $user
-      g = ${hexblob:mailbox_guid}
-      i = ${hexblob:object_id}
+
+  dict_map shared/dictrevmap/$user/mailboxes/$mailbox_guid/$object_id {
+    sql_table = user_mailbox_objects_reverse
+    value n {
+      type = hexblob
+    }
+
+    field u {
+      pattern = $user
+    }
+    field g {
+      pattern = $mailbox_guid
+      type = hexblob
+    }
+    field i {
+      pattern = $object_id
+      type = hexblob
     }
   }
-  # For reverse unset and iteration:
-  map {
-    pattern = shared/dictrevmap/$object_id/$object_name
-    table = user_mailbox_objects_reverse
-    value_field = g
-    value_type = hexblob
-    fields {
-      i = ${hexblob:object_id}
-      n = ${hexblob:object_name}
+
+  dict_map shared/dictrevmap/$object_id/$object_name {
+    sql_table = user_mailbox_objects_reverse
+    value g {
+      type = hexblob
+    }
+
+    field i {
+      pattern = $object_id
+      type = hexblob
+    }
+    field n {
+      pattern = $object_name
+      type = hexblob
     }
   }
-  # for reverse gets - this isn't actually used currently
-  map {
-    pattern = shared/dictrevmap/$object_id
-    table = user_mailbox_objects_reverse
-    value_field = u,g,n
-    #value_type = hexblob # for v2.2.27.1 and older
-    value_type = string,hexblob,hexblob # v2.2.27.2 and newer
-    fields {
-      i = ${hexblob:object_id}
+
+  dict_map shared/dictrevmap/$object_id {
+    sql_table = user_mailbox_objects
+    value u {
+    }
+    value g {
+      type = hexblob
+    }
+    value n {
+      type = hexblob
+    }
+
+    field i {
+      pattern = $object_id
+      type = hexblob
     }
   }

@@ -128,8 +128,8 @@ strange crashes at startup) by disabling VSZ limits:
 Usually there should be only a single dict-async process running, because each
 process creates its own connections to the Cassandra cluster increasing its
 load. The Cassandra cpp-driver can use multiple IO threads as well. This is
-controlled by the num_threads parameter in the connect setting in
-``dovecot-dict-cql.conf.ext``. Each IO thread can handle 32k requests
+controlled by the :dovecot_core:ref:`sql-cassandra;cassandra_io_thread_count`
+setting. Each IO thread can handle 32k requests
 simultaneously, so usually 1 IO thread is enough. Note that each IO thread
 creates more connections to Cassandra, so again it's better not to creates too
 many threads unnecessarily. If all the IO threads are full of pending requests,
