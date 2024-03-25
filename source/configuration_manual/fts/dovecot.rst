@@ -232,8 +232,8 @@ Example configuration using OBOX::
     fts_dovecot = yes
   }
 
-  # Fall back to built in search.
-  #fts_enforced = no
+  # Don't fall back to built-in search.
+  fts_search_read_fallback = no
 
   # Local filesystem example:
   # Use local filesystem storing FTS indexes

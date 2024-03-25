@@ -124,47 +124,33 @@ Settings
    The :dovecot_plugin:ref:`fts` filter name refers to this setting.
 
 
-.. dovecot_plugin:setting:: fts_enforced
-   :added: 2.2.19
-   :default: no
+.. dovecot_plugin:setting:: fts_search_add_missing
    :plugin: fts
-   :values: yes, no, body
+   :default: body-search-only
+   :values: body-search-only, yes
 
-   Require FTS indexes to perform a search? This controls what to do when
-   searching headers and what to do on error situations.
+   Should missing mails be added to FTS indexes before search? With
+   ``body-search-only`` this is done only when the search query requests
+   searching message bodies, i.e. header searches are not updating the FTS
+   index.
 
-   When searching from message body, the FTS index is always (attempted to be)
-   updated to contain any missing mails before the search is performed.
+   The unindexed mails are searched without FTS, i.e. either getting the
+   headers from ``dovecot.index.cache`` or by opening the emails if the headers
+   aren't in cache. This may be a useful optimization if the user's client only
+   uses header searches.
 
-   ``no``
-
-     Searching from message headers won't update FTS indexes. For header
-     searches, the FTS indexes are used for searching the mails that are
-     already in it, but the unindexed mails are searched via
-     dovecot.index.cache (or by opening the emails if the headers aren't in
-     cache).
-
-     If FTS lookup or indexing fails, both header and body searches fallback
-     to searching without FTS (i.e. possibly opening all emails). This may
-     timeout for large mailboxes and/or slow storage.
-
-   ``yes``
-
-     Searching from message headers updates FTS indexes, the same way as
-     searching from body does. If FTS lookup or indexing fails, the search
-     fails.
-
-   ``body``
-
-     Searching from message headers won't update FTS indexes (the same
-     behavior as with ``no``). If FTS lookup or indexing fails, the search
-     fails.
-
-     .. dovecotadded:: 2.3.7
-
-   Note that only the ``yes`` value guarantees consistent search results. In
-   other cases it's possible that the search results will be different
+   Note that only the ``yes`` value guarantees consistent search results.
+   Otherwise it's possible that the search results will be different
    depending on whether the search was performed via FTS index or not.
+
+
+.. dovecot_plugin:setting:: fts_search_read_fallback
+   :default: yes
+   :plugin: fts
+
+   If FTS lookup or indexing fails, the fall back to searching without FTS
+   (i.e. possibly opening all emails). This may timeout for large mailboxes
+   and/or slow storage.
 
 
 .. dovecot_plugin:setting:: fts_header_excludes
@@ -241,8 +227,7 @@ Settings
    the indexer is told to index the messages and is given this much time to do
    so. If this time limit is reached, an error is returned, indicating that
    the search timed out during waiting for the indexing to complete:
-   ``NO [INUSE] Timeout while waiting for indexing to finish``. Note the
-   :dovecot_plugin:ref:`fts_enforced` setting does not change this behavior.
+   ``NO [INUSE] Timeout while waiting for indexing to finish``.
 
    A value of ``0`` means no timeout.
 
