@@ -11,6 +11,21 @@ fts plugin
 Settings
 ^^^^^^^^
 
+.. dovecot_plugin:setting:: fts
+   :plugin: fts
+   :values: @named_list_filter
+
+   Configures the used fts driver to perform FTS indexing. If not specified,
+   FTS is disabled. The filter name refers to the
+   :dovecot_plugin:ref:`fts_driver` setting.
+
+   Example::
+
+     fts solr {
+       [...]
+     }
+
+
 .. dovecot_plugin:setting:: fts_autoindex
    :default: no
    :plugin: fts
@@ -105,9 +120,8 @@ Settings
    :plugin: fts
    :values: dovecot, solr, flatcurve
 
-   (previously named ``fts``)
-   Name of the backend implementation used to perform fts indexing.
-   If not specified, fts is disabled.
+   Configures the used fts driver to perform FTS indexing.
+   The :dovecot_plugin:ref:`fts` filter name refers to this setting.
 
 
 .. dovecot_plugin:setting:: fts_enforced

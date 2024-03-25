@@ -172,7 +172,7 @@ Removed features and their replacements
 | ``service_count``                                          | Renamed to :dovecot_core:ref:`service_restart_request_count`.                            |
 |                                                            | The default value is set to ``unlimited``. Value ``0`` is now a configuration error.     |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| ``fts``                                                    | Replaced by :dovecot_plugin:ref:`fts_driver`.                                            |
+| ``fts``                                                    | Replaced by :dovecot_plugin:ref:`fts` named filter.                                      |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | :dovecot_plugin:ref:`fts_autoindex_exclude`.               | Changed to boolean property of ``mailbox``.                                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+

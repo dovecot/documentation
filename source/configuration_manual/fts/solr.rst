@@ -115,8 +115,9 @@ Example Configuration
     fts_solr = yes
   }
 
-  fts_driver = solr
-  fts_solr_url = https://solr.example.org:8983/solr/dovecot/
+  fts solr {
+    url = https://solr.example.org:8983/solr/dovecot/
+  }
 
 Important notes:
 

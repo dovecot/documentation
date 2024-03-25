@@ -62,6 +62,10 @@ Settings
    It must be somewhat synchronized with :dovecot_plugin:ref:`obox` and
    :ref:`mail_location_settings`.
 
+   This setting isn't actually necessary to use. It's simpler to just add the
+   settings inside ``fts dovecot`` filter, which is used to enable the
+   Dovecot Pro FTS driver.
+
    It is strongly recommended to use :ref:`fscache` to speed up
    :ref:`obox <obox_settings>` and Dovecot FTS Engine operation.
 
@@ -77,9 +81,7 @@ Settings
        fts_dovecot = yes
      }
 
-     fts_driver = dovecot
-
-     fts_dovecot {
+     fts dovecot {
        fs posix {
          prefix = /var/fts/%u
        }

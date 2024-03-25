@@ -130,7 +130,7 @@ Example configuration
      fs scality {
      }
    }
-   fts_dovecot {
+   fts dovecot {
      fs fts-cache {
      }
      fs fscache {
