@@ -55,7 +55,7 @@ many tombstones. This can be repaired by getting rid of the tombstones:
 
 Other potential changes that may help:
 
- * Enable ``page_size=1000`` in ``dovecot-dict-cql.conf.ext`` connect setting
+ * Enable :dovecot_core:ref:`sql-cassandra;cassandra_page_size` = 1000
    so large results would be paged into multiple queries.
  * Increase Cassandra's request timeout.
  * Increase Cassandra's ``tombstone_failure_threshold``.

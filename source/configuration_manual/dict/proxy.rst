@@ -45,3 +45,26 @@ access to the server:
 
 However, it works with :ref:`lda` only if it's started as root. If this isn't
 possible, use :ref:`lmtp_server` instead.
+
+Settings
+--------
+
+.. dovecot_core:setting:: dict_server
+   :values: @named_filter
+
+   Named filter for the dict server settings. Add the available named dicts
+   for the dict server under this filter using the :dovecot_core:ref:`dict`
+   settings. For example:
+
+   .. code-block:: none
+
+      dict_server {
+	dict quota {
+	  driver = sql
+	  # ...
+	}
+	dict acl {
+	  driver = file
+	  # ...
+	 }
+      }

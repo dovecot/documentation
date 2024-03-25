@@ -84,9 +84,13 @@ Dovecot Backend configuration snippet
           }
         }
 
-        dict_legacy {
-          # Any shared dictionary is suitable this is just an example using mysql
-          acl-mysql = mysql:/etc/dovecot/dovecot-acl-dict-sql.conf.ext
+        dict_server {
+	  # Any shared dictionary is suitable this is just an example using mysql
+          dict acl-mysql {
+	    driver = sql
+	    sql_driver = mysql
+	    !include /etc/dovecot/dovecot-acl-dict-sql.conf.inc
+	  }
         }
 
         acl_driver = vfile

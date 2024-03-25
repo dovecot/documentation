@@ -59,15 +59,10 @@ Dict Settings
 Connection Pooling
 ------------------
 
-The :ref:`dict-sql` driver keeps a maximum of 10 unused SQL connections open
-(infinitely) and reuses them for SQL dict lookup requests.
-
-.. dovecotadded:: 2.3.17
-
-Starting version 2.3.17, the dict server process keeps the last 10 idle dict
-backends cached for maximum of 30 seconds. Practically this acts as a
-connection pool for :ref:`dict-redis` and :ref:`dict-ldap`. Note that this
-doesn't affect dict-sql, because it already had its own internal cache.
+The SQL drivers keep a persistent connection open to the database after it's
+been accessed once. The connection is reused for other SQL lookups as long as
+their SQL settings are exactly the same. Opened SQL connections are currently
+never closed.
 
 
 .. _dict-file:
@@ -75,12 +70,13 @@ doesn't affect dict-sql, because it already had its own internal cache.
 Flat Files
 ----------
 
-.. code-block:: none
-
-  file:<path>
-
 The file will simply contain all the keys that are used. Not very efficient
 for large databases, but good for small ones such as a single user's quota.
+
+.. dovecot_core:setting:: dict_file_path
+   :values: @string
+
+   Path for the dictionary file.
 
 
 .. _dict-fs:
@@ -90,18 +86,19 @@ Filesystem (lib-fs wrapper)
 
 .. dovecotadded:: 2.2.11
 
-.. code-block:: none
-
-  fs:<driver>:<driver args>
-
 This is a wrapper for lib-fs, which most importantly has the ``posix``
-backend. So using:
+backend. Use the :dovecot_core:ref:`fs` setting to configure the filesystem.
+For example:
 
 .. code-block:: none
 
-  fs:posix:prefix=/var/lib/dovecot/dict/
+  dict fs {
+    fs posix {
+      prefix = /var/lib/dovecot/dict/
+    }
+  }
 
-Would create a separate file under ``/var/lib/dovecot/dict`` for each key.
+This creates a separate file under ``/var/lib/dovecot/dict`` for each key.
 
 
 .. _dict-ldap:
@@ -259,40 +256,43 @@ Supported parameters are:
 Proxy
 -----
 
-.. code-block:: none
-
-  proxy:[param=value:...][<dict path>]:<destination dict>
-
-Proxying is used to perform all dictionary accessing via the dict processes.
+The proxy driver performs dictionary accessing via the :ref:`dict-proxy_process`.
 (The dict processes exist only if dict proxying is used.) This is especially
 useful with backends where their initialization is relatively expensive, such
 as SQL. The dict processes will perform connection pooling.
 
-If ``<dict path>`` is specified, it points to the socket where the dict server
-is answering. The default is to use ``$base_dir/dict``. Usually this is
-changed to ``dict-async`` if the dict backend support asynchronous lookups
-(e.g. ldap, pgsql, cassandra). The dict-async service allows more than one
-client, so this configuration prevents creating unnecessarily many dict
-processes.
+.. dovecot_core:setting:: dict_proxy_name
+   :values: @string
 
-The ``<destination dict>`` contains the dict name in the ``dict_legacy { .. }``
-settings. For example: ``proxy:dict-async:quota``.
+   Name of the dict to access in the dict server. This refers to the
+   :dovecot_core:ref:`dict_name` setting.
 
-See :ref:`dict-proxy_process` for more information about the dict server.
 
-Supported parameters are:
+.. dovecot_core:setting:: dict_proxy_socket_path
+   :values: @string
+   :default: dict
 
-+----------------------------------+----------+-----------------------------------------------+
-| Parameter                        | Required | Description                                   |
-+----------------------------------+----------+-----------------------------------------------+
-| idle_timeout=<:ref:`time_msecs`> | NO       | How long to idle before disconnecting.        |
-|                                  |          | (default: 0; which means immediate disconnect |
-|                                  |          | after finishing the operation)                |
-+----------------------------------+----------+-----------------------------------------------+
-| slow_warn=<:ref:`time_msecs`>    | NO       | Log a warning about lookups that take longer  |
-|                                  |          | than this interval.                           |
-|                                  |          | (default: 5s)                                 |
-+----------------------------------+----------+-----------------------------------------------+
+   Points to the dict server's UNIX socket. The path is relative to the
+   :dovecot_core:ref:`base_dir` setting. This should be changed to
+   ``dict-async`` if the dict backend support asynchronous lookups
+   (e.g. ldap, pgsql, cassandra, NOT mysql). The ``dict-async`` service allows
+   more than one client, so this configuration prevents creating unnecessarily
+   many dict processes.
+
+
+.. dovecot_core:setting:: dict_proxy_idle_timeout
+   :values: @time_msecs
+   :default: 0
+
+   How long to keep connection open to dict server before disconnecting.
+   0 means immediate disconnection after finishing the operation.
+
+
+.. dovecot_core:setting:: dict_proxy_slow_warn
+   :values: @time_msecs
+   :default: 5s
+
+   Log a warning about dict lookups that take longer than this interval.
 
 
 .. _dict-redis:
@@ -302,35 +302,61 @@ Redis
 
 .. dovecotadded:: 2.2.9
 
-Note that Redis backend is recommended to be used via :ref:`dict-proxy` to
-support :ref:`connection pooling <dict_pool>`. Also, currently using Redis
-without proxying may cause crashes.
+Redis backend is recommended to be used via :ref:`dict-proxy` to
+support connection pooling.
 
-.. code-block:: none
+.. dovecot_core:setting:: dict_redis_socket_path
+   :values: @string
 
-  redis:param=value:param2=value2:...
+   UNIX socket path to the Redis server. This is used over
+   :dovecot_core:ref:`dict_redis_host` if both are set.
 
-Supported parameters are:
 
-+-------------------+----------+-----------------------------------------------+
-| Parameter         | Required | Description                                   |
-+===================+==========+===============================================+
-| ``db``            | NO       | Database number (default: ``0``)              |
-+-------------------+----------+-----------------------------------------------+
-| ``expire_secs``   | NO       | Expiration value for all keys (in seconds)    |
-|                   |          | (default: no expiration)                      |
-+-------------------+----------+-----------------------------------------------+
-| ``host``          | NO       | Redis server host (default: ``127.0.0.1``)    |
-+-------------------+----------+-----------------------------------------------+
-| ``port``          | NO       | Redis server port (default: ``11211``)        |
-+------------------------------------------------------------------------------+
-| ``password``      | NO       | Redis Password (default: none)                |
-+-------------------+----------+-----------------------------------------------+
-| ``prefix``        | NO       | Prefix to add to all keys (default: none)     |
-+-------------------+----------+-----------------------------------------------+
-| ``timeout_msecs`` | NO       | Abort lookups after specified number of       |
-|                   |          | milliseconds (default: ``30000``)             |
-+-------------------+----------+-----------------------------------------------+
+.. dovecot_core:setting:: dict_redis_host
+   :values: @string
+   :default: 127.0.0.1
+
+   Redis server host.
+
+
+.. dovecot_core:setting:: dict_redis_port
+   :values: !<1-65535>
+   :default: 6379
+
+   Redis server port.
+
+
+.. dovecot_core:setting:: dict_redis_password
+   :values: @string
+
+   Redis server password.
+
+
+.. dovecot_core:setting:: dict_redis_db_id
+   :values: @uint
+   :default: 0
+
+   Database number.
+
+
+.. dovecot_core:setting:: dict_redis_key_prefix
+   :values: @string
+
+   Prefix to add to all keys.
+
+
+.. dovecot_core:setting:: dict_redis_expire
+   :values: @time
+   :default: 0
+
+   Expiration value for all keys. 0 = no expiration.
+
+
+.. dovecot_core:setting:: dict_redis_request_timeout
+   :values: @time_msecs
+   :default: 30s
+
+   How long to wait for answer before aborting request.
 
 
 .. _dict-sql:
@@ -338,53 +364,118 @@ Supported parameters are:
 SQL
 ---
 
-Note that the SQL backend must be used via :ref:`dict-proxy`.
+Note that the SQL backend must be used via :ref:`dict-proxy`. See :ref:`sql`
+for SQL-driver specific settings.
 
-.. code-block:: none
+.. dovecot_core:setting:: dict_map
+   :values: @named_list_filter
 
-  <sql driver>:<path to dict-sql config>
+   Creates a new dict mapping. The filter name refers to the
+   :dovecot_core:ref:`dict_map_pattern` setting.
 
-The ``<sql driver>`` component contains the SQL driver name, such as
-``mysql``, ``pgsql``, ``sqlite``, or ``cassandra``.
 
-The dict-sql config file consists of SQL server configuration and mapping of
-keys to SQL tables/fields.
+.. dovecot_core:setting:: dict_map_pattern
+   :values: @string
 
-See :ref:`authentication-sql`.
+   Pattern that is matched to the accessed dict keys. The
+   :dovecot_core:ref:`dict_map` filter name refers to this setting.
+   If the pattern matches the key, this dict map (and no other) is used.
+   The dict maps are processed in the order list in configuration file.
 
-SQL Connect String
-^^^^^^^^^^^^^^^^^^
 
-.. code-block:: none
+.. dovecot_core:setting:: dict_map_sql_table
+   :values: @string
 
-  connect = host=localhost dbname=mails user=sqluser password=sqlpass
+   SQL table to use for accessing this dict map.
 
-The connect setting is exactly the same as used for
-:ref:`SQL Authentication <authentication-sql>`.
+
+.. dovecot_core:setting:: dict_map_username_field
+   :values: @string
+
+   Field in the SQL table to use for accessing private dict keys in this dict
+   map. This setting is optional if only shared keys are accessed.
+
+
+.. dovecot_core:setting:: dict_map_expire_field
+   :values: @string
+
+   Field in the SQL table to use for tracking dict key expiration. This field
+   is optional if no expiration is used by the code accessing the dict map.
+
+
+.. dovecot_core:setting:: dict_map_value
+   :values: @named_list_filter
+
+   Creates a new value for the dict map. The filter name refers to the
+   :dovecot_core:ref:`dict_map_value_name` setting. Dict supports
+   reading/writing multiple values for the same key.
+
+
+.. dovecot_core:setting:: dict_map_field
+   :values: @named_list_filter
+
+   Creates a new field for the dict map. The filter name refers to the
+   :dovecot_core:ref:`dict_map_field_pattern` setting. The fields are part of
+   the SQL query looking up the dict key.
+
+
+.. dovecot_core:setting:: dict_map_value_name
+   :values: @string
+
+   Field in the SQL table to use for the :dovecot_core:ref:`dict_map_value`.
+
+
+.. dovecot_core:setting:: dict_map_value_type
+   :default: string
+   :values: string, int, uint, double, hexblob, uuid
+
+   Type of the field in the SQL table for the :dovecot_core:ref:`dict_map_value`.
+
+
+.. dovecot_core:setting:: dict_map_field_pattern
+   :values: @string
+
+   Variable in the :dovecot_core:ref:`dict_map_pattern` that maps to this
+   :dovecot_core:ref:`dict_map_field`. The value must always begin with ``$``.
+
+
+.. dovecot_core:setting:: dict_map_field_name
+   :values: @string
+
+   Field in the SQL table to use for the :dovecot_core:ref:`dict_map_field`.
+
+
+.. dovecot_core:setting:: dict_map_field_type
+   :default: string
+   :values: string, int, uint, double, hexblob, uuid
+
+   Type of the field in the SQL table for the :dovecot_core:ref:`dict_map_field`.
+
 
 SQL Mapping
 ^^^^^^^^^^^
 
-SQL mapping is done with a dict key pattern and fields. When a dict lookup or
-update is done, Dovecot goes through all the maps and uses the first one whose
-pattern matches the dict key.
+The SQL database fields are mapped into dict keys using
+:dovecot_core:ref:`dict_map` setting. When a dict lookup or update is done,
+Dovecot goes through all the maps and uses the first one whose pattern matches
+the dict key.
 
 For example when using dict for a per-user quota value the map looks like:
 
 .. code-block:: none
 
-  map {
-    pattern = priv/quota/storage
-    table = quota
+  dict_map priv/quota/storage {
+    sql_table = quota
     username_field = username
-    value_field = quota_bytes
+    value quota_bytes {
+    }
   }
 
 * The dict key must match exactly ``priv/quota/storage``. The dict keys are
   hardcoded in the Dovecot code, so depending on what functionality you're
   configuring you need to know the available dict keys used it.
 * This is a private dict key (``priv/`` prefix), which means that there must
-  be a username_field. The ``username_field`` is assumed to be (at least part
+  be a ``username_field``. The ``username_field`` is assumed to be (at least part
   of) the primary key. In this example we don't have any other primary keys.
 * With MySQL the above map translates to SQL queries:
 
@@ -397,19 +488,21 @@ You can also access multiple SQL fields. For example
 
 .. code-block:: none
 
-  map {
-    pattern = shared/shared-boxes/user/$to/$from
-    table = user_shares
-    value_field = dummy
+  dict_map shared/shared-boxes/user/$to/$from {
+    sql_table = user_shares
+    value dummy {
+    }
 
-    fields {
-      from_user = $from
-      to_user = $to
+    field from_user {
+      pattern = $from
+    }
+    field to_user {
+      pattern = $to
     }
   }
 
 * The :dovecot_plugin:ref:`acl_sharing_map` always uses ``1`` as the value, so here the
-  ``value_field`` is called ``dummy``.
+  ``value`` field is called ``dummy``.
 * The SQL ``from_user`` and ``to_user`` fields are the interesting ones.
   Typically the extra fields would be part of the primary key.
 * With MySQL the above map translates to SQL queries:
@@ -439,35 +532,39 @@ SQL dict.
   #   username VARCHAR(255),
   #   mailbox_guid VARCHAR(32),
   #   attr_key VARCHAR(255),
-  #   value TEXT,
+  #   attr_value TEXT,
   #   PRIMARY KEY (username, mailbox_guid, attr_key)
   # )
-  map {
-    pattern = priv/$mailbox_guid/$key
-    table = mailbox_private_attributes
+  dict_map priv/$mailbox_guid/$key {
+    sql_table = mailbox_private_attributes
     username_field = user
-    value_field = value
+    value attr_value {
+    }
 
-    fields {
-      attr_key = $key
-      mailbox_guid = $mailbox_guid
+    field attr_key {
+      pattern = $key
+    }
+    field mailbox_guid {
+      pattern = $mailbox_guid
     }
   }
 
   # CREATE TABLE mailbox_shared_attributes (
   #   mailbox_guid VARCHAR(32),
   #   attr_key VARCHAR(255),
-  #   value TEXT,
+  #   attr_value TEXT,
   #   PRIMARY KEY (mailbox_guid, attr_key)
   # );
-  map {
-    pattern = shared/$mailbox_guid/$key
-    table = mailbox_shared_attributes
-    value_field = value
+  dict_map shared/$mailbox_guid/$key {
+    sql_table = mailbox_shared_attributes
+    value attr_value {
+    }
 
-    fields {
-      attr_key = $key
-      mailbox_guid = $mailbox_guid
+    field attr_key {
+      pattern = $key
+    }
+    field mailbox_guid {
+      pattern = $mailbox_guid
     }
   }
 

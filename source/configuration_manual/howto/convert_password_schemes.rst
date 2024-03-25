@@ -247,19 +247,21 @@ Create a new service for the postlogin script and reference it in the
      }
    }
 
-Enable the ``plain_pass`` variable in the auth-passwdfile configuration.
+Enable the ``plain_pass`` variable in the auth-passwdfile configuration:
 
 ``/etc/dovecot/conf.d/auth-passwdfile.conf.ext``
 
 .. code:: bash
 
    passdb passwd-file {
-     args = /var/vmail/auth.d/%d/passwd
+     passwd_file_path = /var/vmail/auth.d/%d/passwd
    }
 
    userdb passwd-file {
-     args = /var/vmail/auth.d/%d/passwd
-     default_fields = plain_pass=%w
+     passwd_file_path = /var/vmail/auth.d/%d/passwd
+     fields {
+       plain_pass = %{password}
+     }
    }
 
 This script will act on all users for a particular domain specified via
