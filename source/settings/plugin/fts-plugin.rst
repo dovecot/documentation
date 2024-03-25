@@ -257,5 +257,5 @@ Settings
 
    Example::
 
-     fts_driver = tika
+     fts_decoder_driver = tika
      fts_decoder_tika_url = http://tikahost:9998/tika/
