@@ -135,17 +135,23 @@ This example demonstrates how to dump a whole configuration section.
 
 .. parsed-literal::
 
-   **doveconf dict**
-   dict_legacy {
-     quota_clone = pgsql:@pkgsysconfdir@/dovecot-dict-sql.conf.ext
+   **doveconf service**
+   service imap {
+     ...
    }
+   service pop3 {
+     ...
+   }
+   ...
 
-Or how to dump only the quota dict:
+Or how to dump only the imap service:
 
 .. parsed-literal::
 
-   **doveconf dict/quota_clone**
-   dict/quota_clone = pgsql:@pkgsysconfdir@/dovecot-dict-sql.conf.ext
+   **doveconf service/imap**
+   service imap {
+     ...
+   }
 
 .. include:: reporting-bugs.inc
 

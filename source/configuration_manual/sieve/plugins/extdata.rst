@@ -135,21 +135,22 @@ In /etc/dovecot.conf:
 
 ::
 
-   dict_legacy {
-       sieve = mysql:/etc/dovecot/pigeonhole-sieve.dict
-   }
-
-And in /etc/dovecot/pigeonhole-sieve.dict:
-
-::
-
-   connect = host=localhost dbname=dovecot user=dovecot password=password
-
-   map {
-     pattern = priv/vacation_message   # The dict value to lookup
-     table = virtual_users             # The SQL table to perform the lookup in
-     username_field = email            # The username field to search on in the table
-     value_field = vacation_msg        # The database value to return
+   dict_server {
+     dict sieve {
+       driver = sql
+       sql_driver = mysql
+ 
+       mysql localhost {
+         dbname = dovecot
+	 user = dovecot
+	 password = dovecot
+       }
+       dict_map priv/vacation_message {    # The dict value to lookup
+	 sql_table = virtual_users         # The SQL table to perform the lookup in
+	 username_field = email            # The username field to search on in the table
+	 value vacation_msg {              # The database value to return
+	 }
+       }
    }
 
 Finally configure extdata to use the proxy:

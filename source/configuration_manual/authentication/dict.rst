@@ -147,8 +147,15 @@ For example:
 
 .. code-block:: none
 
-  dict_legacy {
-    cassandra-userdb = cassandra:/etc/dovecot/dovecot-dict-userdb-cql.conf.ext
+  dict_server {
+    dict cassandra-userdb {
+      driver = sql
+      sql_driver = cassandra
+
+      cassandra_hosts = 127.0.0.1
+      cassandra_keyspace = email_users
+      !include /etc/dovecot/dovecot-dict-userdb-cql.conf.inc
+    }
   }
 
 ``dovecot-dict-auth.conf.ext``:
@@ -171,34 +178,29 @@ For example:
     u_displayname = %{dict:displayname_key}
   }
 
-``dovecot-dict-userdb-cql.conf.ext``:
+``dovecot-dict-userdb-cql.conf.inc``:
 
 .. code-block:: none
 
-  driver = cassandra
-  connect = host=127.0.0.1 dbname=email_users
-
   # SELECT displayname FROM user_profile WHERE id = %u
-  map {
-    # pattern must match the "key" path, except with added shared/ prefix. %u
-    # gets caught into $username
-    pattern = shared/userdb/displayname_path/$username
-    table = user_profile
-    value_field = displayname
-    value_type = string
-    fields {
-      id = $username
+  # pattern must match the "key" path, except with added shared/ prefix. %u
+  # gets caught into $username
+  dict_map shared/userdb/displayname_path/$username {
+    sql_table = user_profile
+    value displayname {
+    }
+    field id {
+      pattern = $username
     }
   }
 
   # SELECT email FROM user_profile WHERE id = %u
-  map {
-    pattern = shared/userdb/email_path/$username
-    table = user_profile
-    value_field = email
-    value_type = string
-    fields {
-      id = $username
+  dict_map shared/userdb/email_path/$username {
+    sql_table = user_profile
+    value email {
+    }
+    field id {
+      pattern = $username
     }
   }
 
@@ -215,8 +217,11 @@ Auth configuration
 .. code-block:: none
 
   # Access to the CDB has to go through a dict process.
-  dict_legacy {
-    auth = cdb:/etc/dovecot/auth.cdb
+  dict_server {
+    dict auth {
+      driver = cdb
+      dict_cdb_path = /etc/dovecot/auth.cdb
+    }
   }
 
   passdb dict {

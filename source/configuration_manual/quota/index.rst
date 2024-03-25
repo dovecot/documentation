@@ -409,32 +409,28 @@ dovecot.conf:
   plugin {
     quota_set = dict:proxy::sqlquota
   }
-  dict_legacy {
-    sqlquota = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
-  }
-
-dovecot-dict-sql.conf.ext:
-
-.. code-block:: none
-
-  # Use "host= ... pass=foo#bar" with double-quotes if your password has '#'
-  # character.
-  connect = host=/var/run/mysqld/mysqld.sock dbname=mails user=admin \
-    password=pass
-  # Alternatively you can connect to localhost as well:
-  #connect = host=localhost dbname=mails user=admin password=pass # port=3306
-
-  map {
-    pattern = priv/quota/limit/storage
-    table = quota
-    username_field = username
-    value_field = bytes
-  }
-  map {
-    pattern = priv/quota/limit/messages
-    table = quota
-    username_field = username
-    value_field = messages
+  dict_server {
+    dict sqlquota {
+      driver = sql
+      sql_driver = mysql
+      mysql /var/run/mysqld/mysqld.sock {
+        dbname = mails
+	user = admin
+        password = pass
+      }
+      dict_map priv/quota/limit/storage {
+	sql_table = quota
+	username_field = username
+	value bytes {
+	}
+      }
+      dict_map priv/quota/limit/messages {
+	sql_table = quota
+	username_field = username
+	value messages {
+	}
+      }
+    }
   }
 
 Afterwards the quota can be changed with:

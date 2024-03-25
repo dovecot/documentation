@@ -16,7 +16,7 @@ Required OX Dovecot Pro Packages:
 - ``dovecot-ee-cassandra-plugin``    (*relies on Dovecot 3rd party repo*)
 - ``dovecot-ee-quota-unified-plugin``
 
-Casandra Schema:
+Cassandra Schema
 ----------------
 
 Create the unified quota schema:
@@ -56,39 +56,8 @@ using ``unified_quota_scheme.cql``:
     AND read_repair_chance = 0.0
     AND speculative_retry = '99.0PERCENTILE';
 
-Create a ``dovecot-dict-cql.conf.ext`` file and change the ``host=`` to your
-Cassandra hosts address. If you named the keyspace differently also configure
-it via ``dbname=``.
-
-.. code-block:: none
-
-  connect = host=1.2.3.4  dbname=quota
-
-  map {
-    pattern = priv/quota/messages/$product
-    table = quota_usage
-    username_field = ox_id
-    value_field = count
-    value_type = uint
-    fields {
-      type = $product
-    }
-  }
-
-  map {
-    pattern = priv/quota/storage/$product
-    table = quota_usage
-    username_field = ox_id
-    value_field = usage
-    value_type = uint
-    fields {
-      type = $product
-    }
-  }
-
 In your ``dovecot.conf`` you must enable the ``quota_unified`` plugin and
-configure the ``dict`` service with the ``dovecot-dict-cql.conf.ext`` path
-like below:
+configure the ``dict`` service:
 
 .. code-block:: none
 
@@ -100,7 +69,7 @@ like below:
     vsz_limit = 0
   }
 
-  # Add "service dict" for dovecot-dict-cql.conf.ext integration
+  # Add "service dict"
   service dict {
     unix_listener dict {
       mode = 0600
@@ -110,8 +79,37 @@ like below:
   }
 
   # Add the Cassandra mappings
-  dict_legacy {
-    cassandra = cassandra:/etc/dovecot/dovecot-dict-cql.conf.ext
+  dict_server {
+    dict cassandra {
+      driver = sql
+      sql_driver = cassandra
+      cassandra {
+        hosts = 1.2.3.4
+	keyspace = quota
+      }
+
+      dict_map priv/quota/messages/$product {
+	sql_table = quota_usage
+	username_field = ox_id
+	value count {
+	  type = uint
+	}
+	field type {
+	  pattern = $product
+	}
+      }
+
+      dict_map priv/quota/storage/$product {
+	sql_table = quota_usage
+	username_field = ox_id
+	value usage {
+	  type = uint
+	}
+	field type {
+	  pattern = $product
+	}
+      }
+    }
   }
 
   # Add "quota_unified" to your mail_plugins

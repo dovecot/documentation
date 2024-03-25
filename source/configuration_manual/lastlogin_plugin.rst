@@ -68,8 +68,32 @@ dovecot.conf:
     last_login_key = last-login/%{service}/%{user}/%{remote_ip}
     last_login_precision = ms
   }
-  dict_legacy {
-    sql = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
+  dict_server {
+    dict sql {
+      sql_driver = mysql
+      mysql sql.example.com {
+        dbname = mails
+	user = dovecot
+	password = pass
+      }
+
+      dict_map shared/last-login/$service/$user/$remote_ip {
+	sql_table = last_login
+	value last_access {
+	  type = uint
+	}
+
+	field userid {
+	  pattern = $user
+	}
+	field service {
+	  pattern = $service
+	}
+	field last_ip {
+	  pattern = $remote_ip
+	}
+      }
+    }
   }
 
 SQL schema:
@@ -83,25 +107,6 @@ SQL schema:
     last_ip VARCHAR(40) NOT NULL,
     PRIMARY KEY (userid, service)
   );
-
-dovecot-dict-sql.conf.ext:
-
-.. code-block:: none
-
-  connect = host=sql.example.com dbname=mails user=dovecot password=pass
-
-  map {
-    pattern = shared/last-login/$service/$user/$remote_ip
-    table = last_login
-    value_field = last_access
-    value_type = uint
-
-    fields {
-      userid = $user
-      service = $service
-      last_ip = $remote_ip
-    }
-  }
 
 Cassandra Example
 =================
@@ -117,8 +122,34 @@ dovecot.conf:
     last_login_key = last-login/%{service}/%{user}/%{remote_ip}
     last_login_precision = ms
   }
-  dict_legacy {
-    cassandra = cassandra:/etc/dovecot/dovecot-dict-cql.conf.ext
+  dict_server {
+    dict cassandra {
+      driver = sql
+      sql_driver = cassandra
+      cassandra {
+        hosts = cassandra.example.com
+        keyspace = mails
+        user = dovecot
+	password = pass
+      }
+
+      dict_map shared/last-login/$service/$user/$remote_ip {
+	sql_table = last_login
+	value last_access {
+	  type = uint
+	}
+
+	field userid {
+	  pattern = $user
+	}
+	field service {
+	  pattern = $service
+	}
+	field last_ip {
+	  pattern = $remote_ip
+	}
+      }
+    }
   }
 
 Cassandra schema:
@@ -132,25 +163,6 @@ Cassandra schema:
     last_ip TEXT,
     PRIMARY KEY ((userid), service)
   );
-
-dovecot-dict-cql.conf.ext:
-
-.. code-block:: none
-
-  connect = host=sql.example.com dbname=mails user=dovecot password=pass
-
-  map {
-    pattern = shared/last-login/$service/$user/$remote_ip
-    table = last_login
-    value_field = last_access
-    value_type = uint
-
-    fields {
-      userid = $user
-      service = $service
-      last_ip = $remote_ip
-    }
-  }
 
 Alternative Schema Cassandra Example
 ====================================
@@ -167,8 +179,57 @@ dovecot.conf:
     last_login_key = last-login/%{service}/%{user}/%{remote_ip}
     last_login_precision = ms
   }
-  dict_legacy {
-    cassandra = cassandra:/etc/dovecot/dovecot-dict-cql.conf.ext
+  dict_server {
+    dict cassandra {
+      driver = sql
+      sql_driver = cassandra
+      cassandra {
+        hosts = cassandra.example.com
+        keyspace = mails
+        user = dovecot
+	password = pass
+      }
+
+      dict_map shared/last-login/imap/$user/$remote_ip {
+	sql_table = users
+	value last_imap_access {
+	  type = uint
+	}
+
+	field userid {
+	  pattern = $user
+	}
+	field last_imap_ip {
+	  pattern = $remote_ip
+	}
+      }
+      dict_map shared/last-login/pop3/$user/$remote_ip {
+	sql_table = users
+	value last_pop3_access {
+	  type = uint
+	}
+
+	field userid {
+	  pattern = $user
+	}
+	field last_pop3_ip {
+	  pattern = $remote_ip
+	}
+      }
+      dict_map shared/last-login/lmtp/$user/$remote_ip {
+	sql_table = users
+	value last_lmtp_access {
+	  type = uint
+	}
+
+	field userid {
+	  pattern = $user
+	}
+	field last_lmtp_ip {
+	  pattern = $remote_ip
+	}
+      }
+    }
   }
 
 Cassandra schema:
@@ -185,43 +246,3 @@ Cassandra schema:
     last_lmtp_ip TEXT,
     PRIMARY KEY ((userid))
   );
-
-dovecot-dict-cql.conf.ext:
-
-.. code-block:: none
-
-  connect = host=sql.example.com dbname=mails user=dovecot password=pass
-
-  map {
-    pattern = shared/last-login/imap/$user/$remote_ip
-    table = users
-    value_field = last_imap_access
-    value_type = uint
-
-    fields {
-      userid = $user
-      last_imap_ip = $remote_ip
-    }
-  }
-  map {
-    pattern = shared/last-login/pop3/$user/$remote_ip
-    table = users
-    value_field = last_pop3_access
-    value_type = uint
-
-    fields {
-      userid = $user
-      last_pop3_ip = $remote_ip
-    }
-  }
-  map {
-    pattern = shared/last-login/lmtp/$user/$remote_ip
-    table = users
-    value_field = last_lmtp_access
-    value_type = uint
-
-    fields {
-      userid = $user
-      last_lmtp_ip = $remote_ip
-    }
-  }

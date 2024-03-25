@@ -60,8 +60,12 @@ More complex example using SQL:
 
 .. code-block:: none
 
-  dict_legacy {
-    mysql = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
+  dict_server {
+    dict mysql {
+      driver = sql
+      sql_driver = mysql
+      !include /etc/dovecot/dovecot-dict-sql.conf.inc
+    }
   }
 
   quota_clone {

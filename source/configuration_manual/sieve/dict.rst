@@ -103,47 +103,56 @@ Using a SQL backend
 
 For greater flexibility, it's possible to use a SQL backend for your
 dict scripts. First, set up a configuration file (such as
-/etc/dovecot/dict-sieve-sql.conf) with your database configuration. This
+``/etc/dovecot/dict-sieve-sql.conf.inc``) with your database configuration. This
 should consist of the following parts:
 
 .. code-block:: none
 
-   # The database connection params
-   connect = host=localhost dbname=dovecot user=dovecot password=password
-
    # The name mapping that yields the ID of the Sieve script
-   map {
-       pattern = priv/sieve/name/$script_name   # The name of the script, as per the "sieve" config parameter
-       table = user_sieve_scripts               # The database table
-       username_field = username                # The field in the table to query on
-       value_field = id                         # The field which contains the return value of the script ID
-       fields {
-           script_name = $script_name           # FIXME: The other database field to query?
+   dict_map priv/sieve/name/$script_name {      # The name of the script, as per the "sieve" config parameter
+       sql_table = user_sieve_scripts           # The database table
+       username_field = username                # The username field in the table to query
+       value id {                               # The field which contains the return value of the script ID
+       }
+       field script_name {                      # The script name field in the table to query
+         pattern = $script_name
        }
    }
 
    # The name mapping that yields the script content from ID
-   {
-       pattern = priv/sieve/data/$id            # The ID, obtained from above
-       table = user_sieve_scripts               # The database table
-       username_field = username                # The field in the table to query
-       value_field = script_data                # The field which contains the script
-       fields {
-           id = $id                             # FIXME: The other database field to query?
+   dict_map priv/sieve/data/$id {               # The ID, obtained from above
+       sql_table = user_sieve_scripts           # The database table
+       username_field = username                # The username field in the table to query
+       value script_data {                      # The field which contains the script
+       }
+       field id {                               # The id field in the table to query
+         id = $id
        }
    }
 
 Next, create a dict proxy service. Normally in
-/etc/dovecot/dovecot.conf:
+``/etc/dovecot/dovecot.conf``:
 
 ::
 
-   dict_legacy {
-       sieve = pgsql:/etc/dovecot/dict-sieve-sql.conf.ext
+   dict_server {
+     dict sieve {
+       driver = sql
+       sql_driver = pgsql
+
+       pgsql localhost {
+         parameters {
+	   dbname = dovecot
+	   user = dovecot
+	   password = password
+	 }
+       }
+       !include /etc/dovecot/dict-sieve-sql.conf.inc
+     }
    }
 
 Finally, configure Sieve to check the dict (e.g. in
-/etc/dovecot/conf.d/90-sieve.conf). This looks up a script called
+``/etc/dovecot/conf.d/90-sieve.conf``). This looks up a script called
 "active" in the database.
 
 ::
