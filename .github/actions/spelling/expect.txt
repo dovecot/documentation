@@ -2,7 +2,6 @@ aad
 ACAP
 ACCESSKEY
 ACCOUNTNAME
-achara
 actimeo
 addflag
 addhdr
@@ -24,14 +23,11 @@ AND'ing
 antispam
 apk
 apparmor
-Appe
 APPENDUID
 Appsuite
 APY
 arcfour
-Archlinux
 asd
-asdfgh
 Atilika
 atimes
 atmail
@@ -140,7 +136,6 @@ cql
 cqlsh
 CRLFs
 crt
-ctlr
 currentdate
 currentmodule
 customflags
@@ -258,7 +253,6 @@ examplescripts
 execv
 exim
 exportkeytab
-Expu
 extdata
 Extextcat
 extprograms
@@ -300,7 +294,6 @@ ftn
 fts
 ftscache
 FULLDIRNAME
-fulltext
 gauner
 gcda
 gcov
@@ -327,7 +320,6 @@ groupware
 gss
 gssapi
 halon
-hara
 hardlinking
 hardlinks
 hasfrop
@@ -382,7 +374,6 @@ INCLUDERC
 INDEXCACHE
 indexfiles
 INDEXPVT
-inetd
 inka
 Inno
 inodes
@@ -427,7 +418,6 @@ kio
 klist
 kludgy
 kmail
-kocmuk
 korvatunturi
 KPOP
 krb
@@ -483,10 +473,8 @@ libsasl
 libsasldb
 libsodium
 libsqlite
-libstemmer
 libta
 lifewithqmail
-linelen
 linenos
 listescape
 listfile
@@ -577,7 +565,6 @@ mboxlocking
 mboxmetadata
 mboxo
 mboxrd
-mclroy
 mda
 mdbox
 Mdovecot
@@ -594,7 +581,6 @@ millisecs
 mimencode
 missingok
 mkhomedir
-mmap
 mmencode
 MMIME
 modseq
@@ -646,7 +632,6 @@ nexthop
 NEXTUID
 nfsmount
 ngrams
-ngrep
 ninf
 NLEVEL
 nlinks
@@ -710,18 +695,16 @@ opendirectory
 opengroup
 openmetrics
 opensmtpd
-opensource
 OPENSSLDIR
 opie
 opsec
 optboolean
 optname
 oqmgr
+OR'ing
 orcpt
 origbox
-OR'ing
 ORing
-orld
 OSFILE
 otherinstance
 otp
@@ -922,7 +905,6 @@ spamtest
 spamtestplus
 specialuse
 SPID
-splitrow
 spn
 spnego
 sproxy
@@ -981,7 +963,6 @@ tclass
 tcontext
 tcps
 TCPWRAPPERS
-tecadmin
 technet
 tempdisabled
 tempfail
@@ -990,11 +971,9 @@ Tenuring
 terabyte
 testdomain
 testmbox
-Testmsg
 testpass
 testshared
 textcat
-tgz
 thesmbexchange
 thirdparty
 tika
@@ -1010,7 +989,6 @@ tldmyusername
 TLDR
 tlsmgr
 tmpfs
-tmpmbox
 toctree
 tohdr
 tokeninfo
@@ -1118,10 +1096,10 @@ wforce
 Wietse
 wikis
 winbind
-worl
 wrappermode
 writetime
 wso
+Xapain
 xapian
 XBAR
 xchange
