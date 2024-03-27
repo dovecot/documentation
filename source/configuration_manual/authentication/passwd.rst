@@ -17,30 +17,45 @@ disabling it:
 .. code-block:: none
 
   userdb passwd {
-    args = blocking=no
+    use_worker = no
   }
 
 Field overriding and extra fields
 =================================
 
-It's possible to override fields from passwd and add :ref:`authentication-user_database_extra_fields` with templates, but in
-v2.1+ it's done in a better way by using :dovecot_core:ref:`userdb_override_fields`.
-
+It's possible to override fields from passwd and add :ref:`authentication-user_database_extra_fields`.
 For example:
 
 .. code-block:: none
 
   userdb passwd {
-    override_fields {
-      home = /var/mail/%u
+    fields {
+      home = /var/mail/%{username}
       mail_driver = maildir
-      mail_path = /var/mail/%u/Maildir
+      mail_path = /var/mail/%{username}/Maildir
     }
   }
 
 This uses the UID and GID fields from passwd, but home directory is overridden.
-Also the default :ref:`mail_location_settings`
-setting is overridden.
+Also the default :ref:`mail_location_settings` setting is overridden.
+
+Please not that :dovecot_core:ref:`userdb_fields_import_all` defaults to ``yes``.
+If it is set to ``no`` the fields to be imported need to be explicitly defined.
+
+Example:
+
+.. code-block:: none
+
+  userdb passwd {
+    fields_import_all = no
+    fields {
+      gid = %{passwd:uid:vmail}
+      gid = %{passwd:gid:vmail}
+      home = /var/mail/%{username}
+      mail_driver = maildir
+      mail_path = /var/mail/%{username}/Maildir
+    }
+  }
 
 Passwd as a password database
 =============================
