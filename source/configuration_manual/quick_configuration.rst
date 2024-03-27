@@ -34,8 +34,8 @@ You need to create group vmail and user vmail.
   }
 
   userdb passwd {
-    args = blocking=no
-    override_fields {
+    use_worker = no
+    fields {
       uid = vmail
       gid = vmail
     }
