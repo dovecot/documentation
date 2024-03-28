@@ -2970,9 +2970,46 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: passdb_static_password
    :values: @string
-   :added: 3.0.0
 
    The static password to be used for all users authenticating using this passdb.
+
+.. dovecot_core:setting:: passdb_pam_max_requests
+   :default: 100
+   :values: @uint
+
+   Number of requests a auth-worker process handles for passdb pam before
+   it dies. This configures similar behaviour as the
+   :dovecot_core:ref:`service_restart_request_count` setting but it limits
+   only the number of pam passdb requests, not all requests to be handled by
+   an auth-worker.
+
+.. dovecot_core:setting:: passdb_pam_failure_show_msg
+   :default: no
+   :values: @boolean
+
+   Replace the default ``Authentication failed`` reply with PAM's failure.
+
+.. dovecot_core:setting:: passdb_pam_service_name
+   :default: dovecot
+   :values: @string
+
+   The PAM service name to be used with the pam passdb.
+
+
+.. dovecot_core:setting:: passdb_pam_setcred
+   :default: no
+   :values: @boolean
+
+   Make Dovecot create PAM credentials. The credentials are never deleted,
+   which may cause problems with some PAM plugins.
+
+
+.. dovecot_core:setting:: passdb_pam_session
+   :default: no
+   :values: @boolean
+
+   Make Dovecot open a PAM session and close it immediately.
+
 
 .. dovecot_core:setting:: pop3_client_workarounds
    :todo: Indicate POP3 setting
