@@ -73,16 +73,14 @@ With other databases Dovecot doesn't know what could affect caching, so
 you have to tell Dovecot manually. The following databases require
 specifying the cache key:
 
--  pam
-
 -  bsdauth
 
-For example if the PAM lookup depends on username and service, you can
+For example if the bsdauth lookup depends on username and service, you can
 use:
 
 ::
 
-   passdb pam {
+   passdb bsdauth {
      args = cache_key=%{protocol}%u *
    }
 
