@@ -10,12 +10,12 @@ IMAP/POP3/SMTP/etc. access checks.
 PAM
 ---
 
-Set PAM service name to ``%{protocol}``, ie.:
+Set :dovecot_core:ref:`PAM service name <passdb_pam_service_name>` to ``%{protocol}``, ie.:
 
 ::
 
    passdb pam {
-     args = %{protocol}
+     service_name = %{protocol}
    }
 
 That way PAM uses ``/etc/pam.d/imap`` for IMAP, and ``/etc/pam.d/pop3``

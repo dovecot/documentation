@@ -73,8 +73,6 @@ With other databases Dovecot doesn't know what could affect caching, so
 you have to tell Dovecot manually. The following databases require
 specifying the cache key:
 
--  pam
-
 -  bsdauth
 
 For example if the bsdauth lookup depends on username and service, you can

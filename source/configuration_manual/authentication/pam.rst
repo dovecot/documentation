@@ -23,10 +23,11 @@ Service name
 The PAM configuration is usually in the ``/etc/pam.d/`` directory, but some
 systems may use a single file, ``/etc/pam.conf``. By default Dovecot uses
 dovecot as the PAM service name, so the configuration is read from
-``/etc/pam.d/dovecot``. You can change this by giving the wanted service name
-in the ``args`` parameter. You can also set the service to ``%{protocol}`` in which case
-Dovecot automatically uses either ``imap`` or ``pop3`` as the service,
-depending on the actual service the user is logging in to.
+``/etc/pam.d/dovecot``. You can change this by setting the wanted service name
+using :dovecot_core:ref:`passdb_pam_service_name`. You can also set the service
+to ``%{protocol}`` in which case Dovecot automatically uses either ``imap`` or
+``pop3`` as the service, depending on the actual service the user is logging
+in to.
 
 Here are a few examples:
 
@@ -35,7 +36,7 @@ Here are a few examples:
 .. code-block:: none
 
   passdb pam {
-    args = %{protocol}
+    service_name = %{protocol}
   }
 
 * Use /etc/pam.d/mail:
@@ -43,29 +44,30 @@ Here are a few examples:
 .. code-block:: none
 
   passdb pam {
-    args = mail
+    service_name = mail
   }
 
 PAM sessions
 =============
 
-By giving a session=yes parameter, you can make Dovecot open a PAM session and
-close it immediately. Some PAM plugins need this, for instance
-``pam_mkhomedir``. With this parameter, ``dovecot.conf`` might look something
-like this:
+By setting :dovecot_core:ref:`passdb_pam_service_name` to ``yes``, you can make
+Dovecot open a PAM session and close it immediately. Some PAM plugins need
+this, for instance ``pam_mkhomedir``. With this parameter, ``dovecot.conf``
+might look something like this:
 
 .. code-block:: none
 
   passdb pam {
-    args = session=yes dovecot
+    session = yes
+    service_name = dovecot
   }
 
 PAM credentials
 ================
-
-By giving a ``setcred=yes`` parameter, you can make Dovecot create PAM
-credentials. Some PAM plugins need this. The credentials are never deleted
-however, so using this might cause problems with other PAM plugins.
+By setting :dovecot_core:ref:`passdb_pam_setcred` to ``yes`` parameter, you can
+make Dovecot create PAM credentials. Some PAM plugins need this. The
+credentials are never deleted however, so using this might cause problems with
+other PAM plugins.
 
 Limiting the number of PAM lookups
 ===================================
@@ -75,12 +77,13 @@ so PAM plugin writers haven't done much testing on what happens when multiple
 lookups are done. Because of this, many PAM plugins leak memory and possibly
 have some other problems when doing multiple lookups. If you notice that PAM
 authentication stops working after some time, you can limit the number of
-lookups done by the auth worker process before it dies:
+lookups done by the auth worker process before it dies using the
+:dovecot_core:ref:`passdb_pam_max_requests` setting:
 
 .. code-block:: none
 
   passdb pam {
-    args = max_requests=100
+    max_requests = 100
   }
 
 The default ``max_requests`` value is 100.
@@ -94,12 +97,12 @@ Making PAM plugin failure messages visible
 ===========================================
 
 You can replace the default ``Authentication failed`` reply with PAM's failure
-reply by setting:
+reply by setting :dovecot_core:ref:`passdb_pam_failure_show_msg`:
 
 .. code-block:: none
 
   passdb pam {
-    args = failure_show_msg=yes
+    failure_show_msg = yes
   }
 
 This can be useful with e.g. ``pam_opie`` to find out which one time password
@@ -118,7 +121,7 @@ You can restrict the IP-Addresses allowed to connect via PAM:
 .. code-block:: none
 
   passdb pam {
-    override_fields {
+    fields {
       allow_nets = 10.1.100.0/23,2001:db8:a0b:12f0::/64
     }
   }
@@ -127,19 +130,7 @@ Caching
 ========
 
 Dovecot supports caching password lookups by setting ``auth_cache_size`` to
-non-zero value. For this to work with PAM, you'll also have to give
-``cache_key`` parameter. Usually the user is authenticated only based on the
-username and password, but PAM plugins may do all kinds of other checks as
-well, so this can't be relied on. For this reason the ``cache_key`` must
-contain all the :ref:`config_variables` that may
-affect authentication. The commonly used variables are:
-
-* ``%{user}`` - Username. You'll most likely want to use this.
-* ``%{protocol}`` - Service. If you use * as the service name you'll most likely want to
-  use this.
-* ``%{remote_ip}`` - Remote IP address. Use this if you do any IP related checks.
-* ``%{local_ip}`` - Local IP address. Use this if you do any checks based on the local
-  IP address that was connected to.
+non-zero value.
 
 Examples:
 
@@ -148,17 +139,6 @@ Examples:
   # 1MB auth cache size
   auth_cache_size = 1024
   passdb pam {
-    # username and service
-    args = cache_key=%u%s *
-  }
-
-.. code-block:: none
-
-  # 1MB auth cache size
-  auth_cache_size = 1024
-  passdb pam {
-    # username, remote IP and local IP
-    args = cache_key=%u%r%l dovecot
   }
 
 Examples
@@ -179,7 +159,7 @@ Solaris
 ^^^^^^^^
 
 For Solaris you will have to edit ``/etc/pam.conf``. Here is a working Solaris
-example (using ``args = *`` instead of the default ``dovecot`` service):
+example (using ``service_name = %L{service}`` instead of the default ``dovecot`` service):
 
 .. code-block:: none
 
@@ -213,7 +193,7 @@ the on that OS:
 .. code-block:: none
 
   passdb pam {
-    args = login
+    service_name = login
   }
 
 On older versions of Mac OS X, "passwd" can be used as a userdb to fill in UID,
