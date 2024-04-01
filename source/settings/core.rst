@@ -3498,10 +3498,23 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: submission_ssl
    :default: no
    :todo: Indicate submission setting
-   :values: @boolean
+   :values: no, smtps, starttls
 
-   If enabled, use SSL/TLS to connect to :dovecot_core:ref:`submission_host`.
+   If enabled, SSL/TLS is used for the connection to :dovecot_core:ref:`submission_host`.
 
+   Available values:
+
+   ``no``
+
+      No SSL connection is used.
+
+   ``smtps``
+
+      An SMTPS connection (immediate SSL) is used.
+
+   ``starttls``
+
+      The STARTTLS command is used to establish the TLS layer.
 
 .. dovecot_core:setting:: submission_timeout
    :default: 30secs
