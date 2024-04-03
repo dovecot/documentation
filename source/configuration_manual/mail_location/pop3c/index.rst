@@ -23,9 +23,9 @@ Connection Settings
 ===================
 
 .. dovecot_core:setting:: pop3c_features
-   :values: @string
+   :values: @boollist
 
-   A space-separated list of features, optimizations, and workarounds that can
+   List of features, optimizations, and workarounds that can
    be enabled.
 
    Workarounds:
