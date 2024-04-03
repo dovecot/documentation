@@ -2176,7 +2176,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: login_trusted_networks
-   :values: !<space-separated list of trusted network ranges>
+   :values: @boollist
 
    This setting is used for a few different purposes, but most importantly it
    allows the client connection to tell the server what the original client's
