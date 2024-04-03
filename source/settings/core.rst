@@ -2296,7 +2296,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: mail_attachment_detection_options
-   :values: @string
+   :values: @boollist
 
    Settings to control adding ``$HasAttachment`` or ``$HasNoAttachment``
    keywords. By default, all MIME parts with
