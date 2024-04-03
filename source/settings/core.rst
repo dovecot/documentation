@@ -2271,8 +2271,7 @@ See :ref:`settings` for list of all setting groups.
    Key-value pairs that are passed as a table to lua script_init() function.
 
 .. dovecot_core:setting:: mail_access_groups
-   :todo: Describe format; comma-separated list?
-   :values: @string
+   :values: @boollist
 
    Supplementary groups that are granted access for mail processes.
 
