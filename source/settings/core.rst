@@ -2097,7 +2097,7 @@ See :ref:`settings` for list of all setting groups.
 
 
 .. dovecot_core:setting:: login_plugins
-   :values: @string
+   :values: @boollist
 
    List of plugins to load for IMAP and POP3 login processes.
 
