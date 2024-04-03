@@ -276,7 +276,7 @@ Connection Settings
 
 .. dovecot_core:setting:: imapc_sasl_mechanisms
    :default: plain
-   :values: @string
+   :values: @boollist
 
    The :ref:`sasl` mechanisms to use for authentication when connection to a
    remote IMAP server.
