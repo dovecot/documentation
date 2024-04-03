@@ -45,9 +45,9 @@ Connection Settings
 
 
 .. dovecot_core:setting:: imapc_features
-   :values: @string
+   :values: @boollist
 
-   A space-separated list of features, optimizations, and workarounds that can
+   List of features, optimizations, and workarounds that can
    be enabled.
 
    .. dovecotchanged:: 2.4.0,3.0.0 Several features are now automatically
