@@ -3012,10 +3012,9 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: pop3_client_workarounds
    :todo: Indicate POP3 setting
-   :values: @string
+   :values: @boollist
 
-   Workarounds for various POP3 client bugs can be enabled here.  The list is
-   space-separated.
+   Workarounds for various POP3 client bugs can be enabled here.
 
    The following values are currently supported:
 
