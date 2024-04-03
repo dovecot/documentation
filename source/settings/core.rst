@@ -4080,10 +4080,9 @@ See :ref:`settings` for list of all setting groups.
    Skip user existence verification via passdb lookup.
 
 .. dovecot_core:setting:: valid_chroot_dirs
-   :values: @string
+   :values: @boollist
 
-   A colon-separated list of directories under which chrooting is allowed for
-   mail processes.
+   List of directories under which chrooting is allowed for mail processes.
 
    Addresses the risk of root exploits enabled by incorrect use of chrooting.
 

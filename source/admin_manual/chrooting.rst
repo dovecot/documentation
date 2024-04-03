@@ -54,7 +54,7 @@ may be chrooting under ``/var/mail/<user>/`` and ``/home/<user>/``, use:
 
 .. code-block:: none
 
-   valid_chroot_dirs = /var/mail:/home
+   valid_chroot_dirs = /var/mail /home
 
 You can chroot all users globally into the same directory by using
 :dovecot_core:ref:`mail_chroot` setting. For example:
