@@ -2287,7 +2287,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: mail_always_cache_fields
    :seealso: @mail_cache_fields;dovecot_core, @mail_never_cache_fields;dovecot_core
-   :values: @string
+   :values: @boollist
 
    The fields specified here are always added to cache when saving mails, even
    if the client never accesses these fields.
@@ -2434,7 +2434,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: mail_cache_fields
    :default: flags
    :seealso: @mail_always_cache_fields;dovecot_core, @mail_never_cache_fields;dovecot_core
-   :values: @string
+   :values: @boollist
 
    The default list of fields that are added to cache if no other caching
    decisions exist yet. This setting is used only when creating the initial
@@ -2600,7 +2600,7 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: mail_never_cache_fields
    :default: imap.envelope
    :seealso: @mail_always_cache_fields;dovecot_core, @mail_cache_fields;dovecot_core
-   :values: @string
+   :values: @boollist
 
    List of fields that should never be cached.
 
