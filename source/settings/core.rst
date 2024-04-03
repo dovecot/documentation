@@ -647,7 +647,7 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: doveadm_allowed_commands
    :default: ALL
-   :values: @string
+   :values: @boollist
 
    Lists the commands that the client may use with the doveadm server.
 
