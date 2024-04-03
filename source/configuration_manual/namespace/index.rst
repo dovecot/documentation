@@ -626,9 +626,9 @@ Settings
 
 
 .. dovecot_core:setting:: mailbox_special_use
-   :values: @string
+   :values: @boollist
 
-   Space-separated list of SPECIAL-USE (:rfc:`6154`)
+   List of SPECIAL-USE (:rfc:`6154`)
    flags to broadcast
    for the mailbox.
 
