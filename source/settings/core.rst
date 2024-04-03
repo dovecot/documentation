@@ -1800,10 +1800,10 @@ See :ref:`settings` for list of all setting groups.
 .. dovecot_core:setting:: lmtp_client_workarounds
    :added: 2.3.9
    :todo: Indicate LMTP setting
-   :values: @string
+   :values: @boollist
 
-   Configures the list of active workarounds for LMTP client bugs. The list is
-   space-separated. Supported workaround identifiers are:
+   Configures the list of active workarounds for LMTP client bugs.
+   Supported workaround identifiers are:
 
    ``whitespace-before-path``
 
