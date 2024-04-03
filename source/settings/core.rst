@@ -3833,10 +3833,9 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: submission_client_workarounds
    :todo: Indicate submission setting
-   :values: @string
+   :values: @boollist
 
-   Configures the list of active workarounds for Submission client bugs. The
-   list is space-separated.
+   Configures the list of active workarounds for Submission client bugs.
 
    Supported workaround identifiers are:
 
