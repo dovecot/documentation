@@ -77,12 +77,12 @@ specifying the cache key:
 
 -  bsdauth
 
-For example if the PAM lookup depends on username and service, you can
+For example if the bsdauth lookup depends on username and service, you can
 use:
 
 ::
 
-   passdb pam {
+   passdb bsdauth {
      args = cache_key=%{protocol}%u *
    }
 
