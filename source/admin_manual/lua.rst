@@ -26,8 +26,10 @@ reusing scripts by keeping track of which scripts are loaded. Each script has
 it's own memory pool, which is guaranteed to be released when script is
 unloaded.
 
-When script is loaded, :func:`script_load` function is called if found. This can
+When script is loaded, :func:`script_init` function is called if found. This can
 return non-zero to indicate that the script has a problem.
+
+When script is being unloaded, :func:`script_deinit` is called.
 
 C API
 ^^^^^^
