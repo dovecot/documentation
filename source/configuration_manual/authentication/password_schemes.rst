@@ -77,8 +77,11 @@ this.
 Generating encrypted passwords
 ==============================
 
-You can generate passwords for a particular scheme easily with ``doveadm pw``
-utility. For example:
+You can generate passwords for a particular scheme easily with :man:`doveadm-pw(1)`
+utility. If you do not have Dovecot configured, you can use ``doveadm -O pw`` to
+avoid complaints about config file.
+
+Examples:
 
 .. code-block:: none
 
