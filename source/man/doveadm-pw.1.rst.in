@@ -29,6 +29,9 @@ All generated password hashes have a {*scheme*} prefix, for example
 stored without the {*scheme*} prefix. The default scheme can be
 overridden by storing the password with the scheme prefix.
 
+In particular, if you want to use this to verify or generate passwords,
+without configuring Dovecot first, you can use ``doveadm -O pw`` to do so.
+
 .. include:: global-options.inc
 
 OPTIONS
