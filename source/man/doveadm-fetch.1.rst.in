@@ -31,7 +31,8 @@ messages one at a time, see :man:`doveadm-search(1)`.
 
 This command uses by default the output formatter **pager**.
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 

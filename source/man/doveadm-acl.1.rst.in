@@ -24,7 +24,8 @@ Control List related actions.
 
 This command uses by default the output formatter **table**.
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 

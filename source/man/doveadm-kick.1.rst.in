@@ -40,7 +40,8 @@ are disconnected.
 
 .. include:: global-options.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 **-a** *anvil_socket_path*
    This option is used to specify an absolute path to an alternative

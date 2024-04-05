@@ -35,7 +35,8 @@ moved to the alternative storage.
 
 .. include:: global-options.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 

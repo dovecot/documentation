@@ -25,7 +25,8 @@ This command is used to manipulate flags of messages.
 
 .. include:: global-options.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 

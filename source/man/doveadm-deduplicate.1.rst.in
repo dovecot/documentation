@@ -27,7 +27,8 @@ Deduplication across multiple mailboxes is not supported.
 
 .. include:: global-options.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 

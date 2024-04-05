@@ -23,7 +23,8 @@ modify Dovecot's local metacache storage.
 
 .. include:: global-options-formatter.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 

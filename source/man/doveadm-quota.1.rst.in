@@ -34,7 +34,8 @@ In the last form, the *command* will affect only the matching
 
 .. include:: global-options-formatter.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 

@@ -22,7 +22,8 @@ modify Dovecot's obox mailbox format.
 
 .. include:: global-options-formatter.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 

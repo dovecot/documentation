@@ -22,7 +22,8 @@ modify Dovecot's local fscache storage.
 
 .. include:: global-options-formatter.inc
 
-Command specific *options*: 
+OPTIONS
+=======
 
 
 .. include:: option-S-socket.inc

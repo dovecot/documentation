@@ -132,7 +132,8 @@ parameters.
 .. include:: global-options.inc
 
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 
