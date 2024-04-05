@@ -44,7 +44,8 @@ searched.
 This command uses by default the output formatter **flow** (without the
 *key* = prefix).
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 

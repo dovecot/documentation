@@ -24,7 +24,8 @@ The **doveadm sieve** commands can be used to manage Sieve filtering.
 
 .. include:: global-options-formatter.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 

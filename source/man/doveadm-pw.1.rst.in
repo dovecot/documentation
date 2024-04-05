@@ -31,7 +31,8 @@ overridden by storing the password with the scheme prefix.
 
 .. include:: global-options.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 **-l**
    List all supported password *scheme* s and exit successfully.

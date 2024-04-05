@@ -29,7 +29,8 @@ developers when debugging some problem.
 
 .. include:: global-options.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 **-t** *type*
    the file type of the file to be dumped. If the *type* was omitted,

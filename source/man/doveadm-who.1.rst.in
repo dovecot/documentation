@@ -26,7 +26,8 @@ currently connected to which service.
 
 This command uses by default the output formatter **table**.
 
-Command specific *options*:
+OPTIONS
+=======
 
 **-1**
    Print one line per user and connection. Otherwise the connections are

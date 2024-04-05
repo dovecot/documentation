@@ -42,7 +42,8 @@ DESCRIPTION
 OPTIONS
 =======
 
-Command specific *options*:
+OPTIONS
+=======
 
 **-s** *socketpath*
    Sets stats socket path

@@ -43,7 +43,8 @@ in *@pkgsysconfdir@/conf.d/90-plugin.conf*.
 
 .. include:: global-options.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 

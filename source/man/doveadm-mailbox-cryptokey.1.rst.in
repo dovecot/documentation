@@ -31,7 +31,8 @@ OPTIONS
 **-o** *plugin/mail_crypt_private_password=password*
    Dovecot option, needed if you use password protected keys
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 

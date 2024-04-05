@@ -24,7 +24,8 @@ penalties.
 
 .. include:: global-options.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 **-a** *anvil_socket_path*
    This option is used to specify an alternative socket. The option's

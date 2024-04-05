@@ -38,7 +38,8 @@ In the third form, the mails will be imported only for given *user* (s).
 
 .. include:: global-options.inc
 
-Command specific *options*:
+OPTIONS
+=======
 
 .. include:: option-A.inc
 
