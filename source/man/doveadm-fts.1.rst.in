@@ -22,7 +22,7 @@ Search (FTS) index.
 
 .. include:: global-options.inc
 
-This command uses by default the output formatter **flow** (without the *key* = prefix).
+This command uses by default the output formatter **flow** (without the *key*\ =\ prefix).
 
 OPTIONS
 =======

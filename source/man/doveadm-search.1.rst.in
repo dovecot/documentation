@@ -42,7 +42,7 @@ searched.
 .. include:: global-options-formatter.inc
 
 This command uses by default the output formatter **flow** (without the
-*key* = prefix).
+*key*\ =\ prefix).
 
 OPTIONS
 =======
