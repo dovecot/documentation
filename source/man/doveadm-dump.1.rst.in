@@ -12,7 +12,7 @@ doveadm-dump - Dump the content of Dovecot's binary mailbox index/log
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **dump** [**-t** *type*] *path* [ *type-specific args* ]
+**doveadm** [*GLOBAL OPTIONS*] **dump** [**-t** *type*] *path* [ *type-specific args* ]
 
 DESCRIPTION
 ===========

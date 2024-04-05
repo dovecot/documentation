@@ -12,11 +12,11 @@ doveadm-import - Import messages matching given search query
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **import** [**-S** *socket_path*] [**-U** *source_user*] [**-s**] **-A** *source_location* *dest_parent* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **import** [**-S** *socket_path*] [**-U** *source_user*] [**-s**] **-A** *source_location* *dest_parent* *search_query*
 
-**doveadm** [**-Dv**] **import** [**-S** *socket_path*] [**-U** *source_user*] [**-s**] **-F** *file* *source_location* *dest_parent *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **import** [**-S** *socket_path*] [**-U** *source_user*] [**-s**] **-F** *file* *source_location* *dest_parent *search_query*
 
-**doveadm** [**-Dv**] **import** [**-S** *socket_path*] [**-U** *source_user*] [**-s**] **-u** *user* *source_location* *dest_parent* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **import** [**-S** *socket_path*] [**-U** *source_user*] [**-s**] **-u** *user* *source_location* *dest_parent* *search_query*
 
 DESCRIPTION
 ===========

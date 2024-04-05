@@ -12,7 +12,7 @@ doveadm-exec - Easily execute commands from Dovecot's libexec directory.
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **exec** *binary* [*binary arguments*]
+**doveadm** [*GLOBAL OPTIONS*] **exec** *binary* [*binary arguments*]
 
 DESCRIPTION
 ===========

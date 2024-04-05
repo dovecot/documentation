@@ -12,7 +12,7 @@ doveadm-service-status - Show information about dovecot services
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **service status** [*service* [...]]
+**doveadm** [*GLOBAL OPTIONS*] **service status** [*service* [...]]
 
 DESCRIPTION
 ===========

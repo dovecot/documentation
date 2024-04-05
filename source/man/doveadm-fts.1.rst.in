@@ -12,7 +12,7 @@ doveadm-fts - Manipulate the Full Text Search (FTS) index
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **fts** *command* [*OPTIONS*] [*ARGUMENTS*]
+**doveadm** [*GLOBAL OPTIONS*] **fts** *command* [*OPTIONS*] [*ARGUMENTS*]
 
 DESCRIPTION
 ===========

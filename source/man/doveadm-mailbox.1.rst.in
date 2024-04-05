@@ -12,7 +12,7 @@ doveadm-mailbox - Commands related to handling mailboxes
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] *mailbox_cmd* [*options*] [*arguments*]
+**doveadm** [*GLOBAL OPTIONS*] *mailbox_cmd* [*options*] [*arguments*]
 
 DESCRIPTION
 ===========
@@ -211,7 +211,7 @@ When the **-s** option is given, *old_name* will be unsubscribed and
 mailbox status
 --------------
 
-**doveadm** [**-f** *formatter*] **mailbox status** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**-t**] *fields* *mailbox*...
+**doveadm** **mailbox status** [**-A** | **-u** *user* | **-F** *file*] [**-S** *socket_path*] [**-t**] *fields* *mailbox*...
 
 Show the **status** of one or more mailboxes. The *mailbox* name may
 also contain wildcards.

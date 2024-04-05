@@ -12,7 +12,7 @@ doveadm-cluster - Utility actions for Dovecot Cluster
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster *command* [*arguments*]
+**doveadm** [*GLOBAL OPTIONS*] cluster *command* [*arguments*]
 
 DESCRIPTION
 ===========

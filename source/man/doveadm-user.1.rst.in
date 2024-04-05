@@ -12,7 +12,7 @@ doveadm-user - Perform a user lookup in Dovecot's userdbs
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **user** [**-a** *userdb_socket_path*] [**-f** *field*] [**-u**] [**-x** *auth_info*] *user*...
+**doveadm** [*GLOBAL OPTIONS*] **user** [**-a** *userdb_socket_path*] [**-f** *field*] [**-u**] [**-x** *auth_info*] *user*...
 
 DESCRIPTION
 ===========

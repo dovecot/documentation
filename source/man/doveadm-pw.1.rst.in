@@ -12,11 +12,11 @@ doveadm-pw - Dovecot's password hash generator
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **pw -l**
+**doveadm** [*GLOBAL OPTIONS*] **pw -l**
 
-**doveadm** [**-Dv**] **pw** [**-p** *password*] [**-r** *rounds*] [**-s** *scheme*] [**-u** *user*] [**-V**]
+**doveadm** [*GLOBAL OPTIONS*] **pw** [**-p** *password*] [**-r** *rounds*] [**-s** *scheme*] [**-u** *user*] [**-V**]
 
-**doveadm** [**-Dv**] **pw -t** *hash* [**-p** *password*] [**-u** *user*]
+**doveadm** [*GLOBAL OPTIONS*] **pw -t** *hash* [**-p** *password*] [**-u** *user*]
 
 DESCRIPTION
 ===========

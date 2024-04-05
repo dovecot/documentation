@@ -12,7 +12,7 @@ doveadm-auth - Flush/lookup/test authentication data
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **auth** *command* [*OPTIONS*] [*ARGUMENTS*]
+**doveadm** [*GLOBAL OPTIONS*] **auth** *command* [*OPTIONS*] [*ARGUMENTS*]
 
 DESCRIPTION
 ===========

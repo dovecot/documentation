@@ -12,13 +12,13 @@ doveadm-log - Locate, test or reopen Dovecot's log files
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **log errors** [**-s** *min_timestamp*]
+**doveadm** [*GLOBAL OPTIONS*] **log errors** [**-s** *min_timestamp*]
 
-**doveadm** [**-Dv**] **log find** [*directory*]
+**doveadm** [*GLOBAL OPTIONS*] **log find** [*directory*]
 
-**doveadm** [**-Dv**] **log reopen**
+**doveadm** [*GLOBAL OPTIONS*] **log reopen**
 
-**doveadm** [**-Dv**] **log test**
+**doveadm** [*GLOBAL OPTIONS*] **log test**
 
 DESCRIPTION
 ===========

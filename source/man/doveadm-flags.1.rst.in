@@ -12,11 +12,11 @@ doveadm-flags - Add, remove or replace messages' flags
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **flags** [**-S** *socket_path*] **-A** *command flags* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **flags** [**-S** *socket_path*] **-A** *command flags* *search_query*
 
-**doveadm** [**-Dv**] **flags** [**-S** *socket_path*] **-F** *file* *command flags* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **flags** [**-S** *socket_path*] **-F** *file* *command flags* *search_query*
 
-**doveadm** [**-Dv**] **flags** [**-S** *socket_path*] **-u** *user* *command flags* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **flags** [**-S** *socket_path*] **-u** *user* *command flags* *search_query*
 
 DESCRIPTION
 ===========

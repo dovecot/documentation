@@ -13,17 +13,17 @@ doveadm-cluster-backend - Utility actions for Dovecot Cluster backend
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend add [ **-\-id** *id* ] [ **-\-site** *host* ] *-\-self* | *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster backend add [ **-\-id** *id* ] [ **-\-site** *host* ] *-\-self* | *name*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend remove *-\-self* | *host*
+**doveadm** [*GLOBAL OPTIONS*] cluster backend remove *-\-self* | *host*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend update [ **-\-status** *online|offline|standby* ] [ **-\-load-factor** *<0..100>* ] *-\-self* | *host*
+**doveadm** [*GLOBAL OPTIONS*] cluster backend update [ **-\-status** *online|offline|standby* ] [ **-\-load-factor** *<0..100>* ] *-\-self* | *host*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend evacuate *-\-self* | *host*
+**doveadm** [*GLOBAL OPTIONS*] cluster backend evacuate *-\-self* | *host*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend status *-\-self* | *host*
+**doveadm** [*GLOBAL OPTIONS*] cluster backend status *-\-self* | *host*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend list
+**doveadm** [*GLOBAL OPTIONS*] cluster backend list
 
 
 DESCRIPTION
@@ -51,7 +51,7 @@ COMMANDS
 cluster backend add
 -------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend add [ **-\-id** *id* ] [ **-\-site** *host* ] *-\-self* | *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster backend add [ **-\-id** *id* ] [ **-\-site** *host* ] *-\-self* | *name*
 
 Adds a new backend to cluster. New backends are added in standby state. UUID should not be used unless you are re-adding the same backend.
 
@@ -59,7 +59,7 @@ Adds a new backend to cluster. New backends are added in standby state. UUID sho
 cluster backend remove
 ----------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend remove *-\-self* | *host*
+**doveadm** [*GLOBAL OPTIONS*] cluster backend remove *-\-self* | *host*
 
 Remove a backend from cluster.
 
@@ -67,7 +67,7 @@ Remove a backend from cluster.
 cluster backend update
 ----------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend update [ **-\-status** *online|offline|standby* ] [ **-\-load-factor** *<0..100>* ] *-\-self* | *host*
+**doveadm** [*GLOBAL OPTIONS*] cluster backend update [ **-\-status** *online|offline|standby* ] [ **-\-load-factor** *<0..100>* ] *-\-self* | *host*
 
 ``--status``
   See BACKEND STATUS
@@ -80,7 +80,7 @@ cluster backend update
 cluster backend evacuate
 ------------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend evacuate *-\-self* | *host*
+**doveadm** [*GLOBAL OPTIONS*] cluster backend evacuate *-\-self* | *host*
 
 Start moving all user groups to other backends. Will not wait for the moves to finish. Also sets the backend to standby and load factor to 0.
 
@@ -88,7 +88,7 @@ Start moving all user groups to other backends. Will not wait for the moves to f
 cluster backend status
 ----------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend status *-\-self* | *host*
+**doveadm** [*GLOBAL OPTIONS*] cluster backend status *-\-self* | *host*
 
 Shows the current status of the backend.
 
@@ -96,7 +96,7 @@ Shows the current status of the backend.
 cluster backend list
 --------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster backend list [ **--site** *host* ]
+**doveadm** [*GLOBAL OPTIONS*] cluster backend list [ **--site** *host* ]
 
 Lists all backends in this cluster, including other sites. You can use optional ``--site`` parameter to specify site to list.
 

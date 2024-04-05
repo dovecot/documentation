@@ -12,7 +12,7 @@ doveadm-obox - Utility actions for Dovecot's obox mailbox format
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] obox *command* [*arguments*]
+**doveadm** [*GLOBAL OPTIONS*] obox *command* [*arguments*]
 
 DESCRIPTION
 ===========

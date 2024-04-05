@@ -12,7 +12,7 @@ doveadm-deduplicate - Expunge duplicate messages
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **deduplicate** [**-u** *user* | **-A** | **-F** *file* ] [**-S** *socket_path*] [**-m**] *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **deduplicate** [**-u** *user* | **-A** | **-F** *file* ] [**-S** *socket_path*] [**-m**] *search_query*
 
 DESCRIPTION
 ===========

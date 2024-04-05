@@ -12,11 +12,11 @@ doveadm-force-resync - Repair broken mailboxes
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **force-resync** [**-S** *socket_path*] **-A** *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] **force-resync** [**-S** *socket_path*] **-A** *mailbox*
 
-**doveadm** [**-Dv**] **force-resync** [**-S** *socket_path*] **-F** *file* *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] **force-resync** [**-S** *socket_path*] **-F** *file* *mailbox*
 
-**doveadm** [**-Dv**] **force-resync** [**-S** *socket_path*] **-u** *user* *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] **force-resync** [**-S** *socket_path*] **-u** *user* *mailbox*
 
 DESCRIPTION
 ===========

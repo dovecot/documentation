@@ -12,7 +12,7 @@ doveadm-process-status - Show information about dovecot processes
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **process status** [*service* [...]]
+**doveadm** [*GLOBAL OPTIONS*] **process status** [*service* [...]]
 
 DESCRIPTION
 ===========

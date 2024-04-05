@@ -14,7 +14,7 @@ doveadm-cluster-kick - Disconnect user connections from cluster
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster kick *user*
+**doveadm** [*GLOBAL OPTIONS*] cluster kick *user*
 
 
 DESCRIPTION

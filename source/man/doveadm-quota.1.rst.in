@@ -12,11 +12,11 @@ doveadm-quota - Initialize/recalculate or show current quota usage
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **quota** [**-S** *socket_path*] *command* **-A**
+**doveadm** [*GLOBAL OPTIONS*] **quota** [**-S** *socket_path*] *command* **-A**
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **quota** [**-S** *socket_path*] *command* **-F** *file*
+**doveadm** [*GLOBAL OPTIONS*] **quota** [**-S** *socket_path*] *command* **-F** *file*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **quota** [**-S** *socket_path*] *command* **-u** *user*
+**doveadm** [*GLOBAL OPTIONS*] **quota** [**-S** *socket_path*] *command* **-u** *user*
 
 DESCRIPTION
 ===========
@@ -52,7 +52,7 @@ COMMANDS
 quota get
 ---------
 
-**doveadm** [**-f** *formatter*] **quota get** [**-A** | **-u** *user* | **-F** *file*]
+**doveadm** **quota get** [**-A** | **-u** *user* | **-F** *file*]
 
 The **quota get** command is used to display the current quota usage.
 The storage values are reported in kilobytes.

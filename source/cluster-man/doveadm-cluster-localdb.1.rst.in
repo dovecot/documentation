@@ -16,17 +16,17 @@ doveadm-cluster-localdb - Utility actions for Dovecot Cluster local cache.
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb user status *group* *user*
+**doveadm** [*GLOBAL OPTIONS*] cluster localdb user status *group* *user*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb user list [ *mask* ]
+**doveadm** [*GLOBAL OPTIONS*] cluster localdb user list [ *mask* ]
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb user remove *group* *user*
+**doveadm** [*GLOBAL OPTIONS*] cluster localdb user remove *group* *user*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb group status *group*
+**doveadm** [*GLOBAL OPTIONS*] cluster localdb group status *group*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb group list [ *mask* ]
+**doveadm** [*GLOBAL OPTIONS*] cluster localdb group list [ *mask* ]
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb group remove *group*
+**doveadm** [*GLOBAL OPTIONS*] cluster localdb group remove *group*
 
 
 DESCRIPTION
@@ -47,7 +47,7 @@ COMMANDS
 cluster localdb user status
 ----------------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb user status *group* *user*
+**doveadm** [*GLOBAL OPTIONS*] cluster localdb user status *group* *user*
 
 Displays locally cached information about a user.
 
@@ -55,7 +55,7 @@ Displays locally cached information about a user.
 cluster localdb user list
 -------------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb user list [ *mask* ]
+**doveadm** [*GLOBAL OPTIONS*] cluster localdb user list [ *mask* ]
 
 List users in local cache.
 
@@ -63,7 +63,7 @@ List users in local cache.
 cluster localdb user remove
 ---------------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb user remove *group* *user*
+**doveadm** [*GLOBAL OPTIONS*] cluster localdb user remove *group* *user*
 
 Remove locally cached information for a user.
 
@@ -71,7 +71,7 @@ Remove locally cached information for a user.
 cluster localdb group status
 ----------------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb group status *group*
+**doveadm** [*GLOBAL OPTIONS*] cluster localdb group status *group*
 
 Display locally cached information about a group.
 
@@ -79,7 +79,7 @@ Display locally cached information about a group.
 cluster localdb group list
 --------------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb group list [ *mask* ]
+**doveadm** [*GLOBAL OPTIONS*] cluster localdb group list [ *mask* ]
 
 List groups in local cache.
 
@@ -87,7 +87,7 @@ List groups in local cache.
 cluster localdb group remove
 ----------------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster localdb group remove *group*
+**doveadm** [*GLOBAL OPTIONS*] cluster localdb group remove *group*
 
 Remove locally cached information for a group.
 

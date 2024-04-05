@@ -12,11 +12,11 @@ doveadm-fetch - Fetch partial/full messages or message information
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **fetch** [**-S** *socket_path*] **-A** *fields* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **fetch** [**-S** *socket_path*] **-A** *fields* *search_query*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **fetch** [**-S** *socket_path*] **-F** *file* *fields* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **fetch** [**-S** *socket_path*] **-F** *file* *fields* *search_query*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **fetch** [**-S** *socket_path*] **-u** *user* *fields* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **fetch** [**-S** *socket_path*] **-u** *user* *fields* *search_query*
 
 DESCRIPTION
 ===========

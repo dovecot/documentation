@@ -12,7 +12,7 @@ doveadm-penalty - Show current penalties
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **penalty** [**-a** *anvil_socket_path*] [*ip* [**/** *mask*]]
+**doveadm** [*GLOBAL OPTIONS*] **penalty** [**-a** *anvil_socket_path*] [*ip* [**/** *mask*]]
 
 DESCRIPTION
 ===========

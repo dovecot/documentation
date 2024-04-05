@@ -14,7 +14,7 @@ doveadm-cluster-geodb - Utility actions for Dovecot Cluster GeoDB
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] cluster geodb refresh
+**doveadm** [*GLOBAL OPTIONS*] cluster geodb refresh
 
 
 DESCRIPTION
@@ -33,7 +33,7 @@ COMMANDS
 cluster geodb refresh
 ---------------------
 
-**doveadm** [**-Dv**] cluster geodb refresh
+**doveadm** [*GLOBAL OPTIONS*] cluster geodb refresh
 
 Refreshes local caches from GeoDB. This is mainly intended for testing purposes.
 Usually this is not necessary to run, because cluster has been designed to work

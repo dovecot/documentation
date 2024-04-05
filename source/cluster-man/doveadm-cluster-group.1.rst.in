@@ -14,15 +14,15 @@ doveadm-cluster-group - Utility actions for Dovecot Cluster user groups
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster group access *group*
+**doveadm** [*GLOBAL OPTIONS*] cluster group access *group*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster group move [ **-\-direct** ] *site* *group* *host*
+**doveadm** [*GLOBAL OPTIONS*] cluster group move [ **-\-direct** ] *site* *group* *host*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster group status *site* *group*
+**doveadm** [*GLOBAL OPTIONS*] cluster group status *site* *group*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster group update [ **-\-sticky-users** <yes|no> ] [ **-\-sticky-backend** <yes|no> ] *site* *group*
+**doveadm** [*GLOBAL OPTIONS*] cluster group update [ **-\-sticky-users** <yes|no> ] [ **-\-sticky-backend** <yes|no> ] *site* *group*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster group list [ *mask* ]
+**doveadm** [*GLOBAL OPTIONS*] cluster group list [ *mask* ]
 
 
 DESCRIPTION
@@ -43,7 +43,7 @@ COMMANDS
 cluster group access
 --------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster group access *group*
+**doveadm** [*GLOBAL OPTIONS*] cluster group access *group*
 
 Perform cluster lookup for the :cluster:ref:`cluster_backend_test_username` user as if it belonged to the specified
 group. This command must be run from a backend, not a proxy. For now this command is mainly used internally to finish user group moves.
@@ -52,7 +52,7 @@ group. This command must be run from a backend, not a proxy. For now this comman
 cluster group move
 ------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster group move [ **-\-direct** ] *site* *group* *host*
+**doveadm** [*GLOBAL OPTIONS*] cluster group move [ **-\-direct** ] *site* *group* *host*
 
 Initiate a user group move, which finishes on background. The move is
 initialized by updating the "moving" and "alt_backed_id" fields in GeoDB.
@@ -68,7 +68,7 @@ should not be used.
 cluster group status
 --------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster group status *site* *group*
+**doveadm** [*GLOBAL OPTIONS*] cluster group status *site* *group*
 
 Display current status of a user group.
 
@@ -76,7 +76,7 @@ Display current status of a user group.
 cluster group update
 --------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster group update [ **-\-sticky-users** <yes|no> ] [ **-\-sticky-backend** <yes|no> ] *site* *group*
+**doveadm** [*GLOBAL OPTIONS*] cluster group update [ **-\-sticky-users** <yes|no> ] [ **-\-sticky-backend** <yes|no> ] *site* *group*
 
 Updates group settings. Currently only two options can be given.
 
@@ -90,7 +90,7 @@ Updates group settings. Currently only two options can be given.
 cluster group list
 ------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster group list [ *mask* ]
+**doveadm** [*GLOBAL OPTIONS*] cluster group list [ *mask* ]
 
 List all user groups. Optional mask can be provided for filtering the list.
 
