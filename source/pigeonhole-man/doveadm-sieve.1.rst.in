@@ -12,7 +12,7 @@ doveadm-sieve - Commands related to handling Sieve scripts
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] *sieve_cmd* [*options*] [*arguments*]
+**doveadm** [*GLOBAL OPTIONS*] *sieve_cmd* [*options*] [*arguments*]
 
 DESCRIPTION
 ===========

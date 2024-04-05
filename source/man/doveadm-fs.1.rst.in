@@ -12,7 +12,7 @@ doveadm-fs - Interact with the abstract mail storage filesystem
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **fs** *command* [*ARGUMENTS*]
+**doveadm** [*GLOBAL OPTIONS*] **fs** *command* [*ARGUMENTS*]
 
 DESCRIPTION
 ===========

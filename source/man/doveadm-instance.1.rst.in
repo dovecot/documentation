@@ -12,9 +12,9 @@ doveadm-instance - Manage the list of running Dovecot instances
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **instance list**
+**doveadm** [*GLOBAL OPTIONS*] **instance list**
 
-**doveadm** [**-Dv**] **instance remove** *name* | *base_dir*
+**doveadm** [*GLOBAL OPTIONS*] **instance remove** *name* | *base_dir*
 
 DESCRIPTION
 ===========

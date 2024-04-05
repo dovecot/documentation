@@ -12,7 +12,7 @@ doveadm-acl - Manage Access Control List (ACL)
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **acl** *command* [*OPTIONS*] [*ARGUMENTS*]
+**doveadm** [*GLOBAL OPTIONS*] **acl** *command* [*OPTIONS*] [*ARGUMENTS*]
 
 DESCRIPTION
 ===========

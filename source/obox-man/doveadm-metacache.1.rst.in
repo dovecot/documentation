@@ -13,7 +13,7 @@ storage
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] metacache *command* [*arguments*]
+**doveadm** [*GLOBAL OPTIONS*] metacache *command* [*arguments*]
 
 DESCRIPTION
 ===========

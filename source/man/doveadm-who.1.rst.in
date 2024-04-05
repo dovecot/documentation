@@ -12,7 +12,7 @@ doveadm-who - Show who is logged into the Dovecot server
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **who** [**-1**] [**-f**
+**doveadm** [*GLOBAL OPTIONS*] **who** [**-1**] [**-f**
 *passdb_field*] [**-a** *anvil_socket_path*] [*user_mask*]
 [*ip* [**/** *bits*]]
 

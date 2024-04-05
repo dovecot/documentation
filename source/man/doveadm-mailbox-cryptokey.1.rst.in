@@ -12,7 +12,7 @@ doveadm-mailbox-cryptokey - Mail crypt plugin management
 SYNOPSIS
 ========
 
-**doveadm** [**-o** *plugin/mail_crypt_private_password=password* [**-Dv**] [**-f** *formatter*]
+**doveadm** [**-o** *plugin/mail_crypt_private_password=password* [*GLOBAL OPTIONS*]
 *mailbox cryptokey export|generate|list|password* [*options*] [*arguments*]
 
 DESCRIPTION

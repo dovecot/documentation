@@ -12,7 +12,7 @@ doveadm-fscache - Utility actions for Dovecot's local fscache storage
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] fscache *command* [*arguments*]
+**doveadm** [*GLOBAL OPTIONS*] fscache *command* [*arguments*]
 
 DESCRIPTION
 ===========

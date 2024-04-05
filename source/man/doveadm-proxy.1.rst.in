@@ -12,9 +12,9 @@ doveadm-proxy - Handle Dovecot proxy connections (obsolete)
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **proxy** *kick* [*OPTIONS*] [*ARGUMENTS*]
+**doveadm** [*GLOBAL OPTIONS*] **proxy** *kick* [*OPTIONS*] [*ARGUMENTS*]
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **proxy** *list* [*OPTIONS*] [*ARGUMENTS*]
+**doveadm** [*GLOBAL OPTIONS*] **proxy** *list* [*OPTIONS*] [*ARGUMENTS*]
 
 DESCRIPTION
 ===========

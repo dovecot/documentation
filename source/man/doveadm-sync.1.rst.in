@@ -14,7 +14,7 @@ doveadm-backup - Dovecot's one-way mailbox synchronization feature
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **sync** [**-u** *user* | **-A** | **-F**
+**doveadm** [*GLOBAL OPTIONS*] **sync** [**-u** *user* | **-A** | **-F**
 *file*] [**-S** *socket_path*] [**-1fPR**] [**-l** *secs*] [**-r**
 *rawlog path*] [**-m** *mailbox*] [**-g** *mailbox guid*] [**-n**
 *namespace* | **-N**] [**-x** *exclude*] [**-a** *all mailbox*]
@@ -22,7 +22,7 @@ SYNOPSIS
 date*] [**-O** *sync flag*] [**-I** *max size*]
 **-d** | *destination*
 
-**doveadm** [**-Dv**] **backup** [**-u** *user* | **-A** | **-F**
+**doveadm** [*GLOBAL OPTIONS*] **backup** [**-u** *user* | **-A** | **-F**
 *file*] [**-S** *socket_path*] [**-fPR**] [**-l** *secs*] [**-r**
 *rawlog path*] [**-m** *mailbox*] [**-g** *mailbox guid*] [**-n**
 *namespace* | **-N**] [**-x** *exclude*] [**-a** *all mailbox*]

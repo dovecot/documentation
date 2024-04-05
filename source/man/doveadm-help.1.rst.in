@@ -12,7 +12,7 @@ doveadm-help - Show information about doveadm commands
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **help** [*command*]
+**doveadm** [*GLOBAL OPTIONS*] **help** [*command*]
 
 DESCRIPTION
 ===========

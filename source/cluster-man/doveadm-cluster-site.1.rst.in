@@ -14,17 +14,17 @@ doveadm-cluster-site - Utility actions for Dovecot Cluster site
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site add [ **-\-id** **id** ] [ **-\-tag** *tag* ] [ **-\-load-balancer** *host* ] *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster site add [ **-\-id** **id** ] [ **-\-tag** *tag* ] [ **-\-load-balancer** *host* ] *name*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site remove *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster site remove *name*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site update [ **-\-status** *online|offline|standby|evacuate* ] [ **-\-load-balancer** *host* ] *-\-self* | *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster site update [ **-\-status** *online|offline|standby|evacuate* ] [ **-\-load-balancer** *host* ] *-\-self* | *name*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site status *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster site status *name*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site list
+**doveadm** [*GLOBAL OPTIONS*] cluster site list
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site init [ **-\-update** ] *-\-self* | *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster site init [ **-\-update** ] *-\-self* | *name*
 
 
 DESCRIPTION
@@ -45,7 +45,7 @@ COMMANDS
 cluster site add
 ----------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site add [ **-\-id** *id* ] [ **-\-tag** *tag* ] [ **-\-load-balancer** *host* ] *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster site add [ **-\-id** *id* ] [ **-\-tag** *tag* ] [ **-\-load-balancer** *host* ] *name*
 
 Adds a new site to cluster. Load balancer is the host or IP address where another site's proxy connects to do site to site connections.
 New sites are added in online state. UUID should not be used unless you are re-adding the same site.
@@ -54,7 +54,7 @@ New sites are added in online state. UUID should not be used unless you are re-a
 cluster site remove
 -------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site remove *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster site remove *name*
 
 Remove a site. This currently has no safety checks, so be sure to remove first all of the site's backends and remove it from all users' preferred sites.
 
@@ -62,14 +62,14 @@ Remove a site. This currently has no safety checks, so be sure to remove first a
 cluster site update
 -------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site update [ **-\-status** *online|offline|standby|evacuate* ] [ **-\-load-balancer** *host* ] *-\-self* | *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster site update [ **-\-status** *online|offline|standby|evacuate* ] [ **-\-load-balancer** *host* ] *-\-self* | *name*
 
 Update site status and load balancer. The ``--self`` parameter can be used to target the local site.
 
 
 cluster site list
 -----------------
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site list
+**doveadm** [*GLOBAL OPTIONS*] cluster site list
 
 List all sites.
 
@@ -77,7 +77,7 @@ List all sites.
 cluster site init
 -------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster site init [ **-\-update**] *-\-self* | *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster site init [ **-\-update**] *-\-self* | *name*
 
 Initialise site by creating *cluster_default_group_count* user groups. The ``--self`` parameter can be used to target the local site.
 

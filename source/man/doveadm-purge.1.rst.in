@@ -12,11 +12,11 @@ doveadm-purge - Remove messages with refcount=0 from mdbox files
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] **purge** [**-S** *socket_path*] **-A**
+**doveadm** [*GLOBAL OPTIONS*] **purge** [**-S** *socket_path*] **-A**
 
-**doveadm** [**-Dv**] **purge** [**-S** *socket_path*] **-F** *file*
+**doveadm** [*GLOBAL OPTIONS*] **purge** [**-S** *socket_path*] **-F** *file*
 
-**doveadm** [**-Dv**] **purge** [**-S** *socket_path*] **-u** *user*
+**doveadm** [*GLOBAL OPTIONS*] **purge** [**-S** *socket_path*] **-u** *user*
 
 DESCRIPTION
 ===========

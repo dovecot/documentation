@@ -14,13 +14,13 @@ doveadm-cluster-tag - Utility actions for Dovecot Cluster tag
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag create [ **-\-id** **id** ] *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster tag create [ **-\-id** **id** ] *name*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag delete *name|id*
+**doveadm** [*GLOBAL OPTIONS*] cluster tag delete *name|id*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag update [ **-\-name** *name* ] *name|id*
+**doveadm** [*GLOBAL OPTIONS*] cluster tag update [ **-\-name** *name* ] *name|id*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag list
+**doveadm** [*GLOBAL OPTIONS*] cluster tag list
 
 
 DESCRIPTION
@@ -46,14 +46,14 @@ COMMANDS
 cluster tag create
 ------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag create [ **-\-id** *id* ] *name*
+**doveadm** [*GLOBAL OPTIONS*] cluster tag create [ **-\-id** *id* ] *name*
 
 Creates a new tag for cluster. UUID can be provided, if not, it will be generated.
 
 cluster tag remove
 -------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag remove *name|id*
+**doveadm** [*GLOBAL OPTIONS*] cluster tag remove *name|id*
 
 Remove a tag. This currently has no safety checks, so be sure to remove first all of the tag's sites.
 
@@ -61,7 +61,7 @@ Remove a tag. This currently has no safety checks, so be sure to remove first al
 cluster tag update
 -------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag update [ **-\-name** *name* ] *name|id*
+**doveadm** [*GLOBAL OPTIONS*] cluster tag update [ **-\-name** *name* ] *name|id*
 
 Change tag name.
 
@@ -69,7 +69,7 @@ Change tag name.
 cluster tag list
 ----------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster tag list
+**doveadm** [*GLOBAL OPTIONS*] cluster tag list
 
 List all tags.
 

@@ -14,13 +14,13 @@ doveadm-cluster-user - Utility actions for Dovecot Cluster users
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster user access [ **-u** *user* ] | [ **-A** ] | [ **-f** *file* ] [ **-i** ]
+**doveadm** [*GLOBAL OPTIONS*] cluster user access [ **-u** *user* ] | [ **-A** ] | [ **-f** *file* ] [ **-i** ]
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster user delete *user*
+**doveadm** [*GLOBAL OPTIONS*] cluster user delete *user*
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster user move [ **-\-direct** ] [ **-\-site** *site* ] *user* *group* [ *failover group* ]
+**doveadm** [*GLOBAL OPTIONS*] cluster user move [ **-\-direct** ] [ **-\-site** *site* ] *user* *group* [ *failover group* ]
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster user status *user*
+**doveadm** [*GLOBAL OPTIONS*] cluster user status *user*
 
 
 DESCRIPTION
@@ -41,7 +41,7 @@ COMMANDS
 cluster user access
 -------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster user access [ **-u** *user* | **-A** | **-F** *file* ] [ **-i** ]
+**doveadm** [*GLOBAL OPTIONS*] cluster user access [ **-u** *user* | **-A** | **-F** *file* ] [ **-i** ]
 
 Perform cluster lookup for the user (or users). Displays the host name or
 IP address of the backend which the user ended up. This command can be run
@@ -60,7 +60,7 @@ You can use the ``-i`` parameter to display backend's IP rather than host name.
 cluster user delete
 -------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster user delete *user*
+**doveadm** [*GLOBAL OPTIONS*] cluster user delete *user*
 
 Deletes a user record from GeoDB.
 
@@ -68,7 +68,7 @@ Deletes a user record from GeoDB.
 cluster user move
 -----------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster user move [ **-\-direct** ] [ **-\-site** *site* ] *user* *group* [ *failover group* ]
+**doveadm** [*GLOBAL OPTIONS*] cluster user move [ **-\-direct** ] [ **-\-site** *site* ] *user* *group* [ *failover group* ]
 
 Initiates moving user to a different user group which will finish in background.
 The move is initialized by updating the ``moving_*`` fields in GeoDB.
@@ -84,7 +84,7 @@ should not be used.
 cluster user status
 -------------------
 
-**doveadm** [**-Dv**] [**-f** *formatter*] cluster user status *user*
+**doveadm** [*GLOBAL OPTIONS*] cluster user status *user*
 
 Displays status information of a user.
 

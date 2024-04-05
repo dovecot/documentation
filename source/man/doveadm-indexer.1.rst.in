@@ -12,7 +12,7 @@ doveadm-indexer - Commands related to managing the indexer process
 SYNOPSIS
 ========
 
-**doveadm** [**-Dv**] [**-f** *formatter*] **indexer** *command* [*OPTIONS*] [*ARGUMENTS*]
+**doveadm** [*GLOBAL OPTIONS*] **indexer** *command* [*OPTIONS*] [*ARGUMENTS*]
 
 DESCRIPTION
 ===========
