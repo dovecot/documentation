@@ -4,15 +4,30 @@
 Authentication via remote IMAP server
 =====================================
 
-Available driver settings:
+This method is a separate IMAP server that authenticates the requested user
+against its internal database.
 
-* host=<template> : IP address or hostname. Allows
-  :ref:`%variables <config_variables>` (e.g. ``host=imap.%d``)
-* port=<port>
-* username=<template> : The default is %u, but this could be changed to for
-  example %n@example.com
-* ssl=imaps / ssl=starttls
-* rawlog_dir=<path>
+Configuration
+=============
+
+.. dovecot_core:setting_link:: imapc_host
+
+
+.. dovecot_core:setting_link:: imapc_port
+
+
+.. dovecot_core:setting_link:: imapc_user
+
+
+.. dovecot_core:setting_link:: imapc_rawlog_dir
+
+
+.. dovecot_core:setting_link:: imapc_ssl
+
+
+.. dovecotremoved:: 2.4.0,3.0.0 Arg-based driver settings have been removed
+                    in favor of using the standard imapc_* settings.
+
 
 .. dovecotremoved:: 2.4.0,3.0.0 ssl_ca_file, ssl_ca_dir and allow_invalid_cert
                     settings have been removed. The standard ssl_* settings can
@@ -28,5 +43,11 @@ Authenticates users against remote IMAP server in IP address 192.168.1.123:
 .. code-block:: none
 
   passdb imap {
-    args = host=192.168.1.123
+    imapc_host = 192.168.1.123
+    imapc_port = 143
+    imapc_user = %{owner_user}
+    imapc_rawlog_dir = /tmp/imapc_rawlogs/
+    imapc_ssl = starttls
+
+    ssl_client_require_valid_cert = no
   }
