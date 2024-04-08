@@ -28,21 +28,87 @@ Obox should work with Cassandra v2.1, v2.2 or v3.x. A recent v3.x release is rec
 
 .. _dictmap_example_configuration:
 
+Example Configuration
+---------------------
+
+.. Note:: All uppercased parts **must** be replaced from the following examples
+
 Cassandra/sproxyd Example Configuration
----------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: none
 
    mail_location = obox:%u:INDEX=~/:CONTROL=~/
    plugin {
      # Without lazy_expunge plugin:
-     obox_fs = fscache:512M:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; refcounting-table:lockdir=/tmp:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11
+     obox_fs = fscache:512M:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; sproxyd:http://SPROXYD_SCALITY_URL/?class=2&reason_header_max_length=200 ; refcounting-table:lockdir=/tmp:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11
      # With lazy_expunge plugin:
-     #obox_fs = fscache:512M:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; refcounting-table:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11
+     #obox_fs = fscache:512M:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; sproxyd:http://SPROXYD_SCALITY_URL/?class=2&reason_header_max_length=200 ; refcounting-table:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11
 
-     obox_index_fs = compress:zstd:3:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=2&reason_header_max_length=200 ; diff-table
-     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:dictmap:proxy:dict-async:cassandra ; sproxyd:http://sproxyd.scality.example.com/?class=1&reason_header_max_length=200 ; dict-prefix=%u/fts/
+     obox_index_fs = compress:zstd:3:dictmap:proxy:dict-async:cassandra ; sproxyd:http://SPROXYD_SCALITY_URL/?class=2&reason_header_max_length=200 ; diff-table
+     fts_dovecot_fs = fts-cache:fscache:512M:/var/cache/fts/%4Nu:compress:zstd:3:dictmap:proxy:dict-async:cassandra ; sproxyd:http://SPROXYD_SCALITY_URL/?class=1&reason_header_max_length=200 ; dict-prefix=%u/fts/
    }
+
+See also :ref:`scality_sproxyd`
+
+Cassandra/azure Example Configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: none
+
+   mail_location = obox:%u:INDEX=~/:CONTROL=~/
+   plugin {
+     # Without lazy_expunge plugin:
+     obox_fs = fscache:2G:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; azure:https://ACCOUNTNAME:SHARED_KEY@CONTAINERNAME.blob.core.windows.net/?reason_header_max_length=200 ; refcounting-table:lockdir=/tmp:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11:storage-objectid-prefix=%u/mail-storage/
+     # With lazy_expunge plugin:
+     #obox_fs = fscache:2G:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; azure:https://ACCOUNTNAME:SHARED_KEY@CONTAINERNAME.blob.core.windows.net/?reason_header_max_length=200 ; refcounting-table:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11:storage-objectid-prefix=%u/mail-storage/
+
+     obox_index_fs = compress:zstd:3:dictmap:proxy:dict-async:cassandra ; azure:https://ACCOUNTNAME:SHARED_KEY@CONTAINERNAME.blob.core.windows.net/?reason_header_max_length=200 ; diff-table:storage-passthrough-paths=full
+     fts_dovecot_fs = fts-cache:fscache:2G:/var/cache/fts/%4Nu:compress:zstd:3:dictmap:proxy:dict-async:cassandra ; azure:https://ACCOUNTNAME:SHARED_KEY@CONTAINERNAME.blob.core.windows.net/?reason_header_max_length=200 ; dict-prefix=%u/fts/:storage-passthrough-paths=full
+   }
+
+See also :ref:`azure`
+
+Cassandra/aws-s3 Example Configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: none
+
+   mail_location = obox:%u:INDEX=~/:CONTROL=~/
+   plugin {
+     # Without lazy_expunge plugin:
+     obox_fs = fscache:2G:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; aws-s3:https://BUCKET_NAME.s3.REGION.amazonaws.com/?region=REGION&auth_role=S3ACCESS&reason_header_max_length=200 ; refcounting-table:lockdir=/tmp:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11:storage-objectid-prefix=%u/mail-storage/
+     # With lazy_expunge plugin:
+     #obox_fs = fscache:2G:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; aws-s3:https://BUCKET_NAME.s3.REGION.amazonaws.com/?region=REGION&auth_role=S3ACCESS&reason_header_max_length=200 ; refcounting-table:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11:storage-objectid-prefix=%u/mail-storage/
+
+     obox_index_fs = compress:zstd:3:dictmap:proxy:dict-async:cassandra ; aws-s3:https://BUCKET_NAME.s3.REGION.amazonaws.com/?region=REGION&auth_role=S3ACCESS&reason_header_max_length=200 ; diff-table:storage-passthrough-paths=full
+     fts_dovecot_fs = fts-cache:fscache:2G:/var/cache/fts/%4Nu:compress:zstd:3:dictmap:proxy:dict-async:cassandra ; aws-s3:https://BUCKET_NAME.s3.REGION.amazonaws.com/?region=REGION&auth_role=S3ACCESS&reason_header_max_length=200 ; dict-prefix=%u/fts/:storage-passthrough-paths=full
+   }
+
+
+See also :ref:`amazon_s3`
+
+Cassandra/s3 Example Configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: none
+
+   mail_location = obox:%u:INDEX=~/:CONTROL=~/
+   plugin {
+     # Without lazy_expunge plugin:
+     obox_fs = fscache:2G:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; s3:https://ACCESSKEY:SECRET@S3_STORAGE_URL/?bucket=mails&reason_header_max_length=200 ; refcounting-table:lockdir=/tmp:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11:storage-objectid-prefix=%u/mail-storage/
+     # With lazy_expunge plugin:
+     #obox_fs = fscache:2G:/var/cache/mails/%4Nu:dictmap:proxy:dict-async:cassandra ; s3:https://ACCESSKEY:SECRET@S3_STORAGE_URL/?bucket=mails&reason_header_max_length=200 ; refcounting-table:bucket-size=10000:bucket-cache=%h/buckets.cache:nlinks-limit=3:delete-timestamp=+10s:bucket-deleted-days=11:storage-objectid-prefix=%u/mail-storage/
+
+     obox_index_fs = compress:zstd:3:dictmap:proxy:dict-async:cassandra ; s3:https://ACCESSKEY:SECRET@S3_STORAGE_URL/?bucket=mails&reason_header_max_length=200 ; diff-table:storage-passthrough-paths=full
+     fts_dovecot_fs = fts-cache:fscache:2G:/var/cache/fts/%4Nu:compress:zstd:3:dictmap:proxy:dict-async:cassandra ; s3:https://ACCESSKEY:SECRET@S3_STORAGE_URL/?bucket=mails&reason_header_max_length=200 ; dict-prefix=%u/fts/:storage-passthrough-paths=full
+   }
+
+
+See also :ref:`s3_storages`
+
+Other dictmap Configuration hints
+---------------------------------
 
 It's highly recommended to use :ref:`lazy_expunge_plugin` with dictmap.
 This allows enabling various optimizations, which otherwise wouldn't be safe.
