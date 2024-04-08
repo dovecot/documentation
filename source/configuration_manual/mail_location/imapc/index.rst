@@ -30,6 +30,13 @@ Connection Settings
    server before disconnecting and retrying.
 
 
+.. dovecot_core:setting:: imapc_connection_timeout_interval
+   :default: 30 secs
+   :values: @time_msecs
+
+   How long to wait before considering a connection attempt as timed out.
+
+
 .. dovecot_core:setting:: imapc_connection_retry_count
    :default: 1
    :values: @uint
@@ -241,14 +248,12 @@ Connection Settings
 
 
 .. dovecot_core:setting:: imapc_max_line_length
-   :default: 0
+   :default: unlimited
    :values: @size
 
    The maximum line length to accept from the remote IMAP server.
 
    This setting is used to limit maximum memory usage.
-
-   A value of ``0`` indicates no maximum.
 
 
 .. dovecot_core:setting:: imapc_password
@@ -316,6 +321,9 @@ Connection Settings
    production use.
 
    Only used if :dovecot_core:ref:`imapc_ssl` is enabled.
+
+   .. dovecotremoved:: 2.4.0,3.0.0 Dropped in favor of using the global
+                       :dovecot_core:ref:`ssl_client_require_valid_cert`.
 
 
 .. dovecot_core:setting:: imapc_user
