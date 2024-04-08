@@ -271,21 +271,22 @@ Example configuration using OBOX::
 
   # Exclude mailboxes we do not wish to index automatically.
   # These will be indexed on demand, if they are used in a search.
+
   namespace inbox {
     inbox = yes
 
     mailbox spam {
       special_use = \Junk
-      fts_autoindex_exclude = yes
+      fts_autoindex = no
     }
 
     mailbox trash {
       special_use = \Trash
-      fts_autoindex_exclude = yes
+      fts_autoindex = no
     }
 
     mailbox .DUMPSTER {
-      fts_autoindex_exclude = yes
+      fts_autoindex = no
     }
   }
 

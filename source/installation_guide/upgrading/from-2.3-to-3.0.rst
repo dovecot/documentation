@@ -174,7 +174,9 @@ Removed features and their replacements
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``fts``                                                    | Replaced by :dovecot_plugin:ref:`fts` named filter.                                      |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
-| :dovecot_plugin:ref:`fts_autoindex_exclude`.               | Changed to boolean property of ``mailbox``.                                              |
+| ``fts_autoindex_exclude``                                  | Replaced by boolean property :dovecot_plugin:ref:`fts_autoindex`,                        |
+|                                                            | nested inside ``mailbox`` blocks. Note that the values are inverted as compared to       |
+|                                                            | those in the old ``fts_autoindex_exclude``.                                              |
 +------------------------------------------------------------+------------------------------------------------------------------------------------------+
 | ``fts_decoder``                                            | Replaced by :dovecot_plugin:ref:`fts_decoder_driver` and                                 |
 |                                                            | :dovecot_plugin:ref:`fts_decoder_script_socket_path`.                                    |

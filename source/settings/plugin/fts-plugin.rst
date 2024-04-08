@@ -29,33 +29,30 @@ Settings
 .. dovecot_plugin:setting:: fts_autoindex
    :default: no
    :plugin: fts
-   :seealso: @fts_autoindex_exclude;dovecot_plugin, @fts_autoindex_max_recent_msgs;dovecot_plugin
+   :seealso: @fts_autoindex_max_recent_msgs;dovecot_plugin
    :values: @boolean
 
    If enabled, index mail as it is delivered or appended.
-
-
-.. dovecot_plugin:setting:: fts_autoindex_exclude
-   :plugin: fts
-   :seealso: @fts_autoindex;dovecot_plugin
-   :values: @boolean
-
-   You can disable autoindexing for a mailbox adding this flag:
+   It can be overridden at the mailbox level. E.g. You can disable autoindexing
+   for selected mailboxes adding this flag:
 
    Example::
 
+      fts_autoindex = yes
+      ...
+
       mailbox trash {
         special_use = \Trash
-        fts_autoindex_exclude = yes
+        fts_autoindex = no
       }
 
       mailbox spam {
         special_use = \Junk
-        fts_autoindex_exclude = yes
+        fts_autoindex = no
       }
 
       mailbox storage/* {
-        fts_autoindex_exclude = yes
+        fts_autoindex = no
       }
 
 
