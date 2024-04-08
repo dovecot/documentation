@@ -521,6 +521,11 @@ Authentication variables
 |          |                       | .. dovecotadded:: 2.2.13 Works in auth process.               |
 |          |                       | .. dovecotdeprecated:: 2.3.13                                 |
 +----------+-----------------------+---------------------------------------------------------------+
+|          | owner_user            | For shared storage this is the %{user} variable of the owner, |
+|          |                       | otherwise it is the same as %{user}.                          |
+|          |                       |                                                               |
+|          |                       | .. dovecotadded:: 2.4.0,3.0.0                                 |
++----------+-----------------------+---------------------------------------------------------------+
 |          | passdb:<name>         | Return passdb extra field "name". %{passdb:name:default}      |
 |          |                       | returns "default" if "name" doesn't exist (not returned if    |
 |          |                       | name exists but is empty). Note that this doesn't work in     |
