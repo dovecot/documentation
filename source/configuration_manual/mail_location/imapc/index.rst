@@ -319,6 +319,7 @@ Connection Settings
 
 
 .. dovecot_core:setting:: imapc_user
+   :default: %{owner_user}
    :seealso: @imapc_master_user;dovecot_core, @imapc_password;dovecot_core
    :values: @string
 
