@@ -93,7 +93,7 @@ Additionally imapc must be configured accordingly on the backends:
 ::
 
    imapc_host = proxy-load-balancer
-   #imapc_user = # leave this empty. It'll be automatically filled with the destination username.
+   #imapc_user = %{owner_user} # This %variable will be automatically filled with the destination username.
    imapc_password = master-secret
    # With v2.4.0;v3.0.0 the following features are enabled by default, prior to
    # this version the following must be uncommented:
