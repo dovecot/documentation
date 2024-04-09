@@ -459,6 +459,8 @@ Settings
 
    URL for `Apache Tika <https://tika.apache.org/>`_ decoder for attachments.
 
+   .. dovecotchanged:: 2.4.0,3.0.0 Basic authentication support is now added.
+
    Example:
 
    .. code-block:: none
