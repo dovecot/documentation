@@ -444,6 +444,13 @@ Settings
        fts_languages = en de
      }
 
+.. dovecot_plugin:setting:: fts_message_max_size
+   :added: 2.4.0,3.0.0
+   :plugin: fts
+   :values: @size
+   :default: 0
+
+   Maximum body size that is processed by fts. 0 means unlimited.
 
 .. dovecot_plugin:setting:: fts_tika
    :added: 2.2.13
