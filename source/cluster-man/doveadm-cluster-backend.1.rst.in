@@ -55,6 +55,9 @@ cluster backend add
 
 Adds a new backend to cluster. New backends are added in standby state. UUID should not be used unless you are re-adding the same backend.
 
+*name*
+  must be a resolvable DNS name. Unresolvable DNS names and IPv4/v6 literal addresses will be rejected.
+
 
 cluster backend remove
 ----------------------
