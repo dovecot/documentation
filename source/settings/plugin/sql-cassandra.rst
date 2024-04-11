@@ -41,6 +41,20 @@ Supported Options
              completely.
 
 
+.. dovecot_core:setting:: log_retries
+   :default: no
+   :domain: sql-cassandra
+   :values: @boolean
+
+   Whether to log about failed requests that are retried (which may or may
+   not succeed after the retry).
+
+   .. note:: This setting behaves differently than other boolean settings.
+             The feature is enabled by presence of the keyword in connect
+             string, so to disable this feature, you must remove the keyword
+             completely.
+
+
 .. dovecot_core:setting:: delete_consistency
    :default: local-quorum
    :domain: sql-cassandra
