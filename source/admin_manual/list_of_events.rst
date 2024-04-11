@@ -1230,6 +1230,8 @@ Events emitted by Dovecot's internal SQL library.
    :field error: Human readable error.
    :field error_code: Error code (if available).
    :field query_first_word: First word of the query (e.g. ``SELECT``).
+   :field consistency @added;2.4.0,3.0.0: Requested consistency for the query (Cassandra only)
+   :field error_consistency @added;2.4.0,3.0.0: Consistency attempted to be used by Cassandra for the failed query (Cassandra only)
 
    Response was received to SQL query.
 
