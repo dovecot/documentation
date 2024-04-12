@@ -22,19 +22,19 @@ containing the following details:
 
 
 
-*name*:
+*name*
    the name of the process
-*pid*:
+*pid*
    the pid of the process
-*available_count*:
+*available_count*
    the number of further clients that can connect to the process
-*total_count*:
+*total_count*
    the number of connected clients
-*idle_start*:
+*idle_start*
    timestamp when the process entered the idle status, 0 if active
-*last_status_update*:
+*last_status_update*
    timestamp of the latest update from the process
-*last_kill_sent*:
+*last_kill_sent*
    timestamp of the latest SIGINT signal sent to the process
 
 .. include:: global-options-formatter.inc
