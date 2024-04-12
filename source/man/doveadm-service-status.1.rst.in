@@ -20,32 +20,32 @@ DESCRIPTION
 **doveadm service status** produces a table with a line for each service,
 containing the following details:
 
-*name*:
+*name*
    the name of the service
-*process_count*:
+*process_count*
    the number of processes actually running for the service
-*process_avail*:
+*process_avail*
    the number of additional processes that can be spawned for the service
-*process_limit*:
+*process_limit*
    the maximum number of processes that can be active for the service
-*client_limit*:
+*client_limit*
    the maximum number of connections that the service will handle simultaneously
-*throttle_secs*:
+*throttle_secs*
    seconds to wait before launching another process when processes are dying
    unexpectedly early for the service
-*exit_failure_last*:
+*exit_failure_last*
    timestamp when the last process was terminated abnormally for the service
-*exit_failures_in_sec*:
+*exit_failures_in_sec*
    number of abnormally terminated processes for the service in the last second
-*last_drop_warning*:
+*last_drop_warning*
    timestamp when the last time a "dropping client connections" warning was logged
-*listen_pending*:
+*listen_pending*
    if the master process is queuing connections that need to be dispatched
-*listening*:
+*listening*
    if service is listening
-*doveadm_stop*:
+*doveadm_stop*
    if the service has been stopped by **doveadm service stop**
-*process_total*:
+*process_total*
    the total number of processes forked for the service since the service start.
 
 .. include:: global-options-formatter.inc
