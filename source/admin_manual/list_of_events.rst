@@ -491,6 +491,10 @@ Most useful for debugging authentication flow.
 |                     |  * ``internal_failure``                              |
 |                     |  * ``next``                                          |
 +---------------------+------------------------------------------------------+
+| cache               | ``hit`` or ``miss`` when auth cache was used.        |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.19                            |
++---------------------+------------------------------------------------------+
 
 
 auth_userdb_request_started
@@ -540,6 +544,10 @@ Most useful for debugging authentication flow.
 |                     |  * ``ok``                                            |
 |                     |  * ``user_unknown``                                  |
 |                     |  * ``internal_failure``                              |
++---------------------+------------------------------------------------------+
+| cache               | ``hit`` or ``miss`` when auth cache was used.        |
+|                     |                                                      |
+|                     | .. versionadded:: v2.3.19                            |
 +---------------------+------------------------------------------------------+
 
 
