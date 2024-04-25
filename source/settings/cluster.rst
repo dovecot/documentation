@@ -29,6 +29,17 @@ These settings are for both Dovecot proxies and backends.
    Dictionary URI used for the server-specific local database. This typically
    points to SQLite under ``/dev/shm``.
 
+.. cluster:setting:: cluster_backend_test_username
+   :values: @string
+
+   This setting is used for two purposes:
+
+   #. Username used by proxy for logging into backends to see if it's up or
+      down. ``%{backend_host}`` variable expands to the hostname of the backend.
+   #. Username used by backend for running ``doveadm cluster group access``
+      command. This command just needs any existing user to work - it doesn't
+      matter that it's not actually in the accessed group.
+
 Proxy Settings
 ^^^^^^^^^^^^^^
 
@@ -41,17 +52,6 @@ These settings are only for Dovecot proxies. Don't set them in backends.
    If enabled, this proxy runs checks to see whether backends are up or down.
    If disabled, this proxy never sets any backends offline. This setting is
    used only by proxies.
-
-.. cluster:setting:: cluster_backend_test_username
-   :values: @string
-
-   This setting is used for two purposes:
-
-   #. Username used by proxy for logging into backends to see if it's up or
-      down. ``%{backend_host}`` variable expands to the hostname of the backend.
-   #. Username used by backend for running ``doveadm cluster group access``
-      command. This command just needs any existing user to work - it doesn't
-      matter that it's not actually in the accessed group.
 
 .. cluster:setting:: cluster_backend_test_password
    :values: @string
