@@ -2076,7 +2076,7 @@ Events emitted by dictionary library and dictionary server.
 
 .. dovecot_event:field_group:: dict_common
 
-   :field driver: Name of the dictionary driver, e.g. ``sql`` or ``proxy``.
+   :field dict_driver: Name of the dictionary driver, e.g. ``sql`` or ``proxy``.
    :field error: Error, if one occurred.
 
 .. dovecot_event:field_group:: dict_init
