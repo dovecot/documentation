@@ -1229,7 +1229,12 @@ Events emitted by Dovecot's internal SQL library.
 
 .. Note:: This includes queries sent to Cassandra.
 
+.. dovecot_event:field_group:: sql_common
+
+   :field sql_driver: Name of the sql driver, e.g. ``mysql`` or ``cassandra``.
+
 .. dovecot_core:event:: sql_query_finished
+   :inherit: sql_common
 
    :field error: Human readable error.
    :field error_code: Error code (if available).
@@ -1239,6 +1244,7 @@ Events emitted by Dovecot's internal SQL library.
 
 
 .. dovecot_core:event:: sql_transaction_finished
+   :inherit: sql_common
 
    :field error: Human readable error.
    :field error_code: Error code (if available).
@@ -1247,6 +1253,7 @@ Events emitted by Dovecot's internal SQL library.
 
 
 .. dovecot_core:event:: sql_connection_finished
+   :inherit: sql_common
 
    Connection to SQL server is closed.
 
