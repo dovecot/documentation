@@ -106,7 +106,6 @@ lookup can return:
   :ref:`authentication-passwd_file`.
 * **LDAP**: Lightweight Directory Access Protocol. See :ref:`authentication-ldap`.
 * **SQL**: SQL database (PostgreSQL, MySQL, SQLite). See :ref:`authentication-sql`.
-* **Dict**: Dict key-value database (Redis, etc.) See :ref:`authentication-dict`.
 * **Static**: Static passdb for simple configurations. See
   :ref:`authentication-static_password_database`.
 * **Lua**: Lua script for authentication. See: :ref:`authentication-lua_based_authentication`.
@@ -262,6 +261,5 @@ The result values that can be used:
   passwd_file
   ldap
   sql
-  dict
   lua_based_authentication
   passwd
