@@ -2369,6 +2369,10 @@ cluster
    :added: 3.0.0
 
    :field group: User group name.
+   :field dest_backend_id: ID of the target backend.
+   :field dest_backend_host: Hostname of the target backend.
+   :field src_backend_id: ID of the source backend.
+   :field src_backend_host: Hostname of the source backend.
 
 .. dovecot_core:event:: cluster_user_group_move_finished
    :added: 3.0.0
@@ -2376,19 +2380,29 @@ cluster
    :field group: User group name.
    :field moved_users: Number of users moved successfully within this group.
    :field failed_users: Number of users whose moving failed.
+   :field dest_backend_id: ID of the target backend.
+   :field dest_backend_host: Hostname of the target backend.
+   :field src_backend_id: ID of the source backend.
+   :field src_backend_host: Hostname of the source backend.
    :field error: Reason why group moving (partially) failed.
 
 .. dovecot_core:event:: cluster_user_move_started
    :added: 3.0.0
 
    :field user: Username being moved.
-   :field dest_host: Destination host where user is being moved to.
+   :field dest_backend_id: ID of the target backend.
+   :field dest_backend_host: Hostname of the target backend.
+   :field src_backend_id: ID of the source backend.
+   :field src_backend_host: Hostname of the source backend.
 
 .. dovecot_core:event:: cluster_user_move_finished
    :added: 3.0.0
 
    :field user: Username being moved.
-   :field dest_host: Destination host where user is being moved to.
+   :field dest_backend_id: ID of the target backend.
+   :field dest_backend_host: Hostname of the target backend.
+   :field src_backend_id: ID of the source backend.
+   :field src_backend_host: Hostname of the source backend.
    :field error: Reason why user moving failed.
 
 .. dovecot_core:event:: cluster_backend_check_started
