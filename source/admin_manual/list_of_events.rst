@@ -2226,6 +2226,8 @@ Login
      - :ref:`service_configuration-client_limit` and :ref:`service_configuration-process_limit` was hit and this login session was killed.
    * - ``shutting_down``
      - The process is shutting down so the login is aborted.
+   * - ``tls_handshake_not_finished``
+     - TLS handshake failed or was not finished.
    * - ``user_disabled``
      - User is in deny passdb, or in some other way disabled passdb.
 
