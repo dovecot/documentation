@@ -5,8 +5,33 @@ on:
     branches:
       - main
       - release-2.3
+      - new-ce-documentation
 
 jobs:
+  releasenew:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/new-ce-documentation'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+        cache: npm
+    - name: Install Dependencies
+      run: npm ci
+    - name: Build with VitePress
+      run: |
+        npm run docs:build
+    - uses: dovecot/rsync-deployments@master
+      with:
+        RSYNC_OPTIONS: -azr --delete
+        RSYNC_TARGET: docs@doc.dovecot.org:public_html/2.4/.
+        RSYNC_BASEDIR: /.vitepress/dist/.
+      if: env.DEPLOY_KEY
+      env:
+        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
   release:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
