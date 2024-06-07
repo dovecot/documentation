@@ -24,7 +24,7 @@ Dovecot authentication is split into four parts:
 
    * [[link,userdb,User Databases (userdb)]]
 
-For autehntication policy topics, see also:
+For authentication policy topics, see also:
 
 * [[link,auth_penalty]]
 * [[link,auth_policy]]

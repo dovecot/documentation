@@ -16,7 +16,7 @@ passwords and using them to access other services.
 
 ::: warning [[deprecated,weak_password_schemes]]
 Some password schemes are disabled by default due to being considered weak.
-This includes MD based (except DIGEST-MD5 and CRAM-MD5), LANMAN, NTLMm and
+This includes MD based (except DIGEST-MD5 and CRAM-MD5), LANMAN, NTLM and
 a few others.
 
 Please read the documentation carefully.

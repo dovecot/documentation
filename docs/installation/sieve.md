@@ -10,7 +10,7 @@ dovecotlinks:
 ## Prebuilt Binaries
 
 ::: tip
-This is the recommended way of installating Dovecot/Pigeonhole.
+This is the recommended way of installing Dovecot/Pigeonhole.
 :::
 
 Pigeonhole is the name of the project that adds support for the Sieve
