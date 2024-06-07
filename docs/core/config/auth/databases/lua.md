@@ -245,7 +245,7 @@ Lua userdb supports both single user lookup and iteration.
 Function signature is `auth_userdb_lookup(request)`.
 
 The function must return a tuple, which contains a return code, and also
-additionally astring or table.
+additionally a string or table.
 
 Table must be in key-value format, as it will be imported into auth request.
 
