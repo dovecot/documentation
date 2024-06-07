@@ -25,14 +25,14 @@ Configuration of VitePress is in the `.vitepress/config.js` file.
 
 From [VitePress](https://vitepress.dev/guide/getting-started#prerequisites):
 
-* Node.js version 18 or higher
+* Node.js **version 18+**
+  * Alternatively, Bun (https://bun.sh/) can be used instead.
 
-::: warning
-Ubuntu 22.04 LTS (and prior) does NOT contain a new enough version of nodejs.
-
-Either run in a container (see https://hub.docker.com/\_/node) or install
-via out-of-band packages (see https://github.com/nodesource/distributions).
-:::
+> [!WARNING]
+> Ubuntu 22.04 LTS (and prior) does NOT contain a new enough version of nodejs.
+>
+> Either run in a container (see https://hub.docker.com/\_/node) or install
+> via out-of-band packages (see https://github.com/nodesource/distributions).
 
 ## Installation
 
@@ -40,8 +40,9 @@ To install, run:
 
 ```console
 $ npm install
-# Or using bun (https://bun.sh/):
-#$ bun install
+
+# Or using bun:
+$ bun install
 ```
 
 ## Local Testing Server
@@ -49,22 +50,21 @@ $ npm install
 VitePress provides a local development server that will do real-time updates
 when source files change.
 
-::: warning
-This must be run from the base of the project!
-:::
+> [!IMPORTANT]
+> This must be run from the base of the project!
 
 Run with:
 
 ```console
 $ npm run docs:dev
-# or:
-#$ bun run docs:dev
+
+# Or using bun:
+$ bun run docs:dev
 ```
 
-::: warning
-Note: Certain features (such as search) will not work in testing/dev mode and
-require the documentation to be statically built and served.
-:::
+> [!NOTE]
+> Certain features (such as search) will not work in testing/dev mode and
+> require the documentation to be statically built and served.
 
 ## Documentation Generation
 
@@ -72,8 +72,9 @@ To generate the static documentation, run:
 
 ```console
 $ npm run docs:build
-# or:
-#$ bun run docs:build
+
+# Or using bun:
+$ bun run docs:build
 ```
 
 Generated documentation will be output in the `docs/.vitepress/dist` directory.
@@ -81,14 +82,15 @@ The statically generated documentation can be displayed locally by running:
 
 ```console
 $ npm run docs:preview
-# or:
-#$ bun run docs:preview
+
+# Or using bun (https://bun.sh/):
+$ bun run docs:preview
 ```
 
 ### Debugging
 
 Depending on when an issue occurs, errors may be displayed on the development
-screen (and in the terminal where the docs:dev command is being run).
+screen (and in the terminal where the `docs:dev` command is being run).
 
 However, some errors only occur when viewing a page, and will oftentimes
 result in a blank or incomplete page render. In these cases, looking at the
@@ -143,11 +145,12 @@ performed.
 This Markdown works in both the base pages and in many database fields
 (see documentation in `data/*.data.js` for the fields that support Markdown).
 
-Dovecot specific Markdown commands are wrapped in `[[...]]` syntax.
+> [!NOTE]
+> All Dovecot extended Markdown commands are wrapped in `[[...]]` syntax.
 
 #### Doveadm Commands
 
-Syntax: `[[doveadm,command_string(,args)]]` (args is optional)
+***Syntax: `[[doveadm,command_string(,args)]]` (args is optional)***
 
 `command_string` should NOT include "doveadm" - this will automatically be
 added in the output.
@@ -156,20 +159,22 @@ If args is set, it is appended to the display as doveadm arguments. Example:
 
 ```
 # [[doveadm,foo,--bar &lt;baz&gt;]] results in:
-<a href="PATH_TO_FOO_COMMAND">doveadm foo --bar &lt;baz%gt;</a>
+<a href="PATH_TO_FOO_COMMAND">doveadm foo --bar &lt;baz&gt;</a>
 ```
 
 #### Events
 
-Syntax: `[[event,event_name]]`
+***Syntax: `[[event,event_name]]`***
 
 `event_name` is the name of the Dovecot event to link to.
 
 #### Link
 
+***Syntax: `[[link,tag(,optional_text)]]`***
+
 VitePress does not support inter-documentation linking, by default.
 
-However, this wiki-like linking is useful and, thus, has been implemented
+However, this wiki-like linking is useful and has been custom implemented
 in Dovecot's implementation of VitePress.
 
 Dovecot linking "tags" are defined in a page's Frontmatter (the YAML at
@@ -185,11 +190,9 @@ the top of the page) under the `dovecotlinks` key.
     headers on a page. (Roughly: every non-character is converted to '-'.)
   * `text` is the default text for the tag.
 
-To link to a tag, use the Markdown syntax: `[[link,tag(,optional_text)]]`
-
 #### Man Pages
 
-Syntax: `[[man,command_name(,hash,section)]]`
+***Syntax: `[[man,command_name(,hash,section)]]`***
 
 Links to the man page.
 
@@ -201,13 +204,13 @@ Section is the section number.  It defaults to `1`.
 
 #### Plugin
 
-Syntax: `[[plugin,plugin_name]]`
+***Syntax: `[[plugin,plugin_name]]`***
 
 Links to the plugin page.
 
 #### RFC
 
-Syntax: `[[rfc,rfc_number(,section)]]`
+***Syntax: `[[rfc,rfc_number(,section)]]`***
 
 Links to the RFC page (external).
 
@@ -215,7 +218,7 @@ Links to the RFC page (external).
 
 #### Settings
 
-Syntax: `[[setting,setting_name(,args)]]`
+***Syntax: `[[setting,setting_name(,args)]]`***
 
 If args is set, it is appended to the display as a setting value. Example:
 
@@ -226,7 +229,7 @@ If args is set, it is appended to the display as a setting value. Example:
 
 #### Variable
 
-Syntax: `[[variable(,section)]]`
+***Syntax: `[[variable(,section)]]`***
 
 Link to the Settings Variable page.
 
@@ -234,16 +237,16 @@ By default, links to the base page.
 
 If section is defined, will link to the sub-section. Valid sub-sections:
 
-* auth
-* config (the default)
-* global
-* login
-* mail-service-user
-* mail-user
+* `auth`
+* `config` (default)
+* `global`
+* `login`
+* `mail-service-user`
+* `mail-user`
 
 #### Updates (added, changed, deprecated, removed)
 
-Syntax: `[[(update),tag_name]]`
+***Syntax: `[[(update),tag_name]]`***
 
 Create a update tag based on a tag_name.
 
