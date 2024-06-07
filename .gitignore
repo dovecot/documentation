@@ -3,5 +3,8 @@
 .DS.Store
 .DS_Store
 *.html
+bun.lockb
 node_modules/
-.vitepress/dist
+.vitepress/cache/
+.vitepress/dist/
+.vitepress/local.js
