@@ -1,9 +1,0 @@
-# cmdlog-plugin component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-[dovecot-2.3.9.4-rev1-cmdlog-plugin]
-name=Amazon Linux 2 - OX Dovecot Pro Command Log plug-in
-baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.9.4/plugin/cmdlog-plugin/AmazonLinux2
-gpgkey=https://software.open-xchange.com/oxbuildkey.pub
-gpgcheck=1
-enabled=1
-

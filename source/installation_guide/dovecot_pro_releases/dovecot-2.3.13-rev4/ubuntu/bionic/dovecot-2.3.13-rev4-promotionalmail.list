@@ -1,4 +1,0 @@
-# promotionalmail component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-# dovecot-2.3.13-rev4 Ubuntu 18.04 LTS (Bionic Beaver) - OX Engage Dovecot plug-in
-deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.13/promotionalmail/Ubuntu_18.04 ./

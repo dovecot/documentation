@@ -1,4 +1,0 @@
-# dovecot-2.3.9.3-rev3 Debian Stretch (9.0) - DataStax C/C++ Driver for Apache Cassandra
-deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-cassandra-cpp-driver/stable/2.13.0/DebianStretch ./
-# dovecot-2.3.9.3-rev3 Debian Stretch (9.0) - Sodium library
-deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-3rdparty-libsodium/stable/1.0.16/DebianStretch ./

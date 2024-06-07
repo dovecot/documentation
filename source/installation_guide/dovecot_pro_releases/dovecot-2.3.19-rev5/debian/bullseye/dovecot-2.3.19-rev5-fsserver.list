@@ -1,4 +1,0 @@
-# fsserver component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-# dovecot-2.3.19-rev5 Debian Bullseye (11.0) - OX Dovecot Pro Object Storage Development Tools - fs-server backend
-deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.19/devtools/fsserver/DebianBullseye ./
