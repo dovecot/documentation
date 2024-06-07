@@ -7,13 +7,13 @@ Static website content for Dovecot CE documentation.
 The site is statically generated via the
 [VitePress](https://www.vitepress.dev/) framework.
 
-VitePress is a Javascript application.  The content pages use markdown, with
+VitePress is a JavaScript application.  The content pages use markdown, with
 the ability to layer additional VitePress (and [Vue](https://www.vuejs.org))
 functionality on top of it, i.e. the ability to use templates/variables to
 generate page content.
 
-Most maintenance tasks on the Javascript code use simple functionality using
-basic Javscript components. The Mozilla reference page might be useful if
+Most maintenance tasks on the JavaScript code use simple functionality using
+basic JavaScript components. The Mozilla reference page might be useful if
 there are any questions:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
 
@@ -133,7 +133,7 @@ to have a page that shows all information on all plugin settings.
 
 The data files live in the base `/data` directory. Each file attempts to be
 self-documenting, but they are all essentially large JSON objects. Developers
-should need to know basically no Javascript to be able to edit the files.
+should need to know basically no JavaScript to be able to edit the files.
 
 ### Dovecot Markdown Extensions
 

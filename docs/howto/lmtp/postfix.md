@@ -67,7 +67,7 @@ mailbox_transport = lmtp:unix:private/dovecot-lmtp
 You can use LMTP and the Postfix setting "reject_unverified_recipient" for
 dynamic address verification. It's useful as Postfix doesn't need to query
 an external datasource (MySQL, LDAP...). Postfix maintain a local database
-with existing/non existing addresses (you can configure how long
+with existing/non-existing addresses (you can configure how long
 positive/negative results should be cached).
 
 See: [Postfix reject_unverified_recipient](https://www.postfix.org/ADDRESS_VERIFICATION_README.html).
