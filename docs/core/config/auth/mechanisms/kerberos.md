@@ -169,7 +169,7 @@ previous threads about it. Some points about it:
   binds (`auth_bind = yes`). However, a second LDAP passdb entry without
   `auth_bind = yes` may be added for the sole purpose of Kerberos principals
   mapping. This passdb doesn't need to return a password attribute (and
-  usually shouldn't). Aauthentication-bind LDAP databases are able to
+  usually shouldn't). Authentication-bind LDAP databases are able to
   provide `k5principals` lookups if configured with `pass_filter`.
   :::
 

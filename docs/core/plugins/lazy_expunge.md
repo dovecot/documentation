@@ -94,7 +94,7 @@ deleted, it's moved to this namespace as `<name>`. If the mailbox already
 exists in the expunge namespace, the contents are merged.
 
 To move to a namespace, you MUST add a trailing delimiter to the
-[[setting,lazy_expunge]] valuw.  Example: if the namespace delimiter is `/`,
+[[setting,lazy_expunge]] value.  Example: if the namespace delimiter is `/`,
 and you want to move to the `.EXPUNGED` namespace, then the
 [[setting,lazy_expunge]] setting should be set to `.EXPUNGED/`.
 

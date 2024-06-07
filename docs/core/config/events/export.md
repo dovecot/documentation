@@ -115,7 +115,7 @@ Supported Transports:
 | `log` | Send serialized event to syslog |
 | `http-post` | Send the serialized event as a HTTP POST payload to the URL specified in the `transport_arg` setting with a timeout specified by `transport_timeout`. Default is `250 milliseconds`. |
 | `file` | Send serialized events to a file specified in the `transport_arg` setting. |
-| `unix` | Send serialised events to a unix socket specified in the the `transport_arg` setting. The `transport_timeout` setting is used to specify how long the unix socket connection can take. Default is `250 milliseconds`. |
+| `unix` | Send serialised events to a unix socket specified in the `transport_arg` setting. The `transport_timeout` setting is used to specify how long the unix socket connection can take. Default is `250 milliseconds`. |
 
 The `drop` transport is useful when one wants to disable the event exporter
 temporarily.  Note that serialization still occurs, but the resulting

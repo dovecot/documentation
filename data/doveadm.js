@@ -1041,7 +1041,7 @@ Move mails between primary and alternative mailbox storage locations.
 				text: `Newly created folders are also subscribed to.`,
 			},
 			'source-location': {
-				positioinal: true,
+				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Location of source mailboxes.`,
 			},
@@ -1204,7 +1204,7 @@ Move mails between primary and alternative mailbox storage locations.
 				positional: true,
 				optional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Specifiy directory where syslogd writes files.`,
+				text: `Specify directory where syslogd writes files.`,
 			},
 		},
 		man: 'doveadm-log',
@@ -1214,7 +1214,7 @@ Move mails between primary and alternative mailbox storage locations.
 	'log reopen': {
 		args: {},
 		man: 'doveadm-log',
-		text: `Cause master process to repoen all log files.`,
+		text: `Cause master process to reopen all log files.`,
 	},
 
 	'log test': {
