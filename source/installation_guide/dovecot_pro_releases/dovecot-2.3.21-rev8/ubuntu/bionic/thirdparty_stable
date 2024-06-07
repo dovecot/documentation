@@ -1,2 +1,0 @@
-# dovecot-2.3.21-rev8 Ubuntu 18.04 LTS (Bionic Beaver) - DataStax C/C++ Driver for Apache Cassandra
-deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/3rdparty/cassandra-cpp-driver/Ubuntu_18.04 ./

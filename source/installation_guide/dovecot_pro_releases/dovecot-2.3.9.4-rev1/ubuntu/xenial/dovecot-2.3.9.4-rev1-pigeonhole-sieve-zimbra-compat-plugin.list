@@ -1,4 +1,0 @@
-# pigeonhole-sieve-zimbra-compat-plugin component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-# dovecot-2.3.9.4-rev1 Ubuntu 16.04 LTS (Xenial Xerus) - OX Dovecot Pro Pigeonhole Sieve Zimbra compatibility plug-in
-deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.9.4/plugin/pigeonhole-sieve-zimbra-compat-plugin/Ubuntu_16.04 ./
