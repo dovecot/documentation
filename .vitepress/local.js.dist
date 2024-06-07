@@ -1,0 +1,47 @@
+/* This file allows configuration overwrite of default paths. */
+
+// Allows custom mapping of data sources.
+// It is used by the VitePress data loaders to determine what data to
+// load for export.
+//
+// By default, all data files are loaded from "../data" directory
+// (paths are relative to "<base>/lib").
+//
+// Keys are data identifiers, Values are location RELATIVE TO
+// * "<base>/lib" DIRECTORY.
+export const data_paths = {
+	// doveadm: '../data/doveadm.js',
+}
+
+// A listing of source files (.md) for the documentation.
+// Paths are relative to project base.
+//
+// Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
+//
+// Default: [ 'docs/**/*.md' ]
+export const source_paths = []
+
+// A listing of files to watch to refresh data loaders in dev mode.
+// See: https://vitepress.dev/guide/data-loading#data-from-local-files
+// Paths are relative to project base.
+//
+// Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
+//
+// Default: [ 'docs/**/*.md', 'docs/**/*.inc', 'data/**/*' ]
+export const watch_paths = []
+
+// A listing of source path translations.
+//
+// This is the same format as VitePress' 'rewrite' setting:
+//   https://vitepress.dev/reference/site-config#rewrites
+//
+// Default: {}
+export const source_path_translations = {}
+
+// A listing of paths containing man files.
+// Paths are relative to project base.
+//
+// Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
+//
+// Default: [ 'docs/core/man/*.[[:digit:]].md' ]
+export const man_paths = []
