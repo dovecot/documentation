@@ -1,14 +1,7 @@
-/_build
-/venv
 *~
 .*.swp
 .DS.Store
 .DS_Store
 *.html
-__pycache__
-/source/man/*.1.rst
-/source/man/*.7.rst
-/source/man/*.inc
-/source/*-man/*.1.rst
-/source/*-man/*.7.rst
-/source/*-man/*.inc
+node_modules/
+.vitepress/dist
