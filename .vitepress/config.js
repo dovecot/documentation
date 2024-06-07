@@ -63,7 +63,7 @@ export default defineConfig({
 			useTitleFromFrontmatter: true,
 			useFolderTitleFromIndexFile: true,
 			includeFolderIndexFile: true,
-			collapseDepth: 1,
+			collapseDepth: 2,
 			excludeFiles: [],
 			excludeFilesByFrontmatterName: 'exclude',
 			sortMenusByName: true,
