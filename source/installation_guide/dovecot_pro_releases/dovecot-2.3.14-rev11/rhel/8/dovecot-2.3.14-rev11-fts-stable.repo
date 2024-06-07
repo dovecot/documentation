@@ -1,7 +1,0 @@
-[dovecot-2.3.14-rev11-fts]
-name=RedHat Enterprise Linux 8 - OX Dovecot Pro Full Text Search plug-in
-baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/fts/RHEL8
-gpgkey=https://software.open-xchange.com/oxbuildkey.pub
-gpgcheck=1
-enabled=1
-

@@ -1,9 +1,0 @@
-# pigeonhole-sieve-zimbra-compat-plugin component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-[dovecot-2.3.11.4-rev1-pigeonhole-sieve-zimbra-compat-plugin]
-name=RedHat Enterprise Linux 6 - OX Dovecot Pro Pigeonhole Sieve Zimbra compatibility plug-in
-baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.11.4/plugin/pigeonhole-sieve-zimbra-compat-plugin/RHEL6
-gpgkey=https://software.open-xchange.com/oxbuildkey.pub
-gpgcheck=1
-enabled=1
-
