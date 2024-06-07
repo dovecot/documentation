@@ -14,6 +14,9 @@ dovecotlinks:
   quota_backend_maildir:
     hash: backend-maildir
     text: Maildir quota backend
+  quota_mailbox_count:
+    hash: maximum-mailbox-count
+    text: quota maximum mailbox count
   quota_max_mail_size:
     hash: maximum-saved-mail-size
     text: quota maximum saved mail size
@@ -626,6 +629,14 @@ plugin {
   quota_grace = 50 M
 }
 ```
+
+## Maximum Mailbox Count
+
+See [[setting,quota_mailbox_count]].
+
+Maximum number of mailboxes that can be created. Each namespace is tracked
+separately, so e.g. shared mailboxes aren't counted towards the user's own
+limit. The default is `0`, which is unlimited.
 
 ## Maximum Saved Mail Size
 
