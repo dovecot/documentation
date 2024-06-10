@@ -24,7 +24,7 @@ let outPath
 const program = new Command()
 program
 	.name('generate_man.js')
-	.description('Generates man pages from markdown source.')
+	.description("Generates man pages from markdown source.\n\nRequires \"pandoc\" to be installed on the system!")
 	.argument('<path>', 'path to output man pages')
 	.action((path) => { outPath = path })
 	.parse()
