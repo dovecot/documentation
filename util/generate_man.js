@@ -29,6 +29,11 @@ program
 	.action((path) => { outPath = path })
 	.parse()
 
+/* Create output directory, if it doesn't exist. */
+if (!fs.existsSync(outPath)) {
+	fs.mkdirSync(outPath)
+}
+
 /* Generate list of man files. */
 const files = (await manFiles()).flatMap((x) => fg.sync(x))
 
