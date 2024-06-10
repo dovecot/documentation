@@ -42,6 +42,7 @@ const gitHash = gitCommitInfo().shortHash
 
 /* Process man files. */
 for (const f of files) {
+	/* Load base man file. */
 	const str = fs.readFileSync(f, 'utf8')
 	const content = matter(str).content
 
@@ -52,19 +53,7 @@ for (const f of files) {
 		"% " + dayjs().format('YYYY/MM/DD') + "\n\n"
 
 	/* Handle @include statements */
-	raw_md += content.replace(includesRE, (m, m1) => {
-		if (!m1.length) return m
-
-		const iContent = matter(
-			fs.readFileSync(
-				path.join(path.dirname(f), m1),
-				'utf8'
-			)
-		).content
-
-		// TODO: embedded includes
-		return iContent
-	})
+	raw_md += processIncludes(content, f)
 
 	/* Process Dovecot markdown */
 	raw_md = raw_md.replace(includesDM, (m, m1) => {
@@ -86,5 +75,17 @@ for (const f of files) {
 	pdc(raw_md, 'markdown', 'man', [ '-s' ], (err, result) => {
 		if (err) throw err
 		fs.writeFileSync(path.join(outPath, path.basename(f, '.md')), result)
+	})
+}
+
+/* Process @include statements (handles embedded includes) */
+function processIncludes(data, f) {
+	return data.replace(includesRE, (m, m1) => {
+		if (!m1.length) return m
+
+		const inc_f = path.join(path.dirname(f), m1)
+		return processIncludes(matter(
+			fs.readFileSync(inc_f, 'utf8')
+		).content, inc_f)
 	})
 }
