@@ -29,7 +29,7 @@ The driver passes all of the
 This plugin requires the [[plugin,fts]] to be activated and configured
 :::
 
-Enabling flatcurve is designed to be as easy as adding these lines:
+Enabling flatcurve is designed to be as easy as adding this to configuration:
 
 ```[dovecot.conf]
 mail_plugins = $mail_plugins fts fts_flatcurve
