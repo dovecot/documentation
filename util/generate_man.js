@@ -26,8 +26,10 @@ program
 	.name('generate_man.js')
 	.description("Generates man pages from markdown source.\n\nRequires \"pandoc\" to be installed on the system!")
 	.argument('<path>', 'path to output man pages')
+	.option('-d, --debug', 'print debug output')
 	.action((path) => { outPath = path })
 	.parse()
+const debug = program.opts().debug
 
 /* Create output directory, if it doesn't exist. */
 if (!fs.existsSync(outPath)) {
@@ -42,6 +44,10 @@ const gitHash = gitCommitInfo().shortHash
 
 /* Process man files. */
 for (const f of files) {
+	if (debug) {
+		console.debug('Processing file:', f)
+	}
+
 	/* Load base man file. */
 	const str = fs.readFileSync(f, 'utf8')
 	const content = matter(str).content
@@ -74,7 +80,11 @@ for (const f of files) {
 
 	pdc(raw_md, 'markdown', 'man', [ '-s' ], (err, result) => {
 		if (err) throw err
-		fs.writeFileSync(path.join(outPath, path.basename(f, '.md')), result)
+		const out_f = path.join(outPath, path.basename(f, '.md'))
+		fs.writeFileSync(out_f, result)
+		if (debug) {
+			console.debug('Man file written:', out_f)
+		}
 	})
 }
 
@@ -84,6 +94,10 @@ function processIncludes(data, f) {
 		if (!m1.length) return m
 
 		const inc_f = path.join(path.dirname(f), m1)
+		if (debug) {
+			console.debug('    Include:', inc_f)
+		}
+
 		return processIncludes(matter(
 			fs.readFileSync(inc_f, 'utf8')
 		).content, inc_f)
