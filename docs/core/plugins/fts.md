@@ -31,7 +31,7 @@ Dovecot maintains these FTS indexing engines:
 | Name | Description |
 | ---- | ----------- |
 | Dovecot Pro FTS | Dovecot native, object storage optimized driver. Only available as part of Dovecot Pro. |
-| [[plugin,fts_solr]] | Interface to [Apache Solr](https://solr.apache.org/) |
+| [[plugin,fts_solr]] | Interface to [Apache Solr](https://solr.apache.org/); stores data remotely. |
 | [[plugin,fts_flatcurve]] | [Xapian](https://xapian.org/) based driver; stores data locally. |
 
 ## Searching In Dovecot
@@ -193,7 +193,6 @@ The lib-fts tokenization library works in the following way:
    * Stemming
 
 4. Stopwords: A configurable list of words not to be indexed
-
 
 ### Languages
 
