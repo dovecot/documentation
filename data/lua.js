@@ -2,14 +2,22 @@
 
 export const lua_functions = {
 
+	// KEY: Lua function signature
 	'dovecot.i_debug(text)': {
+		// List of function arguments
 		params: {
+			// Argument label (should match function signature example)
 			text: {
+				// Argument type
 				type: 'string',
+				// Argument description. Rendered w/Markdown.
 				text: `Message to log.`
 			},
 		},
+		// List of tags to associate with this function (used for display
+		// separation)
 		tags: [ 'base '],
+		// Function description. Rendered w/Markdown.
 		text: `Log debug level message.`
 	},
 
