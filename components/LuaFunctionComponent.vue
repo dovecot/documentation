@@ -22,11 +22,11 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
    <a class="header-anchor" :href="'#' + k"></a>
   </component>
 
-  <dl v-if="v.params">
-   <dt><strong>Parameters:</strong></dt>
+  <dl v-if="v.args">
+   <dt><strong>Arguments:</strong></dt>
    <dd>
     <ul>
-     <li v-for="[k2,v2] in Object.entries(v.params)">
+     <li v-for="[k2,v2] in Object.entries(v.args)">
       <code>{{ k2 }}</code>
       (<em>{{ v2.type }}</em>):
       <span v-html="v2.text" />
