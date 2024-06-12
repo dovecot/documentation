@@ -8,7 +8,7 @@ export const categories = {
 	auth: {
 		// Category type
 		category: 'root',
-		// Category description (rendered with Markdown)
+		// Category description. Rendered w/Markdown.
 		description: `Authentication (server mainly)`
 	},
 
