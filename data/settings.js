@@ -2690,14 +2690,6 @@ quota backend. It means you can have the quota in Maildir++ format (e.g.
 \`10000000S\`).`
 	},
 
-	quota_set: {
-		plugin: 'quota',
-		values: setting_types.STRING,
-		seealso: [ '[[link,quota_admin]]' ],
-		text: `
-A dictionary string where your quota limit exists and can be modified.`
-	},
-
 	quota_warning: {
 		plugin: 'quota',
 		values: setting_types.STRING,
