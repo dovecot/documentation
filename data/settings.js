@@ -11,7 +11,7 @@ export const settings = {
 		// Change Documentation
 		// KEY = update identifier (see data/updates.js)
 		// VALUE = Text to display. "false" means only the version
-		// and change type is displayed
+		// and change type is displayed. Rendered w/Markdown.
 		// added: {
 		//     'update_identifier': `Update description`
 		// },
@@ -20,10 +20,10 @@ export const settings = {
 		// removed: {},
 
 		// Default value of the setting. If not set, is displayed as "None".
-		// This can be markdown.
+		// Rendered w/Markdown.
 		// default: '',
 
-		// A list of "See Also" links to display. This can be markdown.
+		// A list of "See Also" links to display. Rendered w/Markdown.
 		// Text entries are processed as inter-settings links.
 		// seealso: [],
 
@@ -41,7 +41,7 @@ export const settings = {
 		// in a separate section on the All Settings page.
 		advanced: true,
 
-		// Setting description. Markdown can be used.
+		// Setting description. Rendered w/Markdown.
 		text: `
 If the destination for proxying matches any of the IP addresses listed
 here, proxying is not performed when \`proxy_maybe=yes\` is returned.

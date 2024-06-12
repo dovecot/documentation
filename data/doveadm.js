@@ -30,7 +30,7 @@ export const doveadm = {
 				// The argument type
 				type: doveadm_arg_types.BOOL,
 
-				// Description of the parameter
+				// Description of the parameter. Rendered w/Markdown.
 				text: `Do a reverse move?`,
 			},
 			query: doveadm_args_query,
@@ -39,14 +39,14 @@ export const doveadm = {
 		// Change Documentation
 		// added: {
 		//     // KEY = update identifier (see data/updates.js)
-		//     // VALUE = Text to display
+		//     // VALUE = Text to display. Rendered w/Markdown.
 		//     'update_identifier': `Update description`
 		// },
 		// changed: {},
 		// deprecated: {},
 		// removed: {},
 
-		// Fields/Values returned. Values are processed w/Markdown
+		// Fields/Values returned. Values are rendered w/Markdown.
 		// fields: {},
 
 		// What doveadm flags does this command support (bit field)
@@ -62,7 +62,7 @@ export const doveadm = {
 		// Tag name(s). String or array.
 		// tags: 'foo', // or [ 'foo1', 'foo2', ... ]
 
-		// Summary of command. Processed w/Markdown
+		// Summary of command. Rendered w/Markdown.
 		text: `
 Move mails between primary and alternative mailbox storage locations.
 
