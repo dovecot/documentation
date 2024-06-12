@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: PostgreSQL
+dovecotlinks:
+  sql_postgresql: PostgreSQL Configuration
 ---
 
 # SQL Driver: PostgreSQL
