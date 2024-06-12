@@ -35,7 +35,7 @@ export const watch_paths = []
 // This is the same format as VitePress' 'rewrite' setting:
 //   https://vitepress.dev/reference/site-config#rewrites
 //
-// Default: {}
+// Default: { 'docs/:path(.*)': ':path' }
 export const source_path_translations = {}
 
 // A listing of paths containing man files.
