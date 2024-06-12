@@ -52,12 +52,12 @@ export const events = {
 				// removed: {
 				//     <tag>: `Description of change (or 'false')`,
 				// },
-				// Field Description
+				// Field Description. Rendered w/Markdown
 				// text: ``,
 			// }
 		},
 
-		// Summary of event. Processed w/Markdown.
+		// Summary of event. Rendered w/Markdown.
 		text: `Emitted when a message is expunged from a mailbox.`
 	},
 

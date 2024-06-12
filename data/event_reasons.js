@@ -3,8 +3,12 @@
  * Keys are reasons, Values are object. */
 
 export const reasons = {
+
+	// KEY: Event reason
 	'storage:autoexpunge': {
+		// Category type
 		category: 'storage',
+		// Category description. Rendered w/Markdown.
 		description: `Mails are being autoexpunged`
 	},
 
