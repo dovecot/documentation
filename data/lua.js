@@ -5,7 +5,7 @@ export const lua_functions = {
 	// KEY: Lua function signature
 	'dovecot.i_debug(text)': {
 		// List of function arguments
-		params: {
+		args: {
 			// Argument label (should match function signature example)
 			text: {
 				// Argument type
@@ -22,7 +22,7 @@ export const lua_functions = {
 	},
 
 	'dovecot.i_info(text)': {
-		params: {
+		args: {
 			text: {
 				type: 'string',
 				text: `Message to log.`
@@ -33,7 +33,7 @@ export const lua_functions = {
 	},
 
 	'dovecot.i_warning(text)': {
-		params: {
+		args: {
 			text: {
 				type: 'string',
 				text: `Message to log.`
@@ -44,7 +44,7 @@ export const lua_functions = {
 	},
 
 	'dovecot.i_error(text)': {
-		params: {
+		args: {
 			text: {
 				type: 'string',
 				text: `Message to log.`
@@ -65,7 +65,7 @@ export const lua_functions = {
 	},
 
 	'dovecot.restrict_global_variables(toggle)': {
-		params: {
+		args: {
 			text: {
 				type: 'boolean',
 				text: `Enable or disable defining new global variables.`
@@ -90,7 +90,7 @@ are not restricted.`
 	},
 
 	'dovecot.http.client({ parameters })': {
-		params: {
+		args: {
 			debug: {
 				type: 'boolean',
 				text: `Enable debug logging.`
@@ -200,7 +200,7 @@ remote servers.`
 	},
 
 	'http_client.request({url=string, method=string})': {
-		params: {
+		args: {
 			url: {
 				type: 'string',
 				text: `Full url address. Parameters will be parsed from the string. TLS encryption is implied with use of \`https\`.`
@@ -220,7 +220,7 @@ values, as well as \`Connection: Keep-Alive\`.`
 	},
 
 	'http_request.add_header(name, value)': {
-		params: {
+		args: {
 			name: {
 				type: 'string',
 				text: `Name of the HTTP header.`
@@ -235,7 +235,7 @@ values, as well as \`Connection: Keep-Alive\`.`
 	},
 
 	'http_request.remove_header(name)': {
-		params: {
+		args: {
 			name: {
 				type: 'string',
 				text: `Name of the HTTP header.`
@@ -247,7 +247,7 @@ Do a lookup of the header in the request and remove it if found.`
 	},
 
 	'http_request.set_payload(value, synchronous)': {
-		params: {
+		args: {
 			value: {
 				type: 'string',
 				text: `Payload of the request as string data.`
@@ -312,7 +312,7 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	'event.append_log_prefix(prefix)': {
-		params: {
+		args: {
 			prefix: {
 				type: 'string',
 				text: `Prefix to append.`
@@ -323,7 +323,7 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	'event.replace_log_prefix(prefix)': {
-		params: {
+		args: {
 			prefix: {
 				type: 'string',
 				text: `Prefix to append.`
@@ -334,7 +334,7 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	'event.set_name(name)': {
-		params: {
+		args: {
 			name: {
 				type: 'string',
 				text: `Event name.`
@@ -345,7 +345,7 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	'event.add_str(key,value)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Key name.`
@@ -360,7 +360,7 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	'event.add_int(key,value)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Key name.`
@@ -375,7 +375,7 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	'event.add_timeval(key,seconds)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Key name.`
@@ -390,7 +390,7 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	'event.inc_int(key,diff)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Key name.`
@@ -405,7 +405,7 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	'event.log_debug(message)': {
-		params: {
+		args: {
 			message: {
 				type: 'string',
 				text: `Message to log.`
@@ -416,7 +416,7 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	'event.log_info(message)': {
-		params: {
+		args: {
 			message: {
 				type: 'string',
 				text: `Message to log.`
@@ -427,7 +427,7 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	'event.log_warning(message)': {
-		params: {
+		args: {
 			message: {
 				type: 'string',
 				text: `Message to log.`
@@ -438,7 +438,7 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	'event.log_error(message)': {
-		params: {
+		args: {
 			message: {
 				type: 'string',
 				text: `Message to log.`
@@ -458,7 +458,7 @@ A log message *must be* logged or else a panic will occur.`
 	},
 
 	'dict.lookup(key[, username])': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Key to lookup.`
@@ -476,7 +476,7 @@ If key is not found, returns \`nil\`.`
 	},
 
 	'dict.iterate(path, flags[, username])': {
-		params: {
+		args: {
 			path: {
 				type: 'string',
 				text: `Path prefix to iterate.`
@@ -501,7 +501,7 @@ end`
 	},
 
 	'dict.transaction_begin([username])': {
-		params: {
+		args: {
 			username: {
 				type: 'string',
 				text: `Username for private dict keys.`
@@ -512,7 +512,7 @@ end`
 	},
 
 	'dict.transaction.set(key, value)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Key to set.`
@@ -527,7 +527,7 @@ end`
 	},
 
 	'dict.transaction.unset(key)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Key to unset.`
@@ -538,7 +538,7 @@ end`
 	},
 
 	'dict.transaction.set_timestamp({tv_sec=seconds, tv_nsec=nanoseconds})': {
-		params: {
+		args: {
 			seconds: {
 				type: 'int',
 				text: `UNIX timestamp.`
@@ -566,7 +566,7 @@ This is currently used only with Cassandra.`
 	},
 
 	'dns_client.lookup(hostname[, event])': {
-		params: {
+		args: {
 			hostname: {
 				type: 'string',
 				text: `Hostname to lookup.`
@@ -587,7 +587,7 @@ compatible error code (similar to e.g. Lua io.* calls).`,
 	},
 
 	'mail_user.plugin_getenv(key)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Setting name.`
@@ -598,7 +598,7 @@ compatible error code (similar to e.g. Lua io.* calls).`,
 	},
 
 	'mail_user.var_expand(template)': {
-		params: {
+		args: {
 			template: {
 				type: 'string',
 				text: `Variable template string.`
@@ -609,7 +609,7 @@ compatible error code (similar to e.g. Lua io.* calls).`,
 	},
 
 	'mail_user.mailbox(name[, flags])': {
-		params: {
+		args: {
 			name: {
 				type: 'string',
 				text: `Mailbox name.`
@@ -624,7 +624,7 @@ compatible error code (similar to e.g. Lua io.* calls).`,
 	},
 
 	'mail_user.metadata_get(key)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Metadata key, must begin with \`/private/\` or \`/shared/\`.`
@@ -635,7 +635,7 @@ compatible error code (similar to e.g. Lua io.* calls).`,
 	},
 
 	'mail_user.metadata_set(key, value)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Metadata key, must begin with \`/private/\` or \`/shared/\`.`
@@ -650,7 +650,7 @@ compatible error code (similar to e.g. Lua io.* calls).`,
 	},
 
 	'mail_user.metadata_unset(key)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Metadata key, must begin with \`/private/\` or \`/shared/\`.`
@@ -662,7 +662,7 @@ Unsets value, same as calling \`mail_user.metadata_set()\` with value = \`nil\`.
 	},
 
 	'mail_user.metadata_list(prefix, prefix, prefix...)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Metadata prefix, must begin with \`/private/\` or \`/shared/\`.`
@@ -688,7 +688,7 @@ Unsets value, same as calling \`mail_user.metadata_set()\` with value = \`nil\`.
 	},
 
 	'mailbox.sync([flags])': {
-		params: {
+		args: {
 			flags: {
 				type: 'int',
 				text: `Flags, see [\`dovecot.storage\`](#dovecot-storage).`
@@ -699,7 +699,7 @@ Unsets value, same as calling \`mail_user.metadata_set()\` with value = \`nil\`.
 	},
 
 	'mailbox.status(item,item,item...)': {
-		params: {
+		args: {
 			item: {
 				type: 'string',
 				text: `Item name.`
@@ -711,7 +711,7 @@ Unsets value, same as calling \`mail_user.metadata_set()\` with value = \`nil\`.
 	},
 
 	'mailbox.metadata_get(key)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Metadata key, must begin with \`/private/\` or \`/shared/\`.`
@@ -722,7 +722,7 @@ Unsets value, same as calling \`mail_user.metadata_set()\` with value = \`nil\`.
 	},
 
 	'mailbox.metadata_set(key)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Metadata key, must begin with \`/private/\` or \`/shared/\`.`
@@ -737,7 +737,7 @@ Unsets value, same as calling \`mail_user.metadata_set()\` with value = \`nil\`.
 	},
 
 	'mailbox.metadata_unset(key)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Metadata key, must begin with \`/private/\` or \`/shared/\`.`
@@ -749,7 +749,7 @@ Unsets value, same as calling \`mailbox.metadata_set()\` with value = \`nil\`.`
 	},
 
 	'mailbox.metadata_list(prefix, prefix, prefix...)': {
-		params: {
+		args: {
 			key: {
 				type: 'string',
 				text: `Metadata prefix, must begin with \`/private/\` or \`/shared/\`.`
