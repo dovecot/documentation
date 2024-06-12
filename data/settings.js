@@ -120,8 +120,10 @@ of the specified one, in order to aid the cache to return within the limits.`
 If \`dovecot.index.cache\` becomes larger than this, it's truncated
 to empty size.
 
-WARNING: The maximum value is 1 GB because the cache file format can't
-currently support large sizes.`
+::: warning
+The maximum value is 1 GB because the cache file format can't currently
+support larger sizes.
+:::`
 	},
 
 	mail_cache_min_mail_count: {
@@ -314,7 +316,7 @@ will generally not be useful.`
 
 	managesieve_notify_capability: {
 		tags: [ 'managesieve', 'sieve' ],
-		default: '&lt;dynamically determined&gt;',
+		default: '<dynamically determined>',
 		values: setting_types.STRING,
 		text: `
 \`NOTIFY\` capabilities reported by the ManageSieve service before
@@ -455,7 +457,7 @@ would be when no discard script is configured.`
 	sieve_extensions: {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
-		default: '&lt;see description&gt;',
+		default: '<see description>',
 		values: setting_types.STRING,
 		text: `
 The Sieve language extensions available to users.
@@ -521,6 +523,10 @@ Currently, no extensions are marked as such by default.`
 		plugin: 'sieve',
 		values: setting_types.STRING,
 		text: `
+::: warning
+Do not use this setting unless you really need to!
+:::
+
 The Sieve language extensions implicitly available to users.
 
 The extensions listed in this setting do not need to be enabled explicitly
@@ -529,8 +535,6 @@ using the Sieve "require" command.
 This behavior directly violates the Sieve standard, but can be necessary
 for compatibility with some existing implementations of Sieve (notably
 jSieve).
-
-Do not use this setting unless you really need to!
 
 The syntax and semantics of this setting are otherwise identical to
 [[setting,sieve_extensions]].`
@@ -939,7 +943,7 @@ This specifies the type of status result that the spam/virus scanner
 produces.
 
 This can either be a numeric score \`(score)\`, a string of identical
-characters \`(strlen)\`, e.g. \'*******'\, or a textual description
+characters \`(strlen)\`, e.g. \`'*******'\`, or a textual description
 \`(text)\`, e.g. \`'Spam'\` or \`'Not Spam'\`.`
 	},
 
@@ -1183,7 +1187,10 @@ while virustest only uses values between 0 and 5.`
 		seealso: [ '[[plugin,sieve-imapsieve]]' ],
 		text: `
 Points to a directory relative to the [[setting,base_dir]] where
-the plugin looks for script service sockets.`
+the plugin looks for script service sockets.
+
+The \`XXX\` in this setting is a sequence number, which allows configuring
+multiple associations between Sieve scripts and mailboxes.`
 	},
 
 	'imapsieve_mailbox<XXX>_before': {
@@ -1198,12 +1205,16 @@ This setting each specify the location of a single sieve script. The
 semantics of this setting is similar to [[setting,sieve_before]]: the
 specified scripts form a sequence together with the user script in which
 the next script is only executed when an (implicit) keep action is
-executed.`
+executed.
+
+The \`XXX\` in this setting is a sequence number, which allows configuring
+multiple associations between Sieve scripts and mailboxes.`
 	},
 
 	'imapsieve_mailbox<XXX>_causes': {
 		plugin: 'imapsieve',
 		values: setting_types.STRING,
+		values_enum: [ 'APPEND', 'COPY', 'FLAG' ],
 		seealso: [ '[[plugin,sieve-imapsieve]]' ],
 		text: `
 Only execute the administrator Sieve scripts for the mailbox configured
@@ -1213,7 +1224,8 @@ with [[setting,imapsieve_mailbox\<XXX\>_name]] when one of the listed
 This has no effect on the user script, which is always executed no matter
 the cause.
 
-Options: \`APPEND\`, \`COPY\`, \`FLAG\``
+The \`XXX\` in this setting is a sequence number, which allows configuring
+multiple associations between Sieve scripts and mailboxes.`
 	},
 
 	'imapsieve_mailbox<XXX>_from': {
@@ -1222,12 +1234,15 @@ Options: \`APPEND\`, \`COPY\`, \`FLAG\``
 		seealso: [ '[[plugin,sieve-imapsieve]]' ],
 		text: `
 Only execute the administrator Sieve scripts for the mailbox configured
-with [[setting,imapsieve_mailbox\<XXX\>_name]] when the message
+with [[setting,imapsieve_mailbox<XXX>_name]] when the message
 originates from the indicated mailbox.
 
 This setting supports wildcards with a syntax compatible with the \`IMAP
 LIST\` command, meaning that this setting can apply to multiple or even
-all \`("*")\` mailboxes.`
+all \`("*")\` mailboxes.
+
+The \`XXX\` in this setting is a sequence number, which allows configuring
+multiple associations between Sieve scripts and mailboxes.`
 	},
 
 	'imapsieve_mailbox<XXX>_name': {
@@ -1241,11 +1256,11 @@ scripts are configured.
 The \`XXX\` in this setting is a sequence number, which allows configuring
 multiple associations between Sieve scripts and mailboxes.
 
-The settings defined hereafter with matching sequence numbers apply to the
-mailbox named by this setting.
+All \`imapsieve_mailbox<XXX>_*\` settings with matching sequence numbers apply
+to the mailbox named by this setting.
 
 The sequence of configured mailboxes ends at the first missing
-\`imapsieve_mailbox\<XXX\>_name\` setting.
+\`imapsieve_mailbox<XXX>_name\` setting.
 
 This setting supports wildcards with a syntax compatible with the \`IMAP
 LIST\` command, meaning that this setting can apply to multiple or even
@@ -1333,7 +1348,7 @@ being configured.`
 
 	/* acl plugin */
 
-	'acl': {
+	acl: {
 		plugin: 'acl',
 		values: setting_types.STRING,
 		text: `
@@ -1360,7 +1375,7 @@ This backend has the following options:
 | Name | Description |
 | ---- | ----------- |
 | \`<global_path>\` | If a path is defined, this is the location of the global ACL configuration file. |
-| \`cache_secs\` | The interval, in seconds, for running stat() on the ACL file to check for changes. DEFAULT: 30 seconds |
+| \`cache_secs\` | The interval, in seconds, for running stat() on the ACL file to check for changes. DEFAULT: \`30\` |
 
 Example:
 
@@ -1630,24 +1645,24 @@ When searching from message body, the FTS index is always (attempted to be)
 updated to contain any missing mails before the search is performed.
 
 \`no\`
-:	Searching from message headers won't update FTS indexes. For header
-	searches, the FTS indexes are used for searching the mails that are
-	already in it, but the unindexed mails are searched via
-	dovecot.index.cache (or by opening the emails if the headers aren't in
-	cache).
+:   Searching from message headers won't update FTS indexes. For header
+    searches, the FTS indexes are used for searching the mails that are
+    already in it, but the unindexed mails are searched via
+    dovecot.index.cache (or by opening the emails if the headers aren't in
+    cache).
 
 	If FTS lookup or indexing fails, both header and body searches fallback
 	to searching without FTS (i.e. possibly opening all emails). This may
 	timeout for large mailboxes and/or slow storage.
 
 \`yes\`
-:	Searching from message headers updates FTS indexes, the same way as
-	searching from body does. If FTS lookup or indexing fails, the search
-	fails.
+:   Searching from message headers updates FTS indexes, the same way as
+    searching from body does. If FTS lookup or indexing fails, the search
+    fails.
 
 \`body\`
-:	Searching from message headers won't update FTS indexes (the same
-	behavior as with \`no\`). If FTS lookup or indexing fails, the search fails.
+:   Searching from message headers won't update FTS indexes (the same
+    behavior as with \`no\`). If FTS lookup or indexing fails, the search fails.
 
 Only the \`yes\` value guarantees consistent search results. In
 other cases it's possible that the search results will be different
@@ -1734,7 +1749,7 @@ A value of \`0\` means no timeout.`
 	},
 
 	fts_language_config: {
-		default: '&lt;textcat dir&gt;',
+		default: '<textcat dir>',
 		plugin: 'fts',
 		values: setting_types.STRING,
 		seealso: [ 'fts_languages' ],
@@ -1759,7 +1774,7 @@ plugin {
 	},
 
 	fts_languages: {
-		default: '&lt;textcat dir&gt;',
+		default: '<textcat dir>',
 		plugin: 'fts',
 		values: setting_types.STRING,
 		seealso: [ 'fts_language_config' ],
@@ -2048,9 +2063,9 @@ This setting prevents copying mail to the lazy-expunge folder when using
 the IMAP MOVE command. When using COPY/EXPUNGE, this setting prevents
 duplicates only with the following mailbox formats:
 
-* Maildir (with [[setting,maildir_copy_with_hardlinks,yes]], which is the
-  default)
-* sdbox/mdbox`
+* [[link,maildir]] (with [[setting,maildir_copy_with_hardlinks,yes]], which is
+  the default)
+* [[link,sdbox]]/[[link,mdbox]]`
 	},
 
 	/* listescape plugin */
@@ -2086,7 +2101,7 @@ The following algorithms are supported:
 	},
 
 	mail_compress_save_level: {
-		default: '&lt;algorithm dependent&gt;',
+		default: '<algorithm dependent>',
 		plugin: 'mail-compress',
 		values: setting_types.STRING,
 		text: `
@@ -2541,7 +2556,7 @@ An identifier that indicates whether the overquota-flag is active for a user.
 This identifier is compared against [[setting,quota_over_flag_value]] to
 determine if the overquota-flag should be determine to be set for the user.
 
-Usually, this value will be loaded via userdb.`
+Usually, this value will be loaded via [[link,userdb]].`
 	},
 
 	quota_over_flag_lazy_check: {
@@ -2761,7 +2776,7 @@ See [[link,password_schemes]] for disabled by default schemes.
 If enabled, will emit warning to logs. If a disabled scheme is used,
 an error is logged.
 
-Notably, any explicitly cleartext schemes (such as PLAIN), CRAM-MD5 and
+Notably, any explicitly cleartext schemes (such as PLAIN), CRAM-MD5, and
 DIGEST-MD5 are not affected by this setting.`
 	},
 
@@ -2875,7 +2890,7 @@ Note: You also need to enable [[setting,log_debug,category=auth]].`
 		text: `
 This setting indicates the default realm/domain to use if none has
 been specified. The setting is used for both SASL realms
-and appending an @domain element to the username in cleartext logins.`
+and appending an \`@domain\` element to the username in cleartext logins.`
 	},
 
 	auth_failure_delay: {
@@ -2890,7 +2905,7 @@ encounter.`
 	},
 
 	auth_gssapi_hostname: {
-		default: '&lt;name returned by gethostname()&gt;',
+		default: '<name returned by gethostname()>',
 		values: setting_types.STRING,
 		text: `
 This supplies the hostname to use in Generic Security Services API
@@ -2900,7 +2915,7 @@ Use \`"$ALL"\` (with the quotation marks) to allow all keytab entries.`
 	},
 
 	auth_krb5_keytab: {
-		default: '&lt;system default (e.g. /etc/krb5.keytab)&gt;',
+		default: '<system default (e.g. /etc/krb5.keytab)>',
 		values: setting_types.STRING,
 		text: `
 This specifies the Kerberos keytab to use for the GSSAPI mechanism.
@@ -3437,7 +3452,7 @@ Because it grants access to users' mailboxes, it must be kept secret.`
 		default: 0,
 		values: setting_types.UINT,
 		text: `
-Value Range: \<1-65535\>
+Value Range: \`<1-65535>\`
 
 The destination port to be used for the next doveadm proxying hop.
 
@@ -3505,15 +3520,15 @@ dsync. Options are specified in this setting via a space-separated list.
 Available options:
 
 \`empty-header-workaround\`
-:	Workaround for servers (e.g. Zimbra) that sometimes send FETCH replies
-	containing no headers.
+:   Workaround for servers (e.g. Zimbra) that sometimes send FETCH replies
+    containing no headers.
 
 \`no-header-hashes\`
-:	When this setting is enabled and one dsync side doesn't support mail
-	GUIDs (i.e. imapc), there is no fallback to using header hashes. Instead,
-	dsync assumes that all mails with identical IMAP UIDs contain the same
-	mail contents. This can significantly improve dsync performance with some
-	IMAP servers that don't support caching Date/Message-ID headers.`
+:   When this setting is enabled and one dsync side doesn't support mail
+    GUIDs (i.e. imapc), there is no fallback to using header hashes. Instead,
+    dsync assumes that all mails with identical IMAP UIDs contain the same
+    mail contents. This can significantly improve dsync performance with some
+    IMAP servers that don't support caching Date/Message-ID headers.`
 	},
 
 	dsync_hashed_headers: {
@@ -3575,7 +3590,7 @@ for HAProxy are aborted immediately.`
 	},
 
 	hostname: {
-		default: '&lt;system\'s real hostname@domain.tld&gt;',
+		default: '<system\'s real hostname@domain.tld>',
 		tags: [ 'submission' ],
 		values: setting_types.STRING,
 		text: `
@@ -3610,27 +3625,27 @@ space-separated.
 The following values are currently supported:
 
 \`delay-newmail\`
-:	EXISTS/RECENT new-mail notifications are sent only in replies to NOOP
-	and CHECK commands. Some clients, such as pre-2.1 versions of Mac OS X
-	Mail, ignore them otherwise, and, worse, Outlook Express may report
-	that the message is no longer on the server (note that the workaround
-	does not help for OE6 if synchronization is set to Headers Only).
+:   EXISTS/RECENT new-mail notifications are sent only in replies to NOOP
+    and CHECK commands. Some clients, such as pre-2.1 versions of Mac OS X
+    Mail, ignore them otherwise, and, worse, Outlook Express may report
+    that the message is no longer on the server (note that the workaround
+    does not help for OE6 if synchronization is set to Headers Only).
 
 \`tb-extra-mailbox-sep\`
-:	Because \`LAYOUT=fs\` (mbox and dbox) confuses Thunderbird, causing
-	extra / suffixes to mailbox names, Dovecot can be told to ignore
-	the superfluous character instead of judging the mailbox name to be
-	invalid.
+:   Because \`LAYOUT=fs\` (mbox and dbox) confuses Thunderbird, causing
+    extra / suffixes to mailbox names, Dovecot can be told to ignore
+    the superfluous character instead of judging the mailbox name to be
+    invalid.
 
 \`tb-lsub-flags\`
-:	Without this workaround, Thunderbird doesn't immediately recognize
-	that LSUB replies with \`LAYOUT=fs\` aren't selectable, and users may
-	receive pop-ups with not selectable errors. Showing \Noselect flags for
-	these replies (e.g., in mbox use) causes them to be grayed out.`
+:   Without this workaround, Thunderbird doesn't immediately recognize
+    that LSUB replies with \`LAYOUT=fs\` aren't selectable, and users may
+    receive pop-ups with not selectable errors. Showing \\Noselect flags for
+    these replies (e.g., in mbox use) causes them to be grayed out.`
 	},
 
 	'imap_compress_<algorithm>_level': {
-		default: '&lt;algorithm dependent&gt;',
+		default: '<algorithm dependent>',
 		tags: ['imap'],
 		values: setting_types.UINT,
 		text: `
@@ -3652,21 +3667,21 @@ Per [[rfc,4978]], only the deflate algorithm is currently supported.
 Behavior when IMAP FETCH fails due to some internal error. Options:
 
 \`disconnect-immediately\`
-:	The FETCH is aborted immediately and the IMAP client is disconnected.
+:   The FETCH is aborted immediately and the IMAP client is disconnected.
 
 \`disconnect-after\`
-:	The FETCH runs for all the requested mails returning as much data as
-	possible. The client is finally disconnected without a tagged reply.
+:   The FETCH runs for all the requested mails returning as much data as
+    possible. The client is finally disconnected without a tagged reply.
 
 \`no-after\`
-:	Same as disconnect-after, but tagged NO reply is sent instead of
-	disconnecting the client.
+:   Same as disconnect-after, but tagged NO reply is sent instead of
+    disconnecting the client.
 
-	If the client attempts to FETCH the same failed mail more than once,
-	the client is disconnected.
+    If the client attempts to FETCH the same failed mail more than once,
+    the client is disconnected.
 
-	This is to avoid clients from going into infinite loops trying to FETCH
-	a broken mail.`
+    This is to avoid clients from going into infinite loops trying to FETCH
+    a broken mail.`
 	},
 
 	imap_hibernate_timeout: {
@@ -3738,7 +3753,8 @@ when the client is in IDLE operation.`
 		default: 'no',
 		tags: [ 'imap' ],
 		values: setting_types.BOOLEAN,
-		text: `Enable IMAP LITERAL- extension (replaces LITERAL+)?`
+		text:
+`Enable IMAP LITERAL- ([[rfc,7888]]) extension (replaces LITERAL+)?`
 	},
 
 	imap_logout_format: {
@@ -3809,23 +3825,30 @@ hosts and the generated URLs use [[setting,hostname]] as the host.
 
 An empty value disables the URLAUTH extension entirely.
 
-Warning: URLAUTH in current versions of Dovecot is broken in several ways.
+::: warning
+URLAUTH in current versions of Dovecot is broken in several ways.
 This will be fixed in the future, but activating URLAUTH support on
 production systems is not recommended.
+:::
 
-Note: This setting is REQUIRED for the URLAUTH [[rfc,4467]] extension to
-be active.`
+::: info Note
+This setting is REQUIRED for the URLAUTH ([[rfc,4467]]) extension to
+be active.
+:::`
 	},
 
 	imap_urlauth_logout_format: {
 		default: 'in=%i out=%o',
+		seealso: [ 'imap_urlauth_host' ],
 		tags: [ 'imap' ],
 		values: setting_types.STRING,
 		text: `
 Specifies the logout format used with the URLAUTH extension in IMAP
 operation.
 
-Note: This setting is currently not used.
+::: warning Note
+This setting is currently not used.
+:::
 
 Variables allowed:
 
@@ -3837,10 +3860,11 @@ Variables allowed:
 
 	imap_urlauth_port: {
 		default: 143,
+		seealso: [ 'imap_urlauth_host' ],
 		tags: [ 'imap' ],
 		values: setting_types.UINT,
 		text: `
-Value Range: 1-65535
+Value Range: \`<1-65535>\`
 
 The port is used with the URLAUTH extension in IMAP operation.`
 	},
@@ -3880,128 +3904,143 @@ A space-separated list of features, optimizations, and workarounds that can
 be enabled.
 
 **Features**
-:	\`no-acl\`
-	:	If the [[plugin,imap-acl]] is loaded, the imapc acl feature is
-		automatically enabled. With it IMAP ACL commands (MYRIGHTS, GETACL,
-		SETACL, DELETEACL) are proxied to the imapc remote location. Note
-		that currently these commands are attempted to be used even if the
-		remote IMAP server doesn't advertise the ACL capability.
+:   \`no-acl\`
+    :   If the [[plugin,imap-acl]] is loaded, the imapc acl feature is
+        automatically enabled. With it IMAP ACL commands (MYRIGHTS, GETACL,
+        SETACL, DELETEACL) are proxied to the imapc remote location. Note
+        that currently these commands are attempted to be used even if the
+        remote IMAP server doesn't advertise the ACL capability.
 
-		To disable this feature either unload the imap-acl plugin or
-		provide this feature.
+        To disable this feature either unload the [[plugin,imap-acl]] or
+        provide this feature.
 
-		[[changed,imapc_features_no_acl]] Earlier versions had an "acl"
-		feature, which is now enabled by default.
+        ::: info [[changed,imapc_features_no_acl]]
+        Earlier versions had an "acl" feature, which is now enabled by default.
+        :::
 
-:	\`no-delay-login\`
-	:	Immediately connect to the remote server. By default this is
-		delayed until a command requires a connection.
+:   \`no-delay-login\`
+    :   Immediately connect to the remote server. By default this is
+        delayed until a command requires a connection.
 
-		[[changed,imapc_features_no_delay_login]] Earlier versions had a
-		"delay-login" feature, which is now enabled by default.
+        ::: info [[changed,imapc_features_no_delay_login]]
+        Earlier versions had a "delay-login" feature, which is now enabled
+        by default.
+        :::
 
-:	\`gmail-migration\`
-	:	Enable GMail-specific migration. Use IMAP \`X-GM-MSGID\` as POP3 UIDL.
-		Add \`$GMailHaveLabels\` keyword to mails that have \`X-GM-LABELS\`
-		except for \`\Muted\` keyword (to be used for migrating only archived
-		emails in \`All Mails\`). Add [[setting,pop3_deleted_flag]] to
-		mails that don't exist in POP3 server.
+:   \`gmail-migration\`
+    :   Enable GMail-specific migration. Use IMAP \`X-GM-MSGID\` as POP3 UIDL.
+        Add \`$GMailHaveLabels\` keyword to mails that have \`X-GM-LABELS\`
+        except for \`\Muted\` keyword (to be used for migrating only archived
+        emails in \`All Mails\`). Add [[setting,pop3_deleted_flag]] to
+        mails that don't exist in POP3 server.
 
-:	\`no-modseq\`
-	:	Disable access to \`MODSEQ\` and \`HIGHESTMODSEQ\` fields. By default
-		these fields are available if the remote server advertises the
-		CONDSTORE or the QRESYNC capability. If modseqs are disabled, or not
-		supported by the new server, they can still be used if imapc is
-		configured to have local index files.
+:   \`no-modseq\`
+    :   Disable access to \`MODSEQ\` and \`HIGHESTMODSEQ\` fields. By default
+        these fields are available if the remote server advertises the
+        CONDSTORE or the QRESYNC capability. If modseqs are disabled, or not
+        supported by the new server, they can still be used if imapc is
+        configured to have local index files.
 
-		[[changed,imapc_features_no_modseq]] Earlier versions had a "modseq"
-		feature, which is now enabled by default.
+        ::: info [[changed,imapc_features_no_modseq]]
+        Earlier versions had a "modseq" feature, which is now enabled by
+        default.
+        :::
 
-:	\`proxyauth\`
-	:	Use Sun/Oracle IMAP-server specific \`PROXYAUTH\` command to do master
-		user authentication. Normally this would be done using the SASL PLAIN
-		authentication.
+:   \`proxyauth\`
+    :   Use Sun/Oracle IMAP-server specific \`PROXYAUTH\` command to do master
+        user authentication. Normally this would be done using the SASL PLAIN
+        authentication.
 
-:	\`throttle:<INIT>:<MAX>:<SHRINK>\`
-	:	When receiving [THROTTLED] response (from GMail), throttling is
-		applied.
+:   \`throttle:<INIT>:<MAX>:<SHRINK>\`
+    :   When receiving [THROTTLED] response (from GMail), throttling is
+        applied.
 
-		**INIT** = initial throttling msecs (default: 50 ms), afterwards each
-		subsequent [THROTTLED] doubles the throttling until **MAX** is reached
-		(default: 16000 ms). When [THROTTLED] is not received for a while,
-		it's shrunk again. The initial shrinking is done after **SHRINK**
-		(default: 500 ms). If [THROTTLED] is received again within this
-		timeout, it's doubled, otherwise both throttling and the next
-		shrinking timeout is shrank to 3/4 the previous value.
+        **INIT** = initial throttling msecs (default: 50 ms), afterwards each
+        subsequent [THROTTLED] doubles the throttling until **MAX** is reached
+        (default: 16000 ms). When [THROTTLED] is not received for a while,
+        it's shrunk again. The initial shrinking is done after **SHRINK**
+        (default: 500 ms). If [THROTTLED] is received again within this
+        timeout, it's doubled, otherwise both throttling and the next
+        shrinking timeout is shrank to 3/4 the previous value.
 
 **Optimizations**
-:	\`no-fetch-bodystructure\`
-	:	Disable fetching of IMAP \`BODY\` and \`BODYSTRUCTURE\` from the
-		remote server. Instead, the whole message body is fetched to
-		regenerate them.
+:   \`no-fetch-bodystructure\`
+    :   Disable fetching of IMAP \`BODY\` and \`BODYSTRUCTURE\` from the
+        remote server. Instead, the whole message body is fetched to
+        regenerate them.
 
-		[[changed,imapc_features_no_fetch_bodystructure]] Earlier versions
-		had a "fetch-bodystructure" feature, which is now enabled by default.
+        ::: info [[changed,imapc_features_no_fetch_bodystructure]]
+        Earlier versions had a "fetch-bodystructure" feature, which is now
+        enabled by default.
+        :::
 
-:	\`no-fetch-headers\`
-	:	Disable fetching of specific message headers from the remote server
-		using the IMAP \`FETCH BODY.PEEK[HEADER.FIELDS(...)]\` command.
-		Instead, the whole header is fetched and the wanted headers are
-		parsed from it.
+:   \`no-fetch-headers\`
+    :   Disable fetching of specific message headers from the remote server
+        using the IMAP \`FETCH BODY.PEEK[HEADER.FIELDS(...)]\` command.
+        Instead, the whole header is fetched and the wanted headers are
+        parsed from it.
 
-		[[changed,imapc_features_no_fetch_headers]] Earlier versions had a
-		"fetch-headers" feature, which is now enabled by default.
+        ::: info [[changed,imapc_features_no_fetch_headers]]
+        Earlier versions had a "fetch-headers" feature, which is now enabled
+        by default.
+        :::
 
-:	\`no-fetch-size\`
-	:	Disable fetching of message sizes from the remote server using the
-		IMAP \`FETCH RFC822.SIZE\` command. Instead, the whole message body
-		is fetched to calculate the size.
+:   \`no-fetch-size\`
+    :   Disable fetching of message sizes from the remote server using the
+        IMAP \`FETCH RFC822.SIZE\` command. Instead, the whole message body
+        is fetched to calculate the size.
 
-		[[changed,imapc_features_no_fetch_size]] Earlier versions had a
-		"rfc822.size" feature, which is now enabled by default.
+        ::: info [[changed,imapc_features_no_fetch_size]]
+        Earlier versions had a "rfc822.size" feature, which is now enabled
+        by default.
+        :::
 
-:	\`no-metadata\`
-	:	Disable the detection of the \`METADATA\` capability from the
-		remote server. The client will receive a \`NO [UNAVAILABLE]\`
-		response for any request that requires access to metadata on the
-		remote server (the same happens if the server does not announce
-		the capability at all).
+:   \`no-metadata\`
+    :   Disable the detection of the \`METADATA\` capability from the
+        remote server. The client will receive a \`NO [UNAVAILABLE]\`
+        response for any request that requires access to metadata on the
+        remote server (the same happens if the server does not announce
+        the capability at all).
 
-:	\`no-search\`
-	:	Disable searching messages using the IMAP \`SEARCH\` command.
-		Instead, all the message headers/bodies are fetched to perform
-		the search locally.
+:   \`no-search\`
+    :   Disable searching messages using the IMAP \`SEARCH\` command.
+        Instead, all the message headers/bodies are fetched to perform
+        the search locally.
 
-		[[changed,imapc_features_no_search]] Earlier versions had a "search"
-		feature, which is now enabled by default.
+        ::: info [[changed,imapc_features_no_search]]
+        Earlier versions had a "search" feature, which is now enabled by
+        default.
+        :::
 
 **Workarounds**
-:	\`fetch-fix-broken-mails\`
-	:	If a \`FETCH\` returns \`NO\` (but not \`NO [LIMIT]\` or \`NO
-		[SERVERBUG]\`), assume the mail is broken in server and just treat
-		it as if it were an empty email.
+:   \`fetch-fix-broken-mails\`
+    :   If a \`FETCH\` returns \`NO\` (but not \`NO [LIMIT]\` or \`NO
+        [SERVERBUG]\`), assume the mail is broken in server and just treat
+        it as if it were an empty email.
 
-		Warning: This is often a dangerous option! It's not safe to assume
-		that \`NO\` means a permanent error rather than a temporary
-		error. This feature should be enabled only for specific
-		users who have been determined to be broken.
+        ::: danger
+        This is often a dangerous option! It's not safe to assume that \`NO\`
+        means a permanent error rather than a temporary error. This feature
+        should be enabled only for specific users who have been determined
+        to be broken.
+        :::
 
-:	\`fetch-msn-workarounds\`
-	:	Try to ignore wrong message sequence numbers in \`FETCH\` replies
-		whenever possible, preferring to use the returned UID number instead.
+:   \`fetch-msn-workarounds\`
+    :   Try to ignore wrong message sequence numbers in \`FETCH\` replies
+        whenever possible, preferring to use the returned UID number instead.
 
-:	\`no-examine\`
-	:	Use \`SELECT\` instead of \`EXAMINE\` even when we don't want to
-		modify anything in the mailbox. This is a Courier-workaround where
-		it didn't permanently assign \`UIDVALIDITY\` to an \`EXAMINE\`d
-		mailbox, but assigned it for \`SELECT\`ed mailbox.
+:   \`no-examine\`
+    :   Use \`SELECT\` instead of \`EXAMINE\` even when we don't want to
+        modify anything in the mailbox. This is a Courier-workaround where
+        it didn't permanently assign \`UIDVALIDITY\` to an \`EXAMINE\`d
+        mailbox, but assigned it for \`SELECT\`ed mailbox.
 
-:	\`zimbra-workarounds\`
-	:	Fetch full message using \`BODY.PEEK[HEADER] BODY.PEEK[TEXT]\`
-		instead of just \`BODY.PEEK[]\` because the header differs between
-		these two when there are illegal control chars or 8bit chars.
-		This mainly caused problems with dsync, but this should no longer
-		be a problem and there's probably no need to enable this workaround.`
+:   \`zimbra-workarounds\`
+    :    Fetch full message using \`BODY.PEEK[HEADER] BODY.PEEK[TEXT]\`
+         instead of just \`BODY.PEEK[]\` because the header differs between
+         these two when there are illegal control chars or 8bit chars.
+         This mainly caused problems with dsync, but this should no longer
+        be a problem and there's probably no need to enable this workaround.`
 	},
 
 	imapc_host: {
@@ -4272,12 +4311,12 @@ Configures the list of active workarounds for LMTP client bugs. The list is
 space-separated. Supported workaround identifiers are:
 
 \`whitespace-before-path\`
-:	Allow one or more spaces or tabs between 'MAIL FROM:' and path and
-	between 'RCPT TO:' and path.
+:   Allow one or more spaces or tabs between 'MAIL FROM:' and path and
+    between 'RCPT TO:' and path.
 
 \`mailbox-for-path\`
-:	Allow using bare Mailbox syntax (i.e., without \<...\>) instead of full
-	path syntax.`
+:   Allow using bare Mailbox syntax (i.e., without \<...\>) instead of full
+    path syntax.`
 	},
 
 	lmtp_hdr_delivery_address: {
@@ -4292,13 +4331,13 @@ relevant "Received:" header.
 Options:
 
 \`alternative\`
-:	Address from the RCPT TO OCRPT parameter
+:   Address from the RCPT TO OCRPT parameter
 
 \`final\`
-:	Address from the RCPT TO command
+:   Address from the RCPT TO command
 
 \`none\`
-:	No address (always used for messages with multiple recipients)`
+:   No address (always used for messages with multiple recipients)`
 	},
 
 	lmtp_proxy: {
@@ -4391,24 +4430,24 @@ Specify the locking method to use for index files.
 Options:
 
 \`dotlock\`
-:	\`mailboxname.lock\` file created by almost all software when writing to
-	mboxes. This grants the writer an exclusive lock over the mbox, so it's
-	usually not used while reading the mbox so that other processes can also
-	read it at the same time. So while using a dotlock typically prevents
-	actual mailbox corruption, it doesn't protect against read errors if
-	mailbox is modified while a process is reading.
+:   \`mailboxname.lock\` file created by almost all software when writing to
+    mboxes. This grants the writer an exclusive lock over the mbox, so it's
+    usually not used while reading the mbox so that other processes can also
+    read it at the same time. So while using a dotlock typically prevents
+    actual mailbox corruption, it doesn't protect against read errors if
+    mailbox is modified while a process is reading.
 
 \`flock\`
-:	flock() system call is quite commonly used for both read and write
-	locking. The read lock allows multiple processes to obtain a read lock
-	for the mbox, so it works well for reading as well. The one downside to
-	it is that it doesn't work if mailboxes are stored in NFS.
+:   flock() system call is quite commonly used for both read and write
+    locking. The read lock allows multiple processes to obtain a read lock
+    for the mbox, so it works well for reading as well. The one downside to
+    it is that it doesn't work if mailboxes are stored in NFS.
 
 \`fcntl\`
-:	Very similar to flock, also commonly used by software. In some systems
-	this fcntl() system call is compatible with flock(), but in other
-	systems it's not, so you shouldn't rely on it. fcntl works with NFS if
-	you're using lockd daemon in both NFS server and client.`
+:   Very similar to flock, also commonly used by software. In some systems
+    this fcntl() system call is compatible with flock(), but in other
+    systems it's not, so you shouldn't rely on it. fcntl works with NFS if
+    you're using lockd daemon in both NFS server and client.`
 	},
 
 	log_core_filter: {
@@ -4432,8 +4471,10 @@ will crash any time an error is logged, which can be useful for debugging.`
 Filter to specify what debug logging to enable.  The syntax of the filter is
 described in [[link,event_filter_global]].
 
-Note: This will eventually replace [[setting,mail_debug]] and
-[[setting,auth_debug]] settings.`
+::: info Note
+This will eventually replace [[setting,mail_debug]] and
+[[setting,auth_debug]] settings.
+:::`
 	},
 
 	log_path: {
@@ -4486,7 +4527,7 @@ passing a parameter to the login executable.`
 		text: `
 The greeting message displayed to clients.
 
-Variables:
+Variables allowed:
 
 - LMTP: [[variable,mail-service-user]]
 - Other Protocols: [[variable,login]]`
@@ -4498,7 +4539,7 @@ Variables:
 		text: `
 The formatting of login log messages.
 
-Variables (in addition to [[variable,global]]):
+Variables allowed (in addition to [[variable,global]]):
 
 | Variable Name | Description |
 | ------------- | ----------- |
@@ -4621,63 +4662,63 @@ included in this setting.
 The details of how this setting works depends on the used protocol:
 
 **IMAP**
-:	ID command can be used to override:
+:   ID command can be used to override:
 
-	* Session ID
-	* Client IP and port (\`%{rip}\`, \`%{rport}\`)
-	* Server IP and port (\`%{lip}\`, \`%{lport}\`)
+    * Session ID
+    * Client IP and port (\`%{rip}\`, \`%{rport}\`)
+    * Server IP and port (\`%{lip}\`, \`%{lport}\`)
 
-	\`forward_*\` fields can be sent to auth process's passdb lookup
+    \`forward_*\` fields can be sent to auth process's passdb lookup
 
-	The trust is always checked against the connecting IP address.
-	Except if HAProxy is used, then the original client IP address is used.
+    The trust is always checked against the connecting IP address.
+    Except if HAProxy is used, then the original client IP address is used.
 
 **POP3**
-:	XCLIENT command can be used to override:
+:   XCLIENT command can be used to override:
 
-	* Session ID
-	* Client IP and port (\`%{rip}\`, \`%{rport}\`)
+    * Session ID
+    * Client IP and port (\`%{rip}\`, \`%{rport}\`)
 
-	\`forward_*\` fields can be sent to auth process's passdb lookup
+    \`forward_*\` fields can be sent to auth process's passdb lookup
 
-	The trust is always checked against the connecting IP address.
-	Except if HAProxy is used, then the original client IP address is used.
+    The trust is always checked against the connecting IP address.
+    Except if HAProxy is used, then the original client IP address is used.
 
 **ManageSieve**
-:	XCLIENT command can be used to override:
+:   XCLIENT command can be used to override:
 
-	* Session ID
-	* Client IP and port (\`%{rip}\`, \`%{rport}\`)
+    * Session ID
+    * Client IP and port (\`%{rip}\`, \`%{rport}\`)
 
-	The trust is always checked against the connecting IP address.
-	Except if HAProxy is used, then the original client IP address is used.
+    The trust is always checked against the connecting IP address.
+    Except if HAProxy is used, then the original client IP address is used.
 
 **Submission**
-:	XCLIENT command can be used to override:
+:   XCLIENT command can be used to override:
 
-	* Session ID
-	* Client IP and port (\`%{rip}\`, \`%{rport}\`)
-	* HELO - Overrides what the client sent earlier in the EHLO command
-	* LOGIN - Currently unused
-	* PROTO - Currently unused
+    * Session ID
+    * Client IP and port (\`%{rip}\`, \`%{rport}\`)
+    * HELO - Overrides what the client sent earlier in the EHLO command
+    * LOGIN - Currently unused
+    * PROTO - Currently unused
 
-	\`forward_*\` fields can be sent to auth process's passdb lookup
+    \`forward_*\` fields can be sent to auth process's passdb lookup
 
-	The trust is always checked against the connecting IP address.
-	Except if HAProxy is used, then the original client IP address is used.
+    The trust is always checked against the connecting IP address.
+    Except if HAProxy is used, then the original client IP address is used.
 
 **LMTP**
-:	XCLIENT command can be used to override:
+:   XCLIENT command can be used to override:
 
-	* Session ID
-	* Client IP and port (\`%{rip}\`, \`%{rport}\`)
-	* HELO - Overrides what the client sent earlier in the LHLO command
-	* LOGIN - Currently unused
-	* PROTO - Currently unused
-	* TIMEOUT (overrides [[setting,mail_max_lock_timeout]])
+    * Session ID
+    * Client IP and port (\`%{rip}\`, \`%{rport}\`)
+    * HELO - Overrides what the client sent earlier in the LHLO command
+    * LOGIN - Currently unused
+    * PROTO - Currently unused
+    * TIMEOUT (overrides [[setting,mail_max_lock_timeout]])
 
-	The trust is always checked against the connecting IP address.
-	Except if HAProxy is used, then the original client IP address is used.`
+    The trust is always checked against the connecting IP address.
+    Except if HAProxy is used, then the original client IP address is used.`
 	},
 
 	mail_access_groups: {
@@ -4718,22 +4759,22 @@ Multiple options can be added in a space-separated list.
 Options:
 
 \`add-flags\`
-:	Attachments are detected and marked during save. Detection is done also
-	during fetch if it can be done without extra disk IO and with minimal CPU
-	cost. This means that either both \`mime.parts\` and
-	\`imap.bodystructure\` has to be in cache already, or if mail body is
-	opened in any case.
+:   Attachments are detected and marked during save. Detection is done also
+    during fetch if it can be done without extra disk IO and with minimal CPU
+    cost. This means that either both \`mime.parts\` and
+    \`imap.bodystructure\` has to be in cache already, or if mail body is
+    opened in any case.
 
 \`add-flags no-flags-on-fetch\`
-:	Flags are added during save, but not during fetch. This option will
-	likely be removed in a later release.
+:   Flags are added during save, but not during fetch. This option will
+    likely be removed in a later release.
 
 \`content-type=<type|!type>\`
-:	Include or exclude given content type. Including will only negate an
-	exclusion (e.g. \`content-type=!foo/* content-type=foo/bar\`).
+:   Include or exclude given content type. Including will only negate an
+    exclusion (e.g. \`content-type=!foo/* content-type=foo/bar\`).
 
 \`exclude-inlined\`
-:	Do not consider any attachment with disposition inlined.`
+:   Do not consider any attachment with disposition inlined.`
 	},
 
 	mail_attachment_dir: {
@@ -4760,18 +4801,18 @@ Which filesystem type to use for saving attachments.
 Options:
 
 \`posix\`
-:	No single-instance storage done (this option might simplify the
-	filesystem's own de-duplication operations).
+:   No single-instance storage (SiS) done (this option might simplify the
+    filesystem's own de-duplication operations).
 
 \`sis posix\`
-:	SIS with immediate byte-by-byte comparison during saving.
+:   SiS with immediate byte-by-byte comparison during saving.
 
-	SIS is deprecated and writing of SIS files is disabled. Reading is
-	supported for now, any missing SIS attachments are replaced with files
-	filled with spaces.
+    SiS is deprecated and writing of SiS files is disabled. Reading is
+    supported for now, any missing SiS attachments are replaced with files
+    filled with spaces.
 
 \`sis-queue posix\`
-:	SIS with delayed comparison and de-duplication.
+:   SiS with delayed comparison and de-duplication.
 
 [[variable,mail-user]] can be used.`
 	},
@@ -4863,21 +4904,21 @@ setting doesn't apply to object storage operations.
 Options:
 
 \`always\`
-:	Use fsync after all disk writes.
+:   Use fsync after all disk writes.
 
-	Recommended for NFS to make sure there aren't any delayed write()s.
+    Recommended for NFS to make sure there aren't any delayed write()s.
 
 \`optimized\`
-:	Use fsync after important disk writes.
+:   Use fsync after important disk writes.
 
-	For example cache file writes aren't fsynced, because they can be
-	regenerated if necessary.
+    For example cache file writes aren't fsynced, because they can be
+    regenerated if necessary.
 
 \`never\`
-:	Never fsync any disk writes.
+:   Never fsync any disk writes.
 
-	This provides the best performance, but risks losing recently saved emails
-	in case of a crash with most mailbox formats.`
+    This provides the best performance, but risks losing recently saved emails
+    in case of a crash with most mailbox formats.`
 	},
 
 	mail_full_filesystem_access: {
@@ -4889,8 +4930,8 @@ Allow full filesystem access to clients?
 If enabled, no access checks are performed other than what the operating
 system does for the active UID/GID.
 
-This setting works with both Maildir and mbox, allowing you to prefix
-mailbox names with \`/path/\` or \`~user/\` indicators.`
+This setting works with both [[link,maildir]] and [[link,mbox]], allowing you
+to prefix mailbox names with \`/path/\` or \`~user/\` indicators.`
 	},
 
 	mail_gid: {
@@ -5039,10 +5080,11 @@ The number of messages to try to prefetch whenever possible. Depending on
 the (remote) storage latency, this may significantly speed up performance
 when reading many mails. The exact behavior depends on the mailbox format:
 
-* mbox, mdbox: No effect in behavior.
-* sdbox, maildir: Call \`posix_fadvise(POSIX_FADV_WILLNEED)\` on mail files
-  to instruct kernel to read the whole files into memory.
-* imapc: Combine multiple mail reads into the same remote imapc FETCH
+* [[link,mbox]], [[link,mdbox]]: No effect in behavior.
+* [[link,sdbox]], [[link,maildir]]: Call
+  \`posix_fadvise(POSIX_FADV_WILLNEED)\` on mail files to instruct kernel to
+  read the whole files into memory.
+* [[link,imapc]]: Combine multiple mail reads into the same remote imapc FETCH
   command. For example with [[setting,mail_prefetch_count,0]] reading two mails
   would result in \`FETCH 1 BODY.PEEK[]\` and \`FETCH 2 BODY.PEEK[]\`
   commands, while with [[setting,mail_prefetch_count,1]] they would be
@@ -5163,14 +5205,15 @@ increasing it by 0..30%, based on a hash of the username.
 
 The scanning is done only for these mailbox formats:
 
-* maildir: Delete all files having ctime older than 36 hours from \`tmp/\`.
-  The scan is done if tmp/ directory's atime older than this setting.
-* sdbox, mdbox: Delete \`.temp.*\` files having ctime older than 36 hours from
-  \`dbox-Mails/\`. The scan is done if the \`last_temp_file_scan\` header
-  field in dovecot.index is older than this setting.
-* mdbox: Delete \`.temp.*\` files having ctime older than 36 hours from
-  \`storage/\`. The scan is done if storage/ directory's atime is older than
-  this setting.
+* [[link,maildir]]: Delete all files having ctime older than 36 hours from
+  \`tmp/\`. The scan is done if tmp/ directory's atime older than this setting.
+* [[link,sdbox]], [[link,mdbox]]: Delete \`.temp.*\` files having ctime older
+  than 36 hours from \`dbox-Mails/\`. The scan is done if the
+  \`last_temp_file_scan\` header field in dovecot.index is older than this
+  setting.
+* [[link,mdbox]]: Delete \`.temp.*\` files having ctime older than 36 hours
+  from \`storage/\`. The scan is done if storage/ directory's atime is older
+  than this setting.
 
 A value of \`0\` means this scan never occurs.`
 	},
@@ -5587,7 +5630,8 @@ namespaces.`
 		tags: [ 'namespace' ],
 		values: setting_types.BOOLEAN,
 		text: `
-If \`yes\`, namespace will be hidden from IMAP NAMESPACE command.`
+If \`yes\`, namespace will be hidden from IMAP NAMESPACE ([[rfc,2342]])
+command.`
 	},
 
 	'namespace/ignore_on_failure': {
@@ -5658,7 +5702,7 @@ namespace {
 		tags: [ 'namespace' ],
 		values: setting_types.UINT,
 		text: `
-Sets display order in IMAP \`NAMESPACE\` command.
+Sets display order in IMAP NAMESPACE ([[rfc,2342]]) command.
 
 Namespaces are automatically numbered if this setting does not exist.`
 	},
@@ -5777,9 +5821,10 @@ using this setting, as it avoids actually opening the mailbox to see if
 anything needs to be expunged.
 
 [[setting,mail_always_cache_fields,date.save]] is also
-recommended when using this setting with sdbox or Maildir, as it avoids
-using \`stat()\` to find out the mail's saved-timestamp. With mdbox
-format this isn't necessary, since the saved-timestamp is always available.`
+recommended when using this setting with [[link,sdbox]] or [[link,maildir]],
+as it avoids using \`stat()\` to find out the mail's saved-timestamp. With
+[[link,mdbox]] format this isn't necessary, since the saved-timestamp is
+always available.`
 	},
 
 	'namespace/mailbox/autoexpunge_max_mails': {
@@ -5818,12 +5863,12 @@ space-separated.
 The following values are currently supported:
 
 \`oe-ns-eoh\`
-:	Because Outlook Express and Netscape Mail expect an end-of-headers
-	line, this option sends one explicitly if none has been sent.
+:   Because Outlook Express and Netscape Mail expect an end-of-headers
+    line, this option sends one explicitly if none has been sent.
 
 \`outlook-no-nuls\`
-:	Because Outlook and Outlook Express hang if messages contain NUL
-	characters, this setting replaces each of them with a \`0x80\` character.`
+:   Because Outlook and Outlook Express hang if messages contain NUL
+    characters, this setting replaces each of them with a \`0x80\` character.`
 	},
 
 	pop3_delete_type: {
@@ -5846,8 +5891,11 @@ Change POP3 behavior so a user cannot permanently delete messages via POP3.
 Instead, the messages are hidden from POP3 sessions by setting an IMAP
 flag, which Dovecot will filter out in future listings.
 
-To enable this behavior, enter the name of the IMAP keyword to use. Note:
-this keyword will visible on IMAP clients for the message.
+To enable this behavior, enter the name of the IMAP keyword to use.
+
+::: info Note
+This keyword will visible on IMAP clients for the message.
+:::
 
 Example:
 
@@ -5865,7 +5913,7 @@ Enable support for the POP3 LAST command.
 
 While this command has been removed from newer POP3 specs, some clients
 still attempt to use it. Enabling this causes the RSET command to clear all
-\Seen flags that messages may have.`
+\\Seen flags that messages may have.`
 	},
 
 	pop3_fast_size_lookups: {
@@ -5957,10 +6005,10 @@ How to handle any duplicate POP3 UIDLs that may exist.
 Options:
 
 \`allow\`
-:	Show duplicates to clients.
+:   Show duplicates to clients.
 
 \`rename\`
-:	Append a temporary counter (such as -2 or -3) after the UIDL`
+:   Append a temporary counter (such as -2 or -3) after the UIDL`
 	},
 
 	pop3_uidl_format: {
@@ -5993,7 +6041,7 @@ be enabled.
 Workarounds:
 
 \`no-pipelining\`
-:	Prevents use of the PIPELINING extension even when it is advertised.`
+:   Prevents use of the PIPELINING extension even when it is advertised.`
 	},
 
 	pop3c_host: {
@@ -6064,6 +6112,7 @@ get the metadata.`
 Use TLS to connect to the remote POP3 server.
 
 | Value | Description |
+| ----- | ----------- |
 | \`no\` | No TLS |
 | \`pop3s\` | Explicitly connect to remote POP3 port using TLS |
 | \`starttls\` | Use POP3 STARTTLS command to switch to TLS connection |`
@@ -6236,16 +6285,16 @@ and the STARTTLS commands.
 Options:
 
 \`no\`
-:	SSL/TLS is completely disabled.
+:   SSL/TLS is completely disabled.
 
 \`yes\`
-:	SSL/TLS is enabled, but not necessarily required for clients.
+:   SSL/TLS is enabled, but not necessarily required for clients.
 
 \`required\`
-:	SSL/TLS is required for all imap, pop3, managesieve and
-	submission protocol client connections. This differs from
-	[[setting,auth_allow_cleartext]] in that even non-cleartext
-	authentication mechanisms aren't allowed without SSL/TLS.
+:   SSL/TLS is required for all imap, pop3, managesieve and
+    submission protocol client connections. This differs from
+    [[setting,auth_allow_cleartext]] in that even non-cleartext
+    authentication mechanisms aren't allowed without SSL/TLS.
 
 This setting affects the \`secured\` state of connections. See
 [[link,secured_connections]].`
@@ -6308,7 +6357,7 @@ auth_ssl_require_client_cert = yes
 	},
 
 	ssl_cert: {
-		default: '&lt;/etc/ssl/certs/dovecot.pem',
+		default: '</etc/ssl/certs/dovecot.pem',
 		seealso: [ 'ssl', 'ssl_key', '[[link,ssl_configuration]]' ],
 		values: setting_types.STRING,
 		text: `
@@ -6353,7 +6402,7 @@ This setting is used for both incoming and outgoing SSL connections.`
 	},
 
 	ssl_cipher_suites: {
-		default: '&lt;OpenSSL version specific&gt;',
+		default: '<OpenSSL version specific>',
 		seealso: [ 'ssl', 'ssl_cipher_list', '[[link,ssl_configuration]]' ],
 		values: setting_types.STRING,
 		text: `
@@ -6431,13 +6480,13 @@ ssl_client_key = </etc/dovecot/dovecot-client.key
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
 		values: setting_types.STRING,
 		text: `
-Available Values: <Obtain by running \`openssl engine\` command.
+Available Values: <Obtain by running \`openssl engine\` command>
 
 Which SSL crypto device to use.`
 	},
 
 	ssl_curve_list: {
-		default: '&lt;defaults from the SSL library&gt;',
+		default: '<defaults from the SSL library>',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
 		values: setting_types.STRING,
 		text: `
@@ -6501,7 +6550,7 @@ The password to use if [[setting,ssl_key]] is password-protected.
 
 Since this file is often world-readable, you may wish to specify the path
 to a file containing the password, rather than the password itself, by
-using the format [[setting,ssl_key_password,\<path]] here. The path should
+using the format \`ssl_key_password = <path\` here. The path should
 be to a root-owned file with mode 0600.
 
 Alternatively, you can supply the password via the -p parameter at startup.`
@@ -6519,23 +6568,24 @@ This setting is used for both incoming and outgoing SSL connections.
 Supported values are:
 
 \`ANY\`
-:	Warning: this value is meant for tests only. It should not be used in
-	any deployment of any value/relevance.
+:   ::: warning
+    This value is meant for tests only. It should not be used in any
+    deployment of any value/relevance.
 
 \`TLSv1\`
-:	Support TLSv1+. (TLSv1 deprecated: [[rfc,8996]])
+:   Support TLSv1+. (TLSv1 deprecated: [[rfc,8996]])
 
 \`TLSv1.1\`
-:	Support TLSv1.1+. (TLSv1.1 deprecated: [[rfc,8996]])
+:   Support TLSv1.1+. (TLSv1.1 deprecated: [[rfc,8996]])
 
 \`TLSv1.2\`
-:	Support TLSv1.2+.
+:   Support TLSv1.2+.
 
 \`TLSv1.3\`
-:	Support TLSv1.3+.
+:   Support TLSv1.3+.
 
 \`LATEST\`
-:	Support only the latest version available.`
+:   Support only the latest version available.`
 	},
 
 	ssl_options: {
@@ -6550,10 +6600,10 @@ This setting is used for both incoming and outgoing SSL connections.
 Currently supported options are:
 
 \`compression\`
-:	Enable compression.
+:   Enable compression.
 
 \`no_ticket\`
-:	Disable SSL session tickets.`
+:   Disable SSL session tickets.`
 	},
 
 	ssl_prefer_server_ciphers: {
@@ -6627,19 +6677,19 @@ list is space-separated.
 Supported workaround identifiers are:
 
 \`implicit-auth-external\`
-:	Implicitly login using the EXTERNAL SASL mechanism upon the first MAIL
-	command, provided that the client provides a valid TLS client
-	certificate. This is helpful for clients that omit explicit SASL
-	authentication when configured for authentication using a TLS certificate
-	(Thunderbird for example).
+:   Implicitly login using the EXTERNAL SASL mechanism upon the first MAIL
+    command, provided that the client provides a valid TLS client
+    certificate. This is helpful for clients that omit explicit SASL
+    authentication when configured for authentication using a TLS certificate
+    (Thunderbird for example).
 
 \`mailbox-for-path\`
-:	Allow using bare Mailbox syntax (i.e., without \<...\>) instead of full
-	path syntax.
+:   Allow using bare Mailbox syntax (i.e., without \<...\>) instead of full
+    path syntax.
 
 \`whitespace-before-path\`
-:	Allow one or more spaces or tabs between 'MAIL FROM:' and path and
-	between 'RCPT TO:' and path.`
+:   Allow one or more spaces or tabs between 'MAIL FROM:' and path and
+    between 'RCPT TO:' and path.`
 	},
 
 	submission_host: {
@@ -6746,7 +6796,7 @@ Password for authentication to the relay MTA if authentication is required.`
 		tags: [ 'submission_relay' ],
 		values: setting_types.UINT,
 		text: `
-Value Range: 1-65535
+Value Range: \`<1-65535>\`
 
 Port for the submission relay server.`
 	},
@@ -6772,13 +6822,13 @@ If enabled, SSL/TLS is used for the connection to the relay server.
 Available values:
 
 \`no\`
-:	No SSL connection is used.
+:   No SSL connection is used.
 
 \`smtps\`
-:	An SMTPS connection (immediate SSL) is used.
+:   An SMTPS connection (immediate SSL) is used.
 
 \`starttls\`
-:	The STARTTLS command is used to establish the TLS layer.`
+:   The STARTTLS command is used to establish the TLS layer.`
 	},
 
 	submission_relay_ssl_verify: {

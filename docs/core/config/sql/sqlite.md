@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: SQLite
+dovecotlinks:
+  sql_sqlite: SQLite Configuration
 ---
 
 # SQL Driver: SQLite

@@ -612,7 +612,7 @@ This event is useful to track and monitor external services.`
 		text: `
 Intermediate event emitted when an HTTP request is being redirected.
 
-The \`http_request_finished\` event is still sent at the end of the request.`
+The [[event,http_request_finished]] is still sent at the end of the request.`
 	},
 
 	http_request_retried: {
@@ -621,7 +621,7 @@ The \`http_request_finished\` event is still sent at the end of the request.`
 		text: `
 Intermediate event emitted when an HTTP request is being retried.
 
-The \`http_request_finished\` event is still sent at the end of the request.`
+The [[event,http_request_finished]] is still sent at the end of the request.`
 	},
 
 	/* HTTP Server
@@ -739,7 +739,7 @@ and the unhibernation attempt is retried.
 
 This event is sent each time when retrying is done.
 
-The \`imap_client_unhibernated\` event is still sent when unhibernation
+The [[event,imap_client_unhibernated]] event is still sent when unhibernation
 either succeeds or fails permanently.`
 	},
 
@@ -1302,7 +1302,7 @@ List of error codes:
 | \`temp_fail\` | Auth service reported temporary failure. |
 | \`user_disabled\` | User is disabled. |
 | \`password_expired\` | Password is expired. |
-| \`invalid_base64\` | Challenge response was invalid BASE64. |
+| \`invalid_base64\` | Challenge response was invalid base64 encoded. |
 | \`login_disabled\` | Login is disabled. |
 | \`invalid_mech\` | Used mechanism isn't supported. |
 | \`cleartext_auth_disabled\` | Cleartext authentication is not enabled, use TLS. |

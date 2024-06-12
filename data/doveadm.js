@@ -66,7 +66,9 @@ export const doveadm = {
 		text: `
 Move mails between primary and alternative mailbox storage locations.
 
-*Applicable to mdbox and sdbox mailbox formats only.*`
+::: warning
+Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
+:::`
 	},
 
 	'acl add': {
@@ -755,7 +757,7 @@ Move mails between primary and alternative mailbox storage locations.
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-force-resync',
-		text: `Under certain circumstances it may happen, that Dovecot is unable to automatically solve problems with mailboxes. In such situations the force-resync command may be helpful. It tries to fix all problems. For sdbox and mdbox mailboxes the storage files will be also checked.`,
+		text: `Under certain circumstances Dovecot may be unable to automatically solve problems with mailboxes. In such situations the force-resync command may be helpful. It tries to fix all problems. For [[link,sdbox]] and [[link,mdbox]] mailboxes the storage files will be also checked.`,
 	},
 
 	'fs copy': {
@@ -1326,9 +1328,11 @@ doveadm mailbox cryptokey generate -u username -UR
 This can be used to generate new user keypair and re-encrypt and create folder
 keys.
 
-Note: You must provide password if you want to generate password-protected
-keypair right away. You can also use \`doveadm mailbox cryptokey password\`
-to secure it.`
+::: info Note
+You must provide a password if you want to generate password-protected
+keypair right away. You can also use [[doveadm,mailbox cryptokey password]]
+to secure it.
+:::`
 	},
 
 	'mailbox cryptokey list': {
