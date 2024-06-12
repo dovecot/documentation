@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: MySQL
+dovecotlinks:
+  sql_mysql: MySQL Configuration
 ---
 
 # SQL Driver: MySQL

@@ -19,12 +19,12 @@ export const categories = {
 
 	dict: {
 		category: 'root',
-		description: `Dictionary library and drivers`
+		description: `[[link,dict,Dictionary]] library and drivers`
 	},
 
 	'dict-server': {
 		category: 'root',
-		description: `Dictionary server/proxy (dict process)`
+		description: `[[link,dict,Dictionary]] Dictionary server/proxy (dict process)`
 	},
 
 	dns: {
@@ -44,12 +44,12 @@ export const categories = {
 
 	fts: {
 		category: 'root',
-		description: `Full text search plugin`
+		description: `[[plugin,fts]]`
 	},
 
-	'fts-dovecot': {
+	'fts-flatcurve': {
 		category: 'root',
-		description: `fts-flatcurve FTS plugin`
+		description: `[[plugin,fts-flatcurve]]`
 	},
 
 	'http-client': {
@@ -64,7 +64,7 @@ export const categories = {
 
 	imap: {
 		category: 'root',
-		description: `imap process`
+		description: `[[link,imap_server,IMAP]] process`
 	},
 
 	'imap-hibernate': {
@@ -89,12 +89,12 @@ export const categories = {
 
 	lmtp: {
 		category: 'root',
-		description: `LMTP process`
+		description: `[[link,lmtp]] process`
 	},
 
 	lua: {
 		category: 'root',
-		description: `Lua script`
+		description: `[[link,lua,Lua script]]`
 	},
 
 	'mail-cache': {
@@ -109,17 +109,17 @@ export const categories = {
 
 	managesieve: {
 		category: 'root',
-		description: `ManageSieve`
+		description: `[[link,managesieve,ManageSieve]]`
 	},
 
 	pop3: {
 		category: 'root',
-		description: `POP3 process`
+		description: `[[link,pop3]] process`
 	},
 
 	'push-notification': {
 		category: 'root',
-		description: `push-notification plugin`
+		description: `[[plugin,push-notification]]`
 	},
 
 	'quota-status': {
@@ -149,22 +149,22 @@ export const categories = {
 
 	ssl: {
 		category: 'root',
-		description: `SSL/TLS connections`
+		description: `[[link,ssl,SSL/TLS]] connections`
 	},
 
 	'ssl-client': {
 		category: 'root',
-		description: `Incoming SSL/TLS connections`
+		description: `Incoming [[link,ssl,SSL/TLS]] connections`
 	},
 
 	'ssl-server': {
 		category: 'root',
-		description: `Outgoing SSL/TLS connections`
+		description: `Outgoing [[link,ssl,SSL/TLS]] connections`
 	},
 
 	submission: {
 		category: 'root',
-		description: `Submission process`
+		description: `[[link,submission]] process`
 	},
 
 	/* Storage categories */
@@ -213,27 +213,27 @@ export const categories = {
 
 	sieve: {
 		category: 'sieve',
-		description: `Sieve parent category`
+		description: `[[link,sieve]] parent category`
 	},
 
 	'sieve-action': {
 		category: 'sieve',
-		description: `Individual Sieve actions executed`
+		description: `Individual [[link,sieve]] actions executed`
 	},
 
 	'sieve-execute': {
 		category: 'sieve',
-		description: `Sieve script(s) being executed for a particular message; this envelops all of Sieve execution, both runtime and action execution`
+		description: `[[link,sieve]] script(s) being executed for a particular message; this envelops all of Sieve execution, both runtime and action execution`
 	},
 
 	'sieve-runtime': {
 		category: 'sieve',
-		description: `Evaluation of individual Sieve scripts`
+		description: `Evaluation of individual [[link,sieve]] scripts`
 	},
 
 	'sieve-storage': {
 		category: 'sieve',
-		description: `Sieve storage`
+		description: `[[link,sieve]] storage`
 	},
 
 	/* SQL categories */
@@ -245,22 +245,22 @@ export const categories = {
 
 	cassandra: {
 		category: 'sql',
-		description: `Cassandra CQL events`
+		description: `[[link,sql_cassandra,Cassandra CQL]] events`
 	},
 
 	mysql: {
 		category: 'sql',
-		description: `MySQL events`
+		description: `[[link,sql_mysql,MySQL]] events`
 	},
 
 	pgsql: {
 		category: 'sql',
-		description: `PostgreSQL events`
+		description: `[[link,sql_postgresql,PostgreSQL]] events`
 	},
 
 	sqlite: {
 		category: 'sql',
-		description: `SQLite events`
+		description: `[[link,sql_sqlite,SQLite]] events`
 	},
 
 	sqlpool: {
