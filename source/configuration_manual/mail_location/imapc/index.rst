@@ -69,6 +69,14 @@ Connection Settings
      .. dovecotchanged:: 2.4.0,3.0.0 Earlier versions had an "acl" feature,
                          which is now enabled by default.
 
+   ``no-qresync``
+
+     Disable the QRESYNC extension even if advertised by the IMAP server.
+     This can be used to work around a Zimbra bug where it doesn't send
+     untagged OK [CLOSED] imap-resp-code when selecting a folder.
+
+     .. dovecotadded:: 2.4.0,3.0.0
+
    ``no-delay-login``
 
      Immediately connect to the remote server. By default this is delayed until
