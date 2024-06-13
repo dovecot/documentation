@@ -522,6 +522,7 @@ lrwstipekxacd
 lsearch
 lucene
 lugog
+Luonnokset
 lwq
 maclen
 madboa
@@ -829,6 +830,7 @@ rhel
 RHu
 rmail
 Rnotation
+Roskakori
 roundcube
 roundrobin
 RPA
