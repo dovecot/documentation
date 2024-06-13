@@ -3672,7 +3672,7 @@ Behavior when IMAP FETCH fails due to some internal error. Options:
 	imap_hibernate_timeout: {
 		default: 0,
 		tags: [ 'imap' ],
-		values: setting_types.SIZE,
+		values: setting_types.TIME,
 		text: `
 How long to wait while the client is in IDLE state before moving the
 connection to the hibernate process, to save on memory use, and close the
