@@ -36,6 +36,12 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 .badgePadding :deep(.VPBadge) {
   margin-right: 4px;
 }
+.badgePadding :deep(p) {
+  margin: 4px;
+}
+.dovecotSettings :deep(ul) {
+  margin: 0;
+}
 </style>
 
 <template>
@@ -45,7 +51,7 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
    <a class="header-anchor" :href="'#' + k"></a>
   </component>
 
-  <table>
+  <table class="dovecotSettings">
    <tbody>
     <tr>
      <th style="text-align:right;">Default</th>
