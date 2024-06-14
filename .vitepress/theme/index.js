@@ -1,4 +1,5 @@
 import DefaultTheme from 'vitepress/theme'
+import DovecotLayout from './DovecotLayout.vue'
 
 const modules = import.meta.glob(
 	'../../components/*.vue',
@@ -15,5 +16,6 @@ export default {
 			const c = modules[path].default
 			app.component(c.__name, c)
 		}
-	}
+	},
+	Layout: DovecotLayout
 }
