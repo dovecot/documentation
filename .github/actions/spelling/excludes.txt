@@ -81,11 +81,7 @@
 \.xpm$
 \.xz$
 \.zip$
-^source/_ext/
-^source/_static/
-^\.github/
 ^\QMakefile\E$
-^\Qsource/conf.py\E$
-^\Qsource/man/Makefile\E$
-^\Qsource/settings/plugin/snarf-plugin.rst\E$
 ignore$
+^\.github/
+^\.vitepress/
