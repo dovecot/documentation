@@ -1,3 +1,4 @@
+import gitCommitInfo from 'git-commit-info'
 import path from 'path'
 import { defineConfig } from 'vitepress'
 import { pagefindPlugin } from 'vitepress-plugin-pagefind'
@@ -90,6 +91,12 @@ export default defineConfig({
 		socialLinks: [
 			{ icon: 'github', link: 'https://github.com/dovecot/core/' },
 		],
+
+		/* Dovecot specific config: return gitrev for this build. */
+		gitrev: {
+			align: 'right',
+			hash: gitCommitInfo().shortHash,
+		}
 	},
 
 	markdown: {
