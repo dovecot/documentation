@@ -22,6 +22,12 @@ Dovecot doesn't care which settings are in which files. They could all be put
 into a single `dovecot.conf` if preferred (except for
 [external config files](#external-config-files)).
 
+## Config Version
+
+The first setting in the configuration file must be
+[[setting,dovecot_config_version]]. It specifies the configuration syntax,
+the used setting names and the expected default values.
+
 ## Basic Syntax
 
 The syntax generally looks like this:
