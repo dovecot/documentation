@@ -3533,6 +3533,17 @@ configuration changes, the old configuration will either keep working or there
 will be a clear failure at startup.`
 	},
 
+	dovecot_storage_version: {
+		values: setting_types.STRING,
+		text: `
+Dovecot storage file format version. It specifies the oldest Dovecot version
+that must be able to read files written by this Dovecot instance. The intention
+is that when upgrading Dovecot cluster, this setting is first kept as the old
+Dovecot version. Once the cluster is fully upgraded to a new version and
+there is no intention to rollback to the old version anymore, this version
+number can be increased.`
+	},
+
 	dsync_alt_char: {
 		default: '_',
 		tags: [ 'dsync' ],

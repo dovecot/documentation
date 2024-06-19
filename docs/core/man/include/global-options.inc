@@ -6,7 +6,9 @@ Global [[man,doveadm]] *options*:
 :   Enables *verbosity* and debug messages.
 
 **-O**
-:   Do not read any config file, just use defaults.
+:   Do not read any config file, just use defaults. The
+    [[setting,dovecot_storage_version]] defaults to the latest version, but
+    can be overridden with **-o**.
 
 **-k**
 :   Preserve entire environment for doveadm, not just
