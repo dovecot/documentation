@@ -316,10 +316,6 @@ plugin {
   # 10MB quota limit
   quota = count:User quota
   quota_rule = *:storage=10M
-
-  # This is required - it uses "virtual sizes" rather than "physical sizes"
-  # for quota counting:
-  quota_vsizes = yes
 }
 ```
 
@@ -644,8 +640,6 @@ side, it can be beneficial to prevent user from saving too large mails, which
 would later on fail on the MTA side anyway.
 
 ## Quota Virtual Sizes
-
-See [[setting,quota_vsizes]].
 
 Indicates that the quota plugin should use virtual sizes rather than physical
 sizes when calculating message sizes. Required for the `count` driver.

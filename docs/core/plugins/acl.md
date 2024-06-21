@@ -263,7 +263,7 @@ Placing the ACL file makes the ACL effective, but Dovecot doesn't take care of
 the user to shared mailboxes mapping out of the box, and as a result, it won't
 publish shared mailboxes to clients if this is not set up. You have to
 configure this manually by defining an appropriate [[link,dict]] to
-store the map using [[setting,acl_shared_dict setting]].
+store the map using [[setting,acl_shared_dict]].
 
 ```[dovecot.conf]
 plugin {

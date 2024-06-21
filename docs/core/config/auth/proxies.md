@@ -174,7 +174,7 @@ IP, you may run out of TCP ports. The only way to work around this is to use
 either multiple destination IPs or ports, or multiple source IPs.
 
 Multiple source IPs can be easily used by adding them to 
-[[setting,login_source_ips`]]. You can also use hostnames which expand to
+[[setting,login_source_ips]]. You can also use hostnames which expand to
 multiple IPs.
 
 By prefixing the setting with `?` (e.g.

@@ -1182,7 +1182,7 @@ while virustest only uses values between 0 and 5.`
 	/* imapsieve plugin */
 
 	'imapsieve_mailbox<XXX>_after': {
-		plugin: 'imapsieve',
+		plugin: 'imap-sieve',
 		values: setting_types.STRING,
 		seealso: [ '[[plugin,sieve-imapsieve]]' ],
 		text: `
@@ -1194,7 +1194,7 @@ multiple associations between Sieve scripts and mailboxes.`
 	},
 
 	'imapsieve_mailbox<XXX>_before': {
-		plugin: 'imapsieve',
+		plugin: 'imap-sieve',
 		values: setting_types.STRING,
 		seealso: [ '[[plugin,sieve-imapsieve]]' ],
 		text: `
@@ -1212,7 +1212,7 @@ multiple associations between Sieve scripts and mailboxes.`
 	},
 
 	'imapsieve_mailbox<XXX>_causes': {
-		plugin: 'imapsieve',
+		plugin: 'imap-sieve',
 		values: setting_types.STRING,
 		values_enum: [ 'APPEND', 'COPY', 'FLAG' ],
 		seealso: [ '[[plugin,sieve-imapsieve]]' ],
@@ -1229,7 +1229,7 @@ multiple associations between Sieve scripts and mailboxes.`
 	},
 
 	'imapsieve_mailbox<XXX>_from': {
-		plugin: 'imapsieve',
+		plugin: 'imap-sieve',
 		values: setting_types.STRING,
 		seealso: [ '[[plugin,sieve-imapsieve]]' ],
 		text: `
@@ -1246,7 +1246,7 @@ multiple associations between Sieve scripts and mailboxes.`
 	},
 
 	'imapsieve_mailbox<XXX>_name': {
-		plugin: 'imapsieve',
+		plugin: 'imap-sieve',
 		values: setting_types.STRING,
 		seealso: [ '[[plugin,sieve-imapsieve]]' ],
 		text: `
@@ -1268,7 +1268,7 @@ all \`("*")\` mailboxes.`
 	},
 
 	imapsieve_url: {
-		plugin: 'imapsieve',
+		plugin: 'imap-sieve',
 		values: setting_types.URL,
 		seealso: [ '[[plugin,sieve-imapsieve]]' ],
 		text: `
@@ -1834,7 +1834,7 @@ This setting and [[setting,fts_decoder]] cannot be used simultaneously.`
 	fts_tokenizers: {
 		default: 'generic email-address',
 		plugin: 'fts',
-		seealso: [ 'fts_tokenization' ],
+		seealso: [ '[[link,fts_tokenization]]' ],
 		values: setting_types.STRING,
 		text: `
 The list of tokenizers to use.
@@ -5489,8 +5489,7 @@ reading.
 
 To use multiple values, separate them with spaces.
 
-Descriptions of the locking methods can be found at
-[[setting,mbox_mbox_format_locking]].`
+Descriptions of the locking methods can be found at [[link,mbox_locking]].`
 	},
 
 	mbox_very_dirty_syncs: {

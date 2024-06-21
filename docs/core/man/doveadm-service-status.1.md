@@ -53,7 +53,7 @@ containing the following details:
 :   if service is listening
 
 *doveadm_stop*
-:   if the service has been stopped by [[man,doveadm-service,stop]]
+:   if the service has been stopped by [[man,doveadm,stop]]
 
 *process_total*
 :   the total number of processes forked for the service since the service

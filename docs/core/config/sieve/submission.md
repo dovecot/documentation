@@ -18,7 +18,7 @@ The `%d` variable expands to the recipient domain.
 IMAP or POP3 protocol doesn't have explicit support for domains. The
 usernames are commonly in `user@domain` format, and that is also where
 Dovecot gets the domain from. If the username doesn't have `@domain`, then
-the domain is also usually empty (unless [[setting,auth_default_realm]]
+the domain is also usually empty (unless [[setting,auth_default_domain]]
 is used).
 
 If you login as `user@domain`, but the %d is still empty, the problem is

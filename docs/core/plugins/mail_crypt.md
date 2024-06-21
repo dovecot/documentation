@@ -1,6 +1,10 @@
 ---
 layout: doc
 title: mail-crypt
+dovecotlinks:
+  fs_crypt:
+    hash: fs-crypt-and-fs-mail-crypt
+    text: fs-crypt
 ---
 
 # Mail Crypt (mail-crypt) Plugin
@@ -242,8 +246,8 @@ Note that ED25519 keys are not suitable for X25519.
 #### RSA key
 
 ::: warning
-Use of RSA keys is discouraged, please use
-[[setting,mail_crypt_plugin_elliptic_curve_key]] instead.
+Use of RSA keys is discouraged, please use [[setting,mail_crypt_curve]]
+instead.
 :::
 
 You can generate an unencrypted RSA private key in the pkey format with the

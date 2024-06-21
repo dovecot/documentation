@@ -17,10 +17,10 @@ For example:
 * The `/` character is disallowed on POSIX systems.
 
 This plugin allows you to use all of these characters, as long as the virtual
-separator (i.e. what is set by the [[setting,separator]] setting and used as
-such by the IMAP protocol) is changed to something else, which means that
-the plugin does **not** make it possible to use the virtual separator in
-folder names.
+separator (i.e. what is set by the [[setting,namespace/separator]] setting
+and used as such by the IMAP protocol) is changed to something else, which
+means that the plugin does **not** make it possible to use the virtual
+separator in folder names.
 
 The characters are escaped to the mailbox name as `\NN` hex codes.
 
