@@ -26,7 +26,7 @@ The vacation extension is available by default.
 
 In contrast, the vacation-seconds extension - which implies the vacation
 extension when used - is not available by default and needs to be enabled
-explicitly by adding it to [[setting,sieve_extensions setting]]
+explicitly by adding it to [[setting,sieve_extensions]].
 
 The configuration also needs to be adjusted accordingly to allow a non-reply
 period of less than a day.

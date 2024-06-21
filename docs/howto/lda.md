@@ -295,9 +295,8 @@ dovecot_destination_concurrency_limit = 1
 To prevent backscatter you should configure Postfix to reject mail for
 nonexistent recipients.
 
-This is the default behaviour
-([[setting,smtpd_reject_unlisted_recipient,yes]]) so there's no need to
-set "reject_unlisted_recipient" in any of your
+This is the default behaviour (`smtpd_reject_unlisted_recipient = yes`)
+so there's no need to set "reject_unlisted_recipient" in any of your
 restriction. But: Postfix must know if a recipient exists. Depending on
 how you've configured Dovecot and Postfix this can be done several ways.
 

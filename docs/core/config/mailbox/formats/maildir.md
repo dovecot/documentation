@@ -131,7 +131,7 @@ Dovecot supports reading a few fields from the `<base filename>`:
 
 * `,S=<size>`: `<size>` contains the file size. Getting the size from the
   filename avoids doing a system `stat()` call, which may improve the
-  performance. This is especially useful with [[plugin,quota_backend_maildir]].
+  performance. This is especially useful with [[link,quota_backend_maildir]].
 * `,W=<vsize>`: `<vsize>` contains the file's RFC822.SIZE, i.e., the file
   size with linefeeds being CR+LF characters. If the message was stored with
   CR+LF linefeeds, `<size>` and `<vsize>` are the same. Setting this may

@@ -242,7 +242,7 @@ ES supports any curve supported by OpenSSL for this purpose.
 ### OpenID Discovery
 
 Support for [[rfc,7628]] OpenID Discovery (OIDC) can be achieved with
-[[setting,openid_configuration_url]]. Setting this causes Dovecot to
+`openid_configuration_url`. Setting this causes Dovecot to
 report OIDC configuration URL as `openid-configuration` element in error JSON.
 
 ## Full Config Example

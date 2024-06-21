@@ -188,7 +188,7 @@ global scripts using the `sievec` command line tool. For example:
 $ sievec /var/lib/dovecot/sieve/global/
 ```
 
-This is necessary for scripts listed in [[setting,sieve_global_path]],
+This is necessary for scripts listed in [[setting,sieve_global]],
 [[setting,sieve_before]], and [[setting,sieve_after]] settings.
 
 For global scripts that are only included in other scripts using the Sieve

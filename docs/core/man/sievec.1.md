@@ -41,7 +41,7 @@ when it is missing or outdated.
 The **sievec** command is also useful to verify Sieve scripts before
 using. Additionally, with the **-d** option it can output a textual (and
 thus human-readable) dump of the generated Sieve code to the specified
-file. The output is then identical to what the [[man,sieve-dumA]]p
+file. The output is then identical to what the [[man,sieve-dump]]
 command produces for a stored binary file. This output is mainly useful
 to find bugs in the compiler that yield corrupt binaries.
 

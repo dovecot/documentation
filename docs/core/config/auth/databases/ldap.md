@@ -155,7 +155,7 @@ so the prefetch optimization doesn't help.
 If you're using DN template, `pass_attrs` and `pass_filter` settings
 are completely ignored. That means you can't make passdb return any
 [[link,passdb_extra_fields]]. You should also set
-[[setting,auth_username_forma,%Lu]] in `dovecot.conf` to normalize the
+[[setting,auth_username_format,%Lu]] in `dovecot.conf` to normalize the
 username by lowercasing it.
 
 ```[dovecot.conf]
