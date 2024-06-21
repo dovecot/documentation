@@ -45,3 +45,11 @@ export const source_path_translations = {}
 //
 // Default: [ 'docs/core/man/*.[[:digit:]].md' ]
 export const man_paths = []
+
+// A listing of paths containing plugin files.
+// Paths are relative to project base.
+//
+// Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
+//
+// Default: [ 'docs/core/plugins/*.md' ]
+export const plugin_paths = []
