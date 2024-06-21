@@ -17,7 +17,7 @@ The important rules are:
 * Must be set before the final storage driver (s3, sproxyd, ...)
 * Should be set after fscache (you generally don't want fscache to be
   compressed for performance reasons).
-* Must be set before [[plugin,fs_crypt]], because encrypted data compresses
+* Must be set before [[link,fs_crypt]], because encrypted data compresses
   poorly.
 
 ## Settings

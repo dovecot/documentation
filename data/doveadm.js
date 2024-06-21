@@ -1861,7 +1861,7 @@ returned.`,
 
 	reload: {
 		args: {},
-		man: 'doveadm-reload',
+		man: 'doveadm',
 	},
 
 	save: {

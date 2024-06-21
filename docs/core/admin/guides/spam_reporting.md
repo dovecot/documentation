@@ -25,7 +25,8 @@ messages in/out of the Spam mailbox.
 ::: warning
 **You cannot run scripts anywhere you want.**
 
-Sieve allows you to only run scripts under [[setting,sieve_pipe_bin_dir]]. You
+Sieve allows you to only run scripts under
+[[setting,sieve_&gt;extension&lt;_bin_dir,sieve_pipe_bin_dir]]. You
 can't use `/usr/local/bin/my-sieve-filter.sh`, you have to put the
 script under `sieve_pipe_bin_dir` and use `my-sieve-filter.sh` in the
 script instead.

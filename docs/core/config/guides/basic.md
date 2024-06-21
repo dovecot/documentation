@@ -70,7 +70,7 @@ session ID and the client's original IP address.
 login_trusted_networks = 10.0.0.0/8
 ```
 
-See [[setting,login_trusted_network]].
+See [[setting,login_trusted_networks]].
 
 ### LMTP Proxying
 
