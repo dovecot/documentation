@@ -13,93 +13,107 @@ import gitCommitInfo from 'git-commit-info'
 import matter from 'gray-matter'
 import pdc from 'pdc'
 import path from 'path'
+import { VFile } from 'vfile'
 import { manFiles } from '../lib/utility.js'
+import remarkMan from 'remark-man'
+import remarkParse from 'remark-parse'
+import remarkGfm from 'remark-gfm'
+import { unified } from 'unified'
+import { map } from 'unist-util-map'
 
 /* Pattern matching for markdown elements. */
 const includesRE = /<!--\s*@include:\s*(.*?)\s*-->/g
 const includesDM = /\[\[(.*?)\]\]/g
 
 /* Check for command line argument. */
+let component
 let outPath
 const program = new Command()
 program
 	.name('generate_man.js')
 	.description("Generates man pages from markdown source.\n\nRequires \"pandoc\" to be installed on the system!")
+	.argument('<component>', 'component to render')
 	.argument('<path>', 'path to output man pages')
 	.option('-d, --debug', 'print debug output')
-	.action((path) => { outPath = path })
+	.action((comp,path) => { component = comp; outPath = path })
 	.parse()
 const debug = program.opts().debug
 
-/* Create output directory, if it doesn't exist. */
-if (!fs.existsSync(outPath)) {
-	fs.mkdirSync(outPath)
+const doInclude = (content, f) => {
+	return content.replace(includesRE, (m, m1) => {
+		if (!m1.length) return m
+		const inc_f = path.join(path.dirname(f), m1)
+		return doInclude(fs.readFileSync(inc_f, 'utf8'), f)
+	})
 }
 
-/* Generate list of man files. */
-const files = (await manFiles()).flatMap((x) => fg.sync(x))
+const processDovecotMd = () => {
+	return tree => {
+		return map(tree, (node) => {
+			if (node.value) {
+				node.value = node.value.replace(includesDM, (m, m1) => {
+					if (!m1.length) return m
 
-/* Get hash of last git commit. */
-const gitHash = gitCommitInfo().shortHash
+					const parts = m1.split(',').map((x) => x.trim())
+					switch (parts[0]) {
+					case 'man':
+						return parts[1] + '(' + (parts[3] ? parts[3] : '1') + ')'
+					case 'rfc':
+						return "RFC " + parts[1]
+					case 'setting':
+						return '`' + parts[1] + '`'
+					case 'link':
+						return parts[1]
+					default:
+						return m1
+					}
+				})
+			}
+			return node
+		})
+	}
+}
 
-/* Process man files. */
-for (const f of files) {
-	if (debug) {
-		console.debug('Processing file:', f)
+const main = async (component, outPath) => {
+	/* Create output directory, if it doesn't exist. */
+	if (!fs.existsSync(outPath)) {
+		await fs.promises.mkdir(outPath)
 	}
 
-	/* Load base man file. */
-	const str = fs.readFileSync(f, 'utf8')
-	const content = matter(str).content
+	/* Generate list of man files. */
+	const files = (await manFiles()).flatMap((x) => fg.sync(x))
 
-	// https://pandoc.org/MANUAL.html#extension-pandoc_title_block
-	const fparts = path.basename(f).split('.')
-	let raw_md = "% " + fparts[0] + "(" + fparts[1] + ") " + gitHash + " | Dovecot\n" +
-		"%\n" +
-		"% " + dayjs().format('YYYY/MM/DD') + "\n\n"
+	/* Get hash of last git commit. */
+	const gitHash = gitCommitInfo().shortHash
 
-	/* Handle @include statements */
-	raw_md += processIncludes(content, f)
-
-	/* Process Dovecot markdown */
-	raw_md = raw_md.replace(includesDM, (m, m1) => {
-		if (!m1.length) return m
-
-		const parts = m1.split(',').map((x) => x.trim())
-		switch (parts[0]) {
-		case 'man':
-			return parts[1] + '(' + (parts[3] ? parts[3] : '1') + ')'
-
-		case 'setting':
-			return '`' + parts[1] + '`'
-
-		default:
-			return m1
-		}
-	})
-
-	pdc(raw_md, 'markdown', 'man', [ '-s' ], (err, result) => {
-		if (err) throw err
-		const out_f = path.join(outPath, path.basename(f, '.md'))
-		fs.writeFileSync(out_f, result)
+	/* Process man files. */
+	for (const f of files) {
 		if (debug) {
-			console.debug('Man file written:', out_f)
+			console.debug('Processing file:', f)
 		}
-	})
+
+		/* Load base man file. */
+		const out_f = path.join(outPath, path.basename(f, '.md'));
+		const str = await fs.promises.readFile(f, 'utf8')
+		const page = matter(str)
+		const vf = new VFile({
+			path: f,
+			value: doInclude(page.content, f)
+		})
+		if (page.data.dovecotComponent != component)
+			continue
+
+		const fparts = path.basename(f).split('.')
+		const result = await unified().
+			use(remarkParse).
+			use(processDovecotMd).
+			use(remarkGfm).
+			use(remarkMan, {
+				manual: 'Dovecot',
+				version: gitHash,
+			}).process(vf).
+			then((file) => fs.promises.writeFile(out_f, String(file)))
+	}
 }
 
-/* Process @include statements (handles embedded includes) */
-function processIncludes(data, f) {
-	return data.replace(includesRE, (m, m1) => {
-		if (!m1.length) return m
-
-		const inc_f = path.join(path.dirname(f), m1)
-		if (debug) {
-			console.debug('    Include:', inc_f)
-		}
-
-		return processIncludes(matter(
-			fs.readFileSync(inc_f, 'utf8')
-		).content, inc_f)
-	})
-}
+main(component, outPath)
