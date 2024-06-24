@@ -24,7 +24,7 @@ Global [[man,doveadm]] *options*:
 **-c** *config-file*
 :   Read configuration from the given *config-file*. By default
     it first reads config socket, and then falls back to
-    *@pkgsysconfdir@/dovecot.conf*. You can also point this to
+    */etc/dovecot/dovecot.conf*. You can also point this to
     config socket of some instance running compatible version.
 
 **-o** *setting*<!-- -->**=** <!-- -->*value*
