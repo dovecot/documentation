@@ -151,8 +151,8 @@ dest=core.tar.gz
 
 ## Debugging Core Dumps in Other Systems
 
-::: warning TODO
-Move to Pro
+::: todo
+Move to Dovecot Pro documentation.
 :::
 
 If you have a tar.gz generated from dovecot-sysreport, you can debug it
