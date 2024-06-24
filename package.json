@@ -3,8 +3,10 @@
     "@sindresorhus/slugify": "^2.2.1",
     "commander": "^12.1.0",
     "dayjs": "^1.11.11",
+    "fast-glob": "^3.3.2",
     "git-commit-info": "^2.0.2",
     "import": "^0.0.6",
+    "markdown-it-container": "^4.0.0",
     "markdown-it-deflist": "^3.0.0",
     "markdown-it-mathjax3": "^4.3.2",
     "pagefind": "^1.1.0",
@@ -16,7 +18,7 @@
     "unified": "^11.0.5",
     "unist-util-map": "^4.0.0",
     "vitepress": "^1.2.3",
-    "vitepress-plugin-pagefind": "^0.4.1",
+    "vitepress-plugin-pagefind": "^0.4.3",
     "vitepress-sidebar": "^1.23.2"
   },
   "scripts": {
