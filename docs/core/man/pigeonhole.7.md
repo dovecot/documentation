@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: pigeonhole
+dovecotComponent: pigeonhole
 ---
 
-# pigeonhole
-
-## NAME
-
-pigeonhole - Overview of the Pigeonhole Sieve support for Dovecot
+# pigeonhole(7) - Overview of the Pigeonhole Sieve support for Dovecot
 
 ## DESCRIPTION
 

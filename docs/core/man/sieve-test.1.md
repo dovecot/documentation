@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: sieve-test
+dovecotComponent: pigeonhole
 ---
 
-# sieve-test
-
-## NAME
-
-sieve-test - Pigeonhole's Sieve script tester
+# sieve-test(1) - Pigeonhole's Sieve script tester
 
 ## SYNOPSIS
 

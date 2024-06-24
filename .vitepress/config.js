@@ -6,7 +6,7 @@ import { generateSidebar } from 'vitepress-sidebar'
 import { dovecotMdExtend } from '../lib/markdown.js'
 import { frontmatterIter } from '../lib/utility.js'
 
-const base = '/2.4'
+const base = '/doc'
 
 // No need to include the "dummy" index files, used to build titles
 // for the sidebar, into the final documentation bundles

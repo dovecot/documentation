@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-help
+dovecotComponent: core
 ---
 
-# doveadm-help
-
-## NAME
-
-doveadm-help - Show information about doveadm commands
+# doveadm-help(1) - Show information about doveadm commands
 
 ## SYNOPSIS
 

@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-altmove
+dovecotComponent: core
 ---
 
-# doveadm-altmove
-
-## NAME
-
-doveadm-altmove - Move matching mails to the alternative storage (dbox-only)
+# doveadm-altmove(1) - Move matching mails to the alternative storage (dbox-only)
 
 ## SYNOPSIS
 

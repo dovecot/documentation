@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: sieve-dump
+dovecotComponent: pigeonhole
 ---
 
-# sieve-dump
-
-## NAME
-
-sieve-dump - Pigeonhole's Sieve script binary dump tool
+# sieve-dump(1) - Pigeonhole's Sieve script binary dump tool
 
 ## SYNOPSIS
 

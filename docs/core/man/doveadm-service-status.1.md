@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-service-status
+dovecotComponent: core
 ---
 
-# doveadm-service-status
-
-## NAME
-
-doveadm-service-status - Show information about dovecot services
+# doveadm-service-status(1) - Show information about dovecot services
 
 ## SYNOPSIS
 

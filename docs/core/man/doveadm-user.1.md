@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-user
+dovecotComponent: core
 ---
 
-# doveadm-user
-
-## NAME
-
-doveadm-user - Perform a user lookup in Dovecot's userdbs
+# doveadm-user(1) - Perform a user lookup in Dovecot's userdbs
 
 ## SYNOPSIS
 
