@@ -8,3 +8,4 @@ node_modules/
 .vitepress/cache/
 .vitepress/dist/
 .vitepress/local.js
+/man/
