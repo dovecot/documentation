@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-sieve
+dovecotComponent: pigeonhole
 ---
 
-# doveadm-sieve
-
-## NAME
-
-doveadm-sieve - Commands related to handling Sieve scripts
+# doveadm-sieve(1) - Commands related to handling Sieve scripts
 
 ## SYNOPSIS
 

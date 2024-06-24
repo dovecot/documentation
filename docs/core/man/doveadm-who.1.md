@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-who
+dovecotComponent: core
 ---
 
-# doveadm-who
-
-## NAME
-
-doveadm-who - Show who is logged into the Dovecot server
+# doveadm-who(1) - Show who is logged into the Dovecot server
 
 ## SYNOPSIS
 

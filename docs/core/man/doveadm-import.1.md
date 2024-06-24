@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-import
+dovecotComponent: core
 ---
 
-# doveadm-import
-
-## NAME
-
-doveadm-import - Import messages matching given search query
+# doveadm-import(1) - Import messages matching given search query
 
 ## SYNOPSIS
 

@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-indexer
+dovecotComponent: core
 ---
 
-# doveadm-indexer
-
-## NAME
-
-doveadm-indexer - Commands related to managing the indexer process
+# doveadm-indexer(1) - Commands related to managing the indexer process
 
 ## SYNOPSIS
 

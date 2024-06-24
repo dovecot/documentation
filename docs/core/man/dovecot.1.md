@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: dovecot
+dovecotComponent: core
 ---
 
-# dovecot
-
-## NAME
-
-dovecot - A secure and highly configurable IMAP and POP3 server
+# dovecot(1) - A secure and highly configurable IMAP and POP3 server
 
 ## SYNOPSIS
 

@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-deduplicate
+dovecotComponent: core
 ---
 
-# doveadm-deduplicate
-
-## NAME
-
-doveadm-deduplicate - Expunge duplicate messages
+# doveadm-deduplicate(1) - Expunge duplicate messages
 
 ## SYNOPSIS
 

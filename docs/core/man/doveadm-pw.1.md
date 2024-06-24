@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-pw
+dovecotComponent: core
 ---
 
-# doveadm-pw
-
-## NAME
-
-doveadm-pw - Dovecot's password hash generator
+# doveadm-pw(1) - Dovecot's password hash generator and validator
 
 ## SYNOPSIS
 

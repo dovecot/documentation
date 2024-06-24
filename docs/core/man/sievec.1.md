@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: sievec
+dovecotComponent: pigeonhole
 ---
 
-# sievec
-
-## NAME
-
-sievec - Pigeonhole's Sieve script compiler
+# sievec(1) - Pigeonhole's Sieve script compiler
 
 ## SYNOPSIS
 

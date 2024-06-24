@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-penalty
+dovecotComponent: core
 ---
 
-# doveadm-penalty
-
-## NAME
-
-doveadm-penalty - Show current penalties
+# doveadm-penalty(1) - Show current penalties
 
 ## SYNOPSIS
 

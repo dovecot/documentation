@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-instance
+dovecotComponent: core
 ---
 
-# doveadm-instance
-
-## NAME
-
-doveadm-instance - Manage the list of running Dovecot instances
+# doveadm-instance(1) - Manage the list of running Dovecot instances
 
 ## SYNOPSIS
 

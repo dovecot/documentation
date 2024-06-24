@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-index
+dovecotComponent: core
 ---
 
-# doveadm-index
-
-## NAME
-
-doveadm-index - Index mailboxes
+# doveadm-index(1) - Index mailboxes
 
 ## SYNOPSIS
 

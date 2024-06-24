@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-acl
+dovecotComponent: core
 ---
 
-# doveadm-acl
-
-## NAME
-
-doveadm-acl - Manage Access Control List (ACL)
+# doveadm-acl(1) - Manage Access Control List (ACL)
 
 ## SYNOPSIS
 

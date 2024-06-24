@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveconf
+dovecotComponent: core
 ---
 
-# doveconf
-
-## NAME
-
-doveconf - Dovecot's configuration dumping utility
+# doveconf(1) - Dovecot's configuration dumping utility
 
 ## SYNOPSIS
 

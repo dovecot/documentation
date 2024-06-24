@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-process-status
+dovecotComponent: core
 ---
 
-# doveadm-process-status
-
-## NAME
-
-doveadm-process-status - Show information about dovecot processes
+# doveadm-process-status(1) - Show information about dovecot processes
 
 ## SYNOPSIS
 

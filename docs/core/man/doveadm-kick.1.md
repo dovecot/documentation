@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-kick
+dovecotComponent: core
 ---
 
-# doveadm-kick
-
-## NAME
-
-doveadm-kick - Disconnect users by user name and/or IP address
+# doveadm-kick(1) - Disconnect users by user name and/or IP address
 
 ## SYNOPSIS
 

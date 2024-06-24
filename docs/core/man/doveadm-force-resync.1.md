@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-force-resync
+dovecotComponent: core
 ---
 
-# doveadm-force-resync
-
-## NAME
-
-doveadm-force-resync - Repair broken mailboxes
+# doveadm-force-resync(1) - Repair broken mailboxes
 
 ## SYNOPSIS
 

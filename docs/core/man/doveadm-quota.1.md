@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-quota
+dovecotComponent: core
 ---
 
-# doveadm-quota
-
-## NAME
-
-doveadm-quota - Initialize/recalculate or show current quota usage
+# doveadm-quota(1) - Initialize/recalculate or show current quota usage
 
 ## SYNOPSIS
 
