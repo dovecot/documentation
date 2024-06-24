@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-dump
+dovecotComponent: core
 ---
 
-# doveadm-dump
-
-## NAME
-
-doveadm-dump - Dump the content of Dovecot's binary mailbox index/log
+# doveadm-dump(1) - Dump the content of Dovecot's binary mailbox index/log
 
 ## SYNOPSIS
 

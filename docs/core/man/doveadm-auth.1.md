@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-auth
+dovecotComponent: core
 ---
 
-# doveadm-auth
-
-## NAME
-
-doveadm-auth - Flush/lookup/test authentication data
+# doveadm-auth(1) - Flush/lookup/test authentication data
 
 ## SYNOPSIS
 

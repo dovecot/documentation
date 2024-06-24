@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-exec
+dovecotComponent: core
 ---
 
-# doveadm-exec
-
-## NAME
-
-doveadm-exec - Easily execute commands from Dovecot's libexec directory.
+# doveadm-exec(1) - Easily execute commands from Dovecot's libexec directory.
 
 ## SYNOPSIS
 

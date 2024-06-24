@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-expunge
+dovecotComponent: core
 ---
 
-# doveadm-expunge
-
-## NAME
-
-doveadm-expunge - Expunge messages matching given search query
+# doveadm-expunge(1) - Expunge messages matching given search query
 
 ## SYNOPSIS
 

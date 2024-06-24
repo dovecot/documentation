@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-compress-connect
+dovecotComponent: core
 ---
 
-# doveadm-compress-connect
-
-## NAME
-
-doveadm compress-connect - Establish a compress-aware imap connection
+# doveadm compress-connect(1) - Establish a compress-aware imap connection
 
 ## SYNOPSIS
 

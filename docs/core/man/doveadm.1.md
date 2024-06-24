@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: doveadm
+dovecotComponent: core
 ---
 
 <style module>
@@ -9,11 +10,7 @@ title: doveadm
 }
 </style>
 
-# doveadm
-
-## NAME
-
-doveadm - Dovecot's administration utility
+# doveadm(1) - Dovecot's administration utility
 
 ## SYNOPSIS
 
@@ -32,318 +29,247 @@ Execute **doveadm help**, for a command usage listing.
 
 These commands work directly with Dovecot's master process.
 
-### reload
 
-#### doveadm reload
+### doveadm reload
 
-<div :class="$style.indent">
 
 Force [[man,dovecot]] to reload the configuration.
 
-</div>
 
-### stop
+### doveadm stop
 
-#### doveadm stop
-
-<div :class="$style.indent">
 
 Stop [[man,dovecot]] and all its child processes.
 
-</div>
 
-### ADDITIONAL MASTER COMMANDS
 
-#### doveadm config
+## ADDITIONAL MASTER COMMANDS
 
-<div :class="$style.indent">
+
+### doveadm config
 
 [[man,doveconf]], Dump Dovecot configuration.
 
-</div>
+### doveadm exec
 
-#### doveadm exec
-
-<div :class="$style.indent">
 
 [[man,doveadm-exec]], Easily execute commands from Dovecot's libexec_dir.
 
-</div>
 
-#### doveadm instance
+### doveadm instance
 
-<div :class="$style.indent">
 
 [[man,doveadm-instance]], Manage the list of running Dovecot instances.
 
-</div>
 
-#### doveadm kick
+### doveadm kick
 
-<div :class="$style.indent">
 
 [[man,doveadm-kick]], Disconnect users by user name and/or IP address.
 
-</div>
 
-#### doveadm log
+### doveadm log
 
-<div :class="$style.indent">
 
 [[man,doveadm-log]], Locate, test or reopen Dovecot's log files.
 
-</div>
 
-#### doveadm penalty
+### doveadm penalty
 
-<div :class="$style.indent">
 
 [[man,doveadm-penalty]], Show current penalties.
 
-</div>
 
-#### doveadm proxy
+### doveadm proxy
 
-<div :class="$style.indent">
 
 [[man,doveadm-proxy]], Handle Dovecot proxy connections.
 
-</div>
 
-#### doveadm who
+### doveadm who
 
-<div :class="$style.indent">
 
 [[man,doveadm-who]], Show who is logged into the Dovecot server.
 
-</div>
 
-### AUTHENTICATION COMMANDS
 
-#### doveadm auth
+## AUTHENTICATION COMMANDS
 
-<div :class="$style.indent">
+
+### doveadm auth
+
 
 [[man,doveadm-auth]], Test authentication for a user.
 
-</div>
 
-#### doveadm pw
+### doveadm pw
 
-<div :class="$style.indent">
 
 [[man,doveadm-pw]], Dovecot's password hash generator.
 
-</div>
 
-#### doveadm user
+### doveadm user
 
-<div :class="$style.indent">
 
 [[man,doveadm-user]], Perform a user lookup in Dovecot's userdbs
 
-</div>
 
-### MAILBOX COMMANDS
 
-#### doveadm acl
+## MAILBOX COMMANDS
 
-<div :class="$style.indent">
+
+### doveadm acl
+
 
 [[man,doveadm-acl]], Manage Access Control List (ACL).
 
-</div>
 
-#### doveadm altmove
+### doveadm altmove
 
-<div :class="$style.indent">
 
 [[man,doveadm-altmove]], Move matching mails to the alternative storage.
 
-</div>
 
-#### doveadm backup
+### doveadm backup
 
-<div :class="$style.indent">
 
 [[man,doveadm-sync]], Dovecot's one-way mailbox synchronization utility.
 
-</div>
 
-#### doveadm copy
+### doveadm copy
 
-<div :class="$style.indent">
 
 [[man,doveadm-move]], Copy/move messages matching the given search query
 into another mailbox.
 
-</div>
 
-#### doveadm deduplicate
+### doveadm deduplicate
 
-<div :class="$style.indent">
 
 [[man,doveadm-deduplicate]], Expunge duplicate messages.
 
-</div>
 
-#### doveadm dump
+### doveadm dump
 
-<div :class="$style.indent">
 
 [[man,doveadm-dump]], Dump the content of Dovecot's binary mailbox index/log.
 
-</div>
 
-#### doveadm expunge
+### doveadm expunge
 
-<div :class="$style.indent">
 
 [[man,doveadm-expunge]], Expunge messages matching given search query.
 
-</div>
 
-#### doveadm fetch
+### doveadm fetch
 
-<div :class="$style.indent">
 
 [[man,doveadm-fetch]], Fetch messages matching given search query.
 
-</div>
 
-#### doveadm flags
+### doveadm flags
 
-<div :class="$style.indent">
 
 [[man,doveadm-flags]], Add, remove or replace messages' flags.
 
-</div>
 
-#### doveadm force-resync
+### doveadm force-resync
 
-<div :class="$style.indent">
 
 [[man,doveadm-force-resync]], Repair broken mailboxes, in case
 Dovecot doesn't automatically do that.
 
-</div>
 
-#### doveadm fs
+### doveadm fs
 
-<div :class="$style.indent">
 
 [[man,doveadm-fs]], Interact with the abstract mail storage filesystem.
 
-</div>
 
-#### doveadm fts
+### doveadm fts
 
-<div :class="$style.indent">
 
 [[man,doveadm-fts]], Manipulate the Full Text Search (FTS) index.
 
-</div>
 
-#### doveadm import
+### doveadm import
 
-<div :class="$style.indent">
 
 [[man,doveadm-import]], Import messages matching given search query.
 
-</div>
 
-#### doveadm index
+### doveadm index
 
-<div :class="$style.indent">
 
 [[man,doveadm-index]], Index messages in a given mailbox.
 
-</div>
 
-#### doveadm mailbox
+### doveadm mailbox
 
-<div :class="$style.indent">
 
 [[man,doveadm-mailbox]], Various commands related to handling mailboxes.
 
-</div>
 
-#### doveadm mailbox cryptokey
+### doveadm mailbox cryptokey
 
-<div :class="$style.indent">
 
 [[man,doveadm-mailbox-cryptokey]], Mail crypt plugin management.
 
-</div>
 
-#### doveadm move
+### doveadm move
 
-<div :class="$style.indent">
 
 [[man,doveadm-move]], Move messages matching the given search query
 into another mailbox.
 
-</div>
 
-#### doveadm purge
+### doveadm purge
 
-<div :class="$style.indent">
 
 [[man,doveadm-purge]], Remove messages with refcount=0 from mdbox
 files.
 
-</div>
 
-#### doveadm quota
+### doveadm quota
 
-<div :class="$style.indent">
 
 [[man,doveadm-quota]], Initialize/recalculate or show current quota usage.
 
-</div>
 
-#### doveadm rebuild
+### doveadm rebuild
 
-<div :class="$style.indent">
 
 [[man,doveadm-rebuild]], Rebuild index metadata from message data.
 
-</div>
 
-#### doveadm save
+### doveadm save
 
-<div :class="$style.indent">
 
 [[man,doveadm-save]], Save email to users' mailboxes.
 
-</div>
 
-#### doveadm search
+### doveadm search
 
-<div :class="$style.indent">
 
 [[man,doveadm-search]], Show a list of mailbox GUIDs and message
 UIDs matching given search query.
 
-</div>
 
-#### doveadm stats
+### doveadm stats
 
-<div :class="$style.indent">
 
 [[man,doveadm-stats]], Inspect or reset stats.
 
-</div>
 
-#### doveadm sync
+### doveadm sync
 
-<div :class="$style.indent">
 
 [[man,doveadm-sync]], Dovecot's two-way mailbox synchronization utility.
 
-</div>
+
 
 ## EXIT STATUS
+
 
 **doveadm** will exit with one of the following values:
 
@@ -380,13 +306,17 @@ UIDs matching given search query.
 **127**
 :   Unknown error.
 
+
 ## ENVIRONMENT
+
 
 **USER**
 :   This environment variable is used to determine the *user* if a
     command accepts a *user* but none was specified.
 
+
 ## FILES
+
 
 */etc/dovecot/dovecot.conf*
 :   Dovecot's main configuration file.
@@ -399,6 +329,8 @@ UIDs matching given search query.
 
 <!-- @include: include/reporting-bugs.inc -->
 
+
 ## SEE ALSO
+
 
 [[man,doveadm-help]]

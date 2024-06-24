@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-save
+dovecotComponent: core
 ---
 
-# doveadm-save
-
-## NAME
-
-doveadm-save - Save email to a user's mailbox
+# doveadm-save(1) - Save email to a user's mailbox
 
 ## SYNOPSIS
 

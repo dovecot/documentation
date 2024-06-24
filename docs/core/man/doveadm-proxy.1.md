@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-proxy
+dovecotComponent: core
 ---
 
-# doveadm-proxy
-
-## NAME
-
-doveadm-proxy - Handle Dovecot proxy connections (obsolete)
+# doveadm-proxy(1) - Handle Dovecot proxy connections (obsolete)
 
 ## SYNOPSIS
 

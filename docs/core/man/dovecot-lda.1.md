@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: dovecot-lda
+dovecotComponent: core
 ---
 
-# dovecot-lda
-
-## NAME
-
-dovecot-lda - Dovecot's local mail delivery agent
+# dovecot-lda - Dovecot's local mail delivery agent
 
 ## SYNOPSIS
 

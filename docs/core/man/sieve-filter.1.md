@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: sieve-filter
+dovecotComponent: pigeonhole
 ---
 
-# sieve-filter
-
-## NAME
-
-sieve-filter - Pigeonhole's Sieve mailbox filter tool
+# sieve-filter(1) - Pigeonhole's Sieve mailbox filter tool
 
 ::: warning
 This tool is still experimental. Read this manual

@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-stats
+dovecotComponent: core
 ---
 
-# doveadm-stats
-
-## NAME
-
-doveadm-stats - Inspect or reset stats
+# doveadm-stats(1) - Inspect or reset stats
 
 ## SYNOPSIS
 

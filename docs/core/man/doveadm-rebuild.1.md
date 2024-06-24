@@ -1,14 +1,10 @@
 ---
 layout: doc
 title: doveadm-rebuild
+dovecotComponent: core
 ---
 
-# doveadm-rebuild
-
-## NAME
-
-doveadm-rebuild - Commands related to rebuilding various aspects of
-mails matching given search query.
+# doveadm-rebuild(1) - Commands related to rebuilding various aspects of mails matching given search query.
 
 ## SYNOPSIS
 

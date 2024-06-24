@@ -1,14 +1,10 @@
 ---
 layout: doc
 title: doveadm-search
+dovecotComponent: core
 ---
 
-# doveadm-search
-
-## NAME
-
-doveadm-search - Show a list of mailbox GUIDs and message UIDs matching
-given search query.
+# doveadm-search(1) - Show a list of mailbox GUIDs and message UIDs matching given search query.
 
 ## SYNOPSIS
 

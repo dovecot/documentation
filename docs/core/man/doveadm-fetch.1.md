@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-fetch
+dovecotComponent: core
 ---
 
-# doveadm-fetch
-
-## NAME
-
-doveadm-fetch - Fetch partial/full messages or message information
+# doveadm-fetch(1) - Fetch partial/full messages or message information
 
 ## SYNOPSIS
 

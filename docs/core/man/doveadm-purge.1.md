@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-purge
+dovecotComponent: core
 ---
 
-# doveadm-purge
-
-## NAME
-
-doveadm-purge - Remove messages with refcount=0 from mdbox files
+# doveadm-purge(1) - Remove messages with refcount=0 from mdbox files
 
 ## SYNOPSIS
 

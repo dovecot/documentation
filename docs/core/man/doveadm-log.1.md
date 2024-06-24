@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-log
+dovecotComponent: core
 ---
 
-# doveadm-log
-
-## NAME
-
-doveadm-log - Locate, test or reopen Dovecot's log files
+# doveadm-log(1) - Locate, test or reopen Dovecot's log files
 
 ## SYNOPSIS
 
