@@ -1,9 +1,9 @@
 ---
 layout: doc
-title: doveadm-sync
+title: doveadm-backup
 dovecotComponent: core
 ---
 
-# doveadm-sync(1) - Dovecot's two-way mailbox synchronization feature
+# doveadm-backup(1) - Dovecot's one-way mailbox synchronization feature
 
 <!-- @include: include/doveadm-backup-sync.md -->

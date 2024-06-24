@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-dict
+dovecotComponent: core
 ---
 
-# doveadm-dict
-
-## NAME
-
-doveadm-dict - Commands related to dictionary manipulation
+# doveadm-dict(1) - Commands related to dictionary manipulation
 
 ## SYNOPSIS
 

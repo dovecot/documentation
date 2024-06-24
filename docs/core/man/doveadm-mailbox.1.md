@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-mailbox
+dovecotComponent: core
 ---
 
-# doveadm-mailbox
-
-## NAME
-
-doveadm-mailbox - Commands related to handling mailboxes
+# doveadm-mailbox(1) - Commands related to handling mailboxes
 
 ## SYNOPSIS
 

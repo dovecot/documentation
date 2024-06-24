@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-fts
+dovecotComponent: core
 ---
 
-# doveadm-fts
-
-## NAME
-
-doveadm-fts - Manipulate the Full Text Search (FTS) index
+# doveadm-fts(1) - Manipulate the Full Text Search (FTS) index
 
 ## SYNOPSIS
 

@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: dovecot-sysreport
+dovecotComponent: core
 ---
 
-# dovecot-sysreport
-
-## NAME
-
-dovecot-sysreport - Dovecot's system report utility
+# dovecot-sysreport(1) - Dovecot's system report utility
 
 ## SYNOPSIS
 

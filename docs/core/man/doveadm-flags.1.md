@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-flags
+dovecotComponent: core
 ---
 
-# doveadm-flags
-
-## NAME
-
-doveadm-flags - Add, remove or replace messages' flags
+# doveadm-flags(1) - Add, remove or replace messages' flags
 
 ## SYNOPSIS
 

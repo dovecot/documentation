@@ -1,14 +1,10 @@
 ---
 layout: doc
 title: doveadm-search-query
+dovecotComponent: core
 ---
 
-# doveadm-search-query
-
-## NAME
-
-doveadm-search-query - Overview of search queries for doveadm mailbox
-commands
+# doveadm-search-query(7) - Overview of search queries for doveadm mailbox commands
 
 ## DESCRIPTION
 

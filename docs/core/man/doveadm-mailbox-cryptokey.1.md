@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-mailbox-cryptokey
+dovecotComponent: core
 ---
 
-# doveadm-mailbox-cryptokey
-
-## NAME
-
-doveadm-mailbox-cryptokey - Mail crypt plugin management
+# doveadm-mailbox-cryptokey(1) - Mail crypt plugin management
 
 ## SYNOPSIS
 

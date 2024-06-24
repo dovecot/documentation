@@ -1,13 +1,10 @@
 ---
 layout: doc
 title: doveadm-fs
+dovecotComponent: core
 ---
 
-# doveadm-fs
-
-## NAME
-
-doveadm-fs - Interact with the abstract mail storage filesystem
+# doveadm-fs(1) - Interact with the abstract mail storage filesystem
 
 ## SYNOPSIS
 
