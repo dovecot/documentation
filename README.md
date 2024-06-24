@@ -274,3 +274,18 @@ Create a update tag based on a tag_name.
 The tag_name must be defined in `data/updates.js`.
 
 Example: `[[changed,tag_name]]`
+
+### Other Markdown Extensions
+
+#### TODO Container
+
+***Syntax:***
+
+```
+::: todo
+TODO text contents
+:::
+```
+
+Outputs a formatted TODO container, using the (optional) TODO text contents
+as the body.
