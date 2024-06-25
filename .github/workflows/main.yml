@@ -23,7 +23,19 @@ jobs:
       run: npm ci
     - name: Build with VitePress
       run: |
+        mkdir mans
         npm run docs:build
+        npm run man:build core mans/core
+        npm run man:build pigeonhole mans/pigeonhole
+    - name: Prepare tarballs
+      run: |
+        mkdir tars
+        tar --transform=s,.vitepress/dist,html/2.4, -cJf tars/docs.txz /.vitepress/dist
+        for dir in mans/*; do
+          tag=$(basename $dir)
+          tar --transform=s,${dir},man, '--exclude=_*' '--exclude=.*' -cJf tars/$tag.txz $dir
+        done
+        mv tars/* /.vitepress/dist/
     - uses: dovecot/rsync-deployments@master
       with:
         RSYNC_OPTIONS: -azr --delete
