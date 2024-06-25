@@ -3310,19 +3310,6 @@ The base directory in which Dovecot should store runtime data.
 This can be used to override the base directory determined at compile time.`
 	},
 
-	config_cache_size: {
-		default: '1M',
-		values: setting_types.SIZE,
-		text: `
-The maximum size of the in-memory configuration cache.
-
-The cache should be large enough to allow keeping the full, parsed Dovecot
-configuration in memory.
-
-The default is almost always large enough, unless your system has numerous
-large TLS certificates in the configuration.`
-	},
-
 	debug_log_path: {
 		default: '[[setting,info_log_path]]',
 		values: setting_types.STRING,
