@@ -298,6 +298,7 @@ authenticated session. The following substitutions are available:
 		tags: [ 'managesieve', 'sieve' ],
 		default: 5,
 		values: setting_types.UINT,
+		advanced: true,
 		text: `
 The maximum number of compile errors that are returned to the client upon
 script upload or script verification.`
@@ -307,6 +308,7 @@ script upload or script verification.`
 		tags: [ 'managesieve', 'sieve' ],
 		default: 65536,
 		values: setting_types.UINT,
+		advanced: true,
 		text: `
 The maximum ManageSieve command line length in bytes.
 
@@ -318,6 +320,7 @@ will generally not be useful.`
 		tags: [ 'managesieve', 'sieve' ],
 		default: '<dynamically determined>',
 		values: setting_types.STRING,
+		advanced: true,
 		text: `
 \`NOTIFY\` capabilities reported by the ManageSieve service before
 authentication.
@@ -331,6 +334,7 @@ depending on the authenticated user).`
 		tags: [ 'managesieve', 'sieve' ],
 		default: 'fileinto reject envelope encoded-character vacation subaddress comparator-i;ascii-numeric relational regex imap4flags copy include variables body enotify environment mailbox date index ihave duplicate mime foreverypart extracttext',
 		values: setting_types.STRING,
+		advanced: true,
 		text: `
 \`SIEVE\` capabilities reported by the ManageSieve service before
 authentication.
@@ -612,6 +616,7 @@ the sievec command line tool).`
 		plugin: 'sieve',
 		default: '1M',
 		values: setting_types.SIZE,
+		advanced: true,
 		text: `
 The maximum size of a Sieve script. The compiler will refuse to compile any
 script larger than this limit.
@@ -774,6 +779,7 @@ If it is not a file, the default user log file is \`~/.dovecot.sieve.log\`.`
 		default: '14d',
 		values: setting_types.TIME,
 		seealso: [ '[[link,sieve_duplicate]]' ],
+		advanced: true,
 		text: `
 Default period after which tracked values are purged from the duplicate
 tracking database.`
@@ -785,6 +791,7 @@ tracking database.`
 		default: '7d',
 		values: setting_types.TIME,
 		seealso: [ '[[link,sieve_duplicate]]' ],
+		advanced: true,
 		text: `
 Maximum period after which tracked values are purged from the duplicate
 tracking database.`
@@ -863,6 +870,7 @@ notifications.`
 		values: setting_types.UINT,
 		default: 255,
 		seealso: [ '[[link,sieve_include]]' ],
+		advanced: true,
 		text: `
 The maximum number of scripts that may be included. This is the total
 number of scripts involved in the include tree.`
@@ -874,6 +882,7 @@ number of scripts involved in the include tree.`
 		values: setting_types.UINT,
 		default: 10,
 		seealso: [ '[[link,sieve_include]]' ],
+		advanced: true,
 		text: `
 The maximum nesting depth for the include tree.`
 	},
@@ -1076,6 +1085,7 @@ make the original SMTP recipient available to Sieve.`
 		default: 255,
 		values: setting_types.UINT,
 		seealso: [ '[[link,sieve_vacation]]' ],
+		advanced: true,
 		text: `
 The maximum number of variables that can be declared in a scope.
 
@@ -1091,6 +1101,7 @@ The minimum value for this setting is \`128\`.`
 		default: '4k',
 		values: setting_types.SIZE,
 		seealso: [ '[[link,sieve_variables]]' ],
+		advanced: true,
 		text: `
 The maximum allowed size for the value of a variable. If exceeded at
 runtime, the value is always truncated to the configured maximum.
@@ -1851,6 +1862,7 @@ See [[plugin,fts,tokenizers]] for configuration information.`
 		default: 500,
 		values: setting_types.UINT,
 		plugin: 'fts-flatcurve',
+		advanced: true,
 		text: `
 Commit database changes after this many documents are updated. Higher commit
 limits will result in faster indexing for large transactions (i.e. indexing
@@ -1864,6 +1876,7 @@ Set to \`0\` to use the Xapian default.`
 		default: 30,
 		values: setting_types.UINT,
 		plugin: 'fts-flatcurve',
+		advanced: true,
 		text: `
 The maximum number of characters in a term to index.
 
@@ -1874,6 +1887,7 @@ The maximum value for this setting is \`200\`.`
 		default: 2,
 		values: setting_types.UINT,
 		plugin: 'fts-flatcurve',
+		advanced: true,
 		text: `The minimum number of characters in a term to index.`
 	},
 
@@ -1881,6 +1895,7 @@ The maximum value for this setting is \`200\`.`
 		default: 10,
 		values: setting_types.UINT,
 		plugin: 'fts-flatcurve',
+		advanced: true,
 		text: `
 Once the database reaches this number of shards, automatically optimize the
 DB at shutdown.
@@ -1892,6 +1907,7 @@ Set to \`0\` to disable auto-optimization.`
 		default: 5000,
 		values: setting_types.UINT,
 		plugin: 'fts-flatcurve',
+		advanced: true,
 		text: `
 When the "current" fts database reaches this number of messages, it is
 rotated to a read-only database and replaced by a new write DB. Most people
@@ -1904,6 +1920,7 @@ Set to \`0\` to disable rotation.`
 		default: 5000,
 		values: setting_types.TIME_MSECS,
 		plugin: 'fts-flatcurve',
+		advanced: true,
 		text: `
 When the "current" fts database exceeds this length of time (in msecs) to
 commit changes, it is rotated to a read-only database and replaced by a new
@@ -2460,6 +2477,7 @@ plugin {
 			settings_quota_clone_unset_added: false
 		},
 		values: setting_types.BOOLEAN,
+		advanced: true,
 		text: `
 Unset quota information before updating. This is needed with some dict
 backends that do not support upserting, such as SQL with older SQLite.`
@@ -2732,6 +2750,7 @@ proceeds from there.`
 		default: 64,
 		plugin: 'virtual',
 		values: setting_types.UINT,
+		advanced: true,
 		text: `How many mailboxes to open in virtual plugin.`
 	},
 
@@ -2848,6 +2867,7 @@ entry is to be added.`
 		default: 'no',
 		tags: [ 'auth_cache' ],
 		values: setting_types.BOOLEAN,
+		advanced: true,
 		text: `
 The auth master process by default is responsible for the hash
 verifications. Setting this to \`yes\` moves the verification to auth-worker
@@ -2907,6 +2927,7 @@ encounter.`
 	auth_gssapi_hostname: {
 		default: '<name returned by gethostname()>',
 		values: setting_types.STRING,
+		advanced: true,
 		text: `
 This supplies the hostname to use in Generic Security Services API
 (GSSAPI) principal names.
@@ -2917,6 +2938,7 @@ Use \`"$ALL"\` (with the quotation marks) to allow all keytab entries.`
 	auth_krb5_keytab: {
 		default: '<system default (e.g. /etc/krb5.keytab)>',
 		values: setting_types.STRING,
+		advanced: true,
 		text: `
 This specifies the Kerberos keytab to use for the GSSAPI mechanism.
 
@@ -3005,6 +3027,7 @@ auth_policy_hash_nonce = <localized_random_string>
 		tags: [ 'auth_policy' ],
 		values: setting_types.UINT,
 		seealso: [ 'auth_policy_server_url' ],
+		advanced: true,
 		text: `
 How many bits to use from password hash when reporting to policy server.`
 	},
@@ -3170,6 +3193,7 @@ OBJ_txt2nid() function).
 	auth_use_winbind: {
 		default: 'no',
 		values: setting_types.BOOLEAN,
+		advanced: true,
 		text: `
 By default, the NTLM mechanism is handled internally.
 
@@ -3216,6 +3240,7 @@ This translation is done after the changes specified with the
 
 	auth_username_translation: {
 		values: setting_types.STRING,
+		advanced: true,
 		text: `
 If set, performs username character translations before querying the auth
 database.
@@ -3253,6 +3278,7 @@ Available transformations:
 
 	auth_winbind_helper_path: {
 		values: setting_types.STRING,
+		advanced: true,
 		text: `
 This setting tells the system the path for Samba's ntlm_auth helper binary.
 
@@ -3277,6 +3303,7 @@ necessary.`
 	base_dir: {
 		default: '/var/run/dovecot/',
 		values: setting_types.STRING,
+		advanced: true,
 		text: `
 The base directory in which Dovecot should store runtime data.
 
@@ -3535,6 +3562,7 @@ Available options:
 		tags: [ 'dsync' ],
 		default: 'Date Message-ID',
 		values: setting_types.STRING,
+		advanced: true,
 		text: `
 Which email headers are used in incremental syncing for checking whether
 the local email matches the remote email?
@@ -3744,6 +3772,7 @@ imap_id_send = "name" * "version" * support-url http://example.com/
 		default: '2mins',
 		tags: [ 'imap' ],
 		values: setting_types.TIME,
+		advanced: true,
 		text: `
 The amount of time to wait between "OK Still here" untagged IMAP responses
 when the client is in IDLE operation.`
@@ -3784,6 +3813,7 @@ in addition to [[variable,mail-user]] are:
 		default: '64k',
 		tags: [ 'imap' ],
 		values: setting_types.SIZE,
+		advanced: true,
 		text: `
 Maximum IMAP command line length. Some clients generate very long command
 lines with huge mailboxes, so you may need to raise this if you get
@@ -4274,6 +4304,7 @@ lda_original_recipient_header = X-Original-To
 	libexec_dir: {
 		default: '/usr/libexec/dovecot',
 		values: setting_types.STRING,
+		advanced: true,
 		text: `
 The directory from which you execute commands via doveadm-exec.`
 	},
@@ -4409,6 +4440,7 @@ causing delays to other deliveries.`
 		default: 'no',
 		tags: [ 'lmtp' ],
 		values: setting_types.BOOLEAN,
+		advanced: true,
 		text: `
 This setting makes the replies returned to the client much more verbose.
 Currently, this only applies when the LMTP proxy is involved, for which
@@ -4524,6 +4556,7 @@ passing a parameter to the login executable.`
 	login_greeting: {
 		default: 'Dovecot ready.',
 		values: setting_types.STRING,
+		advanced: true,
 		text: `
 The greeting message displayed to clients.
 
@@ -4822,6 +4855,7 @@ Options:
 		seealso: [ 'mail_attachment_dir' ],
 		values: setting_types.ENUM,
 		values_enum: [ '%{md4}', '%{md5}', '%{sha1}', '%{sha256}', '%{sha512}', '%{size}' ],
+		advanced: true,
 		text: `
 The hash format to use in attachment filenames when saving attachments
 externally.
@@ -4924,6 +4958,7 @@ Options:
 	mail_full_filesystem_access: {
 		default: 'no',
 		values: setting_types.BOOLEAN,
+		advanced: true,
 		text: `
 Allow full filesystem access to clients?
 
@@ -4992,6 +5027,7 @@ You can specify a log prefix for mail processes here.
 	mail_max_keyword_length: {
 		default: 50,
 		values: setting_types.UINT,
+		advanced: true,
 		text: `
 The maximum length allowed for a mail keyword name.
 
@@ -5001,6 +5037,7 @@ Compliance is enforced only during attempts to create new keywords.`
 	mail_max_lock_timeout: {
 		default: '0',
 		values: setting_types.TIME,
+		advanced: true,
 		text: `
 This value is used as a timeout for tempfailing mail connections.  It
 can be set globally, for application to all Dovecot services, but
@@ -5113,6 +5150,7 @@ You can give Dovecot access to mail group by setting
 	mail_save_crlf: {
 		default: 'no',
 		values: setting_types.BOOLEAN,
+		advanced: true,
 		text: `
 Save message with CR+LF line endings?
 
@@ -5259,6 +5297,7 @@ protocol !indexer-worker {
 		default: '30secs',
 		tags: [ 'imap' ],
 		values: setting_types.TIME,
+		advanced: true,
 		text: `
 The minimum time between checks for new mail/other changes when a mailbox
 is in the IMAP IDLE state.`
@@ -5459,6 +5498,7 @@ The maximum time to wait for all locks to be released before aborting.`
 		seealso: [ 'pop3_uidl_format', '[[link,mbox]]' ],
 		values: setting_types.STRING,
 		values_enum: [ 'apop3d', 'all' ],
+		advanced: true,
 		text: `
 The mail-header selection algorithm to use for MD5 POP3 UIDLs when the
 setting [[setting,pop3_uidl_format,%m]] is applied.`
@@ -5469,6 +5509,7 @@ setting [[setting,pop3_uidl_format,%m]] is applied.`
 		tags: [ 'mbox' ],
 		seealso: [ '[[link,mbox]]' ],
 		values: setting_types.SIZE,
+		advanced: true,
 		text: `
 For mboxes smaller than this size, index files are not written.
 
@@ -6640,6 +6681,7 @@ to even exist. See [[setting,auth_ssl_require_client_cert]].`
 	state_dir: {
 		default: '/var/lib/dovecot',
 		values: setting_types.STRING,
+		advanced: true,
 		text: `
 The compile-time directory PKG_STATEDIR (typically /var/lib/dovecot)
 is hard-coded as the location of state files. The PKG_STATEDIR value
