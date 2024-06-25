@@ -2390,22 +2390,3 @@ cluster
    :field user: Username being moved.
    :field dest_host: Destination host where user is being moved to.
    :field error: Reason why user moving failed.
-
-.. dovecot_core:event:: cluster_backend_check_started
-   :added: 3.0.0
-
-   :field backend_id: Backend ID being checked.
-   :field backend_host: Backend host
-
-   Sent when a backend's health check is started.
-
-.. dovecot_core:event:: cluster_backend_check_finished
-   :added: 3.0.0
-
-   :field backend_id: Backend ID being checked.
-   :field backend_host: Backend host
-   :field error: Set if the check failed due to an internal error
-   :field status: Backend status after the check: ``online`` or ``offline``
-   :field reason: Reason why the check passed or failed
-
-   Sent when a backend's health check is finished.
