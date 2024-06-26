@@ -21,7 +21,7 @@ a commercial software product of [Open-Xchange](https://www.open-xchange.com/).
 Dovecot Pro implements Palomar, a cloud-native architecture that allows for
 Dovecot to be highly available, scalable, and stateless.
 
-Dovecot Pro uses Dovecot core as part of the architecture.
+Dovecot Pro uses Dovecot Core as part of the Palomar architecture.
 
 For full details and documentation on Dovecot Pro, visit [[link,dovecot_pro]].
 
@@ -30,7 +30,10 @@ For full details and documentation on Dovecot Pro, visit [[link,dovecot_pro]].
 [Dovecot Community Edition (CE)](https://www.dovecot.org/) is the open source
 version of Dovecot.
 
-This manual fully documents Dovecot CE and its behavior.
+Dovecot CE is designed for use on a single server. There is no support or
+maintenance for multiple Dovecot servers to interact with each other.
+
+This site fully documents Dovecot CE and its behavior.
 
 Dovecot CE is also referred to as "Dovecot Core" in this documentation.
 
