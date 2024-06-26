@@ -1,0 +1,52 @@
+:root {
+  --vp-sidebar-width: 304px;
+}
+
+.VPDoc.has-aside .content-container {
+  max-width: 95% !important;
+}
+
+.VPContent.has-sidebar {
+  @media (min-width: 960px) {
+    padding-left: 288px !important;
+  }
+  @media (min-width: 1440px) {
+    padding-right: 0 !important;
+  }
+}
+
+.VPDoc.has-sidebar.has-aside {
+  @media (min-width: 960px) and (max-width: 1500px) {
+    padding-left: 0;
+  }
+}
+
+.VPDoc.has-sidebar.has-aside .container > .content {
+  @media (min-width: 1500px) {
+    padding-left: 52px;
+    padding-right: 52px;
+  }
+}
+
+.VPSidebar {
+  padding-left: 32px !important;
+  padding-right: 32px !important;
+  padding-bottom: 32px !important;
+  width: var(--vp-sidebar-width) !important;
+}
+
+.VPNavBar.has-sidebar .content {
+  padding-left: var(--vp-sidebar-width) !important;
+  padding-right: 32px !important;
+  @media (max-width: 960px) {
+    --vp-sidebar-width: 32px;
+    padding-right: 0 !important;
+  }
+}
+
+.VPNavBar.has-sidebar .title {
+  padding-left: 16px !important;
+  @media (max-width: 960px) {
+    padding-left: 0 !important;
+  }
+}
