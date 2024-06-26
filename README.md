@@ -31,7 +31,7 @@ From [VitePress](https://vitepress.dev/guide/getting-started#prerequisites):
 > [!WARNING]
 > Ubuntu 22.04 LTS (and prior) does NOT contain a new enough version of nodejs.
 >
-> Either run in a container (see https://hub.docker.com/\_/node) or install
+> Either run in a container (see https://hub.docker.com/_/node) or install
 > via out-of-band packages (see https://github.com/nodesource/distributions).
 
 ## Installation
@@ -95,6 +95,27 @@ screen (and in the terminal where the `docs:dev` command is being run).
 However, some errors only occur when viewing a page, and will oftentimes
 result in a blank or incomplete page render. In these cases, looking at the
 browser developer console will generally show the error that has occurred.
+
+## Docker Container
+
+An updated Docker container is produced after every code addition, and can be
+used to view the documentation locally.
+
+Container installation information can be found at:
+https://github.com/dovecot/documentation/pkgs/container/documentation
+
+The container exposes a web server on port 80, and the documentation is available
+in the `2.4` directory.
+
+### Example
+
+Provide access to Dovecot documentation at `http://localhost:8080/`:
+
+```console
+docker run --rm \
+  -p 8080:80 \
+  ghcr.io/dovecot/documentation:latest
+```
 
 ## Dovecot-specific VitePress Features
 
