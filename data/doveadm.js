@@ -1788,9 +1788,10 @@ to secure it.
 			'doveadm_proxy_list_response_changed': `
 The response format has changed.
 
-3.0 returns different formats based on value of \`separate-connections\`.
-If \`separate-connections\` is true, \`pid\`, \`ip\`, \`dest_ip\`, and list of
-\`alt_username_fields\` (from anvil) is returned.`,
+Dovecot now returns different formats based on the value of
+\`separate-connections\`. If \`separate-connections\` is true, \`pid\`,
+\`ip\`, \`dest_ip\`, and list of \`alt_username_fields\` (from anvil) is
+returned.`,
 		},
 		man: 'doveadm-proxy',
 		text: `Show who is logged into the Dovecot server.`,
