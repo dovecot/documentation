@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: Main Index
+dovecotlinks:
+  design_index_format_main: Main index format
 ---
 
 # Main Index
