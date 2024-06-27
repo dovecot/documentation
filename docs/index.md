@@ -5,6 +5,10 @@ title: Home
 
 # Dovecot Community Edition (CE)
 
+![Dovecot CE](/dovecot_logo.png)
+
+<hr />
+
 Dovecot is an open source email server for Linux/UNIX-like systems,
 written with security primarily in mind. Dovecot is an excellent choice for
 both small and large installations. It's fast, simple to set up, requires
