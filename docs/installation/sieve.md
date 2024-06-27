@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: Sieve Installation
+order: 6
 dovecotlinks:
   sieve_installation: Sieve installation
 ---

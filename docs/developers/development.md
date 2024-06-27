@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: Development Tips
+order: 305
 ---
 
 # Development Tips

@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: Debug
+order: 198
 dovecotlinks:
   debug: debugging
 ---
