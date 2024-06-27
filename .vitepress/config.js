@@ -67,7 +67,8 @@ export default defineConfig({
 			collapseDepth: 2,
 			excludeFiles: [],
 			excludeFilesByFrontmatterFieldName: 'exclude',
-			sortMenusByName: true,
+			sortMenusByFrontmatterOrder: true,
+			frontmatterOrderDefaultValue: 999,
 		}),
 
 		outline: "deep",
