@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: Upgrading
+order: 3
 ---
 
 # Upgrading Dovecot

@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: Installation
+order: 2
 ---
 
 # Installation Guide

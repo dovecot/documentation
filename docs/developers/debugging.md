@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: Debugging
+order: 304
 dovecotlinks:
   developer_debug: Developer Debugging
 ---
