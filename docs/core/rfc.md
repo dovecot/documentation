@@ -96,6 +96,7 @@ This is a non-exhaustive list of RFCs that Dovecot implements/supports.
 - IMAP “$Important” Keyword and “\\Important” Special-Use Attribute
   ([[rfc,8457]])
 - IMAP4 Extension: Message Preview Generation ([[rfc,8970]])
+- IMAP Response Code for Command Progress Notification ([[rfc,9585]])
 
 ## SMTP/LMTP (Base)
 
