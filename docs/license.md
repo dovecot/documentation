@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: License
+order: 401
 ---
 
 # License

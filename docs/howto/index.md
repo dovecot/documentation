@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: How-Tos
+order: 200
 dovecotlinks:
   howto: How To's
 ---

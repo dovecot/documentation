@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: Coding Style
+order: 302
 dovecotlinks:
   coding_style: Coding Style Guide
 ---

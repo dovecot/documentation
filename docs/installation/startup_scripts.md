@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: Startup Scripts
+order: 5
 dovecotlinks:
   startup_scripts: startup scripts
 ---
