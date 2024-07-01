@@ -3,6 +3,7 @@
     "@sindresorhus/slugify": "^2.2.1",
     "commander": "^12.1.0",
     "dayjs": "^1.11.11",
+    "fast-glob": "^3.3.2",
     "git-commit-info": "^2.0.2",
     "import": "^0.0.6",
     "markdown-it-deflist": "^3.0.0",
