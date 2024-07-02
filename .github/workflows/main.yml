@@ -5,12 +5,11 @@ on:
     branches:
       - main
       - release-2.3
-      - new-ce-documentation
 
 jobs:
   releasenew:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/new-ce-documentation'
+    if: github.ref == 'refs/heads/main'
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -56,7 +55,7 @@ jobs:
   publishnew:
     runs-on: ubuntu-latest
     needs: releasenew
-    if: github.ref == 'refs/heads/new-ce-documentation'
+    if: github.ref == 'refs/heads/main'
     name: Publish documentation tarball
     steps:
     - name: Download artifact
@@ -82,31 +81,6 @@ jobs:
         files: |
           ./SHA256SUMS.txt
           ./docs.tgz
-  release:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-    - name: Prepare environment
-      run: |
-        mkdir build
-        chmod 0777 build
-    - uses: actions/checkout@v4
-    - uses: dovecot/dovecot-sphinx-action@0.11
-    - name: Prepare tarballs
-      run: |
-        tar --transform=s,build/dirhtml,html, -cJf build/docs.txz build/dirhtml
-        for dir in build/mans/*; do
-          tag=$(basename $dir)
-          tar --transform=s,${dir},man, '--exclude=_*' '--exclude=.*' -cJf build/$tag.txz $dir
-        done
-    - uses: dovecot/rsync-deployments@master
-      with:
-        RSYNC_OPTIONS: -azr --delete
-        RSYNC_TARGET: docs@doc.dovecot.org:public_html/3.0/.
-        RSYNC_BASEDIR: /build/.
-      if: env.DEPLOY_KEY
-      env:
-        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
   release23:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/release-2.3'
