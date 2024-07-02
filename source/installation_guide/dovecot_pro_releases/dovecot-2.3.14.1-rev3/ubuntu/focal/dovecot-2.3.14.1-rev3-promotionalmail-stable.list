@@ -1,4 +1,0 @@
-# promotionalmail component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-# dovecot-2.3.14.1-rev3 Ubuntu 20.04 LTS (Focal Fossa) - OX Engage Dovecot plug-in
-deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/promotionalmail/Ubuntu_20.04 ./

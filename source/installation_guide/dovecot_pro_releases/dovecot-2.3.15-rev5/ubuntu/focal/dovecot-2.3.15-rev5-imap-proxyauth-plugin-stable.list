@@ -1,4 +1,0 @@
-# imap-proxyauth-plugin component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-# dovecot-2.3.15-rev5 Ubuntu 20.04 LTS (Focal Fossa) - OX Dovecot Pro IMAP Proxy Authentication plug-in
-deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/plugin/imap-proxyauth-plugin/Ubuntu_20.04 ./

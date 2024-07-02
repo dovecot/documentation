@@ -1,4 +1,0 @@
-# imap-proxyauth-plugin component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-# dovecot-2.3.9.2-rev1 Ubuntu 16.04 LTS (Xenial Xerus) - OX Dovecot Pro IMAP Proxy Authentication plug-in
-deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-imap-proxyauth-plugin/stable/2.3.9.2/Ubuntu_16.04 ./

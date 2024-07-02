@@ -1,9 +1,0 @@
-# cmdlog-plugin component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-[dovecot-2.3.9.3-rev3-cmdlog-plugin]
-name=RedHat Enterprise Linux 6 - OX Dovecot Pro Command Log plug-in
-baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-cmdlog-plugin/stable/2.3.9.3/RHEL6
-gpgkey=https://software.open-xchange.com/oxbuildkey.pub
-gpgcheck=1
-enabled=1
-

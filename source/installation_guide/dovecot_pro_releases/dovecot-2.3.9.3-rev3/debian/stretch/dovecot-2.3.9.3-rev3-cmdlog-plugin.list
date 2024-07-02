@@ -1,4 +1,0 @@
-# cmdlog-plugin component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-# dovecot-2.3.9.3-rev3 Debian Stretch (9.0) - OX Dovecot Pro Command Log plug-in
-deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/components/dovecot-cmdlog-plugin/stable/2.3.9.3/DebianStretch ./

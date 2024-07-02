@@ -1,7 +1,0 @@
-[dovecot-2.3.13-rev4-fts]
-name=CentOS 7 - OX Dovecot Pro Full Text Search plug-in
-baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.13/fts/CentOS7
-gpgkey=https://software.open-xchange.com/oxbuildkey.pub
-gpgcheck=1
-enabled=1
-

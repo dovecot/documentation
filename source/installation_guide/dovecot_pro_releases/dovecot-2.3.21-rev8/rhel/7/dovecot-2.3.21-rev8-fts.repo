@@ -1,7 +1,0 @@
-[dovecot-2.3.21-rev8-fts]
-name=RedHat Enterprise Linux 7 - Dovecot Pro Full Text Search plug-in
-baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.21/fts/RHEL7
-gpgkey=http://software.open-xchange.com/oxbuildkey.pub
-gpgcheck=1
-enabled=1
-

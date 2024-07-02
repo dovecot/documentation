@@ -1,9 +1,0 @@
-# pigeonhole-sieve-zimbra-compat-plugin component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-[dovecot-2.3.19.1-rev1-pigeonhole-sieve-zimbra-compat-plugin]
-name=CentOS 7 - OX Dovecot Pro Pigeonhole Sieve Zimbra compatibility plug-in
-baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/plugin/pigeonhole-sieve-zimbra-compat-plugin/CentOS7
-gpgkey=https://software.open-xchange.com/oxbuildkey.pub
-gpgcheck=1
-enabled=1
-

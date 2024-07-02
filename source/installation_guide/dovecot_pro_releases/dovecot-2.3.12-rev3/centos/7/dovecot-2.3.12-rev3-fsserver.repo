@@ -1,9 +1,0 @@
-# fsserver component requires separate OX License
-# Please contact to support@open-xchange.com to get access
-[dovecot-2.3.12-rev3-fsserver]
-name=CentOS 7 - OX Dovecot Pro Object Storage Development Tools - fs-server backend
-baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.12/devtools/fsserver/CentOS7
-gpgkey=https://software.open-xchange.com/oxbuildkey.pub
-gpgcheck=1
-enabled=1
-

@@ -1,7 +1,0 @@
-[dovecot-2.3.20-rev10-obox2]
-name=RedHat Enterprise Linux 8 - Dovecot Pro Object Storage plug-in
-baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.20/obox2/RHEL8
-gpgkey=https://software.open-xchange.com/oxbuildkey.pub
-gpgcheck=1
-enabled=1
-

@@ -1,7 +1,0 @@
-[dovecot-2.3.17-rev8-base]
-name=CentOS 8 - OX Dovecot Pro Mail Server
-baseurl=https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/2.3.17/base/CentOS8
-gpgkey=https://software.open-xchange.com/oxbuildkey.pub
-gpgcheck=1
-enabled=1
-

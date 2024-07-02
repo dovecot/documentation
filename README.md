@@ -1,204 +1,291 @@
-Dovecot Documentation
-=====================
+# dovecot-ce-documentation
 
-This repository contains documentation displayed at https://doc.dovecot.org/.
+Static website content for Dovecot CE documentation.
 
-Building
---------
+## Site Generation Software
 
-Initialize your python 3 virtualenv environment
+The site is statically generated via the
+[VitePress](https://www.vitepress.dev/) framework.
 
-```
- $ python3 -m venv venv/sphinx
- $ . venv/sphinx/bin/activate
- $ pip install -r requirements.txt
-```
+VitePress is a JavaScript application.  The content pages use markdown, with
+the ability to layer additional VitePress (and [Vue](https://www.vuejs.org))
+functionality on top of it, i.e. the ability to use templates/variables to
+generate page content.
 
-Create HTML version of documentation (output in `_build`) by running:
-```
-make html
-```
+Most maintenance tasks on the JavaScript code use simple functionality using
+basic JavaScript components. The Mozilla reference page might be useful if
+there are any questions:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
 
-Formatting
-----------
+Markdown reference: https://www.markdownguide.org/
 
-### Common Setting Parameters
+Configuration of VitePress is in the `.vitepress/config.js` file.
 
-There are 3 Dovecot sphinx directives for documenting settings:
+### Prerequisites
 
-  * "dovecot_core" for Core settings
-  * "dovecot_plugin" for Core plugin settings
-  * "pigeonhole" for Pigeonhole settings (both core and plugin)
+From [VitePress](https://vitepress.dev/guide/getting-started#prerequisites):
 
-These directives share the following parameters/usage.
+* Node.js **version 18+**
+  * Alternatively, Bun (https://bun.sh/) can be used instead.
 
-Format:
+> [!WARNING]
+> Ubuntu 22.04 LTS (and prior) does NOT contain a new enough version of nodejs.
+>
+> Either run in a container (see https://hub.docker.com/_/node) or install
+> via out-of-band packages (see https://github.com/nodesource/distributions).
 
-```
-.. <directive name>:setting:: <setting name>
-   :added: [X.Y.Z <reST text>]
-   :changed: [X.Y.Z <reST text>]
-   :default: [<value1>, <value2>, ...]
-   :domain: <domain-name>
-   :hdr_only: [yes]
-   :plugin: <plugin-name>
-   :removed: [X.Y.Z <reST text>]
-   :seealso: [<value1>, <value2>, ...]
-   :todo: [todo text]
-   :values: [<value1>, <value2>, ...]
+## Installation
 
-   Blah blah blah (the setting documentation) blah blah blah
+To install, run:
+
+```console
+$ npm install
+
+# Or using bun:
+$ bun install
 ```
 
-The `plugin` setting is REQUIRED for "dovecot_plugin". It should also be used
-for plugin settings in "pigeonhole". (It is not used with "dovecot_core".)
-It is the name of the plugin that the setting lives in (e.g. `quota`).
+## Local Testing Server
 
-The `added`, `changed` and `removed` settings are optional. They indicate the
-version the setting was added, changed, or removed. The string can contain
-reST that will be parsed
+VitePress provides a local development server that will do real-time updates
+when source files change.
 
-The `default` setting is optional. If set, this is used to populate the
-"Default" description field. If empty, `<empty>` is output.
+> [!IMPORTANT]
+> This must be run from the base of the project!
 
-The default field supports three types:
-  * Raw text will be output as a literal (i.e. '0' will be output as `0`)
-  * Text prefixed with '!' will be output as reST text
-  * Text prefixed with '@' will be treated as a sphinx reference. The
-    reference domain can be indicated by adding ';<domain>' to the end of the
-    string (e.g. '@foo;dovecot-test')
+Run with:
 
-Multiple items can be defined by delimiting with a ','.
+```console
+$ npm run docs:dev
 
-The `domain` setting is used to distinguish a sub-namespace within the
-main namespace (e.g. driver configuration for "external config" that may
-contain duplicate setting names as the base namespace).
-
-The `hdr_only` setting is optional. If set (= `yes`), only the setting name
-and index link are created - Default/Values information is not output.
-
-The `seealso` setting is optional. If set, it will display a list of related
-links/topics for the current setting. The syntax is the same as the `default`
-field.
-
-The `todo` setting is optional. If set, it will pass the text through to the
-Sphinx "todo" directive.
-
-The `values` setting is optional. If set, this is used to populate the
-"Values" description field. If empty, nothing is output.
-
-The values field supports three types:
-  * Raw text will be output as a literal (i.e. '0' will be output as `0`)
-  * Text prefixed with '!' will be output as reST text
-  * Text prefixed with '@' will be treated as a Dovecot settings type
-    reference. The allowable types are:
-    * string
-    * boolean
-    * size
-    * time
-    * uint
-    * time_msecs
-    * ip_addresses
-    * url
-
-Multiple items can be defined by delimiting with a ','.
-
-```
-.. <directive name>:setting_link:: <setting name>
+# Or using bun:
+$ bun run docs:dev
 ```
 
-Output a link to the setting.
+> [!NOTE]
+> Certain features (such as search) will not work in testing/dev mode and
+> require the documentation to be statically built and served.
 
+## Documentation Generation
 
-#### Sphinx Settings References
+To generate the static documentation, run:
 
-To reference Dovecot core settings in Sphinx, use this:
+```console
+$ npm run docs:build
 
-```
-:dovecot_core:ref:`<setting_name>`
-```
-
-To reference a domain within core settings (e.g. SQL configuration), use this:
-
-```
-:dovecot_core:ref:`<domain>;<setting_name>`
+# Or using bun:
+$ bun run docs:build
 ```
 
-To reference Dovecot core *plugin* settings in Sphinx, use this:
+Generated documentation will be output in the `docs/.vitepress/dist` directory.
+The statically generated documentation can be displayed locally by running:
 
-```
-:dovecot_plugin:ref:`<setting_name>`
-```
+```console
+$ npm run docs:preview
 
-To reference Pigeonhole settings in Sphinx, use this:
-
-```
-:pigeonhole:ref:`<setting_name>`
+# Or using bun (https://bun.sh/):
+$ bun run docs:preview
 ```
 
-### Events
+### Debugging
 
-Dovecot-specific directives should be used to create event documentation.
+Depending on when an issue occurs, errors may be displayed on the development
+screen (and in the terminal where the `docs:dev` command is being run).
 
-There are two helper functions that allow you to define inheritable field
-"groups" that an event can include by reference:
+However, some errors only occur when viewing a page, and will oftentimes
+result in a blank or incomplete page render. In these cases, looking at the
+browser developer console will generally show the error that has occurred.
 
-```
-.. dovecot_event:field_global::
+## Docker Container
 
-   :field <field_name> <field_modification>: <field_description (reST)>
-   :field ...: ...
-   ...
+An updated Docker container is produced after every code addition, and can be
+used to view the documentation locally.
 
-.. dovecot_event:field_group:: <group_identifier>
-   :inherit: <group_identifier>
+Container installation information can be found at:
+https://github.com/dovecot/documentation/pkgs/container/documentation
 
-   :field <field_name> <field_modification>: <field_description (reST)>
-   :field ...: ...
-   ...
-```
+The container exposes a web server on port 80, and the documentation is available
+in the `2.4` directory.
 
-Events are defined using the ``dovecot_core:event`` directive:
+### Example
 
-```
-.. dovecot_core:event:: <event_name>
-   :added: [X.Y.Z <reST text>]
-   :changed: [X.Y.Z <reST text>]
-   :inherit: [<group_identifier>[, <group_identifier>, ...]]
-   :plugin: <plugin-name>
-   :removed: [X.Y.Z <reST text>]
+Provide access to Dovecot documentation at `http://localhost:8080/`:
 
-   :field <field_name>[ <field_modification>]: <field_description (reST)>
-   :field ...: ...
-   ...
-
-   ...Event description (reST)...
+```console
+docker run --rm \
+  -p 8080:80 \
+  ghcr.io/dovecot/documentation:latest
 ```
 
-Field modifications current consist of the following type:
+## Dovecot-specific VitePress Features
+
+### Directory Structure
+
+`docs/` contains the pages to be rendered by VitePress into the site.
+
+### Sidebar Generation
+
+The sidebar is automatically generated via the
+[vitepress-sidebar](https://github.com/jooy2/vitepress-sidebar) plugin.
+
+It will create the sidebar based on the file layout in the `docs/` directory.
+
+The title is configured via the `title` parameter in the
+[frontmatter](https://vitepress.dev/guide/frontmatter) content of the page.
+
+Any page can be excluded from output by setting the `exclude` parameter to
+`true` in the frontmatter content of the page.
+
+Header titles can be set via the `index.md` file in the folder. This file
+can be hidden by setting the `exclude` parameter to `true`.
+
+### Dovecot Data Generation
+
+Dovecot has several systems (configuration, doveadm, events, etc.) that can
+be added throughout the code and need a way to collect and handle the
+documentation in a single location.
+
+This is accomplished by maintaining a "database" of these elements in a
+special data file. These data files can then be processed via simple javascript
+and HTML templating to vastly simplify the output of this common data.
+
+Additionally, this allows this information to be maintained in a single place
+and shown on multiple pages. For example, it is useful on a plugins page to
+show all configuration settings related to that plugin, but it is also useful
+to have a page that shows all information on all plugin settings.
+
+The data files live in the base `/data` directory. Each file attempts to be
+self-documenting, but they are all essentially large JSON objects. Developers
+should need to know basically no JavaScript to be able to edit the files.
+
+### Dovecot Markdown Extensions
+
+Markdown has been extended to allow various Dovecot-specific tasks to be
+performed.
+
+This Markdown works in both the base pages and in many database fields
+(see documentation in `data/*.data.js` for the fields that support Markdown).
+
+> [!NOTE]
+> All Dovecot extended Markdown commands are wrapped in `[[...]]` syntax.
+
+#### Doveadm Commands
+
+***Syntax: `[[doveadm,command_string(,args)]]` (args is optional)***
+
+`command_string` should NOT include "doveadm" - this will automatically be
+added in the output.
+
+If args is set, it is appended to the display as doveadm arguments. Example:
 
 ```
-@added;vX.Y.Z = Version the field was added
+# [[doveadm,foo,--bar &lt;baz&gt;]] results in:
+<a href="PATH_TO_FOO_COMMAND">doveadm foo --bar &lt;baz&gt;</a>
 ```
 
-#### Sphinx Event References
+#### Events
 
-To reference Dovecot events in Sphinx, use this:
+***Syntax: `[[event,event_name]]`***
+
+`event_name` is the name of the Dovecot event to link to.
+
+#### Link
+
+***Syntax: `[[link,tag(,optional_text)]]`***
+
+VitePress does not support inter-documentation linking, by default.
+
+However, this wiki-like linking is useful and has been custom implemented
+in Dovecot's implementation of VitePress.
+
+Dovecot linking "tags" are defined in a page's Frontmatter (the YAML at
+the top of the page) under the `dovecotlinks` key.
+
+`dovecotlinks` keys are the link tags.  Values are one of two formats:
+
+* If text, this the default text associated with the tag. A link to this tag
+  will link the to base page.
+* If an object, it must define two sub-keys: `hash` and `text`
+  * `hash` is the anchor on the page to link to when using the tag. The '#'
+    MUST not be present. Hash strings can be determined by mousing over
+    headers on a page. (Roughly: every non-character is converted to '-'.)
+  * `text` is the default text for the tag.
+
+#### Man Pages
+
+***Syntax: `[[man,command_name(,hash,section)]]`***
+
+Links to the man page.
+
+`command_name` is the command to link to (e.g., `doveconf`).
+
+Hash is the section number.  It defaults to empty.
+
+Section is the section number.  It defaults to `1`.
+
+#### Plugin
+
+***Syntax: `[[plugin,plugin_name]]`***
+
+Links to the plugin page.
+
+#### RFC
+
+***Syntax: `[[rfc,rfc_number(,section)]]`***
+
+Links to the RFC page (external).
+
+`section` is optional and will link to the RFC subsection.
+
+#### Settings
+
+***Syntax: `[[setting,setting_name(,args)]]`***
+
+If args is set, it is appended to the display as a setting value. Example:
 
 ```
-:dovecot_core:ref:`<event_name>`
+# [[setting,foo,5]] results in:
+<a href="PATH_TO_FOO_SETTING">foo = 5</a>
 ```
 
-#### Dovecot Version Add/Change/Deprecated/Removed Directives
+#### Variable
 
-Dovecot defines specific directives to handle add, change, deprecation, and
-removed actions:
+***Syntax: `[[variable(,section)]]`***
+
+Link to the Settings Variable page.
+
+By default, links to the base page.
+
+If section is defined, will link to the sub-section. Valid sub-sections:
+
+* `auth`
+* `config` (default)
+* `global`
+* `login`
+* `mail-service-user`
+* `mail-user`
+
+#### Updates (added, changed, deprecated, removed)
+
+***Syntax: `[[(update),tag_name]]`***
+
+Create a update tag based on a tag_name.
+
+The tag_name must be defined in `data/updates.js`.
+
+Example: `[[changed,tag_name]]`
+
+### Other Markdown Extensions
+
+#### TODO Container
+
+***Syntax:***
 
 ```
-.. dovecotadded:: 1.2.3[,4.5.6,...] Optional text
-.. dovecotchanged:: 1.2.3[,4.5.6,...] Optional text
-.. dovecotdeprecated:: 1.2.3[,4.5.6,...] Optional text
-.. dovecotremoved:: 1.2.3[,4.5.6,...] Optional text
+::: todo
+TODO text contents
+:::
+```
 
-Note: For pigeonhole specific versions, preface the version with "pigeonhole-",
-e.g. "pigeonhole-0.4.14".
+Outputs a formatted TODO container, using the (optional) TODO text contents
+as the body.
