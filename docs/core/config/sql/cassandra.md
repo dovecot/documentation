@@ -12,7 +12,7 @@ Driver name `cassandra`.
 Driver for Apache Cassandra CQL server.
 
 To compile support for this driver, you need to have
-[DataStax C/C++ driver](https://docs.datastax.com/en/developer/cpp-driver/)
+[DataStax C/C++ driver](https://docs.datastax.com/en/developer/cpp-driver/index.html)
 and headers installed.
 
 ## Supported Options
@@ -61,7 +61,7 @@ consistency.
 
 * Default: `0`
 * Values: [[link,settings_types_time_msecs]]
-* See Also: https://docs.datastax.com/en/developer/java-driver/4.13/manual/core/speculative_execution/
+* See Also: https://docs.datastax.com/en/developer/java-driver/latest/manual/core/speculative_execution/index.html
 
 If the driver supports speculative execution policy, configures constant
 speculative execution policy.
@@ -70,7 +70,7 @@ speculative execution policy.
 
 * Default: `0`
 * Values: [[link,settings_types_time_msecs]]
-* See Also: https://docs.datastax.com/en/developer/java-driver/4.13/manual/core/speculative_execution/
+* See Also: https://docs.datastax.com/en/developer/java-driver/latest/manual/core/speculative_execution/index.html
 
 If the driver supports speculative execution policy, configures constant
 speculative execution policy.
@@ -397,7 +397,7 @@ in the cluster for that partition.
 
 This describes the format of the JSON output produced when the metrics configuration option is activated.
 
-Source: https://docs.datastax.com/en/developer/cpp-driver/2.2/api/struct.CassMetrics/
+Source: https://docs.datastax.com/en/developer/cpp-driver/latest/api/struct.CassMetrics/index.html
 
 ::: details
 ```json

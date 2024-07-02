@@ -345,7 +345,7 @@ enabled, you can't share the key to groups or someone with no public key.
 
 ## Decrypting Files Encrypted with mail-crypt Plugin
 
-You can use [`decrypt.rb`](https://github.com/dovecot/tools/dcrypt-decrypt.rb)
+You can use [`decrypt.rb`](https://github.com/dovecot/tools/blob/main/dcrypt-decrypt.rb)
 to decrypt encrypted files.
 
 ## fs-crypt and fs-mail-crypt

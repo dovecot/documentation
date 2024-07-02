@@ -19,7 +19,7 @@ packages:
 
 * [Postfix](https://www.postfix.org/)
   flexible mailer.
-* [Exim](https://www.exim.org/>)
+* [Exim](https://www.exim.org/)
 * [Sendmail](https://www.proofpoint.com/us/products/email-protection/open-source-email-solution), the original BSD mailer.
 * [Courier](https://www.courier-mta.org/)
 * [qmail](https://cr.yp.to/qmail.html) is an obsolete and unmaintained server.

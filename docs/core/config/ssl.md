@@ -280,14 +280,14 @@ Clients confirmed working with TLS SNI:
 
 * Thunderbird (Linux)
 * [K-9 on Android](https://github.com/k9mail/k-9/pull/718)
-* Apple Mail (according to https://forums.cpanel.net/threads/mail-ssl-sni.454592/ )
-* [Mutt](https://dev.mutt.org/trac/ticket/3923)
+* Apple Mail (according to https://support.cpanel.net/hc/en-us/community/posts/19633051862807-Mail-SSL-SNI)
+* [Mutt](https://gitlab.com/muttmua/trac-tickets/-/blob/master/tickets/closed/3923-mutt_may_need_to_support_TLSs_Server_Name_Indiciation_SNI_fo.txt?ref_type=heads)
 * [NeoMutt](https://www.neomutt.org/feature/tls-sni)
 
 Not working Clients:
 
 * Apple Mail (Mac OS X 10.10 and lower AND iOS 9.3 and lower)
-* Outlook for Mac version 15 (according to https://forums.cpanel.net/threads/mail-ssl-sni.454592/ )
+* Outlook for Mac version 15 (according to https://support.cpanel.net/hc/en-us/community/posts/19633051862807-Mail-SSL-SNI)
 * Kindle Fire HD 8
 * Outlook 2013
 
