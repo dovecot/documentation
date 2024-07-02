@@ -46,6 +46,7 @@ export default defineConfig({
 			{
 				text: '2.4',
 				items: [
+					{ text: '3.0 (Pro)', link: 'https://doc.dovecotpro.org/3.0/' },
 					{ text: '2.3', link: 'https://doc.dovecot.org/' },
 				]
 			},
