@@ -91,7 +91,7 @@ export default defineConfig({
 		},
 
 		socialLinks: [
-			{ icon: 'github', link: 'https://github.com/dovecot/core/' },
+			{ icon: 'github', link: 'https://github.com/dovecot/' },
 		],
 
 		/* Dovecot specific config: return gitrev for this build. */
