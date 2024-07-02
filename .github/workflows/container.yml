@@ -3,7 +3,7 @@ name: Build Container
 on:
   push:
     branches:
-      - new-ce-documentation
+      - main
 
 env:
   REGISTRY: ghcr.io
