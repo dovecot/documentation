@@ -5,6 +5,7 @@ import { pagefindPlugin } from 'vitepress-plugin-pagefind'
 import { generateSidebar } from 'vitepress-sidebar'
 import { dovecotMdExtend } from '../lib/markdown.js'
 import { frontmatterIter } from '../lib/utility.js'
+import { checkExternalLinks, outputBrokenLinks } from '../lib/link_checker.js'
 
 const base = '/2.4'
 
@@ -112,4 +113,13 @@ export default defineConfig({
 	head: [
 		['link', { rel: 'icon', type: 'image/x-icon', href: base + '/favicon.ico' } ]
 	],
+
+	async transformHead(context) {
+		checkExternalLinks(context)
+	},
+
+	async buildEnd(siteConfig) {
+		outputBrokenLinks()
+	}
+
 })
