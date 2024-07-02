@@ -242,7 +242,6 @@ getscript
 gitlab
 Gluster
 gmatch
-Gmb
 gno
 gnomint
 gnutls
@@ -288,6 +287,7 @@ INBO
 inbox
 inboxes
 INDEXPVT
+Indiciation
 inka
 Inno
 inodes
@@ -559,8 +559,8 @@ opie
 opsec
 optboolean
 optname
-orcpt
 OR'ing
+orcpt
 ORing
 OSFILE
 otherinstance
@@ -569,7 +569,6 @@ OUTOFMEM
 overquota
 oxpedia
 packagecloud
-pagefind
 passdb
 passfield
 passthrough
@@ -582,7 +581,6 @@ pidfile
 pidof
 pids
 Piljk
-pkgsysconfdir
 pki
 popafter
 postconf
@@ -680,7 +678,6 @@ Sentmail
 SENTON
 SENTSINCE
 seperately
-seqno
 SERVERBUG
 servermetadata
 setactive
@@ -795,6 +792,7 @@ tldmypassword
 tldmyusername
 TLDR
 tlsmgr
+TLSs
 tmpfs
 TODOs
 tohdr

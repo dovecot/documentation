@@ -16,7 +16,7 @@ alternative backends for dcrypt.
 
 ECDH (Elliptic curve Diffie-Hellman) is widely used in lib-dcrypt for
 both key and data storage. This algorithm is also known as
-[ECIES (Elliptic Curve Integrated Encryption Scheme)](https://en.wikipedia.org/wiki/ECIES>).
+[ECIES (Elliptic Curve Integrated Encryption Scheme)](https://en.wikipedia.org/wiki/ECIES).
 
 When encrypting data, we perform following steps, this is the currently
 used algorithm. There is also a legacy algorithm, but since that has not
@@ -122,4 +122,4 @@ ekh - (eof-maclen) payload data
 ```
 
 There is a small script for decrypting these files, see
-[`dcrypt-decrypt.rb`](https://github.com/dovecot/tools/dcrypt-decrypt.rb).
+[`dcrypt-decrypt.rb`](https://github.com/dovecot/tools/blob/main/dcrypt-decrypt.rb).

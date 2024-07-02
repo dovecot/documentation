@@ -132,4 +132,4 @@ are set:
 ## Using LMTP with different MTAs
 
 * Browse the How To section: [[link,howto]]
-* [HALON](https://wiki.halon.io/LMTP)
+* [Halon](https://docs.halon.io/kb/delivery/lmtp)

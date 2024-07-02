@@ -197,7 +197,7 @@ no need for LDAs to support any type of locking.
 
 ### Mail Delivery
 
-[Qmail's how a message is delivered page](https://www.qmail.org/man/man5/maildir.html)
+[Qmail's how a message is delivered page](http://qmail.org/man/man5/maildir.html)
 suggests to deliver the mail like this:
 
 1. Create a unique filename (only `time.pid.host` here, later Maildir spec
