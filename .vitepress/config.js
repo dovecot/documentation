@@ -55,7 +55,7 @@ export default defineConfig({
 				link: 'https://www.dovecot.org/'
 			},
 			{
-				text: 'Repositories',
+				text: 'Download repositories',
 				link: 'https://repo.dovecot.org/'
 			},
 		],
