@@ -514,7 +514,7 @@ smtpd_recipient_restrictions =
 ```
 
 For more about this service, see
-https://blog.sys4.de/postfix-dovecot-mailbox-quota-en.html.
+https://sys4.de/en/blog/postfix-dovecot-mailbox-quota/
 
 ## Quota Warning Scripts
 
