@@ -2,6 +2,14 @@
   --vp-sidebar-width: 304px;
 }
 
+:root:not(.dark) .dark-only {
+  display: none;
+}
+
+:root:is(.dark) .light-only {
+  display: none;
+}
+
 .VPDoc.has-aside .content-container {
   max-width: 95% !important;
 }
