@@ -26,7 +26,7 @@
   "scripts": {
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
-    "docs:build-ci": "vitepress build",
+    "docs:build-checks": "vitepress build",
     "docs:preview": "vitepress preview",
     "man:build": "node util/generate_man.js"
   },
