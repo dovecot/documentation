@@ -231,7 +231,7 @@ A safe way to move users from one cluster to another is to do it like:
   lot of users are moved at once.
 * Set `host=<new host>` [[link,passdb_extra_fields]]. This update
   should be atomic together with the `delay_until` field.
-* Use [[doveadm,kick]] or [[doveadm,cluster kick]] to kick the user's
+* Use [[doveadm,kick]] to kick the user's
   existing connections.
 
   * The processes may still continue running in the backend for a longer time.
