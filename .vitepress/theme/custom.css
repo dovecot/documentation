@@ -44,9 +44,19 @@
   }
 }
 
-.VPNavBar.has-sidebar .title {
-  padding-left: 16px !important;
+.VPNavBar.has-sidebar div.title {
+  padding-left: 32px !important;
+  margin-top: 1px;
+  width: var(--vp-sidebar-width) !important;
   @media (max-width: 960px) {
     padding-left: 0 !important;
+    width: auto !important;
+  }
+}
+
+.VPNav div.divider {
+  padding-left: var(--vp-sidebar-width) !important;
+  @media (max-width: 960px) {
+    padding-left: 0px !important;
   }
 }
