@@ -2551,6 +2551,19 @@ plugin {
 If set, allows message deliveries to exceed quota by this value.`
 	},
 
+	quota_mailbox_count: {
+		default: '0',
+		plugin: 'quota',
+		values: setting_types.UINT,
+		seealso: [ '[[link,quota_mailbox_count]]' ],
+		text: `
+Maximum number of mailboxes that can be created. Each namespace is tracked
+separately, so e.g. shared mailboxes aren't counted towards the user's own
+limit.
+
+\`0\` means unlimited.`
+	},
+
 	quota_max_mail_size: {
 		default: '0',
 		plugin: 'quota',
