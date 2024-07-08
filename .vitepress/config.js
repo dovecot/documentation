@@ -46,6 +46,7 @@ export default defineConfig({
 	},
 
 	ignoreDeadLinks: 'localhostLinks',
+	metaChunk: true,
 
 	themeConfig: {
 		nav: [
