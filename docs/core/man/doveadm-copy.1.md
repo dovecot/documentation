@@ -6,4 +6,4 @@ dovecotComponent: core
 
 # doveadm-copy(1) - Copy messages matching the given search query into another mailbox
 
-<!-- @include: include/doveadm-copy-move.md -->
+<!-- @include: include/doveadm-copy-move.inc -->
