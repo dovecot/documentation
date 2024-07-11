@@ -282,7 +282,18 @@ it are:
 - Configure Dovecot's userdb lookup to return a different host for
   [[setting,fts_solr]] setting using [[link,userdb_extra_fields]].
 
-  - LDAP: `user_attrs = ..., solrHost=fts_solr=url=https://%$:8983/solr/dovecot/`
+  - LDAP:
+::: code-group
+```[dovecot.conf]
+userdb ... {
+  driver = ldap
+  ...
+  fields {
+    fts_solr = url=https://%{ldap:solrHost}:8983/solr/dovecot/
+  }
+}
+'''
+```
   - MySQL: `user_query = SELECT concat('url=https://', solr_host, ':8983/solr/dovecot/') AS fts_solr, ...`
 
 You can also use

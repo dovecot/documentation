@@ -8,6 +8,5 @@
     When the SQL userdb module is used make sure that the *iterate_query*
     setting in */etc/dovecot/dovecot-sql.conf.ext* matches your database
     layout. When using the LDAP userdb module, make sure that the
-    *iterate_attrs* and *iterate_filter* settings in
-    */etc/dovecot/dovecot-ldap.conf.ext* match your LDAP schema.
+    *fields* and *iterate_fields* settings match your LDAP schema.
     Otherwise [[man,doveadm]] will be unable to iterate over all users.

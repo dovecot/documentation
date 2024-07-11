@@ -26,7 +26,7 @@ significant. See below for examples.
 
 ## LDAP
 
-`auth_bind=yes` with `auth_bind_userdn-template` is incompatible with
+`passdb_ldap_bind=yes` with `passdb_ldap_bind_userdn-template` is incompatible with
 prefetch, because no passdb lookup is done then. If you want zero LDAP lookups,
 you might want to use [[link,auth_staticdb]] instead of prefetch.
 
@@ -34,28 +34,30 @@ you might want to use [[link,auth_staticdb]] instead of prefetch.
 
 ::: code-group
 ```[dovecot.conf]
-passdb {
+passdb dbldap {
   driver = ldap
-  args = /etc/dovecot/dovecot-ldap.conf.ext
+  fields = {
+    user        = %{ldap:uid}
+    password    = %{ldap:userPassword}
+    userdb_home = %{ldap:homeDirectory}
+    userdb_uid  = %{ldap:uidNumber}
+    userdb_gid  = %{ldap:gidNumber}
+  }
 }
 
-userdb {
+userdb dbprefetch {
   driver = prefetch
 }
 
 # The userdb below is used only by LDA.
-userdb {
+userdb dbldap {
   driver = ldap
-  args = /etc/dovecot/dovecot-ldap.conf.ext
+  fields = {
+    home = %{ldap:homeDirectory}
+    uid  = %{ldap:uidNumber}
+    gid  = %{ldap:gidNumber}
+  }
 }
-```
-
-```[dovecot-ldap.conf.ext]
-pass_attrs = uid=user, userPassword=password, \
-    homeDirectory=userdb_home, uidNumber=userdb_uid, gidNumber=userdb_gid
-
-# For LDA:
-user_attrs = homeDirectory=home, uidNumber=uid, gidNumber=gid
 ```
 :::
 

@@ -136,7 +136,7 @@ See also [Global Variables](#global-variables) and [User Variables](#user-variab
 | | `original_username` | Same as `%{username}`, except using the original username |
 | | `original_domain` | Same as `%{domain}`, except using the original username  |
 | | `listener` | Socket listener name as specified in config file, which accepted the client connection. |
-| | `passdb:<name>` | Return passdb extra field "name". `%{passdb:name:default}` returns "default" if "name" doesn't exist (not returned if name exists but is empty). Note that this doesn't work in passdb/userdb ldap's pass_attrs or user_attrs. |
+| | `passdb:<name>` | Return passdb extra field "name". `%{passdb:name:default}` returns "default" if "name" doesn't exist (not returned if name exists but is empty). |
 | | `passdb:forward_<name>` | Used by proxies to pass on extra fields to the next hop, see [[link,auth_forward_fields]]. |
 
 ## Authentication Variables
@@ -172,8 +172,8 @@ See also [Global Variables](#global-variables) and [User Variables](#user-variab
 | | `original_user` | Same as `%{user}`, except using the original username the client sent before any changes by auth process |
 | | `original_username` | Same as `%{username}`, except using the original username |
 | | `original_domain` | Same as `%{domain}`, except using the original username |
-| | `passdb:<name>` | Return passdb extra field "name". `%{passdb:name:default}` returns "default" if "name" doesn't exist (not returned if name exists but is empty). Note that this doesn't work in passdb/userdb ldap's pass_attrs or user_attrs. |
-| | `userdb:<name>` | Return userdb extra field "name". Note that this can also be  used in passdbs to access any userdb_\* extra fields added by previous passdb lookups. `%{userdb:name:default}` returns "default" if "name" doesn't exist (not returned if name exists but is empty). Note that this doesn't work in passdb/userdb ldap's pass_attrs or user_attrs. |
+| | `passdb:<name>` | Return passdb extra field "name". `%{passdb:name:default}` returns "default" if "name" doesn't exist (not returned if name exists but is empty). |
+| | `userdb:<name>` | Return userdb extra field "name". Note that this can also be  used in passdbs to access any userdb_\* extra fields added by previous passdb lookups. `%{userdb:name:default}` returns "default" if "name" doesn't exist (not returned if name exists but is empty). |
 | | `client_id` | If [[setting,imap_id_retain]] is enabled this variable is populated with the client ID request as IMAP arglist. For directly logging the ID see the [[event,imap_id_received]] event. |
 | | `passdb:forward_<name>` | Used by proxies to pass on extra fields to the next hop, see [[link,auth_forward_fields]]. |
 | `%!` | | Internal ID number of the current passdb/userdb. |

@@ -346,13 +346,18 @@ user_query = SELECT home, uid, gid, \
 #### LDAP
 
 ::: code-group
-```[dovecot-ldap.conf]
-user_attrs = \
-    =home=%{ldap:homeDirectory}, \
-    =uid=%{ldap:uidNumber},
-    =gid=%{ldap:gidNumber},
-    =quota_rule=*:bytes=%{ldap:quotaBytes},
-    =namespace/default/separator=%{ldap:mailSeparator}
+```[dovecot.conf]
+userdb ... {
+  driver = ldap
+  ...
+  fields {
+    home       = %{ldap:homeDirectory}
+    uid        = %{ldap:uidNumber}
+    gid        = %{ldap:gidNumber}
+    quota_rule = *:bytes=%{ldap:quotaBytes}
+    namespace/default/separator = %{ldap:mailSeparator}
+  }
+}
 ```
 :::
 
