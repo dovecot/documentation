@@ -2555,6 +2555,7 @@ If set, allows message deliveries to exceed quota by this value.`
 		default: '0',
 		plugin: 'quota',
 		values: setting_types.UINT,
+		tags: [ 'storage_size_limits' ],
 		seealso: [ '[[link,quota_mailbox_count]]' ],
 		text: `
 Maximum number of mailboxes that can be created. Each namespace is tracked
@@ -2568,6 +2569,7 @@ limit.
 		default: '0',
 		plugin: 'quota',
 		values: setting_types.UINT,
+		tags: [ 'storage_size_limits' ],
 		text: `
 Maximum number of messages that can be created in a single mailbox.
 
@@ -2578,6 +2580,7 @@ Maximum number of messages that can be created in a single mailbox.
 		default: '0',
 		plugin: 'quota',
 		values: setting_types.UINT,
+		tags: [ 'storage_size_limits' ],
 		seealso: [ '[[link,quota_max_mail_size]]' ],
 		text: `
 The maximum message size that is allowed to be saved (e.g. by LMTP, IMAP
@@ -4450,7 +4453,7 @@ format), save the message to the detail mailbox.`
 
 	lmtp_user_concurrency_limit: {
 		default: 0,
-		tags: [ 'lmtp' ],
+		tags: [ 'lmtp', 'user_concurrency_limits' ],
 		values: setting_types.UINT,
 		text: `
 Limit the number of concurrent deliveries to a single user to this maximum
@@ -5073,6 +5076,7 @@ tolerate tempfailing less well.`
 	mail_max_userip_connections: {
 		default: '10',
 		values: setting_types.UINT,
+		tags: [ 'user_concurrency_limits' ],
 		text: `
 The maximum number of IMAP connections allowed for a user from each IP
 address.
