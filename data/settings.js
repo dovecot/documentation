@@ -2564,6 +2564,16 @@ limit.
 \`0\` means unlimited.`
 	},
 
+	quota_mailbox_message_count: {
+		default: '0',
+		plugin: 'quota',
+		values: setting_types.UINT,
+		text: `
+Maximum number of messages that can be created in a single mailbox.
+
+\`0\` means unlimited.`
+	},
+
 	quota_max_mail_size: {
 		default: '0',
 		plugin: 'quota',
