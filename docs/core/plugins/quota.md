@@ -638,6 +638,12 @@ Maximum number of mailboxes that can be created. Each namespace is tracked
 separately, so e.g. shared mailboxes aren't counted towards the user's own
 limit. The default is `0`, which is unlimited.
 
+## Maximum Messages Per Mailbox
+
+See [[setting,quota_mailbox_message_count]].
+
+Maximum number of messages that can be created in a single mailbox.
+
 ## Maximum Saved Mail Size
 
 See [[setting,quota_max_mail_size]].
