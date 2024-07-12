@@ -24,39 +24,39 @@ You can run dsync in one of three modes:
   changes without losing anything. Both the mailboxes will end up
   looking identical after the synchronization is finished.
 
--  **doveadm sync -1** performs one-way synchronization, but it
-   merges the changes in destination without deleting anything. This
-   doesn't currently work perfectly, so its use should be limited.
-   Its main purpose is that during mailbox migration you can run
-   **doveadm backup** multiple times, then switch mails to be
-   delivered to the new mailbox and run **doveadm sync -1** once more
-   to transfer any last new mails from the old mailbox.
+- **doveadm sync -1** performs one-way synchronization, but it
+  merges the changes in destination without deleting anything. This
+  doesn't currently work perfectly, so its use should be limited.
+  Its main purpose is that during mailbox migration you can run
+  **doveadm backup** multiple times, then switch mails to be
+  delivered to the new mailbox and run **doveadm sync -1** once more
+  to transfer any last new mails from the old mailbox.
 
-   :   The one-way algorithm is the same as two-way dsync algorithm
-       except the source account is not modified. It fetches the
-       message's GUID (Global UID), which is used to identify any
-       conflicting UIDs in messages. As long as the source and
-       destination side has matching UID<->GUID mapping, those emails are
-       assumed to be synced correctly. Only after the first mismatch will
-       changes begin.
+  - The one-way algorithm is the same as two-way dsync algorithm
+    except the source account is not modified. It fetches the
+    message's GUID (Global UID), which is used to identify any
+    conflicting UIDs in messages. As long as the source and
+    destination side has matching UID<->GUID mapping, those emails are
+    assumed to be synced correctly. Only after the first mismatch will
+    changes begin.
 
-       Example: Source mailbox has messages UID 1..5; source mailbox is
-       sync'd using **doveadm backup** to the destination. Subsequently,
-       UID 6 is delivered to the source mailbox and UID 1 is expunged
-       from the destination mailbox. In this example, UID 1 is kept
-       removed (in destination) because UID 1..5 have identical
-       Date+Message-ID headers. UID 6 is not seen in destination so it's
-       copied.
+    Example: Source mailbox has messages UID 1..5; source mailbox is
+    sync'd using **doveadm backup** to the destination. Subsequently,
+    UID 6 is delivered to the source mailbox and UID 1 is expunged
+    from the destination mailbox. In this example, UID 1 is kept
+    removed (in destination) because UID 1..5 have identical
+    Date+Message-ID headers. UID 6 is not seen in destination so it's
+    copied.
 
-       If both source and destination have UID 6, but the messages are
-       different, the headers don't match and both the messages are kept
-       in the destination but they're given new UIDs 7 and 8 just to be
-       sure any client didn't get confused about what UID 6 actually was.
-       Thus, one-way sync begins to quickly diverge from the source
-       mailbox once changes start to occur on either side; one-way sync
-       should therefore normally only be used within a short period of
-       time after a **doveadm backup** or **doveadm sync** command was
-       used to synchronize the mailboxes.
+    If both source and destination have UID 6, but the messages are
+    different, the headers don't match and both the messages are kept
+    in the destination but they're given new UIDs 7 and 8 just to be
+    sure any client didn't get confused about what UID 6 actually was.
+    Thus, one-way sync begins to quickly diverge from the source
+    mailbox once changes start to occur on either side; one-way sync
+    should therefore normally only be used within a short period of
+    time after a **doveadm backup** or **doveadm sync** command was
+    used to synchronize the mailboxes.
 
 There are also three different synchronization algorithms:
 
