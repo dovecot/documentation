@@ -1,5 +1,25 @@
 ## Dovecot Core
 
+### Configuration Changes
+
+The first setting in `dovecot.conf` must now be
+[[setting,dovecot_config_version]]. This helps to avoid unexpected
+configuration changes in the future.
+
+passdb and userdb sections now require a name, i.e.:
+
+
+```
+# This gives an error:
+passdb {
+  ...
+}
+
+# Use this instead:
+passdb some_name {
+}
+```
+
 ### Removed Features
 
 | Feature | Notes |
