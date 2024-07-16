@@ -3,6 +3,9 @@ layout: doc
 title: Cassandra
 dovecotlinks:
   sql_cassandra: Cassandra configuration
+  sql_cassandra_page_size:
+    hash: page-size
+    text: page-size
 ---
 
 # SQL Driver: Cassandra
