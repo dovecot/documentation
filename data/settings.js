@@ -3519,6 +3519,33 @@ many connections to the doveadm service.
 If \`0\`, commands are run directly in the same process.`
 	},
 
+	dovecot_config_version: {
+		values: setting_types.STRING,
+		text: `
+Dovecot configuration version. It uses the same versioning as Dovecot in
+general, e.g. \`3.0.5\`. This must be the first setting in the
+configuration file. It specifies the configuration syntax, the used setting
+names and the expected default values.
+
+When there are default configuration changes in newer Dovecot versions, the
+existing installations will continue to work the same as before with the same
+default settings until this version number is increased. If there are other
+configuration changes, the old configuration will either keep working or there
+will be a clear failure at startup.`
+	},
+
+	dovecot_storage_version: {
+		values: setting_types.STRING,
+		text: `
+Dovecot storage file format version. It uses the same versioning as Dovecot in
+general, e.g. \`3.0.5\`. It specifies the oldest Dovecot version
+that must be able to read files written by this Dovecot instance. The intention
+is that when upgrading Dovecot cluster, this setting is first kept as the old
+Dovecot version. Once the cluster is fully upgraded to a new version and
+there is no intention to rollback to the old version anymore, this version
+number can be increased.`
+	},
+
 	dsync_alt_char: {
 		default: '_',
 		tags: [ 'dsync' ],
