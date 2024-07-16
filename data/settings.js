@@ -3522,7 +3522,8 @@ If \`0\`, commands are run directly in the same process.`
 	dovecot_config_version: {
 		values: setting_types.STRING,
 		text: `
-Dovecot configuration version. This must be the first setting in the
+Dovecot configuration version. It uses the same versioning as Dovecot in
+general, e.g. \`3.0.5\`. This must be the first setting in the
 configuration file. It specifies the configuration syntax, the used setting
 names and the expected default values.
 
@@ -3536,7 +3537,8 @@ will be a clear failure at startup.`
 	dovecot_storage_version: {
 		values: setting_types.STRING,
 		text: `
-Dovecot storage file format version. It specifies the oldest Dovecot version
+Dovecot storage file format version. It uses the same versioning as Dovecot in
+general, e.g. \`3.0.5\`. It specifies the oldest Dovecot version
 that must be able to read files written by this Dovecot instance. The intention
 is that when upgrading Dovecot cluster, this setting is first kept as the old
 Dovecot version. Once the cluster is fully upgraded to a new version and
