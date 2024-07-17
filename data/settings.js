@@ -2882,7 +2882,6 @@ entry is to be added.`
 		default: 'no',
 		tags: [ 'auth_cache' ],
 		values: setting_types.BOOLEAN,
-		advanced: true,
 		text: `
 The auth master process by default is responsible for the hash
 verifications. Setting this to \`yes\` moves the verification to auth-worker
@@ -2942,7 +2941,6 @@ encounter.`
 	auth_gssapi_hostname: {
 		default: '<name returned by gethostname()>',
 		values: setting_types.STRING,
-		advanced: true,
 		text: `
 This supplies the hostname to use in Generic Security Services API
 (GSSAPI) principal names.
@@ -2953,7 +2951,6 @@ Use \`"$ALL"\` (with the quotation marks) to allow all keytab entries.`
 	auth_krb5_keytab: {
 		default: '<system default (e.g. /etc/krb5.keytab)>',
 		values: setting_types.STRING,
-		advanced: true,
 		text: `
 This specifies the Kerberos keytab to use for the GSSAPI mechanism.
 
@@ -3208,7 +3205,6 @@ OBJ_txt2nid() function).
 	auth_use_winbind: {
 		default: 'no',
 		values: setting_types.BOOLEAN,
-		advanced: true,
 		text: `
 By default, the NTLM mechanism is handled internally.
 
@@ -3293,7 +3289,6 @@ Available transformations:
 
 	auth_winbind_helper_path: {
 		values: setting_types.STRING,
-		advanced: true,
 		text: `
 This setting tells the system the path for Samba's ntlm_auth helper binary.
 
@@ -5066,7 +5061,6 @@ Compliance is enforced only during attempts to create new keywords.`
 	mail_max_lock_timeout: {
 		default: '0',
 		values: setting_types.TIME,
-		advanced: true,
 		text: `
 This value is used as a timeout for tempfailing mail connections.  It
 can be set globally, for application to all Dovecot services, but
