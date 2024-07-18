@@ -1,4 +1,4 @@
-/* This file allows configuration overwrite of default paths. */
+/* This file allows configuration overrides of various core settings. */
 
 // Allows custom mapping of data sources.
 // It is used by the VitePress data loaders to determine what data to
@@ -53,3 +53,22 @@ export const man_paths = []
 //
 // Default: [ 'docs/core/plugins/*.md' ]
 export const plugin_paths = []
+
+// Enable additional labels to support in Dovecot-specific markdown
+// processing (i.e. [[xyz,...]]).
+export const markdown_extend = {
+
+	// Init function. Return value is configuration options to add to markdown
+	// object.
+	// init: () => { return {} },
+
+	// Opening tag function. Returns opening tag.
+	// open: (mode, parts, opts, env) => { return '' },
+
+	// Body function. Returns body text.
+	// body: (mode, env) => { return '' },
+
+	// Close tag function. Returns closing tag.
+	// close: (mode, env) => { return '' },
+
+}
