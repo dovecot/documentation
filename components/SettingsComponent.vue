@@ -2,17 +2,18 @@
 import { data } from '../lib/data/settings.data.js'
 
 /* Properties for this component:
- * 'advanced' (boolean): If set, only show advanced settings. Otherwise, only
- *                       regular settings are shown.
+ * 'filter' (string): One of three options, 'all' (DEFAULT), 'advanced', or
+ *                    'no_advanced.
  * 'level' (integer): The header level to display entries as. Default: '2'
  * 'plugin' (string): Filter entries by this plugin.
  * 'show_plugin' (boolean): If set, add plugin name to output.
  * 'tag' (string): Filter by tag. Tag matches either plugin OR tag field.
  */
 const props = defineProps(
-    ['advanced', 'level', 'plugin', 'show_plugin', 'tag']
+    ['filter', 'level', 'plugin', 'show_plugin', 'tag']
 )
 
+const filter = props.filter ?? 'all'
 const level = (props.level ? Number(props.level) : 2) + 1
 
 const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
@@ -23,9 +24,10 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 	 (props.tag &&
 	  ((v.plugin && v.plugin == props.tag) ||
 	   (v.tags.includes(props.tag))))) &&
-	/* Always need to filter advanced entries. */
-	((props.advanced && v.advanced) ||
-	 (!props.advanced && !v.advanced))
+	/* Apply filter. */
+	((filter == 'all') ||
+	 ((filter == 'advanced') && v.advanced) ||
+	 ((filter == 'no_advanced') && !v.advanced))
 ).sort())
 </script>
 
@@ -41,6 +43,10 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 }
 .dovecotSettings :deep(ul) {
   margin: 0;
+}
+.advancedWarn {
+  color: var(--vp-custom-block-danger-text);
+  background-color: var(--vp-custom-block-danger-bg);
 }
 </style>
 
@@ -105,6 +111,11 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
         <span v-html="elem.text" />
        </li>
       </ul>
+     </td>
+    </tr>
+    <tr v-if="v.advanced">
+     <td class="advancedWarn" colspan="2">
+      Advanced Setting; this should not normally be changed.
      </td>
     </tr>
    </tbody>
