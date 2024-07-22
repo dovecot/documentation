@@ -111,8 +111,13 @@ DATAERR
 datalake
 datastack
 datastax
+dbldap
 dbox
 dboxes
+dbpam
+dbpasswd
+dbprefetch
+dbstatic
 dcrypt
 DDTHH
 debian
@@ -340,7 +345,6 @@ lcov
 lda
 ldapi
 ldapmodify
-ldaprc
 ldaps
 LDFLAGS
 ldif
@@ -724,7 +728,6 @@ sproxyd
 sqlhost
 sqlpass
 sqlpool
-sqlquota
 sqluser
 ssha
 ssldir
