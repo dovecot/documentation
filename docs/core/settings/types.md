@@ -15,6 +15,9 @@ dovecotlinks:
   settings_types_string:
     hash: string
     text: string
+  settings_types_string_list:
+    hash: string
+    text: string
   settings_types_time:
     hash: time
     text: time
@@ -123,3 +126,16 @@ addresses.
 
 Special type of [String](#string) setting. Conforms to Uniform Resource
 Locators (URL) ([[rfc,1738]]).
+
+## String List
+
+String list is a list of `key=value` pairs. Each key `name` is unique
+within the list (i.e. giving the same key multiple times overrides the
+previous one).
+
+```
+fields {
+  user = myuser
+  password = mypassword
+}
+```
