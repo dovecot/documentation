@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: last-login
+dovecotlinks:
+  last_login: Last Login
 ---
 
 # Last Login (last-login) Plugin
