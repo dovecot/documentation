@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: quota-clone
+dovecotlinks:
+  quota_clone: Quota Clone
 ---
 
 # Quota Clone (quota-clone) Plugin
