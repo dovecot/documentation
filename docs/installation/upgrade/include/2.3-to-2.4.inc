@@ -55,6 +55,7 @@ passdb some_name {
 | Dovecot director role | This has been replaced with the Dovecot Pro Palomar architecture. |
 | `imap_id_log` setting | Replaced by the [[event,imap_id_received]] event. |
 | size.virtual | size.virtual field is no longer written to dovecot.index.cache file as it is duplicating vsize record in dovecot.index file. Reading of the field from old files is supported. |
+| SETQUOTA / `quota_set` | Quota limits can no longer be modified using the IMAP SETQUOTA command. |
 
 ### Changed Default Settings
 

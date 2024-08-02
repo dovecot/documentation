@@ -6577,8 +6577,8 @@ The path to the Diffie-Hellman parameters file must be provided. This
 setting isn't needed if using only ECDSA certificates.
 
 You can generate a new parameters file by, for example, running
-\`openssl gendh 4096\` on a machine with sufficient entropy (this may take
-some time).
+\`openssl dhparam -out dh.pem 4096\` on a machine with sufficient entropy
+(this may take some time).
 
 Example:
 
