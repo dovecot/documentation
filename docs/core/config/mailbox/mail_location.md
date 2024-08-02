@@ -297,6 +297,7 @@ export USERDB_KEYS="$USERDB_KEYS mail"
 
 exec "$@"
 ```
+:::
 
 ## Mailbox Autocreation
 
@@ -344,6 +345,7 @@ Since a location specified within a [[link,namespaces]] overrides
 [[setting,mail_location]], in case you specified that parameter
 you'll have to override in in the user database, specifying
 `namespace/inbox/location` extra field instead of mail.
+:::
 
 ### SQL
 
@@ -353,9 +355,20 @@ user_query = SELECT home, uid, gid, mail FROM users WHERE user = '%u'
 
 ### LDAP
 
+::: code-group
+```[dovecot.conf]
+userdb ... {
+  driver = ldap
+  ...
+  fields {
+    home = %{ldap:homeDirectory}
+    uid  = %{ldap:uidNumber}
+    gid  = %{ldap:gidNumber}
+    mail = %{ldap:mailLocation}
+  }
+}
 ```
-user_attrs = homeDirectory=home, uidNumber=uid, gidNumber=gid, mailLocation=mail
-```
+:::
 
 ### Passwd-file
 

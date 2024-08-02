@@ -27,7 +27,7 @@ In `/etc/pam.d/imap` you could then use, e.g., the pam_listfile.so module:
 
 ```[/etc/pam.d/imap]
 # allow IMAP access only for users in /etc/imapusers file
-auth    required        pam_listfile.so item=user sense=allow file=/etc/imapusers onerr=fail 
+auth    required        pam_listfile.so item=user sense=allow file=/etc/imapusers onerr=fail
 ```
 
 ## SQL
@@ -37,15 +37,15 @@ You can use the `%s` variable which expands to `imap` or `pop3` in
 
 ```
 password_query = SELECT password FROM users WHERE userid = '%u' \
-    and not (imap_allowed = false and '%s' = 'imap') 
+    and not (imap_allowed = false and '%s' = 'imap')
 ```
 
 ## LDAP
 
-Just like with SQL, you can use `%s` in `pass_filter`:
+Just like with SQL, you can use `%s` in `ldap_filter`:
 
 ```
-pass_filter = (&(objectClass=posixAccount)(uid=%u)(service=%s)) 
+pass_filter = (&(objectClass=posixAccount)(uid=%u)(service=%s))
 ```
 
 That would require setting both service=pop3 and service=imap attributes

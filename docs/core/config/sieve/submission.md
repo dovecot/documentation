@@ -72,17 +72,17 @@ password_query = SELECT username, domain, password FROM users \
       skip = authenticated
    }
 
-   passdb {
+   passdb dbpam {
       driver = pam
       skip = authenticated
    }
 
-   userdb {
+   userdb dbldap {
       driver = ldap
       args = /path/to/ldap/config
    }
 
-   userdb {
+   userdb dbpasswd {
       driver = passwd
    }
 

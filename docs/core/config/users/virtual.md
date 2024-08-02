@@ -173,19 +173,28 @@ of these (in the preferred order):
 If for example `home=/var/vmail/domain/user/` and
 `mail=/var/vmail/domain/user/mail/`, set:
 
+::: code-group
 ```[dovecot.conf]
 mail_home = /var/vmail/%d/%n
 mail_location = maildir:~/mail
 ```
+:::
 
 ### LDAP with Relative Directory Paths
 
 If your LDAP database uses, e.g., `mailDirectory = domain/user/`, you
 can use it as a base for home directory:
 
+::: code-group
+```[dovecot.conf]
+userdb ... {
+  ...
+  fields {
+    home = %{ldap:mailDirectory}
+  }
+}
 ```
-user_attrs = .., mailDirectory=home=/var/vmail/%$
-```
+:::
 
 Then just use [[setting,mail_location,maildir:~/Maildir]].
 
@@ -254,30 +263,32 @@ If you need to do PAM/passwd lookup for system users, and also have
 domain users, you can configure authentication to drop the domain part
 after doing virtual user lookup.
 
+::: code-group
 ```[dovecot.conf]
 ## Your virtual passdb
-passdb {
+passdb dbldap {
   driver = ldap
-  args = /path/to/ldap/config
+  ...
 }
 
-passdb {
+passdb dbstatic {
   driver = static
   args = user=%Ld noauthenticate
   skip = authenticated
 }
 
-passdb {
+passdb dbpam {
   driver = pam
   skip = authenticated
 }
 
-userdb {
+userdb dbldap {
   driver = ldap
-  args = /path/to/ldap/config
+  ...
 }
 
-userdb {
+userdb dbpasswd {
   driver = passwd
 }
 ```
+:::

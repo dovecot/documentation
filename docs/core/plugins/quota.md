@@ -130,14 +130,24 @@ If you're wondering why per-user quota isn't working:
 #### Override: LDAP
 
 ::: warning Note
-Remember that `user_attrs` is used only if you use [[link,auth_ldap]].
+Remember that `fields` is used only if you use [[link,auth_ldap]].
 :::
 
 Quota limit is in `quotaBytes` field:
 
+
+::: code-group
+```[dovecot.conf]
+userdb ... {
+  driver = ldap
+  ...
+  fields {
+    home       = %{ldap:homeDirectory}
+    quota_rule = *:bytes=%{ldap:quotaBytes}
+  }
+}
 ```
-user_attrs = homeDirectory=home, quotaBytes=quota_rule=*:bytes=%$
-```
+'''
 
 #### Override: SQL
 
