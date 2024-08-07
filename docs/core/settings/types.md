@@ -18,9 +18,6 @@ dovecotlinks:
   settings_types_time:
     hash: time
     text: time
-  settings_types_time_interval:
-    hash: time-interval
-    text: time interval
   settings_types_time_msecs:
     hash: millisecond-time
     text: time (milliseconds)
@@ -97,14 +94,6 @@ secs, seconds, mins, minutes, hours, days, weeks
 ::: tip Note
 So for example, `d`, `da`, `day`, and `days` all mean the same.
 :::
-
-### Time Interval
-
-Combination of a positive integer number and a time unit. Available time
-units are mentioned above.
-
-For example, to match messages from last week, you may specify:
-`since 1w`, `since 1weeks`, or `since 7days`.
 
 ## Millisecond Time
 
