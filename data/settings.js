@@ -2308,9 +2308,35 @@ plugin {
 
 	/* notify-status plugin */
 
-	notify_status_dict: {
+	mailbox_notify_status: {
+		plugin: 'notify-status',
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Whether notifications for a single mailbox or mailbox wildcards are enabled.
+
+Example:
+
+\`\`\`
+mailbox INBOX {
+  notify_status = yes
+}
+mailbox Spam {
+  notify_status = yes
+}
+mailbox *BOX {
+  notify_status = yes
+}
+\`\`\``
+	},
+
+	notify_status: {
+		filter: '`notify_status`',
 		plugin: 'notify-status',
 		values: setting_types.STRING,
+		dependencies: [
+			'[[link,dict]]',
+		],
 		text: `
 The URI of the dictionary to use. This MUST be set for the plugin to be active.
 
@@ -2323,37 +2349,15 @@ plugin {
 \`\`\``
 	},
 
-	notify_status_mailbox: {
-		plugin: 'notify-status',
-		values: setting_types.STRING,
-		text: `
-A mailbox pattern to enable for status updates. Wildcards are acceptable.
-
-By default, all mailboxes are processed. When defining one or more patterns
-only mailboxes matching the pattern are enabled for status updates.
-
-You can define multiple mailbox patterns by appending an increasing number
-to the setting label.
-
-Example:
-
-\`\`\`
-plugin {
-  notify_status_mailbox = Spam
-  notify_status_mailbox2 = Archive/*
-}
-\`\`\``
-	},
-
 	notify_status_value: {
-		default: '{"messages":%%{messages},"unseen":%%{unseen}}',
+		default: '{"messages":%{messages},"unseen":%{unseen}}',
 		plugin: 'notify-status',
 		values: setting_types.STRING,
 		text: `
 A template of the string that will be written to the dictionary.
 
 The template supports variable substitution of the form
-\`%%{variable_name}\`.
+\`%{variable_name}\`.
 
 Supported variable substitutions:
 
