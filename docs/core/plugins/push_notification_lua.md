@@ -23,15 +23,16 @@ Lua push notification handler requires [[plugin,push-notification]],
 
 | Name | Required | Type | Description |
 | ---- | -------- | ---- | ----------- |
-| `file` | NO | [[link,settings_types_string]] | The lua file to execute. If no script is specified, [[setting,mail_lua_script]] will be used by default. |
+| `push_notification_driver` | **YES** | [[link,settings_types_string]] | To identify this settings block the driver should get the value `lua`. |
+| `push_notification_lua_path` | NO | [[link,settings_types_string]] | The lua file to execute. If no script is specified, [[setting,mail_lua_script]] will be used by default. |
 
 ## Example Configuration
 
 ```[dovecot.conf]
 mail_plugins = $mail_plugins mail_lua notify push_notification push_notification_lua
 
-plugin {
-  push_notification_driver = lua:file=/path/to/lua/script
+push_notification lua {
+  lua_path = /path/to/lua/script
 }
 ```
 

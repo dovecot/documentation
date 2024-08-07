@@ -66,19 +66,26 @@ protocol lda {
 
 ## Drivers
 
-A push notification driver is defined by the
-[[setting,push_notification_driver]] setting.
+A push notification driver is defined by the [[setting,push_notification]]
+setting. The configuration value is a named filter for a specified driver, see
+the driver for their names and their supported options.
+
+It is possible to specify multiple push notification drivers by giving unique
+names to the individual driver configurations. Multiple configuration for a
+driver of the same type is useful if, for example, you want to process a single
+notification with the same driver but different endpoints.
 
 Example:
 
 ```[dovecot.conf]
-plugin {
-  push_notification_driver  = ox:url=http://example.com/foo
-  push_notification_driver2 = ox:url=http://example.com/bar
+push_notification ox1 {
+  driver = ox
+  ox_url = http://example.com/foo
+}
 
-  # This driver will NOT be processed, as it does not appear sequentially
-  # with the other configuration options
-  push_notification_driver4 = dlog
+push_notification ox2 {
+  driver = ox
+  ox_url = http://example.com/bar
 }
 ```
 
@@ -87,13 +94,18 @@ The list of drivers shipped with Dovecot core appears below.
 ### DLOG (Debug log) [`dlog`]
 
 The most simple push notification plugin is the `dlog` plugin. It will write
-notifications into the debug log of the process. This driver has no options.
+notifications into the debug log of the process. This driver has no options. To
+enable it you will have to define it explicitly, otherwise it is disabled.
+
+| Name | Required | Type | Description |
+| ---- | -------- | ---- | ----------- |
+| `push_notification_driver` | **YES** | [[link,settings_types_string]] | To identify this settings block the driver should get the value `dlog`. |
 
 #### Example Configuration
 
 ```[dovecot.conf]
-plugin {
-  push_notification_driver = dlog
+push_notification dlog {
+  driver = dlog
 }
 ```
 
@@ -110,17 +122,18 @@ be used by any push endpoint that implements this API, not just OX App Suite.
 
 | Name | Required | Type | Description |
 | ---- | -------- | ---- | ----------- |
-| `url` | **YES** | [[link,settings_types_string]] | The HTTP end-point (URL + authentication information) to use is configured in the Dovecot configuration file. Contains authentication information needed for Basic Authentication (if any). Example: `http<s> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/preliminary/http-notify/v1/notify"`<br/>For HTTPS endpoints, system CAs are trusted by default, but internal CAs might need further configuration.<br/>For further details on configuring the App Suite endpoint, see: [OX App Suite Push Notification API#Configuration of Dovecot "http-notify" plugin-in][ox-appsuite-push-notification-api-dovecot-configuration] |
-| `cache_lifetime` | NO | [[link,settings_types_time]] | Cache lifetime for the METADATA entry for a user. (DEFAULT: `60 seconds`) |
-| `max_retries` | NO | [[link,settings_types_uint]] | The maximum number of times to retry a connection to the OX endpoint. Setting it to `0` will disable retries. (DEFAULT: `1`) |
-| `timeout_msecs` | NO | [[link,settings_types_time_msecs]] | Time before HTTP request to OX endpoint will timeout. (DEFAULT: `2000`) |
-| `user_from_metadata` | NO | (Existence of setting) | Use the user stored in the METADATA entry instead of the user sent by OX endpoint. Does not require an argument; presence of the option activates the feature. (DEFAULT: user returned by endpoint response is used) |
+| `push_notification_driver` | **YES** | [[link,settings_types_string]] | To identify this settings block the driver should get the value `ox`. |
+| `push_notification_ox_url` | **YES** | [[link,settings_types_string]] | The HTTP end-point (URL + authentication information) to use is configured in the Dovecot configuration file. Contains authentication information needed for Basic Authentication (if any). Example: `http<s> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/preliminary/http-notify/v1/notify"`<br/>For HTTPS endpoints, system CAs are trusted by default, but internal CAs might need further configuration.<br/>For further details on configuring the App Suite endpoint, see: [OX App Suite Push Notification API#Configuration of Dovecot "http-notify" plugin-in][ox-appsuite-push-notification-api-dovecot-configuration] |
+| `push_notification_ox_cache_ttl` | NO | [[link,settings_types_time]] | Cache lifetime for the METADATA entry for a user. (DEFAULT: `60 seconds`) |
+| `push_notification_ox_user_from_metadata` | NO | [[link,settings_types_boolean]] | Use the user stored in the METADATA entry instead of the user sent by OX endpoint. (DEFAULT: user returned by endpoint response is used, i.e. `no`) |
 
 #### Example Configuration
 
 ```[dovecot.conf]
-plugin {
-  push_notification_driver = ox:url=http://login:pass@node1.domain.tld:8009/preliminary/http-notify/v1/notify user_from_metadata timeout_msecs=10000
+push_notification ox {
+  ox_url = http://login:pass@node1.domain.tld:8009/preliminary/http-notify/v1/notify
+  user_from_metadata = yes
+  cache_ttl = 10secs
 }
 ```
 
