@@ -49,6 +49,7 @@ The parameters are forwarded as part of the ID command field-value list.
 | `x-originating-port` | Client port |
 | `x-connected-ip` | Server IP address |
 | `x-connected-port` | Server port address |
+| `x-connected-name` | TLS SNI provided name. |
 | `x-proxy-ttl` | TTL which is reduced by each hop, loop prevention. When TTL drops to 0, the connection is dropped. |
 | `x-session-id`,<br/>`x-session-ext-id` | Session ID to be used. |
 | `x-forward-<variable_name>` | Forwarded variable, see [[variable]] |
@@ -73,6 +74,7 @@ other AUTH error.
 | `PORT` | Client port |
 | `SESSION` | Session ID |
 | `TTL` | TTL which is reduced by each hop, loop prevention. When TTL drops to 0, the connection is dropped. |
+| `DESTNAME` | Name provided by TLS SNI. |
 | `FORWARD` |  Base64-encoded, tab-separated list of `key=value` pairs to be forwarded to auth process. The keys and values are escaped using Dovecot's tab-escape format. |
 
 ## SMTP/LMTP
@@ -90,6 +92,7 @@ See [XCLIENT information](https://www.postfix.org/XCLIENT_README.html).
 | `LOGIN` | Original `LOGIN` value |
 | `TIMEOUT` | Original `TIMEOUT` |
 | `PROTO` | Forwarded protocol: `SMTP`, `ESTMP`, or `LMTP`. |
+| `DESTNAME` | Name provided by TLS SNI. |
 
 ### Supported Fields (*SMTP/Submission* ONLY)
 
@@ -97,6 +100,7 @@ See [XCLIENT information](https://www.postfix.org/XCLIENT_README.html).
 | ----- | ----------- |
 | `FORWARD` | Base64-encoded, tab-separated list of `key=value` pairs to be forwarded to auth process. The keys and values are escaped using Dovecot's tab-escape format. This value is effectively limited to around 1000 bytes. |
 | `SESSION` | Session ID |
+| `DESTNAME` | Name provided by TLS SNI. |
 
 ### Supported Fields LMTP
 
