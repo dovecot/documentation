@@ -3,9 +3,12 @@ layout: doc
 title: push-notification
 dovecotlinks:
   push_notification: Push Notifications
+  push_notification_events:
+    hash: push-notification-events
+    text: Push Notification Events
 ---
 
-# Push Notification (push-notification) Plugin
+# Push Notification Plugin (`push-notification`)
 
 Dovecot's Push Notification plugin implements a framework that exposes
 [[rfc,5423]] (Internet Message Store Events) events that occur in Dovecot to
@@ -40,7 +43,7 @@ These events are not supported by the notification framework:
 ## Usage
 
 To use push notifications, both the `notify` and the `push_notification`
-plugins need to be activated by defining in [[setting,mail_plugins]].
+plugins need to be activated by defining them in [[setting,mail_plugins]].
 
 This can either be set globally or restricted to the protocols where you
 want push notifications to be generated.  For example, to restrict to mail
@@ -83,13 +86,16 @@ The list of drivers shipped with Dovecot core appears below.
 
 ### DLOG (Debug log) [`dlog`]
 
+The most simple push notification plugin is the `dlog` plugin. It will write
+notifications into the debug log of the process. This driver has no options.
+
+#### Example Configuration
+
 ```[dovecot.conf]
 plugin {
   push_notification_driver = dlog
 }
 ```
-
-This will cause notifications to end up in your debug log.
 
 ### OX (Open-Xchange) driver [`ox`]
 
@@ -97,18 +103,17 @@ The OX backend supports sending notifications on MessageNew events (i.e. mail
 deliveries, not IMAP APPENDs).
 
 This driver was designed for use with
-[OX App Suite Push Notification API](https://documentation.open-xchange.com/7.10.5/middleware/mail/dovecot/dovecot_push.html),
-but can be used by any push endpoint that implements this API, not just OX
-App Suite.
+[OX App Suite Push Notification API][ox-appsuite-push-notification-api] but can
+be used by any push endpoint that implements this API, not just OX App Suite.
 
 #### Configuration Options
 
 | Name | Required | Type | Description |
 | ---- | -------- | ---- | ----------- |
-| `url` | **YES** | string | The HTTP end-point (URL + authentication information) to use is configured in the Dovecot configuration file. Contains authentication information needed for Basic Authentication (if any). Example: `http<s> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/preliminary/http-notify/v1/notify"`. For HTTPS endpoints, system CAs are trusted by default, but internal CAs might need further configuration. For further details on configuring the App Suite endpoint, see: https://documentation.open-xchange.com/latest/middleware/mail/dovecot/dovecot_push.html#configuration-of-dovecot-http-notify-plug-in |
-| `cache_lifetime` | NO | time | Cache lifetime for the METADATA entry for a user. (DEFAULT: `60 seconds`) |
-| `max_retries` | NO | unsigned integer | The maximum number of times to retry a connection to the OX endpoint. Setting it to `0` will disable retries. (DEFAULT: `1`) |
-| `timeout_msecs` | NO | time (msecs) | Time before HTTP request to OX endpoint will timeout. (DEFAULT: `2000`) |
+| `url` | **YES** | [[link,settings_types_string]] | The HTTP end-point (URL + authentication information) to use is configured in the Dovecot configuration file. Contains authentication information needed for Basic Authentication (if any). Example: `http<s> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/preliminary/http-notify/v1/notify"`<br/>For HTTPS endpoints, system CAs are trusted by default, but internal CAs might need further configuration.<br/>For further details on configuring the App Suite endpoint, see: [OX App Suite Push Notification API#Configuration of Dovecot "http-notify" plugin-in][ox-appsuite-push-notification-api-dovecot-configuration] |
+| `cache_lifetime` | NO | [[link,settings_types_time]] | Cache lifetime for the METADATA entry for a user. (DEFAULT: `60 seconds`) |
+| `max_retries` | NO | [[link,settings_types_uint]] | The maximum number of times to retry a connection to the OX endpoint. Setting it to `0` will disable retries. (DEFAULT: `1`) |
+| `timeout_msecs` | NO | [[link,settings_types_time_msecs]] | Time before HTTP request to OX endpoint will timeout. (DEFAULT: `2000`) |
 | `user_from_metadata` | NO | (Existence of setting) | Use the user stored in the METADATA entry instead of the user sent by OX endpoint. Does not require an argument; presence of the option activates the feature. (DEFAULT: user returned by endpoint response is used) |
 
 #### Example Configuration
@@ -122,11 +127,11 @@ plugin {
 #### Metadata
 
 The push notifications are enabled separately for each user using METADATA.
-Normally [OX App Suite](https://www.open-xchange.com/products/ox-app-suite/)
-does this internally, but for e.g. testing purposes you can do this yourself:
+Normally [OX App Suite][ox-app-suite] does this internally, but for e.g.
+testing purposes you can do this yourself:
 
-```console
-$ doveadm mailbox metadata set -u user@example.com \
+```sh
+doveadm mailbox metadata set -u user@example.com \
     -s "" /private/vendor/vendor.dovecot/http-notify user=11@3
 ```
 
@@ -139,12 +144,17 @@ Push notification sent in JSON format with the following fields:
 | `event` | string | [[rfc,5423]] event type (currently only "MessageNew") |
 | `folder` | string | Mailbox name |
 | `from` | string | [[rfc,2822]] address of the message sender (MIME-encoded), if applicable |
-| `imap-uid` | integer | UID of the message, if applicable |
-| `imap-uidvalidity` | integer | [[rfc,3501]] UIDVALIDITY value of the mailbox |
+| `imap-uid` | number | UID of the message, if applicable |
+| `imap-uidvalidity` | number | [[rfc,3501]] UIDVALIDITY value of the mailbox |
 | `snippet` | string | Snippet of the message body (UTF-8), if applicable |
 | `subject` | string | Subject of the message (MIME-encoded), if applicable |
-| `unseen` | integer | [[rfc,3501]] UNSEEN value of the mailbox |
+| `unseen` | number | [[rfc,3501]] UNSEEN value of the mailbox |
 | `user` | string | User identifier |
+
+::: info NOTE
+The returned numbers are generally integer values in the range
+`0`..`4294967295`.
+:::
 
 Example (`Content-Type: application/json; charset=utf-8`):
 
@@ -167,3 +177,7 @@ Example (`Content-Type: application/json; charset=utf-8`):
 You can use Lua to write custom push notification handlers.
 
 See [[plugin,push-notification-lua]] for configuration information.
+
+[ox-appsuite]: https://www.open-xchange.com/products/ox-app-suite/
+[ox-appsuite-push-notification-api]: https://documentation.open-xchange.com/7.10.5/middleware/mail/dovecot/dovecot_push.html
+[ox-appsuite-push-notification-api-dovecot-configuration]: https://documentation.open-xchange.com/latest/middleware/mail/dovecot/dovecot_push.html#configuration-of-dovecot-http-notify-plug-in
