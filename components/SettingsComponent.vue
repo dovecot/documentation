@@ -51,6 +51,10 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
   color: var(--vp-custom-block-danger-text);
   background-color: var(--vp-custom-block-danger-bg);
 }
+
+.dovecotSettings th {
+  text-align: right;
+}
 </style>
 
 <template>
@@ -63,26 +67,26 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
   <table class="dovecotSettings">
    <tbody>
     <tr>
-     <th style="text-align:right;">Default</th>
+     <th>Default</th>
      <td>
       <span v-if="v.default" v-html="v.default" />
       <em v-else>[None]</em>
      </td>
     </tr>
     <tr>
-     <th style="text-align:right;">Value</th>
+     <th>Value</th>
      <td>
       <span class="comma" v-for="v in v.values" v-html="v.url" />
      </td>
     </tr>
     <tr v-if="v.values_enum.length">
-     <th style="text-align:right;">Allowed Values</th>
+     <th>Allowed Values</th>
      <td>
       <span class="comma" v-for="v in v.values_enum.values()"><code>{{ v }}</code></span>
      </td>
     </tr>
     <tr v-if="v.seealso.length">
-     <th style="text-align:right;">See Also</th>
+     <th>See Also</th>
      <td>
       <ul>
        <li v-for="v in v.seealso" v-html="v" />
@@ -90,11 +94,11 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
      </td>
     </tr>
     <tr v-if="props.show_plugin && v.plugin">
-     <th style="text-align:right;">Plugin</th>
+     <th>Plugin</th>
      <td v-html="v.plugin_link" />
     </tr>
     <tr v-if="v.added || v.changed || v.deprecated || v.removed">
-     <th style="text-align:right;">Changes</th>
+     <th>Changes</th>
      <td>
       <ul class="badgePadding">
        <li v-if="v.added" v-for="elem in v.added">
