@@ -80,7 +80,6 @@ Variables that work nearly everywhere where there is a username:
 | `%u` | `user` | full username (e.g. user@domain) |
 | `%n` | `username` | user part in user@domain, same as `%u` if there's no domain |
 | `%d` | `domain` | domain part in user@domain, empty if user with no domain |
-| `%s` | `service` | imap, pop3, smtp, lda (and doveadm, etc.) |
 | | `session` | session ID for this client connection (unique for 9 years) |
 | | `auth_user` | SASL authentication ID (e.g. if master user login is done, this contains the master username). If username changes during authentication, this value contains the original username. Otherwise the same as `%{user}`. |
 | | `auth_username` | user part in `%{auth_user}` |
@@ -94,6 +93,7 @@ See also [Global Variables](#global-variables) and [User Variables](#user-variab
 
 | Variable | Long Name | Description |
 | -------- | --------- | ----------- |
+| | `service` | imap, pop3, smtp, lda (and doveadm, etc.) |
 | `%l` | `local_ip` | local IP address |
 | `%r` | `remote_ip` | remote IP address |
 | | `userdb:<name>` | Return userdb extra field "name". `%{userdb:name:default}` returns "default" if "name" doesn't exist (not returned if name exists but is empty) |
@@ -117,6 +117,7 @@ See also [Global Variables](#global-variables) and [User Variables](#user-variab
 
 | Variable | Long Name | Description |
 | -------- | --------- | ----------- |
+| | `protocol` | imap, pop3, smtp, lda (and doveadm, etc.)<br/>[[added,variables_login_variables_protocol]] Renamed from `%{service}` variable. |
 | | `local_name` | TLS SNI hostname, if given |
 | `%l` | `local_ip` | local IP address |
 | `%r` | `remote_ip` | remote IP address |
@@ -147,6 +148,7 @@ See also [Global Variables](#global-variables) and [User Variables](#user-variab
 
 | Variable | Long Name | Description |
 | -------- | --------- | ----------- |
+| | `protocol` | imap, pop3, smtp, lda (and doveadm, etc.)<br/>[[added,variables_auth_variables_protocol]] Renamed from `%{service}` variable. |
 | | `domain_first` | For "username@domain_first@domain_last" style usernames |
 | | `domain_last` | For "username@domain_first@domain_last" style usernames |
 | | `local_name` | TLS SNI hostname, if given |
