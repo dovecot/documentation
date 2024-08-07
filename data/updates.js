@@ -70,6 +70,10 @@ export const updates = {
 
 	/* Tags used in events.js */
 
+	events_auth_client_common_protocol_added: '2.4.0',
+	events_auth_client_common_service_removed: '2.4.0',
+	events_auth_server_common_protocol_added: '2.4.0',
+	events_auth_server_common_service_removed: '2.4.0',
 	events_dns_worker_request_finished_cached_added: '2.4.0',
 	events_imap_id_received_added: '2.4.0',
 	events_login_aborted_added: '2.4.0',
@@ -84,6 +88,8 @@ export const updates = {
 	events_smtp_server_transaction_rcpt_finished_dest_ip_added: '2.4.0',
 	events_sql_query_finished_consistency_added: '2.4.0',
 	events_pre_login_client_local_name_added: '2.4.0',
+	events_pre_login_client_protocol_added: '2.4.0',
+	events_pre_login_client_service_removed: '2.4.0',
 
 	/* Tags used in settings.js. */
 

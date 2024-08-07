@@ -1351,7 +1351,18 @@ export const inherits = {
 	auth_client_common: {
 		fields: {
 			mechanism: `Name of used SASL mechanism (e.g. PLAIN).`,
-			service: `Name of service. Examples: \`imap\`, \`pop3\`, \`lmtp\`, ...`,
+			service: {
+				removed: {
+					events_auth_client_common_service_removed: false,
+				},
+				text: 'Same as `protocol`',
+			},
+			protocol: {
+				added: {
+					events_auth_client_common_protocol_added: false,
+				},
+				text: 'Name of service. Examples: `imap`, `pop3`, `lmtp`, ...',
+			},
 			transport: `
 Transport security indicator. Values:
 
@@ -1404,7 +1415,18 @@ Transport security indicator. Values:
 			login_user: `When doing a master user login, the user we are logging in as. Otherwise not set.`,
 			master_user: `When doing a master user login, the master username. Otherwise not set.`,
 			mechanism: `Name of used SASL mechanism (e.g. PLAIN).`,
-			service: `Service doing the lookup (e.g. \`imap\`, \`pop3\`, ...).`,
+			service: {
+				removed: {
+					events_auth_server_common_service_removed: false,
+				},
+				text: 'Same as `protocol`',
+			},
+			protocol: {
+				added: {
+					events_auth_server_common_protocol_added: false,
+				},
+				text: 'Service doing the lookup (e.g. `imap`, `pop3`, ...).',
+			},
 			session: `Session ID.`,
 			client_id: `Expands to client ID request as IMAP arglist. Needs [[setting,imap_id_retain,yes]].`,
 			remote_ip: `Remote IP address of the client connection.`,
@@ -1782,7 +1804,18 @@ characters and no control characters.
 			remote_ip: `Remote IP address.`,
 			remote_port: `Remote port.`,
 			user: `Full username.`,
-			service: `Name of service e.g. \`submission\`, \`imap\`.`,
+			service: {
+				removed: {
+					events_pre_login_client_service_removed: false,
+				},
+				text: 'Same as `protocol`',
+			},
+			protocol: {
+				added: {
+					events_pre_login_client_protocol_added: false,
+				},
+				text: 'Name of service e.g. `submission`, `imap`.',
+			},
 		},
 	},
 
