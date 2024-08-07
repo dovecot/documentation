@@ -20,33 +20,35 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 
 <template>
  <template v-for="(v, k) in d">
-  <h3 :id="k" tabindex="-1">
-   <code>{{ k }}</code>
-   <a class="header-anchor" :href="'#' + k"></a>
-  </h3>
+   <section>
+   <h3 :id="k" tabindex="-1">
+    <code>{{ k }}</code>
+    <a class="header-anchor" :href="'#' + k"></a>
+   </h3>
 
-  <span v-if="v.text" v-html="v.text" />
+   <div v-if="v.text" v-html="v.text" />
 
-  <details class="details custom-block">
-   <summary>Field List</summary>
-   <table>
-    <thead>
-     <tr>
-      <th>Field</th>
-      <th>Description</th>
-      <th v-if="v.options">Options</th>
-     </tr>
-    </thead>
-    <tbody>
-     <tr v-for="(v2, k2) in v.fields">
-      <td><code>{{ k2 }}</code></td>
-      <td v-html="v2.text" />
-      <td v-if="v.options">
-       <code v-if="k2 in v.options">{{ v.options[k2].join(', ') }}</code>
-      </td>
-     </tr>
-    </tbody>
-   </table>
-  </details>
+   <details class="details custom-block">
+    <summary>Field List</summary>
+    <table>
+     <thead>
+      <tr>
+       <th>Field</th>
+       <th>Description</th>
+       <th v-if="v.options">Options</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr v-for="(v2, k2) in v.fields">
+       <td><code>{{ k2 }}</code></td>
+       <td v-html="v2.text" />
+       <td v-if="v.options">
+        <code v-if="k2 in v.options">{{ v.options[k2].join(', ') }}</code>
+       </td>
+      </tr>
+     </tbody>
+    </table>
+   </details>
+  </section>
  </template>
 </template>
