@@ -35,6 +35,9 @@ export const settings = {
 		// This can be a string or an array.
 		// plugin: '',
 
+		// A list of dependencies without which this setting cannot work.
+		// dependencies: [],
+
 		// The setting type. See lib/settings.js for the list of types.
 		values: setting_types.STRING,
 
