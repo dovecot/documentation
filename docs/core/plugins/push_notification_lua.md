@@ -3,7 +3,7 @@ layout: doc
 title: push-notification-lua
 ---
 
-# Lua Push Notification (push-notification-lua) Plugin
+# Push Notification Plugin: Lua (`push-notification-lua`)
 
 You can use Lua to write custom push notification handlers.
 
@@ -23,7 +23,7 @@ Lua push notification handler requires [[plugin,push-notification]],
 
 | Name | Required | Type | Description |
 | ---- | -------- | ---- | ----------- |
-| `file` | NO | string | The lua file to execute. If no script is specified, [[setting,mail_lua_script]] will be used by default. |
+| `file` | NO | [[link,settings_types_string]] | The lua file to execute. If no script is specified, [[setting,mail_lua_script]] will be used by default. |
 
 ## Example Configuration
 
@@ -40,8 +40,7 @@ plugin {
 The Lua driver hooks into all events, and calls matching functions when found
 in Lua script.
 
-The driver supports all available
-[push notification events](#push-notification-events).
+The driver supports all available [[link,push_notification_events]].
 
 All events are called within a transaction. The event is called with context
 and an event table, which contains the event parameters.
