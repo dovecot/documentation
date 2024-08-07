@@ -74,7 +74,7 @@ prefix. For example if you have namespaces with an empty prefix and a prefix
 * `mail/*` matches only mailboxes from the `mail/` namespace
 
 Beware that `*` will not match any mailbox which already has a more
-specialised match!
+specialized match!
 
 The mailbox names have special prefixes:
 
