@@ -126,8 +126,8 @@ to do classification.
 - Please read [[link,sieve_plugins]] for more information about sieve
   extensions.
 
-- If you run Spamassassin trough Amavis and you use a virtual users
-  setup, you should instead configure Spamassassin to use
+- If you run SpamAssassin trough Amavis and you use a virtual users
+  setup, you should instead configure SpamAssassin to use
   MySQL/PostgreSQL as a backend, unless you want a headache with file
   permissions and lock files.
 
@@ -209,7 +209,7 @@ pipe :copy "sa-learn-ham.sh" [ "${username}" ];
 
 ### Shell Scripts
 
-#### Spamassassin
+#### SpamAssassin
 
 ::: warning **Untested**
 spamc interaction scripts are not tested yet.
