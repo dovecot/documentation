@@ -85,6 +85,14 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
       <span class="comma" v-for="v in v.values_enum.values()"><code>{{ v }}</code></span>
      </td>
     </tr>
+    <tr v-if="v.dependencies.length">
+     <th>Dependencies</th>
+     <td>
+      <ul>
+       <li v-for="v in v.dependencies" v-html="v" />
+      </ul>
+     </td>
+    </tr>
     <tr v-if="v.seealso.length">
      <th>See Also</th>
      <td>
