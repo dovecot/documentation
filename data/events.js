@@ -1772,6 +1772,12 @@ characters and no control characters.
 	pre_login_client: {
 		fields: {
 			local_ip: `Local IP address.`,
+			local_name: {
+				added: {
+					events_pre_login_client_local_name_added: false,
+				},
+				text: `TLS SNI hostname, if given.`,
+			},
 			local_port: `Local port.`,
 			remote_ip: `Remote IP address.`,
 			remote_port: `Remote port.`,
