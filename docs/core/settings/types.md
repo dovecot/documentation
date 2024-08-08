@@ -15,6 +15,9 @@ dovecotlinks:
   settings_types_string:
     hash: string
     text: string
+  settings_types_string_novar:
+    hash: string-without-variables
+    text: String without variables
   settings_types_time:
     hash: time
     text: time
@@ -24,29 +27,47 @@ dovecotlinks:
   settings_types_uint:
     hash: unsigned-integer
     text: unsigned integer
+  settings_types_in_port:
+    hash: port-number
+    text: Port Number
   settings_types_url:
     hash: url
     text: URL
+  settings_types_named_filter:
+    hash: named-filter
+    text: Named Filter
+  settings_types_named_list_filter:
+    hash: named-list-filter
+    text: Named List Filter
+  settings_types_strlist:
+    hash: string-list
+    text: String List
+  settings_types_boollist:
+    hash: boolean-list
+    text: Boolean List
 ---
 
 # Dovecot Settings Types
 
 ## String
 
-String settings are typically used with variable expansion to configure how
-something is logged. For example [[setting,imap_logout_format]]:
+String can contain any character. Strings support [[variable]].
 
-```
+::: tip
+If you need the `%` character verbatim you have to escape it as `%%`.
+:::
+
+## String without variables
+
+Certain settings require specific variables and thus don't use the default
+[[variable]]. For example:
+
+```[dovecot.conf]
 imap_logout_format = in=%i out=%o
 ```
 
-The `#` character and everything after it are comments. Extra spaces and tabs
-are ignored, so if you need to use these, put the value inside quotes. The
-quote character inside a quoted string is escaped with `\"`:
-
-```
-key = "# char, \"quote\", and trailing whitespace  "
-```
+Here the `%i` and `%o` refer to variables specific to the
+[[setting,imap_logout_format]] setting.
 
 ## Unsigned Integer
 
@@ -114,7 +135,73 @@ then it's a CIDR address like `1.2.3.0/24`. If a /block isn't specified, then
 it defaults to all bits, i.e. /32 for IPv4 addresses and /128 for IPv6
 addresses.
 
+## Port Number
+
+This type is an [[link,settings_types_uint]] with numbers ranging only from `0`
+to `65535`.
+
 ## URL
 
 Special type of [String](#string) setting. Conforms to Uniform Resource
 Locators (URL) ([[rfc,1738]]).
+
+## Named Filter
+
+The settings inside the filter are used only in a specific situation. See
+[[link,settings_syntax_named_filters]] for more details.
+
+## Named List Filter
+
+The settings inside the filter are used only in a specific situation. The
+filter has a unique name, which can be used to identify it within the list.
+See [[link,settings_syntax_named_filters]] for more details.
+
+## String List
+
+The string list type is a list of `key=value` pairs. Each key name is unique
+within the list (i.e. giving the same key multiple times overrides the previous
+one). The string list is configured similarly to
+[[link,settings_syntax_named_filters]]:
+
+```[dovecot.conf]
+fs_randomfail_ops {
+  read = 100
+  write = 50
+}
+```
+
+## Boolean List
+
+The boolean list type is a list of `key=yes/no` pairs. Each key is unique
+within the list (i.e. giving the same key multiple times overrides the previous
+one). The boolean list can be configured as a space or comma-separated list,
+which replaces the previous boolean  list entirely. For example:
+
+```[dovecot.conf]
+mail_plugins = quota imap_quota
+mail_plugins = acl,imap_acl # removes quota and imap_quota
+```
+
+Quotes are also supported:
+
+doveadm_allowed_commands = "mailbox list" "mailbox create"
+
+The boolean list can also be configured to update an existing boolean list. For
+example:
+
+```[dovecot.conf]
+mail_plugins = quota acl
+protocol imap {
+  mail_plugins {
+    imap_quota = yes
+    imap_acl = yes
+  }
+}
+local 10.0.0.0/24 {
+  protocol imap {
+    mail_plugins {
+      imap_acl = no
+    }
+  }
+}
+```
