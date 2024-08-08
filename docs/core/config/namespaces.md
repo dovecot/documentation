@@ -89,18 +89,18 @@ Namespace configuration is defined within a dovecot configuration block with
 the format:
 
 ```
-namespace <section-name> {
+namespace <name> {
   [... namespace settings ...]
 }
 ```
 
-The optional section name is only used internally within configuration. It
-allows you to update an existing namespace - by repeating the namespace block
-and adding additional configuration settings - or allows userdb to override
-namespace settings for specific users, e.g.:
+The namespace name is only used internally within configurations. It allows you
+to update an existing namespace - by repeating the namespace block and adding
+additional configuration settings - or allows userdb to override namespace
+settings for specific users, e.g.:
 
 ```
-namespace/section-name/prefix=foo/
+namespace/name/prefix=foo/
 ```
 
 Example configuration for default namespace:
@@ -119,7 +119,7 @@ namespace inbox {
 
 ## Hierarchy Separators
 
-[[setting,namespace/separator]] specifies the character that is used to
+[[setting,namespace_separator]] specifies the character that is used to
 separate the parent mailbox from its child mailbox.
 
 For example if you have a mailbox "foo" with child mailbox "bar", the full
