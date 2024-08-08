@@ -328,7 +328,7 @@ namespace default {
 ```
 
 The separator setting can be overridden by returning
-[[setting_text,namespace/separator,namespace/default/separator]] extra field.
+[[setting_text,namespace_separator,namespace/default/separator]] extra field.
 
 ### Examples
 
