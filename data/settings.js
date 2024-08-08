@@ -6458,6 +6458,13 @@ but it's not a good idea to use other than the standard ones specified in
 the RFC.`
 	},
 
+	oauth2: {
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,auth_oauth2]]' ],
+		text: `
+Filter for oauth2 specific settings.`
+	},
+
 	pop3_client_workarounds: {
 		tags: [ 'pop3' ],
 		values: setting_types.STRING,
