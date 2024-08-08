@@ -111,7 +111,7 @@ export const updates = {
 	settings_login_socket_path_added: '2.4.0',
 	settings_mail_cache_max_headers_count_added: '2.4.0',
 	settings_mail_cache_max_header_name_length_added: '2.4.0',
-	settings_namespace_mailbox_special_use_changed: '2.4.0',
+	settings_mailbox_special_use_changed: '2.4.0',
 	settings_quota_clone_unset_added: '2.4.0',
 	settings_quota_mailbox_count_added: '2.4.0',
 	settings_quota_mailbox_message_count_added: '2.4.0',
