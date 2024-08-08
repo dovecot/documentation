@@ -5910,9 +5910,35 @@ The namespace type.  One of:
 | \`shared\` | Contains other users' [[link,shared_mailboxes_user]]. |`
 	},
 
-	'namespace/mailbox/auto': {
+	mailbox: {
+		tags: [ 'mailbox' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		text: `
+Create a new mailbox to the list of mailboxes. The filter name refers to the
+[[setting,mailbox_name]] setting.
+
+::: tip
+If the mailbox name has spaces, you can put it into quotes:
+
+\`\`\`[dovecot.conf]
+mailbox "Test Mailbox" {
+  # ...
+}
+\`\`\`
+:::`
+	},
+
+	mailbox_name: {
+		tags: [ 'mailbox' ],
+		values: setting_types.STRING,
+		text: `
+Name of the mailbox being configured. The [[setting,mailbox]] filter name
+refers to this setting.`
+	},
+
+	mailbox_auto: {
 		default: 'no',
-		tags: [ 'namespace_mailbox' ],
+		tags: [ 'mailbox' ],
 		values: setting_types.ENUM,
 		values_enum: [ 'create', 'no', 'subscribe' ],
 		text: `
@@ -5929,10 +5955,10 @@ the first time. The autosubscribed mailboxes aren't written to
 subscriptions file, unless SUBSCRIBE command is explicitly used for them.`
 	},
 
-	'namespace/mailbox/autoexpunge': {
+	mailbox_autoexpunge: {
 		default: 'no',
-		seealso: [ '[[setting,namespace/mailbox/autoexpunge_max_mails]]' ],
-		tags: [ 'namespace_mailbox' ],
+		seealso: [ '[[setting,mailbox_autoexpunge_max_mails]]' ],
+		tags: [ 'mailbox' ],
 		values: setting_types.TIME,
 		text: `
 Expunge all mails in this mailbox whose saved-timestamp is older than this
@@ -5959,21 +5985,21 @@ as it avoids using \`stat()\` to find out the mail's saved-timestamp. With
 always available.`
 	},
 
-	'namespace/mailbox/autoexpunge_max_mails': {
+	mailbox_autoexpunge_max_mails: {
 		default: 0,
-		tags: [ 'namespace_mailbox' ],
+		tags: [ 'mailbox' ],
 		values: setting_types.UINT,
 		text: `
 Mails are autoexpunged until mail count is at or below this number of messages.
 
-Once this threshold has been reached, [[setting,namespace/mailbox/autoexpunge]]
+Once this threshold has been reached, [[setting,mailbox_autoexpunge]]
 processing is done.`
 	},
 
-	'namespace/mailbox/special_use': {
-		tags: [ 'namespace_mailbox' ],
+	mailbox_special_use: {
+		tags: [ 'mailbox' ],
 		changed: {
-			settings_namespace_mailbox_special_use_changed: `Using non-standard special-use flags will result in a warning message at startup.`
+			settings_mailbox_special_use_changed: `Using non-standard special-use flags will result in a warning message at startup.`
 		},
 		values: setting_types.STRING,
 		text: `

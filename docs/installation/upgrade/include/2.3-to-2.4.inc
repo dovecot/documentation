@@ -97,7 +97,7 @@ prefixing them with `\`.
 | imap-zlib plugin | The IMAP `COMPRESS` extension is now automatically enabled. |
 | Renamed `zlib plugin` and relevant configuration items | Use [[plugin,mail-compress]], with the configuration items [[setting,mail_compress_save]] as well as [[setting,mail_compress_save_level]], instead. |
 | Dict passdb & userdb driver | Use [[link,auth_lua]] instead. |
-| mailbox-alias plugin | Depending on the use case, replacement may be the [[setting, namespace/mailbox/special_use]] mailbox setting and/or [[link,sieve]] filters. |
+| mailbox-alias plugin | Depending on the use case, replacement may be the [[setting,mailbox_special_use]] mailbox setting and/or [[link,sieve]] filters. |
 | `disable_plaintext_auth` | This has been replaced with [[setting,auth_allow_cleartext]] setting. |
 | `ssl=required` | Connections from [[setting,login_trusted_networks]] are now also required to be SSL/TLS encrypted with this setting. |
 | `SSLv3` option for [[setting,ssl_min_protocol]] | This option was removed, as it is no longer secure. |

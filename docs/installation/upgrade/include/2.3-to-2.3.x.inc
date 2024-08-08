@@ -10,10 +10,10 @@
 
 ### v2.3.x to v2.3.14
 
-* Removed autocreate plugin. Use
-  [[setting,namespace/mailbox/auto,mailbox { auto }]] instead.
+* Removed autocreate plugin. Use [[setting,mailbox_auto,mailbox { auto }]]
+  instead.
 * Removed expire plugin. Use
-  [[setting,namespace/mailbox/autoexpunge,mailbox { autoexpunge }]] instead.
+  [[setting,mailbox_autoexpunge,mailbox { autoexpunge }]] instead.
 * Removed xz write support from zlib plugin. (Reading xz compressed mails
   is still supported.) Use another compression algorithm.
 
