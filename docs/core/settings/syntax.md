@@ -207,6 +207,12 @@ Similarly remote local filters override remote filters, which override
 Dovecot may also return an error if it detects that the same setting is being
 ambiguously set by multiple matching filters.
 
+## Setting types
+
+See [[link,settings_types]] for which types of settings are supported by the
+configuration. Note especially the [[link,settings_types_strlist]] and
+[[link,settings_types_boollist]] which look similar to named filters.
+
 ## Including Config Files
 
 The main `dovecot.conf` file can also include other config files:
