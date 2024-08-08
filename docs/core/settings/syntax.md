@@ -5,6 +5,9 @@ dovecotlinks:
   settings_syntax_expansion:
     hash: variable-expansion
     text: variable expansion
+  settings_syntax_named_filters:
+    hash: named-filters
+    text: Named Filters
 ---
 
 # Dovecot Config File Syntax
@@ -38,66 +41,74 @@ The syntax generally looks like this:
 settings_key = settings_value
 ```
 
+The `#` character and everything after it are comments. Extra spaces and tabs
+are ignored. If you need to use these, put the value inside quotes. The quote
+character inside a quoted string is escaped with `\"`:
+
+```[dovecot.conf]
+settings_key = "# char, \"quote\", and trailing whitespace    "
+```
+
 If Dovecot doesn't seem to be reading your configuration correctly, use
-`doveconf -n` to check how Dovecot actually parses it. You can also check more
-complex configurations by providing filters,
+`doveconf -n` to check how Dovecot actually parses it.
 
-```console
-$ doveconf -n -f service=imap -f local=10.0.0.1 -f remote=1.2.3.4
-```
+## Named Filters
 
-## Sections
+[[added,settings_syntax_named_filters_added]]
 
-Sections look like this:
+All settings are globals. There are several filters which can be used to
+restrict when the settings are used. There are "named filters" and "named list
+filters".
 
-```
-section optional_name {
-  section_setting_key = section_setting_value
-  subsection optional_subname {
-    subkey = subvalue
-  }
+Named filters are used to access settings in some specific situations. For
+example:
+
+```[dovecot.conf]
+mail_attribute {
+  dict_driver = file
 }
 ```
 
-::: tip Note
-The sections must be currently written with the linefeeds as shown above.
+In this case when mail attributes are being accessed, the dict settings are
+looked up using the named filter called `mail_attribute`. Note that named
+filters cannot have a name before the `{`, i.e. `mail_attribute foo {` will
+result in an error.
 
-For example, this doesn't work:
+Named list filters are similar to named filters, except there can be many of
+them, each with a unique name. For example:
 
-```
-section optional_name { key = value } # DOES NOT WORK
-```
-:::
-
-The sections can be optionally named. This is especially useful if you want to
-update the same section later on in the config.
-
-Example:
-
-```
+```[dovecot.conf]
 namespace inbox {
-  inbox = yes
+  prefix = INBOX/
+}
+namespace virtual {
+  prefix = Virtual/
+}
+```
+
+Both named filters and named list filters can be updated later on in the
+configuration. For example:
+
+```[dovecot.conf]
+namespace inbox {
+  prefix = INBOX/
 }
 
 # ...
 
 # possibly included from another file:
+# The namespaces settings get merged into the same inbox namespace filter.
 namespace inbox {
   mailbox Trash {
     special_use = \Trash
   }
 }
-# The namespaces get merged into the same inbox namespace.
 ```
 
-Without naming the namespace it would have created a new namespace.
+The named list filter's name may also sometimes be used as part of the settings
+instead of simply a name. For example:
 
-The section name may also sometimes be used as part of the settings instead
-of simply a name.
-
-Example:
-
-```
+```[dovecot.conf]
 service auth {
   unix_listener auth-master {
     # ...
@@ -105,24 +116,48 @@ service auth {
 }
 ```
 
-Above the "auth-master" both uniquely identifies the section name, but also
-it names the UNIX socket path.
+Above the `auth-master` both uniquely identifies the filter name, but it also
+acts as the `unix_listener_path` setting.
 
-## Filters
+Settings inside filters are automatically attempted to be prefixed by the
+filter prefix to avoid repetition. For example:
 
-There are a few different filters that can be used to apply settings
-conditionally. The filters look exactly like sections, which may be a bit
-confusing.
+```[dovecot.conf]
+service imap {
+  inet_listener imaps {
+    ssl = yes
+  }
+}
+```
 
-The currently supported filters are:
+The `ssl` setting is attempted to be looked up in this order:
+1. `inet_listener_ssl`
+1. `service_ssl`
+1. `ssl`
 
-* `protocol <name>`: Name of the service/protocol that is reading the settings. For example: `imap`, `pop3`, `doveadm`, `lmtp`, `lda`
+The first setting that exists is used.
 
-* `remote <ip/network>`: Remote client's IP/network. For non-TCP connections this will never match. For example `10.0.0.1` or `10.0.0.0/16`.
+::: tip NOTE
+The filters must currently be written with the linefeeds as shown above.
+For example this doesn't work:
 
-* `local_name <name>`: Matches TLS connection's SNI name, if it's sent by the client. Commonly used to [[link,ssl,configure multiple TLS certificates]].
+```[dovecot.conf]
+namespace inbox { prefix = INBOX/ } # DOES NOT WORK
+```
+:::
 
-* `local <ip/range>`: Locally connected IP/network. For non-TCP connections this will never match. For example `127.0.0.1` or `10.0.0.0/16`.
+## Connection Filters
+
+There are a few different connection/session related filters:
+
+* `protocol <name>`: Name of the service/protocol that is reading the settings.
+  For example: `imap`, `pop3`, `doveadm`, `lmtp`, `lda`
+* `remote <ip/network>`: Remote client's IP/network. For non-TCP connections
+  this will never match. For example `10.0.0.1` or `10.0.0.0/16`.
+* `local_name <name>`: Matches TLS connection's SNI name, if it's sent by the
+  client. Commonly used to [[link,ssl,configure multiple TLS certificates]].
+* `local <ip/range>`: Locally connected IP/network. For non-TCP connections
+  this will never match. For example `127.0.0.1` or `10.0.0.0/16`.
 
 These filters work for most of the settings, but most importantly auth
 settings currently only support the protocol filter. Some of the other
@@ -209,9 +244,7 @@ Example:
 
 ```
 protocol imap {
-  plugin {
-    !include imap-plugin-settings.conf
-  }
+  !include imap-settings.conf
 }
 ```
 
@@ -224,7 +257,6 @@ Examples:
 
 * passdb/userdb { args } for ldap/sql points to a `dovecot-ldap.conf.ext` and
   `dovecot-sql.conf.ext`.
-
 * dict { .. } points to `dovecot-dict-*.conf.ext`.
 
 Although these external config files look similar to the main `dovecot.conf`
@@ -281,52 +313,9 @@ key2 = $key value2
 # Equivalent to key2 = value1 value2
 ```
 
-This is commonly used with [[setting,mail_plugins]] to easily add more
-plugins, e.g., inside IMAP protocol:
-
-```
-mail_plugins = acl quota
-protocol imap {
-  mail_plugins = $mail_plugins imap_acl imap_quota
-}
-```
-
 However, you must be careful with the ordering of these in the configuration
 file, because the `$variables` are expanded immediately while parsing the
 config file and they're not updated later.
-
-For example this is a common problem:
-
-```
-# NON-WORKING EXAMPLE
-# Enable ACL plugin:
-mail_plugins = $mail_plugins acl
-protocol imap {
-  mail_plugins = $mail_plugins imap_acl
-}
-# Enable quota plugin:
-mail_plugins = $mail_plugins quota
-protocol imap {
-  mail_plugins = $mail_plugins imap_quota
-}
-
-# The end result is:
-# mail_plugins = " acl quota" - OK
-# protocol imap {
-#   mail_plugins = " acl imap_acl imap_quota" - NOT OK
-# }
-
-# Dovecot emits a warning about this:
-# doveconf: Warning: /etc/dovecot/dovecot.conf line 8: Global setting mail_plugins won't change the setting inside an earlier filter at /etc/dovecot/dovecot.conf line 5 (if this is intentional, avoid this warning by moving the global setting before /etc/dovecot/dovecot.conf line 5)
-```
-
-This is because the second `mail_plugins` change that added `quota` globally
-didn't update anything inside the existing `protocol { .. }` or other
-filters.
-
-Some variables exist in the plugin section only, such as
-[[setting,sieve_extensions]]. Those variables cannot be referred to; that
-is `$sieve_extensions` won't work.
 
 ## Environment Variables
 
