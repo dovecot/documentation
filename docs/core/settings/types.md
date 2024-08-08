@@ -71,8 +71,8 @@ Here the `%i` and `%o` refer to variables specific to the
 
 ## Unsigned Integer
 
-Unsigned integer is a number between 0..4294967295, although specific settings
-may have additional restrictions.
+Unsigned integer is a number between `0`..`4294967295`, although specific
+settings may have additional restrictions.
 
 ## Boolean
 
@@ -97,8 +97,9 @@ type is case insensitive. The following suffixes can be used to define size:
 | `G` | gigabytes |
 | `T` | terabytes |
 
-The values can optionally be followed by "I" or "IB". For example K = KI = KIB.
-The size value type is base 2, meaning a kilobyte equals 1024 bytes.
+The values can optionally be followed by `I` or `IB`. For example
+`K = KI = KIB`. The size value type is base `2`, meaning a kilobyte equals
+`1024` bytes.
 
 ## Time
 
@@ -112,8 +113,10 @@ The Time value supports using suffixes of any of the following words:
 secs, seconds, mins, minutes, hours, days, weeks
 ```
 
-::: tip Note
-So for example, `d`, `da`, `day`, and `days` all mean the same.
+::: info NOTE
+So for example, `d`, `da`, `day`, and `days` all mean the same. Make sure to be
+explicit if you want to differentiate between `mins` and `msecs`, as `m` does
+not suffice.
 :::
 
 ## Millisecond Time
