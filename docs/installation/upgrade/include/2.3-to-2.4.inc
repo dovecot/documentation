@@ -147,6 +147,7 @@ See [[setting,imapc_features]].
 | `sieve_global_dir` | See [[link,sieve_file]] and [[link,sieve_location]]. |
 | `sieve_global_path` | See [[link,sieve_file]] and [[link,sieve_location]]. |
 | `sieve_vacation_max_subject_codepoints` | |
+| `auth_policy_server_timeout_msecs` | See: [[link,auth_policy_configuration]]. |
 
 #### Other Features
 
