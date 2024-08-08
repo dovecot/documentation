@@ -131,8 +131,8 @@ exists under "Work" mailbox:
 
 ### Maildir Default
 
-Namespace with [[setting,namespace/prefix,""]],
-[[setting,namespace/separator,.]]:
+Namespace with [[setting,namespace_prefix,""]],
+[[setting,namespace_separator,.]]:
 
 ```
 require "fileinto";
@@ -141,8 +141,8 @@ fileinto "Work.Customers";
 
 ### Courier Migration
 
-Namespace with [[setting,namespace/prefix,INBOX.]],
-[[setting,namespace/separator,.]]:
+Namespace with [[setting,namespace_prefix,INBOX.]],
+[[setting,namespace_separator,.]]:
 
 ```
 require "fileinto";
@@ -151,8 +151,8 @@ fileinto "INBOX.Work.Customers";
 
 ### mbox, dbox Default
 
-Namespace with [[setting,namespace/prefix,""]],
-[[setting,namespace/separator,/]]:
+Namespace with [[setting,namespace_prefix,""]],
+[[setting,namespace_separator,/]]:
 
 ```
 require "fileinto";

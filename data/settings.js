@@ -5694,12 +5694,10 @@ This must be set to \`yes\` if you store indexes to shared filesystems
 		tags: [ 'namespace' ],
 		values: setting_types.STRING,
 		text: `
-Name of the namespace.
+Creates a new namespace to the list of namespaces. The filter name refers to
+the [[setting,namespace_name]] setting.
 
-Giving name is optional, but doing so enables referencing the configuration
-later on.
-
-Example, to name a namespace \`foo\`:
+Example:
 
 \`\`\`
 namespace foo {
@@ -5708,7 +5706,15 @@ namespace foo {
 \`\`\``
 	},
 
-	'namespace/alias_for': {
+	namespace_name: {
+		tags: [ 'namespace' ],
+		values: setting_types.STRING,
+		text: `
+Name of the namespace. This is used only in configurations - it's not visible
+to user. The [[setting,namespace]] filter refers to this setting.`
+	},
+
+	namespace_alias_for: {
 		tags: [ 'namespace' ],
 		values: setting_types.STRING,
 		text: `
@@ -5728,17 +5734,17 @@ namespace prefix for existing users.
 Example:
 
 \`\`\`
-namespace {
+namespace alias {
   # If primary namespace has empty prefix
   alias_for =
 
-  # OR if primary namespace has 'prefix=INBOX/'
-  alias_for=INBOX/
+  # OR if primary namespace has prefix=INBOX/
+  alias_for = INBOX/
 }
 \`\`\``
 	},
 
-	'namespace/disabled': {
+	namespace_disabled: {
 		default: 'no',
 		tags: [ 'namespace' ],
 		values: setting_types.BOOLEAN,
@@ -5749,7 +5755,7 @@ Useful when returned by a userdb lookup to easily configure per-user
 namespaces.`
 	},
 
-	'namespace/hidden': {
+	namespace_hidden: {
 		default: 'no',
 		tags: [ 'namespace' ],
 		values: setting_types.BOOLEAN,
@@ -5758,17 +5764,17 @@ If \`yes\`, namespace will be hidden from IMAP NAMESPACE ([[rfc,2342]])
 command.`
 	},
 
-	'namespace/ignore_on_failure': {
+	namespace_ignore_on_failure: {
 		default: 'no',
 		tags: [ 'namespace' ],
 		values: setting_types.BOOLEAN,
 		text: `
-If namespace [[setting,namespace/location]] fails to load, by
+If namespace [[setting,namespace_location]] fails to load, by
 default the entire session will fail to start. If this is set, this
 namespace will be ignored instead.`
 	},
 
-	'namespace/inbox': {
+	namespace_inbox: {
 		default: 'no',
 		tags: [ 'namespace' ],
 		values: setting_types.BOOLEAN,
@@ -5779,10 +5785,10 @@ folder.
 There can be only one namespace defined like this.`
 	},
 
-	'namespace/list': {
+	namespace_list: {
 		default: 'yes',
 		tags: [ 'namespace' ],
-		seealso: [ 'namespace/hidden' ],
+		seealso: [ 'namespace_hidden' ],
 		values: setting_types.ENUM,
 		values_enum: [ 'yes', 'no', 'children' ],
 		text: `
@@ -5802,7 +5808,7 @@ namespace prefix "lazy-expunge/" won't list it, but using \`LIST ""
 lazy-expunge/*\` lists all folders under it.`
 	},
 
-	'namespace/location': {
+	namespace_location: {
 		default: '[[setting,mail_location]]',
 		tags: [ 'namespace' ],
 		values: setting_types.STRING,
@@ -5821,7 +5827,7 @@ namespace {
 \`\`\``
 	},
 
-	'namespace/order': {
+	namespace_order: {
 		default: 0,
 		tags: [ 'namespace' ],
 		values: setting_types.UINT,
@@ -5831,13 +5837,15 @@ Sets display order in IMAP NAMESPACE ([[rfc,2342]]) command.
 Namespaces are automatically numbered if this setting does not exist.`
 	},
 
-	'namespace/prefix': {
+	namespace_prefix: {
 		tags: [ 'namespace' ],
 		values: setting_types.STRING,
 		text: `
 Specifies prefix for namespace.
 
-Note: Must end with [[setting,namespace/separator]].
+::: info
+Must end with [[setting,namespace_separator]].
+:::
 
 [[variable,mail-user]] can be used.
 
@@ -5851,7 +5859,7 @@ namespace {
 \`\`\``
 	},
 
-	'namespace/separator': {
+	namespace_separator: {
 		default: '"." for Maildir; "/" for other mbox formats',
 		tags: [ 'namespace' ],
 		seealso: [ '[[link,namespaces_hierarchy_separators]]' ],
@@ -5869,7 +5877,7 @@ folder names.
 Recommended value is to leave it empty and accept the default value.`
 	},
 
-	'namespace/subscriptions': {
+	namespace_subscriptions: {
 		default: 'yes',
 		tags: [ 'namespace' ],
 		values: setting_types.BOOLEAN,
@@ -5887,7 +5895,7 @@ namespace with \`subscriptions=yes\` and then a namespace with an empty
 prefix. If neither is found, an error is given.`
 	},
 
-	'namespace/type': {
+	namespace_type: {
 		default: 'private',
 		tags: [ 'namespace' ],
 		values: setting_types.ENUM,
