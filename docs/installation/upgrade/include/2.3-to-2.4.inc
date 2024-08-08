@@ -114,6 +114,7 @@ prefixing them with `\`.
 | `push_notification_backend` plugin setting | Use [[setting,push_notification_driver]] instead. |
 | `sieve_dir`, `sieve_global_path`, `sieve_global_dir` settings | These settings have been removed. See [[link,sieve_file]] and [[link,sieve_location]]. |
 | `sieve_vacation_max_subject_codepoints` | This setting has been removed. |
+| `auth_policy_server_timeout_msecs` | See: [[link,auth_policy_configuration]]. |
 
 ### Changed Default Settings
 

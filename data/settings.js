@@ -3185,13 +3185,6 @@ auth_policy_server_api_header = Authorization: Basic d2ZvcmNlOnN1cGVy
 \`\`\``
 	},
 
-	auth_policy_server_timeout_msecs: {
-		tags: [ 'auth_policy' ],
-		default: 2000,
-		values: setting_types.TIME_MSECS,
-		text: `Auth policy server request timeout.`
-	},
-
 	auth_policy_server_url: {
 		tags: [ 'auth_policy' ],
 		values: setting_types.URL,
