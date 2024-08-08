@@ -29,8 +29,8 @@ should use `mail_namespace_storage_added`.
 
 ### `mail_namespace_storage_added`
 
-Storage was connected to its first namespace/mailbox list. This hook should
-usually be used if plugin wants to override mailbox_list's methods.
+Storage was connected to its first mailbox list. This hook should usually be
+used if plugin wants to override mailbox_list's methods.
 
 ### `mail_namespaces_created`
 
