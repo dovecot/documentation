@@ -101,6 +101,7 @@ export const updates = {
 	settings_auth_debug_deprecated: '2.4.0',
 	settings_auth_default_domain_added: '2.4.0',
 	settings_auth_internal_failure_delay_added: '2.4.0',
+	settings_auth_policy_added: '2.4.0',
 	settings_auth_policy_request_attributes_changed: '2.4.0',
 	settings_dovecot_config_version_added: '2.4.0',
 	settings_dovecot_storage_version_added: '2.4.0',
