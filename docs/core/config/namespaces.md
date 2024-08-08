@@ -411,27 +411,12 @@ namespace {
 
 ## Mailbox Settings
 
-Mailbox configuration is defined within a dovecot configuration block, inside
-of a `namespace` block, with the format:
-
-```
-mailbox <mailbox-name> {
-  [... mailbox settings ...]
-}
-```
-
-The mailbox-name specifies the full mailbox name; if it has spaces, you can
-put it into quotes:
-
-```
-mailbox "Test Mailbox" {
-   [...]
-}
-```
+Mailbox configuration is typically defined inside a [[setting,namespace]] block
+so it only applies to the specific namespace.
 
 ### Settings
 
-<SettingsComponent tag="namespace_mailbox" level="3" />
+<SettingsComponent tag="mailbox" level="3" />
 
 ### Example
 
