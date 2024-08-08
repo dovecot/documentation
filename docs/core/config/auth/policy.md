@@ -3,6 +3,9 @@ layout: doc
 title: Policy
 dovecotlinks:
   auth_policy: authentication policy
+  auth_policy_configuration:
+    hash: configuration
+    text: Auth Policy Configuration
 ---
 
 # Authentication Policy
@@ -20,6 +23,15 @@ defeat brute force attacks.
 
 The auth-policy server is a core feature and does not require plugin(s)
 to work. To activate this feature, you need to configure it.
+
+Auth policy overrides some of the default HTTP client settings:
+* [[setting,http_client_request_absolute_timeout,2s]]
+* [[setting,http_client_max_idle_time,10s]]
+* [[setting,http_client_max_parallel_connections,100]]
+* [[setting,http_client_user_agent,dovecot/auth-policy-client]]
+
+You can override these and any other HTTP client or SSL settings by placing
+them inside [[setting,auth_policy]] [[link,settings_syntax_named_filters]].
 
 <SettingsComponent tag="auth_policy" />
 
