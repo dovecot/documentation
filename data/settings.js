@@ -3041,6 +3041,17 @@ auth_mechanisms = plain login
 \`\`\``
 	},
 
+	auth_policy: {
+		added: {
+			settings_auth_policy_added: false,
+		},
+		tags: [ 'auth_policy' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,auth_policy]]' ],
+		text: `
+Filter for auth policy specific settings.`
+	},
+
 	auth_policy_check_after_auth: {
 		default: 'yes',
 		tags: [ 'auth_policy' ],
