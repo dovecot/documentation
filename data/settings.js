@@ -5957,7 +5957,7 @@ subscriptions file, unless SUBSCRIBE command is explicitly used for them.`
 
 	mailbox_autoexpunge: {
 		default: 'no',
-		seealso: [ '[[setting,mailbox_autoexpunge_max_mails]]' ],
+		seealso: [ 'mailbox_autoexpunge_max_mails' ],
 		tags: [ 'mailbox' ],
 		values: setting_types.TIME,
 		text: `
