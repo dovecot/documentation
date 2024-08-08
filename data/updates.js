@@ -107,6 +107,7 @@ export const updates = {
 	settings_fts_autoindex_exclude_namespaces_changed: '2.4.0',
 	settings_fts_message_max_size_added: '2.4.0',
 	settings_fts_tika_changed_auth: '2.4.0',
+	settings_http_client_settings_added: '2.4.0',
 	settings_imapc_features_changed: '2.4.0',
 	settings_login_socket_path_added: '2.4.0',
 	settings_mail_cache_max_headers_count_added: '2.4.0',

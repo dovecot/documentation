@@ -3708,6 +3708,449 @@ agent (such as the Message-ID: header), in LMTP replies, and as the
 hostname advertised by submission SMTP service.`
 	},
 
+	http_client_auto_redirect: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		seealso: [ 'http_client_request_max_redirects' ],
+		text: `
+If this setting is \`yes\` redirects are handled as long as
+[[setting,http_client_request_max_redirects]] isn't reached. If \`no\` the
+redirect responses are handled as regular failure responses.
+
+::: warning
+This setting should likely be changed only in the code, never in configuration.
+:::`
+	},
+
+	http_client_auto_retry: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		seealso: [ 'http_client_request_max_attempts' ],
+		text: `
+If this setting is \`no\` requests are not automatically retried by the generic
+HTTP client code. It's still possible to retry the requests with explicit
+\`http_client_request_try_retry()\` calls as long as
+[[setting,http_client_request_max_attempts]] isn't reached.
+
+::: warning
+This setting should likely be changed only in the code, never in configuration.
+:::`
+	},
+
+	http_client_connect_backoff_max_time: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.TIME_MSECS,
+		default: '1 min',
+		text: `
+Maximum backoff time for retries.`
+	},
+
+	http_client_connect_backoff_time: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.TIME_MSECS,
+		default: '100 ms',
+		text: `
+Initial backoff time for retries. It's doubled at each connection failure.`
+	},
+
+	http_client_connect_timeout: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.TIME_MSECS,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 0,
+		seealso: [ 'http_client_request_timeout' ],
+		text: `
+Max time to wait for TCP connect and SSL handshake to finish before retrying.
+\`0\` = use [[setting,http_client_request_timeout]].`
+	},
+
+	http_client_delete_request_max_attempts: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.UINT,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 0,
+		seealso: [ 'http_client_request_max_attempts' ],
+		text: `
+If non-zero, override [[setting,http_client_request_max_attempts]] for
+\`DELETE\` requests.`
+	},
+
+	http_client_delete_request_timeout: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.TIME_MSECS,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 0,
+		seealso: [ 'http_client_request_timeout' ],
+		text: `
+If non-zero, override [[setting,http_client_request_timeout]] for
+\`DELETE\` requests.`
+	},
+
+	http_client_dns_client_socket_path: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.STRING,
+		default: 'dns-client',
+		text: `
+UNIX socket path to the dns-client service.`
+	},
+
+	http_client_dns_ttl: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.TIME_MSECS,
+		default: '30 mins',
+		text: `
+How long to cache DNS entries.`
+	},
+
+	http_client_max_auto_retry_delay: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.TIME,
+		default: 0,
+		text: `
+Maximum acceptable delay for automatically retrying/redirecting requests. If a
+server sends a response with a \`Retry-After\` header that causes a delay
+longer than this, the request is not automatically retried and the response is
+returned.`
+	},
+
+	http_client_max_connect_attempts: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.UINT,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 0,
+		text: `
+Maximum number of connection attempts to a host before all associated requests fail.
+
+If non-zero, the maximum will be enforced across all IPs for that host, meaning
+that IPs may be tried more than once eventually if the number of IPs is smaller
+than the specified maximum attempts. If the number of IPs is higher than the
+maximum attempts not all IPs are tried.
+
+If \`0\`, all IPs are tried at most once.`
+	},
+
+	http_client_max_idle_time: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.TIME_MSECS,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 0,
+		text: `
+Maximum time a connection will idle. If parallel connections are idle, the
+duplicates will end earlier based on how many idle connections exist to that
+same service.`
+	},
+
+	http_client_max_parallel_connections: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.UINT,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 1,
+		text: `
+Maximum number of parallel connections per peer.`
+	},
+
+	http_client_max_pipelined_requests: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.UINT,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 1,
+		text: `
+Maximum number of pipelined requests per connection.`
+	},
+
+	http_client_proxy_password: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.STRING,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		text: `
+Password for HTTP proxy.`
+	},
+
+	http_client_proxy_socket_path: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.STRING,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		seealso: [ 'http_client_proxy_url' ],
+		text: `
+UNIX socket path for HTTP proxy. Overrides [[setting,http_client_proxy_url]].`
+	},
+
+	http_client_proxy_ssl_tunnel: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.BOOLEAN,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 'yes',
+		text: `
+If \`no\` the HTTP proxy delegates SSL negotiation to proxy, rather than
+creating a \`CONNECT\` tunnel through the proxy for the SSL link.`
+	},
+
+	http_client_proxy_url: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.STRING,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		seealso: [ 'http_client_proxy_socket_path' ],
+		text: `
+URL for HTTP proxy. Ignored if [[setting,http_client_proxy_socket_path]] is
+set.`
+	},
+
+	http_client_proxy_username: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.STRING,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		text: `
+Username for HTTP proxy.`
+	},
+
+	http_client_rawlog_dir: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.STRING,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		text: `
+Directory for writing raw log data for debugging purposes.`
+	},
+
+	http_client_read_request_max_attempts: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.UINT,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 0,
+		seealso: [ 'http_client_request_max_attempts' ],
+		text: `
+If non-zero, override [[setting,http_client_request_max_attempts]] for \`GET\`
+and \`HEAD\` requests.`
+	},
+
+	http_client_read_request_timeout: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.TIME_MSECS,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 0,
+		seealso: [ 'http_client_request_timeout' ],
+		text: `
+If non-zero, override [[setting,http_client_request_timeout]] for \`GET\` and
+\`HEAD\` requests.`
+	},
+
+	http_client_request_absolute_timeout: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.UINT,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 0,
+		text: `
+Max total time to wait for HTTP request to finish, including all retries. \`0\`
+means no limit.`
+	},
+
+	http_client_request_max_attempts: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.UINT,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 1,
+		text: `
+Maximum number of attempts for a request.`
+	},
+
+	http_client_request_max_redirects: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.UINT,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 0,
+		text: `
+Maximum number of redirects for a request. \`0\` = redirects refused.`
+	},
+
+	http_client_request_timeout: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.TIME_MSECS,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: '1 min',
+		text: `
+Max time to wait for HTTP requests to finish before retrying.`
+	},
+
+	http_client_response_hdr_max_field_size: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.SIZE,
+		default: '8k',
+		text: `
+Response header limit: Max size for an individual field.`
+	},
+
+	http_client_response_hdr_max_fields: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.UINT,
+		default: 50,
+		text: `
+Response header limit: Max number of fields.`
+	},
+
+	http_client_response_hdr_max_size: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.SIZE,
+		default: '200k',
+		text: `
+Response header limit: Max size for the entire response header.`
+	},
+
+	http_client_socket_recv_buffer_size: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.SIZE,
+		default: 0,
+		text: `
+The kernel receive buffer size for the connection sockets. \`0\` = kernel
+defaults.`
+	},
+
+	http_client_socket_send_buffer_size: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.SIZE,
+		default: 0,
+		text: `
+The kernel send buffer size for the connection sockets. \`0\` = kernel
+defaults.`
+	},
+
+	http_client_soft_connect_timeout: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.TIME_MSECS,
+		default: 0,
+		text: `
+Time to wait for TCP connect and SSL handshake to finish for the first
+connection before trying the next IP in parallel. \`0\` = wait until current
+connection attempt finishes.`
+	},
+
+	http_client_user_agent: {
+		advanced: true,
+		tags: [ 'http', 'http_client' ],
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		values: setting_types.STRING,
+		text: `
+\`User-Agent:\` header to send.`
+	},
+
+	http_client_write_request_max_attempts: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.UINT,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 0,
+		seealso: [ 'http_client_request_max_attempts' ],
+		text: `
+If non-zero, override [[setting,http_client_request_max_attempts]] for \`PUT\`
+and \`POST\` requests.`
+	},
+
+	http_client_write_request_timeout: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.TIME_MSECS,
+		added: {
+			settings_http_client_settings_added: false,
+		},
+		default: 0,
+		seealso: [ 'http_client_request_timeout' ],
+		text: `
+If non-zero, override [[setting,http_client_request_timeout]] for \`PUT\` and
+\`POST\` requests.`
+	},
+
 	imap_capability: {
 		tags: [ 'imap' ],
 		values: setting_types.STRING,
