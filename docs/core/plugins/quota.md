@@ -702,8 +702,7 @@ because user is over quota. The possible solutions for this are:
   quota limit (but not unlimited).
 
 To make sure users don't start keeping messages permanently in Trash you can
-use [[setting,namespace/mailbox/autoexpunge]] to expunge old messages
-from Trash mailbox.
+use [[setting,mailbox_autoexpunge]] to expunge old messages from Trash mailbox.
 
 ## Debugging Quota
 
