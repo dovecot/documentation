@@ -31,7 +31,7 @@ dovecotlinks:
     text: quota warning scripts
 ---
 
-# Quota (quota) Plugin
+# Quota Plugin (`quota`)
 
 Quota tracking and enforcing plugin.
 

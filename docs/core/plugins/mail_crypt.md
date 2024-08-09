@@ -7,7 +7,7 @@ dovecotlinks:
     text: fs-crypt
 ---
 
-# Mail Crypt (mail-crypt) Plugin
+# Mail Crypt Plugin (`mail-crypt`)
 
 The mail crypt plugin is used to secure email messages stored in a Dovecot
 system. Messages are encrypted before written to storage and decrypted after

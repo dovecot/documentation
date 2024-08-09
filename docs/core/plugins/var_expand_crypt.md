@@ -3,7 +3,7 @@ layout: doc
 title: var-expand-crypt
 ---
 
-# Dovecot Variable Encryption (var-expand-crypt) Plugin
+# Dovecot Variable Encryption Plugin (`var-expand-crypt`)
 
 This plugin provides generic encrypt/decrypt facility for [[variable]].
 

@@ -3,7 +3,7 @@ layout: doc
 title: notify
 ---
 
-# Notify (notify) Plugin
+# Notify Plugin (`notify`)
 
 The notify plugin can be used to easily develop other plugins that need to
 do some work when something in user’s mailboxes change.

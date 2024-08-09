@@ -3,7 +3,7 @@ layout: doc
 title: pop3-migration
 ---
 
-# POP3 Migration (pop3-migration) Plugin
+# POP3 Migration Plugin (`pop3-migration`)
 
 The pop3-migration plugin is used to preserve POP3 UIDLs.
 

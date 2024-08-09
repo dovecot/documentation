@@ -5,7 +5,7 @@ dovecotlinks:
   last_login: Last Login
 ---
 
-# Last Login (last-login) Plugin
+# Last Login Plugin (`last-login`)
 
 This plugin can be used to update user's last-login timestamp in a configured
 dictionary.
