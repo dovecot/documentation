@@ -3,7 +3,7 @@ layout: doc
 title: sieve-extprograms
 ---
 
-# Pigeonhole Sieve Extprograms (sieve-extprograms) Plugin
+# Pigeonhole Sieve Extprograms Plugin (`sieve-extprograms`)
 
 The "sieve_extprograms" plugin provides an extension to the Sieve
 filtering language, adding new action commands for invoking a predefined

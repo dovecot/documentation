@@ -3,7 +3,7 @@ layout: doc
 title: fs-compress
 ---
 
-# Compression (fs-compress) Plugin
+# Compression Plugin (`fs-compress`)
 
 fs-compress plugin is used to wrap other data streams in a compression layer.
 
