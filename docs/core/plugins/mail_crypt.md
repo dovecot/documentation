@@ -2,6 +2,9 @@
 layout: doc
 title: mail-crypt
 dovecotlinks:
+  fs_crypt:
+    hash: mail-crypt-plugin-mail-crypt
+    text: "Mail Crypt Plugin: mail-crypt"
   fs_crypt_and_fs_mail_crypt:
     hash: fs-crypt-and-fs-mail-crypt
     text: "Mail Crypt Plugin: fs-crypt and fs-mail-crypt"
