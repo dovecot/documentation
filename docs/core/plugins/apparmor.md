@@ -3,7 +3,7 @@ layout: doc
 title: apparmor
 ---
 
-# AppArmor (apparmor) Plugin
+# AppArmor Plugin (`apparmor`)
 
 [AppArmor](https://www.wikipedia.org/wiki/AppArmor) plugin, which
 allows changing "hat" (apparmor context) when user is loaded. Context is
