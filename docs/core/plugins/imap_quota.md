@@ -3,7 +3,7 @@ layout: doc
 title: imap-quota
 ---
 
-# IMAP Quota (imap-quota) Plugin
+# IMAP Quota Plugin (`imap-quota`)
 
 This plugin implements the IMAP command for requesting current quota
 information.

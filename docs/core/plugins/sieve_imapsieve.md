@@ -3,7 +3,7 @@ layout: doc
 title: sieve-imapsieve
 ---
 
-# Sieve IMAPSieve (sieve-imapsieve) Plugin
+# Sieve IMAPSieve Plugin (`sieve-imapsieve`)
 
 IMAPSieve ([[rfc,6785]]) defines the use of Sieve
 filtering in IMAP, operating when messages are created or their

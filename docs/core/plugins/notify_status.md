@@ -3,7 +3,7 @@ layout: doc
 title: notify-status
 ---
 
-# Notify Status (notify-status) Plugin
+# Notify Status Plugin (`notify-status`)
 
 This plugin updates a [[link,dict]] with mailbox status information
 every time a mailbox changes.

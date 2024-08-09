@@ -3,7 +3,7 @@ layout: doc
 title: charset-alias
 ---
 
-# Charset Alias (charset-alias) Plugin
+# Charset Alias Plugin (`charset-alias`)
 
 This plugin allows treating the specified source charset as a different
 charset when decoding to UTF-8.

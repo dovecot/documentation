@@ -3,7 +3,7 @@ layout: doc
 title: trash
 ---
 
-# Trash (trash) Plugin
+# Trash Plugin (`trash`)
 
 Normally, a quota exceeded error is returned if saving/copying a message would
 bring the user over quota.  With the trash plug-in, the oldest messages are

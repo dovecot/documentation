@@ -7,7 +7,7 @@ dovecotlinks:
     text: FTS Tokenization
 ---
 
-# FTS: Full Text Search (fts) Plugin
+# FTS: Full Text Search Plugin (`fts`)
 
 As the amount and importance of information stored in email messages is
 increasing in people’s everyday lives, searching through those messages is

@@ -3,7 +3,7 @@ layout: doc
 title: imap-filter-sieve
 ---
 
-# IMAP FILTER=SIEVE (imap-filter-sieve) Plugin
+# IMAP FILTER=SIEVE Plugin (`imap-filter-sieve`)
 
 Normally, Sieve filters can either be applied at initial mail delivery
 or triggered by certain events in the Internet Message Access Protocol

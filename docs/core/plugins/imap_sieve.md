@@ -3,7 +3,7 @@ layout: doc
 title: imap-sieve
 ---
 
-# IMAPSieve (imap-sieve) Plugin
+# IMAPSieve Plugin (`imap-sieve`)
 
 As defined in the base specification ([[rfc,5228]]), the Sieve language is
 used only during delivery. However, in principle, it can be used at any

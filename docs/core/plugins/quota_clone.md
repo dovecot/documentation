@@ -5,7 +5,7 @@ dovecotlinks:
   quota_clone: Quota Clone
 ---
 
-# Quota Clone (quota-clone) Plugin
+# Quota Clone Plugin (`quota-clone`)
 
 Quota clone plugin is useful when you want to store everybody's current quota
 usage to a database, but you don't want to use the database as the
