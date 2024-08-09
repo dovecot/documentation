@@ -3,7 +3,7 @@ layout: doc
 title: welcome
 ---
 
-# Welcome (welcome) Plugin
+# Welcome Plugin (`welcome`)
 
 Call a script when the user logs in for the first time. This is specifically
 done when the INBOX is (auto)created. The scripts are called similarly to
