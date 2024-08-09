@@ -62,6 +62,134 @@ destination IP address belongs to, for instance, a load-balancer rather
 than the server itself.`
 	},
 
+	fs: {
+		tags: [ 'fs' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ '[[link,fs]]', 'fs_name', 'fs_driver' ],
+		text: `
+Create a new [[link,fs,fs]] to the list of filesystems. The filter name refers
+to [[setting,fs_name]] setting.
+
+Example:
+\`\`\`[dovecot.conf]
+fs posix {
+  # ...
+}
+\`\`\`
+
+Since an empty [[setting,fs_driver]] default to [[setting,fs_name]] there is no
+need to specify [[setting,fs_driver]] explicitly.
+
+It's possible to specify the same \`fs\` multiple times by separating the
+[[setting,fs_name]] and [[setting,fs_driver]] settings:
+
+\`\`\`[dovecot.conf]
+fs compress1 {
+  fs_driver = compress
+}
+fs compress2 {
+  fs_driver = compress
+}
+\`\`\``
+	},
+
+	fs_name: {
+		tags: [ 'fs' ],
+		values: setting_types.STRING,
+		seealso: [ 'fs', 'fs_driver' ],
+		text: `
+Name of the [[setting,fs]]. The [[setting,fs_driver]] setting default to this.`
+	},
+
+	fs_driver: {
+		tags: [ 'fs' ],
+		values: setting_types.STRING,
+		default: '[[setting,fs_name]]',
+		seealso: [ 'fs', 'fs_name' ],
+		text: `
+The [[setting,fs]] driver to use. Defaults to [[setting,fs_name]].`
+	},
+
+	fs_dict_value_encoding: {
+		tags: [ 'fs-dict' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'raw', 'hex', 'base64' ],
+		default: 'raw',
+		text: `
+How to encode file contents into the dict value.`
+	},
+
+	fs_posix_lock_method: {
+		advanced: true,
+		tags: [ 'fs-posix' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'flock', 'dotlock' ],
+		default: 'flock',
+		text: `
+Lock method to use for locking files. Currently nothing uses \`lib-fs\`
+locking.`
+	},
+
+	fs_posix_prefix: {
+		tags: [ 'fs-posix' ],
+		values: setting_types.STRING,
+		text: `
+Directory prefix where files are read from/written to.
+
+:::info NOTE
+The trailing \`/\` is not automatically added, so using e.g. \`/tmp/foo\` as
+prefix will cause \`/tmp/foofilename\` to be created.
+:::
+`
+	},
+
+	fs_posix_mode: {
+		tags: [ 'fs-posix' ],
+		values: setting_types.UINT,
+		default: '0600',
+		text: `
+Mode to use for creating files.`
+	},
+
+	fs_posix_autodelete_empty_directories: {
+		tags: [ 'fs-posix' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		text: `
+If the last file in a directory is deleted, should the parent directory be
+automatically deleted?
+
+::: info NOTE
+Using this setting makes the POSIX filesystem behave more like an object
+storage would.
+:::
+
+::: warning
+This setting can cause the POSIX filesystem to also delete the parent directory
+hierarchy farther up than anticipated.
+:::`
+	},
+
+	fs_posix_fsync: {
+		tags: [ 'fs-posix' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		text: `
+Configure whether \`fsync()\` is called after writes to guarantee that the file
+is written to disk.`
+	},
+
+	fs_posix_accurate_mtime: {
+		advanced: true,
+		tags: [ 'fs-posix' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Configure whether \`utimes()\` is called after writes to guarantee microsecond
+precision timestamps for files. By default Linux updates the \`mtime\` only on
+timer interrupts, which is not remotely close to microsecond precision.`
+	},
+
 	login_proxy_notify_path: {
 		default: 'proxy-notify',
 		values: setting_types.STRING,
