@@ -117,6 +117,7 @@ export const updates = {
 	settings_passdb_auth_verbose_added: '2.2.24',
 	settings_passdb_mechanisms_added: '2.2.30',
 	settings_passdb_username_filter_added: '2.2.30',
+	settings_userdb_auth_verbose_added: '2.2.24',
 	settings_quota_clone_unset_added: '2.4.0',
 	settings_quota_mailbox_count_added: '2.4.0',
 	settings_quota_mailbox_message_count_added: '2.4.0',
