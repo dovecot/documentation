@@ -7,7 +7,7 @@ dovecotlinks:
     text: lazy-expunge storage locations
 ---
 
-# Lazy Expunge (lazy-expunge) Plugin
+# Lazy Expunge Plugin (`lazy-expunge`)
 
 The lazy expunge plugin provides a "second-chance" to recover messages that
 would otherwise be deleted from a mailbox by user action.

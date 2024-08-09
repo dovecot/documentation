@@ -11,7 +11,7 @@ dovecotlinks:
     text: ACL Inheritance
 ---
 
-# ACL: Access Control List (acl) Plugin
+# ACL: Access Control List Plugin (`acl`)
 
 This page talks mainly about how ACLs work, for more general description of how
 shared mailboxes work, see [[link,shared_mailboxes]].
