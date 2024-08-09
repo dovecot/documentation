@@ -1203,14 +1203,14 @@ compiling it at delivery).`
 		},
 		inherit: 'pre_login_client',
 		fields: {
-			reason: `Short reason; see the short to long reason mapping in the table below.`,
+			reason: `Short reason; see the short reason to description mapping in the table above.`,
 			auth_successes: `Number of successful authentications, which eventually failed due to other reasons.`,
 			auth_attempts: `Total number of authentication attempts, both successful and failed.`,
 			auth_usecs: `How long ago the first authentication attempt was started.`,
 			connected_usecs: `How long ago the client connection was created.`,
 		},
 		text: `
-Error Codes:
+\`reason\` values:
 
 | Reason | Description |
 | ------ | ----------- |
@@ -1226,6 +1226,7 @@ Error Codes:
 | \`client_ssl_cert_untrusted\` | Client sent an SSL certificate that is untrusted with [[setting,auth_ssl_require_client_cert,yes]]. |
 | \`client_ssl_cert_missing\` | Client didn't send SSL certificate, but [[setting,auth_ssl_require_client_cert,yes]]. |
 | \`client_ssl_not_started\` | Client didn't even start SSL with [[setting,auth_ssl_require_client_cert,yes]]. |
+| \`connection_limit\` | Client reached [[setting,mail_max_userip_connections]] limit. |
 | \`internal_failure\` | Internal failure. The error log has more details. |
 | \`invalid_base64\` | Client sent invalid base64 in SASL response. |
 | \`invalid_mech\` | Unknown SASL authentication mechanism requested. |
@@ -1237,7 +1238,7 @@ Error Codes:
 | \`tls_handshake_not_finished\` | TLS handshake failed or was not finished. |
 | \`user_disabled\` | User is in deny passdb, or in some other way disabled passdb. |
 
-Proxying error codes:
+Proxying \`reason\` values:
 
 | Reason | Description |
 | ------ | ----------- |
