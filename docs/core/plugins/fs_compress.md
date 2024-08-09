@@ -1,6 +1,10 @@
 ---
 layout: doc
 title: fs-compress
+dovecotlinks:
+  fs_compress:
+    hash: compression-fs-compress-plugin
+    text: "Compression Plugin: fs-compress"
 ---
 
 # Compression Plugin (`fs-compress`)
