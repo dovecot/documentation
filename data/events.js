@@ -1203,14 +1203,14 @@ compiling it at delivery).`
 		},
 		inherit: 'pre_login_client',
 		fields: {
-			reason: `Short reason; see the short to long reason mapping in the table below.`,
+			reason: `Short reason; see the <a href="#pre_login_client_reason_values">short reason to description mapping</a>.`,
 			auth_successes: `Number of successful authentications, which eventually failed due to other reasons.`,
 			auth_attempts: `Total number of authentication attempts, both successful and failed.`,
 			auth_usecs: `How long ago the first authentication attempt was started.`,
 			connected_usecs: `How long ago the client connection was created.`,
 		},
 		text: `
-Error Codes:
+<span id="pre_login_client_reason_values">\`reason\` values:</span>
 
 | Reason | Description |
 | ------ | ----------- |
@@ -1237,7 +1237,7 @@ Error Codes:
 | \`tls_handshake_not_finished\` | TLS handshake failed or was not finished. |
 | \`user_disabled\` | User is in deny passdb, or in some other way disabled passdb. |
 
-Proxying error codes:
+Proxying \`reason\` values:
 
 | Reason | Description |
 | ------ | ----------- |
