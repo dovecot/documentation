@@ -85,136 +85,36 @@ For example:
 
 ## Settings
 
-An example `userdb` entry might look like this:
+<SettingsComponent tag="userdb" />
 
-```
-userdb {
-  driver = passwd-file
-  args = username_format=%n /etc/dovecot/users
-
-  default_fields = uid=vmail gid=vmail
-  override_fields =
-
-  skip = never
-  result_failure = continue
-  result_internalfail = continue
-  result_success = return-ok
-
-  auth_verbose = default
-}
-```
-
-### Content Settings
-
-Settings that provide content for the `userdb` lookup:
-
-#### `driver`
-
-The `userdb` backend name.
-
-#### `args`
-
-Arguments for the `userdb` backend.
-
-The format of this value depends on the `userdb` driver. Each one uses
-different args.
-
-#### `default_fields`
-
-Userdb fields (and [[link,userdb_extra_fields]]) that are used, unless
-overwritten by the `userdb` backend. They are in format:
-`key=value key2=value2 ...`
-
-The values can contain [[variable]]. All `%variables` used here reflect the
-state BEFORE the `userdb` lookup.
-
-#### `override_fields`
-
-Same as `default_fields`, but instead of providing the default values,
-these values override what the `userdb` backend returned.
-
-All `%variables` used here reflect the state AFTER the `userdb` lookup.
-
-For example, this is useful with `userdb` passwd for overriding home directory
-or `uid` or `gid`. See [[link,auth_passwd]].
-
-#### `auth_verbose`
-
-If this is explicitly set to `yes` or `no`, it overrides the global
-[[setting,auth_verbose]] setting. However, [[setting,auth_debug,yes]]
-overrides the `auth_verbose` setting.
-
-### Applicability Settings
-
-Settings which specify when the specific `userdb` is used:
-
-#### `skip`
-
-Do we sometimes want to skip over this `userdb`? Options:
-* `never`
-* `found`: Skip if an earlier `userdb` already found the user
-* `notfound`: Skip if previous `userdb`s haven't yet found the user
-
-### Success Settings
-
-Settings that control what happens when finished with this `userdb`:
-
-#### `result_success`
-
-What to do if the user was found from the `userdb`
-
-Default: `return-ok`
-
-#### `result_failure`
-
-What to do if the user wasn't found from the `userdb`
-
-Default: `continue`
-
-#### `result_internalfail`
-
-What to do if the `userdb` lookup had an internal failure
-
-Default: `continue`
-
-If any of the `userdb`s had an internal failure, and the final `userdb` also
-returns `continue`, the lookup will fail with `internal error`.
-
-::: warning
-If multiple `userdb`s are required (results are merged), it's
-important to set `result_internalfail=return-fail` to them,
-otherwise the `userdb` lookup could still succeed but not all the
-intended extra fields are set.
-:::
-
-### Result Values
+## Result Values
 
 The following values control the behavior of a userdb lookup result:
 
-#### `return-ok`
+### `return-ok`
 
 Return success, don't continue to the next `userdb`.
 
-#### `return-fail`
+### `return-fail`
 
 Return "user doesn't exist", don't continue to the next `userdb`.
 
-#### `return`
+### `return`
 
 Return earlier `userdb`'s success or failure, don't continue to the
 next `userdb`. If this was the first `userdb`, return "user doesn't exist".
 
-#### `continue-ok`
+### `continue-ok`
 
 Set the current user existence state to "found", and continue to the next
 `userdb`.
 
-#### `continue-fail`
+### `continue-fail`
 
 Set the current user existence state to "not found", and continue to the
 next `userdb`.
 
-#### `continue`
+### `continue`
 
 Continue to the next `userdb` without changing the user existence state.
 The initial state is "not found".
