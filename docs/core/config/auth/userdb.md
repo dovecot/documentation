@@ -5,20 +5,20 @@ dovecotlinks:
   userdb: userdb
   userdb_extra_fields:
     hash: extra-fields
-    text: userdb extra fields
+    text: "userdb: Extra Fields"
 ---
 
-# User Databases (userdb)
+# User Databases (`userdb`)
 
-Dovecot uses [[link,passdb]] and userdb as part of the authentication process.
+Dovecot uses [[link,passdb]] and `userdb` as part of the authentication
+process.
 
-passdb authenticated the user. userdb lookup then retrieves post-login
-information specific to the authenticated user. This may include:
+[[link,passdb]] authenticated the user. `userdb` lookup then retrieves
+post-login information specific to the authenticated user. This may include:
 
 * Mailbox location information
 * Quota limit
 * Overriding settings for the user (almost any setting can be overridden)
-
 
 | Userdb Lookups | Dovecot Proxy | Dovecot Backend |
 | -------------- | ------------- | --------------- |
@@ -26,20 +26,23 @@ information specific to the authenticated user. This may include:
 | LMTP mail delivery | No | YES |
 | doveadm commands | No | YES |
 
-The userdb and passdb may be the same or they may be different depending on
-your needs. You can also have [[link,auth_multiple_dbs]].
+The `userdb` and [[link,passdb]] may be the same or they may be different
+depending on your needs. You can also have [[link,auth_multiple_dbs]].
 
 ## Fields
 
 The user database lookup can return these fields:
 
 ### `uid`
+
 User's UID (UNIX user ID), overrides the global [[setting,mail_uid]] setting.
 
 ### `gid`
+
 User's GID (UNIX group ID), overrides the global [[setting,mail_gid]] setting.
 
 ### `home`
+
 User's home directory, overrides the global [[setting,mail_home]] setting.
 
 Although not required, it's highly recommended even for virtual users.
@@ -51,17 +54,17 @@ The extra fields are also passed to post-login scripts. See
 
 #### `user`
 
-Changes the username (can also be done by the passdb lookup).
+Changes the username (can also be done by the [[link,passdb]] lookup).
 
 #### Overwriting Mail-Related Settings
 
 For example:
 
-* `mail`
+`mail`
 :   Mail location, overrides the global [[setting,mail_location]]
     setting. See: [[link,mail_location]].
 
-* `quota_rule`
+`quota_rule`
 :   Specify per-user quota limit.
 
 ## Supported Databases
@@ -74,12 +77,12 @@ For example:
 | [[link,auth_ldap,LDAP]] | Lightweight Directory Access Protocol. |
 | [[link,auth_sql,SQL]] | SQL database (PostgreSQL, MySQL, SQLite, Cassandra). |
 | [[link,auth_staticdb,Static]] | Userdb information generated from a given template. |
-| [[link,auth_prefetch,Prefetch]] | Prefetch database. This assumes that the passdb already returned also all the required user database information. |
+| [[link,auth_prefetch,Prefetch]] | Prefetch database. This assumes that the [[link,passdb]] already returned also all the required user database information. |
 | [[link,auth_lua,Lua]] | Lua script for authentication. |
 
 ## Settings
 
-An example userdb entry might look like this:
+An example `userdb` entry might look like this:
 
 ```
 userdb {
@@ -100,36 +103,36 @@ userdb {
 
 ### Content Settings
 
-Settings that provide content for the userdb lookup:
+Settings that provide content for the `userdb` lookup:
 
 #### `driver`
 
-The userdb backend name.
+The `userdb` backend name.
 
 #### `args`
 
-Arguments for the userdb backend.
+Arguments for the `userdb` backend.
 
-The format of this value depends on the userdb driver. Each one uses
+The format of this value depends on the `userdb` driver. Each one uses
 different args.
 
 #### `default_fields`
 
-Userdb fields (and [extra fields](#extra-fields)) that are used, unless
-overwritten by the userdb backend. They are in format:
-`key=value key2=value2 ....`
+Userdb fields (and [[link,userdb_extra_fields]]) that are used, unless
+overwritten by the `userdb` backend. They are in format:
+`key=value key2=value2 ...`
 
 The values can contain [[variable]]. All `%variables` used here reflect the
-state BEFORE the userdb lookup.
+state BEFORE the `userdb` lookup.
 
 #### `override_fields`
 
 Same as `default_fields`, but instead of providing the default values,
-these values override what the userdb backend returned.
+these values override what the `userdb` backend returned.
 
-All `%variables` used here reflect the state AFTER the userdb lookup.
+All `%variables` used here reflect the state AFTER the `userdb` lookup.
 
-For example, this is useful with userdb passwd for overriding home directory
+For example, this is useful with `userdb` passwd for overriding home directory
 or `uid` or `gid`. See [[link,auth_passwd]].
 
 #### `auth_verbose`
@@ -140,45 +143,44 @@ overrides the `auth_verbose` setting.
 
 ### Applicability Settings
 
-Settings which specify when the specific userdb is used:
+Settings which specify when the specific `userdb` is used:
 
 #### `skip`
 
-Do we sometimes want to skip over this userdb? Options:
-
+Do we sometimes want to skip over this `userdb`? Options:
 * `never`
-* `found`: Skip if an earlier userdb already found the user
-* `notfound`: Skip if previous userdbs haven't yet found the user
+* `found`: Skip if an earlier `userdb` already found the user
+* `notfound`: Skip if previous `userdb`s haven't yet found the user
 
 ### Success Settings
 
-Settings that control what happens when finished with this userdb:
+Settings that control what happens when finished with this `userdb`:
 
 #### `result_success`
 
-What to do if the user was found from the userdb
+What to do if the user was found from the `userdb`
 
 Default: `return-ok`
 
 #### `result_failure`
 
-What to do if the user wasn't found from the userdb
+What to do if the user wasn't found from the `userdb`
 
 Default: `continue`
 
 #### `result_internalfail`
 
-What to do if the userdb lookup had an internal failure
+What to do if the `userdb` lookup had an internal failure
 
 Default: `continue`
 
-If any of the userdbs had an internal failure, and the final userdb also
+If any of the `userdb`s had an internal failure, and the final `userdb` also
 returns `continue`, the lookup will fail with `internal error`.
 
 ::: warning
-If multiple userdbs are required (results are merged), it's
+If multiple `userdb`s are required (results are merged), it's
 important to set `result_internalfail=return-fail` to them,
-otherwise the userdb lookup could still succeed but not all the
+otherwise the `userdb` lookup could still succeed but not all the
 intended extra fields are set.
 :::
 
@@ -188,30 +190,30 @@ The success result values:
 
 #### `return-ok`
 
-Return success, don't continue to the next userdb.
+Return success, don't continue to the next `userdb`.
 
 #### `return-fail`
 
-Return "user doesn't exist", don't continue to the next userdb.
+Return "user doesn't exist", don't continue to the next `userdb`.
 
 #### `return`
 
-Return earlier userdb's success or failure, don't continue to the
-next userdb. If this was the first userdb, return "user doesn't exist".
+Return earlier `userdb`'s success or failure, don't continue to the
+next `userdb`. If this was the first `userdb`, return "user doesn't exist".
 
 #### `continue-ok`
 
 Set the current user existence state to "found", and continue to the next
-userdb.
+`userdb`.
 
 #### `continue-fail`
 
 Set the current user existence state to "not found", and continue to the
-next userdb.
+next `userdb`.
 
 #### `continue`
 
-Continue to the next userdb without changing the user existence state.
+Continue to the next `userdb` without changing the user existence state.
 The initial state is "not found".
 
 ## Extra Fields
@@ -219,7 +221,7 @@ The initial state is "not found".
 A user database lookup typically returns `uid`, `gid`, and `home` fields,
 as per traditional `/etc/passwd` lookups.
 
-Other fields may also be stored in the userdb, and these are called 'extra
+Other fields may also be stored in the `userdb`, and these are called 'extra
 fields'.
 
 These fields can be returned the exact same way as `uid`, `gid`, and `home`
@@ -280,7 +282,7 @@ This may be useful for shared mailboxes.
 #### `userdb_import`
 
 This allows returning multiple extra fields in one TAB-separated field.
-It's useful for userdbs which are a bit less flexible for returning a
+It's useful for `userdb`s which are a bit less flexible for returning a
 variable number of fields (e.g. SQL).
 
 #### `uidgid_file`
@@ -300,7 +302,7 @@ Import `name=value` to mail user event.
 Most commonly settings are overridden from plugin section.
 
 For example if your plugin section has `quota_rule=*:storage=100M` value
-and the userdb lookup returns `quota_rule=*:storage=200M`, the original
+and the `userdb` lookup returns `quota_rule=*:storage=200M`, the original
 quota setting gets overridden. In fact, if the lookup always returns a
 `quota_rule` field, there's no point in having [[setting,quota_rule]] in
 the `dovecot.conf` plugin section at all, because it always gets overridden
@@ -310,7 +312,7 @@ To understand how imap and pop3 processes see their settings, it may be
 helpful to know how Dovecot internally passes them:
 
 1. First all actual settings are first read into memory.
-2. Next all the extra fields returned by userdb lookup are used to override
+2. Next all the extra fields returned by `userdb` lookup are used to override
    the settings. Any unknown setting is placed into the plugin {} section
    (e.g. `foo=bar` will be parsed as if it were `plugin { foo=bar }`).
 3. Last, if [[link,post_login_scripting]] is used, it may modify the
@@ -358,18 +360,16 @@ user_attrs = \
 
 #### passwd-file
 
-Example that shows how to give two userdb extra fields (`mail` and
+Example that shows how to give two `userdb` extra fields (`mail` and
 `quota`).
 
-Note that all userdb extra fields must be prefixed with `userdb_`,
-otherwise they're treated as passdb extra fields.
+Note that all `userdb` extra fields must be prefixed with `userdb_`,
+otherwise they're treated as [[link,passdb_extra_fields]].
 
-:::code-group
-```[passwd-file]
+```
 user:{plain}pass:1000:1000::/home/user::userdb_mail=mbox:~/mail userdb_quota_rule=*:storage=100M userdb_namespace/default/separator=/
 user2:{plain}pass2:1001:1001::/home/user2::userdb_mail=maildir:~/Maildir userdb_quota_rule=*:storage=200M
 ```
-:::
 
 ## See Also
 
