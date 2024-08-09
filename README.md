@@ -360,7 +360,7 @@ By default, links to the base page.
 If section is defined, will link to the sub-section. Valid sub-sections:
 
 * `auth`
-* `config` (default)
+* `settings` (default)
 * `global`
 * `login`
 * `mail-service-user`
