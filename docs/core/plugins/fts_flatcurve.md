@@ -3,7 +3,7 @@ layout: doc
 title: fts-flatcurve
 ---
 
-# Dovecot Flatcurve FTS Plugin
+# Dovecot Flatcurve FTS Plugin (`fts-flatcurve`)
 
 [[added,fts_flatcurve]]
 
