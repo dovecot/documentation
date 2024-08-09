@@ -134,172 +134,26 @@ Other special [[link,passdb_extra_fields]].
 
 ## Settings
 
-An example passdb passwd-file with its default settings:
+<SettingsComponent tag="passdb" />
 
-::: code-group
-```[dovecot.conf]
-passdb {
-  driver = passwd-file
-  args = scheme=ssha256 /usr/local/etc/passwd.replica
-  default_fields =
-  override_fields =
-
-  deny = no
-  master = no
-  pass = no
-  skip = never
-  mechanisms =
-  username_filter =
-
-  result_failure = continue
-  result_internalfail = continue
-  result_success = return-ok
-
-  auth_verbose = default
-}
-```
-
-### Content Settings
-
-Settings that provide content for the passdb lookup:
-
-#### `driver`
-
-The passdb backend name.
-
-#### `args`
-
-Arguments for the passdb backend.
-
-The format of this value depends on the passdb driver. Each one uses
-different args.
-
-#### `default_fields`
-
-Passdb fields (and [extra fields](#extra-fields)) that are used, unless
-overwritten by the passdb backend. They are in format:
-`key=value key2=value2 ....`
-
-The values can contain [[variable]]. All `%variables` used here reflect the
-state BEFORE the passdb lookup.
-
-#### `override_fields`
-
-Same as `default_fields`, but instead of providing the default values,
-these values override what the passdb backend returned.
-
-All `%variables` used here reflect the state AFTER the passdb lookup.
-
-#### `auth_verbose`
-
-If this is explicitly set to `yes` or `no`, it overrides the global
-[[setting,auth_verbose]] setting. However, [[setting,auth_debug,yes]]
-overrides the `auth_verbose` setting.
-
-### Applicability Settings
-
-Settings which specify when the specific passdb is used:
-
-#### `deny`
-
-If `yes`, used to provide "denied users database". If the user is found
-from the passdb, the authentication will fail.
-
-#### `master`
-
-If `yes`, used to provide [[link,auth_master_users]]. The users listed in
-the master passdb can log in as other users.
-
-#### `pass`
-
-This is an alias for `result_success=continue` as described below.
-
-This is commonly used together with master passdb to specify that
-even after a successful master user authentication, the authentication
-should continue to the actual non-master passdb to lookup the user.
-
-#### `skip`
-
-Do we sometimes want to skip over this passdb? Options:
-
-* `never`
-* `authenticated`: Skip if an earlier passdb already authenticated the user
-  successfully.
-* `unauthenticated`: Skip if user hasn't yet been successfully authenticated by
-  the previous passdbs.
-
-#### `mechanisms`
-
-Skip, if non-empty and the current auth mechanism is not listed here.
-
-Space or comma-separated list of auth mechanisms (e.g. `PLAIN LOGIN`).
-
-Also `none` can be used to match for a non-authenticating passdb lookup.
-
-#### `username_filter`
-
-Skip, if non-empty and the username doesn't match the filter.
-
-This is mainly used to assign specific passdbs to specific domains.
-
-Space or comma-separated list of username filters that can have `*` or
-`?` wildcards. If any of the filters matches, the filter succeeds. However,
-there can also be negative matches preceded by `!`. If any of the negative
-filters matches, the filter won't succeed.
-
-Example: if the filter is `*@example.com *@example2.com !user@example.com`,
-any@example.com or user@example2.com matches but user@example.com won't match.
-
-### Success Settings
-
-Settings that control what happens when finished with this passdb:
-
-#### `result_success`
-
-What to do if the authentication succeeded.
-
-Default: `return-ok`
-
-#### `result_failure`
-
-What to do if the authentication failed.
-
-Default: `continue`
-
-#### `result_internalfail`
-
-What to do if the passdb lookup had an internal failure.
-
-Default: `continue`
-
-If any of the passdbs had an internal failure, and the final passdb also
-returns `continue`, the lookup will fail with `internal error`.
-
-::: warning
-If multiple passdbs are required (results are merged), it's
-important to set `result_internalfail=return-fail` to them,
-otherwise the authentication could still succeed but not all the
-intended extra fields are set.
-:::
-
-### Result Values
+## Result Values
 
 The following values control the behavior of a passdb lookup result:
 
-#### `return-ok`
+### `return-ok`
 
 Return success, don't continue to the next `passdb`.
 
-#### `return-fail`
+### `return-fail`
 
 Return failure, don't continue to the next `passdb`.
 
-#### `return`
+### `return`
 
 Return earlier `passdb`'s success or failure, don't continue to the next
 `passdb`. If this was the first `passdb`, return failure.
 
-#### `continue-ok`
+### `continue-ok`
 
 Set the current authentication state to "success", and continue to the next
 `passdb`.
@@ -312,7 +166,7 @@ jump to the first non-master `passdb` instead of continuing with the next
 master `passdb`.
 :::
 
-#### `continue-fail`
+### `continue-fail`
 
 Set the current authentication state to "failure", and continue to the next
 `passdb`.
@@ -325,7 +179,7 @@ jump to the first non-master `passdb` instead of continuing with the next
 master `passdb`.
 :::
 
-#### `continue`
+### `continue`
 
 Continue to the next `passdb` without changing the authentication state. The
 initial state is "failure found". If this was set in
