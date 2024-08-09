@@ -3,7 +3,7 @@ layout: doc
 title: mail-log
 ---
 
-# Mail Logger (mail-log) Plugin
+# Mail Logger Plugin (`mail-log`)
 
 This plugin can be used to log several actions done in a mail session:
 

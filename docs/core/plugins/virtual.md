@@ -3,7 +3,7 @@ layout: doc
 title: virtual
 ---
 
-# Virtual Mailbox (virtual) Plugin
+# Virtual Mailbox Plugin (`virtual`)
 
 This plugin allows virtual mailboxes to be created.
 
