@@ -7701,6 +7701,150 @@ If enabled, use SSL/TLS to connect to [[setting,submission_host]].`
 		text: `The syslog facility used if you're logging to syslog.`
 	},
 
+	userdb: {
+		tags: [ 'userdb' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		dependencies: [ 'userdb_driver' ],
+		seealso: [ '[[link,userdb]]', 'userdb_name', 'userdb_driver' ],
+		text: `
+Creates a new [[link,userdb]]. The filter name refers to the
+[[setting,userdb_name]] setting. The [[setting,userdb_driver]] setting is
+required to be set inside this filter.`
+	},
+
+	userdb_name: {
+		tags: [ 'userdb' ],
+		values: setting_types.STRING,
+		text: `
+Name of the userdb. This is used only in configuration - it's not visible to
+users. The [[setting,userdb]] filter name refers to this setting.`
+	},
+
+	userdb_driver: {
+		tags: [ 'userdb' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,userdb]]' ],
+		text: `
+The driver used for this user database. See [[link,userdb]] for the list of
+available drivers.`
+	},
+
+	userdb_args: {
+		tags: [ 'userdb' ],
+		values: setting_types.STRING,
+		text: `
+Arguments for the userdb backend. The format of this value depends on the userdb driver. Each one uses different args.`
+	},
+
+	userdb_default_fields: {
+		tags: [ 'userdb' ],
+		values: setting_types.STRING,
+		seealso: [ 'userdb_override_fields', '[[link,userdb_extra_fields]]' ],
+		text: `
+Userdb fields (and [[link,userdb_extra_fields]]) that are used, unless
+overwritten by the userdb driver. They are in format \`key=value key2=value2
+...\`. The values can contain [[variable]]. All \`%variables\` used here
+reflect the state **before** the userdb lookup.`
+	},
+
+	userdb_override_fields: {
+		tags: [ 'userdb' ],
+		values: setting_types.STRING,
+		seealso: [ 'userdb_default_fields', '[[link,auth_passwd]]' ],
+		text: `
+Same as [[setting,userdb_default_fields]] but instead of providing the default
+values, these values override what the userdb backend returned. All
+[[variable]] used here reflect the state **after** the userdb lookup.
+
+For example useful with userdb passwd for overriding e.g. home directory or the
+\`uid\` or \`gid\`.`
+	},
+
+	userdb_skip: {
+		tags: [ 'userdb' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'never', 'found', 'notfound' ],
+		default: 'never',
+		text: `
+Configures when userdbs should be skipped:
+
+| Value | Description |
+| --- | --- |
+| \`never\` | Never skip over this userdb. |
+| \`found\` | Skip if an earlier userdbs already found the user. |
+| \`notfound\` | Skip if previous userdbs haven't yet found the user. |`
+	},
+
+	userdb_result_success: {
+		tags: [ 'userdb' ],
+		values: setting_types.ENUM,
+		values_enum: [
+			'return-ok',
+			'return',
+			'return-fail',
+			'continue',
+			'continue-ok',
+			'continue-fail',
+		],
+		default: 'return-ok',
+		seealso: [ '[[link,userdb_result_values]]' ],
+		text: `
+What to do if the user was successfully found from the userdb. Possible values
+and their meaning are described fully at [[link,userdb_result_values]].`
+	},
+
+	userdb_result_failure: {
+		tags: [ 'userdb' ],
+		values: setting_types.ENUM,
+		values_enum: [
+			'return-ok',
+			'return',
+			'return-fail',
+			'continue',
+			'continue-ok',
+			'continue-fail',
+		],
+		default: 'continue',
+		seealso: [ '[[link,userdb_result_values]]' ],
+		text: `
+What to do if the user was not found from the userdb. Possible values and their
+meaning are described fully at [[link,userdb_result_values]].`
+	},
+
+	userdb_result_internalfail: {
+		tags: [ 'userdb' ],
+		values: setting_types.ENUM,
+		values_enum: [
+			'return-ok',
+			'return',
+			'return-fail',
+			'continue',
+			'continue-ok',
+			'continue-fail',
+		],
+		default: 'continue',
+		seealso: [ '[[link,userdb_result_values]]' ],
+		text: `
+What to do after the userdb failed due to an internal error.
+Possible values and their meaning are described fully at
+[[link,userdb_result_values]]. If any of the userdbs had an internal failure
+and the final userdb also returns \`continue\` the authentication will fail
+with \`internal error\`.`
+	},
+
+	userdb_auth_verbose: {
+		tags: [ 'userdb' ],
+		added: {
+			settings_userdb_auth_verbose_added: false,
+		},
+		values: setting_types.ENUM,
+		values_enum: [ 'default', 'no', 'yes' ],
+		default: 'default',
+		text: `
+If this setting is explicitly set to \`yes\` or \`no\`, it overrides the global
+[[setting,auth_verbose]] setting.`
+	},
+
 	valid_chroot_dirs: {
 		values: setting_types.STRING,
 		text: `
