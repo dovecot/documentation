@@ -5,7 +5,7 @@ dovecotlinks:
   namespaces: Namespaces
   namespaces_hierarchy_separators:
     hash: hierarchy-separators
-    text: namespace hierarchy separators
+    text: "Namespaces: Hierarchy Separators"
 ---
 
 # Namespaces
@@ -19,7 +19,7 @@ to locate mailboxes and whether they're private, shared or public.
 
 Dovecot namespaces can be used for several other purposes too:
 
-* Changing the [hierarchy separator](#hierarchy-separator)
+* Changing the [[link,namespaces_hierarchy_separators,Hierarchy Separators]]
 * Providing backwards compatibility when switching from another IMAP server
 * Provides support for [[link,shared_mailboxes_public]] and
   [[link,shared_mailboxes_user]] mailboxes
@@ -134,7 +134,8 @@ However, changing the separator doesn't change the on-disk "layout separator".
 
 Example:
 
-| `mail_location` | Layout Sep. | NS Sep. | Mailbox Name | Directory |
+| `mail_location` | Layout Separator | Namespace Separator | Mailbox Name | Directory |
+| --- | --- | --- | --- | --- |
 | `maildir:~/Maildir` | `.` | `.` | `foo.bar` | `~/Maildir/.foo.bar/` |
 | `maildir:~/Maildir` | `.` | `/` | `foo/bar` | `~/Maildir/.foo.bar/` |
 | `maildir:~/Maildir:LAYOUT=fs` | `/` | `.` | `foo.bar` | `~/Maildir/foo/bar/` |
