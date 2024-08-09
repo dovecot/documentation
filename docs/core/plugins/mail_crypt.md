@@ -2,12 +2,12 @@
 layout: doc
 title: mail-crypt
 dovecotlinks:
-  fs_crypt:
+  fs_crypt_and_fs_mail_crypt:
     hash: fs-crypt-and-fs-mail-crypt
-    text: fs-crypt
-  supported_sym_algorithms:
+    text: "Mail Crypt Plugin: fs-crypt and fs-mail-crypt"
+  fs_crypt_supported_sym_algorithms:
     hash: supported-symmetric-algorithms
-    text: Supported symmetric algorithms
+    text: "Mail Crypt Plugin: Supported symmetric algorithms"
 ---
 
 # Mail Crypt Plugin (`mail-crypt`)
