@@ -3,7 +3,7 @@ layout: doc
 title: fts-solr
 ---
 
-# Apache Solr FTS (fts-solr) Plugin
+# Apache Solr FTS Plugin (`fts-solr`)
 
 [Solr](https://solr.apache.org/) is a Lucene indexing server.
 Dovecot communicates to it using HTTP/XML queries.

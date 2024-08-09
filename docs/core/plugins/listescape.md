@@ -3,7 +3,7 @@ layout: doc
 title: listescape
 ---
 
-# Listescape (listescape) Plugin
+# Listescape Plugin (`listescape`)
 
 The listescape plugin allows users to use characters in mailboxes names that
 would otherwise be illegal (due to the underlying mailbox storage).

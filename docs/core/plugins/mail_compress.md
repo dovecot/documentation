@@ -3,7 +3,7 @@ layout: doc
 title: mail-compress
 ---
 
-# Mail Compression (mail-compress) Plugin
+# Mail Compression Plugin (`mail-compress`)
 
 This plugin can be used to read compressed mbox, maildir or dbox files. It
 can also be used to write (via IMAP, [[link,lda]] and/or [[link,lmtp]])
