@@ -6465,6 +6465,213 @@ the RFC.`
 Filter for oauth2 specific settings.`
 	},
 
+	passdb: {
+		tags: [ 'passdb' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		dependencies: [ 'passdb_driver' ],
+		seealso: [ '[[link,passdb]]', 'passdb_name', 'passdb_driver' ],
+		text: `
+Creates a new [[link,passdb]]. The filter name refers to the
+[[setting,passdb_name]] setting. The [[setting,passdb_driver]] setting is
+required to be set inside this filter.`
+	},
+
+	passdb_name: {
+		tags: [ 'passdb' ],
+		values: setting_types.STRING,
+		text: `
+Name of the passdb. This is used only in configuration - it's not visible to
+users. The [[setting,passdb]] filter name refers to this setting.`
+	},
+
+	passdb_driver: {
+		tags: [ 'passdb' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,passdb]]' ],
+		text: `
+The driver used for this password database. See [[link,passdb]] for the list of
+available drivers.`
+	},
+
+	passdb_args: {
+		tags: [ 'passdb' ],
+		values: setting_types.STRING,
+		text: `
+Arguments for the passdb backend. The format of this value depends on the
+passdb driver. Each one uses different args.`
+	},
+
+	passdb_default_fields: {
+		tags: [ 'passdb' ],
+		values: setting_types.STRING,
+		seealso: [ 'passdb_override_fields', '[[link,passdb_extra_fields]]' ],
+		text: `
+Passdb fields (and [[link,passdb_extra_fields]]) that are used unless
+overwritten by the passdb driver. They are in format \`key=value key2=value2
+...\`. The values can contain [[link,settings_variables,%variables]]. All
+\`%variables\` used here reflect the state **before** the passdb lookup.`
+	},
+
+	passdb_override_fields: {
+		tags: [ 'passdb' ],
+		values: setting_types.STRING,
+		seealso: [ 'passdb_default_fields' ],
+		text: `
+Same as [[setting,passdb_default_fields]] but instead of providing the default
+values, these values override what the passdb backend returned. All
+[[link,settings_variables,%variables]] used here reflect the state **after**
+the passdb lookup.`
+	},
+
+	passdb_mechanisms: {
+		tags: [ 'passdb' ],
+		added: {
+			settings_passdb_mechanisms_added: false,
+		},
+		values: setting_types.STRING,
+		text: `
+Skip the passdb if non-empty and the current auth mechanism is not listed here.
+Space or comma-separated list of auth mechanisms (e.g. \`PLAIN LOGIN\`). Also
+\`none\` can be used to match for a non-authenticating passdb lookup.`
+	},
+
+	passdb_username_filter: {
+		tags: [ 'passdb' ],
+		added: {
+			settings_passdb_username_filter_added: false,
+		},
+		values: setting_types.STRING,
+		text: `
+Skip the passdb if non-empty and the username doesn't match the filter. This is
+mainly used to assign specific passdbs to specific domains. Space or
+comma-separated list of username filters that can have \`*\` or \`?\`
+wildcards. If any of the filters matches, the filter succeeds. Define negative
+matches by preceding \`!\`. If any of the negative filter matches, the filter
+won't succeed.
+
+**Example**:
+* Filter: \`*@example.com *@example2.com !user@example.com\`
+* Matches:
+  * \`any@example.com\`
+  * \`user@example2.com\`
+* Won't match:
+  * \`user@example.com\``
+	},
+
+	passdb_skip: {
+		tags: [ 'passdb' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'never', 'authenticated', 'unauthenticated' ],
+		default: 'never',
+		text: `
+Configures when passdbs should be skipped:
+
+| Value | Description |
+| --- | --- |
+| \`never\` | Never skip over this passdb. |
+| \`authenticated\` | Skip if an earlier passdb already authenticated the user successfully. |
+| \`unauthenticated\` | Skip if user hasn't yet been successfully authenticated by the previous passdbs. |`
+	},
+
+	passdb_result_success: {
+		tags: [ 'passdb' ],
+		values: setting_types.ENUM,
+		values_enum: [
+			'return-ok',
+			'return',
+			'return-fail',
+			'continue',
+			'continue-ok',
+			'continue-fail',
+		],
+		default: 'return-ok',
+		seealso: [ '[[link,passdb_result_values]]' ],
+		text: `
+What to do after the passdb authentication succeeded. Possible values and their
+meaning are described fully at [[link,passdb_result_values]].`
+	},
+
+	passdb_result_failure: {
+		tags: [ 'passdb' ],
+		values: setting_types.ENUM,
+		values_enum: [
+			'return-ok',
+			'return',
+			'return-fail',
+			'continue',
+			'continue-ok',
+			'continue-fail',
+		],
+		default: 'continue',
+		seealso: [ '[[link,passdb_result_values]]' ],
+		text: `
+What to do after the passdb authentication failed. Possible values and their
+meaning are described fully at [[link,passdb_result_values]].`
+	},
+
+	passdb_result_internalfail: {
+		tags: [ 'passdb' ],
+		values: setting_types.ENUM,
+		values_enum: [
+			'return-ok',
+			'return',
+			'return-fail',
+			'continue',
+			'continue-ok',
+			'continue-fail',
+		],
+		default: 'continue',
+		seealso: [ '[[link,passdb_result_values]]' ],
+		text: `
+What to do after the passdb authentication failed due to an internal error.
+Possible values and their meaning are described fully at
+[[link,passdb_result_values]]. If any of the passdbs had an internal failure
+and the final passdb also returns \`continue\` the authentication will fail
+with \`internal error\`.`
+	},
+
+	passdb_deny: {
+		tags: [ 'passdb' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+If \`yes\` and the user is found from the \`denied user database\` the
+authentication will fail.`
+	},
+
+	passdb_pass: {
+		tags: [ 'passdb' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+This is an alias for [[setting,passdb_result_success,continue]]. This is
+commonly used together with the master passdb to specify that even after a
+successful master user authentication the authentication should continue to the
+non-master passdb to lookup the user.`
+	},
+
+	passdb_master: {
+		tags: [ 'passdb' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+If \`yes\` and the user is found from the [[link,auth_master_users]] the user
+is allowed to login as other users.`
+	},
+
+	passdb_auth_verbose: {
+		tags: [ 'passdb' ],
+		added: {
+			settings_passdb_auth_verbose_added: false,
+		},
+		values: setting_types.ENUM,
+		values_enum: [ 'default', 'no', 'yes' ],
+		default: 'default',
+		text: `
+If this setting is explicitly set to \`yes\` or \`no\`, it overrides the global
+[[setting,auth_verbose]] setting.`
+	},
+
 	pop3_client_workarounds: {
 		tags: [ 'pop3' ],
 		values: setting_types.STRING,
