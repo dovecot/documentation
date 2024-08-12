@@ -95,7 +95,7 @@ prefixing them with `\`.
 | `auth_debug` | Use [[setting,log_debug]] filter instead. Example: `log_debug=category=auth` |
 | OpenSSL support for older than 1.0.2 | Older versions are not supported anymore. |
 | imap-zlib plugin | The IMAP `COMPRESS` extension is now automatically enabled. |
-| Renamed `zlib plugin` and relevant configuration items | Use [[plugin,mail-compress]], with the configuration items [[setting,mail_compress_save]] as well as [[setting,mail_compress_save_level]], instead. |
+| zlib plugin | Use [[plugin,mail-compress]] with the [[setting,mail_compress_write_method]] setting instead. |
 | Dict passdb & userdb driver | Use [[link,auth_lua]] instead. |
 | mailbox-alias plugin | Depending on the use case, replacement may be the [[setting,mailbox_special_use]] mailbox setting and/or [[link,sieve]] filters. |
 | `disable_plaintext_auth` | This has been replaced with [[setting,auth_allow_cleartext]] setting. |
