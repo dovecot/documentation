@@ -43,7 +43,7 @@ Added base64url format to hash modifier in variable expansion. Example:
 
 #### fs-crypt
 
-[[link,fs_crypt]] now requires encryption keys by default.
+[[link,mail_crypt_fs_crypt]] now requires encryption keys by default.
 
 #### Event Filter Values
 
@@ -68,7 +68,7 @@ prefixing them with `\`.
 | `fail_type` parameter to [[setting,auth_policy_request_attributes]] | This parameter was added. |
 | ARGON2 password scheme | Support for the ARGON2 password scheme was added. |
 | SCRAM-SHA-1, SCRAM-SHA-256 | Support SASL mechanisms for outgoing connections. |
-| X25519, X448 | [[plugin,mail-crypt]] and [[link,fs_crypt]] now support these curves. |
+| X25519, X448 | [[plugin,mail-crypt]] and [[link,mail_crypt_fs_crypt]] now support these curves. |
 | [[setting,fts_message_max_size]] | This setting was added. |
 | `log_retries` Cassandra parameter | This connection parameter was added. See [[link,sql_cassandra]]. |
 | [[setting,quota_mailbox_count]] | This setting was added. |
