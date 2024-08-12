@@ -127,7 +127,7 @@ See [[setting,imapc_features]].
 | old-stats plugin | Use [[link,stats]] instead. `auth_stats` setting has been removed too. |
 | shadow auth driver | Use [[link,auth_pam]] instead. |
 | XZ Compression | You need to perform migration using a different compression format. With [[link,maildir]], you can try uncompressing all your mail and compressing them with another algorithm while Dovecot is not running. |
-| zlib plugin | Use [[plugin,mail-compress]], with the configuration items [[setting,mail_compress_save]] as well as [[setting,mail_compress_save_level]], instead. |
+| zlib plugin | Use [[plugin,mail-compress]] with the [[setting,mail_compress_write_method]] setting instead. |
 
 #### Settings
 
