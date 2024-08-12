@@ -2,12 +2,18 @@
 layout: doc
 title: mail-crypt
 dovecotlinks:
-  fs_crypt:
+  mail_crypt:
     hash: mail-crypt-plugin-mail-crypt
     text: "Mail Crypt Plugin: mail-crypt"
-  fs_crypt_and_fs_mail_crypt:
-    hash: fs-crypt-and-fs-mail-crypt
-    text: "Mail Crypt Plugin: fs-crypt and fs-mail-crypt"
+  mail_crypt_settings:
+    hash: settings
+    text: "Mail Crypt Plugin: Settings"
+  mail_crypt_fs_crypt:
+    hash: fs-crypt
+    text: "Mail Crypt Plugin: fs-crypt"
+  mail_crypt_converting_ec_key_to_pkey:
+    hash: converting-ec-key-to-pkey
+    text: "Mail Crypt Plugin: Converting EC key to PKEY"
 ---
 
 # Mail Crypt Plugin (`mail-crypt`)
@@ -64,9 +70,7 @@ encryption with care and backup encryption keys!
 :::
 
 This page assumes you are using configuring mail encryption from scratch with
-a recent version of Dovecot.  If you are upgrading from an older version,
-see [[setting,mail_crypt_save_version]] for possible backwards
-compatibility issues.
+a recent version of Dovecot.
 
 ## Settings
 
@@ -74,43 +78,39 @@ compatibility issues.
 
 ### Dynamic Settings
 
-Plugin settings may be dynamically set via [[link,userdb_extra_fields]].
-To provide [[setting,mail_crypt_global_private_key]] and
-[[setting,mail_crypt_global_public_key]] as userdb attributes, you
-can base64 encode the original contents, such as PEM file. For example,
+Per-user settings may be returned by [[link,userdb_extra_fields]].
+To provide [[setting,mail_crypt_global_private_key]] or
+[[setting,mail_crypt_global_public_key]] as a single line userdb attribute you
+can base64 encode the original PEM key contents. For example:
 
-```console
-$ cat ecprivkey.pem | base64 -w0
+```sh
+cat ecprivkey.pem | base64 -w0
 ```
 
-All external keys must be in PEM format, using pkey format.
+All configured keys must be in
+[[link,mail_crypt_converting_ec_key_to_pkey,PEM]] format.
 
 ## Modes Of Operation
 
 Mail crypt plugin can operate using **either** global keys or folder keys.
-Using both is not supported. To perform any encryption,
-[[setting,mail_crypt_save_version]] must be specified and non-zero.
+Using both is not supported.
 
-### Folder Keys
+### Folder Keys Mode
 
-In this mode, the user is generated a key pair, and each folder is generated a
-key pair, which is encrypted using the user's key pair. A user can have more
-than one key pair but only one can be active.
-
-* [[setting,mail_crypt_save_version]] must be `2`.
-
-* [[setting,mail_crypt_curve]] must be set.
+In this mode, for the user a key pair is generated. Then for each folder a key
+pair is generated. This folder is encrypted using the user's key pair. A user
+can have more than one key pair but only one can be active.
 
 * [[setting,mail_attribute_dict]] must be set, as is is used to store the keys.
 
 #### Unencrypted User Keys
 
-In this version of the folder keys mode, the users' private key is stored
+In this version of the folder keys mode, each user's private key is stored
 unencrypted on the server.
 
 Example config for folder keys with Maildir:
 
-```
+```[dovecot.conf]
 mail_attribute_dict = file:%h/Maildir/dovecot-attributes
 mail_plugins = $mail_plugins mail_crypt
 
@@ -127,7 +127,7 @@ encrypted on the server.
 
 Example config for mandatory encrypted folder keys with Maildir:
 
-```
+```[dovecot.conf]
 mail_attribute_dict = file:%h/Maildir/dovecot-attributes
 mail_plugins = $mail_plugins mail_crypt
 
@@ -141,17 +141,20 @@ plugin {
 The password that is used to decrypt the users master/private key, must be
 provided via password query:
 
-```
-# File: /etc/dovecot/dovecot-sql.conf.ext
-password_query = SELECT \
+::: code-group
+```[/etc/dovecot/dovecot-sql.conf.ext]
+password_query = \
+  SELECT \
     email as user, password, \
-    '%w' AS userdb_mail_crypt_private_password \
-    FROM virtual_users  WHERE email='%u';
+    '%Mw' AS userdb_crypt_user_key_password \
+  FROM virtual_users \
+  WHERE email='%u';
 ```
+:::
 
-#### Choosing Encryption Key
+#### Choosing Encryption Password
 
-DO NOT use password directly. It can contain `%` which is interpreted as
+DO NOT use passwords directly. It can contain `%` which is interpreted as
 variable expansion and can cause errors. Also, it might be visible in
 debug logging. Suggested approaches are base64 encoding, hex encoding
 or hashing the password. With hashing, you get the extra benefit that
@@ -179,20 +182,20 @@ You should not configure [[setting,mail_crypt_curve]] when using global keys.
 In order to generate an EC key, you must first choose a curve from the output
 of this command:
 
-```console
-$ openssl ecparam -list_curves
+```sh
+openssl ecparam -list_curves
 ```
 
 If you choose the curve `prime256v1`, generate an EC key with the command:
 
-```console
-$ openssl ecparam -name prime256v1 -genkey | openssl pkey -out ecprivkey.pem
+```sh
+openssl ecparam -name prime256v1 -genkey | openssl pkey -out ecprivkey.pem
 ```
 
 Then generate a public key out of your private EC key
 
-```console
-$ openssl pkey -in ecprivkey.pem -pubout -out ecpubkey.pem
+```sh
+openssl pkey -in ecprivkey.pem -pubout -out ecpubkey.pem
 ```
 
 These keys can now be used with this configuration:
@@ -225,8 +228,8 @@ BgUrgQQACg==
 
 You must convert it to pkey format with:
 
-```console
-$ openssl pkey -in oldkey.pem -out newkey.pem
+```sh
+openssl pkey -in oldkey.pem -out newkey.pem
 ```
 
 Then `newkey.pem` can be used with mail-crypt plugin.
@@ -239,9 +242,9 @@ You can use EdSDA keys by using algorithm `X25519` or `X448` (case sensitive).
 
 To generate a suitable keypair, use
 
-```console
-$ openssl genpkey -algorithm X448 -out edprivkey.pem
-$ openssl pkey -in private.pem -pubout -out edpubkey.pem
+```sh
+openssl genpkey -algorithm X448 -out edprivkey.pem
+openssl pkey -in private.pem -pubout -out edpubkey.pem
 ```
 
 Note that ED25519 keys are not suitable for X25519.
@@ -256,14 +259,14 @@ instead.
 You can generate an unencrypted RSA private key in the pkey format with the
 command:
 
-```console
-$ openssl genpkey -algorithm RSA -out rsaprivkey.pem
+```sh
+openssl genpkey -algorithm RSA -out rsaprivkey.pem
 ```
 
 Alternatively, you can generate a password encrypted private key with:
 
-```console
-$ openssl genpkey -algorithm RSA -out rsaprivkey.pem -aes-128-cbc -pass pass:qwerty
+```sh
+openssl genpkey -algorithm RSA -out rsaprivkey.pem -aes-128-cbc -pass pass:secret
 ```
 
 This does make the password show up in the process listing, so it can be
@@ -272,8 +275,8 @@ visible for everyone on the system.
 Regardless of whether you generated an unencrypted or password encrypted
 private key, you can generate a public key out of it with:
 
-```console
-$ openssl pkey -in rsaprivkey.pem -pubout -out rsapubkey.pem
+```sh
+openssl pkey -in rsaprivkey.pem -pubout -out rsapubkey.pem
 ```
 
 These keys can then be used with this configuration:
@@ -297,10 +300,9 @@ mostly for providing PEM keys via userdb.
 Hence, this is possible:
 
 ::: code-group
-
-```console[Key Generation]
-$ openssl ecparam -name secp256k1 -genkey | openssl pkey | base64 -w0 > ecprivkey.pem
-$ base64 -d ecprivkey.pem | openssl ec -pubout | base64 -w0 > ecpubkey.pem
+```sh[Key Generation]
+openssl ecparam -name secp256k1 -genkey | openssl pkey | base64 -w0 > ecprivkey.pem
+base64 -d ecprivkey.pem | openssl ec -pubout | base64 -w0 > ecpubkey.pem
 ```
 
 ```[dovecot.conf]
@@ -318,7 +320,7 @@ plugin {
 
 :::
 
-## Read-only Mode (`mail_crypt_save_version = 0`)
+## Read-only Mode
 
 If you have encrypted mailboxes that you need to read, but no longer want to
 encrypt new mail, use [[setting,mail_crypt_save_version,0]]:
@@ -348,68 +350,32 @@ enabled, you can't share the key to groups or someone with no public key.
 
 ## Decrypting Files Encrypted with mail-crypt Plugin
 
-You can use [`decrypt.rb`](https://github.com/dovecot/tools/blob/main/dcrypt-decrypt.rb)
-to decrypt encrypted files.
+You can use [`decrypt.rb`][decrypt.rb] to decrypt encrypted files.
 
-## fs-crypt and fs-mail-crypt
+## `fs-crypt`
 
-fs-crypt is a lib-fs wrapper that can encrypt and decrypt files. It works
-similarly to the fs-compress wrapper. It can be used to encrypt, e.g.:
+`fs-crypt` is a [[link,fs,lib-fs wrapper]] that can encrypt and decrypt files.
+It works similarly to the [[link,fs_compress,fs-compress wrapper]]. It can be
+used to encrypt e.g.:
 
-* External mail attachments (mail_attachment_fs)
+* External mail attachments ([[setting,mail_attachment_fs]])
+<!-- @include: @docs/plugins/include/mail_crypt.inc -->
 
-fs-crypt comes in two flavors, `mail-crypt` and `crypt`. (The differences
-between the two are technical and related to internal code contexts.)
+Note that `fs-crypt` and the [[plugin,fs-compress]] wrapper can be also
+combined. Please make sure that compression is always applied before
+encryption. See [[plugin,fs-compress]] for an example and more details about
+compression.
 
-Note that fs-[mail-]crypt and the fs-compress wrapper can be also combined.
-Please make sure that compression is always applied before encryption. See
-[[plugin,fs-compress]] for an example and more details about compression.
+## `fs-crypt` settings
 
-Currently the fs-crypt plugin requires that all the files it reads are
-encrypted. If it sees an unencrypted file it'll fail to read it. The plan is
-to fix this later.
+See [[link,mail_crypt_settings]] for generic mail-crypt settings.
 
 ::: warning
 [[changed,fs_crypt_require_encryption_keys]] fs-crypt requires encryption keys
 by default.
 :::
 
-FS driver syntax:
-
-::: tip Note
-All parameters to mail-crypt are optional.
-:::
-
-```
-crypt:[maybe:][algo=<s>:][set_prefix=<n>:][private_key_path=/path:][public_key_path=/path:][password=password:]<parent fs>
-```
-
-Parameters:
-
-| Key | Value |
-| --- | ----- |
-| `maybe` | Allow missing encryption keys. [[added,mail_crypt_fs_maybe]] |
-| `algo` | Encryption algorithm. Default is `aes-256-gcm-sha256`. |
-| `password` | Password for decrypting public key. |
-| `private_key_path` | Path to private key. |
-| `public_key_path` | Path to public key. |
-| `set_prefix` | Read `<set_prefix>_public_key` and `<set_prefix>_private_key`. Default is `mail_crypt_global`.
-
-Example:
-
-```[dovecot.conf]
-plugin {
-  fts_index_fs = crypt:set_prefix=fscrypt_index:posix:prefix=/tmp/fts
-  fscrypt_index_public_key = <server.pub
-  fscrypt_index_private_key = <server.key
-}
-```
-
-To encrypt/decrypt files manually, you can use:
-
-```console
-$ doveadm fs get/put crypt private_key_path=foo:public_key_path=foo2:posix:prefix=/path/to/files/root path/to/file
-```
+<SettingsComponent tag="fs-crypt" />
 
 ## Doveadm Commands
 
@@ -417,9 +383,23 @@ $ doveadm fs get/put crypt private_key_path=foo:public_key_path=foo2:posix:prefi
 For doveadm commands that are working with password protected keys, the global
 `-o` option should be used to provide the password.  Example:
 
-```console
-$ doveadm -o plugin/mail_crypt_private_password=some_password <...doveadm command...>
+```sh
+doveadm -o plugin/mail_crypt_private_password=some_password <...doveadm command...>
 ```
 :::
 
+To encrypt/decrypt files manually, you can use:
+
+```sh
+doveadm \
+  -o fs_driver=crypt \
+  -o fs_parent/fs_driver=posix \
+  -o crypt_private_key="$(cat pubkey.pem)" \
+  -o crypt_global_private_key=main \
+  -o crypt_global_private_key/main/crypt_private_key="$(cat privkey.pem)" \
+  fs get/put '' path/to/input-file [/path/to/output-file]
+```
+
 <DoveadmComponent plugin="mail-crypt" />
+
+[decrypt.rb]: https://github.com/dovecot/tools/blob/main/dcrypt-decrypt.rb

@@ -34,7 +34,7 @@ Wrapper backends used on top of other backends:
 | Name | Description |
 | --- | --- |
 | [[link,fs_metawrap,metawrap]] | File metadata. |
-| [[link,fs_crypt,crypt]] | File encryption. |
+| [[link,mail_crypt,crypt]] | File encryption. |
 | [[link,fs_compress,compress]] | File compression. |
 <!-- @include: @docs/storage/providers/includes/fs-wrapper.inc -->
 
