@@ -148,6 +148,7 @@ See [[setting,imapc_features]].
 | `sieve_global_path` | See [[link,sieve_file]] and [[link,sieve_location]]. |
 | `sieve_vacation_max_subject_codepoints` | |
 | `auth_policy_server_timeout_msecs` | See: [[link,auth_policy_configuration]]. |
+| `mail_crypt_require_encrypted_user_key` | Replaced by [[setting,crypt_user_key_require_encrypted]], [[setting,crypt_user_key_password]] and [[setting,crypt_user_key_encryption_key]]. |
 
 #### Other Features
 
@@ -188,7 +189,6 @@ See [[link,sql_cassandra]].
 | Setting | Notes |
 | ------- | ------- |
 | [[setting,fts_autoindex_exclude]] | Now honors namespaces. |
-| [[setting,mail_crypt_require_encrypted_user_key]] | Now accepts boolean values. |
 | [[setting,ssl]] | Connections from [[setting,login_trusted_networks]] are now also required to be SSL/TLS encrypted with the setting `ssl=required`. |
 | [[setting,ssl_min_protocol]] | The `SSLv3` option was removed, as it is no longer secure. |
 
