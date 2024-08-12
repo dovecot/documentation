@@ -110,6 +110,26 @@ Name of the [[setting,fs]]. The [[setting,fs_driver]] setting default to this.`
 The [[setting,fs]] driver to use. Defaults to [[setting,fs_name]].`
 	},
 
+	fs_compress_read_plain_fallback: {
+		tags: [ 'fs-compress' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ '[[plugin,fs-compress]]' ],
+		text: `
+By default [[plugin,fs-compress]] fails if the file wasn't compressed. If this
+setting is enabled the file is returned as-is (i.e. allows reading plaintext
+files).`
+	},
+
+	fs_compress_write_method: {
+		tags: [ 'fs-compress' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,mail_compress_compression_methods]]' ],
+		text: `
+Which [[link,mail_compress_compression_methods,Compression Method]] to use for
+writing new files.`
+	},
+
 	fs_dict_value_encoding: {
 		tags: [ 'fs-dict' ],
 		values: setting_types.ENUM,
