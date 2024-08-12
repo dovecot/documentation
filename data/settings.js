@@ -2316,16 +2316,15 @@ mails can still be read.`
 
 	/* mail-crypt plugin */
 
-	mail_crypt_acl_require_secure_key_sharing: {
-		default: 'no',
+	crypt_acl_require_secure_key_sharing: {
 		plugin: 'mail-crypt',
 		values: setting_types.BOOLEAN,
+		default: 'no',
 		text: `
 If enabled, you cannot share a key to groups or someone without a public key.`
 	},
 
-	mail_crypt_curve: {
-		default: 'no',
+	crypt_user_key_curve: {
 		plugin: 'mail-crypt',
 		values: setting_types.STRING,
 		text: `
@@ -2336,15 +2335,13 @@ Any valid curve supported by the underlying cryptographic library is allowed.
 Example:
 
 \`\`\`
-plugin {
-  mail_crypt_curve = secp521r1
-}
+crypt_user_key_curve = secp521r1
 \`\`\`
 
 This must be set if you wish to use folder keys rather than global keys.
 
 With global keys (either RSA or EC keys), all keying material is taken
-from the plugin environment and no key generation is performed.
+from the setting and no key generation is performed.
 
 In folder-keys mode, a key pair is generated for the user, and a
 folder-specific key pair is generated. The latter is encrypted by means of
@@ -2353,57 +2350,111 @@ the user's key pair.
 For EdDSA, you need to use X448 or X25519, case sensitive.`
 	},
 
-	mail_crypt_global_private_key: {
+	crypt_global_private_keys: {
+		plugin: 'mail-crypt',
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'crypt_private_key', 'crypt_private_key_password' ],
+		text: `
+List of private keys to decrypt files. Add [[setting,crypt_private_key]] and
+optionally [[setting,crypt_private_key_password]] inside each filter.`
+	},
+
+	crypt_global_public_key: {
 		plugin: 'mail-crypt',
 		values: setting_types.STRING,
 		text: `
-Private key(s) to decrypt files. Key(s) must be in PEM format, using pkey
-format.
-
-You can define multiple keys by appending an increasing number to the
-setting label, e.g.: \`mail_crypt_global_private_key2\`.`
+Public key to encrypt files. Key must be in
+[[link,mail_crypt_converting_ec_key_to_pkey,PEM pkey format]]. The PEM key may
+additionally be base64-encoded into a single line, which can make it easier to
+store into userdb extra fields.`
 	},
 
-	mail_crypt_global_public_key: {
+	crypt_global_private_key: {
+		plugin: 'mail-crypt',
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'crypt_private_key', 'crypt_private_key_password' ],
+		text: `
+List of global private key(s) to decrypt mails. Add
+[[setting,crypt_private_key]] and optionally
+[[setting,crypt_private_key_password]] inside each filter.`
+	},
+
+	crypt_user_key_encryption_key: {
+		plugin: 'mail-crypt',
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'crypt_private_key', 'crypt_private_key_password' ],
+		text: `
+List of private key(s) to decrypt user's master private key. Add
+[[setting,crypt_private_key]] and optionally
+[[setting,crypt_private_key_password]] inside each filter.`
+	},
+
+	crypt_user_key_password: {
 		plugin: 'mail-crypt',
 		values: setting_types.STRING,
 		text: `
-Public key to encrypt files. Key must be in PEM format, using pkey format.`
+Password to decrypt user's master private key.`
 	},
 
-	mail_crypt_private_key: {
-		plugin: 'mail-crypt',
-		values: setting_types.STRING,
-		text: `
-Private key to decrypt user's master key. Key must be in PEM format, using
-pkey format.`
-	},
-
-	mail_crypt_private_password: {
-		plugin: 'mail-crypt',
-		values: setting_types.STRING,
-		text: `
-Password to decrypt user's master key or environment private key.`
-	},
-
-	mail_crypt_require_encrypted_user_key: {
+	crypt_user_key_require_encrypted: {
 		plugin: 'mail-crypt',
 		values: setting_types.BOOLEAN,
-		text: `If true, require user key encryption with password.`
+		seealso: [
+			'crypt_user_key_password',
+			'crypt_user_key_encryption_key',
+		],
+		text: `
+If yes, require user's master private key to be encrypted with
+[[setting,crypt_user_key_password]] or
+[[setting,crypt_user_key_encryption_key]]. If they are unset new user key
+generation will fail. This setting doesn't affect already existing
+non-encrypted keys.`
 	},
 
-	mail_crypt_save_version: {
-		default: 2,
+	crypt_write_algorithm: {
 		plugin: 'mail-crypt',
-		values: setting_types.UINT,
+		values: setting_types.STRING,
+		default: 'aes-256-gcm-sha256',
 		text: `
-Sets the version of the mail_crypt compatibility desired.
+Set the encryption algorithm. If empty new mails are not encrypted, but
+existing mails can still be decrypted.`
+	},
 
-| Version | Description |
-| ------- | ----------- |
-| \`0\` | Decryption is active; no encryption occurs. |
-| \`1\` | Do not use (implemented for legacy reasons only). |
-| \`2\` | Encryption and decryption are active. |`
+	crypt_private_key_name: {
+		plugin: 'mail-crypt',
+		values: setting_types.STRING,
+		seealso: [
+			'crypt_global_private_keys',
+			'crypt_user_key_encryption_key',
+		],
+		text: `
+Name of the private key inside [[setting,crypt_global_private_keys]] or
+[[setting,crypt_user_key_encryption_key]].`
+	},
+
+	crypt_private_key: {
+		plugin: 'mail-crypt',
+		values: setting_types.STRING,
+		seealso: [
+			'[[link,mail_crypt_converting_ec_key_to_pkey]]',
+			'crypt_global_private_keys',
+			'crypt_user_key_encryption_key',
+		],
+		text: `
+Private key in [[link,mail_crypt_converting_ec_key_to_pkey]]. The PEM key may
+additionally be base64-encoded into a single line, which can make it easier to
+store into userdb extra fields.
+
+Used inside [[setting,crypt_global_private_keys]] and
+[[setting,crypt_user_key_encryption_key]] lists.`
+	},
+
+	crypt_private_key_password: {
+		plugin: 'mail-crypt',
+		values: setting_types.STRING,
+		seealso: [ 'crypt_private_key' ],
+		text: `
+Password to decrypt [[setting,crypt_private_key]].`
 	},
 
 	/* mail-log plugin */

@@ -61,7 +61,6 @@ prefixing them with `\`.
 | Feature | Notes |
 | ------- | ----- |
 | `%{ldap_multi}` variable | This variable was added to LDAP configuration file to allow for fetching a multi-valued attribute. See [[link,auth_ldap]]. |
-| [[setting,mail_crypt_require_encrypted_user_key]] | Setting now accepts boolean values. |
 | [[setting,fts_autoindex_exclude]] | The setting now honors namespaces. |
 | [[setting,submission_add_received_header]] | This setting was added. |
 | [[setting,login_socket_path]] | This setting was added. |
@@ -115,6 +114,7 @@ prefixing them with `\`.
 | `sieve_dir`, `sieve_global_path`, `sieve_global_dir` settings | These settings have been removed. See [[link,sieve_file]] and [[link,sieve_location]]. |
 | `sieve_vacation_max_subject_codepoints` | This setting has been removed. |
 | `auth_policy_server_timeout_msecs` | See: [[link,auth_policy_configuration]]. |
+| `mail_crypt_require_encrypted_user_key` | Replaced by [[setting,crypt_user_key_require_encrypted]], [[setting,crypt_user_key_password]] and [[setting,crypt_user_key_encryption_key]]. |
 
 ### Changed Default Settings
 
