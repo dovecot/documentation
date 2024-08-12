@@ -1,6 +1,10 @@
 ---
 layout: doc
 title: mail-compress
+dovecotlinks:
+  mail_compress_compression_methods:
+    hash: compression-methods
+    text: Compression Methods
 ---
 
 # Mail Compression Plugin (`mail-compress`)
@@ -9,7 +13,19 @@ This plugin can be used to read compressed mbox, maildir or dbox files. It
 can also be used to write (via IMAP, [[link,lda]] and/or [[link,lmtp]])
 compressed messages to [[link,dbox]] or [[link,maildir]] mailboxes.
 
-## Settings and Supported Algorithms
+## Compression Methods
+
+The following algorithms are supported:
+
+| Name | Library (algorithm) | Dovecot Support |
+| ---- | ------------------- | --------------- |
+| `bz2` | [libbzip2 (bzip2)](https://sourceware.org/bzip2/) | v2.0+ |
+| `gz`  | [zlib (gzip)](https://www.zlib.net/) | v2.0+ |
+| `deflate` | [zlib (gzip)](https://www.zlib.net/) | v2.0+ |
+| `lz4` | [liblz4](https://www.lz4.org/) | v2.2.11+ |
+| `zstd` | [Zstandard](https://facebook.github.io/zstd/) | v2.3.12+ |
+
+## Settings
 
 <SettingsComponent plugin="mail-compress" />
 
