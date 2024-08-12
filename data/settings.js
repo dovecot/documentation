@@ -130,6 +130,15 @@ Which [[link,mail_compress_compression_methods,Compression Method]] to use for
 writing new files.`
 	},
 
+	fs_crypt_read_plain_fallback: {
+		tags: [ 'fs-crypt' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+If enabled files that are not encrypted are returned as-is. By default it
+results in a read error.`
+	},
+
 	fs_dict_value_encoding: {
 		tags: [ 'fs-dict' ],
 		values: setting_types.ENUM,
