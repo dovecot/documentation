@@ -79,9 +79,9 @@ a recent version of Dovecot.
 ### Dynamic Settings
 
 Per-user settings may be returned by [[link,userdb_extra_fields]].
-To provide [[setting,mail_crypt_global_private_key]] or
-[[setting,mail_crypt_global_public_key]] as a single line userdb attribute you
-can base64 encode the original PEM key contents. For example:
+To provide [[setting,crypt_global_private_key]] or
+[[setting,crypt_global_public_key]] as a single line userdb attribute you can
+base64 encode the original PEM key contents. For example:
 
 ```sh
 cat ecprivkey.pem | base64 -w0
@@ -101,6 +101,7 @@ In this mode, for the user a key pair is generated. Then for each folder a key
 pair is generated. This folder is encrypted using the user's key pair. A user
 can have more than one key pair but only one can be active.
 
+* [[setting,crypt_user_key_curve]] must be set.
 * [[setting,mail_attribute_dict]] must be set, as is is used to store the keys.
 
 #### Unencrypted User Keys
@@ -114,10 +115,7 @@ Example config for folder keys with Maildir:
 mail_attribute_dict = file:%h/Maildir/dovecot-attributes
 mail_plugins = $mail_plugins mail_crypt
 
-plugin {
-  mail_crypt_curve = secp521r1
-  mail_crypt_save_version = 2
-}
+crypt_user_key_curve = secp521r1
 ```
 
 #### Encrypted User Keys
@@ -131,11 +129,8 @@ Example config for mandatory encrypted folder keys with Maildir:
 mail_attribute_dict = file:%h/Maildir/dovecot-attributes
 mail_plugins = $mail_plugins mail_crypt
 
-plugin {
-  mail_crypt_curve = secp521r1
-  mail_crypt_save_version = 2
-  mail_crypt_require_encrypted_user_key = yes
-}
+crypt_user_key_curve = secp521r1
+crypt_user_key_require_encrypted = yes
 ```
 
 The password that is used to decrypt the users master/private key, must be
@@ -175,7 +170,8 @@ user's password. The benefit is that it can be easier to do key management
 when you can do the EC re-encryption steps in case of password change in your
 user database instead of dovecot's database.
 
-You should not configure [[setting,mail_crypt_curve]] when using global keys.
+You should not configure [[setting,crypt_user_key_curve]] when using global
+keys.
 
 #### Elliptic Curve (EC) Key
 
@@ -203,10 +199,10 @@ These keys can now be used with this configuration:
 ```[dovecot.conf]
 mail_plugins = $mail_plugins mail_crypt
 
-plugin {
-  mail_crypt_global_private_key = <ecprivkey.pem
-  mail_crypt_global_public_key = <ecpubkey.pem
-  mail_crypt_save_version = 2
+crypt_global_public_key = <rsapubkey.pem
+crypt_global_private_key main {
+  crypt_private_key = <rsaprivkey.pem
+  crypt_private_password = secret
 }
 ```
 
@@ -252,7 +248,7 @@ Note that ED25519 keys are not suitable for X25519.
 #### RSA key
 
 ::: warning
-Use of RSA keys is discouraged, please use [[setting,mail_crypt_curve]]
+Use of RSA keys is discouraged, please use [[setting,crypt_user_key_curve]]
 instead.
 :::
 
@@ -284,11 +280,10 @@ These keys can then be used with this configuration:
 ```[dovecot.conf]
 mail_plugins = $mail_plugins mail_crypt
 
-plugin {
-  mail_crypt_global_private_key = <rsaprivkey.pem
-  mail_crypt_global_private_password = qwerty
-  mail_crypt_global_public_key = <rsapubkey.pem
-  mail_crypt_save_version = 2
+crypt_global_public_key = <rsapubkey.pem
+crypt_global_private_key main {
+  crypt_private_key = <rsaprivkey.pem
+  crypt_private_password = secret
 }
 ```
 
@@ -306,15 +301,14 @@ base64 -d ecprivkey.pem | openssl ec -pubout | base64 -w0 > ecpubkey.pem
 ```
 
 ```[dovecot.conf]
-passdb {
-  driver = static
-  args = password=pass mail_crypt_global_public_key=<content of ecpubkey.pem> mail_crypt_global_private_key=<content of ecprivkey.pem>
+mail_plugins = $mail_plugins mail_crypt
+crypt_global_private_key main {
+  # create the filter, but leave its settings empty
 }
 
-mail_plugins = $mail_plugins mail_crypt
-
-plugin {
-  mail_crypt_save_version = 2
+passdb {
+  driver = static
+  args = password=pass crypt_global_public_key=<content of ecpubkey.pem> crypt_global_private_key/main/private_key=<content of ecprivkey.pem>
 }
 ```
 
@@ -323,12 +317,12 @@ plugin {
 ## Read-only Mode
 
 If you have encrypted mailboxes that you need to read, but no longer want to
-encrypt new mail, use [[setting,mail_crypt_save_version,0]]:
+encrypt new mail, use empty [[setting,crypt_write_algorithm]] setting:
 
 ```[dovecot.conf]
-plugin {
-  mail_crypt_save_version = 0
-  mail_crypt_global_private_key = <server.key
+crypt_write_algorithm =
+crypt_global_private_key main {
+  crypt_private_key = <server.key
 }
 ```
 
@@ -345,8 +339,8 @@ When a key is shared to a single user, and the user has a public key available, 
 `mail_crypt_acl` plugin, which will enable accessing the encrypted shared
 folders.
 
-If you have [[setting,mail_crypt_acl_require_secure_key_sharing]]
-enabled, you can't share the key to groups or someone with no public key.
+If you have [[setting,crypt_acl_require_secure_key_sharing]] enabled, you can't
+share the key to groups or someone with no public key.
 
 ## Decrypting Files Encrypted with mail-crypt Plugin
 
@@ -384,7 +378,7 @@ For doveadm commands that are working with password protected keys, the global
 `-o` option should be used to provide the password.  Example:
 
 ```sh
-doveadm -o plugin/mail_crypt_private_password=some_password <...doveadm command...>
+doveadm -o crypt_private_password=some_password <...doveadm command...>
 ```
 :::
 

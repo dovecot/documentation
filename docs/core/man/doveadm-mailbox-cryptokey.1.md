@@ -8,7 +8,7 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [**-o** *plugin/mail_crypt_private_password=password*] [*GLOBAL OPTIONS*] *mailbox cryptokey export|generate|list|password* [*options*] [*arguments*]
+**doveadm** [**-o** *crypt_user_key_password=password*] [*GLOBAL OPTIONS*] *mailbox cryptokey export|generate|list|password* [*options*] [*arguments*]
 
 ## DESCRIPTION
 
@@ -21,7 +21,7 @@ active.
 
 <!-- @include: global-options-formatter.inc -->
 
-**-o** *plugin/mail_crypt_private_password=password*
+**-o** *crypt_user_key_password=password*
 :   Dovecot option, needed if you use password protected keys
 
 ## OPTIONS
