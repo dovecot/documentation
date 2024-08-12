@@ -2242,37 +2242,47 @@ expanded in plugin section.`
 
 	/* mail-compress plugin */
 
-	mail_compress_save: {
+	compress_bz2_block_size_100k: {
 		plugin: 'mail-compress',
-		values: setting_types.STRING,
+		values: setting_types.UINT,
+		default: 9,
 		text: `
-The compression algorithm to use.  This setting is REQUIRED - if empty, the
-plugin is disabled.
-
-The following algorithms are supported:
-
-| Name | Library (algorithm) |
-| ---- | ------------------- |
-| \`bz2\` | [libbzip2 (bzip2)](https://sourceware.org/bzip2/) |
-| \`gz\`  | [zlib (gzip)](https://www.zlib.net/) |
-| \`lz4\` | [liblz4](https://www.lz4.org/) |
-| \`zstd\` | [Zstandard](https://facebook.github.io/zstd/) |`
+The compression block size to use. Must be between \`1\` (\`100 000\` bytes)
+and \`9\` (\`900 000\` bytes).`
 	},
 
-	mail_compress_save_level: {
-		default: '<algorithm dependent>',
+	compress_deflate_level: {
+		plugin: 'mail-compress',
+		values: setting_types.UINT,
+		default: 6,
+		text: `
+The compression level to use for deflate compression. Must be between \`0\` (no compression) and \`9\`.`
+	},
+
+	compress_gz_level: {
+		plugin: 'mail-compress',
+		values: setting_types.UINT,
+		default: 6,
+		text: `
+The compression level to use for gz compression. Must be between \`0\` (no compression) and \`9\`.`
+	},
+
+	compress_zstd_level: {
+		plugin: 'mail-compress',
+		values: setting_types.UINT,
+		default: 3,
+		text: `
+The compression level to use for zstd compression. Must be between \`1\` and
+\`22\`.`
+	},
+
+	mail_compress_write_method: {
 		plugin: 'mail-compress',
 		values: setting_types.STRING,
 		text: `
-The compression level to use.  This value is dependent on the algorithm
-chosen in [[setting,mail_compress_save]].
-
-| Name | Minimum | Default | Maximum |
-| ---- | ------- | ------- | ------- |
-| \`bz2\` | 1 | 9 | 9 |
-| \`gz\` | 0 (no compression) | 6 | 9 |
-| \`lz4\` | 1 | 1 | 9 |
-| \`zstd\` | 1 | 3 | 22 |`
+The [[link,mail_compress_compression_methods,Compression Method]] to use for
+writing new mails. If empty, new mails are written without compression. Old
+mails can still be read.`
 	},
 
 	/* mail-crypt plugin */
