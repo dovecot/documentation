@@ -45,7 +45,7 @@ You probably also want to hide it with an [[link,acl]] from the user, if
 recovery is only expected to be an action performed by an admin/operator.
 
 To move to a mailbox, do NOT add a trailing delimiter to the
-[[setting,lazy_expunge]] setting.
+[[setting,lazy_expunge_mailbox]] setting.
 
 ##### Example Configuration
 
@@ -61,10 +61,10 @@ namespace inbox {
 
 mail_plugins = $mail_plugins lazy_expunge acl
 
-plugin {
-  # Move messages to an .EXPUNGED mailbox
-  lazy_expunge = .EXPUNGED
+# Move messages to an .EXPUNGED mailbox
+lazy_expunge_mailbox = .EXPUNGED
 
+plugin {
   # Define ACL so that user cannot list the .EXPUNGED mailbox
   acl = vfile:/etc/dovecot/dovecot.acl
 
