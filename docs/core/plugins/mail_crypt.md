@@ -352,7 +352,7 @@ You can use [`decrypt.rb`][decrypt.rb] to decrypt encrypted files.
 It works similarly to the [[link,fs_compress,fs-compress wrapper]]. It can be
 used to encrypt e.g.:
 
-* External mail attachments ([[setting,mail_attachment_fs]])
+* External mail attachments ([[setting,mail_attachment]])
 <!-- @include: @docs/plugins/include/mail_crypt.inc -->
 
 Note that `fs-crypt` and the [[plugin,fs-compress]] wrapper can be also
