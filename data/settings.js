@@ -5572,31 +5572,31 @@ If no value is specified, attachment saving to external files is disabled.
 [[variable,mail-user]] can be used.`
 	},
 
-	mail_attachment_fs: {
-		default: 'sis posix',
-		seealso: [ 'mail_attachment_dir' ],
-		values: setting_types.ENUM,
-		values_enum: [ 'posix', 'sis posix', 'sis-queue posix' ],
+	mail_attachment: {
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'fs_driver', 'mail_attachment_dir' ],
 		text: `
-Which filesystem type to use for saving attachments.
+Named filter for initializing [[link,fs,FS Driver]] for external attachments.
 
-Options:
+Commonly used options:
 
 \`posix\`
 :   No single-instance storage (SIS) done (this option might simplify the
     filesystem's own de-duplication operations).
 
-\`sis posix\`
+\`sis\`
 :   SIS with immediate byte-by-byte comparison during saving.
 
     SIS is deprecated and writing of SIS files is disabled. Reading is
     supported for now, any missing SIS attachments are replaced with files
     filled with spaces.
 
-\`sis-queue posix\`
+\`sis-queue\`
 :   SIS with delayed comparison and de-duplication.
 
-[[variable,mail-user]] can be used.`
+	[[changed,settings_mail_attachment_sis_option_changed]] SIS is deprecated
+	and writing SIS files is disabled. Reading is supported for now. Any
+	missing SIS attachments are replaced with files filled with spaces.`
 	},
 
 	mail_attachment_hash: {
