@@ -2187,54 +2187,25 @@ The key that is updated in the dictionary (defined by
 
 	/* lazy-expunge plugin */
 
-	lazy_expunge: {
+	lazy_expunge_mailbox: {
 		plugin: 'lazy-expunge',
 		seealso: [ '[[link,lazy_expunge_storage]]' ],
 		values: setting_types.STRING,
 		text: `
-The mailbox/namespace to move messages to when expunged. This setting MUST
-be defined or else lazy-expunge plugin will not be active.`
-	},
+The mailbox to move messages to when expunged. This setting MUST be defined or
+else lazy-expunge plugin will not be active.
 
-	lazy_expunge_exclude: {
-		plugin: 'lazy-expunge',
-		values: setting_types.STRING,
-		text: `
-Mailbox name/wildcard to exclude from lazy expunging.
-
-Use either mailbox names or refer to them using special-use flags (e.g.
-\`\Trash\`).
-
-To exclude additional mailboxes, add sequential numbers to the end of the
-plugin name. For example:
-
-\`\`\`
-plugin {
-  lazy_expunge_exclude = \Drafts
-  lazy_expunge_exclude2 = External Accounts/*
+\`\`\`[dovecot.conf]
+lazy_expunge_mailbox = .EXPUNGED
+namespace inbox {
+  mailbox Drafts {
+    lazy_expunge_mailbox =
+  }
+  namespace "External accounts" {
+    lazy_expunge_mailbox =
+  }
 }
-\`\`\`
-
-This setting matches also the namespace prefix in folder names.
-
-Namespaces match as follows:
-
-- The full folder name, including the namespace prefix.
-
-  For example \`lazy_expunge_exclude = Public/incoming\`
-  would match the \`incoming\` folder in the \`Public/\` namespace.
-
-- For \`inbox=yes\` namespace, the folder name without the namespace prefix.
-
-  For example \`lazy_expunge_exclude = incoming\` would match the \`incoming\`
-  folder in the INBOX namespace, but not in the \`Public/\` namespace.
-
-- The folder names support \`*\` and \`?\` wildcards.
-
-  Namespace prefixes must NOT be specified and will not match for:
-
-  - the \`INBOX\` folder
-  - special-use flags (e.g. \`\Trash\`)`
+\`\`\``
 	},
 
 	lazy_expunge_only_last_instance: {
