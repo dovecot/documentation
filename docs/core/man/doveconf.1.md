@@ -66,7 +66,8 @@ configuration in easy human readable output.
 :   Hide the setting's name, show only the setting's value.
 
 **-n**
-:   Show only settings with non-default values.
+:   Show only settings with non-default values. This is the default behavior
+    when no other parameters are given.
 
 **-N**
 :   Show settings with non-default values and explicitly set default values.
