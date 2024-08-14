@@ -431,3 +431,11 @@ Enable by `fts_tokenizer_generic = algorithm=tr29 wb5a=yes`.
 This tokenizer preserves email addresses as complete search tokens, by
 bypassing the generic tokenizer, when it finds an address. It will only
 work as intended if it is listed **after** other tokenizers.
+
+Email Address tokenizer specific settings:
+
+<FTSConfigComponent name="maxlen" default="254">
+
+Maximum length of token, before an arbitrary cut off is made.
+
+</FTSConfigComponent>
