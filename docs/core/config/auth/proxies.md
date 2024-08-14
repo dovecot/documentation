@@ -124,13 +124,11 @@ You can use SSL/TLS connection to destination server by returning:
   CA's certs; anything else is exploitable by a man-in-the-middle attack.
   :::
 
-  ::: info Note
-  [[setting,ssl_client_ca_dir]] or [[setting,ssl_client_ca_file]] aren't
-  currently used for verifying the remote certificate, although ideally they
-  will be in a future Dovecot version.
-
-  For now you need to add the trusted remote certificates to
-  [[setting,ssl_ca]].
+  ::: info NOTE
+  Login processes don't currently use [[setting,ssl_client_ca_dir]] or
+  [[setting,ssl_client_ca_file]] settings for verifying the remote certificate,
+  mainly because login processes can't really read the files chrooted. You can
+  instead use [[setting,ssl_client_ca]].
   :::
 
   ::: warning

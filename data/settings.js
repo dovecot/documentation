@@ -7343,6 +7343,10 @@ ssl_alt_cert = </path/to/alternative/cert.pem
 	},
 
 	ssl_ca: {
+		changed: {
+			settings_ssl_client_ca_added: `
+Split out [[setting,ssl_client_ca]] out of this setting.`
+		},
 		seealso: [
 			'ssl',
 			'ssl_client_require_valid_cert',
@@ -7353,15 +7357,6 @@ ssl_alt_cert = </path/to/alternative/cert.pem
 List of SSL CA certificates that are used to validate whether SSL
 certificates presented by incoming imap/pop3/etc. client connections are
 valid.
-
-These CAs are also used by some processes for validating outgoing SSL
-connections in addition to [[setting,ssl_client_ca_file]] and
-[[setting,ssl_client_ca_dir]]. This is mainly important for
-\`imap-login\`, \`pop3-login\`, etc. processes which are chrooted and can't
-access the CA files outside the chroot.
-
-Note that mail processes (imap, pop3, etc.) don't read this setting to save
-memory, because the CAs can be large and there can be many mail processes.
 
 Example:
 
@@ -7428,6 +7423,20 @@ preference. Use [[setting,ssl_cipher_list]] for TLSv1.2 and below connections.
 This setting is used for both incoming and outgoing SSL connections.
 
 See: https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites`
+	},
+
+	ssl_client_ca: {
+		added: {
+			settings_ssl_client_ca_added: `
+Split this setting out of [[setting,ssl_ca]].`
+		},
+		values: setting_types.STRING,
+		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		text: `
+List of trusted SSL CA certificates. This is used in addition to
+[[setting,ssl_client_ca_file]] and [[setting,ssl_client_ca_dir]]. This is
+mainly useful to provide CAs for proxying in login processes, which run
+chrooted and can't access CA files outside the chroot.`
 	},
 
 	ssl_client_ca_dir: {
