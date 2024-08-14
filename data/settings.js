@@ -2933,6 +2933,7 @@ and appending an \`@domain\` element to the username in cleartext logins.`
 	auth_failure_delay: {
 		default: '2secs',
 		values: setting_types.TIME,
+		seealso: [ 'auth_internal_failure_delay' ],
 		text: `
 This is the delay before replying to failed authentication attempts.
 
@@ -2949,6 +2950,22 @@ This supplies the hostname to use in Generic Security Services API
 (GSSAPI) principal names.
 
 Use \`"$ALL"\` (with the quotation marks) to allow all keytab entries.`
+	},
+
+	auth_internal_failure_delay: {
+		default: '2secs',
+		values: setting_types.TIME_MSECS,
+		added: {
+			settings_auth_internal_failure_delay_added: false
+		},
+		seealso: [ 'auth_failure_delay' ],
+		text: `
+The delay before replying to client when authentication fails with
+internal failure. An additional 0..50% delay is added on top of this to
+prevent thundering herd issues.
+
+This setting is intended to prevent clients from hammering the server with
+immediate retries.`
 	},
 
 	auth_krb5_keytab: {

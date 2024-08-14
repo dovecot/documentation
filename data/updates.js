@@ -81,6 +81,7 @@ export const updates = {
 	settings_auth_allow_weak_schemes_added: '2.4.0',
 	settings_auth_debug_deprecated: '2.4.0',
 	settings_auth_default_domain_added: '2.4.0',
+	settings_auth_internal_failure_delay_added: '2.4.0',
 	settings_auth_policy_request_attributes_changed: '2.4.0',
 	settings_fts_message_max_size_added: '2.4.0',
 	settings_fts_tika_changed_auth: '2.4.0',
