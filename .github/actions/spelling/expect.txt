@@ -107,6 +107,7 @@ currentdate
 cydir
 cyrusimap
 datacenter
+DATADIR
 DATAERR
 datalake
 datastack
@@ -231,7 +232,6 @@ FULLDIRNAME
 gcda
 gcov
 gecos
-gendh
 genhtml
 geninfo
 genkey
@@ -724,7 +724,6 @@ sproxyd
 sqlhost
 sqlpass
 sqlpool
-sqlquota
 sqluser
 ssha
 ssldir
