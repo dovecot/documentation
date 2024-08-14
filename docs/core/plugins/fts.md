@@ -4,7 +4,7 @@ title: fts
 dovecotlinks:
   fts_tokenization:
     hash: tokenization
-	text: FTS Tokenization
+    text: FTS Tokenization
 ---
 
 # FTS: Full Text Search (fts) Plugin
