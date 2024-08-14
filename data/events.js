@@ -1450,16 +1450,50 @@ Transport security indicator. Values:
 
 	auth_server_passdb: {
 		fields: {
-			passdb: `Driver name.`,
-			passdb_name: `\`passdb { name }\`, if it is configured. Otherwise, same as \`passdb { driver }\`.`,
+			passdb: {
+				changed: {
+					events_auth_server_passdb_passdb_changed: false,
+				},
+				text: `passdb { name }.`,
+			},
+			passdb_driver: {
+				added: {
+					events_auth_server_passdb_passdb_driver_added: false,
+				},
+				text: `Driver name.`,
+			},
+			passdb_name: {
+				removed: {
+					events_auth_server_passdb_passdb_name_removed: `
+Renamed to \`passdb\`.`,
+				},
+				text: '',
+			},
 			passdb_id: `Internal ID number of the passdb. May be useful to identify the passdb if it has no name.`,
 		}
 	},
 
 	auth_server_userdb: {
 		fields: {
-			userdb: `Driver name.`,
-			userdb_name: `\`userdb { name }\`, if it is configured. Otherwise, same as \`userdb { driver }\`.`,
+			userdb: {
+				changed: {
+					events_auth_server_userdb_userdb_changed: false,
+				},
+				text: `userdb { name }.`,
+			},
+			userdb_driver: {
+				added: {
+					events_auth_server_userdb_userdb_driver_added: false,
+				},
+				text: `Driver name.`,
+			},
+			userdb_name: {
+				removed: {
+					events_auth_server_userdb_userdb_name_removed: `
+Renamed to \`userdb\`.`,
+				},
+				text: '',
+			},
 			userdb_id: `Internal ID number of the userdb. May be useful to identify the userdb if it has no name.`
 		}
 	},
