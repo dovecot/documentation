@@ -9,6 +9,10 @@ dovecotlinks:
 
 ## Driver Settings
 
+[[removed,settings_ssl_imapc_removed]]: The `ssl_ca_file`, `ssl_ca_dir` and
+`allow_invalid_cert` settings have been removed. The standard `ssl_*` settings
+can be used instead (also inside `passdb { ... }` if wanted).
+
 ### `host=<hostspec>`
 
 IP address or hostname. Allows [[variable]] (e.g. `host=imap.%d`).
@@ -24,14 +28,6 @@ The default is `%u`.
 ### `ssl=<imaps|starttls>`
 
 The SSL method to use.
-
-### `ssl_ca_dir=<path>`
-
-### `ssl_ca_file=<path>`
-
-### `allow_invalid_cert=<yes|no>`
-
-Whether to allow authentication even if the certificate isn't trusted.
 
 ### `rawlog_dir=<path>`
 
