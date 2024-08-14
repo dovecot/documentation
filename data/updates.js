@@ -128,6 +128,7 @@ export const updates = {
 	settings_ssl_imapc_removed: '2.4.0',
 	settings_ssl_request_client_cert_changed: '2.4.0',
 	settings_userdb_auth_verbose_added: '2.2.24',
+	settings_quota_clone_added: '2.4.0',
 	settings_quota_clone_unset_added: '2.4.0',
 	settings_quota_mailbox_count_added: '2.4.0',
 	settings_quota_mailbox_message_count_added: '2.4.0',
