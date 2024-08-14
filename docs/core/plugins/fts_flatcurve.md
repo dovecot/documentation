@@ -54,6 +54,15 @@ mail_plugins = $mail_plugins fts fts_flatcurve
 
 plugin {
   fts = flatcurve
+
+  # Maximum email-address token size (254) is larger than Xapian can handle,
+  # so we will need to truncate at some level. It is doubtful that large
+  # email-addresses are useful for search purposes, so this optional config
+  # will prevent these large addresses (more than 100 bytes) from being
+  # stored.
+  #fts_tokenizers = generic email-address
+  #fts_tokenizer_email_address = maxlen=100
+
   # All of these are optional, and indicate the default values.
   # They are listed here for documentation purposes; most people should
   # not need to define/override in their config.
