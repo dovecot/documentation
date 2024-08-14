@@ -18,6 +18,7 @@ AND'ing
 apparmor
 appendfile
 APPENDUID
+appsuite
 APY
 arcfour
 asd
@@ -33,6 +34,7 @@ authuser
 autocreate
 autocreated
 Autocreation
+autodelete
 autoexpunge
 autoexpunged
 autoexpunging
@@ -62,6 +64,7 @@ bodystructure
 Boehm
 Bokmal
 Borenstein
+boollist
 BROKENCHAR
 bsd
 bsdauth
@@ -131,6 +134,7 @@ Deinitializing
 delaycompress
 deleteheader
 dentries
+DESTNAME
 destuser
 DHd
 Dhesi
@@ -221,6 +225,7 @@ firewalls
 firstsaved
 flatcurve
 Fng
+foofilename
 foop
 foos
 foreverypart
@@ -415,7 +420,7 @@ lwq
 maclen
 madboa
 mailauth
-mailboxdir
+MAILBOXDIR
 mailboxlog
 mailboxname
 maildir
@@ -546,6 +551,7 @@ notifempty
 notwhat
 nouser
 NOVALGRIND
+novar
 nsend
 nss
 nstring
@@ -620,6 +626,7 @@ PREREQ
 princ
 printfa
 prioritization
+privkey
 procmail
 procmailrc
 proctitle
@@ -640,6 +647,7 @@ qresync
 qwerty
 rampup
 randkey
+randomfail
 rawlog
 rchar
 rdineren
@@ -746,7 +754,7 @@ sqlhost
 sqlpass
 sqlpool
 sqluser
-ssha
+SSHA
 ssldir
 stackbuf
 STATEDIR
@@ -763,14 +771,13 @@ strdup
 strescape
 strfuncs
 strlcpy
+strlist
 strocpy
 strp
 subaddress
 subaddresses
 subjwas
-subname
 Subtables
-subvalue
 sustainability
 svbin
 sysadmin
