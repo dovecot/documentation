@@ -115,6 +115,7 @@ prefixing them with `\`.
 | `sieve_vacation_max_subject_codepoints` | This setting has been removed. |
 | `auth_policy_server_timeout_msecs` | See: [[link,auth_policy_configuration]]. |
 | `mail_crypt_require_encrypted_user_key` | Replaced by [[setting,crypt_user_key_require_encrypted]], [[setting,crypt_user_key_password]] and [[setting,crypt_user_key_encryption_key]]. |
+| `verbose_ssl` | Use [[setting,log_debug,category=ssl]] instead. |
 
 ### Changed Default Settings
 

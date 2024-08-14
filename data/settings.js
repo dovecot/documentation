@@ -8058,9 +8058,14 @@ debugging in case there are any problems. See [[link,process_titles]].`
 	},
 
 	verbose_ssl: {
+		removed: {
+			settings_verbose_ssl_removed: false,
+		},
 		default: 'no',
 		values: setting_types.BOOLEAN,
-		text: `If enabled, protocol-level SSL errors are logged.`
+		text: `
+If enabled, protocol-level SSL errors are logged. Same as
+[[setting,log_debug,category=ssl]].`
 	},
 
 	version_ignore: {
