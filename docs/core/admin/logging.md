@@ -165,7 +165,7 @@ they're all disabled, but they may be useful for debugging.
 * [[setting,log_debug,category=mail]] enables all kinds of mail related
   debug logging, such as showing where Dovecot is looking for mails.
 
-* [[setting,verbose_ssl,yes]] enables logging SSL errors and warnings.
+* [[setting,verbose_ssl,category=ssl]] enables logging SSL errors and warnings.
   Even without this setting if connection is closed because of an SSL
   error, the error is logged as the disconnection reason.
 
