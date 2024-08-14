@@ -123,5 +123,6 @@ export const updates = {
 	settings_quota_mailbox_count_added: '2.4.0',
 	settings_quota_mailbox_message_count_added: '2.4.0',
 	settings_submission_add_received_header_added: '2.4.0',
+	settings_verbose_ssl_removed: '2.4.0',
 
 }

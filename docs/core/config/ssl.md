@@ -363,7 +363,7 @@ ssl_prefer_server_ciphers = no
 To make Dovecot log all the problems it sees with SSL connections:
 
 ```[dovecot.conf]
-verbose_ssl = yes
+log_debug = category=ssl
 ```
 
 Some errors might be caused by dropped connections, so it could be quite noisy.
