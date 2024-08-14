@@ -26,7 +26,7 @@ For more details see:
 
 The most important SSL settings are:
 
-```
+```[dovecot.conf]
 ssl = yes
 # Preferred permissions: root:root 0444
 ssl_cert = </etc/ssl/certs/dovecot.pem
@@ -51,14 +51,14 @@ need to give Dovecot any special permissions to read them (in fact:
 
 Settings for the SSL certificate and SSL secret key files:
 
-```
+```[dovecot.conf]
 ssl_cert = </etc/dovecot/dovecot.crt
 ssl_key = </etc/dovecot/dovecot.key
 ```
 
 It's possible to keep the certificate and the key both in the same file:
 
-```
+```[dovecot.conf]
 # Preferred permissions: root:root 0400
 ssl_cert = </etc/ssl/dovecot.pem
 ssl_key = </etc/ssl/dovecot.pem
@@ -67,7 +67,7 @@ ssl_key = </etc/ssl/dovecot.pem
 For using different SSL certificates for different IP addresses you can put
 them inside local {} blocks:
 
-```
+```[dovecot.conf]
 local 10.0.0.1 {
   ssl_cert = </etc/dovecot/dovecot.crt
   ssl_key = </etc/dovecot/dovecot.key
@@ -81,7 +81,7 @@ local 10.0.0.2 {
 
 If you need different SSL certificates for IMAP and POP3 protocols, you can put them inside protocol ``{}`` blocks:
 
-```
+```[dovecot.conf]
 protocol imap {
   ssl_cert = </etc/dovecot/dovecot-imap.crt
   ssl_key = </etc/dovecot/dovecot-imap.key
@@ -214,7 +214,7 @@ You can specify alternative SSL certificate that will be used if the
 algorithm differs from the primary certificate. This is useful when
 migrating to, e.g., ECDSA certificate.
 
-```
+```[dovecot.conf]
 ssl_alt_cert = </path/to/alternative/cert.pem
 ssl_alt_key = </path/to/alternative/key.pem
 ```
@@ -224,7 +224,7 @@ ssl_alt_key = </path/to/alternative/key.pem
 If you have multiple IPs available, this method is guaranteed to work with
 all clients.
 
-```
+```[dovecot.conf]
 # instead of IP you can also use hostname, which will be resolved
 local 192.0.2.10 {
   protocol imap {
@@ -262,7 +262,7 @@ It is important to note that having multiple SSL certificates per IP will
 not be compatible with all clients, especially mobile ones. It is a TLS
 SNI limitation.
 
-```
+```[dovecot.conf]
 local_name imap.example.org {
   ssl_cert = </etc/ssl/certs/imap.example.org.crt
   ssl_key = </etc/ssl/private/imap.example.org.key
@@ -304,7 +304,7 @@ Dovecot with the password:
    directly. Instead you could store it in a different file, such as
    `/etc/dovecot-private.conf` containing:
 
-```
+```[dovecot.conf]
 ssl_key_password = secret
 ```
 
@@ -327,7 +327,7 @@ You should use this.
 
 You can specify path to DH parameters file using:
 
-```
+```[dovecot.conf]
 ssl_dh = </path/to/dh.pem
 ```
 
@@ -354,7 +354,7 @@ a list of the ciphers.
 
 For TLSv1.3 server ciphers should not longer be preferred:
 
-```
+```[dovecot.conf]
 ssl_prefer_server_ciphers = no
 ```
 
@@ -362,7 +362,7 @@ ssl_prefer_server_ciphers = no
 
 To make Dovecot log all the problems it sees with SSL connections:
 
-```
+```[dovecot.conf]
 verbose_ssl = yes
 ```
 
@@ -373,7 +373,7 @@ Some errors might be caused by dropped connections, so it could be quite noisy.
 If you want to require clients to present a valid SSL certificate, you'll
 need these settings:
 
-```
+```[dovecot.conf]
 ssl_ca = </etc/ssl/ca.pem
 ssl_verify_client_cert = yes
 
@@ -414,7 +414,7 @@ to clients while requiring client certificates, you can put
 [[setting,auth_ssl_require_client_cert,yes]] inside of a protocol block as
 shown below to make an exemption for SMTP SASL clients (such as Postfix).
 
-```
+```[dovecot.conf]
 protocol !smtp {
   auth_ssl_require_client_cert=yes
 }
@@ -571,7 +571,7 @@ either [[setting,ssl_client_ca_dir]] or [[setting,ssl_client_ca_file]].
 Using [[setting,ssl_client_ca_dir]] is preferred because it uses less memory.
 :::
 
-```
+```[dovecot.conf]
 ssl_client_ca_dir = /path/to/pem/certificates
 ssl_client_ca_file = /path/to/pem/bundle
 ```
