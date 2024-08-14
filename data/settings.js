@@ -2669,18 +2669,22 @@ options.`
 
 	/* quota-clone plugin */
 
-	quota_clone_dict: {
+	quota_clone: {
 		plugin: 'quota-clone',
-		values: setting_types.STRING,
+		added: {
+			settings_quota_clone_added: false,
+		},
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,dict]]' ],
 		text: `
-The dictionary to update with quota clone information. This must be set for
-the plugin to be active.
+Named filter for initializing dictionary used to update with quota clone
+information.
 
-See [[link,dict]] for dictionary configuration.
-
-\`\`\`
-plugin {
-  quota_clone_dict = redis:host=127.0.0.1:port=6379
+\`\`\`[dovecot.conf]
+dict_redis_host = 127.0.0.1
+dict_redis_port = 6379
+quota_clone {
+  dict_driver = redis
 }
 \`\`\``
 	},
