@@ -305,7 +305,7 @@ filter when multiple languages are present in the configuration.
 
 Stopwords specific settings:
 
-#### `stopwords_dir`
+<FTSConfigComponent name="stopwords_dir" default="&lt;DATADIR&gt;/stopwords">
 
 Path to the directory containing stopword files. Stopword files are
 looked up in `”<path>”/stopwords_<lang>.txt`.
@@ -317,6 +317,8 @@ More languages can be obtained from
 [Apache Lucene](https://lucene.apache.org/),
 [Snowball stemmer](https://snowballstem.org/), or
 https://github.com/stopwords-iso/.
+
+</FTSConfigComponent>
 
 ### `snowball`
 
@@ -341,13 +343,14 @@ Similar cases can exist for other languages as well.
 
 normalizer-icu specific settings:
 
-#### `id`
+<FTSConfigComponent name="stopwords_dir" default="Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove">
 
 Description of the normalizing/transliterating rules to use.
 
-* See [Normalizer Format](https://unicode-org.github.io/icu/userguide/transforms/general/#transliterator-identifiers)
-  for syntax
-* Defaults to `Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove`
+See [Normalizer Format](https://unicode-org.github.io/icu/userguide/transforms/general/#transliterator-identifiers)
+for syntax.
+
+</FTSConfigComponent>
 
 ### `english-possessive`
 
@@ -390,12 +393,13 @@ suitable for indexing and searching. The generic tokenizer does this.
 
 Generic-specific settings:
 
-#### `maxlen`
+<FTSConfigComponent name="maxlen" default="30">
 
 Maximum length of token, before an arbitrary cut off is made.
-Defaults to `FTS_DEFAULT_TOKEN_MAX_LENGTH`. The default is probably OK.
 
-#### `algorithm`
+</FTSConfigComponent>
+
+<FTSConfigComponent name="algorithm" default="simple">
 
 Accepted values are `simple` or `tr29`. It defines the method for
 looking for word boundaries.
@@ -408,9 +412,9 @@ latin alphabets, but leaves corner cases.
 Hebrew characters, but it is not possible to use a single algorithm for
 all existing languages.
 
-The default is `simple`.
+</FTSConfigComponent>
 
-#### `wb5a`
+<FTSConfigComponent name="wb5a" default="no">
 
 Unicode TR29 rule WB5a setting to the tr29 tokenizer. Splits
 prefixing contracted words from base word. E.g. “l'homme” → “l”
@@ -419,6 +423,8 @@ contractions can thus be filtered away. This is disabled by default
 and only works with the TR29 algorithm.
 
 Enable by `fts_tokenizer_generic = algorithm=tr29 wb5a=yes`.
+
+</FTSConfigComponent>
 
 ### `email-address`
 
