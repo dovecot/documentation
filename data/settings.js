@@ -3420,7 +3420,11 @@ It is usually neither necessary nor advisable to change the default.`
 
 	auth_ssl_require_client_cert: {
 		default: 'no',
-		seealso: [ 'ssl_ca', 'ssl_verify_client_cert', '[[link,ssl_configuration]]' ],
+		seealso: [
+			'ssl_ca',
+			'ssl_request_client_cert',
+			'[[link,ssl_configuration]]',
+		],
 		values: setting_types.BOOLEAN,
 		text: `
 If \`yes\`, authentication fails when a valid SSL client certificate is not
@@ -7339,7 +7343,11 @@ ssl_alt_cert = </path/to/alternative/cert.pem
 	},
 
 	ssl_ca: {
-		seealso: [ 'ssl', 'ssl_client_require_valid_cert', 'ssl_verify_client_cert' ],
+		seealso: [
+			'ssl',
+			'ssl_client_require_valid_cert',
+			'ssl_request_client_cert',
+		],
 		values: setting_types.STRING,
 		text: `
 List of SSL CA certificates that are used to validate whether SSL
@@ -7359,7 +7367,7 @@ Example:
 
 \`\`\`
 ssl_ca = </etc/dovecot/ca.crt
-ssl_verify_client_cert = yes
+ssl_request_client_cert = yes
 auth_ssl_require_client_cert = yes
 \`\`\``
 	},
@@ -7635,9 +7643,17 @@ appended to the [[setting,ssl_ca]] file.
 This setting is used only for server connections.`
 	},
 
-	ssl_verify_client_cert: {
+	ssl_request_client_cert: {
+		changed: {
+			settings_ssl_request_client_cert_changed: `
+Renamed from \`ssl_verify_client_cert\` setting.`
+		},
 		default: 'no',
-		seealso: [ 'ssl', 'auth_ssl_require_client_cert', '[[link,ssl_configuration]]' ],
+		seealso: [
+			'ssl',
+			'auth_ssl_require_client_cert',
+			'[[link,ssl_configuration]]',
+		],
 		values: setting_types.BOOLEAN,
 		text: `
 If enabled, the imap/pop3/etc. client is requested to send an SSL certificate.
