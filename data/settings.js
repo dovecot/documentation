@@ -5583,18 +5583,18 @@ Which filesystem type to use for saving attachments.
 Options:
 
 \`posix\`
-:   No single-instance storage (SiS) done (this option might simplify the
+:   No single-instance storage (SIS) done (this option might simplify the
     filesystem's own de-duplication operations).
 
 \`sis posix\`
-:   SiS with immediate byte-by-byte comparison during saving.
+:   SIS with immediate byte-by-byte comparison during saving.
 
-    SiS is deprecated and writing of SiS files is disabled. Reading is
-    supported for now, any missing SiS attachments are replaced with files
+    SIS is deprecated and writing of SIS files is disabled. Reading is
+    supported for now, any missing SIS attachments are replaced with files
     filled with spaces.
 
 \`sis-queue posix\`
-:   SiS with delayed comparison and de-duplication.
+:   SIS with delayed comparison and de-duplication.
 
 [[variable,mail-user]] can be used.`
 	},
