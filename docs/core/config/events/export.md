@@ -6,9 +6,12 @@ dovecotlinks:
   event_export_label:
     hash: filtering-events
     text: Filtering Events
+  event_export_formats:
+    hash: formats
+    text: "Event Export: Formats"
   event_export_transports:
     hash: transports
-    text: Event Export Transports
+    text: "Event Export: Transports"
 ---
 
 # Event Export
@@ -65,13 +68,13 @@ Supported Format Arguments:
 
 | Arguments | Description |
 | --------- | ----------- |
-| `time-rfc3339` | Serialize timestamps as strings using the [[rfc,3339]] format (YYYY-MM-DDTHH:MM:SS.uuuuuuZ) |
+| `time-rfc3339` | Serialize timestamps as strings using the [[rfc,3339]] format (`YYYY-MM-DDTHH:MM:SS.uuuuuuZ`) |
 | `time-unix` | Serialize timestamps as a floating point number of seconds since the Unix epoch |
 
 #### Example: JSON
 
-::: tip Note
-This example is pretty-printed.  The actual exported event omits the
+::: tip NOTE
+This example is pretty-printed. The actual exported event omits the
 whitespace between the various tokens.
 :::
 
@@ -103,7 +106,7 @@ whitespace between the various tokens.
 #### Example: tab-text
 
 ```
-event:imap_command_finished        hostname:dovecot-dev    start_time:2019-06-19T10:38:25.422744Z  end_time:2019-06-19T10:38:25.424812Z    category:imap   field:user=jeffpc       field:session=xlBB1KqLz1isGwB+  field:tag=a0005 field:cmd_name=SELECT       field:tagged_reply_state=OK     field:tagged_reply=OK [READ-WRITE] Select completed     field:last_run_time=2019-06-19T10:38:25.422709Z field:running_usecs=1953        field:lock_wait_usecs=60        field:net_in_bytes=7        field:net_out_bytes=311
+event:imap_command_finished	hostname:dovecot-dev	start_time:2019-06-19T10:38:25.422744Z	end_time:2019-06-19T10:38:25.424812Z	category:imap	field:user=jeffpc	field:session=xlBB1KqLz1isGwB+	field:tag=a0005	field:cmd_name=SELECT	field:tagged_reply_state=OK	field:tagged_reply=OK [READ-WRITE] Select completed	field:last_run_time=2019-06-19T10:38:25.422709Z	field:running_usecs=1953	field:lock_wait_usecs=60	field:net_in_bytes=7	field:net_out_bytes=311
 ```
 
 ## Transports
