@@ -82,7 +82,9 @@ dict {
   metadata = driver:/etc/dovecot/dict.config
 }
 
-mail_attribute_dict = proxy::metadata
+mail_attribute {
+ dict_driver = proxy
+ dict_proxy_name = metadata
 ```
 :::
 
@@ -105,7 +107,7 @@ Set [[setting,mailbox_list_index,yes]].
 
 ### URLAUTH:
 
-Set [[setting,imap_urlauth_host]] and [[setting,mail_attribute_dict]].
+Set [[setting,imap_urlauth_host]] and [[setting,mail_attribute]].
 
 ## IMAP Hibernation
 

@@ -4613,13 +4613,16 @@ this parameter's value to \`yes\` if you wish to activate the IMAP METADATA
 commands.
 
 Note: If activated, a dictionary needs to be configured, via the
-[[setting,mail_attribute_dict]] setting.
+[[setting,mail_attribute]] setting.
 
 Example:
 
 \`\`\`
 # Store METADATA information within user's Maildir directory
-mail_attribute_dict = file:%h/Maildir/dovecot-attributes
+mail_attribute {
+  dict_driver = file
+  dict_file_path = %h/Maildir/dovecot-attributes
+}
 
 protocol imap {
   imap_metadata = yes
@@ -5658,21 +5661,24 @@ will return only the first 80 bits of the SHA256 output.`
 		text: `Attachments below this size will not be saved externally.`
 	},
 
-	mail_attribute_dict: {
+	mail_attribute: {
 		seealso: [ 'imap_metadata' ],
 		tags: [ 'metadata' ],
-		values: setting_types.STRING,
+		values: setting_types.NAMED_FILTER,
 		text: `
-The dictionary to be used for key=value mailbox attributes.
+Named filter for initializing [[link,dict,dict driver]] for server and mailbox
+attributes (\`key=value\`).
 
-This is used by the URLAUTH and METADATA extensions.
-
-[[variable,mail-user]] can be used.
+This is used by the URLAUTH and METADATA extensions, as well as various other
+features.
 
 Example:
 
 \`\`\`
-mail_attribute_dict = file:%h/dovecot-attributes
+mail_attribute {
+  dict_driver = file
+  dict_file_path = %h/dovecot-attributes
+}
 \`\`\``
 	},
 
