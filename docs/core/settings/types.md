@@ -30,6 +30,9 @@ dovecotlinks:
   settings_types_in_port:
     hash: port-number
     text: Port Number
+  settings_types_octal_uint:
+    hash: octal-unsigned-integer
+    text: octal unsigned integer
   settings_types_url:
     hash: url
     text: URL
@@ -75,6 +78,11 @@ Unsigned integer is a number between `0`..`4294967295`, although specific
 settings may have additional restrictions.
 
 The value can also be `unlimited`, which translates to `4294967295`.
+
+## Octal Unsigned Integer
+
+Same as [[link,settings_types_uint]], but if the value is prefixed with `0`,
+the number is read as octal (instead of decimal).
 
 ## Boolean
 
