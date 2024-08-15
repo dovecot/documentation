@@ -10,7 +10,8 @@ dovecotlinks:
 
 # Statistics
 
-See [[link,events]] for list of all events that can be used in statistics.
+See [[link,summary_events]] for list of all events that can be used in
+statistics.
 
 Dovecot supports gathering statistics from events (see [[link,event_design]]).
 Currently there are no statistics logged by default, and therefore they must
