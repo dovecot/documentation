@@ -17,17 +17,17 @@ networked file systems such as NFS.
 The Maildir mailbox format is mainly viable for smaller installations.
 
 It will be maintained on a best-effort basis for
-[Dovecot Community Edition](https://repo.dovecot.org/), without any
+[Dovecot Community Edition][dovecot-ce], without any
 prioritization of new features or optimizations.
 :::
 
 ## Dovecot Extensions
 
-Since the [Maildir standard](https://cr.yp.to/proto/maildir.html)
-doesn't provide everything needed to fully
-support the IMAP protocol, Dovecot had to create some of its own non-standard
-extensions. The extensions still keep the Maildir standards compliant, so MUAs
-not supporting the extensions can still safely use it as a normal Maildir.
+Since the [Maildir standard][maildir-standard] doesn't provide everything
+needed to fully support the IMAP protocol, Dovecot had to create some of its
+own non-standard extensions. The extensions still keep the Maildir standards
+compliant, so MUAs not supporting the extensions can still safely use it as a
+normal Maildir.
 
 ### IMAP UID mapping
 
@@ -163,13 +163,21 @@ Timestamps of `cur` and `new` directories:
 
 ### Filename Examples
 
-| Filename | Explanation |
-| **1491941793**.M41850P8566V0000000000000015I0000000004F3030E_0.mx1.example.com,S=10956:2,STln | UNIX timestamp of arrival |
-| 1491941793.M41850P8566V0000000000000015I0000000004F3030E_0.mx1.example.com,\ **S=10956**\ :2,STln | Size of e-mail |
-| 1491941793.M41850P8566V0000000000000015I0000000004F3030E_0.mx1.example.com,S=10956:2,\ **STln** | **S** = seen (marked as read) |
-| | **T** = trashed |
-| | **l** = IMAP tag #12 (0=a, 1=b, 2=c, etc) as defined in that folder's `dovecot-keywords` file. |
-| | **n** = IMAP tag #14 (0=a, 1=b, 2=c, etc) as defined in that folder's `dovecot-keywords` file. |
+For a filename `1491941793.M41850P8566V0000000000000015I0000000004F3030E_0.mx1.example.com,S=10956:2,STln`:
+
+`1491941793`
+:    UNIX timestamp of arrival.
+
+`S=10956`
+:    Size of the e-mail.
+
+`STln`
+:    * **S** = seen (marked as read)
+     * **T** = trashed
+     * **l** = IMAP tag #12 (0=a, 1=b, 2=c, etc.) as defined in that folder's
+       `dovecot-keywords` file.
+     * **n** = IMAP tag #14 (0=a, 1=b, 2=c, etc.) as defined in that folder's
+       `dovecot-keywords` file.
 
 ## Issues with the Maildir Specification
 
@@ -197,8 +205,8 @@ no need for LDAs to support any type of locking.
 
 ### Mail Delivery
 
-[Qmail's how a message is delivered page](http://qmail.org/man/man5/maildir.html)
-suggests to deliver the mail like this:
+[Qmail's how a message is delivered page][qmail-message-delivery] suggests to
+deliver the mail like this:
 
 1. Create a unique filename (only `time.pid.host` here, later Maildir spec
    has been updated to allow more uniqueness identifiers)
@@ -271,18 +279,18 @@ file reappeared into the mailbox and an error is logged.
 The proper way to configure procmail to deliver to a Maildir is to use
 `Maildir/` as the destination.
 
+## Settings
+
+<SettingsComponent tag="maildir" />
+
 ## Configuration
-
-### Settings
-
-<SettingsComponent tag="maildir" level="3" />
 
 ### Mail Location
 
 Maildir exists almost always in `~/Maildir` directory. The mail location is
 specified with:
 
-```
+```[dovecot.conf]
 mail_location = maildir:~/Maildir
 ```
 
@@ -302,7 +310,7 @@ If you want Maildirs to use hierarchical directories, such as:
 
 you'll need to enable fs layout:
 
-```
+```[dovecot.conf]
 mail_location = maildir:~/Maildir:LAYOUT=fs
 ```
 
@@ -337,7 +345,7 @@ avoid problems with this,
 you should place control files into a partition where quota isn't checked. You
 can specify this by adding `:CONTROL=<path` to `mail_location`:
 
-```
+```[dovecot.conf]
 mail_location = maildir:~/Maildir:CONTROL=/var/no-quota/%u
 ```
 
@@ -348,7 +356,7 @@ By default, index files are stored in the actual Maildirs.
 See [[link,mail_location]] for an explanation of how to change the index
 path. Example:
 
-```
+```[dovecot.conf]
 mail_location = maildir:~/Maildir:INDEX=/var/indexes/%u
 ```
 
@@ -376,7 +384,7 @@ This may not be a problem in many installations, but if a risk of collisions
 with Maildir's three subdirectory names is perceived, then the `DIRNAME`
 parameter can be used. For example, if we specify mail location as:
 
-```
+```[dovecot.conf]
 mail_location = maildir:~/Maildir:LAYOUT=fs:DIRNAME=mAildir
 ```
 
@@ -405,7 +413,7 @@ or not.
 
 For example:
 
-```
+```[dovecot.conf]
 mail_location = maildir:~/Maildir:LAYOUT=fs
 
 namespace {
@@ -427,6 +435,10 @@ namespace {
 The solution is to disable `dovecot.list.index` for the alias namespace. In
 the above example, this is done by changing the "Alias location" line to:
 
-```
+```[dovecot.conf]
 location = maildir:~/Maildir:LAYOUT=fs:LISTINDEX=
 ```
+
+[dovecot-ce]: https://repo.dovecot.org/
+[maildir-standard]: https://cr.yp.to/proto/maildir.html
+[qmail-message-delivery]: http://qmail.org/man/man5/maildir.html
