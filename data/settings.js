@@ -451,7 +451,7 @@ capability.`
 	managesieve_logout_format: {
 		tags: [ 'managesieve', 'sieve' ],
 		default: 'bytes=%i/%o',
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 Specifies the string pattern used to compose the logout message of an
 authenticated session. The following substitutions are available:
@@ -2541,7 +2541,7 @@ plugin {
 	notify_status_value: {
 		default: '{"messages":%{messages},"unseen":%{unseen}}',
 		plugin: 'notify-status',
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 A template of the string that will be written to the dictionary.
 
@@ -3660,7 +3660,7 @@ within service blocks.`
 
 	deliver_log_format: {
 		default: 'msgid=%m: %$',
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 The format to use for logging mail deliveries.
 
@@ -4579,7 +4579,7 @@ when the client is in IDLE operation.`
 	imap_logout_format: {
 		default: 'in=%i out=%o deleted=%{deleted} expunged=%{expunged} trashed=%{trashed} hdr_count=%{fetch_hdr_count} hdr_bytes=%{fetch_hdr_bytes} body_count=%{fetch_body_count} body_bytes=%{fetch_body_bytes}',
 		tags: [ 'imap' ],
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 This setting specifies the IMAP logout format string. Supported variables,
 in addition to [[variable,mail-user]] are:
@@ -4664,7 +4664,7 @@ be active.
 		default: 'in=%i out=%o',
 		seealso: [ 'imap_urlauth_host' ],
 		tags: [ 'imap' ],
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 Specifies the logout format used with the URLAUTH extension in IMAP
 operation.
@@ -5336,7 +5336,7 @@ info_log_path = /var/log/dovecot-info.log
 
 	log_timestamp: {
 		default: '%b %d %H:%M:%S',
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 The prefix for each line written to the log file.
 
@@ -5368,7 +5368,7 @@ Variables allowed:
 
 	login_log_format: {
 		default: '%$: %s',
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 The formatting of login log messages.
 
@@ -5383,7 +5383,7 @@ Variables allowed (in addition to [[variable,global]]):
 	login_log_format_elements: {
 		default: 'user=<%u> method=%m rip=%r lip=%l mpid=%e %c session=<%{session}>',
 		// TODO: Provide join example
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 A space-separated list of elements of the login log formatting.
 
@@ -7134,7 +7134,7 @@ If enabled, only one POP3 session may exist for any single user.`
 	pop3_logout_format: {
 		default: 'top=%t/%p retr=%r/%b del=%d/%m size=%s',
 		tags: [ 'pop3' ],
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 The string to display to the client on POP3 logout (informational only).
 
@@ -7203,7 +7203,7 @@ Options:
 	pop3_uidl_format: {
 		default: '%08Xu%08Xv',
 		tags: [ 'pop3' ],
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 The POP3 unique mail identifier (UIDL) format to use.
 
@@ -7414,7 +7414,7 @@ protocol imap {
 	rejection_reason: {
 		default: 'Your message to \<%t\> was automatically rejected:%n%r',
 		tags: [ 'lda', 'lmtp' ],
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 A human-readable message for the recipients of bounce messages.
 
@@ -7435,7 +7435,7 @@ delivery protocol.`
 		default: 'Rejected: %s',
 		seealso: [ 'rejection_reason' ],
 		tags: [ 'lda', 'lmtp' ],
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 The Subject: header to use for bounce messages.
 
@@ -7918,7 +7918,7 @@ Overrides [[setting,sendmail_path]] value, if set.`
 	submission_logout_format: {
 		default: 'in=%i out=%o',
 		tags: [ 'submission' ],
-		values: setting_types.STRING,
+		values: setting_types.STRING_NOVAR,
 		text: `
 The SMTP Submission logout format string.
 
