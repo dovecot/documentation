@@ -662,7 +662,7 @@ This is currently used only with Cassandra.`
 			},
 		},
 		return: `
-On succesful DNS lookup, returns a table with IP addresses (which has at
+On successful DNS lookup, returns a table with IP addresses (which has at
 least one IP).
 
 On failure, returns nil, error string, net_gethosterror()
