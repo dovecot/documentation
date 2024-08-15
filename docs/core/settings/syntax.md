@@ -8,6 +8,9 @@ dovecotlinks:
   settings_syntax_named_filters:
     hash: named-filters
     text: Named Filters
+  settings_connection_filters:
+    hash: connection-filters
+    text: Connection Filters
 ---
 
 # Dovecot Config File Syntax
