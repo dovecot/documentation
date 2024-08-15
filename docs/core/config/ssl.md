@@ -93,7 +93,7 @@ protocol pop3 {
 }
 ```
 
-::: tip Note
+::: tip NOTE
 It's important to note that `ssl = yes` must be set globally if
 you require SSL for any protocol (or Dovecot will not listen on the
 SSL ports), which in turn requires that a certificate and key are
@@ -137,7 +137,7 @@ There are a couple of different ways to specify when SSL/TLS is required:
   Note that this setting is unrelated to the STARTTLS command - either
   implicit SSL/TLS or STARTTLS command is allowed.
 
-  ::: tip Note
+  ::: tip NOTE
   If you have only cleartext mechanisms enabled (e.g.
   [[setting,auth_mechanisms,plain login]] and
   [[setting,auth_allow_cleartext,no]], [[setting,ssl,yes]] and
@@ -145,7 +145,7 @@ There are a couple of different ways to specify when SSL/TLS is required:
   case the authentication will fail unless SSL/TLS is enabled first.
   :::
 
-  ::: tip Note
+  ::: tip NOTE
   With both [[setting,ssl,yes]] and [[setting,ssl,required]], it's
   still possible that the client attempts to do a cleartext authentication
   before enabling SSL/TLS, which exposes the cleartext password to
@@ -171,7 +171,7 @@ There are a couple of different ways to specify when SSL/TLS is required:
   non-cleartext authentication would be the ideal situation since it
   protects the cleartext password even against man-in-the-middle attacks.
 
-  ::: tip Note
+  ::: tip NOTE
   The cleartext authentication mechanisms are always allowed (and SSL
   not required) for [secured connections](#secured-connections).
   :::
@@ -251,7 +251,7 @@ local 192.0.2.20 {
 }
 ```
 
-::: warning Note
+::: warning
 You will still need a top-level default [[setting,ssl_key]] and
 [[setting,ssl_cert]], or you will receive errors.
 :::
@@ -276,18 +276,21 @@ local_name imap.example2.org {
 # ..etc..
 ```
 
+#### Client Support
+
 Clients confirmed working with TLS SNI:
 
 * Thunderbird (Linux)
-* [K-9 on Android](https://github.com/k9mail/k-9/pull/718)
-* Apple Mail (according to https://support.cpanel.net/hc/en-us/community/posts/19633051862807-Mail-SSL-SNI)
-* [Mutt](https://gitlab.com/muttmua/trac-tickets/-/blob/master/tickets/closed/3923-mutt_may_need_to_support_TLSs_Server_Name_Indiciation_SNI_fo.txt?ref_type=heads)
-* [NeoMutt](https://www.neomutt.org/feature/tls-sni)
+* [K-9 on Android][support-android-k9]
+* Apple Mail (according to [Mail SSL SNI - cPanel][support-apple-mail])
+* [Mutt][support-mutt]
+* [NeoMutt][support-neomutt]
 
 Not working Clients:
 
 * Apple Mail (Mac OS X 10.10 and lower AND iOS 9.3 and lower)
-* Outlook for Mac version 15 (according to https://support.cpanel.net/hc/en-us/community/posts/19633051862807-Mail-SSL-SNI)
+* Outlook for Mac version 15 (according to
+  [Mail SSL SNI - cPanel][support-apple-mail])
 * Kindle Fire HD 8
 * Outlook 2013
 
@@ -384,7 +387,7 @@ auth_ssl_require_client_cert = yes
 
 The CA file should contain the certificate(s) followed by the matching CRL(s).
 
-::: tip Note
+::: tip NOTE
 The CRLs are required to exist. For a multi-level CA place the certificates
 in this order:
 
@@ -580,8 +583,8 @@ ssl_client_ca_file = /path/to/pem/bundle
 
 [[added,ja3_identifier]]
 
-Dovecot supports calculating [JA3 hash](https://engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967)
-for checking client TLS implementation.
+Dovecot supports calculating [JA3 hash][ja3-hash] for checking client TLS
+implementation.
 
 This adds `ssl_ja3` and `ssl_ja3_hash` to [[variable,login]], to be used
 with [[setting,login_log_format_elements]] and `ssl_ja3_hash` for
@@ -611,3 +614,9 @@ Thunderbird 102.4.2+build2-0ubuntu0.22.04.1, TLS1.3
   ja3=771,4865-4867-4866-49195-49199-52393-52392-49196-49200-49162-49161-49171-49172-156-157-47-53,0-23-65281-10-11-35-5-51-43-13-45-21,29-23-24-25-256-257,0
   ja3_hash=3ed71a458200f4af79031644408b8e58
 ```
+
+[ja3-hash]: https://engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967
+[support-apple-mail]: https://support.cpanel.net/hc/en-us/community/posts/19633051862807-Mail-SSL-SNI
+[support-android-k9]: https://github.com/k9mail/k-9/pull/718
+[support-mutt]: https://gitlab.com/muttmua/trac-tickets/-/blob/master/tickets/closed/3923-mutt_may_need_to_support_TLSs_Server_Name_Indiciation_SNI_fo.txt?ref_type=heads
+[support-neomutt]: https://www.neomutt.org/feature/tls-sni
