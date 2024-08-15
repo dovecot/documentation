@@ -3912,6 +3912,60 @@ Format used for serializing the event.`
 Format-specific arguments used for serializing the event.`
 	},
 
+	fifo_listener: {
+		tags: [ 'service' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'service', 'fifo_listener_path' ],
+		text: `
+Creates a new FIFO listener for a [[setting,service]]. The filter name refers
+to the [[setting,fifo_listener_path]] setting.`
+	},
+
+	fifo_listener_path: {
+		tags: [ 'service' ],
+		values: setting_types.STRING_NOVAR,
+		seealso: [ 'base_dir', 'fifo_listener' ],
+		text: `
+Path to the FIFO, relative to [[setting,base_dir]] setting. The
+[[setting,fifo_listener]] filter name refers to this setting.`
+	},
+
+	fifo_listener_type: {
+		tags: [ 'service' ],
+		added: {
+			settings_fifo_listener_type_added: false,
+		},
+		values: setting_types.STRING,
+	text: `
+Listener type. This string value has service-specific meaning and is used to
+distinguish different listener types that one service may employ.`
+	},
+
+	fifo_listener_mode: {
+		tags: [ 'service' ],
+		values: setting_types.OCTAL_UINT,
+		default: '0600',
+		text: `
+Mode of the file. Note that \`0600\` is an octal value, while \`600\` is a
+different decimal value. Setting mode to \`0\` disables the listener.`
+	},
+
+	fifo_listener_user: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		default: '<empty>',
+		text: `
+Owner of the listener file. Empty (default) means UID 0 (root).`
+	},
+
+	fifo_listener_group: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		default: '<empty>',
+		text: `
+	Group of the listener file. Empty (default) means GID 0 (root/wheel).`
+	},
+
 	first_valid_gid: {
 		default: 1,
 		seealso: [ 'last_valid_gid' ],
@@ -5008,6 +5062,83 @@ passed to all child processes.
 
 It can include key = value pairs for assigning variables the desired value
 upon Dovecot startup.`
+	},
+
+	inet_listener: {
+		tags: [ 'service' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'service', 'inet_listener_name' ],
+		text: `
+Creates a new network socket listener for a [[setting,service]]. The filter
+name refers to the [[setting,inet_listener_name]] setting.`
+	},
+
+	inet_listener_name: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		seealso: [ 'inet_listener_type', 'inet_listener' ],
+		text: `
+Name of this listener. It is meant to be descriptive for humans (e.g. \`imap\`,
+\`imaps\`), but it is also used by services to determine the socket type,
+unless [[setting,inet_listener_type]] overrides it. The
+[[setting,inet_listener]] filter name refers to this setting.`
+	},
+
+	inet_listener_type: {
+		tags: [ 'service' ],
+		added: {
+			settings_inet_listener_type_added: false,
+		},
+		values: setting_types.STRING,
+		text: `
+Listener type. This string value has service-specific meaning and is used to
+distinguish different listener types that one service may employ.`
+	},
+
+	inet_listener_address: {
+		tags: [ 'service' ],
+		values: setting_types.IPADDR,
+		text: `
+Overrides the [[setting,listen]] setting for this listener.`
+	},
+
+	inet_listener_port: {
+		tags: [ 'service' ],
+		values: setting_types.IN_PORT,
+		default: 0,
+		text: `
+Port number where to listen. \`0\` disables the listener.`
+	},
+
+	inet_listener_ssl: {
+		tags: [ 'service' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ 'ssl' ],
+		text: `
+If \`yes\`, the listener does an immediate SSL/TLS handshake after accepting a
+connection. This is needed for e.g. the \`imaps\` and \`pop3s\` ports.
+
+::: info NOTE
+All listeners with \`ssl=yes\` will be removed if the global [[setting,ssl]]
+setting is \`no\`.
+
+Regardless of the value for listener's ssl setting, some services will still
+try to initialize encryption if the global [[setting,ssl]] is \`yes\`. This is
+for example done to accommodate STARTTLS commands for IMAP/SUBMISSION/LMTP
+protocols. In other words, SSL is truly disabled only when the global
+[[setting,ssl]] is \`no\`.
+:::`
+	},
+
+	inet_listener_haproxy: {
+		tags: [ 'service' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+If \`yes\`, this listener is configured for use with HAProxy. It expects a
+Proxy Protocol header right after accepting the connection. Connections are
+aborted immediately if this protocol is violated.`
 	},
 
 	info_log_path: {
@@ -7439,6 +7570,213 @@ The binary to use for sending email.
 Used only if [[setting,submission_host]] is not set.`
 	},
 
+	service: {
+		tags: [ 'service' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'service_name' ],
+		text: `
+Creates a new service to the list of services. The filter name refers to the
+[[setting,service_name]] setting.`
+	},
+
+	service_name: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		seealso: [ 'service' ],
+		text: `
+Name of the service. The [[setting,service]] filter name refers to this
+setting.`
+	},
+
+	service_protocol: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		seealso: [ 'protocols' ],
+		text: `
+If non-empty, this service is enabled only when the protocol name is listed in
+[[setting,protocols]] setting.`
+	},
+
+	service_type: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		seealso: [ 'service_process_limit' ],
+		text: `
+Type of this service:
+
+| Value | Description |
+| --- | --- |
+| \`<empty>\` | The default. |
+| \`login\` | Used by login services. The login processes have "all processes full" notification fd. It's used by the processes to figure out when no more client connections can be accepted because client and process limits have been reached. The login processes can then kill some of their oldest connections that haven't logged in yet. |
+| \`worker\` | Used by various worker services. It's normal for worker processes to fill up to [[setting,service_process_limit]], and there shouldn't be a warning logged about it. |
+| \`startup\` | Creates one process at startup. |
+| \`log\`<br/>\`config\`<br/>\`anvil\` | Treated specially by these specific services. |`
+	},
+
+	service_executable: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		seealso: [ 'base_dir' ],
+		text: `
+The binary path to execute and its parameters. If the path doesn't begin with
+\`/\`, it's relative to [[setting,base_dir]].`
+	},
+
+	service_user: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		seealso: [ 'default_login_user', 'default_internal_user' ],
+		text: `
+UNIX user (UID) which runs this process. [[setting,default_login_user]] should
+be used for \`type=login\` processes and [[setting,default_internal_user]]
+should be used for other processes that don't require root privileges.`
+	},
+
+	service_group: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		text: `
+The primary UNIX group (GID) which runs this process.`
+	},
+
+	service_privileged_group: {
+		tags: [ 'service' ],
+		advanced: true,
+		values: setting_types.STRING,
+		seealso: [ 'mail_privileged_group' ],
+		text: `
+Secondary UNIX group - which is disabled by default - but can be enabled by the
+process. [[setting,mail_privileged_group]] setting is a more user friendly way
+to use this setting for mail processes.`
+	},
+
+	service_extra_groups: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		text: `
+Secondary UNIX groups that this process belongs to.`
+	},
+
+	service_chroot: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		seealso: [ 'base_dir' ],
+		text: `
+The processes are chrooted to this directory at startup. Relative to
+[[setting,base_dir]].`
+	},
+
+	service_drop_priv_before_exec: {
+		tags: [ 'service' ],
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		text: `
+Drop all privileges after forking, but before executing the binary. This is
+mainly useful for dumping core files on non-Linux OSes, since the processes are
+no longer in "setuid" mode. This setting can't be used with non-empty chroot.`
+	},
+
+	service_process_min_avail: {
+		tags: [ 'service' ],
+		values: setting_types.UINT,
+		default: 0,
+		seealso: [
+		'service_client_limit',
+		'service_service_count',
+		'service_process_min_avail',
+		],
+		text: `
+Minimum number of processes that always should be available to accept more
+client connections.
+
+Note that if [[setting,service_client_limit,1]], this means there are always
+that many processes that are not doing anything. When a new process launches,
+one of the idling processes will accept the connection and a new idling process
+is launched.
+
+* For [[setting,service_service_count,1]] processes this decreases the
+  latency for handling new connections, because there's no need to wait for
+  processes to fork. This is usually not necessary to to be set. Large
+  [[setting,service_process_min_avail]] values might be useful in some special
+  cases, like if there are a lot of POP3 users logging in exactly at the same
+  time to check mails.
+* For [[setting,service_service_count]] to a value \`!=1\` and
+  [[setting,service_client_limit]] to a value \`>1\` processes it could be set
+  to the number of CPU cores on the system to balance the load among them. This
+  is commonly used with \`*-login\` processes.
+* For [[setting,service_service_count]] with a value of \`!=1\` and
+  [[setting,service_client_limit,1]] processes it is likely not useful to use
+  this, because generally there are already some idling processes waiting to
+  accept new connections. However, it's not harmful either, since
+  [[setting,service_process_min_avail]] includes the existing idling processes
+  when counting how many new idling processes are needed.`
+	},
+
+	service_process_limit: {
+		tags: [ 'service' ],
+		values: setting_types.UINT,
+		default: 100,
+		text: `
+The maximum number of processes that may exist for this service.`
+	},
+
+	service_client_limit: {
+		tags: [ 'service' ],
+		values: setting_types.UINT,
+		default: 1000,
+		text: `
+Maximum number of simultaneous client connections per process. Once this number
+of connections is received, the next incoming connection will prompt Dovecot to
+spawn another process.`
+	},
+
+	service_service_count: {
+		tags: [ 'service' ],
+		values: setting_types.UINT,
+		default: 'unlimited',
+		text: `
+Number of client connections to handle until the process kills itself. Use
+\`unlimited\` to keep the process alive. \`1\` means only a single connection
+is handled until the process is stopped - this is the most secure choice since
+there's no way for one connection's state to leak to the next one. For better
+performance this can be set higher, but ideally not \`unlimited\` since more
+complex services can have small memory leaks and/or memory fragmentation and
+the process should get restarted eventually. For example \`100\` or \`1000\`
+can be good values.`
+	},
+
+	service_idle_kill: {
+		tags: [ 'service' ],
+		changed: {
+			settings_service_idle_kill_changed: `
+This behavior was redesigned to work better in busy servers.`,
+		},
+		values: setting_types.TIME,
+		default: '1 min',
+		text: `
+Time interval between killing extra idling processes. During the interval the
+master process tracks the lowest number of idling processes for the service.
+Afterwards it sends \`SIGINT\` notification to that many idling processes. If
+the processes are still idling when receiving the signal, they shut down
+themselves.
+
+Using \`infinite\` disables the idle-killing.`
+	},
+
+	service_vsz_limit: {
+		tags: [ 'service' ],
+		values: setting_types.SIZE,
+		default: '256 M',
+		text: `
+Limit the process's address space (both \`RLIMIT_DATA\` and \`RLIMIT_AS\` if
+available). When the space is reached, some memory allocations may start
+failing with "Out of memory", or the kernel may kill the process with signal 9.
+This setting is mainly intended to prevent memory leaks from eating up all of
+the memory, but there can be also legitimate reasons why the process reaches
+this limit. For example a huge mailbox may not be accessed if this limit is too
+low. Use \`unlimited\` to disable this entirely.`
+	},
+
 	shutdown_clients: {
 		default: 'yes',
 		values: setting_types.BOOLEAN,
@@ -8078,6 +8416,60 @@ If enabled, use SSL/TLS to connect to [[setting,submission_host]].`
 		default: 'mail',
 		values: setting_types.STRING,
 		text: `The syslog facility used if you're logging to syslog.`
+	},
+
+	unix_listener: {
+		tags: [ 'service' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'service', 'unix_listener_path' ],
+		text: `
+Creates a new UNIX listener for a [[setting,service]]. The filter name refers
+to the [[setting,unix_listener_path]] setting.`
+	},
+
+	unix_listener_path: {
+		tags: [ 'service' ],
+		values: setting_types.STRING_NOVAR,
+		seealso: [ 'base_dir', 'unix_listener' ],
+		text: `
+Path to the UNIX socket file, relative to [[setting,base_dir]] setting. The
+[[setting,unix_listener]] filter name refers to this setting.`
+	},
+
+	unix_listener_type: {
+		tags: [ 'service' ],
+		added: {
+			settings_unix_listener_type_added: false,
+		},
+		values: setting_types.STRING,
+		text: `
+Listener type. This string value has service-specific meaning and is used to
+distinguish different listener types that one service may employ.`
+	},
+
+	unix_listener_mode: {
+		tags: [ 'service' ],
+		values: setting_types.OCTAL_UINT,
+		default: '0600',
+		text: `
+Mode of the file. Note that \`0600\` is an octal value, while \`600\` is a
+different decimal value. Setting mode to \`0\` disables the listener.`
+	},
+
+	unix_listener_user: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		default: '<empty>',
+		text: `
+Owner of the listener file. Empty (default) means UID 0 (root).`
+	},
+
+	unix_listener_group: {
+		tags: [ 'service' ],
+		values: setting_types.STRING,
+		default: '<empty>',
+		text: `
+Group of the listener file. Empty (default) means GID 0 (root/wheel).`
 	},
 
 	userdb: {
