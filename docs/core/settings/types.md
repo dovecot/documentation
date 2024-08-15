@@ -74,6 +74,8 @@ Here the `%i` and `%o` refer to variables specific to the
 Unsigned integer is a number between `0`..`4294967295`, although specific
 settings may have additional restrictions.
 
+The value can also be `unlimited`, which translates to `4294967295`.
+
 ## Boolean
 
 Boolean settings interpret any value as true, or false.
@@ -101,6 +103,8 @@ The values can optionally be followed by `I` or `IB`. For example
 `K = KI = KIB`. The size value type is base `2`, meaning a kilobyte equals
 `1024` bytes.
 
+The value can also be `unlimited`.
+
 ## Time
 
 The Time value is used in Dovecot configuration to define the amount of Time
@@ -118,6 +122,8 @@ So for example, `d`, `da`, `day`, and `days` all mean the same. Make sure to be
 explicit if you want to differentiate between `mins` and `msecs`, as `m` does
 not suffice.
 :::
+
+The value can also be `infinite`.
 
 ## Millisecond Time
 
