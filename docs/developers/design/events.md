@@ -10,7 +10,7 @@ dovecotlinks:
 Dovecot supports events, which improves both logging and statistics.
 
 ::: tip See Also
-* [[link,events]]
+* [[link,summary_events]]
 * [[link,stats]]
 * [[link,event_export]]
 * [[link,event_filter]]
