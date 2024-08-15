@@ -25,10 +25,9 @@ dovecotlinks:
 
 ## Exporter Definition
 
-The `event_exporter` block defines how events should be exported.
-
-The basic definition is split into two orthogonal parts: the format and
-the transport.
+The [[setting,event_exporter]] named list filter defines how
+[[link,summary_events]] should be exported. The basic definition is split into
+two orthogonal parts: the format and the transport.
 
 The format and its arguments specify *how* an event is serialized, while the
 transport and its arguments specify *where* the serialized event is sent.
@@ -150,35 +149,13 @@ filter, etc.) specified in the metric block.
 
 ### Filtering Events
 
-One uses the `metric` block settings documented in [[link,stats]] to
-select and filter the event to be exported.
+One uses the `metric` block settings documented in [[link,stats]] to select and
+filter the event to be exported. See [[setting,metric_exporter]] and
+[[setting,metric_exporter_include]] settings.
 
-#### `exporter`
+## Settings
 
-The `exporter` setting identifies which exporter should be used to export this
-event.  If the setting is not specified, this event is *not* exported.  (This
-is to allow certain metrics to be used only for statistics.)
-
-#### `exporter_include`
-
-There are five possible parts that can be included in a serialized event:
-
-| Part | Description |
-| ---- | ----------- |
-| `name` | The name of the event |
-| `hostname` | The name of the host generating this event |
-| `timestamps` | The event start and end timestamps |
-| `categories` | A set of categories associated with this event |
-| `fields` | The fields associated with this event; the fields that will be exported are defined by the [[link,stats,fields]] setting in the parent `metric` block |
-
-The `exporter_include` setting is made up of these tokens which control what
-parts of an event are exported.  It can be set to any set of those
-(including empty set) and the order doesn't matter.  It defaults to all 5
-tokens.
-
-For example, `exporter_include=name hostname timestamps` includes just the 3
-specified parts, while `exporter_include=` includes nothing - the exported
-event will be empty (e.g., `{}` in JSON).
+<SettingsComponent tag="event-export" />
 
 ## Example Configs
 
