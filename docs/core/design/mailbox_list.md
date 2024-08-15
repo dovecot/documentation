@@ -140,7 +140,8 @@ mailboxes unless they physically exists (i.e. they have been opened once).
 
 #### `MAILBOX_LIST_ITER_SKIP_ALIASES`
 
-Skip namespaces that are aliases to other namespaces (`alias_for` set).
+Skip namespaces that are aliases to other namespaces
+([[setting,namespace_alias_for]]).
 
 #### `MAILBOX_LIST_ITER_STAR_WITHIN_NS`
 
