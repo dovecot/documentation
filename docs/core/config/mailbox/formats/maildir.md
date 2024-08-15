@@ -416,17 +416,17 @@ For example:
 ```[dovecot.conf]
 mail_location = maildir:~/Maildir:LAYOUT=fs
 
-namespace {
+namespace inbox {
   inbox = yes
   prefix = INBOX/
   separator = /
   subscriptions = no
 }
 
-namespace {
+namespace empty {
   prefix =
   separator = /
-  alias_for = INBOX/
+  alias_for = inbox
   location = maildir:~/Maildir:LAYOUT=fs # Alias location
   subscriptions = yes
 }

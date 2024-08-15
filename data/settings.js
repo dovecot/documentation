@@ -6511,7 +6511,7 @@ to user. The [[setting,namespace]] filter refers to this setting.`
 		tags: [ 'namespace' ],
 		values: setting_types.STRING,
 		text: `
-Defines the namespace prefix for purposes of alias detection.
+Refers to an alias namespace's [[setting,namespace_name]].
 
 If multiple namespaces point to the same location, they should be marked as
 aliases against one primary namespace. This avoids duplicating work for
@@ -6526,13 +6526,14 @@ namespace prefix for existing users.
 
 Example:
 
-\`\`\`
+\`\`\`[dovecot.conf]
+namespace inbox {
+  prefix =
+  # ...
+}
 namespace alias {
-  # If primary namespace has empty prefix
-  alias_for =
-
-  # OR if primary namespace has prefix=INBOX/
-  alias_for = INBOX/
+  prefix = INBOX/
+  alias_for = inbox
 }
 \`\`\``
 	},
