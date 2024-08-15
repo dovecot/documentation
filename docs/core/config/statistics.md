@@ -20,44 +20,19 @@ Dovecot supports gathering statistics from events (see [[link,event_design]]).
 Currently there are no statistics logged by default, and therefore they must
 be explicitly added using the `metric` configuration blocks.
 
-The event filter settings are the only required settings in a metric block.
-The filter specifies which events should be used when calculating the
-statistics for a given metric block.  Event filtering is described in detail
-in [[link,event_filter]].
+The [`metric_filter`](#metric_filter) setting is the only required setting in a
+[`metric`](#metric) block. It specifies which events should be used when
+calculating the statistics for a given metric block. Event filtering is
+described in detail in [[link,event_filter]].
 
-In addition to the event filter, a list of fields that are included in the
-metrics can be specified using the `fields` setting.  All events have a
-default "duration" field that doesn't need to be listed explicitly.
+Note that Dovecot also has many unnamed events. These aren't generally useful
+for statistics, but in some situations they may become visible in statistics.
+To avoid surprises, it's a good idea to always specify `event=name` in the
+filter setting. You can also use `event=*` to match all named events.
 
-All fields listed in `fields` are exported to OpenMetrics as well.
+## Settings
 
-Finally, the `group_by` metric setting can be used to dynamically generate
-sub-metrics based on fields' values.
-
-In general, the metric block has the form:
-
-```[dovecot.conf]]
-metric name {
-  ...filter related settings...
-
-  # List of fields in event parameters that are included in the metrics.
-  fields = abc def
-
-  List of fields to group events by into auto-generated sub-metrics.
-  group_by = field another-field
-}
-```
-
-Example:
-
-```[dovecot.conf]
-metric imap_command {
-  filter = event=imap_command_finished
-
-  fields = net_in_bytes net_out_bytes
-  group_by = cmd_name tagged_reply_state
-}
-```
+<SettingsComponent tag="metrics" />
 
 ## Group By
 
@@ -263,10 +238,11 @@ after configuration reload.
 
 Metrics can be added dynamically by running [[doveadm,stats add]].
 
-* `exporter` and `exporter-include` parameters are described in
-  [[link,event_export_label]].
-* `fields` and `group-by` are described above.
-* `<filter>` syntax is described in [[link,event_filter_metric]].
+* `exporter`: See [[setting,metric_exporter]].
+* `exporter-include`: See [[setting,metric_exporter_include]].
+* `fields`: See [[setting,metric_fields]].
+* `group-by`: See [[link,stats_group_by]].
+* `<filter>`: See [[setting,metric_filter]].
 
 For example:
 
