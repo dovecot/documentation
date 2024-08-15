@@ -102,7 +102,7 @@ pair is generated. This folder is encrypted using the user's key pair. A user
 can have more than one key pair but only one can be active.
 
 * [[setting,crypt_user_key_curve]] must be set.
-* [[setting,mail_attribute_dict]] must be set, as is is used to store the keys.
+* [[setting,mail_attribute]] must be set, as is is used to store the keys.
 
 #### Unencrypted User Keys
 
@@ -112,8 +112,11 @@ unencrypted on the server.
 Example config for folder keys with Maildir:
 
 ```[dovecot.conf]
-mail_attribute_dict = file:%h/Maildir/dovecot-attributes
 mail_plugins = $mail_plugins mail_crypt
+mail_attribute {
+  dict_driver = file
+  dict_file_path = %h/Maildir/dovecot-attributes
+}
 
 crypt_user_key_curve = secp521r1
 ```
@@ -126,8 +129,11 @@ encrypted on the server.
 Example config for mandatory encrypted folder keys with Maildir:
 
 ```[dovecot.conf]
-mail_attribute_dict = file:%h/Maildir/dovecot-attributes
 mail_plugins = $mail_plugins mail_crypt
+mail_attribute {
+  dict_driver = file
+  dict_file_path = %h/Maildir/dovecot-attributes
+}
 
 crypt_user_key_curve = secp521r1
 crypt_user_key_require_encrypted = yes
