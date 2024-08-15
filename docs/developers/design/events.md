@@ -2,7 +2,9 @@
 layout: doc
 title: Design
 dovecotlinks:
-  event_design: events design
+  event_design:
+    hash: events-design
+    text: Events Design
 ---
 
 # Events Design
