@@ -2,8 +2,9 @@
 layout: doc
 title: All Events
 dovecotlinks:
-  events: all events
-  summary_events: all events
+  summary_events:
+    hash: all-dovecot-events
+    text: All Dovecot Events
 ---
 
 # All Dovecot Events

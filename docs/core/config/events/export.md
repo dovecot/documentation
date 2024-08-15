@@ -14,7 +14,7 @@ dovecotlinks:
 # Event Export
 
 ::: tip See Also
-* [[link,events]]
+* [[link,summary_events]]
 * [[link,event_filter]]
 * [[link,stats]]
 * [[link,event_design]]

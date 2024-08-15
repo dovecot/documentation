@@ -21,7 +21,7 @@ location. The source location of course can change between Dovecot
 versions, so it should be avoided.
 
 ::: tip See Also
-* [[link,events]]
+* [[link,summary_events]]
 * [[link,event_export]]
 * [[link,stats]]
 * [[link,event_design]]
