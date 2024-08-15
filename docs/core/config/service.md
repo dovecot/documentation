@@ -62,294 +62,43 @@ Most admins don't need to know these details.
 The important service settings are described in the
 `example-config/conf.d/10-master.conf` file.
 
-## Basics
+## Settings
 
-### `executable`
-
-The binary path to execute and its parameters. If the path doesn't begin
-with `/`, it's relative to [[setting,base_dir]].
-
-### `type`
-
-Type of this service:
-
-* "" is the default.
-
-* "startup" creates one process at startup. For example SSL parameters are
-  generated at startup because of this, instead of only after the first
-  SSL connection arrives.
-
-  * "login" is used by login processes. The login processes have
-    "all processes full" notification fd. It's used by the processes to
-    figure out when no more client connections can be accepted because
-    client and process limits have been reached. The login processes can
-    then kill some of their oldest connections that haven't logged in yet.
-
-  * "log", "config" and "anvil" are treated specially by these specific
-    processes.
-
-### `protocol`
-
-If non-empty, this service is enabled only when the protocol name is listed
-in protocols setting.
-
-### `idle_kill`
-
-Time interval between killing extra idling processes. During the interval
-the master process tracks the lowest number of idling processes for the
-service. Afterwards it sends SIGINT notification to that many idling
-processes. If the processes are still idling when receiving the signal,
-they shut down themselves.
-
-If set to `0`, [[setting,default_idle_kill]] is used.
-
-Using `4294967295 secs` disables the idle-killing.
-
-## Service Privileges
-
-### `user`
-
-UNIX user (UID) which runs this process.
-
-[[setting,default_login_user]] setting's value should be used for
-type=login processes and [[setting,default_internal_user]] should be used
-for other processes that don't require root privileges.
-
-### `group`
-
-The primary UNIX group (GID) which runs this process.
-
-### `extra_groups`
-
-Secondary UNIX groups that this process belongs to.
-
-### `privileged_group`
-
-Secondary UNIX group, which is disabled by default, but can be enabled by the
-process.
-
-This setting is probably never needed directly.
-
-[[setting,mail_privileged_group]] setting is a more user friendly way to use
-this setting for mail processes.
-
-### `chroot`
-
-The processes are chrooted to this directory at startup. Relative to
-[[setting,base_dir]].
-
-### `drop_priv_before_exec`
-
-Drop all privileges after forking, but before executing the binary. This is
-mainly useful for dumping core files on non-Linux OSes, since the processes
-are no longer in `etuid` mode. This setting can't be used with non-empty
-`chroot`.
+<SettingsComponent tag="service" />
 
 ## Service Limits
 
 There are 3 types of services that need to be optimized in different ways:
 
-**Master services (e.g. auth, anvil, indexer, log)**
-:   Currently there isn't any easy way to optimize these. If these become a
-    bottleneck, typically you need to run another Dovecot server. In some
-    cases it may be possible to create multiple master processes and have
-    each one be responsible for only specific users/processes, although
-    this may also require some extra development.
-
-**Services that do disk I/O or other blocking operations (e.g. imap, pop3, lmtp)**
-:   These should have `client_limit=1`, because any blocking operation will
-    block all the other clients and cause unnecessary delays and even
-    timeouts.
-
-    This means that `process_limit` specifies the maximum number of
-    available parallel connections.
-
-**Services that have no blocking operations (e.g. imap-login, pop3-login)**
-:   For best performance (but a bit less safety), these should have
-    `process_limit` and `process_min_avail` set to the number of CPU cores,
-    so each CPU will be busy serving the process but without unnecessary
-    context switches.
-
-    Then `client_limit` needs to be set high enough to be able to serve
-    all the needed connections (`max connections=process_limit *
-    client_limit`).
-
-    `service_count` is commonly set to unlimited (0) for these services.
-    Otherwise when the `service_count` is beginning to be reached, the
-    total number of available connections will shrink. With very bad luck
-    that could mean that all the processes are simply waiting for the
-    existing connections to die away before the process can die and a new
-    one can be created. Although this could be made less likely by
-    setting `process_limit` higher than `process_min_avail`, but that's
-    still not a guarantee since each process could get a very long running
-    connection and the `process_limit` would be eventually reached.
-
-### `client_limit`
-
-Maximum number of simultaneous client connections per process. Once this
-number of connections is received, the next incoming connection will
-prompt Dovecot to spawn another process.
-
-If set to `0`, `default_client_limit` is used instead.
-
-### `service_count`
-
-Number of client connections to handle until the process kills itself.
-
-`0` means unlimited.
-
-`1` means only a single connection is handled until the process is stopped;
-this is the most secure choice since there's no way for one connection's
-state to leak to the next one.
-
-For better performance this can be set higher, but ideally not unlimited
-since more complex services can have small memory leaks and/or memory
-fragmentation and the process should get restarted eventually.
-
-For example `100..1000` can be good values.
-
-### `process_limit`
-
-Maximum number of processes that can exist for this service.
-
-If set to `0`, `default_process_limit` is used instead.
-
-### `process_min_avail`
-
-Minimum number of processes that always should be available to accept more
-client connections.
-
-Note that if `client_limit=1`, this means there are always that many
-processes that are not doing anything. When a new process launches, one of the
-idling processes will accept the connection and a new idling process is
-launched.
-
-* For `service_count=1` processes this decreases the latency for handling
-  new connections, because there's no need to wait for processes to fork.
-  This is usually not necessary to to be set.
-
-  Large `process_min_avail` values might be useful in some special cases,
-  like if there are a lot of POP3 users logging in exactly at the same time
-  to check mails.
-
-* For `service_count!=1` and `client_limit>1` processes it could be set to
-  the number of CPU cores on the system to balance the load among them.
-  This is commonly used with `*-login` processes.
-
-* For `service_count!=1` and `client_limit=1` processes it is likely not
-  useful to use this, because generally there are already some idling processes
- waiting to accept new connections. However, it's not harmful either, since
-  `process_min_avail` includes the existing idling processes when counting
-  how many new idling processes are needed.
-
-### `vsz_limit`
-
-Limit the process's address space (both `RLIMIT_DATA` and `RLIMIT_AS` if
-available).
-
-When the space is reached, some memory allocations may start failing with
-"Out of memory", or the kernel may kill the process with signal 9.
-
-This setting is mainly intended to prevent memory leaks from eating up all
-of the memory, but there can be also legitimate reasons why the process
-reaches this limit. For example a huge mailbox may not be accessed if this
-limit is too low.
-
-The default value (`18446744073709551615=2^64-1`) sets the limit to
-[[setting,default_vsz_limit]], while `0` disables the limit entirely.
-
-## Service Listeners
-
-### `unix_listeners` and `fifo_listeners`
-
-#### `path`
-
-Path to the file, relative to [[setting,base_dir]].
-
-This is also used as the section name.
-
-#### `type`
-
-[[added,service_listener_type]]
-
-Listener type. This string value has service-specific meaning and is used
-to distinguish different listener types that one service may employ.
-
-The default value is the empty string.
-
-#### `user`
-
-Owner of the file. Defaults to `0` (root).
-
-#### `group`
-
-Group of the file. Defaults to `0` (root/wheel).
-
-#### `mode`
-
-Mode of the file. Defaults to `0700`.
-
-Note that `0700` is an octal value, while `700` is a *different* decimal
-value.
-
-Setting mode to `0` disables the listener.
-
-### `inet_listeners`
-
-#### `name`
-
-Section name of this listener. It is meant to be descriptive for humans
-(e.g. `imap`, `imaps`).
-
-#### `type`
-
-[[added,service_listener_type]]
-
-Listener type. This string value has service-specific meaning and is used
-to distinguish different listener types that one service may employ.
-
-The default value is the empty string.
-
-#### `address`
-
-Space separated list of IP addresses / host names to listen on.
-
-`*` means all IPv4 addresses, `::` means all IPv6 addresses.
-
-Defaults to `listen` setting.
-
-#### `port`
-
-Port number where to listen.
-
-`0` disables the listener.
-
-#### `ssl`
-
-If `yes`, the listener does an immediate SSL/TLS handshake after accepting
-a connection. This is needed for the legacy imaps and pop3s ports.
-
-::: tip Note
-All listeners with `ssl=yes` will be removed if global ssl is turned off.
-:::
-
-::: tip Note
-Regardless of the value for listener's `ssl` setting, some services will
-still try to initialize encryption if global ssl is on.
-
-This is for example done to accommodate STARTTLS commands for
-IMAP/SUBMISSION/LMTP protocols.
-
-In other words, ssl is truly disabled only when global ssl is turned off.
-:::
-
-#### `haproxy`
-
-If yes, this listener is configured for use with HAProxy.
-
-It expects a Proxy Protocol header right after accepting the connection.
-
-Connections are aborted immediately when this protocol is violated.
+1. Master services (e.g. `auth`, `anvil`, `indexer`, `log`): Currently there
+   isn't any easy way to optimize these. If these become a bottleneck,
+   typically you need to run another Dovecot server. In some cases it may be
+   possible to create multiple master processes and have each one be
+   responsible for only specific users/processes, although this may also
+   require some extra development.
+1. Services that do disk I/O or other blocking operations (e.g. `imap`, `pop3`,
+   `lmtp`): These should have [[setting,service_client_limit,1]], because any
+   blocking operation will block all the other clients and cause unnecessary
+   delays and even timeouts. This means that [[setting,service_process_limit]]
+   specifies the maximum number of available parallel connections.
+1. Services that have no blocking operations (e.g. `imap-login`, `pop3-login`):
+   For best performance (but a bit less safety), these should have
+   [[setting,service_process_limit]] and [[setting,service_process_min_avail]]
+   set to the number of CPU cores, so each CPU will be busy serving the process
+   but without unnecessary context switches. Then
+   [[setting,service_client_limit]] needs to be set high enough to be able to
+   serve all the needed connections (max connections = `process_limit *
+   client_limit`).
+   [[setting,service_service_count]] is commonly set to `unlimited` for these
+   services. Otherwise when the limit is beginning to be reached, the total
+   number of available connections will shrink. With very bad luck that could
+   mean that all the processes are simply waiting for the existing connections
+   to die away before the process can die and a new one can be created.
+   Although this could be made less likely by setting
+   [[setting,service_process_limit]] higher than
+   [[setting,service_process_min_avail]], but that's still not a guarantee
+   since each process could get a very long running connection and the
+   [[setting,service_process_limit]] would be eventually reached.
 
 ## Default Services
 
@@ -370,11 +119,12 @@ The anvil process tracks state of users and their connections.
 
     * "Warning: service anvil { client_limit=200 } is lower than required under max. load (207)"
 
-      This is calculated by counting the `process_limit` of auth and login
-      services, because each of them has a persistent connection to anvil.
+      This is calculated by counting the [[setting,service_process_limit]] of
+      auth and login services, because each of them has a persistent connection
+      to anvil.
 
-* **idle_kill=4294967295s**, because it should never die or all of its
-  tracked state would be lost.
+* **idle_kill=infinite**, because it should never die or all of its tracked
+  state would be lost.
 
 * [[doveadm,who]] and some other doveadm commands connect to anvil's UNIX
   listener and request its state.
@@ -423,11 +173,11 @@ probably shouldn't touch the `login` and `master` listeners).
 
     * Warning: service auth { client_limit=1000 } is lower than required under max. load (1328)
 
-      This is calculated by counting the `process_limit` of every service that
-      is enabled with the `protocol` setting (e.g. imap, pop3, lmtp).
-      Only services with `service_count != 1` are counted, because they have
-      persistent connections to auth, while `service_count=1` processes only do
-      short-lived auth connections.
+      This is calculated by counting the [[setting,service_process_limit]] of
+      every service that is enabled with the `protocol` setting (e.g. imap,
+      pop3, lmtp). Only services with `service_count != 1` are counted, because
+      they have persistent connections to auth, while `service_count=1`
+      processes only do short-lived auth connections.
 
 * **process_limit=1**, because there can be only one auth master process.
 
@@ -506,9 +256,9 @@ connections are the client connections of dict processes.
     is supposed to disconnect immediately after the lookup.
 
 * dict-async / Asynchronous lookups (e.g. pgsql, cassandra, ldap)
-  * `process_limit` should commonly be the same as number of CPU cores.
-    Although with Cassandra this may not be true, because Cassandra library
-    can use multiple threads.
+  * [[setting,service_process_limit]] should commonly be the same as number of
+    CPU cores. Although with Cassandra this may not be true, because Cassandra
+    library can use multiple threads.
 
 * **user=$default_internal_user**, because the proxy dict lookups are
   typically SQL lookups, which require no filesystem access. (The SQL
@@ -681,11 +431,9 @@ logging via syslog.
 
 ### stats
 
-Mail process statistics tracking.
-
-Its behavior is very similar to the anvil process, but anvil's data is of
-higher importance and lower traffic than stats, so stats are tracked in
-a separate process.
+Event statistics tracking. Its behavior is very similar to the anvil process,
+but anvil's data is of higher importance and lower traffic than stats, so stats
+are tracked in a separate process.
 
 * **client_limit** should be large enough to handle all the simultaneous
   connections.
@@ -693,7 +441,7 @@ a separate process.
   Dovecot attempts to verify that the limit is high enough at startup.
   If it's not, it logs a warning such as:
 
-    * Warning: service stats { client_limit=1000 } is lower than required under max. load (7945)
+  `Warning: service stats { client_limit=1000 } is lower than required under max. load (7945)`
 
-      This is calculated by counting the `process_limit` of all the services,
-      because each of them has a persistent connection to stats.
+  This is calculated by counting the [[setting,service_process_limit]] of all
+  the services, because each of them has a persistent connection to stats.
