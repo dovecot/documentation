@@ -6712,6 +6712,104 @@ but it's not a good idea to use other than the standard ones specified in
 the RFC.`
 	},
 
+	metric: {
+		tags: [ 'metrics' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'metric_name' ],
+		text: `
+Creates a new metric. The filter name refers to the [[setting,metric_name]]
+setting.`
+	},
+
+	metric_name: {
+		tags: [ 'metrics' ],
+		values: setting_types.STRING,
+		text: `
+Name of the metric. It is visible in statistics outputs.`
+	},
+
+	metric_fields: {
+		changed: {
+			settings_metric_fields_changed: `
+All listed fields are exported to OpenMetrics as well.`
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.BOOLLIST,
+		text: `
+A list of fields included in the metric. All events have a default \`duration\`
+field that does not need to be listed explicitly.`
+	},
+
+	metric_group_by: {
+		tags: [ 'metrics' ],
+		values: setting_types.BOOLLIST,
+		seealso: [ '[[link,stats_group_by]]' ],
+		text: `
+This can be used to dynamically generate sub-metrics based on fields' values.`
+	},
+
+	metric_filter: {
+		tags: [ 'metrics' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,event_filter_metric]]' ],
+		text: `
+[[link,event_filter_metric,Event filter]] that matches the events belonging to
+this metric.`
+	},
+
+	metric_exporter: {
+		tags: [ 'metrics' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,event_export]]', 'event_exporter_name' ],
+		text: `
+Export events matching the filter with this
+[[link,event_export,event exporter]]. Refers to the
+[[setting,event_exporter_name]] setting. If empty, the events are used only for
+statistics, and no exporting is done.`
+	},
+
+	metric_exporter_include: {
+		tags: [ 'metrics' ],
+		values: setting_types.BOOLLIST,
+		default: 'name hostname timestamps categories fields',
+		text: `
+Specifies which parts of the event are exported to the serialized event:
+
+| Values | Description |
+| --- | --- |
+| \`name\` | The name of the event. |
+| \`hostname\` | The name of the host generating this event. |
+| \`timestamps\` | The event start and end timestamps. |
+| \`categories\` | A set of categories associated with this event. |
+| \`fields\` | The fields associated with this event. The fields that will be exported are defined by the [[setting,metric_fields]] setting. |
+
+For example:
+
+\`\`\`[dovecot.conf]
+metric example {
+  exporter_include = name hostname timestamps
+}
+\`\`\`
+
+includes just the 3 specified parts, while
+
+\`\`\`[dovecot.conf]
+metric another_example {
+  exporter_include =
+}
+\`\`\`
+
+includes nothing and the exported event will be empty (i.e. \`{}\` in JSON).`
+	},
+
+	metric_description: {
+		tags: [ 'metrics' ],
+		values: setting_types.STRING,
+		text: `
+Human-readable description of the metric. This is included in the HELP text
+sent to OpenMetrics.`
+	},
+
 	oauth2: {
 		values: setting_types.NAMED_FILTER,
 		seealso: [ '[[link,auth_oauth2]]' ],
