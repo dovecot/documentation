@@ -258,6 +258,10 @@ You will still need a top-level default [[setting,ssl_key]] and
 
 ### With Client TLS SNI (Server Name Indication) Support
 
+The SNI mechanism allows a server to present different hosts via a common
+connection, that the client can request by name. These are set up using the
+[[link,settings_connection_filters,local_name]] filter.
+
 It is important to note that having multiple SSL certificates per IP will
 not be compatible with all clients, especially mobile ones. It is a TLS
 SNI limitation.
@@ -275,6 +279,11 @@ local_name imap.example2.org {
 
 # ..etc..
 ```
+
+[[added,ssl_sni_settings_reload_added]]: A server can reload different SSL
+certificates and other related settings using SNI (e.g.
+[[setting,login_greeting]] or [[setting,postmaster_address]]). The reloading of
+settings based on SNI is supported for IMAP, SMTP and LMTP.
 
 #### Client Support
 
