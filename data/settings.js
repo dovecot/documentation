@@ -3855,6 +3855,63 @@ This list should only include headers that can be efficiently downloaded
 from the remote server.`
 	},
 
+	event_exporter: {
+		tags: [ 'event-export' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'event_exporter_name' ],
+		text: `
+Creates a new event exporter. The filter name refers to the
+[[setting,event_exporter_name]] setting.`
+	},
+
+	event_exporter_name: {
+		tags: [ 'event-export' ],
+		values: setting_types.STRING,
+		seealso: [ 'metric_exporter' ],
+		text: `
+Name of the event exporter. It is referred by the [[setting,metric_exporter]]
+settings.`
+	},
+
+	event_exporter_transport: {
+		tags: [ 'event-export' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,event_export_transports]]' ],
+		text: `
+The transport to use.`
+	},
+
+	event_exporter_transport_args: {
+		tags: [ 'event-export' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,event_export_transports]]' ],
+		text: `
+The transport arguments to use.`
+	},
+
+	event_exporter_transport_timeout: {
+		tags: [ 'event-export' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Abort the http-post request after this timeout.`
+	},
+
+	event_exporter_format: {
+		tags: [ 'event-export' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,event_export_formats]]' ],
+		text: `
+Format used for serializing the event.`
+	},
+
+	event_exporter_format_args: {
+		tags: [ 'event-export' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,event_export_formats]]' ],
+		text: `
+Format-specific arguments used for serializing the event.`
+	},
+
 	first_valid_gid: {
 		default: 1,
 		seealso: [ 'last_valid_gid' ],
