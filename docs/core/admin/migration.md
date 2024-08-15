@@ -33,7 +33,7 @@ Things that you should consider in your config:
   but not enforced)
 * [[link,mail_cache]]
 * [[setting,mail_attachment_detection_options]]
-* [[setting,mail_attribute_dict]]
+* [[setting,mail_attribute]]
 * [[plugin,mail-compress]] and [[plugin,mail-crypt]] settings
 * [[link,nfs]] related settings
 
