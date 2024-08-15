@@ -3578,28 +3578,6 @@ This can be used to override the base directory determined at compile time.`
 		text: `The log file to use for debug messages.`
 	},
 
-	default_client_limit: {
-		default: 1000,
-		values: setting_types.UINT,
-		text: `
-The maximum number of simultaneous client connections per process for a
-service.
-
-Once this number of connections is reached, the next incoming connection
-prompts spawning of another process.
-
-This value can be overridden via the [[link,service_client_limit]] setting
-within service blocks.`
-	},
-
-	default_idle_kill: {
-		default: '1mins',
-		values: setting_types.TIME,
-		text: `
-The default value to use for the [[link,service_idle_kill]] setting within
-service blocks.`
-	},
-
 	default_internal_group: {
 		default: 'dovecot',
 		seealso: [ 'default_internal_user' ],
@@ -3627,29 +3605,6 @@ The user the login process should run as.
 
 This is the least trusted user in Dovecot: this user should not have access
 to anything at all.`
-	},
-
-	default_process_limit: {
-		default: 100,
-		values: setting_types.UINT,
-		text: `
-The maximum number of processes that may exist for a service.
-
-This value can be overridden via the [[link,service_process_limit]]
-setting within service blocks.`
-	},
-
-	default_vsz_limit: {
-		default: '256M',
-		values: setting_types.SIZE,
-		text: `
-The default virtual memory size limit for service processes.
-
-Designed to catch processes that leak memory so that they can be terminated
-before they use up all the available resources.
-
-This value can be overridden via the [[link,service_vsz_limit]] setting
-within service blocks.`
 	},
 
 	deliver_log_format: {
