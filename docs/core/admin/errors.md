@@ -268,9 +268,9 @@ and:
 These usually happen because the `dovecot.index.cache` file is so large
 that it can't fit into the memory.
 
-The solution is usually to either raise the imap service's `vsz_limit` or
-`default_vsz_limit` to somewhat higher than the maximum cache file size
-(1 GB by default). For example to `1500M`.
+The solution is usually to either raise the imap service's
+[[setting,service_vsz_limit]] or to somewhat higher than the maximum cache file
+size. For example to `1500M`.
 
 An alternative solution to this is to reduce the maximum cache file size to
 be somewhat lower than the imap service's vsz_limit. See

@@ -41,7 +41,7 @@ You can enable high-security mode with:
 service imap-login {
   service_count = 1
   #process_min_avail = 0
-  #process_limit = $default_process_limit
+  #process_limit = $service_process_limit
   #vsz_limit = 64M
 }
 
@@ -60,7 +60,7 @@ hole.
 
 Since one login process can handle only one connection, the service's
 `process_limit` setting limits the number of users that can be logging in at
-the same time (defaults to [[setting,default_process_limit,100]]).
+the same time (defaults to [[setting,service_process_limit,100]]).
 
 SSL/TLS proxying processes are also counted here, so if you're using
 SSL/TLS you'll need to make sure this count is higher than the maximum
@@ -83,7 +83,7 @@ You can enable high-performance mode with:
 ```[dovecot.conf]
 service imap-login {
   service_count = 0
-  #client_limit = $default_client_limit
+  #client_limit = $service_client_limit
   process_min_avail = 4 # number of CPU cores
   vsz_limit = 1G
 }
