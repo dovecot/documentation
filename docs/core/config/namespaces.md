@@ -240,21 +240,21 @@ namespace compat1 {
   prefix = mail/
   hidden = yes
   list = no
-  alias_for =
+  alias_for = inbox
 }
 namespace compat2 {
   separator = /
   prefix = ~/mail/
   hidden = yes
   list = no
-  alias_for =
+  alias_for = inbox
 }
 namespace compat3 {
  separator = /
  prefix = ~%u/mail/
  hidden = yes
  list = no
- alias_for =
+ alias_for = inbox
 }
 ```
 
@@ -286,7 +286,7 @@ namespace compat {
   inbox = no
   hidden = yes
   list = no
-  alias_for =
+  alias_for = inbox
 }
 ```
 

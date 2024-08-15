@@ -67,8 +67,8 @@ Functions about finding namespaces:
   It also has a few variations:
 
   - `mail_namespace_find_unalias()` changes the behavior for namespaces
-    that are aliases to another namespace (`alias_for` setting). Then it
-    returns the unaliased namespace and modifies the mailbox name.
+    that are aliases to another namespace ([[setting,namespace_alias_for]]).
+    Then it returns the unaliased namespace and modifies the mailbox name.
 
   - `mail_namespace_find_visible()` skips `hidden=yes` namespaces.
 
