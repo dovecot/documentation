@@ -2,7 +2,9 @@
 layout: doc
 title: All Settings
 dovecotlinks:
-  summary_settings: all settings
+  summary_settings:
+    hash: all-dovecot-settings
+    text: All Dovecot Settings
 ---
 
 # All Dovecot Settings
