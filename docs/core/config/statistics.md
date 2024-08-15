@@ -6,6 +6,9 @@ dovecotlinks:
   stats_push_notifications:
     hash: push-notifications
     text: push notification stats
+  stats_group_by:
+    hash: group-by
+    text: "Statistics: Group By"
 ---
 
 # Statistics
