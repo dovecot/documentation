@@ -1,0 +1,2 @@
+# dovecot-2.3.21.1-rev2 Debian Bullseye (11.0) - DataStax C/C++ Driver for Apache Cassandra
+deb https://LDBACCOUNT:PASSWORD@software.open-xchange.com/products/dovecot/stable/3rdparty/cassandra-cpp-driver/DebianBullseye ./
