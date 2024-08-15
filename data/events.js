@@ -1240,6 +1240,7 @@ compiling it at delivery).`
 | \`no_auth_attempts\` | Client didn't send any authentication attempts. |
 | \`password_expired\` | The user's password is expired.
 | \`process_full\` | [[link,service_client_limit]] and [[link,service_process_limit]] was hit and this login session was killed. |
+| \`proxy_dest_auth_failed\` | Local authentication succeeded, but proxying failed to authenticate to the destination hop. |
 | \`shutting_down\` | The process is shutting down so the login is aborted. |
 | \`tls_handshake_not_finished\` | TLS handshake failed or was not finished. |
 | \`user_disabled\` | User is in deny passdb, or in some other way disabled passdb. |
