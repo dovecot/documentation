@@ -71,30 +71,37 @@ If you don't want to disconnect all users at once, you can check who's
 currently logged in. The first example demonstrates how to disconnect
 all users whose login name is 3 characters long and begins with **ba**:
 
-```console
-$ doveadm who -1 ja\*
+```sh
+doveadm who -1 ja\*
+```
+```
 username                      service pid ip
 jane                          imap   8192 ::1
 jano                          imap   8196 ::2
 james                         imap   8203 2001:db8:543:2::1
-
-$ doveadm kick jan?
+```
+```sh
+doveadm kick jan?
 # The connections for jane and jano are kicked.
 ```
 
 The next example shows how to kick user foo's connections from
 192.0.2.\*:
 
-```console
-$ doveadm who -1 foo
+```sh
+doveadm who -1 foo
+```
+```
 username                     service pid ip
 foo                          imap   8135 fd95:4eed:38ba::25
 foo                          imap   9112 192.0.2.53
 foo                          imap   8216 192.0.2.111
-
-$ doveadm kick foo 192.0.2.0/24
-
-$ doveadm who f\*
+```
+```sh
+doveadm kick foo 192.0.2.0/24
+doveadm who f\*
+```
+```
 username                  # service (pids) (ips)
 foo                       1 imap    (8135) (fd95:4eed:38ba::25)
 ```

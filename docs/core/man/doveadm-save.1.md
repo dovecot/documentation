@@ -59,8 +59,8 @@ quota is enforced.
 
 ## EXAMPLE
 
-```console
-$ echo "hello, world" | doveadm save -u testuser@testdomain
+```sh
+echo "hello, world" | doveadm save -u testuser@testdomain
 ```
 
 <!-- @include: include/reporting-bugs.inc -->
