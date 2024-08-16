@@ -47,7 +47,7 @@ to find bugs in the compiler that yield corrupt binaries.
 
 ## OPTIONS
 
-**-c**\ *config-file*
+**-c** *config-file*
 :   Alternative Dovecot configuration file path.
 
 **-d**
