@@ -8,7 +8,10 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **dict** *command* [**-u** *user*] *dict-uri* [*args*]
+**doveadm** [*GLOBAL OPTIONS*] **dict** *command*
+  [**-u** *user*]
+  *dict-uri*
+  [*args*]
 
 ## DESCRIPTION
 
@@ -35,7 +38,10 @@ Fetch a key from a dictionary.
 
 ### doveadm dict iter
 
-**doveadm** [*GLOBAL OPTIONS*] dict iter [**-u** *user*] [**-1RV**] *dict-uri* *prefix*
+**doveadm** [*GLOBAL OPTIONS*] dict iter
+  [**-u** *user*]
+  [**-1RV**]
+  *dict-uri* *prefix*
 
 Find the keys matching the a prefix in a dictionary.
 
@@ -55,7 +61,10 @@ List keys into the dictionary.
 
 ### doveadm dict inc
 
-**doveadm** [*GLOBAL OPTIONS*] dict inc [**-u** *user*] [**-t** *timestamp-msecs*] *dict-uri* *key* *diff*
+**doveadm** [*GLOBAL OPTIONS*] dict inc
+  [**-u** *user*]
+  [**-t** *timestamp-msecs*]
+  *dict-uri* *key* *diff*
 
 Increment the value of a numeric key in the keys into the dictionary.
 
@@ -70,7 +79,11 @@ Increment the value of a numeric key in the keys into the dictionary.
 
 ### doveadm dict set
 
-**doveadm** [*GLOBAL OPTIONS*] dict set [**-u** *user*] [**-t** *timestamp-msecs*] [**-e** *expire-secs*] *dict-uri* *key* *value*
+**doveadm** [*GLOBAL OPTIONS*] dict set
+  [**-u** *user*]
+  [**-t** *timestamp-msecs*]
+  [**-e** *expire-secs*]
+  *dict-uri* *key* *value*
 
 Set/create keys into the dictionary.
 
@@ -88,7 +101,10 @@ Set/create keys into the dictionary.
 
 ### doveadm dict unset
 
-**doveadm** [*GLOBAL OPTIONS*] dict unset [**-u** *user*] [**-t** *timestamp-msecs*] *dict-uri* *key*
+**doveadm** [*GLOBAL OPTIONS*] dict unset
+  [**-u** *user*]
+  [**-t** *timestamp-msecs*]
+  *dict-uri* *key*
 
 Remove a key from the dictionary.
 
