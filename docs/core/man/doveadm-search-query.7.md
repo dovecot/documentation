@@ -19,16 +19,16 @@ Each *search_query* consists at least of one *SEARCH KEY*. Most of the
 case-insensitive. The shortest valid *search_query* is **ALL**. For
 example:
 
-```console
-$ doveadm search ALL
+```sh
+doveadm search ALL
 ```
 
 Multiple search query expressions will be combined with the **AND**
 operator by default. To find all messages that are new and greater than
 50 kilobyte, one can use:
 
-```console
-$ doveadm search NEW LARGER 50k
+```sh
+doveadm search NEW LARGER 50k
 ```
 
 **OR**-ed *SEARCH KEYS* have to be written in parenthesis, when mixing
@@ -36,8 +36,8 @@ ANDs and ORs. Shells commonly require escaping for parentheses. To find
 messages that were saved on the "13th of April 2007" AND have the \\Seen
 and/or \\Flagged flag set, one can use for example:
 
-```console
-$ doveadm search SAVEDON 2007-04-13 \( SEEN OR FLAGGED \)
+```sh
+doveadm search SAVEDON 2007-04-13 \( SEEN OR FLAGGED \)
 ```
 
 It's also possible to specify the mailbox, in which should be searched.
@@ -46,14 +46,14 @@ keyword **mailbox-guid** and the mailbox's globally unique identifier in
 the *search_query*. To find all messages in the mailbox with the GUID
 "44f68b13ce97044b837f000035ca9452" use:
 
-```console
-$ doveadm search mailbox-guid 44f68b13ce97044b837f000035ca9452 ALL
+```sh
+doveadm search mailbox-guid 44f68b13ce97044b837f000035ca9452 ALL
 ```
 
 To list all deleted messages in the "Trash" folder use:
 
-```console
-$ doveadm search mailbox Trash DELETED
+```sh
+doveadm search mailbox Trash DELETED
 ```
 
 ## SEARCH KEYS

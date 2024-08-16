@@ -39,8 +39,10 @@ penalties.
 
 ## EXAMPLE
 
-```console
-$ doveadm penalty
+```sh
+doveadm penalty
+```
+```
 IP               penalty last_penalty        last_update
 192.0.2.222            3 2010-06-15 15:19:27 15:19:27
 192.0.2.53             3 2010-06-15 15:19:34 15:19:34

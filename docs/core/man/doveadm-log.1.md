@@ -74,8 +74,10 @@ priorities are: **debug**, **info**, **warning**, **error** and
 
 This example shows how to locate the log files used by [[man,dovecot]]:
 
-```console
-$ doveadm log find
+```sh
+doveadm log find
+```
+```
 Looking for log files from /var/log
 Debug: /var/log/dovecot.debug
 Info: /var/log/mail.log

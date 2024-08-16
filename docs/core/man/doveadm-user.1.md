@@ -64,8 +64,10 @@ The socket may be located in another directory, when the default
 
 Perform a user lookup for the users jane and john@example.com:
 
-```console
-$ doveadm user jane john@example.com
+```sh
+doveadm user jane john@example.com
+```
+```
 userdb: jane
   uid       : 8001
   gid       : 8001
@@ -83,8 +85,10 @@ userdb: john@example.com
 
 User lookup, using wildcards:
 
-```console
-$ doveadm user \*.?oe@example.net
+```sh
+doveadm user \*.?oe@example.net
+```
+```
 jane.doe@example.net
 judy.roe@example.net
 john.doe@example.net
