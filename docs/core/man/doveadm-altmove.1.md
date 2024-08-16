@@ -30,7 +30,7 @@ the given *file*.
 In the third form, the command will be performed for the user contained in the
 *USER* environment variable.
 
-In the last form, only matching mails of the given *user*\ (s) will be
+In the last form, only matching mails of the given *user*(s) will be
 moved to the alternative storage.
 
 <!-- @include: global-options.inc -->

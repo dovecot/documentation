@@ -33,7 +33,7 @@ the execution and evaluation of commands and tests respectively.
 
 ## OPTIONS
 
-**-a**\ *orig-recipient-address*
+**-a** *orig-recipient-address*
 :   The original envelope recipient address. This is what Sieve's
     envelope test will compare to when the "to" envelope part is
     requested. Some tests and actions will also use this as the script
@@ -42,7 +42,7 @@ the execution and evaluation of commands and tests respectively.
     headers. If none of these headers is present either, the recipient
     address defaults to *recipient@example.com*.
 
-**-c**\ *config-file*
+**-c** *config-file*
 :   Alternative Dovecot configuration file path.
 
 **-C**
@@ -65,7 +65,7 @@ the execution and evaluation of commands and tests respectively.
     transmit any messages to remote SMTP recipients. Such actions only
     print the outgoing message to **stdout**.
 
-**-f**\ *envelope-sender*
+**-f** *envelope-sender*
 :   The envelope sender address (return path). This is what Sieve's
     envelope test will compare to when the "from" envelope part is
     requested. Also, this is where response messages are 'sent' to. If
@@ -74,7 +74,7 @@ the execution and evaluation of commands and tests respectively.
     these headers is present either, the sender envelope address defaults
     to *sender@example.com*.
 
-**-l**\ *mail-location*
+**-l** *mail-location*
 :   The location of the user's mail store. The syntax of this option's
     *mail-location* parameter is identical to what is used for the
     mail_location setting in the Dovecot config file. This parameter is
@@ -82,13 +82,13 @@ the execution and evaluation of commands and tests respectively.
     of messages. If **-l** is omitted when **-e** is specified, mail
     store actions like fileinto and keep are skipped.
 
-**-m**\ *default-mailbox*
+**-m** *default-mailbox*
 :   The mailbox where the keep action stores the message. This is "INBOX"
     by default.
 
 <!-- @include: option-o.inc -->
 
-**-r**\ *recipient-address*
+**-r** *recipient-address*
 :   The final envelope recipient address. Some tests and actions will use
     this as the script owner's e-mail address. For example, this is what
     is used by the vacation action to check whether a reply is
@@ -96,19 +96,19 @@ the execution and evaluation of commands and tests respectively.
     recipient address will be used instead (see **-a** option for more
     info).
 
-**-s**\ *script-file*
+**-s** *script-file*
 :   Specify additional scripts to be executed before the main script.
     Multiple **-s** arguments are allowed and the specified scripts are
     executed sequentially in the order specified at the command line.
 
-**-t**\ *trace-file*
+**-t** *trace-file*
 :   Enables runtime trace debugging. Trace debugging provides detailed
     insight in the operations performed by the Sieve script. Refer to the
     runtime trace debugging section below. The trace information is
     written to the specified file. Using '-' as filename causes the trace
     data to be written to **stdout**.
 
-**-T**\ *trace-option*
+**-T** *trace-option*
 :   Configures runtime trace debugging, which is enabled with the **-t**
     option. Refer to the runtime trace debugging section below.
 
@@ -141,7 +141,7 @@ tests and the matched values can be printed.
 The runtime trace can be configured using the **-T** option, which can
 be specified multiple times. It can be used as follows:
 
-**-T\ level=...**
+**-T level=...**
 :   Set the detail level of the trace debugging. One of the following
     values can be supplied:
 
@@ -159,11 +159,11 @@ be specified multiple times. It can be used as follows:
         :   Print all executed commands, performed tests and the values
             matched in those tests.
 
-**-T\ debug**
+**-T debug**
 :   Print debug messages as well. This is usually only useful for
     developers and is likely to produce messy output.
 
-**-T\ addresses**
+**-T addresses**
 :   Print byte code addresses for the current trace output. Normally,
     only the current Sieve source code position (line number) is printed.
     The byte code addresses are equal to those listed in a binary dump

@@ -71,7 +71,7 @@ course:
 
 ## OPTIONS
 
-**-c**\ *config-file*
+**-c** *config-file*
 :   Alternative Dovecot configuration file path.
 
 **-C**
@@ -95,7 +95,7 @@ course:
     what would be done. Using this option, the sieve-filter command
     becomes active and performs the requested actions.
 
-**-m**\ *default-mailbox*
+**-m** *default-mailbox*
 :   The mailbox where the (implicit) **keep** Sieve action stores
     messages. This is equal to the *source-mailbox* by default.
     Specifying a different folder will have the effect of moving (or
@@ -106,7 +106,7 @@ course:
 
 <!-- @include: option-o.inc -->
 
-**-q**\ *output-mailbox*\ **[not implemented yet]**
+**-q** *output-mailbox* **[not implemented yet]**
 :   Store outgoing e-mail into the indicated *output-mailbox*. By
     default, the sieve-filter command ignores Sieve actions such as
     redirect, reject, vacation and notify, but using this option outgoing
@@ -114,7 +114,7 @@ course:
     effect in simulation mode. Flags of redirected messages are not
     preserved.
 
-**-Q**\ *mail-command*\ **[not implemented yet]**
+**-Q** *mail-command* **[not implemented yet]**
 :   Send outgoing e-mail (e.g. as produced by redirect, reject and
     vacation) through the specified program. By default, the sieve-filter
     command ignores Sieve actions such as redirect, reject, vacation and
@@ -123,7 +123,7 @@ course:
     simulation mode. Unless you really know what you are doing, **DO NOT
     USE THIS TO FEED MAIL TO SENDMAIL!**.
 
-**-s**\ *script-file*\ **[not implemented yet]**
+**-s** *script-file* **[not implemented yet]**
 :   Specify additional scripts to be executed before the main script.
     Multiple **-s** arguments are allowed and the specified scripts are
     executed sequentially in the order specified at the command line.
@@ -169,10 +169,10 @@ course:
     executed at delivery. The *discard-action* parameter accepts one of
     the following values:
 
-    :   **keep**\ (default)
+    :   **keep** (default)
         :   Keep discarded messages in source mailbox.
 
-    :   **move**\ *mailbox*
+    :   **move** *mailbox*
         :   Move discarded messages to the indicated *mailbox*. This is for
             instance useful to move messages to a Trash mailbox. Refer to the
             explanation of the *source-mailbox* argument for more information
