@@ -62,8 +62,8 @@ In the final form, the mails will be imported only for given *user* (s).
 
 *dest_parent*
 :   The name of the destination mailbox, under which the mails should be
-:   imported. [[man,doveadm]] will create the *dest_parent* mailbox if
-:   it doesn't exist.
+    imported. [[man,doveadm]] will create the *dest_parent* mailbox if
+    it doesn't exist.
 
 *search_query*
 :   Copy messages matching this search query. See

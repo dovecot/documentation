@@ -55,7 +55,7 @@ Options accepted by **dovecot-lda**:
     setting is set to **yes**). If a message couldn't be saved to the
     *mailbox* for any reason, it's delivered to **INBOX** instead.
 
-**-o** *setting* **=** *value*
+**-o** *setting*<!-- -->**=**<!-- -->*value*
 :   Overrides the configuration *setting* from
     */etc/dovecot/dovecot.conf* and from the userdb with the given
     *value*. In order to override multiple settings, the **-o** option
