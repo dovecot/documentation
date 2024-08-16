@@ -35,7 +35,9 @@ authentication related actions.
 
 ### auth cache flush
 
-**doveadm** [*GLOBAL OPTIONS*] auth cache flush [**-a** *master_socket_path*] [*user* ...]
+**doveadm** [*GLOBAL OPTIONS*] auth cache flush
+  [**-a** *master_socket_path*]
+  [*user* ...]
 
 Flush the authentication cache. By default the cache is flushed for all
 the users (which can also be done by sending SIGHUP to the auth
@@ -54,7 +56,11 @@ providing their usernames.
 
 ### auth lookup
 
-**doveadm** [*GLOBAL OPTIONS*] auth lookup [**-a** *userdb_socket_path*] [**-x** *auth_info*] [**-f** *field*] *user* [...]
+**doveadm** [*GLOBAL OPTIONS*] auth lookup
+  [**-a** *userdb_socket_path*]
+  [**-x** *auth_info*]
+  [**-f** *field*]
+  *user* [...]
 
 Similar to [[man,doveadm-user]] command, except it performs a *passdb*
 lookup (without authentication) instead of a *userdb* lookup.
@@ -75,7 +81,11 @@ lookup (without authentication) instead of a *userdb* lookup.
 
 ### auth test
 
-**doveadm** [*GLOBAL OPTIONS*] auth test [**-a** *auth_socket_path*] [**-A** *sasl_mech*] [**-x** *auth_info*] *user* [*password*]
+**doveadm** [*GLOBAL OPTIONS*] auth test
+  [**-a** *auth_socket_path*]
+  [**-A** *sasl_mech*]
+  [**-x** *auth_info*]
+  *user* [*password*]
 
 Test authentication for the given user.
 
@@ -94,7 +104,12 @@ Test authentication for the given user.
 
 ### auth login
 
-**doveadm** [*GLOBAL OPTIONS*] auth login [**-a** *auth_socket_path*] [**-m** *auth_master_socket_path*] [**-A** *sasl_mech*] [**-x** *auth_info*] *user* [*password*]
+**doveadm** [*GLOBAL OPTIONS*] auth login
+  [**-a** *auth_socket_path*]
+  [**-m** *auth_master_socket_path*]
+  [**-A** *sasl_mech*]
+  [**-x** *auth_info*]
+  *user* [*password*]
 
 Test full login for the given user; i.e. performing both passdb lookup (authentication) and userdb lookup (login).
 

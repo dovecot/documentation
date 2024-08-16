@@ -10,9 +10,16 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] **pw -l**
 
-**doveadm** [*GLOBAL OPTIONS*] **pw** [**-p** *password*] [**-r** *rounds*] [**-s** *scheme*] [**-u** *user*] [**-V**]
+**doveadm** [*GLOBAL OPTIONS*] **pw**
+  [**-p** *password*]
+  [**-r** *rounds*]
+  [**-s** *scheme*]
+  [**-u** *user*]
+  [**-V**]
 
-**doveadm** [*GLOBAL OPTIONS*] **pw -t** *hash* [**-p** *password*] [**-u** *user*]
+**doveadm** [*GLOBAL OPTIONS*] **pw** **-t** *hash*
+  [**-p** *password*]
+  [**-u** *user*]
 
 ## DESCRIPTION
 
