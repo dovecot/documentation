@@ -100,36 +100,42 @@ When Dovecot was configured to use different settings for some
 networks/subnets it is possible to show which settings will be applied
 for a specific connection.
 
-```console
-$ doveconf -f local=10.0.0.110 -f remote=10.11.1.2 -f service=pop3 -n
+```sh
+doveconf -f local=10.0.0.110 -f remote=10.11.1.2 -f service=pop3 -n
 ```
 
 **doveconf** can be also used to convert v1.x configuration files into
 v2.x format.
 
-```console
-$ doveconf -n -c /oldpath/dovecot.conf > /etc/dovecot/dovecot.conf.new
+```sh
+doveconf -n -c /oldpath/dovecot.conf > /etc/dovecot/dovecot.conf.new
 ```
 
 Ask **doveconf** for a global setting:
 
-```console
-$ doveconf mail_plugins
+```sh
+doveconf mail_plugins
+```
+```
 mail_plugins = quota
 ```
 
 Ask **doveconf** for a protocol specific setting. Uses the **-h**
 option, in order to hide the setting's name:
 
-```console
-$ doveconf -h -f protocol=imap mail_plugins
+```sh
+doveconf -h -f protocol=imap mail_plugins
+```
+```
 quota imap_quota
 ```
 
 Dump a whole configuration section:
 
-```console
-$ doveconf dict
+```sh
+doveconf dict
+```
+```
 dict {
   quota_clone = pgsql:/etc/dovecot/dovecot-dict-sql.conf.ext
 }
@@ -137,8 +143,10 @@ dict {
 
 Or dump only the quota dict:
 
-```console
-$ doveconf dict/quota_clone
+```sh
+doveconf dict/quota_clone
+```
+```
 dict/quota_clone = pgsql:/etc/dovecot/dovecot-dict-sql.conf.ext
 ```
 

@@ -86,8 +86,10 @@ configuring Dovecot first, you can use `doveadm -O pw` to do so.
 
 A DIGEST-MD5 hash for jane.roe@example.com.
 
-```console
-$ doveadm pw -s digest-md5 -u jane.roe@example.com
+```sh
+doveadm pw -s digest-md5 -u jane.roe@example.com
+``ldas;l;als;las;lkas
+```
 Enter new password:
 Retype new password:
 {DIGEST-MD5}9b9dcb4466233a9307bbc33708dffda0
@@ -95,8 +97,10 @@ Retype new password:
 
 A CRAM-MD5 hash for john.doe@example.com.
 
-```console
-$ doveadm pw
+```sh
+doveadm pw
+```
+```
 Enter new password:
 Retype new password:
 {CRAM-MD5}913331d8782236a8ecba7764a63aa27b26437fd40ca878d887f11d81245c2c6b
