@@ -8,13 +8,28 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **kick** [**-a** *anvil_socket_path*] [**-f** *passdb_field*] [**-h** *dest_host*] *user_mask*
+**doveadm** [*GLOBAL OPTIONS*] **kick**
+  [**-a** *anvil_socket_path*]
+  [**-f** *passdb_field*]
+  [**-h** *dest_host*]
+  *user_mask*
 
-**doveadm** [*GLOBAL OPTIONS*] **kick** [**-a** *anvil_socket_path*] [**-f** *passdb_field*] [**-h** *dest_host*] *ip* [**/** *bits*]
+**doveadm** [*GLOBAL OPTIONS*] **kick**
+  [**-a** *anvil_socket_path*]
+  [**-f** *passdb_field*]
+  [**-h** *dest_host*]
+  *ip* [**/** *bits*]
 
-**doveadm** [*GLOBAL OPTIONS*] **kick** [**-a** *anvil_socket_path*] [**-f** *passdb_field*] [**-h** *dest_host*] *user_mask* *ip* [**/** *bits*]
+**doveadm** [*GLOBAL OPTIONS*] **kick**
+  [**-a** *anvil_socket_path*]
+  [**-f** *passdb_field*]
+  [**-h** *dest_host*]
+  *user_mask* *ip* [**/** *bits*]
 
-**doveadm** [*GLOBAL OPTIONS*] **kick** [**-a** *anvil_socket_path*] [**-f** *passdb_field*] **-h** *dest_host*
+**doveadm** [*GLOBAL OPTIONS*] **kick**
+  [**-a** *anvil_socket_path*]
+  [**-f** *passdb_field*]
+  **-h** *dest_host*
 
 ## DESCRIPTION
 
