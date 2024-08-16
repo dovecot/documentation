@@ -34,7 +34,7 @@ configuring Dovecot first, you can use `doveadm -O pw` to do so.
 **-l**
 :   List all supported password *scheme* s and exit successfully.
 
-    There are up to three optional password *scheme*\ s: **BLF-CRYPT**
+    There are up to three optional password *scheme*s: **BLF-CRYPT**
     (Blowfish crypt), **SHA256-CRYPT** and **SHA512-CRYPT**. Their
     availability depends on the system's currently used libc.
 
