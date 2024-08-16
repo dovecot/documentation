@@ -8,7 +8,12 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **user** [**-a** *userdb_socket_path*] [**-f** *field*] [**-u**] [**-x** *auth_info*] *user*...
+**doveadm** [*GLOBAL OPTIONS*] **user**
+  [**-a** *userdb_socket_path*]
+  [**-f** *field*]
+  [**-u**]
+  [**-x** *auth_info*]
+  *user*...
 
 ## DESCRIPTION
 

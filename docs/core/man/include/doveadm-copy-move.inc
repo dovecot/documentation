@@ -1,21 +1,53 @@
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **move** [**-S** *socket_path*] **-A** **destination** [**user** *source_user*] *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **move**
+  [**-S** *socket_path*]
+  **-A** **destination**
+  [**user** *source_user*]
+  *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] **move** [**-S** *socket_path*] **-F** *file* **destination** [**user** *source_user*] *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **move**
+  [**-S** *socket_path*]
+  **-F** *file* **destination**
+  [**user** *source_user*]
+  *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] **move** [**-S** *socket_path*] **\-\-no-userdb-lookup** **destination** [**user** *source_user*] *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **move**
+  [**-S** *socket_path*]
+  **\-\-no-userdb-lookup** **destination**
+  [**user** *source_user*]
+  *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] **move** [**-S** *socket_path*] **-u** *user* **destination** [**user** *source_user*] *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **move**
+  [**-S** *socket_path*]
+  **-u** *user* **destination**
+  [**user** *source_user*]
+  *search_query*
 
 
-**doveadm** [*GLOBAL OPTIONS*] **copy** [**-S** *socket_path*] **-A** **destination** [**user** *source_user*] *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **copy**
+  [**-S** *socket_path*]
+  **-A** **destination**
+  [**user** *source_user*]
+  *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] **copy** [**-S** *socket_path*] **-F** *file* **destination** [**user** *source_user*] *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **copy**
+  [**-S** *socket_path*]
+  **-F** *file* **destination**
+  [**user** *source_user*]
+  *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] **copy** [**-S** *socket_path*] **\-\-no-userdb-lookup** **destination** [**user** *source_user*] *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **copy**
+  [**-S** *socket_path*]
+  **\-\-no-userdb-lookup** **destination**
+  [**user** *source_user*]
+  *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] **copy** [**-S** *socket_path*] **-u** *user* **destination** [**user** *source_user*] *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **copy**
+  [**-S** *socket_path*]
+  **-u** *user* **destination**
+  [**user** *source_user*]
+  *search_query*
 
 ## DESCRIPTION
 

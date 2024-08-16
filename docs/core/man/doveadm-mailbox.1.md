@@ -8,7 +8,12 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] *mailbox_cmd* [*options*] [*arguments*]
+**doveadm**
+  [*GLOBAL OPTIONS*]
+  [**-f** *formatter*]
+  *mailbox_cmd*
+  [*OPTIONS*]
+  [*ARGUMENTS*]
 
 ## DESCRIPTION
 
@@ -41,7 +46,12 @@ dovecotComponent: core
 
 ### mailbox create
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox create [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-g** *guid*] [**-s**] *mailbox*...
+**doveadm** [*GLOBAL OPTIONS*] mailbox create
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-g** *guid*]
+  [**-s**]
+  *mailbox*...
 
 This command is used to create one or more mailboxes. The mailbox format
 of the created mailboxes depends on the *mail_location* setting, or the
@@ -56,14 +66,22 @@ user's *mail* field, returned by the userdb.
 
 ### mailbox cryptokey
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox cryptokey **export|generate|list|password**
+**doveadm** [*GLOBAL OPTIONS*] mailbox cryptokey
+  **export|generate|list|password**
 
 This command is used to manage mail crypt plugin cryptographic keys.
 Please see [[man,doveadm-mailbox-cryptokey]] for more details.
 
 ### mailbox delete
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox delete [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-s**] [**-r**] [**-e**] [**-Z**] *mailbox*...
+**doveadm** [*GLOBAL OPTIONS*] mailbox delete
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-s**]
+  [**-r**]
+  [**-e**]
+  [**-Z**]
+  *mailbox*...
 
 This command deletes a mailbox and expunges all the messages it
 contains. If the mailbox has any children, they won't be deleted, unless
@@ -85,7 +103,12 @@ contains. If the mailbox has any children, they won't be deleted, unless
 
 ### mailbox list
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox list [**-7** | **-8**] [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-s**] [*mailbox* ...]
+**doveadm** [*GLOBAL OPTIONS*] mailbox list
+  [**-7** | **-8**]
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-s**]
+  [*mailbox* ...]
 
 To get an overview of existing mailboxes use this command. It's also
 possible to use wildcards in the *mailbox* name.
@@ -102,7 +125,13 @@ already deleted.
 
 ### mailbox metadata list
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox metadata list [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-s**] [**-p**] *mailbox* [*key-prefix*]
+**doveadm** [*GLOBAL OPTIONS*] mailbox metadata list
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-s**]
+  [**-p**]
+  *mailbox*
+  [*key-prefix*]
 
 **-s**
 :   Allows to specify *mailbox* "", which points to the server metadata
@@ -121,7 +150,11 @@ already deleted.
 
 ### mailbox metadata get
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox metadata get [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-s**] *mailbox* *key*
+**doveadm** [*GLOBAL OPTIONS*] mailbox metadata get
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-s**]
+  *mailbox* *key*
 
 **-s**
 :   Allows to specify *mailbox* "", which points to the server metadata
@@ -137,7 +170,11 @@ already deleted.
 
 ### mailbox metadata set
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox metadata set [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-s**] *mailbox* *key* *value*
+**doveadm** [*GLOBAL OPTIONS*] mailbox metadata set
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-s**]
+  *mailbox* *key* *value*
 
 **-s**
 :   Allows to specify *mailbox* "", which points to the server metadata
@@ -156,7 +193,11 @@ already deleted.
 
 ### mailbox metadata unset
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox metadata unset [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-s**] *mailbox* *key*
+**doveadm** [*GLOBAL OPTIONS*] mailbox metadata unset
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-s**]
+  *mailbox* *key*
 
 **-s**
 :   Allows to specify *mailbox* "", which points to the server metadata
@@ -192,7 +233,11 @@ Convention).
 
 ### mailbox rename
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox rename [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-s**] *old_name* *new_name*
+**doveadm** [*GLOBAL OPTIONS*] mailbox rename
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-s**]
+  *old_name* *new_name*
 
 The **mailbox rename** command is used to rename the mailbox
 *old_name* to *new_name*.
@@ -202,7 +247,11 @@ When the **-s** option is given, *old_name* will be unsubscribed and
 
 ### mailbox status
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox status [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-t**] *fields* *mailbox*...
+**doveadm** [*GLOBAL OPTIONS*] mailbox status
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-t**]
+  *fields* *mailbox*...
 
 Show the **status** of one or more mailboxes. The *mailbox* name may
 also contain wildcards.
@@ -254,19 +303,34 @@ This command uses by default the output *formatter* **flow**.
 
 ### mailbox subscribe
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox subscribe [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *mailbox* *...*
+**doveadm** [*GLOBAL OPTIONS*] mailbox subscribe
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *mailbox* *...*
 
 This command is used to subscribe one or more mailboxes.
 
 ### mailbox unsubscribe
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox unsubscribe [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *mailbox* *...*
+**doveadm** [*GLOBAL OPTIONS*] mailbox unsubscribe
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *mailbox* *...*
 
 This command is used to unsubscribe one or more mailboxes.
 
 ### mailbox update
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox update [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-\-mailbox-guid** *guid*] [**-\-uid-validity** *uid*] [**-\-min-next-uid** *uid*] [**-\-min-first-recent-uid** *uid*] [**-\-min-highest-modseq** *seq*] [**-\-min-highest-pvt-modseq** *seq*] *mailbox* *...*
+**doveadm** [*GLOBAL OPTIONS*] mailbox update
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-\-mailbox-guid** *guid*]
+  [**-\-uid-validity** *uid*]
+  [**-\-min-next-uid** *uid*]
+  [**-\-min-first-recent-uid** *uid*]
+  [**-\-min-highest-modseq** *seq*]
+  [**-\-min-highest-pvt-modseq** *seq*]
+  *mailbox* *...*
 
 This command is used to set UID validity, next UID, first recent UID and
 modification sequence values.
@@ -277,7 +341,10 @@ is not supported for all mail backends.
 
 ### mailbox cache purge
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox cache purge [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *mailbox* *...*
+**doveadm** [*GLOBAL OPTIONS*] mailbox cache purge
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *mailbox* *...*
 
 Purge the dovecot.index.cache file. Most importantly this frees up disk
 space from mails that were already deleted. Normally there i no need to
@@ -286,7 +353,14 @@ automatically.
 
 ### mailbox cache decision
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox cache decision [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-\-all**] [**-\-fields** *list of fields*] [**-\-last-used** *unix timestamp*] [**-\-decision** *no|temp|yes*] *mailbox* *...*
+**doveadm** [*GLOBAL OPTIONS*] mailbox cache decision
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-\-all**]
+  [**-\-fields** *list of fields*]
+  [**-\-last-used** *unix timestamp*]
+  [**-\-decision** *no|temp|yes*]
+  *mailbox* *...*
 
 This command is used to list or change caching decisions for field(s) in
 mailbox(es). You can list decisions by leaving out decision and
@@ -312,7 +386,10 @@ cache.
 
 ### mailbox cache remove
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox cache remove [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *search query*
+**doveadm** [*GLOBAL OPTIONS*] mailbox cache remove
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *search query*
 
 Remove any matching mail(s) from cache.
 

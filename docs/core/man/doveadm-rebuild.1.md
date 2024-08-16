@@ -8,13 +8,21 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **rebuild** \<command\> [**-S** *socket_path*] **-A** *search_query*
+**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **rebuild** \<command\>
+  [**-S** *socket_path*]
+  **-A** *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **rebuild** \<command\> [**-S** *socket_path*] **-F** *file* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **rebuild** \<command\>
+  [**-S** *socket_path*]
+  **-F** *file* *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **rebuild** \<command\> [**-S** *socket_path*] **\-\-no-userdb-lookup** *search_query*
+**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **rebuild** \<command\>
+  [**-S** *socket_path*]
+  **\-\-no-userdb-lookup** *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **rebuild** \<command\> [**-S** *socket_path*] **-u** *user* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **rebuild** \<command\>
+  [**-S** *socket_path*]
+  **-u** *user* *search_query*
 
 ## DESCRIPTION
 

@@ -14,7 +14,15 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [**-DOkv**] [**-i** *instance-name*] [**-c** *config-file*] [**-o** *key*<!-- -->**=**<!-- -->*value* [ .. ]] [**-f** *formatter*] *command* [*command_options*] [*command_arguments*]
+**doveadm**
+  [**-DOkv**]
+  [**-i** *instance-name*]
+  [**-c** *config-file*]
+  [**-o** *key*<!-- -->**=**<!-- -->*value* [ .. ]]
+  [**-f** *formatter*]
+  *command*
+  [*command_options*]
+  [*command_arguments*]
 
 ## DESCRIPTION
 

@@ -8,13 +8,21 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **purge** [**-S** *socket_path*] **-A**
+**doveadm** [*GLOBAL OPTIONS*] **purge**
+  [**-S** *socket_path*]
+  **-A**
 
-**doveadm** [*GLOBAL OPTIONS*] **purge** [**-S** *socket_path*] **-F** *file*
+**doveadm** [*GLOBAL OPTIONS*] **purge**
+  [**-S** *socket_path*]
+  **-F** *file*
 
-**doveadm** [*GLOBAL OPTIONS*] **purge** [**-S** *socket_path*] **\-\-no-userdb-lookup**
+**doveadm** [*GLOBAL OPTIONS*] **purge**
+  [**-S** *socket_path*]
+  **\-\-no-userdb-lookup**
 
-**doveadm** [*GLOBAL OPTIONS*] **purge** [**-S** *socket_path*] **-u** *user*
+**doveadm** [*GLOBAL OPTIONS*] **purge**
+  [**-S** *socket_path*]
+  **-u** *user*
 
 ## DESCRIPTION
 

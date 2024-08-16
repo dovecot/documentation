@@ -8,7 +8,9 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **penalty** [**-a** *anvil_socket_path*] [*ip* [**/** *mask*]]
+**doveadm** [*GLOBAL OPTIONS*] **penalty**
+  [**-a** *anvil_socket_path*]
+  [*ip* [**/** *mask*]]
 
 ## DESCRIPTION
 

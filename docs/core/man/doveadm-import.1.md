@@ -8,13 +8,30 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **import** [**-S** *socket_path*] [**-U** *source_user*] [**-s**] **-A** *source_location* *dest_parent* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **import**
+  [**-S** *socket_path*]
+  [**-U** *source_user*]
+  [**-s**]
+  **-A**
+  *source_location* *dest_parent* *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] **import** [**-S** *socket_path*] [**-U** *source_user*] [**-s**] **-F** *file* *source_location* *dest_parent* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **import**
+  [**-S** *socket_path*]
+  [**-U** *source_user*]
+  [**-s**]
+  **-F** *file* *source_location* *dest_parent* *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] **import** [**-S** *socket_path*] [**-U** *source_user*] [**-s**] **\-\-no-userdb-lookup** *source_location* *dest_parent* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **import**
+  [**-S** *socket_path*]
+  [**-U** *source_user*]
+  [**-s**]
+  **\-\-no-userdb-lookup** *source_location* *dest_parent* *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] **import** [**-S** *socket_path*] [**-U** *source_user*] [**-s**] **-u** *user* *source_location* *dest_parent* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **import**
+  [**-S** *socket_path*]
+  [**-U** *source_user*]
+  [**-s**]
+  **-u** *user* *source_location* *dest_parent* *search_query*
 
 ## DESCRIPTION
 

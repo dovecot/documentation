@@ -8,7 +8,11 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**dovecot-sysreport** [ **-h|-\-help** ] [**-c|-\-core** [ *binary* ] *core* [...]] [ **-d|-\-destination** *dest*" ] [ **-k|-\-keeptemp** ]
+**dovecot-sysreport**
+  [**-h|-\-help**]
+  [**-c|-\-core** [*binary*] *core* [...]]
+  [**-d|-\-destination** *dest*]
+  [**-k|-\-keeptemp**]
 
 ## DESCRIPTION
 

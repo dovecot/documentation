@@ -28,13 +28,17 @@ If you have multiple fs drivers, you start by having the first driver in
 
 ### fs copy
 
-**doveadm** [*GLOBAL OPTIONS*] fs copy *fs-driver* *fs-args* *source-path* *dest-path*
+**doveadm** [*GLOBAL OPTIONS*] fs copy
+  *fs-driver* *fs-args* *source-path* *dest-path*
 
 Copy source path to the destination path.
 
 ### fs delete
 
-**doveadm** [*GLOBAL OPTIONS*] fs delete [**-R**] [**-n** *count*] *fs-driver* *fs-args* *path* [*path* ...]
+**doveadm** [*GLOBAL OPTIONS*] fs delete
+  [**-R**]
+  [**-n** *count*]
+  *fs-driver* *fs-args* *path* [*path* ...]
 
 Delete all data associated with the path provided.
 
@@ -64,7 +68,9 @@ Iterate through all directories in the path provided.
 
 ### fs put
 
-**doveadm** [*GLOBAL OPTIONS*] fs put [**-h** *hash*] *fs-driver* *fs-args* *input_path* *path*
+**doveadm** [*GLOBAL OPTIONS*] fs put
+  [**-h** *hash*]
+  *fs-driver* *fs-args* *input_path* *path*
 
 Store data at the path provided.
 
