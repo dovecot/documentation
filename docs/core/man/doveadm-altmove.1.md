@@ -75,8 +75,8 @@ storage under /nfsmount:
 mail_location = mdbox:~/mdbox:ALT=/nfsmount/%h/mdbox
 ```
 
-```console
-$ doveadm altmove -u johnd@example.com seen savedbefore 1w<
+```sh
+doveadm altmove -u johnd@example.com seen savedbefore 1w<
 ```
 
 <!-- @include: include/reporting-bugs.inc -->
