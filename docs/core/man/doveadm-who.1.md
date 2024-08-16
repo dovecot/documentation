@@ -55,8 +55,10 @@ This command uses by default the output formatter **table**.
 
 Show authenticated sessions, filtered by the client's IP address:
 
-```console
-$ doveadm who ::1
+```sh
+doveadm who ::1
+```
+```
 username                       # proto (pids)        (ips)
 jane                           2 imap  (30155 30412) (::1)
 
@@ -67,8 +69,10 @@ john@example.com                1 imap  (30257) (192.0.2.34)
 
 Show authenticated sessions, filtered by username:
 
-```console
-$ doveadm who pvo
+```sh
+doveadm who pvo
+```
+```
 username         # proto (pids)                    (ips)
 pvo              1 sieve (30343)                   (fd95:4eed:38ba::25)
 pvo              4 imap  (25693 25686 25679 25669) (fd95:4eed:38ba::25)
