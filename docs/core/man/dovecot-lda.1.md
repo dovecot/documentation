@@ -8,7 +8,15 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**dovecot-lda** [**-ek**] [**-a** *address*] [**-c** *config_file*] [**-d** *username*] [**-f** *envelope_sender*] [**-m** *mailbox*] [**-o** *setting=value*] [**-p** *path*]
+**dovecot-lda**
+  [**-ek**]
+  [**-a** *address*]
+  [**-c** *config_file*]
+  [**-d** *username*]
+  [**-f** *envelope_sender*]
+  [**-m** *mailbox*]
+  [**-o** *setting=value*]
+  [**-p** *path*]
 
 ## DESCRIPTION
 
