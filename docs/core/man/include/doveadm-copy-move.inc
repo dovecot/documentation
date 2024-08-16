@@ -98,7 +98,7 @@ given *user*(s).
 **user** *source_user*
 :   The keyword **user** followed by a valid user name. When this
     argument is present, [[man,doveadm]] will apply the *search_query*
-    to the *source_user*'s *mail_location*.
+    to the *source_user*'s mail location.
 
     **Limitation:** Currently the users, specified by **-u** *user*
     and **user** *source_user*, must share the same system UID and GID.
