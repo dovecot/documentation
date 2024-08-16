@@ -31,7 +31,7 @@ dovecotComponent: core
 ## DESCRIPTION
 
 This command can be used with sdbox or mdbox storage to move mails to
-alternative storage path when :ALT=\<path\> is specified for the mail
+alternative storage path when *mail_alt_path* is specified for the mail
 location.
 
 In the first form, [[man,doveadm]] will execute the **altmove** for all users.
@@ -83,8 +83,10 @@ moved to the alternative storage.
 This example moves seen mails older than one week to alternative
 storage under /nfsmount:
 
-```
-mail_location = mdbox:~/mdbox:ALT=/nfsmount/%h/mdbox
+```[dovecot.conf]
+mail_driver = mdbox
+mail_path = ~/mdbox
+mail_alt_path = /nfsmount/%h/mdbox
 ```
 
 ```sh

@@ -82,7 +82,7 @@ usage.
 :   SQL dictionary proxy settings.
 
 */etc/dovecot/conf.d/10-mail.conf*
-:   Mailbox locations and namespaces, including global *mail_location*
+:   Mailbox locations and namespaces.
 
 */etc/dovecot/conf.d/90-quota.conf*
 :   Quota configuration.
