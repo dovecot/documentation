@@ -22,7 +22,7 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **search**
   [**-S** *socket_path*]
-  **-u** *user&* *search_query*
+  **-u** *user* *search_query*
 
 ## DESCRIPTION
 
