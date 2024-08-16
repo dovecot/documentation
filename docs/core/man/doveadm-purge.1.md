@@ -36,8 +36,8 @@ In the first form, the command will be executed for all users.
 In the second form, the command will be executed for all users listed in
 the given *file*.
 
-+In the third form, the command will be performed for the user contained in the
-+*USER* environment variable.
+In the third form, the command will be performed for the user contained in the
+*USER* environment variable.
 
 
 In the last form, only messages of the given *user* (s) will be purged.
