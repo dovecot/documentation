@@ -107,7 +107,7 @@ already deleted.
 **-s**
 :   Allows to specify *mailbox* "", which points to the server metadata
     instead of mailboxes' matadata. It has no effect if mailbox is anything
-	else than an empty string.
+    else than an empty string.
 
 **-p**
 :   Prepend prefix.
@@ -126,7 +126,7 @@ already deleted.
 **-s**
 :   Allows to specify *mailbox* "", which points to the server metadata
     instead of mailboxes' matadata. It has no effect if mailbox is anything
-	else than an empty string.
+    else than an empty string.
 
 *mailbox*
 :   The target mailbox (mandatory). If **-s** is specified, the empty

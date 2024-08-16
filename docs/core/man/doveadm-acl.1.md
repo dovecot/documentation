@@ -101,7 +101,7 @@ This command uses by default the output formatter **table**.
     :   **k -> create**
         :   Mailboxes can be created/renamed directly under this
             *mailbox* (but not necessarily under its children, see
-	    [[link,acl_inheritance]].
+        [[link,acl_inheritance]].
             Note: Renaming also requires the delete right.
 
     :   **x -> delete**
