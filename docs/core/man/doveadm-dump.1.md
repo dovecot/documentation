@@ -92,8 +92,8 @@ developers when debugging some problem.
 
 Look at the contents of a mailbox's index:
 
-```console
-$ doveadm dump ~/Maildir/.work/
+```sh
+doveadm dump ~/Maildir/.work/
 ```
 
 <!-- @include: reporting-bugs.inc -->

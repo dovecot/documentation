@@ -62,8 +62,8 @@ expunged.
 This example expunges messages from Spam mailbox that were saved/copied
 there more than two weeks ago:
 
-```console
-$ doveadm expunge -u jane.doe@example.org mailbox Spam savedbefore 2w
+```sh
+doveadm expunge -u jane.doe@example.org mailbox Spam savedbefore 2w
 ```
 
 <!-- @include: reporting-bugs.inc -->

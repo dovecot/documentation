@@ -125,8 +125,10 @@ This example demonstrates an imap authentication test for user john,
 assuming the user is connected from the host with the IP address
 192.0.2.143.
 
-```console
-$ doveadm auth test -x service=imap -x rip=192.0.2.143 john
+```sh
+doveadm auth test -x service=imap -x rip=192.0.2.143 john
+```
+```
 Password:
 passdb: john auth succeeded
 extra fields:

@@ -81,8 +81,10 @@ usage.
 
 Get the current quota usage of user jane:
 
-```console
-$ doveadm quota get -u jane
+```sh
+doveadm quota get -u jane
+```
+```
 Quota name                        Type    Value  Limit  %
 user                              STORAGE 90099 102400 87
 user                              MESSAGE 20548  30000 68

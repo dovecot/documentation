@@ -325,8 +325,10 @@ See [[man,doveadm-search-query,,7]] for the search query syntax.
 
 List subscribed mailboxes, beginning with 'dovecot', of user bob:
 
-```console
-$ doveadm mailbox list -s -u bob dovecot\*
+```sh
+doveadm mailbox list -s -u bob dovecot\*
+```
+```
 dovecot
 dovecot/pigeonhole
 dovecot/pigeonhole/2.0
@@ -334,8 +336,10 @@ dovecot/pigeonhole/2.0
 
 Now have a look at the status of user bob's dovecot mailboxes:
 
-```console
-$ doveadm -f table mailbox status -u bob "messages vsize" dovecot\*
+```sh
+doveadm -f table mailbox status -u bob "messages vsize" dovecot\*
+```
+```
 mailbox                                    messages vsize
 dovecot                                    20501    93968492
 dovecot/pigeonhole                         0        0
@@ -345,11 +349,16 @@ dovecot/pigeonhole/2.0                     47       323474
 Converting an internationalized mailbox name from mUTF-7 to UTF-8 and
 vice versa:
 
-```console
-$ doveadm mailbox mutf7 -7 "~peter/mail/&U,BTFw-/&ZeVnLIqe-"
+```sh
+doveadm mailbox mutf7 -7 "~peter/mail/&U,BTFw-/&ZeVnLIqe-"
+```
+```
 ~peter/mail/台北/日本語
-
-$ doveadm mailbox mutf7 ~peter/mail/台北/日本語
+```
+```sh
+doveadm mailbox mutf7 ~peter/mail/台北/日本語
+```
+```
 ~peter/mail/&U,BTFw-/&ZeVnLIqe-
 ```
 

@@ -167,8 +167,10 @@ are fetching the fields **mailbox** and **date.sent** from user bob's
 mailbox with the guid "3a94c928d66ebe4bda04000015811c6a" for the
 messages with the UIDs **8**, **25** and **45**.
 
-```console
-$ doveadm fetch -u bob "mailbox date.sent" mailbox-guid 3a94c928d66ebe4bda04000015811c6a uid 8,25,45
+```sh
+doveadm fetch -u bob "mailbox date.sent" mailbox-guid 3a94c928d66ebe4bda04000015811c6a uid 8,25,45
+```
+```
 mailbox: dovecot/pigeonhole/2.0
 date.sent: 2010-01-19 01:17:41 (+0100)
 ^L

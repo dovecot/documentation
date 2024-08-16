@@ -52,18 +52,22 @@ Deduplication across multiple mailboxes is not supported.
 This example shows how to list and expunge duplicate messages from a
 mailbox.
 
-```console
-$ doveadm -f table fetch -u jane 'guid uid' mailbox a_Box | sort
+```sh
+doveadm -f table fetch -u jane 'guid uid' mailbox a_Box | sort
+```
+```
 guid                             uid
 8aad0f0a30169f4bea620000ca356bad 18751
 8aad0f0a30169f4bea620000ca356bad 18756
 923e301ab9219b4b4f440000ca356bad 18748
 923e301ab9219b4b4f440000ca356bad 18753
 ...
-
+```
+```sh
 doveadm deduplicate -u jane mailbox a_Box
-
 doveadm -f table fetch -u jane 'guid uid' mailbox a_Box | sort
+```
+```
 guid                             uid
 8aad0f0a30169f4bea620000ca356bad 18751
 923e301ab9219b4b4f440000ca356bad 18748

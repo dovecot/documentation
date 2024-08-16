@@ -46,8 +46,10 @@ containing the following details:
 
 ## EXAMPLES
 
-```console
-$ doveadm process status
+```sh
+doveadm process status
+```
+```
 name   pid    available_count total_count idle_start last_status_update last_kill_sent
 stats  132400 999             5           0          1685365436         0
 log    132356 971             29          0          1685352909         0

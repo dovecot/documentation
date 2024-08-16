@@ -76,9 +76,9 @@ given *user*(s).
 Move jane's messages - received in September 2011 - from her INBOX into
 her archive:
 
-```console
-$ doveadm move -u jane Archive/2011/09 mailbox INBOX BEFORE \
-      2011-10-01 SINCE 01-Sep-2011
+```sh
+doveadm move -u jane Archive/2011/09 mailbox INBOX BEFORE \
+  2011-10-01 SINCE 01-Sep-2011
 ```
 
 <!-- @include: reporting-bugs.inc -->

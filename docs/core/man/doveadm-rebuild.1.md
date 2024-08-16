@@ -64,8 +64,10 @@ This command uses by default the output formatter **flow** (without the
 
 Rebuild user bob's attachment status:
 
-```console
-$ doveadm rebuild attachments -u bob ALL
+```sh
+doveadm rebuild attachments -u bob ALL
+```
+```
 1
 2
 3
