@@ -13,30 +13,31 @@ dovecotComponent: core
   [**-U** *source_user*]
   [**-s**]
   **-A**
-  *source_location* *dest_parent* *search_query*
+  *source_mail_driver*:*source_mail_path*
 
 **doveadm** [*GLOBAL OPTIONS*] **import**
   [**-S** *socket_path*]
   [**-U** *source_user*]
   [**-s**]
-  **-F** *file* *source_location* *dest_parent* *search_query*
+  **-F** *file* *source_mail_driver*:*source_mail_path*
 
 **doveadm** [*GLOBAL OPTIONS*] **import**
   [**-S** *socket_path*]
   [**-U** *source_user*]
   [**-s**]
-  **\-\-no-userdb-lookup** *source_location* *dest_parent* *search_query*
+  **\-\-no-userdb-lookup** *source_mail_driver*:*source_mail_path*
 
 **doveadm** [*GLOBAL OPTIONS*] **import**
   [**-S** *socket_path*]
   [**-U** *source_user*]
   [**-s**]
-  **-u** *user* *source_location* *dest_parent* *search_query*
+  **-u** *user* *source_mail_driver*:*source_mail_path*
 
 ## DESCRIPTION
 
 This command can be used to import mails from another mail storage
-specified by *source_location* to one or more user's mailboxes. All the
+specified by *source_mail_driver*, *source_mail_path*, and other settings
+specified via **-p** parameters to one or more user's mailboxes. All the
 mailboxes are imported under the given *dest_parent* mailbox, or to root
 level if *dest_parent* is empty (""). The *search_query* can be used to
 restrict which mailboxes or messages are imported. By default the import
@@ -65,6 +66,8 @@ In the final form, the mails will be imported only for given *user* (s).
 
 <!-- @include: option-S-socket.inc -->
 
+<!-- @include: include/option-p.inc -->
+
 **-s**
 :   When the **-s** option is present, *dest_parent* and all new
     mailboxes under it will be subscribed to.
@@ -86,11 +89,12 @@ In the final form, the mails will be imported only for given *user* (s).
 :   Copy messages matching this search query. See
     [[man,doveadm-search-query,,7]] for details.
 
-*source_location*
-:   This argument specifies the mailbox format and location of the source
-    location. The syntax is the same as for the *mail_location* setting.
+*source_mail_driver*:*source_mail_path*
+:   This argument specifies the *mail_driver* and *mail_path* settings for the
+    source location. The **-p** parameter can optionally be used to specify
+    additional settings.
     For example: **maildir:/backup/20101126/jane.doe/Maildir** or
-    **mdbox:/srv/mail/john.doe/mdbox:ALT=/nfsmount/john.doe/mdbox**
+    **-p mail_alt_path=/nfsmount/john.doe/mdbox mdbox:/srv/mail/john.doe/mdbox**
 
 ## EXAMPLE
 
