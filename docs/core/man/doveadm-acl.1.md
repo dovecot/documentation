@@ -116,7 +116,7 @@ This command uses by default the output formatter **table**.
 ### acl add
 
 **doveadm** [*GLOBAL OPTIONS*] acl add
-  [**-u** *user* | **-A** | **-F** *file* || **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *mailbox id* *right*
   [*right* ...]
