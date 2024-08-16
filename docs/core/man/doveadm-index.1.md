@@ -8,14 +8,33 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **index** [**-S** *socket_path*] **-A** [**-q**] [**-n** *max_recent*] *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] **index**
+  [**-S** *socket_path*]
+  **-A**
+  [**-q**]
+  [**-n** *max_recent*]
+  *mailbox*
 
-**doveadm** [*GLOBAL OPTIONS*] **index** [**-S** *socket_path*] **-F** *file* [**-q**] [**-n** *max_recent*] *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] **index**
+  [**-S** *socket_path*]
+  **-F** *file*
+  [**-q**]
+  [**-n** *max_recent*]
+  *mailbox*
 
-**doveadm** [*GLOBAL OPTIONS*] **index** [**-S** *socket_path*] **\-\-no-userdb-lookup** [**-q**] [**-n** *max_recent*] *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] **index**
+  [**-S** *socket_path*]
+  **\-\-no-userdb-lookup**
+  [**-q**]
+  [**-n** *max_recent*]
+  *mailbox*
 
-
-**doveadm** [*GLOBAL OPTIONS*] **index** [**-S** *socket_path*] **-u** *user* [**-q**] [**-n** *max_recent*] *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] **index**
+  [**-S** *socket_path*]
+  **-u** *user*
+  [**-q**]
+  [**-n** *max_recent*]
+  *mailbox*
 
 ## DESCRIPTION
 
