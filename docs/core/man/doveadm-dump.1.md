@@ -8,7 +8,10 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **dump** [**-t** *type*] *path* [ *type-specific args* ]
+**doveadm** [*GLOBAL OPTIONS*] **dump**
+  [**-t** *type*]
+  *path*
+  [*type-specific args*]
 
 ## DESCRIPTION
 
