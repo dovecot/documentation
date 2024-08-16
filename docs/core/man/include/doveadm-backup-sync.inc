@@ -248,15 +248,15 @@ See also [[man,doveadm]] for other possible error codes.
 Synchronize mailboxes with a remote server. Any errors are written to
 stderr:
 
-```console
-$ doveadm sync -u username@example.com remote:server-replica.example.com
+```sh
+doveadm sync -u username@example.com remote:server-replica.example.com
 ```
 
 If you need more complex parameters to ssh, you can use e.g.:
 
-```console
-$ doveadm sync -u username@example.com ssh -i id_dsa.dovecot \
-      mailuser@example.com doveadm dsync-server -u username@example.com
+```sh
+doveadm sync -u username@example.com ssh -i id_dsa.dovecot \
+  mailuser@example.com doveadm dsync-server -u username@example.com
 ```
 
 ### CONVERTING
@@ -267,8 +267,8 @@ mdbox:~/mdbox**, a logged in system user may convert her/his mails from
 its Maildir in her/his home directory to the mdbox mailbox format. The
 user has to execute the command:
 
-```console
-$ doveadm sync maildir:~/Maildir
+```sh
+doveadm sync maildir:~/Maildir
 ```
 
 If you want to do this without any downtime, you can do the conversion
