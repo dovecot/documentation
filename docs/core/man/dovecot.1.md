@@ -60,7 +60,7 @@ little memory.
 :   Print a usage message to stdout and exit successfully.
 
 **-\-hostdomain**
-:   Shows the current *host*\ .\ *domain* name of the system. If the domain
+:   Shows the current *host*.*domain* name of the system. If the domain
     lookup should fail for some reason, only the hostname will be shown.
 
 **-\-version**
