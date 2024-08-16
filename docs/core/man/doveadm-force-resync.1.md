@@ -48,8 +48,8 @@ also checked.
 
 Fix bob's INBOX:
 
-```console
-$ doveadm force-resync -u bob INBOX
+```sh
+doveadm force-resync -u bob INBOX
 ```
 
 <!-- @include: reporting-bugs.inc -->

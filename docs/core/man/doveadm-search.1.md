@@ -66,8 +66,10 @@ This command uses by default the output formatter **flow** (without the
 Search in user bob's dovecot mailboxes all messages which contains the
 word "todo" in the Subject: header:
 
-```console
-$ doveadm search -u bob mailbox dovecot\* subject todo
+```sh
+doveadm search -u bob mailbox dovecot\* subject todo
+```
+```
 3a94c928d66ebe4bda04000015811c6a	8
 3a94c928d66ebe4bda04000015811c6a	25
 3a94c928d66ebe4bda04000015811c6a	45
@@ -79,11 +81,11 @@ The search command is mainly useful when used together with
 For example to save message bodies of all messages from
 INBOX that have "todo" in subject, use:
 
-```console
-$ doveadm search -u bob mailbox INBOX subject todo
-$ while read guid uid; do
-    doveadm fetch -u bob body mailbox-guid $guid uid $uid > msg.$uid
-  done
+```sh
+doveadm search -u bob mailbox INBOX subject todo
+while read guid uid; do
+  doveadm fetch -u bob body mailbox-guid $guid uid $uid > msg.$uid
+done
 ```
 
 <!-- @include: reporting-bugs.inc -->

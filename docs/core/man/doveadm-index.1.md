@@ -75,8 +75,8 @@ plugin {
 
 Index bob's INBOX:
 
-```console
-$ doveadm index -u bob INBOX
+```sh
+doveadm index -u bob INBOX
 ```
 
 <!-- @include: reporting-bugs.inc -->

@@ -69,9 +69,10 @@ containing the following details:
 
 ## EXAMPLES
 
-```console
-$ doveadm service status
-
+```sh
+doveadm service status
+```
+```
 name: fs-auth
 process_count: 0
 process_avail: 0

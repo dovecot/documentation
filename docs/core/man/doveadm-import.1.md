@@ -80,17 +80,17 @@ In the final form, the mails will be imported only for given *user* (s).
 This example imports all mails from a backup under a *backup-20101026*
 mailbox:
 
-```console
-$ doveadm import -u jane.doe@example.org \
-      mdbox:/backup/20101026/jane.doe/mdbox backup-20101026 all
+```sh
+doveadm import -u jane.doe@example.org \
+  mdbox:/backup/20101026/jane.doe/mdbox backup-20101026 all
 ```
 
 Another example that imports only messages from foo@example.org in the
 backup mdbox's INBOX to jane's INBOX:
 
-```console
-$ doveadm import -u jane.doe@example.org \
-      mdbox:~/mdbox-backup "" mailbox INBOX from foo@example.org
+```sh
+doveadm import -u jane.doe@example.org \
+  mdbox:~/mdbox-backup "" mailbox INBOX from foo@example.org
 ```
 
 <!-- @include: reporting-bugs.inc -->

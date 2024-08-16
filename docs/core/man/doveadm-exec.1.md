@@ -33,8 +33,8 @@ user could start a pre-authenticated imap session, using the command:
 This example demonstrates how to deliver a message from a file to a
 user's mailbox.
 
-```console
-$ doveadm exec dovecot-lda -d user@example.net -f admin@example.net < ~/stuff/welcome.msg
+```sh
+doveadm exec dovecot-lda -d user@example.net -f admin@example.net < ~/stuff/welcome.msg
 ```
 
 <!-- @include: reporting-bugs.inc -->

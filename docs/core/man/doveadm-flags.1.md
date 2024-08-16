@@ -76,13 +76,16 @@ This command is used to replace ALL current flags with the given
 
 List and manipulate the message flags of the message with uid 81563:
 
-```console
-$ doveadm fetch -u bob 'uid flags' mailbox dovecot uid 81563
+```sh
+doveadm fetch -u bob 'uid flags' mailbox dovecot uid 81563
+```
+```
 uid: 81563
 flags: \Answered \Seen NonJunk
-
-$ doveadm flags remove -u bob NonJunk mailbox dovecot uid 81563
-$ doveadm flags add -u bob '\Flagged $Forwarded' mailbox dovecot uid 81563
+```
+```sh
+doveadm flags remove -u bob NonJunk mailbox dovecot uid 81563
+doveadm flags add -u bob '\Flagged $Forwarded' mailbox dovecot uid 81563
 ```
 
 <!-- @include: reporting-bugs.inc -->
