@@ -8,11 +8,21 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveconf** [**-adnPNSx**] [**-c** *config-file*] [**-f** *filter*]
+**doveconf**
+  [**-adnPNSx**]
+  [**-c** *config-file*]
+  [**-f** *filter*]
 
-**doveconf** [**-n**] [**-c** *config-file*] *section_name* ...
+**doveconf**
+  [**-n**]
+  [**-c** *config-file*]
+  *section_name* ...
 
-**doveconf** [**-h**] [**-c** *config-file*] [**-f** *filter*] *setting_name* ...
+**doveconf**
+  [**-h**]
+  [**-c** *config-file*]
+  [**-f** *filter*]
+  *setting_name* ...
 
 ## DESCRIPTION
 

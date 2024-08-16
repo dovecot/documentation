@@ -42,14 +42,20 @@ This command uses by default the output formatter **flow** (without the
 
 ### fts optimize
 
-**doveadm** [*GLOBAL OPTIONS*] fts optimize [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [*namespace*]
+**doveadm** [*GLOBAL OPTIONS*] fts optimize
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [*namespace*]
 
 Optimize the full text search index. This is also done automatically by
 the full text search engines, but this enforces it to happen.
 
 ### fts rescan
 
-**doveadm** [*GLOBAL OPTIONS*] fts rescan [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [*namespace*]
+**doveadm** [*GLOBAL OPTIONS*] fts rescan
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [*namespace*]
 
 Scan what mails exist in the full text search index and compare those to
 what actually exist in mailboxes. This removes mails from the index that
@@ -60,7 +66,12 @@ delete all the FTS indexes. This may change in the future versions.
 
 ### fts check fast
 
-**doveadm** [*GLOBAL OPTIONS*] fts check fast [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-\-refresh**] [**-\-print-mismatches-only**] [*namespace*]
+**doveadm** [*GLOBAL OPTIONS*] fts check fast
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-\-refresh**]
+  [**-\-print-mismatches-only**]
+  [*namespace*]
 
 This command exists only when the fts_dovecot plugin (Dovecot Pro FTS) is
 loaded.
@@ -90,7 +101,12 @@ Exit codes:
 
 ### fts check full
 
-**doveadm** [*GLOBAL OPTIONS*] fts check full [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-\-print-details**] [**-\-print-mismatches-only**] [*namespace*]
+**doveadm** [*GLOBAL OPTIONS*] fts check full
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-\-print-details**]
+  [**-\-print-mismatches-only**]
+  [*namespace*]
 
 This command exists only when the fts_dovecot plugin (Dovecot Pro FTS) is
 loaded.
