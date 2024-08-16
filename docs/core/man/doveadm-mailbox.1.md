@@ -54,7 +54,7 @@ dovecotComponent: core
   *mailbox*...
 
 This command is used to create one or more mailboxes. The mailbox format
-of the created mailboxes depends on the *mail_location* setting, or the
+of the created mailboxes depends on the *mail_driver* setting, or the
 user's *mail* field, returned by the userdb.
 
 **-g** *guid*
