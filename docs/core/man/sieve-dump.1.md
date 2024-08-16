@@ -38,7 +38,7 @@ compiling the binary.
 
 ## OPTIONS
 
-**-c**\ *config-file*
+**-c** *config-file*
 :   Alternative Dovecot configuration file path.
 
 **-D**

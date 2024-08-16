@@ -25,11 +25,11 @@ core file along with its binary dependencies.
 
 **-c|-\-config** *root_config_file*
 :   Sets the root file of the dovecot's configuration. If not set, it
-:   will be assumed to be in the default configuration path.
+    will be assumed to be in the default configuration path.
 
 **-o|-\-core** [ *binary* ] *core* *[...]*
 :   Includes core files along with their dependencies extracted from the
-:   specified binary file.
+    specified binary file.
 
 **-d|-\-destination** *dest*
 :   Sets the file location which the report archive should be put to. The
