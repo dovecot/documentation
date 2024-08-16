@@ -8,7 +8,12 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **who** [**-1**] [**-f** *passdb_field*] [**-a** *anvil_socket_path*] [*user_mask*] [*ip* [**/** *bits*]]
+**doveadm** [*GLOBAL OPTIONS*] **who**
+  [**-1**]
+  [**-f** *passdb_field*]
+  [**-a** *anvil_socket_path*]
+  [*user_mask*]
+  [*ip* [**/** *bits*]]
 
 ## DESCRIPTION
 

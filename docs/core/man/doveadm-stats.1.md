@@ -12,6 +12,8 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] **stats dump** [ **-s** *\<stats socket path\>* ] [ **-r** ] [ **-f** *\<fields\>* ]
 
+**doveadm** [*GLOBAL OPTIONS*] **stats top** [**-s \<stats socket path\>**] [**-b**] [**sort** *\<field\>*]
+
 **doveadm** [*GLOBAL OPTIONS*] **stats remove** [ *\<name\>* ]
 
 **doveadm** [*GLOBAL OPTIONS*] **stats reopen**

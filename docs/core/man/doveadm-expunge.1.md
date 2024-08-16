@@ -8,13 +8,25 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **expunge** [**-S** *socket_path*] [**-d**] **-A** *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **expunge**
+  [**-S** *socket_path*]
+  [**-d**]
+  **-A** *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] **expunge** [**-S** *socket_path*] [**-d**] **-F** *file* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **expunge**
+  [**-S** *socket_path*]
+  [**-d**]
+  **-F** *file* *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] **expunge** [**-S** *socket_path*] [**-d**] **\-\-no-userdb-lookup** *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **expunge**
+  [**-S** *socket_path*]
+  [**-d**]
+  **\-\-no-userdb-lookup** *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] **expunge** [**-S** *socket_path*] [**-d**] **-u** *user* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **expunge**
+  [**-S** *socket_path*]
+  [**-d**]
+  **-u** *user* *search_query*
 
 ## DESCRIPTION
 

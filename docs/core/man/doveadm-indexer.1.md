@@ -20,7 +20,10 @@ dovecotComponent: core
 
 ### indexer add
 
-**doveadm** [*GLOBAL OPTIONS*] indexer add [**-h**] [**-n** *max_recent*] *user* *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] indexer add
+  [**-h**]
+  [**-n** *max_recent*]
+  *user* *mailbox*
 
 Add indexing request for the given *user* and the *mailbox* to the
 indexer queue. It works the same as the **doveadm index -q** command.
