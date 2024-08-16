@@ -115,53 +115,78 @@ This command uses by default the output formatter **table**.
 
 ### acl add
 
-**doveadm** [*GLOBAL OPTIONS*] acl add [**-u** *user* | **-A** | **-F** *file* || **\-\-no-userdb-lookup**] [**-S** *socket_path*] *mailbox id* *right* [*right* ...]
+**doveadm** [*GLOBAL OPTIONS*] acl add
+  [**-u** *user* | **-A** | **-F** *file* || **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *mailbox id* *right*
+  [*right* ...]
 
 Add ACL rights to the *mailbox*/*id*. If the *id* already exists, the
 existing rights are preserved.
 
 ### acl debug
 
-**doveadm** [*GLOBAL OPTIONS*] acl debug [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] acl debug
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *mailbox*
 
 This command can be used to debug why a shared mailbox isn't accessible
 to the user. It will list exactly what the problem is.
 
 ### acl delete
 
-**doveadm** [*GLOBAL OPTIONS*] acl delete [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *mailbox id*
+**doveadm** [*GLOBAL OPTIONS*] acl delete
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *mailbox id*
 
 Remove the whole ACL entry for the *mailbox*/*id*.
 
 ### acl get
 
-**doveadm** [*GLOBAL OPTIONS*] acl get [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-m**] *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] acl get
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-m**]
+  *mailbox*
 
 Show all the ACLs for the *mailbox*.
 
 ### acl recalc
 
-**doveadm** [*GLOBAL OPTIONS*] acl recalc [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*]
+**doveadm** [*GLOBAL OPTIONS*] acl recalc
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
 
 Make sure the *user*'s shared mailboxes exist correctly in the
 *acl_shared_dict*.
 
 ### acl remove
 
-**doveadm** [*GLOBAL OPTIONS*] acl remove [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *mailbox id* *right* [*right* ...]
+**doveadm** [*GLOBAL OPTIONS*] acl remove
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *mailbox id* *right* [*right* ...]
 
 Remove the specified ACL rights from the *mailbox*/*id*. If all rights
 are removed, the entry still exists without any rights.
 
 ### acl rights
 
-**doveadm** [*GLOBAL OPTIONS*] acl rights [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] acl rights
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *mailbox*
 
 Show the *user*'s current ACL rights for the *mailbox*.
 
 ### acl set
 
-**doveadm** [*GLOBAL OPTIONS*] acl set [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *mailbox id* *right* [*right* ...]
+**doveadm** [*GLOBAL OPTIONS*] acl set
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *mailbox id* *right* [*right* ...]
 
 Set ACL rights to the *mailbox*/*id*. If the *id* already exists, the
 existing rights are replaced.

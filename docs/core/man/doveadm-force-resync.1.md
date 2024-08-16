@@ -8,13 +8,21 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **force-resync** [**-S** *socket_path*] **-A** *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] **force-resync**
+  [**-S** *socket_path*]
+  **-A** *mailbox*
 
-**doveadm** [*GLOBAL OPTIONS*] **force-resync** [**-S** *socket_path*] **-F** *file* *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] **force-resync**
+  [**-S** *socket_path*]
+  **-F** *file* *mailbox*
 
-**doveadm** [*GLOBAL OPTIONS*] **force-resync** [**-S** *socket_path*] **\-\-no-userdb-lookup** *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] **force-resync**
+  [**-S** *socket_path*]
+  **\-\-no-userdb-lookup** *mailbox*
 
-**doveadm** [*GLOBAL OPTIONS*] **force-resync** [**-S** *socket_path*] **-u** *user* *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] **force-resync**
+  [**-S** *socket_path*]
+  **-u** *user* *mailbox*
 
 ## DESCRIPTION
 

@@ -8,9 +8,9 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **proxy** *kick* [*OPTIONS*] [*ARGUMENTS*]
-
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **proxy** *list* [*OPTIONS*] [*ARGUMENTS*]
+**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **proxy** *kick*|*list*
+  [*OPTIONS*]
+  [*ARGUMENTS*]
 
 ## DESCRIPTION
 

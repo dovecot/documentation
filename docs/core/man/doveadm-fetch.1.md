@@ -8,13 +8,21 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **fetch** [**-S** *socket_path*] **-A** *fields* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **fetch**
+  [**-S** *socket_path*]
+  **-A** *fields* *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **fetch** [**-S** *socket_path*] **-F** *file* *fields* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **fetch**
+  [**-S** *socket_path*]
+  **-F** *file* *fields* *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **fetch** [**-S** *socket_path*] **\-\-no-userdb-lookup** *fields* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **fetch**
+  [**-S** *socket_path*]
+  **\-\-no-userdb-lookup** *fields* *search_query*
 
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **fetch** [**-S** *socket_path*] **-u** *user* *fields* *search_query*
+**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **fetch**
+  [**-S** *socket_path*]
+  **-u** *user* *fields* *search_query*
 
 ## DESCRIPTION
 

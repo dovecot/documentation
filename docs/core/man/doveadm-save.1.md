@@ -8,13 +8,41 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **save** [**-S** *socket_path*] **-A** [*-m* *mailbox*] [*-U* *uid*] [*-g* *guid*] [*-r* *received-date*] [*mail-file*]
+**doveadm** [*GLOBAL OPTIONS*] **save**
+  [**-S** *socket_path*]
+  **-A**
+  [*-m* *mailbox*]
+  [*-U* *uid*]
+  [*-g* *guid*]
+  [*-r* *received-date*]
+  [*mail-file*]
 
-**doveadm** [*GLOBAL OPTIONS*] **save** [**-S** *socket_path*] **-F** *file* [*-m* *mailbox*] [*-U* *uid*] [*-g* *guid*] [*-r* *received-date*] [*mail-file*]
+**doveadm** [*GLOBAL OPTIONS*] **save**
+  [**-S** *socket_path*]
+  **-F** *file*
+  [*-m* *mailbox*]
+  [*-U* *uid*]
+  [*-g* *guid*]
+  [*-r* *received-date*]
+  [*mail-file*]
 
-**doveadm** [*GLOBAL OPTIONS*] **save** [**-S** *socket_path*] **\-\-no-userdb-lookup** [*-m* *mailbox*] [*-U* *uid*] [*-g* *guid*] [*-r* *received-date*] [*mail-file*]
+**doveadm** [*GLOBAL OPTIONS*] **save**
+  [**-S** *socket_path*]
+  **\-\-no-userdb-lookup**
+  [*-m* *mailbox*]
+  [*-U* *uid*]
+  [*-g* *guid*]
+  [*-r* *received-date*]
+  [*mail-file*]
 
-**doveadm** [*GLOBAL OPTIONS*] **save** [**-S** *socket_path*] **-u** *user* [*-m* *mailbox*] [*-U* *uid*] [*-g* *guid*] [*-r* *received-date*] [*mail-file*]
+**doveadm** [*GLOBAL OPTIONS*] **save**
+  [**-S** *socket_path*]
+  **-u** *user*
+  [*-m* *mailbox*]
+  [*-U* *uid*]
+  [*-g* *guid*]
+  [*-r* *received-date*]
+  [*mail-file*]
 
 ## DESCRIPTION
 

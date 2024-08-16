@@ -46,7 +46,11 @@ The **doveadm sieve** commands can be used to manage Sieve filtering.
 
 ### sieve put
 
-**doveadm** [*GLOBAL OPTIONS*] sieve put [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-a**] *scriptname*
+**doveadm** [*GLOBAL OPTIONS*] sieve put
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-a**]
+  *scriptname*
 
 This command puts one new Sieve script in the script storage. The script
 is read from standard input. If the script compiles successfully, it is
@@ -56,40 +60,58 @@ for execution at delivery.
 
 ### sieve get
 
-**doveadm** [*GLOBAL OPTIONS*] sieve get [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *scriptname*
+**doveadm** [*GLOBAL OPTIONS*] sieve get
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *scriptname*
 
 This command retrieves the Sieve script named *scriptname*.
 
 ### sieve delete
 
-**doveadm** [*GLOBAL OPTIONS*] sieve delete [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-a**] *scriptname* ...
+**doveadm** [*GLOBAL OPTIONS*] sieve delete
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-a**]
+  *scriptname* ...
 
 This command deletes one or more Sieve scripts. The deleted script may
 not be the active script, unless the **-a** option is present.
 
 ### sieve list
 
-**doveadm** [*GLOBAL OPTIONS*] sieve list [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*]
+**doveadm** [*GLOBAL OPTIONS*] sieve list
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
 
 List existing Sieve scripts, and their active state.
 
 ### sieve rename
 
-**doveadm** [*GLOBAL OPTIONS*] sieve rename [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *old_name* *new_name*
+**doveadm** [*GLOBAL OPTIONS*] sieve rename
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *old_name* *new_name*
 
 The **sieve rename** command is used to rename the Sieve script *old_name*
 to *new_name*.
 
 ### sieve activate
 
-**doveadm** [*GLOBAL OPTIONS*] sieve activate [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *scriptname*
+**doveadm** [*GLOBAL OPTIONS*] sieve activate
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *scriptname*
 
 This command marks the Sieve script named *scriptname* as the active script
 for execution at delivery.
 
 ### sieve deactivate
 
-**doveadm** [*GLOBAL OPTIONS*] sieve deactivate [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *scriptname*
+**doveadm** [*GLOBAL OPTIONS*] sieve deactivate
+  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  *scriptname*
 
 This command deactivates Sieve processing.
 

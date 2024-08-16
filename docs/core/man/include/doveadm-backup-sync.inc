@@ -1,8 +1,42 @@
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **sync** [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-1fPR**] [**-l** *secs*] [**-r** *rawlog path*] [**-m** *mailbox*] [**-g** *mailbox guid*] [**-n** *namespace* | **-N**] [**-x** *exclude*] [**-a** *all mailbox*] [**-s** *state*] [**-T** *secs*] [**-t** *start date*] [**-e** *end date*] [**-O** *sync flag*] [**-I** *max size*] **-d** | *destination*
+**doveadm** [*GLOBAL OPTIONS*] **sync**
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-1fPR**]
+  [**-l** *secs*]
+  [**-r** *rawlog path*]
+  [**-m** *mailbox*]
+  [**-g** *mailbox guid*]
+  [**-n** *namespace* | **-N**]
+  [**-x** *exclude*]
+  [**-a** *all mailbox*]
+  [**-s** *state*]
+  [**-T** *secs*]
+  [**-t** *start date*]
+  [**-e** *end date*]
+  [**-O** *sync flag*]
+  [**-I** *max size*]
+  **-d** | *destination*
 
-**doveadm** [*GLOBAL OPTIONS*] **backup** [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-fPR**] [**-l** *secs*] [**-r** *rawlog path*] [**-m** *mailbox*] [**-g** *mailbox guid*] [**-n** *namespace* | **-N**] [**-x** *exclude*] [**-a** *all mailbox*] [**-s** *state*] [**-T** *secs*] [**-t** *start date*] [**-e** *end date*] [**-O** *sync flag*] [**-I** *max size*] **-d** | *destination*
+**doveadm** [*GLOBAL OPTIONS*] **backup**
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-fPR**]
+  [**-l** *secs*]
+  [**-r** *rawlog path*]
+  [**-m** *mailbox*]
+  [**-g** *mailbox guid*]
+  [**-n** *namespace* | **-N**]
+  [**-x** *exclude*]
+  [**-a** *all mailbox*]
+  [**-s** *state*]
+  [**-T** *secs*]
+  [**-t** *start date*]
+  [**-e** *end date*]
+  [**-O** *sync flag*]
+  [**-I** *max size*]
+  **-d** | *destination*
 
 ## DESCRIPTION
 

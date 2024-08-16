@@ -8,7 +8,11 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **deduplicate** [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-m**] *search_query*
+**doveadm** [*GLOBAL OPTIONS*] **deduplicate**
+  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-S** *socket_path*]
+  [**-m**]
+  *search_query*
 
 ## DESCRIPTION
 
