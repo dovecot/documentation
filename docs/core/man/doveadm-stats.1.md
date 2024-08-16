@@ -8,15 +8,29 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm stats dump** [ **-s \<stats socket path\>** ] **\<type\>** [ **\<filter\>** ]
+**doveadm stats dump**
+  [**-s \<stats socket path\>**]
+  **\<type\>**
+  [**\<filter\>**]
 
-**doveadm stats top** [ **-s \<stats socket path\>** ] [ **-b** ] [ **sort** *\<field\>* ]
+**doveadm stats top**
+  [**-s \<stats socket path\>**]
+  [**-b**]
+  [**sort** *\<field\>*]
 
-**doveadm stats reset** [ **-s \<stats socket path\>** ]
+**doveadm stats reset**
+  [**-s \<stats socket path\>**]
 
-**doveadm stats add** [ **-\-description** *\<string\>* ] [ **-\-exporter** *\<name\>* ] [ **-\-exporter-include** *\<field\>* ] [ **-\-fields** *\<fields\>* ] [**-\-group_by** *\<fields\>* ] **\<name\>** *\<filter\>*
+**doveadm stats add**
+  [**-\-description** *\<string\>*]
+  [**-\-exporter** *\<name\>*]
+  [**-\-exporter-include** *\<field\>*]
+  [**-\-fields** *\<fields\>*]
+  [**-\-group_by** *\<fields\>* ]
+  **\<name\>** *\<filter\>*
 
-**doveadm stats remove** *\<name\>*
+**doveadm stats remove**
+  *\<name\>*
 
 **doveadm stats reopen**
 
