@@ -43,7 +43,7 @@ active.
 
 ## SUBCOMMANDS
 
-**export** [ **-U** ] **|** *mailbox-mask*
+**export** [**-U**] | *mailbox-mask*
 
 **-U**
 :   Operate on user keypair only
@@ -51,7 +51,7 @@ active.
 Exports user's or folder's keypair(s) in PEM format. If the keys are
 password protected, -o is needed.
 
-**generate** [ **-Rf** [ **-U** ] **|** *mailbox-mask**]*
+**generate** [**-Rf** [**-U**] | *mailbox-mask*]
 
 **-U**
 :   Operate on user keypair only
@@ -69,14 +69,14 @@ user key and use it to secure your folder keys, use generate -u username
 
 If you want to password-protect your key here, use -o.
 
-**list** [ **-U** ] **|** *mailbox-mask*
+**list** [**-U**] | *mailbox-mask*
 
 **-U**
 :   Operate on user keypair only
 
 List all keys for user or folder. No password is required.
 
-**password** [ **-N** | **-n** *password**]* **[**-O **|**-o *password* **]** **[** -C **]**
+**password** [**-N** | **-n** *password*] [**-O**|**-o** *password*] [**-C**]
 
 **-O**
 :   Ask for old password
