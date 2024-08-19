@@ -105,8 +105,10 @@ sha256-crypt would be a pretty strong scheme.
 
 You can create them using [[doveadm,pw]] utility, for example:
 
-```console
-$ doveadm pw -s sha256-crypt
+```sh
+doveadm pw -s sha256-crypt
+```
+```
 Enter new password: foo
 Retype new password: foo
 {SHA256-CRYPT}$5$88T/Emz.AbSmbz5C$D3GLxhvDffdN1ldpKkulh2fHyUNzvojIjiVbTovPdyC

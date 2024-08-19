@@ -126,8 +126,8 @@ To migrate users, use: [[doveadm,backup,-Ru username tcp:host:port]].
 
 If you are experiencing problems, run:
 
-```console
-$ doveadm -D backup -Ru username tcp:host:port
+```sh
+doveadm -D backup -Ru username tcp:host:port
 ```
 
 This will enable debug logging.
@@ -138,8 +138,8 @@ the source, deleting mails and mailboxes if necessary.
 If it's possible that the destination already has new mails (or other
 changes), use [[doveadm,sync,-1]] instead:
 
-```console
-$ doveadm -o imapc_password=bar sync -1Ru user imapc:
+```sh
+doveadm -o imapc_password=bar sync -1Ru user imapc:
 ```
 
 You can run the command again to perform incremental updates.
@@ -235,8 +235,8 @@ imapc_user = %u
 
 You can verify that the settings are done correctly with:
 
-```console
-$ doveadm -o imapc_password=password -o mail_location=imapc: mailbox list -u user
+```sh
+doveadm -o imapc_password=password -o mail_location=imapc: mailbox list -u user
 ```
 
 ### POP3 notes
@@ -285,14 +285,14 @@ You can alternatively configure compatible UIDL format in Dovecot. See
 
 To migrate users, use:
 
-```console
-$ doveadm -o imapc_password=bar -o pop3c_password=bar backup -Ru user imapc:
+```sh
+doveadm -o imapc_password=bar -o pop3c_password=bar backup -Ru user imapc:
 ```
 
 If you are experiencing problems, enable debugging with the `-D` parameter:
 
-```console
-$ doveadm -D -o imapc_password=bar -o pop3c_password=bar backup -Ru username imapc:
+```sh
+doveadm -D -o imapc_password=bar -o pop3c_password=bar backup -Ru username imapc:
 ```
 
 The doveadm backup command forces the destination to look exactly like the
@@ -300,8 +300,8 @@ source, deleting mails and mailboxes if necessary.
 
 If it's possible that the destination already has new mails (or other changes), use [[doveadm,sync,-1]] instead:
 
-```console
-$ doveadm -o imapc_password=bar -o pop3c_password=bar sync -1Ru user imapc:
+```sh
+doveadm -o imapc_password=bar -o pop3c_password=bar sync -1Ru user imapc:
 ```
 
 Note that Public and Shared namespaces are synchronized automatically
@@ -411,6 +411,6 @@ with GMail migration. It will:
 
     For example use a command line:
 
-    ```console
-    $ doveadm backup -a 'virtual/All' -O '-$GmailHaveLabels' -R -u user@domain imapc:
+    ```sh
+    doveadm backup -a 'virtual/All' -O '-$GmailHaveLabels' -R -u user@domain imapc:
     ```
