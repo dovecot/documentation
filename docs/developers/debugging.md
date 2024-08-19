@@ -17,10 +17,10 @@ process.
 
 Start imap in PREAUTH with one of:
 
-```console
-$ /usr/libexec/dovecot/imap -u <username>
-$ src/imap/imap -u <username>
-$ doveadm exec imap -u <username>
+```sh
+/usr/libexec/dovecot/imap -u <username>
+src/imap/imap -u <username>
+doveadm exec imap -u <username>
 ```
 
 This also works for pop3 and managesieve. lmtp can also be started from
@@ -31,9 +31,9 @@ with RCPT TO command).
 
 1. Run the following script:
 
-   ```console
-   $ rm -f /tmp/f && mkfifo /tmp/f && \
-   $ cat /tmp/f | ./imap -u testuser | nc -l 127.0.0.1 143 > /tmp/f
+   ```sh
+   rm -f /tmp/f && mkfifo /tmp/f && \
+   cat /tmp/f | ./imap -u testuser | nc -l 127.0.0.1 143 > /tmp/f
    ```
 
 2. Connect to port 143 with the imap client of your choice.
@@ -50,8 +50,8 @@ with RCPT TO command).
 To avoid having to make install dovecot before running an executable in
 gdb or valgrind, use libtool. For example:
 
-```console
-$ libtool e gdb --args src/imap/imap
+```sh
+libtool e gdb --args src/imap/imap
 ```
 
 Maybe add a helpful alias to your `.bashrc` or similar:
@@ -164,8 +164,8 @@ to the repository you want according to
 https://doc.dovecot.org/installation_guide/dovecot_pro_releases/. Then
 you can install the packages easily with:
 
-```console
-$ rpm -Uvh --nodeps $(repoquery --location dovecot-ee-debuginfo)
+```sh
+rpm -Uvh --nodeps $(repoquery --location dovecot-ee-debuginfo)
 ```
 
 ## Scripting gdb for Getting Backtrace From Many Core Dumps
@@ -379,8 +379,8 @@ The most useful Valgrind parameters:
 
 ### Standalone
 
-```console
-$ valgrind --leak-check=full /usr/libexec/dovecot/imap -u user@example.com
+```sh
+valgrind --leak-check=full /usr/libexec/dovecot/imap -u user@example.com
 ```
 
 ### Service Settings
@@ -394,8 +394,8 @@ service imap {
 
 ### Debugging Valgrind errors in a Live Program Using GDB
 
-```console
-$ valgrind --vgdb-error=0
+```sh
+valgrind --vgdb-error=0
 ```
 
 And follow the instructions given by valgrind. Also works within emacs.
@@ -407,8 +407,8 @@ time (per emacs).
 
 As above,
 
-```console
-$ valgrind --vgdb-error=0
+```sh
+valgrind --vgdb-error=0
 ```
 
 Method 1: Just start the first gdb in a different shell or emacs window

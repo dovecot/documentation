@@ -153,8 +153,8 @@ since it's executed as the user itself.
 Give the destination username to dovecot-lda with `-d` parameter, for
 example:
 
-```console
-$ dovecot-lda -f $FROM_ENVELOPE -d $DEST_USERNAME
+```sh
+dovecot-lda -f $FROM_ENVELOPE -d $DEST_USERNAME
 ```
 
 You'll need to set up a auth-userdb socket for dovecot-lda so it knows
@@ -186,8 +186,8 @@ need a userdb lookup for any other reason either (such as overriding
 settings for specific users), you can run dovecot-lda similar to how
 it's run for system users:
 
-```console
-$ HOME=/path/to/user/homedir dovecot-lda -f $FROM_ENVELOPE
+```sh
+HOME=/path/to/user/homedir dovecot-lda -f $FROM_ENVELOPE
 ```
 
 This way you don't need to have a master listener socket. Note that you
@@ -253,8 +253,8 @@ dovelda          ALL=NOPASSWD:/usr/local/libexec/dovecot/dovecot-lda
 Then configure your MTA to invoke dovecot-lda as user 'dovelda' and via
 sudo:
 
-```console
-$ /usr/bin/sudo /usr/local/libexec/dovecot/dovecot-lda
+```sh
+/usr/bin/sudo /usr/local/libexec/dovecot/dovecot-lda
 ```
 
 instead of just plain `/usr/local/libexec/dovecot/dovecot-lda`.

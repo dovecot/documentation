@@ -14,14 +14,14 @@ This is based on already having Dovecot already compiled and installed.
    proxy, with a home directory. This needs to have a writable home
    directory, but no other privileges.
 
-   ```console
-   # useradd imapproxy
+   ```sh
+   useradd imapproxy
    ```
 
 2. Verify that the user cannot login:
 
-   ```console
-   # grep imapproxy /etc/shadow
+   ```sh
+   grep imapproxy /etc/shadow
    ```
 
    You should see something like:
@@ -90,8 +90,8 @@ This is based on already having Dovecot already compiled and installed.
 
 Start dovecot and test it with openssl as:
 
-```console
-# openssl s_client -connect machine.example.org:143 -starttls imap
+```sh
+openssl s_client -connect machine.example.org:143 -starttls imap
 ```
 
 You should see a whole bunch of SSL information, and the last line

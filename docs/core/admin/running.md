@@ -37,8 +37,10 @@ to avoid systemd from killing processes on restart.
 
 When Dovecot is running, it uses several processes:
 
-```console
-# ps auxw|grep "dovecot"
+```sh
+ps auxw|grep "dovecot"
+```
+```
 root        7245  0.1  0.1   2308  1096 pts/0    S+   19:53   0:00 dovecot
 dovecot     7246  0.0  0.0   2084   824 pts/0    S+   19:53   0:00 dovecot/anvil
 root        7247  0.0  0.0   2044   908 pts/0    S+   19:53   0:00 dovecot/log

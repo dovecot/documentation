@@ -99,8 +99,8 @@ other ways of adding mails to mailboxes using [[setting,fts_autoindex]].
 
 Indexing can also be triggered manually:
 
-```console
-$ doveadm index -u user@domain -q INBOX
+```sh
+doveadm index -u user@domain -q INBOX
 ```
 
 ### Enforce FTS
@@ -131,9 +131,9 @@ Dovecot keeps track of indexed messages in the `dovecot.index files`. If this
 becomes out of sync with the actual FTS indexes (either too many or too few
 mails), you'll need to do a rescan and then index missing mails:
 
-```console
-$ doveadm fts rescan -u user@domain
-$ doveadm index -u user@domain -q '*'
+```sh
+doveadm fts rescan -u user@domain
+doveadm index -u user@domain -q '*'
 ```
 
 Note that currently most FTS backends don't implement the rescan.

@@ -225,11 +225,11 @@ exit;
 
 # selinux
 
-```console
-$ chcon -u system_u /usr/local/etc/convertpw.php
-$ chcon -t bin_t /usr/local/etc/convertpw.php
-$ chcon -u system_u /usr/local/etc/popafter.sh
-$ chcon -t bin_t /usr/local/etc/popafter.sh
+```sh
+chcon -u system_u /usr/local/etc/convertpw.php
+chcon -t bin_t /usr/local/etc/convertpw.php
+chcon -u system_u /usr/local/etc/popafter.sh
+chcon -t bin_t /usr/local/etc/popafter.sh
 ```
 
 ## Example for SHA512-Crypt with passwd-files
@@ -300,11 +300,15 @@ exec "$@"
 Exemplary directory permissions (Setup is using `vmail` context for
 the users):
 
-```console
-$ l /var/vmail/conf.d/scripts/
-total 4
+```sh
+ls -l /var/vmail/conf.d/scripts/
+```
+```
 -r-x------ 1 vmail vmail 322 Nov 23 09:58 postlogin.sh
-
-$  l /tmp/log
+```
+```sh
+ls -l /tmp/log
+```
+```
 -rw------- 1 vmail root 1160 Nov 23 10:27 /tmp/log
 ```

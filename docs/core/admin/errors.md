@@ -227,14 +227,14 @@ You can check `/var/log/audit/audit.log` for message such as:
 
 If you see this, you need to relabel your mail location to `mail_home_rw_t`.
 
-```console
-$ chcon -R -t mail_home_rw_t /home/mail
+```sh
+chcon -R -t mail_home_rw_t /home/mail
 ```
 
 To make this change permanent, you need to add new fcontext rule:
 
-```console
-$ semanage fcontext --add --type mail_home_rw_t --range s0 '/home/mail(/.*)?'
+```sh
+semanage fcontext --add --type mail_home_rw_t --range s0 '/home/mail(/.*)?'
 ```
 
 After this, Dovecot should be able to write into your mail location again.

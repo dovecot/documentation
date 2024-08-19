@@ -190,9 +190,9 @@ userdb {
 
 And create the symlink:
 
-```console
-$ ln -s /etc/dovecot/dovecot-ldap.conf.ext \
-      /etc/dovecot/dovecot-ldap-userdb.conf.ext
+```sh
+ln -s /etc/dovecot/dovecot-ldap.conf.ext \
+  /etc/dovecot/dovecot-ldap-userdb.conf.ext
 ```
 
 ## Common Configuration
@@ -242,9 +242,9 @@ this will create a symlink pointing to the CA.
 
 You can test the CA installation with this command:
 
-```console
-$ openssl s_client -connect yourldap.example.org:636 \
-      -CApath /etc/openldap/certs -showcerts
+```sh
+openssl s_client -connect yourldap.example.org:636 \
+  -CApath /etc/openldap/certs -showcerts
 ```
 
 This should report "Verify return code: 0 (ok)".
@@ -519,8 +519,8 @@ olcAccess: {1}to *
 
 2. Run `ldapmodify` to apply the change.
 
-```console
-$ ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f doveauth_access.ldif
+```sh
+ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f doveauth_access.ldif
 ```
 
 ### `auth_bind_userdn`

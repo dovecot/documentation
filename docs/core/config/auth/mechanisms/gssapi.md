@@ -23,16 +23,16 @@ your DNS lookups and reverse DNS lookups work and return correct names.
 First thing, you need to create Service Principal for Dovecot. This is
 done with `kadmin` tool.
 
-```console
-$ kadmin -q 'addprinc -randkey imap/fully.qualified.host@REALM'
-$ kadmin -q 'addprinc -randkey IMAP/fully.qualified.host@REALM'
+```sh
+kadmin -q 'addprinc -randkey imap/fully.qualified.host@REALM'
+kadmin -q 'addprinc -randkey IMAP/fully.qualified.host@REALM'
 ```
 
 To create a keytab, use:
 
-```console
-$ kadmin -q 'ktadd -k /root/keytab imap/fully.qualified.host@REALM'
-$ kadmin -q 'ktadd -k /root/keytab IMAP/fully.qualified.host@REALM'
+```sh
+kadmin -q 'ktadd -k /root/keytab imap/fully.qualified.host@REALM'
+kadmin -q 'ktadd -k /root/keytab IMAP/fully.qualified.host@REALM'
 ```
 
 and put the keytab file into `/etc/dovecot`, set mode `0440` and ownership
@@ -42,27 +42,29 @@ On Active Directory, you need to create a Service User with password that
 never expires and cannot be changed, and then use `setspn.exe` to create the
 service principals for this user.
 
-```console
-$ setspn -A IMAP/hostname service_user_name
-$ setspn -A imap/hostname service_user_name
+```sh
+setspn -A IMAP/hostname service_user_name
+setspn -A imap/hostname service_user_name
 ```
 
 Then you need to use `ktpass` utility to export the keytab.
 
-```console
-$ ktpass -princ imap/hostname -mapuser service_user_name \
-      -crypto ALL -ptype KRB5_NT_PRINCIPAL -pass service_user_password \
-      -target dc.test.com -out c:\share\keytab
-$ ktpass -princ IMAP/hostname -mapuser service_user_name -crypto ALL \
-      -ptype KRB5_NT_PRINCIPAL -pass service_user_password \
-      -target dc.test.com -out c:\share\keytab
+```sh
+ktpass -princ imap/hostname -mapuser service_user_name \
+  -crypto ALL -ptype KRB5_NT_PRINCIPAL -pass service_user_password \
+  -target dc.test.com -out c:\share\keytab
+ktpass -princ IMAP/hostname -mapuser service_user_name -crypto ALL \
+  -ptype KRB5_NT_PRINCIPAL -pass service_user_password \
+  -target dc.test.com -out c:\share\keytab
 ```
 
 Use `klist` on your Dovecot server to verify the keytab contains the
 expected results:
 
-```console
-$ klist -k /etc/dovecot/keytab
+```sh
+klist -k /etc/dovecot/keytab
+```
+```
 Keytab name: FILE:/etc/krb5.keytab
 KVNO Principal
 ---- --------------------------------------------------------------------------

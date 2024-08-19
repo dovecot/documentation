@@ -295,10 +295,10 @@ exec /usr/bin/rspamc -h /run/rspamd/worker-controller.socket -P <secret> learn_h
 Before running following commands, make sure `dovecot.conf` has all the
 sieve configuration you want. Then run following commands:
 
-```console
-$ sievec /etc/dovecot/sieve/report-spam.sieve
-$ sievec /etc/dovecot/sieve/report-ham.sieve
-$ chmod +x /etc/dovecot/sieve/sa-learn-ham.sh /etc/dovecot/sieve/sa-learn-spam.sh
+```sh
+sievec /etc/dovecot/sieve/report-spam.sieve
+sievec /etc/dovecot/sieve/report-ham.sieve
+chmod +x /etc/dovecot/sieve/sa-learn-ham.sh /etc/dovecot/sieve/sa-learn-spam.sh
 ```
 
 Now your learn scripts should be invoked when you move mails between

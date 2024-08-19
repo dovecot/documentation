@@ -114,9 +114,9 @@ passdb {
   [[setting,ssl_dh]] setting instead: `ssl_dh=</etc/dovecot/dh.pem`
   * You can convert an existing ssl-parameters.dat to dh.pem:
 
-  ```console
-  $ dd if=/var/lib/dovecot/ssl-parameters.dat bs=1 skip=88 |
-        openssl dhparam -inform der > /etc/dovecot/dh.pem`
+  ```sh
+  dd if=/var/lib/dovecot/ssl-parameters.dat bs=1 skip=88 |
+    openssl dhparam -inform der > /etc/dovecot/dh.pem`
   ```
 * ssl-params process has also been removed, as it is no longer used to
   generate these parameters.

@@ -101,8 +101,8 @@ v2.3 should support all commands.
 You can use the doveadm itself to find out what the output format will
 look like. For example:
 
-```console
-$ doveadm -f tab search mailbox inbox 1:2
+```sh
+doveadm -f tab search mailbox inbox 1:2
 mailbox-guid    uid
 fa8cb722dfad9c52b62600007049b30b        125159
 fa8cb722dfad9c52b62600007049b30b        125160

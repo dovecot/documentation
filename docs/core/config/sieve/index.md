@@ -184,8 +184,8 @@ inefficient.
 To mitigate this problem, the administrator must manually pre-compile
 global scripts using the `sievec` command line tool. For example:
 
-```console
-$ sievec /var/lib/dovecot/sieve/global/
+```sh
+sievec /var/lib/dovecot/sieve/global/
 ```
 
 This is necessary for scripts listed in [[setting,sieve_global]],
