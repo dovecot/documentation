@@ -132,10 +132,10 @@ In `/etc/master.passwd`, a password of `* ` indicates that password
 authentication is disabled for that user and the token `*LOCKED*` prevents
 all login authentication, so you might as well exclude those:
 
-```console
-$ fgrep -v '*' /etc/master.passwd | cut -d : -f 1-4,8-10 > /path/to/file-with-encrypted-passwords
-$ chmod 640 /path/to/file-with-encrypted-passwords
-$ chown root:dovecot /path/to/file-with-encrypted-passwords
+```sh
+fgrep -v '*' /etc/master.passwd | cut -d : -f 1-4,8-10 > /path/to/file-with-encrypted-passwords
+chmod 640 /path/to/file-with-encrypted-passwords
+chown root:dovecot /path/to/file-with-encrypted-passwords
 ```
 
 The following will work in many situations, after disabling the inclusion of
