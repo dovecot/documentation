@@ -45,14 +45,16 @@ install service ticket of the form `smtp/hostname@REALM`.
 
 Create symlink for krb5.conf, if you do not have krb5.conf ready:
 
-```console
-$ ln -sf /usr/local/samba/private/krb5.conf /etc/krb5.conf
+```sh
+ln -sf /usr/local/samba/private/krb5.conf /etc/krb5.conf
 ```
 
 Create Dovecot user to your samba instance (choose random password):
 
-```console
-$ samba-tool user create dovecot
+```sh
+samba-tool user create dovecot
+```
+```
 New Password:
 Retype Password:
 User 'dovecot' created successfully
@@ -60,22 +62,24 @@ User 'dovecot' created successfully
 
 Add Service Principal Names (SPNs) and create keytab:
 
-```console
-$ samba-tool spn add imap/host.domain.com dovecot
-$ samba-tool domain exportkeytab --principal imap/host.domain.com /etc/dovecot/dovecot.keytab
+```sh
+samba-tool spn add imap/host.domain.com dovecot
+samba-tool domain exportkeytab --principal imap/host.domain.com /etc/dovecot/dovecot.keytab
 ```
 
 Dovecot needs to be able to read the keytab:
 
-```console
-$ chgrp dovecot /etc/dovecot/dovecot.keytab
-$ chmod g+r /etc/dovecot/dovecot.keytab
+```sh
+chgrp dovecot /etc/dovecot/dovecot.keytab
+chmod g+r /etc/dovecot/dovecot.keytab
 ```
 
 Make sure your keytab has entry for `imap/host.domain.name@REALM`:
 
-```console
-$ klist -Kek /etc/dovecot/dovecot.keytab
+```sh
+klist -Kek /etc/dovecot/dovecot.keytab
+```
+```
 Keytab name: FILE:/etc/dovecot/dovecot.keytab
 KVNO Principal
 ---- --------------------------------------------------------------------------
@@ -193,16 +197,20 @@ client to test this.
 
 First telnet directly to the server:
 
-```console
-$ telnet localhost 143
+```sh
+telnet localhost 143
+```
+```
 * OK Dovecot ready.
 ```
 
 or, if you are using IMAPS then use openssl instead of telnet to
 connect:
 
-```console
-$ openssl s_client -connect localhost:993
+```sh
+openssl s_client -connect localhost:993
+```
+```
 CONNECTED(00000003)
 ...
 * OK Dovecot ready.
