@@ -117,6 +117,7 @@ prefixing them with `\`.
 | `mail_crypt_require_encrypted_user_key` | Replaced by [[setting,crypt_user_key_require_encrypted]], [[setting,crypt_user_key_password]] and [[setting,crypt_user_key_encryption_key]]. |
 | `verbose_ssl` | Use [[setting,log_debug,category=ssl]] instead. |
 | `mail_location` setting & `mail` userdb field | Split into multiple [[link,mail_location,mail_*]] settings. |
+| `listescape` plugin | [[setting,mailbox_list_storage_escape_char]] setting. |
 
 ### Changed Default Settings
 
