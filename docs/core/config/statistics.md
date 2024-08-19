@@ -185,8 +185,8 @@ for how metric names are formed from these ranges.
 
 The gathered statistics are available by running:
 
-```console
-$ doveadm stats dump
+```sh
+doveadm stats dump
 ```
 
 Each event has a `duration` field, which tracks in microseconds how long
@@ -217,14 +217,14 @@ also be tracked, although only the `count` is relevant to those.
 
 The list of fields can be specified with the `-f` parameter. The default is:
 
-```console
-$ doveadm stats dump -f 'count sum min max avg median stddev %95'
+```sh
+doveadm stats dump -f 'count sum min max avg median stddev %95'
 ```
 
 It's also possible to specify other percentiles than just 95%, for example:
 
-```console
-$ doveadm stats dump -f 'count sum min max avg median stddev %95 %99 %99.9 %99.99'
+```sh
+doveadm stats dump -f 'count sum min max avg median stddev %95 %99 %99.9 %99.99'
 ```
 
 The stats counters are reset whenever the stats process is started, which
@@ -246,20 +246,20 @@ Metrics can be added dynamically by running [[doveadm,stats add]].
 
 For example:
 
-```console
-$ doveadm stats add --description "IMAP SELECT commands" \
-      --exporter log-exporter --exporter-include "name timestamps" \
-      --fields "net_in_bytes net_out_bytes" \
-      --group-by "cmd_name tagged_reply_state" imap_cmd_select \
-      "event=imap_command_finished AND cmd_name=SELECT"
+```sh
+doveadm stats add --description "IMAP SELECT commands" \
+  --exporter log-exporter --exporter-include "name timestamps" \
+  --fields "net_in_bytes net_out_bytes" \
+  --group-by "cmd_name tagged_reply_state" imap_cmd_select \
+  "event=imap_command_finished AND cmd_name=SELECT"
 ```
 
 Metrics can be removed dynamically by running [[doveadm,stats remove]].
 
 For example:
 
-```console
-$ doveadm stats remove imap_cmd_select
+```sh
+doveadm stats remove imap_cmd_select
 ```
 
 ## Examples

@@ -59,8 +59,8 @@ namespace {
 Prebuilt packages usually install the configuration files into
 `/etc/dovecot/`. You'll find the correct path by running:
 
-```console
-$ doveconf -n | head -n 1
+```sh
+doveconf -n | head -n 1
 ```
 
 It's a good idea to read through all the config files and see what settings
@@ -73,8 +73,8 @@ a `/usr/local/etc/dovecot/README` file, which contains the path to the
 installed example configuration files, usually
 `/usr/local/share/doc/dovecot/example-config`. Copy them to `etc/`:
 
-```console
-$ cp -r /usr/local/share/doc/dovecot/example-config/* /usr/local/etc/dovecot/
+```sh
+cp -r /usr/local/share/doc/dovecot/example-config/* /usr/local/etc/dovecot/
 ```
 
 ### Split Configuration Files
@@ -88,8 +88,8 @@ which config file you add which setting.
 In the production system it's often easier to just have a single
 `dovecot.conf` file, which you can create easily using:
 
-```console
-$ doveconf -nP > dovecot.conf
+```sh
+doveconf -nP > dovecot.conf
 ```
 
 ### Hints About Writing Configuration Files
@@ -127,12 +127,12 @@ Later when you know Dovecot is working, you can do it differently (see
 
 Run as your own non-root user:
 
-```console
-$ echo "$USER:{PLAIN}password:$UID:$GID::$HOME" > users
-$ sudo mv users /etc/dovecot/
+```sh
+echo "$USER:{PLAIN}password:$UID:$GID::$HOME" > users
+sudo mv users /etc/dovecot/
 
 # If SELinux is enabled:
-$ restorecon -v /etc/dovecot/users
+restorecon -v /etc/dovecot/users
 ```
 
 You can (and should) replace the "password" with whatever password you

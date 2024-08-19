@@ -45,28 +45,28 @@ requires autotools and libtool to be installed.
 If you installed Dovecot from sources, Pigeonhole's configure script
 should be able to find the installed `dovecot-config` automatically:
 
-```console
-$ ./configure
-$ make
-$ sudo make install
+```sh
+./configure
+make
+sudo make install
 ```
 
 If this doesn't work, you can use `--with-dovecot=<path>` configure
 option, where the path points to a directory containing
 `dovecot-config` file. This can point to an installed file:
 
-```console
-$ ./configure --with-dovecot=/usr/local/lib/dovecot
-$ make
-$ sudo make install
+```sh
+./configure --with-dovecot=/usr/local/lib/dovecot
+make
+sudo make install
 ```
 
 or to Dovecot source directory that is already compiled:
 
-```console
-$ ./configure --with-dovecot=../dovecot-2.3.21/
-$ make
-$ sudo make install
+```sh
+./configure --with-dovecot=../dovecot-2.3.21/
+make
+sudo make install
 ```
 
 ::: warning IMPORTANT

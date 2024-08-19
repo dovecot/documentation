@@ -30,9 +30,9 @@ dependency to pull it if not installed.
 
 For Debian:
 
-```console
-$ apt-get install postfix-pgsql sasl2-bin libsasl2-modules postgresql \
-      libpam-pgsql dovecot-pgsql dovecot-imapd dovecot-pop3d
+```sh
+apt-get install postfix-pgsql sasl2-bin libsasl2-modules postgresql \
+  libpam-pgsql dovecot-pgsql dovecot-imapd dovecot-pop3d
 ```
 
 ## Configuring PostgreSQL
@@ -46,10 +46,10 @@ host    all         all         127.0.0.1         255.255.255.255   password
 
 Then create the database:
 
-```console
-$ sudo su postgres
-$ createdb mails
-$ psql mails
+```sh
+sudo su postgres
+createdb mails
+psql mails
 ```
 
 Create tables:
@@ -259,9 +259,9 @@ need and which don't even work with PAM. You mostly just need PLAIN and
 possibly LOGIN authentication. I'm not sure if there's any pretty way to
 select only them, but one evil way is to just delete others:
 
-```console
-$ cd /usr/lib/sasl2
-$ rm -f libcrammd5.* libdigestmd5.* libsasldb.* libotp.* libntlm.* libanonymous.*
+```sh
+cd /usr/lib/sasl2
+rm -f libcrammd5.* libdigestmd5.* libsasldb.* libotp.* libntlm.* libanonymous.*
 ```
 
 The better way is to put in `/etc/postfix/sasl/smtpd.conf` the following
@@ -304,9 +304,9 @@ user_query = SELECT '/home/'||home AS home, uid, gid FROM users WHERE userid = '
 Finally remember to restart everything before trying to figure out why
 nothing is working:
 
-```console
-$ /etc/init.d/saslauthd restart
-$ /etc/init.d/postgresql restart
-$ /etc/init.d/postfix restart
-$ /etc/init.d/dovecot restart
+```sh
+/etc/init.d/saslauthd restart
+/etc/init.d/postgresql restart
+/etc/init.d/postfix restart
+/etc/init.d/dovecot restart
 ```

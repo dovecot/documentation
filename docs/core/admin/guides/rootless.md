@@ -39,10 +39,10 @@ which is worse:
 
 Install somewhere under home directory:
 
-```console
-$ ./configure --prefix=$HOME/dovecot
-$ make
-$ make install
+```sh
+./configure --prefix=$HOME/dovecot
+make
+make install
 ```
 
 Dovecot is then started by running `~/dovecot/sbin/dovecot`. The
@@ -58,19 +58,19 @@ without losing chroot and privileged ports.
 
 Use following commands to enable this:
 
-```console
-$ setcap cap_net_bind_service+ep ~/dovecot/sbin/dovecot
-$ setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/script-login
-$ setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/imap-urlauth-login
-$ setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/submission-login
-$ setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/managesieve-login
-$ setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/pop3-login
-$ setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/imap-login
-$ setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/lmtp
-$ setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/anvil
+```sh
+setcap cap_net_bind_service+ep ~/dovecot/sbin/dovecot
+setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/script-login
+setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/imap-urlauth-login
+setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/submission-login
+setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/managesieve-login
+setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/pop3-login
+setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/imap-login
+setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/lmtp
+setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/anvil
 
 # if you have installed managesieve
-$ setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/managesieve-login
+setcap cap_sys_chroot+ep ~/dovecot/libexec/dovecot/managesieve-login
 ```
 
 ## Configuration

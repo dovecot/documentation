@@ -114,8 +114,10 @@ systems. (If not, check with your distribution. GNU coreutils includes
 printf(1), and metamail includes mmencode(1). In Debian, mmencode is called
 mimencode(1).)
 
-```console
-$ printf 'username\0username\0password' | mmencode
+```sh
+printf 'username\0username\0password' | mmencode
+```
+```
 dXNlcm5hbWUAdXNlcm5hbWUAcGFzc3dvcmQ=
 ```
 
@@ -127,8 +129,10 @@ user `username` with password `password`. With
 
 You can use `mmencode -u` to interpret the encoded string pasted into stdin:
 
-```console
-# mmencode -u
+```sh
+mmencode -u
+```
+```
 bXl1c2VybmFtZUBkb21haW4udGxkAG15dXNlcm5hbWVAZG9tYWluLnRsZABteXBhc3N3b3Jk<CR>
 myusername@domain.tldmyusername@domain.tldmypassword<CTRL-D>
 #
@@ -144,14 +148,14 @@ Unfortunately, mmencode on FreeBSD chokes on `\0`.
 As an alternate, if you have MIME::Base64 on your system, you can use a
 perl statement to do the same thing:
 
-```console
-$ perl -MMIME::Base64 -e 'print encode_base64("myusername\@domain.tld\0myusername\@domain.tld\0mypassword");'
+```sh
+perl -MMIME::Base64 -e 'print encode_base64("myusername\@domain.tld\0myusername\@domain.tld\0mypassword");'
 ```
 
 As `mmencode -u` doesn't encounter any `\0` you can still do:
 
-```console
-$ perl -MMIME::Base64 -e 'print encode_base64("myusername\@domain.tld\0myusername\@domain.tld\0mypassword");' | mmencode -u
+```sh
+perl -MMIME::Base64 -e 'print encode_base64("myusername\@domain.tld\0myusername\@domain.tld\0mypassword");' | mmencode -u
 ```
 
 to check that you have encoded correctly.
@@ -160,6 +164,6 @@ to check that you have encoded correctly.
 
 With python you can do:
 
-```console
-$ python -c "import base64; print(base64.encodestring('myusername@domain.tld\0myusername@domain.tld\0mypassword'));"
+```sh
+python -c "import base64; print(base64.encodestring('myusername@domain.tld\0myusername@domain.tld\0mypassword'));"
 ```

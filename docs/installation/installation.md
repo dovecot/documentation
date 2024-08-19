@@ -43,10 +43,10 @@ you to use these instead of building sources yourself.
 
 For most people it is enough to do:
 
-```console
-$ ./configure
-$ make
-$ sudo make install
+```sh
+./configure
+make
+sudo make install
 ```
 
 That installs Dovecot under the `/usr/local` directory. The
@@ -59,8 +59,8 @@ If you have installed some libraries into locations which require
 special include or library paths, you can pass them in the `CPPFLAGS`
 and `LDFLAGS` environment variables. For example:
 
-```console
-$ CPPFLAGS="-I/opt/openssl/include" LDFLAGS="-L/opt/openssl/lib" ./configure
+```sh
+CPPFLAGS="-I/opt/openssl/include" LDFLAGS="-L/opt/openssl/lib" ./configure
 ```
 
 You'll need to create two users for Dovecot's internal use:
@@ -82,8 +82,8 @@ groups. See [[link,system_users]] for more information.
 
 If you got Dovecot from Git, for instance with
 
-```console
-$ git clone https://github.com/dovecot/core.git dovecot
+```sh
+git clone https://github.com/dovecot/core.git dovecot
 ```
 
 you will first need to run `./autogen.sh` to generate the
@@ -101,19 +101,19 @@ the following software/packages installed:
 It is advisable to add `--enable-maintainer-mode` to the `configure`
 script. Thus:
 
-```console
-$ ./autogen.sh
-$ ./configure --enable-maintainer-mode
-$ make
-$ sudo make install
+```sh
+./autogen.sh
+./configure --enable-maintainer-mode
+make
+sudo make install
 ```
 
 For later updates, you can use:
 
-```console
-$ git pull
-$ make
-$ sudo make install
+```sh
+git pull
+make
+sudo make install
 ```
 
 ### SSL/TLS Support

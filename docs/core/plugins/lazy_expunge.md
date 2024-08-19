@@ -129,8 +129,8 @@ Doveadm can be used to manually clean expunge storage.
 
 Example to delete all messages in `.EXPUNGED` namespace older than one day:
 
-```console
-$ doveadm expunge mailbox '.EXPUNGED/*' savedsince 1d
+```sh
+doveadm expunge mailbox '.EXPUNGED/*' savedsince 1d
 ```
 
 ### Autoexpunge

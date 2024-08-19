@@ -21,8 +21,8 @@ preserved.
 
 To import mail from another user in the system, you can do
 
-```console
-$ doveadm import -U sourceuser -u destuser 'maildir:~/Maildir' Imported ALL
+```sh
+doveadm import -U sourceuser -u destuser 'maildir:~/Maildir' Imported ALL
 ```
 
 This will import all mails and folder structure from sourceuser to destuser,
@@ -33,8 +33,8 @@ This will require that both sourceuser and destuser have same system UID.
 You can also use imap client to do the import, which lets you import mail
 from users with different system UID, or users that reside on a remote system.
 
-```console
-$ doveadm import -U sourceuser -u destuser imapc: Imported ALL
+```sh
+doveadm import -U sourceuser -u destuser imapc: Imported ALL
 ```
 
 This assumes you have configured imap client. See
@@ -44,8 +44,8 @@ This assumes you have configured imap client. See
 
 You can also import mails from a filesystem location:
 
-```console
-$ doveadm import -u destuser maildir:/opt/backup/destuser/Maildir "" ALL
+```sh
+doveadm import -u destuser maildir:/opt/backup/destuser/Maildir "" ALL
 ```
 
 This will restore all mails from backup into mailbox root, with folder
@@ -58,8 +58,8 @@ Note that `destuser` must have read and privileges to the source location.
 
 If you have only read privileges, you can try using in-memory indexes:
 
-```console
-$ doveadm import -u destuser maildir:/opt/backup/destuser/Maildir:INDEX=MEMORY "" ALL
+```sh
+doveadm import -u destuser maildir:/opt/backup/destuser/Maildir:INDEX=MEMORY "" ALL
 ```
 
 ## Merging Storages
@@ -143,8 +143,8 @@ index storage supports snapshots:
 
 * Use [[doveadm,import]] to recover new mails:
 
-  ```console
-  $ doveadm import -u user@example.com sdbox:/mnt/temp-mail-storage/user:INDEX=/mnt/temp-index-storage/user:CONTROL=/mnt/temp-index-storage/user:ITERINDEX "" all
+  ```sh
+  doveadm import -u user@example.com sdbox:/mnt/temp-mail-storage/user:INDEX=/mnt/temp-index-storage/user:CONTROL=/mnt/temp-index-storage/user:ITERINDEX "" all
   ```
 
   If your normal [[setting,mail_location]] has other settings, you may also

@@ -48,8 +48,8 @@ if you want to log in as `user` with password `pass` and the
 realm should be `example.com` (usually not provided by the user, see
 above), create the digest with:
 
-```console
-$ echo -n "user:example.com:pass" | md5sum c19c4c6e32f9d8026b26ba77c21fb8eb -
+```sh
+echo -n "user:example.com:pass" | md5sum c19c4c6e32f9d8026b26ba77c21fb8eb -
 ```
 
 And save it as: `user@example.com:c19c4c6e32f9d8026b26ba77c21fb8eb`.

@@ -48,10 +48,10 @@ service imap-login {
 This attempts to write the rawlogs under `$base_dir/login/rawlogs` directory.
 You need to create it first with enough write permissions:
 
-```console
-$ mkdir /var/run/dovecot/login/rawlogs
-$ chown dovenull /var/run/dovecot/login/rawlogs
-$ chmod 0700 /var/run/dovecot/login/rawlogs
+```sh
+mkdir /var/run/dovecot/login/rawlogs
+chown dovenull /var/run/dovecot/login/rawlogs
+chmod 0700 /var/run/dovecot/login/rawlogs
 ```
 
 ## rawlog Binary
@@ -78,8 +78,10 @@ work.
 Verify that [[doveadm,user,-u user@example.com]] returns the home directory,
 for example:
 
-```console
-$ doveadm user -u user@example.com
+```sh
+doveadm user -u user@example.com
+```
+```
 userdb: user@example.com
    user      : user@example.com
    uid       : 1000

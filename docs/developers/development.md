@@ -20,10 +20,10 @@ To build llvm/clang, you'll need cmake version 3.4.3.
 There are github mirrors, but you can clone directly from
 [llvm.org](https://llvm.org/).
 
-```console
-$ git clone https://llvm.org/git/llvm
-$ cd tools
-$ git clone https://llvm.org/git/clang
+```sh
+git clone https://llvm.org/git/llvm
+cd tools
+git clone https://llvm.org/git/clang
 ```
 
 Here are some hints on how to build/hack clang:
@@ -39,12 +39,11 @@ Here are some hints on how to build/hack clang:
 - Even then it seems to be very slow. It's possibly enough to use
   `-DCMAKE_BUILD_TYPE=RelWithDebInfo`
 
-```console
-$ mkdir build
-$ cd build
-$ cmake -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ \
-      -DLLVM_OPTIMIZED_TABLEGEN=ON -DCMAKE_BUILD_TYPE=Debug -G "Unix \
-      Makefiles" ../
+```sh
+mkdir build
+cd build
+cmake -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ \
+  -DLLVM_OPTIMIZED_TABLEGEN=ON -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" ../
 ```
 
 If you want to debug clang, you need to debug "clang -cc1" because
@@ -69,22 +68,22 @@ code analysis:
 
 Compile using `--coverage` flags:
 
-```console
-$ EXTRA_CFLAGS=--coverage EXTRA_LDFLAGS=--coverage ./configure
+```sh
+EXTRA_CFLAGS=--coverage EXTRA_LDFLAGS=--coverage ./configure
 ```
 
 Build and run unit tests:
 
-```console
-$ make check NOVALGRIND=1
+```sh
+make check NOVALGRIND=1
 ```
 
 Get coverage as HTML:
 
-```console
-$ lcov -q --directory . --capture -o cov.info
-$ summary="`lcov --summary cov.info 2>&1 \| sed -e 's/$/<br>/'`"
-$ genhtml -q -k --legend -o cov cov.info
+```sh
+lcov -q --directory . --capture -o cov.info
+summary="`lcov --summary cov.info 2>&1 \| sed -e 's/$/<br>/'`"
+genhtml -q -k --legend -o cov cov.info
 ```
 
 The HTML content is now in the "cov" directory. Note that the lcov
@@ -107,8 +106,8 @@ exec llvm-cov gcov "$@"
 
 Then add `--gcov-tool llvm-gcov.sh` parameter:
 
-```console
-$ lcov -q --gcov-tool llvm-gcov.sh --directory . --capture -o cov.info
+```sh
+lcov -q --gcov-tool llvm-gcov.sh --directory . --capture -o cov.info
 ```
 
 ### Issues
