@@ -106,14 +106,14 @@ commands can be used:
 
 #### `X-Dovecot-API` Auth
 
-```console
-$ curl -H "Authorization: X-Dovecot-API <base64 dovecot_api_key>" \
-      http://host:port/doveadm/v1
+```sh
+curl -H "Authorization: X-Dovecot-API <base64 dovecot_api_key>" \
+  http://host:port/doveadm/v1
 ```
 
 #### Basic Auth
 
-```
+```sh
 curl -H "Authorization: Basic <base64 doveadm:doveadm_password>" http://host:port/doveadm/v1
 curl –u doveadm:password http://host:port/doveadm/v1
 ```
@@ -192,9 +192,9 @@ Reload Dovecot configuration:
 
 Then we execute it with curl:
 
-```console
-$ curl -v -u doveadm:secretpassword -X POST http://localhost:8080/doveadm/v1 \
-      -H "Content-Type: application/json" -d '[["reload",{},"tag1"]]'
+```sh
+curl -v -u doveadm:secretpassword -X POST http://localhost:8080/doveadm/v1 \
+  -H "Content-Type: application/json" -d '[["reload",{},"tag1"]]'
 ```
 
 This is equivalent to the command [[doveadm,reload]].
