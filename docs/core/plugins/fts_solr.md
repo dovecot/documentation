@@ -39,8 +39,8 @@ have packages for this.
 To use Solr with Dovecot, it needs to configured specifically for use
 with Dovecot.
 
-```console
-$ sudo -u solr /opt/solr/bin/solr create -c dovecot
+```sh
+sudo -u solr /opt/solr/bin/solr create -c dovecot
 ```
 
 Once the instance is created, you can start the Solr service.
@@ -63,10 +63,10 @@ These files are both located in the `conf` directory of the Solr instance
 
 #### Remove default core configuration files
 
-```console
-$ rm -f /var/solr/data/dovecot/conf/schema.xml
-$ rm -f /var/solr/data/dovecot/conf/managed-schema
-$ rm -f /var/solr/data/dovecot/conf/solrconfig.xml
+```sh
+rm -f /var/solr/data/dovecot/conf/schema.xml
+rm -f /var/solr/data/dovecot/conf/managed-schema
+rm -f /var/solr/data/dovecot/conf/solrconfig.xml
 ```
 
 #### Install schema.xml and solrconfig.xml
@@ -176,12 +176,12 @@ performance. You must run a hard commit once in a while or Solr will
 keep increasing its transaction log sizes. For example send the commit
 command to Solr every few minutes.
 
-```console
-# Optimize should be run somewhat rarely, e.g. once a day
-$ curl https://<hostname/ip>:<port|default 8983>/solr/dovecot/update?optimize=true
+```sh
+Optimize should be run somewhat rarely, e.g. once a day
+curl https://<hostname/ip>:<port|default 8983>/solr/dovecot/update?optimize=true
 
 # Commit should be run pretty often, e.g. every minute
-$ curl https://<hostname/ip>:<port|default 8983>/solr/dovecot/update?commit=true
+curl https://<hostname/ip>:<port|default 8983>/solr/dovecot/update?commit=true
 ```
 
 You may not need those if you are using a recent Solr (7+) or SolrCloud.

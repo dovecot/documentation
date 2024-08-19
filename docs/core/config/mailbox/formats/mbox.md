@@ -157,8 +157,10 @@ Here's a list of how to find out the locking settings for other software:
 
 #### Procmail
 
-```console
-$ procmail -v 2>&1|grep Locking
+```sh
+procmail -v 2>&1|grep Locking
+```
+```
 Locking strategies:     dotlocking, fcntl()
 ```
 
@@ -183,8 +185,8 @@ is missing, since the fcntl is common with Dovecot and Postfix.
 
 #### mutt
 
-```console
-$ mutt -v|grep -i lock
+```sh
+mutt -v|grep -i lock
 ```
 
 #### Debian
@@ -587,8 +589,8 @@ imap(user): Error: chown(/home/user/mail/.imap/INBOX, -1, 12(mail)) failed: Oper
 There is rarely any real need for the files to have 0660 mode, so the best
 solution for this problem is to just change the mode to 0600:
 
-```console
-$ chmod 0600 /var/mail/*
+```sh
+chmod 0600 /var/mail/*
 ```
 
 ### Only /var/mail/ mboxes
