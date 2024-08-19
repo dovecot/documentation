@@ -187,9 +187,9 @@ Then run `postfix reload`.
   [[setting,mail_privileged_group]]), we can use the setgid permission
   bit on the `dovecot-lda` executable:
 
-  ```console
-  # chgrp mail /usr/lib/dovecot/dovecot-lda
-  # chmod 2755 /usr/lib/dovecot/dovecot-lda
+  ```sh
+  chgrp mail /usr/lib/dovecot/dovecot-lda
+  chmod 2755 /usr/lib/dovecot/dovecot-lda
   ```
 
   Alas, these permission will disappear if you update Dovecot.
@@ -198,16 +198,16 @@ Then run `postfix reload`.
   `/etc/postfix/dovecot-lda-relay` that has the setgid permission and
   execs the real `dovecot-lda`.
 
-  ```console
-  $ cd /etc/postfix
-  $ cat >dovecot-lda-relay.c <<EOF
+  ```sh
+  cd /etc/postfix
+  cat >dovecot-lda-relay.c <<EOF
   #include <unistd.h>
   char *pgm = "/usr/lib/dovecot/dovecot-lda";  /* wherever dovecot-lda is located */
   int main(int argc, char**argv) { argv[0]=pgm; execv(pgm,argv); return 10; }
   EOF
-  $ gcc -o dovecot-lda-relay dovecot-lda-relay.c
-  $ chown root:mail dovecot-lda-relay
-  $ chmod 2755 dovecot-lda-relay
+  gcc -o dovecot-lda-relay dovecot-lda-relay.c
+  chown root:mail dovecot-lda-relay
+  chmod 2755 dovecot-lda-relay
   ```
 
   Then, simply invoke `/etc/postfix/dovecot-lda-relay` instead of
@@ -400,8 +400,8 @@ work with the Dovecot LDA "deliver".
 
 The delivery command you need is
 
-```console
-$ |/var/qmail/bin/preline -f /usr/local/libexec/dovecot/dovecot-lda
+```sh
+|/var/qmail/bin/preline -f /usr/local/libexec/dovecot/dovecot-lda
 ```
 
 (You may need to adjust the paths to match your qmail and dovecot
@@ -418,8 +418,8 @@ For site-wide usage, put that in `/var/qmail/control/defaultdelivery`
 
 Add the `-d` parameter to specify the destination username:
 
-```console
-$ |/var/qmail/bin/preline -f /usr/local/libexec/dovecot/dovecot-lda -d $EXT@$USER
+```sh
+|/var/qmail/bin/preline -f /usr/local/libexec/dovecot/dovecot-lda -d $EXT@$USER
 ```
 
 ## Sendmail

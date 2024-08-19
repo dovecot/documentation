@@ -322,8 +322,8 @@ plugin {
 
 Afterwards you can remove the old global ACL directory parent:
 
-```console
-$ rm -rf /etc/dovecot/acls/
+```sh
+rm -rf /etc/dovecot/acls/
 ```
 
 ### Event Changes

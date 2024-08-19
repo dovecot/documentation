@@ -107,8 +107,8 @@ use `-s` to override it: [[doveadm,pw,-s SHA512-CRYPT]].
 To provide password, for scripting purposes, you can use either
 [[doveadm,pw,-p password]] or:
 
-```console
-$ printf 'password\npassword\n' | doveadm pw
+```sh
+printf 'password\npassword\n' | doveadm pw
 ```
 
 ## Default password Schemes
