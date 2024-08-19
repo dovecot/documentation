@@ -2227,19 +2227,6 @@ duplicates only with the following mailbox formats:
 * [[link,sdbox]]/[[link,mdbox]]`
 	},
 
-	/* listescape plugin */
-
-	listescape_char: {
-		default: '\\',
-		plugin: 'listescape',
-		values: setting_types.STRING,
-		text: `
-The escape character to use.
-
-\`%\` needs to be written twice to escape it, because [[variable]] are
-expanded in plugin section.`
-	},
-
 	/* mail-compress plugin */
 
 	compress_bz2_block_size_100k: {
