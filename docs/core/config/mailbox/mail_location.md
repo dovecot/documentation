@@ -404,18 +404,18 @@ directory and configure your SMTP server to use the Maildir format.
 
 First send a test mail to yourself (as your own non-root user):
 
-```console
-$ echo "Hello me" | mail -s "Dovecot test" $USER
+```sh
+echo "Hello me" | mail -s "Dovecot test" $USER
 ```
 
 Now, find where the mail went. Here's a simple script which checks the
 most common locations:
 
-```console
-$ for mbox in /var/mail/$USER /var/spool/mail/$USER ~/mbox ~/mail/* ~/*; do
-    grep -q "Dovecot test" "$mbox" && echo "mbox: $mbox"
-  done
-$ grep -q "Dovecot test" ~/Maildir/new/* 2>/dev/null && echo "Maildir: ~/Maildir"
+```sh
+for mbox in /var/mail/$USER /var/spool/mail/$USER ~/mbox ~/mail/* ~/*; do
+  grep -q "Dovecot test" "$mbox" && echo "mbox: $mbox"
+done
+grep -q "Dovecot test" ~/Maildir/new/* 2>/dev/null && echo "Maildir: ~/Maildir"
 ```
 
 ### mbox

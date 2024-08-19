@@ -36,13 +36,14 @@ From [VitePress](https://vitepress.dev/guide/getting-started#prerequisites):
 
 ## Installation
 
+> [!NOTE]
+> Instead of `npm` you can use any compatible node package managing software:
+> `pnpm`, `yarn`, `bun`, etc.
+
 To install, run:
 
-```console
-$ npm install
-
-# Or using bun:
-$ bun install
+```sh
+npm install
 ```
 
 ## Local Testing Server
@@ -55,11 +56,8 @@ when source files change.
 
 Run with:
 
-```console
-$ npm run docs:dev
-
-# Or using bun:
-$ bun run docs:dev
+```sh
+npm run docs:dev
 ```
 
 > [!NOTE]
@@ -70,21 +68,15 @@ $ bun run docs:dev
 
 To generate the static documentation, run:
 
-```console
-$ npm run docs:build
-
-# Or using bun:
-$ bun run docs:build
+```sh
+npm run docs:build
 ```
 
 Generated documentation will be output in the `docs/.vitepress/dist` directory.
 The statically generated documentation can be displayed locally by running:
 
-```console
-$ npm run docs:preview
-
-# Or using bun (https://bun.sh/):
-$ bun run docs:preview
+```sh
+npm run docs:preview
 ```
 
 ### Debugging
@@ -111,7 +103,7 @@ in the `2.4` directory.
 
 Provide access to Dovecot documentation at `http://localhost:8080/`:
 
-```console
+```sh
 docker run --rm \
   -p 8080:80 \
   ghcr.io/dovecot/documentation:latest

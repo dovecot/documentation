@@ -111,8 +111,8 @@ admin2:{SHA1}i+UhJqb95FCnFio2UdWJu1HpV50=
 
 One way to create this master file is to use the htaccess program as follows:
 
-```console
-$ htpasswd -b -c -s passwd.masterusers user password
+```sh
+htpasswd -b -c -s passwd.masterusers user password
 ```
 
 ### SQL Example

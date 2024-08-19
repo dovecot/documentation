@@ -141,14 +141,23 @@ curl –u doveadm:password http://host:port/doveadm/v1
 
 Use API Key as configured in [[setting,doveadm_api_key]].
 
-```console
-$ curl -H "Authorization: X-Dovecot-API <base64 dovecot_api_key>" \
-      http://host:port/doveadm/v1
+```sh
+curl -H "Authorization: X-Dovecot-API <base64 dovecot_api_key>" \
+  http://host:port/doveadm/v1
 ```
 
 ### API Overview
 
 #### Request
+```sh
+curl -H "Authorization: Basic <base64 doveadm:doveadm_password>" http://host:port/doveadm/v1
+curl –u doveadm:password http://host:port/doveadm/v1
+```
+
+There is also https://github.com/dovecot/doveadm-http-cli that can be
+used for accessing the API.
+
+### API overview
 
 All commands sent to the API needs to be posted in json format using
 `Content-Type: application/json` in headers for the request type and the
@@ -269,9 +278,9 @@ Reload Dovecot configuration:
 
 Then we execute it with curl:
 
-```console
-$ curl -v -u doveadm:secretpassword -X POST http://localhost:8080/doveadm/v1 \
-      -H "Content-Type: application/json" -d '[["reload",{},"tag1"]]'
+```sh
+curl -v -u doveadm:secretpassword -X POST http://localhost:8080/doveadm/v1 \
+  -H "Content-Type: application/json" -d '[["reload",{},"tag1"]]'
 ```
 
 This is equivalent to the command [[doveadm,reload]].
