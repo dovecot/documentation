@@ -20,8 +20,10 @@ if you can't find it.
 
 Next check that Dovecot is listening for connections:
 
+```sh
+nc localhost 143
 ```
-# nc localhost 143
+```
 Trying 127.0.0.1...
 Connected to localhost.
 Escape character is '^]'.
@@ -33,8 +35,10 @@ serve the imap protocol and listening on the expected
 interfaces/addresses. The simplest way to do that would be using
 [[man,doveconf]]:
 
+```sh
+doveconf protocols listen
 ```
-# doveconf protocols listen
+```
 protocols = imap pop3 lmtp sieve
 listen = *, ::
 ```
@@ -52,8 +56,10 @@ command line.
 
 Next check that it also works from remote host:
 
+```sh
+nc imap.example.com 143
 ```
-# nc imap.example.com 143
+```
 Trying 1.2.3.4...
 Connected to imap.example.com.
 Escape character is '^]'.
@@ -69,8 +75,10 @@ to test using `openssl s_client`.
 
 ### Check Dovecot is Allowing Logins
 
+```sh
+nc localhost 143
 ```
-# nc localhost 143
+```
 a login "username" "password"
 ```
 
@@ -94,8 +102,10 @@ the problem.
 You'll need to try this from another computer, since all local IPs are
 treated as secure:
 
+```sh
+nc imap.example.com 143
 ```
-# nc imap.example.com 143
+```
 a login "username" "password"
 ```
 
@@ -115,15 +125,19 @@ You could alternatively use OpenSSL to test that the server works with SSL:
 
 - Test using imaps port (assuming you haven't disabled imaps port):
 
-  ```console
-  # openssl s_client -connect imap.example.com:993
+  ```sh
+  openssl s_client -connect imap.example.com:993
+  ```
+  ```
   * OK Dovecot ready.
   ```
 
 - Test using imap port and STARTTLS command (works also with imap port):
 
-  ```console
-  # openssl s_client -connect imap.example.com:143 -starttls imap
+  ```sh
+  openssl s_client -connect imap.example.com:143 -starttls imap
+  ```
+  ```
   * OK Dovecot ready.
   ```
 
@@ -276,10 +290,9 @@ following:
 
 Simple imaptest to cover the basics:
 
-```console
-$ timeout 10s imaptest pass=supersecret host=127.0.0.1 \
-      mbox=testmbox.sm40k user=testuser1 Fetch2=100 store=100 \
-      delete=100 expunge=100 clients=1
+```sh
+timeout 10s imaptest pass=supersecret host=127.0.0.1 mbox=testmbox.sm40k \
+  user=testuser1 Fetch2=100 store=100 delete=100 expunge=100 clients=1
 ```
 
 Check the output for errors.
@@ -292,9 +305,9 @@ Copy a message with doveadm:
 
 Copy messages with imaptest:
 
-```console
-$ imaptest pass=supersecret host=127.0.0.1 mbox=testmbox.sm40k \
-      user=testuser1 copybox=Trash
+```sh
+imaptest pass=supersecret host=127.0.0.1 mbox=testmbox.sm40k user=testuser1 \
+  copybox=Trash
 ```
 
 Move a message: [[doveadm,move,-u testuser1 Trash mailbox INBOX 1]].
@@ -303,16 +316,16 @@ Move a message: [[doveadm,move,-u testuser1 Trash mailbox INBOX 1]].
 
 Test rapid delivery of lots of messages via IMAP APPEND (100k test users)
 
-```console
-$ imaptest - user=testuser%d pass=testpass mbox=testmbox append=100,0 \
-      logout=0 users=100000 clients=500 msgs=100000 no_pipelining secs=10
+```sh
+imaptest - user=testuser%d pass=testpass mbox=testmbox append=100,0 logout=0 \
+  users=100000 clients=500 msgs=100000 no_pipelining secs=10
 ```
 
 Test rapid delivery of lots of messages via LMTP:
 
 ::: code-group
-```console[Command]
-$ imaptest profile=imaptest.profile mbox=testmbox secs=10
+```sh[Command]
+imaptest profile=imaptest.profile mbox=testmbox secs=10
 ```
 
 ```[imaptest.profile]
@@ -350,27 +363,27 @@ client lmtponly {
 
 1h mixed test against proxy (10.41.1.135) with 2m users and 200 clients:
 
-```console
-$ timeout 1h imaptest pass=testpassword host=10.41.1.135 \
-      mbox=testmbox user=testuser%d users=1-2000000 Fetch2=100 \
-      store=100 delete=90 expunge=100 clients=200
+```sh
+timeout 1h imaptest pass=testpassword host=10.41.1.135 mbox=testmbox \
+  user=testuser%d users=1-2000000 Fetch2=100 store=100 delete=90 expunge=100 \
+  clients=200
 ```
 
 8hr mixed test with 2m users; generally this would be run against multiple
 proxies (host=proxy ip) from multiple imaptest nodes.
 
-```console
-$ timeout 8h imaptest pass=testpassword host=127.0.0.1 mbox=testmbox \
-      user=testuser%d users=1-2000000 Fetch2=100 store=100 delete=90 \
-      expunge=100 clients=100
+```sh
+timeout 8h imaptest pass=testpassword host=127.0.0.1 mbox=testmbox \
+  user=testuser%d users=1-2000000 Fetch2=100 store=100 delete=90 expunge=100 \
+  clients=100
 ```
 
 ##### POP3 + LMTP Testing
 
 ::: code-group
-```console[Command]
-$ imaptest pass=testpassword mbox=testmbox.sm40k \
-      profile=pop3_2m_profile.conf no_tracking clients=10000
+```sh[Command]
+imaptest pass=testpassword mbox=testmbox.sm40k profile=pop3_2m_profile.conf \
+  no_tracking clients=10000
 ```
 
 ```[pop3_2m_profile.conf]
@@ -411,9 +424,9 @@ client pop3 {
 ##### IMAP + LMTP Testing
 
 ::: code-group
-```console[Command]
-$ imaptest pass=testpassword mbox=testmbox profile=imap_4m_profile.conf \
-      clients=10000
+```sh[Command]
+imaptest pass=testpassword mbox=testmbox profile=imap_4m_profile.conf \
+  clients=10000
 ```
 
 ```[imap_4m_profile.conf]
@@ -482,7 +495,7 @@ client AppleMail {
 
 ##### Generate Read Load (BODY FETCHs):
 
-```console
-$ imaptest - user=terra.29.%d select=100 fetch2=100,0 logout=0 \
-      clients=10 msgs=100000 no_pipelining users=400 no_tracking
+```sh
+imaptest - user=terra.29.%d select=100 fetch2=100,0 logout=0 clients=10 \
+  msgs=100000 no_pipelining users=400 no_tracking
 ```

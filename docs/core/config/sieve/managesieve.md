@@ -256,8 +256,8 @@ novice user, so for convenience a
 is provided to generate the `AUTHENTICATE` command for you. It is used
 as follows:
 
-```console
-$ sieve-auth-command.pl <username> <password>
+```sh
+sieve-auth-command.pl <username> <password>
 ```
 
 The command is written to stdout and you can paste this to your protocol
@@ -329,8 +329,8 @@ the means to do so. This command-line utility is part of the GNUTLS
 distribution and on most systems this should be easy to install. It is
 used to connect to ManageSieve as follows:
 
-```console
-$ gnutls-cli --starttls -p <port> <host>
+```sh
+gnutls-cli --starttls -p <port> <host>
 ```
 
 This starts the client in plain text mode first. As shown in the

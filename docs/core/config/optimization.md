@@ -21,8 +21,8 @@ path).
 
 The variable can be set either from the shell:
 
-```console
-$ export TZ=:/etc/localtime
+```sh
+export TZ=:/etc/localtime
 ```
 
 or directly from inside the Dovecot configuration file:
@@ -145,15 +145,15 @@ to check are:
 * In order to reduce I/O on the backends, it is recommended to disable the
   ext4 journal:
 
-  ```console
-  $ tune2fs -O ^has_journal /dev/vdb
-  $ e2fsck -f /dev/vdb
+  ```sh
+  tune2fs -O ^has_journal /dev/vdb
+  e2fsck -f /dev/vdb
   ```
 
 * Dovecot doesn't require atimes, so you can mount the filesystem with noatime:
 
-  ```console
-  $ mount -o defaults,discard,noatime /dev/vdb /storage
+  ```sh
+  mount -o defaults,discard,noatime /dev/vdb /storage
   ```
 
 * All the servers' hostnames must be unique. This is relied on in many

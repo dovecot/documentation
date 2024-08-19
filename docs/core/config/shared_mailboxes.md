@@ -522,9 +522,9 @@ to filesystem permissions.
 
 ### Maildir
 
-```console
-$ ln -s /home/user2/Maildir/.Work /home/user1/Maildir/.shared.user2
-$ ln -s /home/user3/Maildir/.Work /home/user1/Maildir/.shared.user3
+```sh
+ln -s /home/user2/Maildir/.Work /home/user1/Maildir/.shared.user2
+ln -s /home/user3/Maildir/.Work /home/user1/Maildir/.shared.user3
 ```
 
 Now user1 has a "shared" directory containing "user2" and "user3" child
@@ -539,10 +539,10 @@ mbox
 
 Doing the same as in the above Maildir example:
 
-```console
-$ mkdir /home/user1/mail/shared
-$ ln -s /home/user2/mail/Work /home/user1/mail/shared/user2
-$ ln -s /home/user3/mail/Work /home/user1/mail/shared/user3
+```sh
+mkdir /home/user1/mail/shared
+ln -s /home/user2/mail/Work /home/user1/mail/shared/user2
+ln -s /home/user3/mail/Work /home/user1/mail/shared/user3
 ```
 
 One additional problem with mbox format is the creation of dotlock
@@ -625,8 +625,8 @@ different users having different groups create mailboxes, causing
 permission denied errors when trying to preserve the group) you can set
 the setgid bit for the root directory:
 
-```console
-$ chmod g+s /home/user/mail
+```sh
+chmod g+s /home/user/mail
 ```
 
 This will cause the group to be automatically copied by the OS for all
@@ -675,9 +675,9 @@ anymore. The solution is to use a common group for the users and set
 `/var/mail/` directory's permissions properly (group-suid is
 required):
 
-```console
-$ chgrp dovemail /var/mail
-$ chmod 02770 /var/mail # or perhaps 03770 for extra security
+```sh
+chgrp dovemail /var/mail
+chmod 02770 /var/mail # or perhaps 03770 for extra security
 ```
 
 and in `dovecot.conf`:
