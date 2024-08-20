@@ -642,7 +642,7 @@ Settings
    .. note:: Bug in v2.2.30-v2.2.33: if special-use flags are used,
              SPECIAL-USE needs to be added to post-login CAPABILITY response
              as :rfc:`6154` mandates. You can do this with
-             ``imap_capability = +SPECIAL-USE``
+             ``imap_capability { SPECIAL-USE = yes }``
 
 
 Example

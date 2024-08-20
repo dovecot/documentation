@@ -1017,18 +1017,18 @@ See :ref:`settings` for list of all setting groups.
 
 .. dovecot_core:setting:: imap_capability
    :todo: Indicate imap setting
-   :values: @string
+   :values: @boollist
 
    Override the IMAP CAPABILITY response.
-
-   If the value begins with the ``+`` character, the capabilities listed here
-   are added at the end of the default string.
 
    Example:
 
    .. code-block:: none
 
-     imap_capability = +XFOO XBAR
+     imap_capability {
+       XFOO = yes
+       XBAR = yes
+     }
 
 
 .. dovecot_core:setting:: imap_client_workarounds
