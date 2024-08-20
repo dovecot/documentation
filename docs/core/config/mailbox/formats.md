@@ -2,7 +2,9 @@
 layout: doc
 title: Formats Overview
 dovecotlinks:
-  mailbox_formats: mailbox formats
+  mailbox_formats:
+    hash: mailbox-formats
+    text: Mailbox Formats
 ---
 
 # Mailbox Formats
