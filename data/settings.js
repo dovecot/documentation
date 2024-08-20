@@ -6166,6 +6166,323 @@ protocol !indexer-worker {
 \`\`\``
 	},
 
+	mail_driver: {
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		seealso: [
+			'[[link,mailbox_formats]]',
+			'mail_path',
+		],
+		text: `
+One of the mailbox formats described at [[link,mailbox_formats]].
+
+For an empty value or \`auto\`, Dovecot attempts to find the mailboxes
+automatically.`
+	},
+
+	mail_path: {
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		default: '<specific to mail_driver setting>',
+		seealso: [
+			'[[link,settings_variables_mail_user_variables]]',
+			'[[link,home_directories_for_virtual_users]]',
+			'mail_driver',
+		],
+		text: `
+Path to a directory where the mail is stored. [[link,settings_variables_mail_user_variables]] are commonly used here.
+
+Usually the mails should be stored in a sub-directory under the home directory,
+but not the home directory itself (see
+[[link,home_directories_for_virtual_users]]).
+
+The path must be absolute, not a relative path. Even if relative paths appear
+to work, this usage is deprecated and will likely stop working at some point.`
+	},
+
+	mail_inbox_path: {
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		seealso: [ 'mail_path' ],
+		text: `
+Path to the INBOX mailbox. The path doesn't have to be absolute - it is
+relative to the [[setting,mail_path]].
+
+This is often used with mbox format where INBOX is in \`/var/mail/\` while the
+rest of the folders are under the user's home directory.
+
+This can also be used to specify a different INBOX path with Maildir:
+
+\`\`\`[dovecot.conf]
+ mail_driver = maildir
+ mail_path = ~/Maildir
+ mail_inbox_path = ~/Maildir/.INBOX
+\`\`\``
+	},
+
+	mail_index_path: {
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		default: '<same as mail_path setting>',
+		seealso: [ '[[link,design_indexes_index_format]]' ],
+		text: `
+Location of [[link,design_indexes_index_format]].`
+	},
+
+	mail_index_private_path: {
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,shared_mailboxes_public]]' ],
+		text: `
+The private index files are used with shared mailboxes to provide private
+(per-user) message flags.`
+	},
+
+	mail_cache_path: {
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		default: '<same as mail_index_path setting',
+		text: `
+Place \`dovecot.index.cache\` files to this directory instead of among the
+other index files. This may be used as an optimization to split most index
+files to the fastest (smallest) storage while keeping cache files in a slightly
+slower (larger) storage.`
+	},
+
+	mail_control_path: {
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		text: `
+Location for (mailbox-format specific) control files.`
+	},
+
+	mail_alt_path: {
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,dbox_alt_storage]]' ],
+		text: `
+Specifies the [[link,dbox_alt_storage]] path.`
+	},
+
+	mail_alt_check: {
+		tags: [ 'mail-location' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		seealso: [ 'mail_alt_path' ],
+		text: `
+Whether to perform a sanity check and warn if [[setting,mail_alt_path]] changes
+from the last access. This can catch accidentally broken configurations before
+users start reporting missing mails. The downside to this check is some
+additional disk IO.`
+	},
+
+	mailbox_list_layout: {
+		tags: [ 'mail-location' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'fs', 'index', 'Maildir++' ],
+		default: 'fs',
+		seealso: [
+			'[[link,dbox]]',
+			'[[link,maildir]]',
+			'[[link,mbox]]',
+		],
+		text: `
+Directory layout to use.
+
+| Value | Description |
+| --- | --- |
+| \`Maildir++\` | The default used by [[link,maildir]]. |
+| \`fs\` | The default used by [[link,mbox]] and [[link,dbox]]. |
+| \`index\` | Uses mailbox GUIDs as the directory names. The mapping between mailbox names and GUIDs exists in \`dovecot.list.index*\` files. |
+
+::: info
+The [[setting,mail_driver]] setting provides the default value, that the
+\`mailbox_list_layout\` setting can override.
+:::`
+	},
+
+	mailbox_subscriptions_filename: {
+		advanced: true,
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		default: {
+			value: 'subscriptions',
+			text: 'specific [[link,mailbox_formats]] have different defaults',
+		},
+		text: `
+Specifies the filename used for storing mailbox subscriptions.`
+	},
+
+	mailbox_directory_name: {
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		default: '<specific to mail_driver setting',
+		seealso: [ 'mail_driver', 'mailbox_directory_name_legacy' ],
+		text: `
+Specifies the directory name used for mailbox, index, and control directory
+paths. See the individual mailbox format pages for further information. For
+example \`dbox-Mails\` with [[link,dbox]].
+
+With mbox format this works differently. The user-provided mailbox name is the
+directory name, while \`mailbox_directory_name\` is the mbox file. For example
+with \`mailbox_directory_name=mbox\`, creating \`foo/bar\` mailbox name ends up
+creating \`.../foo/bar/mbox\` file.`
+	},
+
+	mailbox_directory_name_legacy: {
+		tags: [ 'mail-location' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ 'mailbox_directory_name' ],
+		text: `
+If \`no\`, [[setting,mailbox_directory_name]] applies also to index and control
+directories. The only reason to set this to \`yes\` is if you already have an
+existing Dovecot installation with the legacy \`DIRNAME\` (rather than
+\`FULLDIRNAME\`) parameter and don't want to migrate the data.`
+	},
+
+	mailbox_root_directory_name: {
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		default: 'specific to the mail_driver setting',
+		text: `
+Specifies directory name under which all mailbox directories are stored. For
+example \`mailboxes\` with [[link,dbox]].`
+	},
+
+	mail_volatile_path: {
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		text: `
+Specifies the location of volatile files. This includes lock files and
+potentially other files that don't need to exist permanently, so it can point
+to an in-memory filesystem (\`tmpfs\`). This is especially useful to avoid
+creating lock files to NFS or other remote filesystems.`
+	},
+
+	mailbox_list_index_prefix: {
+		tags: [ 'mail-location' ],
+		values: setting_types.STRING,
+		default: 'dovecot.list.index',
+		text: `
+Prefix for the mailbox list index filename. It may also optionally include a
+path (relative to [[setting,mail_index_path]]) to place it in a different
+  directory.`
+	},
+
+	mailbox_list_visible_escape_char: {
+		tags: [ 'mail-location' ],
+		seealso: [ 'mailbox_list_storage_escape_char' ],
+		values: setting_types.STRING,
+		default: {
+			value: '*[None]*',
+			text: `The default for [[link,imapc]] storage is \`~\`.`,
+		},
+		text: `
+Specifies an escape character that is used for broken or otherwise inaccessible
+mailbox names. If mailbox name can't be changed reversibly to UTF-8 and back,
+encode the problematic parts using
+\`<mailbox_list_visible_escape_char><hex>\`in the user-visible UTF-8 name. The
+\`mailbox_list_visible_escape_char\` itself also has to be encoded the same
+way.
+
+This can be useful with [[link,imapc]] to access mailbox names that aren't
+valid mUTF-7 charset from remote servers, or if the remote server uses a
+different hierarchy separator and has folder names containing the local
+separator.
+
+::: info
+It's possible to use the same character here as for
+[[setting,mailbox_list_storage_escape_char]].
+:::`
+	},
+
+	mailbox_list_storage_escape_char: {
+		tags: [ 'mail-location' ],
+		seealso: [ 'mailbox_list_visible_escape_char' ],
+		values: setting_types.STRING,
+		default: {
+			value: '*[None]*',
+			text: `The default for [[link,imapc]] storage is \`%%\`.`,
+		},
+		text: `
+Specifies an escape character that it used for encoding special characters in
+the mailbox names in storage. This allows users to use characters in mailboxes
+names that would otherwise be illegal. For example:
+
+* [[link,maildir]] layout disallows using the \`.\` character, since it's used
+  internally as the folder hierarchy separator.
+* The \`~\` character at the beginning of the mailbox name is disallowed,
+  because of the possibility that it gets expanded to user's home directory.
+* The \`/\` character can't be used on POSIX filesystems, since it's the
+  directory separator.
+
+The characters are escaped to the mailbox name as
+\`<mailbox_list_storage_escape_char><hex>\`.
+
+::: info
+It's possible to use the same character here as for
+[[setting,mailbox_list_visible_escape_char]].
+:::`
+	},
+
+	mailbox_list_drop_noselect: {
+		tags: [ 'mail-location' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		text: `
+Specifies whether to automatically delete \`\NoSelect\` mailboxes that have no
+children. These mailboxes are sometimes confusing to users. Also if a
+\`\NoSelect\` mailbox is attempted to be created with \`CREATE box/\`, it's
+created as selectable mailbox instead.
+
+::: info
+[[link,maildir]] layout does not support \`\NoSelect\` mailboxes, so this
+setting has no effect with it.
+:::`
+	},
+
+	mailbox_list_validate_fs_names: {
+		tags: [ 'mail-location' ],
+		seealso: [ 'mail_full_filesystem_access' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		text: `
+Specifies whether to disallow mailbox names that might be unsafe to use in
+filesystems or potentially allow bypassing ACL checks:
+
+* \`/\` character anywhere in the name (except as a hierarchy separator),
+  unless mailbox list isn't on a filesystem (e.g. index, imapc).
+* \`/\` as the first character.
+* \`~\` as the first character (so it's not confused as home directory).
+* No adjacent \`/\` characters.
+* No \`.\` or \`..\` names between \`/\` characters.
+* No [[setting,mailbox_directory_name]] between \`/\` characters.
+* No mailbox format-specific internal directories between \`/\` characters,
+* unless [[setting,mailbox_directory_name]] is non-empty. This mainly means the
+  Maildir \`new\`, \`cur\` and \`tmp\` directories in some configurations.
+
+Enabling [[setting,mail_full_filesystem_access]] enables also this setting.`
+	},
+
+	mailbox_list_iter_from_index_dir: {
+		tags: [ 'mail-location' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Perform mailbox listing using the [[setting,mail_index_path]] directories
+instead of the [[setting,mail_path]] directories. Mainly useful when the index
+file storage is on a faster storage.`
+	},
+
+	mailbox_list_utf8: {
+		tags: [ 'mail-location' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Store mailbox names on disk using UTF-8 instead of modified UTF-7 (mUTF-7).`
+	},
+
 	mailbox_idle_check_interval: {
 		default: '30secs',
 		tags: [ 'imap' ],
