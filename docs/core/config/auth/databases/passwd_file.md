@@ -33,8 +33,8 @@ used to set various [[link,passdb_extra_fields]] and
 Keys which begin with a `userdb_ prefix` are used for userdb, others are
 used for passdb.
 
-For example, if you wish to override [[setting,mail_location]] for one use,
-use `userdb_mail=mbox:~/mail`.
+For example, if you wish to override [[setting,mail_path]] for one use,
+use `userdb_mail_path=~/mail`.
 
 [[variable]] expansion is done for `extra_fields`.
 
@@ -102,7 +102,7 @@ user:{plain}password::::::allow_nets=192.168.0.0/24
 This file can be used as both a passwd and a userdb:
 
 ```
-user:{plain}pass:1000:1000::/home/user::userdb_mail=maildir:~/Maildir allow_nets=192.168.0.0/24
+user:{plain}pass:1000:1000::/home/user::userdb_mail_path=~/Maildir allow_nets=192.168.0.0/24
 user2:{plain}pass2:1001:1001::/home/user2
 ```
 

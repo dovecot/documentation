@@ -33,7 +33,8 @@ mailboxes, for example:
 namespace {
   prefix = virtual/
   separator = /
-  location = virtual:~/Maildir/virtual
+  mail_driver = virtual
+  mail_path = ~/Maildir/virtual
 }
 ```
 
@@ -43,8 +44,8 @@ default it uses the `fs` layout, so you can create directories such as:
 * INBOX: `~/Maildir/virtual/INBOX/`
 * Sub/mailbox: `~/Maildir/virtual/Sub/mailbox/`
 
-If you prefer to use Maildir++ layout instead, you can simply append
-`:LAYOUT=maildir++` to the location.
+If you prefer to use the Maildir++ layout instead, set
+[[setting,mailbox_list_layout,maildir++]].
 
 ### Virtual Mailboxes
 
@@ -179,7 +180,9 @@ namespace inbox {
 namespace virtual {
   prefix = virtual/
   separator = /
-  location = virtual:/etc/dovecot/virtual:INDEX=~/Maildir/virtual
+  mail_driver = virtual
+  mail_path = /etc/dovecot/virtual
+  mail_index_path = ~/Maildir/virtual
   list = no
   hidden = yes
 }

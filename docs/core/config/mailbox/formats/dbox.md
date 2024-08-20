@@ -43,7 +43,7 @@ implemented as such extension.
 One message per file, similar to [[link,maildir]].
 
 For backwards compatibility, `dbox` is an alias to `sdbox` in
-[[setting,mail_location]].
+[[setting,mail_driver]].
 
 ### multi-dbox (`mdbox`)
 
@@ -60,10 +60,9 @@ both `sdbox` and `mdbox`.
 In these tables `<root>` is shorthand for the mail location root directory
 on the filesystem.
 
-Index files can be stored in a different location by using the `INDEX`
-parameter in the mail location specification. If the `INDEX`
-parameter is specified, it will override the mail location root for index files
-and the "map index" file (`mdbox only`).
+Index files can be stored in a different location by using the
+[[setting,mail_index_path]] setting. If specified, it will override the mail
+location root for index files and mdbox's "map index" file.
 
 | Location | Description |
 | -------- | ----------- |
@@ -190,11 +189,13 @@ stored in primary storage and alternate storage.
 
 ### Configuration
 
-To enable this functionality, use the `ALT` parameter in
-[[setting,mail_location]].  For example:
+To enable this functionality, use the [[setting,mail_alt_path]] setting. For
+example:
 
-```
-mail_location = mdbox:/var/vmail/%d/%n:ALT=/altstorage/vmail/%d/%n
+```[dovecot.conf]
+mail_driver = mdbox
+mail_path = /var/vmail/%d/%n
+mail_alt_path = /altstorage/vmail/%d/%n
 ```
 
 will make Dovecot look for message data first under `/var/vmail/%d/%n`
@@ -232,8 +233,13 @@ completely deleted (reference count = 0). The `mdbox_deleted` parameters
 should otherwise be exactly the same as `mdbox`'s. Then you can use
 e.g. [[doveadm,fetch]] or [[doveadm,import]] commands to access the mails.
 
-For example, if you have mail_location=mdbox:~/mdbox:INDEX=/var/index/%u:
-[[doveadm,import,mdbox_deleted:~/mdbox:INDEX=/var/index/%u "" subject oops]].
+For example, if you have:
+* [[setting,mail_driver,mdbox]],
+* [[setting,mail_path,~/mdbox]],
+* [[setting,mail_index_path,/var/index/%u]],
+
+use:
+[[doveadm,import,-p mail_index_path=/var/index/%u mdbox_deleted:~/mdbox "" subject oops]].
 
 This finds a deleted mail with subject "oops" and imports it into INBOX.
 
@@ -253,11 +259,12 @@ available. Instead, the MTA should use [[link,lmtp]] or [[link,lda]].
 
 #### sdbox
 
-To use **single-dbox**, use the tag `sdbox` in [[setting,mail_location]]:
+To use **single-dbox**, use the tag `sdbox` in [[setting,mail_driver]]:
 
-```
+```[dovecot.conf]
 # single-dbox
-mail_location = sdbox:~/dbox
+mail_driver = sdbox
+mail_path = ~/dbox
 ```
 
 For backwards compatibility, `dbox` is an alias to `sdbox` in the mail
@@ -265,18 +272,18 @@ location. (This usage is deprecated.)
 
 #### mdbox
 
-To use **multi-dbox**, use the tag `mdbox` in [[setting,mail_location]]:
+To use **multi-dbox**, use the tag `mdbox` in [[setting,mail_driver]]:
 
-```
+```[dovecot.conf]
 # multi-dbox
-mail_location = mdbox:~/mdbox
+mail_driver = mdbox
+mail_path = ~/mdbox
 ```
 
-#### Default `mail_location` Keys
+#### Default mail settings
 
-For dbox, the default [[link,mail_location_keys]]: are:
-
-| Key | Default Value |
-| --- | ------------- |
-| `MAILDIRBOX` | `mailboxes/` |
-| `FULLDIRNAME` | `dbox-Mails/` |
+* [[setting,mail_path,%{home}/sdbox]] for sdbox,
+  [[setting,mail_path,%{home}/mdbox]] for mdbox,
+* [[setting,mailbox_list_layout,fs]],
+* [[setting,mailbox_directory_name,dbox-Mails]], and
+* [[setting,mailbox_root_directory_name,mailboxes]].

@@ -148,7 +148,7 @@ minutes they time out and fail the operation.
 For Dovecot you can configure locking using the [[setting,mbox_read_locks]]
 and [[setting,mbox_write_locks]] settings. The defaults are:
 
-```
+```[dovecot.conf]
 mbox_read_locks = fcntl
 mbox_write_locks = dotlock fcntl
 ```
@@ -169,7 +169,7 @@ Locking strategies:     dotlocking, fcntl()
 Postfix has two different ways to deliver to mboxes. One is the "mailbox"
 transport and another one is the "virtual" transport.
 
-```
+```[dovecot.conf]
 # postconf mailbox_delivery_lock
 mailbox_delivery_lock = fcntl, dotlock
 # postconf virtual_mailbox_lock 
@@ -403,8 +403,8 @@ There are four possibilities why the error message could happen:
 
    - This could happen if you let Dovecot do mailbox autodetection and
      it sometimes uses `/var/mail/%u` (when it exists) and other
-     times `~/mail/inbox`. Use an explicit [[setting,mail_location]]
-     setting to make sure the same INBOX is used.
+     times `~/mail/inbox`. Use explicit [[link,mail_location]] settings to make
+     sure the same INBOX is used.
 
    - Another possibility is that you're sharing index files between
      multiple users. Each user must have their own home directory.
@@ -510,9 +510,11 @@ well. Usually `~/mail` is a good choice for this.
 
 For an installation such as this, the mail location is specified with:
 
-```
+```[dovecot.con]
 # %u is replaced with the username that logs in
-mail_location = mbox:~/mail:INBOX=/var/mail/%u
+mail_driver = mbox
+mail_path = ~/mail
+mail_inbox_path = /var/mail/%u
 ```
 
 It's in no way a requirement to have the INBOX in `/var/mail/` directory. In
@@ -520,18 +522,19 @@ fact, this often just brings problems because Dovecot might not be able to
 write dotlock files to the directory (see below). You can avoid this
 completely by just keeping everything in `~/mail/`:
 
-```
+```[dovecot.conf]
 # INBOX exists in ~/mail/inbox
-mail_location = mbox:~/mail
+mail_driver = mbox
+mail_path = ~/mail
 ```
 
-#### Default `mail_location` Keys
+#### Default mail settings
 
-For mbox, the default keys are:
-
-| Key | Default Value |
-| --- | ------------- |
-| `FULLDIRNAME` | `<empty>` (For mbox, this setting specifies the mailbox message file name) |
+* [[setting,mail_path,%{home}/mail]],
+* [[setting,mailbox_list_layout,fs]],
+* [[setting,mailbox_subscriptions_filename,.subscriptions]], and
+* [[setting,mail_inbox_path,inbox]] with fs layout (so INBOX is in
+  `~/mail/inbox` rather than `~/mail/INBOX`).
 
 ### Index Files
 
@@ -540,8 +543,11 @@ By default, index files are stored under an `.imap/` directory.
 See the [[link,mail_location]] for an explanation of how to
 change the index path. Example:
 
-```
-mail_location = mbox:~/mail:INBOX=/var/mail/%u:INDEX=/var/indexes/%u
+```[dovecot.conf]
+mail_driver = mbox
+mail_path = ~/mail
+mail_inbox_path = /var/mail/%u
+mail_index_path = /var/indexes/%u
 ```
 
 ### Locking
@@ -568,7 +574,7 @@ directory's permissions have traditionally been set up:
 
 You can give Dovecot access to mail group by setting:
 
-```
+```[dovecot.conf]
 mail_privileged_group = mail
 ```
 
@@ -604,19 +610,21 @@ completely.
 If you **really** want to use Dovecot as a plain POP3 server without index
 files, you can work around not having a per-user directory:
 
-* Set users' home directory in userdb to some empty non-writable directory,
-  for example `/var/empty`
-* Modify [[setting,mail_location]] so that the mail root directory is also
-  the empty directory and append `:INDEX=MEMORY` to it. For example:
-  `mail_location = mbox:/var/empty:INBOX=/var/mail/%u:INDEX=MEMORY`
+* Set users' home directory in an empty non-writable directory, e.g.
+  [[setting,mail_home,/var/empty]].
+* Set [[setting,mail_path]] to an empty non-writable directory, e.g.
+  [[setting,mail_path,/var/empty]].
+* Set [[setting,mail_inbox_path]], e.g.
+  [[setting,mail_inbox_path,/var/mail/%u]].
 * Note that if you have IMAP users, they'll see `/var/empty` as the
   directory containing other mailboxes than INBOX. If the directory is
   writable, all the users will have their mailboxes shared.
 
 ### Directory Layout
 
-By default Dovecot uses filesystem layout under mbox. This means that mail is
-stored in mbox files under hierarchical directories, for example:
+By default Dovecot uses [[setting,mailbox_list_layout,fs]] layout under mbox.
+This means that mail is stored in mbox files under hierarchical directories,
+for example:
 
 | File | Description |
 | --- | --- |
@@ -629,8 +637,8 @@ which are subfolders of mailboxes containing messages.
 
 As an alternative, it is possible to configure Dovecot to store all mailboxes
 in a single directory with hierarchical levels separated by a dot. This can
-be configured by adding `:LAYOUT=maildir++` to the mail location. There
-are, however, some further considerations when doing this; see
+be configured by adding [[setting,mailbox_list_layout,maildir++]] to the mail
+location. There are, however, some further considerations when doing this; see
 [child folders](#child-folders) for some examples.
 
 ### Control Files
@@ -640,17 +648,19 @@ Under mbox format, Dovecot maintains the subscribed mailboxes list in a file
 in the example configuration this would be at `~/mail/.subscriptions`.
 
 If you want to put this somewhere else, you can change the directory in which
-the `.subscriptions` file is kept by using the `CONTROL` parameter. For
-example:
+the `.subscriptions` file is kept by using the [[setting,mail_control_path]]
+setting. For example:
 
-```
-mail_location = mbox:~/mail:CONTROL=~/mail-control
+```[dovecot.conf]
+mail_driver = mbox
+mail_path = ~/mail
+mail_control_path = ~/mail-control
 ```
 
 would store the subscribed mailboxes list at `~/mail-control/.subscriptions`.
 
-One practical application of the `CONTROL` parameter is described at
-[child folders](#child-folders).
+One practical application of the [[setting,mail_control_path]] setting is
+described at [child folders](#child-folders).
 
 ### Message Filename
 
@@ -660,9 +670,9 @@ equivalent to the name of the mailbox. Under this scheme, it is not possible
 to have mailboxes which contain both messages and child mailboxes.
 
 However, the behaviour (for mailboxes other than INBOX) can be changed using
-the `DIRNAME` parameter. If the `DIRNAME` parameter is specified with a
-particular value, then Dovecot will store messages in a file with a name of
-that value, in a directory with a name equivalent to the mailbox name.
+the [[setting,mailbox_directory_name]] setting. If it is specified, Dovecot
+stores messages in a mbox file with a name of that value, in a directory with a
+name equivalent to the mailbox name.
 
 There are, however, some further considerations when doing this; see
 [child folders](#child-folders) for an example.
@@ -715,24 +725,32 @@ example:
 | `~/mail/.bar.baz`| mbox file containing mail for mail folder "bar/baz" |
 | `~/mail/inbox` | mbox file containing mail for INBOX |
 
-This can be enabled by adding `:LAYOUT=maildir++` to the mail location:
+This can be enabled by adding the [[setting,mailbox_list_layout,maildir++]]
+setting to the mail location:
 
-```
+```[dovecot.conf]
 # Incomplete example. Do not use!
-mail_location = mbox:~/mail:LAYOUT=maildir++
+mail_driver = mbox
+mail_path = ~/mail
+mailbox_list_layout = maildir++
 ```
 
-However, there is a problem. Under mbox, setting `LAYOUT=maildir++` alone
-leaves Dovecot unable to place index files, which would likely result in
-performance issues. So when using `LAYOUT=maildir++` with mbox, it is
-advisable to also configure `INDEX`. Now, mail files (other than INBOX) all
-have names beginning with a dot, so if we like we can store other things in
+However, there is a problem. Under mbox, the
+[[setting,mailbox_list_layout,maildir++]] setting alone leaves Dovecot unable
+to place index files, which would likely result in performance issues. So when
+using [[setting,mailbox_list_layout,maildir++]] with mbox, it is advisable to
+also configure [[setting,mail_index_path]]. Now, mail files (other than INBOX)
+all have names beginning with a dot, so if we like we can store other things in
 the `~/mail` directory by using names which do not begin with a dot. So we
-could think to use `INDEX` to store indexes at `~/mail/index/`. Example:
+could think to use [[setting,mail_index_path]] to store indexes at
+`~/mail/index/`. Example:
 
-```
+```[dovecot.conf]
 # Incomplete example. Do not use!
-mail_location = mbox:~/mail:LAYOUT=maildir++:INDEX=~/mail/index
+mail_driver = mbox
+mail_path = ~/mail
+mail_index_path = ~/mail/index
+mailbox_list_layout = maildir++
 ```
 
 If we do this, then indexes will be kept at `~/mail/index/` and this will
@@ -741,27 +759,33 @@ may want to consider though. By default Dovecot will maintain a list of
 subscribed folders in a file `.subscriptions` under the mail location root.
 In this case that means it would end up at `~/mail/.subscriptions`. This
 would then mean that it would be impossible to create a mail folder called
-"subscriptions". We can get around this by using the `CONTROL` parameter to
-move the `.subscriptions` file somewhere else, for example into the
-directory `~/mail/control` (again, choosing a name which doesn't begin with
-a dot so we don't collide with the names of mbox files storing mail folders).
+"subscriptions". We can get around this by using the
+[[setting,mail_control_path]] setting to move the `.subscriptions` file
+somewhere else, for example into the directory `~/mail/control` (again,
+choosing a name which doesn't begin with a dot so we don't collide with the
+names of mbox files storing mail folders).
 That gives us:
 
-```
+```[dovecot.conf]
 # Trick mbox configuration which allows a mail folder which contains both
 # messages and sub-folders
-mail_location = mbox:~/mail:LAYOUT=maildir++:INDEX=~/mail/index:CONTROL=~/mail/control
+mail_driver = mbox
+mail_path = ~/mail
+mailbox_list_layout = maildir++
+mail_index_path = ~/mail/index
+mail_control_path = ~/mail/control
 ```
 
 This then allows mail folders which contains both messages and sub-folders
 without possibility of naming collisions between mail folders and other data.
 
-There is one further wrinkle. Specifying `:LAYOUT=maildir++` for mbox
-changes the default hierarchy separator from a slash to a dot. This should
-not be a problem for IMAP clients as the hierarchy separator is exposed
-through IMAP. However anything which expects to just "know" that the
-hierarchy separator is a slash may get confused. This can be worked around by
-configuring [[link,namespaces]] to set the folder separator back to a slash.
+There is one further wrinkle. Specifying
+[[setting,mailbox_list_layout,maildir++]] for mbox changes the default
+hierarchy separator from a slash to a dot. This should not be a problem for
+IMAP clients as the hierarchy separator is exposed through IMAP. However
+anything which expects to just "know" that the hierarchy separator is a slash
+may get confused. This can be worked around by configuring [[link,namespaces]]
+to set the folder separator back to a slash.
 
 #### Messages in Named File
 
@@ -775,12 +799,14 @@ could then do that. The rule would then be that messages go into the
 specially-named file in the directory corresponding to the mail folder name.
 We want to choose a special name which would be unlikely to collide with
 a folder name. We could think to use something like `mBoX-MeSsAgEs`. Now,
-it turns out that you can configure Dovecot to do this using the `DIRNAME`
-parameter:
+it turns out that you can configure Dovecot to do this using the
+[[setting,mailbox_directory_name]] setting:
 
-```
+```[dovecot.conf]
 # Incomplete example. Do not use!
-mail_location = mbox:~/mail:DIRNAME=mBoX-MeSsAgEs
+mail_driver = mbox
+mail_path = ~/mail
+mailbox_directory_name = mBoX-MeSsAgEs
 ```
 
 With that config, we would get a layout like this:
@@ -791,12 +817,13 @@ With that config, we would get a layout like this:
 | `~/mail/foo/mBoX-MeSsAgEs` | mbox file containing mail for mail folder "foo" |
 | `~/mail/foo/bar/mBoX-MeSsAgEs` | mbox file containing mail for mail folder "foo/bar" |
 
-However there is a problem. Under mbox, setting `DIRNAME` alone leaves
-Dovecot unable to place index files, which would likely result in performance
-issues, or worse, if the index directory gets created first, this will
-obstruct the creation of the mbox file. So when using `DIRNAME` with mbox,
-it is also necessary to configure `INDEX`. The question then arises where
-to put index files.
+However there is a problem. Under mbox, setting
+[[setting,mailbox_directory_name]] alone leaves Dovecot unable to place index
+files, which would likely result in performance issues, or worse, if the index
+directory gets created first, this will obstruct the creation of the mbox file.
+So when using [[setting,mailbox_directory_name]] with mbox, it is also
+necessary to configure [[setting,mail_index_path]]. The question then arises
+where to put index files.
 
 Any directory under the `~/mail` directory could be considered as a mail
 folder. We could think to use a name beginning with a dot, for example
@@ -807,14 +834,18 @@ as few implementation-specific restrictions as possible.
 In addition, by default, Dovecot will create a file `.subscriptions` at the
 mail location root to hold a list of mailbox subscriptions. This would make it
 impossible to create a mail folder called ".subscriptions". But we can move
-the `.subscriptions` file to another directory by using the `CONTROL`
-parameter. To get around these issues, we can add another directory layer
-which separates these purposes. For example:
+the `.subscriptions` file to another directory by using the
+[[setting,mail_control_path]] setting. To get around these issues, we can add
+another directory layer which separates these purposes. For example:
 
-```
+```[dovecot.conf]
 # Trick mbox configuration which allows a mail folder which contains both
 # messages and sub-folders
-mail_location = mbox:~/mail/mailboxes:DIRNAME=mBoX-MeSsAgEs:INDEX=~/mail/index:CONTROL=~/mail/control
+mail_driver = mbox
+mail_path = ~/mail/mailboxes
+mailbox_directory_name = = mBoX-MeSsAgEs
+mail_index_path = ~/mail/index
+mail_control_path = ~/mail/control
 ```
 
 would result in the following layout:

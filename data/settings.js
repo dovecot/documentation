@@ -1546,8 +1546,8 @@ supports two ways of defining the ACL configuration:
 - *global*: ACL rules are applied to all users.
 
 - *per-mailbox*: Each mailbox has separate ACL rules. They are stored in a
-  \`dovecot-acl\` file in each mailbox (or \`CONTROL\`) directory. This is the
-  default.
+  \`dovecot-acl\` file in each mailbox (or [[setting,mail_control_path]])
+  directory. This is the default.
 
 This backend has the following options:
 
@@ -4449,16 +4449,17 @@ The following values are currently supported:
     does not help for OE6 if synchronization is set to Headers Only).
 
 \`tb-extra-mailbox-sep\`
-:   Because \`LAYOUT=fs\` (mbox and dbox) confuses Thunderbird, causing
-    extra / suffixes to mailbox names, Dovecot can be told to ignore
-    the superfluous character instead of judging the mailbox name to be
-    invalid.
+:   Because [[setting,mailbox_list_layout,fs]] (mbox and dbox) confuses
+    Thunderbird, causing extra / suffixes to mailbox names, Dovecot can be told
+    to ignore the superfluous character instead of judging the mailbox name to
+    be invalid.
 
 \`tb-lsub-flags\`
 :   Without this workaround, Thunderbird doesn't immediately recognize
-    that LSUB replies with \`LAYOUT=fs\` aren't selectable, and users may
-    receive pop-ups with not selectable errors. Showing \\Noselect flags for
-    these replies (e.g., in mbox use) causes them to be grayed out.`
+    that LSUB replies with [[setting,mailbox_list_layout,fs]] aren't
+    selectable, and users may receive pop-ups with not selectable errors.
+    Showing \\Noselect flags for these replies (e.g., in mbox use) causes them
+    to be grayed out.`
 	},
 
 	'imap_compress_<algorithm>_level': {
@@ -5832,11 +5833,13 @@ Options:
 		default: 'no',
 		values: setting_types.BOOLEAN,
 		advanced: true,
+		seealso: [ 'mailbox_list_validate_fs_names' ],
 		text: `
 Allow full filesystem access to clients?
 
 If enabled, no access checks are performed other than what the operating
-system does for the active UID/GID.
+system does for the active UID/GID. This also disables the
+[[setting,mailbox_list_validate_fs_names]] setting.
 
 This setting works with both [[link,maildir]] and [[link,mbox]], allowing you
 to prefix mailbox names with \`/path/\` or \`~user/\` indicators.`
@@ -5856,18 +5859,18 @@ gid field.`
 	},
 
 	mail_home: {
-		seealso: [ 'mail_location', '[[link,quick_config]]' ],
+		seealso: [ 'mail_path', '[[link,quick_config]]' ],
 		values: setting_types.STRING,
 		text: `
 There are various possible ways of specifying this parameter and
-[[setting,mail_location]].
+[[setting,mail_path]].
 
-The following example is one option when \`home=/var/vmail/domain/user/\`
-and \`mail=/var/vmail/domain/user/mail/\`:
+The following example is one option when home is in \`/var/vmail/domain/user/\`
+and mails are in \`/var/vmail/domain/user/mail/\`:
 
-\`\`\`
+\`\`\`[dovecot.conf]
 mail_home = /var/vmail/%d/%n
-mail_location = maildir:~/mail
+mail_path = ~/mail
 \`\`\`
 
 [[variable,mail-service-user]] can be used.`
@@ -6880,9 +6883,8 @@ command.`
 		tags: [ 'namespace' ],
 		values: setting_types.BOOLEAN,
 		text: `
-If namespace [[setting,namespace_location]] fails to load, by
-default the entire session will fail to start. If this is set, this
-namespace will be ignored instead.`
+If namespace's storage initialization fails, by default the entire session will
+fail to start. If this is set, this namespace will be ignored instead.`
 	},
 
 	namespace_inbox: {

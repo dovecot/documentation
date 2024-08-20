@@ -31,8 +31,10 @@ The index will be stored in the `public` dir under the home directories.
 This allows individual /SEEN information for the public namespace.
 
 ```[dovecot.conf]
-#mail_location = mdbox:~/mdbox
-mail_location = maildir:~/maildir
+#mail_driver = mdbox
+#mail_path = ~/mdbox
+mail_driver = maildir
+mail_path = ~/maildir
 mail_plugins = acl quota
 
 namespace {
@@ -47,7 +49,10 @@ namespace {
   type = public
   separator = /
   prefix = Public/
-  location = maildir:/var/vmail/public:LAYOUT=fs:INDEX=~/public
+  mail_driver = maildir
+  mail_path = /var/vmail/public
+  mail_index_path = ~/public
+  mailbox_list_layout = fs
   list = yes
   subscriptions = no
 }

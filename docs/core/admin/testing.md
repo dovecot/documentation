@@ -158,8 +158,8 @@ b OK [READ-WRITE] Select completed.
 
 If anything goes wrong, set [[setting,log_debug,category=mail]] and try
 again. The log file should now contain debugging information of where
-Dovecot is trying to find the mails. Fix [[setting,mail_location]] setting
-and try again.
+Dovecot is trying to find the mails. Fix the [[link,mail_location]] and try
+again.
 
 ### Check Dovecot Finds Other Mailboxes
 
@@ -174,7 +174,7 @@ c OK List completed.
 ```
 
 If they weren't found, set [[setting,log_debug,category=mail]] and look at the
-debugging information. Fix [[setting,mail_location]] setting and try again.
+debugging information. Fix the [[link,mail_location]] and try again.
 
 ### Check Other IMAP Commands
 
@@ -258,7 +258,7 @@ System configuration
 
 Enable LMTP delivery times in the configuration:
 
-```
+```[dovecot.conf]
 deliver_log_format = msgid=%m from=<%f> size=%p vsize=%w session=%{session_time}ms delivery=%{delivery_time}ms: %$
 ```
 
@@ -267,11 +267,8 @@ You can then see log entries like:
 ```
 Oct 06 12:40:13 lmtp(testuser_717@example.com)<iQBSCwulE1ZXMwAA0J78UA>: Info: iQBSCwulE1ZXMwAA0J78UA: msgid=unspecified from=<sender@example.com> size=155980 vsize=157963 session=161ms delivery=134ms: saved mail to INBOX
 ```
-Increase the maximum user connections per IP:
-
-```
-mail_max_userip_connections = 1000
-```
+Increase the maximum user connections per IP
+[[setting,mail_max_userip_connections,1000]].
 
 ### Troubleshooting
 

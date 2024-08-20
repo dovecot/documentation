@@ -46,14 +46,15 @@ For example to create a public Maildir mailboxes, use:
 
 ```[dovecot.conf]
 # User's private mail location
-mail_location = maildir:~/Maildir
+mail_driver = maildir
+mail_path = ~/Maildir
 
 # When creating any namespaces, you must also have a private namespace:
 namespace {
   type = private
   separator = /
   prefix =
-  #location defaults to mail_location.
+  # use global mail_path
   inbox = yes
 }
 
@@ -61,7 +62,7 @@ namespace {
   type = public
   separator = /
   prefix = Public/
-  location = maildir:/var/mail/public
+  mail_path = /var/mail/public
   subscriptions = no
 }
 ```
@@ -83,25 +84,28 @@ structure to look like:
 ### Per-user \\Seen Flag
 
 The recommended way to enable private flags for shared
-mailboxes is to create private indexes with `:INDEXPVT=<path>`. This
-creates `dovecot.index.pvt[.log]` files, which contain only the message
-UIDs and the private flags. Currently the list of private flags is
-hardcoded only to the \\Seen flag.
+mailboxes is to create private indexes with
+[[setting,mail_index_private_path]]. This creates `dovecot.index.pvt[.log]`
+files, which contain only the message UIDs and the private flags. Currently the
+list of private flags is hardcoded only to the \\Seen flag.
 
 ```[dovecot.conf]
 namespace {
   type = public
   separator = /
   prefix = Public/
-  location = maildir:/var/mail/public:INDEXPVT=~/Maildir/public
+  mail_driver = maildir
+  mail_path = /var/mail/public
+  mail_index_private_path = ~/Maildir/public
   subscriptions = no
 }
 ```
 
 ### Maildir: Keyword Sharing
 
-Make sure you don't try to use per-user CONTROL directory. Otherwise
-`dovecot-keywords` file doesn't get shared and keyword mapping breaks.
+Make sure you don't try to use per-user [[setting,mail_control_path]]
+directory. Otherwise `dovecot-keywords` file doesn't get shared and keyword
+mapping breaks.
 
 ### Subscriptions
 
@@ -120,7 +124,7 @@ namespace subscriptions {
   hidden = yes
   list = no
   alias_for = inbox # the INBOX namespace's name
-  location = <same as mail_location>:SUBSCRIPTIONS=subscriptions-shared
+  mailbox_subscriptions_filename = subscriptions-shared
 }
 ```
 
@@ -135,7 +139,9 @@ you'll need to store index files elsewhere:
 namespace {
   type = public
   prefix = Public/
-  location = mbox:/var/mail/public/:INDEX=/var/indexes/public
+  mail_driver = mbox
+  mail_path = /var/mail/public/
+  mail_index_path = /var/indexes/public
   subscriptions = no
 }
 ```
@@ -148,13 +154,13 @@ directory.
 #### Maildir
 
 If your Maildir is read-only, the control and index files still need to
-be created somewhere. You can specify the path for these by appending
-`:CONTROL=<path>:INDEX=<path>` to mail location. The path may point to
-a directory that is shared among all users, or to a per-user path. Note
-that if the Maildir has any keywords, the per-user control directory
-breaks the keywords since there is no `dovecot-keywords` file.
+be created somewhere. You can specify the path for these with the
+[[setting,mail_control_path]] and [[setting,mail_index_path]] settings.
+The path may point to a directory that is shared among all users, or to a
+per-user path. Note that if the Maildir has any keywords, the per-user control
+directory breaks the keywords since there is no `dovecot-keywords` file.
 
-When configuring multiple namespaces, the CONTROL/INDEX path must be
+When configuring multiple namespaces, the control/index path must be
 different for each namespace. Otherwise if namespaces have identically
 named mailboxes their control/index directories will conflict and cause
 all kinds of problems.
@@ -169,7 +175,10 @@ namespace {
   type = public
   separator = /
   prefix = Public/
-  location = maildir:/var/mail/public:CONTROL=~/Maildir/public:INDEX=~/Maildir/public
+  mail_driver = maildir
+  mail_path = /var/mail/public
+  mail_control_path = ~/Maildir/public
+  mail_index_path = ~/Maildir/public
   subscriptions = no
 }
 
@@ -177,7 +186,10 @@ namespace {
   type = public
   separator = /
   prefix = Team/
-  location = maildir:/var/mail/team:CONTROL=~/Maildir/team:INDEX=~/Maildir/team
+  mail_driver = maildir
+  mail_path = /var/mail/team
+  mail_control_path = ~/Maildir/team
+  mail_index_path = ~/Maildir/team
   subscriptions = no
 }
 ```
@@ -191,7 +203,8 @@ namespace {
   type = public
   separator = .
   prefix = public.
-  location = maildir:/var/mail/public
+  mail_driver = maildir
+  mail_path = /var/mail/public
   subscriptions = no
   list = children
 }
@@ -218,14 +231,15 @@ To enable mailbox sharing, you'll need to create a shared namespace. See
 
 ```[dovecot.conf]
 # User's private mail location.
-mail_location = maildir:~/Maildir
+mail_driver = maildir
+mail_path = ~/Maildir
 
 # When creating any namespaces, you must also have a private namespace:
 namespace {
   type = private
   separator = /
   prefix =
-  #location defaults to mail_location.
+  # use global mail_path
   inbox = yes
 }
 
@@ -233,10 +247,11 @@ namespace {
   type = shared
   separator = /
   prefix = shared/%%u/
-  # a) Per-user seen flags. Maildir indexes are shared. (INDEXPVT requires v2.2+)
-  location = maildir:%%h/Maildir:INDEXPVT=~/Maildir/shared/%%u
-  # b) Per-user seen flags. Maildir indexes are not shared. If users have direct filesystem level access to their mails, this is a safer option:
-  #location = maildir:%%h/Maildir:INDEX=~/Maildir/shared/%%u:INDEXPVT=~/Maildir/shared/%%u
+  mail_path = %{owner_home}/Maildir
+  mail_index_private_path = ~/Maildir/shared/%{owner_user}
+  # If users have direct filesystem level access to their mails, it's safer
+  # to not share the index files between users:
+  #mail_index_path = ~/Maildir/shared/%{owner_user}
   subscriptions = no
   list = children
 }
@@ -260,51 +275,25 @@ instead use `prefix=shared/%%n/`.
 user, the "shared" directory isn't listed by the LIST command. If you
 wish it to be visible always, you can set `list=yes`.
 
-The `location` setting specifies how to access other users' mailboxes.
-If you use %%h, the user's home directory is asked from auth process via
-auth-userdb socket. See [[link,lda]] for how to configure the socket.
-
-If the users' mailboxes can be found using a
-template, it's faster not to use the `%%h`. For example:
-
-```[dovecot.conf]
-location = maildir:/var/mail/%%d/%%n/Maildir:INDEXPVT=~/Maildir/shared/%%u
-```
-
-### % vs %%
-
-`%var` expands to the logged in user's variable, while `%%var` expands to
-the other users' variables. For example if your name is "myself" and
-"someone1" and "someone2" have shared mailboxes to you, the variables
-could be expanded like:
-
-- `%u` expands to "myself"
-- `%%u` expands to "someone1" or "someone2"
-- `%h` might expand to "/home/myself"
-- `%%h` might expand to "/home/someone1" or "/home/someone2"
-- `~/` equals `%h/`
-
-Note that in, e.g., [[setting,mail_location]] you might need both. For
-example in:
+The sharing user can be accessed with `%{owner_user}`, `%{owner_username}` and
+`%{owner_domain}` variables. The sharing user's home directory can also be
+looked up via [[link,userdb,User Databases]] using `%{owner_home}` variable.
+These can be used in [[link,mail_location]]. If the users' mailboxes can be
+found using a template, it's a bit more efficient to not use `%{owner_home}`.
+For example:
 
 ```[dovecot.conf]
-mail_location = maildir:%%h/Maildir:INDEXPVT=%h/Maildir/shared/%%u
+mail_driver = maildir
+mail_path = /var/mail/%{owner_domain}/%{owner_username}/Maildir
+mail_index_private_path = ~/Maildir/shared/%{owner_user}
 ```
-
-What it means is:
-
-- `%%h/Maildir` points to the other user's Maildir, e.g. "/home/someone1".
-
-- `:INDEXPVT=%h/Maildir/shared/%%u` points to a per-user directory under
-  your own Maildir, e.g. "/home/myself/Maildir/someone1" or
-  "/home/myself/Maildir/someone2". This is necessary for storing
-  per-user seen flags.
 
 ### dbox
 
 With dbox, the index files are a very important part of the mailboxes.
-You must not try to change `:INDEX=` to a user-specific location. This will
-only result in mailbox corruption. (INDEXPVT can be used though.)
+You must not try to change [[setting,mail_index_path]] to a user-specific
+location. This will only result in mailbox corruption.
+([[setting,mail_index_private_path]] can be used though.)
 
 ### Filesystem Permissions
 
@@ -683,7 +672,8 @@ chmod 02770 /var/mail # or perhaps 03770 for extra security
 and in `dovecot.conf`:
 
 ```[dovecot.conf]
-mail_location = maildir:/var/vmail/%d/%n/Maildir
+mail_driver = maildir
+mail_path = /var/vmail/%d/%n/Maildir
 mail_access_groups = dovemail
 ```
 
@@ -694,16 +684,16 @@ drwxrwsr-x 3 user dovemail 60 Oct 24 12:04 domain.example.com/
 drwx--S--- 3 user user 60 Oct 24 12:04 domain.example.com/user/
 ```
 
-Note that this requires that [[setting,mail_location]] is in its
-explicit format with %variables. Using `maildir:~/Maildir` won't work,
-because Dovecot can't really know how far down it should copy the
-permissions from.
+Note that this requires that the [[setting,mail_path]] setting is in its
+explicit format with [[link,settings_variables,%variables]]. Using
+`~/Maildir` won't work, because Dovecot can't really know how far down it
+should copy the permissions from.
 
 ### Permissions to New User Home Directories
 
-When `mail_location` begins with `%h` or `~/`, its permissions are
-copied from the first existing parent directory if it has setgid-bit
-set. This isn't done when the path contains any other %variables.
+When [[setting,mail_path]] begins with `%{home}` or `~/`, its permissions are
+copied from the first existing parent directory if it has setgid-bit set. This
+isn't done when the path contains any other %variables.
 
 ### Mail Delivery Agent Permissions
 
