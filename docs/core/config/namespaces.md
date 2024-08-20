@@ -46,17 +46,17 @@ Inside each namespace there is a list of folders, which form a sub-hierarchy.
 
 Each folder has a name. In configuration files and log files Dovecot almost
 always uses the "virtual name", which uses the configured namespace's hierarchy
-separator as well as the namespace prefix. Depending on the used LAYOUT in
-[[setting,mail_location]] the internal folder name may be different. The
-internal name is stored in databases (e.g. mailbox subscriptions), which allows
-changing the namespace prefix or separator without having to change the
-databases.
+separator as well as the namespace prefix. Depending on the used
+[[setting,mailbox_list_layout]] setting the internal folder name may be
+different. The internal name is stored in databases (e.g. mailbox
+subscriptions), which allows changing the namespace prefix or separator without
+having to change the databases.
 
 The folder names use UTF-8 character set internally. All folder names must be
-valid UTF-8. With `LAYOUT=fs` and `LAYOUT=Maildir++` the folder names are
-stored in filesystem paths as mUTF-7 (see IMAP [[rfc,3501]]) mainly for legacy
-reasons. This can be changed by specifying the UTF8 parameter in
-[[setting,mail_location]].
+valid UTF-8. With [[setting,mailbox_list_layout,fs]] and
+[[setting,mailbox_list_layout,Maildir++]] the folder names are stored in
+filesystem paths as mUTF-7 (see IMAP [[rfc,3501]]) mainly for legacy reasons.
+This can be changed with the [[setting,mailbox_list_utf8]] setting.
 
 ### Folder Name Lengths
 
@@ -68,17 +68,17 @@ Folder name length restrictions:
 * The maximum folder path length is 4096 bytes.
 
 The maximum folder name lengths work correctly when folder names aren't stored
-in filesystem, i.e. `LAYOUT=index` is used. Otherwise the OS adds its own
-limitations to path name lengths and the full 4096 bytes can't be used.
-With `LAYOUT=Maildir++` the path must fit to 254 bytes (due to OS
-limitations).
+in filesystem, i.e. [[setting,mailbox_list_layout,index]] is used. Otherwise
+the OS adds its own limitations to path name lengths and the full 4096 bytes
+can't be used. With [[setting,mailbox_list_layout,Maildir++]] the path must fit
+to 254 bytes (due to OS limitations).
 
 ### Parent Folders
 
 A folder can have one or more parent folders that do not physically exist.
 These are presented with `\NoSelect` or `\Nonexistent` attribute.
-It's possible to try to avoid creating these by using the `NO-NOSELECT`
-option in [[setting,mail_location]].
+It's possible to try to avoid creating these by using the
+[[setting,mailbox_list_drop_noselect]] setting (enabled by default).
 
 ## Configuration
 
@@ -134,24 +134,23 @@ However, changing the separator doesn't change the on-disk "layout separator".
 
 Example:
 
-| `mail_location` | Layout Separator | Namespace Separator | Mailbox Name | Directory |
+| `mailbox_list_layout` | Layout Separator | Namespace Separator | Mailbox Name | Directory |
 | --- | --- | --- | --- | --- |
-| `maildir:~/Maildir` | `.` | `.` | `foo.bar` | `~/Maildir/.foo.bar/` |
-| `maildir:~/Maildir` | `.` | `/` | `foo/bar` | `~/Maildir/.foo.bar/` |
-| `maildir:~/Maildir:LAYOUT=fs` | `/` | `.` | `foo.bar` | `~/Maildir/foo/bar/` |
-| `maildir:~/Maildir:LAYOUT=fs` | `/` | `/` | `foo/bar` | `~/Maildir/foo/bar/` |
+| `Maildir++` (default) | `.` | `.` | `foo.bar` | `~/Maildir/.foo.bar/` |
+| `Maildir++` (default) | `.` | `/` | `foo/bar` | `~/Maildir/.foo.bar/` |
+| `fs` | `/` | `.` | `foo.bar` | `~/Maildir/foo/bar/` |
+| `fs` | `/` | `/` | `foo/bar` | `~/Maildir/foo/bar/` |
 
 ::: tip
 The "namespace separator" changes only the "mailbox name", but doesn't
 change the directory where the mails are stored. The "layout separator" can
-only be changed by changing [[link,mail_location_layout]], which also
-affects the entire directory structure.
+only be changed by changing [[setting,mailbox_list_layout]], which also affects
+the entire directory structure.
 :::
 
 The layout separator also restricts the mailbox names. For example if the
 layout separator is `.`, you can't just set separator to `/` and create a
-mailbox named `foo.bar`. If you need to do this, you can use
-[[plugin,listescape]] to escape the mailbox names.
+mailbox named `foo.bar`.
 
 A commonly used separator is `/`. It probably causes the least amount of
 trouble with different IMAP clients. The `^` separator is troublesome with
@@ -182,7 +181,7 @@ used - there's currently no way to simply add a namespace.
 ```[dovecot.conf]
 userdb {
   driver = static
-  args = namespace=inbox,special namespace/special/location=sdbox:/var/special/%u namespace/special/prefix=special/
+  args = namespace=inbox,special namespace/special/mail_path=/var/special/%u namespace/special/prefix=special/
 }
 ```
 
@@ -202,7 +201,9 @@ namespaces:
 namespace {
   separator = /
   prefix = "#mbox/"
-  location = mbox:~/mail:INBOX=/var/mail/%u
+  mail_driver = mbox
+  mail_path = ~/mail
+  mail_index_path = /var/mail/%u
   inbox = yes
   hidden = yes
   list = no
@@ -211,7 +212,8 @@ namespace {
 namespace {
   separator = /
   prefix =
-  location = maildir:~/Maildir
+  mail_driver = maildir
+  mail_path = ~/Maildir
 }
 ```
 
@@ -333,7 +335,7 @@ Now if you want to set the namespace location from the Namespaces table, use
 something like:
 
 ```
-user_query = SELECT Location as 'namespace/docs/location' FROM Namespaces WHERE ..
+user_query = SELECT Location as 'namespace/docs/mail_path' FROM Namespaces WHERE ..
 ```
 
 If you follow some advice to separate your "INBOX", "shared/" and "public/"
@@ -360,7 +362,6 @@ namespace subscriptions {
 
 namespace inbox {
   inbox = yes
-  location =
   subscriptions = no
 
   prefix = INBOX/
@@ -394,7 +395,9 @@ namespace inbox {
 namespace {
   type = shared
   prefix = shared/%%u/
-  location = mdbox:%%h/mdbox:INDEXPVT=%h/mdbox/shared
+  mail_driver = mdbox
+  mail_path = %%h/mdbox
+  mail_index_private_path = %{owner_home}/mdbox/shared
   list = children
   subscriptions = no
 }
@@ -403,7 +406,9 @@ namespace {
   type = public
   separator = /
   prefix = public/
-  location = mdbox:/usr/local/mail/public/mdbox:INDEXPVT=%h
+  mail_driver = mdbox
+  mail_path = /usr/local/mail/public/mdbox
+  mail_index_private_path = ~/mdbox/public
   subscriptions = no
   list = children
 }
