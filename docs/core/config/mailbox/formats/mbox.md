@@ -619,6 +619,7 @@ By default Dovecot uses filesystem layout under mbox. This means that mail is
 stored in mbox files under hierarchical directories, for example:
 
 | File | Description |
+| --- | --- |
 | `~/mail/inbox` | mbox file containing mail for INBOX |
 | `~/mail/foo` | mbox file containing mail for mailbox "foo" |
 | `~/mail/bar/baz` | mbox file containing mail for mailbox "bar/baz" |
