@@ -311,10 +311,10 @@ Settings
 
 .. dovecot_core:setting:: mbox_read_locks
    :default: fcntl
-   :values: dotlock, dotlock_try, fcntl, flock, lockf
+   :values: @boollist
 
    Specify which locking method(s) to use for locking the mbox files during
-   reading.
+   reading. Possible values are *dotlock, dotlock_try, fcntl, flock, lockf*.
 
    To use multiple values, separate them with spaces.
 
@@ -336,10 +336,10 @@ Settings
 
 .. dovecot_core:setting:: mbox_write_locks
    :default: dotlock fcntl
-   :values: dotlock, dotlock_try, fcntl, flock, lockf
+   :values: @boollist
 
    Specify which locking method(s) to use for locking the mbox files during
-   writing.
+   writing. Possible values are *dotlock, dotlock_try, fcntl, flock, lockf*.
 
    To use multiple values, separate them with spaces.
 
