@@ -2,10 +2,16 @@
 layout: doc
 title: Settings Variables
 dovecotlinks:
+  settings_variables: Settings Variables
+  settings_variables_mail_user_variables:
+    hash: mail-user-variables
+    text: Mail User Variables
   login_variables:
     hash: login-variables
     text: Login Variables
-  settings_variables: Settings Variables
+  variables_modifiers:
+    hash: modifiers
+    text: variable modifiers
 ---
 
 # Settings Variables
