@@ -929,7 +929,7 @@ Create a "mail" field with value `maildir:/var/mail/<dir>/Maildir` where
 `<dir>` comes from "sAMAccountName" LDAP attribute:
 
 ```
-user_attrs = =mail=maildir:/var/spool/vmail/%{ldap:sAMAccountName}/Maildir
+user_attrs = =mail_path=/var/spool/vmail/%{ldap:sAMAccountName}/Maildir
 ```
 
 You can add static fields that aren't looked up from LDAP. For example
@@ -938,7 +938,7 @@ create a "mail" field with value `maildir:/var/vmail/%d/%n/Maildir`:
 ```
 user_attrs = \
     =quota_rule=*:bytes=%{ldap:quotaBytes}, \
-    =mail=maildir:/var/vmail/%d/%n/Maildir
+    =mail_path=/var/vmail/%d/%n/Maildir
 ```
 
 If you don't want a field to exist at all when its LDAP attribute
@@ -950,7 +950,7 @@ character. For example this doesn't return "home" or "mail" fields if
 user_attrs = \
     =quota_rule=*:bytes=%{ldap:quotaBytes}, \
     mailboxPath=home=/home/%{ldap:mailboxPath}, \
-    mailboxPath=mail=maildir:~/Maildir
+    mailboxPath=mail_path=~/Maildir
 ```
 
 It's also possible to give default values to nonexistent attributes by

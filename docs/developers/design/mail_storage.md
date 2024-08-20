@@ -68,8 +68,8 @@ Used to get storage's default settings.
 ### `autodetect(ns, set)`
 
 Returns TRUE if based on the given settings it looks like this storage
-should we handling the namespace. This is done when [[setting,mail_location]]
-doesn't explicitly specify the mailbox format.
+should we handling the namespace. This is done when [[setting,mail_driver]]
+isn't explicitly set.
 
 ### `mailbox_alloc()`
 

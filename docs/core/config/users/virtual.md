@@ -175,7 +175,8 @@ If for example `home=/var/vmail/domain/user/` and
 
 ```[dovecot.conf]
 mail_home = /var/vmail/%d/%n
-mail_location = maildir:~/mail
+mail_driver = maildir
+mail_path = ~/mail
 ```
 
 ### LDAP with Relative Directory Paths
@@ -184,18 +185,18 @@ If your LDAP database uses, e.g., `mailDirectory = domain/user/`, you
 can use it as a base for home directory:
 
 ```
-user_attrs = .., mailDirectory=home=/var/vmail/%$
+user_attrs = .., home=/var/vmail/%{ldap:mailDirectory}
 ```
 
-Then just use [[setting,mail_location,maildir:~/Maildir]].
+Then use [[setting,mail_path,~/Maildir]].
 
 ### Mail Location
 
 If your users have varying locations for mail location, which cannot be
 represented by templating, userdb can return the
 [[link,userdb_extra_fields,mail field]] to override the default
-[[setting,mail_location]] setting. Normally this is not
-needed, and it is sufficient to have the setting in config file.
+[[setting,mail_path]]. Normally this is not needed, and it is sufficient to
+have the setting in config file.
 
 ### Dynamic passwd-file Locations
 
@@ -212,7 +213,8 @@ leave it out.
 Note that the default [[setting,auth_username_format]] is `%Lu`.
 
 ```[dovecot.conf]
-mail_location = maildir:/home/%d/%n/Maildir
+mail_driver = maildir
+mail_path = /home/%d/%n/Maildir
 
 passdb {
   driver = passwd-file
@@ -232,7 +234,8 @@ don't want to deal with UIDs or GIDs. In that case the easiest way to
 get Dovecot running is to use the [[link,auth_staticdb,static userdb]].
 
 ```[dovecot.conf]
-mail_location = maildir:~/Maildir
+mail_driver = maildir
+mail_path = ~/Maildir
 
 passdb {
   driver = pam

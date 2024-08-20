@@ -46,7 +46,7 @@ dovecot_delivery:
 ```
 
 LDA is now running using the local user's UID and GID. The mail is delivered
-to the location specified by [[setting,mail_location]].
+to the location specified by [[link,mail_location]].
 
 Note that the above configuration doesn't do any [[link,userdb]] lookups, so
 you can't have any per-user configuration. If you want that, see the

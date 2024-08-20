@@ -236,7 +236,7 @@ imapc_user = %u
 You can verify that the settings are done correctly with:
 
 ```sh
-doveadm -o imapc_password=password -o mail_location=imapc: mailbox list -u user
+doveadm -o imapc_password=password -o mail_driver=imapc -o mail_path= mailbox list -u user
 ```
 
 ### POP3 notes
@@ -264,7 +264,8 @@ pop3c_port = 110
 
 namespace {
   prefix = POP3-MIGRATION-NS/
-  location = pop3c:
+  mail_driver = pop3c
+  mail_path =
   list = no
   hidden = yes
 }

@@ -21,10 +21,11 @@ Do a regular IMAP LOGIN, using STARTTLS, to imap.example.com:
 
 ```[dovecot.conf]
 # In-memory index files:
-mail_location = imapc:
+mail_driver = imapc
+mail_path =
 
 # OR, Store index files locally:
-#mail_location = imapc:~/imapc
+#mail_path = ~/imapc
 
 imapc_host = imap.example.com
 imapc_password = secret

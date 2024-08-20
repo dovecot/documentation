@@ -18,11 +18,11 @@ dovecotlinks:
 
 You can use special variables in several places:
 
-* [[setting,mail_location]] setting and namespace locations
+* All settings, except of type [[link,settings_types_string_novar]]. Most
+  commonly used by [[link,mail_location]].
 * Static [[link,userdb]] and [[link,auth_passwd_file]] template strings
 * [[link,auth_ldap]], [[link,auth_sql]], and [[link,userdb]] query strings
 * Log prefix for imap/pop3 process
-* Plugin settings
 
 ## Global Variables
 

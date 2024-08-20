@@ -40,66 +40,14 @@ The same mailbox name can be visible in three different forms:
 
 - Physical directory name on disk can be different again. For example
   with Maildir++ it could be `.../Maildir/.foo.bar` (note the leading
-  dot before `foo`). With `LAYOUT=index` the directory name is the mailbox
-  GUID (e.g. `.../mailboxes/d3b07384d113edec49eaa6238ad5ff00`).
+  dot before `foo`). With [[setting,mailbox_list_layout,index]] the directory
+  name is the mailbox GUID (e.g.
+  `.../mailboxes/d3b07384d113edec49eaa6238ad5ff00`).
 
 The mailbox virtual/storage names can be converted with functions:
 
 - `mailbox_list_get_storage_name()` - Virtual name -&gt; storage name
 - `mailbox_list_get_vname()` - Storage name -&gt; virtual name
-
-## Initialization
-
-Mailbox list is configured by [[setting,mail_location]] setting, which fills
-`struct mailbox_list_settings`.
-
-### `mailbox_list_settings` struct
-
-#### `layout`
-
-The mailbox list layout (`fs`, `maildir++` or `index`).
-
-#### `root_dir`
-
-The root mail directory (e.g. with
-`mail_location=maildir:~/Maildir` it would be the `~/Maildir`).
-
-#### `index_dir`
-
-Directory under which index files are written to. Empty
-string means in-memory indexes. Defaults to `root_dir`.
-
-#### `index_pvt_dir`
-
-Directory for private index files (private \Seen flags for shared folders).
-
-#### `index_cache_dir`
-
-Directory for dovecot.index.cache files. This could
-allow storing them in a different filesystem than other index files.
-
-#### `control_dir`
-
-Directory under which control files are written to.
-Control files are files that contain some important metadata
-information about mailbox so (unlike index files) they should never
-be deleted. For example the mailbox subscriptions file is a control file.
-Defaults to `root_dir`.
-
-#### `alt_dir`
-
-This is a [[link,dbox]] specific setting.
-
-#### `volatile_dir`
-
-Directory under which temporary files are written to.
-This directory is allowed to be deleted between Dovecot restarts.
-
-#### `inbox_path`
-
-Path to INBOX mailbox. This exists mainly because with
-mbox format INBOX is often in a different location than other
-mailboxes.
 
 ## Listing Mailboxes
 

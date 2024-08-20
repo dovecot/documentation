@@ -35,7 +35,11 @@ For example:
 ```[dovecot.conf]
 userdb {
   driver = passwd
-  override_fields = home=/var/mail/%u mail=maildir:/var/mail/%u/Maildir
+  override_fields {
+    home = /var/mail/%u
+    mail_driver = maildir
+    mail_path = /var/mail/%u/Maildir
+  }
 }
 ```
 
