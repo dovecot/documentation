@@ -23,7 +23,7 @@ directory.
 
 This can be done by simply having both system and virtual userdbs return home
 directory properly (i.e. virtual users' `home=/var/vmail/%d/%n`) and then set
-`mail_location = maildir:~/Maildir`.
+[[setting,mail_path,~/Maildir]].
 
 If it's not possible to have a home directory for virtual users (avoid that if
 possible), you can do this by pointing multiple authentication databases
@@ -38,7 +38,8 @@ returning mail [[link,passdb_extra_fields]].
 ::: code-group
 ```[dovecot.conf]
 # Mail location for both system and virtual users:
-mail_location = maildir:~/Maildir
+mail_driver = maildir
+mail_path = ~/Maildir
 
 # try to authenticate using SQL database first
 passdb {

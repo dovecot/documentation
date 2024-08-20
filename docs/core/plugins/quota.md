@@ -175,7 +175,7 @@ Example [[link,auth_passwd_file]] entries:
 ```
 user:{plain}pass:1000:1000::/home/user::userdb_quota_rule=*:bytes=100M
 user2:{plain}pass2:1001:1001::/home/user2::userdb_quota_rule=*:bytes=200M
-user3:{plain}pass3:1002:1002::/home/user3::userdb_mail=maildir:~/Maildir userdb_quota_rule=*:bytes=300M
+user3:{plain}pass3:1002:1002::/home/user3::userdb_mail_path=~/Maildir userdb_quota_rule=*:bytes=300M
 ```
 
 #### Override: passwd
@@ -196,7 +196,7 @@ setting. For example:
 namespace {
   type = public
   prefix = Public/
-  #location = ..
+  #mail_path = ..
 }
 
 plugin {
@@ -216,7 +216,7 @@ parameter to quota setting. For example:
 namespace {
   type = private
   prefix = Archive/
-  #location = ..
+  #mail_path = ..
 }
 
 plugin {
@@ -358,8 +358,7 @@ PrivateDevices=off
 It's a good idea to keep index files in a partition where there are no
 filesystem quota limits. The index files exist to speed up mailbox
 operations, so Dovecot runs more slowly if it can't keep them updated. You can
-specify the index file location by appending `:INDEX=/somewhere` to
-[[setting,mail_location]].
+specify the index file location with the [[setting,mail_index_path]] setting.
 
 Dovecot can handle "out of disk space" errors in index file handling and
 transparently move to in-memory indexes. It'll use the in-memory indexes until
@@ -378,8 +377,11 @@ allocated inside the mbox file for flag changes.
 
 Example:
 
-```
-mail_location = mbox:~/mail:INBOX=/var/mail/%u:INDEX=/var/no-quotas/index/%u
+```[dovecot.conf]
+mail_driver = mbox
+mail_path = ~/mail
+mail_inbox_path = /var/mail/%u
+mail_index_path = /var/no-quotas/index/%u
 ```
 
 #### Maildir
@@ -389,17 +391,20 @@ file. If it can't do this, it can give an error when opening the mailbox,
 making it impossible to expunge any mails.
 
 Currently the only way to avoid this is to use a separate partition for the
-uidlist files where there are no filesystem quota limits. You can do this by
-appending `:CONTROL=/somewhere` to [[setting,mail_location]].
+uidlist files where there are no filesystem quota limits. You can do this with
+the [[setting,mail_control_path]] setting.
 
 Example:
 
-```
-mail_location = maildir:~/Maildir:INDEX=/var/no-quotas/index/%u:CONTROL=/var/no-quotas/control/%u
+```[dovecot.conf]
+mail_driver = maildir
+mail_path = ~/Maildir
+mail_index_path = /var/no-quotas/index/%u
+mail_control_path = /var/no-quotas/control/%u
 ```
 
 Note that if you change the location of the control files, Dovecot will look
-in the new `CONTROL` directory (`/var/no-quotas/control/%u`) for the
+in the new control path directory (`/var/no-quotas/control/%u`) for the
 subscriptions file.
 
 #### Configuration Examples
