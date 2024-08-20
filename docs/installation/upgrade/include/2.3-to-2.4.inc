@@ -44,7 +44,7 @@ e.g., authentication failures if the old (broken) behavior was relied on.
 #### base64url Hash Modifier
 
 Added base64url format to hash modifier in variable expansion. Example:
-`%{sha1;format=base64url:username}`. See [[link,variables_modifiers]].
+`%{sha1;format=base64url:username}`. See [[link,settings_variables_modifiers]].
 
 #### fs-crypt
 
