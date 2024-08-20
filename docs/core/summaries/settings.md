@@ -15,7 +15,7 @@ dovecotlinks:
 
 ## Advanced Settings
 
-::: danger NOTE
+::: danger
 These settings should not normally be changed.
 :::
 

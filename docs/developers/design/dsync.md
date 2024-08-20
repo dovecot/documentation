@@ -7,7 +7,8 @@ dovecotlinks:
 
 # Dsync Design
 
-::: danger FIXME
+<!-- FIXME -->
+::: danger
 This describes the design for v2.0/v2.1. The v2.2 design is somewhat different.
 :::
 
@@ -100,7 +101,8 @@ synchronized. In fast mode it relies on uidvalidity, uid-next and
 highest-modseq values to find out changes. If any of the values changed,
 the mailbox is included in sync.
 
-::: warning FIXME
+<!-- FIXME -->
+::: warning
 A superfast mode should still be implemented, where once a
 mailbox is selected for syncing, it should sync only mails whose modseq
 is higher than a given one. This would improve performance and network
@@ -120,7 +122,8 @@ this. If the message exists in multiple mailboxes, a copy from the next
 mailbox is attempted. If all of them fail, dsync fallbacks to saving the
 message.
 
-::: warning FIXME
+<!-- FIXME -->
+::: warning
 This optimization currently works only in full sync mode. If this
 were to work in fast sync mode, the full mailbox list would have to be
 looked up from local side. And this would slow it down..

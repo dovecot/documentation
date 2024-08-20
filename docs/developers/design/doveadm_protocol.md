@@ -5,8 +5,9 @@ title: Doveadm Protocol
 
 # Doveadm Protocol
 
-::: tip Note
-See also [[link,doveadm_http_api]].
+::: tip
+See also:
+* [[link,doveadm_http_api]].
 :::
 
 doveadm-server can be accessed via UNIX sockets or TCP protocol (by
@@ -37,7 +38,7 @@ All the fields are TAB-separated. The server will send you back either:
 
 - `-` means you need to authenticate first.
 
-::: tip Note
+::: tip
 As of Dovecot v2.2.34, Dovecot sends the "+" or "-" only after `VERSION`,
 while earlier versions sent it already before `VERSION`. This shouldn't
 change much practically, because the client was supposed to have sent the

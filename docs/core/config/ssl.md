@@ -93,7 +93,7 @@ protocol pop3 {
 }
 ```
 
-::: tip NOTE
+::: tip
 It's important to note that `ssl = yes` must be set globally if
 you require SSL for any protocol (or Dovecot will not listen on the
 SSL ports), which in turn requires that a certificate and key are
@@ -137,7 +137,7 @@ There are a couple of different ways to specify when SSL/TLS is required:
   Note that this setting is unrelated to the STARTTLS command - either
   implicit SSL/TLS or STARTTLS command is allowed.
 
-  ::: tip NOTE
+  ::: tip
   If you have only cleartext mechanisms enabled (e.g.
   [[setting,auth_mechanisms,plain login]] and
   [[setting,auth_allow_cleartext,no]], [[setting,ssl,yes]] and
@@ -145,7 +145,7 @@ There are a couple of different ways to specify when SSL/TLS is required:
   case the authentication will fail unless SSL/TLS is enabled first.
   :::
 
-  ::: tip NOTE
+  ::: tip
   With both [[setting,ssl,yes]] and [[setting,ssl,required]], it's
   still possible that the client attempts to do a cleartext authentication
   before enabling SSL/TLS, which exposes the cleartext password to
@@ -171,7 +171,7 @@ There are a couple of different ways to specify when SSL/TLS is required:
   non-cleartext authentication would be the ideal situation since it
   protects the cleartext password even against man-in-the-middle attacks.
 
-  ::: tip NOTE
+  ::: tip
   The cleartext authentication mechanisms are always allowed (and SSL
   not required) for [secured connections](#secured-connections).
   :::
@@ -396,7 +396,7 @@ auth_ssl_require_client_cert = yes
 
 The CA file should contain the certificate(s) followed by the matching CRL(s).
 
-::: tip NOTE
+::: tip
 The CRLs are required to exist. For a multi-level CA place the certificates
 in this order:
 

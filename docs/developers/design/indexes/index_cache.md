@@ -7,8 +7,9 @@ title: Cache
 
 ![Index Cache](images/mail-index-cache.png)
 
-::: info See Also
-See [Mail Indexes](index_format) for an overview of what the cache does.
+::: info
+See Also:
+* [Mail Indexes](index_format) for an overview of what the cache does.
 :::
 
 ## Client Types

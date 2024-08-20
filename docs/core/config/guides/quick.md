@@ -15,7 +15,7 @@ typical environment, this guide will help you.
 Here is a very simple basic configuration with single vmail user to be placed
 in `dovecot.conf`.
 
-::: tip Note
+::: tip
 Some distros split configuration under `/etc/dovecot/conf.d/`. This can
 be useful, but it is not required.
 

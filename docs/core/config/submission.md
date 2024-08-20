@@ -16,7 +16,7 @@ It is currently implemented as a proxy that acts as a front-end for any
 service: it adds the required AUTH ([[rfc,4954]]) support, avoiding
 the need to configure the MTA for [[link,sasl]].
 
-::: danger NOTE
+::: danger
 Dovecot's submission server is NOT a full-featured SMTP server. It REQUIRES
 proxying to an external relay SMTP submission server to deliver non-local
 messages.
@@ -40,7 +40,7 @@ capability, but once it becomes available on the server side, client
 developers will at least have some incentive to provide support for
 this feature.
 
-::: warning NOTE
+::: warning
 Currently, the submission proxy is still pretty basic. However, it will
 provide a basis for adding all kinds of functionality in the (not so distant)
 future. For the first time, it will be possible to act upon message
@@ -107,7 +107,7 @@ Like IMAP and POP3, the Submission login service supports proxying to multiple
 backend Dovecot servers. The proxy configuration wiki page for POP3 and IMAP
 applies automatically to Submission as well.
 
-::: warning IMPORTANT
+::: warning
 Please note that the login proxy described here is configured between two
 Dovecot servers (e.g. proxy frontend and mail storage backend). This is
 not the way to configure the relay connection between the Dovecot submission

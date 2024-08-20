@@ -64,7 +64,7 @@ usable both with EC and RSA keys.
 Using per-folder keys is not considered production quality, but global keys
 are fine.
 
-::: warning Note
+::: warning
 Improper configuration or use can make your emails unrecoverable! Treat
 encryption with care and backup encryption keys!
 :::

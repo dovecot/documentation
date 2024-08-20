@@ -7,8 +7,9 @@ title: Mail Index API
 
 ![Index API](images/lib-index.png)
 
-::: info See Also
-See [Mail Indexes](index_format) for an overview of what the cache does.
+::: info
+See Also:
+* [Mail Indexes](index_format) for an overview of what the cache does.
 :::
 
 `lib-index/mail-index.h` contains the functions to access the index

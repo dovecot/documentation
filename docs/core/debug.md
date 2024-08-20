@@ -82,7 +82,7 @@ timestamps to the log.
 
 ### dovecot-sysreport
 
-::: tip Recommended
+::: tip
 This is the recommended way of reporting core dumps to the Dovecot developers.
 :::
 

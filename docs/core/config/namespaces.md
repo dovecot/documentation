@@ -141,7 +141,7 @@ Example:
 | `maildir:~/Maildir:LAYOUT=fs` | `/` | `.` | `foo.bar` | `~/Maildir/foo/bar/` |
 | `maildir:~/Maildir:LAYOUT=fs` | `/` | `/` | `foo/bar` | `~/Maildir/foo/bar/` |
 
-::: tip Note
+::: tip
 The "namespace separator" changes only the "mailbox name", but doesn't
 change the directory where the mails are stored. The "layout separator" can
 only be changed by changing [[link,mail_location_layout]], which also

@@ -20,11 +20,12 @@ Individual events can be identified either by their name or source code
 location. The source location of course can change between Dovecot
 versions, so it should be avoided.
 
-::: tip See Also
-* [[link,summary_events]]
-* [[link,event_export]]
-* [[link,stats]]
-* [[link,event_design]]
+::: tip
+See Also:
+* [[link,summary_events]],
+* [[link,event_export]],
+* [[link,stats]], and
+* [[link,event_design]].
 :::
 
 ## Matching

@@ -16,11 +16,12 @@ dovecotlinks:
 
 # Event Export
 
-::: tip See Also
-* [[link,summary_events]]
-* [[link,event_filter]]
-* [[link,stats]]
-* [[link,event_design]]
+::: tip
+See Also:
+* [[link,summary_events]],
+* [[link,event_filter]],
+* [[link,stats]], and
+* [[link,event_design]].
 :::
 
 ## Exporter Definition

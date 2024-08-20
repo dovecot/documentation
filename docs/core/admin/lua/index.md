@@ -14,8 +14,8 @@ See:
 * [[link,auth_lua]]
 * [[plugin,push-notification]]
 
-::: tip Info
-**Dovecot supports Lua 5.1 and Lua 5.3.**
+::: tip
+Dovecot supports Lua 5.1 and Lua 5.3.
 :::
 
 ## Modules

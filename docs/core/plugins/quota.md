@@ -129,7 +129,7 @@ If you're wondering why per-user quota isn't working:
 
 #### Override: LDAP
 
-::: warning Note
+::: warning
 Remember that `user_attrs` is used only if you use [[link,auth_ldap]].
 :::
 
@@ -141,7 +141,7 @@ user_attrs = homeDirectory=home, quotaBytes=quota_rule=*:bytes=%$
 
 #### Override: SQL
 
-::: warning Note
+::: warning
 `user_query` is used only if you use [[link,auth_sql]].
 :::
 
@@ -231,7 +231,7 @@ plugin {
 }
 ```
 
-::: tip Note
+::: tip
 If you're using dict quota, you need to make sure that the quota of the
 `Archive` namespace is calculated for another "user" than the default
 namespace. Either track different namespaces in different backends or make
@@ -281,7 +281,7 @@ query every user's quota from the index files directly.)
 The `count` quota backend tracks the quota internally within Dovecot's index
 files.
 
-::: warning Recommended
+::: warning
 This is the **RECOMMENDED** way of calculating quota on recent Dovecot
 installations.
 :::

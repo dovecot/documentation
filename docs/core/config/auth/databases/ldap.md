@@ -256,7 +256,7 @@ LDAP library supports them.
 
 See the `sasl_*` settings in `dovecot-ldap-example.conf`.
 
-::: warning Note
+::: warning
 SASL binds are currently incompatible with authentication binds.
 :::
 
@@ -362,7 +362,7 @@ The following variables can be used inside the `dovecot-ldap.conf.ext` files:
 
 LDAP values can now have DN pointers to other entries that are queried.
 
-::: info Note
+::: info
 These aren't actually very useful anymore. See the next section for how
 to do multiple queries more easily using multiple userdbs.
 :::
@@ -493,7 +493,7 @@ the filename is different in userdb's args). That way one connection is used
 only for LDAP binds and another connection is used for user lookups.
 Otherwise the binding is changed to the default DN before each user lookup.
 
-::: info Note
+::: info
 If you're not using authentication binding, you'll need to give dovecot-auth
 (the user which is specified with `dn` parameter) read access to
 `userPassword` field in the LDAP server.

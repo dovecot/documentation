@@ -103,7 +103,7 @@ end
 
 ### Object `dict`
 
-::: tip Note
+::: tip
 Currently, this object cannot be created within the Lua code itself.
 :::
 
@@ -117,7 +117,7 @@ Currently, this object cannot be created within the Lua code itself.
 
 [[added,lua_dns_client]]
 
-::: tip Note
+::: tip
 Currently, this object cannot be created within the Lua code itself.
 :::
 

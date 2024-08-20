@@ -35,7 +35,7 @@ Details can be found at: https://repo.dovecot.org/.
 
 ## Compiling Dovecot From Source
 
-::: tip NOTE
+::: tip
 Dovecot is provided by package managers on most popular operating systems,
 and we also provide packages at https://repo.dovecot.org/. We encourage
 you to use these instead of building sources yourself.

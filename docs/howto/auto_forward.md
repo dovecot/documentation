@@ -71,7 +71,7 @@ redirect "forward@example.com";
 ```
 :::
 
-::: info Note
+::: info
 It is very important to make that deleteheader, addheader, redirect the last
 rule in the sieve script, as this would affect other actions as well.
 :::

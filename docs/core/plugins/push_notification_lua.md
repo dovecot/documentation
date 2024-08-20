@@ -7,7 +7,7 @@ title: push-notification-lua
 
 You can use Lua to write custom push notification handlers.
 
-::: info Note
+::: info
 Lua push notification requires the base push-notification plugin to be
 configured.
 

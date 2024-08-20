@@ -41,7 +41,7 @@ problem if your users are logging with different as `user`, `User` and
 [[link,userdb_extra_fields]] which makes Dovecot modify the username to
 the returned value.
 
-::: info Note
+::: info
 If you're using separate user and domain fields, a common problem is
 that you're returning only the `user` field from the database.
 **This drops out the domain from the username**. So make sure you're
@@ -122,7 +122,7 @@ others will handle the traffic.
 
 ## Examples
 
-::: info Note
+::: info
 `user` can have a special meaning in some SQL databases, so we're using
 `userid` instead.
 :::

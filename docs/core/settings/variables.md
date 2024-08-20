@@ -69,8 +69,9 @@ Effective group ID of the current process.
 
 ## User Variables
 
-::: tip See also
-See also [Global Variables](#global-variables)
+::: tip
+See also:
+* [Global Variables](#global-variables)
 :::
 
 Variables that work nearly everywhere where there is a username:
@@ -87,8 +88,10 @@ Variables that work nearly everywhere where there is a username:
 
 ## Mail Service User Variables
 
-::: tip See also
-See also [Global Variables](#global-variables) and [User Variables](#user-variables)
+::: tip
+See also:
+* [Global Variables](#global-variables), and
+* [User Variables](#user-variables).
 :::
 
 | Variable | Long Name | Description |
@@ -100,8 +103,11 @@ See also [Global Variables](#global-variables) and [User Variables](#user-variab
 
 ## Mail User Variables
 
-::: tip See also
-See also [Global Variables](#global-variables), [User Variables](#user-variables), and [Mail Service User Variables](#mail-service-user-variables)
+::: tip
+See also:
+* [Global Variables](#global-variables),
+* [User Variables](#user-variables), and
+* [Mail Service User Variables](#mail-service-user-variables).
 :::
 
 | Variable | Long Name | Description |
@@ -111,8 +117,10 @@ See also [Global Variables](#global-variables), [User Variables](#user-variables
 
 ## Login Variables
 
-::: tip See also
-See also [Global Variables](#global-variables) and [User Variables](#user-variables)
+::: tip
+See also:
+* [Global Variables](#global-variables), and
+* [User Variables](#user-variables).
 :::
 
 | Variable | Long Name | Description |
@@ -142,8 +150,10 @@ See also [Global Variables](#global-variables) and [User Variables](#user-variab
 
 ## Authentication Variables
 
-::: tip See also
-See also [Global Variables](#global-variables) and [User Variables](#user-variables)
+::: tip
+See also:
+* [Global Variables](#global-variables), and
+* [User Variables](#user-variables).
 :::
 
 | Variable | Long Name | Description |
@@ -234,14 +244,14 @@ negative offset does then the string is taken from the start.
 If the width is prefixed with zero, the string isn't truncated, but only padded
 with '0' character if the string is shorter.
 
-::: warning Note
+::: warning
 `%04i` may return "0001", "1000" and "12345". `%1.04i` for the same string
 would return "001", "000" and "2345".
 :::
 
 If the width is negative, it counts from the end.
 
-::: warning Note
+::: warning
 `%0.-2u` gives all but the last two characters from the username.
 :::
 
