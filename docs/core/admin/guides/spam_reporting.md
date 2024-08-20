@@ -16,7 +16,7 @@ clients and is entirely self-contained within the server.
 Spam/not-spam reporting within Dovecot (IMAP) can be handled by the user
 action of moving a message into (or out of) a defined Spam mailbox.
 
-## Configuration 
+## Configuration
 
 Spam reporting messages are handled via [[plugin,imap-sieve]].
 A global configuration script is used to capture the event of moving
@@ -57,11 +57,11 @@ namespace inbox {
 protocol imap {
   mail_plugins = $mail_plugins imap_sieve
 }
-   
+
 plugin {
   sieve_plugins = sieve_imapsieve
   sieve_implicit_extensions = +vnd.dovecot.report
-   
+
   # From elsewhere to Spam folder
   imapsieve_mailbox1_name = Spam
   imapsieve_mailbox1_causes = COPY
@@ -73,14 +73,14 @@ plugin {
   imapsieve_mailbox2_causes = COPY
   imapsieve_mailbox2_before = file:/etc/dovecot/report-ham.sieve
 }
-   
+
 # Needed to send message to external mail server
 submission_host = 127.0.0.1:587
 ```
 
 ```[/etc/dovecot/report-spam.sieve]
 require "vnd.dovecot.report";
-   
+
 report "abuse" "User added this message to the Spam folder." "spam-report@example.com";
 ```
 
@@ -88,17 +88,17 @@ report "abuse" "User added this message to the Spam folder." "spam-report@exampl
 require "vnd.dovecot.report";
 require "environment";
 require "imapsieve";
-   
+
 if environment "imap.mailbox" "Trash" {
   # Putting spam in Trash mailbox is not significant
   stop;
 }
-   
+
 if environment "imap.mailbox" "Spam" {
   # Copying mail inside Spam mailbox is not significant
   stop;
 }
-   
+
 report "not-spam" "User removed this message from the Spam folder." "ham-report@example.com";
 ```
 :::
@@ -155,11 +155,11 @@ namespace inbox {
 protocol imap {
   mail_plugins = $mail_plugins imap_sieve
 }
-   
+
 plugin {
   sieve_plugins = sieve_imapsieve
   sieve_implicit_extensions = +vnd.dovecot.report
-   
+
   # From elsewhere to Spam folder
   imapsieve_mailbox1_name = Spam
   imapsieve_mailbox1_causes = COPY
