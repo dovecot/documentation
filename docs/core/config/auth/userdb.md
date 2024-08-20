@@ -53,22 +53,12 @@ Although not required, it's highly recommended even for virtual users.
 ### Optional Extra Fields
 
 The extra fields are also passed to post-login scripts. See
-[[link,post_login_scripting]].
+[[link,post_login_scripting]]. You can override settings in `dovecot.conf`, see
+[[link,userdb_extra_fields]].
 
 #### `user`
 
 Changes the username (can also be done by the [[link,passdb]] lookup).
-
-#### Overwriting Mail-Related Settings
-
-For example:
-
-`mail`
-:   Mail location, overrides the global [[setting,mail_location]]
-    setting. See: [[link,mail_location]].
-
-`quota_rule`
-:   Specify per-user quota limit.
 
 ## Supported Databases
 
@@ -130,9 +120,9 @@ fields'.
 These fields can be returned the exact same way as `uid`, `gid`, and `home`
 fields.
 
-It's possible to override settings from `dovecot.conf`. This is commonly
-done for [[setting,quota_rule]] to set per-user quota limits, although it
-can be done for any plugin settings.
+It's also possible to override settings from `dovecot.conf`. For example the
+[[setting,mail_path]] and [[setting,quota_rule]] settings are commonly
+overridden to provide per-user mail path or quota limit.
 
 The extra fields are also passed to [[link,post_login_scripting]].
 
@@ -160,10 +150,6 @@ field. This differs from `mail_plugins=` in that the field is removed
 entirely (and default is used) instead of just being set to an empty value.
 
 ### Fields
-
-#### `mail`
-
-[[link,mail_location]], overrides the global [[setting,mail_location]] setting.
 
 #### `nice`
 
@@ -228,7 +214,6 @@ section name and key with `/`. For example:
 namespace default {
   inbox = yes
   separator = .
-  location = maildir:~/Maildir
 }
 ```
 
@@ -270,8 +255,8 @@ Note that all `userdb` extra fields must be prefixed with `userdb_`,
 otherwise they're treated as [[link,passdb_extra_fields]].
 
 ```
-user:{plain}pass:1000:1000::/home/user::userdb_mail=mbox:~/mail userdb_quota_rule=*:storage=100M userdb_namespace/default/separator=/
-user2:{plain}pass2:1001:1001::/home/user2::userdb_mail=maildir:~/Maildir userdb_quota_rule=*:storage=200M
+user:{plain}pass:1000:1000::/home/user::userdb_mail_driver=mbox userdb_mail_path=~/mail userdb_quota_rule=*:storage=100M userdb_namespace/default/separator=/
+user2:{plain}pass2:1001:1001::/home/user2::userdb_mail_driver=maildir userdb_mail_path=~/Maildir userdb_quota_rule=*:storage=200M
 ```
 
 ## See Also
