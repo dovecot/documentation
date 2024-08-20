@@ -5,9 +5,10 @@ title: Transaction Log
 
 # Transaction Log
 
-::: info See Also
-See [Mail Indexes](index_format) for an overview
-of the transaction log is and what its benefits are.
+::: info
+See Also:
+* [Mail Indexes](index_format) for an overview of the transaction log is and
+  what its benefits are.
 :::
 
 ## File Format
@@ -87,7 +88,8 @@ Transaction logs are always only appended to, with one exception: If a
 partially written transaction is found, it'll be truncated away and new
 transaction is overwritten on top of the old truncated data.
 
-::: warning FIXME
+<!-- FIXME -->
+::: warning
 This should be avoided, rather rotate the transaction log instead.
 :::
 

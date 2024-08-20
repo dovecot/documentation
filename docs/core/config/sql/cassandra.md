@@ -38,7 +38,7 @@ Alias for [`keyspace`](#keyspace).
 
 Whether to log CQL queries.
 
-::: info Note
+::: info
 This setting behaves differently than other boolean settings.
 The feature is enabled by presence of the keyword in connect
 string, so to disable this feature, you must remove the keyword
@@ -112,7 +112,7 @@ Specifies the keyspace name to use.
 When turned on, latency-aware routing tracks the latency of queries to
 avoid sending new queries to poorly performing Cassandra nodes.
 
-::: info Note
+::: info
 The feature is enabled by presence of the keyword in connect
 string, so to disable this feature, you must remove the keyword completely.
 :::
@@ -133,7 +133,7 @@ Driver log level.
 Whether to log about failed requests that are retried (which may or may
 not succeed after the retry).
 
-::: info Note
+::: info
 This setting behaves differently than other boolean settings.
 
 The feature is enabled by presence of the keyword in connect
@@ -253,7 +253,7 @@ Cassandra protocol version to use. It is good idea to specify this to avoid
 warnings about version handshake if the driver supports a higher protocol
 version than the server.
 
-::: info Note
+::: info
 If you want to use server-side prepared statements, you need to
 use at least `4`.
 :::
@@ -290,7 +290,7 @@ versus data accuracy.
 
 #### `any`
 
-::: danger Note
+::: danger
 Not supported for reads.
 :::
 
@@ -336,7 +336,7 @@ responded.
 
 #### `each-quorum`
 
-::: danger Note
+::: danger
 Not supported for reads.
 :::
 
@@ -353,13 +353,13 @@ At least one node must succeed in the operation.
 
 #### `local-serial`
 
-::: danger Note
+::: danger
 Not supported for writes.
 :::
 
 #### `serial`
 
-::: danger Note
+::: danger
 Not supported for writes.
 :::
 

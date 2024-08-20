@@ -8,7 +8,7 @@ title: fts-solr
 [Solr](https://solr.apache.org/) is a Lucene indexing server.
 Dovecot communicates to it using HTTP/XML queries.
 
-::: tip note
+::: tip
 This documentation is written for Solr 7.7.0. You will need to adapt if
 using a different version.
 
@@ -80,7 +80,7 @@ to `/var/solr/data/dovecot/conf/` as `solrconfig.xml` and `schema.xml`. The
 
 ## Dovecot Setup
 
-::: tip Note
+::: tip
 This plugin requires the [[plugin,fts]] to be activated and configured
 :::
 
