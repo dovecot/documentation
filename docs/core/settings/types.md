@@ -125,7 +125,7 @@ The Time value supports using suffixes of any of the following words:
 secs, seconds, mins, minutes, hours, days, weeks
 ```
 
-::: info NOTE
+::: info
 So for example, `d`, `da`, `day`, and `days` all mean the same. Make sure to be
 explicit if you want to differentiate between `mins` and `msecs`, as `m` does
 not suffice.

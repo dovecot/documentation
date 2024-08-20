@@ -32,7 +32,7 @@ The pre-login rawlog is used before IMAP, POP3, Submission or ManageSieve
 client logs into the post-login process. Note that LMTP and doveadm protocols
 don't have a pre-login process.
 
-::: info Note
+::: info
 SSL/TLS sessions are currently not decrypted to rawlogs.
 :::
 
@@ -66,12 +66,12 @@ performance impact for those users is minimal.
 
 ### Home Directory
 
-::: info Note
+::: info
 For rawlog binary to work, your userdb must have returned a home directory
 for the user.
 :::
 
-::: warning IMPORTANT
+::: warning
 The home directory must be returned by userdb, [[setting,mail_home]] won't
 work.
 

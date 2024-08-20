@@ -69,7 +69,7 @@ make
 sudo make install
 ```
 
-::: warning IMPORTANT
+::: warning
 You need to recompile Pigeonhole when you upgrade Dovecot
 to a new version, because otherwise the Sieve interpreter plugin will
 fail to load with a version error.

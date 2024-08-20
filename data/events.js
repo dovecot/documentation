@@ -359,7 +359,7 @@ Most useful for debugging authentication flow.`
 		inherit: 'server_connection_common',
 		text: `Outgoing server connection was either successfully established or failed.
 
-::: tip Note
+::: tip
 Currently it is not possible to know which one happened.
 :::`
 	},
@@ -428,7 +428,7 @@ Currently it is not possible to know which one happened.
 		text: `
 A mail was expunged from the mailbox.
 
-::: tip Note
+::: tip
 This event inherits from mailbox, not mail.
 :::`
 	},
@@ -444,7 +444,7 @@ This event inherits from mailbox, not mail.
 		text: `
 A mail was opened for reading its metadata.
 
-::: tip Note
+::: tip
 This event is not sent when mails' body is accessed.
 :::`
 	},
@@ -457,7 +457,7 @@ This event is not sent when mails' body is accessed.
 		text: `
 A mail was opened, e.g., for reading its body.
 
-::: tip Note
+::: tip
 This event is not sent when mails' metadata is accessed, even if it causes
 opening the mail file.
 :::`
@@ -468,7 +468,7 @@ opening the mail file.
 		text: `
 A mail is set to be expunged.
 
-::: tip Note
+::: tip
 Expunges can be rolled back later on, this event is emitted when an expunge
 is requested.
 :::`
@@ -688,7 +688,7 @@ POP3 command is completed.
 This event is useful to track individual command usage, debug specific
 sessions, and/or detect broken clients.
 
-::: tip Note
+::: tip
 This event is currently not sent for pre-login POP3 commands.
 :::`
 	},
@@ -706,7 +706,7 @@ This event is currently not sent for pre-login POP3 commands.
 		text: `
 IMAP client is hibernated or the hibernation attempt failed.
 
-::: tip Note
+::: tip
 For failures, this event can be logged by either imap or imap-hibernate
 process depending on which side the error was detected in.
 :::`
@@ -727,7 +727,7 @@ Reason why client was unhibernated:
 		text: `
 IMAP client is unhibernated or the unhibernation attempt failed.
 
-::: tip Note
+::: tip
 For failures, this event can be logged by either imap or imap-hibernate
 process depending on which side the error was detected in.
 :::`
@@ -783,7 +783,7 @@ IMAP command is completed.
 This event is useful to track individual command usage, debug specific
 sessions, and/or detect broken clients.
 
-::: tip Note
+::: tip
 This event is currently not sent for pre-login IMAP commands.
 :::`
 	},

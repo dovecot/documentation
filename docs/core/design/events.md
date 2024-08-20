@@ -11,11 +11,12 @@ dovecotlinks:
 
 Dovecot supports events, which improves both logging and statistics.
 
-::: tip See Also
-* [[link,summary_events]]
-* [[link,stats]]
-* [[link,event_export]]
-* [[link,event_filter]]
+::: tip
+See Also:
+* [[link,summary_events]],
+* [[link,stats]],
+* [[link,event_export]], and
+* [[link,event_filter]].
 :::
 
 Each logging call can be attached to a specific event, which can provide more
@@ -58,7 +59,7 @@ connection event could be used for logging things like "Client connected" and
 However, most of the logging should be done by new events that have the IMAP
 client connection event as their parent.
 
-::: tip Note
+::: tip
 There's an automatic "duration" statistics field that is calculated from the
 creation of the event to the (last) sending of the event, so for it to
 make sense the event lifetime and its logging also needs to make sense.
@@ -112,7 +113,7 @@ Example: `mail` category has parent `mailbox`, which has parent `storage`.
 If an event filter contains `category=storage`, it will match the `mail`
 and `mailbox` child categories as well.
 
-::: tip Note
+::: tip
 A category isn't the same as a service/process name, but there is a
 `service:<name>` category.
 :::
@@ -222,7 +223,7 @@ it's HTTP traffic or IMAP traffic or something else.
 * `error_code=<value>`: Machine-readable error code for a failed operation.
   If set, the `error` field must also be set.
 
-::: tip Note
+::: tip
 Events shouldn't be sent every time when receiving/sending network traffic.
 Instead, the `net_in/out_bytes` fields should be updated internally so
 that whenever the next event is sent it will have an updated traffic number.
@@ -236,7 +237,7 @@ such fields are more of an exception, because it would be too inefficient
 to send individual events each time those were updated.
 :::
 
-::: tip Note
+::: tip
 Even though internally updating a field for an event's parent will be
 immediately visible to its children, the update won't be automatically sent
 to the stats process. We may need to fix this if it becomes a problem.
@@ -280,8 +281,7 @@ event_create_passthrough(parent)->set_name("name")->add_str("key", "value")->eve
 The passthrough event is converted to a normal event at the end with the
 event() call. 
 
-::: tip Note
-
+::: tip
 This API works by modifying the last created passthrough event, so it's
 not possible to have multiple passthrough events created in parallel.
 :::
