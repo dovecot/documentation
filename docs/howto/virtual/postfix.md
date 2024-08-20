@@ -30,7 +30,6 @@ index-information.
 The index will be stored in the `public` dir under the home directories.
 This allows individual /SEEN information for the public namespace.
 
-::: code-group
 ```[dovecot.conf]
 #mail_location = mdbox:~/mdbox
 mail_location = maildir:~/maildir
@@ -53,7 +52,6 @@ namespace {
   subscriptions = no
 }
 ```
-:::
 
 User Home directory structure: `/var/vmail/\<domain\>/\<user\>/`:
 
