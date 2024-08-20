@@ -26,8 +26,9 @@ You need to create group `vmail` and user `vmail`.
 
 ::: code-group
 ```[dovecot.conf]
-mail_home=/srv/mail/%Lu
-mail_location=sdbox:~/Mail
+mail_home = /srv/mail/%Lu
+mail_driver = sdbox
+mail_path = ~/Mail
 
 ## this is sometimes needed
 #first_valid_uid = uid-of-vmail-user
@@ -162,7 +163,8 @@ If you're using something else, see [[link,passdb]] and [[link,userdb]].
 ## Mail Location
 
 You can let Dovecot do its automatic mail location detection, but if that
-doesn't work you can set the location manually in [[setting,mail_location]].
+doesn't work you can set the location manually. See
+[[link,mail_location_mailbox_root_autodetection]].
 
 ::: tip
 It is recommended to use either [[link,maildir]] or [[link,dbox]] as your

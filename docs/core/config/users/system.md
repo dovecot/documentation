@@ -61,12 +61,12 @@ decide to use these, or use newer mailbox formats instead, such as
 [[link,maildir]] or [[link,dbox]].
 
 Dovecot detects the mailbox format and location automatically if
-[[setting,mail_location]] setting isn't set, but it's still a good idea to
-explicitly tell Dovecot where to find the mails. This ensures that
-Dovecot behaves correctly also when the user's mailbox doesn't exist at
-the moment (eg. a new user). If Dovecot can't figure out where the
-existing mails are, it will give an error message and quits. It never
-tries to create a missing mailbox when autodetection is used.
+[[setting,mail_driver]] aren't set, but it's still a good idea to explicitly
+tell Dovecot where to find the mails. This ensures that Dovecot behaves
+correctly also when the user's mailbox doesn't exist at the moment (eg. a new
+user). If Dovecot can't figure out where the existing mails are, it will give
+an error message and quits. It never tries to create a missing mailbox when
+autodetection is used.
 
 See [[link,mail_location]] for more information how to configure the
 mailbox location.
@@ -82,8 +82,10 @@ where to store the other mailboxes. Typically they're stored in
 included in mailbox location autodetection. You can specify them
 manually with:
 
-```
-mail_location = mbox:~/mail:INBOX=/var/mail/%u
+```[dovecot.conf]
+mail_driver = mbox
+mail_path = ~/mail
+mail_inbox_path = /var/mail/%u
 ```
 
 Remember that the first path after `mbox:` is the mailbox root
@@ -101,8 +103,9 @@ accordingly. See locking section in [[link,mbox]] for more information.
 Maildir is typically stored in `~/Maildir` directory. You can specify
 this manually with:
 
-```
-mail_location = maildir:~/Maildir
+```[dovecot.conf]
+mail_driver = maildir
+mail_path = ~/Maildir
 ```
 
 See [[link,maildir]] for more information.

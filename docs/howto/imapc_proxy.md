@@ -45,7 +45,8 @@ This is based on already having Dovecot already compiled and installed.
 
    listen = *, ::
 
-   mail_location = imapc:~/imapc
+   mail_driver = imapc
+   mail_path = ~/imapc
    # Change the line below to reflect the IP address of your Exchange Server.
    imapc_host = 10.1.2.3
    imapc_port = 143

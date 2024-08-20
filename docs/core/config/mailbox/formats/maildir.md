@@ -291,7 +291,8 @@ Maildir exists almost always in `~/Maildir` directory. The mail location is
 specified with:
 
 ```[dovecot.conf]
-mail_location = maildir:~/Maildir
+mail_driver = maildir
+mail_path = ~/Maildir
 ```
 
 #### Directory Layout
@@ -311,16 +312,16 @@ If you want Maildirs to use hierarchical directories, such as:
 you'll need to enable fs layout:
 
 ```[dovecot.conf]
-mail_location = maildir:~/Maildir:LAYOUT=fs
+mailbox_list_layout = fs
 ```
 
-#### Default `mail_location` Keys
+#### Default mail settings
 
-For Maildir, the default keys are:
-
-| Key | Default Value |
-| --- | ------------- |
-| `FULLDIRNAME` | `<empty>` |
+* [[setting,mail_path,%{home}/Maildir]],
+* [[setting,mailbox_list_layout,maildir++]],
+* [[setting,mail_inbox_path,.]] with `fs` and `maildir++` layouts. This is used
+  to store INBOX into the `~/Maildir/` directory root instead of
+  `~/Maildir/.INBOX`.
 
 ### Control Files
 
@@ -343,10 +344,12 @@ Dovecot cannot currently handle not being able to write the control files, so
 it will cause problems with [[link,quota_backend_fs]]. To
 avoid problems with this,
 you should place control files into a partition where quota isn't checked. You
-can specify this by adding `:CONTROL=<path` to `mail_location`:
+can specify this with the [[setting,mail_control_path]] setting:
 
 ```[dovecot.conf]
-mail_location = maildir:~/Maildir:CONTROL=/var/no-quota/%u
+mail_driver = maildir
+mail_path = ~/Maildir
+mail_control_path = /var/no-quota/%u
 ```
 
 ### Index Files
@@ -357,7 +360,9 @@ See [[link,mail_location]] for an explanation of how to change the index
 path. Example:
 
 ```[dovecot.conf]
-mail_location = maildir:~/Maildir:INDEX=/var/indexes/%u
+mail_driver = maildir
+mail_path = ~/Maildir
+mail_index_path = /var/indexes/%u
 ```
 
 ### Optimizations
@@ -369,23 +374,28 @@ mail_location = maildir:~/Maildir:INDEX=/var/indexes/%u
 
 ### Mailbox Directory Name
 
-When using `LAYOUT=fs`, there is a potential for naming collisions between
-Maildir's `new/`, `cur/`, and `tmp/` subdirectories, and mail folders
-of the same names.
+When using [[setting,mailbox_list_layout,fs]], there is a potential for naming
+collisions between Maildir's `new/`, `cur/`, and `tmp/` subdirectories, and
+mail folders of the same names.
 
-For example, consider a mail folder `foo/bar`. Under `LAYOUT=fs`, data
-for this mail folder will be stored under Maildir's usual three directories
-`~/Maildir/foo/bar/{new,cur,tmp}/`. If the user then tries to create a mail
-folder `foo/bar/new`, this would then imply that data should be stored in
-Maildir's three directories `~/Maildir/foo/bar/new/{new,cur,tmp}/`. But
-this would overlap Maildir's `new/` subdirectory of mail folder `foo/bar`.
+For example, consider a mail folder `foo/bar`. Under
+[[setting,mailbox_list_layout,fs]], data for this mail folder will be stored
+under Maildir's usual three directories `~/Maildir/foo/bar/{new,cur,tmp}/`. If
+the user then tries to create a mail folder `foo/bar/new`, this would then
+imply that data should be stored in Maildir's three directories
+`~/Maildir/foo/bar/new/{new,cur,tmp}/`. But this would overlap Maildir's `new/`
+subdirectory of mail folder `foo/bar`.
 
 This may not be a problem in many installations, but if a risk of collisions
-with Maildir's three subdirectory names is perceived, then the `DIRNAME`
-parameter can be used. For example, if we specify mail location as:
+with Maildir's three subdirectory names is perceived, then the
+[[setting,mailbox_directory_name]] setting can be used. For example, if we
+specify the mail location as:
 
 ```[dovecot.conf]
-mail_location = maildir:~/Maildir:LAYOUT=fs:DIRNAME=mAildir
+mail_driver = maildir
+mail_path = ~/Maildir
+mailbox_list_layout = fs
+mailbox_directory_name = mAildir
 ```
 
 then this will push Maildir's `new/`, `cur/`, and `tmp/` subdirectories
@@ -395,15 +405,16 @@ stored at `~/Maildir/foo/bar/mAildir/{new,cur,tmp}/`. A mail folder
 `~/Maildir/foo/bar/new/mAildir/{new,cur,tmp}/`, which would then have no
 overlap with the mail folder `foo/bar`.
 
-`DIRNAME` affects INBOX slightly differently. Without `DIRNAME`, INBOX
-will be stored at `~/Maildir/{new,cur,tmp}/`, but when `DIRNAME` is
-specified, we get an extra path component `INBOX/` immediately prior to the
-`DIRNAME` value, so in the example above INBOX would be stored at
+[[setting,mailbox_directory_name]] affects INBOX slightly differently. If
+unset, INBOX will be stored at `~/Maildir/{new,cur,tmp}`, but when
+[[setting,mailbox_directory_name]] is specified, we get an extra path component
+`INBOX/` immediately prior to the [[setting,mailbox_directory_name]] value. In
+the example above INBOX would be stored at
 `~/Maildir/INBOX/mAildir/{new,cur,tmp}/`.
 
-The value for `DIRNAME` should be chosen carefully so as to minimise the
-chances of clashing with mail folder names. In the example here, unusual
-upper/lower casing has been used.
+The value for [[setting,mailbox_directory_name]] should be chosen carefully so
+as to minimise the chances of clashing with mail folder names. In the example
+here, unusual upper/lower casing has been used.
 
 ### Multiple Namespaces pointing to INBOX
 
@@ -414,7 +425,9 @@ or not.
 For example:
 
 ```[dovecot.conf]
-mail_location = maildir:~/Maildir:LAYOUT=fs
+mail_driver = maildir
+mail_path = ~/Maildir
+mailbox_list_layout = fs
 
 namespace inbox {
   inbox = yes
@@ -427,16 +440,17 @@ namespace empty {
   prefix =
   separator = /
   alias_for = inbox
-  location = maildir:~/Maildir:LAYOUT=fs # Alias location
   subscriptions = yes
 }
 ```
 
 The solution is to disable `dovecot.list.index` for the alias namespace. In
-the above example, this is done by changing the "Alias location" line to:
+the above example, this is done by adding:
 
 ```[dovecot.conf]
-location = maildir:~/Maildir:LAYOUT=fs:LISTINDEX=
+namespace empty {
+  mailbox_list_index_prefix =
+}
 ```
 
 [dovecot-ce]: https://repo.dovecot.org/
