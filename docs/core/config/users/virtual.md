@@ -5,10 +5,10 @@ dovecotlinks:
   virtual_users: virtual users
   home_directories_for_virtual_users:
     hash: home-directories
-    text: home directories for virtual users
+    text: Home Directories for Virtual Users
   virtual_users_system_users:
     hash: virtual-and-system-users
-    text: virtual and system users
+    text: Virtual and System Users
 ---
 
 # Virtual Users
