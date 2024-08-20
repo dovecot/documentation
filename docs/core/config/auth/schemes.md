@@ -241,7 +241,7 @@ Alias CRAM-MD5.
 
 ### SHA Based Schemes
 
-::: info See Also
+::: info
 See below for libc's SHA\* support.
 :::
 

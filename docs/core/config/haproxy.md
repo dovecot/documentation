@@ -14,7 +14,7 @@ dovecotlinks:
 open source software "TCP and HTTP" Load Balancer and proxying solution.
 It is available as a package on almost all Linux distros.
 
-::: tip Note
+::: tip
 HAProxy is the recommended way to do software load balancing for Dovecot.
 
 This page is not intended to be a comprehensive HAProxy manual; it is designed
@@ -120,7 +120,7 @@ backend back_dc_lmtp
     server   10.41.1.116 10.41.1.116:24 check inter 5s
 ```
 
-::: info Note
+::: info
 Details about load balancing methods and options are available in the
 haproxy documentation if you need more information.
 :::
