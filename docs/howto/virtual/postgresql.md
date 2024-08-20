@@ -277,7 +277,7 @@ Where mech_list is a list of all the mechanism names to enable.
 
 ::: code-group
 ```[dovecot.conf]
-mail_location = maildir:~/
+mail_driver = maildir
 
 passdb {
   driver = sql

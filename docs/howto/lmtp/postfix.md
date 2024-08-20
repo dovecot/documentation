@@ -55,8 +55,7 @@ in this case of a virtual user scenario:
 virtual_transport = lmtp:unix:private/dovecot-lmtp
 ```
 
-For a non virtual user setup (i.e., when
-[[setting,mail_location, maildir:~/.maildir]]):
+For a non virtual user setup:
 
 ```
 mailbox_transport = lmtp:unix:private/dovecot-lmtp
