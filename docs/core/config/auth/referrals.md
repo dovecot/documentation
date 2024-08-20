@@ -14,7 +14,7 @@ of hardware failures or organizational changes. No client action is needed
 to invoke the LOGIN-REFERRALS capability: the redirection is triggered by
 the server and occurs transparently.
 
-::: info Security
+::: danger
 As stated by [[rfc,2221]], a man in the middle attack may use a rogue
 'password catching' server to collect login data and redirect your clients
 to their own rogue IMAP server. Although this would be avoided by enforcing
@@ -26,7 +26,7 @@ Dovecot does NOT use login referrals by default.
 
 ## Configuration
 
-::: info Note
+::: info
 The `host` field is also used by proxying. Login referrals are used
 only if the `proxy` field isn't set.
 :::

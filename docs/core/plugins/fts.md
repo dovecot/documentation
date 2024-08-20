@@ -121,7 +121,7 @@ to UTF-8 plaintext or [Apache Tika](https://tika.apache.org/) server.
 * [[setting,fts_decoder]]: Use decoder script.
 * [[setting,fts_tika]]: Use Apache Tika server.
 
-::: warning Note
+::: warning
 [[setting,fts_decoder]] and [[setting,fts_tika]] cannot be used simultaneously.
 :::
 
@@ -332,7 +332,9 @@ library.
 
 Normalize text using libicu. This is potentially very resource intensive.
 
-::: tip Caveat for Norwegian
+::: tip
+There is a caveat for the Norwegian language:
+
 The default normalizer filter does not modify `U+00F8` (Latin Small Letter O
 with Stroke). In some configurations it might be desirable to rewrite it to,
 e.g., `o`. Same goes for the upper case version. This can be done by passing

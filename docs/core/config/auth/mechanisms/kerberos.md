@@ -14,7 +14,7 @@ user-specific information, such as where their mailboxes are stored.
 With centralized systems, such as Microsoft Active Directory, LDAP is a
 good choice.
 
-::: info Note
+::: info
 If you only wish to authenticate clients using their Kerberos
 *passphrase* (as opposed to ticket authentication), you will probably
 want to use [[link,auth_pam]] with `pam_krb5.so` instead.
@@ -123,7 +123,7 @@ userdb {
 }
 ```
 
-::: info Note
+::: info
 In this example, you will also need to configure PAM to use
 whichever authentication backends are appropriate for your site.
 :::
@@ -167,7 +167,7 @@ previous threads about it. Some points about it:
   that are allowed to log in. If it's set, it bypasses the `krb5_kuserok()`
   check.
 
-  ::: info Note
+  ::: info
   For this to work, you need a password database which supports
   **credential lookups**. This excludes LDAP databases using authentication
   binds (`auth_bind = yes`). However, a second LDAP passdb entry without
