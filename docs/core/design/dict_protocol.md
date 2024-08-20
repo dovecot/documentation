@@ -96,7 +96,7 @@ version number. Minor version can be ignored.
 
 Other dict commands and their line format is described as follows.
 
-:::info
+::: info
 Prior to Dovecot v2.3.17 none of the following commands included the
 username for which the dict operation is performed. Instead, the
 username from the initial handshake message was used.

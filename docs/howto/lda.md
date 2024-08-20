@@ -328,7 +328,7 @@ recipient@example.com  available
 
 Don't forget to run "postmap" afterwards.
 
-::: info Note
+::: info
 If you use the Dovecot LDA or LMTP it doesn't matter what you
 use behind the recipient address. Use "OK", the full name of the user or
 else.
@@ -361,7 +361,7 @@ know if the recipient exists. The value doesn't matter. When you use a
 database (or LDAP) there's no need to manually maintain a file with
 valid recipients.
 
-::: info Note
+::: info
 If you use "relay_domains" instead of "virtual_mailbox_domains" you have
 to use "relay_recipient_maps" instead of "virtual_mailbox_maps".
 :::
@@ -389,7 +389,7 @@ Recipient address rejected: undeliverable address: host tux.example.com[private/
 If the recipient address exists (status=deliverable) Postfix accepts the
 mail.
 
-::: info Note
+::: info
 You cannot use "reject_unverified_recipient" with "pipe" so this doesn't
 work with the Dovecot LDA "deliver".
 :::

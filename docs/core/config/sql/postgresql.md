@@ -17,6 +17,7 @@ headers.
 PostgreSQL parses the connection string directly. Dovecot only parses the
 `host` argument.
 
-::: info See Also
-https://www.postgresql.org/docs/9.0/libpq-connect.html
+::: info
+See Also:
+* https://www.postgresql.org/docs/9.0/libpq-connect.html
 :::

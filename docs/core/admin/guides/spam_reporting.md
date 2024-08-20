@@ -5,7 +5,7 @@ title: Spam Reporting
 
 # Spam Reporting
 
-::: tip Note 
+::: tip
 This page describes the recommended way of implementing spam/ham reporting
 within Dovecot.
 
@@ -211,8 +211,8 @@ pipe :copy "sa-learn-ham.sh" [ "${username}" ];
 
 #### SpamAssassin
 
-::: warning **Untested**
-spamc interaction scripts are not tested yet.
+::: warning
+`spamc` interaction scripts are not tested yet.
 :::
 
 ::: code-group

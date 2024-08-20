@@ -90,7 +90,7 @@ Search program is compatible with IMAP SEARCH command
 [[rfc,3501,6.4.4]]. Besides the standard SEARCH key you may want to
 use X-MAILBOX key which matches the message's original mailbox.
 
-::: tip Note
+::: tip
 Leading whitespace is required in front of the search specifications.
 :::
 
@@ -105,7 +105,7 @@ message is really saved by prefixing it with `!`, e.g.:
 work/*
   unseen
 ```
-::: warning Note
+::: warning
 Nothing guarantees that the saved mail will actually show up in
 the virtual mailbox. If a message was saved with \Seen flag to the above
 virtual mailbox, it wouldn't show up there. This also means it's problematic

@@ -11,8 +11,9 @@ The main index can be used to quickly look up messages' UIDs, flags,
 keywords and extension-specific data, such as cache file or mbox file
 offsets.
 
-::: info See Also
-See [Mail Indexes](index_format) for a more detailed overview.
+::: info
+See Also:
+* [Mail Indexes](index_format) for a more detailed overview.
 :::
 
 ## File Format

@@ -34,9 +34,10 @@ import_environment = $import_environment TZ=:/etc/localtime
 Note that a reload is not sufficient for the change to take effect. A restart
 is required.
 
-::: tip See Also
-* [GNU man page for the TZ environment variable](https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html)
-* [Article explaining in detail the issue](https://blog.packagecloud.io/set-environment-variable-save-thousands-of-system-calls/)
+::: tip
+See Also:
+* [GNU man page for the TZ environment variable](https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html), and
+* [Article explaining in detail the issue](https://blog.packagecloud.io/set-environment-variable-save-thousands-of-system-calls/).
 :::
 
 ## Disk I/O
@@ -124,7 +125,7 @@ Note that these settings do NOT directly affect the memory usage:
 
 ## Operating Systems
 
-::: warning Note
+::: warning
 Dovecot is developed for Linux.
 
 Although Dovecot may work on other OS platforms, the main developer focus (and

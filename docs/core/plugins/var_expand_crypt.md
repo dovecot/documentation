@@ -34,7 +34,7 @@ args=decrypted_value=%{decrypt;key=value,iv=value,noiv=yes,algo=algorithm,format
 
 Decrypt expects input in base64 or hex format.
 
-::: tip Note
+::: tip
 It is usually best to leave iv management to Dovecot, and not use
 `iv` and `noiv` options at all.
 :::
