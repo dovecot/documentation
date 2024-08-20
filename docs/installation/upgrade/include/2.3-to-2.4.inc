@@ -150,6 +150,7 @@ See [[setting,imapc_features]].
 | `auth_policy_server_timeout_msecs` | See: [[link,auth_policy_configuration]]. |
 | `mail_crypt_require_encrypted_user_key` | Replaced by [[setting,crypt_user_key_require_encrypted]], [[setting,crypt_user_key_password]] and [[setting,crypt_user_key_encryption_key]]. |
 | `verbose_ssl` | Use [[setting,log_debug,category=ssl]] instead. |
+| `mail_location` setting & `mail` userdb field | Split into multiple [[link,mail_location,mail_*]] settings. |
 
 #### Other Features
 
@@ -200,7 +201,6 @@ See [[link,sql_cassandra]].
 | [[setting,imapc_features]] | Features "delay-login", "search", "fetch-headers", "fetch-bodystructure", "fetch-size" by default. Enable "acl" and "modseq" by default, if the remote server supports it. |
 | [[setting,mail_cache_max_headers_count]] | unlimited | 100 | New feature, explicitly set to `0` for the old behavior. |
 | [[setting,mail_cache_max_header_name_length]] | unlimited | 100 | New feature, explicitly set to `0` for the old behavior. |
-| [[setting,mail_location]] | empty | `NO-NOSELECT` | `NO-NOSELECT` is the new default behavior. To revert to the old default specify `KEEP-NOSELECT`. |
 | [[setting,mail_log_prefix]] | `%s(%u)<%{pid}><%{session}>:` | `%s(%u)<%{process:pid}><%{session}>:` | Uses new process key. |
 | [[setting,mailbox_list_drop_noselect]] | `no` | `yes` | `\NoSelect` folders are now dropped by default. |
 | `service/anvil/chroot` | empty | \<no value\> | Anvil is no longer chrooted. |
