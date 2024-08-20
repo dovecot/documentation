@@ -21,7 +21,7 @@ Document describing gluing together virtual user/domain support for:
 
 - Dovecot (dovecot-pop3d and or dovecot-imapd)
 
-::: info Note
+::: info
 On Debian, the package dovecot-pgsql do not yet include postgresql as a
 dependency to pull it if not installed.
 :::

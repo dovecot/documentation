@@ -153,7 +153,8 @@ actually delayed, `status_r->sync_delayed_expunges` is set to TRUE.
 
 ## Implementing Sync for a Storage Backend
 
-::: warning FIXME
+<!-- FIXME -->
+::: warning
 Talk about `mail_index_sync_*()` and how to change stuff and how to
 update internal state.
 :::

@@ -86,7 +86,7 @@ Recipient address rejected: undeliverable address: host tux.example.com[private/
 If the recipient address exists (status=deliverable) Postfix accepts the
 mail.
 
-::: info Note
+::: info
 You cannot use "reject_unverified_recipient" with "pipe", so this doesn't
 work with the Dovecot LDA "deliver".
 :::

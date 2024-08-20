@@ -21,8 +21,9 @@ Always do a test migration to verify that POP3 UIDLs are preserved
 correctly. If the UIDL format is wrong, all the mails have to be re-migrated.
 :::
 
-::: tip See Also
-[[link,migration]]
+::: tip
+See Also:
+* [[link,migration]].
 :::
 
 ## Configuration
