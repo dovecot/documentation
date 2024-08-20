@@ -3,6 +3,9 @@ layout: doc
 title: File Format
 dovecotlinks:
   design_indexes: mail indexes design
+  design_indexes_index_format:
+    hash: mail-index-file-format
+    text: Mail Index File Format
 ---
 
 # Mail Index File Format
