@@ -48,7 +48,7 @@ Settings
 
 
 .. dovecot_core:setting:: metric_group_by
-   :values: @boollist
+   :values: @string
 
    This can be used to dynamically generate sub-metrics based on fields'
    values. See :ref:`statistics_group_by` for more details and examples.
