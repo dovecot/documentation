@@ -116,6 +116,7 @@ prefixing them with `\`.
 | `auth_policy_server_timeout_msecs` | See: [[link,auth_policy_configuration]]. |
 | `mail_crypt_require_encrypted_user_key` | Replaced by [[setting,crypt_user_key_require_encrypted]], [[setting,crypt_user_key_password]] and [[setting,crypt_user_key_encryption_key]]. |
 | `verbose_ssl` | Use [[setting,log_debug,category=ssl]] instead. |
+| `mail_location` setting & `mail` userdb field | Split into multiple [[link,mail_location,mail_*]] settings. |
 
 ### Changed Default Settings
 
@@ -124,7 +125,6 @@ prefixing them with `\`.
 | `service/anvil/chroot` | empty | \<no value\> | Anvil is no longer chrooted |
 | `service/anvil/user` | $default_internal_user | \<no value\> | Anvil runs as root |
 | `service/auth-worker/process_limit` | 1 | 30 | Behaviour of process limit has changed for auth-worker,  it now behaves as it was supposed to. |
-| [[setting,mail_location]] | empty | `NO-NOSELECT` | `NO-NOSELECT` is the new default behavior. To revert to the old default specify `KEEP-NOSELECT`. |
 | [[setting,mail_cache_max_headers_count]] | unlimited | 100 | New feature, explicitly set to `0` for the old behavior. |
 | [[setting,mail_cache_max_header_name_length]] | unlimited | 100 | New feature, explicitly set to `0` for the old behavior. |
 | [[setting,mail_log_prefix]] | `%s(%u)<%{pid}><%{session}>:` | `%s(%u)<%{process:pid}><%{session}>:` | Uses new process key. |

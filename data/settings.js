@@ -5876,21 +5876,6 @@ mail_path = ~/mail
 [[variable,mail-service-user]] can be used.`
 	},
 
-	mail_location: {
-		seealso: [ '[[link,mail_location]]' ],
-		values: setting_types.STRING,
-		text: `
-This setting indicates the location for users' mailboxes.
-
-For an empty value, Dovecot attempts to find the mailboxes
-automatically (looking at \`~/Maildir\`, \`/var/mail/username\`, \`~/mail\`,
-and \`~/Mail\`, in that order). However, auto-detection commonly fails for
-users whose mail directory hasn't yet been created, so you should
-explicitly state the full location here, if possible.
-
-[[variable,mail-user]] can be used.`
-	},
-
 	mail_log_prefix: {
 		default: '%s(%u)\<%{process:pid}\>\<%{session}\>',
 		values: setting_types.STRING,
@@ -6919,25 +6904,6 @@ It is still possible to list the namespace's folders by explicitly asking
 for them. For example, if this setting is \`no\`, using \`LIST "" *\` with
 namespace prefix "lazy-expunge/" won't list it, but using \`LIST ""
 lazy-expunge/*\` lists all folders under it.`
-	},
-
-	namespace_location: {
-		default: '[[setting,mail_location]]',
-		tags: [ 'namespace' ],
-		values: setting_types.STRING,
-		text: `
-Specifies driver and parameters for physical mailbox storage. It allows an
-override of the [[setting,mail_location]] setting for a namespace.
-
-[[variable,mail-user]] can be used.
-
-Example:
-
-\`\`\`
-namespace {
-  location = sdbox:/archive/%u
-}
-\`\`\``
 	},
 
 	namespace_order: {
