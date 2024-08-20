@@ -96,7 +96,7 @@ You can enable [[setting,lazy_expunge_only_last_instance]] to copy
 only the last instance to the expunge storage. This ensures that only a single
 copy of a message will appear in the expunge storage.
 
-::: warning Note
+::: warning
 This feature only works with certain storage setups. See
 [[setting,lazy_expunge_only_last_instance]] for further information.
 :::

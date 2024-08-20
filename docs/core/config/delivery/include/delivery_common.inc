@@ -17,7 +17,7 @@
   where LDA can lookup userdb information when `-d` parameter is used.
   See below how to configure Dovecot to configure the socket.
 
-::: tip Note
+::: tip
 The config files must be world readable to enable dovecot-lda process to read
 them while running with user privileges.
 

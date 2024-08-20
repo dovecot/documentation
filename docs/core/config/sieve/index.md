@@ -35,7 +35,7 @@ The Sieve language has various extensions. You can find more information
 about the extensions from the Sieve Mail Filtering Language Charter
 or the [Sieve.info wiki page](http://sieve.info/).
 
-::: info Note
+::: info
 Sieve doesn't support running external programs.
 :::
 

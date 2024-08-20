@@ -10,7 +10,7 @@ every time a mailbox changes.
 
 ## Settings
 
-::: warning Note
+::: warning
 This plugin requires that the [[plugin,notify]] is loaded.
 :::
 
