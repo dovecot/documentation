@@ -9,7 +9,7 @@ dovecotlinks:
 
 [[deprecated,auth_nss]]
 
-::: danger NOTE
+::: danger
 This userdb is probably useless with Dovecot Core v2.0.12+, since it uses
 `getpwnam_r()`, which supports error reporting.
 :::

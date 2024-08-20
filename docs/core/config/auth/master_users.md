@@ -46,7 +46,7 @@ If you want master users to be able to log in as themselves, you'll need to
 either add the user to the normal passdb or add the passdb to dovecot.conf
 twice, with and without `master=yes`.
 
-::: info Note
+::: info
 If the passdbs point to different locations, the user can have a
 different password when logging in as other users than when logging in as
 himself. This is a good idea since it can avoid accidentally logging in as
