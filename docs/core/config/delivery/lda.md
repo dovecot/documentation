@@ -36,8 +36,9 @@ This page describes the common settings required to make LDA work.
 
 ## Parameters
 
-::: tip See Also
-[[man,dovecot-lda]]
+::: tip
+See also:
+* [[man,dovecot-lda]].
 :::
 
 Parameters accepted by dovecot-lda binary:

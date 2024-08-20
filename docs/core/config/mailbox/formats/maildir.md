@@ -13,7 +13,7 @@ efficiency because individual emails can be modified, deleted and added
 without affecting the mailbox or other emails, and makes it safer to use on
 networked file systems such as NFS.
 
-::: warning Note
+::: warning
 The Maildir mailbox format is mainly viable for smaller installations.
 
 It will be maintained on a best-effort basis for

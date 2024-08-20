@@ -15,9 +15,10 @@ dovecotlinks:
 
 # Dovecot Config File Syntax
 
-::: tip See Also
-* [[link,settings_types]]
-* [[link,settings_variables]]
+::: tip
+See Also:
+* [[link,settings_types]], and
+* [[link,settings_variables]].
 :::
 
 ## Example Configuration
@@ -140,7 +141,7 @@ The `ssl` setting is attempted to be looked up in this order:
 
 The first setting that exists is used.
 
-::: tip NOTE
+::: tip
 The filters must currently be written with the linefeeds as shown above.
 For example this doesn't work:
 

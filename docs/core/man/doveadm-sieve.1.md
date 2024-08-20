@@ -37,7 +37,7 @@ The **doveadm sieve** commands can be used to manage Sieve filtering.
 *scriptname*
 :   Is the name of a *Sieve script*, as visible to ManageSieve clients.
 
-    ::: tip Note
+    ::: tip
     For Sieve scripts that are stored on disk, this is the filename
     without the ".sieve" extension.
     :::

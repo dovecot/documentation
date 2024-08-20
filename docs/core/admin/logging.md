@@ -118,7 +118,7 @@ Save the below scriptlet as `/etc/logrotate.d/dovecot`:
 }
 ```
 
-::: info Note
+::: info
 doveadm is not working properly with SELinux (e.g. doveadm cannot read
 config file when called from logrotate context). SELinux safe postrotate
 alternative scriptlet:

@@ -261,7 +261,7 @@ Function signature is `auth_userdb_iterate()`.
 
 Function returns a table of usernames. Key names are ignored.
 
-::: tip Note
+::: tip
 The iteration will hold the whole user database in memory during iteration.
 :::
 

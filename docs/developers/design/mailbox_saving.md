@@ -36,7 +36,7 @@ Set message's modseq to at least the specified modseq. If the modseqs are
 already higher in the mailbox, the resulting modseq is what it would have been
 without this call.
 
-::: info Note
+::: info
 Mainly useful when you're restoring an existing mailbox and want to preserve
 metadata.
 :::
@@ -46,7 +46,7 @@ metadata.
 Set message's UID. If mailbox's next_uid is already higher than the specified
 UID, the UID request is ignored.
 
-::: info Note
+::: info
 Mainly useful when you're restoring an existing mailbox and want to preserve
 metadata.
 :::
@@ -58,7 +58,7 @@ there already exists a message with the same GUID a different one may or
 may not be given. For example with maildir the GUID is same as the base
 filename, while dbox has an explicit GUID metadata field.
 
-::: info Note
+::: info
 Mainly useful when you're restoring an existing mailbox and want to preserve
 metadata.
 :::
@@ -67,7 +67,7 @@ metadata.
 
 Set POP3 UIDL value. Not all backends support this.
 
-::: info Note
+::: info
 Mainly useful when you're restoring an existing mailbox and want to preserve
 metadata.
 :::
@@ -77,7 +77,7 @@ metadata.
 Set "message saved" date, i.e. the date/time when the message was saved to
 this mailbox. The default is the current time.
 
-::: info Note
+::: info
 Mainly useful when you're restoring an existing mailbox and want to preserve
 metadata.
 :::

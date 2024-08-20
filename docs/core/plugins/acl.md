@@ -150,7 +150,7 @@ The ACLs are compatible with [[rfc,4314]] (IMAP ACL extension).
 Unknown ACL letters are complained about, but unknown named ACLs are ignored.
 Named ACLs are mostly intended for future extensions.
 
-::: tip Note
+::: tip
 The file is rather picky about formatting; using a tab (or multiple spaces)
 instead of a space character between fields may not work. If you are having
 problems, make sure to check for tabs, extra spaces and other unwanted
@@ -201,7 +201,7 @@ There are default ACLs though:
 * However, optionally the default ACLs can be taken from the INBOX for private
   and shared namespaces. See [[setting,acl_defaults_from_inbox]].
 
-::: warning NOTE
+::: warning
 Currently the default ACLs are merged with the mailbox-specific ACLs. So if a
 default ACL gives access to `user1` and a per-mailbox ACL gives access to
 `user2`, the `user1` still has access to that mailbox.

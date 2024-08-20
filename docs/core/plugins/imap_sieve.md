@@ -31,7 +31,7 @@ for administrators to configure Sieve scripts outside the user's
 control, that are run either before or after a user's script if there is
 one.
 
-::: warning Note
+::: warning
 The `imapsieve` extension can only be used in a Sieve script
 that is invoked from IMAP. When it is used in the active delivery
 script, it will cause runtime errors. To make a Sieve script suitable

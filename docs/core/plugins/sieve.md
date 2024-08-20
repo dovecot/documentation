@@ -220,7 +220,7 @@ sieve = dict:file:/etc/dovecot/sieve.dict;name=keep;bindir=~/.sieve-bin
 #sieve = dict:file:/etc/dovecot/sieve.dict;name=keep;bindir=/var/sieve-scripts/%u
 ```
 
-::: tip Note
+::: tip
 Sieve uses the ID number as its cache index and to detect the
 need to compile. Therefore, if a script is changed, then its ID must
 also be changed for it to be reloaded.
@@ -343,7 +343,7 @@ plugin {
 As with the flat file, the database query will need to return the Sieve
 script all in one line, otherwise the subsequent lines will be ignored.
 
-::: info Note
+::: info
 You might need to configure the [[link,dict_proxy,dict proxy permissions]].
 :::
 
@@ -407,7 +407,7 @@ sieve = ldap:/etc/dovecot/sieve.ldap;name=keep;bindir=~/.sieve-bin
 #sieve = ldap:/etc/dovecot/sieve.ldap;name=keep;bindir=/var/sieve-scripts/%u
 ```
 
-::: tip Note
+::: tip
 Sieve uses the ID number as its cache index and to detect the
 need to compile. Therefore, if a script is changed, then its ID must
 also be changed for it to be reloaded.
@@ -630,7 +630,7 @@ plugin {
 }
 ```
 
-::: tip Note
+::: tip
 Be sure to manually pre-compile the scripts specified by
 [[setting,sieve_before]] and [[setting,sieve_after]] by using the
 [[link,sievec]] tool.

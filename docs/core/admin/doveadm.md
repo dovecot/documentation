@@ -172,7 +172,7 @@ without any response.
 Also it is not guaranteed that the commands will be processed in order.
 :::
 
-::: info Note
+::: info
 All commands are case sensitive.
 :::
 

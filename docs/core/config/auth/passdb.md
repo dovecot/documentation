@@ -360,7 +360,7 @@ assume that the password was given wrong, so it might not be a good idea to use
 this unless the system will be down for days and you don't have a better way to
 notify the users.
 
-::: info Note
+::: info
 If you want to entirely block the user from logging in (i.e. account is
 suspended), with no IMAP referral information provided, you must ensure that
 neither `proxy` nor `host` are defined as one of the `passdb` extra fields.
@@ -379,7 +379,7 @@ such delay is done.
 Commonly used with [[link,authentication_proxies]] and [[link,auth_referral]],
 but may also be used standalone.
 
-::: info Note
+::: info
 If [[link,auth_pam]] is used as the `passdb`, it adds an extra delay which
 can't be removed by this setting.
 :::
@@ -444,7 +444,7 @@ pass_attrs = \
 ```
 :::
 
-::: warning Note
+::: warning
 About the `proxy`, `proxy_maybe` and any other boolean type fields: these
 represent an existence test. Currently this translates to `will proxy (or
 proxy_maybe) if this attribute exists`. This allows the proxy behaviour to

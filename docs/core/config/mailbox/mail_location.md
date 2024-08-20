@@ -51,7 +51,7 @@ where:
 
 ## Keys
 
-::: warning Note
+::: warning
 This table is intended as an abstract list of what keys exist; see
 the individual mailbox format pages for further information on how
 to use these keys.
@@ -93,13 +93,13 @@ mailboxes that have no children. These mailboxes are sometimes confusing to
 users. Also if a `\NoSelect` mailbox is attempted to be created with
 `CREATE box/`, it's created as selectable mailbox instead.
 
-::: tip Note
+::: tip
 Mailboxes using `LAYOUT=fs` (either explicitly stated or from the defaults)
 always perform *renames* according to the default, regardless
 of the setting (dangling `\NoSelect` mailboxes are removed after renames).
 :::
 
-::: tip Note
+::: tip
 Mailboxes using `LAYOUT=Maildir++` (either explicitly stated or from
 the defaults), always perform *deletes* according to the default, regardless
 of the setting (dangling `\NoSelect` mailboxes are removed after deletes).
@@ -165,7 +165,7 @@ name.
 The [[link,sdbox]] and [[link,mdbox]] formats use `DIRNAME=dbox-Mails`
 by default.
 
-::: tip Note
+::: tip
 `DIRNAME` is not used for index or control directories, consider using
 `FULLDIRNAME` instead.
 :::
@@ -268,7 +268,7 @@ done by looking, in order, at:
 * `~/Mail/inbox`
 * `~/Mail/mbox`
 
-::: tip Note
+::: tip
 `.imap` is a directory, and `inbox` and `mbox` are files.
 :::
 
@@ -339,11 +339,12 @@ specific users by making the [[link,userdb]] return `mail` extra field.
 Note that `%h` doesn't work in the userdb queries or templates. `~/` gets
 expanded later, so use it instead.
 
-::: tip Note
+::: tip
 Since a location specified within a [[link,namespaces]] overrides
 [[setting,mail_location]], in case you specified that parameter
 you'll have to override in in the user database, specifying
 `namespace/inbox/location` extra field instead of mail.
+:::
 
 ### SQL
 

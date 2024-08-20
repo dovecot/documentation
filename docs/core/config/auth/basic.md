@@ -66,7 +66,7 @@ This section describes authentication tactics that can be used if an
 architecture is used where an edge Proxy authenticates a user and then
 redirects to an internal Backend.
 
-::: tip Note
+::: tip
 Proxy already verifies the authentication (in the reference Dovecot
 architecture; password has been switched to a master password at this
 point), so we don't really need to do it again. We could, in fact, even avoid

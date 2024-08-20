@@ -164,7 +164,7 @@ Push notification sent in JSON format with the following fields:
 | `unseen` | number | [[rfc,3501]] UNSEEN value of the mailbox |
 | `user` | string | User identifier |
 
-::: info NOTE
+::: info
 The returned numbers are generally integer values in the range
 `0`..`4294967295`.
 :::

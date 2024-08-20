@@ -165,7 +165,7 @@ locking.`
 		text: `
 Directory prefix where files are read from/written to.
 
-:::info NOTE
+::: info
 The trailing \`/\` is not automatically added, so using e.g. \`/tmp/foo\` as
 prefix will cause \`/tmp/foofilename\` to be created.
 :::
@@ -188,7 +188,7 @@ Mode to use for creating files.`
 If the last file in a directory is deleted, should the parent directory be
 automatically deleted?
 
-::: info NOTE
+::: info
 Using this setting makes the POSIX filesystem behave more like an object
 storage would.
 :::
@@ -1880,7 +1880,7 @@ The list of headers to, respectively, include or exclude.
 - The asterisk can only be used at the end of the header name.
   Prefix and infix usage of asterisk are not supported.
 
-::: info Example
+::: info EXAMPLE
 \`\`\`
 plugin {
   fts_header_excludes = Received DKIM-* X-* Comments
@@ -1896,7 +1896,7 @@ plugin {
   - All other headers are indexed.
 :::
 
-::: info Example
+::: info EXAMPLE
 \`\`\`
 plugin {
   fts_header_excludes = *
@@ -4653,7 +4653,7 @@ This will be fixed in the future, but activating URLAUTH support on
 production systems is not recommended.
 :::
 
-::: info Note
+::: info
 This setting is REQUIRED for the URLAUTH ([[rfc,4467]]) extension to
 be active.
 :::`
@@ -4668,7 +4668,7 @@ be active.
 Specifies the logout format used with the URLAUTH extension in IMAP
 operation.
 
-::: warning Note
+::: warning
 This setting is currently not used.
 :::
 
@@ -5070,7 +5070,7 @@ Port number where to listen. \`0\` disables the listener.`
 If \`yes\`, the listener does an immediate SSL/TLS handshake after accepting a
 connection. This is needed for e.g. the \`imaps\` and \`pop3s\` ports.
 
-::: info NOTE
+::: info
 All listeners with \`ssl=yes\` will be removed if the global [[setting,ssl]]
 setting is \`no\`.
 
@@ -5370,7 +5370,7 @@ will crash any time an error is logged, which can be useful for debugging.`
 Filter to specify what debug logging to enable.  The syntax of the filter is
 described in [[link,event_filter_global]].
 
-::: info Note
+::: info
 This will eventually replace [[setting,mail_debug]] and
 [[setting,auth_debug]] settings.
 :::`
@@ -7153,7 +7153,7 @@ flag, which Dovecot will filter out in future listings.
 
 To enable this behavior, enter the name of the IMAP keyword to use.
 
-::: info Note
+::: info
 This keyword will visible on IMAP clients for the message.
 :::
 

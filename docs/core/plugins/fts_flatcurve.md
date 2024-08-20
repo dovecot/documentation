@@ -10,7 +10,7 @@ title: fts-flatcurve
 This is a Dovecot FTS plugin to enable message indexing using the
 [Xapian](https://xapian.org/) Open Source Search Engine Library.
 
-::: warning Note
+::: warning
 Requires Xapian 1.4+.
 :::
 
@@ -25,7 +25,7 @@ support fuzzy searches.
 The driver passes all of the
 [ImapTest search tests](https://github.com/dovecot/imaptest/).
 
-::: tip Note
+::: tip
 This plugin requires the [[plugin,fts]] to be activated and configured
 :::
 
@@ -41,7 +41,7 @@ plugin {
 
 ## Settings
 
-::: tip Note
+::: tip
 The default settings should be fine in most scenarios.
 :::
 

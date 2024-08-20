@@ -1328,7 +1328,7 @@ doveadm mailbox cryptokey generate -u username -UR
 This can be used to generate new user keypair and re-encrypt and create folder
 keys.
 
-::: info Note
+::: info
 You must provide a password if you want to generate password-protected
 keypair right away. You can also use [[doveadm,mailbox cryptokey password]]
 to secure it.
