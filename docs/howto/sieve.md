@@ -122,7 +122,7 @@ if allof ( not header :matches "x-spam-score" "-*",
 }
 ```
 
-::: info Note
+::: info
 Be very careful when matching against spam score headers using
 the relational extension and the i;ascii-numeric comparator. This
 comparator can only be used to match unsigned integers. Strings that do

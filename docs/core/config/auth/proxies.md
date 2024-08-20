@@ -124,7 +124,7 @@ You can use SSL/TLS connection to destination server by returning:
   CA's certs; anything else is exploitable by a man-in-the-middle attack.
   :::
 
-  ::: info NOTE
+  ::: info
   Login processes don't currently use [[setting,ssl_client_ca_dir]] or
   [[setting,ssl_client_ca_file]] settings for verifying the remote certificate,
   mainly because login processes can't really read the files chrooted. You can
@@ -213,7 +213,7 @@ See [[link,forwarding_parameters]] for more details on how this is implemented
 for different protocols, which includes limits to the key and value lengths
 and counts.
 
-::: info Note
+::: info
 Most importantly the IMAP ID command restricts the forward key length
 to just 20 bytes (excluding `forward_` prefix). Larger keys are silently
 dropped.
