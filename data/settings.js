@@ -6171,6 +6171,7 @@ protocol !indexer-worker {
 		values: setting_types.STRING,
 		seealso: [
 			'[[link,mailbox_formats]]',
+			'[[link,mail_location_mailbox_root_autodetection]]',
 			'mail_path',
 		],
 		text: `
@@ -6224,7 +6225,10 @@ This can also be used to specify a different INBOX path with Maildir:
 		tags: [ 'mail-location' ],
 		values: setting_types.STRING,
 		default: '<same as mail_path setting>',
-		seealso: [ '[[link,design_indexes_index_format]]' ],
+		seealso: [
+			'[[link,design_indexes_index_format]]',
+			'[[link,mail_location_index_files]]',
+		],
 		text: `
 Location of [[link,design_indexes_index_format]].`
 	},
