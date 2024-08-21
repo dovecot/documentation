@@ -51,12 +51,18 @@ delivery notifications only, this config should be used:
 
 ```[dovecot.conf]
 protocol lmtp {
-  mail_plugins = $mail_plugins notify push_notification
+  mail_plugins {
+    notify = yes
+    push_notification = yes
+  }
 }
 
 # If notifications are also needed for LDA-based delivery, add:
 protocol lda {
-  mail_plugins = $mail_plugins notify push_notification
+  mail_plugins {
+    notify = yes
+    push_notification = yes
+  }
 }
 ```
 

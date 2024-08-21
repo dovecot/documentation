@@ -21,7 +21,9 @@ a listing of messages that don't exist in a physical mailbox.
 First, you'll have to load the plugin:
 
 ```[dovecot.conf]
-mail_plugins = $mail_plugins virtual
+mail_plugins {
+  virtual = yes
+}
 ```
 
 ### Namespace

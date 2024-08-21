@@ -35,7 +35,10 @@ This allows individual /SEEN information for the public namespace.
 #mail_path = ~/mdbox
 mail_driver = maildir
 mail_path = ~/maildir
-mail_plugins = acl quota
+mail_plugins {
+  acl = yes
+  quota = yes
+}
 
 namespace {
   type = private
@@ -171,12 +174,19 @@ verbose_proctitle = yes
 ::: code-group
 ```[dovecot.conf]
 protocol imap {
-  mail_plugins = $mail_plugins imap_acl imap_quota mail_log notify
+  mail_plugins {
+    imap_acl = yes
+    imap_quota = yes
+    mail_log = yes
+    notify = yes
+  }
 }
 
 protocol lmtp {
   postmaster_address = postmaster@domainname   # required on my debian
-  mail_plugins = $mail_plugins sieve
+  mail_plugins {
+    sieve = yes
+  }
 }
 ```
 :::

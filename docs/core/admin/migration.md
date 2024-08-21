@@ -271,7 +271,9 @@ namespace {
 }
 
 protocol doveadm {
-  mail_plugins = $mail_plugins pop3_migration
+  mail_plugins {
+    pop3_migration = yes
+  }
 }
 
 plugin {

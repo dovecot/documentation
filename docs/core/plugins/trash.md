@@ -26,7 +26,10 @@ Example:
 
 ::: code-group
 ```[dovecot.conf]
-mail_plugins = $mail_plugins quota trash
+mail_plugins {
+  quota = yes
+  trash = yes
+}
 
 plugin {
   trash = /etc/dovecot/dovecot-trash.conf.ext

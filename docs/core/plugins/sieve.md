@@ -34,11 +34,15 @@ Then, you need to enable the Sieve plugin in your configuration:
 
 ```[dovecot.conf]
 protocol lda {
-  mail_plugins = $mail_plugins sieve
+  mail_plugins {
+    sieve = yes
+  }
 }
 
 protocol lmtp {
-  mail_plugins = $mail_plugins sieve
+  mail_plugins {
+    sieve = yes
+  }
 }
 ```
 
