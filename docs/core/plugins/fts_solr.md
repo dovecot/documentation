@@ -149,7 +149,10 @@ See [soft commits](#soft-commits) for additional information.
 ## Example Configuration
 
 ```[dovecot.conf]
-mail_plugins = $mail_plugins fts fts_solr
+mail_plugins {
+  fts = yes
+  fts_solr = yes
+}
 
 plugin {
   fts = solr

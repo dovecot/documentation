@@ -42,7 +42,10 @@ Plugin support can be enabled at protocol level for [[plugin,quota]] and
 protocol lmtp {
   # REQUIRED
   postmaster_address = postmaster@domainname
-  mail_plugins = quota sieve
+  mail_plugins {
+    quota = yes
+    sieve = yes
+  }
 }
 ```
 

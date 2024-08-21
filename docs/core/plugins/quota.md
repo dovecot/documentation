@@ -55,12 +55,16 @@ Enable in configuration files, e.g.:
 
 ```[dovecot.conf]
 # Enable quota plugin for tracking and enforcing the quota.
-mail_plugins = $mail_plugins quota
+mail_plugins {
+  quota = yes
+}
 
 protocol imap {
   # Enable the IMAP QUOTA extension, allowing IMAP clients to ask for the
   # current quota usage.
-  mail_plugins = $mail_plugins imap_quota
+  mail_plugins {
+    imap_quota = yes
+  }
 }
 
 plugin {
@@ -410,9 +414,13 @@ subscriptions file.
 #### Configuration Examples
 
 ```[dovecot.conf]
-mail_plugins = $mail_plugins quota
+mail_plugins {
+  quota = yes
+}
 protocol imap {
-  mail_plugins = mail_plugins imap_quota
+  mail_plugins {
+    imap_quota = yes
+  }
 }
 
 plugin {
