@@ -1645,26 +1645,6 @@ and other users none. Mailboxes in public namespaces don't have owners, so
 by default no one can access them.`
 	},
 
-	acl_ignore_namespace: {
-		plugin: 'acl',
-		values: setting_types.STRING,
-		text: `
-Ignore ACLs entirely for the given namespace.
-
-You can define multiple namespaces by appending an increasing number to
-the setting name.
-
-Example:
-
-\`\`\`
-plugin {
-  acl_ignore_namespace = virtual/
-  # Ignore shared/ and all its (autocreated) child namespaces
-  acl_ignore_namespace2 = shared/*
-}
-\`\`\``
-	},
-
 	acl_ignore: {
 		added: {
 			settings_acl_global_settings_added: false,
@@ -1701,26 +1681,6 @@ Example:
 acl_sharing_map {
   dict_driver = file
   dict_file_path = /var/lib/dovecot/shared-mailboxes
-}
-\`\`\``
-	},
-
-	acl_shared_dict: {
-		plugin: 'acl',
-		values: setting_types.STRING,
-		seealso: [ '[[link,dict]]' ],
-		text: `
-A shared mailbox dictionary that defines which users may LIST mailboxes
-shared by other users.
-
-See [[link, shared_mailboxes_listing]] for further details on the contents
-of the dictionary entries.
-
-Example:
-
-\`\`\`
-plugin {
-  acl_shared_dict = file:/var/lib/dovecot/shared-mailboxes
 }
 \`\`\``
 	},
