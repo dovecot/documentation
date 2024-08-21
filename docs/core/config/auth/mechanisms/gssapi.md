@@ -76,7 +76,9 @@ KVNO Principal
 Once you have a keytab, configure GSSAPI on Dovecot.
 
 ```[dovecot.conf]
-auth_mechanisms = $auth_mechanisms gssapi
+auth_mechanisms = {
+  gssapi = yes
+}
 auth_gssapi_hostname = hostname-from-spn # or "$ALL"
 auth_krb5_keytab = /etc/dovecot/keytab
 ```
