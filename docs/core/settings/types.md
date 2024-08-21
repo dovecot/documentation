@@ -86,12 +86,12 @@ The size value type is base 2, meaning a kilobyte equals 1024 bytes.
 
 The Time value is used in Dovecot configuration to define the amount of Time
 taken by something or for doing something, such as a sending or downloading
-file, processing, and more. The Time value supports using suffixes of any of
-the following words:
+file, processing, and more.
+
+The Time value supports using suffixes of any of the following words:
 
 ```
-secs, seconds, mins, minutes, msecs, mseconds, millisecs, milliseconds,
-hours, days, weeks
+secs, seconds, mins, minutes, hours, days, weeks
 ```
 
 ::: tip Note
@@ -108,7 +108,13 @@ For example, to match messages from last week, you may specify:
 
 ## Millisecond Time
 
-Same as [Time](#time), but support milliseconds precision.
+Same as [Time](#time), but additionally supports milliseconds (`ms`) precision.
+
+In addition to Time suffixes, adds support for the following words:
+
+```
+msecs, mseconds, millisecs, milliseconds
+```
 
 ## IP Addresses
 
