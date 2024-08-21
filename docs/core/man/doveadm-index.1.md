@@ -51,10 +51,7 @@ using:
 
 ::: code-group
 ```[/etc/dovecot/conf.d/90-plugin.conf]
-plugin {
-  ...
-  fts_autoindex = yes
-}
+fts_autoindex = yes
 ```
 :::
 

@@ -61,6 +61,13 @@ example, `1min` is accepted as equivalent to `60000000`.
 Event filters support escaping wildcard `*` and `?` characters by prefixing
 them with `\`.
 
+#### Changed types for FTS header settings
+
+| Setting Name | Update |
+| --- | --- |
+| [[setting,fts_header_excludes]] | Changed to [[link,settings_types_boollist]]. |
+| [[setting,fts_header_includes]] | Changed to [[link,settings_types_boollist]]. |
+
 ### Added Features
 
 #### Settings
@@ -152,6 +159,10 @@ See [[setting,imapc_features]].
 | `verbose_ssl` | Use [[setting,log_debug,category=ssl]] instead. |
 | `mail_location` setting & `mail` userdb field | Split into multiple [[link,mail_location,mail_*]] settings. |
 | `listescape` plugin | [[setting,mailbox_list_storage_escape_char]] setting. |
+| `fts` | Replaced by [[setting,fts_driver]]. |
+| `fts_autoindex_exclude` | Replaced by boolean property [[setting,fts_autoindex]], nested inside [[setting,mailbox]] blocks. Note that the values are inverted as compared to those in the old `fts_autoindex_exclude`. |
+| `fts_decoder` | Replaced by [[setting,fts_decoder_driver]] and [[setting,fts_decoder_script_socket_path]]. |
+| `fts_tika` | Replaced by [[setting,fts_decoder_driver]] and [[setting,fts_decoder_tika_url]]. |
 
 #### Other Features
 
@@ -192,7 +203,6 @@ See [[link,sql_cassandra]].
 
 | Setting | Notes |
 | ------- | ------- |
-| [[setting,fts_autoindex_exclude]] | Now honors namespaces. |
 | [[setting,ssl]] | Connections from [[setting,login_trusted_networks]] are now also required to be SSL/TLS encrypted with the setting `ssl=required`. |
 | [[setting,ssl_min_protocol]] | The `SSLv3` option was removed, as it is no longer secure. |
 
