@@ -93,8 +93,8 @@ configuration in easy human readable output.
 :   Show passwords and other sensitive values.
 
 **-x**
-:   Expand configuration variables (e.g. $mail_plugins ⇒ quota) and show
-    file contents (from e.g. ssl_cert = \</etc/ssl/certs/dovecot.pem).
+:   Expand configuration variables (e.g. `$ENV:foo`) and show file contents
+    (from e.g. `ssl_cert = \</etc/ssl/certs/dovecot.pem`).
 
 *section_name*
 :   Show only the current configuration of one or more specified sections.
