@@ -56,12 +56,18 @@ example, `1min` instead of `60000000`.
 Event filters now support escaping wildcard `*` and `?` characters by
 prefixing them with `\`.
 
+#### Changed types for FTS header settings
+
+| Setting Name | Update |
+| --- | --- |
+| [[setting,fts_header_excludes]] | Changed to [[link,settings_types_boollist]]. |
+| [[setting,fts_header_includes]] | Changed to [[link,settings_types_boollist]]. |
+
 ### Added Features
 
 | Feature | Notes |
 | ------- | ----- |
 | `%{ldap_multi}` variable | This variable was added to LDAP configuration file to allow for fetching a multi-valued attribute. See [[link,auth_ldap]]. |
-| [[setting,fts_autoindex_exclude]] | The setting now honors namespaces. |
 | [[setting,submission_add_received_header]] | This setting was added. |
 | [[setting,login_socket_path]] | This setting was added. |
 | `fail_type` parameter to [[setting,auth_policy_request_attributes]] | This parameter was added. |
@@ -118,6 +124,10 @@ prefixing them with `\`.
 | `verbose_ssl` | Use [[setting,log_debug,category=ssl]] instead. |
 | `mail_location` setting & `mail` userdb field | Split into multiple [[link,mail_location,mail_*]] settings. |
 | `listescape` plugin | [[setting,mailbox_list_storage_escape_char]] setting. |
+| `fts` | Replaced by [[setting,fts_driver]]. |
+| `fts_autoindex_exclude` | Replaced by boolean property [[setting,fts_autoindex]], nested inside [[setting,mailbox]] blocks. Note that the values are inverted as compared to those in the old `fts_autoindex_exclude`. |
+| `fts_decoder` | Replaced by [[setting,fts_decoder_driver]] and [[setting,fts_decoder_script_socket_path]]. |
+| `fts_tika` | Replaced by [[setting,fts_decoder_driver]] and [[setting,fts_decoder_tika_url]]. |
 
 ### Changed Default Settings
 
