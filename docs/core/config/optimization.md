@@ -56,7 +56,7 @@ the most useful optimization you can do.
 
 - See [[plugin,fts]] for optimizing IMAP SEARCH command.
 
-- See [[link,pop3]] for POP3 optimizations, especially 
+- See [[link,pop3]] for POP3 optimizations, especially
   [[setting,pop3_no_flag_updates,yes]].
 
 - [[setting,mailbox_list_index,yes]] can help a lot by replying to IMAP STATUS
