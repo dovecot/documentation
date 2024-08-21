@@ -60,10 +60,11 @@ the execution and evaluation of commands and tests respectively.
 
 **-e**
 :   Enables true execution of the set of actions that results from
-    running the script. In combination with the **-l** parameter, the
-    actual delivery of messages can be tested. Note that this will not
-    transmit any messages to remote SMTP recipients. Such actions only
-    print the outgoing message to **stdout**.
+    running the script. Use he **-o** parameter to specify the mail_driver,
+    mail_path and other necessary storage settings. This allows actual delivery
+    of messages can be tested. Note that this will not transmit any messages to
+    remote SMTP recipients. Such actions only print the outgoing message to
+    **stdout**.
 
 **-f** *envelope-sender*
 :   The envelope sender address (return path). This is what Sieve's
@@ -73,14 +74,6 @@ the execution and evaluation of commands and tests respectively.
     "Return-Path:", "Sender:" or "From:" message headers. If none of
     these headers is present either, the sender envelope address defaults
     to *sender@example.com*.
-
-**-l** *mail-location*
-:   The location of the user's mail store. The syntax of this option's
-    *mail-location* parameter is identical to what is used for the
-    mail_location setting in the Dovecot config file. This parameter is
-    typically used in combination with **-e** to test the actual delivery
-    of messages. If **-l** is omitted when **-e** is specified, mail
-    store actions like fileinto and keep are skipped.
 
 **-m** *default-mailbox*
 :   The mailbox where the keep action stores the message. This is "INBOX"
