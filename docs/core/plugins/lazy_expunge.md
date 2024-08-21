@@ -59,7 +59,10 @@ namespace inbox {
   }
 }
 
-mail_plugins = $mail_plugins lazy_expunge acl
+mail_plugins {
+  lazy_expunge = yes
+  acl = yes
+}
 
 # Move messages to an .EXPUNGED mailbox
 lazy_expunge_mailbox = .EXPUNGED

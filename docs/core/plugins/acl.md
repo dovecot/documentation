@@ -55,11 +55,15 @@ plugin should only be loaded inside a `protocol imap {}` block.
 
 ```[dovecot.conf]
 # Enable internal ACL support
-mail_plugins = acl
+mail_plugins {
+  acl = yes
+}
 
 # Enable the IMAP ACL commands
 protocol imap {
-  mail_plugins = $mail_plugins imap_acl
+  mail_plugins {
+    imap_acl = yes
+  }
 }
 
 acl_driver = vfile

@@ -30,7 +30,9 @@ If you provide from [[link,userdb]], use `apparmor_hat=hat`.
 ## Sample Configuration
 
 ```[dovecot.conf]
-mail_plugins = $mail_plugins apparmor
+mail_plugins {
+  apparmor = yes
+}
 
 plugin {
   apparmor_hat = hat_name

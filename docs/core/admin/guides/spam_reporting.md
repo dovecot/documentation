@@ -55,7 +55,9 @@ namespace inbox {
 
 # Setup actions based on message movement
 protocol imap {
-  mail_plugins = $mail_plugins imap_sieve
+  mail_plugins {
+    imap_sieve = yes
+  }
 }
 
 plugin {
@@ -153,7 +155,9 @@ namespace inbox {
 
 # Setup actions based on message movement
 protocol imap {
-  mail_plugins = $mail_plugins imap_sieve
+  mail_plugins {
+    imap_sieve = yes
+  }
 }
 
 plugin {

@@ -5986,8 +5986,9 @@ This setting should only be enabled if you are using multiple servers on NFS.`
 
 	mail_plugins: {
 		seealso: [ 'mail_plugin_dir' ],
-		values: setting_types.STRING,
-		text: `A space-separated list of plugins to load.`
+		values: setting_types.BOOLLIST,
+		text: `
+A list of mail plugins to load.`
 	},
 
 	mail_prefetch_count: {
