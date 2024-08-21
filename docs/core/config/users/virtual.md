@@ -216,7 +216,7 @@ Note that the default [[setting,auth_username_format]] is `%Lu`.
 mail_driver = maildir
 mail_path = /home/%d/%n/Maildir
 
-passdb {
+passdb db1 {
   driver = passwd-file
   args = username_format=%n /home/%d/etc/shadow
 }
@@ -237,7 +237,7 @@ get Dovecot running is to use the [[link,auth_staticdb,static userdb]].
 mail_driver = maildir
 mail_path = ~/Maildir
 
-passdb {
+passdb db1 {
   driver = pam
 }
 
@@ -259,18 +259,18 @@ after doing virtual user lookup.
 
 ```[dovecot.conf]
 ## Your virtual passdb
-passdb {
+passdb db1 {
   driver = ldap
   args = /path/to/ldap/config
 }
 
-passdb {
+passdb db2 {
   driver = static
   args = user=%Ld noauthenticate
   skip = authenticated
 }
 
-passdb {
+passdb db3 {
   driver = pam
   skip = authenticated
 }

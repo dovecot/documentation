@@ -39,7 +39,7 @@ Examples:
 * Use `/etc/pam.d/imap` and `/etc/pam.d/pop3`:
 
   ```[dovecot.conf]
-  passdb {
+  passdb db1 {
     driver = pam
     args = %s
   }
@@ -48,7 +48,7 @@ Examples:
 * Use `/etc/pam.d/mail`:
 
   ```[dovecot.conf]
-  passdb {
+  passdb db1 {
     driver = pam
     args = mail
   }
@@ -63,7 +63,7 @@ session and close it immediately. Some PAM plugins need this, for instance
 Example:
 
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = pam
   args = session=yes dovecot
 }
@@ -87,7 +87,7 @@ can limit the number of lookups done by the auth worker process before it
 dies:
 
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = pam
   args = max_requests=100
 }
@@ -105,7 +105,7 @@ You can replace the default "Authentication failed" reply with PAM's failure
 reply by setting:
 
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = pam
   args = failure_show_msg=yes
 }
@@ -124,7 +124,7 @@ you're supposed to give:
 You can restrict the IP-Addresses allowed to connect via PAM:
 
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = pam
   override_fields = allow_nets=10.1.100.0/23,2001:db8:a0b:12f0::/64
 }
@@ -154,7 +154,7 @@ Examples:
 ```[dovecot.conf]
 # 1MB auth cache size
 auth_cache_size = 1024
-passdb {
+passdb db1 {
   driver = pam
   # username and service
   args = cache_key=%u%s *
@@ -164,7 +164,7 @@ passdb {
 ```[dovecot.conf]
 # 1MB auth cache size
 auth_cache_size = 1024
-passdb {
+passdb db1 {
   driver = pam
   # username, remote IP and local IP
   args = cache_key=%u%r%l dovecot
@@ -219,7 +219,7 @@ versions of OS X (e.g. 10.4), can be represented (where?) as the following in
 the on that OS:
 
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = pam
   args = login
 }
