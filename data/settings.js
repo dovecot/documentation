@@ -3241,15 +3241,15 @@ auth_master_user_separator = *
 
 	auth_mechanisms: {
 		default: 'plain',
-		values: setting_types.ENUM,
-		values_enum: [ 'plain', 'login', 'digest-md5', 'cram-md5', 'ntlm', 'rpa', 'apop', 'anonymous', 'gssapi', 'otp', 'skey', 'gss-spnego' ],
+		values: setting_types.BOOLLIST,
+		seealso: [ '[[link,authentication_mechanisms]]' ],
 		text: `
 Here you can supply a space-separated list of the authentication
 mechanisms you wish to use.
 
 Example:
 
-\`\`\`
+\`\`\`[dovecot.conf]
 auth_mechanisms = plain login
 \`\`\``
 	},

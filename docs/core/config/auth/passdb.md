@@ -394,7 +394,7 @@ If set, explicitly fails the `passdb` lookup.
 
 #### `k5principals`
 
-If using `auth_mechanisms = gssapi`, may contain Kerberos v5 principals
+If using [[setting,auth_mechanisms,gssapi]], may contain Kerberos v5 principals
 allowed to map to the current user, bypassing the internal call to
 `krb5_kuserok()`. The database must support credentials lookup.
 
