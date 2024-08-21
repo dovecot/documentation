@@ -1528,6 +1528,29 @@ being configured.`
 	/* acl plugin */
 
 	acl: {
+		added: {
+			settings_acl_global_settings_added: false,
+		},
+		plugin: 'acl',
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'acl_id' ,'acl_rights' ],
+		text: `
+Specifies an ACL entry on global, namespace or mailbox level. The filter name
+refers to the [[setting,acl_id]] setting.
+
+Has two settings:
+
+[[setting, acl_id]]
+:    The identifier in ACL.
+
+[[setting,acl_rights]]
+:   The permission to grant - or deny - for this user.`
+	},
+
+	acl_driver: {
+		added: {
+			settings_acl_global_settings_added: false,
+		},
 		plugin: 'acl',
 		values: setting_types.STRING,
 		text: `
@@ -1536,8 +1559,8 @@ plugin is disabled.
 
 The format is:
 
-\`\`\`
-backend[:option[:option...]]
+\`\`\`[dovecot.conf]
+backend
 \`\`\`
 
 Currently, there is a single backend available: \`vfile\`. This backend
@@ -1547,26 +1570,43 @@ supports two ways of defining the ACL configuration:
 
 - *per-mailbox*: Each mailbox has separate ACL rules. They are stored in a
   \`dovecot-acl\` file in each mailbox (or [[setting,mail_control_path]])
-  directory. This is the default.
+  directory. This is the default.`
+	},
 
-This backend has the following options:
+	acl_id: {
+		added: {
+			settings_acl_global_settings_added: false,
+		},
+		plugin: 'acl',
+		values: setting_types.STRING,
+		seealso: [ 'acl', '[[link,acl_file_format]]' ],
+		text: `
+Specifies identity to match. See [[link,acl_file_format]] for values. The
+[[setting,acl]] filter name refers to this setting.`
+	},
 
-| Name | Description |
-| ---- | ----------- |
-| \`<global_path>\` | If a path is defined, this is the location of the global ACL configuration file. |
-| \`cache_secs\` | The interval, in seconds, for running stat() on the ACL file to check for changes. DEFAULT: \`30\` |
+	acl_rights: {
+		added: {
+			settings_acl_global_settings_added: false,
+		},
+		plugin: 'acl',
+		values: setting_types.STRING,
+		seealso: [ 'acl', '[[link,acl_file_format]]' ],
+		text: `
+Specifies rights for this acl. See [[link,acl_file_format]] for values. This is
+usually used in [[setting,acl]] block.`
+	},
 
-Example:
-
-\`\`\`
-plugin {
-  # Per-user ACL:
-  acl = vfile
-
-  # Global ACL; check for changes every minute
-  #acl = vfile:/etc/dovecot/dovecot-acl:cache_secs=60
-}
-\`\`\``
+	acl_global_path: {
+		added: {
+			settings_acl_global_settings_added: false,
+		},
+		plugin: 'acl',
+		values: setting_types.STRING,
+		seealso: [ 'acl' ],
+		text: `
+Location of global ACL configuration file. This option is deprecated, you
+should use [[setting,acl]] instead.`
 	},
 
 	acl_defaults_from_inbox: {
@@ -1621,6 +1661,46 @@ plugin {
   acl_ignore_namespace = virtual/
   # Ignore shared/ and all its (autocreated) child namespaces
   acl_ignore_namespace2 = shared/*
+}
+\`\`\``
+	},
+
+	acl_ignore: {
+		added: {
+			settings_acl_global_settings_added: false,
+		},
+		plugin: 'acl',
+		values: setting_types.BOOLEAN,
+		text: `
+Can be used in global config, namespace, or mailbox level to ignore ACLs.
+
+\`\`\`[dovecot.conf]
+namespace ignore {
+  acl_ignore = yes
+}
+\`\`\``
+	},
+
+	acl_sharing_map: {
+		added: {
+			settings_acl_global_settings_added: false,
+		},
+		plugin: 'acl',
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,dict]]' ],
+		text: `
+A shared mailbox dictionary that defines which users may LIST mailboxes
+shared by other users.
+
+See [[link, shared_mailboxes_listing]] for further details on the contents
+of the dictionary entries.
+
+Example:
+
+\`\`\`[dovecot.conf]
+acl_sharing_map {
+  dict_driver = file
+  dict_file_path = /var/lib/dovecot/shared-mailboxes
 }
 \`\`\``
 	},
