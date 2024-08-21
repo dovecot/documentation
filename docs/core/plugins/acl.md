@@ -6,6 +6,12 @@ dovecotlinks:
   acl_global_file:
     hash: global-acl-file
     text: global ACL file
+  acl_file_format:
+    hash: acl-file-format
+    text: ACL File Format
+  acl_imap_acls:
+    hash: imap-acls
+    text: IMAP ACLs
   acl_inheritance:
     hash: acl-inheritance-and-default-acls
     text: ACL Inheritance
