@@ -75,7 +75,7 @@ service:
 
 ### Submission Service
 
-Just add `submission` to the `protocols=` setting and configure the relay
+Add `submission` to the [[setting,protocols]] setting and configure the relay
 MTA server.
 
 The submission service is a login service, just like IMAP, POP3 and
