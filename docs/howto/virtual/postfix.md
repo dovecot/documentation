@@ -85,7 +85,7 @@ quotas or mailbox formats.
 ```[dovecot.conf]
 auth_mechanisms = plain
 
-passdb {
+passdb db1 {
   driver = passwd-file
   args = username_format=%u /var/vmail/auth.d/%d/passwd
 }
