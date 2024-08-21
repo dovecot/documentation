@@ -145,8 +145,8 @@ Set this field only if it hasn't been set before.
 
 Remove this field entirely.
 
-For example you can return `mail_plugins:remove` to the `mail_plugins`
-field. This differs from `mail_plugins=` in that the field is removed
+For example you can return `uid:remove` to remove the `uid` field from the
+userdb reply. This differs from `uid=` in that the field is removed
 entirely (and default is used) instead of just being set to an empty value.
 
 ### Fields
