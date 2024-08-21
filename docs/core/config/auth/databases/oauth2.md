@@ -25,7 +25,7 @@ auth_mechanisms = {
   xoauth2 = yes
 }
 
-passdb {
+passdb db1 {
   driver = oauth2
   mechanisms = xoauth2 oauthbearer
   args = /etc/dovecot/dovecot-oauth2.conf.ext
@@ -81,7 +81,7 @@ various ways.
 Without proxy authentication:
 
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = static
   args = nopassword=y proxy=y proxy_mech=%m ...
 }
@@ -99,13 +99,13 @@ If you want to configure proxy to get token and pass it to backend:
 
 ::: code-group
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = oauth2
   mechanisms = oauthbearer xoauth2
   args = /usr/local/etc/dovecot/dovecot-oauth2.token.conf.ext
 }
 
-passdb {
+passdb db2 {
   driver = oauth2
   mechanisms = plain login
   args = /usr/local/etc/dovecot/dovecot-oauth2.plain.conf.ext

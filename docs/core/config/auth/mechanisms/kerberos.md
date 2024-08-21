@@ -115,7 +115,7 @@ auth_gssapi_hostname = "$ALL"
 auth_mechanisms = gssapi
 auth_krb5_keytab = /etc/dovecot/dovecot.keytab
 
-passdb {
+passdb db1 {
   driver = pam
 }
 userdb db1 {
@@ -143,7 +143,7 @@ account sufficient pam_krb5.so
 Then enable PAM passdb:
 
 ```
-passdb {
+passdb db1 {
   driver = pam
 }
 ```
