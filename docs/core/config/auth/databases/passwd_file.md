@@ -74,7 +74,7 @@ passdb {
   driver = passwd-file
   args = scheme=plain-md5 username_format=%n /etc/imap.passwd
 }
-userdb {
+userdb db1 {
   driver = passwd-file
   args = username_format=%n /etc/imap.passwd
   default_fields = uid=vmail gid=vmail home=/home/vmail/%u
@@ -147,7 +147,7 @@ passdb {
   args = username_format=%n /path/to/file-with-encrypted-passwords
 }
 
-userdb {
+userdb db1 {
   driver = passwd-file
   args = username_format=%n /path/to/file-with-encrypted-passwords
 }

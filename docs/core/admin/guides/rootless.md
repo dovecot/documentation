@@ -137,7 +137,7 @@ The important settings to change for rootless installation are:
     args = /home/user/dovecot/etc/passwd
   }
 
-  userdb {
+  userdb db1 {
     driver = passwd
   }
   ```

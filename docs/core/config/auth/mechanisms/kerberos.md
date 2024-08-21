@@ -97,7 +97,7 @@ auth_gssapi_hostname = "$ALL"
 auth_mechanisms = gssapi
 auth_krb5_keytab = /etc/dovecot/dovecot.keytab
 
-userdb {
+userdb db1 {
   driver = static
   args = uid=vmail gid=vmail home=/var/vmail/%u
 }
@@ -118,7 +118,7 @@ auth_krb5_keytab = /etc/dovecot/dovecot.keytab
 passdb {
   driver = pam
 }
-userdb {
+userdb db1 {
   driver = passwd
 }
 ```

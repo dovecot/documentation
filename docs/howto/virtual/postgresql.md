@@ -284,7 +284,7 @@ passdb {
   args = /usr/local/etc/dovecot-sql.conf
 }
 
-userdb {
+userdb db1 {
   driver = sql
   args = /usr/local/etc/dovecot-sql.conf
 }

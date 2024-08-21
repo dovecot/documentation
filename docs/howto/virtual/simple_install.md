@@ -66,7 +66,7 @@ passdb {
   args = /etc/dovecot/passwd
 }
 
-userdb {
+userdb db1 {
   driver = static
   args = uid=vmail gid=vmail home=/home/vmail/%u
 }
