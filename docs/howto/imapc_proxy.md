@@ -58,7 +58,7 @@ This is based on already having Dovecot already compiled and installed.
      default_fields = userdb_imapc_user=%u userdb_imapc_password=%w
    }
 
-   userdb {
+   userdb db1 {
      driver = prefetch
    }
 
