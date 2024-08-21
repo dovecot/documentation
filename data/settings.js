@@ -1737,58 +1737,35 @@ plugin {
 	fts_autoindex: {
 		default: 'no',
 		plugin: 'fts',
-		seealso: [ 'fts_autoindex_exclude', 'fts_autoindex_max_recent_msgs' ],
+		seealso: [ 'fts_autoindex_max_recent_msgs' ],
 		values: setting_types.BOOLEAN,
 		text: `
-If enabled, index mail as it is delivered or appended.`
-	},
+If enabled, index mail as it is delivered or appended.
 
-	fts_autoindex_exclude: {
-		plugin: 'fts',
-		seealso: [ 'fts_autoindex' ],
-		values: setting_types.STRING,
-		changed: {
-			settings_fts_autoindex_exclude_namespaces_changed: 'This setting now honors namespaces for mailbox names.'
-		},
-		text: `
-To exclude a mailbox from automatic indexing, it can be listed in this
-setting.
+It can be overridden at the mailbox level, e.g. you can disable autoindexing
+for selected mailboxes using this setting:
 
-To exclude additional mailboxes, add sequential numbers to the end of the
-plugin name.
+Example:
 
-Use either mailbox names or special-use flags (e.g. \`\Trash\`).
+\`\`\`[dovecot.conf]
+fts_autoindex = yes
 
-For example:
+# ...
 
-\`\`\`
-plugin {
-  fts_autoindex_exclude = \Junk
-  fts_autoindex_exclude2 = \Trash
-  fts_autoindex_exclude3 = External Accounts/*
+mailbox trash {
+  special_use = \Trash
+  fts_autoindex = no
 }
-\`\`\`
 
-This setting matches also the namespace prefix in folder names.
+mailbox spam {
+  special_use = \Junk
+  fts_autoindex = no
+}
 
-Namespaces match as follows:
-
-- The full folder name, including the namespace prefix.
-
-  For example \`fts_autoindex_exclude = Public/incoming\`
-  would match the \`incoming\` folder in the \`Public/\` namespace.
-
-- For \`inbox=yes\` namespace, the folder name without the namespace prefix.
-
-  For example \`fts_autoindex_exclude = incoming\` would match the \`incoming\`
-  folder in the INBOX namespace, but not in the \`Public/\` namespace.
-
-- The folder names support \`*\` and \`?\` wildcards.
-
-  Namespace prefixes must NOT be specified and will not match for:
-
-  - the \`INBOX\` folder
-  - special-use flags (e.g. \`\Trash\`)`
+mailbox storage/* {
+  fts_autoindex = no
+}
+\`\`\``
 	},
 
 	fts_autoindex_max_recent_msgs: {
@@ -1812,19 +1789,29 @@ search on them is performed.
 
 Example:
 
-\`\`\`
-plugin {
-  fts_autoindex_max_recent_msgs = 999
-}
+\`\`\`[dovecot.conf]
+fts_autoindex_max_recent_msgs = 999
 \`\`\``
 	},
 
-	fts_decoder: {
+	fts_decoder_driver: {
+		plugin: 'fts',
+		values: setting_types.ENUM,
+		values_enum: [ 'script', 'tika' ],
+		text: `
+Optional setting. If set, decode attachments to plaintext using the selected
+service and index the resulting plaintext.`
+	},
+
+	fts_decoder_script_socket_path: {
+		changed: {
+			settings_fts_decoder_script_socket_path_changed: `
+Renamed from \`fts_decoder\`.`
+		},
 		plugin: 'fts',
 		values: setting_types.STRING,
 		text: `
-Decode attachments to plaintext using this service and index the resulting
-plaintext.
+Name of the script service used to decode the attachments.
 
 See the \`decode2text.sh\` script included in Dovecot for how to use this.
 
@@ -1842,9 +1829,16 @@ service decode2text {
 	mode = 0666
   }
 }
-\`\`\`
+\`\`\``
+	},
 
-This setting and [[setting,fts_tika]] cannot be used simultaneously.`
+	fts_driver: {
+		plugin: 'fts',
+		values: setting_types.ENUM,
+		values_enum: [ 'dovecot', 'solr', 'flatcurve' ],
+		text: `
+Name of the backend implementation used to perform [[plugin,fts]] indexing. If
+not specified, [[plugin,fts]] is disabled.`
 	},
 
 	fts_enforced: {
@@ -1900,9 +1894,9 @@ See [[plugin,fts,filters]] for configuration information.`
 
 	fts_header_excludes: {
 		plugin: 'fts',
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-The list of headers to, respectively, include or exclude.
+The list of headers to include or exclude.
 
 - The default is the preexisting behavior, i.e. index all headers.
 - \`includes\` take precedence over \`excludes\`: if a header matches both,
@@ -1913,11 +1907,19 @@ The list of headers to, respectively, include or exclude.
 - The asterisk can only be used at the end of the header name.
   Prefix and infix usage of asterisk are not supported.
 
-::: info EXAMPLE
-\`\`\`
-plugin {
-  fts_header_excludes = Received DKIM-* X-* Comments
-  fts_header_includes = X-Spam-Status Comments
+Example:
+
+\`\`\`[dovecot.conf]
+fts_header_excludes {
+  Received = yes
+  DKIM-* = yes
+  X-* = yes
+  Comments = yes
+}
+
+fts_header_includes {
+  X-Spam-Status = yes
+  Comments = yes
 }
 \`\`\`
 
@@ -1927,23 +1929,33 @@ plugin {
   - \`Comments\` and \`X-Spam-Status\` are indexed anyway, as they match
     **both** \`excludes\` and \`includes\` lists.
   - All other headers are indexed.
-:::
 
-::: info EXAMPLE
-\`\`\`
-plugin {
-  fts_header_excludes = *
-  fts_header_includes = From To Cc Bcc Subject Message-ID In-* X-CustomApp-*
+Example:
+
+\`\`\`[dovecot.conf]
+fts_header_excludes {
+  * = yes
+}
+
+fts_header_includes {
+  From = yes
+  To = yes
+  Cc = yes
+  Bcc = yes
+  Subject = yes
+  Message-ID = yes
+  In-* = yes
+  X-CustomApp-* = yes
 }
 \`\`\`
 
 - No headers are indexed, except those specified in the \`includes\`.
-:::`
+`
 	},
 
 	fts_header_includes: {
 		plugin: 'fts',
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		seealso: [ 'fts_header_excludes' ],
 		text: ``
 	},
@@ -2026,9 +2038,13 @@ plugin {
 		text: `Maximum body size that is processed by fts. \`0\` means unlimited.`
 	},
 
-	fts_tika: {
-		changed: {
+	fts_decoder_tika_url: {
+		added: {
 			settings_fts_tika_changed_auth: `Basic authentication support (via URL) is added.`
+		},
+		changed: {
+			settings_fts_decoder_tika_url_changed: `
+Renamed from \`fts_tika\`.`
 		},
 		plugin: 'fts',
 		values: setting_types.STRING,
@@ -2037,13 +2053,10 @@ URL for [Apache Tika](https://tika.apache.org/) decoder for attachments.
 
 Example:
 
-\`\`\`
-plugin {
-  fts_tika = http://tikahost:9998/tika/
-}
-\`\`\`
-
-This setting and [[setting,fts_decoder]] cannot be used simultaneously.`
+\`\`\`[dovecot.conf]
+fts_decoder_driver = tika
+fts_decoder_tika_url = http://tikahost:9998/tika/
+\`\`\``
 	},
 
 	fts_tokenizers: {

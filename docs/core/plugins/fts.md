@@ -118,12 +118,9 @@ To disable this functionality, enable [[setting,fts_enforced]].
 Attachments can be indexed either via a script that translates the attachment
 to UTF-8 plaintext or [Apache Tika](https://tika.apache.org/) server.
 
-* [[setting,fts_decoder]]: Use decoder script.
-* [[setting,fts_tika]]: Use Apache Tika server.
-
-::: warning
-[[setting,fts_decoder]] and [[setting,fts_tika]] cannot be used simultaneously.
-:::
+* [[setting,fts_decoder_driver]]
+* [[setting,fts_decoder_script_socket_path]]
+* [[setting,fts_decoder_tika_url]]
 
 ## Rescan
 
