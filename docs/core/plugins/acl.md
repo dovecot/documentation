@@ -62,20 +62,45 @@ protocol imap {
   mail_plugins = $mail_plugins imap_acl
 }
 
-plugin {
-  acl = vfile
+acl_driver = vfile
+# If enable, don't try to find dovecot-acl files from mailbox directories.
+# This reduces unnecessary disk I/O when only global ACLs are used.
+# (v2.2.31+)
+acl_globals_only = yes
 
-  # If enabled, don't try to find dovecot-acl files from mailbox directories.
-  # This reduces unnecessary disk I/O when only global ACLs are used.
-  #acl_globals_only = yes
+namespace inbox [
+  inbox = yes
+  mailbox Foo {
+    acl owner {
+      rights = lr
+    }
+  }
 
-  # Namespace prefix to ignore. Use counter to ignore multiple, e.g.
-  #   acl_ignore_namespace2
-  #acl_ignore_namespace =
-
-  # Dict for mapping which users have shared mailboxes to each other.
-  #acl_shared_dict =
+  acl user=admin {
+    rights = lwristepai
+ }
+ ## Set this to yes to ignore ACLS for this namespace
+ #acl_ignore = yes
 }
+
+## setting ACLs here will affect all shared mailboxes
+namespace shared {
+  mailbox Public {
+    acl anyone {
+      rights = lr
+    }
+  }
+}
+
+# Dict for mapping which users have shared mailboxes to each other.
+#acl_sharing_map {
+#  dict_driver = file
+#  dict_file_path = /var/lib/dovecot/dovecot-acl.db
+#}
+
+# ACL username
+# defaults to master_user, but if it expands to empty, will use current user.
+#acl_username = %{master_user}
 ```
 
 ## Master Users
@@ -269,10 +294,11 @@ Placing the ACL file makes the ACL effective, but Dovecot doesn't take care of
 the user to shared mailboxes mapping out of the box, and as a result, it won't
 publish shared mailboxes to clients if this is not set up. You have to
 configure this manually by defining an appropriate [[link,dict]] to
-store the map using [[setting,acl_shared_dict]].
+store the map using [[setting,acl_sharing_map]].
 
 ```[dovecot.conf]
-plugin {
-  acl_shared_dict = file:/var/lib/dovecot/dovecot-acl.db
+acl_sharing_map {
+  dict_driver = file
+  dict_file_path = /var/lib/dovecot/dovecot-acl.db
 }
 ```

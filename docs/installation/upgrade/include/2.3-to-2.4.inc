@@ -82,7 +82,7 @@ prefixing them with `\`.
 | XZ Compression | You need to perform migration using different plugin. With maildir, you can try uncompressing all your mail and compressing them with another algorithm while Dovecot is not running. |
 | `auth_worker_max_count` | Use [[link,service_configuration,service-specific process limit]]. |
 | Weak password schemes | Weak password schemes are disabled by default, you need to use [[setting,auth_allow_weak_schemes]] to enable them. |
-| Global ACL directory | Use [[link,acl_global_file]] instead. See [below](#use-global-acl-files-instead-of-global-acl-directories) for details on migration. |
+| Global ACL directory | See [Use Inline ACLs Instead of Global ACL Files or Directories](#use-inline-acls-instead-of-global-acl-files-or-directories) below. |
 | `ssl-parameters.dat` | This file is no longer converted automatically by config process, you need to set [[setting,ssl_dh]] setting if you need non-ECC Diffie-Hellman. |
 | shadow auth driver | Use [[link,auth_pam]] instead. |
 | old-stats plugin | Use [[link,stats]] instead. `auth_stats` setting has been removed too. |
@@ -173,16 +173,7 @@ This will always be subject to user database lookup and requires access to auth 
 
 Added the `--no-userdb-lookup` parameter to doveadm mail commands.
 
-### Use Global ACL Files instead of Global ACL Directories
-
-To migrate the ACL directories into their respective files you have to do the
-following:
-
-1. create a new consolidated [[link,acl_global_file]],
-2. for each subdirectory in the currently configured ACL directory add a line
-   starting with the mailbox name followed by the appropriate content,
-3. change the vfile parameter to the new ACL file, and finally
-4. remove the old ACL directory parent.
+### Use Inline ACLs Instead of Global ACL Files or Directories
 
 #### Example
 
@@ -216,32 +207,55 @@ user=kim lrw
 ```
 :::
 
-You have to create the new ACL file:
+You have to create the new ACLs to `dovecot.conf`:
 
-::: code-group
-```[/etc/dovecot/dovecot-acl]
-# previously from /etc/dovecot/acls/INBOX
-INBOX owner lrwstipekxa
-INBOX anyone lr
-INBOX user=kim l
-# previously from /etc/dovecot/acls/foo/.DEFAULT
-INBOX/foo user=timo lr
-INBOX/foo user=kim lrw
-# previously from /etc/dovecot/acls/foo/bar
-INBOX/foo/bar user=kim lrw
+```[dovecot.conf]
+namespace inbox {
+  # previously from /etc/dovecot/acls/INBOX
+  mailbox INBOX {
+    acl owner {
+      rights = lrwstipekxa
+    }
+    acl anyone {
+      rights = lr
+    }
+    acl user=kim {
+      rights = l
+    }
+  }
+  # previously from /etc/dovecot/acls/foo/.DEFAULT
+  mailbox INBOX/foo {
+    acl user=timo {
+      rights = lr
+    }
+    acl user=kim {
+      rights = lrw
+    }
+  }
+  # previously from /etc/dovecot/acls/foo/bar
+  mailbox INBOX/foo/bar {
+    acl user=kim {
+      rights = lrw
+    }
+  }
 ```
-:::
 
 Note that at this point you could simplify specific rules, e.g. use mailbox
-name wildcards to replace lines for a specific user: `INBOX/* user=kim lrw`.
+name wildcards to replace lines for a specific user:
+
+```[dovecot.conf]
+mailbox INBOX/* {
+  acl user=kim {
+    rights = lrw
+  }
+}
+```
 
 And re-configure the ACL plugin:
 
-::: code-group
 ```[dovecot.conf]
-plugin {
-  acl = vfile:/etc/dovecot/dovecot-acl
-}
+acl_driver = vfile
+acl_globals_only = yes
 ```
 
 Afterwards you can remove the old global ACL directory parent:
