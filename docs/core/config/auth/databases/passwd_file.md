@@ -60,7 +60,7 @@ set this to `%n`.
 You can use all [[variable]] in the passwd-file filenames, for example:
 
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = passwd-file
   # Each domain has a separate passwd-file:
   args = /etc/auth/%d/passwd
@@ -70,7 +70,7 @@ passdb {
 ### Examples
 
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = passwd-file
   args = scheme=plain-md5 username_format=%n /etc/imap.passwd
 }
@@ -142,7 +142,7 @@ The following will work in many situations, after disabling the inclusion of
 other `userdb` and `passdb` sections:
 
 ```
-passdb {
+passdb db1 {
   driver = passwd-file
   args = username_format=%n /path/to/file-with-encrypted-passwords
 }

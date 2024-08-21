@@ -42,13 +42,13 @@ mail_driver = maildir
 mail_path = ~/Maildir
 
 # try to authenticate using SQL database first
-passdb {
+passdb db1 {
   driver = sql
   args = /etc/dovecot/dovecot-sql.conf.ext
 }
 
 # fallback to PAM
-passdb {
+passdb db2 {
   driver = pam
 }
 
