@@ -156,7 +156,9 @@ unencrypted on the server.
 Example config for folder keys with Maildir:
 
 ```[dovecot.conf]
-mail_plugins = $mail_plugins mail_crypt
+mail_plugins {
+  mail_crypt = yes
+}
 mail_attribute {
   dict_driver = file
   dict_file_path = %h/Maildir/dovecot-attributes
@@ -173,7 +175,9 @@ encrypted on the server.
 Example config for mandatory encrypted folder keys with Maildir:
 
 ```[dovecot.conf]
-mail_plugins = $mail_plugins mail_crypt
+mail_plugins {
+  mail_crypt = yes
+}
 mail_attribute {
   dict_driver = file
   dict_file_path = %h/Maildir/dovecot-attributes
@@ -247,7 +251,9 @@ openssl pkey -in ecprivkey.pem -pubout -out ecpubkey.pem
 These keys can now be used with this configuration:
 
 ```[dovecot.conf]
-mail_plugins = $mail_plugins mail_crypt
+mail_plugins {
+  mail_crypt = yes
+}
 
 crypt_global_public_key = <rsapubkey.pem
 crypt_global_private_key main {
@@ -328,7 +334,9 @@ openssl pkey -in rsaprivkey.pem -pubout -out rsapubkey.pem
 These keys can then be used with this configuration:
 
 ```[dovecot.conf]
-mail_plugins = $mail_plugins mail_crypt
+mail_plugins {
+  mail_crypt = yes
+}
 
 crypt_global_public_key = <rsapubkey.pem
 crypt_global_private_key main {
@@ -351,7 +359,9 @@ base64 -d ecprivkey.pem | openssl ec -pubout | base64 -w0 > ecpubkey.pem
 ```
 
 ```[dovecot.conf]
-mail_plugins = $mail_plugins mail_crypt
+mail_plugins {
+  mail_crypt = yes
+}
 crypt_global_private_key main {
   # create the filter, but leave its settings empty
 }

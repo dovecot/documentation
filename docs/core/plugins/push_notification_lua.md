@@ -29,7 +29,12 @@ Lua push notification handler requires [[plugin,push-notification]],
 ## Example Configuration
 
 ```[dovecot.conf]
-mail_plugins = $mail_plugins mail_lua notify push_notification push_notification_lua
+mail_plugins {
+  mail_lua = yes
+  notify = yes
+  push_notification = yes
+  push_notification_lua = yes
+}
 
 push_notification lua {
   lua_path = /path/to/lua/script
