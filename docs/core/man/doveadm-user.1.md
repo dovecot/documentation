@@ -27,7 +27,7 @@ database and you are using %variables, like **%s** or **%l**, in the
 like this:
 
 ```
-userdb {
+userdb db1 {
   driver = passwd-file
   args = /etc/%s.passwd
 }
