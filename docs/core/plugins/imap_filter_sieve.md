@@ -40,7 +40,9 @@ The IMAP FILTER Sieve plugin is activated by adding it to the
 
 ```[dovecot.conf]
 protocol imap {
-  mail_plugins = $mail_plugins imap_filter_sieve
+  mail_plugins {
+    imap_filter_sieve = yes
+  }
 }
 ```
 
