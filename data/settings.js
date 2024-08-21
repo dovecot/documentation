@@ -7742,12 +7742,24 @@ process_shutdown_filter = "event=mail_user_session_finished AND rss > 10M"
 
 	protocols: {
 		default: 'imap pop3 lmtp',
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-The list of protocols this node will support.
+The list of protocols to enable.
 
-It takes a space-separated list of protocols (which are configured
-separately) as its value.`
+For example:
+
+\`\`\`[dovecot.conf]
+# Only IMAP protocol enabled:
+protocols = imap
+
+# Enable also LMTP protocol (on top of IMAP):
+protocols {
+  lmtp = yes
+}
+
+# Disable all protocols:
+protocols =
+\`\`\``
 	},
 
 	quota_full_tempfail: {
