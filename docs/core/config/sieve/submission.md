@@ -68,24 +68,6 @@ password_query = SELECT username, domain, password FROM users \
     WHERE username = '%n' AND domain = '%d'
 ```
 
-      args = user=%Ld noauthenticate
-      skip = authenticated
-   }
-
-   passdb {
-      driver = pam
-      skip = authenticated
-   }
-
-   userdb {
-      driver = ldap
-      args = /path/to/ldap/config
-   }
-
-   userdb {
-      driver = passwd
-   }
-
 ## `submission_host`
 
 `submission_host = smtp-out.example.com:25`
