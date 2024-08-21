@@ -51,7 +51,7 @@ This is based on already having Dovecot already compiled and installed.
    imapc_host = 10.1.2.3
    imapc_port = 143
 
-   passdb {
+   passdb db1 {
      driver = imap
      # Change the line below to reflect the IP address of your Exchange Server.
      args = host=10.1.2.3

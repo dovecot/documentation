@@ -307,7 +307,7 @@ For example, with a Postfix/LMTP delivery setup, you must include `local` for
 Postfix to verify the email account:
 
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = static
   args = password=test allow_nets=local,127.0.0.1/32
 }
