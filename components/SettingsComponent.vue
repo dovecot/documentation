@@ -7,7 +7,8 @@ import { data } from '../lib/data/settings.data.js'
  * 'level' (integer): The header level to display entries as. Default: '2'
  * 'plugin' (string): Filter entries by this plugin.
  * 'show_plugin' (boolean): If set, add plugin name to output.
- * 'tag' (string): Filter by tag. Tag matches either plugin OR tag field.
+ * 'tag' (string | array): Filter by tag(s). Tag(s) matches either plugin
+ * OR tag field.
  */
 const props = defineProps(
     ['filter', 'level', 'plugin', 'show_plugin', 'tag']
@@ -15,15 +16,17 @@ const props = defineProps(
 
 const filter = props.filter ?? 'all'
 const level = (props.level ? Number(props.level) : 2) + 1
+const tag = props.tag ? [ props.tag ].flat() : false
 
 const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 	/* Filter entries (by plugin or tag). */
-	((!props.plugin && !props.tag) ||
+	((!props.plugin && !tag) ||
 	 (props.plugin &&
 	  (v.plugin && v.plugin.includes(props.plugin))) ||
-	 (props.tag &&
-	  ((v.plugin && v.plugin.includes(props.tag)) ||
-	   (v.tags.includes(props.tag))))) &&
+	 (tag && tag.find((t) =>
+	  (v.plugin && v.plugin.includes(t)) ||
+	  (v.tags.includes(t)))
+	 )) &&
 	/* Apply filter. */
 	((filter == 'all') ||
 	 ((filter == 'advanced') && v.advanced) ||
