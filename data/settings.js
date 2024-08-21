@@ -7279,11 +7279,21 @@ the passdb lookup.`
 		added: {
 			settings_passdb_mechanisms_added: false,
 		},
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
 Skip the passdb if non-empty and the current auth mechanism is not listed here.
-Space or comma-separated list of auth mechanisms (e.g. \`PLAIN LOGIN\`). Also
-\`none\` can be used to match for a non-authenticating passdb lookup.`
+If the value contains \`none\`, it matches for non-authenticating passdb
+lookups.
+
+Example:
+
+\`\`\`[dovecot.conf]
+passdb passwd-file {
+  driver = passwd-file
+  mechanisms = PLAIN LOGIN
+  # ...
+}
+\`\`\``
 	},
 
 	passdb_username_filter: {
