@@ -160,7 +160,7 @@ Show all the ACLs for the *mailbox*.
   [**-S** *socket_path*]
 
 Make sure the *user*'s shared mailboxes exist correctly in the
-*acl_shared_dict*.
+*acl_sharing_map*.
 
 ### acl remove
 

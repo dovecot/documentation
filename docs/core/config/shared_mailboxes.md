@@ -209,9 +209,7 @@ namespace {
   list = children
 }
 
-plugin {
-  acl = vfile
-}
+acl_driver = vfile
 ```
 
 It's important that the namespace type is "public" regardless of whether
@@ -221,7 +219,7 @@ After this you have to place `dovecot-acl` files in every
 mailbox/folder below `/var/mail/public` with rights for that folder
 (e.g. `user=someone lr`).
 
-[[setting,acl_shared_dict]] is not relevant for public mailboxes (only
+[[setting,acl_sharing_map]] is not relevant for public mailboxes (only
 for shared).
 
 ## User Shared Mailboxes
@@ -260,9 +258,8 @@ mail_plugins = acl
 protocol imap {
   mail_plugins = $mail_plugins imap_acl
 }
-plugin {
-  acl = vfile
-}
+
+acl_driver = vfile
 ```
 
 This creates a shared/ namespace under which each user's mailboxes are.
@@ -320,14 +317,15 @@ rebuild this dictionary, so make sure it doesn't get lost. If it does,
 each user having shared mailboxes must use the IMAP SETACL command (see
 below) to get the dictionary updated for themselves.
 
-See [[setting,acl_shared_dict]] for plugin setting information.
+See [[setting,acl_sharing_map]] for plugin setting information.
 
 You could use any dictionary backend, including SQL or Cassandra, but a
 simple flat file should work pretty well too:
 
 ```[dovecot.conf]
-plugin {
-  acl_shared_dict = file:/var/lib/dovecot/db/shared-mailboxes.db
+acl_sharing_map {
+  dict_driver = file
+  dict_file_path = /var/lib/dovecot/db/shared-mailboxes.db
 }
 ```
 
@@ -341,9 +339,9 @@ mailboxes to users in other domains, you can use separate dict files for
 each domain:
 
 ```[dovecot.conf]
-plugin {
-  # assumes mailboxes are in /var/mail/%d/%n:
-  acl_shared_dict = file:/var/mail/%d/shared-mailboxes.db
+acl_sharing_map {
+  dict_driver = file
+  dict_file_path = /var/mail/%d/shared-mailboxes.db
 }
 ```
 
@@ -353,8 +351,9 @@ See [[link,dict]] for more information, especially about permission issues.
 
 ::: code-group
 ```[dovecot.conf]
-plugin {
-  acl_shared_dict = proxy::acl
+acl_sharing_map {
+  dict_driver = proxy
+  dict_proxy_name = acl
 }
 
 dict {
