@@ -105,6 +105,11 @@ namespace shared {
 
 ## Master Users
 
+::: info
+[[deprecated,settings_acl_global_settings_added]]: This setting is deprecated
+in favor of configuration-file embedded settings.
+:::
+
 Master users have their own ACLs. They're not the mailbox owners, so by
 default they have no permissions to any of the mailboxes. See
 [[link,acl_master_users]] for more information.
