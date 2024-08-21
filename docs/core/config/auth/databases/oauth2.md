@@ -20,7 +20,10 @@ The responses from endpoints must be JSON objects.
 
 ::: code-group
 ```[dovecot.conf]
-auth_mechanisms = $auth_mechanisms oauthbearer xoauth2
+auth_mechanisms = {
+  oauthbearer = yes
+  xoauth2 = yes
+}
 
 passdb {
   driver = oauth2
