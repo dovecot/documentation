@@ -1733,13 +1733,6 @@ plugin {
 See [[setting,auth_master_user_separator]] for the format of this setting.`
 	},
 
-	master_user: {
-		plugin: 'acl',
-		values: setting_types.STRING,
-		seealso: [ 'acl_user' ],
-		text: `TODO`
-	},
-
 	/* apparmor plugin */
 
 	apparmor_hat: {
