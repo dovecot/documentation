@@ -15,7 +15,7 @@ filename, only one SQL connection is used for both passdb and userdb lookups.
 ## Dovecot Configuration
 
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = sql
   args = /etc/dovecot/dovecot-sql.conf.ext
 }
