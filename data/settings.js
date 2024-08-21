@@ -32,6 +32,7 @@ export const settings = {
 		// tags: [],
 
 		// If setting is defined by a plugin, the plugin identifier.
+		// This can be a string or an array.
 		// plugin: '',
 
 		// The setting type. See lib/settings.js for the list of types.
