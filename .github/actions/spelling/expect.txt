@@ -399,6 +399,7 @@ listfile
 LISTINDEX
 listname
 listscripts
+lkas
 LISTSERV
 lmtp
 lmtponly
@@ -480,6 +481,7 @@ MITM
 mkhomedir
 mmencode
 MMIME
+mnt
 modseq
 mountpoint
 mozilla
