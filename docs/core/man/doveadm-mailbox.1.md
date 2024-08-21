@@ -190,6 +190,29 @@ Convention).
 *name*
 :   One or more mailbox names that should be converted.
 
+### mailbox path
+
+**doveadm** [*GLOBAL OPTIONS*] mailbox path [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-s**] [**-t** *type*] *mailbox*
+
+The **mailbox path** command returns the filesystem path for the given
+mailbox.  By default, this is the path to the "index" directory.
+
+**-t** *type*
+:   Output the path to this mailbox location type.  One of:
+
+    - **alt-dir**
+    - **alt-mailbox**
+    - **control**
+    - **dir**
+    - **index** (DEFAULT)
+    - **index-cache**
+    - **index-private**
+    - **list-index**
+    - **mailbox**
+
+*mailbox*
+:   The mailbox to query (mandatory).
+
 ### mailbox rename
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox rename [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-s**] *old_name* *new_name*
