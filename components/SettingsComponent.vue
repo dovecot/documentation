@@ -20,9 +20,9 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 	/* Filter entries (by plugin or tag). */
 	((!props.plugin && !props.tag) ||
 	 (props.plugin &&
-	  (v.plugin && v.plugin == props.plugin)) ||
+	  (v.plugin && v.plugin.includes(props.plugin))) ||
 	 (props.tag &&
-	  ((v.plugin && v.plugin == props.tag) ||
+	  ((v.plugin && v.plugin.includes(props.tag)) ||
 	   (v.tags.includes(props.tag))))) &&
 	/* Apply filter. */
 	((filter == 'all') ||
