@@ -29,10 +29,14 @@ Last login information is also useful in determining system usage statistics.
 
 ```[dovecot.conf]
 protocol imap {
-  mail_plugins = $mail_plugins last_login
+  mail_plugins {
+    last_login = yes
+  }
 }
 protocol pop3 {
-  mail_plugins = $mail_plugins last_login
+  mail_plugins {
+    last_login = yes
+  }
 }
 
 plugin {
