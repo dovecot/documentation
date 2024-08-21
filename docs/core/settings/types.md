@@ -201,7 +201,9 @@ mail_plugins = acl,imap_acl # removes quota and imap_quota
 
 Quotes are also supported:
 
+```[dovecot.conf]
 doveadm_allowed_commands = "mailbox list" "mailbox create"
+```
 
 The boolean list can also be configured to update an existing boolean list. For
 example:
