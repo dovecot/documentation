@@ -37,7 +37,7 @@ This can be used to pass out initialization parameters from Dovecot.
 
 ::: code-group
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = lua
   args = file=/etc/dovecot/auth.lua password={PLAIN}test
 }
@@ -187,7 +187,7 @@ If some previous userdb has had internal failure.
 To configure passdb in dovecot, use:
 
 ```[dovecot.conf]
-passdb {
+passdb db1 {
   driver = lua
   args = file=/path/to/lua blocking=yes # default is yes
 }

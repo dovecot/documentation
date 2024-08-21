@@ -279,7 +279,7 @@ Where mech_list is a list of all the mechanism names to enable.
 ```[dovecot.conf]
 mail_driver = maildir
 
-passdb {
+passdb db1 {
   driver = sql
   args = /usr/local/etc/dovecot-sql.conf
 }
