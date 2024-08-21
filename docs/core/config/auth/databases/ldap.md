@@ -182,7 +182,7 @@ passdb {
   args = /etc/dovecot/dovecot-ldap.conf.ext
 }
 
-userdb {
+userdb db1 {
   driver = ldap
   args = /etc/dovecot/dovecot-ldap-userdb.conf.ext
 }
@@ -397,13 +397,13 @@ Example: Give the user a class attribute, which defines the default quota:
 
 ::: code-group
 ```[dovecot.conf]
-userdb {
+userdb db1 {
   driver = ldap
   args = /etc/dovecot/dovecot-users-ldap.conf.ext
   result_success = continue-ok
 }
 
-userdb {
+userdb db2 {
   driver = ldap
   args = /etc/dovecot/dovecot-class-ldap.conf.ext
   skip = notfound
@@ -454,11 +454,11 @@ passdb {
   driver = ldap
 }
 
-userdb {
+userdb db1 {
   driver = prefetch
 }
 
-userdb {
+userdb db2 {
   args = /etc/dovecot/dovecot-ldap.conf.ext
   driver = ldap
 }

@@ -233,7 +233,7 @@ internal error, the second parameter can be used as error string.
 To configure userdb in dovecot, use:
 
 ```[dovecot.conf]
-userdb {
+userdb db1 {
   driver = lua
   args = file=/path/to/lua blocking=yes # default is yes
 }

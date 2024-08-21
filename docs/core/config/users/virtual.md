@@ -221,7 +221,7 @@ passdb {
   args = username_format=%n /home/%d/etc/shadow
 }
 
-userdb {
+userdb db1 {
   driver = passwd-file
   args = username_format=%n /home/%d/etc/passwd
 }
@@ -241,7 +241,7 @@ passdb {
   driver = pam
 }
 
-userdb {
+userdb db1 {
   driver = static
   args = uid=vmail gid=vmail home=/var/mail/virtual/%d/%n
 }
@@ -275,12 +275,12 @@ passdb {
   skip = authenticated
 }
 
-userdb {
+userdb db1 {
   driver = ldap
   args = /path/to/ldap/config
 }
 
-userdb {
+userdb db2 {
   driver = passwd
 }
 ```

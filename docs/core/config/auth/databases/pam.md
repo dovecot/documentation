@@ -234,7 +234,7 @@ This will provide full system user authentication with true homedir mail
 storage, without resorting to a single virtual mail user or LDAP:
 
 ```[dovecot.conf]
-userdb {
+userdb db1 {
   driver = passwd
 }
 ```

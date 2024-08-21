@@ -43,7 +43,7 @@ processes.
 ## Example
 
 ```[dovecot.conf]
-userdb {
+userdb db1 {
   driver = nss
   args = service=ldap
 }

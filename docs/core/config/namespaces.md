@@ -179,7 +179,7 @@ Note that the `namespace` setting must list all the namespaces that are
 used - there's currently no way to simply add a namespace.
 
 ```[dovecot.conf]
-userdb {
+userdb db1 {
   driver = static
   args = namespace=inbox,special namespace/special/mail_path=/var/special/%u namespace/special/prefix=special/
 }

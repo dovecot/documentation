@@ -149,7 +149,7 @@ passdb {
   args = scheme=CRYPT username_format=%u /etc/dovecot/users
 }
 
-userdb {
+userdb db1 {
   driver = passwd-file
   args = username_format=%u /etc/dovecot/users
 }
