@@ -7451,19 +7451,6 @@ If \`yes\` and the user is found from the [[link,auth_master_users]] the user
 is allowed to login as other users.`
 	},
 
-	passdb_auth_verbose: {
-		tags: [ 'passdb' ],
-		added: {
-			settings_passdb_auth_verbose_added: false,
-		},
-		values: setting_types.ENUM,
-		values_enum: [ 'default', 'no', 'yes' ],
-		default: 'default',
-		text: `
-If this setting is explicitly set to \`yes\` or \`no\`, it overrides the global
-[[setting,auth_verbose]] setting.`
-	},
-
 	pop3_client_workarounds: {
 		tags: [ 'pop3' ],
 		values: setting_types.STRING,
@@ -8914,19 +8901,6 @@ Possible values and their meaning are described fully at
 [[link,userdb_result_values]]. If any of the userdbs had an internal failure
 and the final userdb also returns \`continue\` the authentication will fail
 with \`internal error\`.`
-	},
-
-	userdb_auth_verbose: {
-		tags: [ 'userdb' ],
-		added: {
-			settings_userdb_auth_verbose_added: false,
-		},
-		values: setting_types.ENUM,
-		values_enum: [ 'default', 'no', 'yes' ],
-		default: 'default',
-		text: `
-If this setting is explicitly set to \`yes\` or \`no\`, it overrides the global
-[[setting,auth_verbose]] setting.`
 	},
 
 	valid_chroot_dirs: {
