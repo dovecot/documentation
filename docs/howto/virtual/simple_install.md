@@ -61,8 +61,7 @@ pop3_uidl_format = %g
 auth_verbose = yes
 auth_mechanisms = plain
 
-passdb db1 {
-  driver = passwd-file
+passdb passwd-file {
   passwd_file_path = /etc/dovecot/passwd
 }
 

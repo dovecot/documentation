@@ -15,8 +15,7 @@ IMAP/POP3/SMTP/etc. access checks.
 Set PAM service name to `%{protocol}`, ie.:
 
 ```[dovecot.conf]
-passdb db1 {
-  driver = pam
+passdb pam {
   args = %{protocol}
 }
 ```
@@ -56,8 +55,7 @@ to the user objects.
 You can create a deny passwd-file based on the service:
 
 ```[dovecot.conf]
-passdb db1 {
-  driver = passwd-file
+passdb passwd-file {
   passwd_file_path = /etc/dovecot/deny.%{protocol}
   deny = yes
 }
