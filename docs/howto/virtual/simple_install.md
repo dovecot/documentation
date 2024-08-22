@@ -63,7 +63,7 @@ auth_mechanisms = plain
 
 passdb db1 {
   driver = passwd-file
-  args = /etc/dovecot/passwd
+  passwd_file_path = /etc/dovecot/passwd
 }
 
 userdb db1 {

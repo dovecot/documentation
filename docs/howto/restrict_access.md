@@ -58,7 +58,7 @@ You can create a deny passwd-file based on the service:
 ```[dovecot.conf]
 passdb db1 {
   driver = passwd-file
-  args = /etc/dovecot/deny.%s
+  passwd_file_path = /etc/dovecot/deny.%s
   deny = yes
 }
 ```

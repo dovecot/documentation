@@ -84,7 +84,7 @@ auth_master_user_separator = *
 
 passdb db1 {
   driver = passwd-file
-  args = /etc/dovecot/passwd.masterusers
+  passwd_file_path = /etc/dovecot/passwd.masterusers
   master = yes
   result_success = continue
 }

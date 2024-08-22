@@ -218,12 +218,14 @@ mail_path = /home/%d/%n/Maildir
 
 passdb db1 {
   driver = passwd-file
-  args = username_format=%n /home/%d/etc/shadow
+  auth_username_format = %n
+  passwd_file_path = /home/%d/etc/shadow
 }
 
 userdb db1 {
   driver = passwd-file
-  args = username_format=%n /home/%d/etc/passwd
+  auth_username_format = %n
+  passwd_file_path = /home/%d/etc/passwd
 }
 ```
 
