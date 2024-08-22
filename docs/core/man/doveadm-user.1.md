@@ -27,8 +27,7 @@ in the *user_query* setting. Or when you have configured the userdb in a way
 like this:
 
 ```
-userdb db1 {
-  driver = passwd-file
+userdb passwd-file {
   passwd_file_path = /etc/%{protocol}.passwd
 }
 ```

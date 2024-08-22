@@ -149,8 +149,7 @@ passdb passwd-file {
   passwd_file_path = /etc/dovecot/users
 }
 
-userdb db1 {
-  driver = passwd-file
+userdb passwd-file {
   passwd_file_path = /etc/dovecot/users
 }
 ```
