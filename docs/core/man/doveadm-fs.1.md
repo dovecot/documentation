@@ -70,6 +70,7 @@ Iterate through all directories in the path provided.
 
 **doveadm** [*GLOBAL OPTIONS*] fs put
   [**-h** *hash*]
+  [**-m** *key*=*value*]
   *fs-driver* *fs-args* *input_path* *path*
 
 Store data at the path provided.
