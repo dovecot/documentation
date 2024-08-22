@@ -66,7 +66,6 @@ Changes the username (can also be done by the [[link,passdb]] lookup).
 | -------- | ----------- |
 | [[link,auth_passwd,Passwd]] | System users (NSS, `/etc/passwd`, or similar). |
 | [[link,auth_passwd_file,Passwd-file]] | `/etc/passwd`-like file. |
-| [[link,auth_nss,NSS]] | Name Service Switch. |
 | [[link,auth_ldap,LDAP]] | Lightweight Directory Access Protocol. |
 | [[link,auth_sql,SQL]] | SQL database (PostgreSQL, MySQL, SQLite, Cassandra). |
 | [[link,auth_staticdb,Static]] | Userdb information generated from a given template. |
