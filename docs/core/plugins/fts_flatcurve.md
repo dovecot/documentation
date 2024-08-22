@@ -37,9 +37,7 @@ mail_plugins {
   fts_flatcurve = yes
 }
 
-plugin {
-  fts = flatcurve
-}
+fts_driver = flatcurve
 ```
 
 ## Settings
@@ -58,28 +56,26 @@ mail_plugins {
   fts_flatcurve = yes
 }
 
-plugin {
-  fts = flatcurve
+fts_driver = flatcurve
 
-  # Maximum email-address token size (254) is larger than Xapian can handle,
-  # so we will need to truncate at some level. It is doubtful that large
-  # email-addresses are useful for search purposes, so this optional config
-  # will prevent these large addresses (more than 100 bytes) from being
-  # stored.
-  #fts_tokenizers = generic email-address
-  #fts_tokenizer_email_address = maxlen=100
+# Maximum email-address token size (254) is larger than Xapian can handle,
+# so we will need to truncate at some level. It is doubtful that large
+# email-addresses are useful for search purposes, so this optional config
+# will prevent these large addresses (more than 100 bytes) from being
+# stored.
+#fts_tokenizers = generic email-address
+#fts_tokenizer_email_address = maxlen=100
 
-  # All of these are optional, and indicate the default values.
-  # They are listed here for documentation purposes; most people should
-  # not need to define/override in their config.
-  fts_flatcurve_commit_limit = 500
-  fts_flatcurve_max_term_size = 30
-  fts_flatcurve_min_term_size = 2
-  fts_flatcurve_optimize_limit = 10
-  fts_flatcurve_rotate_count = 5000
-  fts_flatcurve_rotate_time = 5000
-  fts_flatcurve_substring_search = no
-}
+# All of these are optional, and indicate the default values.
+# They are listed here for documentation purposes; most people should
+# not need to define/override in their config.
+fts_flatcurve_commit_limit = 500
+fts_flatcurve_max_term_size = 30
+fts_flatcurve_min_term_size = 2
+fts_flatcurve_optimize_limit = 10
+fts_flatcurve_rotate_count = 5000
+fts_flatcurve_rotate_time = 5000
+fts_flatcurve_substring_search = no
 ```
 
 ## Data Storage
