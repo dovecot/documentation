@@ -18,8 +18,7 @@ small local passwd file, you can avoid having extra auth worker processes by
 disabling it:
 
 ```
-userdb db1 {
-  driver = passwd
+userdb passwd {
   args = blocking=no
 }
 ```
@@ -33,8 +32,7 @@ by using `override_fields`.
 For example:
 
 ```[dovecot.conf]
-userdb db1 {
-  driver = passwd
+userdb passwd {
   override_fields {
     home = /var/mail/%u
     mail_driver = maildir

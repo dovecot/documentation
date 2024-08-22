@@ -89,8 +89,7 @@ passdb passwd-file {
   passwd_file_path = /var/vmail/auth.d/%d/passwd
 }
 
-userdb db1 {
-  driver = passwd-file
+userdb passwd-file {
   passwd_file_path = /var/vmail/auth.d/%d/passwd
 }
 ```
