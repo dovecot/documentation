@@ -6,9 +6,19 @@
   *config-filter-name*
   [*args*]
 
+**doveadm** [*GLOBAL OPTIONS*] **mail dict** *command*
+  [*OPTIONS*]
+  *config-filter-name*
+  [*args*]
+
 ## DESCRIPTION
 
-**doveadm dict** can be used to query and modify dictionary entries.
+**doveadm dict** and **doveadm mail dict** can be used to query and modify
+dictionary entries.
+
+The **doveadm mail dict** command can be used within a specific user context.
+This may be useful if e.g. userdb lookup returns user-specific dict settings.
+Otherwise the commands behave identically.
 
 *config-filter-name*
 :   Filter name to use when looking up the dict settings. For example
@@ -19,14 +29,31 @@
 
 ## OPTIONS
 
+**doveadm dict** command-specific *options*:
+
 **-u** *user*
 :   The user to use.
+
+**doveadm mail dict** command-specific *options*:
+
+<!-- @include: ./option-A.inc -->
+
+<!-- @include: ./option-F-file.inc -->
+
+<!-- @include: ./option-S-socket.inc -->
+
+<!-- @include: ./option-u-user.inc -->
 
 ## COMMANDS
 
 ### get
 
 **doveadm** [*GLOBAL OPTIONS*] dict get [**-u** *user*]
+  *config-filter-name* *key*
+
+**doveadm** [*GLOBAL OPTIONS*] mail dict get
+  [**-A** | **-u** *user* | **-F** *file*]
+  [**-S** *socket_path*]
   *config-filter-name* *key*
 
 Fetch a key from a dictionary.
@@ -38,6 +65,12 @@ Fetch a key from a dictionary.
 
 **doveadm** [*GLOBAL OPTIONS*] dict iter
   [**-u** *user*]
+  [**-1RV**]
+  *config-filter-name* *prefix*
+
+**doveadm** [*GLOBAL OPTIONS*] mail dict iter
+  [**-A** | **-u** *user* | **-F** *file*]
+  [**-S** *socket_path*]
   [**-1RV**]
   *config-filter-name* *prefix*
 
@@ -64,6 +97,12 @@ List keys into the dictionary.
   [**-t** *timestamp-msecs*]
   *config-filter-name* *key* *diff*
 
+**doveadm** [*GLOBAL OPTIONS*] mail dict inc
+  [**-A** | **-u** *user* | **-F** *file*]
+  [**-S** *socket_path*]
+  [**-t** *timestamp-msecs*]
+  *config-filter-name* *key* *diff*
+
 Increment the value of a numeric key in the keys into the dictionary.
 
 **-t** *timestamp-msecs*
@@ -79,6 +118,13 @@ Increment the value of a numeric key in the keys into the dictionary.
 
 **doveadm** [*GLOBAL OPTIONS*] dict set
   [**-u** *user*]
+  [**-t** *timestamp-msecs*]
+  [**-e** *expire-secs*]
+  *config-filter-name* *key* *value*
+
+**doveadm** [*GLOBAL OPTIONS*] mail dict set
+  [**-A** | **-u** *user* | **-F** *file*]
+  [**-S** *socket_path*]
   [**-t** *timestamp-msecs*]
   [**-e** *expire-secs*]
   *config-filter-name* *key* *value*
@@ -101,6 +147,12 @@ Set/create keys into the dictionary.
 
 **doveadm** [*GLOBAL OPTIONS*] dict unset
   [**-u** *user*]
+  [**-t** *timestamp-msecs*]
+  *config-filter-name* *key*
+
+**doveadm** [*GLOBAL OPTIONS*] mail dict unset
+  [**-A** | **-u** *user* | **-F** *file*]
+  [**-S** *socket_path*]
   [**-t** *timestamp-msecs*]
   *config-filter-name* *key*
 
