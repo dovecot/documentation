@@ -88,8 +88,7 @@ passdb passwd-file {
   result_success = continue
 }
 
-userdb db1 {
-  driver = passwd
+userdb passwd {
 }
 ```
 
@@ -134,8 +133,7 @@ passdb db2 {
   args = /etc/dovecot/dovecot-sql.conf.ext
 }
 
-userdb db1 {
-  driver = sql
+userdb sql {
   args = /etc/dovecot/dovecot-sql.conf.ext
 }
 ```
