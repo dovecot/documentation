@@ -177,8 +177,7 @@ filenames in the LDAP passdb and userdb args. The second file could be a
 symlink to the first one.
 
 ```[dovecot.conf]
-passdb db1 {
-  driver = ldap
+passdb ldap {
   args = /etc/dovecot/dovecot-ldap.conf.ext
 }
 
@@ -269,8 +268,7 @@ https://technet.microsoft.com/en-us/library/cc978012.aspx.
 ### LDAP Backend Configuration
 
 ```[dovecot.conf]
-passdb db1 {
-  args = /etc/dovecot/dovecot-ldap.conf.ext
+passdb /etc/dovecot/dovecot-ldap.conf.ext {
   driver = ldap
 }
 ```
@@ -449,8 +447,7 @@ The previous username is:
   variables in other parts of the configuration (e.g. quota file names).
 
 ```[dovecot.conf]
-passdb db1 {
-  args = /etc/dovecot/dovecot-ldap.conf.ext
+passdb /etc/dovecot/dovecot-ldap.conf.ext {
   driver = ldap
 }
 
