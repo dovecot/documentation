@@ -181,8 +181,7 @@ passdb ldap {
   args = /etc/dovecot/dovecot-ldap.conf.ext
 }
 
-userdb db1 {
-  driver = ldap
+userdb ldap {
   args = /etc/dovecot/dovecot-ldap-userdb.conf.ext
 }
 ```
@@ -451,13 +450,11 @@ passdb /etc/dovecot/dovecot-ldap.conf.ext {
   driver = ldap
 }
 
-userdb db1 {
-  driver = prefetch
+userdb prefetch {
 }
 
-userdb db2 {
+userdb ldap {
   args = /etc/dovecot/dovecot-ldap.conf.ext
-  driver = ldap
 }
 ```
 
