@@ -1,6 +1,10 @@
 ---
 layout: doc
 title: fts-solr
+dovecotlinks:
+  fts_solr_soft_commits:
+    hash: soft-commits
+    text: "FTS Solr: Soft Commits"
 ---
 
 # Apache Solr FTS Plugin (`fts-solr`)
@@ -87,64 +91,6 @@ This plugin requires the [[plugin,fts]] to be activated and configured
 ## Dovecot Settings
 
 <SettingsComponent plugin="fts-solr" />
-
-### `fts_solr` Configuration
-
-[[setting,fts_solr]] setting is used to configure the Solr server details.
-
-Format is a space separated list of options:
-
-```
-fts_solr = [option1[=value1]] [option2[=value2]] [...]
-```
-
-The following options are supported:
-
-#### `url=<url>`
-
-* Default: `https://localhost:8983/solr/dovecot/`
-* Values: string
-
-Required base URL for Solr.
-
-Remember to add your core name if using solr 7+: `"/solr/dovecot/"`.
-
-#### `debug`
-
-* Default: no
-* Values: \<existence\> (if `debug` exists, it is enabled)
-
-Enable HTTP debugging. Writes to debug log.
-
-#### `rawlog_dir=<directory>`
-
-* Default: \<empty\>
-* Values: string
-
-Enable rawlog debugging. Store HTTP exchanges between Dovecot and Solr
-in this directory.
-
-#### `batch_size`
-
-* Default: `1000`
-* Values: unsigned integer
-
-Configure the number of mails sent in single requests to Solr.
-
-* With [[setting,fts_autoindex,yes]], each new mail gets separately indexed on
-  arrival, so `batch_size` only matters when doing the initial
-  indexing of a mailbox.
-* With [[setting,fts_autoindex,no]], new mails don't get indexed on arrival, so
-  `batch_size` is used when indexing gets triggered.
-
-#### `soft_commit=yes|no`
-
-* Default: `yes`
-* Values: boolean
-
-Controls whether new mails are immediately searchable via Solr.
-
-See [soft commits](#soft-commits) for additional information.
 
 ## Example Configuration
 
@@ -282,9 +228,9 @@ it are:
 - Have some HTTP proxy redirecting the connections based on the URL
 
 - Configure Dovecot's userdb lookup to return a different host for
-  [[setting,fts_solr]] setting using [[link,userdb_extra_fields]].
+  [[setting,fts_solr_url]] setting using [[link,userdb_extra_fields]].
 
-  - LDAP: `user_attrs = ..., solrHost=fts_solr=url=https://%$:8983/solr/dovecot/`
+  - LDAP: `user_attrs = ..., solrHost=fts_solr_url=https://%$:8983/solr/dovecot/`
   - MySQL: `user_query = SELECT concat('url=https://', solr_host, ':8983/solr/dovecot/') AS fts_solr, ...`
 
 You can also use
