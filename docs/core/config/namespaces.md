@@ -179,8 +179,7 @@ This adds a new given namespace. Without `+` all the namespaces are replaced
 with the given list.
 
 ```[dovecot.conf]
-userdb db1 {
-  driver = static
+userdb static {
   args = namespace+=special namespace/special/mail_path=/var/special/%u namespace/special/prefix=special/
 }
 ```
