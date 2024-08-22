@@ -7292,24 +7292,26 @@ passdb driver. Each one uses different args.`
 
 	passdb_default_fields: {
 		tags: [ 'passdb' ],
-		values: setting_types.STRING,
+		values: setting_types.STRLIST,
 		seealso: [ 'passdb_override_fields', '[[link,passdb_extra_fields]]' ],
 		text: `
 Passdb fields (and [[link,passdb_extra_fields]]) that are used unless
-overwritten by the passdb driver. They are in format \`key=value key2=value2
-...\`. The values can contain [[link,settings_variables,%variables]]. All
-\`%variables\` used here reflect the state **before** the passdb lookup.`
+overwritten by the passdb driver. The values can contain
+[[link,settings_variables,%variables]]. All \`%variables\` used here reflect
+the state **before** the current passdb lookup, and can refer to fields
+returned by previous passdb lookups.`
 	},
 
 	passdb_override_fields: {
 		tags: [ 'passdb' ],
-		values: setting_types.STRING,
+		values: setting_types.STRLIST,
 		seealso: [ 'passdb_default_fields' ],
 		text: `
 Same as [[setting,passdb_default_fields]] but instead of providing the default
 values, these values override what the passdb backend returned. All
 [[link,settings_variables,%variables]] used here reflect the state **after**
-the passdb lookup.`
+the passdb lookup, and can refer to fields returned by the current (and
+previous) passdb lookups.`
 	},
 
 	passdb_mechanisms: {
@@ -8809,13 +8811,14 @@ Arguments for the userdb backend. The format of this value depends on the userdb
 
 	userdb_default_fields: {
 		tags: [ 'userdb' ],
-		values: setting_types.STRING,
+		values: setting_types.STRLIST,
 		seealso: [ 'userdb_override_fields', '[[link,userdb_extra_fields]]' ],
 		text: `
 Userdb fields (and [[link,userdb_extra_fields]]) that are used, unless
-overwritten by the userdb driver. They are in format \`key=value key2=value2
-...\`. The values can contain [[variable]]. All \`%variables\` used here
-reflect the state **before** the userdb lookup.`
+overwritten by the userdb driver. The values can contain
+[[link,settings_variables,%variables]]. All \`%variables\` used here reflect
+the state **before** the current userdb lookup, and can refer to fields
+returned by previous userdb lookups.`
 	},
 
 	userdb_override_fields: {
@@ -8825,7 +8828,9 @@ reflect the state **before** the userdb lookup.`
 		text: `
 Same as [[setting,userdb_default_fields]] but instead of providing the default
 values, these values override what the userdb backend returned. All
-[[variable]] used here reflect the state **after** the userdb lookup.
+[[link,settings_variables,%variables]] used here reflect the state **after**
+the userdb lookup, and can refer to fields returned by the current (and
+previous) userdb lookups.
 
 For example useful with userdb passwd for overriding e.g. home directory or the
 \`uid\` or \`gid\`.`
