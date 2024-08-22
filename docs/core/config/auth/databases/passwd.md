@@ -8,7 +8,7 @@ dovecotlinks:
 # Passwd (`passwd`)
 
 User is looked up using `getpwnam()` call, which usually looks into
-`/etc/passwd` file, but depending on [[link,auth_nss]] configuration it may
+`/etc/passwd` file, but depending on the NSS configuration it may
 also look up the user from, e.g., LDAP database.
 
 Most commonly used as a [[link,userdb]].
