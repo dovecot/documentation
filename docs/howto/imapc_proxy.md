@@ -57,8 +57,7 @@ This is based on already having Dovecot already compiled and installed.
      default_fields = userdb_imapc_user=%u userdb_imapc_password=%w
    }
 
-   userdb db1 {
-     driver = prefetch
+   userdb prefetch {
    }
 
    # /home/imapproxy is the home directory for the imapproxy user, and

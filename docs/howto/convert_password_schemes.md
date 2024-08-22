@@ -55,8 +55,7 @@ https://kaworu.ch/blog/2016/04/20/strong-crypt-scheme-with-dovecot-postfixadmin-
 * `dovecot.conf`:
 
   ```
-  userdb db1 {
-    driver = prefetch
+  userdb prefetch {
   }
   ```
 
@@ -266,8 +265,7 @@ passdb passwd-file {
   passwd_file_path = /var/vmail/auth.d/%d/passwd
 }
 
-userdb db1 {
-  driver = passwd-file
+userdb passwd-file {
   passwd_file_path = /var/vmail/auth.d/%d/passwd
   default_fields = plain_pass=%w
 }

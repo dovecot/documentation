@@ -51,14 +51,12 @@ passdb pam {
 }
 
 # look up users from SQL first (even if authentication was done using PAM!)
-userdb db1 {
-  driver = sql
+userdb sql {
   args = /etc/dovecot/dovecot-sql.conf.ext
 }
 
 # if not found, fallback to /etc/passwd
-userdb db2 {
-  driver = passwd
+userdb passwd {
 }
 ```
 
