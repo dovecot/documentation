@@ -29,7 +29,7 @@ like this:
 ```
 userdb db1 {
   driver = passwd-file
-  args = /etc/%s.passwd
+  passwd_file_path = /etc/%s.passwd
 }
 ```
 
