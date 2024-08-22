@@ -42,8 +42,7 @@ a simple template.
 The syntax is:
 
 ```[dovecot.conf]
-userdb db1 {
-  driver = static
+userdb static {
   args = uid=<uid> gid=<gid> home=<dir template>
 }
 ```
@@ -70,8 +69,7 @@ If you want to avoid this user verification, you can add
 ### Example
 
 ```[dovecot.conf]
-userdb db1 {
-  driver = static
+userdb static {
   args = uid=500 gid=500 home=/home/%u
 }
 ```
