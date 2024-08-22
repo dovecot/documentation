@@ -7374,6 +7374,18 @@ Configures when passdbs should be skipped:
 | \`unauthenticated\` | Skip if user hasn't yet been successfully authenticated by the previous passdbs. |`
 	},
 
+	passdb_use_worker: {
+		tags: [ 'passdb' ],
+		values: setting_types.BOOLEAN,
+		default: {
+			value: 'no',
+			text: 'specific [[link,passdb]] have different defaults',
+		},
+		text: `
+If \`yes\`, run the passdb lookup in auth-worker process instead of the main
+auth process.`
+	},
+
 	passdb_result_success: {
 		tags: [ 'passdb' ],
 		values: setting_types.ENUM,
@@ -8849,6 +8861,18 @@ Configures when userdbs should be skipped:
 | \`never\` | Never skip over this userdb. |
 | \`found\` | Skip if an earlier userdbs already found the user. |
 | \`notfound\` | Skip if previous userdbs haven't yet found the user. |`
+	},
+
+	userdb_use_worker: {
+		tags: [ 'userdb' ],
+		values: setting_types.BOOLEAN,
+		default: {
+			value: 'no',
+			text: 'specific [[link,userdb]] have different defaults',
+		},
+		text: `
+If \`yes\`, run the userdb lookup in auth-worker process instead of the main
+auth process.`
 	},
 
 	userdb_result_success: {
