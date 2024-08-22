@@ -531,7 +531,8 @@ ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f doveauth_access.ldif
 
 If authentication binding is used, you can save one LDAP request per login
 if users' DN can be specified with a common template. The template can use
-the standard %variables (see [`user_filter`](#user-filter)).
+the standard [[link,settings_variables,%variables]] (see
+[`user_filter`](#user-filter)).
 
 Note that you can't use any `pass_attrs` if you use this setting.
 
