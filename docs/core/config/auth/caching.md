@@ -61,8 +61,7 @@ For example if the PAM lookup depends on username and service, you can
 use:
 
 ```[dovecot.conf]
-passdb db1 {
-  driver = pam
+passdb pam {
   args = cache_key=%{protocol}%{user} *
 }
 ```

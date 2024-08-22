@@ -58,8 +58,7 @@ Also global settings that are commonly overridden inside the passdb filter:
 You can use all [[variable]] in the passwd-file filenames, for example:
 
 ```[dovecot.conf]
-passdb db1 {
-  driver = passwd-file
+passdb passwd-file {
   # Each domain has a separate passwd-file:
   passwd_file_path = /etc/auth/%d/passwd
 }
@@ -68,8 +67,7 @@ passdb db1 {
 ### Examples
 
 ```[dovecot.conf]
-passdb db1 {
-  driver = passwd-file
+passdb passwd-file {
   default_password_scheme = plain-md5
   auth_username_format = %n
   passwd_file_path = /etc/imap.passwd
@@ -143,8 +141,7 @@ The following will work in many situations, after disabling the inclusion of
 other `userdb` and `passdb` sections:
 
 ```
-passdb db1 {
-  driver = passwd-file
+passdb passwd-file {
   auth_username_format = %n
   passwd_file_path = /path/to/file-with-encrypted-passwords
 }

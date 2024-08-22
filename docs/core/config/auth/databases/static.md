@@ -27,8 +27,7 @@ You can return any other [[link,passdb_extra_fields]]. You can use
 ### Example
 
 ```[dovecot.conf]
-passdb db1 {
-  driver = static
+passdb static {
   args = nopassword=y
   default_fields = proxy=y host=127.0.0.1
 }
