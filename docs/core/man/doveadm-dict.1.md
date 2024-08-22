@@ -10,38 +10,44 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] **dict** *command*
   [**-u** *user*]
-  *dict-uri*
+  [*OPTIONS*]
+  *config-filter-name*
   [*args*]
 
 ## DESCRIPTION
 
 **doveadm dict** can be used to query and modify dictionary entries.
 
+*config-filter-name*
+:   Filter name to use when looking up the dict settings. For example
+    *mail_attribute*, *quota_clone*. It's also possible to use an empty filter
+    name and specify the dict settings using the **-o** parameters.
+
 <!-- @include: global-options-formatter.inc -->
+
+## OPTIONS
 
 **-u** *user*
 :   The user to use.
 
-*dict-uri*
-:   The uri to the dictionary being manipulated.
-
 ## COMMANDS
 
-### doveadm dict get
+### get
 
-**doveadm** [*GLOBAL OPTIONS*] dict get [**-u** *user*] *dict-uri* *key*
+**doveadm** [*GLOBAL OPTIONS*] dict get [**-u** *user*]
+  *config-filter-name* *key*
 
 Fetch a key from a dictionary.
 
 *key*
 :   The key to fetch.
 
-### doveadm dict iter
+### iter
 
 **doveadm** [*GLOBAL OPTIONS*] dict iter
   [**-u** *user*]
   [**-1RV**]
-  *dict-uri* *prefix*
+  *config-filter-name* *prefix*
 
 Find the keys matching the a prefix in a dictionary.
 
@@ -59,12 +65,12 @@ Find the keys matching the a prefix in a dictionary.
 
 List keys into the dictionary.
 
-### doveadm dict inc
+### inc
 
 **doveadm** [*GLOBAL OPTIONS*] dict inc
   [**-u** *user*]
   [**-t** *timestamp-msecs*]
-  *dict-uri* *key* *diff*
+  *config-filter-name* *key* *diff*
 
 Increment the value of a numeric key in the keys into the dictionary.
 
@@ -77,13 +83,13 @@ Increment the value of a numeric key in the keys into the dictionary.
 *diff*
 :   The amount of the increment.
 
-### doveadm dict set
+### set
 
 **doveadm** [*GLOBAL OPTIONS*] dict set
   [**-u** *user*]
   [**-t** *timestamp-msecs*]
   [**-e** *expire-secs*]
-  *dict-uri* *key* *value*
+  *config-filter-name* *key* *value*
 
 Set/create keys into the dictionary.
 
@@ -99,12 +105,12 @@ Set/create keys into the dictionary.
 *value*
 :   The value to set.
 
-### doveadm dict unset
+### unset
 
 **doveadm** [*GLOBAL OPTIONS*] dict unset
   [**-u** *user*]
   [**-t** *timestamp-msecs*]
-  *dict-uri* *key*
+  *config-filter-name* *key*
 
 Remove a key from the dictionary.
 
