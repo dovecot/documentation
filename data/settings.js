@@ -8843,25 +8843,32 @@ Group of the listener file. Empty (default) means GID 0 (root/wheel).`
 		seealso: [ '[[link,userdb]]', 'userdb_name', 'userdb_driver' ],
 		text: `
 Creates a new [[link,userdb]]. The filter name refers to the
-[[setting,userdb_name]] setting. The [[setting,userdb_driver]] setting is
-required to be set inside this filter.`
+[[setting,userdb_name]] setting.`
 	},
 
 	userdb_name: {
 		tags: [ 'userdb' ],
 		values: setting_types.STRING,
+		seealso: [ 'userdb', 'userdb_driver' ],
 		text: `
-Name of the userdb. This is used only in configuration - it's not visible to
-users. The [[setting,userdb]] filter name refers to this setting.`
+Name of the userdb. The [[setting,userdb]] filter name refers to this setting.
+If the [[setting,userdb_driver]] setting is empty, the \`userdb_name\` is used
+as the driver. This allows doing e.g.:
+
+\`\`\`[dovecot.conf]
+userdb passwd-file {
+  passwd_file_path = /etc/dovecot/passwd
+\`\`\``
 	},
 
 	userdb_driver: {
 		tags: [ 'userdb' ],
 		values: setting_types.STRING,
-		seealso: [ '[[link,userdb]]' ],
+		seealso: [ 'userdb_name', '[[link,userdb]]' ],
 		text: `
-The driver used for this user database. See [[link,userdb]] for the list of
-available drivers.`
+The driver used for this user database. If empty, defaults to
+[[setting,userdb_name]]. See [[link,userdb]] for the list of available
+drivers.`
 	},
 
 	userdb_args: {
