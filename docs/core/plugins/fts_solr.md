@@ -154,10 +154,9 @@ mail_plugins {
   fts_solr = yes
 }
 
-plugin {
-  fts = solr
-  fts_solr = url=https://solr.example.org:8983/solr/ debug batch_size=1000
-}
+fts_driver = solr
+fts_solr_url = https://solr.example.org:8983/solr/
+fts_batch_size = 1000
 ```
 
 Important notes:
