@@ -22,14 +22,14 @@ information Dovecot sees about the *user* (s), or if it exists at all
 in the configured *userdb* (s).
 
 The *auth_info* may be useful when the userdb is for example a SQL
-database and you are using %variables, like **%s** or **%l**, in the
-*user_query* setting. Or when you have configured the userdb in a way
+database and you are using %variables, like **%{protocol}** or **%{local_ip}**,
+in the *user_query* setting. Or when you have configured the userdb in a way
 like this:
 
 ```
 userdb db1 {
   driver = passwd-file
-  passwd_file_path = /etc/%s.passwd
+  passwd_file_path = /etc/%{protocol}.passwd
 }
 ```
 

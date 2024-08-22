@@ -46,8 +46,9 @@ you may need something more, for example the remote IP address.
 
 For SQL and LDAP lookups Dovecot figures this out automatically by using
 all the used [[variable]] as the cache key. For example,
-if your SQL query contains `%s`, `%u`, and `%r` the cache entry is used only
-if all of them (service name, username and remote IP) match for the new lookup.
+if your SQL query contains `%{protocol}`, `%{user}`, and `%{remote_ip}` the
+cache entry is used only if all of them (service name, username and remote IP)
+match for the new lookup.
 
 With other databases Dovecot doesn't know what could affect caching, so
 you have to tell Dovecot manually. The following databases require
@@ -62,7 +63,7 @@ use:
 ```[dovecot.conf]
 passdb db1 {
   driver = pam
-  args = cache_key=%s%u *
+  args = cache_key=%{protocol}%{user} *
 }
 ```
 
