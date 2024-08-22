@@ -85,8 +85,7 @@ There are few ways you can use this script.
 First, is drop-in replacement for director with no authentication.
 
 ```[dovecot.conf]
-passdb db1 {
-  driver = lua
+passdb lua {
   args = file=/etc/dovecot/director.lua nopassword
   # or password=masterpass
   # you can include other keys here too, they will be
@@ -97,14 +96,12 @@ passdb db1 {
 Alternatively, if you wish to do authentication:
 
 ```[dovecot.conf]
-passdb db1 {
-  driver = pam
+passdb pam {
   result_success = continue-ok
 }
 
-passdb db2 {
+passdb lua {
   skip = unauthenticated
-  driver = lua
   args = file=/etc/dovecot/director.lua noauthenticate
 }
 ```
