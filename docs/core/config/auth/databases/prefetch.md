@@ -34,8 +34,7 @@ you might want to use [[link,auth_staticdb]] instead of prefetch.
 
 ::: code-group
 ```[dovecot.conf]
-passdb db1 {
-  driver = ldap
+passdb ldap {
   args = /etc/dovecot/dovecot-ldap.conf.ext
 }
 
@@ -65,8 +64,7 @@ user_attrs = homeDirectory=home, uidNumber=uid, gidNumber=gid
 
 ::: code-group
 ```[dovecot.conf]
-passdb db1 {
-  driver = sql
+passdb sql {
   args = /etc/dovecot/dovecot-sql.conf.ext
 }
 
