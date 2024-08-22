@@ -7477,6 +7477,13 @@ If \`yes\` and the user is found from the [[link,auth_master_users]] the user
 is allowed to login as other users.`
 	},
 
+	passwd_file_path: {
+		tags: [ 'passwd-file' ],
+		values: setting_types.STRING,
+		text: `
+Path to the passwd-file.`
+	},
+
 	pop3_client_workarounds: {
 		tags: [ 'pop3' ],
 		values: setting_types.STRING,
