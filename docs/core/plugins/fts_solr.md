@@ -315,3 +315,14 @@ Some additional things which might help you configuring Solr search:
 
 - Please keep in mind that you will have to change the Solr URL to
   include the core name (ie: `dovecot`: `https://localhost:8939/solr/dovecot`).
+
+- To troubleshoot the settings you can enable debug logs using:
+  ```[dovecot.conf]
+  log_debug = category=fts-solr
+  ```
+  and rawlogs using:
+  ```[dovecot.conf]
+  fts_solr {
+    http_client_rawlog_dir = /path/to/writable/directory/solr-rawlogs
+  }
+  ```
