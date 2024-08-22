@@ -7314,6 +7314,18 @@ the passdb lookup, and can refer to fields returned by the current (and
 previous) passdb lookups.`
 	},
 
+	passdb_default_password_scheme: {
+		tags: [ 'passdb' ],
+		values: setting_types.STRING,
+		default: {
+			value: 'PLAIN',
+			text: 'specific [[link,passdb]] have different defaults',
+		},
+		text: `
+The scheme that passwords are in the passdb, unless overridden by the passdb
+entry (typically by prefixing with \`{SCHEME}\`).`
+	},
+
 	passdb_mechanisms: {
 		tags: [ 'passdb' ],
 		added: {
