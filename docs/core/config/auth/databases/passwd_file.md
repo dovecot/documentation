@@ -72,8 +72,7 @@ passdb passwd-file {
   auth_username_format = %n
   passwd_file_path = /etc/imap.passwd
 }
-userdb db1 {
-  driver = passwd-file
+userdb passwd-file {
   auth_username_format = %n
   passwd_file_path = /etc/imap.passwd
   default_fields = uid=vmail gid=vmail home=/home/vmail/%u
@@ -146,8 +145,7 @@ passdb passwd-file {
   passwd_file_path = /path/to/file-with-encrypted-passwords
 }
 
-userdb db1 {
-  driver = passwd-file
+userdb passwd-file {
   auth_username_format = %n
   passwd_file_path = /path/to/file-with-encrypted-passwords
 }

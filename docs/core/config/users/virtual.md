@@ -219,8 +219,7 @@ passdb passwd-file {
   passwd_file_path = /home/%d/etc/shadow
 }
 
-userdb db1 {
-  driver = passwd-file
+userdb passwd-file {
   auth_username_format = %Ln
   passwd_file_path = /home/%d/etc/passwd
 }
@@ -239,8 +238,7 @@ mail_path = ~/Maildir
 passdb pam {
 }
 
-userdb db1 {
-  driver = static
+userdb static {
   args = uid=vmail gid=vmail home=/var/mail/virtual/%d/%n
 }
 ```
@@ -270,12 +268,10 @@ passdb pam {
   skip = authenticated
 }
 
-userdb db1 {
-  driver = ldap
+userdb ldap {
   args = /path/to/ldap/config
 }
 
-userdb db2 {
-  driver = passwd
+userdb passwd {
 }
 ```
