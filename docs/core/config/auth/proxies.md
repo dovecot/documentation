@@ -325,8 +325,7 @@ service pop3-login {
 auth_cache_size = 4096
 
 auth_mechanisms = plain
-passdb db1 {
-  driver = sql
+passdb sql {
   args = /usr/local/etc/dovecot/dovecot-sql.conf.ext
 }
 ```
@@ -361,8 +360,7 @@ mail_gid = vmail
 
 auth_mechanisms = plain
 
-passdb db1 {
-  driver = sql
+passdb sql {
   args = /usr/local/etc/dovecot/dovecot-sql.conf.ext
 }
 userdb sql {
