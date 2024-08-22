@@ -7387,7 +7387,11 @@ Configures when passdbs should be skipped:
 		seealso: [ '[[link,passdb_result_values]]' ],
 		text: `
 What to do after the passdb authentication succeeded. Possible values and their
-meaning are described fully at [[link,passdb_result_values]].`
+meaning are described fully at [[link,passdb_result_values]].
+
+This is commonly used together with master passdb to specify that even after a
+successful master user authentication, the authentication should continue to
+the actual non-master passdb to lookup the user.`
 	},
 
 	passdb_result_failure: {
@@ -7436,17 +7440,6 @@ with \`internal error\`.`
 		text: `
 If \`yes\` and the user is found from the \`denied user database\` the
 authentication will fail.`
-	},
-
-	passdb_pass: {
-		tags: [ 'passdb' ],
-		values: setting_types.BOOLEAN,
-		default: 'no',
-		text: `
-This is an alias for [[setting,passdb_result_success,continue]]. This is
-commonly used together with the master passdb to specify that even after a
-successful master user authentication the authentication should continue to the
-non-master passdb to lookup the user.`
 	},
 
 	passdb_master: {
