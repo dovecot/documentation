@@ -696,7 +696,8 @@ should copy the permissions from.
 
 When [[setting,mail_path]] begins with `%{home}` or `~/`, its permissions are
 copied from the first existing parent directory if it has setgid-bit set. This
-isn't done when the path contains any other %variables.
+isn't done when the path contains any other
+[[link,settings_variables,%variables]].
 
 ### Mail Delivery Agent Permissions
 
