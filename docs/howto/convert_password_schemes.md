@@ -262,8 +262,7 @@ Enable the `plain_pass` variable in the auth-passwdfile configuration.
 `/etc/dovecot/conf.d/auth-passwdfile.conf.ext`:
 
 ```
-passdb db1 {
-  driver = passwd-file
+passdb passwd-file {
   passwd_file_path = /var/vmail/auth.d/%d/passwd
 }
 
