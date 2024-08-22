@@ -87,13 +87,11 @@ auth_mechanisms = plain
 
 passdb db1 {
   driver = passwd-file
-  auth_username_format = %u
   passwd_file_path = /var/vmail/auth.d/%d/passwd
 }
 
 userdb db1 {
   driver = passwd-file
-  auth_username_format = %u
   passwd_file_path = /var/vmail/auth.d/%d/passwd
 }
 ```
