@@ -132,8 +132,7 @@ The important settings to change for rootless installation are:
 - Instead of [[link,auth_pam]], use, for example, [[link,auth_passwd_file]]:
 
   ```
-  passdb db1 {
-    driver = passwd-file
+  passdb passwd-file {
     passwd_file_path = /home/user/dovecot/etc/passwd
   }
 

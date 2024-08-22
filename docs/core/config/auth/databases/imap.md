@@ -36,8 +36,7 @@ The SSL method to use.
 Authenticates users against remote IMAP server in IP address 192.168.1.123:
 
 ```
-passdb db1 {
-  driver = imap
+passdb imap {
   args = host=192.168.1.123
 }
 ```
