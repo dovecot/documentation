@@ -30,8 +30,8 @@ The PAM configuration is usually in the `/etc/pam.d/` directory, but some
 systems may use a single file, `/etc/pam.conf`. By default Dovecot uses
 dovecot as the PAM service name, so the configuration is read from
 `/etc/pam.d/dovecot`. You can change this by giving the wanted service name
-in the `args` parameter. You can also set the service to `%s` in which case
-Dovecot automatically uses either `imap` or `pop3` as the service,
+in the `args` parameter. You can also set the service to `%{protocol}` in which
+case Dovecot automatically uses either `imap` or `pop3` as the service,
 depending on the actual service the user is logging in to.
 
 Examples:
@@ -41,7 +41,7 @@ Examples:
   ```[dovecot.conf]
   passdb db1 {
     driver = pam
-    args = %s
+    args = %{protocol}
   }
   ```
 
@@ -144,10 +144,10 @@ relied on. For this reason the `cache_key` must contain all the
 
 | Variable | Description | Comment |
 | -------- | ----------- | ------- |
-| `%u` | Username | You'll most likely want to use this. |
-| `%s` | Service | If you use `*` as the service name you'll most likely want to use this. |
-| `%r` | Remote IP address | Use this if you do any IP related checks. |
-| `%l` | Local IP address | Use this if you do any checks based on the local IP address that was connected to. |
+| `%{user}` | Username | You'll most likely want to use this. |
+| `%{protocol}` | Service | If you use `*` as the service name you'll most likely want to use this. |
+| `%{remote_ip}` | Remote IP address | Use this if you do any IP related checks. |
+| `%{local_ip}` | Local IP address | Use this if you do any checks based on the local IP address that was connected to. |
 
 Examples:
 
@@ -157,7 +157,7 @@ auth_cache_size = 1024
 passdb db1 {
   driver = pam
   # username and service
-  args = cache_key=%u%s *
+  args = cache_key=%{user}%{protocol} *
 }
 ```
 
@@ -167,7 +167,7 @@ auth_cache_size = 1024
 passdb db1 {
   driver = pam
   # username, remote IP and local IP
-  args = cache_key=%u%r%l dovecot
+  args = cache_key=%{user}%{remote_ip}%{local_ip} dovecot
 }
 ```
 
