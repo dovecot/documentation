@@ -12,12 +12,12 @@ IMAP/POP3/SMTP/etc. access checks.
 
 ## PAM
 
-Set PAM service name to `%s`, ie.:
+Set PAM service name to `%{protocol}`, ie.:
 
 ```[dovecot.conf]
 passdb db1 {
   driver = pam
-  args = %s
+  args = %{protocol}
 }
 ```
 
@@ -32,23 +32,23 @@ auth    required        pam_listfile.so item=user sense=allow file=/etc/imapuser
 
 ## SQL
 
-You can use the `%s` variable which expands to `imap` or `pop3` in
+You can use the `%{protocol}` variable which expands to `imap` or `pop3` in
 `password_query`:
 
 ```
 password_query = SELECT password FROM users WHERE userid = '%u' \
-    and not (imap_allowed = false and '%s' = 'imap') 
+    and not (imap_allowed = false and '%{protocol}' = 'imap') 
 ```
 
 ## LDAP
 
-Just like with SQL, you can use `%s` in `pass_filter`:
+Just like with SQL, you can use `%{protocol}` in `pass_filter`:
 
 ```
-pass_filter = (&(objectClass=posixAccount)(uid=%u)(service=%s)) 
+pass_filter = (&(objectClass=posixAccount)(uid=%u)(protocol=%{protocol})) 
 ```
 
-That would require setting both service=pop3 and service=imap attributes
+That would require setting both protocol=pop3 and protocol=imap attributes
 to the user objects.
 
 ## passwd-file
@@ -58,7 +58,7 @@ You can create a deny passwd-file based on the service:
 ```[dovecot.conf]
 passdb db1 {
   driver = passwd-file
-  passwd_file_path = /etc/dovecot/deny.%s
+  passwd_file_path = /etc/dovecot/deny.%{protocol}
   deny = yes
 }
 ```
