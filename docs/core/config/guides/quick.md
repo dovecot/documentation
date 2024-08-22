@@ -144,8 +144,7 @@ is configured.
 Switch to passwd-file authentication by adding to `dovecot.conf`:
 
 ```
-passdb db1 {
-  driver = passwd-file
+passdb passwd-file {
   default_password_scheme = CRYPT
   passwd_file_path = /etc/dovecot/users
 }
