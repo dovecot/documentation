@@ -146,14 +146,12 @@ Switch to passwd-file authentication by adding to `dovecot.conf`:
 ```
 passdb db1 {
   driver = passwd-file
-  auth_username_format = %u
   default_password_scheme = CRYPT
   passwd_file_path = /etc/dovecot/users
 }
 
 userdb db1 {
   driver = passwd-file
-  auth_username_format = %u
   passwd_file_path = /etc/dovecot/users
 }
 ```

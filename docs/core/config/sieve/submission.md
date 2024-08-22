@@ -36,9 +36,10 @@ Below are some of the most common reasons for this.
 [[setting,auth_username_format,%L]] lowercases the username but also drops
 the domain. Use [[setting,auth_username_format,%Lu]] instead.
 
-[[setting,auth_username_format]] changes the username permanently, some
-user databases support using [[variable]] or `username_format` (see
-[[link,auth_passwd_file]]). See also [[link,virtual_users_system_users]].
+[[setting,auth_username_format]] changes the username permanently when used
+globally. If used inside [[link,passdb,passdb]] or [[link,userdb,userdb]], it
+changes the username only for the duration of the lookup. See also
+[[link,virtual_users_system_users]].
 
 #### SQL
 
