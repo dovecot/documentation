@@ -3388,7 +3388,7 @@ If \`no\`, there will be no report for the authentication result.`
 	},
 
 	auth_policy_request_attributes: {
-		default: 'login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s session_id=%{session} fail_type=%{fail_type}',
+		default: 'login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%{protocol} session_id=%{session} fail_type=%{fail_type}',
 		changed: {
 			settings_auth_policy_request_attributes_changed: `Default has changed.`
 		},
