@@ -7261,25 +7261,32 @@ Filter for oauth2 specific settings.`
 		seealso: [ '[[link,passdb]]', 'passdb_name', 'passdb_driver' ],
 		text: `
 Creates a new [[link,passdb]]. The filter name refers to the
-[[setting,passdb_name]] setting. The [[setting,passdb_driver]] setting is
-required to be set inside this filter.`
+[[setting,passdb_name]] setting.`
 	},
 
 	passdb_name: {
 		tags: [ 'passdb' ],
 		values: setting_types.STRING,
+		seealso: [ 'passdb', 'passdb_driver' ],
 		text: `
-Name of the passdb. This is used only in configuration - it's not visible to
-users. The [[setting,passdb]] filter name refers to this setting.`
+Name of the passdb. The [[setting,passdb]] filter name refers to this setting.
+If the [[setting,passdb_driver]] setting is empty, the \`passdb_name\` is used
+as the driver. This allows doing e.g.:
+
+\`\`\`[dovecot.conf]
+passdb passwd-file {
+  passwd_file_path = /etc/dovecot/passwd
+\`\`\``
 	},
 
 	passdb_driver: {
 		tags: [ 'passdb' ],
 		values: setting_types.STRING,
-		seealso: [ '[[link,passdb]]' ],
+		seealso: [ 'passdb_name', '[[link,passdb]]' ],
 		text: `
-The driver used for this password database. See [[link,passdb]] for the list of
-available drivers.`
+The driver used for this password database. If empty, defaults to
+[[setting,passdb_name]]. See [[link,passdb]] for the list of available
+drivers.`
 	},
 
 	passdb_args: {
