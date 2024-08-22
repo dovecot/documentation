@@ -260,10 +260,6 @@ The basic backends are built if the system is detected to support them:
 
 Build with [[link,auth_pam]] support
 
-##### `--with-nss`
-
-Build with [[link,auth_nss]] support
-
 ##### `--with-bsdauth`
 
 Build with [[link,auth_bsd]] support
