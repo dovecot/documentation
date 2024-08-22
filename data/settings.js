@@ -2161,19 +2161,44 @@ by default.`
 
 	/* fts-solr plugin */
 
-	fts_solr: {
+	fts_solr_batch_size: {
+		plugin: 'fts-solr',
+		values: setting_types.UINT,
+		default: 1000,
+		text: `
+Configures the number of mails sent to Solr in a single request.
+
+* With [[setting,fts_autoindex,yes]] each new mail gets separately indexed on
+  arrival, so \`fts_solr_batch_size\` only matters during the initial indexing
+  of a mailbox.
+* With [[setting,fts_autoindex,no]] new mails don't get indexed on arrival, so
+  \`fts_solr_batch_size\` is used when indexing is triggered.`
+	},
+
+	fts_solr_soft_commit: {
+		plugin: 'fts-solr',
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		seealso: [ '[[link,fts_solr_soft_commits]]' ],
+		text: `
+Controls whether new mails are immediately searchable via Solr.`
+	},
+
+	fts_solr_url: {
 		plugin: 'fts-solr',
 		values: setting_types.STRING,
 		text: `
-Configuration of fts_solr driver.
+Required base URL for Solr.
 
-Format is a space separated list of options:
+::: info
+Remember to add your core name if using solr 7+: \`/solr/dovecot\`.
 
+Example:
+\`\`\`[dovecot.conf]
+fts_solr_url = http://solr.example.org:8983/solr/dovecot/
+fts_solr_batch_size = 1000
 \`\`\`
-fts_solr = [option1[=value1]] [option2[=value2]] [...]
-\`\`\`
-
-See [[plugin,fts-solr]] for configuration information.`
+:::`
 	},
 
 	/* imap-acl plugin */
