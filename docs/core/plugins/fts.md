@@ -200,10 +200,9 @@ At least one language must be listed.
 The first language is the default language used in case detection fails.
 
 Each added language makes the indexing and searching slightly slower, so it's
-recommended not to add too many languages unnecessarily.
-
-The language detection performance can be improved by limiting the number of
- languages available for textcat, see [[setting,fts_language_config]].
+recommended not to add too many languages unnecessarily. The language detection
+performance can be improved by limiting the number of languages available for
+textcat, see [[setting,textcat_config_path]].
 
 Example:
 
