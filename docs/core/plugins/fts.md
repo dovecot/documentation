@@ -63,8 +63,8 @@ By default the FTS indexes are updated only while searching, so neither
 LDA/LMTP nor an IMAP 'APPEND' command updates the indexes immediately. This
 means that if a user has received a lot of mail since the last indexing
 (i.e., the last search operation), it may take a while to index all the new
-mails before replying to the search command. Dovecot sends periodic “\* OK
-Indexed n% of the mailbox” updates which can be caught by client
+mails before replying to the search command. Dovecot sends periodic "\* OK
+Indexed n% of the mailbox" updates which can be caught by client
 implementations to implement a progress bar.
 
 Updating the FTS index as messages arrive makes for a more responsive user
@@ -231,8 +231,8 @@ listed before it.
 In tokenizers however, the data however flows from child to parent. This
 means that the tokenizer listed 'last' gets the processed data 'first'.
 
-So, for filters data flows “left to right” through the filters listed in the
-configuration. In tokenizers the order is “right to left”.
+So, for filters data flows "left to right" through the filters listed in the
+configuration. In tokenizers the order is "right to left".
 
 ### Base64 Detection
 
@@ -307,7 +307,7 @@ Stopwords specific settings:
 <FTSConfigComponent name="stopwords_dir" default="&lt;DATADIR&gt;/stopwords">
 
 Path to the directory containing stopword files. Stopword files are
-looked up in `”<path>”/stopwords_<lang>.txt`.
+looked up in `"<path>"/stopwords_<lang>.txt`.
 
 See [languages](#languages) for the list of stopword files that are currently
 distributed with Dovecot.
@@ -322,7 +322,7 @@ https://github.com/stopwords-iso/.
 ### `snowball`
 
 Stemming tries to convert words to a common base form. A simple example
-is converting “cars” to “car” (in English).
+is converting `cars` to `car` (in English).
 
 This stemmer is based on the [Snowball stemmer](https://snowballstem.org/)
 library.
@@ -376,7 +376,7 @@ index the part of the token that conveys the core meaning.
 Only works with French, so the language of the input needs to be
 recognized by textcat as French.
 
-It filters “qu'”, “c'”, “d'”, “l'”, “m'”, “n'”, “s'” and “t'”.
+It filters `qu'`, `c'`, `d'`, `l'`, `m'`, `n'`, `s'` and `t'`.
 
 Do not use at the same time as `generic` tokenizer with
 `algorithm=tr29 wb5a=yes`.
@@ -418,8 +418,8 @@ all existing languages.
 <FTSConfigComponent name="wb5a" default="no">
 
 Unicode TR29 rule WB5a setting to the tr29 tokenizer. Splits
-prefixing contracted words from base word. E.g. “l'homme” → “l”
-“homme”. Together with a language specific stopword list unnecessary
+prefixing contracted words from base word. E.g. `l'homme` → `l` and
+`homme`. Together with a language specific stopword list unnecessary
 contractions can thus be filtered away. This is disabled by default
 and only works with the TR29 algorithm.
 
