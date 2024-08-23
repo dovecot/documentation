@@ -310,20 +310,7 @@ filter when multiple languages are present in the configuration.
 
 #### Settings
 
-<FTSConfigComponent name="stopwords_dir" default="&lt;DATADIR&gt;/stopwords">
-
-Path to the directory containing stopword files. Stopword files are
-looked up in `"<path>"/stopwords_<lang>.txt`.
-
-See [languages](#languages) for the list of stopword files that are currently
-distributed with Dovecot.
-
-More languages can be obtained from
-[Apache Lucene](https://lucene.apache.org/),
-[Snowball stemmer](https://snowballstem.org/), or
-https://github.com/stopwords-iso/.
-
-</FTSConfigComponent>
+<SettingsComponent tag="language-stopwords-dir" level="4" />
 
 ### `snowball`
 
@@ -350,14 +337,7 @@ Similar cases can exist for other languages as well.
 
 #### Settings
 
-<FTSConfigComponent name="stopwords_dir" default="Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove">
-
-Description of the normalizing/transliterating rules to use.
-
-See [Normalizer Format](https://unicode-org.github.io/icu/userguide/transforms/general/#transliterator-identifiers)
-for syntax.
-
-</FTSConfigComponent>
+<SettingsComponent tag="language-filter-normalizer-icu" level="4" />
 
 ### `english-possessive`
 
