@@ -8,6 +8,9 @@ dovecotlinks:
   fts_filter_configuration:
     hash: filter-configuration
     text: Filter Configuration
+  fts_tokenizer_configuration:
+    hash: tokenizer-configuration
+    text: Tokenizer Configuration
 ---
 
 # FTS: Full Text Search Plugin (`fts`)
@@ -423,7 +426,7 @@ prefixing contracted words from base word. E.g. `l'homme` → `l` and
 contractions can thus be filtered away. This is disabled by default
 and only works with the TR29 algorithm.
 
-Enable by `fts_tokenizer_generic = algorithm=tr29 wb5a=yes`.
+Enable by `language_tokenizer_generic = algorithm=tr29 wb5a=yes`.
 
 </FTSConfigComponent>
 
