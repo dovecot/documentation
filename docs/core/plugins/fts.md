@@ -203,7 +203,8 @@ The lib-language tokenization library works in the following way:
 
 ### Languages
 
-[[setting,fts_languages]] lists languages FTS should detect.
+The [[setting,language]] setting declares the languages that need to be
+detected.
 
 At least one language must be listed.
 
@@ -217,8 +218,9 @@ textcat, see [[setting,textcat_config_path]].
 Example:
 
 ```[dovecot.conf]
-plugin {
-  fts_languages = en de
+language en {
+}
+language de {
 }
 ```
 
