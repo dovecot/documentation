@@ -201,7 +201,7 @@ The lib-language tokenization library works in the following way:
 
 4. Stopwords: A configurable list of words not to be indexed
 
-### Languages
+### Language Definition
 
 The [[setting,language]] setting declares the languages that need to be
 detected.
