@@ -2076,6 +2076,37 @@ This setting can be overridden for specific tokenizers by using
 See [[link,fts_tokenizer_configuration]] for configuration information.`
 	},
 
+	language_filter_normalizer_icu_id: {
+		plugin: 'fts',
+		tags: [ 'language-filter-normalizer-icu' ],
+		values: setting_types.STRING,
+		default: `Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove`,
+		text: `
+Description of the normalizing/transliterating rules to use.
+
+See
+[Normalizer Format](https://unicode-org.github.io/icu/userguide/transforms/general/#transliterator-identifiers)
+for syntax.`
+	},
+
+	language_filter_stopwords_dir: {
+		plugin: 'fts',
+		tags: [ 'language-filter-stopwords-dir' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,fts_tokenization]]' ],
+		text: `
+Path to the directory containing stopword files. The files inside the directory
+have names with the form \`/stopwords_<lang>.txt\`.
+
+See [[link,fts_languages]] for the list of stopword files that are currently
+distributed with Dovecot.
+
+More languages can be obtained from:
+* [Apache Lucene](https://lucene.apache.org/),
+* [Snowball stemmer](https://snowballstem.org/), or
+* [GitHub - Stopwords ISO](https://github.com/stopwords-iso/).`
+	},
+
 	/* fts-flatcurve plugin */
 
 	fts_flatcurve_commit_limit: {
