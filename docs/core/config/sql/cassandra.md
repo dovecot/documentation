@@ -225,7 +225,7 @@ to use for authenticating against the remote server.
 ### `ssl_verify`
 
 * Default: `none`
-* Values: `none`, `cert`, `cert-ip`, `cert-dns`
+* Values: `none`, `cert`, `cert-ip`
 
 Configure the peer certificate validation method.
 
@@ -236,7 +236,6 @@ Configure the peer certificate validation method.
 | `none` | Disables validation. |
 | `cert` | Validate that the certificate is valid. |
 | `cert-ip` | Validate that the certificate is valid and has Common Name or Subject Alternate Name for the IP address. |
-| `cert-dns` | Validate that the certificate is valid and has Common Name or Subject Alternate Name that matches PTR resource record for the server's IP address. |
 
 ### `user`
 
