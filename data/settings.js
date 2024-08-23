@@ -7333,6 +7333,30 @@ the passdb lookup, and can refer to fields returned by the current (and
 previous) passdb lookups.`
 	},
 
+	passdb_fields: {
+		tags: [ 'passdb' ],
+		values: setting_types.STRLIST,
+		seealso: [ '[[link,passdb_extra_fields]]' ],
+		text: `
+Passdb fields (and [[link,passdb_extra_fields]]). The values can contain
+[[link,settings_variables,%variables]]. All \`%variables\` used here reflect
+the state **after** the current passdb lookup, and can refer to fields returned
+by previous passdb lookups. Depending on the passdb driver, it can also refer
+to variable fields returned by it (e.g. \`%{ldap:fieldName}\`).
+
+For example:
+
+\`\`\`[dovecot.conf]
+passdb ldap {
+  fields {
+    user = %{ldap:userId}
+    proxy = yes
+    host = %{ldap:proxyHost}
+  }
+}
+\`\`\``
+	},
+
 	passdb_default_password_scheme: {
 		tags: [ 'passdb' ],
 		values: setting_types.STRING,
@@ -8903,6 +8927,31 @@ previous) userdb lookups.
 
 For example useful with userdb passwd for overriding e.g. home directory or the
 \`uid\` or \`gid\`.`
+	},
+
+	userdb_fields: {
+		tags: [ 'userdb' ],
+		values: setting_types.STRLIST,
+		seealso: [ '[[link,userdb_extra_fields]]' ],
+		text: `
+Userdb fields (and [[link,userdb_extra_fields]]). The values can contain
+[[link,settings_variables,%variables]]. All \`%variables\` used here reflect
+the state **after** the current userdb lookup, and can refer to fields returned
+by previous userdb lookups. Depending on the userdb driver, it can also refer
+to variable fields returned by it (e.g. \`%{ldap:fieldName}\`).
+
+For example:
+
+\`\`\`[dovecot.conf]
+userdb ldap {
+  fields {
+    user = %{ldap:userId}
+    home = /home/%{ldap:mailboxPath}
+    uid = vmail
+    gid = vmail
+  }
+}
+\`\`\``
 	},
 
 	userdb_skip: {
