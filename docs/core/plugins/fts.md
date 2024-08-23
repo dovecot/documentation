@@ -364,8 +364,9 @@ recognized by textcat as French.
 
 It filters `qu'`, `c'`, `d'`, `l'`, `m'`, `n'`, `s'` and `t'`.
 
-Do not use at the same time as `generic` tokenizer with
-`algorithm=tr29 wb5a=yes`.
+Do not use at the same time as `generic` tokenizer with both
+* [[setting,language_tokenizer_generic_algorithm,tr29]] and
+* [[setting,language_tokenizer_generic_wb5a,yes]].
 
 ## Tokenizer Configuration
 
@@ -380,38 +381,7 @@ suitable for indexing and searching. The generic tokenizer does this.
 
 #### Settings
 
-<FTSConfigComponent name="maxlen" default="30">
-
-Maximum length of token, before an arbitrary cut off is made.
-
-</FTSConfigComponent>
-
-<FTSConfigComponent name="algorithm" default="simple">
-
-Accepted values are `simple` or `tr29`. It defines the method for
-looking for word boundaries.
-
-`simple` is faster and will work for many texts, especially those using
-latin alphabets, but leaves corner cases.
-
-`tr29` implements a version of Unicode technical report 29 word boundary
- lookup. It might work better with, e.g., texts containing Katakana or
-Hebrew characters, but it is not possible to use a single algorithm for
-all existing languages.
-
-</FTSConfigComponent>
-
-<FTSConfigComponent name="wb5a" default="no">
-
-Unicode TR29 rule WB5a setting to the tr29 tokenizer. Splits
-prefixing contracted words from base word. E.g. `l'homme` → `l` and
-`homme`. Together with a language specific stopword list unnecessary
-contractions can thus be filtered away. This is disabled by default
-and only works with the TR29 algorithm.
-
-Enable by `language_tokenizer_generic = algorithm=tr29 wb5a=yes`.
-
-</FTSConfigComponent>
+<SettingsComponent tag="language-tokenizer-generic" level="4" />
 
 ### `email-address`
 
@@ -421,8 +391,4 @@ work as intended if it is listed **after** other tokenizers.
 
 #### Settings
 
-<FTSConfigComponent name="maxlen" default="254">
-
-Maximum length of token, before an arbitrary cut off is made.
-
-</FTSConfigComponent>
+<SettingsComponent tag="language-tokenizer-email-address" level="4" />
