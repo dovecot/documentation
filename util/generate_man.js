@@ -43,7 +43,7 @@ const doInclude = (content, f) => {
 	return content.replace(includesRE, (m, m1) => {
 		if (!m1.length) return m
 		const inc_f = path.join(path.dirname(f), m1)
-		return doInclude(fs.readFileSync(inc_f, 'utf8'), f)
+		return doInclude(fs.readFileSync(inc_f, 'utf8'), inc_f)
 	})
 }
 

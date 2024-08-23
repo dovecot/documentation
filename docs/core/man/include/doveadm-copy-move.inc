@@ -38,19 +38,19 @@ given *search_query*, into the user's *destination* mailbox.
 In the third form, matching mails will be moved or copied only for
 given *user*(s).
 
-<!-- @include: include/global-options.inc -->
+<!-- @include: ./global-options.inc -->
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
+<!-- @include: ./option-A.inc -->
 
-<!-- @include: include/option-F-file.inc -->
+<!-- @include: ./option-F-file.inc -->
 
-<!-- @include: include/option-no-userdb-lookup.inc -->
+<!-- @include: ./option-no-userdb-lookup.inc -->
 
-<!-- @include: include/option-S-socket.inc -->
+<!-- @include: ./option-S-socket.inc -->
 
-<!-- @include: include/option-u-user.inc -->
+<!-- @include: ./option-u-user.inc -->
 
 ## ARGUMENTS
 
@@ -81,7 +81,7 @@ $ doveadm move -u jane Archive/2011/09 mailbox INBOX BEFORE \
       2011-10-01 SINCE 01-Sep-2011
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: ./reporting-bugs.inc -->
 
 ## SEE ALSO
 
