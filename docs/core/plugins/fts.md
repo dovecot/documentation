@@ -219,6 +219,7 @@ Example:
 
 ```[dovecot.conf]
 language en {
+  default = yes
 }
 language de {
 }
