@@ -67,7 +67,7 @@ const processDovecotMd = () => {
 					case 'link':
 						return parts[1]
 					default:
-						return m1
+						throw new Error('unknown dovecot markdown command: ' + parts[0])
 					}
 				})
 			}
