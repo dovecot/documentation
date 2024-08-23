@@ -58,6 +58,8 @@ const processDovecotMd = () => {
 					switch (parts[0]) {
 					case 'man':
 						return parts[1] + '(' + (parts[3] ? parts[3] : '1') + ')'
+					case 'plugin':
+						return parts[1] + ' plugin documentation'
 					case 'rfc':
 						return "RFC " + parts[1]
 					case 'setting':
