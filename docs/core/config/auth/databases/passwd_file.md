@@ -64,6 +64,19 @@ passdb passwd-file {
 }
 ```
 
+### Variables
+
+[[setting,passdb_fields]] and [[setting,userdb_fields]] can use
+`%{passwd_file:<field>[:<default>]}` variables to access the current passdb or
+userdb lookup's fields. The available fields are:
+
+* `uid`
+* `gid`
+* `home`
+* Any specified extra fields. The `userdb_` prefixed fields are available also
+  in passdb lookups with the `userdb_` prefix. In userdb lookups these same
+  fields are available without the `userdb_` prefix.
+
 ### Examples
 
 ```[dovecot.conf]
