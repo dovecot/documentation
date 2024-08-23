@@ -1878,20 +1878,6 @@ other cases it's possible that the search results will be different
 depending on whether the search was performed via FTS index or not.`
 	},
 
-	fts_filters: {
-		default: 'no',
-		plugin: 'fts',
-		seealso: [ '[[link,fts_tokenization]]' ],
-		values: setting_types.STRING,
-		text: `
-The list of filters to apply.
-
-Language specific filter chains can be specified with \`fts_filters_<lang>\`
-(e.g. \`fts_filters_en\`).
-
-See [[plugin,fts,filters]] for configuration information.`
-	},
-
 	fts_header_excludes: {
 		plugin: 'fts',
 		values: setting_types.BOOLLIST,
@@ -2069,6 +2055,22 @@ Example:
 \`\`\`
 textcat_config_path = /usr/share/libexttextcat/fpdb.conf
 \`\`\``
+	},
+
+	language_filters: {
+		plugin: 'fts',
+		values: setting_types.BOOLLIST,
+		seealso: [
+			'[[link,fts_tokenization]]',
+			'[[link,fts_filter_configuration]]',
+		],
+		text: `
+The list of filters to apply.
+
+Language specific filter chains can be specified with
+\`language_filters_<lang>\` (e.g. \`language_filters_en\`).
+
+See [[link,fts_filter_configuration]] for configuration information.`
 	},
 
 	/* fts-flatcurve plugin */
