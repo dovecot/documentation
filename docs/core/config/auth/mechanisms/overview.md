@@ -58,7 +58,7 @@ all, because they only support verifying a known cleartext password.
 | OTP | One time password mechanisms. |
 | EXTERNAL | EXTERNAL SASL mechanism. |
 | [[link,auth_oauth2,OAUTHBEARER]] | OAuth2 bearer authentication [[rfc,7628]]. |
-| XOAUTH2 | [Google flavor OAUTHBEARER](https://developers.google.com/gmail/imap/xoauth2-protocol) |
+| [[link,auth_oauth2,XOAUTH2]] | [Google flavor OAUTHBEARER](https://developers.google.com/gmail/imap/xoauth2-protocol) |
 
 ## Configuration
 
