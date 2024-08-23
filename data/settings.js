@@ -1961,34 +1961,6 @@ the search timed out during waiting for the indexing to complete:
 A value of \`0\` means no timeout.`
 	},
 
-	fts_languages: {
-		default: '<textcat dir>',
-		plugin: 'fts',
-		values: setting_types.STRING,
-		seealso: [ 'textcat_config_path' ],
-		text: `
-A space-separated list of languages that the full text search should detect.
-
-At least one language must be specified.
-
-The language listed first is the default and is used when language
-recognition fails.
-
-The filters used for stemming and stopwords are language dependent.
-
-Note: For better performance it's recommended to synchronize this
-setting with the textcat configuration file; see
-[[setting,textcat_config_path]].
-
-Example:
-
-\`\`\`
-plugin {
-  fts_languages = en de
-}
-\`\`\``
-	},
-
 	fts_message_max_size: {
 		default: 0,
 		added: {
@@ -2024,14 +1996,14 @@ fts_decoder_tika_url = http://tikahost:9998/tika/
 		plugin: 'fts',
 		default: '<textcat dir>',
 		values: setting_types.STRING,
-		seealso: [ 'fts_languages' ],
+		seealso: [ 'language' ],
 		text: `
 Path to the textcat/exttextcat configuration file, which lists the
 supported languages.
 
 This is recommended to be changed to point to a minimal version of a
 configuration that supports only the languages listed in
-[[setting,fts_languages]].
+[[setting,language]].
 
 Doing this improves language detection performance during indexing and also
 makes the detection more accurate.
@@ -2040,6 +2012,36 @@ Example:
 
 \`\`\`
 textcat_config_path = /usr/share/libexttextcat/fpdb.conf
+\`\`\``
+	},
+
+	language: {
+		plugin: 'fts',
+		default: '<textcat dir>',
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'textcat_config_path', '[[link,fts_tokenization]]' ],
+		text: `
+Defines a language to be used in tokenization.
+
+At least one language must be specified.
+
+The language listed first is the default and is used when language
+recognition fails.
+
+The filters used for stemming and stopwords are language dependent.
+
+::: tip
+For better performance it's recommended to synchronize this setting with the
+textcat configuration file; see [[setting,textcat_config_path]].
+:::
+
+Example:
+
+\`\`\`[dovecot.conf]
+language en {
+}
+language de {
+}
 \`\`\``
 	},
 
