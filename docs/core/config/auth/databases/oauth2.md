@@ -14,6 +14,9 @@ You are recommended to use `oauthbearer` (preferred) or `xoauth2`
 
 The responses from endpoints must be JSON objects.
 
+[[changed,auth_oauth2_no_passdb_changed]]: The OAuth2 mechanism no longer uses
+a passdb for token authentication. Password Grant still needs a oauth2 passdb.
+
 ## Configuration
 
 ### Common
@@ -25,10 +28,7 @@ auth_mechanisms = {
   xoauth2 = yes
 }
 
-passdb oauth2 {
-  mechanisms = xoauth2 oauthbearer
-  args = /etc/dovecot/dovecot-oauth2.conf.ext
-}
+auth_oauth2_config_file = /etc/dovecot/dovecot-oauth2.conf.ext
 ```
 :::
 
@@ -97,14 +97,9 @@ If you want to configure proxy to get token and pass it to backend:
 
 ::: code-group
 ```[dovecot.conf]
-passdb db1 {
-  driver = oauth2
-  mechanisms = oauthbearer xoauth2
-  args = /usr/local/etc/dovecot/dovecot-oauth2.token.conf.ext
-}
+auth_oauth2_config_file = /usr/local/etc/dovecot/dovecot-oauth2.token.conf.ext
 
-passdb db2 {
-  driver = oauth2
+passdb oauth2 {
   mechanisms = plain login
   args = /usr/local/etc/dovecot/dovecot-oauth2.plain.conf.ext
 }
@@ -246,7 +241,7 @@ report OIDC configuration URL as `openid-configuration` element in error JSON.
 
 ## Full Config Example
 
-Oauth2 overrides some of the default HTTP client and SSL settings:
+OAuth2 overrides some of the default HTTP client and SSL settings:
 
 * [[setting,ssl_prefer_server_ciphers,yes]]
 * [[setting,http_client_user_agent,dovecot-oauth2-passdb/DOVECOT_VERSION]]
@@ -313,4 +308,7 @@ them inside [[setting,oauth2]] [[link,settings_syntax_named_filters]].
 
 ## Enable debug logging
 # debug = no
+
+## Use worker to verify token
+# blocking = yes
 ```
