@@ -38,6 +38,7 @@ incremented/decremented) so the cloned quota is never too much wrong.
 The keys that are written:
 
 | Key | Value |
+| --- | ----- |
 | `priv/quota/messages` | Count of messages |
 | `priv/quota/storage` | Storage usage (in bytes) |
 
