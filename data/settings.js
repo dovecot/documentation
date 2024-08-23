@@ -2107,6 +2107,107 @@ More languages can be obtained from:
 * [GitHub - Stopwords ISO](https://github.com/stopwords-iso/).`
 	},
 
+	language_tokenizer_address_token_maxlen: {
+		plugin: 'fts',
+		tags: [ 'language-tokenizer-email-address' ],
+		values: setting_types.UINT,
+		default: 250,
+		seealso: [ '[[link,fts_tokenization]]' ],
+		text: `
+Maximum length of token, before an arbitrary cut off is made.`
+	},
+
+	language_tokenizer_generic_algorithm: {
+		plugin: 'fts',
+		tags: [ 'language-tokenizer-generic' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'simple', 'tr29' ],
+		default: 'simple',
+		seealso: [ '[[link,fts_tokenization]]' ],
+		text: `
+Defines the method for finding word boundaries.
+
+| Value | Description |
+| --- | --- |
+| \`simple\` | Faster algorithm that works for many texts, especially using the latin alphabets, but leaves corner cases. |
+| \`tr29\` | Implements a version of Unicode technical report 29 word boundary lookup. It might work better with texts containing e.g. Katakana or Hebrew characters, but it is not possible to use a single algorithm for all existing languages. |`
+	},
+
+	language_tokenizer_generic_token_maxlen: {
+		plugin: 'fts',
+		tags: [ 'language-tokenizer-generic' ],
+		values: setting_types.UINT,
+		default: 30,
+		seealso: [ '[[link,fts_tokenization]]' ],
+		text: `
+Maximum length of token, before an arbitrary cut off is made.`
+	},
+
+	language_tokenizer_generic_wb5a: {
+		plugin: 'fts',
+		tags: [ 'language-tokenizer-generic' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ '[[link,fts_tokenization]]' ],
+		text: `
+Unicode TR29 rule WB5a setting to the tr29 tokenizer. Splits prefixing
+contracted words from base word. E.g. \`l'homme\` -> \`l\` and \`homme\`.
+Together with a language specific stopword list unnecessary contractions can
+thus be filtered away. This is disabled by default and only works with the TR29
+algorithm.
+
+Enable by declaring:
+* [[setting,language_tokenizer_generic_algorithm,tr29]] and
+* [[setting,language_tokenizer_generic_wb5a,yes]].`
+	},
+
+	language_tokenizer_kuromoji_icu_id: {
+		plugin: 'fts',
+		values: setting_types.STRING,
+		default: 'Any-NFKC',
+		seealso: [ '[[link,fts_tokenization]]' ],
+		text: `
+Description of the normalizing/transliterating rules to use. See
+[Normalizer Format](https://unicode-org.github.io/icu/userguide/transforms/general/#transliterator-identifiers)
+for syntax.
+
+Defaults to \`Any-NFKC\` which is quite good for CJK text mixed with latin
+alphabet languages. It transforms CJK characters to full-width encoding and
+transforms latin ones to half-width. The NFKC transformation is described
+above.
+
+::: warning
+If this setting is changed, existing FTS indexes will produce unexpected
+results. The FTS indexes should be recreated in this case.
+:::`
+	},
+
+	language_tokenizer_kuromoji_split_compounds: {
+		plugin: 'fts',
+		advanced: true,
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		seealso: [ '[[link,fts_tokenization]]' ],
+		text: `
+This setting enables \`search mode\` in the Atilika Kuromoji library. The
+setting defaults to enabled and should not be changed unless there is a
+compelling reason.
+
+::: warning
+If this setting is changed, existing FTS indexes will produce unexpected
+results. The FTS indexes should be recreated in this case.
+:::`
+	},
+
+	language_tokenizer_kuromoji_token_maxlen: {
+		plugin: 'fts',
+		values: setting_types.UINT,
+		default: 1024,
+		seealso: [ '[[link,fts_tokenization]]' ],
+		text: `
+Maximum length of token, before an arbitrary cut off is made.`
+	},
+
 	/* fts-flatcurve plugin */
 
 	fts_flatcurve_commit_limit: {
