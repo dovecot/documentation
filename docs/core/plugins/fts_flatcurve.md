@@ -63,8 +63,8 @@ fts_driver = flatcurve
 # email-addresses are useful for search purposes, so this optional config
 # will prevent these large addresses (more than 100 bytes) from being
 # stored.
-#fts_tokenizers = generic email-address
-#fts_tokenizer_email_address = maxlen=100
+#language_tokenizers = generic email-address
+#language_tokenizer_email_address = maxlen=100
 
 # All of these are optional, and indicate the default values.
 # They are listed here for documentation purposes; most people should
