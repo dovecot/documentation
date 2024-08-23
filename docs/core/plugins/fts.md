@@ -5,6 +5,9 @@ dovecotlinks:
   fts_tokenization:
     hash: tokenization
     text: FTS Tokenization
+  fts_languages:
+    hash: languages
+    text: Languages
   fts_filter_configuration:
     hash: filter-configuration
     text: Filter Configuration
