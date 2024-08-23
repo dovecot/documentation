@@ -15,11 +15,14 @@ import pdc from 'pdc'
 import path from 'path'
 import { VFile } from 'vfile'
 import { manFiles } from '../lib/utility.js'
+import remarkDeflist from 'remark-definition-list'
 import remarkMan from 'remark-man'
 import remarkParse from 'remark-parse'
-import remarkGfm from 'remark-gfm'
 import { unified } from 'unified'
+import { u } from 'unist-builder'
 import { map } from 'unist-util-map'
+import { parents } from 'unist-util-parents'
+import { SKIP, visit } from 'unist-util-visit'
 
 /* Pattern matching for markdown elements. */
 const includesRE = /<!--\s*@include:\s*(.*?)\s*-->/g
@@ -49,6 +52,39 @@ const doInclude = (content, f) => {
 
 const processDovecotMd = () => {
 	return tree => {
+		/* Convert definition lists to base mdast elements that remark-man
+		 * can handle. */
+		visit(tree, 'defList', function (node, index, parent) {
+			if (typeof index !== 'number' || !parent) return
+			/* defList is just a container, remove it. */
+			parent.children.splice(index, 1, ...node.children)
+			return [SKIP, index]
+		})
+
+		visit(tree, 'defListTerm', function (node) {
+			node.type = "paragraph"
+		})
+
+		visit(parents(tree), 'defListDescription', function (node, index, parent) {
+			/* Convert the actual description text to a blockquote, so
+			 * that it is indented. */
+			node.node.type = "blockquote"
+
+			/* remark-man only indents blockquote if it is not at the base
+			 * level. Thus, search for a parent blockquote - if it doesn't
+			 * exist, add an additional blockquote to bump the level. */
+			while (parent) {
+				if (parent.type == 'blockquote') {
+					return
+				}
+				parent = parent.parent
+			}
+
+			node.node.children = [ u('blockquote', node.children) ]
+		})
+
+		/* Go through and replace Dovecot markdown items with man-friendly
+		 * textual equivalents. */
 		return map(tree, (node) => {
 			if (node.value) {
 				node.value = node.value.replace(includesDM, (m, m1) => {
@@ -61,7 +97,7 @@ const processDovecotMd = () => {
 					case 'plugin':
 						return parts[1] + ' plugin documentation'
 					case 'rfc':
-						return "RFC " + parts[1]
+						return 'RFC ' + parts[1]
 					case 'setting':
 						return '`' + parts[1] + '`'
 					case 'link':
@@ -105,15 +141,15 @@ const main = async (component, outPath) => {
 		if (page.data.dovecotComponent != component)
 			continue
 
-		const fparts = path.basename(f).split('.')
-		const result = await unified().
+		await unified().
 			use(remarkParse).
+			use(remarkDeflist).
 			use(processDovecotMd).
-			use(remarkGfm).
 			use(remarkMan, {
 				manual: 'Dovecot',
 				version: gitHash,
-			}).process(vf).
+			}).
+			process(vf).
 			then((file) => fs.promises.writeFile(out_f, String(file)))
 	}
 }
