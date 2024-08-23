@@ -2020,20 +2020,6 @@ fts_decoder_tika_url = http://tikahost:9998/tika/
 \`\`\``
 	},
 
-	fts_tokenizers: {
-		default: 'generic email-address',
-		plugin: 'fts',
-		seealso: [ '[[link,fts_tokenization]]' ],
-		values: setting_types.STRING,
-		text: `
-The list of tokenizers to use.
-
-This setting can be overridden for specific languages by using
-\`fts_tokenizers_<lang>\` (e.g. \`fts_tokenizers_en\`).
-
-See [[plugin,fts,tokenizers]] for configuration information.`
-	},
-
 	textcat_config_path: {
 		plugin: 'fts',
 		default: '<textcat dir>',
@@ -2071,6 +2057,23 @@ Language specific filter chains can be specified with
 \`language_filters_<lang>\` (e.g. \`language_filters_en\`).
 
 See [[link,fts_filter_configuration]] for configuration information.`
+	},
+
+	language_tokenizers: {
+		plugin: 'fts',
+		values: setting_types.BOOLLIST,
+		default: 'generic email-address',
+		seealso: [
+			'[[link,fts_tokenization]]',
+			'[[link,fts_tokenizer_configuration]]',
+		],
+		text: `
+The list of tokenizers to use.
+
+This setting can be overridden for specific tokenizers by using
+\`language_tokenizer_<lang>\` (e.g. \`language_tokenizer_generic\`).
+
+See [[link,fts_tokenizer_configuration]] for configuration information.`
 	},
 
 	/* fts-flatcurve plugin */
