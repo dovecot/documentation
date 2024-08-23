@@ -164,6 +164,10 @@ See [[setting,imapc_features]].
 | `fts_decoder` | Replaced by [[setting,fts_decoder_driver]] and [[setting,fts_decoder_script_socket_path]]. |
 | `fts_solr` | Replaced by [[setting,fts_solr_url]], [[setting,fts_solr_batch_size]], [[setting,fts_solr_soft_commit]], and [[setting,http_client_rawlog_dir]] settings. |
 | `fts_tika` | Replaced by [[setting,fts_decoder_driver]] and [[setting,fts_decoder_tika_url]]. |
+| `fts_language_config` | Renamed to [[setting,textcat_config_path]]. |
+| `fts_languages` | Converted into [[setting,language]] blocks. |
+| `fts_filters` | Split into [[setting,language_filters]], [[setting,language_filter_normalizer_icu_id]], [[setting,language_filter_stopwords_dir]]. |
+| `fts_tokenizers` | Split into [[setting,language_tokenizers]], [[setting,language_tokenizer_address_token_maxlen]], [[setting,language_tokenizer_generic_algorithm]], [[setting,language_tokenizer_generic_token_maxlen]], [[setting,language_tokenizer_generic_wb5a]], [[setting,language_tokenizer_kuromoji_icu_id]], [[setting,language_tokenizer_kuromoji_split_compounds]], [[setting,language_tokenizer_kuromoji_token_maxlen]]. |
 
 #### Other Features
 
