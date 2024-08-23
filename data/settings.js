@@ -2019,11 +2019,13 @@ textcat_config_path = /usr/share/libexttextcat/fpdb.conf
 		plugin: 'fts',
 		default: '<textcat dir>',
 		values: setting_types.NAMED_LIST_FILTER,
+		dependencies: [ 'language_default' ],
 		seealso: [ 'textcat_config_path', '[[link,fts_tokenization]]' ],
 		text: `
 Defines a language to be used in tokenization.
 
-At least one language must be specified.
+At least one language must be specified and one single language must be flagged
+as the default language using [[setting,language_default,yes]].
 
 The language listed first is the default and is used when language
 recognition fails.
@@ -2039,10 +2041,24 @@ Example:
 
 \`\`\`[dovecot.conf]
 language en {
+  default = yes
 }
 language de {
 }
 \`\`\``
+	},
+
+	language_default: {
+		plugin: 'fts',
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		dependencies: [ 'language' ],
+		seealso: [ '[[link,fts_tokenization]]' ],
+		text: `
+The language marked as default will be used when language detection cannot
+identify the proper language of the text being processed.
+
+Exactly one language must be marked with this flag.`
 	},
 
 	language_filters: {
