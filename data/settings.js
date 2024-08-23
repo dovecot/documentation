@@ -1975,36 +1975,11 @@ the search timed out during waiting for the indexing to complete:
 A value of \`0\` means no timeout.`
 	},
 
-	fts_language_config: {
-		default: '<textcat dir>',
-		plugin: 'fts',
-		values: setting_types.STRING,
-		seealso: [ 'fts_languages' ],
-		text: `
-Path to the textcat/exttextcat configuration file, which lists the
-supported languages.
-
-This is recommended to be changed to point to a minimal version of a
-configuration that supports only the languages listed in
-[[setting,fts_languages]].
-
-Doing this improves language detection performance during indexing and also
-makes the detection more accurate.
-
-Example:
-
-\`\`\`
-plugin {
-  fts_language_config = /usr/share/libexttextcat/fpdb.conf
-}
-\`\`\``
-	},
-
 	fts_languages: {
 		default: '<textcat dir>',
 		plugin: 'fts',
 		values: setting_types.STRING,
-		seealso: [ 'fts_language_config' ],
+		seealso: [ 'textcat_config_path' ],
 		text: `
 A space-separated list of languages that the full text search should detect.
 
@@ -2017,7 +1992,7 @@ The filters used for stemming and stopwords are language dependent.
 
 Note: For better performance it's recommended to synchronize this
 setting with the textcat configuration file; see
-[[setting,fts_language_config]].
+[[setting,textcat_config_path]].
 
 Example:
 
@@ -2071,6 +2046,29 @@ This setting can be overridden for specific languages by using
 \`fts_tokenizers_<lang>\` (e.g. \`fts_tokenizers_en\`).
 
 See [[plugin,fts,tokenizers]] for configuration information.`
+	},
+
+	textcat_config_path: {
+		plugin: 'fts',
+		default: '<textcat dir>',
+		values: setting_types.STRING,
+		seealso: [ 'fts_languages' ],
+		text: `
+Path to the textcat/exttextcat configuration file, which lists the
+supported languages.
+
+This is recommended to be changed to point to a minimal version of a
+configuration that supports only the languages listed in
+[[setting,fts_languages]].
+
+Doing this improves language detection performance during indexing and also
+makes the detection more accurate.
+
+Example:
+
+\`\`\`
+textcat_config_path = /usr/share/libexttextcat/fpdb.conf
+\`\`\``
 	},
 
 	/* fts-flatcurve plugin */
