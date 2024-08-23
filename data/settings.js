@@ -7357,6 +7357,19 @@ passdb ldap {
 \`\`\``
 	},
 
+	passdb_fields_import_all: {
+		tags: [ 'passdb' ],
+		values: setting_types.BOOLEAN,
+		default: {
+			value: 'yes',
+			text: `For \`passdb ldap\` the default is \`no\`.`
+		},
+		seealso: [ 'passdb_fields' ],
+		text: `
+If yes, import all fields returned by the passdb lookup. If no, require
+[[setting,passdb_fields]] to explicitly add wanted fields.`
+	},
+
 	passdb_default_password_scheme: {
 		tags: [ 'passdb' ],
 		values: setting_types.STRING,
@@ -8952,6 +8965,19 @@ userdb ldap {
   }
 }
 \`\`\``
+	},
+
+	userdb_fields_import_all: {
+		tags: [ 'userdb' ],
+		values: setting_types.BOOLEAN,
+		default: {
+			value: 'yes',
+			text: `For \`userdb ldap\` the default is \`no\`.`
+		},
+		seealso: [ 'userdb_fields' ],
+		text: `
+If yes, import all fields returned by the userdb lookup. If no, require
+[[setting,userdb_fields]] to explicitly add wanted fields.`
 	},
 
 	userdb_skip: {
