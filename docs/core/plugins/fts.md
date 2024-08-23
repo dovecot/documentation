@@ -331,7 +331,7 @@ library.
 
 Normalize text using libicu. This is potentially very resource intensive.
 
-::: tip
+::: warning
 There is a caveat for the Norwegian language:
 
 The default normalizer filter does not modify `U+00F8` (Latin Small Letter O
