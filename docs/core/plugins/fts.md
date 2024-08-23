@@ -302,7 +302,7 @@ searches to fail. The recommended solution is to NOT use the stopword
 filter when multiple languages are present in the configuration.
 :::
 
-Stopwords specific settings:
+#### Settings
 
 <FTSConfigComponent name="stopwords_dir" default="&lt;DATADIR&gt;/stopwords">
 
@@ -342,7 +342,7 @@ a modified `id` setting to the normalizer filter.
 Similar cases can exist for other languages as well.
 :::
 
-normalizer-icu specific settings:
+#### Settings
 
 <FTSConfigComponent name="stopwords_dir" default="Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove">
 
@@ -392,7 +392,7 @@ Available tokenizers:
 Input data, such as email text and headers, need to be divided into words
 suitable for indexing and searching. The generic tokenizer does this.
 
-Generic-specific settings:
+#### Settings
 
 <FTSConfigComponent name="maxlen" default="30">
 
@@ -433,7 +433,7 @@ This tokenizer preserves email addresses as complete search tokens, by
 bypassing the generic tokenizer, when it finds an address. It will only
 work as intended if it is listed **after** other tokenizers.
 
-Email Address tokenizer specific settings:
+#### Settings
 
 <FTSConfigComponent name="maxlen" default="254">
 
