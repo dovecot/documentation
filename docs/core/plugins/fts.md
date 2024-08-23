@@ -5,6 +5,9 @@ dovecotlinks:
   fts_tokenization:
     hash: tokenization
     text: FTS Tokenization
+  fts_filter_configuration:
+    hash: filter-configuration
+    text: Filter Configuration
 ---
 
 # FTS: Full Text Search Plugin (`fts`)
@@ -269,14 +272,14 @@ including header-encoded parts (e.g. `=?us-ascii?Q?...?=` sequences).
 
 Filters affect how data is indexed.
 
-They are configured through [[setting,fts_filters]].
+They are configured through [[setting,language_filters]].
 
 Example:
 
 ```
 plugin {
-  fts_filters = normalizer-icu snowball stopwords
-  fts_filters_en = lowercase snowball english-possessive stopwords
+  language_filters = normalizer-icu snowball stopwords
+  language_filters_en = lowercase snowball english-possessive stopwords
 }
 ```
 
