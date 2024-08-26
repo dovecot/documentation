@@ -82,11 +82,11 @@ This is based on already having Dovecot already compiled and installed.
    ## SSL settings
 
    # These will need to ba adjusted to point to *your* certificates
-   # The ssl_ca line refers to the intermediate certificate bundle which
+   # The ssl_ca_file line refers to the intermediate certificate bundle which
    # may or may not be required by your SSL provider
-   ssl_cert = </etc/pki/tls/certs/machine.example.org.crt
-   ssl_key = </etc/pki/tls/private/machine.example.org.key
-   ssl_ca = </etc/pki/tls/certs/gd_bundle.crt
+   ssl_cert_file = /etc/pki/tls/certs/machine.example.org.crt
+   ssl_key_file = /etc/pki/tls/private/machine.example.org.key
+   ssl_ca_file = /etc/pki/tls/certs/gd_bundle.crt
    ssl_cipher_list = ALL:!LOW:!SSLv2:!EXP:!aNULL
    ```
 
