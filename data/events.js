@@ -1236,7 +1236,7 @@ compiling it at delivery).`
 | \`internal_failure\` | Internal failure. The error log has more details. |
 | \`invalid_base64\` | Client sent invalid base64 in SASL response. |
 | \`invalid_mech\` | Unknown SASL authentication mechanism requested. |
-| \`login_disabled\` | The user has the [[link,auth_nologin]] field set in passdb and is thereby not able to login. |
+| \`login_disabled\` | The user has the [[link,passdb_auth_nologin]] field set in passdb and is thereby not able to login. |
 | \`no_auth_attempts\` | Client didn't send any authentication attempts. |
 | \`password_expired\` | The user's password is expired.
 | \`process_full\` | [[link,service_client_limit]] and [[link,service_process_limit]] was hit and this login session was killed. |

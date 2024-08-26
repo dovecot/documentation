@@ -3463,19 +3463,19 @@ The format to use for logging mail deliveries.
 
 Variables that can be used for this setting (see [[variable,global]]):
 
-| Variable Name | Description |
-| ------------- | ----------- |
-| \`%$\` | Delivery status message (e.g., saved to INBOX) |
-| \`%{msgid}\`, \`%m\` | Message-ID |
-| \`%{subject}\`, \`%s\` | Subject |
-| \`%{from}\`, \`%f\` | From address |
-| \`%{from_envelope}\`, \`%e\` | SMTP FROM envelope |
-| \`%{size}\`, \`%p\` | Physical size |
-| \`%{vsize}\`, \`%w\` | Virtual size |
-| \`%{to_envelope}\` | RCPT TO envelope |
-| \`%{delivery_time}\` | How many milliseconds to deliver the mail |
-| \`%{session_time}\`| LMTP session duration, not including \`%{delivery_time}\` |
-| \`%{storage_id}\` | Backend-specific ID for mail, e.g. Maildir filename |
+| Variable Name | Short Form | Description |
+| ------------- | ---------- | ----------- |
+| \`%$\` | | Delivery status message (e.g., saved to INBOX) |
+| \`%{msgid}\` | \`%m\` | Message-ID |
+| \`%{subject}\` | \`%s\` | Subject |
+| \`%{from}\` | \`%f\` | From address |
+| \`%{from_envelope}\` | \`%e\` | SMTP FROM envelope |
+| \`%{size}\` | \`%p\` | Physical size |
+| \`%{vsize}\` | \`%w\` | Virtual size |
+| \`%{to_envelope}\` | | RCPT TO envelope |
+| \`%{delivery_time}\` | | How many milliseconds to deliver the mail |
+| \`%{session_time}\` | | LMTP session duration, not including \`%{delivery_time}\` |
+| \`%{storage_id}\` | | Backend-specific ID for mail, e.g. Maildir filename |
 
 Example:
 
@@ -4322,19 +4322,19 @@ when the client is in IDLE operation.`
 This setting specifies the IMAP logout format string. Supported variables,
 in addition to [[variable,mail-user]] are:
 
-| Variable Name | Description |
-| ------------- | ----------- |
-| \`%{input}\`, \`%i\` | Total number of bytes read from client |
-| \`%{output}\`, \`%o\` | Total number of bytes sent to client |
-| \`%{fetch_hdr_count}\` | Number of mails with mail header data sent to client |
-| \`%{fetch_hdr_bytes}\` | Number of bytes with mail header data sent to client |
-| \`%{fetch_body_count}\` | Number of mails with mail body data sent to client |
-| \`%{fetch_body_bytes}\` | Number of bytes with mail body data sent to client |
-| \`%{deleted}\` | Number of mails where client added \Deleted flag |
-| \`%{expunged}\` | Number of mails that client expunged, which does not include automatically expunged mails |
-| \`%{autoexpunged}\` | Number of mails that were automatically expunged after client disconnected |
-| \`%{trashed}\` | Number of mails that client copied/moved to the special_use=\Trash mailbox. |
-| \`%{appended}\` | Number of mails saved during the session |`
+| Variable Name | Short Form | Description |
+| ------------- | ---------- | ----------- |
+| \`%{input}\` | \`%i\` | Total number of bytes read from client |
+| \`%{output}\` | \`%o\` | Total number of bytes sent to client |
+| \`%{fetch_hdr_count}\` | | Number of mails with mail header data sent to client |
+| \`%{fetch_hdr_bytes}\` | | Number of bytes with mail header data sent to client |
+| \`%{fetch_body_count}\` | | Number of mails with mail body data sent to client |
+| \`%{fetch_body_bytes}\` | | Number of bytes with mail body data sent to client |
+| \`%{deleted}\` | | Number of mails where client added \Deleted flag |
+| \`%{expunged}\` | | Number of mails that client expunged, which does not include automatically expunged mails |
+| \`%{autoexpunged}\` | | Number of mails that were automatically expunged after client disconnected |
+| \`%{trashed}\` | | Number of mails that client copied/moved to the special_use=\Trash mailbox. |
+| \`%{appended}\` | | Number of mails saved during the session |`
 	},
 
 	imap_max_line_length: {
@@ -6563,19 +6563,19 @@ The string to display to the client on POP3 logout (informational only).
 
 Variables available (in addition to [[variable,mail-user]]):
 
-| Variable Name | Description |
-| ------------- | ----------- |
-| \`%{input}\`, \`%i\` | Bytes read from the client |
-| \`%{output}\`, \`%o\` | Bytes sent to the client |
-| \`%{top_count}\`, \`%t\` | Number of TOP commands run |
-| \`%{top_bytes}\`, \`%p\` | Bytes sent to the client because of TOP commands |
-| \`%{retr_count}\`, \`%r\` | Number of RETR commands run |
-| \`%{retr_bytes}\`, \`%b\` | Bytes sent to the client because of RETR commands |
-| \`%{deleted_count}\`, \`%d\` | Number of deleted messages |
-| \`%{deleted_bytes}\` | Number of bytes in deleted messages |
-| \`%{message_count}\`, \`%m\` | Number of messages before deletion |
-| \`%{message_bytes}\`, \`%s\` | Mailbox size, in bytes, before deletion |
-| \`%{uidl_change}\`, \`%u\` | The old and the new UIDL hash (which can be useful for identifying unexpected changes in UIDLs) |`
+| Variable Name | Short Form | Description |
+| ------------- | ---------- | ----------- |
+| \`%{input}\` | \`%i\` | Bytes read from the client |
+| \`%{output}\` | \`%o\` | Bytes sent to the client |
+| \`%{top_count}\` | \`%t\` | Number of TOP commands run |
+| \`%{top_bytes}\` | \`%p\` | Bytes sent to the client because of TOP commands |
+| \`%{retr_count}\` | \`%r\` | Number of RETR commands run |
+| \`%{retr_bytes}\` | \`%b\` | Bytes sent to the client because of RETR commands |
+| \`%{deleted_count}\` | \`%d\` | Number of deleted messages |
+| \`%{deleted_bytes}\` | | Number of bytes in deleted messages |
+| \`%{message_count}\` | \`%m\` | Number of messages before deletion |
+| \`%{message_bytes}\` | \`%s\` | Mailbox size, in bytes, before deletion |
+| \`%{uidl_change}\` | \`%u\` | The old and the new UIDL hash (which can be useful for identifying unexpected changes in UIDLs) |`
 	},
 
 	pop3_no_flag_updates: {
@@ -6634,13 +6634,13 @@ The following variables can be used in combination with the
 standard variable modifiers (e.g., \`%Uf\` supplies the filename in uppercase)
 and with [[variable,global]]:
 
-| Variable Name | Description |
-| ------------- | ----------- |
-| \`%{uidvalidity}\`, \`%v\` | Mailbox's IMAP UIDVALIDITY value |
-| \`%{uid}\`, \`%u\` | IMAP UID associated with the message |
-| \`%{md5}\`, \`%m\` | MD5 sum of the mailbox headers in hex ([[link,mbox]] only) |
-| \`%{filename}\`, \`%f\` | Filename ([[link,maildir]] only) |
-| \`%{guid}\`, \`%g\`| Dovecot GUID for the message |`
+| Variable Name | Short Form | Description |
+| ------------- | ---------- | ----------- |
+| \`%{uidvalidity}\` | \`%v\` | Mailbox's IMAP UIDVALIDITY value |
+| \`%{uid}\` | \`%u\` | IMAP UID associated with the message |
+| \`%{md5}\` | \`%m\` | MD5 sum of the mailbox headers in hex ([[link,mbox]] only) |
+| \`%{filename}\` | \`%f\` | Filename ([[link,maildir]] only) |
+| \`%{guid}\` | \`%g\`| Dovecot GUID for the message |`
 	},
 
 	pop3c_features: {
@@ -6843,12 +6843,12 @@ A human-readable message for the recipients of bounce messages.
 
 The following variables are allowed, including [[variable,global]]:
 
-| Variable Name | Description |
-| ------------- | ----------- |
-| \`%{crlf}\`, \`%n\` | Newline (CRLF) |
-| \`%{reason}\`, \`%r\` | Reason for rejection |
-| \`%{subject}\`, \`%s\` | Original subject line |
-| \`%{to}\`, \`%t\` | Recipient address |
+| Variable Name | Short Form | Description |
+| ------------- | ---------- | ----------- |
+| \`%{crlf}\` | \`%n\` | Newline (CRLF) |
+| \`%{reason}\` | \`%r\` | Reason for rejection |
+| \`%{subject}\` | \`%s\` | Original subject line |
+| \`%{to}\` | \`%t\` | Recipient address |
 
 The variable values are obtained from the mail being delivered or the
 delivery protocol.`
@@ -7326,13 +7326,13 @@ The SMTP Submission logout format string.
 
 Variables supported, including [[variable,mail-user]]:
 
-| Variable Name | Description |
-| ------------- | ----------- |
-| \`%{input}\`, \`%i\` | Bytes read from client |
-| \`%{output}\`, \`%o\` | Bytes sent to client |
-| \`%{command_count}\` | Number of commands received from client |
-| \`%{reply_count}\` | Number of replies sent to client |
-| \`%{transaction_id}\` | ID of the current transaction, if any |`
+| Variable Name | Short Form | Description |
+| ------------- | ---------- | ----------- |
+| \`%{input}\` | \`%i\` | Bytes read from client |
+| \`%{output}\` | \`%o\` | Bytes sent to client |
+| \`%{command_count}\` | | Number of commands received from client |
+| \`%{reply_count}\` | | Number of replies sent to client |
+| \`%{transaction_id}\` | | ID of the current transaction, if any |`
 	},
 
 	submission_max_mail_size: {
