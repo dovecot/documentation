@@ -51,8 +51,10 @@ Allocate all memory larger than 128 kB using mmap(). This allows the OS to
 free the memory afterwards. This is important for storage nodes because
 there can be a lot of long-running imap and pop3 processes.
 
-```
-import_environment = $import_environment MALLOC_MMAP_THRESHOLD_=131072
+```[dovecot.conf]
+import_environment {
+  MALLOC_MMAP_THRESHOLD_ = 131072
+}
 ```
 
 See [[setting,import_environment]].
