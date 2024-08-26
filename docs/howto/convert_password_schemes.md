@@ -267,7 +267,9 @@ passdb passwd-file {
 
 userdb passwd-file {
   passwd_file_path = /var/vmail/auth.d/%d/passwd
-  default_fields = plain_pass=%w
+  default_fields {
+    plain_pass = %w
+  }
 }
 ```
 
