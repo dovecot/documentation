@@ -216,7 +216,8 @@ be used.
 
 * **chroot** could also be set if possible.
 
-* **restart_request_count=0** counts the number of processed auth requests.
+* **restart_request_count=unlimited** counts the number of processed auth
+  requests.
 
   This can be used to cycle the process after the specified number of auth
   requests (default is unlimited). The worker processes also stop after
@@ -307,7 +308,7 @@ doveadm can automatically connect to the correct backend to run the command.
 * **client_limit=1**, because doveadm command execution is synchronous.
 
 * **restart_request_count=1** just in case there were any memory leaks. This
-  could be set to some larger value (or `0`) for higher performance.
+  could be set to some larger value (or `unlimited`) for higher performance.
 
 * **user=root**, but the privileges are (temporarily) dropped to the
   mail user's privileges after userdb lookup.
