@@ -332,7 +332,7 @@ forking less processes:
   be reused. For example `service imap { restart_request_count = 100 }`
   reuses the imap process for 100 different IMAP connections before it
   dies. This is useful mainly for imap, pop3 and managesieve services.
-  It's better to avoid using `restart_request_count=0` (unlimited) in case
+  It's better to avoid using `restart_request_count=unlimited` in case
   there are memory leaks.
 
 - You can pre-fork some idling processes to handle bursts with
