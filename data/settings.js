@@ -5208,14 +5208,23 @@ source IMAP server.
 	},
 
 	import_environment: {
-		default: 'TZ CORE_OUTOFMEM CORE_ERROR',
-		values: setting_types.STRING,
+		default: `
+TZ=%{env:TZ} CORE_OUTOFMEM=%{env:CORE_OUTOFMEM} CORE_ERROR=%{env:CORE_ERROR}
+PATH=%{env:PATH}`,
+		values: setting_types.STRLIST,
 		text: `
-A list of environment variables, space-separated, that are preserved and
-passed to all child processes.
+A list of environment key=value pairs, that are preserved and passed to all
+child processes.
 
-It can include key = value pairs for assigning variables the desired value
-upon Dovecot startup.`
+The value can be determined from the existing environment upon Dovecot startup or directly specified.
+
+Example:
+\`\`\`[dovecot.conf]
+import_environment {
+  TZ = :/etc/localtime
+  TMPDIR = /dovecot-tmp
+}
+\`\`\``
 	},
 
 	inet_listener: {
