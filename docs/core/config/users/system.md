@@ -88,8 +88,8 @@ mail_path = ~/mail
 mail_inbox_path = /var/mail/%u
 ```
 
-Remember that the first path after `mbox:` is the mailbox root
-directory, never try to give `mbox:/var/mail/%u` because that
+Remember that the [[setting,mail_path]] setting is the mailbox root directory,
+don't try to use the INBOX `/var/mail/%u` path in there because that
 isn't going to work (unless you really want to store mails under
 `/var/mail/%u/` directory).
 

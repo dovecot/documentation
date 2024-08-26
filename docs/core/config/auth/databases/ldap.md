@@ -920,7 +920,7 @@ from "quotaBytes" LDAP attribute:
 user_attrs = =quota_rule=\*:bytes=%{ldap:quotaBytes}
 ```
 
-Create a "mail" field with value `maildir:/var/mail/<dir>/Maildir` where
+Create a "mail_path" field with value `/var/mail/<dir>/Maildir` where
 `<dir>` comes from "sAMAccountName" LDAP attribute:
 
 ```
