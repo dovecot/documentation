@@ -3550,6 +3550,126 @@ Write consistency when updating or inserting to the database fails with primary
 consistency.`
 	},
 
+	/* SQL MySQL settings. */
+
+	mysql: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'mysql_host' ],
+		text: `
+Creates a new MySQL connection. If more than one is specified, the connections
+are automatically used for load balancing and for failover. The filter name
+refers to the [[setting,mysql_host]] setting.`
+	},
+
+	mysql_client_flags: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.UINT,
+		default: 0,
+		text: `
+Flags to use when connecting to the database, provided as base-10 number. See
+https://dev.mysql.com/doc/c-api/8.0/en/mysql-real-connect.html`
+	},
+
+	mysql_connect_timeout: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.TIME,
+		default: '5s',
+		text: `
+How long to wait for connection.`
+	},
+
+	mysql_connection_limit: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.UINT,
+		text: `
+Maximum number of parallel connections. Currently MySQL queries are blocking,
+so only a single connection can be used in parallel.`
+	},
+
+	mysql_dbname: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.STRING,
+		text: `
+Database name to connect to.`
+	},
+
+	mysql_host: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.STRING,
+		default: 'localhost',
+		text: `
+Host or UNIX socket path to connect to. The [[setting,mysql]] setting defaults
+to this.
+
+::: info
+MySQL drivers can default to using UNIX socket connection when host is
+\`localhost\` and port is \`0\` (default). To force it to use TCP connection,
+set [[setting,mysql_host,127.0.0.1]] or set [[setting,mysql_port]] explicitly.
+:::`
+	},
+
+	mysql_option_file: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.STRING,
+		text: `
+File to read for client library specific configuration.`
+	},
+
+	mysql_option_group: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.STRING,
+		text: `
+Section name to read from [[setting,mysql_option_file]].`
+	},
+
+	mysql_password: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.STRING,
+		text: `
+Password for authentication.`
+	},
+
+	mysql_port: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.IN_PORT,
+		default: '0 (defaults to 3306 for TCP connections)',
+		text: `
+Port to connect to.`
+	},
+
+	mysql_read_timeout: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.TIME,
+		default: '30s',
+		text: `
+Timeout when reading data from server.`
+	},
+
+	mysql_ssl: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.BOOLEAN,
+		seealso: [ '[[link,ssl]]' ],
+		text: `
+Whether to use SSL when connecting to MySQL. Configure it using the
+\`ssl_client_*\` settings. See [[link,ssl]].`
+	},
+
+	mysql_user: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.STRING,
+		text: `
+Username for authentication.`
+	},
+
+	mysql_write_timeout: {
+		tags: [ 'sql-mysql' ],
+		values: setting_types.TIME,
+		default: '30s',
+		text: `
+Timeout in seconds when writing data to server.`
+	},
+
 	/* Dovecot core settings. */
 
 	auth_allow_weak_schemes: {
