@@ -105,7 +105,14 @@ userdb db1 {
 
 You can also set `DEBUG` environment to have rawlog log an info message why
 it's not doing anything:
-[[setting,import_environment,$import_environment DEBUG=1]].
+
+```[dovecot.conf]
+import_environment {
+  DEBUG = 1
+}
+```
+
+See [[setting,import_environment]].
 
 ### Configuration
 
