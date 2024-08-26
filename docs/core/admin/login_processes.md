@@ -81,13 +81,13 @@ You can enable high-performance mode with:
 
 ```[dovecot.conf]
 service imap-login {
-  restart_request_count = 0
+  restart_request_count = unlimited
   process_min_avail = 4 # number of CPU cores
   vsz_limit = 1G
 }
 
 service pop3-login {
-  restart_request_count = 0
+  restart_request_count = unlimited
 }
 ```
 
