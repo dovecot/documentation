@@ -98,8 +98,10 @@ If your userdb can't return a home directory directly, you can add:
 ```[dovecot.conf]
 userdb db1 {
   # ...
-  default_fields = home=/home/%u
-  # or temporarily even e.g. default_fields = home=/tmp/temp-home
+  default_fields {
+    home = /home/%u
+    # or temporarily even e.g. home = /tmp/temp-home
+  }
 }
 ```
 
