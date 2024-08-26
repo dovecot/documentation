@@ -36,7 +36,7 @@
 * `ssl_protocols` setting was replaced by [[setting,ssl_min_protocol]].
   Now you only specify the minimum ssl protocol version Dovecot accepts,
   defaulting to TLSv1.
-* `ssl_parameters` was replaced with [[setting,ssl_dh]]. See
+* `ssl_parameters` was replaced with `ssl_dh`. See
   [Diffie-Hellman Parameters for SSL](#diffie-hellman-parameters-for-ssl).
 * `SSLv2` is no longer supported as SSL protocol.
 
@@ -110,8 +110,8 @@ passdb {
 
 ### Diffie-Hellman Parameters for SSL
 
-* `ssl-parameters.dat` file is now obsolete. You should use
-  [[setting,ssl_dh]] setting instead: `ssl_dh=</etc/dovecot/dh.pem`
+* `ssl-parameters.dat` file is now obsolete. You should use `ssl_dh` setting
+  instead: `ssl_dh=</etc/dovecot/dh.pem`
   * You can convert an existing ssl-parameters.dat to dh.pem:
 
   ```sh

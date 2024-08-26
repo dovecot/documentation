@@ -180,7 +180,7 @@ See [[setting,imapc_features]].
 | OpenSSL support for older than 1.0.2 | Older versions are not supported anymore. |
 | Sieve extensions: `notify`, `imapflags`, `vnd.dovecot.duplicate` | These deprecated Sieve extensions have been removed. |
 | "size.virtual" index record | size.virtual field is no longer written to dovecot.index.cache file as it is duplicating vsize record in dovecot.index file. Reading of the field from old files is supported. |
-| `ssl-parameters.dat` | This file is no longer converted automatically by config process, you need to set [[setting,ssl_dh]] setting if you need non-ECC Diffie-Hellman. |
+| `ssl-parameters.dat` | This file is no longer converted automatically by config process, you need to set [[setting,ssl_dh_file]] setting if you need non-ECC Diffie-Hellman. |
 | TCP wrapper support | Use [[link,auth_lua]] instead. |
 | Weak password schemes | Weak password schemes are disabled by default; you need to use [[setting,auth_allow_weak_schemes]] to enable them. |
 | Global ACL directory | See [ACLs](#acls) below. |
