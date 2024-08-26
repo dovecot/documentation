@@ -23,7 +23,7 @@ manage various parts of Dovecot, as well as access users' mailboxes.
 
 Execute **doveadm help**, for a command usage listing.
 
-<!-- @include: include/global-options-formatter.inc -->
+<!-- @include: global-options-formatter.inc -->
 
 ## COMMANDS
 
@@ -327,7 +327,7 @@ UIDs matching given search query.
 */etc/dovecot/conf.d/90-plugin.conf*
 :   Plugin specific settings.
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 
 ## SEE ALSO

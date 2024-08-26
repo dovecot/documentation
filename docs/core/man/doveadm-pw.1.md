@@ -27,7 +27,7 @@ overridden by storing the password with the scheme prefix.
 If you want to use this feature to verify or generate passwords without
 configuring Dovecot first, you can use `doveadm -O pw` to do so.
 
-<!-- @include: include/global-options.inc -->
+<!-- @include: global-options.inc -->
 
 ## OPTIONS
 
@@ -102,7 +102,7 @@ Retype new password:
 {CRAM-MD5}913331d8782236a8ecba7764a63aa27b26437fd40ca878d887f11d81245c2c6b
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

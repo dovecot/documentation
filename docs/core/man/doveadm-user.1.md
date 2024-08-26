@@ -28,7 +28,7 @@ userdb {
 }
 ```
 
-<!-- @include: include/global-options.inc -->
+<!-- @include: global-options.inc -->
 
 ## OPTIONS
 
@@ -50,7 +50,7 @@ The socket may be located in another directory, when the default
     *home* or *mail* fields are missing, their defaults are taken from
     configuration file.
 
-<!-- @include: include/option-x.inc -->
+<!-- @include: option-x.inc -->
 
 ## ARGUMENTS
 
@@ -90,7 +90,7 @@ judy.roe@example.net
 john.doe@example.net
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

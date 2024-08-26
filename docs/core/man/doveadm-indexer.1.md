@@ -14,7 +14,7 @@ dovecotComponent: core
 
 **doveadm indexer** can be used to manage the indexer process.
 
-<!-- @include: include/global-options-formatter.inc -->
+<!-- @include: global-options-formatter.inc -->
 
 ## COMMANDS
 
@@ -54,7 +54,7 @@ List all the queued indexing requests matching the *user_mask* (and the
 currently processed by indexer-worker are not listed; use **doveadm who**
 instead to see them.
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

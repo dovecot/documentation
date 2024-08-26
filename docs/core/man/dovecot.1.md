@@ -119,7 +119,7 @@ The *signals* **ALARM** and **PIPE** are ignored.
 */etc/dovecot/conf.d/*.conf*
 :   Configuration files of different services and settings.
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

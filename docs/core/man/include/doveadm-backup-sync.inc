@@ -102,13 +102,13 @@ server processes to be running, except when using -u parameter to do a
 dsync can sync either one or multiple users using the -u or -A
 parameters.
 
-<!-- @include: ./global-options.inc -->
+<!-- @include: global-options.inc -->
 
 ## OPTIONS
 
-<!-- @include: ./option-A.inc -->
+<!-- @include: option-A.inc -->
 
-<!-- @include: ./option-F-file.inc -->
+<!-- @include: option-F-file.inc -->
 
 **-1**
 :   Do one-way synchronization instead of two-way synchronization.
@@ -120,7 +120,7 @@ parameters.
 :   Synchronize all the available namespaces. By default only namespaces
     that don't have explicit location setting are synchronized.
 
-<!-- @include: ./option-no-userdb-lookup.inc -->
+<!-- @include: option-no-userdb-lookup.inc -->
 
 **-P**
 :   Run a [[man,doveadm-purge]] for the destination (remote) storage
@@ -131,7 +131,7 @@ parameters.
     system to the destination (remote). This option reverses the flow,
     and will instead pull messages from the remote to the local storage.
 
-<!-- @include: ./option-S-socket.inc -->
+<!-- @include: option-S-socket.inc -->
 
 **-T** *secs*
 :   Specify the time in seconds, how long [[man,doveadm]] should wait
@@ -184,7 +184,7 @@ parameters.
 :   Use stateful synchronization. If the previous state is unknown, use
     an empty string. The new state is always printed to standard output.
 
-<!-- @include: ./option-u-user.inc -->
+<!-- @include: option-u-user.inc -->
 
 **-x** *mailbox_mask*
 :   Exclude the specified mailbox name/mask. The mask may contain "**?**"
@@ -302,7 +302,7 @@ Once all users have been converted, you can set the default
 *mail_location* to mdbox and remove the per-user mail locations from
 *userdb*.
 
-<!-- @include: ./reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

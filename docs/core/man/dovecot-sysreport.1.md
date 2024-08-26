@@ -40,4 +40,4 @@ core file along with its binary dependencies.
 **-k|-\-keeptemp**
 :   If set, temp files would not be deleted at the end.
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->

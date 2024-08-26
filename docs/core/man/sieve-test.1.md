@@ -56,7 +56,7 @@ the execution and evaluation of commands and tests respectively.
 **-D**
 :   Enable Sieve debugging.
 
-<!-- @include: include/option-d.inc -->
+<!-- @include: option-d.inc -->
 
 **-e**
 :   Enables true execution of the set of actions that results from
@@ -86,7 +86,7 @@ the execution and evaluation of commands and tests respectively.
 :   The mailbox where the keep action stores the message. This is "INBOX"
     by default.
 
-<!-- @include: include/option-o.inc -->
+<!-- @include: option-o.inc -->
 
 **-r**\ *recipient-address*
 :   The final envelope recipient address. Some tests and actions will use
@@ -112,9 +112,9 @@ the execution and evaluation of commands and tests respectively.
 :   Configures runtime trace debugging, which is enabled with the **-t**
     option. Refer to the runtime trace debugging section below.
 
-<!-- @include: include/option-u-user.inc -->
+<!-- @include: option-u-user.inc -->
 
-<!-- @include: include/option-x.inc -->
+<!-- @include: option-x.inc -->
 
 ## ARGUMENTS
 
@@ -221,7 +221,7 @@ logging facility.
 :   Sieve interpreter settings (included from Dovecot's main
     configuration file)
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

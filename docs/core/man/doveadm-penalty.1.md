@@ -17,7 +17,7 @@ penalties.
 
 <!-- todo:: (Extend me!/explain it) -->
 
-<!-- @include: include/global-options.inc -->
+<!-- @include: global-options.inc -->
 
 ## OPTIONS
 
@@ -46,7 +46,7 @@ IP               penalty last_penalty        last_update
 192.0.2.53             3 2010-06-15 15:19:34 15:19:34
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

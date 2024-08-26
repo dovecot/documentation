@@ -1,4 +1,4 @@
-<!-- @include: ./global-options.inc -->
+<!-- @include: global-options.inc -->
 
 **-f** *formatter*
 :   Specifies the *formatter* for formatting the output. Supported

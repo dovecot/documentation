@@ -15,22 +15,22 @@ dovecotComponent: core
 The doveadm fts *COMMANDS* can be used to manipulate the Full Text
 Search (FTS) index.
 
-<!-- @include: include/global-options.inc -->
+<!-- @include: global-options.inc -->
 
 This command uses by default the output formatter **flow** (without the
 *key*=prefix).
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
+<!-- @include: option-A.inc -->
 
-<!-- @include: include/option-F-file.inc -->
+<!-- @include: option-F-file.inc -->
 
-<!-- @include: include/option-no-userdb-lookup.inc -->
+<!-- @include: option-no-userdb-lookup.inc -->
 
-<!-- @include: include/option-S-socket.inc -->
+<!-- @include: option-S-socket.inc -->
 
-<!-- @include: include/option-u-user.inc -->
+<!-- @include: option-u-user.inc -->
 
 ## ARGUMENTS
 
@@ -113,7 +113,7 @@ Exit codes:
 **2**
 :   The mailbox is not fully consistent
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

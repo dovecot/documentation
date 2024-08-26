@@ -83,7 +83,7 @@ course:
     binary. Refer to [[man,sievec]] for more information about Sieve
     compilation.
 
-<!-- @include: include/option-d.inc -->
+<!-- @include: option-d.inc -->
 
 **-D**
 :   Enable Sieve debugging.
@@ -104,7 +104,7 @@ course:
     to the explanation of the *source-mailbox* argument for more
     information on mailbox naming.
 
-<!-- @include: include/option-o.inc -->
+<!-- @include: option-o.inc -->
 
 **-q**\ *output-mailbox*\ **[not implemented yet]**
 :   Store outgoing e-mail into the indicated *output-mailbox*. By
@@ -128,7 +128,7 @@ course:
     Multiple **-s** arguments are allowed and the specified scripts are
     executed sequentially in the order specified at the command line.
 
-<!-- @include: include/option-u-user.inc -->
+<!-- @include: option-u-user.inc -->
 
 **-v**
 :   Produce verbose output during filtering.
@@ -138,7 +138,7 @@ course:
     the messages from the *source-mailbox*, changing their contents, and
     changing the assigned IMAP flags and keywords.
 
-<!-- @include: include/option-x.inc -->
+<!-- @include: option-x.inc -->
 
 ## ARGUMENTS
 
@@ -247,7 +247,7 @@ FIXME
 :   Sieve interpreter settings (included from Dovecot's main
     configuration file)
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 
