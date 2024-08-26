@@ -2535,15 +2535,15 @@ For EdDSA, you need to use X448 or X25519, case sensitive.`
 	crypt_global_private_keys: {
 		plugin: 'mail-crypt',
 		values: setting_types.NAMED_LIST_FILTER,
-		seealso: [ 'crypt_private_key', 'crypt_private_key_password' ],
+		seealso: [ 'crypt_private_key_file', 'crypt_private_key_password' ],
 		text: `
-List of private keys to decrypt files. Add [[setting,crypt_private_key]] and
-optionally [[setting,crypt_private_key_password]] inside each filter.`
+List of private keys to decrypt files. Add [[setting,crypt_private_key_file]]
+and optionally [[setting,crypt_private_key_password]] inside each filter.`
 	},
 
-	crypt_global_public_key: {
+	crypt_global_public_key_file: {
 		plugin: 'mail-crypt',
-		values: setting_types.STRING,
+		values: setting_types.FILE,
 		text: `
 Public key to encrypt files. Key must be in
 [[link,mail_crypt_converting_ec_key_to_pkey,PEM pkey format]]. The PEM key may
@@ -2554,20 +2554,20 @@ store into userdb extra fields.`
 	crypt_global_private_key: {
 		plugin: 'mail-crypt',
 		values: setting_types.NAMED_LIST_FILTER,
-		seealso: [ 'crypt_private_key', 'crypt_private_key_password' ],
+		seealso: [ 'crypt_private_key_file', 'crypt_private_key_password' ],
 		text: `
 List of global private key(s) to decrypt mails. Add
-[[setting,crypt_private_key]] and optionally
+[[setting,crypt_private_key_file]] and optionally
 [[setting,crypt_private_key_password]] inside each filter.`
 	},
 
 	crypt_user_key_encryption_key: {
 		plugin: 'mail-crypt',
 		values: setting_types.NAMED_LIST_FILTER,
-		seealso: [ 'crypt_private_key', 'crypt_private_key_password' ],
+		seealso: [ 'crypt_private_key_file', 'crypt_private_key_password' ],
 		text: `
 List of private key(s) to decrypt user's master private key. Add
-[[setting,crypt_private_key]] and optionally
+[[setting,crypt_private_key_file]] and optionally
 [[setting,crypt_private_key_password]] inside each filter.`
 	},
 
@@ -2614,9 +2614,9 @@ Name of the private key inside [[setting,crypt_global_private_keys]] or
 [[setting,crypt_user_key_encryption_key]].`
 	},
 
-	crypt_private_key: {
+	crypt_private_key_file: {
 		plugin: 'mail-crypt',
-		values: setting_types.STRING,
+		values: setting_types.FILE,
 		seealso: [
 			'[[link,mail_crypt_converting_ec_key_to_pkey]]',
 			'crypt_global_private_keys',
@@ -2634,9 +2634,9 @@ Used inside [[setting,crypt_global_private_keys]] and
 	crypt_private_key_password: {
 		plugin: 'mail-crypt',
 		values: setting_types.STRING,
-		seealso: [ 'crypt_private_key' ],
+		seealso: [ 'crypt_private_key_file' ],
 		text: `
-Password to decrypt [[setting,crypt_private_key]].`
+Password to decrypt [[setting,crypt_private_key_file]].`
 	},
 
 	/* mail-log plugin */
