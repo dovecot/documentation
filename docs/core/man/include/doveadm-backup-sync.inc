@@ -17,15 +17,16 @@ protocol, which allows using dsync for mailbox migration purposes.
 You can run dsync in one of three modes:
 
 - **doveadm backup** performs one-way synchronization. If there are
-  any changes in the destination they will be deleted, so the
+  any changes in the destination they will be reverted, so the
   destination will look exactly like the source.
 
 - **doveadm sync** performs two-way synchronization. It merges all
   changes without losing anything. Both the mailboxes will end up
   looking identical after the synchronization is finished.
 
-- **doveadm sync -1** performs one-way synchronization, but it
-  merges the changes in destination without deleting anything. This
+- **doveadm sync -1** performs one-way synchronization. If there are
+  any changes in the destination, they will be preserved and the new
+  changes will be merged on top of them. This merging
   doesn't currently work perfectly, so its use should be limited.
   Its main purpose is that during mailbox migration you can run
   **doveadm backup** multiple times, then switch mails to be
