@@ -23,7 +23,7 @@ jobs:
       run: npm ci
     - name: Fix site prefix
       run: |
-        sed -i -e "|'/2.4'|'/${{ github.ref_name }}'|" .vitepress/config.js
+        sed -i -e "s|'/2.4'|'/${{ github.ref_name }}'|" .vitepress/config.js
     - name: Build with VitePress
       run: |
         mkdir mans
