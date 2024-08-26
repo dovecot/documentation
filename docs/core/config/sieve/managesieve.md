@@ -138,9 +138,10 @@ protocol sieve {
   # NOTE: The username is compared case-sensitively.
   #mail_max_userip_connections = 10
 
-  # Space separated list of plugins to load (none known to be useful so far).
+  # List of plugins to load (none known to be useful so far).
   # Do NOT try to load IMAP plugins here.
-  #mail_plugins =
+  #mail_plugins {
+  #}
 
   # MANAGESIEVE logout format string:
   #  %i - total number of bytes read from client
