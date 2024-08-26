@@ -89,7 +89,7 @@ prefixing them with `\`.
 | `auth_worker_max_count` | Use [[link,service_configuration,service-specific process limit]]. |
 | Weak password schemes | Weak password schemes are disabled by default, you need to use [[setting,auth_allow_weak_schemes]] to enable them. |
 | Global ACL directory | See [Use Inline ACLs Instead of Global ACL Files or Directories](#use-inline-acls-instead-of-global-acl-files-or-directories) below. |
-| `ssl-parameters.dat` | This file is no longer converted automatically by config process, you need to set [[setting,ssl_dh]] setting if you need non-ECC Diffie-Hellman. |
+| `ssl-parameters.dat` | This file is no longer converted automatically by config process, you need to set [[setting,ssl_dh_file]] setting if you need non-ECC Diffie-Hellman. |
 | shadow auth driver | Use [[link,auth_pam]] instead. |
 | old-stats plugin | Use [[link,stats]] instead. `auth_stats` setting has been removed too. |
 | Memcached dict driver | Use [[link,dict_redis]] instead. |

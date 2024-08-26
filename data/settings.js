@@ -3636,7 +3636,7 @@ It is usually neither necessary nor advisable to change the default.`
 	auth_ssl_require_client_cert: {
 		default: 'no',
 		seealso: [
-			'ssl_ca',
+			'ssl_ca_file',
 			'ssl_request_client_cert',
 			'[[link,ssl_configuration]]',
 		],
@@ -8443,9 +8443,9 @@ This setting affects the \`secured\` state of connections. See
 [[link,secured_connections]].`
 	},
 
-	ssl_alt_cert: {
+	ssl_alt_cert_file: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
-		values: setting_types.STRING,
+		values: setting_types.FILE,
 		text: `
 Alternative SSL certificate that will be used if the algorithm differs from
 the primary certificate.
@@ -8454,36 +8454,32 @@ This is useful when migrating to e.g. an ECDSA certificate.
 
 Example:
 
-\`\`\`
-ssl_alt_cert = </path/to/alternative/cert.pem
+\`\`\`[dovecot.conf]
+ssl_alt_cert_file = /path/to/alternative/cert.pem
 \`\`\``
 	},
 
-	ssl_alt_key: {
-		seealso: [ 'ssl', 'ssl_alt_cert', '[[link,ssl_configuration]]' ],
-		values: setting_types.STRING,
+	ssl_alt_key_file: {
+		seealso: [ 'ssl', 'ssl_alt_cert_file', '[[link,ssl_configuration]]' ],
+		values: setting_types.FILE,
 		text: `
-Private key for [[setting,ssl_alt_cert]].
+Private key for [[setting,ssl_alt_cert_file]].
 
 Example:
 
-\`\`\`
-ssl_alt_key = </path/to/alternative/key.pem
-ssl_alt_cert = </path/to/alternative/cert.pem
+\`\`\`[dovecot.conf]
+ssl_alt_key_file = /path/to/alternative/key.pem
+ssl_alt_cert_file = /path/to/alternative/cert.pem
 \`\`\``
 	},
 
-	ssl_ca: {
-		changed: {
-			settings_ssl_client_ca_added: `
-Split out [[setting,ssl_client_ca]] out of this setting.`
-		},
+	ssl_ca_file: {
 		seealso: [
 			'ssl',
 			'ssl_client_require_valid_cert',
 			'ssl_request_client_cert',
 		],
-		values: setting_types.STRING,
+		values: setting_types.FILE,
 		text: `
 List of SSL CA certificates that are used to validate whether SSL
 certificates presented by incoming imap/pop3/etc. client connections are
@@ -8491,28 +8487,28 @@ valid.
 
 Example:
 
-\`\`\`
-ssl_ca = </etc/dovecot/ca.crt
+\`\`\`[dovecot.conf]
+ssl_ca_file = /etc/dovecot/ca.crt
 ssl_request_client_cert = yes
 auth_ssl_require_client_cert = yes
 \`\`\``
 	},
 
-	ssl_cert: {
+	ssl_cert_file: {
 		default: '</etc/ssl/certs/dovecot.pem',
-		seealso: [ 'ssl', 'ssl_key', '[[link,ssl_configuration]]' ],
-		values: setting_types.STRING,
+		seealso: [ 'ssl', 'ssl_key_file', '[[link,ssl_configuration]]' ],
+		values: setting_types.FILE,
 		text: `
-The PEM-encoded X.509 SSL/TLS certificate presented for incoming
+Path to the PEM-encoded X.509 SSL/TLS certificate presented for incoming
 imap/pop3/etc. client connections.
 
-The [[setting,ssl_key]] is also needed for the private certificate.
+The [[setting,ssl_key_file]] is also needed for the private certificate.
 
 Example:
 
-\`\`\`
-ssl_cert = </etc/ssl/private/dovecot.crt
-ssl_key = </etc/ssl/private/dovecot.key
+\`\`\`[dovecot.conf]
+ssl_cert_file = /etc/ssl/private/dovecot.crt
+ssl_key_file = /etc/ssl/private/dovecot.key
 \`\`\``
 	},
 
@@ -8556,20 +8552,6 @@ This setting is used for both incoming and outgoing SSL connections.
 See: https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites`
 	},
 
-	ssl_client_ca: {
-		added: {
-			settings_ssl_client_ca_added: `
-Split this setting out of [[setting,ssl_ca]].`
-		},
-		values: setting_types.STRING,
-		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
-		text: `
-List of trusted SSL CA certificates. This is used in addition to
-[[setting,ssl_client_ca_file]] and [[setting,ssl_client_ca_dir]]. This is
-mainly useful to provide CAs for proxying in login processes, which run
-chrooted and can't access CA files outside the chroot.`
-	},
-
 	ssl_client_ca_dir: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
 		values: setting_types.STRING,
@@ -8585,7 +8567,7 @@ operation instead of all the root CAs.`
 
 	ssl_client_ca_file: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
-		values: setting_types.STRING,
+		values: setting_types.FILE,
 		text: `
 File containing the trusted SSL CA certificates. For example
 \`/etc/ssl/certs/ca-bundle.crt\`.
@@ -8601,34 +8583,42 @@ use a CA bundle that only contains the CAs that are actually necessary for
 the server operation.`
 	},
 
-	ssl_client_cert: {
-		seealso: [ 'ssl', 'ssl_client_key', '[[link,ssl_configuration]]' ],
-		values: setting_types.STRING,
+	ssl_client_cert_file: {
+		seealso: [
+			'ssl',
+			'ssl_client_key_file',
+			'[[link,ssl_configuration]]',
+		],
+		values: setting_types.FILE,
 		text: `
 Public SSL certificate used for outgoing SSL connections. This is generally
 needed only when the server authenticates the client using the certificate.
 
-[[setting,ssl_client_key]] is also needed for the private certificate.
+[[setting,ssl_client_key_file]] is also needed for the private certificate.
 
 Example:
 
-\`\`\`
-ssl_client_cert = </etc/dovecot/dovecot-client.crt
-ssl_client_key = </etc/dovecot/dovecot-client.key
+\`\`\`[dovecot.conf]
+ssl_client_cert_file = /etc/dovecot/dovecot-client.crt
+ssl_client_key_file = /etc/dovecot/dovecot-client.key
 \`\`\``
 	},
 
-	ssl_client_key: {
-		seealso: [ 'ssl', 'ssl_client_cert', '[[link,ssl_configuration]]' ],
-		values: setting_types.STRING,
+	ssl_client_key_file: {
+		seealso: [
+			'ssl',
+			'ssl_client_cert_file',
+			'[[link,ssl_configuration]]',
+		],
+		values: setting_types.FILE,
 		text: `
-Private key for [[setting,ssl_client_cert]].
+Private key for [[setting,ssl_client_cert_file]].
 
 Example:
 
-\`\`\`
-ssl_client_cert = </etc/dovecot/dovecot-client.crt
-ssl_client_key = </etc/dovecot/dovecot-client.key
+\`\`\`[dovecot.conf]
+ssl_client_cert_file = /etc/dovecot/dovecot-client.crt
+ssl_client_key_file = /etc/dovecot/dovecot-client.key
 \`\`\``
 	},
 
@@ -8658,12 +8648,12 @@ ssl_curve_list = P-521:P-384:P-256
 \`\`\``
 	},
 
-	ssl_dh: {
+	ssl_dh_file: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
-		values: setting_types.STRING,
+		values: setting_types.FILE,
 		text: `
-The path to the Diffie-Hellman parameters file must be provided. This
-setting isn't needed if using only ECDSA certificates.
+Path to the Diffie-Hellman parameters file. This setting isn't needed if using
+only ECDSA certificates.
 
 You can generate a new parameters file by, for example, running
 \`openssl dhparam -out dh.pem 4096\` on a machine with sufficient entropy
@@ -8671,8 +8661,8 @@ You can generate a new parameters file by, for example, running
 
 Example:
 
-\`\`\`
-ssl_dh=</path/to/dh.pem
+\`\`\`[dovecot.conf]
+ssl_dh_file = /path/to/dh.pem
 \`\`\``
 	},
 
@@ -8684,25 +8674,31 @@ ssl_dh=</path/to/dh.pem
 Require a valid certificate when connecting to external SSL services?`
 	},
 
-	ssl_key: {
-		seealso: [ 'ssl', 'ssl_cert', 'ssl_key_password', '[[link,ssl_configuration]]' ],
-		values: setting_types.STRING,
+	ssl_key_file: {
+		seealso: [
+			'ssl',
+			'ssl_cert_file',
+			'ssl_key_password',
+			'[[link,ssl_configuration]]',
+		],
+		values: setting_types.FILE,
 		text: `
-The PEM-encoded X.509 SSL/TLS private key for [[setting,ssl_cert]].
+Path to the PEM-encoded X.509 SSL/TLS private key for
+[[setting,ssl_cert_file]].
 
 Example:
 
-\`\`\`
-ssl_cert = </etc/ssl/private/dovecot.crt
-ssl_key = </etc/ssl/private/dovecot.key
+\`\`\`[dovecot.conf]
+ssl_cert_file = /etc/ssl/private/dovecot.crt
+ssl_key_file = /etc/ssl/private/dovecot.key
 \`\`\``
 	},
 
 	ssl_key_password: {
-		seealso: [ 'ssl', 'ssl_key', '[[link,ssl_configuration]]' ],
+		seealso: [ 'ssl', 'ssl_key_file', '[[link,ssl_configuration]]' ],
 		values: setting_types.STRING,
 		text: `
-The password to use if [[setting,ssl_key]] is password-protected.
+The password to use if [[setting,ssl_key_file]] is password-protected.
 
 Since this file is often world-readable, you may wish to specify the path
 to a file containing the password, rather than the password itself, by
@@ -8773,12 +8769,12 @@ list. This setting is used only for server connections.`
 
 	ssl_require_crl: {
 		default: 'yes',
-		seealso: [ 'ssl', 'ssl_ca', '[[link,ssl_configuration]]' ],
+		seealso: [ 'ssl', 'ssl_ca_file', '[[link,ssl_configuration]]' ],
 		values: setting_types.BOOLEAN,
 		text: `
 If enabled, the CRL check must succeed for presented SSL client
 certificate and any intermediate certificates. The CRL list is generally
-appended to the [[setting,ssl_ca]] file.
+appended to the [[setting,ssl_ca_file]] file.
 
 This setting is used only for server connections.`
 	},
