@@ -48,8 +48,8 @@ userdb passwd {
 }
 
 ssl=yes
-ssl_cert=</path/to/cert.pem
-ssl_key=</path/to/key.pem
+ssl_cert_file = /path/to/cert.pem
+ssl_key_file = /path/to/key.pem
 
 namespace {
   inbox = yes
@@ -104,8 +104,8 @@ doveconf -nP > dovecot.conf
 * To read the content of a file, for instance for the SSL certificate option,
   prefix the filename with a `<`, e.g.:
 
-```
-ssl_cert = </etc/ssl/certs/imap.pem
+```[dovecot.conf]
+ssl_cert_file = /etc/ssl/certs/imap.pem
 ```
 
 ## Authentication
@@ -189,8 +189,8 @@ them than the defaults.
 
 ## SSL and Plaintext Authentication
 
-If you intend to use SSL, set [[setting,ssl_cert]] and [[setting,ssl_key]]
-settings. Otherwise set [[setting,ssl,no]].
+If you intend to use SSL, set [[setting,ssl_cert_file]] and
+[[setting,ssl_key_file]] settings. Otherwise set [[setting,ssl,no]].
 
 Easiest way to get SSL certificates built is to use Dovecot's
 `doc/mkcert.sh` script. For more information see [[link,ssl_configuration]].
