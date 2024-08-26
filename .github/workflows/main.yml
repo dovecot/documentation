@@ -21,6 +21,9 @@ jobs:
         cache: npm
     - name: Install Dependencies
       run: npm ci
+    - name: Fix site prefix
+      run: |
+        sed -i -e "|'/2.4'|${{ github.ref_name }}|" .vitepress/config.js
     - name: Build with VitePress
       run: |
         mkdir mans
