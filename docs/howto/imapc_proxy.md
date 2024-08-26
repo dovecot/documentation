@@ -54,7 +54,10 @@ This is based on already having Dovecot already compiled and installed.
    passdb imap {
      # Change the line below to reflect the IP address of your Exchange Server.
      args = host=10.1.2.3
-     default_fields = userdb_imapc_user=%u userdb_imapc_password=%w
+     default_fields {
+       userdb_imapc_user = %u
+       userdb_imapc_password = %w
+     }
    }
 
    userdb prefetch {
