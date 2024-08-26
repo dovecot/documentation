@@ -153,25 +153,25 @@ of these (in the preferred order):
 1. Mail directory under home, for example:
 
    - `home=/var/vmail/domain/user/`
-   - `mail=/var/vmail/domain/user/mail/`
+   - `mail_path=/var/vmail/domain/user/mail/`
 
 2. Completely distinct home and mail directories:
 
    - `home=/home/virtual/domain/user/`
-   - `mail=/var/vmail/domain/user/`
+   - `mail_path=/var/vmail/domain/user/`
 
 3. Home directory under mail, for example:
 
    - Maildir:
      - `home=/var/vmail/domain/user/home/`
-     - `mail=/var/vmail/domain/user/`
+     - `mail_path=/var/vmail/domain/user/`
 
    - mbox: There's really no good and safe way to do it.
 
 4. The home directory is the same as the mail directory.
 
 If for example `home=/var/vmail/domain/user/` and
-`mail=/var/vmail/domain/user/mail/`, set:
+`mail_path=/var/vmail/domain/user/mail/`, set:
 
 ```[dovecot.conf]
 mail_home = /var/vmail/%d/%n
