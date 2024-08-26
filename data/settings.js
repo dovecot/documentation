@@ -3881,12 +3881,6 @@ If set, the key must be included in the HTTP request (via X-API-Key header)
 base64 encoded.`
 	},
 
-	doveadm_http_rawlog_dir: {
-		seealso: [ '[[link,rawlog]]' ],
-		values: setting_types.STRING,
-		text: `Directory where doveadm stores HTTP rawlogs.`
-	},
-
 	doveadm_password: {
 		values: setting_types.STRING,
 		text: `
