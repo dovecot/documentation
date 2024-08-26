@@ -39,9 +39,6 @@ dovecotlinks:
   service_protocol:
     hash: protocol
     text: service configuration (protocol)
-  service_service_count:
-    hash: service-count
-    text: service configuration (service_count)
   service_type:
     hash: type
     text: service configuration (type)
@@ -89,12 +86,12 @@ There are 3 types of services that need to be optimized in different ways:
    [[setting,service_client_limit]] needs to be set high enough to be able to
    serve all the needed connections (max connections = `process_limit *
    client_limit`).
-   [[setting,service_service_count]] is commonly set to `unlimited` for these
-   services. Otherwise when the limit is beginning to be reached, the total
-   number of available connections will shrink. With very bad luck that could
-   mean that all the processes are simply waiting for the existing connections
-   to die away before the process can die and a new one can be created.
-   Although this could be made less likely by setting
+   [[setting,service_restart_request_count]] is commonly set to `unlimited` for
+   these services. Otherwise when the limit is beginning to be reached, the
+   total number of available connections will shrink. With very bad luck that
+   could mean that all the processes are simply waiting for the existing
+   connections to die away before the process can die and a new one can be
+   created. Although this could be made less likely by setting
    [[setting,service_process_limit]] higher than
    [[setting,service_process_min_avail]], but that's still not a guarantee
    since each process could get a very long running connection and the
@@ -175,9 +172,11 @@ probably shouldn't touch the `login` and `master` listeners).
 
       This is calculated by counting the [[setting,service_process_limit]] of
       every service that is enabled with the `protocol` setting (e.g. imap,
-      pop3, lmtp). Only services with `service_count != 1` are counted, because
-      they have persistent connections to auth, while `service_count=1`
-      processes only do short-lived auth connections.
+      pop3, lmtp). Only services with the
+      [[setting,service_restart_request_count]] setting being `!= 1` are
+      counted, because they have persistent connections to auth, while
+      [[setting,service_restart_request_count,1]] processes only do short-lived
+      auth connections.
 
 * **process_limit=1**, because there can be only one auth master process.
 
@@ -217,7 +216,7 @@ be used.
 
 * **chroot** could also be set if possible.
 
-* **service_count=0** counts the number of processed auth requests.
+* **restart_request_count=0** counts the number of processed auth requests.
 
   This can be used to cycle the process after the specified number of auth
   requests (default is unlimited). The worker processes also stop after
@@ -307,8 +306,8 @@ doveadm can automatically connect to the correct backend to run the command.
 
 * **client_limit=1**, because doveadm command execution is synchronous.
 
-* **service_count=1** just in case there were any memory leaks. This could
-  be set to some larger value (or `0`) for higher performance.
+* **restart_request_count=1** just in case there were any memory leaks. This
+  could be set to some larger value (or `0`) for higher performance.
 
 * **user=root**, but the privileges are (temporarily) dropped to the
   mail user's privileges after userdb lookup.
@@ -333,8 +332,8 @@ connections.
   For small, mostly-idling hobbyist servers, a larger number may work
   without problems.
 
-* **service_count** can be changed from `1` if only a single UID is used
-  for mail users.
+* **restart_request_count** can be changed from `1` if only a single UID is
+  used for mail users.
 
   This improves performance, but it's less secure, because bugs in code
   may leak email data from another user's earlier connection.
