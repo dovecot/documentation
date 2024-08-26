@@ -3706,6 +3706,33 @@ https://www.postgresql.org/docs/current/libpq-connect.html for available
 parameters.`
 	},
 
+	/* SQL sqlite settings. */
+
+	sqlite_path: {
+		tags: [ 'sql-sqlite' ],
+		values: setting_types.STRING,
+		text: `
+Path to the sqlite database.`
+	},
+
+	sqlite_journal_mode: {
+		tags: [ 'sql-sqlite' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'delete', 'wal' ],
+		default: 'wal',
+		text: `
+Allows using write-ahead logging mode for database.`
+	},
+
+	sqlite_readonly: {
+		tags: [ 'sql-sqlite' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Specifies that this database is read-only and should not be attempted to be
+created or written to.`
+	},
+
 	/* Dovecot core settings. */
 
 	auth_allow_weak_schemes: {
