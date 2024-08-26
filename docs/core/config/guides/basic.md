@@ -155,14 +155,14 @@ The `4` should be changed to the number of CPU cores on the server.
 
 ```
 service imap-login {
-  service_count = 0
+  restart_request_count = 0
   client_limit = 10000
   process_min_avail = 4
   process_limit = 4
 }
 
 service pop3-login {
-  service_count = 0
+  restart_request_count = 0
   client_limit = 10000
   process_min_avail = 4
   process_limit = 4
