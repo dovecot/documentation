@@ -434,8 +434,10 @@ unloading. This will cause some extra warnings about leaking memory in
 dl\*() functions which can be ignored. You can also do this in
 dovecot.conf:
 
-```
-import_environment = $import_environment GDB=1
+```[dovecot.conf]
+import_environment {
+  GDB = 1
+}
 ```
 
 ## Debugging Tools
