@@ -3,6 +3,9 @@ layout: doc
 title: Settings Variables
 dovecotlinks:
   settings_variables: Settings Variables
+  settings_variables_distribution_variables:
+    hash: distribution-variables
+    text: Distribution Variables
   settings_variables_mail_user_variables:
     hash: mail-user-variables
     text: Mail User Variables
@@ -34,6 +37,7 @@ Global variables that work everywhere are:
 | `env:<name>` | Environment variable \<name\>. |
 | `system:<name>` | Get a system variable, see [below](#system-variables) for list of supported names. |
 | `process:<name>` | Get a process variable, see [below](#process-variables) for list of supported names. |
+| `dovecot:<name>` | Get a distribution variable, see [below](#distribution-variables) for a list of supported names.
 
 If [[plugin,var-expand-crypt]] is loaded, these also work globally:
 
@@ -72,6 +76,30 @@ Effective user ID of the current process.
 ### `gid`
 
 Effective group ID of the current process.
+
+## Distribution Variables
+
+### `name`
+
+Name of distributed package. (Default: `Dovecot`)
+
+### `version`
+
+Dovecot version.
+
+### `support-url`
+
+Support webpage set in Dovecot distribution. (Default:
+https://www.dovecot.org/)
+
+### `support-email`
+
+Support email set in Dovecot distribution. (Default: `dovecot@dovecot.org`)
+
+### `revision`
+
+Short commit hash of Dovecot git source tree HEAD. (Same as the commit hash
+reported in `dovecot --version`.)
 
 ## User Variables
 
