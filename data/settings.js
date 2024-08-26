@@ -4627,6 +4627,102 @@ If non-zero, override [[setting,http_client_request_timeout]] for \`PUT\` and
 \`POST\` requests.`
 	},
 
+	http_server_default_host: {
+		advanced: true,
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.STRING,
+		text: `
+Overwrite the local hostname with http_server_default_host.`
+	},
+
+	http_server_max_idle_time: {
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.TIME_MSECS,
+		default: 0,
+		text: `
+Maximum time a connection will idle.`
+	},
+
+	http_server_max_payload_size: {
+		advanced: true,
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.SIZE,
+		default: '10G',
+		text: `
+Request payload limit: Max size for the request payload.`
+	},
+
+	http_server_max_pipelined_requests: {
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.UINT,
+		default: 1,
+		text: `
+Maximum number of pipelined requests per connection.`
+	},
+
+	http_server_max_target_length: {
+		advanced: true,
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.SIZE,
+		default: '8k',
+		text: `
+Request target limit: Maximum length of the request target.`
+	},
+
+	http_server_request_hdr_max_field_size: {
+		advanced: true,
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.SIZE,
+		default: '8k',
+		text: `
+Request header limit: Max size for an individual field.`
+	},
+
+	http_server_request_hdr_max_fields: {
+		advanced: true,
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.UINT,
+		default: 50,
+		text: `
+Request header limit: Max number of fields.`
+	},
+
+	http_server_request_hdr_max_size: {
+		advanced: true,
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.SIZE,
+		default: '200k',
+		text: `
+Request header limit: Max size for the entire request header.`
+	},
+
+	http_server_socket_recv_buffer_size: {
+		advanced: true,
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.SIZE,
+		default: 0,
+		text: `
+The kernel receive buffer size for the connection sockets. \`0\` = kernel
+defaults.`
+	},
+
+	http_server_socket_send_buffer_size: {
+		advanced: true,
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.SIZE,
+		default: '0',
+		text: `
+The kernel send buffer size for the connection sockets. \`0\` = kernel
+defaults.`
+	},
+
+	http_server_rawlog_dir: {
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.STRING,
+		text: `
+Directory for writing raw log data for debugging purposes.`
+	},
+
 	imap_capability: {
 		tags: [ 'imap' ],
 		values: setting_types.STRING,
