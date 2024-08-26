@@ -9112,7 +9112,8 @@ ssl_client_key_file = /etc/dovecot/dovecot-client.key
 		],
 		values: setting_types.FILE,
 		text: `
-Private key for [[setting,ssl_client_cert_file]].
+Private key for [[setting,ssl_client_cert_file]]. If it is password protected,
+set the password with [[setting,ssl_client_key_password]].
 
 Example:
 
@@ -9120,6 +9121,13 @@ Example:
 ssl_client_cert_file = /etc/dovecot/dovecot-client.crt
 ssl_client_key_file = /etc/dovecot/dovecot-client.key
 \`\`\``
+	},
+
+	ssl_client_key_password: {
+		values: setting_types.STRING,
+		seealso: [ 'ssl', 'ssl_client_key_file', '[[link,ssl_configuration]]' ],
+		text: `
+Password for the [[setting,ssl_client_key_file]].`
 	},
 
 	ssl_crypto_device: {
