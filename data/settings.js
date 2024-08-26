@@ -3670,6 +3670,42 @@ Username for authentication.`
 Timeout in seconds when writing data to server.`
 	},
 
+	/* SQL Postgres settings. */
+
+	pgsql: {
+		tags: [ 'sql-postgresql' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'pgsql_host' ],
+		text: `
+Creates a new PostgreSQL connection. If more than one is specified, the
+connections are automatically used for load balancing and for failover. The
+filter name refers to the [[setting,pgsql_host]] setting.`
+	},
+
+	pgsql_connection_limit: {
+		tags: [ 'sql-postgresql' ],
+		values: setting_types.UINT,
+		text: `
+Maximum number of parallel connections.`
+	},
+
+	pgsql_host: {
+		tags: [ 'sql-postgresql' ],
+		values: setting_types.STRING,
+		seealso: [ 'pgsql' ],
+		text: `
+Host to connect to. The [[setting,pgsql]] setting defaults to this.`
+	},
+
+	pgsql_parameters: {
+		tags: [ 'sql-postgresql' ],
+		values: setting_types.STRLIST,
+		text: `
+List of key/value settings passed to PostgreSQL. See
+https://www.postgresql.org/docs/current/libpq-connect.html for available
+parameters.`
+	},
+
 	/* Dovecot core settings. */
 
 	auth_allow_weak_schemes: {
