@@ -63,6 +63,14 @@ environment variable.
 
 This needs to be included in [[setting,import_environment]].
 
+### `os`
+
+OS name reported by `uname()` call. (Similar to `uname -s` output.)
+
+### `os-version`
+
+OS version reported by `uname()` call. (Similar to `uname -r` output.)
+
 ## Process Variables
 
 ### `pid`
