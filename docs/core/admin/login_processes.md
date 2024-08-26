@@ -39,13 +39,13 @@ You can enable high-security mode with:
 
 ```[dovecot.conf]
 service imap-login {
-  service_count = 1
+  restart_request_count = 1
   #process_min_avail = 0
   #vsz_limit = 64M
 }
 
 service pop3-login {
-  service_count = 1
+  restart_request_count = 1
 }
 ```
 
@@ -81,13 +81,13 @@ You can enable high-performance mode with:
 
 ```[dovecot.conf]
 service imap-login {
-  service_count = 0
+  restart_request_count = 0
   process_min_avail = 4 # number of CPU cores
   vsz_limit = 1G
 }
 
 service pop3-login {
-  service_count = 0
+  restart_request_count = 0
 }
 ```
 
