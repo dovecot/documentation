@@ -74,7 +74,7 @@ jobs:
     - name: List files
       run: ls -rl
     - name: Update latest release
-      use: andelf/nightly-release@v1
+      uses: andelf/nightly-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
