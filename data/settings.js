@@ -3233,6 +3233,323 @@ If enabled, wait for the script to finish. By default, the welcome script
 is run asynchronously.`
 	},
 
+	/* SQL Cassandra settings. */
+
+	cassandra_connect_timeout: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		default: '5s',
+		text: `
+Connection timeout.`
+	},
+
+	cassandra_debug_queries: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Whether to log CQL queries.`
+	},
+
+	cassandra_delete_consistency: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.ENUM,
+		values_enum: [
+			'any',
+			'local-serial',
+			'serial',
+			'one',
+			'two',
+			'three',
+			'local-quorum',
+			'quorum',
+			'each-quorum',
+			'all',
+		],
+		default: 'local-quorum',
+		seealso: [ '[[link,sql_cassandra_consistency]]' ],
+		text: `
+Write consistency when deleting from the database. See
+[[link,sql_cassandra_consistency]].`
+	},
+
+	cassandra_delete_fallback_consistency: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.ENUM,
+		values_enum: [
+			'any',
+			'local-serial',
+			'serial',
+			'one',
+			'two',
+			'three',
+			'local-quorum',
+			'quorum',
+			'each-quorum',
+			'all',
+		],
+		default: 'local-quorum',
+		seealso: [ '[[link,sql_cassandra_consistency]]' ],
+		text: `
+Write consistency when deleting from the database fails with primary
+consistency.`
+	},
+
+	cassandra_execution_retry_interval: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		default: 0,
+		text: `
+If the driver supports speculative execution policy, configures constant
+speculative execution policy. See
+https://docs.datastax.com/en/developer/java-driver/latest/manual/core/speculative_execution/index.html`
+	},
+
+	cassandra_execution_retry_times: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		default: 0,
+		text: `
+If the driver supports speculative execution policy, configures constant
+speculative execution policy. See
+https://docs.datastax.com/en/developer/java-driver/latest/manual/core/speculative_execution/index.html`
+	},
+
+	cassandra_heartbeat_interval: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME,
+		default: '30s',
+		text: `
+How often to send keepalive packets to cassandra nodes.`
+	},
+
+	cassandra_hosts: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.BOOLLIST,
+		text: `
+List of hosts or IP addresses to connect.`
+	},
+
+	cassandra_idle_timeout: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		default: '0',
+		text: `
+How long to idle before disconnecting.`
+	},
+
+	cassandra_keyspace: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		text: `
+Specifies the keyspace name to use.`
+	},
+
+	cassandra_latency_aware_routing: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+When turned on, latency-aware routing tracks the latency of queries to avoid
+sending new queries to poorly performing Cassandra nodes.`
+	},
+
+	cassandra_log_level: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.ENUM,
+		values_enum: [ `critical`, `error`, `warn`, `info`, `debug`, `trace` ],
+		default: 'warn',
+		text: `
+Driver log level.`
+	},
+
+	cassandra_log_retries: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Whether to log about failed requests that are retried (which may or may
+not succeed after the retry).`
+	},
+
+	cassandra_metrics: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		text: `
+Path where to write JSON metrics. See [[link,sql_cassandra_metrics]].`
+	},
+
+	cassandra_io_thread_count: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.UINT,
+		default: 'driver dependent',
+		text: `
+Set number of IO threads to handle query requests.`
+	},
+
+	cassandra_page_size: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.UINT,
+		default: 0,
+		text: `
+When a query returns many rows, it can be sometimes inefficient to return them
+as a single response message. Instead, the driver can break the results into
+pages which get returned as they are needed.
+
+This setting controls the size of each page.
+
+Set to \`0\` to disable.`
+	},
+
+	cassandra_password: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		text: `
+Password for authentication.`
+	},
+
+	cassandra_port: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.IN_PORT,
+		default: 9042,
+		text: `
+CQL port to use.`
+	},
+
+	cassandra_read_consistency: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.ENUM,
+		values_enum: [
+			'any',
+			'local-serial',
+			'serial',
+			'one',
+			'two',
+			'three',
+			'local-quorum',
+			'quorum',
+			'each-quorum',
+			'all',
+		],
+		default: 'local-quorum',
+		seealso: [ '[[link,sql_cassandra_consistency]]' ],
+		text: `
+Read consistency.`
+	},
+
+	cassandra_read_fallback_consistency: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.ENUM,
+		values_enum: [
+			'any',
+			'local-serial',
+			'serial',
+			'one',
+			'two',
+			'three',
+			'local-quorum',
+			'quorum',
+			'each-quorum',
+			'all',
+		],
+		default: 'local-quorum',
+		seealso: [ '[[link,sql_cassandra_consistency]]' ],
+		text: `
+Read consistency if primary consistency fails.`
+	},
+
+	cassandra_request_timeout: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		default: '60s',
+		text: `
+How long to wait for a query to finish.`
+	},
+
+	cassandra_ssl: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ '[[link,ssl_configuration]]' ],
+		text: `
+Whether to use SSL when connecting to Cassandra. Configure it using the
+\`ssl_client_*\` settings. See [[link,ssl_configuration]].`
+	},
+
+	cassandra_user: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		text: `
+Username for authentication.`
+	},
+
+	cassandra_protocol_version: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.ENUM,
+		values_enum: [ 3, 4, 5 ],
+		default: 'depends on driver version',
+		text: `
+Cassandra protocol version to use. It is good idea to specify this to avoid
+warnings about version handshake if the driver supports a higher protocol
+version than the server.
+
+::: info
+If you want to use server-side prepared statements, you need to
+use at least \`4\`.
+:::`
+	},
+
+	cassandra_warn_timeout: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		default: '5s',
+		text: `
+Emit warning if query takes longer than this.`
+	},
+
+	cassandra_write_consistency: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.ENUM,
+		values_enum: [
+			'any',
+			'local-serial',
+			'serial',
+			'one',
+			'two',
+			'three',
+			'local-quorum',
+			'quorum',
+			'each-quorum',
+			'all',
+		],
+		default: 'local-quorum',
+		seealso: [ '[[link,sql_cassandra_consistency]]' ],
+		text: `
+Write consistency when updating or inserting to the database.`
+	},
+
+	cassandra_write_fallback_consistency: {
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.ENUM,
+		values_enum: [
+			'any',
+			'local-serial',
+			'serial',
+			'one',
+			'two',
+			'three',
+			'local-quorum',
+			'quorum',
+			'each-quorum',
+			'all',
+		],
+		default: 'local-quorum',
+		seealso: [ '[[link,sql_cassandra_consistency]]' ],
+		text: `
+Write consistency when updating or inserting to the database fails with primary
+consistency.`
+	},
+
 	/* Dovecot core settings. */
 
 	auth_allow_weak_schemes: {
