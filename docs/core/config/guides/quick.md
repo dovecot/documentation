@@ -41,7 +41,10 @@ passdb pam {
 userdb passwd {
   driver = passwd
   args = blocking=no
-  override_fields = uid=vmail gid=vmail
+  override_fields {
+    uid = vmail
+    gid = vmail
+  }
 }
 
 ssl=yes
