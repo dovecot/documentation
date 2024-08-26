@@ -42,16 +42,17 @@ program
 	.parse()
 const debug = program.opts().debug
 
-const doInclude = async (content, f) => {
-	const files = (await manIncludes()).flatMap((x) => fg.sync(x))
-	const result = await content.replace(includesRE, async (m, m1) => {
+
+
+const doInclude = (content, includes, f) => {
+	const result = content.replace(includesRE, (m, m1) => {
 		if (!m1.length) return m
-		for (const fn of files)
-			if (path.basename(fn) == path.basename(m1)) {
-			   const result = await doInclude(fs.readFileSync(fn, 'utf8'), f)
-			   return result
-			}
-		throw new Error("Missing include " + fn)
+		const inc_f = path.basename(m1)
+		for (const fn of includes) {
+			if (path.basename(fn) == inc_f)
+			   return doInclude(fs.readFileSync(fn, 'utf8'), includes, f)
+		}
+		throw new Error("Missing include " + inc_f)
 	})
 	return result
 }
@@ -126,6 +127,7 @@ const main = async (component, outPath) => {
 
 	/* Generate list of man files. */
 	const files = (await manFiles()).flatMap((x) => fg.sync(x))
+	const includes = (await manIncludes()).flatMap((x) => fg.sync(x))
 
 	/* Get hash of last git commit. */
 	const gitHash = gitCommitInfo().shortHash
@@ -142,7 +144,7 @@ const main = async (component, outPath) => {
 		const page = matter(str)
 		const vf = new VFile({
 			path: f,
-			value: await doInclude(page.content, f)
+			value: await doInclude(page.content, includes, f)
 		})
 		if (page.data.dovecotComponent != component)
 			continue
