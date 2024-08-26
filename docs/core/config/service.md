@@ -235,7 +235,7 @@ parsed data in simpler format to config clients.
 * Only root should be able to connect to its UNIX listener, unless there
   are no secrets in the configuration.
 
-  Passwords are obviously secrets, but less obviously [[setting,ssl_key]]
+  Passwords are obviously secrets, but less obviously [[setting,ssl_key_file]]
   is also a secret, since it contains the actual SSL key data instead of
   only a filename.
 
