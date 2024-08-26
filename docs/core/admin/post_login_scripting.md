@@ -70,8 +70,9 @@ location:
 ```sh
 #!/bin/sh
 
-export MAIL=maildir:/tmp/test
-export USERDB_KEYS="$USERDB_KEYS mail"
+export MAIL_DRIVER=maildir
+export MAIL_PATH=/tmp/test
+export USERDB_KEYS="$USERDB_KEYS mail_driver mail_path"
 exec "$@"
 ```
 
