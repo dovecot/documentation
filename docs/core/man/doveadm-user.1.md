@@ -61,8 +61,8 @@ userdb passwd-file {
 *user*
 :   Is a *user*'s login name. Depending on the configuration, a login
     name may be for example **jane** or **john@example.com**. It's also
-    possible to use '**\***' and '**?**' wildcards (e.g. -u
-    \*@example.org).
+    possible to use '**\***' and '**?**' wildcards (e.g. `-u
+    \*@example.org`).
 
 ## EXAMPLE
 
