@@ -8916,6 +8916,12 @@ interrupt earlier sessions, but may not be desirable if restarting Dovecot
 to apply a security update, for example.`
 	},
 
+	sql_driver: {
+		values: setting_types.STRING,
+		text: `
+SQL driver to use for any SQL database accesses.`
+	},
+
 	ssl: {
 		default: 'yes',
 		seealso: [ '[[link,ssl_configuration]]' ],
