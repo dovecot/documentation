@@ -3907,6 +3907,12 @@ A value of \`0\` means that proxying is not in use. This also means no passdb
 lookup is done - only userdb lookup.`
 	},
 
+	doveadm_server: {
+		values: setting_types.NAMED_FILTER,
+		text: `
+Filter for doveadm server specific settings.`
+	},
+
 	doveadm_socket_path: {
 		default: 'doveadm-server',
 		values: setting_types.STRING,
@@ -8827,6 +8833,12 @@ a user daemon.
 
 The settings [[setting,state_dir,/home/foo/dovecot/state]] and
 [[setting,base_dir,/home/foo/dovecot/run]] give an example of usage.`
+	},
+
+	stats_server: {
+		values: setting_types.NAMED_FILTER,
+		text: `
+Filter for stats server specific settings.`
 	},
 
 	stats_writer_socket_path: {
