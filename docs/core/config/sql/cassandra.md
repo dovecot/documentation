@@ -3,9 +3,12 @@ layout: doc
 title: Cassandra
 dovecotlinks:
   sql_cassandra: Cassandra configuration
-  sql_cassandra_page_size:
-    hash: page-size
-    text: page-size
+  sql_cassandra_consistency:
+    hash: consistency
+    text: "Cassandra: Consistency"
+  sql_cassandra_metrics:
+    hash: metrics
+    text: "Cassandra: Metrics"
 ---
 
 # SQL Driver: Cassandra
@@ -281,7 +284,7 @@ Write consistency when updating or inserting to the database.
 Write consistency when updating or inserting to the database fails with
 primary consistency.
 
-## Cassandra Consistency
+## Consistency
 
 Consistency levels in Cassandra can be configured to manage availability
 versus data accuracy.
@@ -396,9 +399,10 @@ replica nodes in each datacenter.
 A write must be written to the commit log and memtable on all replica nodes
 in the cluster for that partition.
 
-## Cassandra Metrics
+## Metrics
 
-This describes the format of the JSON output produced when the metrics configuration option is activated.
+This describes the format of the JSON output produced when the metrics
+configuration option is activated.
 
 Source: https://docs.datastax.com/en/developer/cpp-driver/latest/api/struct.CassMetrics/index.html
 
