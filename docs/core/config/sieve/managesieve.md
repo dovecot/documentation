@@ -109,14 +109,14 @@ service managesieve-login {
   #}
 
   # Number of connections to handle before starting a new process. Typically
-  # the only useful values are 0 (unlimited) or 1. 1 is more secure, but 0
-  # is faster.
+  # the only useful values are "unlimited" or 1. 1 is more secure, but
+  # "unlimited" is faster.
   #restart_request_count = 1
 
   # Number of processes to always keep waiting for more connections.
   #process_min_avail = 0
 
-  # If you set restart_request_count=0, you probably need to grow this.
+  # If you set restart_request_count=unlimited, you probably need to grow this.
   #vsz_limit = 64M
 }
 
