@@ -8322,7 +8322,7 @@ no longer in "setuid" mode. This setting can't be used with non-empty chroot.`
 		default: 0,
 		seealso: [
 		'service_client_limit',
-		'service_service_count',
+		'service_restart_request_count',
 		'service_process_min_avail',
 		],
 		text: `
@@ -8334,17 +8334,17 @@ that many processes that are not doing anything. When a new process launches,
 one of the idling processes will accept the connection and a new idling process
 is launched.
 
-* For [[setting,service_service_count,1]] processes this decreases the
+* For [[setting,service_restart_request_count,1]] processes this decreases the
   latency for handling new connections, because there's no need to wait for
   processes to fork. This is usually not necessary to to be set. Large
   [[setting,service_process_min_avail]] values might be useful in some special
   cases, like if there are a lot of POP3 users logging in exactly at the same
   time to check mails.
-* For [[setting,service_service_count]] to a value \`!=1\` and
+* For [[setting,service_restart_request_count]] to a value \`!=1\` and
   [[setting,service_client_limit]] to a value \`>1\` processes it could be set
   to the number of CPU cores on the system to balance the load among them. This
   is commonly used with \`*-login\` processes.
-* For [[setting,service_service_count]] with a value of \`!=1\` and
+* For [[setting,service_restart_request_count]] with a value of \`!=1\` and
   [[setting,service_client_limit,1]] processes it is likely not useful to use
   this, because generally there are already some idling processes waiting to
   accept new connections. However, it's not harmful either, since
@@ -8370,7 +8370,7 @@ of connections is received, the next incoming connection will prompt Dovecot to
 spawn another process.`
 	},
 
-	service_service_count: {
+	service_restart_request_count: {
 		tags: [ 'service' ],
 		values: setting_types.UINT,
 		default: 'unlimited',
