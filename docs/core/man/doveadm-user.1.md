@@ -51,7 +51,7 @@ The socket may be located in another directory, when the default
 **-u**
 :   When this option is given, [[man,doveadm]] will only show values
     from the *userdb*. Without -u parameter if any of the *uid*, *gid*,
-    *home* or *mail* fields are missing, their defaults are taken from
+    *home* or *mail_path* fields are missing, their defaults are taken from
     configuration file.
 
 <!-- @include: option-x.inc -->
@@ -76,7 +76,7 @@ userdb: jane
   uid       : 8001
   gid       : 8001
   home      : /home/jane
-  mail      : sdbox:~/sdbox
+  mail_path : ~/sdbox
   plugins   : sieve
   quota_rule: \*:storage=150M
 
@@ -84,7 +84,7 @@ userdb: john@example.com
   home      : /srv/mail/8/70312/79832
   uid       : 79832
   gid       : 70312
-  mail      : mdbox:~/mdbox
+  mail_path : ~/mdbox
 ```
 
 User lookup, using wildcards:
