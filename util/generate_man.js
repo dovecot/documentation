@@ -14,7 +14,7 @@ import matter from 'gray-matter'
 import pdc from 'pdc'
 import path from 'path'
 import { VFile } from 'vfile'
-import { manFiles } from '../lib/utility.js'
+import { manFiles, manIncludes } from '../lib/utility.js'
 import remarkDeflist from 'remark-definition-list'
 import remarkMan from 'remark-man'
 import remarkParse from 'remark-parse'
@@ -42,12 +42,18 @@ program
 	.parse()
 const debug = program.opts().debug
 
-const doInclude = (content, f) => {
-	return content.replace(includesRE, (m, m1) => {
+const doInclude = async (content, f) => {
+	const files = (await manIncludes()).flatMap((x) => fg.sync(x))
+	const result = await content.replace(includesRE, async (m, m1) => {
 		if (!m1.length) return m
-		const inc_f = path.join(path.dirname(f), m1)
-		return doInclude(fs.readFileSync(inc_f, 'utf8'), inc_f)
+		for (const fn of files)
+			if (path.basename(fn) == path.basename(m1)) {
+			   const result = await doInclude(fs.readFileSync(fn, 'utf8'), f)
+			   return result
+			}
+		throw new Error("Missing include " + fn)
 	})
+	return result
 }
 
 const processDovecotMd = () => {
@@ -136,7 +142,7 @@ const main = async (component, outPath) => {
 		const page = matter(str)
 		const vf = new VFile({
 			path: f,
-			value: doInclude(page.content, f)
+			value: await doInclude(page.content, f)
 		})
 		if (page.data.dovecotComponent != component)
 			continue
