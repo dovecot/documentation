@@ -247,7 +247,7 @@ user_attrs = \
 
 #### passwd-file
 
-Example that shows how to give two `userdb` extra fields (`mail` and
+Example that shows how to give two `userdb` extra fields (`mail_driver` and
 `quota`).
 
 Note that all `userdb` extra fields must be prefixed with `userdb_`,
