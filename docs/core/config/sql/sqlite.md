@@ -20,19 +20,6 @@ parameter that has no `=` as filename. Whitespace cannot be used in
 filename.
 :::
 
-## Supported Options
+## Settings
 
-### `journal_mode`
-
-* Default: `delete`
-* Values: `delete`, `wal`
-
-Allows using write-ahead logging mode for database.
-
-### `readonly`
-
-* Default: `no`
-* Values: [[link,settings_types_boolean]]
-
-Specifies that this database is read-only and should not be attempted to be
-created or written to.
+<SettingsComponent tag="sql-sqlite" />
