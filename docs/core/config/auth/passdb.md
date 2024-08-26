@@ -3,22 +3,22 @@ layout: doc
 title: passdb
 dovecotlinks:
   passdb: passdb
-  auth_nologin:
+  passdb_auth_nologin:
     hash: nologin
-    text: authentication nologin extra field
+    text: "passdb: Authentication `nologin` Extra Field"
   passdb_extra_fields:
     hash: extra-fields
-    text: passdb extra fields
-  passdb_user_extra_field:
-    hash: user-extra-field
-    text: passdb user extra field
+    text: "passdb: Extra Fields"
+  passdb_user_extra_fields:
+    hash: user-extra-fields
+    text: "passdb: User Extra Fields"
 ---
 
-# Password Databases (passdb)
+# Password Databases (`passdb`)
 
-Dovecot uses [[link,passdb]] and userdb as part of the authentication process.
+Dovecot uses `passdb` and [[link,userdb]] as part of the authentication process.
 
-passdb authenticates the user. It also provides any other pre-login
+`passdb` authenticates the user. It also provides any other pre-login
 information needed for users, such as:
 
 * Which server user is proxied to.
@@ -40,7 +40,7 @@ the format to Dovecot because it won't try to guess it.
 The SQL and LDAP configuration files have the `default_pass_scheme` setting
 for this.
 
-If you have passwords in multiple formats, or the passdb doesn't have such a
+If you have passwords in multiple formats, or the `passdb` doesn't have such a
 setting, you'll need to prefix each password with `{<scheme>}`:
 `{PLAIN}cleartext-password` or `{PLAIN-MD5}1a1dc91c907325c69271ddf0c944bc72`.
 
@@ -92,7 +92,7 @@ Databases that support looking up everything:
 | [[link,auth_passwd_file,Passwd-file]] | `/etc/passwd`-like file. |
 | [[link,auth_ldap,LDAP]] | Lightweight Directory Access Protocol. |
 | [[link,auth_sql,SQL]] | SQL database (PostgreSQL, MySQL, SQLite, Cassandra). |
-| [[link,auth_staticdb,Static]] | Static passdb for simple configurations. |
+| [[link,auth_staticdb,Static]] | Static `passdb` for simple configurations. |
 | [[link,auth_lua,Lua]] | Lua script for authentication. |
 
 ### Fields
@@ -106,15 +106,15 @@ User's password. See [[link,password_schemes]].
 #### `password_noscheme`
 
 Like `password`, but if a password begins with `{`, assume it belongs to the
-password itself instead of treating it as a [[link,password_schemes]]
-prefix. This is usually needed only if you use cleartext passwords.
+password itself instead of treating it as a [[link,password_schemes]] prefix.
+This is usually needed only if you use cleartext passwords.
 
 #### `user`
 
 Returning a user field can be used to change the username.
 
 Typically used only for case changes (e.g. `UseR` -> `user`). See
-[user extra field](#user-extra-field).
+[[link,passdb_user_extra_fields]].
 
 #### `username`
 
@@ -125,9 +125,9 @@ Like `user`, but doesn't drop existing domain name (e.g. `username=foo` for
 
 Updates the domain part of the username.
 
-#### Extra Fields
+#### User Extra Fields
 
-Other special [extra fields](#extra-fields).
+Other special [[link,passdb_extra_fields]].
 
 ## Settings
 
@@ -285,53 +285,54 @@ The success result values:
 
 #### `return-ok`
 
-Return success, don't continue to the next passdb.
+Return success, don't continue to the next `passdb`.
 
 #### `return-fail`
 
-Return failure, don't continue to the next passdb.
+Return failure, don't continue to the next `passdb`.
 
 #### `return`
 
-Return earlier passdb's success or failure, don't continue to the
-next passdb. If this was the first passdb, return failure.
+Return earlier `passdb`'s success or failure, don't continue to the next
+`passdb`. If this was the first `passdb`, return failure.
 
 #### `continue-ok`
 
 Set the current authentication state to "success", and continue to the next
-passdb.
+`passdb`.
 
-The following passdbs will skip password verification.
+The following `passdb`s will skip password verification.
 
 ::: info
-When using this value on a master passdb (`master = yes`),
-execution will jump to the first non-master passdb instead of
-continuing with the next master passdb.
+When using this value on a master `passdb { master = yes }`, execution will
+jump to the first non-master `passdb` instead of continuing with the next
+master `passdb`.
 :::
 
 #### `continue-fail`
 
-Set the current authentication state to "failure", and continue to the
-next passdb.
+Set the current authentication state to "failure", and continue to the next
+`passdb`.
 
-The following passdbs will still verify the password.
+The following `passdb`s will still verify the password.
 
 ::: info
-When using this value on a master passdb (`master = yes`),
-execution will jump to the first non-master passdb instead of
-continuing with the next master passdb.
+When using this value on a master `passdb { master = yes }`, execution will
+jump to the first non-master `passdb` instead of continuing with the next
+master `passdb`.
 :::
 
 #### `continue`
 
-Continue to the next passdb without changing the authentication state.
-The initial state is "failure found". If this was set in `result_success`,
-the following passdbs will skip password verification.
+Continue to the next `passdb` without changing the authentication state. The
+initial state is "failure found". If this was set in
+[[setting,passdb_result_success]], the following `passdb`s will skip password
+verification.
 
 ::: info
-When using this value on a master passdb (`master = yes`),
-execution will jump to the first non-master passdb instead of
-continuing with the next master passdb.
+When using this value on a master `passdb` (`master = yes`), execution will
+jump to the first non-master `passdb` instead of continuing with the next
+master `passdb`.
 :::
 
 ## Extra Fields
@@ -341,7 +342,7 @@ a given user. It may however also return other fields which are treated
 specially.
 
 How to return these extra fields depends on the password database you use.
-Some passdbs don't support returning them at all, such as [[link,auth_pam]].
+Some `passdb`s don't support returning them at all, such as [[link,auth_pam]].
 
 Boolean fields are true always if the field exists. So `nodelay`,
 `nodelay=yes`, `nodelay=no` and `nodelay=0` all mean that the "nodelay"
@@ -389,25 +390,29 @@ configuration it may cause problems, such as `/var/mail/user` and
 
 An example `password_query` in `dovecot-sql.conf.ext` would be:
 
-```
+:::code-group
+```[dovecot-sql.conf.ext]
 password_query = \
     SELECT concat(user, '@', domain) AS user, password \
     FROM users \
     WHERE user = '%n' and domain = '%d'
 ```
+:::
 
 You can also update "username" and "domain" fields separately:
 
-```
+:::code-group
+```[dovecot-sql.conf.ext]
 password_query = \
     SELECT user AS username, domain, password \
     FROM users \
     WHERE user = '%n' and domain = '%d'
 ```
+:::
 
 #### `login_user`
 
-Master passdb can use this to change the username.
+Master `passdb` can use this to change the username.
 
 #### `allow_nets`
 
@@ -501,7 +506,7 @@ notify the users.
 ::: info Note
 If you want to entirely block the user from logging in (i.e. account is
 suspended), with no IMAP referral information provided, you must ensure that
-neither `proxy` nor `host` are defined as one of the passdb extra fields.
+neither `proxy` nor `host` are defined as one of the `passdb` extra fields.
 
 The order of preference is: `proxy`, `host`, then `nologin`.
 :::
@@ -518,7 +523,7 @@ Commonly used with [[link,authentication_proxies]] and [[link,auth_referral]],
 but may also be used standalone.
 
 ::: info Note
-If [[link,auth_pam]] is used as the passdb, it adds an extra delay which
+If [[link,auth_pam]] is used as the `passdb`, it adds an extra delay which
 can't be removed by this setting.
 :::
 
@@ -528,7 +533,7 @@ If you want to allow all passwords, use an empty password and this field.
 
 #### `fail`
 
-If set, explicitly fails the passdb lookup.
+If set, explicitly fails the `passdb` lookup.
 
 #### `k5principals`
 
