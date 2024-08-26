@@ -43,7 +43,7 @@ jobs:
       uses: dovecot/rsync-deployments@master
       with:
         RSYNC_OPTIONS: -azr --delete
-        RSYNC_TARGET: docs@doc.dovecot.org:public_html/${{ github.ref_name }}.
+        RSYNC_TARGET: docs@doc.dovecot.org:public_html/${{ github.ref_name }}
         RSYNC_BASEDIR: /.vitepress/dist/.
       if: env.DEPLOY_KEY
       env:
