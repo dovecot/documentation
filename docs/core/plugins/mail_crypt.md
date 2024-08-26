@@ -124,8 +124,8 @@ List of known algorithms that Dovecot supports as of writing.
 
 Per-user settings may be returned by [[link,userdb_extra_fields]].
 To provide [[setting,crypt_global_private_key]] or
-[[setting,crypt_global_public_key]] as a single line userdb attribute you can
-base64 encode the original PEM key contents. For example:
+[[setting,crypt_global_public_key_file]] as a single line userdb attribute you
+can base64 encode the original PEM key contents. For example:
 
 ```sh
 cat ecprivkey.pem | base64 -w0
@@ -255,9 +255,9 @@ mail_plugins {
   mail_crypt = yes
 }
 
-crypt_global_public_key = <rsapubkey.pem
+crypt_global_public_key_file = rsapubkey.pem
 crypt_global_private_key main {
-  crypt_private_key = <rsaprivkey.pem
+  crypt_private_key_file = rsaprivkey.pem
   crypt_private_password = secret
 }
 ```
@@ -338,9 +338,9 @@ mail_plugins {
   mail_crypt = yes
 }
 
-crypt_global_public_key = <rsapubkey.pem
+crypt_global_public_key_file = rsapubkey.pem
 crypt_global_private_key main {
-  crypt_private_key = <rsaprivkey.pem
+  crypt_private_key_file = rsaprivkey.pem
   crypt_private_password = secret
 }
 ```
@@ -367,7 +367,7 @@ crypt_global_private_key main {
 }
 
 passdb static {
-  args = password=pass crypt_global_public_key=<content of ecpubkey.pem> crypt_global_private_key/main/private_key=<content of ecprivkey.pem>
+  args = password=pass crypt_global_public_key_file=ecpubkey.pem crypt_global_private_key/main/private_key=<content of ecprivkey.pem>
 }
 ```
 
@@ -381,7 +381,7 @@ encrypt new mail, use empty [[setting,crypt_write_algorithm]] setting:
 ```[dovecot.conf]
 crypt_write_algorithm =
 crypt_global_private_key main {
-  crypt_private_key = <server.key
+  crypt_private_key_file = server.key
 }
 ```
 
@@ -448,9 +448,9 @@ doveadm \
   -o fs=crypt,posix \
   -o fs/crypt/fs_driver=crypt \
   -o fs/posix/fs_driver=posix \
-  -o crypt_private_key="$(cat pubkey.pem)" \
+  -o crypt_private_key_file=pubkey.pem \
   -o crypt_global_private_key=main \
-  -o crypt_global_private_key/main/crypt_private_key="$(cat privkey.pem)" \
+  -o crypt_global_private_key/main/crypt_private_key_file=privkey.pem \
   fs get/put '' path/to/input-file [/path/to/output-file]
 ```
 
