@@ -8282,6 +8282,21 @@ If \`yes\` and the user is found from the [[link,auth_master_users]] the user
 is allowed to login as other users.`
 	},
 
+	passdb_sql_query: {
+		tags: [ 'passdb' ],
+		values: setting_types.STRING,
+		text: `
+SQL query to lookup the passdb fields (\`password\` and other extra fields).`
+	},
+
+	passdb_sql_update_query: {
+		tags: [ 'passdb' ],
+		values: setting_types.STRING,
+		text: `
+SQL query to update the password. Currently used only by the \`OTP\` auth
+mechanism.`
+	},
+
 	passwd_file_path: {
 		tags: [ 'passwd-file' ],
 		values: setting_types.STRING,
@@ -9827,6 +9842,20 @@ Possible values and their meaning are described fully at
 [[link,userdb_result_values]]. If any of the userdbs had an internal failure
 and the final userdb also returns \`continue\` the authentication will fail
 with \`internal error\`.`
+	},
+
+	userdb_sql_query: {
+		tags: [ 'userdb' ],
+		values: setting_types.STRING,
+		text: `
+SQL query to lookup the userdb fields.`
+	},
+
+	userdb_sql_iterate_query: {
+		tags: [ 'userdb' ],
+		values: setting_types.STRING,
+		text: `
+SQL query to list all available usernames.`
 	},
 
 	valid_chroot_dirs: {
