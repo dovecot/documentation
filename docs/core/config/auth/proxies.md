@@ -125,10 +125,10 @@ You can use SSL/TLS connection to destination server by returning:
   :::
 
   ::: info
-  Login processes don't currently use [[setting,ssl_client_ca_dir]] or
-  [[setting,ssl_client_ca_file]] settings for verifying the remote certificate,
-  mainly because login processes can't really read the files chrooted. You can
-  instead use [[setting,ssl_client_ca]].
+  Login processes don't currently use the [[setting,ssl_client_ca_dir]] setting
+  for verifying the remote certificate, mainly because login processes can't
+  really read the files chrooted. You can instead use
+  [[setting,ssl_client_ca_file]].
   :::
 
   ::: warning
@@ -144,8 +144,8 @@ You can use SSL/TLS connection to destination server by returning:
 * `starttls=any-cert`: Combine starttls and `ssl=any-cert`.
 
 Additionally you can also tell Dovecot to send SSL client certificate to the
-remote server using [[setting,ssl_client_cert]] and [[setting,ssl_client_key]]
-settings in `dovecot.conf`.
+remote server using [[setting,ssl_client_cert_file]] and
+[[setting,ssl_client_key_file]] settings in `dovecot.conf`.
 
 Set [[setting,login_trusted_networks]] to point to the proxies in the
 backends. This way you'll get the clients' actual IP addresses logged instead
