@@ -4750,30 +4750,21 @@ This setting enables the \`%{client_id}\` variable for auth processes. See
 	},
 
 	imap_id_send: {
-		default: 'name *',
+		default: 'name=%{dovecot:name}',
 		tags: [ 'imap' ],
-		values: setting_types.STRING,
+		values: setting_types.STRLIST,
 		text: `
 Which ID field names and values to send to clients.
 
-Using \`*\` as the value makes Dovecot use the default value.
+You can access the default values by using
+[[link,settings_variables_distribution_variables]].
 
-There are currently defaults for the following fields:
-
-| Field | Default |
-| ----- | ------- |
-| \`name\` | Name of distributed package (Default: \`Dovecot\`) |
-| \`version\` | Dovecot version |
-| \`os\` | OS name reported by uname syscall (similar to \`uname -s\` output) |
-| \`os-version\` | OS version reported by uname syscall (similar to \`uname -r\` output) |
-| \`support-url\` | Support webpage set in Dovecot distribution (Default: \`http://www.dovecot.org/\`) |
-| \`support-email\` | Support email set in Dovecot distribution (Default: \`dovecot@dovecot.org\`) |
-| \`revision\` |Short commit hash of Dovecot git source tree HEAD (same as the commit hash reported in \`dovecot --version\`) |
-
-Example:
-
-\`\`\`
-imap_id_send = "name" * "version" * support-url http://example.com/
+\`\`\`[dovecot.conf]
+imap_id_send {
+  name = %{dovecot:name}
+  version = %{dovecot:version}
+  support-url = http://example.com/
+}
 \`\`\``
 	},
 
