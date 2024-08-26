@@ -1,15 +1,16 @@
-name: Deploy
+name: Deploy main
 
 on:
   push:
     branches:
       - main
       - release-2.3
+    tags:
+      - '*'
 
 jobs:
   releasenew:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -29,7 +30,7 @@ jobs:
     - name: Prepare tarballs
       run: |
         mkdir tars
-        tar --transform=s,.vitepress/dist,html/2.4, -cJf tars/docs.txz .vitepress/dist
+        tar --transform=s,.vitepress/dist,html/${{ github.ref_name }}, -cJf tars/docs.txz .vitepress/dist
         for dir in mans/*; do
           tag=$(basename $dir)
           tar --transform=s,${dir},man, '--exclude=_*' '--exclude=.*' -cJf tars/$tag.txz $dir
@@ -39,14 +40,18 @@ jobs:
       uses: dovecot/rsync-deployments@master
       with:
         RSYNC_OPTIONS: -azr --delete
-        RSYNC_TARGET: docs@doc.dovecot.org:public_html/2.4/.
+        RSYNC_TARGET: docs@doc.dovecot.org:public_html/${{ github.ref_name }}.
         RSYNC_BASEDIR: /.vitepress/dist/.
       if: env.DEPLOY_KEY
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+    - name: Fix symlinks
+      run: |
+        ssh -i $HOME/.ssh/deploy_key docs@doc.dovecot.org bash update-ce-links.sh
+      if: env.DEPLOY_KEY
     - name: Prepare gzip tarball for GitHub download
       run: |
-        tar --transform=s,.vitepress/dist,html/2.4, -czf tars/docs.tgz .vitepress/dist
+        tar --transform=s,.vitepress/dist,html/${{ github.ref_name }}, -czf tars/docs.tgz .vitepress/dist
     - name: Upload tarball artifact
       uses: actions/upload-artifact@v4
       with:
@@ -69,7 +74,7 @@ jobs:
     - name: List files
       run: ls -rl
     - name: Update latest release
-      uses: andelf/nightly-release@v1
+      use: andelf/nightly-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
