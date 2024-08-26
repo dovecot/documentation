@@ -18,7 +18,7 @@ user could start a pre-authenticated imap session, using the command:
 **doveadm exec imap**. An administrator would use the command
 **doveadm exec imap -u** *username*.
 
-<!-- @include: include/global-options.inc -->
+<!-- @include: global-options.inc -->
 
 ## ARGUMENTS
 
@@ -37,7 +37,7 @@ user's mailbox.
 $ doveadm exec dovecot-lda -d user@example.net -f admin@example.net < ~/stuff/welcome.msg
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 SEE ALSO
 

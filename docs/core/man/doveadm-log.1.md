@@ -22,7 +22,7 @@ The **doveadm log** *commands* are used to locate and reopen the log
 files of [[man,dovecot]]. It's also possible to test the configured
 targets of the *log_path* settings.
 
-<!-- @include: include/global-options.inc -->
+<!-- @include: global-options.inc -->
 
 ## COMMANDS
 
@@ -84,7 +84,7 @@ Error: /var/log/mail.log
 Fatal: /var/log/mail.log
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

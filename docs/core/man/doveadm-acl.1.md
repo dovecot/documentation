@@ -15,21 +15,21 @@ dovecotComponent: core
 The **doveadm acl** *COMMANDS* can be used to execute various Access
 Control List related actions.
 
-<!-- @include: include/global-options-formatter.inc -->
+<!-- @include: global-options-formatter.inc -->
 
 This command uses by default the output formatter **table**.
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
+<!-- @include: option-A.inc -->
 
-<!-- @include: include/option-F-file.inc -->
+<!-- @include: option-F-file.inc -->
 
-<!-- @include: include/option-no-userdb-lookup.inc -->
+<!-- @include: option-no-userdb-lookup.inc -->
 
-<!-- @include: include/option-S-socket.inc -->
+<!-- @include: option-S-socket.inc -->
 
-<!-- @include: include/option-u-user.inc -->
+<!-- @include: option-u-user.inc -->
 
 ## ARGUMENTS
 
@@ -166,7 +166,7 @@ Show the *user*'s current ACL rights for the *mailbox*.
 Set ACL rights to the *mailbox*/*id*. If the *id* already exists, the
 existing rights are replaced.
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

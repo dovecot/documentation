@@ -26,7 +26,7 @@ Instances can be named by setting *instance_name* in each instance's
 giving **-i** *instance_name* command line parameter for Dovecot
 binaries (e.g. doveadm).
 
-<!-- @include: include/global-options-formatter.inc -->
+<!-- @include: global-options-formatter.inc -->
 
 ## ARGUMENTS
 
@@ -50,7 +50,7 @@ This command lists the seen Dovecot instances.
 
 This command removes the specified instance.
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

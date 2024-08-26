@@ -107,7 +107,7 @@ Options accepted by **dovecot-lda**:
 */etc/dovecot/conf.d/90-quota.conf*
 :   Quota configuration.
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

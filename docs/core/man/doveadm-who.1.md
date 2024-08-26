@@ -15,7 +15,7 @@ dovecotComponent: core
 The **who** command is used to show which users from which hosts are
 currently connected to which service.
 
-<!-- @include: include/global-options-formatter.inc -->
+<!-- @include: global-options-formatter.inc -->
 
 This command uses by default the output formatter **table**.
 
@@ -79,7 +79,7 @@ james                       1 imap  (30091)       (127.0.0.1)
 jane                        2 imap  (30155 30412) (::1)
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

@@ -15,11 +15,11 @@ dovecotComponent: core
 The **doveadm auth** *COMMANDS* can be used to perform various
 authentication related actions.
 
-<!-- @include: include/global-options-formatter.inc -->
+<!-- @include: global-options-formatter.inc -->
 
 ## OPTIONS
 
-<!-- @include: include/option-x.inc -->
+<!-- @include: option-x.inc -->
 
 ## ARGUMENTS
 
@@ -50,7 +50,7 @@ providing their usernames.
     The socket may be located in another directory, when the default
     *base_dir* setting was overridden in */etc/dovecot/dovecot.conf*.
 
-<!-- @include: include/option-x.inc -->
+<!-- @include: option-x.inc -->
 
 ### auth lookup
 
@@ -71,7 +71,7 @@ lookup (without authentication) instead of a *userdb* lookup.
 :   When this option and the name of a userdb field is given,
     [[man,doveadm]] will show only the value of the specified field.
 
-<!-- @include: include/option-x.inc -->
+<!-- @include: option-x.inc -->
 
 ### auth test
 
@@ -90,7 +90,7 @@ Test authentication for the given user.
 **-A** *sasl_mech*
 :   The SASL mechanism used for the authentication. By default PLAIN is used.
 
-<!-- @include: include/option-x.inc -->
+<!-- @include: option-x.inc -->
 
 ### auth login
 
@@ -117,7 +117,7 @@ Test full login for the given user; i.e. performing both passdb lookup (authenti
 **-A** *sasl_mech*
 :   The SASL mechanism used for the authentication. By default PLAIN is used.
 
-<!-- @include: include/option-x.inc -->
+<!-- @include: option-x.inc -->
 
 ## EXAMPLE
 
@@ -133,7 +133,7 @@ extra fields:
   user=john
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

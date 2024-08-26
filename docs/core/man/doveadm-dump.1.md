@@ -21,7 +21,7 @@ about index files, see [[link,design_index_format_main].
 files, in human readable format. This is mainly useful for Dovecot
 developers when debugging some problem.
 
-<!-- @include: include/global-options.inc -->
+<!-- @include: global-options.inc -->
 
 ## OPTIONS
 
@@ -96,7 +96,7 @@ Look at the contents of a mailbox's index:
 $ doveadm dump ~/Maildir/.work/
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

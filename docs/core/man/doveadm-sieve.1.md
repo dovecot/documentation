@@ -18,19 +18,19 @@ Dovecot ([[man,dovecot]]).
 
 The **doveadm sieve** commands can be used to manage Sieve filtering.
 
-<!-- @include: include/global-options-formatter.inc -->
+<!-- @include: global-options-formatter.inc -->
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
+<!-- @include: option-A.inc -->
 
-<!-- @include: include/option-F-file.inc -->
+<!-- @include: option-F-file.inc -->
 
-<!-- @include: include/option-no-userdb-lookup.inc -->
+<!-- @include: option-no-userdb-lookup.inc -->
 
-<!-- @include: include/option-S-socket.inc -->
+<!-- @include: option-S-socket.inc -->
 
-<!-- @include: include/option-u-user.inc -->
+<!-- @include: option-u-user.inc -->
 
 ## ARGUMENTS
 
@@ -93,7 +93,7 @@ for execution at delivery.
 
 This command deactivates Sieve processing.
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

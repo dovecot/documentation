@@ -36,7 +36,7 @@ containing the following details:
 *last_kill_sent*
 :   timestamp of the latest SIGINT signal sent to the process
 
-<!-- @include: include/global-options-formatter.inc -->
+<!-- @include: global-options-formatter.inc -->
 
 ## ARGUMENTS
 
@@ -55,7 +55,7 @@ config 132357 999             6           0          1685365436         0
 anvil  132355 1000            0           1685352908 1685352908         0
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

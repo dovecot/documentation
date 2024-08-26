@@ -33,24 +33,24 @@ In the third form, the command will be performed for the user contained in the
 In the last form, only matching mails of the given *user*\ (s) will be
 moved to the alternative storage.
 
-<!-- @include: include/global-options.inc -->
+<!-- @include: global-options.inc -->
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
+<!-- @include: option-A.inc -->
 
-<!-- @include: include/option-F-file.inc -->
+<!-- @include: option-F-file.inc -->
 
-<!-- @include: include/option-no-userdb-lookup.inc -->
+<!-- @include: option-no-userdb-lookup.inc -->
 
 **-r**
 :   When the **-r** option is given this *command* works the other way
     round. Mails will be moved from the alternative storage back to the
     default mail location.
 
-<!-- @include: include/option-S-socket.inc -->
+<!-- @include: option-S-socket.inc -->
 
-<!-- @include: include/option-u-user.inc -->
+<!-- @include: option-u-user.inc -->
 
 ## ARGUMENTS
 
@@ -79,7 +79,7 @@ mail_location = mdbox:~/mdbox:ALT=/nfsmount/%h/mdbox
 $ doveadm altmove -u johnd@example.com seen savedbefore 1w<
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

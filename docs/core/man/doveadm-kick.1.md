@@ -33,7 +33,7 @@ networks range and a matching login name will be disconnected.
 In the last form, all proxy connections to the given destination host
 are disconnected.
 
-<!-- @include: include/global-options.inc -->
+<!-- @include: global-options.inc -->
 
 ## OPTIONS
 
@@ -99,7 +99,7 @@ username                  # service (pids) (ips)
 foo                       1 imap    (8135) (fd95:4eed:38ba::25)
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

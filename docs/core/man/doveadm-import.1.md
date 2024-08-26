@@ -36,17 +36,17 @@ In the third form, the command will be performed for the user contained in the
 
 In the final form, the mails will be imported only for given *user* (s).
 
-<!-- @include: include/global-options.inc -->
+<!-- @include: global-options.inc -->
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
+<!-- @include: option-A.inc -->
 
-<!-- @include: include/option-F-file.inc -->
+<!-- @include: option-F-file.inc -->
 
-<!-- @include: include/option-no-userdb-lookup.inc -->
+<!-- @include: option-no-userdb-lookup.inc -->
 
-<!-- @include: include/option-S-socket.inc -->
+<!-- @include: option-S-socket.inc -->
 
 **-s**
 :   When the **-s** option is present, *dest_parent* and all new
@@ -56,7 +56,7 @@ In the final form, the mails will be imported only for given *user* (s).
 :   When the **-U** option is present, the source box is opened with
     given username.
 
-<!-- @include: include/option-u-user.inc -->
+<!-- @include: option-u-user.inc -->
 
 ## ARGUMENTS
 
@@ -93,7 +93,7 @@ $ doveadm import -u jane.doe@example.org \
       mdbox:~/mdbox-backup "" mailbox INBOX from foo@example.org
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

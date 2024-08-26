@@ -39,13 +39,13 @@ plugin {
 ```
 :::
 
-<!-- @include: include/global-options.inc -->
+<!-- @include: global-options.inc -->
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
+<!-- @include: option-A.inc -->
 
-<!-- @include: include/option-F-file.inc -->
+<!-- @include: option-F-file.inc -->
 
 **-n** *max_recent*
 :   An integer value, which specifies the maximum number of \\Recent
@@ -54,7 +54,7 @@ plugin {
     This may be useful to avoid unnecessary indexing for large mailboxes
     that are never opened.
 
-<!-- @include: include/option-no-userdb-lookup.inc -->
+<!-- @include: option-no-userdb-lookup.inc -->
 
 **-q**
 :   Queues the indexing to be run by indexer process. Without -q the
@@ -62,9 +62,9 @@ plugin {
     backends can't handle multiple processes updating the indexes
     simultaneously, so -q should usually be used on production.
 
-<!-- @include: include/option-S-socket.inc -->
+<!-- @include: option-S-socket.inc -->
 
-<!-- @include: include/option-u-user.inc -->
+<!-- @include: option-u-user.inc -->
 
 ## ARGUMENTS
 
@@ -79,7 +79,7 @@ Index bob's INBOX:
 $ doveadm index -u bob INBOX
 ```
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

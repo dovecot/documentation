@@ -17,7 +17,7 @@ dovecotComponent: core
 These commands are aliases to the [[man,doveadm-kick]] and
 [[man,doveadm-who]] commands.
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

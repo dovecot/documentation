@@ -48,11 +48,11 @@ compiling the binary.
 :   Produce per-block hexdump output of the whole binary instead of the
     normal human-readable output.
 
-<!-- @include: include/option-o.inc -->
+<!-- @include: option-o.inc -->
 
-<!-- @include: include/option-u-user.inc -->
+<!-- @include: option-u-user.inc -->
 
-<!-- @include: include/option-x.inc -->
+<!-- @include: option-x.inc -->
 
 ## ARGUMENTS
 
@@ -86,7 +86,7 @@ compiling the binary.
 :   Sieve interpreter settings (included from Dovecot's main
 :   configuration file)
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

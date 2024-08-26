@@ -14,7 +14,7 @@ dovecotComponent: core
 
 **doveadm dict** can be used to query and modify dictionary entries.
 
-<!-- @include: include/global-options-formatter.inc -->
+<!-- @include: global-options-formatter.inc -->
 
 **-u** *user*
 :   The user to use.
@@ -98,7 +98,7 @@ Remove a key from the dictionary.
 *key*
 :   The key to unset.
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 

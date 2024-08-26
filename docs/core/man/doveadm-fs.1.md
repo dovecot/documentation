@@ -17,7 +17,7 @@ storage backend defined in the Dovecot configuration. It allows access
 to the mailbox structure without needing to know details of how the
 storage backend is designed.
 
-<!-- @include: include/global-options-formatter.inc -->
+<!-- @include: global-options-formatter.inc -->
 
 This command uses by default the **table** output formatter.
 
@@ -83,7 +83,7 @@ Store data at the path provided.
 Retrieve files status for the path provided. Currently, only the total
 size (in bytes) of the item is returned.
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 SEE ALSO
 

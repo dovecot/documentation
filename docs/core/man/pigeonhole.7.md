@@ -77,7 +77,7 @@ The following command line tools are available outside of **doveadm**:
 :   Dumps the content of a Sieve binary file for (development) debugging
     purposes.
 
-<!-- @include: include/reporting-bugs.inc -->
+<!-- @include: reporting-bugs.inc -->
 
 ## SEE ALSO
 
