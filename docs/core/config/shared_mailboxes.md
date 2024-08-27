@@ -328,8 +328,9 @@ simple flat file should work pretty well too:
 
 ```[dovecot.conf]
 acl_sharing_map {
-  dict_driver = file
-  dict_file_path = /var/lib/dovecot/db/shared-mailboxes.db
+  dict file {
+    path = /var/lib/dovecot/db/shared-mailboxes.db
+  }
 }
 ```
 
@@ -344,8 +345,9 @@ each domain:
 
 ```[dovecot.conf]
 acl_sharing_map {
-  dict_driver = file
-  dict_file_path = /var/mail/%d/shared-mailboxes.db
+  dict file {
+    path = /var/mail/%d/shared-mailboxes.db
+  }
 }
 ```
 
@@ -356,8 +358,9 @@ See [[link,dict]] for more information, especially about permission issues.
 ::: code-group
 ```[dovecot.conf]
 acl_sharing_map {
-  dict_driver = proxy
-  dict_proxy_name = acl
+  dict proxy {
+    name = acl
+  }
 }
 
 dict_legacy {
