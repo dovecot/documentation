@@ -1679,8 +1679,9 @@ Example:
 
 \`\`\`[dovecot.conf]
 acl_sharing_map {
-  dict_driver = file
-  dict_file_path = /var/lib/dovecot/shared-mailboxes
+  dict file {
+    path = /var/lib/dovecot/shared-mailboxes
+  }
 }
 \`\`\``
 	},
@@ -2902,7 +2903,8 @@ information.
 dict_redis_host = 127.0.0.1
 dict_redis_port = 6379
 quota_clone {
-  dict_driver = redis
+  dict redis {
+  }
 }
 \`\`\``
 	},
@@ -5466,8 +5468,9 @@ Example:
 \`\`\`
 # Store METADATA information within user's Maildir directory
 mail_attribute {
-  dict_driver = file
-  dict_file_path = %h/Maildir/dovecot-attributes
+  dict file {
+    path = %h/Maildir/dovecot-attributes
+  }
 }
 
 protocol imap {
@@ -6610,8 +6613,9 @@ Example:
 
 \`\`\`
 mail_attribute {
-  dict_driver = file
-  dict_file_path = %h/dovecot-attributes
+  dict file {
+    path = %h/dovecot-attributes
+  }
 }
 \`\`\``
 	},
