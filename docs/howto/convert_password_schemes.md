@@ -127,7 +127,7 @@ https://kaworu.ch/blog/2016/04/20/strong-crypt-scheme-with-dovecot-postfixadmin-
 
   service pop3-postlogin {
     executable = script-login /usr/local/etc/popafter.sh
-    user = $default_internal_user
+    user = $SET:default_internal_user
     unix_listener pop3-postlogin {
     }
   }
