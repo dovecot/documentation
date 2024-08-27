@@ -57,11 +57,11 @@ specifying the cache key (via `cache_key`):
 - [[link,auth_pam]]
 - [[link,auth_bsd]]
 
-For example if the PAM lookup depends on username and service, you can
+For example if the \`bsdauth\` lookup depends on username and service, you can
 use:
 
 ```[dovecot.conf]
-passdb pam {
+passdb bsdauth {
   args = cache_key=%{protocol}%{user} *
 }
 ```
