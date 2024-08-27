@@ -32,11 +32,14 @@ auth    required        pam_listfile.so item=user sense=allow file=/etc/imapuser
 ## SQL
 
 You can use the `%{protocol}` variable which expands to `imap` or `pop3` in
-`password_query`:
+[[setting,passdb_sql_query]]:
 
-```
-password_query = SELECT password FROM users WHERE userid = '%u' \
-    and not (imap_allowed = false and '%{protocol}' = 'imap')
+```[dovecot.conf]
+passdb sql {
+  query = SELECT password \
+    FROM users \
+    WHERE userid = '%u' AND NOT (imap_allowed = false and '%{protocol}' = 'imap')
+}
 ```
 
 ## LDAP

@@ -190,16 +190,13 @@ crypt_user_key_require_encrypted = yes
 The password that is used to decrypt the users master/private key, must be
 provided via password query:
 
-::: code-group
-```[/etc/dovecot/dovecot-sql.conf.ext]
-password_query = \
-  SELECT \
-    email as user, password, \
-    '%Mw' AS userdb_crypt_user_key_password \
-  FROM virtual_users \
-  WHERE email='%u';
+```[dovecot.conf]
+passdb sql {
+  query = SELECT email as user, password, '%Mw' AS userdb_crypt_user_key_password \
+    FROM virtual_users \
+    WHERE email='%u'
+}
 ```
-:::
 
 #### Choosing Encryption Password
 

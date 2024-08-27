@@ -27,28 +27,35 @@ https://kaworu.ch/blog/2016/04/20/strong-crypt-scheme-with-dovecot-postfixadmin-
    mysql:
   `UPDATE 'your_table' SET field_name = CONCAT('{CRYPT}', field_name)`
 
-* Change `dovecot-sql.conf`, so it will look at the new fields
+* Change `dovecot.conf`, so it will look at the new fields
 
   ::: details
-  ```
-  # Comment default_pass_scheme so dovecot will look at the prefix
-  # default_pass_scheme = CRYPT
+  ```[dovecot.conf]
+  passdb sql {
+    # Comment default_pass_scheme so dovecot will look at the prefix
+    # default_pass_scheme = CRYPT
 
-  # update your password_query so it will look at the new field
-  # AND add a %w field in the query so we have the plain password in our
-  # Enviroment ($PLAIN_PASS)
-  password_query = SELECT id as user, newpassword as password, \
-      home as userdb_home, uid as userdb_uid, gid as userdb_gid, \
-	  '%w' as userdb_plain_pass FROM users WHERE id = '%u'
+    # update your sql query so it will look at the new field
+    # AND add a %w field in the query so we have the plain password in our
+    # Enviroment ($PLAIN_PASS)
+    query = SELECT id as user, newpassword as password, home as userdb_home, uid as userdb_uid, gid as userdb_gid, '%w' as userdb_plain_pass \
+      FROM users \
+      WHERE id = '%u'
 
-  # Alternatively, here is another config that worked for me with
-  # SHA512-CRYPT (note: uncomment the lines relevant for your setup):
-  #
-  # driver = mysql
-  # connect = host=127.0.0.1 user=mailauth password=secret dbname=postfixadmin
-  # default_pass_scheme = SHA512-CRYPT
-  # password_query = SELECT username AS user, password, CONCAT('/var/mail/vdomains/', maildir) as userdb_home, 'vmail' as userdb_uid, 'vmail' as userdb_gid, '%w' as userdb_plain_pass FROM mailbox WHERE username = '%u'
-  # user_query = SELECT CONCAT('/var/mail/vdomains/', maildir) AS home, 'vmail' AS uid, 'vmail' AS gid, password FROM mailbox WHERE username = '%u' AND active = 1
+    # Alternatively, here is another config that worked for me with
+    # SHA512-CRYPT (note: uncomment the lines relevant for your setup):
+    #
+    # driver = mysql
+    # connect = host=127.0.0.1 user=mailauth password=secret dbname=postfixadmin
+    # default_pass_scheme = SHA512-CRYPT
+    # query = SELECT username AS user, password, CONCAT('/var/mail/vdomains/', maildir) as userdb_home, 'vmail' as userdb_uid, 'vmail' as userdb_gid, '%w' as userdb_plain_pass \
+    #   FROM mailbox \
+    #   WHERE username = '%u'
+  }
+  userdb sql {
+    # query = SELECT CONCAT('/var/mail/vdomains/', maildir) AS home, 'vmail' AS uid, 'vmail' AS gid, password \
+    #   FROM mailbox \
+    #   WHERE username = '%u' AND active = 1
   ```
   :::
 
@@ -139,7 +146,7 @@ If you are using IMAP, you will need to add the same kind of commands
 (i.e. imap-postlogin) to your config, too.
 
 When every record is updated, you can update `dovecot.conf` (remove the
-extra lines), and `dovecot-sql.conf` (remove the %w-part).
+extra lines).
 
 ## SHA512-CRYPT
 

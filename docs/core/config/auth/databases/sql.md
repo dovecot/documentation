@@ -9,30 +9,35 @@ dovecotlinks:
 
 SQL can be used for both [[link,passdb]] and [[link,userdb]] lookups.
 
-If the args parameter in passdb sql and userdb sql contain the exact same
-filename, only one SQL connection is used for both passdb and userdb lookups.
+If all the SQL settings for the [[link,passdb]] and [[link,userdb]] are equal,
+only one SQL connection is used for both [[link,passdb]] and [[link,userdb]]
+lookups.
 
 ## Dovecot Configuration
 
 ```[dovecot.conf]
+# sql driver-specific settings
+
 passdb sql {
-  args = /etc/dovecot/dovecot-sql.conf.ext
+  sql_driver = # ...
+  query = # ...
 }
 ```
 
 ## passdb
 
-`password_query` setting contains the SQL query to look up the password.
-It must return a field named `password`. If you have it by any other name
-in the database, you can use the SQL's `AS` keyword (`SELECT pw AS
+[[setting,passdb_sql_query]] setting contains the SQL query to look up the
+password. It must return a field named `password`. If you have it by any other
+name in the database, you can use the SQL's `AS` keyword (`SELECT pw AS
 password ..`).
 
 You can use all the normal [[variable]] such as `%u` in the SQL query.
 
-If all the passwords are in same format, you can use `default_pass_scheme` to
-specify it. Otherwise each password needs to be prefixed with
-`{password-scheme}`, for example `{plain}cleartext-password`. See
-[[link,password_schemes]] for a list of supported password schemes.
+If all the passwords are in same format, you can use
+[[setting,passdb_default_password_scheme]] to specify it. Otherwise each
+password needs to be prefixed with `{password-scheme}`, for example
+`{plain}cleartext-password`. See [[link,password_schemes]] for a list of
+supported password schemes.
 
 By default MySQL does case-insensitive string comparisons, so you may have a
 problem if your users are logging with different as `user`, `User` and
@@ -63,9 +68,12 @@ return NULL as the password and return the row only if the password matches.
 You'll also need to return a non-NULL `nopassword` field. The password is in
 `%w` variable. For example:
 
-```
-password_query = SELECT NULL AS password, 'Y' as nopassword, userid AS user \
-    FROM users WHERE userid = '%u' AND mysql_pass = password('%w')
+```[dovecot.conf]
+passdb sql {
+  query = SELECT NULL AS password, 'Y' as nopassword, userid AS user \
+    FROM users \
+    WHERE userid = '%u' AND mysql_pass = password('%w')
+}
 ```
 
 This of course makes the verbose logging a bit wrong, since password
@@ -79,9 +87,9 @@ and your home directory can be specified with a template, you could use
 [[link,auth_staticdb]] instead. It is also a bit faster since it avoids
 doing the userdb SQL query.
 
-`user_query` setting contains the SQL query to look up the userdb
-information. The commonly returned userdb fields are uid, gid, home, and mail.
-See [[link,userdb_extra_fields]] for more information about these and
+[[setting,userdb_sql_query]] setting contains the SQL query to look up the
+userdb information. The commonly returned userdb fields are uid, gid, home, and
+mail. See [[link,userdb_extra_fields]] for more information about these and
 other fields that can be returned.
 
 If you're using a single UID and GID for all users, you can set them in
@@ -95,7 +103,7 @@ mail_gid = vmail
 ## User Iteration
 
 Some commands, such as `doveadm -A` need to get a list of users. With SQL
-userdb this is done with `iterate_query` setting.
+userdb this is done with the [[setting,userdb_sql_iterate_query]] setting.
 
 You can either return:
 
@@ -107,17 +115,18 @@ Any other fields are ignored.
 ## Prefetching
 
 If you want to avoid doing two SQL queries when logging in with IMAP/POP3, you
-can make the `password_query` return all the necessary userdb fields and use
-[[link,auth_prefetch]] to use those fields.
+can make the [[setting,passdb_sql_query]] return all the necessary userdb
+fields and use [[link,auth_prefetch]] to use those fields.
 
-If you're using Dovecot's deliver you'll still need to have the `user_query`
-working.
+If you're using Dovecot's deliver you'll still need to have the
+[[setting,userdb_sql_query]] working.
 
 ## High Availability
 
-You can add multiple `host` parameters to the SQL connect string. Dovecot
-will do round robin load balancing between them. If one of them goes down, the
-others will handle the traffic.
+You can add multiple [[link,sql_mysql]] or [[link,sql_postgresql]] settings to
+specify multiple hosts for MySQL and PostgreSQL. Dovecot will do round robin
+load balancing between them. If one of them goes down, the others will handle
+the traffic.
 
 ## Examples
 
@@ -141,63 +150,87 @@ CREATE TABLE users (
 
 ### MySQL
 
-Add to your `dovecot-sql.conf` file:
+Add to your `dovecot.conf` file:
 
 ```
-driver = mysql
+sql_driver = mysql
 
 # The mysqld.sock socket may be in different locations in different systems.
-# Use "host= ... pass=foo#bar" with double-quotes if your password has '#'
-# character.
-# If you need SSL connection, you can add ssl_ca or ssl_ca_path
-# You can also use ssl_cert/ssl_key, ssl_cipher, ssl_verify_server_cert
-# or provide option_file and option_group
-connect = host=/var/run/mysqld/mysqld.sock dbname=mails user=admin password=pass
+mysql /var/run/mysqld/mysqld.sock {
+  user = admin
+  password = pass
+  dbname = mails
+
+  #ssl = yes
+  #ssl_client_ca_dir = /etc/ssl/certs
+}
 # Alternatively you can connect to localhost as well:
-#connect = host=localhost dbname=mails user=admin password=pass # port=3306
+#mysql localhost {
+#}
 
-password_query = SELECT userid AS username, domain, password \
-    FROM users WHERE userid = '%n' AND domain = '%d'
-user_query = SELECT home, uid, gid FROM users \
+passdb sql {
+  query = SELECT userid AS username, domain, password \
+    FROM users \
     WHERE userid = '%n' AND domain = '%d'
-
-# For using doveadm -A:
-iterate_query = SELECT userid AS username, domain FROM users
+}
+userdb sql {
+  query = SELECT home, uid, gid \
+    FROM users \
+    WHERE userid = '%n' AND domain = '%d'
+  # For using doveadm -A:
+  iterate_query = SELECT userid AS username, domain FROM users
+}
 ```
 
 ### PostgreSQL
 
-Add to your `dovecot-sql.conf` file:
+Add to your `dovecot.conf` file:
 
 ```
-# You can also set up non-password authentication by modifying PostgreSQL's
-# pg_hba.conf
-driver = pgsql
-# Use "host= ... pass=foo#bar" if your password has '#' character
-connect = host=localhost dbname=mails user=admin password=pass
+sql_driver = pgsql
 
-password_query = SELECT userid AS username, domain, password \
-    FROM users WHERE userid = '%n' AND domain = '%d'
-user_query = SELECT home, uid, gid FROM users \
+pgsql localhost {
+  parameters {
+    user = admin
+    # You can also set up non-password authentication by modifying PostgreSQL's
+    # pg_hba.conf
+    password = pass
+    dbname = mails
+  }
+}
+
+passdb sql {
+  query = SELECT userid AS username, domain, password \
+    FROM users \
     WHERE userid = '%n' AND domain = '%d'
-
-# For using doveadm -A:
-iterate_query = SELECT userid AS username, domain FROM users
+}
+userdb sql {
+  query = SELECT home, uid, gid \
+    FROM users \
+    WHERE userid = '%n' AND domain = '%d'
+  # For using doveadm -A:
+  iterate_query = SELECT userid AS username, domain FROM users
+}
 ```
 
 ### SQLite
 
-Add to your `dovecot-sql.conf` file:
+Add to your `dovecot.conf` file:
 
 ```
-driver = sqlite
-connect = /path/to/sqlite.db
+sql_driver = sqlite
+sqlite_path = /path/to/sqlite.db
 
-password_query = SELECT userid AS username, domain, password \
-    FROM users WHERE userid = '%n' AND domain = '%d'
-user_query = SELECT home, uid, gid FROM users \
+passdb sql {
+  query = SELECT userid AS username, domain, password \
+    FROM users \
     WHERE userid = '%n' AND domain = '%d'
-
-# For using doveadm -A:
-iterate_query = SELECT userid AS username, domain FROM users
+}
+userdb sql {
+  query = SELECT home, uid, gid \
+    FROM users \
+    WHERE userid = '%n' AND domain = '%d'
+  # For using doveadm -A:
+  iterate_query = SELECT userid AS username, domain FROM users
+}
 ```
