@@ -24,15 +24,19 @@ Usually PAM is used with [[link,auth_passwd]] or [[link,auth_staticdb]].
 Dovecot should work with Linux PAM, Solaris PAM, OpenPAM (FreeBSD),
 and ApplePAM (Mac OS X).
 
+## Settings
+
+<SettingsComponent tag="passdb-pam" />
+
 ## Service Name
 
 The PAM configuration is usually in the `/etc/pam.d/` directory, but some
 systems may use a single file, `/etc/pam.conf`. By default Dovecot uses
 dovecot as the PAM service name, so the configuration is read from
-`/etc/pam.d/dovecot`. You can change this by giving the wanted service name
-in the `args` parameter. You can also set the service to `%{protocol}` in which
-case Dovecot automatically uses either `imap` or `pop3` as the service,
-depending on the actual service the user is logging in to.
+`/etc/pam.d/dovecot`. You can change this by setting the wanted service name
+using [[setting,passdb_pam_service_name]]. You can also set the service to
+`%{protocol}` in which case Dovecot automatically uses either `imap` or `pop3`
+as the service, depending on the actual service the user is logging in to.
 
 Examples:
 
@@ -40,7 +44,7 @@ Examples:
 
   ```[dovecot.conf]
   passdb pam {
-    args = %{protocol}
+    service_name = %{protocol}
   }
   ```
 
@@ -48,27 +52,27 @@ Examples:
 
   ```[dovecot.conf]
   passdb pam {
-    args = mail
+    service_name = mail
   }
   ```
 
 ## PAM Sessions
 
-By giving a `session=yes` parameter, you can make Dovecot open a PAM
-session and close it immediately. Some PAM plugins need this, for instance
-`pam_mkhomedir`.
-
-Example:
+By setting [[setting,passdb_pam_service_name,yes]] you can make Dovecot open a
+PAM session and close it immediately. Some PAM plugins need this, for instance
+`pam_mkhomedir`. With this parameter, `dovecot.conf` might look something like
+this:
 
 ```[dovecot.conf]
 passdb pam {
-  args = session=yes dovecot
+  session = yes
+  service_name = dovecot
 }
 ```
 
 ## PAM Credentials
 
-By giving a `setcred=yes` parameter, you can make Dovecot create PAM
+By setting [[setting,passdb_pam_setcred,yes]] you can make Dovecot create PAM
 credentials. Some PAM plugins need this. The credentials are never deleted
 however, so using this might cause problems with other PAM plugins.
 
@@ -81,11 +85,11 @@ have some other problems when doing multiple lookups.
 
 If you notice that PAM authentication stops working after some time, you
 can limit the number of lookups done by the auth worker process before it
-dies:
+dies using the [[setting,passdb_pam_max_requests]] setting:
 
 ```[dovecot.conf]
 passdb pam {
-  args = max_requests=100
+  max_requests = 100
 }
 ```
 
@@ -98,11 +102,11 @@ A PAM module can change the username.
 ## Making PAM Plugin Failure Messages Visible
 
 You can replace the default "Authentication failed" reply with PAM's failure
-reply by setting:
+reply by setting [[setting,passdb_pam_failure_show_msg]]:
 
 ```[dovecot.conf]
 passdb pam {
-  args = failure_show_msg=yes
+  failure_show_msg = yes
 }
 ```
 
@@ -120,7 +124,7 @@ You can restrict the IP-Addresses allowed to connect via PAM:
 
 ```[dovecot.conf]
 passdb pam {
-  override_fields {
+  fields {
     allow_nets = 10.1.100.0/23,2001:db8:a0b:12f0::/64
   }
 }
@@ -131,37 +135,12 @@ passdb pam {
 Dovecot supports caching password lookups by setting
 [[setting,auth_cache_size]] to a non-zero value.
 
-For this to work with PAM, you'll also have to give `cache_key` parameter.
-
-Usually the user is authenticated only based on the username and password,
-but PAM plugins may do all kinds of other checks as well, so this can't be
-relied on. For this reason the `cache_key` must contain all the
-[[variable]] that may affect authentication. The commonly used variables are:
-
-| Variable | Description | Comment |
-| -------- | ----------- | ------- |
-| `%{user}` | Username | You'll most likely want to use this. |
-| `%{protocol}` | Service | If you use `*` as the service name you'll most likely want to use this. |
-| `%{remote_ip}` | Remote IP address | Use this if you do any IP related checks. |
-| `%{local_ip}` | Local IP address | Use this if you do any checks based on the local IP address that was connected to. |
-
 Examples:
 
 ```[dovecot.conf]
 # 1MB auth cache size
 auth_cache_size = 1024
 passdb pam {
-  # username and service
-  args = cache_key=%{user}%{protocol} *
-}
-```
-
-```[dovecot.conf]
-# 1MB auth cache size
-auth_cache_size = 1024
-passdb pam {
-  # username, remote IP and local IP
-  args = cache_key=%{user}%{remote_ip}%{local_ip} dovecot
 }
 ```
 
@@ -181,8 +160,8 @@ account   required        pam_unix.so
 
 For Solaris you will have to edit `/etc/pam.conf`.
 
-Here is a working Solaris example (using `args = *` instead of the default
-`dovecot` service):
+Here is a working Solaris example (using [[setting,service_name,%L{service}]]
+instead of the default `dovecot` service):
 
 ```
 imap    auth       requisite   pam_authtok_get.so.1
@@ -214,7 +193,7 @@ the on that OS:
 
 ```[dovecot.conf]
 passdb pam {
-  args = login
+  service_name = login
 }
 ```
 
