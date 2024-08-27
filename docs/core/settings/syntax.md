@@ -69,7 +69,8 @@ example:
 
 ```[dovecot.conf]
 mail_attribute {
-  dict_driver = file
+  dict file {
+  }
 }
 ```
 
