@@ -98,7 +98,11 @@ auth_mechanisms = gssapi
 auth_krb5_keytab = /etc/dovecot/dovecot.keytab
 
 userdb static {
-  args = uid=vmail gid=vmail home=/var/vmail/%u
+  fields {
+    uid = vmail
+    gid = vmail
+    home = /var/vmail/%u
+  }
 }
 ```
 

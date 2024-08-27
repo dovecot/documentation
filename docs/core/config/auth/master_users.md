@@ -163,7 +163,7 @@ the user exists and get other extra fields.
 ```
 # master password passdb
 passdb static {
-  args = password=master-password
+  password = master-password
   result_success = continue
 }
 

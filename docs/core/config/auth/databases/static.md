@@ -16,25 +16,37 @@ and perhaps some other special kind of setups.
 **Static passdb allows users to log in with any username.**
 :::
 
-For password you return either:
+For password you can either set:
 
-* `password=secret`: All users have `secret` as password.
-* `nopassword`: Users can log in with any password.
+* [[setting,passdb_static_password]] or
+* [[setting,passdb_fields,nopassword=yes]].
 
 You can return any other [[link,passdb_extra_fields]]. You can use
 [[variable]] everywhere.
 
 ### Example
 
-```[dovecot.conf]
+::: code-group
+```[without password]
 passdb static {
-  args = nopassword=y
-  default_fields {
-    proxy = y
+  fields {
+    nopassword = yes
+    proxy = yes
     host = 127.0.0.1
   }
 }
 ```
+
+```[with password]
+passdb static {
+  password = secret
+  fields {
+    proxy = yes
+    host = 127.0.0.1
+  }
+}
+```
+:::
 
 ## userdb
 
@@ -46,7 +58,11 @@ The syntax is:
 
 ```[dovecot.conf]
 userdb static {
-  args = uid=<uid> gid=<gid> home=<dir template>
+  fields {
+    uid = <uid>
+    gid = <gid>
+    home = <dir template>
+  }
 }
 ```
 
@@ -67,12 +83,17 @@ This works with most passdbs, with [[link,auth_pam]] being the most notable
 exception.
 
 If you want to avoid this user verification, you can add
-`allow_all_users=yes` to the args in which case the passdb lookup is skipped.
+[[setting,userdb_static_allow_all_users,yes]] to the settings of the userdb in
+which case the passdb lookup is skipped.
 
 ### Example
 
 ```[dovecot.conf]
 userdb static {
-  args = uid=500 gid=500 home=/home/%u
+  fields {
+    uid = 500
+    gid = 500
+    home = /home/%u
+  }
 }
 ```
