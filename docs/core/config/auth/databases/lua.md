@@ -23,37 +23,46 @@ For details about Dovecot Lua, see [[link,lua]].
 
 [[added,lua_auth_init]]
 
-When passdb or userdb is initialized, there will be a lookup for
-initialization function.
+When passdb or userdb is initialized, there will be a lookup for a function to
+get the `cache_key` for the userdb or passdb. These functions are called
+`auth_passdb_get_cache_key()` for passdbs and `auth_userdb_get_cache_key()` for
+userdbs.
 
-This is different from `script_init()`, which is called for all Lua
-scripts.
+The global `script_init()` function is called for all Lua scripts and can be
+used to pass arguments to the script using [[setting,lua_settings]].
 
-For passdb, the function is `auth_passdb_init()` and for userdb, it is called
-`auth_userdb_init()`. The function is called with a table containing all
-parameters provided in the passdb/userdb args, except file name.
-
-This can be used to pass out initialization parameters from Dovecot.
+These settings can be used to pass out initialization parameters from Dovecot.
 
 ::: code-group
 ```[dovecot.conf]
 passdb lua {
-  args = file=/etc/dovecot/auth.lua password={PLAIN}test
+  lua_file = /etc/dovecot/auth.lua
+  lua_settings {
+    password = {PLAIN}test
+  }
 }
 ```
 
 ```lua[/etc/dovecot/auth.lua]
 local password = nil
 
-function auth_passdb_init(args)
+function script_init(args)
   password = args["password"]
+  return 0
 end
 
 function auth_passdb_lookup(req)
   return dovecot.auth.PASSDB_RESULT_OK, { ["password"]=password }
 end
+
+function auth_passdb_get_cache_key()
+  return "%{username}\t%{protocol}"
+end
 ```
 :::
+
+The lua script to be used is given to the passdb using [[setting,lua_file]]
+setting.
 
 ### Constants
 
@@ -187,7 +196,8 @@ To configure passdb in dovecot, use:
 
 ```[dovecot.conf]
 passdb lua {
-  args = file=/path/to/lua blocking=yes # default is yes
+  lua_file = /path/to/lua
+  use_worker = yes # default is yes
 }
 ```
 
