@@ -12,11 +12,11 @@ IMAP/POP3/SMTP/etc. access checks.
 
 ## PAM
 
-Set PAM service name to `%{protocol}`, ie.:
+Set [[setting,passdb_pam_service_name,%{protocol}]], i.e.:
 
 ```[dovecot.conf]
 passdb pam {
-  args = %{protocol}
+  service_name = %{protocol}
 }
 ```
 
