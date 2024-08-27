@@ -68,7 +68,7 @@ plugin {
   last_login_precision = ms
 }
 
-dict {
+dict_legacy {
   sql = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
 }
 ```
@@ -114,7 +114,7 @@ plugin {
   last_login_precision = ms
 }
 
-dict {
+dict_legacy {
   cassandra = cassandra:/etc/dovecot/dovecot-dict-cql.conf.ext
 }
 ```
@@ -161,7 +161,7 @@ plugin {
   last_login_precision = ms
 }
 
-dict {
+dict_legacy {
   cassandra = cassandra:/etc/dovecot/dovecot-dict-cql.conf.ext
 }
 ```
