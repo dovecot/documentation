@@ -348,13 +348,13 @@ The following variables can be used inside the `dovecot-ldap.conf.ext` files:
 | -------- | ----------- |
 | `%{ldap:attrName:default}` | Fetches a single-valued attribute. If the attribute is not present, the specified default is taken instead. If there are multiple values, all except the first are ignored (with warning). |
 | `%{ldap:attrName}` | If the default is omitted, empty string `""` is assumed. |
-| `%{ldap_multi:attrName:sep:default}` | Fetches a multi-valued attribute. If the attribute is not present, the specified default is taken instead. If there are multiple values, they are concatenated using sep as the separator. |
-| `%{ldap_multi:attrName:sep}` | If the default is omitted, empty string is assumed `""`. |
-| `%{ldap_multi:attrName::default}` | The default for the separator is a single space `" "`. |
-| `%{ldap_multi:attrName::}` | How to specify a column `":"` as separator, default is `""`. |
-| `%{ldap_multi:attrName:::default}` | How to specify a column `":"` as separator, default explicitly defined. |
-| `%{ldap_multi:attrName:,}` | How to specify a comma `","` as separator, default is `""`. |
-| `%{ldap_multi:attrName:,:default}` | How to specify a comma `","` as separator, default explicitly defined. |
+| `%{ldap_multi:attrName:sep:default}` | [[added,ldap_multi_added]] Fetches a multi-valued attribute. If the attribute is not present, the specified default is taken instead. If there are multiple values, they are concatenated using sep as the separator. |
+| `%{ldap_multi:attrName:sep}` | [[added,ldap_multi_added]] If the default is omitted, empty string is assumed `""`. |
+| `%{ldap_multi:attrName::default}` | [[added,ldap_multi_added] The default for the separator is a single space `" "`. |
+| `%{ldap_multi:attrName::}` | [[added,ldap_multi_added]] How to specify a column `":"` as separator, default is `""`. |
+| `%{ldap_multi:attrName:::default}` | [[added,ldap_multi_added]] How to specify a column `":"` as separator, default explicitly defined. |
+| `%{ldap_multi:attrName:,}` | [[added,ldap_multi_added]] How to specify a comma `","` as separator, default is `""`. |
+| `%{ldap_multi:attrName:,:default}` | [[added,ldap_multi_added]] How to specify a comma `","` as separator, default explicitly defined. |
 | `%{ldap_dn}` | Retrieves the Distinguished Name of the entry. |
 | `%{ldap_ptr:attrName}` | Indirect fetch. Retrieves the attribute attrName, then it uses its content as a 2nd attrName where to fetch the actual value. |
 

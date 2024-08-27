@@ -23,6 +23,12 @@ passdb some_name {
 }
 ```
 
+### Added Features
+
+| Feature | Notes |
+| ------- | ----- |
+| `%{ldap_multi}` variable | This variable was added to LDAP configuration file to allow for fetching a multi-valued attribute. See [[link,auth_ldap]]. |
+
 ### Removed Features
 
 | Feature | Notes |
