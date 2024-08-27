@@ -2691,21 +2691,6 @@ A space-separated list of fields to log.
 
 	/* mail-lua plugin */
 
-	mail_lua_script: {
-		plugin: 'mail-lua',
-		values: setting_types.STRING,
-		text: `
-Specify filename to load for user.
-
-Example:
-
-\`\`\`
-plugin {
-  mail_lua_script = /etc/dovecot/user.lua
-}
-\`\`\``
-	},
-
 	mail_lua: {
 		added: {
 			settings_mail_lua_added: false,
