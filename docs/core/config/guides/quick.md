@@ -40,8 +40,8 @@ passdb pam {
 
 userdb passwd {
   driver = passwd
-  args = blocking=no
-  override_fields {
+  use_worker = yes
+  fields {
     uid = vmail
     gid = vmail
   }

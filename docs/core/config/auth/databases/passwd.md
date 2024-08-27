@@ -19,30 +19,47 @@ disabling it:
 
 ```
 userdb passwd {
-  args = blocking=no
+  use_worker = yes
 }
 ```
 
 ## Field Overriding and Extra Fields
 
 It's possible to override fields from passwd and add
-[[link,userdb_extra_fields]] with templates, but it's done in a better way
-by using `override_fields`.
+[[link,userdb_extra_fields]].
 
 For example:
 
 ```[dovecot.conf]
 userdb passwd {
-  override_fields {
-    home = /var/mail/%u
+  fields {
+    home = /var/mail/%{username}
     mail_driver = maildir
-    mail_path = /var/mail/%u/Maildir
+    mail_path = /var/mail/%{username}/Maildir
   }
 }
 ```
 
 This uses the UID and GID fields from passwd, but home directory is
-overridden. Also the default [[link,mail_location]] is overridden.
+overridden. Also the default [[link,mail_location]] setting is overridden.
+
+::: info
+[[setting,userdb_fields_import_all]] defaults to `yes`. If it is set to `no`
+the fields to be imported need to be explicitly defined.
+
+```[dovecot.conf]
+userdb passwd {
+  fields_import_all = no
+  fields {
+    uid = %{passwd:uid:vmail}
+    gid = %{passwd:gid:vmail}
+    home = /var/mail/%{username}
+    mail_driver = maildir
+    mail_path = /var/mail/%{username}/Maildir
+  }
+}
+```
+:::
 
 ## Passwd as a passdb
 
