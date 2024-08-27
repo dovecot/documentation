@@ -107,9 +107,6 @@ The *signals* **ALARM** and **PIPE** are ignored.
 */etc/dovecot/dovecot-ldap.conf.ext*
 :   Dovecot's LDAP authdb/userdb module configuration file.
 
-*/etc/dovecot/dovecot-sql.conf.ext*
-:   Dovecot's SQL authdb/userdb module configuration file.
-
 */etc/dovecot/dovecot-dict-sql.conf.ext*
 :   Dovecot's dict configuration with SQL-backend.
 
