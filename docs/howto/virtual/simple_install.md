@@ -66,7 +66,11 @@ passdb passwd-file {
 }
 
 userdb static {
-  args = uid=vmail gid=vmail home=/home/vmail/%u
+  fields {
+    uid = vmail
+    gid = vmail
+    home = /home/vmail/%u
+  }
 }
 ```
 
