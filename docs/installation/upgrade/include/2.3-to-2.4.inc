@@ -124,7 +124,7 @@ prefixing them with `\`.
 | `verbose_ssl` | Use [[setting,log_debug,category=ssl]] instead. |
 | `mail_location` setting & `mail` userdb field | Split into multiple [[link,mail_location,mail_*]] settings. |
 | `listescape` plugin | [[setting,mailbox_list_storage_escape_char]] setting. |
-| `fts` | Replaced by [[setting,fts_driver]]. |
+| `fts` | Replaced by [[setting,fts]] named filter. |
 | `fts_autoindex_exclude` | Replaced by boolean property [[setting,fts_autoindex]], nested inside [[setting,mailbox]] blocks. Note that the values are inverted as compared to those in the old `fts_autoindex_exclude`. |
 | `fts_decoder` | Replaced by [[setting,fts_decoder_driver]] and [[setting,fts_decoder_script_socket_path]]. |
 | `fts_solr` | Replaced by [[setting,fts_solr_url]], [[setting,fts_solr_batch_size]], [[setting,fts_solr_soft_commit]], and [[setting,http_client_rawlog_dir]] settings. |
