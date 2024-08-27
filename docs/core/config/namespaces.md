@@ -180,7 +180,11 @@ with the given list.
 
 ```[dovecot.conf]
 userdb static {
-  args = namespace+=special namespace/special/mail_path=/var/special/%u namespace/special/prefix=special/
+  fields {
+    namespace += special
+    namespace/special/mail_path = /var/special/%u
+    namespace/special/prefix = special/
+  }
 }
 ```
 
