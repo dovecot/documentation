@@ -11,7 +11,6 @@ to avoid unexpected storage file format incompatibilities.
 
 passdb and userdb sections now require a name, i.e.:
 
-
 ```
 # This gives an error:
 passdb {
@@ -161,9 +160,29 @@ Afterwards you can remove the old global ACL directory parent:
 $ rm -rf /etc/dovecot/acls/
 ```
 
-### Changes to Statistics
+### Event Changes
 
-- The `bytes_in` and `bytes_out` field in several events have been renamed
-  as `net_in_bytes` and `net_out_bytes`.
+#### Core Events
 
-  Check [[link,events]] for details.
+| Event | Change |
+| ----- | ------ |
+| [[event,imap_id_received]] | This event was added. |
+| [[event,login_aborted]] | This event was added. |
+| [[event,mail_metadata_accessed]] | This event was added. |
+| [[event,pop3_command_finished]] | This event was added. |
+
+#### Event Fields
+
+| Event | Field | Change |
+| ----- | ----- | ------ |
+| [[event,dns_worker_request_finished]] | `cached` | This field was added. |
+| [[event,proxy_session_finished]] | `error_code` | This field was added. |
+| [[event,proxy_session_finished]] | `idle_usecs` | This field was changed from `idle_secs`. |
+| [[event,smtp_server_transaction_rcpt_finished]] | `dest_host` | This field was added. |
+| [[event,smtp_server_transaction_rcpt_finished]] | `dest_ip` | This field was added. |
+| [[event,sql_query_finished]] | `consistency` | This field was added. |
+| [[event,sql_query_finished]] | `error_consistency` | This field was added. |
+| Mail user events | `service` | This field was added.
+| Various | `net_bytes_in` | This field was changed from `bytes_in`. |
+| Various | `net_bytes_out` | This field was changed from `bytes_out`. |
+
