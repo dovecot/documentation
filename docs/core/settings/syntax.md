@@ -321,7 +321,7 @@ external to the main `dovecot.conf`, which are typically named `*.conf.ext`.
 Examples:
 
 * passdb/userdb { args } for ldap points to a `dovecot-ldap.conf.ext`.
-* dict { .. } points to `dovecot-dict-*.conf.ext`.
+* dict_legacy { .. } points to `dovecot-dict-*.conf.ext`.
 
 Although these external config files look similar to the main `dovecot.conf`
 file, they have quite a lot of differences in details. Their parsing is done
