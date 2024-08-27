@@ -333,8 +333,12 @@ CREATE TABLE Namespaces (
 Now if you want to set the namespace location from the Namespaces table, use
 something like:
 
-```
-user_query = SELECT Location as 'namespace/docs/mail_path' FROM Namespaces WHERE ..
+```[dovecot.conf]
+userdb sql {
+  query = SELECT Location as 'namespace/docs/mail_path' \
+    FROM Namespaces \
+    WHERE ..
+}
 ```
 
 If you follow some advice to separate your "INBOX", "shared/" and "public/"

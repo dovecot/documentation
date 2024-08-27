@@ -119,32 +119,28 @@ The master passdb doesn't have to be passwd-file, it could be an SQL query as
 well:
 
 ```[dovecot.conf]
+sql_driver = mysql
+mysql localhost {
+}
+
 auth_master_user_separator = *
 
 passdb db1 {
   driver = sql
-  args = /etc/dovecot/dovecot-sql-master.conf.ext
+  query = SELECT password FROM users WHERE userid = '%u' and master_user = true
   master = yes
   result_success = continue
 }
 
 passdb db2 {
   driver = sql
-  args = /etc/dovecot/dovecot-sql.conf.ext
+  query = # ...
 }
 
 userdb sql {
-  args = /etc/dovecot/dovecot-sql.conf.ext
+  query = # ...
 }
 ```
-
-`dovecot-sql-master.conf.ext` would contain all the normal connection
-settings and a `password_query`:
-
-```
-password_query = SELECT password FROM users WHERE userid = '%u' \
-    and master_user = true
-````
 
 ### Testing
 
@@ -244,19 +240,24 @@ passdb db4 {
 Before we get into the master user tricks, we start with normal email
 authentication. The query for that is as follows:
 
-```
-password_query = SELECT user_name, domain_name, password \
-    FROM users WHERE user_name = '%n' AND domain_name = '%d'
+```[dovecot.conf]
+passdb sql {
+  query = SELECT user_name, domain_name, password \
+    FROM users \
+    WHERE user_name = '%n' AND domain_name = '%d'
+}
 ```
 
 In this first example, suppose you want to allow a few people to be
 master users over all domains. These users will have the `masteradmin` field
 set to `1`. The query would be:
 
-```
-password_query = SELECT user_name, domain_name, password \
-    FROM users WHERE user_name = '%n' AND domain_name = '%d' \
-    AND masteradmin='1'
+```[dovecot.conf]
+passdb sql {
+  query = SELECT user_name, domain_name, password \
+    FROM users \
+    WHERE user_name = '%n' AND domain_name = '%d' AND masteradmin='1'
+}
 ```
 
 In the second example, suppose you are hosting multiple domains and you
@@ -264,10 +265,12 @@ want to allow a few users to become master users of their domain only.
 
 Your query would be as follows:
 
-```
-password_query = SELECT user_name, domain_name, password \
-    FROM users WHERE user_name = '%n' AND domain_name = '%d' \
-    AND owns_domain='1' AND '%d'='%{login_domain}'
+```[dovecot.conf]
+passdb sql {
+  query = SELECT user_name, domain_name, password \
+    FROM users \
+    WHERE user_name = '%n' AND domain_name = '%d' AND owns_domain='1' AND '%d'='%{login_domain}'
+}
 ```
 
 This will allow you to log in using `joe@dovecot.org*master@dovecot.org`
@@ -278,19 +281,24 @@ between owner email addresses and domains that are owned. That way if a person
 controls a lot of domains then they can view all the users in all the domains
 they control. The query would be as follows:
 
-```
-password_query = SELECT user_name, domain_name, password \
-    FROM users, ownership WHERE user_name = '%n' AND domain_name = '%d' \
-    AND login_id='%u' AND owned_object='%{login_domain}'
+```[dovecot.conf]
+passdb sql {
+  query = SELECT user_name, domain_name, password \
+    FROM users, ownership \
+    WHERE user_name = '%n' AND domain_name = '%d' AND login_id='%u' AND owned_object='%{login_domain}'
+}
 ```
 
 If you really want to get tricky and efficient you can combine all 3 queries
 into one giant query that does everything.
 
-```
-password_query = SELECT user_name, domain_name, password \
-    FROM users, ownership WHERE user_name = '%n' AND domain_name = '%d' \
-    AND ( (masteradmin='1') OR (owns_domain='1' AND '%d'='%{login_domain}') \
-    OR (login_id='%u' and owned_object='%{login_domain}') ) \
-    group by uid
+```[dovecot.conf]
+passdb sql {
+  query = SELECT user_name, domain_name, password \
+    FROM users, ownership \
+    WHERE user_name = '%n' AND domain_name = '%d' \
+      AND ( (masteradmin='1') OR (owns_domain='1' AND '%d'='%{login_domain}') \
+      OR (login_id='%u' and owned_object='%{login_domain}') ) \
+    GROUP BY uid
+}
 ```

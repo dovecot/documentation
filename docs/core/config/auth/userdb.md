@@ -224,11 +224,12 @@ The separator setting can be overridden by returning
 #### SQL
 
 ::: code-group
-```[dovecot-sql.conf]
-user_query = SELECT home, uid, gid, \
-    CONCAT('*:bytes=', quota_bytes) AS quota_rule, \
-    separator AS "namespace/default/separator" \
-    FROM users WHERE username = '%n' and domain = '%d'
+```[dovecot.conf]
+userdb sql {
+  query = SELECT home, uid, gid, CONCAT('*:bytes=', quota_bytes) AS quota_rule, separator AS "namespace/default/separator" \
+    FROM users \
+    WHERE username = '%n' and domain = '%d'
+}
 ```
 :::
 
