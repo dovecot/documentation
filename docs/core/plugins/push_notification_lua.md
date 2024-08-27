@@ -24,7 +24,8 @@ Lua push notification handler requires [[plugin,push-notification]],
 | Name | Required | Type | Description |
 | ---- | -------- | ---- | ----------- |
 | `push_notification_driver` | **YES** | [[link,settings_types_string]] | To identify this settings block the driver should get the value `lua`. |
-| `push_notification_lua_path` | NO | [[link,settings_types_string]] | The lua file to execute. If no script is specified, [[setting,mail_lua_script]] will be used by default. |
+| `push_notification_lua_file` | NO | [[link,settings_types_file]] | The lua file to execute. See [[setting,lua_file]]. |
+| `push_notification_lua_settings` | NO | [[link,settings_types_strlist]] | Extra parameters to pass to the Lua `script_init()` function. See [[setting,lua_settings]]. |
 
 ## Example Configuration
 
@@ -37,7 +38,10 @@ mail_plugins {
 }
 
 push_notification lua {
-  lua_path = /path/to/lua/script
+  lua_file = /path/to/lua/script
+  lua_settings {
+    extra_param = %{userdb:extra_param}
+  }
 }
 ```
 
