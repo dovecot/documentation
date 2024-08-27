@@ -146,30 +146,38 @@ user_attrs = homeDirectory=home, quotaBytes=quota_rule=*:bytes=%$
 #### Override: SQL
 
 ::: warning
-`user_query` is used only if you use [[link,auth_sql]].
+[[setting,userdb_sql_query]] is used only if you use [[link,auth_sql]].
 :::
 
 Example (for MySQL):
 
-```
-user_query = SELECT uid, gid, home, \
-  concat('*:bytes=', quota_limit_bytes) AS quota_rule \
-  FROM users WHERE userid = '%u'
+```[dovecot.conf]
+sql_driver = mysql
 
-# MySQL with userdb prefetch: Remember to prefix quota_rule with userdb_
-# (just like all other userdb extra fields):
-password_query = SELECT userid AS user, password, \
-  uid AS userdb_uid, gid AS userdb_gid, \
-  concat('*:bytes=', quota_limit_bytes) AS userdb_quota_rule \
-  FROM users WHERE userid = '%u'
+userdb sql {
+  query = SELECT uid, gid, home, concat('*:bytes=', quota_limit_bytes) AS quota_rule \
+    FROM users \
+    WHERE userid = '%u'
+
+passdb sql {
+  # MySQL with userdb prefetch: Remember to prefix quota_rule with userdb_
+  # (just like all other userdb extra fields):
+  query = SELECT userid AS user, password, uid AS userdb_uid, gid AS userdb_gid, concat('*:bytes=', quota_limit_bytes) AS userdb_quota_rule \
+    FROM users \
+    WHERE userid = '%u'
+}
 ```
 
 Example (for PostgreSQL and SQLite):
 
-```
-user_query = SELECT uid, gid, home, \
-  '*:bytes=' || quota_limit_bytes AS quota_rule \
-  FROM users WHERE userid = '%u'
+```[dovecot.conf]
+sql_driver = sqlite # alternatively: pgsql
+
+userdb sql {
+  query = SELECT uid, gid, home, '*:bytes=' || quota_limit_bytes AS quota_rule \
+    FROM users \
+    WHERE userid = '%u'
+}
 ```
 
 #### Override: passwd-file
