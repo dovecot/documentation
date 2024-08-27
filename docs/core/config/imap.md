@@ -130,11 +130,11 @@ imap_hibernate_timeout = 5s
 
 service imap {
   # Note that this change will allow any process running as
-  # $default_internal_user (dovecot) to access mails as any other user.
+  # $SET:default_internal_user (dovecot) to access mails as any other user.
   # This may be insecure in some installations, which is why this isn't
   # done by default.
   unix_listener imap-master {
-    user = $default_internal_user
+    user = $SET:default_internal_user
   }
 }
 
