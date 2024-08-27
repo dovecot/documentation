@@ -2706,6 +2706,28 @@ plugin {
 \`\`\``
 	},
 
+	mail_lua: {
+		added: {
+			settings_mail_lua_added: false,
+		},
+		plugin: 'mail-lua',
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'lua_file', 'lua_settings' ],
+		text: `
+Named filter for initializing [[plugin,mail_lua]] settings.
+
+Example:
+
+\`\`\`[dovecot.conf]
+mail_lua {
+  lua_file = /etc/dovecot/user.lua
+  lua_settings {
+    extra_param = %{userdb:extra_param}
+  }
+}
+\`\`\``
+	},
+
 	/* notify-status plugin */
 
 	mailbox_notify_status: {
@@ -3731,6 +3753,31 @@ Allows using write-ahead logging mode for database.`
 		text: `
 Specifies that this database is read-only and should not be attempted to be
 created or written to.`
+	},
+
+	/* Lua settings. */
+
+	lua_file: {
+		tags: [ 'lua' ],
+		values: setting_types.FILE,
+		seealso: [
+			'[[plugin,mail-lua]]',
+			'[[plugin,push-notification-lua]]',
+			'[[link,auth_lua]]',
+		],
+		text: `
+Path to lua script to be used. This is used by
+* [[plugin,mail-lua]],
+* [[plugin,push-notification-lua]], and
+* [[link,auth_lua]].`
+	},
+
+	lua_settings: {
+		tags: [ 'lua' ],
+		values: setting_types.STRLIST,
+		seealso: [ 'lua_file' ],
+		text: `
+Key-value pairs that are passed as a table to lua \`script_init()\` functions.`
 	},
 
 	/* Dovecot core settings. */
