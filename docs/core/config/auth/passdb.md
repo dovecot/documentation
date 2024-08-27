@@ -248,27 +248,25 @@ configuration it may cause problems, such as `/var/mail/user` and
 
 ##### SQL Example
 
-An example `password_query` in `dovecot-sql.conf.ext` would be:
+An example [[setting,passdb_sql_query]] would be:
 
-:::code-group
-```[dovecot-sql.conf.ext]
-password_query = \
-    SELECT concat(user, '@', domain) AS user, password \
+```[dovecot.conf]
+passdb sql {
+  query = SELECT concat(user, '@', domain) AS user, password \
     FROM users \
     WHERE user = '%n' and domain = '%d'
+}
 ```
-:::
 
 You can also update "username" and "domain" fields separately:
 
-:::code-group
-```[dovecot-sql.conf.ext]
-password_query = \
-    SELECT user AS username, domain, password \
+```[dovecot.conf]
+passdb sql {
+  query = SELECT user AS username, domain, password \
     FROM users \
     WHERE user = '%n' and domain = '%d'
+}
 ```
-:::
 
 #### `login_user`
 
@@ -439,12 +437,13 @@ Import `name=value` to login events.
 
 #### SQL
 
-::: code-group
-```[dovecot-sql.conf.ext]
-password_query = SELECT userid as user, password, 'Y' as proxy, host \
+```[dovecot.conf]
+passdb sql {
+  query = SELECT userid AS user, password, 'Y' as proxy, host \
     FROM users WHERE userid = '%u'
+  }
+}
 ```
-:::
 
 #### LDAP
 
