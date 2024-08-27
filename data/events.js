@@ -1271,7 +1271,12 @@ logged into the backend.`
 		inherit: 'login_proxy_session',
 		fields: {
 			error: `If login to destination failed, contains the error.`,
-			error_code: `If login to destination failed, contains the error code.`,
+			error_code: {
+				added: {
+					events_proxy_session_finished_error_code_added: false
+				},
+				text: `If login to destination failed, contains the <a href="#proxy_session_finished_error_code">error code</a>.`,
+			},
 			disconnect_side: `Which side disconnected: \`client\`, \`server\`, \`proxy\`.`,
 			disconnect_reason: `Reason for disconnection (empty = clean disconnect).`,
 			idle_usecs: {
@@ -1295,6 +1300,8 @@ logged into the backend.`
 		},
 		text: `
 Connection to proxy destination has ended, either successfully or with error.
+
+<span id="proxy_session_finished_error_code" />
 
 List of error codes:
 

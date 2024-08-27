@@ -71,6 +71,7 @@ export const updates = {
 	events_net_in_bytes_changed: '2.4.0',
 	events_net_out_bytes_changed: '2.4.0',
 	events_pop3_command_finished_added: '2.4.0',
+	events_proxy_session_finished_error_code_added: '2.4.0',
 	events_proxy_session_finished_idle_usecs_changed: '2.4.0',
 	events_smtp_server_transaction_rcpt_finished_dest_host_added: '2.4.0',
 	events_smtp_server_transaction_rcpt_finished_dest_ip_added: '2.4.0',
