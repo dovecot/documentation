@@ -60,10 +60,16 @@ user_attrs = homeDirectory=home, uidNumber=uid, gidNumber=gid
 
 ### Example
 
-::: code-group
 ```[dovecot.conf]
+sql_driver = mysql
+mysql localhost {
+}
+
 passdb sql {
-  args = /etc/dovecot/dovecot-sql.conf.ext
+  query = SELECT userid AS user, password, home AS userdb_home, uid AS userdb_uid, gid AS userdb_gid \
+    FROM users \
+    WHERE userid = '%u'
+  }
 }
 
 userdb prefetch {
@@ -71,17 +77,6 @@ userdb prefetch {
 
 # The userdb below is used only by lda.
 userdb sql {
-  args = /etc/dovecot/dovecot-sql.conf.ext
+  query = SELECT home, uid, gid FROM users WHERE userid = '%u'
 }
 ```
-
-```[dovecot-sql.conf.ext]
-password_query = SELECT userid AS user, password, \
-    home AS userdb_home, uid AS userdb_uid, gid AS userdb_gid \
-    FROM users \
-    WHERE userid = '%u'
-
-# For LDA:
-user_query = SELECT home, uid, gid FROM users WHERE userid = '%u'
-```
-:::

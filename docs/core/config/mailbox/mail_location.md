@@ -176,8 +176,10 @@ need to be overridden in userdb with `namespace/<name>/` prefix. For example
 
 ### SQL
 
-```[dovecot-sql.conf.ext]
-user_query = SELECT home, uid, gid, mail_path FROM users WHERE user = '%u'
+```[dovecot.conf]
+userdb sql {
+  query = SELECT home, uid, gid, mail_path FROM users WHERE user = '%u'
+}
 ```
 
 ### LDAP
