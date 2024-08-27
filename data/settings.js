@@ -8561,6 +8561,51 @@ SQL query to update the password. Currently used only by the \`OTP\` auth
 mechanism.`
 	},
 
+	passdb_pam_max_requests: {
+		tags: [ 'passdb', 'passdb-pam' ],
+		values: setting_types.UINT,
+		default: 100,
+		seealso: [ 'service_restart_request_count' ],
+		text: `
+Number of requests a auth-worker process handles for passdb pam before it dies.
+This configures similar behaviour as the
+[[setting,service_restart_request_count]] setting but it limits only the number
+of pam passdb requests, not all requests to be handled by an auth-worker.`
+	},
+
+	passdb_pam_failure_show_msg: {
+		tags: [ 'passdb', 'passdb-pam' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Replace the default \`Authentication failed\` reply with PAM's failure.`
+	},
+
+	passdb_pam_service_name: {
+		tags: [ 'passdb', 'passdb-pam' ],
+		values: setting_types.STRING,
+		default: 'dovecot',
+		text: `
+The PAM service name to be used with the pam passdb.`
+	},
+
+	passdb_pam_setcred: {
+		tags: [ 'passdb', 'passdb-pam' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Make Dovecot create PAM credentials. The credentials are never deleted, which
+may cause problems with some PAM plugins.`
+	},
+
+	passdb_pam_session: {
+		tags: [ 'passdb', 'passdb-pam' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Make Dovecot open a PAM session and close it immediately.`
+	},
+
 	passwd_file_path: {
 		tags: [ 'passwd-file' ],
 		values: setting_types.STRING,
