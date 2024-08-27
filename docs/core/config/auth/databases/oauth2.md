@@ -17,6 +17,14 @@ The responses from endpoints must be JSON objects.
 [[changed,auth_oauth2_no_passdb_changed]]: The OAuth2 mechanism no longer uses
 a passdb for token authentication. Password Grant still needs a oauth2 passdb.
 
+## Settings
+
+Oauth2 overrides some of the default HTTP client and SSL settings. You can
+override these and any other HTTP client or SSL settings by placing them inside
+the [[setting,oauth2]] named filter.
+
+<SettingsComponent tag="oauth2" />
+
 ## Configuration
 
 ### Common
@@ -28,7 +36,9 @@ auth_mechanisms = {
   xoauth2 = yes
 }
 
-auth_oauth2_config_file = /etc/dovecot/dovecot-oauth2.conf.ext
+oauth2 {
+  # ...
+}
 ```
 :::
 
@@ -42,10 +52,12 @@ Configuration file example for
 [Google](https://developers.google.com/identity/protocols/OAuth2):
 
 ```[dovecot.conf]
-tokeninfo_url = https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=
-introspection_url = https://www.googleapis.com/oauth2/v2/userinfo
-#force_introspection = yes
-username_attribute = email
+oauth2 {
+  tokeninfo_url = https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=
+  introspection_url = https://www.googleapis.com/oauth2/v2/userinfo
+  #force_introspection = yes
+  username_attribute = email
+}
 ```
 
 ##### WSO2 Identity Server
@@ -53,11 +65,13 @@ Configuration file example for
 [WSO2 Identity Server](https://wso2.com/identity-and-access-management/):
 
 ```[dovecot.conf]
-introspection_mode = post
-introspection_url = https://client_id:client_secret@server.name:port/oauth2/introspect
-username_attribute = username
-active_attribute = active
-active_value = true
+oauth2 {
+  introspection_mode = post
+  introspection_url = https://client_id:client_secret@server.name:port/oauth2/introspect
+  username_attribute = username
+  active_attribute = active
+  active_value = true
+}
 ```
 
 ##### Microsoft Identity Platform
@@ -65,11 +79,13 @@ Configuration file example for
 [Microsoft Identity Platform](https://learn.microsoft.com/en-us/entra/identity-platform/userinfo):
 
 ```[dovecot.conf]
-introspection_mode = auth
-introspection_url = https://graph.microsoft.com/v1.0/me
-# this can vary on your settings
-username_attribute = mail
-tls_ca_cert_file = /etc/ssl/certs/ca-certificates.crt
+oauth2 {
+  introspection_mode = auth
+  introspection_url = https://graph.microsoft.com/v1.0/me
+  # this can vary on your settings
+  username_attribute = mail
+  ssl_client_ca_file = /etc/ssl/certs/ca-certificates.crt
+}
 ```
 
 ### Proxy
@@ -90,10 +106,16 @@ passdb static {
 }
 ```
 
-With proxy authentication, put into `dovecot-oauth2.conf.ext`:
+With proxy authentication, put into `dovecot.conf`:
 
-```
-pass_attrs = proxy=y proxy_mech=%m
+```[dovecot.conf]
+oauth2 {
+  # ...
+  fields {
+    proxy = y
+    proxy_mech = %m
+  }
+}
 ```
 
 #### Proxy with Password Grant
@@ -102,37 +124,31 @@ If you want to configure proxy to get token and pass it to backend:
 
 ::: code-group
 ```[dovecot.conf]
-auth_oauth2_config_file = /usr/local/etc/dovecot/dovecot-oauth2.token.conf.ext
+oauth2 {
+  client_id = verySecretClientId
+  client_secret = verySecretSecret
+  tokeninfo_url = http://localhost:8000/oauth2?oauth=
+  introspection_url = http://localhost:8000/introspect
+  introspection_mode = post
+  username_attribute = username
+  fields {
+    pass = %{oauth2:access_token}
+  }
+}
 
 passdb oauth2 {
   mechanisms = plain login
-  args = /usr/local/etc/dovecot/dovecot-oauth2.plain.conf.ext
+  oauth2 {
+    # inherit common oauth2 settings from the global scope
+    grant_url = http://localhost:8000/token
+    fields {
+      host = 127.0.0.1
+      proxy = y
+      proxy_mech = xoauth2
+      pass = %{passdb:token}
+    }
+  }
 }
-```
-
-```[dovecot-oauth2.token.conf.ext]
-grant_url = http://localhost:8000/token
-client_id = verySecretClientId
-client_secret = verySecretSecret
-tokeninfo_url = http://localhost:8000/oauth2?oauth=
-introspection_url = http://localhost:8000/introspect
-introspection_mode = post
-use_grant_password = no
-debug = yes
-username_attribute = username
-pass_attrs = pass=%{oauth2:access_token}
-```
-
-```[dovecot-oauth2.plain.conf.ext]
-grant_url = http://localhost:8000/token
-client_id = verySecretClientId
-client_secret = verySecretSecret
-introspection_url = http://localhost:8000/introspect
-introspection_mode = post
-use_grant_password = yes
-debug = yes
-username_attribute = username
-pass_attrs = host=127.0.0.1 proxy=y proxy_mech=xoauth2 pass=%{oauth2:access_token}
 ```
 :::
 
@@ -206,11 +222,19 @@ validation fails for non-JWT keys, then online validation is performed.
 You can use local validation with password grants too. This will save you
 introspection roundtrip to oauth2 server.
 
-To use local validation, put into `dovecot-oauth2.conf.ext`:
+To use local validation, put into `dovecot.conf`:
 
-```
-introspection_mode = local
-local_validation_key_dict = fs:posix:prefix=/etc/dovecot/keys/
+```[dovecot.conf]
+oauth2 {
+  introspection_mode = local
+  local_validation {
+    dict fs {
+      fs posix {
+        prefix=/etc/dovecot/keys/
+      }
+    }
+  }
+}
 ```
 
 Currently, Dovecot oauth2 library implements the following features of
@@ -243,77 +267,3 @@ ES supports any curve supported by OpenSSL for this purpose.
 Support for [[rfc,7628]] OpenID Discovery (OIDC) can be achieved with
 `openid_configuration_url`. Setting this causes Dovecot to
 report OIDC configuration URL as `openid-configuration` element in error JSON.
-
-## Full Config Example
-
-OAuth2 overrides some of the default HTTP client and SSL settings:
-
-* [[setting,ssl_prefer_server_ciphers,yes]]
-* [[setting,http_client_user_agent,dovecot-oauth2-passdb/DOVECOT_VERSION]]
-* [[setting,http_client_max_idle_time,60s]]
-* [[setting,http_client_max_parallel_connections,10]]
-* [[setting,http_client_max_pipelined_requests,1]]
-* [[setting,http_client_request_max_attempts,1]]
-
-You can override these and any other HTTP client or SSL settings by placing
-them inside [[setting,oauth2]] [[link,settings_syntax_named_filters]].
-
-
-```
-### OAuth2 password database configuration
-
-## url for verifying token validity. Token is appended to the URL
-# tokeninfo_url = http://endpoint/oauth/tokeninfo?access_token=
-
-## introspection endpoint, used to gather extra fields and other information.
-# introspection_url = http://endpoint/oauth/me
-
-## How introspection is made, valid values are
-##   auth = GET request with Bearer authentication
-##   get  = GET request with token appended to URL
-##   post = POST request with token=bearer_token as content
-##   local = Attempt to locally validate and decode JWT token
-# introspection_mode = auth
-
-## Force introspection even if tokeninfo contains wanted fields
-## Set this to yes if you are using active_attribute
-# force_introspection = no
-
-## Validation key dictionary, turns on local validation
-# local_validation_key_dict =
-
-## A space separated list of scopes of validity (optional)
-# scope = something
-
-## username attribute in response (default: email)
-# username_attribute = email
-
-## username normalization format (default: %Lu)
-# username_format = %Lu
-
-## Attribute name for checking whether account is disabled (optional)
-# active_attribute =
-
-## Expected value in active_attribute (empty = require present, but
-## anything goes)
-# active_value =
-
-## Expected issuer(s) for the token (space separated list)
-# issuers =
-
-
-## URL to RFC 7628 OpenID Provider Configuration Information schema
-# openid_configuration_url =
-
-## Extra fields to set in passdb response (in passdb static style)
-# pass_attrs =
-
-## Timeout in milliseconds
-# timeout_msecs = 0
-
-## Enable debug logging
-# debug = no
-
-## Use worker to verify token
-# blocking = yes
-```
