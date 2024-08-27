@@ -360,7 +360,7 @@ acl_sharing_map {
   dict_proxy_name = acl
 }
 
-dict {
+dict_legacy {
   acl = pgsql:/etc/dovecot/dovecot-dict-sql.conf.ext
 }
 ```
