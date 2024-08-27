@@ -113,11 +113,12 @@ printf 'password\npassword\n' | doveadm pw
 
 ## Default password Schemes
 
-Password databases have a default password scheme:
+Password databases get the default password scheme using the
+[[setting,passdb_default_password_scheme]] setting. However, there are
+exceptions:
 
 | Database | Default |
 | -------- | ------- |
-| [[link,auth_sql]] | See `default_pass_scheme` setting in `dovecot-sql.conf.ext`. |
 | [[link,auth_ldap]] | See `default_pass_scheme` setting in `dovecot-ldap.conf.ext`. |
 | [[link,auth_passwd_file]] | `CRYPT` is used by default, but can be changed
 with `scheme` parameter in passdb args. |

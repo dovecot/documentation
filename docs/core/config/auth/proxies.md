@@ -325,19 +325,21 @@ service pop3-login {
 auth_cache_size = 4096
 
 auth_mechanisms = plain
+sql_driver = mysql
+mysql sqlhost1 {
+}
+mysql sqlhost2 {
+}
+mysql_dbname = mail
+mysql_user = dovecot
+mysql_password = secret
+
 passdb sql {
-  args = /usr/local/etc/dovecot/dovecot-sql.conf.ext
+  query = SELECT NULL AS password, 'Y' as nopassword, host, destuser, 'Y' AS proxy \
+    FROM proxy \
+    WHERE user = '%u'
 }
 ```
-
-```[dovecot-sql.conf.ext]
-driver = mysql
-connect = host=sqlhost1 host=sqlhost2 dbname=mail user=dovecot password=secret
-password_query = SELECT NULL AS password, 'Y' as nopassword, \
-    host, destuser, 'Y' AS proxy \
-    FROM proxy WHERE user = '%u'
-```
-:::
 
 ### `proxy_maybe` with SQL
 
@@ -360,23 +362,19 @@ mail_gid = vmail
 
 auth_mechanisms = plain
 
+sql_driver = mysql
+mysql localhost {
+}
+
 passdb sql {
-  args = /usr/local/etc/dovecot/dovecot-sql.conf.ext
+  query = SELECT concat(user, '@', domain) AS user, password, host, 'Y' AS proxy_maybe \
+    FROM users \
+    WHERE user = '%n' AND domain = '%d'
 }
 userdb sql {
-  driver = sql
-  args = /usr/local/etc/dovecot/dovecot-sql.conf.ext
+  query = SELECT user AS username, domain, home \
+    FROM users \
+    WHERE user = '%n' AND domain = '%d'
 }
-```
-
-```[dovecot-sql.conf.ext]]
-driver = mysql
-
-password_query = \
-SELECT concat(user, '@', domain) AS user, password, host, \
-    'Y' AS proxy_maybe FROM users WHERE user = '%n' AND domain = '%d'
-
-user_query = SELECT user AS username, domain, home \
-    FROM users WHERE user = '%n' AND domain = '%d'
 ```
 :::

@@ -5,9 +5,9 @@
     contains also users with a lower UID than the one configured with the
     `first_valid_uid` setting.
 
-    When the SQL userdb module is used make sure that the *iterate_query*
-    setting in */etc/dovecot/dovecot-sql.conf.ext* matches your database
-    layout. When using the LDAP userdb module, make sure that the
-    *iterate_attrs* and *iterate_filter* settings in
-    */etc/dovecot/dovecot-ldap.conf.ext* match your LDAP schema.
-    Otherwise [[man,doveadm]] will be unable to iterate over all users.
+	When the SQL userdb module is used, make sure that the
+	[[setting,userdb_sql_iterate_query]] setting matches your database layout.
+	When using the LDAP userdb module, make sure that the *iterate_attrs* and
+	*iterate_filter* settings in */etc/dovecot/dovecot-ldap.conf.ext* match
+	your LDAP schema. Otherwise [[man,doveadm]] will be unable to iterate over
+	all users.
