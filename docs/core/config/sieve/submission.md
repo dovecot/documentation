@@ -43,30 +43,39 @@ changes the username only for the duration of the lookup. See also
 
 #### SQL
 
-`password_query` gets often misconfigured to drop the domain if
+[[setting,passdb_sql_query]] gets often misconfigured to drop the domain if
 username and domain are stored separately. For example:
 
-```
+```[dovecot.conf]
 # BROKEN:
-password_query = SELECT username AS user, password FROM users \
+passdb sql {
+  query = SELECT username AS user, password \
+    FROM users \
     WHERE username = '%n' AND domain = '%d'
+}
 ```
 
 The "username AS user" changes the username permanently and the domain
 is dropped. You can instead use:
 
-```
+```[dovecot.conf]
 # MySQL:
-password_query = SELECT concat(username, '@', domain) AS user, \
-    password FROM users WHERE username = '%n' AND domain = '%d'
+passdb sql {
+  query = SELECT concat(username, '@', domain) AS user, password \
+    FROM users \
+    WHERE username = '%n' AND domain = '%d'
+}
 ```
 
 Or you can return username and domain fields separately and Dovecot will
 merge them into a single user field:
 
-```
-password_query = SELECT username, domain, password FROM users \
+```[dovecot.conf]
+passdb sql {
+  query = SELECT username, domain, password \
+    FROM users \
     WHERE username = '%n' AND domain = '%d'
+}
 ```
 
 ## `submission_host`
