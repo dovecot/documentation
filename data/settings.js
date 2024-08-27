@@ -8081,10 +8081,180 @@ sent to OpenMetrics.`
 	},
 
 	oauth2: {
+		tags: [ 'oauth2' ],
 		values: setting_types.NAMED_FILTER,
 		seealso: [ '[[link,auth_oauth2]]' ],
 		text: `
 Filter for oauth2 specific settings.`
+	},
+
+	oauth2_tokeninfo_url: {
+		tags: [ 'oauth2' ],
+		values: setting_types.STRING,
+		text: `
+URL for verifying token validity. Token is appended to the URL.
+
+Example:
+
+\`\`\`[dovecot.conf]
+oauth2_tokeninfo_url = http://endpoint/oauth/tokeninfo?access_token=
+\`\`\``
+	},
+
+	oauth2_introspection_url: {
+		tags: [ 'oauth2' ],
+		values: setting_types.STRING,
+		text: `
+URL for getting more information about token.`
+	},
+
+	oauth2_introspection_mode: {
+		tags: [ 'oauth2' ],
+		values: setting_types.ENUM,
+		values_enum: [ '<empty>', 'auth', 'get', 'post', 'local' ],
+		seealso: [
+			'oauth2_introspection_url',
+			'oauth2_tokeninfo_url',
+			'oauth2_force_introspection',
+		],
+		text: `
+To enable oauth2 you must choose how to do token introspection.
+[[setting,oauth2_introspection_url]] is not required if
+[[setting,oauth2_tokeninfo_url]] already provides all the necessary fields, or
+if you are using \`local\` validation.
+
+You can force introspection with [[setting,oauth2_force_introspection]], if you
+need to it every time.
+
+With \`local\` validation, [[setting,oauth2_tokeninfo_url]] is also ignored.
+
+| Value | Description |
+| --- | --- |
+| \`auth\` | GET request with Bearer authentication. |
+| \`get\` | GET request with token appended to URL. |
+| \`post\` | POST request with token=bearer_token as content. |
+| \`local\` | Attempt to locally validate and decode JWT token. |`
+	},
+
+	oauth2_force_introspection: {
+		tags: [ 'oauth2' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Force introspection even if tokeninfo contains wanted fields. Set this to
+\`yes\` if you are using [[setting,oauth2_active_attribute]].`
+	},
+
+	oauth2_local_validation: {
+		tags: [ 'oauth2' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'dict' ],
+		text: `
+A dictionary for fetching validation keys.
+
+Example:
+
+\`\`\`[dovecot.conf]
+local_validation {
+  dict fs {
+    fs posix {
+      prefix = /tmp/keys/
+    }
+  }
+}
+\`\`\``
+	},
+
+	oauth2_scope: {
+		tags: [ 'oauth2' ],
+		values: setting_types.BOOLLIST,
+		text: `
+A list of valid scopes.`
+	},
+
+	oauth2_username_attribute: {
+		tags: [ 'oauth2' ],
+		values: setting_types.STRING,
+		default: 'email',
+		text: `
+Username attribute in response.`
+	},
+
+	oauth2_username_validation_format: {
+		tags: [ 'oauth2' ],
+		values: setting_types.STRING,
+		default: '%u',
+		seealso: [ 'oauth2_username_attribute' ],
+		text: `
+Normalization for oauth2 provided username, this setting is normally not
+needed. You only need this if the username that comes from authentication will
+not otherwise match with [[setting,oauth2_username_attribute]] value.`
+	},
+
+	oauth2_active_attribute: {
+		tags: [ 'oauth2' ],
+		values: setting_types.STRING,
+		text: `
+Attribute name for (optional) checking whether account is disabled.`
+	},
+
+	oauth2_active_value: {
+		tags: [ 'oauth2' ],
+		values: setting_types.STRING,
+		text: `
+Expected value in \`active_attribute\`. (empty = require present, but anything
+goes)`
+	},
+
+	oauth2_issuers: {
+		tags: [ 'oauth2' ],
+		values: setting_types.BOOLLIST,
+		text: `
+Valid issuer(s) for the token.`
+	},
+
+	oauth2_openid_configuration_url: {
+		tags: [ 'oauth2' ],
+		values: setting_types.STRING,
+		text: `
+URL to [[rfc,7628]] OpenID Provider Configuration Information schema.`
+	},
+
+	oauth2_fields: {
+		tags: [ 'oauth2' ],
+		values: setting_types.STRLIST,
+		text: `
+Key-value fields to include in successful authentication.`
+	},
+
+	oauth2_send_auth_headers: {
+		tags: [ 'oauth2' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Whether to send special headers about authentication to remote server. If you
+enable this, the following headers will be sent:
+
+\`X-Dovecot-Auth-Protocol\`
+:   Requested protocol, such as imap or pop3.
+
+\`X-Dovecot-Auth-Local\`
+:   Local IP address where client connected to.
+
+\`X-Dovecot-Auth-Remote\`
+:   Remote IP address of the client connection.`
+	},
+
+	oauth2_use_worker_with_mech: {
+		tags: [ 'oauth2' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ 'passdb_use_worker' ],
+		text: `
+Use worker process to verify token. This setting only applies to mechanism. If
+you want to use worker with \`passdb oauth2\`, use
+[[setting,passdb_use_worker]] instead. Worker processes are mostly useful for
+distributing local token validation to multiple CPUs.`
 	},
 
 	passdb: {
