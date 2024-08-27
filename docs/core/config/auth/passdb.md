@@ -306,7 +306,10 @@ Postfix to verify the email account:
 
 ```[dovecot.conf]
 passdb static {
-  args = password=test allow_nets=local,127.0.0.1/32
+  password = test
+  fields {
+    allow_nets = local,127.0.0.1/32
+  }
 }
 ```
 
