@@ -8263,6 +8263,16 @@ Configures when passdbs should be skipped:
 | \`unauthenticated\` | Skip if user hasn't yet been successfully authenticated by the previous passdbs. |`
 	},
 
+	passdb_static_password: {
+		added: {
+			settings_passdb_static_password_added: false,
+		},
+		tags: [ 'passdb' ],
+		values: setting_types.STRING,
+		text: `
+The static password to be used for all users authenticating using this passdb.`
+	},
+
 	passdb_use_worker: {
 		tags: [ 'passdb' ],
 		values: setting_types.BOOLEAN,
@@ -9845,6 +9855,17 @@ Configures when userdbs should be skipped:
 | \`never\` | Never skip over this userdb. |
 | \`found\` | Skip if an earlier userdbs already found the user. |
 | \`notfound\` | Skip if previous userdbs haven't yet found the user. |`
+	},
+
+	userdb_static_allow_all_users: {
+		added: {
+			settings_userdb_static_allow_all_users_added: false,
+		},
+		tags: [ 'userdb' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Skip user existence verification via passdb lookup.`
 	},
 
 	userdb_use_worker: {
