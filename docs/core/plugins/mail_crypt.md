@@ -116,8 +116,9 @@ mail_plugins {
   mail_crypt = yes
 }
 mail_attribute {
-  dict_driver = file
-  dict_file_path = %h/Maildir/dovecot-attributes
+  dict file {
+    path = %h/Maildir/dovecot-attributes
+  }
 }
 
 crypt_user_key_curve = secp521r1
@@ -135,8 +136,9 @@ mail_plugins {
   mail_crypt = yes
 }
 mail_attribute {
-  dict_driver = file
-  dict_file_path = %h/Maildir/dovecot-attributes
+  dict file {
+    path = %h/Maildir/dovecot-attributes
+  }
 }
 
 crypt_user_key_curve = secp521r1

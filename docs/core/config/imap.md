@@ -83,8 +83,10 @@ dict_legacy {
 }
 
 mail_attribute {
- dict_driver = proxy
- dict_proxy_name = metadata
+ dict proxy {
+   name = metadata
+  }
+}
 ```
 :::
 
