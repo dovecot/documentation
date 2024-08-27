@@ -146,7 +146,7 @@ Dump a whole configuration section:
 doveconf dict
 ```
 ```
-dict {
+dict_legacy {
   quota_clone = pgsql:/etc/dovecot/dovecot-dict-sql.conf.ext
 }
 ```
