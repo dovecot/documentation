@@ -231,7 +231,7 @@ it are:
   [[setting,fts_solr_url]] setting using [[link,userdb_extra_fields]].
 
   - LDAP: `user_attrs = ..., solrHost=fts_solr_url=https://%$:8983/solr/dovecot/`
-  - MySQL: `user_query = SELECT concat('url=https://', solr_host, ':8983/solr/dovecot/') AS fts_solr, ...`
+  - MySQL: `query = SELECT concat('url=https://', solr_host, ':8983/solr/dovecot/') AS fts_solr, ...`
 
 You can also use
 [SolrCloud](https://lucene.apache.org/solr/guide/7_6/solrcloud.html),

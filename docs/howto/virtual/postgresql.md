@@ -275,27 +275,31 @@ Where mech_list is a list of all the mechanism names to enable.
 
 # Configuring Dovecot
 
-::: code-group
 ```[dovecot.conf]
 mail_driver = maildir
 
+sql_driver = pgsql
+pgsql localhost {
+  parameters {
+    user = mailreader
+    password = secret
+    dbname = mails
+  }
+}
+
 passdb sql {
-  args = /usr/local/etc/dovecot-sql.conf
+  default_password_scheme = CRYPT
+  query = SELECT userid as user, password \
+    FROM users \
+    WHERE userid = '%u'
 }
 
 userdb sql {
-  args = /usr/local/etc/dovecot-sql.conf
+  query = SELECT '/home/' || home AS home, uid, gid \
+    FROM users \
+    WHERE userid = '%u'
 }
 ```
-
-```[/usr/local/etc/dovecot-sql.conf]]
-driver = pgsql
-connect = host=localhost dbname=mails user=mailreader password=secret
-default_pass_scheme = CRYPT
-password_query = SELECT userid as user, password FROM users WHERE userid = '%u'
-user_query = SELECT '/home/'||home AS home, uid, gid FROM users WHERE userid = '%u'
-```
-:::
 
 ## Restart
 
