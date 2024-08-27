@@ -239,7 +239,11 @@ passdb pam {
 }
 
 userdb static {
-  args = uid=vmail gid=vmail home=/var/mail/virtual/%d/%n
+  fields {
+    uid = vmail
+    gid = vmail
+    home = /var/mail/virtual/%d/%n
+  }
 }
 ```
 
@@ -260,7 +264,10 @@ passdb ldap {
 }
 
 passdb static {
-  args = user=%Ld noauthenticate
+  fields {
+    user = %Ld
+    noauthenticate = yes
+  }
   skip = authenticated
 }
 
