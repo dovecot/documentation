@@ -2,6 +2,8 @@
 layout: doc
 title: RFCs
 order: 199
+dovecotlinks:
+  rfcs: Dovecot RFC Support
 ---
 
 # Dovecot RFC Support

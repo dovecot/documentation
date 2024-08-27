@@ -640,7 +640,7 @@ reqbody
 resolv
 restorecon
 resyncing
-RFCs
+rfcs
 RHu
 roundcube
 roundrobin
