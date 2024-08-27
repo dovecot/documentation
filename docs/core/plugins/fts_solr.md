@@ -100,9 +100,10 @@ mail_plugins {
   fts_solr = yes
 }
 
-fts_driver = solr
-fts_solr_url = https://solr.example.org:8983/solr/
-fts_batch_size = 1000
+fts solr {
+  url = url=https://solr.example.org:8983/solr/
+  batch_size = 1000
+}
 ```
 
 Important notes:
