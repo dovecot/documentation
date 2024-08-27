@@ -60,7 +60,7 @@ quota_clone {
 More complex example using SQL:
 
 ```[dovecot.conf]
-dict {
+dict_legacy {
   mysql = mysql:/etc/dovecot/dovecot-dict-sql.conf.ext
 }
 
