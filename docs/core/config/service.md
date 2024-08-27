@@ -103,8 +103,8 @@ There are 3 types of services that need to be optimized in different ways:
 
 The anvil process tracks state of users and their connections.
 
-* **chroot=empty** and **user=$default_internal_user**, because anvil doesn't
-  need access to anything.
+* **chroot=empty** and **user=$SET:default_internal_user**, because anvil
+  doesn't need access to anything.
 
 * **process_limit=1**, because there can be only one.
 
@@ -180,7 +180,7 @@ probably shouldn't touch the `login` and `master` listeners).
 
 * **process_limit=1**, because there can be only one auth master process.
 
-* **user=$default_internal_user**, because it typically doesn't need
+* **user=$SET:default_internal_user**, because it typically doesn't need
   permissions to do anything (PAM lookups are done by auth-workers).
 
 * **chroot** could be set (to e.g. `empty`) if passdb/userdb doesn't need
@@ -212,7 +212,7 @@ be used.
   which usually requires reading `/etc/shadow`.
 
   If this isn't needed, it's a good idea to change this to something else,
-  such as `$default_internal_user`.
+  such as `$SET:default_internal_user`.
 
 * **chroot** could also be set if possible.
 
@@ -260,7 +260,7 @@ connections are the client connections of dict processes.
     CPU cores. Although with Cassandra this may not be true, because Cassandra
     library can use multiple threads.
 
-* **user=$default_internal_user**, because the proxy dict lookups are
+* **user=$SET:default_internal_user**, because the proxy dict lookups are
   typically SQL lookups, which require no filesystem access. (The SQL
   config files are read while still running as root.)
 
@@ -291,7 +291,7 @@ function.
 
 * **client_limit=1**, because the DNS lookup is synchronous.
 
-* **user=$default_internal_user**, because typically no special
+* **user=$SET:default_internal_user**, because typically no special
   privileged files need to be read.
 
 * **chroot** can be used only if it contains `etc/resolv.conf` and other
@@ -364,7 +364,7 @@ by more than one process.
 
 * **process_limit=1**, because only one process can keep the FTS guarantee.
 
-* **user=$default_internal_user**, because the process doesn't need any
+* **user=$SET:default_internal_user**, because the process doesn't need any
   permissions.
 
 * **chroot** could be set to [[setting,base_dir]] for extra security. It
