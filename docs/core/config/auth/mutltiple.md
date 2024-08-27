@@ -41,9 +41,13 @@ returning mail [[link,passdb_extra_fields]].
 mail_driver = maildir
 mail_path = ~/Maildir
 
+sql_driver = mysql
+mysql localhost {
+}
+
 # try to authenticate using SQL database first
 passdb sql {
-  args = /etc/dovecot/dovecot-sql.conf.ext
+  query = SELECT userid AS user, password FROM users WHERE userid = '%u'
 }
 
 # fallback to PAM
@@ -52,18 +56,10 @@ passdb pam {
 
 # look up users from SQL first (even if authentication was done using PAM!)
 userdb sql {
-  args = /etc/dovecot/dovecot-sql.conf.ext
+  query = SELECT uid, gid, '/var/vmail/%d/%n' AS home FROM users WHERE userid = '%u'
 }
 
 # if not found, fallback to /etc/passwd
 userdb passwd {
 }
 ```
-
-```[dovecot-sql.conf.ext]
-password_query = SELECT userid as user, password FROM users \
-    WHERE userid = '%u'
-user_query = SELECT uid, gid, '/var/vmail/%d/%n' as home \
-    FROM users WHERE userid = '%u'
-```
-:::

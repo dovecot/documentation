@@ -63,16 +63,18 @@ The following clients are known to support login referrals:
 
 Forward user to another server after successful authentication (SQL):
 
-```
-password_query = SELECT password, host, 'Y' as nologin \
-    FROM users WHERE userid = '%u'
+```[dovecot.conf]
+passdb sql {
+  query = SELECT password, host, 'Y' as nologin \
+    FROM users \
+    WHERE userid = '%u'
+}
 ```
 
 Forward all users to another server without authentication:
 
-```
-password_query = SELECT NULL AS password, 'Y' AS nopassword \
-    'imap2.example.com' AS host, \
-    'This server is down, try another one.' AS reason, \
-    'Y' AS nologin, 'Y' AS nodelay
+```[dovecot.conf]
+passdb sql {
+  query = SELECT NULL AS password, 'Y' AS nopassword 'imap2.example.com' AS host, 'This server is down, try another one.' AS reason, 'Y' AS nologin, 'Y' AS nodelay
+}
 ```
