@@ -333,7 +333,7 @@ map {
 
 ```[/etc/dovecot/dovecot.conf]
 # dict proxy service
-dict {
+dict_legacy {
   sieve = pgsql:/etc/dovecot/dict-sieve-sql.conf.ext
 }
 
