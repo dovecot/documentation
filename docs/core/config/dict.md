@@ -81,7 +81,7 @@ See [[link,auth_ldap]].
 
 ::: code-group
 ```[dovecot.conf]
-dict {
+dict_legacy {
   somedict = ldap:/path/to/dovecot-ldap-dict.conf.ext
 }
 ```
@@ -145,7 +145,7 @@ changed to `dict-async` if the dict backend support asynchronous lookups
 client, so this configuration prevents creating unnecessarily many dict
 processes.
 
-The `<destination dict>` contains the dict name in the `dict { .. }`
+The `<destination dict>` contains the dict name in the `dict_legacy { .. }`
 settings. For example: `proxy:dict-async:quota`.
 
 See [proxy processes](#dictionary-proxy-process) for more information about

@@ -78,7 +78,7 @@ map {
 ```
 
 ```[/etc/dovecot/dovecot.conf]
-dict {
+dict_legacy {
   metadata = driver:/etc/dovecot/dict.config
 }
 
