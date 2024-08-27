@@ -16,7 +16,7 @@ storage backend is designed.
 
 *config-filter-name*
 :   Filter name to use when looking up the fs settings. For example
-    *mail_attachments*, *obox*, *metacache*, *fts_dovecot*. It's also possible
+    *mail_attachments*, *obox*, *metacache*, *fts/dovecot*. It's also possible
     to use an empty filter name and specify the fs settings using the **-o**
     parameter.
 

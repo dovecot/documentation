@@ -1735,6 +1735,23 @@ plugin {
 
 	/* fts plugin */
 
+	fts: {
+		plugin: 'fts',
+		values: setting_types.NAMED_LIST_FILTER,
+		text: `
+Configures the used fts driver to perform [[plugin,fts]] indexing. If not
+specified, FTS is disabled. The filter name refers to the
+[[setting,fts_driver]] setting.
+
+Example:
+
+\`\`\`[dovecot.conf]
+fts solr {
+  # ...
+}
+\`\`\``
+	},
+
 	fts_autoindex: {
 		default: 'no',
 		plugin: 'fts',
@@ -1838,8 +1855,8 @@ service decode2text {
 		values: setting_types.ENUM,
 		values_enum: [ 'dovecot', 'solr', 'flatcurve' ],
 		text: `
-Name of the backend implementation used to perform [[plugin,fts]] indexing. If
-not specified, [[plugin,fts]] is disabled.`
+Configures the used fts driver to perform [[plugin,fts]] indexing. The
+[[setting,fts]] filter name refers to this setting.`
 	},
 
 	fts_enforced: {
