@@ -119,7 +119,7 @@ auth process or auth worker process. They have different default users:
 
 ```[dovecot.conf]
 service auth {
-  user = $default_internal_user
+  user = $SET:default_internal_user
 }
 
 service auth-worker {
@@ -130,14 +130,14 @@ service auth-worker {
 The user must have access to your [[link,passdb]] and [[link,userdb]].
 It's not used for anything else. The default is to use `root`, because
 it's guaranteed to have access to all the password databases.
-If you don't need this, you should change it to `$default_internal_user`.
+If you don't need this, you should change it to `$SET:default_internal_user`.
 
 [[link,auth_pam]] is usually configured to read `/etc/shadow` file.
 Even this doesn't need root access if the file is readable by shadow group:
 
 ```[dovecot.conf]
 service auth-worker {
-  user = $default_internal_user
+  user = $SET:default_internal_user
   group = shadow
 }
 ```
