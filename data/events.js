@@ -516,11 +516,15 @@ Reason why the caching decision changed:
 * \`unordered_access\`: temp -&gt; yes decision change, because mails weren't accessed in ascending order.
 * Other values indicate a reason for cache purging, which changes the caching decision yes -&gt; temp.`,
 			uid: `IMAP UID number that caused the decision change. This is set only for some reasons, not all.`,
-			old_decision: `Old cache decision: \`no\`, \`temp\`, or \`yes\`.`,
-			new_decision: `New cache decision: \`no\`, \`temp\`, or \`yes\`.`,
+			old_decision: `Old <a href="#mail_cache_decision_changed_decisions">cache decision</a>.`,
+			new_decision: `New <a href="#mail_cache_decision_changed_decisions">cache decision</a>.`,
 		},
 		text: `
-A field's caching decision changed. The decisions are:
+A field's caching decision changed.
+
+<span id="mail_cache_decision_changed_decisions" />
+
+Decisions:
 
 | Decision | Description |
 | -------- | ----------- |
@@ -1210,7 +1214,9 @@ compiling it at delivery).`
 			connected_usecs: `How long ago the client connection was created.`,
 		},
 		text: `
-<span id="pre_login_client_reason_values">\`reason\` values:</span>
+<span id="pre_login_client_reason_values" />
+
+\`reason\` values:
 
 | Reason | Description |
 | ------ | ----------- |
@@ -1281,7 +1287,7 @@ logged into the backend.`
 			disconnect_reason: `Reason for disconnection (empty = clean disconnect).`,
 			idle_usecs: {
 				changed: {
-					events_proxy_session_finished_idle_usecs_changed: `This was previously named idle_secs.`
+					events_proxy_session_finished_idle_usecs_changed: `This was previously named \`idle_secs\`.`
 				},
 				text: `Number of seconds the connection was idling before getting disconnected.`
 			},
