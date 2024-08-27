@@ -366,7 +366,11 @@ crypt_global_private_key main {
 }
 
 passdb static {
-  args = password=pass crypt_global_public_key_file=ecpubkey.pem crypt_global_private_key/main/private_key=<content of ecprivkey.pem>
+  password = pass
+  fields {
+    crypt_global_public_key_file = ecpubkey.pem
+    crypt_global_private_key/main/private_key = <content of ecprivkey.pem>
+  }
 }
 ```
 
