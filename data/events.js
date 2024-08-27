@@ -338,13 +338,13 @@ Most useful for debugging authentication flow.`
 		fields: {
 			net_in_bytes: {
 				changed: {
-					events_net_in_bytes_changed: false
+					events_net_in_bytes_changed: `This was previously \`in_bytes\`.`
 				},
 				text: `Amount of data read, in bytes.`
 			},
 			net_out_bytes: {
 				changed: {
-					events_net_out_bytes_changed: false
+					events_net_out_bytes_changed: `This was previously \`out_bytes\`.`
 				},
 				text: `Amount of data written, in bytes.`
 			},
@@ -403,13 +403,13 @@ Currently it is not possible to know which one happened.
 			syscw: `Number of write syscalls. (Skipped in non-Linux environments.)`,
 			net_in_bytes: {
 				added: {
-					events_net_in_bytes_changed: false
+					events_net_in_bytes_changed: `This was previously \`in_bytes\`.`
 				},
 				text: `Bytes received during this session (for applicable processes.)`
 			},
 			net_out_bytes: {
 				added: {
-					events_net_out_bytes_changed: false
+					events_net_out_bytes_changed: `This was previously \`out_bytes\`.`
 				},
 				text: `Bytes sent during this session (for applicable processes.)`
 			},
@@ -643,13 +643,13 @@ payload) are parsed.`
 		fields: {
 			net_in_bytes: {
 				changed: {
-					events_net_in_bytes_changed: false
+					events_net_in_bytes_changed: `This was previously \`in_bytes\`.`
 				},
 				text: `Amount of request data read, in bytes.`
 			},
 			net_out_bytes: {
 				changed: {
-					events_net_out_bytes_changed: false
+					events_net_out_bytes_changed: `This was previously \`out_bytes\`.`
 				},
 				text: `Amount of response data written, in bytes.`
 			},
@@ -760,13 +760,13 @@ Values:
 			lock_wait_usecs: `How many usecs this command has spent waiting for locks.`,
 			net_in_bytes: {
 				changed: {
-					events_net_in_bytes_changed: false
+					events_net_in_bytes_changed: `This was previously \`in_bytes\`.`
 				},
 				text: `Amount of data read for this command, in bytes.`
 			},
 			net_out_bytes: {
 				changed: {
-					events_net_out_bytes_changed: false
+					events_net_out_bytes_changed: `This was previously \`out_bytes\`.`
 				},
 				text: `Amount of data written for this command, in bytes.`
 			},
@@ -1282,13 +1282,13 @@ logged into the backend.`
 			},
 			net_in_bytes: {
 				changed: {
-					events_net_in_bytes_changed: false
+					events_net_in_bytes_changed: `This was previously \`in_bytes\`.`
 				},
 				text: `Amount of data read from client, in bytes.`
 			},
 			net_out_bytes: {
 				changed: {
-					events_net_out_bytes_changed: false
+					events_net_out_bytes_changed: `This was previously \`out_bytes\`.`
 				},
 				text: `Amount of data written to client, in bytes.`
 			},
@@ -1522,13 +1522,13 @@ Reason string for purging the cache file:
 			attempts: `Amount of individual HTTP request attempts (number of retries after failures + 1).`,
 			net_in_bytes: {
 				changed: {
-					events_net_in_bytes_changed: false
+					events_net_in_bytes_changed: `This was previously \`in_bytes\`.`
 				},
 				text: `Amount of data read, in bytes.`
 			},
 			net_out_bytes: {
 				changed: {
-					events_net_out_bytes_changed: false
+					events_net_out_bytes_changed: `This was previously \`out_bytes\`.`
 				},
 				text: `Amount of data written, in bytes.`
 			},
