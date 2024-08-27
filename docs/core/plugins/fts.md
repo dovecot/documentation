@@ -60,7 +60,7 @@ On the other hand, searching through message headers benefits from Dovecot's
 standard index and cache files (`dovecot.index` and `dovecot.index.cache`),
 which often contain the necessary information.  It is possible to redirect
 header searches to FTS indexes via a configuration option
-([[setting,fts_enforced]]).
+([[setting,fts_search_add_missing]]).
 
 Triggers for FTS indexing are configurable. It can be started on demand when
 searching, or automatically when new messages arrive or as a batch job.
@@ -121,7 +121,7 @@ which does not have indexes for mail bodies.
 This could end up opening all the mails in the mailbox, which often isn't
 wanted.
 
-To disable this functionality, enable [[setting,fts_enforced]].
+To disable this functionality, enable [[setting,fts_search_add_missing]].
 
 ## Indexing Attachments
 
