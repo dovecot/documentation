@@ -4387,6 +4387,42 @@ deliver_log_format = stime=%{session_time} msgid=%m: %$
 \`\`\``
 	},
 
+	dict: {
+		tags: [ 'dict' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'dict_name', 'dict_driver' ],
+		text: `
+Creates a new dict. The filter name refers to the [[setting,dict_name]]
+setting.
+
+Example:
+
+\`\`\`[dovecot.conf]
+dict file {
+  # ...
+}
+\`\`\`
+
+Since an empty [[setting,dict_driver]] defaults to [[setting,dict_name]], there
+is no need to specify the [[setting,dict_driver]] setting explicitly.`
+	},
+
+	dict_name: {
+		tags: [ 'dict' ],
+		values: setting_types.STRING,
+		seealso: [ 'dict_driver' ],
+		text: `
+Name of the dict. The [[setting,dict_driver]] setting defaults to this.`
+	},
+
+	dict_driver: {
+		tags: [ 'dict' ],
+		values: setting_types.STRING,
+		default: '<dict_name>',
+		text: `
+The dict driver to use. Defaults to [[setting,dict_name]].`
+	},
+
 	dotlock_use_excl: {
 		default: 'yes',
 		values: setting_types.BOOLEAN,
