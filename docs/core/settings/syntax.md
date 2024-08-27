@@ -145,7 +145,7 @@ Above the `auth-master` both uniquely identifies the filter name, but it also
 acts as the `unix_listener_path` setting.
 
 Settings inside filters are automatically attempted to be prefixed by the
-filter prefix to avoid repetition. For example:
+innermost filter prefix to avoid repetition. For example:
 
 ```[dovecot.conf]
 service imap {
@@ -156,8 +156,8 @@ service imap {
 ```
 
 The `ssl` setting is attempted to be looked up in this order:
+1. `inet_listener_imaps_ssl`
 1. `inet_listener_ssl`
-1. `service_ssl`
 1. `ssl`
 
 The first setting that exists is used.
