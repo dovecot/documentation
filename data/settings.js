@@ -4436,6 +4436,246 @@ Name of the dict. The [[setting,dict_driver]] setting defaults to this.`
 The dict driver to use. Defaults to [[setting,dict_name]].`
 	},
 
+	dict_file_path: {
+		tags: [ 'dict', 'dict-file' ],
+		values: setting_types.STRING,
+		text: `
+Path for the dictionary file.`
+	},
+
+	dict_proxy_name: {
+		tags: [ 'dict', 'dict-proxy' ],
+		values: setting_types.STRING,
+		seealso: [ 'dict_name' ],
+		text: `
+Name of the dict to access in the dict server. This refers to the
+[[setting,dict_name]] setting.`
+	},
+
+	dict_proxy_socket_path: {
+		tags: [ 'dict', 'dict-proxy' ],
+		values: setting_types.STRING,
+		default: 'dict',
+		text: `
+Points to the dict server's UNIX socket. The path is relative to the the
+[[setting,base_dir]] setting. This should be changed to \`dict-async\` if the
+dict backend supports asynchronous lookups (e.g. ldap, pgsql, cassandra, NOT
+mysql). The \`dict-async\` service allows more than one client, so this
+configuration prevents creating unnecessarily many dict processes.`
+	},
+
+	dict_proxy_idle_timeout: {
+		tags: [ 'dict', 'dict-proxy' ],
+		values: setting_types.TIME_MSECS,
+		default: 0,
+		text: `
+How long to keep the connection open to dict server before disconnecting. \`0\`
+means immediate disconnection after finishing the operation.`
+	},
+
+	dict_proxy_slow_warn: {
+		tags: [ 'dict', 'dict-proxy' ],
+		values: setting_types.TIME_MSECS,
+		default: '5s',
+		text: `
+Log a warning about dict lookups that take longer than this interval.`
+	},
+
+	dict_redis_socket_path: {
+		tags: [ 'dict', 'dict-redis' ],
+		values: setting_types.STRING,
+		text: `
+UNIX socket path to the Redis server. This is preferred over
+[[setting,dict_redis_host]] if both are set.`
+	},
+
+	dict_redis_host: {
+		tags: [ 'dict', 'dict-redis' ],
+		values: setting_types.STRING,
+		default: '127.0.0.1',
+		text: `
+Redis server host.`
+	},
+
+	dict_redis_port: {
+		tags: [ 'dict', 'dict-redis' ],
+		values: setting_types.UINT,
+		default: 6379,
+		text: `
+Value Range: \`<1-65535>\`
+
+Redis server port.`
+	},
+
+	dict_redis_password: {
+		tags: [ 'dict', 'dict-redis' ],
+		values: setting_types.STRING,
+		text: `
+Redis server password.`
+	},
+
+	dict_redis_db_id: {
+		tags: [ 'dict', 'dict-redis' ],
+		values: setting_types.UINT,
+		default: 0,
+		text: `
+Database number.`
+	},
+
+	dict_redis_key_prefix: {
+		tags: [ 'dict', 'dict-redis' ],
+		values: setting_types.STRING,
+		text: `
+Prefix to add to all keys.`
+	},
+
+	dict_redis_expire: {
+		tags: [ 'dict', 'dict-redis' ],
+		values: setting_types.TIME,
+		default: 'infinite',
+		text: `
+Expiration value for all keys.`
+	},
+
+	dict_redis_request_timeout: {
+		tags: [ 'dict', 'dict-redis' ],
+		values: setting_types.TIME_MSECS,
+		default: '30s',
+		text: `
+How long to wait for answer before aborting request.`
+	},
+
+	dict_map: {
+		tags: [ 'dict', 'dict-sql' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'dict_map_pattern' ],
+		text: `
+Creates a new dict mapping. The filter name refers to the
+[[setting,dict_map_pattern]] setting.`
+	},
+
+	dict_map_pattern: {
+		tags: [ 'dict', 'dict-sql' ],
+		values: setting_types.STRING,
+		text: `
+Pattern that is matched to the accessed dict keys. The [[setting,dict_map]]
+filter name refers to this setting. If the pattern matches the key, this dict
+map (and no other) is used. The dict maps are processed in the order listed in
+the configuration file.`
+	},
+
+	dict_map_sql_table: {
+		tags: [ 'dict', 'dict-sql' ],
+		values: setting_types.STRING,
+		text: `
+SQL table to use for accessing this dict map.`
+	},
+
+	dict_map_username_field: {
+		tags: [ 'dict', 'dict-sql' ],
+		values: setting_types.STRING,
+		text: `
+Field in the SQL table to use for accessing private dict keys in this dict map.
+This setting is optional if only shared keys are accessed.`
+	},
+
+	dict_map_expire_field: {
+		tags: [ 'dict', 'dict-sql' ],
+		values: setting_types.STRING,
+		text: `
+Field in the SQL table to use for tracking dict key expiration. This field is
+optional if no expiration is used by the code accessing the dict map.`
+	},
+
+	dict_map_value: {
+		tags: [ 'dict', 'dict-sql' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'dict_map_value_name' ],
+		text: `
+Creates a new value for the dict map. The filter name refers to the
+[[setting,dict_map_value_name]] setting. Dict supports reading/writing multiple
+values for the same key.`
+	},
+
+	dict_map_field: {
+		tags: [ 'dict', 'dict-sql' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'dict_map_field_pattern' ],
+		text: `
+Creates a new field for the dict map. The filter name refers to the
+[[setting,dict_map_field_pattern]] setting. The fields are part of the SQL
+query looking up the dict key.`
+	},
+
+	dict_map_value_name: {
+		tags: [ 'dict', 'dict-sql' ],
+		values: setting_types.STRING,
+		seealso: [ 'dict_map_value' ],
+		text: `
+Field in the SQL table to use for the [[setting,dict_map_value]].`
+	},
+
+	dict_map_value_type: {
+		tags: [ 'dict', 'dict-sql' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'string', 'int', 'uint', 'double', 'hexblob', 'uuid' ],
+		default: 'string',
+		seealso: [ 'dict_map_value' ],
+		text: `
+Type of the field in the SQL table for the [[setting,dict_map_value]].`
+	},
+
+	dict_map_field_pattern: {
+		tags: [ 'dict', 'dict-sql' ],
+		values: setting_types.STRING,
+		seealso: [ 'dict_map_pattern', 'dict_map_field' ],
+		text: `
+Variable in the [[setting,dict_map_pattern]] that maps to this
+[[setting,dict_map_field]]. The value must always begin with \`$\`.`
+	},
+
+	dict_map_field_name: {
+		tags: [ 'dict', 'dict-sql' ],
+		values: setting_types.STRING,
+		seealso: [ 'dict_map_field' ],
+		text: `
+Field in the SQL table to use for the [[setting,dict_map_field]].`
+	},
+
+	dict_map_field_type: {
+		tags: [ 'dict', 'dict-sql' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'string', 'int', 'uint', 'double', 'hexblob', 'uuid' ],
+		default: 'string',
+		seealso: [ 'dict_map_field' ],
+		text: `
+Type of the field in the SQL table for the [[setting,dict_map_field]].`
+	},
+
+	dict_server: {
+		tags: [ 'dict', 'dict-server' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'dict' ],
+		text: `
+Named filter for the dict server settings. Add the available named dicts for
+the dict server under this filter using the [[setting,dict]] settings.
+
+For example:
+
+\`\`\`[dovecot.conf]
+dict_server {
+  dict quota {
+    driver = sql
+    # ...
+  }
+  dict acl {
+    driver = file
+    # ...
+  }
+}
+\`\`\``
+	},
+
 	dotlock_use_excl: {
 		default: 'yes',
 		values: setting_types.BOOLEAN,
