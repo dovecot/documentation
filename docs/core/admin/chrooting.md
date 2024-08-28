@@ -54,8 +54,8 @@ chroot mail processes to directories which aren't listed in
 [[setting,valid_chroot_dirs]] setting. For example if your users
 may be chrooting under `/var/mail/<user>/` and `/home/<user>/`, use:
 
-```
-valid_chroot_dirs = /var/mail:/home
+```[dovecot.conf]
+valid_chroot_dirs = /var/mail /home
 ```
 
 You can chroot all users globally into the same directory by using
