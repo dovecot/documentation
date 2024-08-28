@@ -6092,10 +6092,10 @@ Controls if "Received:" header should be added to delivered mails.`
 
 	lmtp_client_workarounds: {
 		tags: [ 'lmtp' ],
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-Configures the list of active workarounds for LMTP client bugs. The list is
-space-separated. Supported workaround identifiers are:
+Configures the list of active workarounds for LMTP client bugs. Supported
+workaround identifiers are:
 
 \`whitespace-before-path\`
 :   Allow one or more spaces or tabs between 'MAIL FROM:' and path and
