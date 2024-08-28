@@ -5588,6 +5588,14 @@ How long to wait for a reply to an IMAP command sent to the remote IMAP
 server before disconnecting and retrying.`
 	},
 
+	imapc_connection_timeout_interval: {
+		tags: [ 'imapc' ],
+		values: setting_types.TIME_MSECS,
+		default: '30secs',
+		text: `
+How long to wait before considering a connection attempt as timed out.`
+	},
+
 	imapc_connection_retry_count: {
 		default: 1,
 		tags: [ 'imapc' ],
