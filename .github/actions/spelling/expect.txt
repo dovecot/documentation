@@ -67,7 +67,6 @@ Boehm
 Bokmal
 Borenstein
 boollist
-BROKENCHAR
 bsd
 bsdauth
 bsearch
@@ -115,7 +114,6 @@ currentdate
 cydir
 cyrusimap
 datacenter
-DATADIR
 DATAERR
 datalake
 datastack
@@ -203,7 +201,6 @@ esac
 ESEARCH
 ESORT
 ESTMP
-etuid
 eucjp
 euid
 examplescripts
@@ -237,7 +234,6 @@ fpdb
 Frontends
 FROP
 fscache
-fscrypt
 fsgid
 fsuid
 fsynced
@@ -271,6 +267,7 @@ hatv
 hba
 hdr
 hendrik
+hexblob
 hexuc
 hhmm
 highestmodseq
@@ -279,7 +276,6 @@ Hopmann
 hostaddr
 hostdomain
 hostip
-hostspec
 howto
 htdigest
 htpasswd
@@ -306,7 +302,6 @@ imtest
 INBO
 inbox
 inboxes
-INDEXPVT
 Indiciation
 inka
 Inno
@@ -322,7 +317,6 @@ ipairs
 ipt
 iredmail
 isps
-ITERINDEX
 jan
 jano
 jeffpc
@@ -398,11 +392,10 @@ libsqlite
 lifewithqmail
 listescape
 listfile
-LISTINDEX
 listname
 listscripts
-lkas
 LISTSERV
+lkas
 lmtp
 lmtponly
 lmtptest
@@ -422,13 +415,13 @@ lrwstipekxacd
 lsearch
 lucene
 lugog
+Luonnokset
 lwq
 lwristepai
 macl
 maclen
 madboa
 mailauth
-MAILBOXDIR
 mailboxlog
 mailboxname
 maildir
@@ -533,7 +526,6 @@ nfsmount
 ngrams
 ninf
 NLEVEL
-NOALTCHECK
 noanonymous
 noatime
 noauthenticate
@@ -680,9 +672,9 @@ resyncing
 rfcs
 RHu
 Rivest
+Roskakori
 roundcube
 roundrobin
-rpa
 rport
 rquota
 rsaprivkey
@@ -910,7 +902,6 @@ vlast
 vmail
 vname
 vnd
-VOLATILEDIR
 vpv
 vsize
 vsz
