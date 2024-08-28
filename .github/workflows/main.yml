@@ -48,7 +48,9 @@ jobs:
         LOCALPATH: /.vitepress/dist/.
         REMOTEPATH: public_html/${{ github.ref_name }}
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-      if: secrets.DEPLOY_KEY
+      if: env.DEPLOY_KEY
+      env:
+        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
     - name: Fix symlinks
       run: |
         mkdir -p $HOME/.ssh
@@ -111,4 +113,6 @@ jobs:
         LOCALPATH: /build/.
         REMOTEPATH: public_html/2.3
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-      if: secrets.DEPLOY_KEY
+      if: env.DEPLOY_KEY
+      env:
+        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
