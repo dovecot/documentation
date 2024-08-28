@@ -5322,10 +5322,9 @@ imap_capability = +XFOO XBAR
 
 	imap_client_workarounds: {
 		tags: [ 'imap' ],
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-Workarounds for various IMAP client bugs can be enabled here. The list is
-space-separated.
+Workarounds for various IMAP client bugs can be enabled here.
 
 The following values are currently supported:
 
