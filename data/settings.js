@@ -7978,10 +7978,9 @@ processing is done.`
 		changed: {
 			settings_mailbox_special_use_changed: `Using non-standard special-use flags will result in a warning message at startup.`
 		},
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-Space-separated list of SPECIAL-USE ([[rfc,6154]]) flags to broadcast for
-the mailbox.
+List of SPECIAL-USE ([[rfc,6154]]) flags to broadcast for the mailbox.
 
 There are no validity checks, so you could specify anything you want here,
 but it's not a good idea to use other than the standard ones specified in
