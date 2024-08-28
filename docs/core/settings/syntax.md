@@ -273,6 +273,61 @@ See [[link,settings_types]] for which types of settings are supported by the
 configuration. Note especially the [[link,settings_types_strlist]] and
 [[link,settings_types_boollist]] which look similar to named filters.
 
+## Groups includes
+
+You can create groups of settings, which can be referred to elsewhere. The
+groups themselves are grouped into labels. The label prefix can be omitted from
+the settings' names. The syntax is:
+
+```[dovecot.conf]
+group @label name {
+  # settings, with label_ prefix automatically attempted to be added
+}
+```
+
+For example:
+
+```[dovecot.conf]
+group @mysql default {
+  host = mysql.example.com
+  mysql_ssl = yes
+  ssl_client_ca_file = /etc/ssl/ca.pem
+}
+passdb sql {
+  @mysql = default
+  # ...
+}
+
+group @mailboxes english {
+  mailbox Trash {
+    auto = subscribe
+    special_use = \Trash
+  }
+  mailbox Drafts {
+    auto = subscribe
+    special_use = \Drafts
+  }
+}
+group @mailboxes finnish {
+  mailbox Roskakori {
+    auto = subscribe
+    special_use = \Trash
+  }
+  mailbox Luonnokset {
+    auto = subscribe
+    special_use = \Drafts
+  }
+}
+namespace inbox {
+  @mailboxes = english
+}
+```
+
+It's possible to override groups using the command line parameter `-o` or
+userdb. For example above you can return `namespace/inbox/@mailboxes=finnish`
+from userdb to change mailbox names to Finnish language. Note that groups can't
+be added via overrides unless `@label` is already set in the config file.
+
 ## Including Config Files
 
 The main `dovecot.conf` file can also include other config files:
