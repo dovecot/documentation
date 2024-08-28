@@ -8613,10 +8613,9 @@ Path to the passwd-file.`
 
 	pop3_client_workarounds: {
 		tags: [ 'pop3' ],
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-Workarounds for various POP3 client bugs can be enabled here.  The list is
-space-separated.
+Workarounds for various POP3 client bugs can be enabled here.
 
 The following values are currently supported:
 
