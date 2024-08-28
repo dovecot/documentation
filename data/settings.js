@@ -5875,6 +5875,11 @@ Use TLS to connect to the remote IMAP server.
 	},
 
 	imapc_ssl_verify: {
+		removed: {
+			settings_imapc_ssl_verify_removed: `
+Dropped in favor of using the global
+[[setting,ssl_client_require_valid_cert]].`
+		},
 		default: 'yes',
 		tags: [ 'imapc' ],
 		seealso: [ 'imapc_ssl' ],
