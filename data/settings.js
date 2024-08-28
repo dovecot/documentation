@@ -10156,10 +10156,9 @@ SQL query to list all available usernames.`
 	},
 
 	valid_chroot_dirs: {
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-A colon-separated list of directories under which chrooting is allowed for
-mail processes.
+List of directories under which chrooting is allowed for mail processes.
 
 Addresses the risk of root exploits enabled by incorrect use of chrooting.
 
