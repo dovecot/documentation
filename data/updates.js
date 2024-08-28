@@ -17,6 +17,7 @@ export const updates = {
 	cassandra_log_retries_added: '2.4.0',
 	crypt_des_md5_schemes: '2.4.0',
 	auth_client_common_secured: '2.4.0',
+	auth_imap_arg_configuration_removed: '2.4.0',
 	auth_nss: '2.3.0',
 	auth_oauth2_no_passdb_changed: '2.4.0',
 	auth_policy_fail_type: '2.4.0',
