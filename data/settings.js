@@ -5767,7 +5767,7 @@ List of features, optimizations, and workarounds that can be enabled.
 	},
 
 	imapc_host: {
-		tags: [ 'imapc' ],
+		tags: [ 'imapc', 'imapc-auth' ],
 		values: setting_types.STRING,
 		text: `The remote IMAP host to connect to.`
 	},
@@ -5838,14 +5838,14 @@ If using master users, this setting will be the password of the master user.`
 
 	imapc_port: {
 		default: 143,
-		tags: [ 'imapc' ],
+		tags: [ 'imapc', 'imapc-auth' ],
 		values: setting_types.IN_PORT,
 		text: `The port on the remote IMAP host to connect to.`
 	},
 
 	imapc_rawlog_dir: {
 		seealso: [ '[[link,rawlog]]' ],
-		tags: [ 'imapc' ],
+		tags: [ 'imapc', 'imapc-auth' ],
 		values: setting_types.STRING,
 		text: `Log all IMAP traffic input/output to this directory.`
 	},
@@ -5871,7 +5871,7 @@ imapc_sasl_mechanisms {
 
 	imapc_ssl: {
 		default: 'no',
-		tags: [ 'imapc' ],
+		tags: [ 'imapc', 'imapc-auth' ],
 		values: setting_types.ENUM,
 		values_enum: [ 'no', 'imaps', 'starttls' ],
 		text: `
@@ -5904,7 +5904,7 @@ Only used if [[setting,imapc_ssl]] is enabled.`
 	},
 
 	imapc_user: {
-		tags: [ 'imapc' ],
+		tags: [ 'imapc', 'imapc-auth' ],
 		seealso: [ 'imapc_master_user', 'imapc_password' ],
 		values: setting_types.STRING,
 		default: '%{owner_user}',
