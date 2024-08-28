@@ -280,61 +280,73 @@ For greater flexibility, it's possible to use a SQL backend for your
 dict scripts.
 
 First, set up a configuration file (such as
+`/etc/dovecot/dict-sieve-sql.conf.inc`) with your database configuration. This
+should consist of the following parts:
+
+First, set up a configuration file (such as
 `/etc/dovecot/dict-sieve-sql.conf`) with your database configuration. Next,
-create a dict proxy service (`/etc/dovecot/dovecot.conf`). Finally,
-configure Sieve to check the dict to lookup up a script called "active" in the
-database:
+create a dict proxy service (in `dovecot.conf`). Finally, configure Sieve to
+check the dict to lookup up a script called "active" in the database:
 
 ::: code-group
-```[/etc/dovecot/dict-sieve-sql.conf]
-# The database connection params
-connect = host=localhost dbname=dovecot user=dovecot password=password
-
+```[/etc/dovecot/dict-sieve-sql.conf.inc]
 # The name mapping that yields the ID of the Sieve script
-map {
-  # The name of the script, as per the "sieve" config parameter
-  pattern = priv/sieve/name/$script_name
 
+# The name of the script, as per the "sieve" config parameter
+dict_map priv/sieve/name/$script_name {
   # The database table
-  table = user_sieve_scripts
+  sql_table = user_sieve_scripts
 
-  # The field in the table to query on
+  # The username field in the table to query
   username_field = username
 
   # The field which contains the return value of the script ID
-  value_field = id
+  value id {
+  }
 
-  fields {
-	# FIXME: The other database field to query?
-    script_name = $script_name
+  # The script name field in the table to query
+  field script_name {
+    pattern = $script_name
   }
 }
 
 # The name mapping that yields the script content from ID
-map {
-  # The ID, obtained from above
-  pattern = priv/sieve/data/$id
 
+# The ID, obtained from above
+dict_map priv/sieve/data/$id {
   # The database table
-  table = user_sieve_scripts
+  sql_table = user_sieve_scripts
 
-  # The field in the table to query
+  # The username field in the table to query
   username_field = username
 
   # The field which contains the script
-  value_field = script_data
+  value script_data {
+  }
 
-  fields {
-	# FIXME: The other database field to query?
+  # The id field in the table to query
+  fields id {
     id = $id
   }
 }
 ```
 
-```[/etc/dovecot/dovecot.conf]
-# dict proxy service
-dict_legacy {
-  sieve = pgsql:/etc/dovecot/dict-sieve-sql.conf.ext
+```[dovecot.conf]
+dict_server {
+  dict sieve {
+    driver = sql
+    sql_driver = pgsql
+
+    pgsql localhost {
+      parameters {
+        dbname = dovecot
+        user = dovecot
+        password = password
+      }
+    }
+
+    !include /etc/dovecot/dict-sieve-sql.conf.inc
+  }
 }
 
 # dict lookup
