@@ -5832,15 +5832,19 @@ If using master users, this setting will be the password of the master user.`
 	imapc_sasl_mechanisms: {
 		default: 'plain',
 		tags: [ 'imapc' ],
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
 The [[link,sasl]] mechanisms to use for authentication when connection to a
 remote IMAP server.
 
 The first one advertised by the remote IMAP sever is used.
 
-\`\`\`
-imapc_sasl_mechanisms = external plain login
+\`\`\`[dovecot.conf]
+imapc_sasl_mechanisms {
+  external = yes
+  plain = yes
+  login = yes
+}
 \`\`\``
 	},
 
