@@ -6534,7 +6534,7 @@ would allow reading others' mail).`
 
 	mail_always_cache_fields: {
 		seealso: [ 'mail_cache_fields', 'mail_never_cache_fields' ],
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
 The fields specified here are always added to cache when saving mails, even
 if the client never accesses these fields.
@@ -6661,7 +6661,7 @@ mail_attribute {
 	mail_cache_fields: {
 		default: 'flags',
 		seealso: [ 'mail_always_cache_fields', 'mail_never_cache_fields' ],
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
 The default list of fields that are added to cache if no other caching
 decisions exist yet. This setting is used only when creating the initial
@@ -6819,7 +6819,7 @@ Unique users are identified via case-sensitive comparison.`
 	mail_never_cache_fields: {
 		default: 'imap.envelope',
 		seealso: [ 'mail_always_cache_fields', 'mail_cache_fields' ],
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
 List of fields that should never be cached.
 
