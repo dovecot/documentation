@@ -4440,7 +4440,7 @@ by default.`
 
 	doveadm_allowed_commands: {
 		default: 'ALL',
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
 Lists the commands that the client may use with the doveadm server.
 
