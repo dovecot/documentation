@@ -880,6 +880,7 @@ finished.`
 
 	sql_query_finished: {
 		root: 'sql',
+		inherit: 'sql_common',
 		fields: {
 			error: `Human readable error.`,
 			error_code: `Error code (if available).`,
@@ -902,6 +903,7 @@ finished.`
 
 	sql_transaction_finished: {
 		root: 'sql',
+		inherit: 'sql_common',
 		fields: {
 			error: `Human readable error.`,
 			error_code: `Error code (if available).`,
@@ -911,6 +913,7 @@ finished.`
 
 	sql_connection_finished: {
 		root: 'sql',
+		inherit: 'sql_common',
 		text: `Connection to SQL server is closed.`
 	},
 
@@ -1873,4 +1876,9 @@ characters and no control characters.
 		},
 	},
 
+	sql_common: {
+		fields: {
+			sql_driver: `Name of the sql driver, e.g. \`mysql\` or \`cassandra\`.`,
+		},
+	},
 }
