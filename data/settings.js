@@ -6435,6 +6435,9 @@ doveadm processes.`
 	login_source_ips: {
 		values: setting_types.IPADDR,
 		text: `
+Value Format: List of trusted network ranges, see
+[[link,settings_types_boollist]].
+
 A list of hosts / IP addresses that are used in a round-robin manner for
 the source IP address when the proxy creates TCP connections.
 
@@ -6444,8 +6447,10 @@ listed addresses that exist on the current server should be used.
 
 Example:
 
-\`\`\`
-login_source_ips = ?proxy-sources.example.com
+\`\`\`[dovecot.conf]
+login_source_ips {
+  proxy-sources.example.com = yes
+}
 \`\`\``
 	},
 
