@@ -5606,10 +5606,9 @@ How many times to retry connection against a remote IMAP server?`
 		changed: {
 			settings_imapc_features_changed: `Several features are now automatically enabled and the respective flags dropped. In their place new flags to disable these features were added.`
 		},
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-A space-separated list of features, optimizations, and workarounds that can
-be enabled.
+List of features, optimizations, and workarounds that can be enabled.
 
 **Features**
 :   \`no-acl\`
