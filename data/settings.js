@@ -1986,7 +1986,8 @@ A value of \`0\` means no timeout.`
 
 	fts_decoder_tika_url: {
 		added: {
-			settings_fts_tika_changed_auth: `Basic authentication support (via URL) is added.`
+			settings_fts_tika_changed_auth: `
+Basic authentication support (via URL) is added.`
 		},
 		changed: {
 			settings_fts_decoder_tika_url_changed: `
@@ -4095,7 +4096,8 @@ If \`no\`, there will be no report for the authentication result.`
 	auth_policy_request_attributes: {
 		default: 'login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%{protocol} session_id=%{session} fail_type=%{fail_type}',
 		changed: {
-			settings_auth_policy_request_attributes_changed: `Default has changed.`
+			settings_auth_policy_request_attributes_changed: `
+Default has changed.`
 		},
 		tags: [ 'auth_policy' ],
 		values: setting_types.STRING,
@@ -5604,7 +5606,9 @@ How many times to retry connection against a remote IMAP server?`
 	imapc_features: {
 		tags: [ 'imapc' ],
 		changed: {
-			settings_imapc_features_changed: `Several features are now automatically enabled and the respective flags dropped. In their place new flags to disable these features were added.`
+			settings_imapc_features_changed: `
+Several features are now automatically enabled and the respective flags
+dropped. In their place new flags to disable these features were added.`
 		},
 		values: setting_types.BOOLLIST,
 		text: `
@@ -7987,7 +7991,9 @@ processing is done.`
 	mailbox_special_use: {
 		tags: [ 'mailbox' ],
 		changed: {
-			settings_mailbox_special_use_changed: `Using non-standard special-use flags will result in a warning message at startup.`
+			settings_mailbox_special_use_changed: `
+Using non-standard special-use flags will result in a warning message at
+startup.`
 		},
 		values: setting_types.BOOLLIST,
 		text: `
