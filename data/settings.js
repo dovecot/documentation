@@ -5817,15 +5817,13 @@ Dovecot will send either \`NOOP\` or \`DONE\` to the source IMAP server.`
 	},
 
 	imapc_max_line_length: {
-		default: 0,
 		tags: [ 'imapc' ],
 		values: setting_types.SIZE,
+		default: 'unlimited',
 		text: `
 The maximum line length to accept from the remote IMAP server.
 
-This setting is used to limit maximum memory usage.
-
-A value of \`0\` indicates no maximum.`
+This setting is used to limit maximum memory usage.`
 	},
 
 	imapc_password: {
