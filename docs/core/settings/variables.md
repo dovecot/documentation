@@ -187,6 +187,7 @@ See also:
 | | `original_username` | Same as `%{username}`, except using the original username |
 | | `original_domain` | Same as `%{domain}`, except using the original username  |
 | | `listener` | Socket listener name as specified in config file, which accepted the client connection. |
+| | `owner_user` | For shared storage this is the `%{user}` variable of the owner, otherwise it is the same as `%{user}`.<br />[[added,variables_owner_user_added]] |
 | | `passdb:<name>` | Return passdb extra field "name". `%{passdb:name:default}` returns "default" if "name" doesn't exist (not returned if name exists but is empty). Note that this doesn't work in passdb/userdb ldap's pass_attrs or user_attrs. |
 | | `passdb:forward_<name>` | Used by proxies to pass on extra fields to the next hop, see [[link,auth_forward_fields]]. |
 
