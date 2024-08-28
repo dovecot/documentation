@@ -8782,10 +8782,9 @@ and with [[variable,global]]:
 
 	pop3c_features: {
 		tags: [ 'pop3c' ],
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-A space-separated list of features, optimizations, and workarounds that can
-be enabled.
+List of features, optimizations, and workarounds that can be enabled.
 
 Workarounds:
 
