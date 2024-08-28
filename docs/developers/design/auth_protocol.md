@@ -142,7 +142,7 @@ AUTH-only parameters are:
 | `tls_cipher=<cipher>` | TLS cipher being used. |
 | `tls_cipher_bits=<bits>` | The number of bits in the TLS cipher. |
 | `tls_pfs=<string>` | TLS perfect forward secrecy algorithm (e.g. DH, ECDH) |
-| `tls_protocol=<name>` | TLS protocol name (e.g. SSLv3, TLSv1.2) |
+| `tls_protocol=<name>` | TLS protocol name (e.g. `TLSv1.2`) |
 | `valid-client-cert` | Remote user has presented a valid SSL certificate. |
 | `no-penalty` | Ignore auth penalty tracking for this request |
 | `cert_username` | Username taken from client's SSL certificate. |

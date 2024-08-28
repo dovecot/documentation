@@ -128,6 +128,7 @@ Driver log level.
 
 * Default: `no`
 * Values: [[link,settings_types_boolean]]
+* [[added,cassandra_log_retries_added]]
 
 Whether to log about failed requests that are retried (which may or may
 not succeed after the retry).

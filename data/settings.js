@@ -1547,6 +1547,9 @@ If enabled, index mail as it is delivered or appended.`
 		plugin: 'fts',
 		seealso: [ 'fts_autoindex' ],
 		values: setting_types.STRING,
+		changed: {
+			settings_fts_autoindex_exclude_namespaces_changed: 'This setting now honors namespaces for mailbox names.'
+		},
 		text: `
 To exclude a mailbox from automatic indexing, it can be listed in this
 setting.
@@ -2558,6 +2561,9 @@ If set, allows message deliveries to exceed quota by this value.`
 		values: setting_types.UINT,
 		tags: [ 'storage_size_limits' ],
 		seealso: [ '[[link,quota_mailbox_count]]' ],
+		added: {
+			settings_quota_mailbox_count_added: false
+		},
 		text: `
 Maximum number of mailboxes that can be created. Each namespace is tracked
 separately, so e.g. shared mailboxes aren't counted towards the user's own
@@ -2571,6 +2577,9 @@ limit.
 		plugin: 'quota',
 		values: setting_types.UINT,
 		tags: [ 'storage_size_limits' ],
+		added: {
+			settings_quota_mailbox_message_count_added: false
+		},
 		text: `
 Maximum number of messages that can be created in a single mailbox.
 
@@ -3537,6 +3546,9 @@ If \`0\`, commands are run directly in the same process.`
 
 	dovecot_config_version: {
 		values: setting_types.STRING,
+		added: {
+			settings_dovecot_config_version_added: false
+		},
 		text: `
 Dovecot configuration version. It uses the same versioning as Dovecot in
 general, e.g. \`3.0.5\`. This must be the first setting in the
@@ -3552,6 +3564,9 @@ will be a clear failure at startup.`
 
 	dovecot_storage_version: {
 		values: setting_types.STRING,
+		added: {
+			settings_dovecot_storage_version_added: false
+		},
 		text: `
 Dovecot storage file format version. It uses the same versioning as Dovecot in
 general, e.g. \`3.0.5\`. It specifies the oldest Dovecot version
@@ -4593,6 +4608,9 @@ The prefix for each line written to the log file.
 
 	login_socket_path: {
 		values: setting_types.STRING,
+		added: {
+			settings_login_socket_path_added: false,
+		},
 		text: `
 Default socket path for all services' login processes. Can be overridden by
 passing a parameter to the login executable.`
@@ -6747,6 +6765,9 @@ The settings [[setting,state_dir,/home/foo/dovecot/state]] and
 	submission_add_received_header: {
 		default: 'yes',
 		tags: [ 'submission' ],
+		added: {
+			settings_submission_add_received_header_added: false
+		},
 		values: setting_types.BOOLEAN,
 		text: `
 Controls if "Received:" header should be added to mails by the submission

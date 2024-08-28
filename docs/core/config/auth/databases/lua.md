@@ -3,6 +3,9 @@ layout: doc
 title: Lua
 dovecotlinks:
   auth_lua: Lua authentication database
+  auth_lua_initialization:
+    hash: initialization
+    text: Lua authentication initialization
 ---
 
 # Lua Authentication Database (`lua`)
