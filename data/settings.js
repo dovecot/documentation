@@ -6530,18 +6530,20 @@ The details of how this setting works depends on the used protocol:
 	},
 
 	mail_access_groups: {
-		values: setting_types.STRING,
-		// TODO: Describe format; comma-separated list?
+		values: setting_types.BOOLLIST,
 		text: `
 Supplementary groups that are granted access for mail processes.
 
 Typically, these are used to set up access to shared mailboxes.
 
-Note: It may be dangerous to set these up if users can create
-symlinks. For example: if the "mail" group is chosen here,
-\`ln -s /var/mail ~/mail/var\` could allow a user to delete
-others' mailboxes, or \`ln -s /secret/shared/box ~/mail/mybox\`
-would allow reading others' mail).`
+::: warning
+It may be dangerous to set these up if users can create symlinks.
+
+Examples for if the "mail" group is chosen here:
+* \`ln -s /var/mail ~/mail/var\` could allow a user to delete others'
+  mailboxes, or
+* \`ln -s /secret/shared/box ~/mail/mybox\` would allow reading others' mail.
+:::`
 	},
 
 	mail_always_cache_fields: {
