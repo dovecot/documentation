@@ -52,9 +52,12 @@ export default defineConfig({
 			{
 				text: base.substring(1),
 				items: [
-					{ text: '3.0 (Pro)', link: 'https://doc.dovecotpro.com/latest/' },
 					{ text: '2.3', link: 'https://doc.dovecot.org/2.3/' },
 				]
+			},
+			{
+				text: '3.0 (Pro)',
+				link: 'https://doc.dovecotpro.com/latest/'
 			},
 			{
 				text: 'Dovecot Home',
