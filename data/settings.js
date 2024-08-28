@@ -6543,7 +6543,7 @@ See [[link,mail_cache]] for details and for the list of fields.`
 	},
 
 	mail_attachment_detection_options: {
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
 Settings to control adding \`$HasAttachment\` or \`$HasNoAttachment\`
 keywords. By default, all MIME parts with \`Content-Disposition=attachment\`
