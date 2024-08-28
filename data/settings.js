@@ -6441,10 +6441,6 @@ Value Format: List of trusted network ranges, see
 A list of hosts / IP addresses that are used in a round-robin manner for
 the source IP address when the proxy creates TCP connections.
 
-To allow sharing of the same configuration across multiple servers, you may
-use a \`?\` character at the start of the value to indicate that only the
-listed addresses that exist on the current server should be used.
-
 Example:
 
 \`\`\`[dovecot.conf]
