@@ -175,11 +175,6 @@ Multiple source IPs can be easily used by adding them to
 [[setting,login_source_ips]]. You can also use hostnames which expand to
 multiple IPs.
 
-By prefixing the setting with `?` (e.g.
-[[setting,login_source_ips,?proxy-sources.example.com]]) Dovecot will use
-only those IPs that actually exist in the server, allowing you to share
-the same config file with multiple servers.
-
 It's probably better not to include the server's default outgoing IP
 address in the setting, as explained here:
 https://idea.popcount.org/2014-04-03-bind-before-connect/.
