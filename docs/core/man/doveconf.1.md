@@ -143,21 +143,26 @@ quota imap_quota
 Dump a whole configuration section:
 
 ```sh
-doveconf dict
+doveconf service
 ```
 ```
-dict_legacy {
-  quota_clone = pgsql:/etc/dovecot/dovecot-dict-sql.conf.ext
+service imap {
+  ...
+}
+service pop3 {
+  ...
 }
 ```
 
-Or dump only the quota dict:
+Or dump only the imap service:
 
 ```sh
-doveconf dict/quota_clone
+doveconf service/imap
 ```
 ```
-dict/quota_clone = pgsql:/etc/dovecot/dovecot-dict-sql.conf.ext
+service imap {
+  ...
+}
 ```
 
 <!-- @include: include/reporting-bugs.inc -->
