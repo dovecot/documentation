@@ -9686,10 +9686,9 @@ backend.`
 
 	submission_client_workarounds: {
 		tags: [ 'submission' ],
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-Configures the list of active workarounds for Submission client bugs. The
-list is space-separated.
+Configures the list of active workarounds for Submission client bugs.
 
 Supported workaround identifiers are:
 
