@@ -19,10 +19,10 @@ SSL you can see
 
 SSL and TLS terms are often used in confusing ways:
 
-* SSL (Secure Sockets Layer) is the original protocol implementation. SSLv3 is
-  still allowed by Dovecot, but it's rarely used. Some clients use SSL to mean
-  that they're going to connect to the imaps (993), pop3s (995) or smtps (465)
-  port, although they're still going to use TLSv1 protocol.
+* SSL (Secure Sockets Layer) is the original protocol implementation.
+  Some clients use SSL to mean that they're going to connect to the imaps
+  (993), pop3s (995) or smtps (465) port, although they're still going to
+  use TLSv1 protocol.
 
 * TLS (Transport Layer Security) replaced the SSL protocol. TLSv1 protocol is
   used practically always nowadays. Some clients use TLS to mean that they're

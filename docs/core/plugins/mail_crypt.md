@@ -232,7 +232,7 @@ Then `newkey.pem` can be used with mail-crypt plugin.
 
 [[added,mail_crypt_eddsa]]
 
-You can use EdSDA keys by using algorithm X25519 or X448 (case sensitive).
+You can use EdSDA keys by using algorithm `X25519` or `X448` (case sensitive).
 
 To generate a suitable keypair, use
 
@@ -365,6 +365,11 @@ Please make sure that compression is always applied before encryption. See
 Currently the fs-crypt plugin requires that all the files it reads are
 encrypted. If it sees an unencrypted file it'll fail to read it. The plan is
 to fix this later.
+
+::: warning
+[[changed,fs_crypt_require_encryption_keys]] fs-crypt requires encryption keys
+by default.
+:::
 
 FS driver syntax:
 

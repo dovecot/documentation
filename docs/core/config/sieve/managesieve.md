@@ -283,7 +283,7 @@ OK "Putscript completed."
 ```
 
 Upon successful upload, you should find a file called
-`example.sieve` in your `sieve_dir` directory. The script should
+`example.sieve` in your sieve directory. The script should
 also be listed by the server as follows when the `LISTSCRIPTS` command
 is issued:
 
@@ -318,7 +318,7 @@ OK "Listscripts completed.
 ```
 
 The symbolic link configured with the `sieve` setting should now point
-to the activated script in the `sieve_dir` directory. If no script is
+to the activated script in the sieve directory. If no script is
 active, this symbolic link is absent.
 
 #### Manual TLS Login

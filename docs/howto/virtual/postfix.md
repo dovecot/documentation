@@ -191,8 +191,6 @@ plugin {
   acl = vfile:/var/vmail/conf.d/%d/acls:cache_secs=300
 
   sieve = ~/.dovecot.sieve
-  sieve_dir = ~/sieve
-  sieve_global_dir = /var/vmail/conf.d/%d/sieve
 }
 ```
 :::

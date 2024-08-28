@@ -154,8 +154,8 @@ the dict server.
 
 | Parameter | Required | Description |
 | --------- | -------- | ----------- |
-| `idle_timeout=<time_msecs>` | NO | How long to idle before disconnecting. (default: 0; which means immediate disconnect after finishing the operation) |
-| `slow_warn=<time_msecs>` | NO | Log a warning about lookups that take longer than this interval. (default: 5s) |
+| `idle_timeout=<time_msecs>` | NO | How long to idle before disconnecting. Default: `0`, which means immediate disconnect after finishing the operation. [[added,dict_idle_timeout_added]] |
+| `slow_warn=<time_msecs>` | NO | Log a warning about lookups that take longer than this interval. Default: `5s`. [[added,dict_slow_warn_added]] |
 
 ### Redis
 

@@ -6,6 +6,9 @@ dovecotlinks:
   event_export_label:
     hash: filtering-events
     text: Filtering Events
+  event_export_transports:
+    hash: transports
+    text: Event Export Transports
 ---
 
 # Event Export
@@ -114,8 +117,8 @@ Supported Transports:
 | `drop` | Ignore the serialized event |
 | `log` | Send serialized event to syslog |
 | `http-post` | Send the serialized event as a HTTP POST payload to the URL specified in the `transport_arg` setting with a timeout specified by `transport_timeout`. Default is `250 milliseconds`. |
-| `file` | Send serialized events to a file specified in the `transport_arg` setting. |
-| `unix` | Send serialised events to a unix socket specified in the `transport_arg` setting. The `transport_timeout` setting is used to specify how long the unix socket connection can take. Default is `250 milliseconds`. |
+| `file` | Send serialized events to a file specified in the `transport_arg` setting.<br />[[added,event_export_transports_file_unix_added]] |
+| `unix` | Send serialised events to a unix socket specified in the `transport_arg` setting. The `transport_timeout` setting is used to specify how long the unix socket connection can take. Default is `250 milliseconds`.<br />[[added,event_export_transports_file_unix_added]] |
 
 The `drop` transport is useful when one wants to disable the event exporter
 temporarily.  Note that serialization still occurs, but the resulting

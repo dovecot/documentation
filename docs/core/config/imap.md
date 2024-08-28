@@ -3,6 +3,9 @@ layout: doc
 title: IMAP
 dovecotlinks:
   imap_server: IMAP server
+  imap_hibernation:
+    hash: imap-hibernation
+    text: IMAP Hibernation
 ---
 
 # IMAP Configuration
