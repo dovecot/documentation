@@ -116,7 +116,8 @@ export default defineConfig({
 	},
 
 	head: [
-		['link', { rel: 'icon', type: 'image/x-icon', href: base + '/favicon.ico' } ]
+		['link', { rel: 'icon', type: 'image/x-icon', href: base + '/favicon.ico' } ],
+		['script', { async: '', src: '/js/versions.js' } ]
 	]
 
 })
