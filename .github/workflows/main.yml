@@ -40,18 +40,26 @@ jobs:
         done
         mv tars/* .vitepress/dist/
     - name: Deploy to doc.dovecot.org
-      uses: dovecot/rsync-deployments@master
+      uses: dovecot/rsync-deployments@v2.0.2
       with:
-        RSYNC_OPTIONS: -azr --delete
-        RSYNC_TARGET: docs@doc.dovecot.org:public_html/${{ github.ref_name }}
-        RSYNC_BASEDIR: /.vitepress/dist/.
+        FLAGS: -azr --delete
+        HOST: doc.dovecot.org
+        USER: docs
+        LOCALPATH: /.vitepress/dist/.
+        REMOTEPATH: public_html/${{ github.ref_name }}
+        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+      if: secrets.DEPLOY_KEY
+    - name: Fix symlinks
+      run: |
+        mkdir -p $HOME/.ssh
+        chmod 0700 $HOME/.ssh
+        echo "$DEPLOY_KEY" > $HOME/.ssh/deploy_key
+        chmod 0600 $HOME/.ssh/deploy_key
+        ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=no docs@doc.dovecot.org bash update-ce-links.sh
+        rm $HOME/.ssh/deploy_key
       if: env.DEPLOY_KEY
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-    - name: Fix symlinks
-      run: |
-        ssh -i $HOME/.ssh/deploy_key docs@doc.dovecot.org bash update-ce-links.sh
-      if: env.DEPLOY_KEY
     - name: Prepare gzip tarball for GitHub download
       run: |
         tar --transform=s,.vitepress/dist,html/${{ github.ref_name }}, -czf tars/docs.tgz .vitepress/dist
@@ -95,11 +103,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dovecot/dovecot-sphinx-action@0.11
-    - uses: dovecot/rsync-deployments@master
+    - uses: dovecot/rsync-deployments@v2.0.2
       with:
-        RSYNC_OPTIONS: -azr --delete
-        RSYNC_TARGET: docs@doc.dovecot.org:public_html/2.3/.
-        RSYNC_BASEDIR: /build/.
-      if: env.DEPLOY_KEY
-      env:
+        FLAGS: -azr --delete
+        HOST: doc.dovecot.org
+        USER: docs
+        LOCALPATH: /build/.
+        REMOTEPATH: public_html/2.3
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+      if: secrets.DEPLOY_KEY
