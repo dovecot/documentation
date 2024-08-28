@@ -6375,7 +6375,7 @@ comma-separated string.
 	},
 
 	login_plugins: {
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `List of plugins to load for IMAP and POP3 login processes.`
 	},
 
