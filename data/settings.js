@@ -4160,11 +4160,10 @@ auth_policy_server_url = http://example.com:4001/
 	},
 
 	auth_realms: {
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-This setting supplies a space-separated list of realms for those SASL
-authentication mechanisms that need them. Realms are an integral part of
-Digest-MD5.
+This setting supplies a list of realms for those SASL authentication mechanisms
+that need them. Realms are an integral part of Digest-MD5.
 
 You will need to specify realms you want to advertise to the client in the
 config file:
