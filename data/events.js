@@ -1789,7 +1789,7 @@ characters and no control characters.
 
 	dict_common: {
 		fields: {
-			driver: `Name of the dictionary driver, e.g. \`sql\` or \`proxy\`.`,
+			dict_driver: `Name of the dictionary driver, e.g. \`sql\` or \`proxy\`.`,
 			error: `Error, if one occurred.`
 		},
 	},
