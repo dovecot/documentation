@@ -5896,6 +5896,7 @@ Only used if [[setting,imapc_ssl]] is enabled.`
 		tags: [ 'imapc' ],
 		seealso: [ 'imapc_master_user', 'imapc_password' ],
 		values: setting_types.STRING,
+		default: '%{owner_user}',
 		text: `
 The user identity to be used for performing a regular IMAP LOGIN to the
 source IMAP server.
