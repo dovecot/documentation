@@ -65,6 +65,7 @@ export const updates = {
 	weak_password_schemes: '2.4.0',
 	variables_auth_variables_protocol: '2.4.0',
 	variables_login_variables_protocol: '2.4.0',
+	variables_owner_user_added: '2.4.0',
 
 	/* Tags used in doveadm.js */
 
