@@ -6440,7 +6440,8 @@ login_source_ips = ?proxy-sources.example.com
 	login_trusted_networks: {
 		values: setting_types.IPADDR,
 		text: `
-Value Format: A space-separated list of trusted network ranges.
+Value Format: List of trusted network ranges, see
+[[link,settings_types_boollist]].
 
 This setting is used for a few different purposes, but most importantly it
 allows the client connection to tell the server what the original client's
