@@ -363,8 +363,20 @@ acl_sharing_map {
   }
 }
 
-dict_legacy {
-  acl = pgsql:/etc/dovecot/dovecot-dict-sql.conf.ext
+dict_server {
+  dict acl {
+    driver = sql
+    sql_driver = pgsql
+
+    pgsql localhost {
+      parameters {
+        dbname = mails
+        user = sqluser
+        password = sqlpass
+      }
+    }
+    !include /etc/dovecot/dovecot-dict-sql.conf.inc
+  }
 }
 ```
 
@@ -388,26 +400,27 @@ CREATE TABLE anyone_shares (
 COMMENT ON TABLE anyone_shares IS 'User from_user shares folders to anyone.';
 ```
 
-```[/etc/dovecot/dovecot-dict-sql.conf.ext]
-connect = host=localhost dbname=mails user=sqluser password=sqlpass
-map {
-  pattern = shared/shared-boxes/user/$to/$from
-  table = user_shares
-  value_field = dummy
+```[/etc/dovecot/dovecot-dict-sql.conf.inc]
+dict_map shared/shared-boxes/user/$to/$from {
+  sql_table = user_shares
+  value dummy {
+  }
 
-  fields {
-    from_user = $from
-    to_user = $to
+  field from_user {
+    pattern = $from
+  }
+  field to_user {
+    pattern = $to
   }
 }
 
-map {
-  pattern = shared/shared-boxes/anyone/$from
-  table = anyone_shares
-  value_field = dummy
+dict_map shared/shared-boxes/anyone/$from {
+  sql_table = anyone_shares
+  value dummy {
+  }
 
-  fields {
-    from_user = $from
+  field from_user {
+    pattern = $from
   }
 }
 ```
