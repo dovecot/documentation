@@ -50,7 +50,7 @@ export default defineConfig({
 	themeConfig: {
 		nav: [
 			{
-				text: '2.4',
+				text: base.substring(1),
 				items: [
 					{ text: '3.0 (Pro)', link: 'https://doc.dovecotpro.com/latest/' },
 					{ text: '2.3', link: 'https://doc.dovecot.org/2.3/' },
