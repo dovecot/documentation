@@ -171,7 +171,7 @@ If your proxy handles a lot of connections `(~64k)` to the same destination
 IP, you may run out of TCP ports. The only way to work around this is to use
 either multiple destination IPs or ports, or multiple source IPs.
 
-Multiple source IPs can be easily used by adding them to 
+Multiple source IPs can be easily used by adding them to
 [[setting,login_source_ips]]. You can also use hostnames which expand to
 multiple IPs.
 
