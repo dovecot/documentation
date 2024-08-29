@@ -14,7 +14,6 @@ export const updates = {
 	argon_2i_schemes: '2.4.0',
 	argon2_password_scheme_added: '2.4.0',
 	auth_mechanism_scram_sha_added: '2.4.0',
-	auth_mechanism_sha_added: '2.4.0',
 	cassandra_log_retries_added: '2.4.0',
 	crypt_des_md5_schemes: '2.4.0',
 	auth_client_common_secured: '2.4.0',

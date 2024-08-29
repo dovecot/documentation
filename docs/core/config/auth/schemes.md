@@ -152,7 +152,7 @@ different schemes for a single user.
 | CRAM-MD5 | Used with CRAM-MD5 mechanism. |
 | [[link,auth_digest_md5]] | Used with DIGEST-MD5 mechanism. The username is included in the hash, so it's not possible to use the hash for different usernames. |
 | SCRAM-SHA-1 | Used with SCRAM-SHA-1 mechanism.<br />[[added,auth_mechanism_scram_sha_added]] |
-| SCRAM-SHA-256 | Stronger replacement for SCRAM-SHA-1.<br />[[added,auth_mechanism_sha_added]] |
+| SCRAM-SHA-256 | Stronger replacement for SCRAM-SHA-1.<br />[[added,auth_mechanism_scram_sha_added]] |
 
 ## Other Supported Password Schemes
 
