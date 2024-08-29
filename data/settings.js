@@ -3687,10 +3687,8 @@ Because it grants access to users' mailboxes, it must be kept secret.`
 
 	doveadm_port: {
 		default: 0,
-		values: setting_types.UINT,
+		values: setting_types.IN_PORT,
 		text: `
-Value Range: \`<1-65535>\`
-
 The destination port to be used for the next doveadm proxying hop.
 This implicitly enables doing a passdb lookup for finding the proxy settings.
 
@@ -4694,10 +4692,8 @@ Variables allowed:
 		default: 143,
 		seealso: [ 'imap_urlauth_host' ],
 		tags: [ 'imap' ],
-		values: setting_types.UINT,
+		values: setting_types.IN_PORT,
 		text: `
-Value Range: \`<1-65535>\`
-
 The port is used with the URLAUTH extension in IMAP operation.`
 	},
 
@@ -4954,7 +4950,7 @@ If using master users, this setting will be the password of the master user.`
 	imapc_port: {
 		default: 143,
 		tags: [ 'imapc' ],
-		values: setting_types.UINT,
+		values: setting_types.IN_PORT,
 		text: `The port on the remote IMAP host to connect to.`
 	},
 
@@ -7359,7 +7355,7 @@ If using master users, this setting will be the password of the master user.`
 	pop3c_port: {
 		default: 110,
 		tags: [ 'pop3c' ],
-		values: setting_types.UINT,
+		values: setting_types.IN_PORT,
 		text: `The port on the remote POP3 host to connect to.`
 	},
 
@@ -8302,10 +8298,8 @@ Password for authentication to the relay MTA if authentication is required.`
 	submission_relay_port: {
 		default: 25,
 		tags: [ 'submission_relay' ],
-		values: setting_types.UINT,
+		values: setting_types.IN_PORT,
 		text: `
-Value Range: \`<1-65535>\`
-
 Port for the submission relay server.`
 	},
 
