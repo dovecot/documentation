@@ -15,7 +15,7 @@ const props = defineProps(
 )
 
 const filter = props.filter ?? 'all'
-const level = (props.level ? Number(props.level) : 2) + 1
+const level = `h${(props.level ? Number(props.level) : 2) + 1}`
 const tag = props.tag ? [ props.tag ].flat() : false
 
 const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
@@ -59,7 +59,7 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 
 <template>
  <template v-for="(v, k) in d">
-  <component :is="'h' +  level" :id="k" tabindex="-1">
+  <component :is="level" :id="k" tabindex="-1">
    <code>{{ k }}</code>
    <a class="header-anchor" :href="'#' + k"></a>
   </component>
