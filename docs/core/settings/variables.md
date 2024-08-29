@@ -6,6 +6,9 @@ dovecotlinks:
     hash: login-variables
     text: Login Variables
   settings_variables: Settings Variables
+  variables_modifiers:
+    hash: modifiers
+    text: variable modifiers
 ---
 
 # Settings Variables
