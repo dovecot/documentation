@@ -20,8 +20,15 @@ export const settings = {
 		// removed: {},
 
 		// Default value of the setting. If not set, is displayed as "None".
-		// Rendered w/Markdown.
+		// Rendered w/Markdown. Can be a singular value, i.e. "default: value",
+		// or an object that renders the default value and an optional
+		// non-highlighted text.
 		// default: '',
+		// or
+		// default: {
+		//   value: '',
+		//   text: '',
+		// },
 
 		// A list of "See Also" links to display. Rendered w/Markdown.
 		// Text entries are processed as inter-settings links.
