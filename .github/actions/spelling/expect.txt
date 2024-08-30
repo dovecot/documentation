@@ -418,6 +418,7 @@ lsearch
 lucene
 lugog
 lwq
+lwristepai
 maclen
 madboa
 mailauth
@@ -750,7 +751,6 @@ spamtestplus
 SPECIALUSE
 SPID
 spn
-spnego
 sproxyd
 sqlhost
 sqlpass
