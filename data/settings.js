@@ -4917,6 +4917,93 @@ Format used for serializing the event.`
 Format-specific arguments used for serializing the event.`
 	},
 
+	execute: {
+		tags: [ 'execute' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ '[[link,execute_scripts]]' ],
+		text: `
+Configure external execution script. Used by various different features, such
+as [[link,welcome]]. Currently only a single execute block (per feature) is
+allowed.`
+	},
+
+	execute_args: {
+		tags: [ 'execute' ],
+		values: setting_types.STRING,
+		text: `
+External execution script arguments. The parameters are split by space
+characters. Currently escape characters are not supported.`
+	},
+
+	execute_driver: {
+		tags: [ 'execute' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'unix', 'fork', 'tcp' ],
+		seealso: [ '[[link,execute_scripts]]' ],
+		text: `
+How to execute the external script:
+
+\`unix\`
+:   Use UNIX socket connection to a \`script\` service listening in
+    [[setting,execute_unix_socket_path]].
+
+\`fork\`
+:   Fork and execute the [[setting,execute_fork_path]] binary directly.
+
+\`tcp\`
+:   Use TCP connection to a \`script\` service listening in
+    [[setting,execute_tcp_host]]:[[setting,execute_tcp_port]].`
+	},
+
+	execute_fork_path: {
+		tags: [ 'execute' ],
+		values: setting_types.STRING,
+		default: '[[setting,execute_name]]',
+		text: `
+Path to the binary that is executed with [[setting,execute_driver,fork]].`
+	},
+
+	execute_name: {
+		tags: [ 'execute' ],
+		values: setting_types.STRING,
+		text: `
+Name of the execution script. This is the [[setting,execute]] named filter
+name. It is also used to provide a default driver-specific settings:
+
+\`unix\`
+:   Used as the default for [[setting,execute_unix_socket_path]].
+
+\`fork\`
+:   Used as the default for [[setting,execute_fork_path]].
+
+\`tcp\`
+:   Used as the default for [[setting,execute_tcp_host]]:[[setting,execute_tcp_port]].`
+	},
+
+	execute_tcp_host: {
+		tags: [ 'execute' ],
+		values: setting_types.STRING,
+		default: '[[setting,execute_name,host:]]',
+		text: `
+TCP host where to connect to with [[setting,execute_driver,tcp]].`
+	},
+
+	execute_tcp_port: {
+		tags: [ 'execute' ],
+		values: setting_types.STRING,
+		default: '[[setting,execute_name,:port]]',
+		text: `
+TCP port where to connect to with [[setting,execute_driver,tcp]].`
+	},
+
+	execute_unix_socket_path: {
+		tags: [ 'execute' ],
+		values: setting_types.STRING,
+		default: '[[setting,execute_name]]',
+		text: `
+UNIX socket path where to connect to with [[setting,execute_driver,unix]].`
+	},
+
 	fifo_listener: {
 		tags: [ 'service' ],
 		values: setting_types.NAMED_LIST_FILTER,
