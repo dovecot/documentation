@@ -104,6 +104,14 @@ See [[link,auth_ldap]].
 | ------- | ----- |
 | `%{ldap_multi}` variable | Variable was added to LDAP configuration file to allow for fetching a multi-valued attribute. |
 
+#### imapc_features Parameters
+
+See [[setting,imapc_features]].
+
+| Feature | Notes |
+| ------- | ----- |
+| `no-qresync` | Parameter was added. |
+
 ### Removed Features
 
 #### Backends and Plugins

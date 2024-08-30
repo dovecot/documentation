@@ -35,6 +35,7 @@ export const updates = {
 	imapc_features_no_fetch_headers: '2.4.0',
 	imapc_features_no_fetch_size: '2.4.0',
 	imapc_features_no_modseq: '2.4.0',
+	imapc_features_no_qresync: '2.4.0',
 	imapc_features_no_search: '2.4.0',
 	imapsieve_filters: '2.4.0',
 	ja3_identifier: '2.4.0',

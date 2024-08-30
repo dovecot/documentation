@@ -618,7 +618,7 @@ pwrite
 qmail
 qmgr
 QQACg
-QRESYNC
+qresync
 qwerty
 rampup
 randkey

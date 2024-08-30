@@ -4125,12 +4125,16 @@ be enabled.
         it didn't permanently assign \`UIDVALIDITY\` to an \`EXAMINE\`d
         mailbox, but assigned it for \`SELECT\`ed mailbox.
 
+:   \`no-qresync\` [[added,imapc_features_no_qresync]]
+    :    This can be used to work around a Zimbra bug where it doesn't send
+         untagged "OK [CLOSED]" imap-resp-code when selecting a folder.
+
 :   \`zimbra-workarounds\`
     :    Fetch full message using \`BODY.PEEK[HEADER] BODY.PEEK[TEXT]\`
          instead of just \`BODY.PEEK[]\` because the header differs between
          these two when there are illegal control chars or 8bit chars.
          This mainly caused problems with dsync, but this should no longer
-        be a problem and there's probably no need to enable this workaround.`
+         be a problem and there's probably no need to enable this workaround.`
 	},
 
 	imapc_host: {
