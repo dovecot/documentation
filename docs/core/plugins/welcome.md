@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: welcome
+dovecotlinks:
+  welcome: welcome
 ---
 
 # Welcome Plugin (`welcome`)
@@ -19,10 +21,11 @@ done when the INBOX is (auto)created. The scripts are called similarly to
 mail_plugins {
   welcome = yes
 }
-
-plugin {
-  welcome_script = welcome %u
-  welcome_wait = no
+welcome {
+  execute welcome {
+    args = %{user}
+  }
+  wait = yes
 }
 
 service welcome {
