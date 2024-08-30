@@ -6971,9 +6971,21 @@ User name for authentication to the relay MTA if authentication is required.`
 	submission_ssl: {
 		default: 'no',
 		seealso: [ 'submission_host' ],
-		values: setting_types.BOOLEAN,
+		values: setting_types.STRING,
+		values_enum: [ 'no', 'smtps', 'starttls' ],
 		text: `
-If enabled, use SSL/TLS to connect to [[setting,submission_host]].`
+If enabled, use SSL/TLS to connect to [[setting,submission_host]].
+
+Available values:
+
+\`no\`
+:   No SSL connection is used.
+
+\`smtps\`
+:   An SMTPS connection (immediate SSL) is used.
+
+\`starttls\`
+:   The STARTTLS command is used to establish the TLS layer.`
 	},
 
 	submission_timeout: {
