@@ -21,6 +21,7 @@ mmaped
 plugin
 plugins
 sni
+spnego
 ssh
 ubuntu
 workarounds
