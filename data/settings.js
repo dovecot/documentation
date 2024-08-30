@@ -3233,17 +3233,27 @@ proceeds from there.`
 
 	welcome_script: {
 		plugin: 'welcome',
-		values: setting_types.STRING,
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,welcome]]' ],
 		text: `
-The script to run when the user logs in for the first time (that is, when
-this user's INBOX is created). This must be set or else the plugin will not
-be active.
+Named filter for configuring the welcome [[setting,execute]] script.
 
-\`\`\`
-plugin {
-  welcome_script = welcome %u
-}
+\`\`\`[dovecot.conf]
+welcome {
+  execute welcome {
+    args = %{user}
+  }
 \`\`\``
+	},
+
+	welcome_wait: {
+		plugin: 'welcome',
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ '[[link,welcome]]' ],
+		text: `
+Should the welcome plugin wait for the script execution to finish before
+continuing.`
 	},
 
 	welcome_wait: {
