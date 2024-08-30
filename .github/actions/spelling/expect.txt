@@ -20,6 +20,7 @@ appsuite
 APY
 arcfour
 asd
+Atilika
 atimes
 auid
 Aup
@@ -337,6 +338,7 @@ ktpass
 ktrace
 KTY
 kurkku
+kuromoji
 kuserok
 KVNO
 LANMAN
