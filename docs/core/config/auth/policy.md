@@ -67,14 +67,18 @@ Examples:
 
 ::: code-group
 ```[Configuration]
-login=%{orig_username} pwhash=%{hashed_password} remote=%{real_rip}
+login=%{orig_username} pwhash=%{hashed_password} remote=%{real_rip} attrs/ja3=%{ssl_ja3_hash} attrs/extra=value
 ```
 
 ```json[JSON Result]
 {
     "login": "john.doe",
     "pwhash": "1234",
-    "remote": "127.0.0.1"
+    "remote": "127.0.0.1",
+    "attrs": {
+      "extra":"value",
+      "ja3":"md5 hash"
+    }
 }
 ```
 :::
