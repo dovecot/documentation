@@ -421,7 +421,9 @@ lsearch
 lucene
 lugog
 lwq
+lwristepai
 macl
+maclen
 madboa
 mailauth
 MAILBOXDIR
@@ -755,7 +757,6 @@ spamtestplus
 SPECIALUSE
 SPID
 spn
-spnego
 sproxyd
 sqlhost
 sqlpass
