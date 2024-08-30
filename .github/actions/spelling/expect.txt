@@ -24,6 +24,7 @@ APY
 arcfour
 asd
 astring
+Atilika
 atimes
 auid
 Aup
@@ -352,6 +353,7 @@ ktpass
 ktrace
 KTY
 kurkku
+kuromoji
 kuserok
 KVNO
 LANMAN
