@@ -21,6 +21,7 @@ plugin
 plugins
 qresync
 sni
+spnego
 ssh
 ubuntu
 workarounds
