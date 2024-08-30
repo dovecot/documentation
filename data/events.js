@@ -265,7 +265,8 @@ Most useful for debugging authentication flow.`
 		root: 'auth',
 		inherit: [ 'auth_server_common', 'auth_server_userdb' ],
 		text: `
-Processing has begun for a userdb block.
+Processing has begun for a userdb block. This event is also sent for userdb
+iterations.
 
 Most useful for debugging authentication flow.`
 	},
@@ -283,7 +284,8 @@ Most useful for debugging authentication flow.`
 * \`hit\`: Found from cache`,
 		},
 		text: `
-Processing has ended for a userdb block.
+Processing has ended for a userdb block. This event is also sent for userdb
+iterations.
 
 Most useful for debugging authentication flow.`
 	},
