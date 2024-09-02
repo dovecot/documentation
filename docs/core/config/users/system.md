@@ -12,7 +12,7 @@ isn't necessary. Using [NSS](http://en.wikipedia.org/wiki/Name_Service_Switch)
 you can configure the lookups to be done from elsewhere (e.g. LDAP).
 
 See [[link,auth_passwd]] userdb configuration for how to set this up.
-Especially if you're using nss_ldap you must set `blocking=yes`.
+Especially if you're using nss_ldap you must set [[setting,userdb_use_worker,yes]].
 
 System users usually have their own separate user IDs (UIDs). This is
 good from a security point of view, because it means that the kernel will
