@@ -171,8 +171,8 @@ previous threads about it. Some points about it:
   ::: info
   For this to work, you need a password database which supports
   **credential lookups**. This excludes LDAP databases using authentication
-  binds (`auth_bind = yes`). However, a second LDAP passdb entry without
-  `auth_bind = yes` may be added for the sole purpose of Kerberos principals
+  binds ([[setting,passdb_ldap_bind,yes]]). However, a second LDAP passdb entry without
+  [[setting,passdb_ldap_bind,yes]] may be added for the sole purpose of Kerberos principals
   mapping. This passdb doesn't need to return a password attribute (and
   usually shouldn't). Authentication-bind LDAP databases are able to
   provide `k5principals` lookups if configured with `pass_filter`.
