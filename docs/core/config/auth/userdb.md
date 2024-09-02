@@ -236,13 +236,17 @@ userdb sql {
 #### LDAP
 
 ::: code-group
-```[dovecot-ldap.conf]
-user_attrs = \
-    =home=%{ldap:homeDirectory}, \
-    =uid=%{ldap:uidNumber},
-    =gid=%{ldap:gidNumber},
-    =quota_rule=*:bytes=%{ldap:quotaBytes},
-    =namespace/default/separator=%{ldap:mailSeparator}
+```[dovecot.conf]
+userdb ldap {
+  ...
+  fields {
+    home       = %{ldap:homeDirectory}
+    uid        = %{ldap:uidNumber}
+    gid        = %{ldap:gidNumber}
+    quota_rule = *:bytes=%{ldap:quotaBytes}
+    namespace/default/separator = %{ldap:mailSeparator}
+  }
+}
 ```
 :::
 
