@@ -139,9 +139,17 @@ Remember that `user_attrs` is used only if you use [[link,auth_ldap]].
 
 Quota limit is in `quotaBytes` field:
 
+::: code-group
+```[dovecot.conf]
+userdb ldap {
+  ...
+  fields {
+    home       = %{ldap:homeDirectory}
+    quota_rule = *:bytes=%{ldap:quotaBytes}
+  }
+}
 ```
-user_attrs = homeDirectory=home, quotaBytes=quota_rule=*:bytes=%$
-```
+:::
 
 #### Override: SQL
 
