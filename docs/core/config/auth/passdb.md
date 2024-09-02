@@ -451,12 +451,16 @@ passdb sql {
 #### LDAP
 
 ::: code-group
-```[dovecot-ldap.conf]
-pass_attrs = \
-    =user=%{ldap:user}, \
-    =password=%{ldap:userPassword},
-    =proxy=%{ldap:proxyEnabled}, \
-    =host=%{ldap:hostName}
+```[dovecot.conf]
+passdb ldap {
+  ...
+  fields {
+    user     =  %{ldap:user}
+    password =  %{ldap:userPassword}
+    proxy    =  %{ldap:proxyEnabled}
+    host     =  %{ldap:hostName}
+  }
+}
 ```
 :::
 
@@ -468,12 +472,14 @@ be selectable per user.
 
 To have it `always` on, use a template, e.g.:
 
-```
-pass_attrs = \
-    =user=%{ldap:user}, \
-    =password=%{ldap:userPassword},
-    =proxy=y, \
-    =host=%{ldap:hostName}
+::: code-group
+```[dovecot.conf]
+fields {
+    user     = %{ldap:user}
+    password = %{ldap:userPassword}
+    host     = %{ldap:hostName}
+    proxy    = y
+}
 ```
 :::
 
