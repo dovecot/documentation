@@ -185,13 +185,19 @@ userdb sql {
 
 ### LDAP
 
-```[dovecot-ldap.conf.ext]
-user_attrs = \
-  =home=%{ldap:homeDirectory}, \
-  =uid=%{ldap:uidNumber}, \
-  =gid=%{ldap:gidNumber}, \
-  =mail_path=%{ldap:mailLocation}
+::: code-group
+```[dovecot.conf]
+userdb ldap {
+  ...
+  fields {
+    home      = %{ldap:homeDirectory}
+    uid       = %{ldap:uidNumber}
+    gid       = %{ldap:gidNumber}
+    mail_path = %{ldap:mailLocation}
+  }
+}
 ```
+:::
 
 ### Passwd-file
 
