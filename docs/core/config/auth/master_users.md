@@ -40,7 +40,7 @@ either return an internal login error (the userdb lookup failed) or create a
 whole new user (with, e.g., [[link,auth_staticdb]]).
 
 `result_success=continue` doesn't work with PAM or LDAP without
-`auth_bind=yes`, because both of them require knowing the user's password.
+[[setting,passdb_ldap_bind,yes]], because both of them require knowing the user's password.
 
 If you want master users to be able to log in as themselves, you'll need to
 either add the user to the normal passdb or add the passdb to dovecot.conf
