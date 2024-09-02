@@ -18,6 +18,7 @@ good choice.
 If you only wish to authenticate clients using their Kerberos
 *passphrase* (as opposed to ticket authentication), you will probably
 want to use [[link,auth_pam]] with `pam_krb5.so` instead.
+:::
 
 ## Pre-requisites
 
