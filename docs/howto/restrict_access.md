@@ -44,7 +44,7 @@ passdb sql {
 
 ## LDAP
 
-Just like with SQL, you can use `%{protocol}` in `pass_filter`:
+Just like with SQL, you can use `%{protocol}` in [[setting,ldap_filter]]:
 
 ```
 pass_filter = (&(objectClass=posixAccount)(uid=%u)(protocol=%{protocol}))
