@@ -173,20 +173,29 @@ of these (in the preferred order):
 If for example `home=/var/vmail/domain/user/` and
 `mail_path=/var/vmail/domain/user/mail/`, set:
 
+::: code-group
 ```[dovecot.conf]
 mail_home = /var/vmail/%d/%n
 mail_driver = maildir
 mail_path = ~/mail
 ```
+:::
 
 ### LDAP with Relative Directory Paths
 
 If your LDAP database uses, e.g., `mailDirectory = domain/user/`, you
 can use it as a base for home directory:
 
+::: code-group
+```[dovecot.conf]
+userdb ldap {
+  ...
+  fields {
+    home = %{ldap:mailDirectory}
+  }
+}
 ```
-user_attrs = .., home=/var/vmail/%{ldap:mailDirectory}
-```
+:::
 
 Then use [[setting,mail_path,~/Maildir]].
 
