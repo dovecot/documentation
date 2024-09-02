@@ -374,9 +374,8 @@ protocol imap {
 Due to historical reasons, there are still some config files that are
 external to the main `dovecot.conf`, which are typically named `*.conf.ext`.
 
-Examples:
+Example:
 
-* passdb/userdb { args } for ldap points to a `dovecot-ldap.conf.ext`.
 * dict_legacy { .. } points to `dovecot-dict-*.conf.ext`.
 
 Although these external config files look similar to the main `dovecot.conf`
