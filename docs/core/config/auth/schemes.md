@@ -215,6 +215,7 @@ SHA-512 based hash (`$6$`)
 
 ::: warning [[changed,crypt_des_md5_schemes]]
 Disabled by default.
+:::
 
 #### PLAIN-MD4
 
