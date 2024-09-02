@@ -35,24 +35,29 @@ you might want to use [[link,auth_staticdb]] instead of prefetch.
 ::: code-group
 ```[dovecot.conf]
 passdb ldap {
-  args = /etc/dovecot/dovecot-ldap.conf.ext
+  ...
+  fields = {
+    user        = %{ldap:uid}
+    password    = %{ldap:userPassword}
+    userdb_home = %{ldap:homeDirectory}
+    userdb_uid  = %{ldap:uidNumber}
+    userdb_gid  = %{ldap:gidNumber}
+  }
 }
 
 userdb prefetch {
+  driver = prefetch
 }
 
 # The userdb below is used only by LDA.
 userdb ldap {
-  args = /etc/dovecot/dovecot-ldap.conf.ext
+  ...
+  fields = {
+    home = %{ldap:homeDirectory}
+    uid  = %{ldap:uidNumber}
+    gid  = %{ldap:gidNumber}
+  }
 }
-```
-
-```[dovecot-ldap.conf.ext]
-pass_attrs = uid=user, userPassword=password, \
-    homeDirectory=userdb_home, uidNumber=userdb_uid, gidNumber=userdb_gid
-
-# For LDA:
-user_attrs = homeDirectory=home, uidNumber=uid, gidNumber=gid
 ```
 :::
 
