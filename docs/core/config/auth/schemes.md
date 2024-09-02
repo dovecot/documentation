@@ -119,9 +119,6 @@ exceptions:
 
 | Database | Default |
 | -------- | ------- |
-| [[link,auth_ldap]] | See `default_pass_scheme` setting in `dovecot-ldap.conf.ext`. |
-| [[link,auth_passwd_file]] | `CRYPT` is used by default, but can be changed
-with `scheme` parameter in passdb args. |
 | [[link,auth_passwd]] | `CRYPT` is used by default and can't be changed currently. |
 | [[link,auth_pam]]<br/>[[link,auth_bsd]] | Dovecot never even sees the password with these databases, so Dovecot has nothing to do with what password scheme is used. |
 
