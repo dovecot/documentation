@@ -26,7 +26,7 @@ significant. See below for examples.
 
 ## LDAP
 
-`auth_bind=yes` with `auth_bind_userdn-template` is incompatible with
+[[setting,passdb_ldap_bind,yes]] with [[setting,passdb_ldap_bind_userdn]]-template is incompatible with
 prefetch, because no passdb lookup is done then. If you want zero LDAP lookups,
 you might want to use [[link,auth_staticdb]] instead of prefetch.
 
