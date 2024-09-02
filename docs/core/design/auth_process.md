@@ -243,7 +243,7 @@ to implement always (eg. PAM). If it's not possible to implement
 If the passdb uses connections to external services, it's preferred that
 they use non-blocking connections. Dovecot does this whenever possible
 (PostgreSQL and LDAP for example). If it's not possible, set
-`blocking = TRUE`.
+[[setting,passdb_use_worker,yes]].
 
 With both functions `auth_request->passdb->passdb` contains the
 passdb_module returned by your `preinit()` function.
