@@ -125,6 +125,7 @@ export USERDB_KEYS="$USERDB_KEYS mail_driver mail_path mail_inbox_path"
 
 exec "$@"
 ```
+:::
 
 ## Mail Storage Autocreation
 
