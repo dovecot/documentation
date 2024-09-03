@@ -48,6 +48,7 @@ export const updates = {
 	mail_crypt_fs_maybe: '2.4.0',
 	mail_location_keep_noselect: '2.4.0',
 	mail_location_no_noselect: '2.4.0',
+	metric_group_by_discrete_modifiers_added: '2.4.0',
 	migration_imapc_features: '2.4.0',
 	pbkdf2_hashing: '2.4.0',
 	process_title_imap_process: '2.4.0',

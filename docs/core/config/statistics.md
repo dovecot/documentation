@@ -79,12 +79,25 @@ is a very common use case, not specifying an aggregation function is treated
 as an alias for discrete aggregation.  In other words, `field` and
 `field:discrete` produce the same behavior.
 
+[[added,metric_group_by_discrete_modifiers_added]] An additional parameter
+can be added to provide modifiers to the discrete value. This is done as
+[[link,settings_variables,%variables]] and their modifiers. The following
+variables are provided:
+
+* `%{value}` - The original value
+* `%{domain}` - Text after the `@` character, or empty string if there is no `@`.
+
 Example:
 
 ```[dovecot.conf]
 metric imap_command {
   filter = event=imap_command_finished
   group_by = cmd_name tagged_reply_state
+}
+metric login_domains {
+  filter = event=auth_request_finished
+  fields = user
+  group_by = discrete:%L{domain}
 }
 ```
 
