@@ -19,20 +19,20 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
 </script>
 
 <style scoped>
-.doveadmList h3:first-of-type {
+.doveadmList article:first-of-type {
   border-top-width: 0;
-  padding-top: 0;
+}
+.doveadmList article {
+  border-top: 1px solid var(--vp-c-divider);
 }
 .doveadmList h3 {
-  border-top: 1px solid var(--vp-c-divider);
   margin-top: 18px;
-  padding-top: 18px;
 }
 </style>
 
 <template>
  <section class="doveadmList">
-  <template v-for="(v, k) in d">
+  <article v-for="(v, k) in d">
    <h3 :id="k" tabindex="-1">
     <code>{{ k }}</code>
     <a class="header-anchor" :href="'#' + k"></a>
@@ -141,6 +141,6 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
     </div>
    </details>
 
-  </template>
+  </article>
  </section>
 </template>
