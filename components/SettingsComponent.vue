@@ -53,6 +53,9 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
   margin-top: 18px;
   padding-top: 18px;
 }
+.settingsList .rightAlign {
+  text-align: right;
+}
 .settingsListTable :deep(ul) {
   margin: 0;
 }
@@ -73,26 +76,26 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
    <table class="settingsListTable">
     <tbody>
      <tr>
-      <th style="text-align:right;">Default</th>
+      <th class="rightAlign">Default</th>
       <td>
        <span v-if="v.default" v-html="v.default" />
        <em v-else>[None]</em>
       </td>
      </tr>
      <tr>
-      <th style="text-align:right;">Value</th>
+      <th class="rightAlign">Value</th>
       <td>
        <span class="comma" v-for="v in v.values" v-html="v.url" />
       </td>
      </tr>
      <tr v-if="v.values_enum.length">
-      <th style="text-align:right;">Allowed Values</th>
+      <th class="rightAlign">Allowed Values</th>
       <td>
        <span class="comma" v-for="v in v.values_enum.values()"><code>{{ v }}</code></span>
       </td>
      </tr>
      <tr v-if="v.seealso.length">
-      <th style="text-align:right;">See Also</th>
+      <th class="rightAlign">See Also</th>
       <td>
        <ul>
         <li v-for="v in v.seealso" v-html="v" />
@@ -100,11 +103,11 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
       </td>
      </tr>
      <tr v-if="props.show_plugin && v.plugin">
-      <th style="text-align:right;">Plugin</th>
+      <th class="rightAlign">Plugin</th>
       <td v-html="v.plugin_link" />
      </tr>
      <tr v-if="v.added || v.changed || v.deprecated || v.removed">
-      <th style="text-align:right;">Changes</th>
+      <th class="rightAlign">Changes</th>
       <td>
        <ul class="badgePadding">
         <li v-if="v.added" v-for="elem in v.added">
