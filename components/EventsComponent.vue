@@ -19,14 +19,14 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 </script>
 
 <style scoped>
-.eventsList h3:first-of-type {
+.eventsList article:first-of-type {
   border-top-width: 0;
-  padding-top: 0;
+}
+.eventsList article {
+  border-top: 1px solid var(--vp-c-divider);
 }
 .eventsList h3 {
-  border-top: 1px solid var(--vp-c-divider);
   margin-top: 18px;
-  padding-top: 18px;
 }
 .eventsList :deep(table p) {
   margin: 0;
@@ -35,7 +35,7 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 
 <template>
  <section class="eventsList">
-  <template v-for="(v, k) in d">
+  <article v-for="(v, k) in d">
    <h3 id="k" tabindex="-1">
     <code>{{ k }}</code>
     <a class="header-anchor" :href="'#' + k"></a>
@@ -61,6 +61,6 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
      </tr>
     </tbody>
    </table>
-  </template>
+  </article>
  </section>
 </template>
