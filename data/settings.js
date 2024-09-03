@@ -10449,4 +10449,391 @@ If enabled, protocol-level SSL errors are logged. Same as
 If enabled, ignore version mismatches between different Dovecot versions.`
 	},
 
+	passdb_ldap_bind: {
+		tags: [ 'ldap' ],
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		text: `
+::: info
+	LDAP Authentication Only
+:::
+
+Set \`yes\` to use authentication binding for verifying password's validity.
+
+This works by logging into LDAP server using the username and password given by client.
+
+The [\`ldap_filter\`](#pass-filter) is used to find the DN for the user.
+Note that the \`fields\` block is still used, only the password field
+is ignored in it.
+
+Before doing any search, the binding is switched back to the default DN.
+
+If you use this setting, it's a good idea to use a different
+\`ldap_connection_group\` for userdb. That way one connection is used
+only for LDAP binds and another connection is used for user lookups.
+Otherwise the binding is changed to the default DN before each user lookup.`
+	},
+
+	passdb_ldap_bind_userdn: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+::: info
+	LDAP Authentication Only
+:::
+
+If authentication binding is used, you can save one LDAP request per login
+if users' DN can be specified with a common template. The template can use
+the standard [[variable]].
+
+Note that you can't use any \`fields\` declaration if you use this setting.
+
+Example: \`passdb_ldap_bind_userdn = cn=%u,ou=people,o=org\``
+	},
+
+	ldap_base: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+LDAP base.
+
+[[variable]] can be used.
+
+Example: \`ldap_base = dc=mail, dc=example, dc=org\``
+	},
+
+	use_worker: {
+		tags: [ 'ldap' ],
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		text: `
+::: info
+	LDAP Authentication Only
+:::
+
+By default all LDAP lookups are performed by the auth master process.
+
+If \`use_worker=yes\`, auth worker processes are used to perform the lookups.
+
+Each auth worker process creates its own LDAP connection so this can
+increase parallelism.
+
+With \`use_worker=no\`, the auth master process can keep 8 requests pipelined
+for the LDAP connection, while with \`use_worker=yes\` each connection has a
+maximum of 1 request running.
+
+For small systems, \`use_worker=no\` is sufficient and uses less resources.`
+	},
+
+	ldap_debug_level: {
+		tags: [ 'ldap' ],
+		default: '0',
+		values: setting_types.UINT,
+		text: `
+LDAP library debug level as specified by \`LDAP_DEBUG_*\` in \`ldap_log.h\`.
+
+Value \`-1\` means everything.
+
+You may need to recompile OpenLDAP with debugging enabled to get enough
+output.`
+	},
+
+	default_pass_scheme: {
+		tags: [ 'ldap' ],
+		default: 'crypt',
+		values: setting_types.STRING,
+		text: `
+::: info
+	LDAP Authentication Only
+:::
+
+Default password scheme. \`{scheme}\` before password overrides this.
+
+See [[link,password_schemes]] for a list of supported schemes.`
+	},
+
+	ldap_deref: {
+		tags: [ 'ldap' ],
+		default: 'never',
+		values: setting_types.ENUM,
+		values_enum: [ 'never', 'searching', 'finding', 'always' ],
+		text: `
+Specify dereference which is set as an LDAP option.`
+	},
+
+	ldap_auth_dn: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+Specify the Distinguished Name (the username used to login to the LDAP
+server).
+
+Leave it commented out to bind anonymously (useful with
+\`passdb_ldap_bind = yes\`).
+
+Example: \`ldap_auth_dn = uid=dov-read,dc=ocn,dc=ad,dc=jp,dc=.\``
+	},
+
+	ldap_auth_dn_password: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+Password for LDAP server, used if [\`ldap_auth_dn\`](#dn) is specified.`
+	},
+
+	ldap_iterate_fields: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRLIST,
+		text: `
+::: info
+	LDAP Authentication Only
+:::
+
+Attributes to get a list of all users. Currently only the attribute
+\`user\` is supported.
+
+Example:
+\`\`\`
+	iterate_attrs {
+		user = %{ldap:mailRoutingAddress}
+	}
+\`\`\``
+	},
+
+	ldap_iterate_filter: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+::: info
+	LDAP Authentication Only
+:::
+
+Filter to get a list of all users.
+
+Example: \`ldap_iterate_filter = (objectClass=smiMessageRecipient)\``
+	},
+
+	ldap_version: {
+		tags: [ 'ldap' ],
+		default: '3',
+		values: setting_types.UINT,
+		text: `
+LDAP protocol version to use. Likely \`2\` or \`3\`.`
+	},
+
+	fields: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRLIST,
+		text: `
+::: info
+	LDAP Authentication Only
+:::
+
+Specify user attributes to be retrieved from LDAP in passdb look up.
+
+Password checking attributes:
+
+* \`user\`: Virtual user name (user@domain), if you wish to change the
+	user-given username to something else
+* \`password\`: Password, may optionally start with \`{type}\`, e.g., \`{crypt}\`
+
+Example:
+
+\`\`\`
+	fields {
+	password = %{ldap:userPassword}
+	user = %{ldap:mailRoutingAddress}
+	home = %{ldap:homeDirectory}
+	uid = %{ldap:uidNumber}
+	gid = %{ldap:gidNumber}
+	}
+\`\`\`
+
+There are also other special fields which can be returned. See
+[[link,passdb_extra_fields]].
+
+If you wish to avoid two LDAP lookups (passdb + userdb), you can use
+[[link,auth_prefetch]] instead of userdb ldap in \`dovecot.conf\`. In that
+case you'll also have to include \`user_attrs\` in \`fields\` field
+prefixed with \`userdb_\` string.
+FIXME: WHAT ABOUT THIS ?`
+	},
+
+	ldap_filter: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+::: info
+	LDAP Authentication Only
+:::
+
+Filter for password lookups (passdb lookup).
+
+Example: \`ldap_filter = (&(objectClass=posixAccount)(uid=%u))\``
+	},
+
+	ldap_auth_sasl_authz_id: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+SASL authorization ID, ie. the \`ldap_auth_dn_password\` is for this "master user", but the
+\`ldap_auth_dn\` is still the logged in user. Normally you want to keep this empty.`
+	},
+
+	ldap_auth_sasl_mechanism: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+SASL mechanism names (a space-separated list of candidate mechanisms) to use.`
+	},
+
+	ldap_auth_sasl_realm: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+SASL realm to use.`
+	},
+
+	ldap_scope: {
+		tags: [ 'ldap' ],
+		default: 'subtree',
+		values: setting_types.ENUM,
+		values_enum: [ 'base', 'onelevel', 'subtree' ],
+		text: `
+This specifies the search scope.`
+	},
+
+	ssl: {
+		tags: [ 'ldap' ],
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		text: `
+Set to \`yes\` to use TLS to connect to the LDAP server.`
+	},
+
+	ssl_ca_cert_dir: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+Specify a value for TLS \`ssl_ca_cert_dir\` option.
+
+Currently supported only with OpenLDAP.`
+	},
+
+	ssl_ca_cert_file: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+Specify a value for TLS \`ssl_ca_cert_file\` option.
+
+Currently supported only with OpenLDAP.`
+	},
+
+	ssl_cert_file: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+Specify a value for TLS \`ssl_cert_file\` option.
+
+Currently supported only with OpenLDAP.`
+	},
+
+	ssl_cipher_suite: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+Specify a value for TLS \`ssl_cipher_suite\` option.
+
+Currently supported only with OpenLDAP.`
+	},
+
+	ssl_key_file: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+Specify a value for TLS \`ssl_key_file\` option.
+
+Currently supported only with OpenLDAP.`
+	},
+
+	ssl_require_cert: {
+		tags: [ 'ldap' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'never', 'hard', 'demand', 'allow', 'try' ],
+		text: `
+Specify a value for TLS \`ssl_require_cert\` option.
+
+Currently supported only with OpenLDAP.`
+	},
+
+	ldap_uris: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+LDAP URIs to use.
+
+Configure this setting to specify what LDAP
+server(s) to connect to.
+
+The URIs are in syntax \`protocol://host:port\`.
+
+Example: \`ldap_uris = ldaps://secure.domain.org\``
+},
+
+fields: {
+	tags: [ 'ldap' ],
+	values: setting_types.STRING,
+	text: `
+	FIXME: SEE ABOVE
+::: info
+	LDAP Authentication Only
+:::
+
+Specify user attributes to be retrieved from LDAP (in userdb look up).
+
+User attributes are given in \`dovecot-internal-name=%{ldap:LDAP-name}\` lines.
+
+The internal names are:
+
+| Name | Description |
+| ---- | ----------- |
+| \`uid\` | System UID |
+| \`gid\` | System GID |
+| \`home\` | Home directory |
+| \`mail\` | [[link,mail_location]] |
+
+There are also other special fields which can be returned. See
+[[link,userdb_extra_fields]].
+
+Example:
+
+\`\`\`
+fields {
+	home = %{ldap:homeDirectory}
+	uid = %{ldap:uidNumber}
+	gid = %{ldap:gidNumber}
+}
+\`\`\``
+	},
+
+	ldap_filter: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+		#FIXME: duplicate
+::: info
+	LDAP Authentication Only
+:::
+
+Filter for user lookup (userdb lookup).
+
+Variables that can be used (see [[variable]] for full list):
+
+Example:
+
+\`\`\`
+ldap_filter = (&(objectClass=posixAccount)(uid=%u))
+\`\`\``
+	}
+
 }
