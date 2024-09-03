@@ -6,7 +6,7 @@ on:
       - main
       - release-2.3
     tags:
-      - '*'
+      - '2.*'
 
 jobs:
   releasenew:
