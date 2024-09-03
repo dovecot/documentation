@@ -119,9 +119,9 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
     </div>
    </div>
 
-   <details class="details custom-block">
+   <details v-if="v.args" class="details custom-block">
     <summary v-html="data.http_api_link" />
-    <div v-if="v.args">
+    <div>
      <table>
       <thead>
        <th>Parameter</th>
