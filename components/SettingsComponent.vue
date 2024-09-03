@@ -44,7 +44,16 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 .badgePadding :deep(p) {
   margin: 4px;
 }
-.dovecotSettings :deep(ul) {
+.settingsList h3:first-of-type {
+  border-top-width: 0;
+  padding-top: 0;
+}
+.settingsList h3 {
+  border-top: 1px solid var(--vp-c-divider);
+  margin-top: 18px;
+  padding-top: 18px;
+}
+.settingsListTable :deep(ul) {
   margin: 0;
 }
 .advancedWarn {
@@ -54,76 +63,79 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 </style>
 
 <template>
- <template v-for="(v, k) in d">
-  <component :is="'h' +  level" :id="k" tabindex="-1">
-   <code>{{ k }}</code>
-   <a class="header-anchor" :href="'#' + k"></a>
-  </component>
+ <section class="settingsList">
+  <template v-for="(v, k) in d">
+   <component :is="'h' +  level" :id="k" tabindex="-1">
+    <code>{{ k }}</code>
+    <a class="header-anchor" :href="'#' + k"></a>
+   </component>
 
-  <table class="dovecotSettings">
-   <tbody>
-    <tr>
-     <th style="text-align:right;">Default</th>
-     <td>
-      <span v-if="v.default" v-html="v.default" />
-      <em v-else>[None]</em>
-     </td>
-    </tr>
-    <tr>
-     <th style="text-align:right;">Value</th>
-     <td>
-      <span class="comma" v-for="v in v.values" v-html="v.url" />
-     </td>
-    </tr>
-    <tr v-if="v.values_enum.length">
-     <th style="text-align:right;">Allowed Values</th>
-     <td>
-      <span class="comma" v-for="v in v.values_enum.values()"><code>{{ v }}</code></span>
-     </td>
-    </tr>
-    <tr v-if="v.seealso.length">
-     <th style="text-align:right;">See Also</th>
-     <td>
-      <ul>
-       <li v-for="v in v.seealso" v-html="v" />
-      </ul>
-     </td>
-    </tr>
-    <tr v-if="props.show_plugin && v.plugin">
-     <th style="text-align:right;">Plugin</th>
-     <td v-html="v.plugin_link" />
-    </tr>
-    <tr v-if="v.added || v.changed || v.deprecated || v.removed">
-     <th style="text-align:right;">Changes</th>
-     <td>
-      <ul class="badgePadding">
-       <li v-if="v.added" v-for="elem in v.added">
-        <span v-html="elem.version" />
-        <span v-html="elem.text" />
-       </li>
-       <li v-if="v.changed" v-for="elem in v.changed">
-        <span v-html="elem.version" />
-        <span v-html="elem.text" />
-       </li>
-       <li v-if="v.deprecated" v-for="elem in v.deprecated">
-        <span v-html="elem.version" />
-        <span v-html="elem.text" />
-       </li>
-       <li v-if="v.removed" v-for="elem in v.removed">
-        <span v-html="elem.version" />
-        <span v-html="elem.text" />
-       </li>
-      </ul>
-     </td>
-    </tr>
-    <tr v-if="v.advanced">
-     <td class="advancedWarn" colspan="2">
-      Advanced Setting; this should not normally be changed.
-     </td>
-    </tr>
-   </tbody>
-  </table>
+   <table class="settingsListTable">
+    <tbody>
+     <tr>
+      <th style="text-align:right;">Default</th>
+      <td>
+       <span v-if="v.default" v-html="v.default" />
+       <em v-else>[None]</em>
+      </td>
+     </tr>
+     <tr>
+      <th style="text-align:right;">Value</th>
+      <td>
+       <span class="comma" v-for="v in v.values" v-html="v.url" />
+      </td>
+     </tr>
+     <tr v-if="v.values_enum.length">
+      <th style="text-align:right;">Allowed Values</th>
+      <td>
+       <span class="comma" v-for="v in v.values_enum.values()"><code>{{ v }}</code></span>
+      </td>
+     </tr>
+     <tr v-if="v.seealso.length">
+      <th style="text-align:right;">See Also</th>
+      <td>
+       <ul>
+        <li v-for="v in v.seealso" v-html="v" />
+       </ul>
+      </td>
+     </tr>
+     <tr v-if="props.show_plugin && v.plugin">
+      <th style="text-align:right;">Plugin</th>
+      <td v-html="v.plugin_link" />
+     </tr>
+     <tr v-if="v.added || v.changed || v.deprecated || v.removed">
+      <th style="text-align:right;">Changes</th>
+      <td>
+       <ul class="badgePadding">
+        <li v-if="v.added" v-for="elem in v.added">
+         <span v-html="elem.version" />
+         <span v-html="elem.text" />
+        </li>
+        <li v-if="v.changed" v-for="elem in v.changed">
+         <span v-html="elem.version" />
+         <span v-html="elem.text" />
+        </li>
+        <li v-if="v.deprecated" v-for="elem in v.deprecated">
+         <span v-html="elem.version" />
+         <span v-html="elem.text" />
+        </li>
+        <li v-if="v.removed" v-for="elem in v.removed">
+         <span v-html="elem.version" />
+         <span v-html="elem.text" />
+        </li>
+       </ul>
+      </td>
+     </tr>
+     <tr v-if="v.advanced">
+      <td class="advancedWarn" colspan="2">
+       Advanced Setting; this should not normally be changed.
+      </td>
+     </tr>
+    </tbody>
+   </table>
 
-  <span v-html="v.text" />
- </template>
+   <div v-html="v.text" />
+
+  </template>
+ </section>
 </template>
