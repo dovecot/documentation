@@ -102,7 +102,7 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
 
      <table v-if="v.args">
       <thead>
-       <th>Flag(s)</th>
+       <th>Argument(s)</th>
        <th>Type</th>
        <th>Description</th>
       </thead>
