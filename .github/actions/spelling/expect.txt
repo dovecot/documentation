@@ -791,7 +791,7 @@ qmail
 qmgr
 qmqpd
 QQACg
-QRESYNC
+qresync
 qwerty
 rackdc
 rampup

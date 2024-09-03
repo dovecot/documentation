@@ -144,6 +144,14 @@ Connection Settings
      permanently assign ``UIDVALIDITY`` to an ``EXAMINEd`` mailbox, but assigned
      it for ``SELECTed`` mailbox.
 
+   ``no-qresync``
+
+     Disable the QRESYNC extension even if advertised by the IMAP server.
+     This can be used to work around a Zimbra bug where it doesn't send
+     untagged OK [CLOSED] imap-resp-code when selecting a folder.
+
+     .. versionadded:: 2.3.22
+
    ``zimbra-workarounds``
 
      Fetch full message using ``BODY.PEEK[HEADER] BODY.PEEK[TEXT]`` instead of
