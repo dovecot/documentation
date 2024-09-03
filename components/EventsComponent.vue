@@ -18,17 +18,31 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 ).sort())
 </script>
 
+<style scoped>
+.eventsList h3:first-of-type {
+  border-top-width: 0;
+  padding-top: 0;
+}
+.eventsList h3 {
+  border-top: 1px solid var(--vp-c-divider);
+  margin-top: 18px;
+  padding-top: 18px;
+}
+.eventsList :deep(table p) {
+  margin: 0;
+}
+</style>
+
 <template>
- <template v-for="(v, k) in d">
-  <h3 :id="k" tabindex="-1">
-   <code>{{ k }}</code>
-   <a class="header-anchor" :href="'#' + k"></a>
-  </h3>
+ <section class="eventsList">
+  <template v-for="(v, k) in d">
+   <h3 id="k" tabindex="-1">
+    <code>{{ k }}</code>
+    <a class="header-anchor" :href="'#' + k"></a>
+   </h3>
 
-  <span v-if="v.text" v-html="v.text" />
+   <div v-if="v.text" v-html="v.text" />
 
-  <details class="details custom-block">
-   <summary>Field List</summary>
    <table>
     <thead>
      <tr>
@@ -47,6 +61,6 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
      </tr>
     </tbody>
    </table>
-  </details>
- </template>
+  </template>
+ </section>
 </template>
