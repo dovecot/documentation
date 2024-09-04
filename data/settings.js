@@ -10637,6 +10637,14 @@ Filter to get a list of all users.
 Example: \`ldap_iterate_filter = (objectClass=smiMessageRecipient)\``
 	},
 
+	ldap_starttls: {
+		tags: [ 'ldap' ],
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		text: `
+Set to \`yes\` to use TLS to connect to the LDAP server.`
+	},
+
 	ldap_version: {
 		tags: [ 'ldap' ],
 		default: '3',
@@ -10725,69 +10733,6 @@ SASL realm to use.`
 		values_enum: [ 'base', 'onelevel', 'subtree' ],
 		text: `
 This specifies the search scope.`
-	},
-
-	ssl: {
-		tags: [ 'ldap' ],
-		default: 'no',
-		values: setting_types.BOOLEAN,
-		text: `
-Set to \`yes\` to use TLS to connect to the LDAP server.`
-	},
-
-	ssl_ca_cert_dir: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-Specify a value for TLS \`ssl_ca_cert_dir\` option.
-
-Currently supported only with OpenLDAP.`
-	},
-
-	ssl_ca_cert_file: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-Specify a value for TLS \`ssl_ca_cert_file\` option.
-
-Currently supported only with OpenLDAP.`
-	},
-
-	ssl_cert_file: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-Specify a value for TLS \`ssl_cert_file\` option.
-
-Currently supported only with OpenLDAP.`
-	},
-
-	ssl_cipher_suite: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-Specify a value for TLS \`ssl_cipher_suite\` option.
-
-Currently supported only with OpenLDAP.`
-	},
-
-	ssl_key_file: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-Specify a value for TLS \`ssl_key_file\` option.
-
-Currently supported only with OpenLDAP.`
-	},
-
-	ssl_require_cert: {
-		tags: [ 'ldap' ],
-		values: setting_types.ENUM,
-		values_enum: [ 'never', 'hard', 'demand', 'allow', 'try' ],
-		text: `
-Specify a value for TLS \`ssl_require_cert\` option.
-
-Currently supported only with OpenLDAP.`
 	},
 
 	ldap_uris: {
