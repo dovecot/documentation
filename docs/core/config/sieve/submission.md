@@ -33,7 +33,7 @@ Below are some of the most common reasons for this.
 
 #### Settings
 
-[[setting,auth_username_format,%L]] lowercases the username but also drops
+[[setting,auth_username_format,%Ln]] lowercases the username but also drops
 the domain. Use [[setting,auth_username_format,%Lu]] instead.
 
 [[setting,auth_username_format]] changes the username permanently, some
