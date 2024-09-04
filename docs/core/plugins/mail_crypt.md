@@ -5,6 +5,9 @@ dovecotlinks:
   fs_crypt:
     hash: fs-crypt-and-fs-mail-crypt
     text: fs-crypt
+  supported_sym_algorithms:
+    hash: supported-symmetric-algorithms
+    text: Supported symmetric algorithms
 ---
 
 # Mail Crypt (mail-crypt) Plugin
@@ -68,6 +71,47 @@ compatibility issues.
 ## Settings
 
 <SettingsComponent plugin="mail-crypt" />
+
+### Supported symmetric algorithms
+
+While mail crypt plugin does not support setting encryption algorithm,
+it is possible to specify one with FS crypt.
+
+Dovecot supports all algorithms in OpenSSL that have an OID assigned,
+and additionally few more (with official OIDs).
+
+In particular, XTS, CCM and CTR modes are not supported, due to the way
+they would need to be handled. Some operating systems limit the available
+algorithms with policies.
+
+It is recommended to use AES-GCM or ChaCha20-Poly1305 algorithm, with SHA256 or greater.
+
+Algorithm setting format is &lt;algorithm name&gt;&dash;&lt;mode&gt;&dash;&lt;hash algorithm;&gt;.
+E.g. `aes-256-gcm-sha256` or `chacha20-poly1305-sha256`.
+
+Note that hash algorithm is used for various hashing purposes, not just data integrity, so it
+is always required.
+
+Files encrypted with one algorithm can be decrypted even if the configuration specifies different algorithm,
+as the parameters are stored in the file.
+
+List of known algorithms that Dovecot supports as of writing.
+
+| Encryption algorithm | Supported size | Supported modes |
+| -------------------- | -------------- | --------------- |
+| [chacha20](https://en.wikipedia.org/wiki/ChaCha20) | - | [poly1305](https://en.wikipedia.org/wiki/ChaCha20-Poly1305)<sup>1,3</sup> |
+| [aes](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) | 128, 192, 256 | [gcm](https://en.wikipedia.org/wiki/Galois/Counter_Mode)<sup>1</sup>, [cbc](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#CBC)<sup>2</sup> |
+| [camellia](https://en.wikipedia.org/wiki/Camellia_&#40;cipher&#41;) | 128, 192, 256 | [cbc](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#CBC)<sup>2</sup> |
+| [aria](https://en.wikipedia.org/wiki/ARIA_&#40;cipher&#41;) | 128, 192, 256 | [cbc](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#CBC)<sup>2</sup> |
+| [seed](https://en.wikipedia.org/wiki/SEED) | - | [cbc](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#CBC)<sup>2</sup> |
+| [sm4](https://en.wikipedia.org/wiki/SM4_&#40;cipher&#41;) | - | [cbc](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#CBC)<sup>2</sup> |
+| [des-ede3](https://en.wikipedia.org/wiki/Triple_DES) | - | [cbc](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#CBC)<sup>2</sup> |
+
+<sup>1</sup> Uses [AEAD](https://en.wikipedia.org/wiki/AEAD) integrity.
+
+<sup>2</sup> Uses [HMAC](https://en.wikipedia.org/wiki/HMAC) integrity.
+
+<sup>3</sup> Requires recent enough OpenSSL.
 
 ### Dynamic Settings
 
