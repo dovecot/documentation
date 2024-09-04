@@ -34,12 +34,6 @@ ssl_cert_file = /etc/ssl/certs/dovecot.pem
 ssl_key_file = /etc/ssl/private/dovecot.pem
 ```
 
-::: warning
-You must use the `<` prefix so Dovecot reads the cert/key from the file.
-Without `<` Dovecot assumes that the certificate is directly included in
-`dovecot.conf.`
-:::
-
 The certificate file can be world-readable, since it doesn't contain
 anything sensitive (in fact it's sent to each connecting SSL client). The
 key file's permissions should be restricted to only root (and possibly
