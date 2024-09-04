@@ -10502,29 +10502,6 @@ LDAP base.
 Example: \`ldap_base = dc=mail, dc=example, dc=org\``
 	},
 
-	use_worker: {
-		tags: [ 'ldap' ],
-		default: 'no',
-		values: setting_types.BOOLEAN,
-		text: `
-::: info
-	LDAP Authentication Only
-:::
-
-By default all LDAP lookups are performed by the auth master process.
-
-If \`use_worker=yes\`, auth worker processes are used to perform the lookups.
-
-Each auth worker process creates its own LDAP connection so this can
-increase parallelism.
-
-With \`use_worker=no\`, the auth master process can keep 8 requests pipelined
-for the LDAP connection, while with \`use_worker=yes\` each connection has a
-maximum of 1 request running.
-
-For small systems, \`use_worker=no\` is sufficient and uses less resources.`
-	},
-
 	ldap_debug_level: {
 		tags: [ 'ldap' ],
 		default: '0',
