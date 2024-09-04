@@ -10459,6 +10459,169 @@ If enabled, protocol-level SSL errors are logged. Same as
 If enabled, ignore version mismatches between different Dovecot versions.`
 	},
 
+	ldap_auth_dn: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+Specify the Distinguished Name (the username used to login to the LDAP server).
+
+Leave it commented out to bind anonymously (useful with \`passdb_ldap_bind = yes\`).
+
+Example: \`ldap_auth_dn = uid=dov-read,dc=example,dc=com,dc=.\``
+	},
+
+	ldap_auth_dn_password: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+Password for LDAP server, used if [\`ldap_auth_dn\`](#dn) is specified.`
+	},
+
+	ldap_auth_sasl_authz_id: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+SASL authorization ID, ie. the \`ldap_auth_dn_password\` is for this "master user", but the
+\`ldap_auth_dn\` is still the logged in user. Normally you want to keep this empty.`
+	},
+
+	ldap_auth_sasl_mechanisms: {
+		tags: [ 'ldap' ],
+		values: setting_types.BOOLLIST,
+		text: `
+List of SASL mechanism names to use.`
+	},
+
+	ldap_auth_sasl_realm: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+SASL realm to use.`
+	},
+
+	ldap_base: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+LDAP base.
+
+[[variable]] can be used.
+
+Example: \`ldap_base = dc=mail, dc=example, dc=org\``
+	},
+
+	ldap_debug_level: {
+		tags: [ 'ldap' ],
+		default: '0',
+		values: setting_types.UINT,
+		text: `
+LDAP library debug level as specified by \`LDAP_DEBUG_*\` in \`ldap_log.h\`.
+
+Value \`-1\` means everything.
+
+You may need to recompile OpenLDAP with debugging enabled to get enough output.`
+	},
+
+	ldap_deref: {
+		tags: [ 'ldap' ],
+		default: 'never',
+		values: setting_types.ENUM,
+		values_enum: [ 'never', 'searching', 'finding', 'always' ],
+		text: `
+Specify dereference which is set as an LDAP option.`
+	},
+
+	ldap_filter: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+::: info
+	LDAP Authentication Only
+:::
+
+Filter for password and user lookups (passdb/userdb lookup).
+
+Variables that can be used (see [[variable]] for full list).
+
+Example:
+
+\`\`\`
+ldap_filter = (&(objectClass=posixAccount)(uid=%u))
+\`\`\``
+	},
+
+	ldap_iterate_fields: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRLIST,
+		text: `
+::: info
+	LDAP Authentication Only
+:::
+
+Attributes to get a list of all users. Currently only the attribute
+\`user\` is supported.
+
+Example:
+\`\`\`
+	iterate_attrs {
+		user = %{ldap:mailRoutingAddress}
+	}
+\`\`\``
+	},
+
+	ldap_iterate_filter: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+::: info
+	LDAP Authentication Only
+:::
+
+Filter to get a list of all users.
+
+Example: \`ldap_iterate_filter = (objectClass=smiMessageRecipient)\``
+	},
+
+	ldap_scope: {
+		tags: [ 'ldap' ],
+		default: 'subtree',
+		values: setting_types.ENUM,
+		values_enum: [ 'base', 'onelevel', 'subtree' ],
+		text: `
+This specifies the search scope.`
+	},
+
+
+	ldap_starttls: {
+		tags: [ 'ldap' ],
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		text: `
+Set to \`yes\` to use TLS to connect to the LDAP server.`
+	},
+
+	ldap_uris: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+LDAP URIs to use.
+
+Configure this setting to specify what LDAP
+server(s) to connect to.
+
+The URIs are in syntax \`protocol://host:port\`.
+
+Example: \`ldap_uris = ldaps://secure.domain.org\``
+	},
+
+	ldap_version: {
+		tags: [ 'ldap' ],
+		default: '3',
+		values: setting_types.UINT,
+		text: `
+LDAP protocol version to use. Likely \`2\` or \`3\`.`
+	},
+
 	passdb_ldap_bind: {
 		tags: [ 'ldap' ],
 		default: 'no',
@@ -10499,221 +10662,6 @@ the standard [[variable]].
 Note that you can't use any \`fields\` declaration if you use this setting.
 
 Example: \`passdb_ldap_bind_userdn = cn=%u,ou=people,o=org\``
-	},
-
-	ldap_base: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-LDAP base.
-
-[[variable]] can be used.
-
-Example: \`ldap_base = dc=mail, dc=example, dc=org\``
-	},
-
-	ldap_debug_level: {
-		tags: [ 'ldap' ],
-		default: '0',
-		values: setting_types.UINT,
-		text: `
-LDAP library debug level as specified by \`LDAP_DEBUG_*\` in \`ldap_log.h\`.
-
-Value \`-1\` means everything.
-
-You may need to recompile OpenLDAP with debugging enabled to get enough
-output.`
-	},
-
-	ldap_deref: {
-		tags: [ 'ldap' ],
-		default: 'never',
-		values: setting_types.ENUM,
-		values_enum: [ 'never', 'searching', 'finding', 'always' ],
-		text: `
-Specify dereference which is set as an LDAP option.`
-	},
-
-	ldap_auth_dn: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-Specify the Distinguished Name (the username used to login to the LDAP
-server).
-
-Leave it commented out to bind anonymously (useful with
-\`passdb_ldap_bind = yes\`).
-
-Example: \`ldap_auth_dn = uid=dov-read,dc=ocn,dc=ad,dc=jp,dc=.\``
-	},
-
-	ldap_auth_dn_password: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-Password for LDAP server, used if [\`ldap_auth_dn\`](#dn) is specified.`
-	},
-
-	ldap_iterate_fields: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRLIST,
-		text: `
-::: info
-	LDAP Authentication Only
-:::
-
-Attributes to get a list of all users. Currently only the attribute
-\`user\` is supported.
-
-Example:
-\`\`\`
-	iterate_attrs {
-		user = %{ldap:mailRoutingAddress}
-	}
-\`\`\``
-	},
-
-	ldap_iterate_filter: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-::: info
-	LDAP Authentication Only
-:::
-
-Filter to get a list of all users.
-
-Example: \`ldap_iterate_filter = (objectClass=smiMessageRecipient)\``
-	},
-
-	ldap_starttls: {
-		tags: [ 'ldap' ],
-		default: 'no',
-		values: setting_types.BOOLEAN,
-		text: `
-Set to \`yes\` to use TLS to connect to the LDAP server.`
-	},
-
-	ldap_version: {
-		tags: [ 'ldap' ],
-		default: '3',
-		values: setting_types.UINT,
-		text: `
-LDAP protocol version to use. Likely \`2\` or \`3\`.`
-	},
-
-	ldap_filter: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-::: info
-	LDAP Authentication Only
-:::
-
-Filter for password lookups (passdb lookup).
-
-Example: \`ldap_filter = (&(objectClass=posixAccount)(uid=%u))\``
-	},
-
-	ldap_auth_sasl_authz_id: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-SASL authorization ID, ie. the \`ldap_auth_dn_password\` is for this "master user", but the
-\`ldap_auth_dn\` is still the logged in user. Normally you want to keep this empty.`
-	},
-
-	ldap_auth_sasl_mechanism: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-SASL mechanism names (a space-separated list of candidate mechanisms) to use.`
-	},
-
-	ldap_auth_sasl_realm: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-SASL realm to use.`
-	},
-
-	ldap_scope: {
-		tags: [ 'ldap' ],
-		default: 'subtree',
-		values: setting_types.ENUM,
-		values_enum: [ 'base', 'onelevel', 'subtree' ],
-		text: `
-This specifies the search scope.`
-	},
-
-	ldap_uris: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-LDAP URIs to use.
-
-Configure this setting to specify what LDAP
-server(s) to connect to.
-
-The URIs are in syntax \`protocol://host:port\`.
-
-Example: \`ldap_uris = ldaps://secure.domain.org\``
-},
-
-fields: {
-	tags: [ 'ldap' ],
-	values: setting_types.STRING,
-	text: `
-	FIXME: SEE ABOVE
-::: info
-	LDAP Authentication Only
-:::
-
-Specify user attributes to be retrieved from LDAP (in userdb look up).
-
-User attributes are given in \`dovecot-internal-name=%{ldap:LDAP-name}\` lines.
-
-The internal names are:
-
-| Name | Description |
-| ---- | ----------- |
-| \`uid\` | System UID |
-| \`gid\` | System GID |
-| \`home\` | Home directory |
-| \`mail\` | [[link,mail_location]] |
-
-There are also other special fields which can be returned. See
-[[link,userdb_extra_fields]].
-
-Example:
-
-\`\`\`
-fields {
-	home = %{ldap:homeDirectory}
-	uid = %{ldap:uidNumber}
-	gid = %{ldap:gidNumber}
-}
-\`\`\``
-	},
-
-	ldap_filter: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRING,
-		text: `
-		#FIXME: duplicate
-::: info
-	LDAP Authentication Only
-:::
-
-Filter for user lookup (userdb lookup).
-
-Variables that can be used (see [[variable]] for full list):
-
-Example:
-
-\`\`\`
-ldap_filter = (&(objectClass=posixAccount)(uid=%u))
-\`\`\``
 	}
 
 }
