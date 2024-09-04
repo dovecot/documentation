@@ -287,7 +287,7 @@ You can enable TLS in two alternative ways:
 * Connect to ldap port (389) and use STARTTLS command. Use `ssl=yes` to
   enable this.
 
-See the `ssl_*` settings for how to configure TLS.
+See the [[link,ssl_configuration]] settings for how to configure TLS.
 
 #### Custom Certs
 
