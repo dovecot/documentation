@@ -6,6 +6,9 @@ dovecotlinks:
   userdb_extra_fields:
     hash: extra-fields
     text: "userdb: Extra Fields"
+  userdb_result_values:
+    hash: result-values
+    text: "userdb: Result Values"
 ---
 
 # User Databases (`userdb`)
@@ -184,9 +187,9 @@ otherwise the `userdb` lookup could still succeed but not all the
 intended extra fields are set.
 :::
 
-### Success Values
+### Result Values
 
-The success result values:
+The following values control the behavior of a userdb lookup result:
 
 #### `return-ok`
 
