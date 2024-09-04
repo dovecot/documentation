@@ -10515,20 +10515,6 @@ You may need to recompile OpenLDAP with debugging enabled to get enough
 output.`
 	},
 
-	default_pass_scheme: {
-		tags: [ 'ldap' ],
-		default: 'crypt',
-		values: setting_types.STRING,
-		text: `
-::: info
-	LDAP Authentication Only
-:::
-
-Default password scheme. \`{scheme}\` before password overrides this.
-
-See [[link,password_schemes]] for a list of supported schemes.`
-	},
-
 	ldap_deref: {
 		tags: [ 'ldap' ],
 		default: 'never',
