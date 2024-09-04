@@ -15,6 +15,9 @@ dovecotlinks:
   passdb_user_extra_fields:
     hash: user-extra-fields
     text: "passdb: User Extra Fields"
+  passdb_result_values:
+    hash: result-values
+    text: "passdb: Result Values"
 ---
 
 # Password Databases (`passdb`)
@@ -282,9 +285,9 @@ otherwise the authentication could still succeed but not all the
 intended extra fields are set.
 :::
 
-### Success Values
+### Result Values
 
-The success result values:
+The following values control the behavior of a passdb lookup result:
 
 #### `return-ok`
 
