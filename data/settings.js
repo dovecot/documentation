@@ -3509,8 +3509,10 @@ Because it grants access to users' mailboxes, it must be kept secret.`
 Value Range: \`<1-65535>\`
 
 The destination port to be used for the next doveadm proxying hop.
+This implicitly enables doing a passdb lookup for finding the proxy settings.
 
-A value of \`0\` means that proxying is not in use.`
+A value of \`0\` means that proxying is not in use. This also means no passdb
+lookup is done - only userdb lookup.`
 	},
 
 	doveadm_socket_path: {
