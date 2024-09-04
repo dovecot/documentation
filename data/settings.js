@@ -8595,6 +8595,11 @@ the state **after** the current passdb lookup, and can refer to fields returned
 by previous passdb lookups. Depending on the passdb driver, it can also refer
 to variable fields returned by it (e.g. \`%{ldap:fieldName}\`).
 
+::: info
+The LDAP driver provides additional specific variables,
+see [[link,auth_ldap]] for more details.
+:::
+
 For example:
 
 \`\`\`[dovecot.conf]
@@ -10273,6 +10278,11 @@ the state **after** the current userdb lookup, and can refer to fields returned
 by previous userdb lookups. Depending on the userdb driver, it can also refer
 to variable fields returned by it (e.g. \`%{ldap:fieldName}\`).
 
+::: info
+The LDAP driver provides additional specific variables,
+see [[link,auth_ldap]] for more details.
+:::
+
 For example:
 
 \`\`\`[dovecot.conf]
@@ -10590,44 +10600,6 @@ Set to \`yes\` to use TLS to connect to the LDAP server.`
 		values: setting_types.UINT,
 		text: `
 LDAP protocol version to use. Likely \`2\` or \`3\`.`
-	},
-
-	fields: {
-		tags: [ 'ldap' ],
-		values: setting_types.STRLIST,
-		text: `
-::: info
-	LDAP Authentication Only
-:::
-
-Specify user attributes to be retrieved from LDAP in passdb look up.
-
-Password checking attributes:
-
-* \`user\`: Virtual user name (user@domain), if you wish to change the
-	user-given username to something else
-* \`password\`: Password, may optionally start with \`{type}\`, e.g., \`{crypt}\`
-
-Example:
-
-\`\`\`
-	fields {
-	password = %{ldap:userPassword}
-	user = %{ldap:mailRoutingAddress}
-	home = %{ldap:homeDirectory}
-	uid = %{ldap:uidNumber}
-	gid = %{ldap:gidNumber}
-	}
-\`\`\`
-
-There are also other special fields which can be returned. See
-[[link,passdb_extra_fields]].
-
-If you wish to avoid two LDAP lookups (passdb + userdb), you can use
-[[link,auth_prefetch]] instead of userdb ldap in \`dovecot.conf\`. In that
-case you'll also have to include \`user_attrs\` in \`fields\` field
-prefixed with \`userdb_\` string.
-FIXME: WHAT ABOUT THIS ?`
 	},
 
 	ldap_filter: {
