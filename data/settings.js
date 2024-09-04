@@ -4443,9 +4443,9 @@ Options:
 		tags: [ 'lmtp' ],
 		values: setting_types.BOOLEAN,
 		text: `
-Proxy to other LMTP/SMTP servers?
-
-Proxy destination is determined via passdb lookup parameters.`
+If yes, LMTP sessions perform a passdb lookup to see if the user should be
+proxied. The user is proxied only if the \`proxy\` extra field is returned.
+The proxy destination is determined via returned passdb extra fields.`
 	},
 
 	lmtp_proxy_rawlog_dir: {
