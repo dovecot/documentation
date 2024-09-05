@@ -49,7 +49,7 @@ access to attribute=userPassword
 ```
 :::
 
-Replace `<dovecot's dn>` with the DN you specified in `ldap_auth_dn`
+Replace `<dovecot's dn>` with the DN you specified in [[setting,ldap_auth_dn]]
 in `dovecot.conf`'s ldap settings.
 
 Alternatively, you can:
@@ -82,10 +82,10 @@ $ ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f doveauth_access.ldif
 
 The two important settings in password lookups are:
 
-- `ldap_filter` specifies the LDAP filter how user is found from the
+- [[setting,ldap_filter]] specifies the LDAP filter how user is found from the
   LDAP. You can use all the normal [[variable]] like `%u` in the filter.
 
-- `fields` block specifies a list of attributes that are returned and
+- [[setting,passdb_fields]] specifies a list of attributes that are returned and
   how to produce the returned value.
 
 Usually the LDAP attribute names aren't the same as
@@ -111,12 +111,12 @@ special [[link,passdb_extra_fields]].
 
 #### Password
 
-Most importantly, the `fields` block must return a "password" field,
+Most important, [[setting,passdb_fields]] must return a `password` field,
 which contains the user's password.
 
 The next thing Dovecot needs to know is what format the password is in.
-If all the passwords are in same format, you can use `default_pass_scheme`
-setting in `dovecot-ldap.conf` to specify it. Otherwise each password needs
+If all the passwords are in same format, you can use [[setting,passdb_default_password_scheme]]
+setting in `dovecot.conf` to specify it. Otherwise each password needs
 to be prefixed with `{password-scheme}`, for example
 `{plain}plaintext-password`.
 
@@ -130,7 +130,7 @@ username, it's possible that a user logging in as "user", "User" and
 
 The easiest way to handle this is to tell Dovecot to change the username
 to the same case as it's in the LDAP database. You can do this by
-returning "user" field in the `fields` block, as shown in the above example.
+returning "user" field in [[setting,passdb_fields]] setting, as shown in the above example.
 
 If you can't normalize the username in LDAP, you can alternatively
 lowercase the username via [[setting,auth_username_format,%Lu]].
@@ -180,19 +180,19 @@ Advantages over [Password Lookups](#password-lookups)
   attacker access to all the users' password hashes. (And Dovecot
   admins in general don't have direct access to them.)
 
-You can enable authentication binds by setting `passdb_ldap_bind=yes`.
+You can enable authentication binds by setting [[setting,passdb_ldap_bind,yes]].
 
 Dovecot needs to know what DN to use in the binding. There are two ways
 to configure this: lookup or template.
 
 ### DN Lookup
 
-DN is looked up by sending a `ldap_filter` LDAP request and getting
+DN is looked up by sending a [[setting,ldap_filter]] LDAP request and getting
 the DN from the reply. This is very similar to doing a
 [password lookup](#password-lookups). The only difference is that
 `userPassword` attribute isn't returned.
 
-Just as with password lookups, the `fields` may contain special
+Just as with password lookups, the [[setting,passdb_fields]] may contain special
 [[link,passdb_extra_fields]].
 
 Example:
@@ -221,7 +221,7 @@ of two LDAP requests per login in both cases).
 If you're also using Dovecot for SMTP AUTH, it doesn't do a userdb lookup
 so the prefetch optimization doesn't help.
 
-If you're using DN template, `fields` and `ldap_filter` settings
+If you're using DN template, [[setting,passdb_fields]] and [[setting,ldap_filter]] settings
 are completely ignored. That means you can't make passdb return any
 [[link,passdb_extra_fields]]. You should also set
 [[setting,auth_username_format,%Lu]] in `dovecot.conf` to normalize the
@@ -246,7 +246,8 @@ When using
 the userdb lookups should use a separate connection to the LDAP server.
 That way it can send LDAP requests asynchronously to the server, which
 improves the performance. This can be done by specifying distinct
-`ldap_connection_group` in the LDAP passdb and userdb settings.
+[[setting,ldap_connection_group]] in the LDAP
+[[setting,passdb]] / [[setting,userdb]] sections.
 
 ::: code-group
 ```[dovecot.conf]
@@ -271,7 +272,7 @@ This sections describes the configuration common to LDAP [[link,passdb]] and
 
 The LDAP server(s) endpoints must be specified as ldap URIs:
 
-* `ldap_uris`: A space separated list of LDAP URIs to connect to.
+* [[setting,ldap_uris]]: A space separated list of LDAP URIs to connect to.
 
 If multiple LDAP servers are specified, it's decided by the LDAP library how
 the server connections are handled. Typically the first working server is used,
@@ -284,7 +285,7 @@ You can enable TLS in two alternative ways:
 
 * Connect to ldaps port (636) by using "ldaps" protocol, e.g. `ldap_uris =
   ldaps://secure.domain.org`
-* Connect to ldap port (389) and use STARTTLS command. Use `ssl=yes` to
+* Connect to ldap port (389) and use STARTTLS command. Use [[setting,ssl,yes]] to
   enable this.
 
 See the [[link,ssl_configuration]] settings for how to configure TLS.
@@ -373,7 +374,7 @@ concurrent LDAP connections. Otherwise only a single LDAP connection is used.
 :::
 
 - Normalize the username to exactly the `mailRoutingAddress` field's value
-regardless of how the `ldap_filter` found the user:
+regardless of how the [[setting,ldap_filter]] found the user:
 
 ::: code-group
 ```[dovecot.conf]
@@ -400,7 +401,7 @@ other means:
 :::
 
 - How to find the user for passdb lookup (this can be set specifically to
-distinct values inside each passdb/userdb stanza):
+distinct values inside each [[setting,passdb]] / [[setting,userdb]] section):
 
 ::: code-group
 ```[dovecot.conf]
@@ -422,7 +423,7 @@ ldap_filter = (mailRoutingAddress=%u)
 
 ### LDAP-Specific Variables
 
-The following variables can be used inside the `dovecot-ldap.conf.ext` files:
+The following variables can be used inside the [[setting,passdb]] / [[setting,userdb]] sections:
 
 | Variable | Description |
 | -------- | ----------- |
@@ -509,7 +510,7 @@ userdb ldap {
 ```
 :::
 
-These enable `LDAP` to be used as `passdb` and `userdb`. The userdb
+These enable `LDAP` to be used as [[setting,passdb]] / [[setting,userdb]]. The userdb
 prefetch allows `IMAP` or `POP3` logins to do only a single LDAP lookup by
 returning the userdb information already in the passdb lookup.
 [[link,auth_prefetch]] has more details on the prefetch userdb.
@@ -533,11 +534,11 @@ that e.g. [[link,lda]] or [[link,lmtp]] needs to do userdb lookups
 without knowing the user's password).
 
 The userdb lookups are configured in very much the same way as
-[password lookups](#password-lookups). `fields` and
-`ldap_filter`, are used in the same way in userdb.
+[password lookups](#password-lookups). [[setting,userdb_fields]] and
+[[setting,ldap_filter]], are used in the same way in passdb.
 
 If you're using a single UID and GID for all the users, you can specify
-them globally with `mail_uid` and `mail_gid` settings instead of
+them globally with [[setting,mail_uid]] and [[setting,mail_gid]] settings instead of
 returning them from LDAP.
 
 ```
@@ -604,8 +605,8 @@ User names and domains may be distinguished using the [[variable]]
   the Postfix configuration.
 
 - For IMAP, it will be whatever the password database has designated as
-  the username. If the (LDAP) password database has `user_attrs =
-  =user=%n`, then the domain part of the login name will be stripped by
+  the username. If the (LDAP) password database [[setting,passdb_fields ]]
+  contains `user=%n`, then the domain part of the login name will be stripped by
   the password database. The userdb will not see any domain part, i.e.
   %n and %u are the same thing for the userdb.
 
