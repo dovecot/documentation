@@ -316,8 +316,6 @@ This should report "Verify return code: 0 (ok)".
 It's possible to use SASL binds instead of the regular simple binds if your
 LDAP library supports them.
 
-See the `ldap_sasl_*` settings in `dovecot-ldap-example.conf`.
-
 ::: warning Note
 SASL binds are currently incompatible with authentication binds.
 :::
@@ -563,7 +561,7 @@ You can mix static text with the value returned from LDAP by using
 
 #### Examples
 
-Create a "quota_rule" field with value `*:bytes=<n>` where `<n>` comes
+Create a `quota_rule` field with value `*:bytes=<n>` where `<n>` comes
 from "quotaBytes" LDAP attribute:
 
 ```
@@ -572,7 +570,7 @@ fields {
 }
 ```
 
-Create a "mail" field with value `maildir:/var/mail/<dir>/Maildir` where
+Create a `mail` field with value `maildir:/var/mail/<dir>/Maildir` where
 `<dir>` comes from "sAMAccountName" LDAP attribute:
 
 ```
