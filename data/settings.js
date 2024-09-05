@@ -10534,6 +10534,15 @@ LDAP base.
 Example: \`ldap_base = dc=mail, dc=example, dc=org\``
 	},
 
+	ldap_connection_group: {
+		tags: [ 'ldap' ],
+		values: setting_types.STRING,
+		text: `
+Only databases with the same connection group share the ldap connections.
+By default all the databases have the same \`""\`(empty string) default connection group,
+and as such share the connections.`
+	},
+
 	ldap_debug_level: {
 		tags: [ 'ldap' ],
 		default: '0',
