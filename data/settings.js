@@ -10465,7 +10465,7 @@ If enabled, ignore version mismatches between different Dovecot versions.`
 		text: `
 Specify the Distinguished Name (the username used to login to the LDAP server).
 
-Leave it commented out to bind anonymously (useful with \`passdb_ldap_bind = yes\`).
+Leave it commented out to bind anonymously (useful with [[setting,passdb_ldap_bind,yes]]).
 
 Example: \`ldap_auth_dn = uid=dov-read,dc=example,dc=com,dc=.\``
 	},
@@ -10474,15 +10474,15 @@ Example: \`ldap_auth_dn = uid=dov-read,dc=example,dc=com,dc=.\``
 		tags: [ 'ldap' ],
 		values: setting_types.STRING,
 		text: `
-Password for LDAP server, used if [\`ldap_auth_dn\`](#dn) is specified.`
+Password for LDAP server. Used if [[setting,ldap_auth_dn]] is specified.`
 	},
 
 	ldap_auth_sasl_authz_id: {
 		tags: [ 'ldap' ],
 		values: setting_types.STRING,
 		text: `
-SASL authorization ID, ie. the \`ldap_auth_dn_password\` is for this "master user", but the
-\`ldap_auth_dn\` is still the logged in user. Normally you want to keep this empty.`
+SASL authorization ID, ie. the [[setting,ldap_auth_dn_password]] is for this "master user", but the
+[[setting,ldap_auth_dn]] is still the logged in user. Normally you want to keep this empty.`
 	},
 
 	ldap_auth_sasl_mechanisms: {
@@ -10644,14 +10644,14 @@ Set \`yes\` to use authentication binding for verifying password's validity.
 
 This works by logging into LDAP server using the username and password given by client.
 
-The [\`ldap_filter\`](#pass-filter) is used to find the DN for the user.
-Note that the \`fields\` block is still used, only the password field
+The [[setting,ldap_filter]] is used to find the DN for the user.
+Note that the [[setting,passdb_fields]] are still used, only the password field
 is ignored in it.
 
 Before doing any search, the binding is switched back to the default DN.
 
 If you use this setting, it's a good idea to use a different
-\`ldap_connection_group\` for userdb. That way one connection is used
+[[setting,ldap_connection_group]] for userdb. That way one connection is used
 only for LDAP binds and another connection is used for user lookups.
 Otherwise the binding is changed to the default DN before each user lookup.`
 	},
@@ -10668,7 +10668,7 @@ If authentication binding is used, you can save one LDAP request per login
 if users' DN can be specified with a common template. The template can use
 the standard [[variable]].
 
-Note that you can't use any \`fields\` declaration if you use this setting.
+Note that you can't use any [[setting,passdb_fields]] declaration if you use this setting.
 
 Example: \`passdb_ldap_bind_userdn = cn=%u,ou=people,o=org\``
 	}
