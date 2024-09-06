@@ -4948,7 +4948,6 @@ different decimal value. Setting mode to \`0\` disables the listener.`
 	fifo_listener_user: {
 		tags: [ 'service' ],
 		values: setting_types.STRING,
-		default: '<empty>',
 		text: `
 Owner of the listener file. Empty (default) means UID 0 (root).`
 	},
@@ -4956,7 +4955,6 @@ Owner of the listener file. Empty (default) means UID 0 (root).`
 	fifo_listener_group: {
 		tags: [ 'service' ],
 		values: setting_types.STRING,
-		default: '<empty>',
 		text: `
 	Group of the listener file. Empty (default) means GID 0 (root/wheel).`
 	},
@@ -10208,7 +10206,6 @@ different decimal value. Setting mode to \`0\` disables the listener.`
 	unix_listener_user: {
 		tags: [ 'service' ],
 		values: setting_types.STRING,
-		default: '<empty>',
 		text: `
 Owner of the listener file. Empty (default) means UID 0 (root).`
 	},
@@ -10216,7 +10213,6 @@ Owner of the listener file. Empty (default) means UID 0 (root).`
 	unix_listener_group: {
 		tags: [ 'service' ],
 		values: setting_types.STRING,
-		default: '<empty>',
 		text: `
 Group of the listener file. Empty (default) means GID 0 (root/wheel).`
 	},
