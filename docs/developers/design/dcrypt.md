@@ -35,12 +35,13 @@ the code if you want to.
 
 5. From $P = (x,y)$ choose `x` as `S`
 
-6. Generate random salt
+6. Generate random IV+key and HMAC seed or AAD as encryption key material
 
-7. Use $PBKDF2(SHA256, S, salt, 2000)$ to produce iv+key, and hmac seed or
-   aad
+7. Use $PBKDF2(mac-algorithm, S, salt, rounds)$ to produce IV+key, and AAD if used by cipher algorithm for encrypting the encryption key
 
-8. Encrypt data
+8. Encrypt encryption key material with the values generated in step 7
+
+8. Encrypt data using encryption key material
 
 9. OUTPUT R, salt and encrypted data.
 
@@ -56,10 +57,12 @@ compressed form.
 
 3. From $P = (x,y)$ choose x as S
 
-4. Use $PBKDF2(SHA256, S, salt, 2000)$ to produce iv+key, and hmac seed or
-   aad
+4. Use $PBKDF2(mac-algorithm, S, salt, rounds)$ to produce IV+key, and HMAC seed or
+   AAD for encryption key decryption
 
-5. Decrypt data
+5. Decrypt encryption key (if you are using GCM, AAD and TAG need to provided for encryption key decryption)
+
+6. Decrypt data using encryption key
 
 6. OUTPUT decrypted data
 
@@ -82,12 +85,22 @@ public key id: HEX(SHA256(public key in DER format))
 key data:
   RSA: i2d_PrivateKey
   ECC: BN_bn2mpi using compressed form
-
+  XD: Public key bits
 public key: 2:HEX(public key in DER format):public key ID
 private key (unencrypted)    : 2:key algo oid:0:key data:public key ID
 private key (encrypted, key) : 2:key algo oid:1:symmetric algo:salt:digest algo (for pbkdf2):rounds:encrypted key data:ephemeral public key:digest of encryption key:public key ID
 private key (encrypted, pwd) : 2:key algo oid:2:symmetric algo:salt:digest algo (for pbkd2f):rounds:encrypted key data:public key ID
 ```
+
+## Flags
+
+Currently supported flags are:
+
+ - 0x01 - Use HMAC for data integrity
+ - 0x02 - Use AEAD for key and data integrity
+ - 0x04 - No data integrity verification
+ - 0x08 - Encrypted using obsolete version 1 algorithm
+ - 0x10 - Use same cipher algorithm for key and data, [[added,dcrypt_same_cipher_algo_added]]
 
 ## File Format
 
@@ -113,8 +126,8 @@ mod - +4  MSB PBKDF2 rounds
 +11 - +43 public key id (SHA256 of public key in DER format, point compressed)
 +44 - +48 MSB length of ephemeral key
 +49 - epk ephemeral key
-epk - +4  MSB length of encrypted key
-+4  - ek  encrypted key
+epk - +4  MSB length of encryption key
++4  - ek  encrypted key[+ TAG when AEAD used]
 ----- end of key block (this can then repeat) -----
 eokb - +4  MSB length of encryption key hash
 +4 - ekh  encryption key hash
