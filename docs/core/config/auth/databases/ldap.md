@@ -31,14 +31,18 @@ Advantages over [Authentication Binds](#authentication-binds):
 
 Normally LDAP server doesn't give anyone access to users' passwords, so
 you'll need to create an administrator account that has access to the
-`userPassword` field. With OpenLDAP this can be done by modifying
-`/etc/ldap/slapd.conf`:
+`userPassword` field.
+
+With OpenLDAP this can be done by modifying `/etc/ldap/slapd.conf`:
 
 ::: code-group
-```[dovecot.conf]
-# there should already be something like this in the file:
+```[/etc/ldap/slapd.conf]
+#---- there should already be something like this in the file
 access to attribute=userPassword
-    by dn="<dovecot's dn>" read  # just add this line
+
+    #---- just add this line
+    by dn="<dovecot's dn>" read
+
     by anonymous auth
     by self write
     by * none
@@ -47,6 +51,32 @@ access to attribute=userPassword
 
 Replace `<dovecot's dn>` with the DN you specified in `ldap_auth_dn`
 in `dovecot.conf`'s ldap settings.
+
+Alternatively, you can:
+
+1. Create below text file and save it as `authuser_modify.ldif`.
+
+::: code-group
+```[authuser_modify.ldif]
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcAccess
+olcAccess: {0}to attrs=userPassword
+	by self write
+	by dn="cn=authuser,dc=test,dc=dovecot,dc=net" read
+	by * auth
+olcAccess: {1}to *
+	by self read
+	by dn="cn=authuser,dc=test,dc=dovecot,dc=net" read
+	by * auth
+```
+:::
+
+2. Run `ldapmodify` to apply the change.
+
+```sh
+$ ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f doveauth_access.ldif
+```
 
 ### Dovecot Configuration
 
