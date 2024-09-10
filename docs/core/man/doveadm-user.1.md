@@ -78,7 +78,7 @@ userdb: jane
   home      : /home/jane
   mail_path : ~/sdbox
   plugins   : sieve
-  quota_rule: \*:storage=150M
+  quota_storage_size: 150M
 
 userdb: john@example.com
   home      : /srv/mail/8/70312/79832

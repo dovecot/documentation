@@ -393,7 +393,7 @@ other means:
 ```[dovecot.conf]
   fields {
     user = %{ldap:mailRoutingAddress}
-    quota_rule = *:storage=%{ldap:messageQuotaHard}
+    quota_storage_size = %{ldap:messageQuotaHard}B
   }
 ```
 :::
@@ -447,7 +447,7 @@ userdb ldap1 {
   result_success = continue-ok
   fields {
     class = %{ldap:userClass}
-    quota_rule = *:bytes=%{ldap:quotaBytes}
+    quota_storage_size = %{ldap:quotaBytes}B
   }
 }
 
@@ -455,7 +455,7 @@ userdb ldap2 {
   driver = ldap
   skip = notfound
   fields {
-    quota_rule:default = *:bytes=%{ldap:classQuotaBytes}
+    quota_storage_size:default = %{ldap:classQuotaBytes}B
   }
 }
 ```
@@ -561,12 +561,12 @@ You can mix static text with the value returned from LDAP by using
 
 #### Examples
 
-Create a `quota_rule` field with value `*:bytes=<n>` where `<n>` comes
+Create a `quota_storage_size` field with value `<n>B` where `<n>` comes
 from "quotaBytes" LDAP attribute:
 
 ```
 fields {
-  quota_rule = *:bytes=%{ldap:quotaBytes}
+  quota_storage_size = %{ldap:quotaBytes}B
 }
 ```
 
@@ -584,7 +584,7 @@ create a "mail_path" field with value `/var/vmail/%d/%n/Maildir`:
 
 ```
 fields {
-    quota_rule = *:bytes=%{ldap:quotaBytes}
+    quota_storage_size = %{ldap:quotaBytes}B
     mail_path = /var/vmail/%d/%n/Maildir
 }
 ```

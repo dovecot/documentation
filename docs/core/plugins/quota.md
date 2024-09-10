@@ -4,31 +4,43 @@ title: quota
 dovecotlinks:
   quota_admin:
     hash: quota-admin-commands
-    text: quota admin
+    text: Quota Admin
+  quota_limits:
+    hash: quota-limits
+    text: Quota Limits
+  quota_backends:
+    hash: quota-backends
+    text: Quota Backends
   quota_backend_count:
     hash: backend-count
-    text: quota count backend
+    text: "Quota Backend: Count"
   quota_backend_fs:
     hash: backend-fs
-    text: filesystem quota backend
+    text: "Quota Backend: Filesystem"
+  quota_backend_imapc:
+    hash: backend-imapc
+    text: "Quota Backend: Imapc"
   quota_backend_maildir:
     hash: backend-maildir
-    text: Maildir quota backend
+    text: "Quota Backend: Maildir"
   quota_mailbox_count:
     hash: maximum-mailbox-count
-    text: quota maximum mailbox count
-  quota_max_mail_size:
+    text: "Quota: Maximum Mailbox Count"
+  quota_mail_size:
     hash: maximum-saved-mail-size
-    text: quota maximum saved mail size
+    text: "Quota: Maximum Saved Mail Size"
   quota_overquota:
     hash: overquota-flag
-    text: quota overquota flag
+    text: "Quota: Overquota Flag"
   quota_root:
     hash: quota-root
-    text: quota root
+    text: Quota Root
   quota_warning_scripts:
     hash: quota-warning-scripts
-    text: quota warning scripts
+    text: Quota Warning Scripts
+  quota_status_service:
+    hash: quota-status-service
+    text: Quota Status Service
 ---
 
 # Quota Plugin (`quota`)
@@ -67,18 +79,12 @@ protocol imap {
   }
 }
 
-plugin {
-  quota_grace = 10%%
-  # 10% is the default
-  quota_status_success = DUNNO
-  quota_status_nouser = DUNNO
-  quota_status_overquota = "552 5.2.2 Mailbox is full"
+quota "User quota" {
+  quota_storage_size = 1G
 }
 ```
 
 ### Quota Root
-
-See [[setting,quota]] for details on the syntax of the quota root setting.
 
 Quota root is a concept from IMAP Quota specifications ([[rfc,2087]]). Normally
 you'll have only one quota root, but in theory there could be, e.g., "user
@@ -89,63 +95,67 @@ In some systems, for example, INBOX could have a completely different quota
 root from the rest of the mailboxes (e.g. INBOX in `/var/mail/` partition and
 others in `/home/` partition).
 
-### Quota Rules
+### Quota Limits
 
-See [[setting,quota_rule]] for details on the syntax of the quota rule setting.
+There are two types of quota limits:
 
-For [Maildir++ quota](#backend-maildir++), if `maildirsize` file exists the
-limits are taken from it but if it doesn't exist the `?` limits are used.
+ * Message count limits
+ * Storage size limits
+
+The message count limit is calculated as: [[setting,quota_message_count]] \*
+[[setting,quota_message_percentage]]. Zero is assumed to be unlimited.
+
+The storage size limit is calculated as: [[setting,quota_storage_size]] \*
+[[setting,quota_storage_percentage]] + [[setting,quota_storage_extra]].
+Zero is assumed to be unlimited.
+
+The percentage and extra values are mainly useful to allow exceeding the
+regular quota limit in some mailboxes, such as allowing clients that move
+messages with IMAP COPY+EXPUNGE to Trash folder to temporarily exceed the
+quota.
 
 #### Example
 
 ```[dovecot.conf]
-quota_rule = *:storage=1G
-quota_rule2 = Trash:storage=+100M
-quota_rule3 = SPAM:ignore
+quota_storage_size = 1G
+namespace inbox {
+  mailbox Trash {
+    quota_storage_extra = 100M
+  }
+  mailbox SPAM {
+    quota_ignore = yes
+  }
+}
 ```
 
 This means that the user has 1GB quota, but when saving messages to Trash
 mailbox it's possible to use up to 1.1GB of quota. The quota isn't
 specifically assigned to Trash, so if you had 1GB of mails in Trash you could
-still save 100MB of mails to Trash, but nothing to other mailboxes. The idea
-of this is mostly to allow the clients' move-to-Trash feature work while user
-is deleting messages to get under quota.
+still save 100MB of mails to Trash, but nothing to other mailboxes.
 
-Additionally, any messages in the SPAM folder are ignored per the `ignore`
-directive and would not count against the quota.
-
-The first quota rule muse be named `quota_rule` while the following
-rules have an increasing digit in them. You can have as many quota rules as
-you want.
+Additionally, any messages in the SPAM folder are ignored and would not count
+against the quota at all.
 
 ### Per-User Quota
 
-You can override quota rules in your [[link,userdb_extra_fields]]. Keep
+You can override the quota settings in your [[link,userdb_extra_fields]]. Keep
 global settings in configuration plugin section and override only those
 settings you need to in your userdb.
 
-If you're wondering why per-user quota isn't working:
-
-* Check that [[link,lda]] is called with `-d` parameter.
-* Check that you're not using [[link,auth_staticdb]].
-* Check that [[setting,quota_rule]] setting is properly returned by userdb.
-  Enable [[setting,log_debug,category=auth or category=mail]] to see this.
+Use [[doveadm,user]] command to verify that the userdb returns the expected
+quota settings.
 
 #### Override: LDAP
 
-::: warning
-Remember that `user_attrs` is used only if you use [[link,auth_ldap]].
-:::
-
-Quota limit is in `quotaBytes` field:
+Example [[link,auth_ldap]] where the quota limit is in `quotaBytes` field:
 
 ::: code-group
 ```[dovecot.conf]
 userdb ldap {
   ...
   fields {
-    home       = %{ldap:homeDirectory}
-    quota_rule = *:bytes=%{ldap:quotaBytes}
+    home = %{ldap:homeDirectory}
+    quota_storage_size = {ldap:quotaBytes}B
   }
 }
 ```
@@ -153,24 +163,19 @@ userdb ldap {
 
 #### Override: SQL
 
-::: warning
-[[setting,userdb_sql_query]] is used only if you use [[link,auth_sql]].
-:::
-
 Example (for MySQL):
 
 ```[dovecot.conf]
-sql_driver = mysql
-
 userdb sql {
-  query = SELECT uid, gid, home, concat('*:bytes=', quota_limit_bytes) AS quota_rule \
+  query = SELECT uid, gid, home, CONCAT(quota_limit_bytes, 'B') AS quota_storage_size \
     FROM users \
     WHERE userid = '%u'
 
 passdb sql {
-  # MySQL with userdb prefetch: Remember to prefix quota_rule with userdb_
+  # SQL with userdb prefetch: Remember to prefix quota_quota_storage_size with userdb_
   # (just like all other userdb extra fields):
-  query = SELECT userid AS user, password, uid AS userdb_uid, gid AS userdb_gid, concat('*:bytes=', quota_limit_bytes) AS userdb_quota_rule \
+  query = SELECT userid AS user, password, uid AS userdb_uid, gid AS userdb_gid, \
+      CONCAT(quota_limit_bytes, 'B') AS userdb_quota_storage_size \
     FROM users \
     WHERE userid = '%u'
 }
@@ -182,7 +187,7 @@ Example (for PostgreSQL and SQLite):
 sql_driver = sqlite # alternatively: pgsql
 
 userdb sql {
-  query = SELECT uid, gid, home, '*:bytes=' || quota_limit_bytes AS quota_rule \
+  query = SELECT uid, gid, home, quota_limit_bytes || 'B' AS quota_storage_size \
     FROM users \
     WHERE userid = '%u'
 }
@@ -193,83 +198,75 @@ userdb sql {
 Example [[link,auth_passwd_file]] entries:
 
 ```
-user:{plain}pass:1000:1000::/home/user::userdb_quota_rule=*:bytes=100M
-user2:{plain}pass2:1001:1001::/home/user2::userdb_quota_rule=*:bytes=200M
-user3:{plain}pass3:1002:1002::/home/user3::userdb_mail_path=~/Maildir userdb_quota_rule=*:bytes=300M
+user:{plain}pass:1000:1000::/home/user::userdb_quota_storage_size=100M
+user2:{plain}pass2:1001:1001::/home/user2::userdb_quota_storage_size=200M
+user3:{plain}pass3:1002:1002::/home/user3::userdb_mail_path=~/Maildir userdb_quota_storage_size=300M
 ```
 
 #### Override: passwd
 
 The [[link,auth_passwd]] userdb doesn't support extra fields. That's
-why you can't directly set users' quota limits to passwd file. One
-possibility would be to write a script that reads quota limits from another
-file, merges them with passwd file and produces another passwd-file, which you
-could then use with Dovecot's [[link,auth_passwd_file]].
+why you can't directly set users' quota limits to passwd file. You can use
+an additional userdb (e.g. [[link,auth_passwd_file]] where only the quota
+limits are specified.
 
 ### Quota for Public Namespaces
 
 You can create a separate namespace-specific quota that's shared between all
-users. This is done by adding `:ns=<namespace prefix>` parameter to quota
-setting. For example:
+users. This is done by configuring the quota root inside the namespace filter.
+For example:
 
 ```[dovecot.conf]
-namespace {
+namespace public {
   type = public
   prefix = Public/
   #mail_path = ..
+
+  quota "Shared quota" {
+    #quota_storage_size = ...
+  }
 }
 
-plugin {
-  quota = maildir:User quota
-  quota2 = maildir:Shared quota:ns=Public/
-  #quota_rules and quota2_rules..
+quota "User quota" {
+  #quota_storage_size = ...
 }
 ```
+
+Note that globally configured quota roots are used only for private namespaces.
 
 ### Quota for Private Namespaces
 
 You can create a separate namespace-specific quota for a folder hierarchy.
-This is done by adding another namespace and the `:ns=<namespace prefix>`
-parameter to quota setting. For example:
+This is done by configuring the quota root inside the namespace filter.
+For example:
 
 ```[dovecot.conf]
-namespace {
+namespace inbox {
+  quota "User quota" {
+    #quota_storage_size = ...
+  }
+}
+
+namespace archive {
   type = private
   prefix = Archive/
   #mail_path = ..
-}
 
-plugin {
-  # Maildir quota
-  quota = maildir:User quota:ns=
-  quota2 = maildir:Archive quota:ns=Archive/
-
-  # Count quota
-  #quota = count:User quota:%u.default:ns=
-  #quota2 = count:Archive quota:%u.archive:ns=Archive/
-  #quota_rules and quota2_rules..
+  quota "Archive quota" {
+    #quota_storage_size = ...
+  }
 }
 ```
 
-::: tip
-If you're using dict quota, you need to make sure that the quota of the
-`Archive` namespace is calculated for another "user" than the default
-namespace. Either track different namespaces in different backends or make
-sure the users differs.
-
-`%u.archive` defines `<username>.archive` as key to track quota for the
-`Archive` namespace; `%u.default` tracks the quota of other folders.
-
-See [[variable]] for further help on variables.
-:::
+Note that both quotas must be configured inside the namespace filter.
+Using a global quota configuration would apply to both namespaces.
 
 ### Quota and Shared Namespaces
 
 Quota plugin considers shared namespaces against owner's quota, not the
-current user's.
-
-There is a limitation that per-user quota configuration is ignored, and the
-current user's configuration is used.
+current user's. The regular private quota configuration is used - there is
+no need to explicitly configure quota for shared namespaces. The quota limits
+are also taken from the userdb.
 
 Public namespaces are ignored unless there is explicit quota specified for it.
 
@@ -287,7 +284,7 @@ plugin {
 ## Quota Backends
 
 Quota backend specifies the method how Dovecot keeps track of the current quota
-usage. They don't (usually) specify users' quota limits, that's done by
+usage. They don't specify users' quota limits - that's done by
 [returning extra fields from userdb](#per-user-quota).
 
 We recommend using [`count`](#backend-count) for any new installations.
@@ -301,14 +298,14 @@ query every user's quota from the index files directly.)
 The `count` quota backend tracks the quota internally within Dovecot's index
 files.
 
-::: warning
+::: info
 This is the **RECOMMENDED** way of calculating quota on recent Dovecot
 installations.
 :::
 
 Each mailbox's quota is tracked separately and when the current quota usage is
 wanted to be known, the mailboxes' quotas are summed up together. To get the
-best performance, mailbox list indexes should be enabled.
+best performance, make sure [[setting,mailbox_list_index,yes]].
 
 ::: warning
 If you're switching from some other quota backend to `count`, make
@@ -335,10 +332,9 @@ protocol !indexer-worker {
   mail_vsize_bg_after_count = 100
 }
 
-plugin {
+quota "User quota" {
   # 10MB quota limit
-  quota = count:User quota
-  quota_rule = *:storage=10M
+  quota_storage_size = 10M
 }
 ```
 
@@ -349,17 +345,7 @@ rquota (NFS).
 
 #### Configuration
 
-By default only user quota is shown, or if it doesn't exist, group quota is
-used as fallback.
-
-Driver specific parameters:
-
-| Name | Description |
-| ---- | ----------- |
-| `group` | Report only group quotas |
-| `inode_per_mail` | Report inode quota as "number of message" quota. This can be useful with Maildir or single-dbox. |
-| `mount=<path>` | Report quota from given path. Default is to use the path for the mail root directory. |
-| `user` | Report only user quotas, don't fallback to showing group quotas. |
+<SettingsComponent tag="quota-fs" level="4" />
 
 #### Systemd
 
@@ -425,7 +411,7 @@ mail_control_path = /var/no-quotas/control/%u
 
 Note that if you change the location of the control files, Dovecot will look
 in the new control path directory (`/var/no-quotas/control/%u`) for the
-subscriptions file.
+mailbox `subscriptions` file.
 
 #### Configuration Examples
 
@@ -439,8 +425,8 @@ protocol imap {
   }
 }
 
-plugin {
-  quota = fs:user
+quota user {
+  driver = fs
 }
 ```
 
@@ -448,34 +434,44 @@ If you want to see both user and group quotas as separate quota roots, you can
 use:
 
 ```[dovecot.conf]
-plugin {
-  quota = fs:User quota:user
-  quota2 = fs:Group quota:group
+quota "User quota" {
+  driver = fs
+  fs_type = user
+}
+quota "Group quota" {
+  driver = fs
+  fs_type = group
 }
 ```
 
 If you have your mails in two filesystems, you can create two quota roots:
 
 ```[dovecot.conf]
-plugin {
+quota INBOX {
+  driver = fs
   # Assuming INBOX in /var/mail/ which is mounted to /
-  quota = fs:INBOX:mount=/
+  fs_mount_path = /
+}
+quota Others {
+  driver = fs
   # Assuming other mailboxes are in /home mount
-  quota2 = fs:Others:mount=/home
+  fs_mount_path = /home
 }
 ```
 
 ### Backend: imapc
 
-See [[link,imapc]].
+See [[link,imapc_quota]].
+
+#### Configuration
+
+<SettingsComponent tag="quota-imapc" level="4" />
 
 ### Backend: maildir
 
-Maildir++ is the most commonly used quota backend with Maildir format.
-
 ::: warning
-Note that **Maildir++ quota works only with Maildir format**. With other
-mailbox formats you should use [`count`](#backend-count).
+Note that **Maildir++ quota works only with Maildir format**. However, even
+with Maildir format the recommendation is to use [`count`](#backend-count).
 :::
 
 The `maildir` quota backend implements Maildir++ quota in Dovecot. Dovecot
@@ -484,22 +480,6 @@ implements the
 so Dovecot remains compatible with [Courier](https://www.courier-mta.org/),
 [maildrop](https://www.courier-mta.org/maildrop/),
 [Exim](https://www.exim.org/), etc.
-
-There are two ways to configure Maildir++ quota limits:
-
-1. Configure the limits in Dovecot. You most likely want to do this.
-2. Make Dovecot get the limits from existing `maildirsize` files.
-
-Only Maildir++-specific settings are described below.
-
-Maildir++ quota relies on `maildirsize` file having correct information, so
-if your users can modify the file in some way (e.g. shell access), you're
-relying on the goodwill of your users for the quota to work.
-
-You can't rely on Dovecot noticing external changes to Maildir and updating
-maildirsize accordingly. This happens eventually when quota is being
-recalculated, but it may take a while. Quota recalculation also currently
-doesn't trigger quota warning executions.
 
 #### Maildirsize File
 
@@ -511,54 +491,70 @@ format:
 <storage limit in bytes>S,<messages limit>C
 ```
 
-If you don't configure any quota limits in Dovecot (`quota=maildir` with no
-other settings), Dovecot takes the limits from the header. If the file does
-not exist, quota isn't enforced.
+[[removed,quota_maildir_backend_removed]] Maildir++ quota limit must now be
+specified in Dovecot configuration. It will no longer be read from the
+`maildirsize` file. The limits are still written to the file header, but they
+are ignored by Dovecot.
 
-If you configure quota limits in Dovecot, Dovecot makes sure that this header
-is kept up to date. If the file does not exist, it's simply rebuilt.
+Maildir++ quota relies on `maildirsize` file having correct information, so
+if your users can modify the file in some way (e.g. shell access), you're
+relying on the goodwill of your users for the quota to work.
+
+You can't rely on Dovecot noticing external changes to Maildir and updating
+`maildirsize` accordingly. This happens eventually when quota is being
+recalculated, but it may take a while. Quota recalculation also won't
+trigger quota warning executions.
 
 Once the `maildirsize` reaches 5120 bytes, the quota is recalculated and
 the file is recreated. This makes sure that if quota happens to be broken
 (e.g. externally deleted files) it won't stay that way forever.
 
-## Quota Service
-
-The quota service allows postfix to check quota before delivery:
-
-```[dovecot.conf]
-service quota-status {
-  executable = quota-status -p postfix
-  inet_listener {
-    # You can choose any port you want
-    port = 12340
-  }
-  client_limit = 1
-}
-```
-
-And then have postfix `check_policy_service` check that:
-
-```
-smtpd_recipient_restrictions =
-  ...
-  check_policy_service inet:mailstore.example.com:12340
-```
-
-For more about this service, see
-https://sys4.de/en/blog/postfix-dovecot-mailbox-quota/
-
 ## Quota Warning Scripts
 
-See [[setting,quota_warning]].
+You can configure Dovecot to run an external command when user's quota
+exceeds a specified limit. Note that the warning is ONLY executed at the
+exact time when the limit is being crossed, so when you're testing you have
+to do it by crossing the limit by saving a new mail. If something else
+besides Dovecot updates quota so that the limit is crossed, the warning is
+never executed.
+
+The quota warning limits are configured the same way as the actual
+[[link,quota_limits]], but just placed inside the [[setting,quota_warning]]
+filter.
+
+Only the command for the first exceeded limit is executed, so configure the
+highest limit first. The actual commands that are run need to be created as
+services (create a named Dovecot service and use the service name
+as the \`quota-warning socket name\` argument).
+
+### Configuration
+
+<SettingsComponent tag="quota-warning" level="3" />
 
 ### Example Configuration
 
 ```[dovecot.conf]
-plugin {
-  quota_warning = storage=95%% quota-warning 95 %u
-  quota_warning2 = storage=80%% quota-warning 80 %u
-  quota_warning3 = -storage=100%% quota-warning below %u # user is no longer over quota
+quota user {
+  warning warn-95 {
+    quota_storage_percentage = 95
+    execute quota-warning {
+      args = 95 %u
+    }
+  }
+  warning warn-80 {
+    quota_storage_percentage = 80
+    execute quota-warning {
+      args = 80 %u
+    }
+  }
+  warning warn-under {
+    quota_storage_percentage = 100
+    # user is no longer over quota
+    threshold = under
+    execute quota-warning {
+      args = below %u
+    }
+  }
 }
 
 service quota-warning {
@@ -583,7 +579,7 @@ example that sends a mail to the user:
 #!/bin/sh
 PERCENT=$1
 USER=$2
-cat << EOF | /usr/local/libexec/dovecot/dovecot-lda -d $USER -o "plugin/quota=maildir:User quota:noenforcing"
+cat << EOF | /usr/local/libexec/dovecot/dovecot-lda -d $USER -o quota_enforce=no
 From: postmaster@domain.com
 Subject: quota warning
 
@@ -592,55 +588,55 @@ EOF
 ```
 :::
 
-The quota enforcing is disabled to avoid looping. You'll of course need to
-change the `plugin/quota` value to match the quota backend and other
-configuration you use. Basically preserve your original `quota` setting and
-just insert `:noenforcing` to proper location in it.
-
-For example with dict quota, you can use something like:
-`-o "plugin/quota=count:User quota::noenforcing"`.
+The quota enforcing is disabled to avoid looping.
 
 ### Overquota-flag
 
-Quota warning scripts can be used to set an overquota-flag to userdb (e.g.
+[[link,quota_warning_scripts,Quota warning scripts]] can be used to set an overquota-flag to userdb (e.g.
 LDAP) when user goes over/under quota. This flag can be used by MTA to reject
 mails to an user who is over quota already at SMTP RCPT TO stage.
 
 A problem with this approach is there are race conditions that in some rare
 situations cause the overquota-flag to be set even when user is already under
 quota. This situation doesn't solve itself without manual admin intervention
-or the new overquota-flag feature: This feature checks the flag's value every
-time user logs in (or mail gets delivered or any other email access to user)
+or the overquota-flag feature: This feature checks the flag's value every
+time user logs in (or when mail gets delivered or any other email access to user)
 and compares it to the current actual quota usage. If the flag is wrong, a
-script is executed that should fix up the situation.
+script is executed that fixes up the situation.
 
-The overquota-flag name in userdb must be `quota_over_flag`.
+The [[setting,execute]] setting inside [[setting,quota_over_status]] named
+filter specifies the script that is executed. The current
+[[setting,quota_over_status_current]] value is appended as the last parameter.
+
+The overquota-flag name in userdb must be [[setting,quota_over_status_current]].
 
 These settings are available:
 
-* [[setting,quota_over_flag_lazy_check]]
-* [[setting,quota_over_flag_value]]
-* [[setting,quota_over_script]]
+* [[setting,quota_over_status_lazy_check]]
+* [[setting,quota_over_status_mask]]
 
 Example:
 
 ```[dovecot.conf]
-plugin {
-  # If quota_over_flag=TRUE, the overquota-flag is enabled. Otherwise not.
-  quota_over_flag_value = TRUE
+quota_over_status {
+  # If quota_over_status_current=TRUE, the overquota-flag is enabled.
+  # Otherwise not.
+  mask = TRUE
 
-  # Any non-empty value for quota_over_flag means user is over quota.
+  # Any non-empty value for quota_over_status_current means user is over quota.
   # Wildcards can be used in a generic way, e.g. "*yes" or "*TRUE*"
-  #quota_over_flag_value = *
+  #mask = *
 
-  quota_over_flag_lazy_check = yes
-  quota_over_script = quota-warning mismatch %u
+  lazy_check = yes
+  execute quota-warning {
+    args = mismatch %u
+  }
 }
 ```
 
 ## Quota Grace
 
-See [[setting,quota_grace]].
+See [[setting,quota_storage_grace]].
 
 By default the last mail can bring user over quota. This is
 useful to allow user to actually unambiguously become over quota instead of
@@ -653,9 +649,9 @@ To change the quota grace, use:
 ```[dovecot.conf]
 plugin {
   # allow user to become max 10% over quota
-  quota_grace = 10%%
+  quota_storage_grace = 10%%
   # allow user to become max 50 MB over quota
-  quota_grace = 50 M
+  quota_storage_grace = 50 M
 }
 ```
 
@@ -675,11 +671,10 @@ Maximum number of messages that can be created in a single mailbox.
 
 ## Maximum Saved Mail Size
 
-See [[setting,quota_max_mail_size]].
+See [[setting,quota_mail_size]].
 
 Dovecot allows specifying the maximum message size that is allowed to be
-saved (e.g. by LMTP, IMAP APPEND or doveadm save). The default is `0`, which is
-unlimited.
+saved (e.g. by LMTP, IMAP APPEND or doveadm save). The default is `unlimited`.
 
 Since outgoing mail sizes are also typically limited on the MTA
 side, it can be beneficial to prevent user from saving too large mails, which
@@ -742,3 +737,38 @@ User's current quota may sometimes be wrong for various reasons (typically only
 after some other problems). The quota can be recalculated with
 [[doveadm,quota recalc,-u user@domain]].
 
+## Quota Status Service
+
+Dovecot supports quota-status service, which uses Postfix-compatible policy
+server protocol. This allows Postfix to check the quota before mail delivery.
+
+Example:
+
+::: code-group
+```[dovecot.conf]
+service quota-status {
+  executable = quota-status -p postfix
+  unix_listener /var/spool/postfix/private/quota-status {
+    user = postfix
+  }
+  # Or with TCP:
+  inet_listener postfix {
+    # You can choose any port you want
+    port = 12340
+  }
+  client_limit = 1
+}
+```
+
+```[/etc/postfix/main.cf]
+smtpd_recipient_restrictions =
+  ...
+  check_policy_service unix:private/quota-status
+  # Or with TCP:
+  #check_policy_service inet:mailstore.example.com:12340
+```
+:::
+
+### Configuration
+
+<SettingsComponent tag="quota-status-service" level="3" />

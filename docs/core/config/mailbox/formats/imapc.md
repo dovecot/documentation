@@ -3,6 +3,9 @@ layout: doc
 title: imapc
 dovecotlinks:
   imapc: imapc
+  imapc_quota:
+    hash: quota
+    text: "Imapc: Quota"
 ---
 
 # Imapc Mailbox Format
@@ -42,13 +45,12 @@ IMAP server. By default it uses `GETQUOTAROOT INBOX` to retrieve the quota.
 There are two parameters that can be used to control how the quota is looked
 up:
 
-* `box = <mailbox>`: Use `GETQUOTAROOT <mailbox>`
-* `root = <name>`: Use `GETQUOTA <name>`
+<SettingsComponent tag="quota-imapc" />
 
-Example:
+### Example
 
 ```
-plugin {
-  quota = imapc:root=User Quota
+quota "User Quota" {
+  driver = imapc
 }
 ```
