@@ -88,19 +88,19 @@ passdb passwd-file {
 userdb passwd-file {
   auth_username_format = %n
   passwd_file_path = /etc/imap.passwd
-  default_fields {
-    uid = vmail
-    gid = vmail
-    home = /home/vmail/%u
+  fields {
+    uid:default = vmail
+    gid:default = vmail
+    home:default = /home/vmail/%u
   }
 }
 ```
 
-* The `default_fields` is explained in [[setting,userdb_default_fields]]. They
-  can be used to provide default userdb fields based on templates in case
-  they're not specified for everyone in the passwd file. If you leave any of
-  the standard userdb fields (uid, gid, home) empty, these defaults will be
-  used.
+* The `fields` is explained in [[setting,userdb_fields]]. They
+  can be used to provide userdb extra fields based on templates. If you leave
+  any of the standard userdb fields (uid, gid, home) empty in the passwd file,
+  these defaults will be used. If you leave out the `:default` suffix, they
+  override the passwd file fields.
 
 This file can be used as a passdb:
 
