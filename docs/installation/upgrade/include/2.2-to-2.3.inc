@@ -87,7 +87,9 @@ more generically with e.g. setting following as the first passdb:
 passdb {
   driver = passwd-file
   args = username_format=%{rip} /etc/dovecot/passdb
-  default_fields = noauthenticate=y
+  fields {
+    noauthenticate = y
+  }
 }
 ```
 ```[/etc/dovecot/passdb]
