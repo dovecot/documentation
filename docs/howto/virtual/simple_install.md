@@ -179,12 +179,12 @@ plugin {
 }
 ```
 
-Then configure quota by adding `userdb_quota_rule`
+Then configure quota by adding `userdb_quota_storage_size`
 [[link,userdb_extra_fields]] `/etc/dovecot/passwd`, for example:
 
 ```
-joe:{PLAIN}pass::::::userdb_quota_rule=*:storage=100M
-jane:{PLAIN}pass::::::userdb_quota_rule=*:storage=200M
+joe:{PLAIN}pass::::::userdb_quota_storage_size=100M
+jane:{PLAIN}pass::::::userdb_quota_storage_size=200M
 ```
 
 Joe has now 100MB quota and Jane has 200MB quota.
