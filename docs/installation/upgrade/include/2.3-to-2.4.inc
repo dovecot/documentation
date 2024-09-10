@@ -137,6 +137,13 @@ prefixing them with `\`.
 | passdb/userdb `:protected` | Renamed to `:default` |
 | `passdb_default_fields`, `passdb_override_fields` | Replaced by [[setting,passdb_fields]] |
 | `userdb_default_fields`, `userdb_override_fields` | Replaced by [[setting,userdb_fields]] |
+| `quota`, `quota_rule` | Split into separate [[plugin,quota,quota settings]]. |
+| `quota_grace` | Renamed to [[setting,quota_storage_grace]]. |
+| `quota_over_flag` | Renamed to [[setting,quota_over_status_current]]. |
+| `quota_over_flag_lazy_check` | Renamed to [[setting,quota_over_status_lazy_check]]. |
+| `quota_over_flag_value` | Renamed to [[setting,quota_over_status_mask]]. |
+| `quota_over_script` | Replaced by [[setting,quota_over_status]] named filter with [[setting,execute]]. |
+| `quota_max_mail_size` | Renamed to [[setting,quota_mail_size]]. The default value is set to `unlimited`. |
 
 ### Changed Default Settings
 

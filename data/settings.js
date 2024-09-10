@@ -2938,72 +2938,168 @@ backends that do not support upserting, such as SQL with older SQLite.`
 
 	quota: {
 		plugin: 'quota',
-		values: setting_types.STRING,
+		values: setting_types.NAMED_LIST_FILTER,
 		seealso: [ '[[link,quota_root]]' ],
 		text: `
-Quota root configuration has the following syntax:
+Create a new [[link,quota_root,quota root]]. The filter name refers
+to [[setting,quota_name]] setting.
 
-\`\`\`
-quota = <backend>[:<quota root name>[:<backend args>]]
-\`\`\`
+Globally configured quota roots are used only for private namespaces.
+To use quota for public namespaces, configure it inside the public namespace.
 
-The quota root name is just an arbitrary string that is sent to IMAP
-clients, which in turn may show it to the user. The name has no meaning. By
-default, an empty string is used, but you may want to change that since
-some clients (Apple Mail) break and don't show quota at all then.
-
-You can define multiple quota roots by appending an increasing number to
-the setting label:
-
-\`\`\`
-plugin {
-  quota = maildir:User quota
-  quota2 = fs:Disk quota
-  #quota3 = ...
+Example:
+\`\`\`[dovecot.conf]
+quota "User quota" {
+  storage_size = 1G
 }
-\`\`\`
+\`\`\``
+	},
 
-Globally available arguments for \`<backend args>\` parameter:
+	quota_driver: {
+		plugin: 'quota',
+		values: setting_types.STRING,
+		default: 'count',
+		seealso: [ '[[link,quota_backends]]' ],
+		text: `
+Quota driver to use. See [[link,quota_backends]].`
+	},
 
-| Name | Description |
-| ---- | ----------- |
-| \`noenforcing\` | Don't try to enforce quotas by calculating if saving would get user over quota. Only handle write failures. |
-| \`ns=<prefix>\` | A separate namespace-specific quota that's shared between all users. |
-
-If you want to specify multiple backend arguments, separate them with ':'
-(e.g. \`noenforcing:ns=Public/:foo:bar\`).`
+	quota_enforce: {
+		plugin: 'quota',
+		values: setting_types.BOOLEAN,
+		default: {
+			value: 'yes',
+			text: '`quota_imapc { no }`',
+		},
+		text: `
+If disabled, the quota limit isn't actually enforced. The quota is still
+tracked and the current quota usage is visible to IMAP GETQUOTA commands.`
 	},
 
 	quota_exceeded_message: {
 		plugin: 'quota',
 		values: setting_types.STRING,
+		default: `Quota exceeded (mailbox for user is full)`,
 		text: `
 The message specified here is passed on to a user who goes over quota.
+There are also other messages, which are currently hard coded:
 
-The value is either the message or the path to a file (prefixed with a
-\`<\`) that will be used as the message data.
+ * When exceeding [[setting,quota_mail_size]]:
+   \`Mail size is larger than the maximum size allowed by server configuration\`
+ * When exceeding [[setting,quota_mailbox_message_count]]:
+   \`Too many messages in the mailbox\``
+	},
 
-\`\`\`
-plugin {
-  quota_exceeded_message = Quota exceeded.
+	quota_fs_message_limit: {
+		plugin: 'quota',
+		values: setting_types.BOOLEAN,
+		tags: [ 'quota-fs' ],
+		default: 'no',
+		text: `
+If yes, use filesystem quota's inode limit as the message count limit.
+This can be useful with Maildir or sdbox. Used only with
+[[link,quota_backend_fs]].`
+	},
 
-  # Read message from a file
-  #quota_exceeded_message = </path/to/quota_exceeded_message.txt
+	quota_fs_mount_path: {
+		plugin: 'quota',
+		values: setting_types.STRING,
+		tags: [ 'quota-fs' ],
+		text: `
+If specified, enable FS quota for the specified mount path. Only mailboxes
+existing in this mount path have the quota enabled. Empty value looks up the
+mountpoint automatically. Used only with [[link,quota_backend_fs]].`
+	},
+
+	quota_fs_type: {
+		plugin: 'quota',
+		values: setting_types.ENUM,
+		tags: [ 'quota-fs' ],
+		values_enum: [ 'any', 'user', 'group' ],
+		default: 'any',
+		text: `
+Using \`any\` attempts to use the user quota first, with a fallback to group
+quota. Using \`user\` or \`group\` only attempts to use the user or the group
+quota, with a fallback to unlimited quota limit. Used only with
+[[link,quota_backedn_fs]].`
+	},
+
+	quota_hidden: {
+		plugin: 'quota',
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+If yes, hide the quota root from IMAP GETQUOTA commands.`
+	},
+
+	quota_ignore: {
+		plugin: 'quota',
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+If yes, don't include this mailbox or namespace in quota calculations.
+
+Example:
+\`\`\`[dovecot.conf]
+namespace inbox {
+  mailbox Trash {
+    quota_ignore = yes
+  }
+}
+namespace secondary {
+  quota_ignore = yes
 }
 \`\`\``
 	},
 
-	quota_grace: {
-		default: '10%%',
+	quota_ignore_unlimited: {
 		plugin: 'quota',
-		values: [ setting_types.STRING, setting_types.SIZE ],
-		seealso: [ '[[link,quota_root]]' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
 		text: `
-If set, allows message deliveries to exceed quota by this value.`
+If yes, ignore the quota root entirely if it has no quota limits. This means
+no tracking of the quota, and not making it visible to IMAP GETQUOTA commands.`
+	},
+
+	quota_imapc_mailbox_name: {
+		plugin: 'quota',
+		values: setting_types.STRING,
+		tags: [ 'quota-imapc' ],
+		seealso: [ '[[setting,quota_imapc_root_name]]' ],
+		default: 'INBOX',
+		text: `
+If non-empty, use \`GETQUOTAROOT <mailbox>\` to get the imapc quota root.
+Used only with [[link,quota_backend_imapc]].`
+	},
+
+	quota_imapc_root_name: {
+		plugin: 'quota',
+		values: setting_types.STRING,
+		tags: [ 'quota-imapc' ],
+		seealso: [ '[[setting,quota_imapc_mailbox_name]]' ],
+		default: '',
+		text: `
+If [[setting,quota_imapc_mailbox_name]] is empty, use \`GETQUOTA <name>\`
+to get the imapc quota.
+
+Some servers may have an empty quota root name. This is why if this setting and
+[[setting,quota_imapc_mailbox_name]] both have empty values, this setting is
+used. Used only with [[link,quota_backend_imapc]].`
+	},
+
+	quota_mail_size: {
+		default: 'unlimited',
+		plugin: 'quota',
+		values: setting_types.SIZE,
+		tags: [ 'storage_size_limits' ],
+		seealso: [ '[[link,quota_mail_size]]' ],
+		text: `
+The maximum message size that is allowed to be saved (e.g. by LMTP, IMAP
+APPEND or [[doveadm,save]]).`
 	},
 
 	quota_mailbox_count: {
-		default: '0',
+		default: 'unlimited',
 		plugin: 'quota',
 		values: setting_types.UINT,
 		tags: [ 'storage_size_limits' ],
@@ -3014,13 +3110,11 @@ If set, allows message deliveries to exceed quota by this value.`
 		text: `
 Maximum number of mailboxes that can be created. Each namespace is tracked
 separately, so e.g. shared mailboxes aren't counted towards the user's own
-limit.
-
-\`0\` means unlimited.`
+limit.`
 	},
 
 	quota_mailbox_message_count: {
-		default: '0',
+		default: 'unlimited',
 		plugin: 'quota',
 		values: setting_types.UINT,
 		tags: [ 'storage_size_limits' ],
@@ -3028,172 +3122,293 @@ limit.
 			settings_quota_mailbox_message_count_added: false
 		},
 		text: `
-Maximum number of messages that can be created in a single mailbox.
-
-\`0\` means unlimited.`
+Maximum number of messages that can be created in a single mailbox.`
 	},
 
-	quota_max_mail_size: {
-		default: '0',
+	quota_message_count: {
+		default: 'unlimited',
 		plugin: 'quota',
 		values: setting_types.UINT,
+		seealso: [
+			'[[setting,quota_message_percentage]]',
+			'[[setting,quota_storage_size]]',
+			'[[link,quota_root]]'
+		],
 		tags: [ 'storage_size_limits' ],
-		seealso: [ '[[link,quota_max_mail_size]]' ],
 		text: `
-The maximum message size that is allowed to be saved (e.g. by LMTP, IMAP
-APPEND or doveadm save).
-
-\`0\` means unlimited.`
+Maximum number of messages for the [[link,quota_root]]. This value is still
+multiplied by [[setting,quota_message_percentage]] to get the final value
+(in this mailbox or namespace). This is reported as the MESSAGE limit in IMAP
+GETQUOTA commands. Using \`0\` as the value means the same as \`unlimited\`.`
 	},
 
-	quota_over_flag: {
-		default: '10%%',
+	quota_message_percentage: {
+		default: '100',
+		plugin: 'quota',
+		values: setting_types.UINT,
+		seealso: [ '[[setting,quota_message_count]]' ],
+		text: `
+Multiplier for the [[setting,quota_message_count]] setting (in this
+mailbox/namespace).
+
+This may be useful to exceed the regular quota limit in some mailboxes, such as
+allowing clients that move messages with IMAP COPY+EXPUNGE to Trash folder to
+temporarily exceed the quota.
+
+Example:
+\`\`\`[dovecot.conf]
+quota_message_count = 10000
+namespace inbox {
+  mailbox Trash {
+    # 110% * 10000 = 11000 limit
+    quota_message_percentage = 110
+  }
+}
+\`\`\``
+	},
+
+	quota_name: {
+		plugin: 'quota',
+		values: setting_types.STRING,
+		seealso: [ 'quota', '[[link,quota_root]]' ],
+		text: `
+Name of the [[link,quota_root,quota root]]. The [[setting,quota]] filter name
+refers to this setting.
+
+The quota root name is just an arbitrary string that is sent to IMAP
+clients, which in turn may show it to the user. The name has no meaning.`
+	},
+
+	quota_over_status: {
+		plugin: 'quota',
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,quota_overquota]]' ],
+		text: `
+Named filter for executing the overquota-flag script. The [[setting,execute]]
+setting is required to be specified inside the filter.`
+	},
+
+	quota_over_status_current: {
 		plugin: 'quota',
 		values: setting_types.STRING,
 		seealso: [ '[[link,quota_overquota]]' ],
 		text: `
 An identifier that indicates whether the overquota-flag is active for a user.
 
-This identifier is compared against [[setting,quota_over_flag_value]] to
-determine if the overquota-flag should be determine to be set for the user.
+This identifier is compared against [[setting,quota_over_status_mask]] to
+determine if the overquota-flag should be set for the user.
 
 Usually, this value will be loaded via [[link,userdb]].`
 	},
 
-	quota_over_flag_lazy_check: {
+	quota_over_status_lazy_check: {
 		default: 'no',
 		plugin: 'quota',
 		values: setting_types.BOOLEAN,
 		text: `
 If enabled, overquota-flag is checked only when current quota usage is
-going to already be checked.
-
-Can be used to optimize the overquota-flag check in case it is running too
-slowly.`
+going to already be checked anyway. This prevents any additional storage I/O
+that would be caused by the overquota-flag check.`
 	},
 
-	quota_over_flag_value: {
+	quota_over_status_mask: {
 		plugin: 'quota',
 		values: setting_types.STRING,
 		seealso: [ '[[link,quota_overquota]]' ],
 		text: `
-The search string to match against [[setting,quota_over_flag]] to
+The search string to match against [[setting,quota_over_status_current]] to
 determine if the overquota-flag is set for the user.
 
 Wildcards can be used in a generic way, e.g. \`*yes\` or \`*TRUE*\`.`
 	},
 
-	quota_over_script: {
+	quota_status_nouser: {
+		default: 'REJECT Unknown user',
 		plugin: 'quota',
 		values: setting_types.STRING,
+		tags: [ 'quota-status-service' ],
+		seealso: [ '[[link,quota_status_service]]' ],
 		text: `
-The service script to execute if overquota-flag is wrong. Configured the
-same as [[setting,quota_warning]] scripts.
+[[link,quota_status_service]]: Response when asking quota for a nonexistent
+users.`
+	},
 
-The current [[setting, quota_over_flag]] value is appended as the last
-parameter.
+	quota_status_overquota: {
+		default: '554 5.2.2 %{error}',
+		plugin: 'quota',
+		values: setting_types.STRING,
+		tags: [ 'quota-status-service' ],
+		seealso: [ '[[link,quota_status_service]]' ],
+		text: `
+[[link,quota_status_service]]: Response when asking quota for a user that is
+over the quota. The \`%{error}\` variable expands to the more detailed reason,
+which is generally [[setting,quota_exceeded_message]].`
+	},
 
-\`\`\`
-plugin {
-  quota_over_script = quota-warning mismatch %u
+	quota_status_success: {
+		default: 'OK',
+		plugin: 'quota',
+		values: setting_types.STRING,
+		tags: [ 'quota-status-service' ],
+		seealso: [ '[[link,quota_status_service]]' ],
+		text: `
+[[link,quota_status_service]]: Response when asking quota for a user that is
+under the quota.`
+	},
+
+	quota_status_toolarge: {
+		default: '[[setting,quota_status_overquota]]',
+		plugin: 'quota',
+		values: setting_types.STRING,
+		tags: [ 'quota-status-service' ],
+		seealso: [ '[[link,quota_status_service]]' ],
+		text: `
+[[link,quota_status_service]]: Response when asking quota for a mail that is
+larger than user's [[setting,quota_storage_size]] or
+[[setting,quota_mail_size]]. Empty value defaults to
+[[setting,quota_status_overquota]].`
+	},
+
+	quota_storage_extra: {
+		default: '0',
+		plugin: 'quota',
+		values: setting_types.SIZE,
+		seealso: [
+			'[[setting,quota_storage_size]]',
+			'[[setting,quota_storage_percentage]]',
+			'[[link,quota_root]]'
+		],
+		text: `
+If set, increase the [[setting,quota_storage_size]] (for the mailbox/namespace)
+by this amount. This is an alternative to using
+[[setting,quota_storage_percentage]], although both can also be used.
+
+This may be useful to exceed the regular quota limit in some mailboxes, such as
+allowing clients that move messages with IMAP COPY+EXPUNGE to Trash folder to
+temporarily exceed the quota.
+
+Example:
+\`\`\`[dovecot.conf]
+quota_storage_size = 1G
+namespace inbox {
+  mailbox Trash {
+    # 1G + 100M = 1100M
+    quota_storage_extra = 100M
+  }
 }
 \`\`\``
 	},
 
-	quota_rule: {
+	quota_storage_grace: {
+		default: '10 M',
 		plugin: 'quota',
-		values: setting_types.STRING,
+		values: setting_types.SIZE,
 		seealso: [ '[[link,quota_root]]' ],
 		text: `
-Quota rule configuration has the following syntax:
+If set, allows message deliveries (LDA, LMTP) to exceed quota once by this
+amount. After the quota is already over the limit, the grace no longer applies.
+This prevents a situation where some smaller mails may still become delivered,
+but larger mail deliveries fail, and the user may not have received any warning
+about reaching the quota limit.`
+	},
 
-\`\`\`
-quota_rule = <mailbox name>:<limit configuration>
-\`\`\`
+	quota_storage_percentage: {
+		default: '100',
+		plugin: 'quota',
+		values: setting_types.UINT,
+		seealso: [
+			'[[setting,quota_storage_size]]',
+			'[[setting,quota_storage_extra]]',
+			'[[link,quota_root]]'
+		],
+		text: `
+Multiplier for the [[setting,quota_storage_size]] setting (in this
+mailbox/namespace). This is an alternative to using
+[[setting,quota_storage_extra]], although both can also be used.
 
-You can define multiple quota rules by appending an increasing number to
-the setting label.
+This may be useful to exceed the regular quota limit in some mailboxes, such as
+allowing clients that move messages with IMAP COPY+EXPUNGE to Trash folder to
+temporarily exceed the quota.
 
-\`*\` as the mailbox name configures the default limit, which is applied on
-top of a mailbox-specific limit if found.
-
-\`?\` as the mailbox name works almost like \`*\`. The difference is that
-\`?\` is used only if quota backend doesn't override the limit.
-
-\`*\` and \`?\` wildcards can be used as a generic wildcard in mailbox
-names, so for example \`box*\` matches \`boxes\`.
-
-The following limit names are supported:
-
-| Name | Description |
-| ---- | ----------- |
-| \`backend\` | Quota backend-specific limit configuration. |
-| \`bytes\` | Quota limit (without suffix: in bytes). \`0\` means unlimited. |
-| \`ignore\` | Don't include the specified mailbox in quota at all. |
-| \`messages\` | Quota limit in number of messages. \`0\` means unlimited. |
-| \`storage\` | Quota limit (without suffix: in kilobytes). \`0\` means unlimited. |
-
-Settings with a limit value support the [[link,settings_types_size]]
-syntax as a suffix.
-
-Settings also support \`%\` as a suffix. Percents are relative to the
-default rule. For example:
-
-\`\`\`
-plugin {
-  quota = maildir:User quota
-  quota_rule = *:storage=1GB
-  # 10% of 1GB = 100MB
-  quota_rule2 = Trash:storage=+10%%
-  # 20% of 1GB = 200MB
-  quota_rule3 = Spam:storage=+20%%
+Example:
+\`\`\`[dovecot.conf]
+quota_storage_size = 1G
+namespace inbox {
+  mailbox Trash {
+    # 110% * 1G = 1100M
+    quota_storage_percentage = 110
+  }
 }
-\`\`\`
+\`\`\``
+	},
 
-Note that \`%\` is written twice to escape it, because [[variable]] are
-expanded in plugin section.
-
-[[link,userdb]] configuration may or may not require this escaping.
-
-Backend-specific configuration currently is used only with \`Maildir++\`
-quota backend. It means you can have the quota in Maildir++ format (e.g.
-\`10000000S\`).`
+	quota_storage_size: {
+		default: 'unlimited',
+		plugin: 'quota',
+		values: setting_types.UINT,
+		seealso: [
+			'[[setting,quota_storage_extra]]',
+			'[[setting,quota_storage_percentage]]',
+			'[[setting,quota_message_count]]',
+			'[[link,quota_root]]'
+		],
+		tags: [ 'storage_size_limits' ],
+		text: `
+Quota storage size limit for the [[link,quota_root]]. This value is still
+multiplied by [[setting,quota_storage_percentage]] and then increased by
+[[setting,quota_storage_extra]] to get the final value (in this mailbox or
+namespace). This is reported as the STORAGE limit in IMAP GETQUOTA commands.
+Using \`0\` as the value means the same as \`unlimited\`.`
 	},
 
 	quota_warning: {
 		plugin: 'quota',
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ '[[link,quota_warning_scripts]]' ],
+		tags: [ 'quota-warning' ],
+		text: `
+Create a new [[link,quota_warning_scripts,quota warning]]. The filter name
+refers to [[setting,quota_warning_name]] setting. The [[setting,execute]]
+setting is required to be specified inside the filter.
+
+The order of \`quota_warning\` filters in the configuration is important:
+Only the first warning that matches the rules is executed. This means you must
+configure the highest limits first.`
+	},
+
+	quota_warning_name: {
+		plugin: 'quota',
 		values: setting_types.STRING,
 		seealso: [ '[[link,quota_warning_scripts]]' ],
+		tags: [ 'quota-warning' ],
 		text: `
-You can configure Dovecot to run an external command when user's quota
-exceeds a specified limit. Note that the warning is ONLY executed at the
-exact time when the limit is being crossed, so when you're testing you have
-to do it by crossing the limit by saving a new mail. If something else
-besides Dovecot updates quota so that the limit is crossed, the warning is
-never executed.
+Name of the [[link,quota_warning_scripts,quota warning]]. The
+[[setting,quota_warning]] filter name refers to this setting. This name is
+only used within the configuration to identify the quota warning - it has no
+meaning otherwise.`
+	},
 
-Quota warning configuration has the following syntax:
+	quota_warning_resource: {
+		plugin: 'quota',
+		values: setting_types.ENUM,
+		seealso: [ '[[link,quota_warning_scripts]]' ],
+		values_enum: [ 'storage', 'message' ],
+		default: 'storage',
+		tags: [ 'quota-warning' ],
+		text: `
+Which [[link,quota_limits,quota resource]] the quota warning is tracking.`
+	},
 
-\`\`\`
-quota_warning = <limit configuration> <quota-warning socket name> <parameters>
-\`\`\`
-
-\`limit_configuration\` is almost exactly same as for
-[[setting,quota]], with the exception of adding \`-\` before
-the value for "reverse" warnings where the script is called when quota
-drops below the value. Usually you want to use percents instead of absolute
-limits.
-
-Only the command for the first exceeded limit is executed, so configure the
-highest limit first. The actual commands that are run need to be created as
-services (create a named Dovecot service and use the service name
-as the \`quota-warning socket name\` argument).
-
-Note: The percent sign (\`%\`) needs to be written as \`%%\` to avoid
-config expansion (see [[variable]]).
-
-You can define multiple quota rules by appending an increasing number to
-the setting label.`
+	quota_warning_threshold: {
+		plugin: 'quota',
+		values: setting_types.ENUM,
+		seealso: [ '[[link,quota_warning_scripts]]' ],
+		values_enum: [ 'over', 'under' ],
+		default: 'over',
+		tags: [ 'quota-warning' ],
+		text: `
+Should the quota warning be executed when quota grows over the limit, or
+when it drops under the limit.`
 	},
 
 	/* trash plugin */

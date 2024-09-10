@@ -120,7 +120,7 @@ These fields can be returned the exact same way as `uid`, `gid`, and `home`
 fields.
 
 It's also possible to override settings from `dovecot.conf`. For example the
-[[setting,mail_path]] and [[setting,quota_rule]] settings are commonly
+[[setting,mail_path]] and [[setting,quota_storage_size]] settings are commonly
 overridden to provide per-user mail path or quota limit.
 
 The extra fields are also passed to [[link,post_login_scripting]].
@@ -191,14 +191,12 @@ Import `name=value` to mail user event.
 
 ### Overriding Settings
 
-Most commonly settings are overridden from plugin section.
-
-For example if your plugin section has `quota_rule=*:storage=100M` value
-and the `userdb` lookup returns `quota_rule=*:storage=200M`, the original
+For example if you have `quota_storage_size=100M` in `doveconf.conf` and the
+`userdb` lookup returns `quota_storage_size=200M`, the original
 quota setting gets overridden. In fact, if the lookup always returns a
-`quota_rule` field, there's no point in having [[setting,quota_rule]] in
-the `dovecot.conf` plugin section at all, because it always gets overridden
-anyway.
+`quota_storage_size` field, there's no point in having
+[[setting,quota_storage_size]] in `dovecot.conf` at all, because it always gets
+overridden anyway.
 
 To understand how imap and pop3 processes see their settings, it may be
 helpful to know how Dovecot internally passes them:
@@ -230,7 +228,7 @@ The separator setting can be overridden by returning
 ::: code-group
 ```[dovecot.conf]
 userdb sql {
-  query = SELECT home, uid, gid, CONCAT('*:bytes=', quota_bytes) AS quota_rule, separator AS "namespace/default/separator" \
+  query = SELECT home, uid, gid, CONCAT(quota_bytes, 'B') AS quota_storage_size, separator AS "namespace/default/separator" \
     FROM users \
     WHERE username = '%n' and domain = '%d'
 }
@@ -247,7 +245,7 @@ userdb ldap {
     home       = %{ldap:homeDirectory}
     uid        = %{ldap:uidNumber}
     gid        = %{ldap:gidNumber}
-    quota_rule = *:bytes=%{ldap:quotaBytes}
+    quota_storage_size = %{ldap:quotaBytes}B
     namespace/default/separator = %{ldap:mailSeparator}
   }
 }
@@ -263,8 +261,8 @@ Note that all `userdb` extra fields must be prefixed with `userdb_`,
 otherwise they're treated as [[link,passdb_extra_fields]].
 
 ```
-user:{plain}pass:1000:1000::/home/user::userdb_mail_driver=mbox userdb_mail_path=~/mail userdb_quota_rule=*:storage=100M userdb_namespace/default/separator=/
-user2:{plain}pass2:1001:1001::/home/user2::userdb_mail_driver=maildir userdb_mail_path=~/Maildir userdb_quota_rule=*:storage=200M
+user:{plain}pass:1000:1000::/home/user::userdb_mail_driver=mbox userdb_mail_path=~/mail userdb_quota_storage_size=100M userdb_namespace/default/separator=/
+user2:{plain}pass2:1001:1001::/home/user2::userdb_mail_driver=maildir userdb_mail_path=~/Maildir userdb_quota_storage_size=200M
 ```
 
 ## See Also
