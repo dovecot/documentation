@@ -94,8 +94,7 @@ userdb passwd-file {
 ```
 
 ```[/var/vmail/auth.d/&lt;domain&gt;/passwd]
-<user>@<domain>:{SSHA}xxxx:5000:5000::/var/vmail/<domain>/<user>::userdb_quota_rule=\
-    *:storage=5G
+<user>@<domain>:{SSHA}xxxx:5000:5000::/var/vmail/<domain>/<user>::userdb_quota_storage_size=5G
 ```
 :::
 
@@ -191,12 +190,13 @@ protocol lmtp {
 
 ::: code-group
 ```[dovecot.conf]
+quota user {
+  quota_storage_size = 1GB
+}
+mailbox Trash {
+  quota_storage_percentage = 110
+}
 plugin {
-  #quota = dict:user::file:%h/mdbox/dovecot-quota
-  quota = dict:user::file:%h/maildir/dovecot-quota
-  quota_rule = *:storage=1GB
-  quota_rule2 = Trash:storage=+10%%
-
   sieve = ~/.dovecot.sieve
 }
 ```
