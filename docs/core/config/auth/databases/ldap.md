@@ -455,7 +455,7 @@ userdb ldap2 {
   driver = ldap
   skip = notfound
   fields {
-    quota_rule:protected = *:bytes=%{ldap:classQuotaBytes}
+    quota_rule:default = *:bytes=%{ldap:classQuotaBytes}
   }
 }
 ```

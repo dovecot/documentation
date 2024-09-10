@@ -134,6 +134,7 @@ prefixing them with `\`.
 | `fts_filters` | Split into [[setting,language_filters]], [[setting,language_filter_normalizer_icu_id]], [[setting,language_filter_stopwords_dir]]. |
 | `fts_tokenizers` | Split into [[setting,language_tokenizers]], [[setting,language_tokenizer_address_token_maxlen]], [[setting,language_tokenizer_generic_algorithm]], [[setting,language_tokenizer_generic_token_maxlen]], [[setting,language_tokenizer_generic_wb5a]], [[setting,language_tokenizer_kuromoji_icu_id]], [[setting,language_tokenizer_kuromoji_split_compounds]], [[setting,language_tokenizer_kuromoji_token_maxlen]]. |
 | `service_count` | Renamed to [[setting,service_restart_request_count]]. The default value is set to `unlimited`. Value `0` is now a configuration error. |
+| passdb/userdb `:protected` | Renamed to `:default` |
 
 ### Changed Default Settings
 
