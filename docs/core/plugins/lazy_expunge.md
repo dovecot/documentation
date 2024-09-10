@@ -74,8 +74,12 @@ acl_driver = vfile
 lazy_expunge_mailbox = .EXPUNGED
 
 plugin {
+  # Define ACL so that user cannot list the .EXPUNGED mailbox
+  acl = vfile:/etc/dovecot/dovecot.acl
+}
+mailbox .EXPUNGED {
   # Expunged messages most likely don't want to be included in quota:
-  quota_rule = .EXPUNGED:ignore
+  quota_ignore = yes
 }
 ```
 
@@ -113,11 +117,12 @@ is hidden from users via ACL).
 Example to exclude expunged storage from the quota:
 
 ```[dovecot.conf]
-plugin {
-   quota = count:User quota
-   quota_rule = *:storage=1GB
-   # Exclude .EXPUNGED mailbox from the quota
-   quota_rule2 = .EXPUNGED:ignore
+quota "User quota" {
+  quota_storage_size = 1GB
+}
+mailbox .EXPUNGED {
+  # Exclude .EXPUNGED mailbox from the quota
+  quota_ignore = yes
 }
 ```
 
