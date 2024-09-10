@@ -136,9 +136,13 @@ Extra fields without value (without `=`) will default to `yes`.
 
 The following suffixes added to a field name are handled specially:
 
-#### `:protected`
+#### `:default`
 
 Set this field only if it hasn't been set before.
+
+::: info [[changed,extra_fields_default]]
+This was called `:protected` in earlier versions.
+:::
 
 #### `:remove`
 

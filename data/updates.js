@@ -27,6 +27,7 @@ export const updates = {
 	dict_slow_warn_added: '2.4.0',
 	doveadm_ex_expired_code: '2.4.0',
 	doveadm_mailbox_commands_user: '2.4.0',
+	extra_fields_default: '2.4.0',
 	extra_fields_empty: '2.4.0',
 	event_export_transports_file_unix_added: '2.4.0',
 	fs_crypt_require_encryption_keys: '2.4.0',
