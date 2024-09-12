@@ -28,7 +28,6 @@ Atilika
 atimes
 auid
 Aup
-authdb
 AUTHENTICATIONFAILED
 authpriv
 authtok
@@ -356,7 +355,6 @@ lcov
 lda
 ldapi
 ldapmodify
-ldaprc
 ldaps
 LDFLAGS
 ldif
@@ -425,7 +423,6 @@ mailauth
 mailboxlog
 mailboxname
 maildir
-MAILDIRBOX
 maildirlock
 maildirquota
 maildirsize
@@ -532,7 +529,6 @@ noauthenticate
 NOCHILDREN
 nodelay
 nodeps
-noenforcing
 NOINFERIORS
 noiv
 nolock
@@ -563,7 +559,6 @@ nullok
 nuls
 oauthbearer
 obox
-ocn
 OCRPT
 offenburg
 OIDC
@@ -828,6 +823,7 @@ tmpfs
 TODOs
 tohdr
 tokeninfo
+toolarge
 transitioning
 Troost
 tscript
