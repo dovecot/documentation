@@ -570,7 +570,7 @@ fields {
 }
 ```
 
-Create a `mail` field with value `maildir:/var/mail/<dir>/Maildir` where
+Create a `mail_path` field with value `/var/mail/<dir>/Maildir` where
 `<dir>` comes from "sAMAccountName" LDAP attribute:
 
 ```
@@ -580,7 +580,7 @@ fields {
 ```
 
 You can add static fields that aren't looked up from LDAP. For example
-create a "mail" field with value `maildir:/var/vmail/%d/%n/Maildir`:
+create a "mail_path" field with value `/var/vmail/%d/%n/Maildir`:
 
 ```
 fields {
