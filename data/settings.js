@@ -1557,12 +1557,6 @@ Has two settings:
 The ACL driver to use. This setting is **REQUIRED** - if empty, the acl
 plugin is disabled.
 
-The format is:
-
-\`\`\`[dovecot.conf]
-backend
-\`\`\`
-
 Currently, there is a single backend available: \`vfile\`. This backend
 supports two ways of defining the ACL configuration:
 
