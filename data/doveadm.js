@@ -131,6 +131,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'acl get': {
 		args: {
 			'match-me': {
+				cli: 'm',
 				type: doveadm_arg_types.BOOL,
 			},
 			mailbox: {
