@@ -25,7 +25,7 @@ used by, for example, [[plugin,last-login]] and [[setting,imap_metadata]].
 The dictionaries can be accessed either directly by the mail processes or
 they can be accessed via [proxy processes](#dictionary-proxy-process).
 
-Currently supported backends are:
+Currently supported drivers are:
 
 | Name | Description |
 | ---- | ----------- |
@@ -43,7 +43,7 @@ been accessed once. The connection is reused for other SQL lookups as long as
 their SQL settings are exactly the same. Opened SQL connections are currently
 never closed.
 
-## Backends
+## Drivers
 
 ### Flat Files
 
@@ -55,7 +55,7 @@ databases, but good for small ones such as a single user's quota.
 ### Filesystem (lib-fs-wrapper)
 
 This is a wrapper for lib-fs, which most importantly has the `posix`
-backend. Use the [[setting,fs]] setting to configure the filesystem.
+driver. Use the [[setting,fs]] setting to configure the filesystem.
 For example:
 
 ```
@@ -73,7 +73,7 @@ This create a separate file under `/var/lib/dovecot/dict` for each key.
 LDAP support is very similar to [`sql`](#sql) support, but there is no write
 support.
 
-Note that the LDAP backend must be used via [`proxy`](#proxy).
+Note that the LDAP driver must be used via [`proxy`](#proxy).
 
 See [[link,auth_ldap]].
 
@@ -132,14 +132,14 @@ map {
 
 The proxy driver performs dictionary accessing via the [[link,dict_proxy]].
 (The dict processes exist only if dict proxying is used.) This is especially
-useful with backends where their initialization is relatively expensive, such
+useful with drivers where their initialization is relatively expensive, such
 as SQL. The dict processes will perform connection pooling.
 
 <SettingsComponent tag="dict-proxy" level="3" />
 
 ### Redis
 
-The Redis backend is recommended to be used via [`proxy`](#proxy) to support
+The Redis driver is recommended to be used via [`proxy`](#proxy) to support
 [connection pooling](#connection-pooling).
 
 ::: warning
@@ -151,7 +151,7 @@ Currently using Redis without proxying may cause crashes.
 ### SQL
 
 ::: warning
-Note that the SQL backend must be used with [`proxy`](#proxy).
+Note that the SQL driver must be used with [`proxy`](#proxy).
 :::
 
 <SettingsComponent tag="dict-sql" level="3" />
@@ -275,7 +275,7 @@ dict_map shared/$mailbox_guid/$key {
 
 Dict server is used for providing dictionary access via server
 processes instead of doing it directly from whichever process wants to access
-the dictionary. This is useful for some backends with relatively high
+the dictionary. This is useful for some drivers with relatively high
 connection cost (e.g. [`sql`](#sql)), but not necessarily for others (e.g.,
 [`redis`](#redis).
 

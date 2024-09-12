@@ -56,7 +56,7 @@ smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_
 
 ## Using SASL with Postfix Submission Port
 
-When Dovecot is used as the authentication backend for Postfix, it is good
+When Dovecot is used as the authentication driver for Postfix, it is good
 practice to use a dedicated submission port for the MUAs (TCP 587).
 
 Not only can you specify individual parameters in `master.cf` overriding

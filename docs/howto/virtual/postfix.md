@@ -268,7 +268,7 @@ local1.err                        -/var/log/dovecot.err
 In this configuration Postfix will only accept SASL requests on its
 submission port (`TCP:587`) and will not accept them on Port 25.
 
-As Dovecot is used as authentication backend in this example, this will not
+As Dovecot is used as authentication driver in this example, this will not
 break inbound mail flow in case the authentication mechanism is down
 e.g. due to upgrading to a new build.
 
