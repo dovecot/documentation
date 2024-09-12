@@ -173,7 +173,7 @@ Possible responses include:
 | ------------- | ----------------- | ----------- |
 | `OK` | `O` | Commit was done successfully and all transaction operations completed. |
 | `NOTFOUND` | `N` | Transaction ID specified in the commit was not found. |
-| `WRITE_UNCERTAIN` | `W` | The transaction may or may not have succeeded (e.g. a write timeout occurred or the connection to dict backend was closed by the backend server). A tab-escaped error string is appended to the response line. |
+| `WRITE_UNCERTAIN` | `W` | The transaction may or may not have succeeded (e.g. a write timeout occurred or the connection to dict driver was closed by the backend server). A tab-escaped error string is appended to the response line. |
 | `FAIL` | `F` | Iteration failed due to an error. A tab-escaped error string is appended to the response line. |
 
 ## `ROLLBACK` Command
@@ -216,7 +216,7 @@ C: A<transaction id>TAB<key>TAB<increment>
 Set the unix timestamp for the given transaction. Note that this will set the
 timestamp for the entire transaction. This must be set before any changes are
 done and can't be changed afterwards. Currently only dict-sql with Cassandra
-backend does anything with this.
+driver does anything with this.
 
 ```
 C: T<transaction id>TAB<sec>TAB<nsec>

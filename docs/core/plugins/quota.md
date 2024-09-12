@@ -8,21 +8,21 @@ dovecotlinks:
   quota_limits:
     hash: quota-limits
     text: Quota Limits
-  quota_backends:
-    hash: quota-backends
-    text: Quota Backends
-  quota_backend_count:
-    hash: backend-count
-    text: "Quota Backend: Count"
-  quota_backend_fs:
-    hash: backend-fs
-    text: "Quota Backend: Filesystem"
-  quota_backend_imapc:
-    hash: backend-imapc
-    text: "Quota Backend: Imapc"
-  quota_backend_maildir:
-    hash: backend-maildir
-    text: "Quota Backend: Maildir"
+  quota_drivers:
+    hash: quota-drivers
+    text: Quota Drivers
+  quota_driver_count:
+    hash: driver-count
+    text: "Quota Driver: Count"
+  quota_driver_fs:
+    hash: driver-fs
+    text: "Quota Driver: Filesystem"
+  quota_driver_imapc:
+    hash: driver-imapc
+    text: "Quota Driver: Imapc"
+  quota_driver_maildir:
+    hash: driver-maildir
+    text: "Quota Driver: Maildir"
   quota_mailbox_count:
     hash: maximum-mailbox-count
     text: "Quota: Maximum Mailbox Count"
@@ -52,7 +52,7 @@ Three plugins are associated with quota:
 | Name | Description |
 | ---- | ----------- |
 | [[plugin,imap-quota]] | Enables IMAP commands for requesting and administering current quota. |
-| quota (this plugin) | Implements the actual quota handling and includes all quota backends. |
+| quota (this plugin) | Implements the actual quota handling and includes all quota drivers. |
 | [[plugin,quota-clone]] | Copy the current quota usage to a dict. |
 
 ## Settings
@@ -281,21 +281,21 @@ plugin {
   quota_exceeded_message = Quota exceeded, please go to http://www.example.com/over_quota_help for instructions on how to fix this.
 }
 ```
-## Quota Backends
+## Quota Drivers
 
-Quota backend specifies the method how Dovecot keeps track of the current quota
+Quota driver specifies the method how Dovecot keeps track of the current quota
 usage. They don't specify users' quota limits - that's done by
 [returning extra fields from userdb](#per-user-quota).
 
-We recommend using [`count`](#backend-count) for any new installations.
+We recommend using [`count`](#driver-count) for any new installations.
 
 If you need usage data to an external database, consider using
 [[plugin,quota-clone]] for exporting the information. (It's very slow to
 query every user's quota from the index files directly.)
 
-### Backend: Count
+### Driver: Count
 
-The `count` quota backend tracks the quota internally within Dovecot's index
+The `count` quota driver tracks the quota internally within Dovecot's index
 files.
 
 ::: info
@@ -308,7 +308,7 @@ wanted to be known, the mailboxes' quotas are summed up together. To get the
 best performance, make sure [[setting,mailbox_list_index,yes]].
 
 ::: warning
-If you're switching from some other quota backend to `count`, make
+If you're switching from some other quota driver to `count`, make
 sure that all the mails have their virtual sizes already indexed. Otherwise
 there may be a significant performance hit when Dovecot starts opening all
 the mails to get their sizes. You can help to avoid this by accessing the
@@ -318,7 +318,7 @@ mailbox vsizes for all the users before doing the configuration change:
 
 #### Configuration
 
-`count` backend doesn't have any additional parameters.
+`count` driver doesn't have any additional parameters.
 
 ```[dovecot.conf]
 mailbox_list_index = yes
@@ -338,9 +338,9 @@ quota "User quota" {
 }
 ```
 
-### Backend: fs
+### Driver: fs
 
-The `fs` (filesystem) quota backend supports both local filesystems and
+The `fs` (filesystem) quota driver supports both local filesystems and
 rquota (NFS).
 
 #### Configuration
@@ -350,7 +350,7 @@ rquota (NFS).
 #### Systemd
 
 If you are using systemd, please make sure you **turn off**
-`PrivateDevices=yes`, otherwise the backend won't work properly. The best
+`PrivateDevices=yes`, otherwise the driver won't work properly. The best
 way to do this is to use `systemctl edit dovecot` command or add file
 `/etc/systemd/system/dovecot.service.d/override.conf` with:
 
@@ -459,7 +459,7 @@ quota Others {
 }
 ```
 
-### Backend: imapc
+### Driver: imapc
 
 See [[link,imapc_quota]].
 
@@ -467,14 +467,14 @@ See [[link,imapc_quota]].
 
 <SettingsComponent tag="quota-imapc" level="4" />
 
-### Backend: maildir
+### Driver: maildir
 
 ::: warning
 Note that **Maildir++ quota works only with Maildir format**. However, even
-with Maildir format the recommendation is to use [`count`](#backend-count).
+with Maildir format the recommendation is to use [`count`](#driver-count).
 :::
 
-The `maildir` quota backend implements Maildir++ quota in Dovecot. Dovecot
+The `maildir` quota driver implements Maildir++ quota in Dovecot. Dovecot
 implements the
 [Maildir++ specification](https://www.courier-mta.org/imap/README.maildirquota.html)
 so Dovecot remains compatible with [Courier](https://www.courier-mta.org/),
@@ -491,7 +491,7 @@ format:
 <storage limit in bytes>S,<messages limit>C
 ```
 
-[[removed,quota_maildir_backend_removed]] Maildir++ quota limit must now be
+[[removed,quota_maildir_driver_removed]] Maildir++ quota limit must now be
 specified in Dovecot configuration. It will no longer be read from the
 `maildirsize` file. The limits are still written to the file header, but they
 are ignored by Dovecot.

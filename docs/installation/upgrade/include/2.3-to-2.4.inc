@@ -84,7 +84,7 @@ prefixing them with `\`.
 
 | Feature | Notes |
 | ------- | ----- |
-| Dict quota; Dirsize quota | These backends are removed. You should use [[link,quota_backend_count]] instead along with [[plugin,quota-clone]].<br /> Note that switching to quota count can cause all user's indexes to update, so reserve time for this. |
+| Dict quota; Dirsize quota | These drivers are removed. You should use [[link,quota_driver_count]] instead along with [[plugin,quota-clone]].<br /> Note that switching to quota count can cause all user's indexes to update, so reserve time for this. |
 | XZ Compression | You need to perform migration using different plugin. With maildir, you can try uncompressing all your mail and compressing them with another algorithm while Dovecot is not running. |
 | `auth_worker_max_count` | Use [[link,service_configuration,service-specific process limit]]. |
 | Weak password schemes | Weak password schemes are disabled by default, you need to use [[setting,auth_allow_weak_schemes]] to enable them. |

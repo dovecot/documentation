@@ -45,7 +45,7 @@ Dovecot maintains these FTS indexing engines:
 
 ## Searching In Dovecot
 
-When a FTS indexing backend is not present, searches use a slow sequential
+When a FTS indexing driver is not present, searches use a slow sequential
 search through all message data. This is both computationally and time
 expensive. It is desirable to pre-index data so that searches can be executed
 against this index.
@@ -81,16 +81,16 @@ whether or not the indexes will ever be used by the user.
 ## Dovecot FTS Architecture
 
 Dovecot splits the full text search functionality into two parts:
-a common tokenization library (lib-language) and backend indexing engine
+a common tokenization library (lib-language) and driver indexing engine
 responsible for storing the tokens produced by the common library persistently.
 
-Some of the FTS backends do their own internal tokenization, although it's
+Some of the FTS drivers do their own internal tokenization, although it's
 possible to configure them to use the lib-language tokenization as well.
 
 See [Tokenization](#tokenization) for more details about configuring the
 tokenization.
 
-All backends are implemented as plugins that extend the base fts plugin's
+All drivers are implemented as plugins that extend the base fts plugin's
 functionality.
 
 ## Settings
@@ -143,7 +143,7 @@ doveadm fts rescan -u user@domain
 doveadm index -u user@domain -q '*'
 ```
 
-Note that currently most FTS backends don't implement the rescan.
+Note that currently most FTS drivers don't implement the rescan.
 Instead, they simply delete all the FTS indexes. This may change in the
 future versions.
 

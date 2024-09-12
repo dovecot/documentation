@@ -11,10 +11,10 @@ dovecotlinks:
 
 `fs-compress` plugin is used to wrap other data streams in a compression layer.
 
-It can be used by any of the settings using the [[link,fs,FS backends]].
+It can be used by any of the settings using the [[link,fs,FS drivers]].
 
-The exact location where to set it in the FS backend hierarchy depends on what
-other FS backends are being used.
+The exact location where to set it in the FS driver hierarchy depends on what
+other FS drivers are being used.
 
 The important rules are:
 
