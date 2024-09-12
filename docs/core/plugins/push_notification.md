@@ -117,7 +117,7 @@ push_notification dlog {
 
 ### OX (Open-Xchange) driver [`ox`]
 
-The OX backend supports sending notifications on MessageNew events (i.e. mail
+The OX driver supports sending notifications on MessageNew events (i.e. mail
 deliveries, not IMAP APPENDs).
 
 This driver was designed for use with
