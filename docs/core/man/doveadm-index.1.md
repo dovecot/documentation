@@ -75,7 +75,7 @@ fts_autoindex = yes
 **-q**
 :   Queues the indexing to be run by indexer process. Without -q the
     indexing is done directly by the [[man,doveadm]] process. Some
-    backends can't handle multiple processes updating the indexes
+    drivers can't handle multiple processes updating the indexes
     simultaneously, so -q should usually be used on production.
 
 <!-- @include: include/option-S-socket.inc -->

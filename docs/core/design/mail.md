@@ -98,7 +98,7 @@ Only functions returning int can fail, others don't.
   was.
 
 - `mail_get_special()` can return various special fields. If a
-  special isn't implemented by some backend, the call returns success
+  special isn't implemented by some driver, the call returns success
   and sets the value to empty string.
 
 - `mail_get_stream()` returns an input stream that can be used to

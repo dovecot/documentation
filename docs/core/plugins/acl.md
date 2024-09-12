@@ -26,7 +26,7 @@ Dovecot supports both administrator-configured ACL files and the IMAP ACL
 extension (see [[plugin,imap-acl]], which allows users to change ACLs
 themselves).
 
-The ACL code was written to allow multiple ACL backends, but currently Dovecot
+The ACL code was written to allow multiple ACL drivers, but currently Dovecot
 supports only virtual ACL files.
 
 ::: warning
@@ -124,9 +124,9 @@ Master users have their own ACLs. They're not the mailbox owners, so by
 default they have no permissions to any of the mailboxes. See
 [[link,acl_master_users]] for more information.
 
-## ACL vfile Backend
+## ACL vfile Driver
 
-`vfile` backend supports per-mailbox ACLs and global ACLs.
+`vfile` driver supports per-mailbox ACLs and global ACLs.
 
 Per-mailbox ACLs are stored in `dovecot-acl` named file, which exists in:
 
@@ -271,7 +271,7 @@ by administrator, so users shouldn't be able to override them.
 
 ### Global ACL File
 
-Global ACL file path is specified as a parameter to vfile backend in
+Global ACL file path is specified as a parameter to vfile driver in
 [[setting,acl]], `/etc/dovecot/dovecot-acl` in the above example.
 
 The file contains otherwise the same data as regular per-mailbox `dovecot-acl`

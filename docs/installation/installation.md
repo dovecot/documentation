@@ -230,7 +230,7 @@ Build with zStandard compression support (default if detected)
 #### SQL Driver Options
 
 SQL drivers are typically used for authentication, and they may be
-used as a lib-dict backend too, which can be used by plugins for
+used as a lib-dict driver too, which can be used by plugins for
 different purposes.
 
 ##### `--with-cassandra`
@@ -252,9 +252,9 @@ or similar package)
 Build with SQLite3 driver support (requires `sqlite-devel`,
 `libsqlite3-dev` or similar package)
 
-#### Authentication Backend Options
+#### Authentication Driver Options
 
-The basic backends are built if the system is detected to support them:
+The basic drivers are built if the system is detected to support them:
 
 ##### `--with-pam`
 
@@ -264,9 +264,9 @@ Build with [[link,auth_pam]] support
 
 Build with [[link,auth_bsd]] support
 
-#### Authentication Backend Options (Extra Libraries Needed)
+#### Authentication Driver Options (Extra Libraries Needed)
 
-Some backends require extra libraries and are not necessarily wanted, so
+Some drivers require extra libraries and are not necessarily wanted, so
 they are built only if specifically enabled:
 
 ##### `--with-sql(=plugin)`
