@@ -8,9 +8,9 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **instance list**
+**doveadm** [*GLOBAL OPTIONS*] **instance list** [**-c**] [*name*]
 
-**doveadm** [*GLOBAL OPTIONS*] **instance remove** *name* | *base_dir*
+**doveadm** [*GLOBAL OPTIONS*] **instance remove** *name*
 
 ## DESCRIPTION
 
@@ -31,22 +31,23 @@ binaries (e.g. doveadm).
 ## ARGUMENTS
 
 *name*
-:   The value of an instance's *instance_name* setting.
-
-*base_dir*
-:   The base directory of a Dovecot instance.
+:   The value of an instance's *instance_name* setting. Each instance can
+    also be uniquely identified by its *base_dir* setting.
 
 ## COMMANDS
 
 ### instance list
 
-**doveadm** [*GLOBAL OPTIONS*] instance list
+**doveadm** [*GLOBAL OPTIONS*] instance list [**-c**] [*name*]
 
 This command lists the seen Dovecot instances.
 
+**-c**
+:   Output the config path instead of instance information.
+
 ### instance remove
 
-**doveadm** [*GLOBAL OPTIONS*] instance remove *name* | *base_dir*
+**doveadm** [*GLOBAL OPTIONS*] instance remove *name*
 
 This command removes the specified instance.
 
