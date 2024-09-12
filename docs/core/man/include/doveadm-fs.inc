@@ -10,9 +10,9 @@
 ## DESCRIPTION
 
 The **doveadm fs** *commands* are used to abstractly interact with the
-storage backend defined in the Dovecot configuration. It allows access
+storage driver defined in the Dovecot configuration. It allows access
 to the mailbox structure without needing to know details of how the
-storage backend is designed.
+storage driver is designed.
 
 *config-filter-name*
 :   Filter name to use when looking up the fs settings. For example

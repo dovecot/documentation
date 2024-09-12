@@ -323,7 +323,7 @@ below) to get the dictionary updated for themselves.
 
 See [[setting,acl_sharing_map]] for plugin setting information.
 
-You could use any dictionary backend, including SQL or Cassandra, but a
+You could use any dictionary driver, including SQL or Cassandra, but a
 simple flat file should work pretty well too:
 
 ```[dovecot.conf]
