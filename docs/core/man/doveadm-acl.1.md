@@ -139,6 +139,9 @@ Remove the whole ACL entry for the *mailbox*/*id*.
 
 Show all the ACLs for the *mailbox*.
 
+**-m**
+:   Only show ACLs that match the mailbox.
+
 ### acl recalc
 
 **doveadm** [*GLOBAL OPTIONS*] acl recalc [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*]
