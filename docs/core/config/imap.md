@@ -33,7 +33,7 @@ compression level for the available mechanism.
 ### SEARCH=FUZZY
 
 IMAP provides SEARCH as part of the core protocol, so it is useful to activate
-a Full Text Search indexing backend to handle these searches.
+a Full Text Search indexing driver to handle these searches.
 
 See [[plugin,fts]].
 

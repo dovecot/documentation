@@ -19,7 +19,7 @@ Additionally, it is expensive to directly scan quota information from each
 individual user account, so quota-clone allows access to quota information
 that is less resource intensive.
 
-In these example use-cases, you can use [[link,quota_backend_count]] as the
+In these example use-cases, you can use [[link,quota_driver_count]] as the
 authoritative quota database and make a copy of the quota usage to Redis.
 From Redis you could then once in a while gather everybody's current quota
 usage and send it to yet another place (e.g. for statistics handling).
