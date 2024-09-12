@@ -35,7 +35,7 @@ seconds" or "NO Mailbox is locked, will abort in n seconds".
 
 ## Required Methods
 
-Methods that mail storage backends need to implement are:
+Methods that mail storage drivers need to implement are:
 
 ### `get_setting_parser_info()`
 

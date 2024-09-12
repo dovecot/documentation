@@ -1557,7 +1557,7 @@ Has two settings:
 The ACL driver to use. This setting is **REQUIRED** - if empty, the acl
 plugin is disabled.
 
-Currently, there is a single backend available: \`vfile\`. This backend
+Currently, there is a single driver available: \`vfile\`. This driver
 supports two ways of defining the ACL configuration:
 
 - *global*: ACL rules are applied to all users.
@@ -1959,7 +1959,7 @@ fts_header_includes {
 		plugin: 'fts',
 		values: setting_types.UINT,
 		text: `
-When the full text search backend detects that the index isn't up-to-date,
+When the full text search driver detects that the index isn't up-to-date,
 the indexer is told to index the messages and is given this much time to do
 so. If this time limit is reached, an error is returned, indicating that
 the search timed out during waiting for the indexing to complete:
@@ -2925,7 +2925,7 @@ quota_clone {
 		advanced: true,
 		text: `
 Unset quota information before updating. This is needed with some dict
-backends that do not support upserting, such as SQL with older SQLite.`
+drivers that do not support upserting, such as SQL with older SQLite.`
 	},
 
 	/* quota plugin */
@@ -2953,9 +2953,9 @@ quota "User quota" {
 		plugin: 'quota',
 		values: setting_types.STRING,
 		default: 'count',
-		seealso: [ '[[link,quota_backends]]' ],
+		seealso: [ '[[link,quota_drivers]]' ],
 		text: `
-Quota driver to use. See [[link,quota_backends]].`
+Quota driver to use. See [[link,quota_drivers]].`
 	},
 
 	quota_enforce: {
@@ -2992,7 +2992,7 @@ There are also other messages, which are currently hard coded:
 		text: `
 If yes, use filesystem quota's inode limit as the message count limit.
 This can be useful with Maildir or sdbox. Used only with
-[[link,quota_backend_fs]].`
+[[link,quota_driver_fs]].`
 	},
 
 	quota_fs_mount_path: {
@@ -3002,7 +3002,7 @@ This can be useful with Maildir or sdbox. Used only with
 		text: `
 If specified, enable FS quota for the specified mount path. Only mailboxes
 existing in this mount path have the quota enabled. Empty value looks up the
-mountpoint automatically. Used only with [[link,quota_backend_fs]].`
+mountpoint automatically. Used only with [[link,quota_driver_fs]].`
 	},
 
 	quota_fs_type: {
@@ -3015,7 +3015,7 @@ mountpoint automatically. Used only with [[link,quota_backend_fs]].`
 Using \`any\` attempts to use the user quota first, with a fallback to group
 quota. Using \`user\` or \`group\` only attempts to use the user or the group
 quota, with a fallback to unlimited quota limit. Used only with
-[[link,quota_backedn_fs]].`
+[[link,quota_driver_fs]].`
 	},
 
 	quota_hidden: {
@@ -3063,7 +3063,7 @@ no tracking of the quota, and not making it visible to IMAP GETQUOTA commands.`
 		default: 'INBOX',
 		text: `
 If non-empty, use \`GETQUOTAROOT <mailbox>\` to get the imapc quota root.
-Used only with [[link,quota_backend_imapc]].`
+Used only with [[link,quota_driver_imapc]].`
 	},
 
 	quota_imapc_root_name: {
@@ -3078,7 +3078,7 @@ to get the imapc quota.
 
 Some servers may have an empty quota root name. This is why if this setting and
 [[setting,quota_imapc_mailbox_name]] both have empty values, this setting is
-used. Used only with [[link,quota_backend_imapc]].`
+used. Used only with [[link,quota_driver_imapc]].`
 	},
 
 	quota_mail_size: {
@@ -4691,7 +4691,7 @@ Name of the dict to access in the dict server. This refers to the
 		text: `
 Points to the dict server's UNIX socket. The path is relative to the the
 [[setting,base_dir]] setting. This should be changed to \`dict-async\` if the
-dict backend supports asynchronous lookups (e.g. ldap, pgsql, cassandra, NOT
+dict driver supports asynchronous lookups (e.g. ldap, pgsql, cassandra, NOT
 mysql). The \`dict-async\` service allows more than one client, so this
 configuration prevents creating unnecessarily many dict processes.`
 	},
@@ -8881,7 +8881,7 @@ drivers.`
 		tags: [ 'passdb' ],
 		values: setting_types.STRING,
 		text: `
-Arguments for the passdb backend. The format of this value depends on the
+Arguments for the passdb driver. The format of this value depends on the
 passdb driver. Each one uses different args.`
 	},
 
@@ -9952,7 +9952,7 @@ See: https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites`
 		text: `
 The directory where trusted SSL CA certificates can be found. For example
 \`/etc/ssl/certs\`. These certificates are used only for outgoing SSL
-connections (e.g. with the imapc backend).
+connections (e.g. with the imapc driver).
 
 For extra security you might want to point to a directory containing
 certificates only for the CAs that are actually needed for the server
@@ -9967,7 +9967,7 @@ File containing the trusted SSL CA certificates. For example
 \`/etc/ssl/certs/ca-bundle.crt\`.
 
 These certificates are used only for outgoing SSL connections (e.g. with
-the [[link,imapc]] backend).
+the [[link,imapc]] driver).
 
 Note that this setting isn't recommended to be used with large CA bundles,
 because all the certificates are read into memory. This leads to excessive
@@ -10538,7 +10538,7 @@ drivers.`
 		tags: [ 'userdb' ],
 		values: setting_types.STRING,
 		text: `
-Arguments for the userdb backend. The format of this value depends on the userdb driver. Each one uses different args.`
+Arguments for the userdb driver. The format of this value depends on the userdb driver. Each one uses different args.`
 	},
 
 	userdb_fields: {

@@ -61,7 +61,7 @@ Scan what mails exist in the full text search index and compare those to
 what actually exist in mailboxes. This removes mails from the index that
 have already been expunged and makes sure that the next **doveadm
 index** will index all the missing mails (if any). Note that currently
-most FTS backends do not implement this properly, but instead they
+most FTS drivers do not implement this properly, but instead they
 delete all the FTS indexes. This may change in the future versions.
 
 ### fts check fast
