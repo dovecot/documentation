@@ -237,7 +237,7 @@ of the user running the Sieve interpreter is used.
 
 ##### Examples
 
-###### Flat File Backend
+###### Flat File Driver
 
 To retrieve the Sieve script named "keep" from the dict file
 /etc/dovecot/sieve.dict:
@@ -274,9 +274,9 @@ require ["enotify", "variables"]; if header :matches "From" "*" { set "from" "${
 ```
 :::
 
-###### Using a SQL backend
+###### Using a SQL Driver
 
-For greater flexibility, it's possible to use a SQL backend for your
+For greater flexibility, it's possible to use a SQL driver for your
 dict scripts.
 
 First, set up a configuration file (such as

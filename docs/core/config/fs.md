@@ -21,7 +21,7 @@ can be made to look similar to filesystems. It is similar to [[link,dict]] but
 generally where [[link,dict]] is generally used for small data `fs` is used for
 larger data.
 
-Currently supported FS backends are:
+Currently supported FS drivers are:
 
 | Name | Description |
 | --- | --- |
@@ -29,7 +29,7 @@ Currently supported FS backends are:
 | [[link,fs_dict,dict]] | Dictionary (`lib-dict` wrapper). |
 <!-- @include: @docs/storage/providers/includes/fs.inc -->
 
-Wrapper backends used on top of other backends:
+Wrapper drivers used on top of other drivers:
 
 | Name | Description |
 | --- | --- |
@@ -54,8 +54,8 @@ support file metadata, in case you have a need for that use
 
 ## Dictionary Filesystem
 
-This is a wrapper for `lib-dict` for using [[link,dict]] backends as `fs`
-backends.
+This is a wrapper for `lib-dict` for using [[link,dict]] drivers as `fs`
+drivers.
 
 ### Settings
 
@@ -63,5 +63,5 @@ backends.
 
 ## Metawrap Filesystem
 
-This is a wrapper for other `fs` backends that don't support metadata. The
+This is a wrapper for other `fs` drivers that don't support metadata. The
 metadata is implemented by placing them into the beginning of the file content.

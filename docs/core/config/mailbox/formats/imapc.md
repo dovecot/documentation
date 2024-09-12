@@ -39,7 +39,7 @@ imapc_user = user@example.com
 
 ## Quota
 
-Using the `imapc` quota backend allows asking for the quota from remote
+Using the `imapc` quota driver allows asking for the quota from remote
 IMAP server. By default it uses `GETQUOTAROOT INBOX` to retrieve the quota.
 
 There are two parameters that can be used to control how the quota is looked
