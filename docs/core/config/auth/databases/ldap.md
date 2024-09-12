@@ -326,7 +326,7 @@ When connecting to AD, you may need to use port 3268. Then again, not all LDAP
 fields are available in port 3268. Use whatever works. See:
 https://technet.microsoft.com/en-us/library/cc978012.aspx.
 
-### LDAP Backend Configuration
+### LDAP Driver Configuration
 
 ::: code-group
 ```[dovecot.conf]

@@ -131,7 +131,7 @@ Dovecot supports reading a few fields from the `<base filename>`:
 
 * `,S=<size>`: `<size>` contains the file size. Getting the size from the
   filename avoids doing a system `stat()` call, which may improve the
-  performance. This is especially useful with [[link,quota_backend_maildir]].
+  performance. This is especially useful with [[link,quota_driver_maildir]].
 * `,W=<vsize>`: `<vsize>` contains the file's RFC822.SIZE, i.e., the file
   size with linefeeds being CR+LF characters. If the message was stored with
   CR+LF linefeeds, `<size>` and `<vsize>` are the same. Setting this may
@@ -341,7 +341,7 @@ cache and download the messages all over again. If you do this for all the
 users, you could cause huge disk I/O bursts to your server.
 
 Dovecot cannot currently handle not being able to write the control files, so
-it will cause problems with [[link,quota_backend_fs]]. To
+it will cause problems with [[link,quota_driver_fs]]. To
 avoid problems with this,
 you should place control files into a partition where quota isn't checked. You
 can specify this with the [[setting,mail_control_path]] setting:
