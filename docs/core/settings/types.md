@@ -124,9 +124,13 @@ file, processing, and more.
 
 The Time value supports using suffixes of any of the following words:
 
-```
-secs, seconds, mins, minutes, hours, days, weeks
-```
+ * `secs`
+ * `seconds`
+ * `mins`
+ * `minutes`
+ * `hours`
+ * `days`
+ * `weeks`
 
 ::: info
 So for example, `d`, `da`, `day`, and `days` all mean the same. Make sure to be
@@ -138,13 +142,20 @@ The value can also be `infinite`.
 
 ## Millisecond Time
 
-Same as [Time](#time), but additionally supports milliseconds (`ms`) precision.
+This is similar to [Time](#time), but additionally supports milliseconds
+(`ms`) precision.
 
-In addition to Time suffixes, adds support for the following words:
+The Millisecond Time value supports using suffixes of any of the
+following words:
 
-```
-msecs, mseconds, millisecs, milliseconds
-```
+ * All the suffixes supported by [Time](#time)
+ * `msecs`
+ * `mseconds`
+ * `millisecs`
+ * `milliseconds`
+
+All of these have the same meaning. Similarly to [Time](#time), the suffixes
+can be shortened to e.g. `ms`.
 
 ## IP Addresses
 
