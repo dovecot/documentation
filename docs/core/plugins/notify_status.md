@@ -57,14 +57,14 @@ mailbox TestBox {
 ::: code-group
 
 ```[Dictionary Map]
-map {
-  pattern = priv/status/$box
-  table = mailbox_status
-  value_field = status
+dict_map priv/status/$box {
+  sql_table = mailbox_status
   username_field = username
 
-  fields {
-    mailbox = $box
+  key_field mailbox {
+    value = $box
+  }
+  value_field status {
   }
 }
 ```
