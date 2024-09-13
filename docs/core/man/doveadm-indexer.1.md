@@ -38,21 +38,20 @@ indexer queue. It works the same as the **doveadm index -q** command.
 
 ### indexer remove
 
-**doveadm** [*GLOBAL OPTIONS*] indexer remove *user_mask*
+**doveadm** [*GLOBAL OPTIONS*] indexer remove *user_mask* [*mailbox_mask*]
 
-Remove all indexer requests for the matching *user_mask*. It's possible
-to use wildcards. Requests that are currently processed by
+Remove all indexer requests for the matching *user_mask* (and *mailbox_mask*).
+It's possible to use wildcards. Requests that are currently processed by
 indexer-worker are not listed; use **doveadm kick** instead to kick
 them.
 
 ### indexer list
 
-**doveadm** [*GLOBAL OPTIONS*] indexer list *user_mask* [*mailbox_mask*]
+**doveadm** [*GLOBAL OPTIONS*] indexer list *user_mask*
 
-List all the queued indexing requests matching the *user_mask* (and the
-*mailbox_mask*). It's possible to use wildcards. Requests that are
-currently processed by indexer-worker are not listed; use **doveadm who**
-instead to see them.
+List all the queued indexing requests matching *user_mask*. It's possible to
+use wildcards. Requests that are currently processed by indexer-worker are
+not listed; use **doveadm who** instead to see them.
 
 <!-- @include: reporting-bugs.inc -->
 
