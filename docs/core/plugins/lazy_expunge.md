@@ -56,6 +56,11 @@ namespace inbox {
   mailbox .EXPUNGED {
     autoexpunge = 7days
     autoexpunge_max_mails = 100000
+
+    # Define ACL so that user cannot list the .EXPUNGED mailbox
+    acl owner {
+      rights = rwstipekxa
+    }
   }
 }
 
@@ -63,21 +68,15 @@ mail_plugins {
   lazy_expunge = yes
   acl = yes
 }
+acl_driver = vfile
 
 # Move messages to an .EXPUNGED mailbox
 lazy_expunge_mailbox = .EXPUNGED
 
 plugin {
-  # Define ACL so that user cannot list the .EXPUNGED mailbox
-  acl = vfile:/etc/dovecot/dovecot.acl
-
   # Expunged messages most likely don't want to be included in quota:
   quota_rule = .EXPUNGED:ignore
 }
-```
-
-```[/etc/dovecot/dovecot.acl]
-.EXPUNGED owner rwstipekxa
 ```
 
 :::
