@@ -36,7 +36,6 @@ This allows individual /SEEN information for the public namespace.
 mail_driver = maildir
 mail_path = ~/maildir
 mail_plugins {
-  acl = yes
   quota = yes
 }
 
@@ -96,13 +95,13 @@ userdb passwd-file {
 
 ```[/var/vmail/auth.d/&lt;domain&gt;/passwd]
 <user>@<domain>:{SSHA}xxxx:5000:5000::/var/vmail/<domain>/<user>::userdb_quota_rule=\
-    *:storage=5G userdb_acl_groups=PublicMailboxAdmins
+    *:storage=5G
 ```
 :::
 
 Later on the auth service will be configured to run in the `doveauth` user
 context. Therefore the directory `auth.d/` and its content will be owned
-by this user, while mails / ACLs / Sieve-Scripts, will be accessed using
+by this user, while mails / Sieve-Scripts, will be accessed using
 the `vmail` context specified in the passwd-file.
 
 To keep directory permissions simple these will be stored seperately under
@@ -173,7 +172,6 @@ verbose_proctitle = yes
 ```[dovecot.conf]
 protocol imap {
   mail_plugins {
-    imap_acl = yes
     imap_quota = yes
     mail_log = yes
     notify = yes
@@ -198,8 +196,6 @@ plugin {
   quota = dict:user::file:%h/maildir/dovecot-quota
   quota_rule = *:storage=1GB
   quota_rule2 = Trash:storage=+10%%
-
-  acl = vfile:/var/vmail/conf.d/%d/acls:cache_secs=300
 
   sieve = ~/.dovecot.sieve
 }
