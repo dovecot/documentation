@@ -78,9 +78,6 @@ usage.
 */etc/dovecot/dovecot.conf*
 :   Dovecot's main configuration file, including the *dict* section.
 
-*/etc/dovecot/dovecot-dict-sql.conf.ext*
-:   SQL dictionary proxy settings.
-
 */etc/dovecot/conf.d/10-mail.conf*
 :   Mailbox locations and namespaces.
 
