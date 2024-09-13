@@ -265,8 +265,6 @@ service imap-postlogin {
 
 Enable the `plain_pass` variable in the auth-passwdfile configuration.
 
-`/etc/dovecot/conf.d/auth-passwdfile.conf.ext`:
-
 ```
 passdb passwd-file {
   passwd_file_path = /var/vmail/auth.d/%d/passwd
