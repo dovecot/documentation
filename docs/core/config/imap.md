@@ -63,23 +63,23 @@ CREATE TABLE metadata (
 );
 ```
 
-```[/etc/dovecot/dict.config]
-## driver specific config excluded
-
-map {
-  pattern = $key
-  table = attr_priv
-  fields {
-    attr_name = $key
-  }
-  username_field = username
-  value_field = attr_value
-}
-```
-
 ```[/etc/dovecot/dovecot.conf]
-dict_legacy {
-  metadata = driver:/etc/dovecot/dict.config
+dict_server {
+  dict metadata {
+    driver = sql
+    sql_driver = mysql
+
+    dict_map $key {
+      sql_table = attr_priv
+      username_field = username
+
+      key_field attr_name {
+	value = $key
+      }
+      value_field attr_value {
+      }
+    }
+  }
 }
 
 mail_attribute {
