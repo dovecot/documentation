@@ -2945,11 +2945,17 @@ and appending an \`@domain\` element to the username in cleartext logins.`
 		values: setting_types.TIME,
 		seealso: [ 'auth_internal_failure_delay' ],
 		text: `
-This is the delay before replying to failed authentication attempts.
+This is the delay before replying to failed authentication attempts. Using
+[[link,passdb_extra_field_nodelay]] bypasses this setting.
 
 This setting defines the interval for which the authentication process
 flushes all auth failures. Thus, this is the maximum interval a user may
-encounter.`
+encounter. However, there can be additional delays added by
+[[link,auth_penalty]].
+
+This setting doesn't affect internal failures. See
+[[setting,auth_internal_failure_delay]].
+`
 	},
 
 	auth_gssapi_hostname: {
