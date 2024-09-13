@@ -102,9 +102,11 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
 
      <table v-if="v.args">
       <thead>
-       <th>Argument(s)</th>
-       <th>Type</th>
-       <th>Description</th>
+       <tr>
+        <th>Argument(s)</th>
+        <th>Type</th>
+        <th>Description</th>
+       </tr>
       </thead>
       <tbody>
        <template v-for="elem in v.args">
@@ -124,9 +126,11 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
     <div>
      <table>
       <thead>
-       <th>Parameter</th>
-       <th>Type</th>
-       <th>Description</th>
+       <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Description</th>
+       </tr>
       </thead>
       <tbody>
        <template v-for="elem in v.args">
