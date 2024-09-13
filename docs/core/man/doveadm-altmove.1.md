@@ -75,9 +75,6 @@ moved to the alternative storage.
 */etc/dovecot/conf.d/10-mail.conf*
 :   Mailbox locations and namespaces.
 
-*/etc/dovecot/conf.d/auth-\*.conf.ext*
-:   Authentication processes, including userdb settings.
-
 ## EXAMPLE
 
 This example moves seen mails older than one week to alternative
