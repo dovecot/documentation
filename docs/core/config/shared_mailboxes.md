@@ -403,23 +403,23 @@ COMMENT ON TABLE anyone_shares IS 'User from_user shares folders to anyone.';
 ```[/etc/dovecot/dovecot-dict-sql.conf.inc]
 dict_map shared/shared-boxes/user/$to/$from {
   sql_table = user_shares
-  value dummy {
+  value_field dummy {
   }
 
-  field from_user {
+  key_field from_user {
     pattern = $from
   }
-  field to_user {
+  key_field to_user {
     pattern = $to
   }
 }
 
 dict_map shared/shared-boxes/anyone/$from {
   sql_table = anyone_shares
-  value dummy {
+  value_field dummy {
   }
 
-  field from_user {
+  key_field from_user {
     pattern = $from
   }
 }
