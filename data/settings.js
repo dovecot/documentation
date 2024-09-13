@@ -8739,7 +8739,7 @@ entry (typically by prefixing with \`{SCHEME}\`).`
 		text: `
 Skip the passdb if non-empty and the current auth mechanism is not listed here.
 If the value contains \`none\`, it matches for non-authenticating passdb
-lookups.
+lookups (e.g. lmtp/doveadm lookups).
 
 Example:
 
