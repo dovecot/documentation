@@ -79,17 +79,17 @@ dict_server {
 
     dict_map shared/last-login/$service/$user/$remote_ip {
       sql_table = last_login
-      value last_access {
+      value_field last_access {
         type = uint
       }
 
-      field userid {
+      key_field userid {
         pattern = $user
       }
-      field service {
+      key_field service {
         pattern = $service
       }
-      field last_ip {
+      key_field last_ip {
         pattern = $remote_ip
       }
     }
@@ -134,17 +134,17 @@ dict_server {
 
     dict_map shared/last-login/$service/$user/$remote_ip {
       sql_table = last_login
-      value last_access {
+      value_field last_access {
         type = uint
       }
 
-      field userid {
+      key_field userid {
         pattern = $user
       }
-      field service {
+      key_field service {
         pattern = $service
       }
-      field last_ip {
+      key_field last_ip {
         pattern = $remote_ip
       }
     }
@@ -190,42 +190,42 @@ dict_server {
 
     dict_map shared/last-login/imap/$user/$remote_ip {
       sql_table = users
-      value last_imap_access {
+      value_field last_imap_access {
         type = uint
       }
 
-      field userid {
+      key_field userid {
         pattern = $user
       }
-      field last_imap_ip {
+      key_field last_imap_ip {
         pattern = $remote_ip
       }
     }
 
     dict_map shared/last-login/pop3/$user/$remote_ip {
       sql_table = users
-      value last_pop3_access {
+      value_field last_pop3_access {
         type = uint
       }
 
-      field userid {
+      key_field userid {
         pattern = $user
       }
-      field last_pop3_ip {
+      key_field last_pop3_ip {
         pattern = $remote_ip
       }
     }
 
     dict_map shared/last-login/lmtp/$user/$remote_ip {
       sql_table = users
-      value last_lmtp_access {
+      value_field last_lmtp_access {
         type = uint
       }
 
-      field userid {
+      key_field userid {
         pattern = $user
       }
-      field last_lmtp_ip {
+      key_field last_lmtp_ip {
         pattern = $remote_ip
       }
     }

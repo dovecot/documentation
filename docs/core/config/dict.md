@@ -170,7 +170,7 @@ For example when using dict for a per-user quota value the map looks like:
 dict_map priv/quota/storage {
   sql_table = quota
   username_field = username
-  value quota_bytes {
+  value_field quota_bytes {
   }
 }
 ```
@@ -193,13 +193,13 @@ You can also access multiple SQL fields. For example
 ```[dovecot.conf]
 dict_map shared/shared-boxes/user/$to/$from {
   sql_table = user_shares
-  value dummy {
+  value_field dummy {
   }
 
-  field from_user {
+  key_field from_user {
     pattern = $from
   }
-  field to_user {
+  key_field to_user {
     pattern = $to
   }
 }
@@ -241,13 +241,13 @@ identifier.
 dict_map priv/$mailbox_guid/$key {
   sql_table = mailbox_private_attributes
   username_field = user
-  value attr_value {
+  value_field attr_value {
   }
 
-  field attr_key {
+  key_field attr_key {
     pattern = $key
   }
-  field mailbox_guid {
+  key_field mailbox_guid {
     pattern = $mailbox_guid
   }
 }
@@ -260,13 +260,13 @@ dict_map priv/$mailbox_guid/$key {
 # );
 dict_map shared/$mailbox_guid/$key {
   sql_table = mailbox_shared_attributes
-  value attr_value {
+  value_field attr_value {
   }
 
-  field attr_key {
+  key_field attr_key {
     pattern = $key
   }
-  field mailbox_guid {
+  key_field mailbox_guid {
     pattern = $mailbox_guid
   }
 }
