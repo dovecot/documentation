@@ -301,11 +301,11 @@ dict_map priv/sieve/name/$script_name {
   username_field = username
 
   # The field which contains the return value of the script ID
-  value id {
+  value_field id {
   }
 
   # The script name field in the table to query
-  field script_name {
+  key_field script_name {
     pattern = $script_name
   }
 }
@@ -321,7 +321,7 @@ dict_map priv/sieve/data/$id {
   username_field = username
 
   # The field which contains the script
-  value script_data {
+  value_field script_data {
   }
 
   # The id field in the table to query
