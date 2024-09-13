@@ -3500,12 +3500,31 @@ How long to wait for a query to finish.`
 
 	cassandra_ssl: {
 		tags: [ 'sql-cassandra' ],
-		values: setting_types.BOOLEAN,
+		values: setting_types.ENUM,
 		default: 'no',
-		seealso: [ '[[link,ssl_configuration]]' ],
+		values_enum: [ 'no', 'cert-only', 'cert-ip' ],
+		seealso: [ '[[link,ssl_configuration]]', 'ssl_client_require_valid_cert' ],
 		text: `
-Whether to use SSL when connecting to Cassandra. Configure it using the
-\`ssl_client_*\` settings. See [[link,ssl_configuration]].`
+Whether to use SSL when connecting to Cassandra, and how to verify the
+certificate:
+
+
+\`no\`
+:   Don't use SSL
+
+\`cert-only\`
+:   Verify the certificate, but not the IP address or host name.
+
+\`cert-ip\`
+:   Verify the certificate, and require IP address to match the certificate's
+    common name or one of its subject alternative names.
+
+You can also skip certificate validation by setting
+[[setting,ssl_client_require_valid_cert,yes]]. The \`cassandra_ssl\` setting
+value must something else than \`no\`.
+
+Configure SSL certificates using the \`ssl_client_*\` settings. See
+[[link,ssl_configuration]].`
 	},
 
 	cassandra_user: {
