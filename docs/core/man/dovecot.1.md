@@ -104,12 +104,6 @@ The *signals* **ALARM** and **PIPE** are ignored.
 */etc/dovecot/dovecot.conf*
 :   Dovecot's main configuration file.
 
-*/etc/dovecot/dovecot-dict-sql.conf.ext*
-:   Dovecot's dict configuration with SQL-backend.
-
-*/etc/dovecot/conf.d/auth-*-conf.ext*
-:   Configuration files of different authentication modules.
-
 */etc/dovecot/conf.d/*.conf*
 :   Configuration files of different services and settings.
 
