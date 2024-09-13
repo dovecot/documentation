@@ -39,33 +39,6 @@ catch those cases (see the rules above).
 
 <SettingsComponent tag="auth_cache" />
 
-## Cache Keys
-
-Usually only the username uniquely identifies a user, but in some setups
-you may need something more, for example the remote IP address.
-
-For SQL and LDAP lookups Dovecot figures this out automatically by using
-all the used [[variable]] as the cache key. For example,
-if your SQL query contains `%{protocol}`, `%{user}`, and `%{remote_ip}` the
-cache entry is used only if all of them (service name, username and remote IP)
-match for the new lookup.
-
-With other databases Dovecot doesn't know what could affect caching, so
-you have to tell Dovecot manually. The following databases require
-specifying the cache key (via `cache_key`):
-
-- [[link,auth_pam]]
-- [[link,auth_bsd]]
-
-For example if the \`bsdauth\` lookup depends on username and service, you can
-use:
-
-```[dovecot.conf]
-passdb bsdauth {
-  args = cache_key=%{protocol}%{user} *
-}
-```
-
 ## Password Changing Scenarios
 
 ## Normal
