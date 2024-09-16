@@ -240,12 +240,22 @@ Links to the RFC page (external).
 #### Settings
 
 ***Syntax: `[[setting,setting_name(,args)]]`***
+***Syntax: `[[setting_text,setting_name(,text)]]`***
 
-If args is set, it is appended to the display as a setting value. Example:
+For the `setting` variant, if args is set, it is appended to the display as a
+setting value. Example:
 
 ```
 # [[setting,foo,5]] results in:
 <a href="PATH_TO_FOO_SETTING">foo = 5</a>
+```
+
+For the `setting_text` variant, if text is set, it is used as the link text.
+Example:
+
+```
+# [[setting_text,foo,bar]] results in:
+<a href="PATH_TO_FOO_SETTING">bar</a>
 ```
 
 #### Variable
