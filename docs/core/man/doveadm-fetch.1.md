@@ -24,21 +24,21 @@ messages one at a time, see [[man,doveadm-search]].
 
 - Please respect your users' privacy.
 
-<!-- @include: global-options-formatter.inc -->
+<!-- @include: include/global-options-formatter.inc -->
 
 This command uses by default the output formatter **pager**.
 
 ## OPTIONS
 
-<!-- @include: option-A.inc -->
+<!-- @include: include/option-A.inc -->
 
-<!-- @include: option-F-file.inc -->
+<!-- @include: include/option-F-file.inc -->
 
-<!-- @include: option-no-userdb-lookup.inc -->
+<!-- @include: include/option-no-userdb-lookup.inc -->
 
-<!-- @include: option-S-socket.inc -->
+<!-- @include: include/option-S-socket.inc -->
 
-<!-- @include: option-u-user.inc -->
+<!-- @include: include/option-u-user.inc -->
 
 ## ARGUMENTS
 
@@ -179,7 +179,7 @@ mailbox: dovecot/pigeonhole/2.0
 date.sent: 2010-03-28 18:41:14 (+0200)
 ```
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 

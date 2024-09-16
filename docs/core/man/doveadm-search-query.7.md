@@ -305,7 +305,7 @@ is obligatory.
     example: **larger 1M** or **larger 1024k**.
 
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 

@@ -22,19 +22,19 @@ dovecotComponent: core
 scripts and for debugging. Sieve is not invoked for saved messages, but
 quota is enforced.
 
-<!-- @include: global-options.inc -->
+<!-- @include: include/global-options.inc -->
 
 ## OPTIONS
 
-<!-- @include: option-A.inc -->
+<!-- @include: include/option-A.inc -->
 
-<!-- @include: option-F-file.inc -->
+<!-- @include: include/option-F-file.inc -->
 
-<!-- @include: option-no-userdb-lookup.inc -->
+<!-- @include: include/option-no-userdb-lookup.inc -->
 
-<!-- @include: option-S-socket.inc -->
+<!-- @include: include/option-S-socket.inc -->
 
-<!-- @include: option-u-user.inc -->
+<!-- @include: include/option-u-user.inc -->
 
 **-m** *mailbox*
 :   Store mail to specified mailbox instead of INBOX.
@@ -55,7 +55,7 @@ quota is enforced.
 $ echo "hello, world" | doveadm save -u testuser@testdomain
 ```
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 

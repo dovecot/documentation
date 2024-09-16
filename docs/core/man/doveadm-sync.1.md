@@ -6,4 +6,4 @@ dovecotComponent: core
 
 # doveadm-sync(1) - Dovecot's two-way mailbox synchronization feature
 
-<!-- @include: doveadm-backup-sync.inc -->
+<!-- @include: include/doveadm-backup-sync.inc -->

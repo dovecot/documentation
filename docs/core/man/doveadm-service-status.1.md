@@ -59,7 +59,7 @@ containing the following details:
 :   the total number of processes forked for the service since the service
     start.
 
-<!-- @include: global-options-formatter.inc -->
+<!-- @include: include/global-options-formatter.inc -->
 
 ## ARGUMENTS
 
@@ -89,7 +89,7 @@ process_total: 0
 name: fs-server
 ```
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 

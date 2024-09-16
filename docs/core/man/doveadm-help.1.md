@@ -20,9 +20,9 @@ With no *command* argument given, **doveadm help** will print:
 When the name of a *command* (or a group) was given, it will show the
 man page for that command.
 
-<!-- @include: global-options.inc -->
+<!-- @include: include/global-options.inc -->
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 

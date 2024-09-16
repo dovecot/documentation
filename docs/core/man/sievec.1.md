@@ -63,11 +63,11 @@ to find bugs in the compiler that yield corrupt binaries.
 **-D**
 :   Enable Sieve debugging.
 
-<!-- @include: option-o.inc -->
+<!-- @include: include/option-o.inc -->
 
-<!-- @include: option-u-user.inc -->
+<!-- @include: include/option-u-user.inc -->
 
-<!-- @include: option-x.inc -->
+<!-- @include: include/option-x.inc -->
 
 ## ARGUMENTS
 
@@ -128,7 +128,7 @@ to find bugs in the compiler that yield corrupt binaries.
 :   Sieve interpreter settings (included from Dovecot's main
 :   configuration file)
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 

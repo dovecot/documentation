@@ -69,7 +69,7 @@ Filter can be
 
 **top** accepts any valid field name to sort along with.
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 
