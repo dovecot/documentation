@@ -22,7 +22,7 @@ command **COMPRESS DEFLATE**
 * *host* - the hostname/ip address to connect to
 * *port* - the port to connect to, 143 by default
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 

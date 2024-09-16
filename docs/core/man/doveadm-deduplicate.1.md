@@ -20,24 +20,24 @@ messages from the mailbox and keep the oldest.
 
 Deduplication across multiple mailboxes is not supported.
 
-<!-- @include: global-options.inc -->
+<!-- @include: include/global-options.inc -->
 
 ## OPTIONS
 
-<!-- @include: option-A.inc -->
+<!-- @include: include/option-A.inc -->
 
-<!-- @include: option-F-file.inc -->
+<!-- @include: include/option-F-file.inc -->
 
-<!-- @include: option-no-userdb-lookup.inc -->
+<!-- @include: include/option-no-userdb-lookup.inc -->
 
 **-m**
 :   if the **-m** option is given, [[man,doveadm]] will deduplicate by
     Message-Id header. By default deduplication will be done by message
     GUIDs.
 
-<!-- @include: option-S-socket.inc -->
+<!-- @include: include/option-S-socket.inc -->
 
-<!-- @include: option-u-user.inc -->
+<!-- @include: include/option-u-user.inc -->
 
 ## ARGUMENTS
 
@@ -71,7 +71,7 @@ a7999e1530739c4bd26d0000ca356bad 18749
 ...
 ```
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 

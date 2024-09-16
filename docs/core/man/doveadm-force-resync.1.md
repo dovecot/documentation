@@ -24,19 +24,19 @@ situations the **force-resync** command may be helpful. It tries to fix
 all problems. For sdbox and mdbox mailboxes the storage files will be
 also checked.
 
-<!-- @include: global-options.inc -->
+<!-- @include: include/global-options.inc -->
 
 ## OPTIONS
 
-<!-- @include: option-A.inc -->
+<!-- @include: include/option-A.inc -->
 
-<!-- @include: option-F-file.inc -->
+<!-- @include: include/option-F-file.inc -->
 
-<!-- @include: option-no-userdb-lookup.inc -->
+<!-- @include: include/option-no-userdb-lookup.inc -->
 
-<!-- @include: option-S-socket.inc -->
+<!-- @include: include/option-S-socket.inc -->
 
-<!-- @include: option-u-user.inc -->
+<!-- @include: include/option-u-user.inc -->
 
 ## ARGUMENTS
 
@@ -52,7 +52,7 @@ Fix bob's INBOX:
 $ doveadm force-resync -u bob INBOX
 ```
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 

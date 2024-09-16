@@ -14,19 +14,19 @@ dovecotComponent: core
 
 **doveadm mailbox** can be used to query and modify mailboxes.
 
-<!-- @include: global-options-formatter.inc -->
+<!-- @include: include/global-options-formatter.inc -->
 
 ## OPTIONS
 
-<!-- @include: option-A.inc -->
+<!-- @include: include/option-A.inc -->
 
-<!-- @include: option-F-file.inc -->
+<!-- @include: include/option-F-file.inc -->
 
-<!-- @include: option-no-userdb-lookup.inc -->
+<!-- @include: include/option-no-userdb-lookup.inc -->
 
-<!-- @include: option-S-socket.inc -->
+<!-- @include: include/option-S-socket.inc -->
 
-<!-- @include: option-u-user.inc -->
+<!-- @include: include/option-u-user.inc -->
 
 ## ARGUMENTS
 
@@ -376,7 +376,7 @@ $ doveadm mailbox mutf7 ~peter/mail/台北/日本語
 ~peter/mail/&U,BTFw-/&ZeVnLIqe-
 ```
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 

@@ -34,22 +34,22 @@ In the third form, the command will be performed for the user contained in the
 In the final form, only matching mails of the given *user* (s) will be
 expunged.
 
-<!-- @include: global-options.inc -->
+<!-- @include: include/global-options.inc -->
 
 ## OPTIONS
 
-<!-- @include: option-A.inc -->
+<!-- @include: include/option-A.inc -->
 
 **-d**
 :   Delete the mailbox if it is empty after expunging.
 
-<!-- @include: option-F-file.inc -->
+<!-- @include: include/option-F-file.inc -->
 
-<!-- @include: option-no-userdb-lookup.inc -->
+<!-- @include: include/option-no-userdb-lookup.inc -->
 
-<!-- @include: option-S-socket.inc -->
+<!-- @include: include/option-S-socket.inc -->
 
-<!-- @include: option-u-user.inc -->
+<!-- @include: include/option-u-user.inc -->
 
 ## ARGUMENTS
 
@@ -66,7 +66,7 @@ there more than two weeks ago:
 $ doveadm expunge -u jane.doe@example.org mailbox Spam savedbefore 2w
 ```
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 

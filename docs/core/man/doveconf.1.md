@@ -142,7 +142,7 @@ $ doveconf dict/quota_clone
 dict/quota_clone = pgsql:/etc/dovecot/dovecot-dict-sql.conf.ext
 ```
 
-<!-- @include: reporting-bugs.inc -->
+<!-- @include: include/reporting-bugs.inc -->
 
 ## SEE ALSO
 
