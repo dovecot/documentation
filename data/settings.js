@@ -8619,7 +8619,8 @@ setting.`
 		tags: [ 'metrics' ],
 		values: setting_types.STRING,
 		text: `
-Name of the metric. It is visible in statistics outputs.`
+Name of the metric. It is visible in statistics outputs. The [[setting,metric]]
+filter name refers to this setting.`
 	},
 
 	metric_fields: {
@@ -8636,10 +8637,141 @@ field that does not need to be listed explicitly.`
 
 	metric_group_by: {
 		tags: [ 'metrics' ],
-		values: setting_types.BOOLLIST,
+		values: setting_types.NAMED_LIST_FILTER,
 		seealso: [ '[[link,stats_group_by]]' ],
 		text: `
-This can be used to dynamically generate sub-metrics based on fields' values.`
+Creates a new [[link,stats_group_by,group_by]] for dynamically generating
+sub-metrics based on the specified field's values. The filter name refers to
+the [[setting,metric_group_by_field]].`
+	},
+
+	metric_group_by_field: {
+		tags: [ 'metrics' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,stats_group_by]]' ],
+		text: `
+Generate sub-metrics based on this event field name. The
+[[setting,metric_group_by]] filter name refers to this setting.`
+	},
+
+	metric_group_by_method: {
+		tags: [ 'metrics' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ '[[link,stats_group_by]]' ],
+		text: `
+Configures [[setting,metric_group_by_method_method,the aggregation method]] for
+the [[setting,metric_group_by]]. Only a single method can be specified for
+a group_by. The filter name refers to the
+[[setting,metric_group_by_method_method]].`
+	},
+
+	metric_group_by_method_method: {
+		tags: [ 'metrics' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'discrete', 'exponential', 'linear' ],
+		default: 'discrete',
+		seealso: [ '[[link,stats_group_by]]' ],
+		text: `
+Configures the aggregation method for the
+[[setting,metric_group_by]]. The [[setting,metric_group_by_method]] filter name
+refers to this setting.`
+	},
+
+	metric_group_by_method_discrete_modifier: {
+		tags: [ 'metrics' ],
+		values: setting_types.STRING_NOVAR,
+		seealso: [ '[[link,stats_group_by]]' ],
+		text: `
+Configures a modifier string for values grouped by the
+[[link,stats_group_by_discrete,discrete method]].
+[[link,settings_variables,%variables]] and their functions can be used:
+
+\`%{value}\`
+:   The original value.
+
+\`%{domain}\`
+:   If the value is in \`user@domain\` format, this contains the \`domain\`
+    text. Otherwise empty.`
+	},
+
+	metric_group_by_method_exponential_min_magnitude: {
+		tags: [ 'metrics' ],
+		values: setting_types.UINT,
+		seealso: [
+			'[[link,stats_group_by]]',
+			'metric_group_by_method_exponential_max_magnitude',
+			'metric_group_by_method_exponential_base'
+		],
+		text: `
+Configures the minimum magnitude for values grouped by the
+[[link,stats_group_by_exponential,exponential method]].`
+	},
+
+	metric_group_by_method_exponential_max_magnitude: {
+		tags: [ 'metrics' ],
+		values: setting_types.UINT,
+		seealso: [
+			'[[link,stats_group_by]]',
+			'metric_group_by_method_exponential_min_magnitude',
+			'metric_group_by_method_exponential_base'
+		],
+		text: `
+Configures the maximum magnitude for values grouped by the
+[[link,stats_group_by_exponential,exponential method]].`
+	},
+
+	metric_group_by_method_exponential_base: {
+		tags: [ 'metrics' ],
+		values: setting_types.UINT,
+		default: 10,
+		seealso: [
+			'[[link,stats_group_by]]',
+			'metric_group_by_method_exponential_min_magnitude',
+			'metric_group_by_method_exponential_max_magnitude'
+		],
+		text: `
+Configures the base for values grouped by the
+[[link,stats_group_by_exponential,exponential method]]. Only 2 and 10 are
+supported.`
+	},
+
+	metric_group_by_method_linear_min: {
+		tags: [ 'metrics' ],
+		values: setting_types.UINT,
+		seealso: [
+			'[[link,stats_group_by]]',
+			'metric_group_by_method_linear_max',
+			'metric_group_by_method_linear_step'
+		],
+		text: `
+Configures the minimum for values grouped by the
+[[link,stats_group_by_linear,linear method]].`
+	},
+
+	metric_group_by_method_linear_max: {
+		tags: [ 'metrics' ],
+		values: setting_types.UINT,
+		seealso: [
+			'[[link,stats_group_by]]',
+			'metric_group_by_method_linear_min',
+			'metric_group_by_method_linear_step'
+		],
+		text: `
+Configures the maximum for values grouped by the
+[[link,stats_group_by_linear,linear method]].`
+	},
+
+	metric_group_by_method_linear_step: {
+		tags: [ 'metrics' ],
+		values: setting_types.UINT,
+		seealso: [
+			'[[link,stats_group_by]]',
+			'metric_group_by_method_linear_min',
+			'metric_group_by_method_linear_max'
+		],
+		text: `
+Configures the step for values grouped by the
+[[link,stats_group_by_linear,linear method]].`
 	},
 
 	metric_filter: {
