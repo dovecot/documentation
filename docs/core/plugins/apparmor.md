@@ -22,10 +22,10 @@ function.
 You can also specify hats from user or password database extra fields.
 
 ### Password Database
-If you provide from [[link,passdb]], use `userdb_apparmor_hat=hat`.
+If you provide from [[link,passdb]], use `userdb_apparmor_hats=hat`.
 
 ### User Database
-If you provide from [[link,userdb]], use `apparmor_hat=hat`.
+If you provide from [[link,userdb]], use `apparmor_hats=hat`.
 
 ## Sample Configuration
 
@@ -34,9 +34,7 @@ mail_plugins {
   apparmor = yes
 }
 
-plugin {
-  apparmor_hat = hat_name
-}
+apparmor_hats = hat_name
 ```
 
 ## Debugging
