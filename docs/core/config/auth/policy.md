@@ -43,7 +43,6 @@ auth_policy_hash_nonce = localized_random_string
 
 # OPTIONAL settings
 #auth_policy_server_api_header = Authorization: Basic <base64-encoded value>
-#auth_policy_server_timeout_msecs = 2000
 #auth_policy_hash_mech = sha256
 #auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%{protocol}
 #auth_policy_reject_on_fail = no
