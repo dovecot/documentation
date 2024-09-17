@@ -6,7 +6,7 @@ title: trash
 # Trash Plugin (`trash`)
 
 Normally, a quota exceeded error is returned if saving/copying a message would
-bring the user over quota.  With the trash plug-in, the oldest messages are
+bring the user over quota.  With the trash plugin, the oldest messages are
 instead expunged from the specified mailboxes until the message can be
 saved.
 
@@ -31,20 +31,25 @@ mail_plugins {
   trash = yes
 }
 
-plugin {
-  trash = /etc/dovecot/dovecot-trash.conf.ext
-}
-```
+namespace inbox {
+  # Spam mailbox is emptied before Trash
+  mailbox Spam {
+    priority = 1
+  }
 
-```[dovecot-trash.conf.ext]
-# Spam mailbox is emptied before Trash
-1 Spam
-# Trash mailbox is emptied before Sent
-2 Trash
-# If both Sent and "Sent Messages" mailboxes exist, the next oldest message
-# to be deleted is looked up from both of the mailboxes.
-3 Sent
-3 Sent Messages
+  # Trash mailbox is emptied before Sent
+  mailbox Trash {
+    priority = 2
+  }
+
+  # If both Sent and "Sent Messages" mailboxes exist, the next oldest message
+  # to be deleted is looked up from both of the mailboxes.
+  mailbox Sent {
+    priority = 3
+  }
+  mailbox "Sent Messages" {
+    priority = 3
+  }
 ```
 :::
 
