@@ -9921,7 +9921,7 @@ the process should get restarted eventually. For example \`100\` or \`1000\`
 can be good values.`
 	},
 
-	service_idle_kill: {
+	service_idle_kill_interval: {
 		tags: [ 'service' ],
 		changed: {
 			settings_service_idle_kill_changed: `
