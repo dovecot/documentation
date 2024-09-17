@@ -410,7 +410,7 @@ rm -rf /etc/dovecot/acls/
 #### Exports
 
 Events can now be exported to a local file or a unix socket. See
-[[link,event_export_transports]].
+[[link,event_export_drivers]].
 
 ### Doveadm HTTP API
 
