@@ -2836,9 +2836,7 @@ This setting points to the POP3 INBOX in the configured pop3c namespace.
 This setting is required for the plugin to be active.
 
 \`\`\`
-plugin {
-  pop3_migration_mailbox = POP3-MIGRATION-NS/INBOX
-}
+pop3_migration_mailbox = POP3-MIGRATION-NS/INBOX
 \`\`\``
 	},
 

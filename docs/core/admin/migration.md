@@ -276,9 +276,7 @@ protocol doveadm {
   }
 }
 
-plugin {
-  pop3_migration_mailbox = POP3-MIGRATION-NS/INBOX
-}
+pop3_migration_mailbox = POP3-MIGRATION-NS/INBOX
 ```
 
 You can alternatively configure compatible UIDL format in Dovecot. See
