@@ -42,9 +42,7 @@ mail_plugins {
   mail_log = yes
 }
 
-plugin {
-  mail_log_events = delete undelete expunge mailbox_delete mailbox_rename
-  mail_log_fields = uid box msgid size from
-  mail_log_cached_only = yes
-}
+mail_log_events = delete undelete expunge mailbox_delete mailbox_rename
+mail_log_fields = uid box msgid size from
+mail_log_cached_only = yes
 ```

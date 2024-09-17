@@ -2663,9 +2663,9 @@ fields aren't cached and it's not a strict requirement to log them.`
 
 	mail_log_events: {
 		plugin: 'mail-log',
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-A space-separated list of events to log.
+List of events to log.
 
 Available events:
 
@@ -2682,9 +2682,9 @@ Available events:
 
 	mail_log_fields: {
 		plugin: 'mail-log',
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-A space-separated list of fields to log.
+List of fields to log.
 
 | Field | Restrictions |
 | ----- | ------------ |
