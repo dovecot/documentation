@@ -225,9 +225,11 @@ Section is the section number.  It defaults to `1`.
 
 #### Plugin
 
-***Syntax: `[[plugin,plugin_name]]`***
+***Syntax: `[[plugin,plugin_name(,text)]]`***
 
 Links to the plugin page.
+
+If `text` is set, it is used as the link text instead of the plugin name.
 
 #### RFC
 
