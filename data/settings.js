@@ -2385,17 +2385,20 @@ plugin {
 
 	/* last-login plugin */
 
-	last_login_dict: {
+	last_login: {
 		plugin: 'last-login',
-		values: setting_types.STRING,
+		values: setting_types.NAMED_FILTER,
 		text: `
-The dictionary where last login information is updated.
+Named filter for initializing dictionary used to store last login information.
 
 Example:
 
-\`\`\`
-plugin {
-  last_login_dict = redis:host=127.0.0.1:port=6379
+\`\`\`[dovecot.conf]
+dict_redis_host = 127.0.0.1
+dict_redis_port = 6379
+last_login {
+  dict redis {
+  }
 }
 \`\`\``
 	},
@@ -2405,8 +2408,7 @@ plugin {
 		plugin: 'last-login',
 		values: setting_types.STRING,
 		text: `
-The key that is updated in the dictionary (defined by
-[[setting,last_login_dict]]) with the last login information.`
+The key that is updated in the dictionary with the last login information.`
 	},
 
 	last_login_precision: {
