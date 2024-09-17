@@ -120,8 +120,8 @@ The anvil process tracks state of users and their connections.
       auth and login services, because each of them has a persistent connection
       to anvil.
 
-* **idle_kill=infinite**, because it should never die or all of its tracked
-  state would be lost.
+* **idle_kill_interval=infinite**, because it should never die or all of its
+  tracked state would be lost.
 
 * [[doveadm,who]] and some other doveadm commands connect to anvil's UNIX
   listener and request its state.
@@ -221,7 +221,7 @@ be used.
 
   This can be used to cycle the process after the specified number of auth
   requests (default is unlimited). The worker processes also stop after
-  being idle for `idle_kill` seconds.
+  being idle for [[setting,service_idle_kill_interval]].
 
 ### config
 
