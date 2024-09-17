@@ -5097,36 +5097,28 @@ Creates a new event exporter. The filter name refers to the
 [[setting,event_exporter_name]] setting.`
 	},
 
-	event_exporter_name: {
+	event_exporter_driver: {
 		tags: [ 'event-export' ],
-		values: setting_types.STRING,
-		seealso: [ 'metric_exporter' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'log', 'file', 'unix', 'http-post', 'drop' ],
+		default: 'log',
+		seealso: [ '[[link,event_export_drivers]]' ],
 		text: `
-Name of the event exporter. It is referred by the [[setting,metric_exporter]]
-settings.`
+The event exporter driver to use.`
 	},
 
-	event_exporter_transport: {
+	event_exporter_http_post_url: {
 		tags: [ 'event-export' ],
 		values: setting_types.STRING,
-		seealso: [ '[[link,event_export_transports]]' ],
 		text: `
-The transport to use.`
+Target URL for [[setting,event_exporter_driver,http-post]].`
 	},
 
-	event_exporter_transport_args: {
+	event_exporter_file_path: {
 		tags: [ 'event-export' ],
 		values: setting_types.STRING,
-		seealso: [ '[[link,event_export_transports]]' ],
 		text: `
-The transport arguments to use.`
-	},
-
-	event_exporter_transport_timeout: {
-		tags: [ 'event-export' ],
-		values: setting_types.TIME_MSECS,
-		text: `
-Abort the http-post request after this timeout.`
+Path to event log file with [[setting,event_exporter_driver,file]].`
 	},
 
 	event_exporter_format: {
@@ -5137,12 +5129,47 @@ Abort the http-post request after this timeout.`
 Format used for serializing the event.`
 	},
 
-	event_exporter_format_args: {
+	event_exporter_name: {
 		tags: [ 'event-export' ],
 		values: setting_types.STRING,
+		seealso: [ 'metric_exporter' ],
+		text: `
+Name of the event exporter. It is referred by the [[setting,metric_exporter]]
+settings.`
+	},
+
+	event_exporter_time_format: {
+		tags: [ 'event-export', 'event-exporter-format' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'rfc3339', 'unix' ],
+		default: 'rfc3339',
 		seealso: [ '[[link,event_export_formats]]' ],
 		text: `
-Format-specific arguments used for serializing the event.`
+\`rfc3339\`
+:   Serialize timestamps as strings using the [[rfc,3339]] format
+    (\`YYYY-MM-DDTHH:MM:SS.uuuuuuZ\`).
+
+\`unix\`
+:   Serialize timestamps as a floating point number of seconds since the Unix
+    epoch.`
+	},
+
+	event_exporter_unix_connect_timeout: {
+		tags: [ 'event-export' ],
+		values: setting_types.TIME_MSECS,
+		default: '250ms',
+		seealso: [ 'event_exporter_unix_path' ],
+		text: `
+Timeout when connecting to unix socket with
+[[setting,event_exporter_driver,unix]].`
+	},
+
+	event_exporter_unix_path: {
+		tags: [ 'event-export' ],
+		values: setting_types.STRING,
+		seealso: [ 'event_exporter_unix_connect_timeout' ],
+		text: `
+Path to event unix socket with [[setting,event_exporter_driver,unix]].`
 	},
 
 	execute: {
