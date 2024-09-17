@@ -39,9 +39,12 @@ protocol pop3 {
   }
 }
 
-plugin {
-  last_login_dict = redis:host=127.0.0.1:port=6379
-  #last_login_key = last-login/%u # default
+dict_redis_host = 127.0.0.1
+dict_redis_port = 6379
+last_login {
+  dict redis {
+  }
+  #key = last-login/%u # default
 }
 ```
 
@@ -62,10 +65,12 @@ This includes the service and remote IP address as well.
 ::: code-group
 
 ```[dovecot.conf]
-plugin {
-  last_login_dict = proxy::sql
-  last_login_key = last-login/%{service}/%{user}/%{remote_ip}
-  last_login_precision = ms
+last_login {
+  dict proxy {
+    name = sql
+  }
+  key = last-login/%{service}/%{user}/%{remote_ip}
+  precision = ms
 }
 
 dict_server {
@@ -115,10 +120,13 @@ This includes the service and remote IP address as well.
 ::: code-group
 
 ```[dovecot.conf]
-plugin {
-  last_login_dict = proxy:dict-async:cassandra
-  last_login_key = last-login/%{service}/%{user}/%{remote_ip}
-  last_login_precision = ms
+last_login {
+  dict proxy {
+    name = cassandra
+    socket_path = dict-async
+  }
+  key = last-login/%{service}/%{user}/%{remote_ip}
+  precision = ms
 }
 
 dict_server {
@@ -171,10 +179,13 @@ separate fields to the main users table.
 ::: code-group
 
 ```[dovecot.conf]
-plugin {
-  last_login_dict = proxy:dict-async:cassandra
-  last_login_key = last-login/%{service}/%{user}/%{remote_ip}
-  last_login_precision = ms
+last_login {
+  dict proxy {
+    name = cassandra
+    socket_path = dict-async
+  }
+  key = last-login/%{service}/%{user}/%{remote_ip}
+  precision = ms
 }
 
 dict_server {
