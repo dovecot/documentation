@@ -1690,21 +1690,18 @@ See [[setting,auth_master_user_separator]] for the format of this setting.`
 
 	/* apparmor plugin */
 
-	apparmor_hat: {
+	apparmor_hats: {
 		plugin: 'apparmor',
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
-The AppArmor "hat" to change to when a user is loaded.
-
-You can define multiple hats by appending an increasing number to the
-setting name.
+List of AppArmor "hats" to change to when a user is loaded.
 
 Example:
 
 \`\`\`
-plugin {
-  apparmor_hat = hat_name
-  apparmor_hat2 = another_hat
+apparmor_hats {
+  hat_name = yes
+  another_hat = yes
 }
 \`\`\``
 	},
