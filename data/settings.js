@@ -3406,25 +3406,27 @@ when it drops under the limit.`
 
 	/* trash plugin */
 
-	trash: {
+	trash_priority: {
 		plugin: 'trash',
-		values: setting_types.STRING,
+		values: setting_types.UINT,
 		text: `
-A text file that configures the plugin's behavior. This setting is required
-for the plugin to be active.
+If non-zero, enables the trash plugin for the mailbox with the specified
+priority. Mailboxes with smaller priority number are emptied before mailboxes
+with a larger priority number. If there are multiple mailboxes with the same
+priority, expunge the oldest mail from them first.
 
-\`\`\`
-trash = /etc/dovecot/dovecot-trash.conf.External
-\`\`\`
+Example where Trash is emptied before Spam:
 
-The file uses the following format:
-
-\`\`\`
-<priority> <mailbox name>
-\`\`\`
-
-Deletion begins with the mailbox that has the lowest priority number and
-proceeds from there.`
+\`\`\`[dovecot.conf]
+namespace inbox {
+  mailbox Trash {
+    trash_priority = 1
+  }
+  mailbox Spam {
+    trash_priority = 2
+  }
+}
+\`\`\``
 	},
 
 	/* virtual plugin */
