@@ -116,7 +116,6 @@ ticket-based authentication, you will need something like:
 ```[dovecot.conf]
 auth_mechanisms = plain login gssapi
 auth_gssapi_hostname = "$ALL"
-auth_mechanisms = gssapi
 auth_krb5_keytab = /etc/dovecot/dovecot.keytab
 
 passdb pam {
