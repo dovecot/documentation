@@ -135,7 +135,7 @@ export const updates = {
 	settings_mail_lua_added: '2.4.0',
 	settings_mailbox_special_use_changed: '2.4.0',
 	settings_metric_fields_changed: '2.4.0',
-	settings_passdb_mechanisms_added: '2.2.30',
+	settings_passdb_mechanisms_filter_added: '2.4.0',
 	settings_passdb_static_password_added: '2.4.0',
 	settings_passdb_username_filter_added: '2.2.30',
 	settings_service_idle_kill_changed: '2.3.21',
