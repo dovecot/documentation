@@ -4569,6 +4569,13 @@ The base directory in which Dovecot should store runtime data.
 This can be used to override the base directory determined at compile time.`
 	},
 
+	cdb_path: {
+		tags: [ 'dict', 'dict-cdb' ],
+		values: setting_types.STRING,
+		text: `
+Path to the CDB database file.`
+	},
+
 	debug_log_path: {
 		default: '[[setting,info_log_path]]',
 		values: setting_types.STRING,
