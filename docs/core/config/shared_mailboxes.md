@@ -244,7 +244,7 @@ namespace {
 namespace {
   type = shared
   separator = /
-  prefix = shared/%%u/
+  prefix = shared/$user/
   mail_path = %{owner_home}/Maildir
   mail_index_private_path = ~/Maildir/shared/%{owner_user}
   # If users have direct filesystem level access to their mails, it's safer
@@ -266,15 +266,20 @@ protocol imap {
 acl_driver = vfile
 ```
 
-This creates a shared/ namespace under which each user's mailboxes are.
+This creates a `shared/` namespace under which each user's mailboxes are.
 If you have multiple domains and allow sharing between them, you might
-want to set `prefix=shared/%%d/%%n/` instead (although %%u works just
-fine too). If you don't, you might want to drop the domain part and
-instead use `prefix=shared/%%n/`.
+want to set [[setting,namespace_prefix,shared/$domain/$username/]] instead
+(although `$user` works just fine too). If you don't, you might want to drop
+the domain part and instead use [[setting,namespace_prefix,shared/$username/]].
 
-`list=children` specifies that if no one has shared mailboxes to the
-user, the "shared" directory isn't listed by the LIST command. If you
-wish it to be visible always, you can set `list=yes`.
+[[changed,namespace_prefix_shared_variables_changed]] The shared namespaces
+now use `$user`, `$username` and `$domain` template variables, rather than
+the old `%%u`, `%%n` and `%%d`.
+
+[[setting,namespace_list,children]] specifies that if no one has shared
+mailboxes to the user, the "shared" directory isn't listed by the LIST command.
+If you wish it to be visible always, you can set
+[[setting,namespace_list,yes]].
 
 The sharing user can be accessed with `%{owner_user}`, `%{owner_username}` and
 `%{owner_domain}` variables. The sharing user's home directory can also be
@@ -512,7 +517,10 @@ initially have "lookup" right, but later we don't:
 
 ### Troubleshooting
 
-- Make sure the `%` and `%%` variables are specified correctly in the
+- Make sure `$user` or `$username` is specified in the
+  [[setting,namespace_prefix]] setting rather than the old `%%u` or `%%n`.
+
+- Make sure the [[setting,mail_path]] is set correctly in the
   namespace location. [[setting,log_debug,category=mail]] will help you see
   if Dovecot is trying to access correct paths.
 
