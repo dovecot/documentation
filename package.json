@@ -10,7 +10,7 @@
     "markdown-it-deflist": "^3.0.0",
     "markdown-it-mathjax3": "^4.3.2",
     "pagefind": "^1.1.1",
-    "path-to-regexp": "^7.1.0",
+    "path-to-regexp": "^8.1.0",
     "pdc": "^0.2.3",
     "remark-definition-list": "^2.0.0",
     "remark-man": "^9.0.0",
