@@ -401,9 +401,9 @@ namespace inbox {
 
 namespace {
   type = shared
-  prefix = shared/%%u/
+  prefix = shared/$user/
   mail_driver = mdbox
-  mail_path = %%h/mdbox
+  mail_path = %{owner_home}/mdbox
   mail_index_private_path = %{owner_home}/mdbox/shared
   list = children
   subscriptions = no
