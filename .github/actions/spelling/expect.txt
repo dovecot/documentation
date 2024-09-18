@@ -70,6 +70,7 @@ bzlib
 CACERTDIR
 CANTCREAT
 CApath
+cdb
 certbot
 changetype
 chasquid
@@ -730,7 +731,6 @@ staticbuf
 staticdb
 Stax
 STln
-stoarge
 stopword
 storageid
 strarray
