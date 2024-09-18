@@ -9111,15 +9111,15 @@ The scheme that passwords are in the passdb, unless overridden by the passdb
 entry (typically by prefixing with \`{SCHEME}\`).`
 	},
 
-	passdb_mechanisms: {
+	passdb_mechanisms_filter: {
 		tags: [ 'passdb' ],
 		added: {
-			settings_passdb_mechanisms_added: false,
+			settings_passdb_mechanisms_filter_added: false,
 		},
 		values: setting_types.BOOLLIST,
 		text: `
 Skip the passdb if non-empty and the current auth mechanism is not listed here.
-If the value contains \`none\`, it matches for non-authenticating passdb
+If the value contains \`lookup\`, it matches for non-authenticating passdb
 lookups (e.g. lmtp/doveadm lookups).
 
 Example:
@@ -9127,7 +9127,7 @@ Example:
 \`\`\`[dovecot.conf]
 passdb passwd-file {
   driver = passwd-file
-  mechanisms = PLAIN LOGIN
+  mechanisms_filter = PLAIN LOGIN
   # ...
 }
 \`\`\``

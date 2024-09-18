@@ -137,7 +137,7 @@ oauth2 {
 }
 
 passdb oauth2 {
-  mechanisms = plain login
+  mechanisms_filter = plain login
   oauth2 {
     # inherit common oauth2 settings from the global scope
     grant_url = http://localhost:8000/token
