@@ -73,6 +73,7 @@ bzlib
 CACERTDIR
 CANTCREAT
 CApath
+cdb
 certbot
 changetype
 chasquid
