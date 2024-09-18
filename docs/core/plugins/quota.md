@@ -642,16 +642,13 @@ By default the last mail can bring user over quota. This is
 useful to allow user to actually unambiguously become over quota instead of
 fail some of the last larger mails and pass through some smaller mails. Of
 course the last mail shouldn't be allowed to bring the user hugely over quota,
-so by default this limit is 10% of the user's quota limit.
+so by default this limit is 10 MB.
 
 To change the quota grace, use:
 
 ```[dovecot.conf]
-plugin {
-  # allow user to become max 10% over quota
-  quota_storage_grace = 10%%
-  # allow user to become max 50 MB over quota
-  quota_storage_grace = 50 M
+# allow user to become max 50 MB over quota
+quota_storage_grace = 50 M
 }
 ```
 
