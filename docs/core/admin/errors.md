@@ -118,12 +118,14 @@ subscribing/unsubscribing to folders in the public namespace.
 ## Time Moved Backwards Error
 
 Dovecot isn't very forgiving if your system's time moves backwards.
-There are usually two possibilities why it's moving backwards:
+There are usually three possibilities why it's moving backwards:
 
 1. You're running `ntpdate` periodically. This isn't a good idea.
 
 2. You're using some kind of a virtual server and you haven't configured
    it right (or it's buggy).
+
+3. Dovecot is started before time is synchronized at server startup.
 
 Moving time backwards might cause various problems (see below).
 
@@ -151,6 +153,12 @@ started. That can cause Dovecot to die immediately. If you have this
 problem, fix your init scripts to run ntpd/ntpdate first, before
 starting Dovecot. Also, seriously consider running ntp-wait before
 starting Dovecot.
+
+### Server Startup Time Synchronization
+
+With systemd add `time-sync.target` to the `After` setting. This isn't
+enough though, because it only waits for time-sync to start, not finish.
+To do that, enable also `systemd-time-wait-sync.service`.
 
 ### What about Daylight Saving/Summer Time?
 
