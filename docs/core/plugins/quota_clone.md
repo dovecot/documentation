@@ -50,8 +50,8 @@ mail_plugins {
   quota_clone = yes
 }
 
-dict_redis_host = 127.0.0.1
-dict_redis_port = 6379
+redis_host = 127.0.0.1
+redis_port = 6379
 quota_clone {
   dict redis {
   }

@@ -2393,8 +2393,8 @@ Named filter for initializing dictionary used to store last login information.
 Example:
 
 \`\`\`[dovecot.conf]
-dict_redis_host = 127.0.0.1
-dict_redis_port = 6379
+redis_host = 127.0.0.1
+redis_port = 6379
 last_login {
   dict redis {
   }
@@ -2906,8 +2906,8 @@ Named filter for initializing dictionary used to update with quota clone
 information.
 
 \`\`\`[dovecot.conf]
-dict_redis_host = 127.0.0.1
-dict_redis_port = 6379
+redis_host = 127.0.0.1
+redis_port = 6379
 quota_clone {
   dict redis {
   }
@@ -4721,15 +4721,15 @@ means immediate disconnection after finishing the operation.`
 Log a warning about dict lookups that take longer than this interval.`
 	},
 
-	dict_redis_socket_path: {
+	redis_socket_path: {
 		tags: [ 'dict', 'dict-redis' ],
 		values: setting_types.STRING,
 		text: `
 UNIX socket path to the Redis server. This is preferred over
-[[setting,dict_redis_host]] if both are set.`
+[[setting,redis_host]] if both are set.`
 	},
 
-	dict_redis_host: {
+	redis_host: {
 		tags: [ 'dict', 'dict-redis' ],
 		values: setting_types.STRING,
 		default: '127.0.0.1',
@@ -4737,7 +4737,7 @@ UNIX socket path to the Redis server. This is preferred over
 Redis server host.`
 	},
 
-	dict_redis_port: {
+	redis_port: {
 		tags: [ 'dict', 'dict-redis' ],
 		values: setting_types.UINT,
 		default: 6379,
@@ -4747,14 +4747,14 @@ Value Range: \`<1-65535>\`
 Redis server port.`
 	},
 
-	dict_redis_password: {
+	redis_password: {
 		tags: [ 'dict', 'dict-redis' ],
 		values: setting_types.STRING,
 		text: `
 Redis server password.`
 	},
 
-	dict_redis_db_id: {
+	redis_db_id: {
 		tags: [ 'dict', 'dict-redis' ],
 		values: setting_types.UINT,
 		default: 0,
@@ -4762,14 +4762,14 @@ Redis server password.`
 Database number.`
 	},
 
-	dict_redis_key_prefix: {
+	redis_key_prefix: {
 		tags: [ 'dict', 'dict-redis' ],
 		values: setting_types.STRING,
 		text: `
 Prefix to add to all keys.`
 	},
 
-	dict_redis_expire: {
+	redis_expire: {
 		tags: [ 'dict', 'dict-redis' ],
 		values: setting_types.TIME,
 		default: 'infinite',
@@ -4777,7 +4777,7 @@ Prefix to add to all keys.`
 Expiration value for all keys.`
 	},
 
-	dict_redis_request_timeout: {
+	redis_request_timeout: {
 		tags: [ 'dict', 'dict-redis' ],
 		values: setting_types.TIME_MSECS,
 		default: '30s',
