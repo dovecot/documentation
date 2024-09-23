@@ -1,4 +1,4 @@
-aad
+ABNF
 ACAP
 actimeo
 addflag
@@ -11,6 +11,7 @@ alloconly
 altmove
 altpath
 altstorage
+Alvestrand
 Amavis
 amavisd
 AND'ing
@@ -19,6 +20,7 @@ APPENDUID
 APY
 arcfour
 asd
+astring
 atimes
 auid
 Aup
@@ -58,6 +60,7 @@ blitiri
 bodystructure
 Boehm
 Bokmal
+Borenstein
 BROKENCHAR
 bsd
 bsdauth
@@ -112,6 +115,7 @@ DATAERR
 datalake
 datastack
 datastax
+datatracker
 dbox
 dboxes
 dcrypt
@@ -132,6 +136,7 @@ DHd
 Dhesi
 dirnamename
 Dirsize
+dispo
 distros
 dlog
 dlua
@@ -139,9 +144,11 @@ dnl
 dnotify
 dnpass
 doct
+DOI
 domainless
 domainname
 dontlognull
+Dorner
 dotlock
 dotlocking
 dotnet
@@ -259,6 +266,7 @@ hexuc
 hhmm
 highestmodseq
 HIGHESTPVTMODSEQ
+Hopmann
 hostaddr
 hostdomain
 hostip
@@ -268,10 +276,12 @@ htdigest
 htpasswd
 httpchk
 httplog
+iana
 idfield
 IES
 ietf
 IMA
+IMAIL
 imapc
 imapd
 imapflags
@@ -281,6 +291,7 @@ imapsieve
 imaptest
 imapusers
 imapwiki
+IMB
 imem
 imtest
 INBO
@@ -451,8 +462,10 @@ metacache
 metacpan
 metamail
 metawrap
+MHTML
 millisecs
 mimencode
+mimepart
 missingok
 MITM
 mkhomedir
@@ -461,6 +474,7 @@ MMIME
 modseq
 mountpoint
 mozilla
+mpart
 mpi
 mpid
 Mprocmail
@@ -533,6 +547,7 @@ nouser
 NOVALGRIND
 nsend
 nss
+nstring
 Ntll
 ntlm
 ntp
@@ -567,9 +582,11 @@ OSFILE
 otherinstance
 otp
 OUTOFMEM
+Overell
 overquota
 oxpedia
 packagecloud
+Palme
 passdb
 passfield
 passthrough
@@ -637,6 +654,7 @@ RENAMESCRIPT
 replicator
 repoquery
 reqbody
+Resnick
 resolv
 restorecon
 resyncing
@@ -689,6 +707,7 @@ SHAREDDIR
 sharedmail
 sharedscripts
 sharedusers
+Shelness
 showcerts
 showq
 sievec
@@ -733,6 +752,7 @@ STATEDIR
 staticbuf
 staticdb
 Stax
+stephan
 STln
 stopword
 storageid
@@ -798,6 +818,7 @@ TODOs
 tohdr
 tokeninfo
 transitioning
+Troost
 tscript
 TTLs
 tuxfamily

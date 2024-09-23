@@ -121,3 +121,11 @@ This is a non-exhaustive list of RFCs that Dovecot implements/supports.
 - Message Submission BURL Extension ([[rfc,4468]])
 - SMTP Service Extension for Authentication ([[rfc,4954]])
 - SMTP Service Extension for 8-bit MIME Transport ([[rfc,6152]])
+
+## Dovecot Specific Extensions
+
+### SEARCH=MIMEPART
+
+[SEARCH=MIMEPART IMAP Extension](/rfcs/draft-bosch-imap-search-mimepart-00.txt)
+
+* Body and Header searches not yet implemented.
