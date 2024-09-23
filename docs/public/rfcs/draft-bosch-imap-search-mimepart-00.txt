@@ -1,0 +1,560 @@
+
+
+
+
+Network Working Group                                           S. Bosch
+Internet-Draft
+Intended status: Standards Track                           July 11, 2017
+Expires: January 12, 2018
+
+
+  Internet Message Access Protocol (IMAP) - SEARCH=MIMEPART Extension
+                  draft-bosch-imap-search-mimepart-00
+
+Abstract
+
+   This document adds a new capability called "SEARCH=MIMEPART" to the
+   Internet Message Access Protocol (IMAP).  [FIXME]
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on January 12, 2018.
+
+Copyright Notice
+
+   Copyright (c) 2017 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+
+
+
+
+
+Bosch                   Expires January 12, 2018                [Page 1]
+
+Internet-Draft      IMAP - SEARCH=MIMEPART Extension           July 2017
+
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  Conventions Used in This Document . . . . . . . . . . . . . .   2
+   3.  IMAP Protocol Changes . . . . . . . . . . . . . . . . . . . .   2
+     3.1.  MIMEPART SEARCH Key . . . . . . . . . . . . . . . . . . .   2
+   4.  Formal Syntax . . . . . . . . . . . . . . . . . . . . . . . .   7
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
+   8.  Normative References  . . . . . . . . . . . . . . . . . . . .   9
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
+
+1.  Introduction
+
+   This document extends Internet Message Access Protocol (IMAP)
+   [IMAP4rev1] with a new capability called "SEARCH=MIMEPART".  [FIXME]
+
+2.  Conventions Used in This Document
+
+   In examples, "C:" indicates lines sent by a client that is connected
+   to a server.  "S:" indicates lines sent by the server to the client.
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in [KEYWORDS].
+
+3.  IMAP Protocol Changes
+
+   The IMAP extension for searching in MIME parts of messages is present
+   in any IMAP4 implementation that advertises "SEARCH=MIMEPART" as one
+   of the supp capabilities in the CAPABILITY response or response code.
+
+3.1.  MIMEPART SEARCH Key
+
+   With standard IMAP, the MIME structure of a message can only be
+   inspected individually for each message using the BODYSTRUCTURE item
+   of the FETCH command.  It not possible to formulate a SEARCH command
+   with criteria that are based on the MIME structure.  Such searches
+   require iteratively inspecting each message individually using the
+   FETCH command, which is highly inefficient.  With the new MIMEPART
+   search key for the SEARCH command, a client can search messages based
+   on attributes of the message's MIME body parts.
+
+   The MIMEPART search key matches messages that have at least one MIME
+   part that matches the given MIMEPART searching criteria.  Much like
+   the generic searching criteria for the SEARCH command itself, the
+   MIMEPART searching criteria consist of one or more MIMEPART keys.
+
+
+
+Bosch                   Expires January 12, 2018                [Page 2]
+
+Internet-Draft      IMAP - SEARCH=MIMEPART Extension           July 2017
+
+
+   However, unlike the generic searching criteria, the MIMEPART keys are
+   tested against every single MIME part rather than the message as a
+   whole.  This means that when multiple MIMEPART keys are specified
+   (always within brackets), the result is all messages that have at
+   least one MIME part that by itself matches the intersection (AND
+   function) of all of those keys.  Union (OR function) and negation
+   (NOT function) are achieved with special "OR" and "NOT" keys
+   respectively, much like the generic search key equivalents.
+
+   Although the MIMEPART keys look similar to the generic search keys,
+   these only apply within the context of the MIMEPART search key.
+   Conversely, it is generally not possible to use generic search keys
+   within the MIMEPART search key, unless an identically-named MIMEPART
+   key is defined here explicitly.  And, since a MIME part is matched
+   rather than a whole message, the semantics of the MIMEPART key
+   equivalent will differ accordingly.
+
+   Unlike generic IMAP search keys, MIMEPART keys that use strings do
+   not always use a substring match.  The description of each MIMEPART
+   key that uses strings indicates what kind of string match it employs.
+   Just like the generic IMAP search keys, the matching of MIMEPART keys
+   is case-insensitive.
+
+   The defined MIMEPART keys are described in the following paragraphs.
+   Refer to the Formal Syntax section for the precise syntactic
+   definitions of the arguments for each key.
+
+   The following MIMEPART keys can match any message part.
+
+   HEADER <field-name> <string>
+      Message parts that have a header with the specified field-name (as
+      defined in [IMAIL]) and that contains the specified string in the
+      text of the header (what comes after the colon).  If the string to
+      search is zero-length, this matches all message parts that have a
+      header line with the specified field-name regardless of the
+      contents.
+
+   NOT <mpart-key>
+      Message parts that do not match the specified MIMEPART key.
+
+   OR <mpart-key1> <mpart-key2>
+      Message parts that match either MIMEPART key.
+
+   SIZE <n>
+      Message parts with an RFC 5322 [IMAIL] size equal to the specified
+      number of octets.
+
+   SIZE SMALLER/LARGER <n>
+
+
+
+Bosch                   Expires January 12, 2018                [Page 3]
+
+Internet-Draft      IMAP - SEARCH=MIMEPART Extension           July 2017
+
+
+      Message parts with an RFC 5322 [IMAIL] size smaller/larger than
+      the specified number of octets.
+
+   TYPE <string>
+      Message parts that have a MIME content media type (as defined in
+      [MIME-IMB]) equal to the specified string.
+
+   SUBTYPE <string>
+      Message parts that have a MIME content subtype (as defined in
+      [MIME-IMB]) equal to the specified string.
+
+   PARAM <string> <string>
+      Message parts that have a MIME content parameter with the
+      specified name (as defined in [MIME-IMB]) and that contains the
+      specified string in the value of the parameter.  If the string to
+      search is zero-length, this matches all message parts that have a
+      MIME parameter with the specified name regardless of the value.
+
+   ID <string>
+      Message parts that have a MIME content id (as defined in
+      [MIME-IMB]) equal to the specified string.
+
+   DESCRIPTION <string>
+      Message parts that have a MIME content description (as defined in
+      [MIME-IMB]) that contains the specified string.
+
+   MD5 <string>
+      Message parts for which the MD5 hash [FIXME] of the body equals
+      the specified string.
+
+   DISPOSITION TYPE <string>
+      Message parts that have a MIME content disposition type (as
+      defined in [DISPOSITION]) equal to the specified string.
+
+   DISPOSITION PARAM <string> <string>
+      Message parts that have a MIME content disposition parameter with
+      the specified name (as defined in [DISPOSITION]) and that contains
+      the specified string in the value of the parameter.  If the string
+      to search is zero-length, this matches all message parts that have
+      a MIME parameter with the specified name regardless of the value.
+
+   LANGUAGE <string>
+      Message parts that have a MIME content language tag (as defined in
+      [LANGUAGE-TAGS]) equal to the specified string.
+
+   LOCATION <string>
+      Message parts that have a MIME body content URI (as defined in
+      [LOCATION]) equal to the specified string.
+
+
+
+Bosch                   Expires January 12, 2018                [Page 4]
+
+Internet-Draft      IMAP - SEARCH=MIMEPART Extension           July 2017
+
+
+   ENCODING <string>
+      Message parts that have a MIME content transfer encoding (as
+      defined in [MIME-IMB]) equal to the specified string.
+
+   DEPTH <number>
+      Message parts that are located in the message at the specified
+      hierarchical depth.  A depth of "0" refers to the top-level part,
+      which is normally the message itself (see the "CHILD" key below
+      for the exception).
+
+   DEPTH MIN/MAX <number>
+      Message parts that are located in the message at a level deeper/
+      shallower than the specified minimum/maximum hierarchical depth.
+
+   INDEX <number>
+      Message parts that are at the specified position index in a
+      multipart MIME part.  The first child part is at index "1".
+
+   The following MIMEPART keys can only match message parts that have a
+   MIME type other than "multipart"
+
+   BODY <string>
+      Message parts that contain the specified string in their body.
+
+   TEXT <string>
+      Message parts that contain the specified string in their header or
+      body.
+
+   The following MIMEPART keys can only match message parts with MIME
+   type "message" and subtype "rfc822".
+
+   BCC <string>
+      Message parts that contain the specified string in the envelope
+      structure's BCC field.
+
+   CC <string>
+      Message parts that contain the specified string in the envelope
+      structure's CC field.
+
+   FROM <string>
+      Message parts that contain the specified string in the envelope
+      structure's FROM field.
+
+   IN-REPLY-TO <string>
+      Message parts that contain the specified string in the envelope
+      structure's IN-REPLY-TO field.
+
+   MESSAGE-ID <string>
+
+
+
+Bosch                   Expires January 12, 2018                [Page 5]
+
+Internet-Draft      IMAP - SEARCH=MIMEPART Extension           July 2017
+
+
+      Message parts that contain the specified string in the envelope
+      structure's MESSAGE-ID field.
+
+   REPLY-TO <string>
+      Message parts that contain the specified string in the envelope
+      structure's REPLY-TO field.
+
+   SENDER <string>
+      Message parts that contain the specified string in the envelope
+      structure's SENDER field.
+
+   SENTBEFORE <date>
+      Message parts whose RFC 5322 [IMAIL] Date: header disregarding
+      time and timezone) is earlier than the specified date.
+
+   SENTON <date>
+      Message parts whose RFC 5322 [IMAIL] Date: header (disregarding
+      time and timezone) is within the specified date.
+
+   SENTSINCE <date>
+      Message parts whose RFC 5322 [IMAIL] Date: header (disregarding
+      time and timezone) is within or later than the specified date.
+
+   SUBJECT <string>
+      Message parts that contain the specified string in the envelope
+      structure's SUBJECT field.
+
+   TO <string>
+      Message parts that contain the specified string in the envelope
+      structure's TO field.
+
+   The following MIMEPART keys can only match message parts that have
+   content disposition type "attachment" and include a content
+   disposition parameter "filename".  If the string to search is zero-
+   length, these keys match all message parts for which such a
+   "filename" parameter exists, with the exception of the "FILENAME IS"
+   key.
+
+   FILENAME IS <string>
+      Message parts for which the full file name is equal to the
+      specified string.
+
+   FILENAME CONTAINS <string>
+      Message parts for which the file name contains the specified
+      string.
+
+   FILENAME BEGINS <string>
+
+
+
+
+Bosch                   Expires January 12, 2018                [Page 6]
+
+Internet-Draft      IMAP - SEARCH=MIMEPART Extension           July 2017
+
+
+      Message parts for which the file name begins with the specified
+      string.
+
+   FILENAME ENDS <string>
+      Message parts for which the file name ends with the specified
+      string.
+
+   The following MIMEPART keys allow formulating criteria based on
+   relationships between message parts.
+
+   CHILD <mpart-key>
+      Message parts that have a child message part that matches the
+      specified MIMEPART search key.  When used inside the "CHILD" key,
+      the "DEPTH" key measures the depth relative to the message part
+      the "CHILD" key is currently evaluated for.  A depth of "1" refers
+      to the children directly below that message part.  A depth of "0"
+      will not occur in this context.
+
+   CHILD EXISTS
+      Message parts that have any child message part.
+
+   PARENT <mpart-key>
+      Message parts with a parent message part that matches the
+      specified MIMEPART search key.  This will never match for the top-
+      level message itself, since it has no parent.
+
+   PARENT EXISTS
+      Message parts that have a parent; i.e., message parts that are not
+      the top-level message itself.
+
+   Example:
+
+   [FIXME]
+
+4.  Formal Syntax
+
+   The following syntax specification augments the grammar specified in
+   [IMAP4rev1].  It uses the Augmented Backus-Naur Form (ABNF) notation
+   as specified in [ABNF].  Elements not defined here are taken from
+   [IMAP4rev1].
+
+   search-key       =/ MIMEPART SP mpart-key
+
+   mpart-key        =  "(" mpart-key *(SP mpart-key) ")" /
+                       "DESCRIPTION" SP nstring /
+                       "DISPOSITION" SP mpart-dispo /
+                       "ENCODING" SP nstring /
+                       "HEADER" SP header-fld-name SP astring /
+
+
+
+Bosch                   Expires January 12, 2018                [Page 7]
+
+Internet-Draft      IMAP - SEARCH=MIMEPART Extension           July 2017
+
+
+                       "ID" SP nstring /
+                       "LANGUAGE" SP nstring /
+                       "LOCATION" SP nstring /
+                       "MD5" SP nstring /
+                       "NOT" SP mpart-key /
+                       "OR" SP mpart-key SP mpart-key /
+                       "PARAM" SP astring SP nstring /
+                       "SIZE" [SP ("LARGER" / "SMALLER")] SP number /
+                       "SUBTYPE" SP astring /
+                       "TYPE" SP astring /
+                       "DEPTH" [SP ("MAX" / "MIN")] SP number /
+                       "INDEX" SP number /
+                       mpart-key-file / mpart-key-leaf /
+                       mpart-key-msg / mpart-key-rel
+
+
+   mpart-key-file   =  "FILENAME" [SP mpart-file-match] SP nstring
+                         ; Implies disposition "attachment"
+   mpart-file-match =  "IS" / "CONTAINS" / "BEGINS" / "ENDS"
+
+   mpart-key-leaf   =  "BODY" SP astring" /
+                       "TEXT" SP astring
+                         ; Implies that it is not multipart/*
+
+   mpart-key-msg    =  "CC" SP astring /
+                       "BCC" SP astring /
+                       "FROM" SP astring /
+                       "IN-REPLY-TO" SP astring /
+                       "MESSAGE-ID" SP astring /
+                       "REPLY-TO" SP astring /
+                       "SENDER" SP astring /
+                       "SENTBEFORE" SP date /
+                       "SENTON" SP date /
+                       "SENTSINCE" SP date /
+                       "SUBJECT" SP astring /
+                       "TO" SP astring /
+                         ; Implies that it is message/rfc822
+
+   mpart-key-rel    =  "CHILD" SP ( "EXISTS" / mpart-key ) /
+                         ; Implies multipart/* or message/rfc822
+                       "PARENT" SP ( "EXISTS" / mpart-key )
+                         ; Implies that it is not top-level message
+
+   mpart-dispo      =  "TYPE" nstring / "PARAM" astring SP nstring
+
+
+
+
+
+
+
+Bosch                   Expires January 12, 2018                [Page 8]
+
+Internet-Draft      IMAP - SEARCH=MIMEPART Extension           July 2017
+
+
+5.  Security Considerations
+
+   There are no known additional security issues with this extension
+   beyond those described in the base protocol described in [IMAP4rev1].
+   [FIXME]
+
+6.  IANA Considerations
+
+   The IANA is requested to add "SEARCH=MIMEPART" to the "IMAP
+   Capabilities" registry located at <http://www.iana.org/assignments/
+   imap-capabilities>.
+
+7.  Acknowledgements
+
+   Reviews are appreciated.
+
+8.  Normative References
+
+   [ABNF]     Crocker, D. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", STD 68, RFC 5234, January 2008.
+
+   [DISPOSITION]
+              Troost, R., Dorner, S., and K. Moore, Ed., "Communicating
+              Presentation Information in Internet Messages: The
+              Content-Disposition Header Field", RFC 2183, DOI 10.17487/
+              RFC2183, August 1997,
+              <http://www.rfc-editor.org/info/rfc2183>.
+
+   [IMAIL]    Resnick, P., Ed., "Internet Message Format", RFC 5322, DOI
+              10.17487/RFC5322, October 2008,
+              <http://www.rfc-editor.org/info/rfc5322>.
+
+   [IMAP4rev1]
+              Crispin, M., "INTERNET MESSAGE ACCESS PROTOCOL - VERSION
+              4rev1", RFC 3501, March 2003.
+
+   [KEYWORDS]
+              Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [LANGUAGE-TAGS]
+              Alvestrand, H., "Tags for the Identification of
+              Languages", RFC 3066, DOI 10.17487/RFC3066, January 2001,
+              <http://www.rfc-editor.org/info/rfc3066>.
+
+
+
+
+
+
+
+Bosch                   Expires January 12, 2018                [Page 9]
+
+Internet-Draft      IMAP - SEARCH=MIMEPART Extension           July 2017
+
+
+   [LOCATION]
+              Palme, J., Hopmann, A., and N. Shelness, "MIME
+              Encapsulation of Aggregate Documents, such as HTML
+              (MHTML)", RFC 2557, DOI 10.17487/RFC2557, March 1999,
+              <http://www.rfc-editor.org/info/rfc2557>.
+
+   [MIME-IMB]
+              Freed, N. and N. Borenstein, "Multipurpose Internet Mail
+              Extensions (MIME) Part One: Format of Internet Message
+              Bodies", RFC 2045, DOI 10.17487/RFC2045, November 1996,
+              <http://www.rfc-editor.org/info/rfc2045>.
+
+Author's Address
+
+   Stephan Bosch
+   Enschede
+   NL
+
+   Email: stephan@rename-it.nl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bosch                   Expires January 12, 2018               [Page 10]
