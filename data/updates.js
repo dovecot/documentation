@@ -42,6 +42,7 @@ export const updates = {
 	ja3_identifier: '2.4.0',
 	lazy_expunge_namespace: '2.3.0',
 	ldap_multi_added: '2.4.0',
+	lmtp_nologin_added: '2.4.0',
 	lua_auth_init: '2.4.0',
 	lua_dns_client: '2.4.0',
 	lua_script_init: '2.4.0',
