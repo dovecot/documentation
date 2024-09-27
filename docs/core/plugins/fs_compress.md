@@ -35,7 +35,7 @@ compress:<compress_save>:<compress_save_level>
 See [[setting,mail_compress_save]] for information on available compression
 algorithms.
 
-See [[setting,mail_compress_save_level]]` for information on compression
+See [[setting,mail_compress_save_level]] for information on compression
 levels and defaults.
 
 ### Optional Compression
