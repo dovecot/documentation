@@ -5,7 +5,7 @@ title: Home
 
 # Dovecot Community Edition (CE)
 
-![Dovecot CE](/dovecot_logo.png)
+<DovecotLogo />
 
 <hr />
 
