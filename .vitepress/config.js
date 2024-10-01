@@ -93,7 +93,10 @@ export default defineConfig({
 			copyright: 'Copyright © Open-Xchange GmbH',
 		},
 
-		logo: '/dovecot_logo.png',
+		logo: {
+			light: '/dovecot_logo-light.svg',
+			dark: '/dovecot_logo-dark.svg',
+		},
 
 		editLink: {
 			pattern: 'https://github.com/dovecot/documentation/edit/main/docs/:path'
