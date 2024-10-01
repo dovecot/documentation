@@ -1,5 +1,6 @@
 :root {
   --vp-sidebar-width: 304px;
+  --dovecot-logo-roof: #54bbab;
 }
 
 .VPDoc.has-aside .content-container {
