@@ -18,115 +18,129 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
 ).sort())
 </script>
 
+<style scoped>
+.doveadmList h3:first-of-type {
+  border-top-width: 0;
+  padding-top: 0;
+}
+.doveadmList h3 {
+  border-top: 1px solid var(--vp-c-divider);
+  margin-top: 18px;
+  padding-top: 18px;
+}
+</style>
+
 <template>
- <template v-for="(v, k) in d">
-  <h3 :id="k" tabindex="-1">
-   <code>{{ k }}</code>
-   <a class="header-anchor" :href="'#' + k"></a>
-  </h3>
+ <section class="doveadmList">
+  <template v-for="(v, k) in d">
+   <h3 :id="k" tabindex="-1">
+    <code>{{ k }}</code>
+    <a class="header-anchor" :href="'#' + k"></a>
+   </h3>
 
-  <table v-if="v.man_link || v.fields || v.added || v.changed || v.deprecated || v.removed">
-   <tbody>
-    <tr v-if="v.man_link">
-     <th style="text-align: right;">Man Page</th>
-     <td v-html="v.man_link" />
+   <table v-if="v.man_link || v.fields || v.added || v.changed || v.deprecated || v.removed">
+    <tbody>
+     <tr v-if="v.man_link">
+      <th style="text-align: right;">Man Page</th>
+      <td v-html="v.man_link" />
+     </tr>
+
+     <tr v-if="v.added || v.changed || v.deprecated || v.removed">
+      <th style="text-align: right;">Changes</th>
+      <td>
+       <ul>
+        <li v-if="v.added" v-for="elem in v.added">
+         <span v-html="elem.version" />
+         <span v-html="elem.text" />
+        </li>
+        <li v-if="v.changed" v-for="elem in v.changed">
+         <span v-html="elem.version" />
+         <span v-html="elem.text" />
+        </li>
+        <li v-if="v.deprecated" v-for="elem in v.deprecated">
+         <span v-html="elem.version" />
+         <span v-html="elem.text" />
+        </li>
+        <li v-if="v.removed" v-for="elem in v.removed">
+         <span v-html="elem.version" />
+         <span v-html="elem.text" />
+        </li>
+       </ul>
+      </td>
     </tr>
 
-    <tr v-if="v.added || v.changed || v.deprecated || v.removed">
-     <th style="text-align: right;">Changes</th>
-     <td>
-      <ul>
-       <li v-if="v.added" v-for="elem in v.added">
-        <span v-html="elem.version" />
-        <span v-html="elem.text" />
-       </li>
-       <li v-if="v.changed" v-for="elem in v.changed">
-        <span v-html="elem.version" />
-        <span v-html="elem.text" />
-       </li>
-       <li v-if="v.deprecated" v-for="elem in v.deprecated">
-        <span v-html="elem.version" />
-        <span v-html="elem.text" />
-       </li>
-       <li v-if="v.removed" v-for="elem in v.removed">
-        <span v-html="elem.version" />
-        <span v-html="elem.text" />
-       </li>
-      </ul>
-     </td>
-    </tr>
+     <tr v-if="v.fields">
+      <th style="text-align: right;">Return Values</th>
+      <td>
+       <table>
+        <thead>
+         <tr>
+          <th>Key</th>
+          <th>Value</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr v-for="elem in v.fields">
+          <td><code>{{ elem.key }}</code></td>
+          <td v-html="elem.value" />
+         </tr>
+        </tbody>
+       </table>
+      </td>
+     </tr>
+    </tbody>
+   </table>
 
-    <tr v-if="v.fields">
-     <th style="text-align: right;">Return Values</th>
-     <td>
-      <table>
-       <thead>
+   <div v-if="v.text" v-html="v.text" />
+
+   <div class="info custom-block">
+    <p class="custom-block-title">CLI</p>
+    <div>
+     <ul>
+      <li>Usage: <code>doveadm {{ v.usage }}</code></li>
+     </ul>
+
+     <table v-if="v.args">
+      <thead>
+       <th>Argument(s)</th>
+       <th>Type</th>
+       <th>Description</th>
+      </thead>
+      <tbody>
+       <template v-for="elem in v.args">
         <tr>
-         <th>Key</th>
-         <th>Value</th>
+         <td><code>{{ elem.flag }}</code></td>
+         <td>{{ elem.type }}</td>
+         <td v-html="elem.text" />
         </tr>
-       </thead>
-       <tbody>
-        <tr v-for="elem in v.fields">
-         <td><code>{{ elem.key }}</code></td>
-         <td v-html="elem.value" />
+       </template>
+      </tbody>
+     </table>
+    </div>
+   </div>
+
+   <details v-if="v.args" class="details custom-block">
+    <summary v-html="data.http_api_link" />
+    <div>
+     <table>
+      <thead>
+       <th>Parameter</th>
+       <th>Type</th>
+       <th>Description</th>
+      </thead>
+      <tbody>
+       <template v-for="elem in v.args">
+        <tr>
+         <td><code>{{ elem.param }}</code></td>
+         <td>{{ elem.type }}</td>
+         <td v-html="elem.text" />
         </tr>
-       </tbody>
-      </table>
-     </td>
-    </tr>
-   </tbody>
-  </table>
+       </template>
+      </tbody>
+     </table>
+    </div>
+   </details>
 
-  <span v-if="v.text" v-html="v.text"></span>
-
-  <details class="details custom-block">
-   <summary>CLI</summary>
-   <div>
-    <ul>
-     <li>Usage: <code>doveadm {{ v.usage }}</code></li>
-    </ul>
-
-    <table v-if="v.args">
-     <thead>
-      <th>Flag(s)</th>
-      <th>Type</th>
-      <th>Description</th>
-     </thead>
-     <tbody>
-      <template v-for="elem in v.args">
-       <tr>
-        <td><code>{{ elem.flag }}</code></td>
-        <td>{{ elem.type }}</td>
-        <td v-html="elem.text" />
-       </tr>
-      </template>
-     </tbody>
-    </table>
-   </div>
-  </details>
-
-  <details class="details custom-block">
-   <summary v-html="data.http_api_link" />
-   <div v-if="v.args">
-    <table>
-     <thead>
-      <th>Parameter</th>
-      <th>Type</th>
-      <th>Description</th>
-     </thead>
-     <tbody>
-      <template v-for="elem in v.args">
-       <tr>
-        <td><code>{{ elem.param }}</code></td>
-        <td>{{ elem.type }}</td>
-        <td v-html="elem.text" />
-       </tr>
-      </template>
-     </tbody>
-    </table>
-   </div>
-  </details>
-
- </template>
+  </template>
+ </section>
 </template>
