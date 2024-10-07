@@ -26,14 +26,14 @@ Update vhost count of an existing backend. There only difference to ``doveadm di
 
    doveadm director up
 
-Mark a director as being ``up``. This is the default state. This is usually updated automatically by dovemon.
+Mark a backend as being ``up``. This is the default state. This is usually updated automatically by dovemon.
 
 .. code-block:: none
 
    doveadm director down
 
 
-Mark a director as being ``down``. This is effectively the same as changing vhost count to ``0``. This is usually updated automatically by dovemon.
+Mark a backend as being ``down``. This is effectively the same as changing vhost count to ``0``. This is usually updated automatically by dovemon.
 
 
 .. code-block:: none
