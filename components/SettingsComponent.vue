@@ -44,16 +44,16 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 .badgePadding :deep(p) {
   margin: 4px;
 }
-.settingsList h3:first-of-type {
+.settingsList article:first-of-type {
   border-top-width: 0;
-  padding-top: 0;
+}
+.settingsList article {
+  border-top: 1px solid var(--vp-c-divider);
 }
 .settingsList h3 {
-  border-top: 1px solid var(--vp-c-divider);
   margin-top: 18px;
-  padding-top: 18px;
 }
-.settingsList .rightAlign {
+.settingsListTable th {
   text-align: right;
 }
 .settingsListTable :deep(ul) {
@@ -67,7 +67,7 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 
 <template>
  <section class="settingsList">
-  <template v-for="(v, k) in d">
+  <article v-for="(v, k) in d">
    <component :is="'h' +  level" :id="k" tabindex="-1">
     <code>{{ k }}</code>
     <a class="header-anchor" :href="'#' + k"></a>
@@ -76,26 +76,26 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
    <table class="settingsListTable">
     <tbody>
      <tr>
-      <th class="rightAlign">Default</th>
+      <th>Default</th>
       <td>
        <span v-if="v.default" v-html="v.default" />
        <em v-else>[None]</em>
       </td>
      </tr>
      <tr>
-      <th class="rightAlign">Value</th>
+      <th>Value</th>
       <td>
        <span class="comma" v-for="v in v.values" v-html="v.url" />
       </td>
      </tr>
      <tr v-if="v.values_enum.length">
-      <th class="rightAlign">Allowed Values</th>
+      <th>Allowed Values</th>
       <td>
        <span class="comma" v-for="v in v.values_enum.values()"><code>{{ v }}</code></span>
       </td>
      </tr>
      <tr v-if="v.seealso.length">
-      <th class="rightAlign">See Also</th>
+      <th>See Also</th>
       <td>
        <ul>
         <li v-for="v in v.seealso" v-html="v" />
@@ -103,11 +103,11 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
       </td>
      </tr>
      <tr v-if="props.show_plugin && v.plugin">
-      <th class="rightAlign">Plugin</th>
+      <th>Plugin</th>
       <td v-html="v.plugin_link" />
      </tr>
      <tr v-if="v.added || v.changed || v.deprecated || v.removed">
-      <th class="rightAlign">Changes</th>
+      <th>Changes</th>
       <td>
        <ul class="badgePadding">
         <li v-if="v.added" v-for="elem in v.added">
@@ -139,6 +139,6 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 
    <div v-html="v.text" />
 
-  </template>
+  </article>
  </section>
 </template>
