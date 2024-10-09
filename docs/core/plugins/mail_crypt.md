@@ -369,7 +369,7 @@ passdb static {
   password = pass
   fields {
     crypt_global_public_key_file = ecpubkey.pem
-    crypt_global_private_key/main/private_key = <content of ecprivkey.pem>
+    crypt_global_private_key/main/private_key_file = inline:<content of ecprivkey.pem>
   }
 }
 ```
