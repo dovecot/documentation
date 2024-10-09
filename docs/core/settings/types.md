@@ -185,10 +185,10 @@ the process has dropped root privileges.
 
 The file paths do not support [[link,settings_variables,%variables]].
 
-All the `file` type settings end with a `_file` suffix. It's possible to give
-inline values (instead of a path to a file) for the setting by removing the
-`_file` suffix. For example userdb could be returning
-`crypt_global_public_key=<public key content>` without having to use files.
+It's possible to give inline values (instead of a path to a file) for the
+setting by using `inline:` prefix in the value. For example userdb could be
+returning `crypt_global_public_key_file=inline:<public key content>` without
+having to use files.
 
 ## Named Filter
 
