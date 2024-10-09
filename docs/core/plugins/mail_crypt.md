@@ -347,7 +347,8 @@ crypt_global_private_key main {
 ## Base64-encoded Keys
 
 Mail-crypt plugin can read keys that are base64 encoded. This is intended
-mostly for providing PEM keys via userdb.
+mostly for providing PEM keys via userdb, because it may be difficult to get
+userdb to return multi-line values.
 
 Hence, this is possible:
 
@@ -369,7 +370,7 @@ passdb static {
   password = pass
   fields {
     crypt_global_public_key_file = ecpubkey.pem
-    crypt_global_private_key/main/private_key_file = inline:<content of ecprivkey.pem>
+    crypt_global_private_key/main/private_key_file = inline:<base64-encoded content of ecprivkey.pem>
   }
 }
 ```
