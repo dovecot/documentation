@@ -71,7 +71,7 @@ the most useful optimization you can do.
 - [[setting,mail_prefetch_count]] setting may be helpful with some mailbox
   formats.
 
-- [[setting,mail_volatile_path,/tmp/dovecot-volatile/%2.256Nu/%u]] moves, e.g.,
+- [[setting,mail_volatile_path,/tmp/dovecot-volatile/%{user | sha1 % 256 | hex(2)}/%{user}]] moves, e.g.,
   lock files to the volatile directory. This is helpful especially if the
   [[link,mail_location,mail location settings]] otherwise point to a remote
   filesystem like NFS.

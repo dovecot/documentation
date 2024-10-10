@@ -83,7 +83,7 @@ storage under /nfsmount:
 ```[dovecot.conf]
 mail_driver = mdbox
 mail_path = ~/mdbox
-mail_alt_path = /nfsmount/%h/mdbox
+mail_alt_path = /nfsmount/%{home}/mdbox
 ```
 
 ```sh

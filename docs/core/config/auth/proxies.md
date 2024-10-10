@@ -332,7 +332,7 @@ mysql_password = secret
 passdb sql {
   query = SELECT NULL AS password, 'Y' as nopassword, host, destuser, 'Y' AS proxy \
     FROM proxy \
-    WHERE user = '%u'
+    WHERE user = '%{user}'
 }
 ```
 
@@ -364,12 +364,12 @@ mysql localhost {
 passdb sql {
   query = SELECT concat(user, '@', domain) AS user, password, host, 'Y' AS proxy_maybe \
     FROM users \
-    WHERE user = '%n' AND domain = '%d'
+    WHERE user = '%{user | username}' AND domain = '%{user | domain}'
 }
 userdb sql {
   query = SELECT user AS username, domain, home \
     FROM users \
-    WHERE user = '%n' AND domain = '%d'
+    WHERE user = '%{user | username}' AND domain = '%{user | domain}'
 }
 ```
 :::

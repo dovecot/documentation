@@ -16,7 +16,7 @@ The usernames, returned by winbind, can contain some domain part (either
 "DOMAIN\user" or "user@example.com"). Such usernames are always
 transformed to the form of "user@domain". To strip domain part (to
 obtain corresponding local username, for example), set
-[[setting,auth_username_format,%n]].
+[[setting,auth_username_format,%{user | username}]].
 
 Dovecot needs path to Samba's `ntlm_auth` binary to perform the
 authentication. You can change the path with

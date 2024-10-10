@@ -169,7 +169,7 @@ Example (for MySQL):
 userdb sql {
   query = SELECT uid, gid, home, CONCAT(quota_limit_bytes, 'B') AS quota_storage_size \
     FROM users \
-    WHERE userid = '%u'
+    WHERE userid = '%{user}'
 
 passdb sql {
   # SQL with userdb prefetch: Remember to prefix quota_quota_storage_size with userdb_
@@ -177,7 +177,7 @@ passdb sql {
   query = SELECT userid AS user, password, uid AS userdb_uid, gid AS userdb_gid, \
       CONCAT(quota_limit_bytes, 'B') AS userdb_quota_storage_size \
     FROM users \
-    WHERE userid = '%u'
+    WHERE userid = '%{user}'
 }
 ```
 
@@ -189,7 +189,7 @@ sql_driver = sqlite # alternatively: pgsql
 userdb sql {
   query = SELECT uid, gid, home, quota_limit_bytes || 'B' AS quota_storage_size \
     FROM users \
-    WHERE userid = '%u'
+    WHERE userid = '%{user}'
 }
 ```
 
@@ -386,8 +386,8 @@ Example:
 ```[dovecot.conf]
 mail_driver = mbox
 mail_path = ~/mail
-mail_inbox_path = /var/mail/%u
-mail_index_path = /var/no-quotas/index/%u
+mail_inbox_path = /var/mail/%{user}
+mail_index_path = /var/no-quotas/index/%{user}
 ```
 
 #### Maildir
@@ -405,12 +405,12 @@ Example:
 ```[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
-mail_index_path = /var/no-quotas/index/%u
-mail_control_path = /var/no-quotas/control/%u
+mail_index_path = /var/no-quotas/index/%{user}
+mail_control_path = /var/no-quotas/control/%{user}
 ```
 
 Note that if you change the location of the control files, Dovecot will look
-in the new control path directory (`/var/no-quotas/control/%u`) for the
+in the new control path directory (`/var/no-quotas/control/%{user}`) for the
 mailbox `subscriptions` file.
 
 #### Configuration Examples
@@ -566,13 +566,13 @@ quota user {
   warning warn-95 {
     quota_storage_percentage = 95
     execute quota-warning {
-      args = 95 %u
+      args = 95 %{user}
     }
   }
   warning warn-80 {
     quota_storage_percentage = 80
     execute quota-warning {
-      args = 80 %u
+      args = 80 %{user}
     }
   }
   warning warn-under {
@@ -580,7 +580,7 @@ quota user {
     # user is no longer over quota
     threshold = under
     execute quota-warning {
-      args = below %u
+      args = below %{user}
     }
   }
 }
@@ -657,7 +657,7 @@ quota_over_status {
 
   lazy_check = yes
   execute quota-warning {
-    args = mismatch %u
+    args = mismatch %{user}
   }
 }
 ```

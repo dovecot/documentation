@@ -70,7 +70,7 @@ can be added to provide modifiers to the discrete value. This is done as
 variables are provided:
 
 * `%{value}` - The original value
-* `%{domain}` - Text after the `@` character, or empty string if there is no `@`.
+* `%{user | domain}` - Text after the `@` character, or empty string if there is no `@`.
 
 Example:
 

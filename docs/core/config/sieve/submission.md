@@ -7,13 +7,13 @@ title: Submission
 
 ## `postmaster_address`
 
-`postmaster_address = postmaster@%d`
+`postmaster_address = postmaster@%{user | domain}`
 
 Email address to use in the From: field for outgoing email rejections.
 
-The `%d` variable expands to the recipient domain.
+The `%{user | domain}` variable expands to the recipient domain.
 
-### Domain (`%d`) is Empty
+### Domain (`%{user | domain}`) is Empty
 
 IMAP or POP3 protocol doesn't have explicit support for domains. The
 usernames are commonly in `user@domain` format, and that is also where
@@ -21,20 +21,17 @@ Dovecot gets the domain from. If the username doesn't have `@domain`, then
 the domain is also usually empty (unless [[setting,auth_default_domain]]
 is used).
 
-If you login as `user@domain`, but the %d is still empty, the problem is
+If you login as `user@domain`, but the %{user | domain} is still empty, the problem is
 that your configuration lost the domain part by changing the username.
 Dovecot doesn't keep track of the domain separately from username, so if
 something changes username from `user@domain` to just plain `user`, the
-domain is lost and %d returns nothing. If you have [[setting,auth_debug,yes]],
+domain is lost and %{user | domain} returns nothing. If you have [[setting,auth_debug,yes]],
 this shows up in logs like:
 `Info: auth(user@domain.org): username changed user@domain.org -> user`.
 
 Below are some of the most common reasons for this.
 
 #### Settings
-
-[[setting,auth_username_format,%Ln]] lowercases the username but also drops
-the domain. Use [[setting,auth_username_format,%Lu]] instead.
 
 [[setting,auth_username_format]] changes the username permanently when used
 globally. If used inside [[link,passdb,passdb]] or [[link,userdb,userdb]], it
@@ -51,7 +48,7 @@ username and domain are stored separately. For example:
 passdb sql {
   query = SELECT username AS user, password \
     FROM users \
-    WHERE username = '%n' AND domain = '%d'
+    WHERE username = '%{user | username}' AND domain = '%{user | domain}'
 }
 ```
 
@@ -63,7 +60,7 @@ is dropped. You can instead use:
 passdb sql {
   query = SELECT concat(username, '@', domain) AS user, password \
     FROM users \
-    WHERE username = '%n' AND domain = '%d'
+    WHERE username = '%{user | username}' AND domain = '%{user | domain}'
 }
 ```
 
@@ -74,7 +71,7 @@ merge them into a single user field:
 passdb sql {
   query = SELECT username, domain, password \
     FROM users \
-    WHERE username = '%n' AND domain = '%d'
+    WHERE username = '%{user | username}' AND domain = '%{user | domain}'
 }
 ```
 

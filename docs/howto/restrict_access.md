@@ -38,7 +38,7 @@ You can use the `%{protocol}` variable which expands to `imap` or `pop3` in
 passdb sql {
   query = SELECT password \
     FROM users \
-    WHERE userid = '%u' AND NOT (imap_allowed = false and '%{protocol}' = 'imap')
+    WHERE userid = '%{user}' AND NOT (imap_allowed = false and '%{protocol}' = 'imap')
 }
 ```
 
@@ -47,7 +47,7 @@ passdb sql {
 Just like with SQL, you can use `%{protocol}` in [[setting,ldap_filter]]:
 
 ```
-pass_filter = (&(objectClass=posixAccount)(uid=%u)(protocol=%{protocol}))
+pass_filter = (&(objectClass=posixAccount)(uid=%{user})(protocol=%{protocol}))
 ```
 
 That would require setting both protocol=pop3 and protocol=imap attributes

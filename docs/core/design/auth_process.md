@@ -300,12 +300,12 @@ Success.
 
 A string containing [[variable]].
 
-When expanded, it uniquely identifies a passdb lookup. This is `%u`
+When expanded, it uniquely identifies a passdb lookup. This is `%{user}`
 when the passdb lookup validity depends only on the username. With
 more complex databases such as SQL and LDAP this is created
 dynamically based on the password query in the configuration file. If
 there are multiple variables, they should be separated so that their
-contents don't get mixed, for example `%u<TAB>%r<TAB>%l`.
+contents don't get mixed, for example `%{user}<TAB>%r<TAB>%l`.
 `auth_cache_parse_key()` can be used to easily create a cache key
 from a query string.
 

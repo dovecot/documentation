@@ -42,8 +42,8 @@ something that shows up in your logs and maybe in some configuration,
 but they have no direct functionality.
 
 So although Dovecot makes it easier to handle "user@domain" style
-usernames (eg. `%n` and `%d` [[variable]]), nothing breaks if you use,
-for example, `domain%user` style usernames instead.
+usernames (eg. `%{user | username}` and `%{user | domain}` [[variable]]), nothing breaks if you use,
+for example, `domain%{user}ser` style usernames instead.
 
 However some [[link,authentication_mechanisms]] do have an explicit support
 for realms (pretty much the same as domains). If those mechanisms are used,
@@ -175,7 +175,7 @@ If for example `home=/var/vmail/domain/user/` and
 
 ::: code-group
 ```[dovecot.conf]
-mail_home = /var/vmail/%d/%n
+mail_home = /var/vmail/%{user | domain}/%{user | username}
 mail_driver = maildir
 mail_path = ~/mail
 ```
@@ -215,22 +215,22 @@ Their mail is kept in their home directory at
 
 The usernames in the passwd and shadow files are expected to contain
 only the user part, no domain. This is because the path itself already
-contained %d to specify the domain. If you want the files to contain
+contained %{user | domain} to specify the domain. If you want the files to contain
 full `user@domain` names, you can change [[setting,auth_username_format]] to
-`%u` or leave it out (it's default value is `%Lu`).
+`%{user}` or leave it out (it's default value is `%{user|lower}`).
 
 ```[dovecot.conf]
 mail_driver = maildir
-mail_path = /home/%d/%n/Maildir
+mail_path = /home/%{user | domain}/%{user | username}/Maildir
 
 passdb passwd-file {
   auth_username_format = %Ln
-  passwd_file_path = /home/%d/etc/shadow
+  passwd_file_path = /home/%{user | domain}/etc/shadow
 }
 
 userdb passwd-file {
   auth_username_format = %Ln
-  passwd_file_path = /home/%d/etc/passwd
+  passwd_file_path = /home/%{user | domain}/etc/passwd
 }
 ```
 
@@ -251,7 +251,7 @@ userdb static {
   fields {
     uid = vmail
     gid = vmail
-    home = /var/mail/virtual/%d/%n
+    home = /var/mail/virtual/%{user | domain}/%{user | username}
   }
 }
 ```
@@ -274,7 +274,7 @@ passdb ldap {
 
 passdb static {
   fields {
-    user = %Ld
+    user = %{domain|lower}
     noauthenticate = yes
   }
   skip = authenticated

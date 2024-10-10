@@ -349,7 +349,7 @@ can specify this with the [[setting,mail_control_path]] setting:
 ```[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
-mail_control_path = /var/no-quota/%u
+mail_control_path = /var/no-quota/%{user}
 ```
 
 ### Index Files
@@ -362,7 +362,7 @@ path. Example:
 ```[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
-mail_index_path = /var/indexes/%u
+mail_index_path = /var/indexes/%{user}
 ```
 
 ### Optimizations
