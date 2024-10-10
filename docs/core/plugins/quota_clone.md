@@ -65,7 +65,20 @@ dict_server {
   dict mysql {
     driver = sql
     sql_driver = mysql
-    !include /etc/dovecot/dovecot-dict-sql.conf.inc
+
+    dict_map priv/quota/messages {
+      sql_table = quota
+      username_field = username
+      value_field messages {
+      }
+    }
+
+    dict_map priv/quota/storage {
+      sql_table = quota
+      username_field = username
+      value_field bytes {
+      }
+    }
   }
 }
 
