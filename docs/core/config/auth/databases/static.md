@@ -93,7 +93,7 @@ userdb static {
   fields {
     uid = 500
     gid = 500
-    home = /home/%u
+    home = /home/%{user}
   }
 }
 ```

@@ -56,7 +56,7 @@ function auth_passdb_lookup(req)
 end
 
 function auth_passdb_get_cache_key()
-  return "%{username}\t%{protocol}"
+  return "%{user | username}\t%{protocol}"
 end
 ```
 :::

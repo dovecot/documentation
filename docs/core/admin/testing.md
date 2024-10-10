@@ -259,7 +259,7 @@ System configuration
 Enable LMTP delivery times in the configuration:
 
 ```[dovecot.conf]
-deliver_log_format = msgid=%m from=<%f> size=%p vsize=%w session=%{session_time}ms delivery=%{delivery_time}ms: %$
+deliver_log_format = msgid=%{msgid} from=<%{from}> size=%{size} vsize=%{vsize} session=%{session_time}ms delivery=%{delivery_time}ms: %{message}
 ```
 
 You can then see log entries like:
@@ -332,7 +332,7 @@ total_user_count = 800
 rampup_time = 0s
 
 user lmtptest {
-  username_format = testuser%n
+  username_format = testuser%{num}
   count = 100%
 
   mail_inbox_delivery_interval = 1s
@@ -390,7 +390,7 @@ total_user_count = 2000000
 rampup_time = 600s
 
 user pop3 {
-  username_format = testuser%7n
+  username_format = testuser%{num | fill('0', 7)}
   username_start_index = 1
   count = 100%
 
@@ -433,7 +433,7 @@ total_user_count = 4000000
 rampup_time = 60s
 
 user imap_poweruser {
-  username_format = testuser%7n
+  username_format = testuser%{num | fill('0', 7)}
   username_start_index = 2000000
   count = 50%
 

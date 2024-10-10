@@ -71,10 +71,10 @@ The options for handling this are:
    You can create a `default ACL`, that applies to all mailboxes. See example
    below.
 
-2. Set `plugin { acl_user=%u }`. This preserves the master_user for other
+2. Set `plugin { acl_user=%{user} }`. This preserves the master_user for other
    purposes (e.g. `%{master_user}` variable).
 
-3. Set `plugin { master_user=%u }`. This fully hides that master user login is
+3. Set `plugin { master_user=%{user} }`. This fully hides that master user login is
    being used.
 
 Example configuration:
@@ -127,7 +127,7 @@ auth_master_user_separator = *
 
 passdb db1 {
   driver = sql
-  query = SELECT password FROM users WHERE userid = '%u' and master_user = true
+  query = SELECT password FROM users WHERE userid = '%{user}' and master_user = true
   master = yes
   result_success = continue
 }
@@ -244,7 +244,7 @@ authentication. The query for that is as follows:
 passdb sql {
   query = SELECT user_name, domain_name, password \
     FROM users \
-    WHERE user_name = '%n' AND domain_name = '%d'
+    WHERE user_name = '%{user | username}' AND domain_name = '%{user | domain}'
 }
 ```
 
@@ -256,7 +256,7 @@ set to `1`. The query would be:
 passdb sql {
   query = SELECT user_name, domain_name, password \
     FROM users \
-    WHERE user_name = '%n' AND domain_name = '%d' AND masteradmin='1'
+    WHERE user_name = '%{user | username}' AND domain_name = '%{user | domain}' AND masteradmin='1'
 }
 ```
 
@@ -269,7 +269,7 @@ Your query would be as follows:
 passdb sql {
   query = SELECT user_name, domain_name, password \
     FROM users \
-    WHERE user_name = '%n' AND domain_name = '%d' AND owns_domain='1' AND '%d'='%{login_domain}'
+    WHERE user_name = '%{user | username}' AND domain_name = '%{user | domain}' AND owns_domain='1' AND '%{user | domain}'='%{login_domain}'
 }
 ```
 
@@ -285,7 +285,7 @@ they control. The query would be as follows:
 passdb sql {
   query = SELECT user_name, domain_name, password \
     FROM users, ownership \
-    WHERE user_name = '%n' AND domain_name = '%d' AND login_id='%u' AND owned_object='%{login_domain}'
+    WHERE user_name = '%{user | username}' AND domain_name = '%{user | domain}' AND login_id='%{user}' AND owned_object='%{login_domain}'
 }
 ```
 
@@ -296,9 +296,9 @@ into one giant query that does everything.
 passdb sql {
   query = SELECT user_name, domain_name, password \
     FROM users, ownership \
-    WHERE user_name = '%n' AND domain_name = '%d' \
-      AND ( (masteradmin='1') OR (owns_domain='1' AND '%d'='%{login_domain}') \
-      OR (login_id='%u' and owned_object='%{login_domain}') ) \
+    WHERE user_name = '%{user | username}' AND domain_name = '%{user | domain}' \
+      AND ( (masteradmin='1') OR (owns_domain='1' AND '%{user | domain}'='%{login_domain}') \
+      OR (login_id='%{user}' and owned_object='%{login_domain}') ) \
     GROUP BY uid
 }
 ```

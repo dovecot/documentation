@@ -182,7 +182,7 @@ with the given list.
 userdb static {
   fields {
     namespace += special
-    namespace/special/mail_path = /var/special/%u
+    namespace/special/mail_path = /var/special/%{user}
     namespace/special/prefix = special/
   }
 }
@@ -206,7 +206,7 @@ namespace {
   prefix = "#mbox/"
   mail_driver = mbox
   mail_path = ~/mail
-  mail_index_path = /var/mail/%u
+  mail_index_path = /var/mail/%{user}
   inbox = yes
   hidden = yes
   list = no
@@ -256,7 +256,7 @@ namespace compat2 {
 }
 namespace compat3 {
  separator = /
- prefix = ~%u/mail/
+ prefix = ~%{user}/mail/
  hidden = yes
  list = no
  alias_for = inbox

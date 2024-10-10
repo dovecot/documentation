@@ -4333,7 +4333,7 @@ If \`no\`, there will be no report for the authentication result.`
 	},
 
 	auth_policy_request_attributes: {
-		default: 'login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%{protocol} session_id=%{session} fail_type=%{fail_type}',
+		default: 'login=%{requested_username} pwhash=%{hashed_password} remote=%{remote_ip} device_id=%{client_id} protocol=%{protocol} session_id=%{session} fail_type=%{fail_type}',
 		changed: {
 			settings_auth_policy_request_attributes_changed: `
 Default has changed.`
@@ -7095,8 +7095,8 @@ The details of how this setting works depends on the used protocol:
 :   ID command can be used to override:
 
     * Session ID
-    * Client IP and port (\`%{rip}\`, \`%{rport}\`)
-    * Server IP and port (\`%{lip}\`, \`%{lport}\`)
+    * Client IP and port (\`%{remote_ip}\`, \`%{remote_port}\`)
+    * Server IP and port (\`%{local_ip}\`, \`%{local_port}\`)
 
     \`forward_*\` fields can be sent to auth process's passdb lookup
 
@@ -7107,7 +7107,7 @@ The details of how this setting works depends on the used protocol:
 :   XCLIENT command can be used to override:
 
     * Session ID
-    * Client IP and port (\`%{rip}\`, \`%{rport}\`)
+    * Client IP and port (\`%{remote_ip}\`, \`%{remote_port}\`)
 
     \`forward_*\` fields can be sent to auth process's passdb lookup
 
@@ -7118,7 +7118,7 @@ The details of how this setting works depends on the used protocol:
 :   XCLIENT command can be used to override:
 
     * Session ID
-    * Client IP and port (\`%{rip}\`, \`%{rport}\`)
+    * Client IP and port (\`%{remote_ip}\`, \`%{remote_port}\`)
 
     The trust is always checked against the connecting IP address.
     Except if HAProxy is used, then the original client IP address is used.
@@ -7127,7 +7127,7 @@ The details of how this setting works depends on the used protocol:
 :   XCLIENT command can be used to override:
 
     * Session ID
-    * Client IP and port (\`%{rip}\`, \`%{rport}\`)
+    * Client IP and port (\`%{remote_ip}\`, \`%{remote_port}\`)
     * HELO - Overrides what the client sent earlier in the EHLO command
     * LOGIN - Currently unused
     * PROTO - Currently unused
@@ -7141,7 +7141,7 @@ The details of how this setting works depends on the used protocol:
 :   XCLIENT command can be used to override:
 
     * Session ID
-    * Client IP and port (\`%{rip}\`, \`%{rport}\`)
+    * Client IP and port (\`%{remote_ip}\`, \`%{remote_port}\`)
     * HELO - Overrides what the client sent earlier in the LHLO command
     * LOGIN - Currently unused
     * PROTO - Currently unused
@@ -8700,7 +8700,7 @@ Configures a modifier string for values grouped by the
 \`%{value}\`
 :   The original value.
 
-\`%{domain}\`
+\`%{user | domain}\`
 :   If the value is in \`user@domain\` format, this contains the \`domain\`
     text. Otherwise empty.`
 	},
