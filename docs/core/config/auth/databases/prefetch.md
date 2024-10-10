@@ -73,7 +73,7 @@ mysql localhost {
 passdb sql {
   query = SELECT userid AS user, password, home AS userdb_home, uid AS userdb_uid, gid AS userdb_gid \
     FROM users \
-    WHERE userid = '%u'
+    WHERE userid = '%{user}'
   }
 }
 
@@ -82,6 +82,6 @@ userdb prefetch {
 
 # The userdb below is used only by lda.
 userdb sql {
-  query = SELECT home, uid, gid FROM users WHERE userid = '%u'
+  query = SELECT home, uid, gid FROM users WHERE userid = '%{user}'
 }
 ```

@@ -102,7 +102,7 @@ userdb static {
   fields {
     uid = vmail
     gid = vmail
-    home = /var/vmail/%u
+    home = /var/vmail/%{user}
   }
 }
 ```
