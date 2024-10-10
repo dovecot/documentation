@@ -85,13 +85,13 @@ manually with:
 ```[dovecot.conf]
 mail_driver = mbox
 mail_path = ~/mail
-mail_inbox_path = /var/mail/%u
+mail_inbox_path = /var/mail/%{user}
 ```
 
 Remember that the [[setting,mail_path]] setting is the mailbox root directory,
-don't try to use the INBOX `/var/mail/%u` path in there because that
+don't try to use the INBOX `/var/mail/%{user}` path in there because that
 isn't going to work (unless you really want to store mails under
-`/var/mail/%u/` directory).
+`/var/mail/%{user}/` directory).
 
 If you're also using other software than Dovecot to access mboxes, you
 should try to figure out what locking methods exactly they're using and
