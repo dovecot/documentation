@@ -274,7 +274,7 @@ the domain part and instead use [[setting,namespace_prefix,shared/$username/]].
 
 [[changed,namespace_prefix_shared_variables_changed]] The shared namespaces
 now use `$user`, `$username` and `$domain` template variables, rather than
-the old `%%u`, `%%n` and `%%d`.
+the old `%%{user}`, `%%{user | username}` and `%%{user | domain}`.
 
 [[setting,namespace_list,children]] specifies that if no one has shared
 mailboxes to the user, the "shared" directory isn't listed by the LIST command.
@@ -351,7 +351,7 @@ each domain:
 ```[dovecot.conf]
 acl_sharing_map {
   dict file {
-    path = /var/mail/%d/shared-mailboxes.db
+    path = /var/mail/%{user | domain}/shared-mailboxes.db
   }
 }
 ```
@@ -518,7 +518,7 @@ initially have "lookup" right, but later we don't:
 ### Troubleshooting
 
 - Make sure `$user` or `$username` is specified in the
-  [[setting,namespace_prefix]] setting rather than the old `%%u` or `%%n`.
+  [[setting,namespace_prefix]] setting rather than the old `%%{user}` or `%%{user | username}`.
 
 - Make sure the [[setting,mail_path]] is set correctly in the
   namespace location. [[setting,log_debug,category=mail]] will help you see
@@ -700,7 +700,7 @@ and in `dovecot.conf`:
 
 ```[dovecot.conf]
 mail_driver = maildir
-mail_path = /var/vmail/%d/%n/Maildir
+mail_path = /var/vmail/%{user | domain}/%{user | username}/Maildir
 mail_access_groups = dovemail
 ```
 

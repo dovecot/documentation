@@ -83,7 +83,7 @@ $ ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f doveauth_access.ldif
 The two important settings in password lookups are:
 
 - [[setting,ldap_filter]] specifies the LDAP filter how user is found from the
-  LDAP. You can use all the normal [[variable]] like `%u` in the filter.
+  LDAP. You can use all the normal [[variable]] like `%{user}` in the filter.
 
 - [[setting,passdb_fields]] specifies a list of attributes that are returned and
   how to produce the returned value.
@@ -133,7 +133,7 @@ to the same case as it's in the LDAP database. You can do this by
 returning "user" field in [[setting,passdb_fields]] setting, as shown in the above example.
 
 If you can't normalize the username in LDAP, you can alternatively
-lowercase the username via [[setting,auth_username_format,%Lu]].
+lowercase the username via [[setting,auth_username_format,%{user | lower}]].
 
 #### Use Worker
 
@@ -160,7 +160,7 @@ A typical configuration would look like:
   passdb ldap {
     bind = no
     default_password_scheme = MD5
-    ldap_filter = (&(objectClass=posixAccount)(uid=%u))
+    ldap_filter = (&(objectClass=posixAccount)(uid=%{user}))
     fields {
       user = %{ldap:uid}
       password = %{ldap:userPassword}
@@ -201,7 +201,7 @@ Example:
 ```[dovecot.conf]
   passdb ldap {
     bind = yes
-    ldap_filter = (&(objectClass=posixAccount)(uid=%u))
+    ldap_filter = (&(objectClass=posixAccount)(uid=%{user}))
     fields {
       user = %{ldap:uid}
     }
@@ -224,14 +224,14 @@ so the prefetch optimization doesn't help.
 If you're using DN template, [[setting,passdb_fields]] and [[setting,ldap_filter]] settings
 are completely ignored. That means you can't make passdb return any
 [[link,passdb_extra_fields]]. You should also set
-[[setting,auth_username_format,%Lu]] in `dovecot.conf` to normalize the
+[[setting,auth_username_format,%{user | lower}]] in `dovecot.conf` to normalize the
 username by lowercasing it.
 
 ::: code-group
 ```[dovecot.conf]
   passdb ldap {
     bind = yes
-    bind_userdn = cn=%u,ou=people,o=org
+    bind_userdn = cn=%{user},ou=people,o=org
   }
 ```
 :::
@@ -355,7 +355,7 @@ The most important settings are:
 
 ::: code-group
 ```[dovecot.conf]
-  passdb_ldap_bind_userdn = %u
+  passdb_ldap_bind_userdn = %{user}
   passdb_ldap_bind = yes
 ```
 :::
@@ -403,7 +403,7 @@ distinct values inside each [[setting,passdb]] / [[setting,userdb]] section):
 
 ::: code-group
 ```[dovecot.conf]
-ldap_filter = (mailRoutingAddress=%u)
+ldap_filter = (mailRoutingAddress=%{user})
 ```
 :::
 
@@ -411,7 +411,7 @@ ldap_filter = (mailRoutingAddress=%u)
 
 ::: code-group
 ```[dovecot.conf]
-  ldap_filter = (mailRoutingAddress=%u)
+  ldap_filter = (mailRoutingAddress=%{user})
   ldap_iterate_filter = (objectClass=messageStoreRecipient)
   iterate_fields {
     user = %{ldap:mailRoutingAddress}
@@ -434,7 +434,7 @@ The following variables can be used inside the [[setting,passdb]] / [[setting,us
 | `%{ldap_multi:attrName:::default}` | [[added,ldap_multi_added]] How to specify a column `":"` as separator, default explicitly defined. |
 | `%{ldap_multi:attrName:,}` | [[added,ldap_multi_added]] How to specify a comma `","` as separator, default is `""`. |
 | `%{ldap_multi:attrName:,:default}` | [[added,ldap_multi_added]] How to specify a comma `","` as separator, default explicitly defined. |
-| `%{ldap_dn}` | Retrieves the Distinguished Name of the entry. |
+| `%{ldap:dn}` | Retrieves the Distinguished Name of the entry. |
 
 ### Multiple Queries via userdbs
 
@@ -463,7 +463,7 @@ userdb ldap2 {
 
 ### Variables and Domains
 
-User names and domains may be distinguished using the Variables `%n` and `%d`.
+User names and domains may be distinguished using the Variables `%{user | username}` and `%{user | domain}`.
 They split the previous username at the `@` character.
 
 The previous username is:
@@ -477,19 +477,19 @@ The previous username is:
   If the (LDAP) password database has:
   ```
   fields {
-    user = %n
+    user = %{user | username}
   }
   ```
   then the domain part of the login name will be stripped by the password database.
 
-- The userdb will not see any domain part, i.e. `%n` and `%u` are the same
+- The userdb will not see any domain part, i.e. `%{user | username}` and `%{user}` are the same
   thing for the userdb. The userdb may set a new username, too, using:
   ```
   fields {
     user = ...
   }
   ```
-  This will be used for Logging `%u` and `%d`
+  This will be used for Logging `%{user}` and `%{user | domain}`
   variables in other parts of the configuration (e.g. quota file names).
 
 ::: code-group
@@ -540,7 +540,7 @@ them globally with [[setting,mail_uid]] and [[setting,mail_gid]] settings instea
 returning them from LDAP.
 
 ```
-ldap_filter = (&(objectClass=posixAccount)(uid=%u))
+ldap_filter = (&(objectClass=posixAccount)(uid=%{user}))
 ldap_iterate_filter = (objectClass=posixAccount)
 fields {
     home = %{ldap:homeDirectory}
@@ -580,12 +580,12 @@ fields {
 ```
 
 You can add static fields that aren't looked up from LDAP. For example
-create a "mail_path" field with value `/var/vmail/%d/%n/Maildir`:
+create a "mail_path" field with value `/var/vmail/%{user | domain}/%{user | username}/Maildir`:
 
 ```
 fields {
     quota_storage_size = %{ldap:quotaBytes}B
-    mail_path = /var/vmail/%d/%n/Maildir
+    mail_path = /var/vmail/%{user | domain}/%{user | username}/Maildir
 }
 ```
 
@@ -596,7 +596,7 @@ userDomain attribute doesn't exist, example.com is used instead.
 ### Variables and Domains
 
 User names and domains may be distinguished using the [[variable]]
-`%n` and `%d`. They split the *previous username* at the "@" character. The
+`%{user | username}` and `%{user | domain}`. They split the *previous username* at the "@" character. The
 *previous username* is:
 
 - For LMTP, it will be `user@hostname`, where hostname depends on e.g.
@@ -604,9 +604,9 @@ User names and domains may be distinguished using the [[variable]]
 
 - For IMAP, it will be whatever the password database has designated as
   the username. If the (LDAP) password database [[setting,passdb_fields ]]
-  contains `user=%n`, then the domain part of the login name will be stripped by
+  contains `user=%{user | username}`, then the domain part of the login name will be stripped by
   the password database. The userdb will not see any domain part, i.e.
-  %n and %u are the same thing for the userdb.
+  %{user | username} and %{user} are the same thing for the userdb.
 
 The userdb may set a new username, too, using
 ```
@@ -619,5 +619,5 @@ This will be used for:
 
 - Logging
 
-- `%u` and `%d` variables in other parts of the configuration (e.g. quota
+- `%{user}` and `%{user | domain}` variables in other parts of the configuration (e.g. quota
   file names)

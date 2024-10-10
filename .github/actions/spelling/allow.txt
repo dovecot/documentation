@@ -25,3 +25,8 @@ spnego
 ssh
 ubuntu
 workarounds
+lfill
+ond
+retuns
+rfill
+Uppercases

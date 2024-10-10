@@ -44,7 +44,7 @@ redis_port = 6379
 last_login {
   dict redis {
   }
-  #key = last-login/%u # default
+  #key = last-login/%{user} # default
 }
 ```
 
