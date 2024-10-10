@@ -291,13 +291,13 @@ passdb sql {
   default_password_scheme = CRYPT
   query = SELECT userid as user, password \
     FROM users \
-    WHERE userid = '%u'
+    WHERE userid = '%{user}'
 }
 
 userdb sql {
   query = SELECT '/home/' || home AS home, uid, gid \
     FROM users \
-    WHERE userid = '%u'
+    WHERE userid = '%{user}'
 }
 ```
 

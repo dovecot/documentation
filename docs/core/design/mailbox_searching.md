@@ -78,7 +78,7 @@ search_ctx = mailbox_search_init(trans, search_args, NULL, 0, NULL);
 mail_search_args_unref(&search_args);
 
 while (mailbox_search_next(ctx, &mail)) {
-    printf("matched uid %u\n", mail->uid);
+    printf("matched uid %{user}\n", mail->uid);
 }
 if (mailbox_search_deinit(&search_ctx) < 0)
     i_error("search failed");

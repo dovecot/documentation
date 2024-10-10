@@ -26,7 +26,7 @@ You need to create group `vmail` and user `vmail`.
 
 ::: code-group
 ```[dovecot.conf]
-mail_home = /srv/mail/%Lu
+mail_home = /srv/mail/%{user | lower}
 mail_driver = sdbox
 mail_path = ~/Mail
 

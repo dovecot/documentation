@@ -22,7 +22,7 @@ directory.
 * Virtual users' mails: /var/vmail/domain/user/Maildir
 
 This can be done by simply having both system and virtual userdbs return home
-directory properly (i.e. virtual users' `home=/var/vmail/%d/%n`) and then set
+directory properly (i.e. virtual users' `home=/var/vmail/%{user | domain}/%{user | username}`) and then set
 [[setting,mail_path,~/Maildir]].
 
 If it's not possible to have a home directory for virtual users (avoid that if
@@ -47,7 +47,7 @@ mysql localhost {
 
 # try to authenticate using SQL database first
 passdb sql {
-  query = SELECT userid AS user, password FROM users WHERE userid = '%u'
+  query = SELECT userid AS user, password FROM users WHERE userid = '%{user}'
 }
 
 # fallback to PAM
@@ -56,7 +56,7 @@ passdb pam {
 
 # look up users from SQL first (even if authentication was done using PAM!)
 userdb sql {
-  query = SELECT uid, gid, '/var/vmail/%d/%n' AS home FROM users WHERE userid = '%u'
+  query = SELECT uid, gid, '/var/vmail/%{user | domain}/%{user | username}' AS home FROM users WHERE userid = '%{user}'
 }
 
 # if not found, fallback to /etc/passwd

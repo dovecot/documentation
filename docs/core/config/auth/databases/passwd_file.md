@@ -60,7 +60,7 @@ You can use all [[variable]] in the passwd-file filenames, for example:
 ```[dovecot.conf]
 passdb passwd-file {
   # Each domain has a separate passwd-file:
-  passwd_file_path = /etc/auth/%d/passwd
+  passwd_file_path = /etc/auth/%{user | domain}/passwd
 }
 ```
 
@@ -82,16 +82,16 @@ userdb lookup's fields. The available fields are:
 ```[dovecot.conf]
 passdb passwd-file {
   default_password_scheme = plain-md5
-  auth_username_format = %n
+  auth_username_format = %{user | username}
   passwd_file_path = /etc/imap.passwd
 }
 userdb passwd-file {
-  auth_username_format = %n
+  auth_username_format = %{user | username}
   passwd_file_path = /etc/imap.passwd
   fields {
     uid:default = vmail
     gid:default = vmail
-    home:default = /home/vmail/%u
+    home:default = /home/vmail/%{user}
   }
 }
 ```
@@ -159,12 +159,12 @@ other `userdb` and `passdb` sections:
 
 ```
 passdb passwd-file {
-  auth_username_format = %n
+  auth_username_format = %{user | username}
   passwd_file_path = /path/to/file-with-encrypted-passwords
 }
 
 userdb passwd-file {
-  auth_username_format = %n
+  auth_username_format = %{user | username}
   passwd_file_path = /path/to/file-with-encrypted-passwords
 }
 ```
