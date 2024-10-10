@@ -221,7 +221,7 @@ compiled binaries on the local filesystem. For Example:
 ```[dovecot.conf]
 sieve = dict:file:/etc/dovecot/sieve.dict;name=keep;bindir=~/.sieve-bin
 # or
-#sieve = dict:file:/etc/dovecot/sieve.dict;name=keep;bindir=/var/sieve-scripts/%u
+#sieve = dict:file:/etc/dovecot/sieve.dict;name=keep;bindir=/var/sieve-scripts/%{user}
 ```
 
 ::: tip
@@ -420,7 +420,7 @@ compiled binaries on the local filesystem. For Example:
 ```[dovecot.conf]
 sieve = ldap:/etc/dovecot/sieve.ldap;name=keep;bindir=~/.sieve-bin
 # or
-#sieve = ldap:/etc/dovecot/sieve.ldap;name=keep;bindir=/var/sieve-scripts/%u
+#sieve = ldap:/etc/dovecot/sieve.ldap;name=keep;bindir=/var/sieve-scripts/%{user}
 ```
 
 ::: tip
@@ -441,7 +441,7 @@ parameters are specific to the Sieve ldap configuration:
 
 ###### `sieve_ldap_filter`
 
-- Default: `(&(objectClass=posixAccount)(uid=%u))`
+- Default: `(&(objectClass=posixAccount)(uid=%{user}))`
 - Values: [[link,settings_types_string]]
 
 The LDAP search filter that is used to find the entry containing the
@@ -451,9 +451,9 @@ These variables can be used:
 
 | Variable | Long Name | Description |
 | -------- | --------- | ----------- |
-| `%u` | `%{user}` | username |
-| `%n` | `%{username}` | user part in user@domain, same as `%u` if there's no domain |
-| `%d` | %{domain} | domain part in user@domain, empty if user there's no domain |
+| `%{user}` | `%{user}` | username |
+| `%{user | username}` | `%{user | username}` | user part in user@domain, same as `%{user}` if there's no domain |
+| `%{user | domain}` | %{user | domain} | domain part in user@domain, empty if user there's no domain |
 | | `%{home}` | user's home directory |
 | | `%{name}` | name of the Sieve script |
 
@@ -519,11 +519,11 @@ deref = never
 scope = subtree
 
 # Filter for user lookup. Some variables can be used:
-#   %u      - username
-#   %n      - user part in user@domain, same as %u if there's no domain
-#   %d      - domain part in user@domain, empty if there's no domain
+#   %{user}      - username
+#   %{user | username}      - user part in user@domain, same as %{user} if there's no domain
+#   %{user | domain}      - domain part in user@domain, empty if there's no domain
 #   %{name} - name of the Sieve script
-sieve_ldap_filter = (&(objectClass=posixAccount)(uid=%u))
+sieve_ldap_filter = (&(objectClass=posixAccount)(uid=%{user}))
 
 # Attribute containing the Sieve script
 sieve_ldap_script_attr = mailSieveRuleSource
@@ -564,11 +564,11 @@ For example, to use a Sieve script file named `<username>.sieve` in
 ```
 plugin {
   ...
-  sieve = /var/sieve-scripts/%u.sieve
+  sieve = /var/sieve-scripts/%{user}.sieve
 }
 ```
 
-You may use templates like `%u`, as shown in the example. See [[variable]].
+You may use templates like `%{user}`, as shown in the example. See [[variable]].
 
 A relative path (or just a filename) will be interpreted to point under
 the user's home directory.
@@ -632,12 +632,12 @@ plugin {
 
   # User-specific scripts executed before the user's personal script.
   #   E.g. a vacation script managed through a non-ManageSieve GUI.
-  sieve_before3 = /var/vmail/%d/%n/sieve-before
+  sieve_before3 = /var/vmail/%{user | domain}/%{user | username}/sieve-before
 
   # User-specific scripts executed after the user's personal script.
   # (if keep is still in effect)
   #   E.g. user-specific default mail filing rules
-  sieve_after = /var/vmail/%d/%n/sieve-after
+  sieve_after = /var/vmail/%{user | domain}/%{user | username}/sieve-after
 
   # Global scripts executed after the user's personal script
   # (if keep is still in effect)

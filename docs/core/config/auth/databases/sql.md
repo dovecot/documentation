@@ -31,7 +31,7 @@ password. It must return a field named `password`. If you have it by any other
 name in the database, you can use the SQL's `AS` keyword (`SELECT pw AS
 password ..`).
 
-You can use all the normal [[variable]] such as `%u` in the SQL query.
+You can use all the normal [[variable]] such as `%{user}` in the SQL query.
 
 If all the passwords are in same format, you can use
 [[setting,passdb_default_password_scheme]] to specify it. Otherwise each
@@ -66,13 +66,13 @@ If the passwords are in some special format in the SQL server that Dovecot
 doesn't recognize, it's still possible to use them. Change the SQL query to
 return NULL as the password and return the row only if the password matches.
 You'll also need to return a non-NULL `nopassword` field. The password is in
-`%w` variable. For example:
+`%{password}` variable. For example:
 
 ```[dovecot.conf]
 passdb sql {
   query = SELECT NULL AS password, 'Y' as nopassword, userid AS user \
     FROM users \
-    WHERE userid = '%u' AND mysql_pass = password('%w')
+    WHERE userid = '%{user}' AND mysql_pass = password('%{password}')
 }
 ```
 
@@ -171,12 +171,12 @@ mysql /var/run/mysqld/mysqld.sock {
 passdb sql {
   query = SELECT userid AS username, domain, password \
     FROM users \
-    WHERE userid = '%n' AND domain = '%d'
+    WHERE userid = '%{user | username}' AND domain = '%{user | domain}'
 }
 userdb sql {
   query = SELECT home, uid, gid \
     FROM users \
-    WHERE userid = '%n' AND domain = '%d'
+    WHERE userid = '%{user | username}' AND domain = '%{user | domain}'
   # For using doveadm -A:
   iterate_query = SELECT userid AS username, domain FROM users
 }
@@ -202,12 +202,12 @@ pgsql localhost {
 passdb sql {
   query = SELECT userid AS username, domain, password \
     FROM users \
-    WHERE userid = '%n' AND domain = '%d'
+    WHERE userid = '%{user | username}' AND domain = '%{user | domain}'
 }
 userdb sql {
   query = SELECT home, uid, gid \
     FROM users \
-    WHERE userid = '%n' AND domain = '%d'
+    WHERE userid = '%{user | username}' AND domain = '%{user | domain}'
   # For using doveadm -A:
   iterate_query = SELECT userid AS username, domain FROM users
 }
@@ -224,12 +224,12 @@ sqlite_path = /path/to/sqlite.db
 passdb sql {
   query = SELECT userid AS username, domain, password \
     FROM users \
-    WHERE userid = '%n' AND domain = '%d'
+    WHERE userid = '%{user | username}' AND domain = '%{user | domain}'
 }
 userdb sql {
   query = SELECT home, uid, gid \
     FROM users \
-    WHERE userid = '%n' AND domain = '%d'
+    WHERE userid = '%{user | username}' AND domain = '%{user | domain}'
   # For using doveadm -A:
   iterate_query = SELECT userid AS username, domain FROM users
 }

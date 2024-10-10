@@ -70,7 +70,7 @@ To avoid this, you can use `text` filter, which will sanitize the input and mark
 The new syntax also supports simple maths, you can do one operation. E.g. `%{port + 1000}`.
 Addition, substraction, multiplication, division and modulo operations are supported for now.
 
-A special case for modulo operation is that it can be applied to binary input, e.g. `md5 % 256`.
+A special case for modulo operation is that it can be applied to binary input, e.g. `sha1 % 256`.
 The input is treated as 64-bit unsigned number and modulo is taken from that.
 
 All strings must be encapsulated with `"` or `'`, and you can escape them using `\\` within string.

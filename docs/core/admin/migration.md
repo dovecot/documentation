@@ -213,14 +213,14 @@ Common settings:
 Master password auth:
 
 ```
-imapc_user = %u
+imapc_user = %{user}
 imapc_password = supersecret
 ```
 
 Master user auth:
 
 ```
-imapc_user = %u
+imapc_user = %{user}
 imapc_master_user = master-user
 imapc_password = master-password
 ```
@@ -228,7 +228,7 @@ imapc_password = master-password
 Individual password auth:
 
 ```
-imapc_user = %u
+imapc_user = %{user}
 
 # doveadm -o imapc_password=password backup -Ru user imapc:
 ```
@@ -250,7 +250,7 @@ pop3c_host = hostname
 # Authenticate as masteruser / masteruser-secret, but use a separate login
 # user.
 # If you don't have a master user, remove the pop3c_master_user setting.
-pop3c_user = %u
+pop3c_user = %{user}
 pop3c_master_user = masteruser
 pop3c_password = masteruser-secret
 

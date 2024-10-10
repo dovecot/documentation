@@ -55,7 +55,7 @@ This is based on already having Dovecot already compiled and installed.
      # Change the line below to reflect the IP address of your Exchange Server.
      args = host=10.1.2.3
      fields {
-       userdb_imapc_user = %u
+       userdb_imapc_user = %{user}
        userdb_imapc_password = %w
      }
    }
@@ -64,9 +64,9 @@ This is based on already having Dovecot already compiled and installed.
    }
 
    # /home/imapproxy is the home directory for the imapproxy user, and
-   # %u is a subdir that will be automatically created for each IMAP user
+   # %{user} is a subdir that will be automatically created for each IMAP user
    # when they connect
-   mail_home = /home/imapproxy/%u
+   mail_home = /home/imapproxy/%{user}
 
    auth_mechanisms = plain login
 

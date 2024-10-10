@@ -40,7 +40,7 @@ https://kaworu.ch/blog/2016/04/20/strong-crypt-scheme-with-dovecot-postfixadmin-
     # Enviroment ($PLAIN_PASS)
     query = SELECT id as user, newpassword as password, home as userdb_home, uid as userdb_uid, gid as userdb_gid, '%w' as userdb_plain_pass \
       FROM users \
-      WHERE id = '%u'
+      WHERE id = '%{user}'
 
     # Alternatively, here is another config that worked for me with
     # SHA512-CRYPT (note: uncomment the lines relevant for your setup):
@@ -50,12 +50,12 @@ https://kaworu.ch/blog/2016/04/20/strong-crypt-scheme-with-dovecot-postfixadmin-
     # default_pass_scheme = SHA512-CRYPT
     # query = SELECT username AS user, password, CONCAT('/var/mail/vdomains/', maildir) as userdb_home, 'vmail' as userdb_uid, 'vmail' as userdb_gid, '%w' as userdb_plain_pass \
     #   FROM mailbox \
-    #   WHERE username = '%u'
+    #   WHERE username = '%{user}'
   }
   userdb sql {
     # query = SELECT CONCAT('/var/mail/vdomains/', maildir) AS home, 'vmail' AS uid, 'vmail' AS gid, password \
     #   FROM mailbox \
-    #   WHERE username = '%u' AND active = 1
+    #   WHERE username = '%{user}' AND active = 1
   ```
   :::
 
@@ -267,11 +267,11 @@ Enable the `plain_pass` variable in the auth-passwdfile configuration.
 
 ```
 passdb passwd-file {
-  passwd_file_path = /var/vmail/auth.d/%d/passwd
+  passwd_file_path = /var/vmail/auth.d/%{user | domain}/passwd
 }
 
 userdb passwd-file {
-  passwd_file_path = /var/vmail/auth.d/%d/passwd
+  passwd_file_path = /var/vmail/auth.d/%{user | domain}/passwd
   fields {
     plain_pass = %w
   }
