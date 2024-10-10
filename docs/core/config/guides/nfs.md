@@ -64,13 +64,13 @@ Potential optimizations to use:
   downside is that it requires running periodic [[doveadm,purge]] for each
   user. Theses commands should be run via a doveadm proxy so they are run
   in the proper backends.
-* Use [[setting,mail_volatile_path,/dev/shm/dovecot/%2.256Nu/%u]] to store some
+* Use [[setting,mail_volatile_path,/dev/shm/dovecot/%{user | sha1 % 256 | hex(2)}/%{user}]] to store some
   temporary files (e.g. lock files) in tmpfs rather than NFS.
-* Use [[setting,mailbox_list_index_prefix,/fast/%2.256Nu/%u]] to use "smaller
+* Use [[setting,mailbox_list_index_prefix,/fast/%{user | sha1 % 256 | hex(2)}/%{user}]] to use "smaller
   fast storage" for index files and "larger slow storage" for mail files. Also
   use [[setting,mailbox_list_iter_from_index_dir,yes]] to list mailboxes via
   the fast index storage rather than the slow mail storage.
-* Use [[setting,mailbox_list_iter_from_index_dir,/slow/%2.256Nu/%u]] to use
+* Use [[setting,mailbox_list_iter_from_index_dir,/slow/%{user | sha1 % 256 | hex(2)}/%{user}]] to use
   "smaller fast storage" for new mails and "larger slow storage" for old
   mails. The [[doveadm,altmove]] command needs to be run periodically. Also use
   [[setting,mail_alt_check,no]] to disable a sanity check to make sure alt

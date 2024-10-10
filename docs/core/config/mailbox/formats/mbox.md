@@ -412,7 +412,7 @@ There are four possibilities why the error message could happen:
    the same index file for multiple different mboxes!
 
    - This could happen if you let Dovecot do mailbox autodetection and
-     it sometimes uses `/var/mail/%u` (when it exists) and other
+     it sometimes uses `/var/mail/%{user}` (when it exists) and other
      times `~/mail/inbox`. Use explicit [[link,mail_location]] settings to make
      sure the same INBOX is used.
 
@@ -521,10 +521,10 @@ well. Usually `~/mail` is a good choice for this.
 For an installation such as this, the mail location is specified with:
 
 ```[dovecot.con]
-# %u is replaced with the username that logs in
+# %{user} is replaced with the username that logs in
 mail_driver = mbox
 mail_path = ~/mail
-mail_inbox_path = /var/mail/%u
+mail_inbox_path = /var/mail/%{user}
 ```
 
 It's in no way a requirement to have the INBOX in `/var/mail/` directory. In
@@ -556,8 +556,8 @@ change the index path. Example:
 ```[dovecot.conf]
 mail_driver = mbox
 mail_path = ~/mail
-mail_inbox_path = /var/mail/%u
-mail_index_path = /var/indexes/%u
+mail_inbox_path = /var/mail/%{user}
+mail_index_path = /var/indexes/%{user}
 ```
 
 ### Locking
@@ -625,7 +625,7 @@ files, you can work around not having a per-user directory:
 * Set [[setting,mail_path]] to an empty non-writable directory, e.g.
   [[setting,mail_path,/var/empty]].
 * Set [[setting,mail_inbox_path]], e.g.
-  [[setting,mail_inbox_path,/var/mail/%u]].
+  [[setting,mail_inbox_path,/var/mail/%{user}]].
 * Note that if you have IMAP users, they'll see `/var/empty` as the
   directory containing other mailboxes than INBOX. If the directory is
   writable, all the users will have their mailboxes shared.

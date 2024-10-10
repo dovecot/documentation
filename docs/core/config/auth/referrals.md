@@ -67,7 +67,7 @@ Forward user to another server after successful authentication (SQL):
 passdb sql {
   query = SELECT password, host, 'Y' as nologin \
     FROM users \
-    WHERE userid = '%u'
+    WHERE userid = '%{user}'
 }
 ```
 
