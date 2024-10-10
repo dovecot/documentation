@@ -380,7 +380,29 @@ dict_server {
         password = sqlpass
       }
     }
-    !include /etc/dovecot/dovecot-dict-sql.conf.inc
+
+    dict_map shared/shared-boxes/user/$to/$from {
+      sql_table = user_shares
+      value_field dummy {
+      }
+
+      key_field from_user {
+        value = $from
+      }
+      key_field to_user {
+        value = $to
+      }
+    }
+
+    dict_map shared/shared-boxes/anyone/$from {
+      sql_table = anyone_shares
+      value_field dummy {
+      }
+
+      key_field from_user {
+        value = $from
+      }
+    }
   }
 }
 ```
@@ -404,32 +426,6 @@ CREATE TABLE anyone_shares (
 );
 COMMENT ON TABLE anyone_shares IS 'User from_user shares folders to anyone.';
 ```
-
-```[/etc/dovecot/dovecot-dict-sql.conf.inc]
-dict_map shared/shared-boxes/user/$to/$from {
-  sql_table = user_shares
-  value_field dummy {
-  }
-
-  key_field from_user {
-    pattern = $from
-  }
-  key_field to_user {
-    pattern = $to
-  }
-}
-
-dict_map shared/shared-boxes/anyone/$from {
-  sql_table = anyone_shares
-  value_field dummy {
-  }
-
-  key_field from_user {
-    pattern = $from
-  }
-}
-```
-:::
 
 ### Mailbox Sharing
 
