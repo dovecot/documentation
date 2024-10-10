@@ -194,13 +194,13 @@ example:
 
 ```[dovecot.conf]
 mail_driver = mdbox
-mail_path = /var/vmail/%d/%n
-mail_alt_path = /altstorage/vmail/%d/%n
+mail_path = /var/vmail/%{user | domain}/%{user | username}
+mail_alt_path = /altstorage/vmail/%{user | domain}/%{user | username}
 ```
 
-will make Dovecot look for message data first under `/var/vmail/%d/%n`
+will make Dovecot look for message data first under `/var/vmail/%{user | domain}/%{user | username}`
 ("primary storage"), and if it is not found there it will look under
-`/altstorage/vmail/%d/%n` ("alternate storage") instead. There's no problem
+`/altstorage/vmail/%{user | domain}/%{user | username}` ("alternate storage") instead. There's no problem
 having the same (identical) file in both storages.
 
 Keep the unmounted `/altstorage` directory permissions such that Dovecot
@@ -236,10 +236,10 @@ e.g. [[doveadm,fetch]] or [[doveadm,import]] commands to access the mails.
 For example, if you have:
 * [[setting,mail_driver,mdbox]],
 * [[setting,mail_path,~/mdbox]],
-* [[setting,mail_index_path,/var/index/%u]],
+* [[setting,mail_index_path,/var/index/%{user}]],
 
 use:
-[[doveadm,import,-p mail_index_path=/var/index/%u mdbox_deleted:~/mdbox "" subject oops]].
+[[doveadm,import,-p mail_index_path=/var/index/%{user} mdbox_deleted:~/mdbox "" subject oops]].
 
 This finds a deleted mail with subject "oops" and imports it into INBOX.
 

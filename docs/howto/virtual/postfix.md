@@ -85,11 +85,11 @@ quotas or mailbox formats.
 auth_mechanisms = plain
 
 passdb passwd-file {
-  passwd_file_path = /var/vmail/auth.d/%d/passwd
+  passwd_file_path = /var/vmail/auth.d/%{user | domain}/passwd
 }
 
 userdb passwd-file {
-  passwd_file_path = /var/vmail/auth.d/%d/passwd
+  passwd_file_path = /var/vmail/auth.d/%{user | domain}/passwd
 }
 ```
 

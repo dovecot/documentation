@@ -33,9 +33,9 @@ For example:
 ```[dovecot.conf]
 userdb passwd {
   fields {
-    home = /var/mail/%{username}
+    home = /var/mail/%{user | username}
     mail_driver = maildir
-    mail_path = /var/mail/%{username}/Maildir
+    mail_path = /var/mail/%{user | username}/Maildir
   }
 }
 ```
@@ -53,9 +53,9 @@ userdb passwd {
   fields {
     uid = %{passwd:uid:vmail}
     gid = %{passwd:gid:vmail}
-    home = /var/mail/%{username}
+    home = /var/mail/%{user | username}
     mail_driver = maildir
-    mail_path = /var/mail/%{username}/Maildir
+    mail_path = /var/mail/%{user | username}/Maildir
   }
 }
 ```

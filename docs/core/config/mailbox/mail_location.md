@@ -27,29 +27,17 @@ See [[variable]] for a full list, but the most commonly used ones are:
 
 | Variable | Description |
 | -------- | ----------- |
-| `%u` | Full username. |
-| `%n` | User part in `user@domain`; same as `%u` if there's no domain. |
-| `%d` | Domain part in `user@domain`; empty if there's no domain. |
+| `%{user}` | Full username. |
+| `%{user | username}` | User part in `user@domain`; same as `%{user}` if there's no domain. |
+| `%{user | domain}` | Domain part in `user@domain`; empty if there's no domain. |
 
 ### Directory Hashing
 
-You can use three different kinds of hashes in [[variable]].
+Examples on how to do it:
 
-* `%N` is MD5-based "new hash" which works similarly to `%H` except it
-  gives more uniform results.
+* `%{ user | sha1 % 256 | hex(2)}` would give maximum 256 different hashes in range of `00` to `ff`.
 
-  * Example: `%2.256N` would return maximum 256 different hashes in range
-    `00..ff`.
-
-* `%M` returns a MD5 hash of the string as hex. This can be used for two
-  level hashing by getting substrings of the MD5 hash.
-
-  * Example: `%1Mu/%2.1Mu/%u` returns directories from `0/0/user` to
-    `f/f/user`.
-
-* `%H` returns a 32bit hash of the given string as hex.
-
-  * This is the old, deprecated method. `%N` should be used instead.
+See also [[link,upgrading_directory_hashing]]
 
 ## Index Files
 
@@ -64,7 +52,7 @@ setting. For example:
 ```[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
-mail_index_path = /var/indexes/%u
+mail_index_path = /var/indexes/%{user}
 ```
 
 The index directories are created automatically, but note that it requires
@@ -158,7 +146,7 @@ If you really don't want to set any home directory, you can use something like:
 
 ```[dovecot.conf]
 mail_driver = maildir
-mail_path = /home/%u/Maildir
+mail_path = /home/%{user}/Maildir
 ```
 
 ## Per-User Mail Locations
@@ -167,7 +155,7 @@ It's possible to override the default mail location for specific users by
 making the [[link,userdb]] return the settings as extra field.
 
 ::: tip
-Note that `%h` doesn't work in the userdb queries or templates. `~/` gets
+Note that `%{home}` doesn't work in the userdb queries or templates. `~/` gets
 expanded later, so use it instead.
 
 If you have explicit settings inside [[link,namespaces,namespace { .. }]] they
@@ -179,7 +167,7 @@ need to be overridden in userdb with `namespace/<name>/` prefix. For example
 
 ```[dovecot.conf]
 userdb sql {
-  query = SELECT home, uid, gid, mail_path FROM users WHERE user = '%u'
+  query = SELECT home, uid, gid, mail_path FROM users WHERE user = '%{user}'
 }
 ```
 
@@ -269,10 +257,10 @@ multiple mailboxes, you'll also have to have a directory for them as
 well. Usually `~/mail` is a good choice for this.
 
 For installation such as this, the mail location settings are specified with,
-where `%u` is replaced with the username that logs in:
+where `%{user}` is replaced with the username that logs in:
 * [[setting,mail_driver,mbox]],
 * [[setting,mail_path,~/mail]], and
-* [[setting,mail_inbox_path,/var/mail/%u]].
+* [[setting,mail_inbox_path,/var/mail/%{user}]].
 
 Similarly if your INBOX is in `~/mbox`, use:
 * [[setting,mail_inbox_path,~/mbox]].

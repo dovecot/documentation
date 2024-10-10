@@ -230,7 +230,7 @@ The separator setting can be overridden by returning
 userdb sql {
   query = SELECT home, uid, gid, CONCAT(quota_bytes, 'B') AS quota_storage_size, separator AS "namespace/default/separator" \
     FROM users \
-    WHERE username = '%n' and domain = '%d'
+    WHERE username = '%{user | username}' and domain = '%{user | domain}'
 }
 ```
 :::
