@@ -8227,13 +8227,11 @@ The default should not be changed for most installations.`
 		default: 'fcntl',
 		tags: [ 'mbox' ],
 		seealso: [ '[[link,mbox]]' ],
-		values: setting_types.ENUM,
+		values: setting_types.BOOLLIST,
 		values_enum: [ 'dotlock', 'dotlock_try', 'fcntl', 'flock', 'lockf' ],
 		text: `
 Specify which locking method(s) to use for locking the mbox files during
 reading.
-
-To use multiple values, separate them with spaces.
 
 Descriptions of the locking methods can be found at [[link,mbox_locking]].`
 	},
@@ -8255,13 +8253,11 @@ If set, this option overrides [[setting,mbox_dirty_syncs]].`
 		default: 'dotlock fcntl',
 		tags: [ 'mbox' ],
 		seealso: [ '[[link,mbox]]' ],
-		values: setting_types.ENUM,
+		values: setting_types.BOOLLIST,
 		values_enum: [ 'dotlock', 'dotlock_try', 'fcntl', 'flock', 'lockf' ],
 		text: `
 Specify which locking method(s) to use for locking the mbox files during
 writing.
-
-To use multiple values, separate them with spaces.
 
 Descriptions of the locking methods can be found at [[link,mbox_locking]].`
 	},
