@@ -5906,17 +5906,24 @@ Directory for writing raw log data for debugging purposes.`
 
 	imap_capability: {
 		tags: [ 'imap' ],
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		text: `
 Override the IMAP CAPABILITY response.
 
-If the value begins with the \`+\` character, the capabilities listed here
-are added at the end of the default string.
-
-Example:
+Example of modifying capability banner by adding QUOTA and ACL, and removing IDLE:
 
 \`\`\`
-imap_capability = +XFOO XBAR
+imap_capability {
+  QUOTA = yes
+  ACL = yes
+  IDLE = no
+}
+\`\`\`
+
+Example of setting capability banner to exactly IMAP4rev1 SASL-IR IDLE:
+
+\`\`\`
+imap_capability = IMAP4rev1 SASL-IR IDLE
 \`\`\``
 	},
 
