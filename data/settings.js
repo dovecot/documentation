@@ -4160,7 +4160,7 @@ Access only mailboxes under this prefix.
 Example, for a source IMAP server that uses an INBOX namespace prefix:
 
 \`\`\`
-imapc_list_prefix = INBOX/
+imapc_list_prefix = INBOX
 \`\`\``
 	},
 
