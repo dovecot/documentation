@@ -15,7 +15,7 @@ Mailbox formats supported by Dovecot:
 
 ### mbox
 
-See [[link,mbox]].
+See [mbox](https://doc.dovecot.org/main/core/config/mailbox/formats/mbox.html)
 
 Traditional UNIX mailbox format.
 
@@ -24,7 +24,7 @@ Users' INBOX mailboxes are commonly stored in `/var/spool/mail` or
 
 ### Maildir
 
-See [[link,maildir]].
+See [Maildir](https://doc.dovecot.org/main/core/config/mailbox/formats/maildir.html).
 
 One file contains one message. A reliable choice since files are never
 modified and all operations are atomic. The top-level Maildir
@@ -33,7 +33,7 @@ directory contains the `Maildir/cur`, `Maildir/new`, and
 
 ### dbox
 
-See [[link,dbox]].
+See [dbox](https://doc.dovecot.org/main/core/config/mailbox/formats/dbox.html).
 
 Dovecot's own high performance mailbox format. Messages are stored in
 one or more files, each containing one or more messages.
@@ -45,19 +45,19 @@ There are two flavors of dbox:
 
 ### imapc
 
-See [[link,imapc]].
+See [imapc](https://doc.dovecot.org/main/core/config/mailbox/formats/imapc.html).
 
 Use remote IMAP server as mail storage.
 
 ### pop3c
 
-See [[link,pop3c]].
+See [pop3c](https://doc.dovecot.org/main/core/config/mailbox/formats/pop3c.html).
 
 Use remote POP3 server as mail storage.
 
 ## Configuration
 
-See [[link,mail_location]] for configuration information.
+See [mail_location seting](https://doc.dovecot.org/main/core/config/mailbox/mail_location.html) for configuration information.
 
 ## Physical Storage
 
@@ -71,7 +71,7 @@ There are two general categories of storage: local and shared.
 
 #### Filesystems
 
-* See [[link,maildir]] for Maildir-specific filesystem optimizations
+* See [Maildir](https://doc.dovecot.org/main/core/config/mailbox/formats/maildir.html) for Maildir-specific filesystem optimizations
 * Dovecot doesn't rely on atime updates, so you can mount the filesystem with
   `noatime`
 
