@@ -57,7 +57,7 @@ Use remote POP3 server as mail storage.
 
 ## Configuration
 
-See [mail_location seting](https://doc.dovecot.org/main/core/config/mailbox/mail_location.html) for configuration information.
+See [mail_location setting](https://doc.dovecot.org/main/core/config/mailbox/mail_location.html) for configuration information.
 
 ## Physical Storage
 
