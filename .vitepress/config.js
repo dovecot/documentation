@@ -12,6 +12,14 @@ const base = '/2.4'
 // processing will begin before Dovecot link markup is enabled
 await initDovecotMd(base)
 
+export const dovecotConfig = {
+	watch_paths: [
+		'docs/**/*.md',
+		'docs/**/*.inc',
+		'data/**/*'
+	]
+}
+
 export default defineConfig({
 	title: "Dovecot CE",
 	description: "Dovecot CE Documentation",
@@ -103,7 +111,10 @@ export default defineConfig({
 		gitrev: {
 			align: 'right',
 			hash: gitCommitInfo().shortHash,
-		}
+		},
+
+		/* Dovecot config. */
+		dovecot: dovecotConfig,
 	},
 
 	markdown: {

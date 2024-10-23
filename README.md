@@ -158,6 +158,20 @@ The data files live in the base `/data` directory. Each file attempts to be
 self-documenting, but they are all essentially large JSON objects. Developers
 should need to know basically no JavaScript to be able to edit the files.
 
+### Dovecot VitePress Configuration
+
+Additional configuration options required for VitePress static generation are
+defined using the `dovecot` object in the `themeConfig` VitePress
+configuration setting.
+
+#### watch_paths
+
+An array of file patterns to watch to refresh data loaders in dev mode.
+See: https://vitepress.dev/guide/data-loading#data-from-local-files
+Paths are relative to project base.
+
+Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
+
 ### Dovecot Markdown Extensions
 
 Markdown has been extended to allow various Dovecot-specific tasks to be
