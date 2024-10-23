@@ -163,6 +163,16 @@ should need to know basically no JavaScript to be able to edit the files.
 Various paths used for VitePress static generation can be overridden using
 the `dovecot` object in the `themeConfig` VitePress configuration setting.
 
+#### data_paths
+
+Allows custom mapping of data sources.
+
+It is used by the VitePress data loaders to determine what data to
+load for export.
+
+Keys are data identifiers, Values are location RELATIVE TO `<base>/lib`
+DIRECTORY.
+
 #### man_includes
 
 A list of additional paths (other than the `include/` directory of the man
