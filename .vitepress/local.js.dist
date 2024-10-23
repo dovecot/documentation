@@ -12,22 +12,3 @@
 export const data_paths = {
 	// doveadm: '../data/doveadm.js',
 }
-
-// Enable additional labels to support in Dovecot-specific markdown
-// processing (i.e. [[xyz,...]]).
-export const markdown_extend = {
-
-	// Init function. Return value is configuration options to add to markdown
-	// object.
-	// init: () => { return {} },
-
-	// Opening tag function. Returns opening tag.
-	// open: (mode, parts, opts, env) => { return '' },
-
-	// Body function. Returns body text.
-	// body: (mode, env) => { return '' },
-
-	// Close tag function. Returns closing tag.
-	// close: (mode, env) => { return '' },
-
-}
