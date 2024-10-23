@@ -189,6 +189,29 @@ Paths are relative to project base.
 
 Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
 
+#### markdown_extend
+
+An object containing callbacks that enable additional labels to support in
+Dovecot-specific markdown processing (i.e. [[xyz,...]]).
+
+##### open
+
+Opening tag function. Returns opening tag.
+
+Example: `open: (mode, parts, opts, env) => { return '' }`
+
+##### body
+
+Body function. Returns body text.
+
+Example: `body: (mode, env) => { return '' }`
+
+##### close
+
+Close tag function. Returns closing tag.
+
+Example: `close: (mode, env) => { return '' }`
+
 #### plugin_paths
 
 A listing of paths containing plugin files.
