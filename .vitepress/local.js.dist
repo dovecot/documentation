@@ -13,14 +13,6 @@ export const data_paths = {
 	// doveadm: '../data/doveadm.js',
 }
 
-// A listing of source files (.md) for the documentation.
-// Paths are relative to project base.
-//
-// Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
-//
-// Default: [ 'docs/**/*.md' ]
-export const source_paths = []
-
 // A listing of files to watch to refresh data loaders in dev mode.
 // See: https://vitepress.dev/guide/data-loading#data-from-local-files
 // Paths are relative to project base.
@@ -29,14 +21,6 @@ export const source_paths = []
 //
 // Default: [ 'docs/**/*.md', 'docs/**/*.inc', 'data/**/*' ]
 export const watch_paths = []
-
-// A listing of source path translations.
-//
-// This is the same format as VitePress' 'rewrite' setting:
-//   https://vitepress.dev/reference/site-config#rewrites
-//
-// Default: { 'docs/:path(.*)': ':path' }
-export const source_path_translations = {}
 
 // A listing of paths containing man files.
 // Paths are relative to project base.

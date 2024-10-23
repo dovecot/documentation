@@ -1,21 +1,11 @@
 import gitCommitInfo from 'git-commit-info'
-import path from 'path'
 import { defineConfig } from 'vitepress'
 import { pagefindPlugin } from 'vitepress-plugin-pagefind'
 import { generateSidebar } from 'vitepress-sidebar'
 import { dovecotMdExtend, initDovecotMd } from '../lib/markdown.js'
-import { frontmatterIter } from '../lib/utility.js'
+import { getExcludes } from '../lib/utility.js'
 
 const base = '/2.4'
-
-// No need to include the "dummy" index files, used to build titles
-// for the sidebar, into the final documentation bundles
-const excludes = []
-await frontmatterIter(function (f, data) {
-	if (data.exclude) {
-		excludes.push(path.relative('docs/', f))
-	}
-})
 
 // Need to bootstrap configuration for Dovecot markdown driver (specifically,
 // loading all data files to allow existence checking), or else the markdown
@@ -27,8 +17,11 @@ export default defineConfig({
 	description: "Dovecot CE Documentation",
 	lang: "en-us",
 
-	srcDir: "docs",
-	srcExclude: excludes,
+	srcDir: ".",
+	srcExclude: [ '*.md' ].concat(getExcludes()),
+	rewrites: {
+		'docs/:path(.*)': ':path',
+	},
 
 	base: base,
 	sitemap: {
