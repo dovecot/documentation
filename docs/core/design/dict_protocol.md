@@ -11,8 +11,8 @@ dovecotlinks:
 This document describes Dovecot Dict protocol v3.2 which is supported in
 Dovecot v2.3.17+.
 
-Dovecot Core v2.4.0 changed the version to v4, but it's otherwise compatible
-with v3.2
+[[changed,dict_protocol_v4]] Dict protocol version was updated to v4, but
+it's otherwise compatible with v3.2.
 :::
 
 Dovecot's dict protocol is a line based protocol between the dict client and
