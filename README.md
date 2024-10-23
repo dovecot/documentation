@@ -163,6 +163,18 @@ should need to know basically no JavaScript to be able to edit the files.
 Various paths used for VitePress static generation can be overridden using
 the `dovecot` object in the `themeConfig` VitePress configuration setting.
 
+#### man_includes
+
+A list of additional paths (other than the `include/` directory of the man
+folder) where include files can live.
+
+#### man_paths
+
+A listing of paths containing man files.
+Paths are relative to project base.
+
+Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
+
 #### watch_paths
 
 An array of file patterns to watch to refresh data loaders in dev mode.

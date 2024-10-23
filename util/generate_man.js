@@ -126,8 +126,8 @@ const main = async (component, outPath) => {
 	}
 
 	/* Generate list of man files. */
-	const files = (await manFiles()).flatMap((x) => fg.sync(x))
-	const includes = (await manIncludes()).flatMap((x) => fg.sync(x))
+	const files = manFiles().flatMap((x) => fg.sync(x))
+	const includes = manIncludes().flatMap((x) => fg.sync(x))
 
 	/* Get hash of last git commit. */
 	const gitHash = gitCommitInfo().shortHash

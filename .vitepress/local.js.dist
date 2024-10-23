@@ -13,14 +13,6 @@ export const data_paths = {
 	// doveadm: '../data/doveadm.js',
 }
 
-// A listing of paths containing man files.
-// Paths are relative to project base.
-//
-// Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
-//
-// Default: [ 'docs/core/man/*.[[:digit:]].md' ]
-export const man_paths = []
-
 // A listing of paths containing plugin files.
 // Paths are relative to project base.
 //
