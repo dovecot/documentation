@@ -189,6 +189,13 @@ Paths are relative to project base.
 
 Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
 
+#### plugin_paths
+
+A listing of paths containing plugin files.
+Paths are relative to project base.
+
+Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
+
 #### watch_paths
 
 An array of file patterns to watch to refresh data loaders in dev mode.

@@ -13,14 +13,6 @@ export const data_paths = {
 	// doveadm: '../data/doveadm.js',
 }
 
-// A listing of paths containing plugin files.
-// Paths are relative to project base.
-//
-// Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
-//
-// Default: [ 'docs/core/plugins/*.md' ]
-export const plugin_paths = []
-
 // Enable additional labels to support in Dovecot-specific markdown
 // processing (i.e. [[xyz,...]]).
 export const markdown_extend = {
