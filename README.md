@@ -232,6 +232,13 @@ Paths are relative to project base.
 
 Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
 
+#### url_rewrite
+
+A callback where Markdown generated URLs can be rewritten.
+Function is called the original URL and returns the (modified) URL.
+
+Example: `url_rewrite: (url) => { return url + '.foo' }`
+
 #### watch_paths
 
 An array of file patterns to watch to refresh data loaders in dev mode.
