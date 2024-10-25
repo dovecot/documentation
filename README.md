@@ -208,6 +208,9 @@ Dovecot-specific markdown processing (i.e. [[xyz,...]]).
 
 Opening tag function. Returns opening tag.
 
+The opts argument contains a "resolveURL" key that allows access to the
+internal Dovecot Markdown `resolveURL()` function.
+
 Example: `open: (mode, parts, opts, env) => { return '' }`
 
 ##### body
