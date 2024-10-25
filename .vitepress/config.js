@@ -31,6 +31,7 @@ export const dovecotConfig = {
 	plugin_paths: [
 		'docs/core/plugins/*.md'
 	],
+	url_rewrite: false,
 	watch_paths: [
 		'docs/**/*.md',
 		'docs/**/*.inc',
