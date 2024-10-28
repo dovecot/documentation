@@ -92,7 +92,6 @@ cnf
 cnrilrgfclra
 codahale
 codinghorror
-coi
 CONDSTORE
 convertpw
 copybox
@@ -247,6 +246,7 @@ gethosterror
 getmail
 getscript
 gitlab
+gitrev
 Gluster
 gmatch
 gno

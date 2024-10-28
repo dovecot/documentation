@@ -13,6 +13,10 @@ const base = '/2.4'
 await initDovecotMd(base)
 
 export const dovecotConfig = {
+	gitrev: {
+		align: 'right',
+		hash: gitCommitInfo().shortHash,
+	},
 	watch_paths: [
 		'docs/**/*.md',
 		'docs/**/*.inc',
@@ -106,12 +110,6 @@ export default defineConfig({
 		socialLinks: [
 			{ icon: 'github', link: 'https://github.com/dovecot/' },
 		],
-
-		/* Dovecot specific config: return gitrev for this build. */
-		gitrev: {
-			align: 'right',
-			hash: gitCommitInfo().shortHash,
-		},
 
 		/* Dovecot config. */
 		dovecot: dovecotConfig,
