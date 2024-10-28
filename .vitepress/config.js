@@ -17,6 +17,12 @@ export const dovecotConfig = {
 		align: 'right',
 		hash: gitCommitInfo().shortHash,
 	},
+	man_includes: [
+		'docs/core/man/include/*.inc'
+	],
+	man_paths: [
+		'docs/core/man/*.[[:digit:]].md'
+	],
 	watch_paths: [
 		'docs/**/*.md',
 		'docs/**/*.inc',

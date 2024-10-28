@@ -177,6 +177,18 @@ Alignment of the text. Either `left` or `right`.
 
 The git hash of the branch tip.
 
+#### man_includes
+
+A list of additional paths (other than the `include/` directory of the man
+folder) where include files can live.
+
+#### man_paths
+
+A listing of paths containing man files.
+Paths are relative to project base.
+
+Supports fast-glob: https://github.com/mrmlnc/fast-glob#pattern-syntax
+
 #### watch_paths
 
 An array of file patterns to watch to refresh data loaders in dev mode.
