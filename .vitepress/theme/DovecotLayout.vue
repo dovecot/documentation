@@ -10,9 +10,9 @@ const { Layout } = DefaultTheme
  <Layout>
   <template #doc-footer-before>
    <div class="edit-info">
-    <div :class="'edit-rev edit-rev-' + theme.gitrev.align">
+    <div :class="'edit-rev edit-rev-' + theme.dovecot.gitrev.align">
      <div>
-      <p class="edit-updated">Revision: {{ theme.gitrev.hash }}</p>
+      <p class="edit-updated">Revision: {{ theme.dovecot.gitrev.hash }}</p>
      </div>
     </div>
    </div>

@@ -164,6 +164,19 @@ Additional configuration options required for VitePress static generation are
 defined using the `dovecot` object in the `themeConfig` VitePress
 configuration setting.
 
+#### gitrev
+
+Configures how the current git revision information is displayed in the
+page footer.
+
+##### align
+
+Alignment of the text. Either `left` or `right`.
+
+##### hash
+
+The git hash of the branch tip.
+
 #### watch_paths
 
 An array of file patterns to watch to refresh data loaders in dev mode.
