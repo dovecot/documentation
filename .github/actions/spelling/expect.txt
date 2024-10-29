@@ -54,6 +54,7 @@ bantime
 barfoo
 bayes
 bcc
+benumber
 bernat
 bindir
 bitfield
@@ -62,8 +63,8 @@ blitiri
 bodystructure
 Boehm
 Bokmal
-Borenstein
 boollist
+Borenstein
 bsd
 bsdauth
 bsearch
@@ -134,6 +135,7 @@ deleteheader
 dentries
 DESTNAME
 destuser
+dextended
 DHd
 Dhesi
 dirnamename
@@ -218,6 +220,7 @@ fgrep
 fieldstr
 fileinto
 findtime
+findutils
 firewalls
 firstsaved
 flatcurve
@@ -265,6 +268,7 @@ hba
 hdr
 hendrik
 hexblob
+hexlify
 hexuc
 hhmm
 highestmodseq
@@ -356,6 +360,7 @@ ldaps
 LDFLAGS
 ldif
 leastconn
+lenumber
 letsencrypt
 LFs
 lgdb
@@ -574,8 +579,8 @@ opie
 opsec
 optboolean
 optname
-OR'ing
 orcpt
+OR'ing
 ORing
 OSFILE
 otherinstance
@@ -779,6 +784,7 @@ sysexits
 syslogd
 syslogging
 sysreport
+systemt
 tabindex
 TABLEGEN
 Taddressverification
@@ -837,6 +843,7 @@ unaccessed
 unaliased
 unauth
 UNDRAFT
+unhexlify
 unhibernate
 unhibernated
 unhibernating
