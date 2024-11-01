@@ -879,15 +879,10 @@ the source user name, e.g., \`user sourceuser\`.`
 		/* No examples in here, as this command's use should not be
 		 * encouraged. */
 		args: {
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			'source-path': {
 				type: doveadm_arg_types.STRING,
@@ -911,20 +906,15 @@ the source user name, e.g., \`user sourceuser\`.`
 				type: doveadm_arg_types.BOOL,
 				text: `Do recursive delete of path.`
 			},
-			maxParallel: {
+			'max-parallel': {
 				cli: 'n',
 				type: doveadm_arg_types.INTEGER,
 				text: `Max number of parallel workers.`,
 			},
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			path: {
 				positional: true,
@@ -940,15 +930,10 @@ the source user name, e.g., \`user sourceuser\`.`
 		/* No examples in here, as this command's use should not be
 		 * encouraged. */
 		args: {
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			path: {
 				positional: true,
@@ -964,25 +949,20 @@ the source user name, e.g., \`user sourceuser\`.`
 		/* No examples in here, as this command's use should not be
 		 * encouraged. */
 		args: {
-			noCache: {
+			'no-cache': {
 				// TODO: Needs to be documented in man page
 				cli: 'C',
 				type: doveadm_arg_types.BOOL
 			},
-			objectIds: {
+			'object-ids': {
 				// TODO: Needs to be documented in man page
 				cli: 'O',
 				type: doveadm_arg_types.BOOL
 			},
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			path: {
 				positional: true,
@@ -998,15 +978,10 @@ the source user name, e.g., \`user sourceuser\`.`
 		/* No examples in here, as this command's use should not be
 		 * encouraged. */
 		args: {
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			path: {
 				positional: true,
@@ -1022,15 +997,10 @@ the source user name, e.g., \`user sourceuser\`.`
 		/* No examples in here, as this command's use should not be
 		 * encouraged. */
 		args: {
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			path: {
 				positional: true,
@@ -1055,15 +1025,10 @@ the source user name, e.g., \`user sourceuser\`.`
 				cli: 'm',
 				type: doveadm_arg_types.ARRAY
 			},
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			'input-path': {
 				positional: true,
@@ -1084,15 +1049,10 @@ the source user name, e.g., \`user sourceuser\`.`
 		/* No examples in here, as this command's use should not be
 		 * encouraged. */
 		args: {
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			path: {
 				positional: true,
