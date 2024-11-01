@@ -785,15 +785,10 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 
 	'fs copy': {
 		args: {
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			'source-path': {
 				type: doveadm_arg_types.STRING,
@@ -815,20 +810,15 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				type: doveadm_arg_types.BOOL,
 				text: `Do recursive delete of path.`
 			},
-			maxParallel: {
+			'max-parallel': {
 				cli: 'n',
 				type: doveadm_arg_types.INTEGER,
 				text: `Max number of parallel workers.`,
 			},
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			path: {
 				positional: true,
@@ -842,15 +832,10 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 
 	'fs get': {
 		args: {
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			path: {
 				positional: true,
@@ -864,23 +849,18 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 
 	'fs iter': {
 		args: {
-			noCache: {
+			'no-cache': {
 				cli: 'C',
 				type: doveadm_arg_types.BOOL
 			},
-			objectIds: {
+			'object-ids': {
 				cli: 'O',
 				type: doveadm_arg_types.BOOL
 			},
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			path: {
 				positional: true,
@@ -894,15 +874,10 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 
 	'fs iter-dirs': {
 		args: {
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			path: {
 				positional: true,
@@ -916,15 +891,10 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 
 	'fs metadata': {
 		args: {
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			path: {
 				positional: true,
@@ -945,15 +915,10 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				cli: 'm',
 				type: doveadm_arg_types.ARRAY
 			},
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			'input-path': {
 				positional: true,
@@ -972,15 +937,10 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 
 	'fs stat': {
 		args: {
-			'fs-driver': {
+			'filter-name': {
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver to use.`
-			},
-			'fs-args': {
-				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Filesystem driver arguments to use.`
+				text: `Configuration filter name to use.`
 			},
 			path: {
 				positional: true,
