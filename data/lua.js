@@ -130,20 +130,20 @@ are not restricted.`
 				type: 'boolean',
 				text: `Never automatically retry requests.`
 			},
-			connect_backoff_time_msecs: {
+			connect_backoff_time: {
 				default: '100 msec',
 				hash_arg: true,
 				type: 'int',
 				text: `Initial backoff time; doubled at each connection failure.`
 			},
-			connect_backoff_max_time_msecs: {
+			connect_backoff_max_time: {
 				default: '60000 msec',
 				hash_arg: true,
 				type: 'int',
 				text: `Maximum backoff time.`
 			},
-			connect_timeout_msecs: {
-				default: '<request_timeout_msecs>',
+			connect_timeout: {
+				default: '<request_timeout>',
 				hash_arg: true,
 				type: 'int',
 				text: `Max time to wait for \`connect()\` (and SSL handshake) to finish before retrying.`
@@ -159,7 +159,7 @@ are not restricted.`
 				type: 'int',
 				text: `Maximum number of attempts for a request.`
 			},
-			max_auto_retry_delay_secs: {
+			max_auto_retry_delay: {
 				hash_arg: true,
 				type: 'int',
 				text: `
@@ -184,7 +184,7 @@ higher than the maximum attempts, not all IPs are tried.
 
 If <= 1, all IPs are tried at most once.`
 			},
-			max_idle_time_msecs: {
+			max_idle_time: {
 				hash_arg: true,
 				type: 'int',
 				text: `
@@ -204,19 +204,19 @@ how many idle connections exist to that same service.`
 				type: 'string',
 				text: `Proxy URL to use, can include username and password.`
 			},
-			request_absolute_timeout_msecs: {
+			request_absolute_timeout: {
 				default: '0; no timeout',
 				hash_arg: true,
 				type: 'int',
 				text: `Max total time to wait for HTTP request to finish, including retries and everything else.`
 			},
-			request_timeout_msecs: {
+			request_timeout: {
 				default: '60000 msec',
 				hash_arg: true,
 				type: 'int',
 				text: `Max time to wait for HTTP response before retrying.`
 			},
-			soft_connect_timeout_msecs: {
+			soft_connect_timeout: {
 				default: '0; wait until current connection attempt finishes',
 				hash_arg: true,
 				type: 'int',
