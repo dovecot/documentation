@@ -153,6 +153,11 @@ Dovecot doesn't automatically do that.
 
 [[man,doveadm-index]], Index messages in a given mailbox.
 
+### doveadm mail fs
+
+[[man,doveadm-mail-fs]], Interact with the abstract mail storage filesystem
+in a user context.
+
 ### doveadm mailbox
 
 [[man,doveadm-mailbox]], Various commands related to handling mailboxes.
