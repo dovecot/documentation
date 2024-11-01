@@ -1208,6 +1208,183 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		text: `Write a test message to the log files.`,
 	},
 
+	'mail fs copy': {
+		args: {
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			'source-path': {
+				type: doveadm_arg_types.STRING,
+				text: `Source object path.`,
+			},
+			'destination-path': {
+				type: doveadm_arg_types.STRING,
+				text: `Destination object path.`,
+			},
+		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-fs',
+		text: `Copy object in storage.`,
+	},
+
+	'mail fs delete': {
+		args: {
+			recursive: {
+				cli: 'R',
+				type: doveadm_arg_types.BOOL,
+				text: `Do recursive delete of path.`
+			},
+			'max-parallel': {
+				cli: 'n',
+				type: doveadm_arg_types.INTEGER,
+				text: `Max number of parallel workers.`,
+			},
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			path: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Object path.`,
+			},
+		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-fs',
+		text: `Delete object from storage.`,
+	},
+
+	'mail fs get': {
+		args: {
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			path: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Object path.`,
+			},
+		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-fs',
+		text: `Get object from storage.`,
+	},
+
+	'mail fs iter': {
+		args: {
+			'no-cache': {
+				cli: 'C',
+				type: doveadm_arg_types.BOOL
+			},
+			'object-ids': {
+				cli: 'O',
+				type: doveadm_arg_types.BOOL
+			},
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			path: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Object path.`,
+			},
+		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-fs',
+		text: `List objects in fs path.`,
+	},
+
+	'mail fs iter-dirs': {
+		args: {
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			path: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Object path.`,
+			},
+		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-fs',
+		text: `List folders in fs path.`,
+	},
+
+	'mail fs metadata': {
+		args: {
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			path: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Object path.`,
+			},
+		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-fs',
+	},
+
+	'mail fs put': {
+		args: {
+			hash: {
+				cli: 'h',
+				type: doveadm_arg_types.STRING
+			},
+			metadata: {
+				cli: 'm',
+				type: doveadm_arg_types.ARRAY
+			},
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			'input-path': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Object input path.`,
+			},
+			path: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Object path.`,
+			},
+		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-fs',
+		text: `Store object in storage.`,
+	},
+
+	'mail fs stat': {
+		args: {
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			path: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Object path.`,
+			},
+		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-fs',
+		text: `Retrieve files status for the path provided. Currently, only the total size (in bytes) of the item is returned.`,
+	},
+
 	'mailbox cache decision': {
 		args: {
 			all: {
