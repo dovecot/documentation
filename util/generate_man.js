@@ -56,7 +56,7 @@ const doInclude = (content, includes, f) => {
 	return result
 }
 
-const processDovecotMd = () => {
+const processDovecotMdPost = () => {
 	return tree => {
 		/* Convert definition lists to base mdast elements that remark-man
 		 * can handle. */
@@ -88,7 +88,11 @@ const processDovecotMd = () => {
 
 			node.node.children = [ u('blockquote', node.children) ]
 		})
+	}
+}
 
+const processDovecotMdPre = () => {
+	return tree => {
 		/* Go through and replace Dovecot markdown items with man-friendly
 		 * textual equivalents. */
 		return map(tree, (node) => {
@@ -151,9 +155,10 @@ const main = async (component, outPath) => {
 			continue
 
 		await unified().
+			use(processDovecotMdPre).
 			use(remarkParse).
 			use(remarkDeflist).
-			use(processDovecotMd).
+			use(processDovecotMdPost).
 			use(remarkMan, {
 				manual: 'Dovecot',
 				version: gitHash,
