@@ -42,7 +42,6 @@ program
 	.parse()
 const debug = program.opts().debug
 
-
 const doInclude = (content, includes, f) => {
 	const result = content.replace(includesRE, (m, m1) => {
 		if (!m1.length) return m
@@ -91,33 +90,80 @@ const processDovecotMdPost = () => {
 	}
 }
 
+const DovecotMd = (md) => {
+	const parts = md.split(',').map((x) => x.trim())
+	switch (parts[0]) {
+	case 'doveadm':
+		return [
+				{
+					type:'strong',
+					children: [
+						{
+							type:'text', value:'doveadm(1)'
+						}
+					]
+				},
+				{
+					type:'emphasis',
+					children: [
+						{
+							type:'text', value:' ' + parts.slice(1).join(' ')
+						}
+					]
+				}
+			]
+	case 'man':
+		return [{type:'text', value:parts[1] + '(' + (parts[3] ? parts[3] : '1') + ')'}]
+	case 'plugin':
+		return [{type:'text', value:parts[1] + ' plugin documentation'}]
+	case 'rfc':
+		return [{type:'text', value:'RFC ' + parts[1]}]
+	case 'setting':
+		return [
+				{
+					type:'strong',
+					children: [
+						{
+							type:'text', value:parts[1]
+						}
+					]
+				},
+				{
+					type:'text', value:' setting'
+				}
+			]
+	case 'link':
+		return [{type:'text', value:parts[1]}]
+	default:
+		throw new Error('unknown dovecot markdown command: ' + parts[0])
+	}
+}
+
 const processDovecotMdPre = () => {
 	return tree => {
 		/* Go through and replace Dovecot markdown items with man-friendly
 		 * textual equivalents. */
-		return map(tree, (node) => {
-			if (node.value) {
-				node.value = node.value.replace(includesDM, (m, m1) => {
-					if (!m1.length) return m
-
-					const parts = m1.split(',').map((x) => x.trim())
-					switch (parts[0]) {
-					case 'man':
-						return parts[1] + '(' + (parts[3] ? parts[3] : '1') + ')'
-					case 'plugin':
-						return parts[1] + ' plugin documentation'
-					case 'rfc':
-						return 'RFC ' + parts[1]
-					case 'setting':
-						return '`' + parts[1] + '`'
-					case 'link':
-						return parts[1]
-					default:
-						throw new Error('unknown dovecot markdown command: ' + parts[0])
-					}
-				})
-			}
-			return node
+		return map(tree, (para) => {
+			visit(para, 'text', (node, index, para) => {
+				/* if the text contains at least one tag, we need to convert
+				 * this into an array of children that replace the parent's children. */
+				var result;
+				var newChildren = []
+				var pos = 0;
+				while ((result = includesDM.exec(node.value))) {
+					const pre = node.value.substr(pos, result.index - pos)
+					pos = result.index + result[0].length
+					if (pre != "")
+						newChildren.push({type: 'text', value: pre})
+					newChildren.push(...DovecotMd(result[1]))
+				}
+				if (newChildren.length != 0) {
+					if (pos < node.value.length)
+						newChildren.push({type: 'text', value: node.value.substr(pos)})
+					para.children = newChildren
+				}
+			})
+			return para
 		})
 	}
 }
