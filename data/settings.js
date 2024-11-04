@@ -4588,6 +4588,22 @@ Path to the CDB database file.`
 		text: `The log file to use for debug messages.`
 	},
 
+	default_client_limit: {
+		values: setting_types.UINT,
+		default: '1000',
+		text: `
+Default value for [[setting,service_client_limit]], if not overridden by
+service-specific configuration.`
+	},
+
+	default_idle_kill_interval: {
+		values: setting_types.TIME,
+		default: '1 min',
+		text: `
+Default value for [[setting,service_idle_kill_interval]], if not overridden by
+service-specific configuration.`
+	},
+
 	default_internal_group: {
 		default: 'dovecot',
 		seealso: [ 'default_internal_user' ],
@@ -4615,6 +4631,22 @@ The user the login process should run as.
 
 This is the least trusted user in Dovecot: this user should not have access
 to anything at all.`
+	},
+
+	default_process_limit: {
+		values: setting_types.UINT,
+		default: '100',
+		text: `
+Default value for [[setting,service_process_limit]], if not overridden by
+service-specific configuration.`
+	},
+
+	default_vsz_limit: {
+		values: setting_types.SIZE,
+		default: '256 M',
+		text: `
+Default value for [[setting,service_vsz_limit]], if not overridden by
+service-specific configuration.`
 	},
 
 	deliver_log_format: {
@@ -9913,7 +9945,7 @@ is launched.
 	service_process_limit: {
 		tags: [ 'service' ],
 		values: setting_types.UINT,
-		default: 100,
+		default: '[[setting,default_process_limit]]',
 		text: `
 The maximum number of processes that may exist for this service.`
 	},
@@ -9921,7 +9953,7 @@ The maximum number of processes that may exist for this service.`
 	service_client_limit: {
 		tags: [ 'service' ],
 		values: setting_types.UINT,
-		default: 1000,
+		default: '[[setting,default_client_limit]]',
 		text: `
 Maximum number of simultaneous client connections per process. Once this number
 of connections is received, the next incoming connection will prompt Dovecot to
@@ -9950,7 +9982,7 @@ can be good values.`
 This behavior was redesigned to work better in busy servers.`,
 		},
 		values: setting_types.TIME,
-		default: '1 min',
+		default: '[[setting,default_idle_kill_interval]]',
 		text: `
 Time interval between killing extra idling processes. During the interval the
 master process tracks the lowest number of idling processes for the service.
@@ -9964,7 +9996,7 @@ Using \`infinite\` disables the idle-killing.`
 	service_vsz_limit: {
 		tags: [ 'service' ],
 		values: setting_types.SIZE,
-		default: '256 M',
+		default: '[[setting,default_vsz_limit]]',
 		text: `
 Limit the process's address space (both \`RLIMIT_DATA\` and \`RLIMIT_AS\` if
 available). When the space is reached, some memory allocations may start
