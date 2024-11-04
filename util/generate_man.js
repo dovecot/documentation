@@ -171,7 +171,7 @@ const processDovecotMdPre = () => {
 const main = async (component, outPath) => {
 	/* Create output directory, if it doesn't exist. */
 	if (!fs.existsSync(outPath)) {
-		await fs.promises.mkdir(outPath)
+		await fs.promises.mkdir(outPath, { recursive: true })
 	}
 
 	/* Generate list of man files. */
