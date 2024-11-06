@@ -131,7 +131,7 @@ export default defineConfig({
 	},
 
 	markdown: {
-		config: async (md) => await dovecotMdExtend(md),
+		config: (md) => dovecotMdExtend(md),
 		image: {
 			lazyLoading: true,
 		},
