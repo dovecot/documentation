@@ -96,6 +96,7 @@ dict {
 | `debug` | NO | Enable debug. `0` = off (default), `1` = on. |
 | `password` | NO | Password to use, only SIMPLE auth is supported at the moment. (default: none) |
 | `timeout` | NO | How long to wait for reply, in seconds. (default:30 seconds) |
+| `max_idle_time` | NO | Disconnect from LDAP server after connection has been idle for this many seconds. (default: never) |
 | `tls` | NO | Use TLS?<br/>`yes`: Require either ldaps or successful start TLS<br/> `try`: Send start TLS if necessary (default)<br/> `no`:  Do not send start TLS. |
 
 #### Examples
