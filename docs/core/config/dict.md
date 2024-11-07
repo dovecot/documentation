@@ -175,6 +175,7 @@ Currently using Redis without proxying may cause crashes.
 | --------- | -------- | ----------- |
 | `db` | NO | Database number (default: `0`) |
 | `expire_secs` | NO | Expiration value for all keys (in seconds) (default: no expiration) |
+| `path` | NO | Redis server UNIX socket path. If specified, overrides the `host`. (default: none) |
 | `host` | NO | Redis server host (default: `127.0.0.1`) |
 | `port` | NO | Redis server port (default: `11211`) |
 | `password` | NO | Redis Password (default: none) |
