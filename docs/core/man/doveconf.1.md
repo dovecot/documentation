@@ -54,23 +54,26 @@ configuration in easy human readable output.
     **-f** option can be supplied multiple times.
 
     Possible names for the *filter* are:
-    :   **lname**
-        :   The local hostname, e.g. mail.example.com.
+    :   **protocol**
+        :   The protocol, e.g. imap or pop3
 
-            This will only match hostnames which were configured like:
+    :   **local_name**
+        :   The local hostname for TLS SNI matching, e.g. mail.example.com.
+
+            This matches filters which were configured like:
             :   **local_name mail.example.com { # special settings }**
 
     :   **local**
-        :   The server's hostname or IP address.
+        :   The local hostname or IP address.
 
-            This will also match hostnames which were configured like:
-            :   **local imap.example.net { # special settings }**
-
-    :   **protocol, service**
-        :   The protocol, e.g. imap or pop3
+            This matches filters which were configured like:
+            :   **local 1.2.3.0/24 { # special settings }**
 
     :   **remote**
         :   The client's hostname or IP address.
+
+            This matches filters which were configured like:
+            :   **remote 1.2.3.0/24 { # special settings }**
 
 **-h**
 :   Hide the setting's name, show only the setting's value.
@@ -111,7 +114,7 @@ networks/subnets it is possible to show which settings will be applied
 for a specific connection.
 
 ```sh
-doveconf -f local=10.0.0.110 -f remote=10.11.1.2 -f service=pop3 -n
+doveconf -f local=10.0.0.110 -f remote=10.11.1.2 -f protocol=pop3 -n
 ```
 
 **doveconf** can be also used to convert v1.x configuration files into
@@ -134,10 +137,10 @@ Ask **doveconf** for a protocol specific setting. Uses the **-h**
 option, in order to hide the setting's name:
 
 ```sh
-doveconf -h -f protocol=imap mail_plugins
+doveconf -h -f protocol=imap login_greeting
 ```
 ```
-quota imap_quota
+Dovecot ready.
 ```
 
 Dump a whole configuration section:
