@@ -9,7 +9,7 @@ dovecotComponent: core
 ## SYNOPSIS
 
 **doveconf**
-  [**-adnPNSx**]
+  [**-adnPNx**]
   [**-c** *config-file*]
   [**-f** *filter*]
 
@@ -84,9 +84,6 @@ configuration in easy human readable output.
 
 **-N**
 :   Show settings with non-default values and explicitly set default values.
-
-**-S**
-:   Dump settings in simplified machine parsable/readable format.
 
 **-s**
 :   Show also hidden settings. The hidden settings should not be changed
