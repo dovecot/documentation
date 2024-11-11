@@ -59,10 +59,6 @@ dovecotlinks:
 
 String can contain any character. Strings support [[variable]].
 
-::: tip
-If you need the `%` character verbatim you have to escape it as `%%`.
-:::
-
 ## String without variables
 
 Certain settings require specific variables and thus don't use the default
