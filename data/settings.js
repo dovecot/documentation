@@ -7536,9 +7536,10 @@ A list of mail plugins to load.`
 		default: '0',
 		values: setting_types.UINT,
 		text: `
-The number of messages to try to prefetch whenever possible. Depending on
-the (remote) storage latency, this may significantly speed up performance
-when reading many mails. The exact behavior depends on the mailbox format:
+The number of messages to try to prefetch whenever possible. \`0\` means that
+no prefetching is done. Depending on the (remote) storage latency, this may
+significantly speed up performance when reading many mails. The exact behavior
+depends on the mailbox format:
 
 * [[link,mbox]], [[link,mdbox]]: No effect in behavior.
 * [[link,sdbox]], [[link,maildir]]: Call
@@ -7550,11 +7551,7 @@ when reading many mails. The exact behavior depends on the mailbox format:
   commands, while with [[setting,mail_prefetch_count,1]] they would be
   combined into a single \`FETCH 1:2 BODY.PEEK[]\` command. The downside is
   that each mail uses a file descriptor and disk space in
-  [[setting,mail_temp_dir]].
-
-For imapc, a good value is likely between \`10..100\`.
-
-\`0\` means that no prefetching is done.`
+  [[setting,mail_temp_dir]]. A good value is likely between \`10..100\`.`
 	},
 
 	mail_privileged_group: {
