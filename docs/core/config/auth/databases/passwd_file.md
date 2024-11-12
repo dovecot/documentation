@@ -64,6 +64,12 @@ passdb passwd-file {
 }
 ```
 
+[[added,passwd_file_iteration]]
+To iterate databases that use [[variable]] expansion in the path, you need to provide enough information when using
+e.g. [[doveadm,user]] to iterate. For example [[doveadm,user,*@domain.com]] would match with ``%{user | domain}`` expansion in
+the above example, and [[doveadm,user,*]] would iterate `/etc/auth/passwd` if available.
+This iteration works with all doveadm mail commands similarly.
+
 ### Variables
 
 [[setting,passdb_fields]] and [[setting,userdb_fields]] can use
