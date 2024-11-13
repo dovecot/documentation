@@ -183,7 +183,8 @@ Mode to use for creating files.`
 	fs_posix_autodelete_empty_directories: {
 		tags: [ 'fs-posix' ],
 		values: setting_types.BOOLEAN,
-		default: 'yes',
+		advanced: true,
+		default: 'no',
 		text: `
 If the last file in a directory is deleted, should the parent directory be
 automatically deleted?
