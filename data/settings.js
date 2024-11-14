@@ -4777,11 +4777,9 @@ Redis server host.`
 
 	redis_port: {
 		tags: [ 'dict', 'dict-redis' ],
-		values: setting_types.UINT,
+		values: setting_types.IN_PORT,
 		default: 6379,
 		text: `
-Value Range: \`<1-65535>\`
-
 Redis server port.`
 	},
 
