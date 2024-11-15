@@ -136,22 +136,16 @@ are not restricted.`
 				text: `Never automatically retry requests.`
 			},
 			connect_backoff_time: {
-				default: '100 msec',
+				dovecot_setting: 'http_client_connect_backoff_time',
 				hash_arg: true,
-				type: 'int',
-				text: `Initial backoff time; doubled at each connection failure.`
 			},
 			connect_backoff_max_time: {
-				default: '60000 msec',
+				dovecot_setting: 'http_client_connect_backoff_max_time',
 				hash_arg: true,
-				type: 'int',
-				text: `Maximum backoff time.`
 			},
 			connect_timeout: {
-				default: '<request_timeout>',
+				dovecot_setting: 'http_client_connect_timeout',
 				hash_arg: true,
-				type: 'int',
-				text: `Max time to wait for \`connect()\` (and SSL handshake) to finish before retrying.`
 			},
 			event_parent: {
 				hash_arg: true,
@@ -159,85 +153,99 @@ are not restricted.`
 				text: `Parent event to use.`
 			},
 			max_attempts: {
-				default: '1',
+				dovecot_setting: 'http_client_request_max_attempts',
 				hash_arg: true,
-				type: 'int',
-				text: `Maximum number of attempts for a request.`
 			},
 			max_auto_retry_delay: {
+				dovecot_setting: 'http_client_max_auto_retry_delay',
 				hash_arg: true,
-				type: 'int',
-				text: `
-Maximum acceptable delay in seconds for automatically retrying/redirecting
-requests.
-
-If a server sends a response with a \`Retry-After\` header that causes a
-delay longer than this, the request is not automatically retried and
-the response is returned.`
 			},
 			max_connect_attempts: {
+				dovecot_setting: 'http_client_max_connect_attempts',
 				hash_arg: true,
-				type: 'int',
-				text: `
-Maximum number of connection attempts to a host before all associated
-requests fail.
-
-If > 1, the maximum will be enforced across all IPs for that host, meaning
-that IPs may be tried more than once eventually if the number of IPs is
-smaller than the specified maximum attempts. If the number of IPs is
-higher than the maximum attempts, not all IPs are tried.
-
-If <= 1, all IPs are tried at most once.`
 			},
 			max_idle_time: {
+				dovecot_setting: 'http_client_max_idle_time',
 				hash_arg: true,
-				type: 'int',
-				text: `
-Maximum time a connection will idle before disconnecting.
-
-If parallel connections are idle, the duplicates will end earlier based on
-how many idle connections exist to that same service.`
 			},
 			max_redirects: {
-				default: '0; redirects refused',
+				dovecot_setting: 'http_client_request_max_redirects',
 				hash_arg: true,
-				type: 'int',
-				text: `Maximum number of redirects for a request.`
 			},
 			proxy_url: {
+				dovecot_setting: 'http_client_proxy_url',
 				hash_arg: true,
-				type: 'string',
 				text: `Proxy URL to use, can include username and password.`
 			},
 			request_absolute_timeout: {
-				default: '0; no timeout',
+				dovecot_setting: 'http_client_request_absolute_timeout',
 				hash_arg: true,
-				type: 'int',
-				text: `Max total time to wait for HTTP request to finish, including retries and everything else.`
 			},
 			request_timeout: {
-				default: '60000 msec',
+				dovecot_setting: 'http_client_request_timeout',
 				hash_arg: true,
-				type: 'int',
-				text: `Max time to wait for HTTP response before retrying.`
 			},
 			soft_connect_timeout: {
-				default: '0; wait until current connection attempt finishes',
+				dovecot_setting: 'http_client_soft_connect_timeout',
 				hash_arg: true,
-				type: 'int',
-				text: `Time to wait for \`connect()\` (and SSL handshake) to finish for the first connection before trying the next IP in parallel.`
+			},
+			ssl_cipher_list: {
+				dovecot_setting: 'ssl_cipher_list',
+				hash_arg: true
+			},
+			ssl_cipher_suites: {
+				dovecot_setting: 'ssl_cipher_suites',
+				hash_arg: true
+			},
+			ssl_client_ca_dir: {
+				dovecot_setting: 'ssl_client_ca_dir',
+				hash_arg: true
+			},
+			ssl_client_ca_file: {
+				dovecot_setting: 'ssl_client_ca_file',
+				hash_arg: true
+			},
+			ssl_client_cert_file: {
+				dovecot_setting: 'ssl_client_cert_file',
+				hash_arg: true
+			},
+			ssl_client_key_file: {
+				dovecot_setting: 'ssl_client_key_file',
+				hash_arg: true
+			},
+			ssl_client_key_password: {
+				dovecot_setting: 'ssl_client_key_password',
+				hash_arg: true
+			},
+			ssl_crypto_device: {
+				dovecot_setting: 'ssl_crypto_device',
+				hash_arg: true
+			},
+			ssl_curve_list: {
+				dovecot_setting: 'ssl_curve_list',
+				hash_arg: true
+			},
+			ssl_client_require_valid_cert: {
+				dovecot_setting: 'ssl_client_require_valid_cert',
+				hash_arg: true
+			},
+			ssl_min_protocol: {
+				dovecot_setting: 'ssl_min_protocol',
+				hash_arg: true
+			},
+			ssl_options: {
+				dovecot_setting: 'ssl_options',
+				hash_arg: true
 			},
 			rawlog_dir: {
+				dovecot_setting: 'http_client_rawlog_dir',
 				hash_arg: true,
-				type: 'string',
-				text: `Directory for writing raw log data for debugging purposes. Must be writable by the process creating this log.`
 			},
 			user_agent: {
-				default: '<none>',
+				dovecot_setting: 'http_client_user_agent',
 				hash_arg: true,
-				type: 'string',
-				text: `\`User-Agent:\` header.`
 			},
+
 		},
 		return: 'An http_client object.',
 		tags: [ 'dovecot.http' ],
