@@ -5660,7 +5660,11 @@ Username for HTTP proxy.`
 			settings_http_client_settings_added: false,
 		},
 		text: `
-Directory for writing raw log data for debugging purposes.`
+Directory for writing raw log data for debugging purposes.
+
+::: warning
+Must be writable by the process creating this log.
+:::`
 	},
 
 	http_client_read_request_max_attempts: {
