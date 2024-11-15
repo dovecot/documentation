@@ -78,7 +78,7 @@ function buildFunctionSignature(k, v) {
          <td><code>{{ k2 }}</code></td>
          <td><em>{{ v2.type }}</em></td>
          <td>
-          <span v-html="v2.text" />
+          <div class="lua-function-description" v-html="v2.text" />
           <span v-if="v2.default">(Default: <code>{{ v2.default }}</code>)</span>
          </td>
         </tr>
@@ -103,5 +103,8 @@ function buildFunctionSignature(k, v) {
   border-top: 1px solid #e2e2e3;
   margin: 15px auto;
   width: 75%;
+}
+.lua-function-description :deep(p) {
+  margin: 0;
 }
 </style>

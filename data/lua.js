@@ -9,6 +9,11 @@ export const lua_functions = [
 		// List of function arguments
 		args: {
 			text: {
+				// If this argument is set, the 'text (w/default)' and
+				// 'values' information from the Dovecot setting is used if it
+				// does NOT otherwise exist in this config.
+				// dovecot_setting: 'dovecot_setting_name',
+
 				// If true, this argument appears inside a Lua hash table
 				// instead of as a standalone argument.
 				// hash_arg: false,
