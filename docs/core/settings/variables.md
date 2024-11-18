@@ -18,6 +18,9 @@ dovecotlinks:
   conditionals:
     hash: conditionals
     text: Conditionals
+  cryptography_support:
+    hash: cryptography-support
+    text: Cryptography support
 ---
 
 # Settings Variables
@@ -97,8 +100,12 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | base64(pad=boolean, url=boolean) | Bytes | String | Base64 encode given input, defaults to pad and not url scheme. |
 | benumber | Bytes | Number | Convert big-endian encoded input into a number. |
 | concat(any, any...) | Bytes | Bytes | Concatenates input with value(s). Numbers are coerced to strings. Input is optional. |
+| decrypt(key=bytes,iv=bytes,raw=boolean,algorithm=string) | Any | Any | Decrypts given input, see [cryptography support](#cryptography-support). |
+| decrypt(key=string,salt=string,rounds=number,raw=boolean,hash=string,algorithm=string) | Any | Any | Decrypts given input, see [cryptography support](#cryptography-support). |
 | default(value) | String | String | Replace empty or missing input with value. Clears missing variable error. If no value is provided, empty string is used. |
 | domain | String | String | Provides domain part of user@domain value. |
+| encrypt(key=bytes,iv=bytes,raw=boolean,algorithm=string) | Any | Any | Encrypts given input, see [cryptography support](#cryptography-support). |
+| encrypt(key=string,salt=string,rounds=number,raw=boolean,hash=string,algorithm=string) | Any | Any | Encrypts given input, see [cryptography support](#cryptography-support). |
 | hash(method, rounds=number, salt=string) | Bytes | Bytes | Returns raw hash from input using given hash method. Rounds and salt are optional. |
 | hexlify(width) | Bytes | String | Convert bytes into hex with optional width, truncates or pads up to width. |
 | hex(width) | Number | Number | Convert base-10 number to base-16 number. If width is specified the result is truncated or padded with 0 to width. Negative width is applied after number. |
@@ -128,13 +135,6 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | unhexlify | String | Bytes | Convert hex encoded input into bytes. |
 | upper | String | String | Uppercases input. |
 | username | String | String | Provides user part of user@domain value. |
-
-If [[plugin,var-expand-crypt]] is loaded, these filters are registered as well.
-
-| Filter | Input | Output | Description |
-| ------ | ----- | -----  | ----------- |
-| decrypt(algorithm=string,key=string,iv=string,raw=boolean) | Bytes/String | Bytes | Decrypts input with given parameters. If raw is `0`, expects '$' separated value of IV and encrypted data. |
-| encrypt(algorithm=string,key=string,iv=string,raw=boolean) | Bytes | Bytes/String | Encrypts input with given parameters. If raw is `0`, outputs `$` separated value of IV and encrypted data. |
 
 ## Global providers
 
@@ -356,3 +356,54 @@ Examples:
 # If %{user} is "testuser", return "INVALID". Otherwise return %{user} uppercased.
 %{user | if ("=", "testuser, "invalid", user) | upper }
 ```
+
+## Cryptography support
+
+### Parameters
+
+| Key                | Value                                                                           |
+| ------------------ | --------------------------------------------------------------------------------|
+| key                | The encryption key.                                                             |
+| iv                 | Initialization vector.                                                          |
+| salt               | Salt to use in PBKDF2 algorithm.                                                |
+| hash               | Hash to use in PBKDF2. Defaults to `sha256`.                                    |
+| rounds             | Number of rounds to use in PBKDF2. Defaults to 10 000.                          |
+| algorithm          | Encryption algorithm. Expects OpenSSL naming. Defaults to `aes-256-cbc`.        |
+| raw                | When set to 1, will return encrypted result in raw output format. Default is 0. |
+
+### Key, initialization vector and salt.
+
+For legacy reasons, this function supports direct keying and salted keying.
+In direct keying, the `key` and `iv` must be provided hex encoded, and must match the algorithm's requirements.
+
+If `key` and `salt` are provided, then the actual encryption key and initialization vector are generated with [PBKDF2 algorithm](https://en.wikipedia.org/wiki/PBKDF2).
+
+If only `key` is provided a random salt is generated. Random salt cannot be generated in raw mode, because it would not get stored,
+so it must be always provided.
+
+### Structured output format
+
+Dovecot supports structured encrypted data.
+If initialization vector is directly provided, the output syntax is `iv$data$`.
+With salt based keying material generation, the format is `s=salt,r=rounds$data$`.
+
+### Raw output format
+
+If raw is used, the raw encryption result is emitted with no salt, rounds or IV included.
+
+### Recommended usage
+
+For best results, you should leave salt and IV management to Dovecot.
+
+### Examples
+
+```[dovecot.conf]
+import_environment = {
+   SECRET_KEY = %{env:SECRET_KEY}
+}
+imapc_password = "%{literal('s=3-?I&-a|,r=10000$e80e6ab3c18c0da69b20bf201eaf6269$') | decrypt(key=env:SECRET_KEY)}"
+```
+
+Stores imap client password securely so that it can be decrypted only if `SECRET_KEY` environment variable is provided.
+
+To easily generate an encrypted value, you can use [[doveadm,user,user -e "%{literal('value') | encrypt(key='secret')}"]].
