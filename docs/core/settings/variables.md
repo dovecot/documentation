@@ -149,6 +149,7 @@ Global providers that work everywhere are:
 | `process:<name>` | Get a process variable, see [below](#process-variables) for list of supported names. |
 | `system:<name>` | Get a system variable, see [below](#system-variables) for list of supported names. |
 | `time:<name>`    | Get a time field, available keys are `hour`, `min`, `minute`, `sec`, `second` and `usec`. |
+| `generate:<name>`    | Generate a GUID/UUID. Available keys are `guid`, `guid128`, `uuid`, `uuid:record`, `uuid:compact` and `uuid:microsoft`. |
 
 ## System Variables
 
