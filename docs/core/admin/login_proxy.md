@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: Login Proxying
+dovecotlinks:
+  login_proxy: Login Proxying
 ---
 
 # Login Process Proxying
