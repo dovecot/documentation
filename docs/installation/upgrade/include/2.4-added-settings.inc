@@ -1,0 +1,7 @@
+* [[setting,auth_internal_failure_delay]]
+* [[setting,fts_message_max_size]]
+* [[setting,login_socket_path]]
+* [[setting,quota_mailbox_count]]
+* [[setting,quota_mailbox_message_count]]
+* [[setting,submission_add_received_header]]
+* [[setting,cassandra_log_retries]]
