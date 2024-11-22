@@ -4340,23 +4340,13 @@ If \`no\`, there will be no report for the authentication result.`
 Default has changed.`
 		},
 		tags: [ 'auth_policy' ],
-		values: setting_types.STRING,
+		values: setting_types.STRLIST,
 		seealso: [ 'auth_policy_server_url' ],
 		text: `
 Request attributes specification.
 
-Variables that can be used for this setting:
-
-- [[variable,auth]]
-
-- \`%{hashed_password}\`
-
-  - Truncated auth policy hash of username and password
-
-- \`%{requested_username}\`
-
-  - Logged in user. Same as \`%{user}\`, except for master user logins the
-	same as \`%{login_user}\`.`
+See [[link,auth_policy_variables]] for variables that can be used for this
+setting.`
 	},
 
 	auth_policy_server_api_header: {
