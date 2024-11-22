@@ -6,6 +6,9 @@ dovecotlinks:
   auth_policy_configuration:
     hash: configuration
     text: Auth Policy Configuration
+  auth_policy_variables:
+    hash: list-of-fields
+    text: Auth Policy Variables
 ---
 
 # Authentication Policy
@@ -44,7 +47,13 @@ auth_policy_hash_nonce = localized_random_string
 # OPTIONAL settings
 #auth_policy_server_api_header = Authorization: Basic <base64-encoded value>
 #auth_policy_hash_mech = sha256
-#auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%{protocol}
+#auth_policy_request_attributes {
+#  login = %{requested_username}
+#  pwhash = %{hashed_password}
+#  remote = %{rip}
+#  device_id = %{client_id}
+#  protocol = %{protocol}
+#}
 #auth_policy_reject_on_fail = no
 #auth_policy_hash_truncate = 12
 #auth_policy_check_before_auth = yes
