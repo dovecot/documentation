@@ -5,7 +5,9 @@
 *.html
 bun.lockb
 node_modules/
+lib/data/*.mjs
 .vitepress/cache/
 .vitepress/dist/
 .vitepress/local.js
+.vitepress/.temp
 /man/
