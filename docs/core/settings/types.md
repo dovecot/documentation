@@ -211,6 +211,16 @@ fs_randomfail_ops {
 }
 ```
 
+You can clear out an existing string list by setting it to an empty value.
+This is mainly useful to drop default settings. For example:
+
+```
+auth_policy_request_attributes =
+auth_policy_request_attributes {
+  login = %{requested_username}
+}
+```
+
 ## Boolean List
 
 The boolean list type is a list of `key=yes/no` pairs. Each key is unique
