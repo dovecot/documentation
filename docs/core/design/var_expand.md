@@ -8,7 +8,7 @@ dovecotlinks:
 # Variable expansion design
 
 Dovecot comes with powerful variable expansion system, which allows constructing reusable text templates.
-This has been upgraded since v2.3 to a more flexible systemt .
+This has been upgraded since v2.3 to a more flexible system.
 
 ## Syntax
 
