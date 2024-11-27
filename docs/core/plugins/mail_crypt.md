@@ -194,7 +194,7 @@ provided via password query:
 
 ```[dovecot.conf]
 passdb sql {
-  query = SELECT email as user, password, '%Mw' AS userdb_crypt_user_key_password \
+  query = SELECT email as user, password, '%{password | sha256}' AS userdb_crypt_user_key_password \
     FROM virtual_users \
     WHERE email='%{user}'
 }
