@@ -791,7 +791,6 @@ sysexits
 syslogd
 syslogging
 sysreport
-systemt
 tabindex
 TABLEGEN
 Taddressverification
