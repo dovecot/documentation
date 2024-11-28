@@ -40,9 +40,9 @@ like:
 
 ::: code-group
 ```[dovecot.conf]
-plugin {
-  # Use editheader
-  sieve_extensions = +editheader
+# Use editheader
+sieve_extensions {
+  editheader = yes
 }
 ```
 
@@ -72,6 +72,7 @@ redirect "forward@example.com";
 :::
 
 ::: info
-It is very important to make that deleteheader, addheader, redirect the last
-rule in the sieve script, as this would affect other actions as well.
+It is very important to make sure that the deleteheader, addheader, redirect
+commands are the last rule in the sieve script, as this would affect other
+actions as well.
 :::

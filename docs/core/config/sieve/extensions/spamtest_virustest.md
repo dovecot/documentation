@@ -47,14 +47,15 @@ X-Spam-Score: No, score=-3.2
 ```
 
 ```[dovecot.conf]
-plugin {
-  sieve_extensions = +spamtest +spamtestplus
-
-  sieve_spamtest_status_type = score
-  sieve_spamtest_status_header = \
-      X-Spam-Score: [[:alnum:]]+, score=(-?[[:digit:]]+\.[[:digit:]])
-  sieve_spamtest_max_value = 5.0
+sieve_extensions {
+  spamtest = yes
+  spamtestplus = yes
 }
+
+sieve_spamtest_status_type = score
+sieve_spamtest_status_header = \
+  X-Spam-Score: [[:alnum:]]+, score=(-?[[:digit:]]+\.[[:digit:]])
+sieve_spamtest_score_max_value = 5.0
 ```
 :::
 
@@ -64,13 +65,16 @@ X-Spam-Status: Yes
 ```
 
 ```[dovecot.conf]
-plugin {
-  sieve_extensions = +spamtest +spamtestplus
+sieve_extensions {
+  spamtest = yes
+  spamtestplus = yes
+}
 
-  sieve_spamtest_status_type = text
-  sieve_spamtest_status_header = X-Spam-Status
-  sieve_spamtest_text_value1 = No
-  sieve_spamtest_text_value10 = Yes
+sieve_spamtest_status_type = text
+sieve_spamtest_status_header = X-Spam-Status
+sieve_spamtest_text_value {
+  1 = No
+  10 = Yes
 }
 ```
 :::
@@ -81,13 +85,14 @@ X-Spam-Score: sssssss
 ```
 
 ```[dovecot.conf]
-plugin {
-  sieve_extensions = +spamtest +spamtestplus
-
-  sieve_spamtest_status_header = X-Spam-Score
-  sieve_spamtest_status_type = strlen
-  sieve_spamtest_max_value = 5
+sieve_extensions {
+  spamtest = yes
+  spamtestplus = yes
 }
+
+sieve_spamtest_status_header = X-Spam-Score
+sieve_spamtest_status_type = strlen
+sieve_spamtest_score_max_value = 5
 ```
 
 ::: code-group
@@ -100,19 +105,23 @@ X-Virus-Scan: Found to be clean.
 ```
 
 ```[dovecot.conf]
-plugin {
-  sieve_extensions = +spamtest +spamtestplus +virustest
+sieve_extensions {
+  spamtest = yes
+  spamtestplus = yes
+  virustest = yes
+}
 
-  sieve_spamtest_status_type = score
-  sieve_spamtest_status_header = \
-      X-Spam-Score: score=(-?[[:digit:]]+\.[[:digit:]]).*
-  sieve_spamtest_max_header = \
-      X-Spam-Score: score=-?[[:digit:]]+\.[[:digit:]] required=([[:digit:]]+\.[[:digit:]])
+sieve_spamtest_status_type = score
+sieve_spamtest_status_header = \
+    X-Spam-Score: score=(-?[[:digit:]]+\.[[:digit:]]).*
+sieve_spamtest_score_max_header = \
+    X-Spam-Score: score=-?[[:digit:]]+\.[[:digit:]] required=([[:digit:]]+\.[[:digit:]])
 
-  sieve_virustest_status_type = text
-  sieve_virustest_status_header = X-Virus-Scan: Found to be (.+)\.
-  sieve_virustest_text_value1 = clean
-  sieve_virustest_text_value5 = infected
+sieve_virustest_status_type = text
+sieve_virustest_status_header = X-Virus-Scan: Found to be (.+)\.
+sieve_virustest_text_value {
+  1 = clean
+  5 = infected
 }
 ```
 :::

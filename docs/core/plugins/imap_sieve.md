@@ -62,13 +62,17 @@ using the [[setting,imapsieve_url]] setting. This URL points to the
 scripts. This URL will be shown to the client in the IMAP CAPABILITY
 response as `IMAPSIEVE=<URL>`.
 
+FIXME: document use of storage types and cause
+
 ### sieve-imapsieve
 
 The Sieve plugin is activated by adding it to the [[setting,sieve_plugins]]
 setting:
 
 ```[dovecot.conf]
-sieve_plugins = sieve_imapsieve
+sieve_plugins {
+  sieve_imapsieve = yes
+}
 ```
 
 This plugin registers the `imapsieve` extension with the Sieve

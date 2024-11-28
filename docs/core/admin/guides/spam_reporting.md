@@ -23,10 +23,9 @@ A global configuration script is used to capture the event of moving
 messages in/out of the Spam mailbox.
 
 ::: warning
-**You cannot run scripts anywhere you want.**
+**You cannot run shell scripts anywhere you want.**
 
-Sieve allows you to only run scripts under
-[[setting_text,sieve_&lt;extension&gt;_bin_dir,sieve_pipe_bin_dir]]. You
+Sieve allows you to only run scripts under [[setting,sieve_pipe_bin_dir]]. You
 can't use `/usr/local/bin/my-sieve-filter.sh`, you have to put the
 script under `sieve_pipe_bin_dir` and use `my-sieve-filter.sh` in the
 script instead.
@@ -60,20 +59,30 @@ protocol imap {
   }
 }
 
-plugin {
-  sieve_plugins = sieve_imapsieve
-  sieve_implicit_extensions = +vnd.dovecot.report
+sieve_plugins {
+  sieve_imapsieve = yes
+}
 
+sieve_global_extensions {
+  vnd.dovecot.report = yes
+}
+
+mailbox Spam {
   # From elsewhere to Spam folder
-  imapsieve_mailbox1_name = Spam
-  imapsieve_mailbox1_causes = COPY
-  imapsieve_mailbox1_before = file:/etc/dovecot/report-spam.sieve
+  sieve_script report-spam {
+    type = before
+    cause = copy
+    path = /etc/dovecot/report-spam.sieve
+  }
+}
 
-  # From Spam folder to elsewhere
-  imapsieve_mailbox2_name = *
-  imapsieve_mailbox2_from = Spam
-  imapsieve_mailbox2_causes = COPY
-  imapsieve_mailbox2_before = file:/etc/dovecot/report-ham.sieve
+# From Spam folder to elsewhere
+imapsieve_from Spam {
+  sieve_script report-ham {
+    type = before
+    cause = copy
+    path = /etc/dovecot/report-ham.sieve
+  }
 }
 
 # Needed to send message to external mail server
@@ -160,23 +169,34 @@ protocol imap {
   }
 }
 
-plugin {
-  sieve_plugins = sieve_imapsieve
-  sieve_implicit_extensions = +vnd.dovecot.report
+sieve_plugins {
+  sieve_imapsieve = yes
+  sieve_extprograms = yes
+}
 
+sieve_global_extensions {
+  vnd.dovecot.pipe = yes
+  vnd.dovecot.environment = yes
+}
+
+sieve_pipe_bin_dir = /usr/lib/dovecot/sieve
+
+mailbox Spam {
   # From elsewhere to Spam folder
-  imapsieve_mailbox1_name = Spam
-  imapsieve_mailbox1_causes = COPY
-  imapsieve_mailbox1_before = file:/etc/dovecot/report-spam.sieve
+  sieve_script report-spam {
+    type = before
+    cause = copy
+    path = /etc/dovecot/report-spam.sieve
+  }
+}
 
-  # From Spam folder to elsewhere
-  imapsieve_mailbox2_name = *
-  imapsieve_mailbox2_from = Spam
-  imapsieve_mailbox2_causes = COPY
-  imapsieve_mailbox2_before = file:/etc/dovecot/report-ham.sieve
-
-  sieve_pipe_bin_dir = /usr/lib/dovecot/sieve
-  sieve_global_extensions = +vnd.dovecot.pipe +vnd.dovecot.environment
+# From Spam folder to elsewhere
+imapsieve_from Spam {
+  sieve_script report-ham {
+    type = before
+    cause = copy
+    path = /etc/dovecot/report-ham.sieve
+  }
 }
 ```
 

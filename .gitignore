@@ -1,4 +1,5 @@
 *~
+*.mjs
 .*.swp
 .DS.Store
 .DS_Store
@@ -8,6 +9,7 @@ node_modules/
 lib/data/*.mjs
 .vitepress/cache/
 .vitepress/dist/
+.vitepress/.temp/
 .vitepress/local.js
 .vitepress/.temp
 /man/
