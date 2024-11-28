@@ -68,7 +68,9 @@ The Sieve plugin is activated by adding it to the [[setting,sieve_plugins]]
 setting:
 
 ```[dovecot.conf]
-sieve_plugins = sieve_imapsieve
+sieve_plugins {
+  sieve_imapsieve = yes
+}
 ```
 
 This plugin registers the `imapsieve` extension with the Sieve

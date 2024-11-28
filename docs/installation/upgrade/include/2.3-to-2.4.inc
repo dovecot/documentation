@@ -167,9 +167,9 @@ See [[setting,imapc_features]].
 | `login_access_sockets` | Use [[link,auth_lua]] instead. Dovecot will fail to start if this setting is present in configuration. |
 | `push_notification_backend` | Use [[setting,push_notification_driver]] instead. |
 | `quota_set` | |
-| `sieve_dir` | See [[link,sieve_file]] and [[link,sieve_location]]. |
-| `sieve_global_dir` | See [[link,sieve_file]] and [[link,sieve_location]]. |
-| `sieve_global_path` | See [[link,sieve_file]] and [[link,sieve_location]]. |
+| `sieve_dir` | See [[link,sieve_storage]]. |
+| `sieve_global_dir` | See [[link,sieve_storage]]. |
+| `sieve_global_path` | See [[link,sieve_storage]]. |
 | `sieve_vacation_max_subject_codepoints` | |
 | `auth_policy_server_timeout_msecs` | See: [[link,auth_policy_configuration]]. |
 | `mail_crypt_require_encrypted_user_key` | Replaced by [[setting,crypt_user_key_require_encrypted]], [[setting,crypt_user_key_password]] and [[setting,crypt_user_key_encryption_key]]. |
