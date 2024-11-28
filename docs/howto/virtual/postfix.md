@@ -100,7 +100,7 @@ userdb passwd-file {
 
 Later on the auth service will be configured to run in the `doveauth` user
 context. Therefore the directory `auth.d/` and its content will be owned
-by this user, while mails / Sieve-Scripts, will be accessed using
+by this user, while mails and Sieve scripts will be accessed using
 the `vmail` context specified in the passwd-file.
 
 To keep directory permissions simple these will be stored seperately under
@@ -196,8 +196,8 @@ quota user {
 mailbox Trash {
   quota_storage_percentage = 110
 }
-plugin {
-  sieve = ~/.dovecot.sieve
+sieve_script personal {
+  path = ~/.dovecot.sieve
 }
 ```
 :::
