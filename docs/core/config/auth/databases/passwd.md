@@ -51,8 +51,8 @@ the fields to be imported need to be explicitly defined.
 userdb passwd {
   fields_import_all = no
   fields {
-    uid = %{passwd:uid:vmail}
-    gid = %{passwd:gid:vmail}
+    uid = %{passwd:uid}
+    gid = %{passwd:gid}
     home = /var/mail/%{user | username}
     mail_driver = maildir
     mail_path = /var/mail/%{user | username}/Maildir
