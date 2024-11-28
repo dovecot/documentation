@@ -96,12 +96,6 @@ doveconf -nP > dovecot.conf
 * Usually it does not matter in which file you write the setting. You only need
   to be aware that later settings replace earlier ones. If you use the same
   section multiple times, the settings are merged together.
-* To read the content of a file, for instance for the SSL certificate option,
-  prefix the filename with a `<`, e.g.:
-
-```[dovecot.conf]
-ssl_cert_file = /etc/ssl/certs/imap.pem
-```
 
 ## Authentication
 
