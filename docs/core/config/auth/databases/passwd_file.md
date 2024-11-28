@@ -73,7 +73,7 @@ This iteration works with all doveadm mail commands similarly.
 ### Variables
 
 [[setting,passdb_fields]] and [[setting,userdb_fields]] can use
-`%{passwd_file:<field>[:<default>]}` variables to access the current passdb or
+`%{passwd_file:<field>}` variables to access the current passdb or
 userdb lookup's fields. The available fields are:
 
 * `uid`
