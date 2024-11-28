@@ -10093,7 +10093,6 @@ auth_ssl_require_client_cert = yes
 	},
 
 	ssl_cert_file: {
-		default: '</etc/ssl/certs/dovecot.pem',
 		seealso: [ 'ssl', 'ssl_key_file', '[[link,ssl_configuration]]' ],
 		values: setting_types.FILE,
 		text: `
