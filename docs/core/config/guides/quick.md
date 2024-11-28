@@ -104,9 +104,8 @@ doveconf -nP > dovecot.conf
 
 ## Authentication
 
-By default, Dovecot is setup to use system user authentication.
-You'll probably be using PAM authentication. See the page [[link,auth_pam]]
-for how to configure it.
+The above example configures Dovecot to use PAM for system user authentication.
+See [[link,auth_pam]] for how to configure it.
 
 A typical configuration with Linux would be to create `/etc/pam.d/dovecot`
 which contains:
@@ -126,8 +125,8 @@ Later when you know Dovecot is working, you can do it differently (see
 Run as your own non-root user:
 
 ```sh
-echo "$USER:{PLAIN}password:$UID:$GID::$HOME" > users
-sudo mv users /etc/dovecot/
+echo "$USER:{PLAIN}password" > passwd
+sudo mv passwd /etc/dovecot/
 
 # If SELinux is enabled:
 restorecon -v /etc/dovecot/users
@@ -138,21 +137,17 @@ wish to use, but don't use any important password here as we'll be
 logging in with insecure plaintext authentication until [[link,ssl]]
 is configured.
 
-Switch to passwd-file authentication by adding to `dovecot.conf`:
+Switch to passwd-file authentication by replacing `passdb pam` in
+`dovecot.conf` with `passdb passwd-file`:
 
 ```
 passdb passwd-file {
-  default_password_scheme = CRYPT
-  passwd_file_path = /etc/dovecot/users
-}
-
-userdb passwd-file {
-  passwd_file_path = /etc/dovecot/users
+  passwd_file_path = /etc/dovecot/passwd
 }
 ```
 
-Verify with `doveconf -n passdb userdb` that the output looks like
-above (and there are no other passdbs or userdbs).
+Verify with `doveconf -n passdb` that the output looks like
+above (and there are no other passdbs and no userdbs).
 
 If you're using something else, see [[link,passdb]] and [[link,userdb]].
 
@@ -183,10 +178,10 @@ them than the defaults.
 
 ## SSL and Plaintext Authentication
 
-If you intend to use SSL, set [[setting,ssl_cert_file]] and
-[[setting,ssl_key_file]] settings. Otherwise set [[setting,ssl,no]].
+Configure SSL certificate and private key paths with [[setting,ssl_cert_file]]
+and [[setting,ssl_key_file]] settings.
 
-Easiest way to get SSL certificates built is to use Dovecot's
+An easy way to build a self-signed test certificate is using Dovecot's
 `doc/mkcert.sh` script. For more information see [[link,ssl_configuration]].
 
 By default [[setting,auth_allow_cleartext,no]], which means that Dovecot
