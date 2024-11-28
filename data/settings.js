@@ -7947,7 +7947,7 @@ It's possible to use the same character here as for
 		values: setting_types.STRING,
 		default: {
 			value: '*[None]*',
-			text: `The default for [[link,imapc]] storage is \`%%\`.`,
+			text: `The default for [[link,imapc]] storage is \`%\`.`,
 		},
 		text: `
 Specifies an escape character that it used for encoding special characters in
