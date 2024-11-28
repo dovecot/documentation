@@ -495,7 +495,9 @@ the file is recreated. This makes sure that if quota happens to be broken
 
 ## Quota Service
 
-The quota service allows postfix to check quota before delivery:
+The quota service allows Postfix to check quota before delivery. This service
+does not support proxying, so it works only in non-clustered setups when there
+is a single Dovecot server.
 
 ```[dovecot.conf]
 service quota-status {
