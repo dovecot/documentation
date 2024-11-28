@@ -8338,7 +8338,7 @@ This must be set to \`yes\` if you store indexes to shared filesystems
 
 	namespace: {
 		tags: [ 'namespace' ],
-		values: setting_types.STRING,
+		values: setting_types.NAMED_LIST_FILTER,
 		text: `
 Creates a new namespace to the list of namespaces. The filter name refers to
 the [[setting,namespace_name]] setting.
