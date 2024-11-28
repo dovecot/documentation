@@ -94,7 +94,7 @@ configuration in easy human readable output.
 
 **-x**
 :   Expand configuration variables (e.g. `$ENV:foo`) and show file contents
-    (from e.g. `ssl_cert = \</etc/ssl/certs/dovecot.pem`).
+    (from e.g. `ssl_key_password = \</etc/ssl/password.txt`).
 
 *section_name*
 :   Show only the current configuration of one or more specified sections.
