@@ -26,35 +26,30 @@ You need to create group `vmail` and user `vmail`.
 
 ::: code-group
 ```[dovecot.conf]
-mail_home = /srv/mail/%{user | lower}
+# Start new configs with the latest Dovecot version numbers here:
+dovecot_config_version = 2.4.0
+dovecot_storage_version = 2.4.0
+
+mail_home = /srv/mail/%{user}
 mail_driver = sdbox
 mail_path = ~/Mail
 
+mail_uid = vmail
+mail_gid = vmail
 ## this is sometimes needed
-#first_valid_uid = uid-of-vmail-user
+#first_valid_uid = uid-number-of-vmail-user
 
-# if you want to use system users
-passdb pam {
-  driver = pam
-}
-
-userdb passwd {
-  driver = passwd
-  use_worker = yes
-  fields {
-    uid = vmail
-    gid = vmail
-  }
-}
-
-ssl=yes
-ssl_cert_file = /path/to/cert.pem
-ssl_key_file = /path/to/key.pem
-
-namespace {
+namespace inbox {
   inbox = yes
   separator = /
 }
+
+# Use system users:
+passdb pam {
+}
+
+ssl_cert_file = /path/to/cert.pem
+ssl_key_file = /path/to/key.pem
 ```
 :::
 
