@@ -274,7 +274,7 @@ the domain part and instead use [[setting,namespace_prefix,shared/$username/]].
 
 [[changed,namespace_prefix_shared_variables_changed]] The shared namespaces
 now use `$user`, `$username` and `$domain` template variables, rather than
-the old `%%{user}`, `%%{user | username}` and `%%{user | domain}`.
+the old `%%u`, `%%n` and `%%d`.
 
 [[setting,namespace_list,children]] specifies that if no one has shared
 mailboxes to the user, the "shared" directory isn't listed by the LIST command.
@@ -514,7 +514,7 @@ initially have "lookup" right, but later we don't:
 ### Troubleshooting
 
 - Make sure `$user` or `$username` is specified in the
-  [[setting,namespace_prefix]] setting rather than the old `%%{user}` or `%%{user | username}`.
+  [[setting,namespace_prefix]] setting rather than the old `%%u` or `%%n`.
 
 - Make sure the [[setting,mail_path]] is set correctly in the
   namespace location. [[setting,log_debug,category=mail]] will help you see
