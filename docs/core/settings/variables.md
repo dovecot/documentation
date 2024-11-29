@@ -3,6 +3,9 @@ layout: doc
 title: Settings Variables
 dovecotlinks:
   settings_variables: Settings Variables
+  settings_variables_filters:
+    hash: list-of-filters
+    text: Variable Filters
   settings_variables_distribution_variables:
     hash: distribution-variables
     text: Distribution Variables
