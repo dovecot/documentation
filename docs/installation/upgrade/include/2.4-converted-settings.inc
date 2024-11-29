@@ -31,3 +31,4 @@
 | `quota_over_flag_value` | Renamed to [[setting,quota_over_status_mask]]. |
 | `quota_over_script` | Replaced by [[setting,quota_over_status]] named filter with [[setting,execute]]. |
 | `quota_max_mail_size` | Renamed to [[setting,quota_mail_size]]. The default value is set to `unlimited`. |
+| `fts_index_timeout` | Renamed to [[setting,fts_search_timeout]]. The default value is set to `30 secs`. |
