@@ -16,6 +16,7 @@ Amavis
 amavisd
 AND'ing
 apparmor
+appendfile
 APPENDUID
 APY
 arcfour
