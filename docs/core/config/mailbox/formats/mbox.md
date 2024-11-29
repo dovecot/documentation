@@ -181,7 +181,7 @@ virtual_mailbox_lock = fcntl
 ```
 
 In the above case, if you used the mailbox transport, you'd have to change
-Dovecot's configuration to [[setting,mbox_write_locks,fcntl]] dotlock or
+Dovecot's configuration to [[setting,mbox_write_locks,fcntl dotlock]] or
 vice versa for Postfix.
 
 If you used the virtual transport, it doesn't really matter if the dotlock
