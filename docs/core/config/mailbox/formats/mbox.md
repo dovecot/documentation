@@ -187,6 +187,16 @@ vice versa for Postfix.
 If you used the virtual transport, it doesn't really matter if the dotlock
 is missing, since the fcntl is common with Dovecot and Postfix.
 
+#### Exim
+
+Locks are controlled by the appendfile transport's `use_lockfile`,
+`use_fcntl_lock` and `use_flock_lock` settings. The default is to use
+lockfile (dotlock) and then fcntl lock.
+
+#### Sendmail
+
+Sendmail's mail.local delivery always uses dotlock followed by flock.
+
 #### mutt
 
 ```console
