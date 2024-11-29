@@ -2295,7 +2295,7 @@ Set to \`0\` to disable rotation.`
 	},
 
 	fts_flatcurve_rotate_time: {
-		default: 5000,
+		default: '5s',
 		values: setting_types.TIME_MSECS,
 		plugin: 'fts-flatcurve',
 		advanced: true,
