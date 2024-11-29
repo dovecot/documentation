@@ -100,17 +100,17 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | base64(pad=boolean, url=boolean) | Bytes | String | Base64 encode given input, defaults to pad and not url scheme. |
 | benumber | Bytes | Number | Convert big-endian encoded input into a number. |
 | concat(any, any...) | Bytes | Bytes | Concatenates input with value(s). Numbers are coerced to strings. Input is optional. |
-| decrypt(key=bytes,iv=bytes,raw=boolean,algorithm=string) | Any | Any | Decrypts given input, see [cryptography support](#cryptography-support). |
-| decrypt(key=string,salt=string,rounds=number,raw=boolean,hash=string,algorithm=string) | Any | Any | Decrypts given input, see [cryptography support](#cryptography-support). |
+| decrypt(key=bytes, iv=bytes, raw=boolean, algorithm=string) | Any | Any | Decrypts given input, see [cryptography support](#cryptography-support). |
+| decrypt(key=string, salt=string, rounds=number, raw=boolean, hash=string, algorithm=string) | Any | Any | Decrypts given input, see [cryptography support](#cryptography-support). |
 | default(value) | String | String | Replace empty or missing input with value. Clears missing variable error. If no value is provided, empty string is used. |
 | domain | String | String | Provides domain part of user@domain value. |
-| encrypt(key=bytes,iv=bytes,raw=boolean,algorithm=string) | Any | Any | Encrypts given input, see [cryptography support](#cryptography-support). |
-| encrypt(key=string,salt=string,rounds=number,raw=boolean,hash=string,algorithm=string) | Any | Any | Encrypts given input, see [cryptography support](#cryptography-support). |
+| encrypt(key=bytes, iv=bytes, raw=boolean, algorithm=string) | Any | Any | Encrypts given input, see [cryptography support](#cryptography-support). |
+| encrypt(key=string, salt=string, rounds=number, raw=boolean, hash=string, algorithm=string) | Any | Any | Encrypts given input, see [cryptography support](#cryptography-support). |
 | hash(method, rounds=number, salt=string) | Bytes | Bytes | Returns raw hash from input using given hash method. Rounds and salt are optional. |
 | hexlify(width) | Bytes | String | Convert bytes into hex with optional width, truncates or pads up to width. |
 | hex(width) | Number | Number | Convert base-10 number to base-16 number. If width is specified the result is truncated or padded with 0 to width. Negative width is applied after number. |
-| if(left,operator,right,true,false) | String | String | Evaluates given comparison and returns true or false value. See [conditionals](#conditionals). |
-| if(operator,right,true,false) | String | String | Evaluates given comparison against input value and retuns true or false value. |
+| if(left, operator, right, true, false) | String | String | Evaluates given comparison and returns true or false value. See [conditionals](#conditionals). |
+| if(operator, right, true, false) | String | String | Evaluates given comparison against input value and retuns true or false value. |
 | index(separator, nth) | String | String | Returns nth element from separator separated string. Zero based. Negative values are looked relative to end of list. |
 | ldap_dn | String | String | Converts `domain.com` to `dc=domain,dc=com`. |
 | lenumber | Bytes | Number| Convert little-endian encoded input into a number. |
