@@ -1954,10 +1954,10 @@ fts_header_includes {
 		text: ``
 	},
 
-	fts_index_timeout: {
-		default: 0,
+	fts_search_timeout: {
+		default: '30s',
 		plugin: 'fts',
-		values: setting_types.UINT,
+		values: setting_types.TIME,
 		text: `
 When the full text search driver detects that the index isn't up-to-date,
 the indexer is told to index the messages and is given this much time to do
