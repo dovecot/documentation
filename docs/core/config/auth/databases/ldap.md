@@ -425,15 +425,8 @@ The following variables can be used inside the [[setting,passdb]] / [[setting,us
 
 | Variable | Description |
 | -------- | ----------- |
-| `%{ldap:attrName:default}` | Fetches a single-valued attribute. If the attribute is not present, the specified default is taken instead. If there are multiple values, all except the first are ignored (with warning). |
-| `%{ldap:attrName}` | If the default is omitted, empty string `""` is assumed. |
-| `%{ldap_multi:attrName:sep:default}` | [[added,ldap_multi_added]] Fetches a multi-valued attribute. If the attribute is not present, the specified default is taken instead. If there are multiple values, they are concatenated using sep as the separator. |
-| `%{ldap_multi:attrName:sep}` | [[added,ldap_multi_added]] If the default is omitted, empty string is assumed `""`. |
-| `%{ldap_multi:attrName::default}` | [[added,ldap_multi_added]] The default for the separator is a single space `" "`. |
-| `%{ldap_multi:attrName::}` | [[added,ldap_multi_added]] How to specify a column `":"` as separator, default is `""`. |
-| `%{ldap_multi:attrName:::default}` | [[added,ldap_multi_added]] How to specify a column `":"` as separator, default explicitly defined. |
-| `%{ldap_multi:attrName:,}` | [[added,ldap_multi_added]] How to specify a comma `","` as separator, default is `""`. |
-| `%{ldap_multi:attrName:,:default}` | [[added,ldap_multi_added]] How to specify a comma `","` as separator, default explicitly defined. |
+| `%{ldap:attrName}` | Fetches a single-valued attribute. Fails if the attribute is not present, unless the `|default` filter is given. If there are multiple values, all except the first are ignored (with warning). |
+| `%{ldap_multi:attrName}` | [[added,ldap_multi_added]] Fetches a multi-valued attribute and outputs the values separated by tabs, with each value "tab-escaped". Use the `list` [[link,settings_variables_filters,filter]] to further convert it to a wanted value. For example: `mail_access_groups = %{ldap_multi:userGroups \| list \| default('mail')}` |
 | `%{ldap:dn}` | Retrieves the Distinguished Name of the entry. |
 
 ### Multiple Queries via userdbs
