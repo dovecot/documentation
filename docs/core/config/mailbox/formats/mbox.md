@@ -155,6 +155,12 @@ mbox_write_locks = dotlock fcntl
 
 Here's a list of how to find out the locking settings for other software:
 
+#### Debian
+
+Debian's policy specifies that all software should use "fcntl and then
+dotlock" locking. All software in Debian packages are supposed to be patched to
+use this order by default.
+
 #### Procmail
 
 ```console
@@ -186,12 +192,6 @@ is missing, since the fcntl is common with Dovecot and Postfix.
 ```console
 $ mutt -v|grep -i lock
 ```
-
-#### Debian
-
-Debian's policy specifies that all software should use "fcntl and then
-dotlock" locking, but this probably applies only to most commonly used
-software.
 
 ## Directory Structure
 
