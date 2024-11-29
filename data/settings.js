@@ -8583,7 +8583,7 @@ subscriptions file, unless SUBSCRIBE command is explicitly used for them.`
 	},
 
 	mailbox_autoexpunge: {
-		default: 'no',
+		default: 0,
 		seealso: [ 'mailbox_autoexpunge_max_mails' ],
 		tags: [ 'mailbox' ],
 		values: setting_types.TIME,
