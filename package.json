@@ -18,7 +18,7 @@
     "unist-builder": "^4.0.0",
     "unist-util-map": "^4.0.0",
     "unist-util-parents": "^3.0.0",
-    "vitepress": "^1.4.5",
+    "vitepress": "^1.5.0",
     "vitepress-plugin-pagefind": "^0.4.10",
     "vitepress-sidebar": "^1.29.0"
   },
