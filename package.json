@@ -19,7 +19,7 @@
     "unist-util-map": "^4.0.0",
     "unist-util-parents": "^3.0.0",
     "vitepress": "^1.5.0",
-    "vitepress-plugin-pagefind": "^0.4.10",
+    "vitepress-plugin-pagefind": "^0.4.11",
     "vitepress-sidebar": "^1.29.0"
   },
   "scripts": {
