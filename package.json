@@ -9,7 +9,7 @@
     "markdown-it-container": "^4.0.0",
     "markdown-it-deflist": "^3.0.0",
     "markdown-it-mathjax3": "^4.3.2",
-    "pagefind": "^1.1.1",
+    "pagefind": "^1.2.0",
     "pdc": "^0.2.3",
     "remark-definition-list": "^2.0.0",
     "remark-man": "^9.0.0",
