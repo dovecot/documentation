@@ -9688,10 +9688,10 @@ process_shutdown_filter = "event=mail_user_session_finished AND rss > 10M"
 	},
 
 	protocols: {
-		default: 'imap pop3 lmtp',
+		default: '',
 		values: setting_types.BOOLLIST,
 		text: `
-The list of protocols to enable.
+The list of protocols to enable. By default all protocols are disabled.
 
 For example:
 
@@ -9703,9 +9703,6 @@ protocols = imap
 protocols {
   lmtp = yes
 }
-
-# Disable all protocols:
-protocols =
 \`\`\``
 	},
 
