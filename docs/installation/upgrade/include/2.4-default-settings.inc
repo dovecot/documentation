@@ -6,3 +6,4 @@
 | `service/anvil/chroot` | empty | \<no value\> | Anvil is no longer chrooted. |
 | `service/anvil/user` | $default_internal_user | \<no value\> | Anvil runs as root. |
 | `service/auth-worker/process_limit` | 1 | 30 | |
+| [[setting,protocols]] | `imap pop3 lmtp` | `` | No protocols are enabled by default. |
