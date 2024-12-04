@@ -30,13 +30,21 @@ You need to create group `vmail` and user `vmail`.
 dovecot_config_version = 2.4.0
 dovecot_storage_version = 2.4.0
 
+# Enable wanted protocols:
+protocols {
+  imap = yes
+  lmtp = yes
+}
+
 mail_home = /srv/mail/%{user}
 mail_driver = sdbox
-mail_path = ~/Mail
+mail_path = ~/mail
 
 mail_uid = vmail
 mail_gid = vmail
-## this is sometimes needed
+
+# By default first_valid_uid is 500. If your vmail user's UID is smaller,
+# you need to modify this:
 #first_valid_uid = uid-number-of-vmail-user
 
 namespace inbox {
@@ -44,12 +52,12 @@ namespace inbox {
   separator = /
 }
 
-# Use system users:
+# Authenticate as system users:
 passdb pam {
 }
 
-ssl_cert_file = /path/to/cert.pem
-ssl_key_file = /path/to/key.pem
+ssl_cert_file = /etc/dovecot/ssl-cert.pem
+ssl_key_file = /etc/dovecot/ssl-key.pem
 ```
 :::
 
