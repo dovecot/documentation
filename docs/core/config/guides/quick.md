@@ -75,14 +75,8 @@ you might want to change.
 
 ### Installing From Sources
 
-If you compiled and installed Dovecot from sources, Dovecot has installed only
-a `/usr/local/etc/dovecot/README` file, which contains the path to the
-installed example configuration files, usually
-`/usr/local/share/doc/dovecot/example-config`. Copy them to `etc/`:
-
-```sh
-cp -r /usr/local/share/doc/dovecot/example-config/* /usr/local/etc/dovecot/
-```
+If you compiled and installed Dovecot from sources, Dovecot has installed an example
+configuration file in `/usr/local/etc/dovecot/dovecot.conf`
 
 ### Split Configuration Files
 
