@@ -45,10 +45,8 @@ make
 make install
 ```
 
-Dovecot is then started by running `~/dovecot/sbin/dovecot`. The
-example configuration file exists in
-`~/dovecot/share/doc/dovecot/example-config/` and needs to be copied
-to `~/dovecot/etc/dovecot/`.
+Dovecot is then started by running `~/dovecot/sbin/dovecot`. An example configuration
+is automatically installed in `~/dovecot/etc/dovecot/dovecot.conf`.
 
 ### Add Capabilities
 
