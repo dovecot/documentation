@@ -56,9 +56,6 @@ This page describes Dovecot's services comprehensively.
 
 Most admins don't need to know these details.
 
-The important service settings are described in the
-`example-config/conf.d/10-master.conf` file.
-
 ## Settings
 
 <SettingsComponent tag="service" />
