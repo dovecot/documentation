@@ -11067,7 +11067,7 @@ LDAP protocol version to use. Likely \`2\` or \`3\`.`
 	},
 
 	passdb_ldap_bind: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		default: 'no',
 		values: setting_types.BOOLEAN,
 		text: `
@@ -11092,7 +11092,7 @@ Otherwise the binding is changed to the default DN before each user lookup.`
 	},
 
 	passdb_ldap_bind_userdn: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		values: setting_types.STRING,
 		text: `
 ::: info
@@ -11109,7 +11109,7 @@ Example: \`passdb_ldap_bind_userdn = cn=%u,ou=people,o=org\``
 	},
 
 	passdb_ldap_filter: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		values: setting_types.STRING,
 		text: `
 ::: info
@@ -11131,7 +11131,7 @@ passdb ldap {
 	},
 
 	userdb_ldap_filter: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		values: setting_types.STRING,
 		text: `
 ::: info
@@ -11153,7 +11153,7 @@ userdb ldap {
 	},
 
 	userdb_ldap_iterate_fields: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		values: setting_types.STRLIST,
 		text: `
 ::: info
@@ -11175,7 +11175,7 @@ userdb ldap {
 	},
 
 	userdb_ldap_iterate_filter: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		values: setting_types.STRING,
 		text: `
 ::: info
