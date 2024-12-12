@@ -82,7 +82,7 @@ $ ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f doveauth_access.ldif
 
 The two important settings in password lookups are:
 
-- [[setting,ldap_filter]] specifies the LDAP filter how user is found from the
+- [[setting,passdb_ldap_filter]] specifies the LDAP filter how user is found from the
   LDAP. You can use all the normal [[variable]] like `%{user}` in the filter.
 
 - [[setting,passdb_fields]] specifies a list of attributes that are returned and
@@ -187,8 +187,8 @@ to configure this: lookup or template.
 
 ### DN Lookup
 
-DN is looked up by sending a [[setting,ldap_filter]] LDAP request and getting
-the DN from the reply. This is very similar to doing a
+DN is looked up by sending a [[setting,passdb_ldap_filter]] LDAP request and
+getting the DN from the reply. This is very similar to doing a
 [password lookup](#password-lookups). The only difference is that
 `userPassword` attribute isn't returned.
 
@@ -221,7 +221,8 @@ of two LDAP requests per login in both cases).
 If you're also using Dovecot for SMTP AUTH, it doesn't do a userdb lookup
 so the prefetch optimization doesn't help.
 
-If you're using DN template, [[setting,passdb_fields]] and [[setting,ldap_filter]] settings
+If you're using DN template, [[setting,passdb_fields]] and
+[[setting,passdb_ldap_filter]] settings
 are completely ignored. That means you can't make passdb return any
 [[link,passdb_extra_fields]]. You should also set
 [[setting,auth_username_format,%{user | lower}]] in `dovecot.conf` to normalize the
@@ -372,7 +373,7 @@ concurrent LDAP connections. Otherwise only a single LDAP connection is used.
 :::
 
 - Normalize the username to exactly the `mailRoutingAddress` field's value
-regardless of how the [[setting,ldap_filter]] found the user:
+regardless of how the [[setting,passdb_ldap_filter]] found the user:
 
 ::: code-group
 ```[dovecot.conf]
@@ -526,7 +527,7 @@ without knowing the user's password).
 
 The userdb lookups are configured in very much the same way as
 [password lookups](#password-lookups). [[setting,userdb_fields]] and
-[[setting,ldap_filter]], are used in the same way in passdb.
+[[setting,userdb_ldap_filter]], are used in the same way in passdb.
 
 If you're using a single UID and GID for all the users, you can specify
 them globally with [[setting,mail_uid]] and [[setting,mail_gid]] settings instead of
