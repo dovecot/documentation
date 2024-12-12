@@ -97,10 +97,12 @@ expression can include ldap specific variables and other variables too.
 For example:
 ::: code-group
 ```[dovecot.conf]
+passdb ldap {
   fields {
     user = %{ldap:uid}
     password = %{ldap:userPassword}
   }
+}
 ```
 :::
 
@@ -356,8 +358,10 @@ The most important settings are:
 
 ::: code-group
 ```[dovecot.conf]
-  passdb_ldap_bind_userdn = %{user}
-  passdb_ldap_bind = yes
+passdb ldap {
+  bind_userdn = %{user}
+  bind = yes
+}
 ```
 :::
 
@@ -377,12 +381,14 @@ regardless of how the [[setting,passdb_ldap_filter]] found the user:
 
 ::: code-group
 ```[dovecot.conf]
+passdb ldap {
   fields {
       user     = %{ldap:mailRoutingAddress}
       password = %{ldap:userPassword}
       proxy    = y
       proxy_timeout = 10
   }
+}
 ```
 :::
 
@@ -392,10 +398,12 @@ other means:
 
 ::: code-group
 ```[dovecot.conf]
+passdb ldap {
   fields {
     user = %{ldap:mailRoutingAddress}
     quota_storage_size = %{ldap:messageQuotaHard}B
   }
+}
 ```
 :::
 
@@ -404,7 +412,9 @@ distinct values inside each [[setting,passdb]] / [[setting,userdb]] section):
 
 ::: code-group
 ```[dovecot.conf]
-ldap_filter = (mailRoutingAddress=%{user})
+passdb ldap {
+  filter = (mailRoutingAddress=%{user})
+}
 ```
 :::
 
@@ -412,11 +422,13 @@ ldap_filter = (mailRoutingAddress=%{user})
 
 ::: code-group
 ```[dovecot.conf]
-  ldap_filter = (mailRoutingAddress=%{user})
-  ldap_iterate_filter = (objectClass=messageStoreRecipient)
+userdb ldap {
+  filter = (mailRoutingAddress=%{user})
+  iterate_filter = (objectClass=messageStoreRecipient)
   iterate_fields {
     user = %{ldap:mailRoutingAddress}
   }
+}
 ```
 :::
 
@@ -534,18 +546,24 @@ them globally with [[setting,mail_uid]] and [[setting,mail_gid]] settings instea
 returning them from LDAP.
 
 ```
-ldap_filter = (&(objectClass=posixAccount)(uid=%{user}))
-ldap_iterate_filter = (objectClass=posixAccount)
-fields {
+userdb ldap {
+  filter = (&(objectClass=posixAccount)(uid=%{user}))
+  fields {
     home = %{ldap:homeDirectory}
     uid = %{ldap:uidNumber}
     gid = %{ldap:gidNumber}
+  }
 }
 ```
 
-```
 # For using doveadm -A:
-fields=user=%{ldap:uid}
+```
+userdb ldap {
+  iterate_filter = (objectClass=posixAccount)
+  iterate_fields {
+    user = %{ldap:uid}
+  }
+}
 ```
 
 ### Attribute Templates
@@ -559,8 +577,10 @@ Create a `quota_storage_size` field with value `<n>B` where `<n>` comes
 from "quotaBytes" LDAP attribute:
 
 ```
-fields {
-  quota_storage_size = %{ldap:quotaBytes}B
+userdb ldap {
+  fields {
+    quota_storage_size = %{ldap:quotaBytes}B
+  }
 }
 ```
 
@@ -568,8 +588,10 @@ Create a `mail_path` field with value `/var/mail/<dir>/Maildir` where
 `<dir>` comes from "sAMAccountName" LDAP attribute:
 
 ```
-fields {
-  mail_path = /var/spool/vmail/%{ldap:sAMAccountName}/Maildir
+userdb ldap {
+  fields {
+    mail_path = /var/spool/vmail/%{ldap:sAMAccountName}/Maildir
+  }
 }
 ```
 
@@ -577,9 +599,11 @@ You can add static fields that aren't looked up from LDAP. For example
 create a "mail_path" field with value `/var/vmail/%{user | domain}/%{user | username}/Maildir`:
 
 ```
-fields {
+userdb ldap {
+  fields {
     quota_storage_size = %{ldap:quotaBytes}B
     mail_path = /var/vmail/%{user | domain}/%{user | username}/Maildir
+  }
 }
 ```
 
@@ -604,9 +628,11 @@ User names and domains may be distinguished using the [[variable]]
 
 The userdb may set a new username, too, using
 ```
+userdb ldap {
   fields {
     user = ...
   }
+}
 ```
 
 This will be used for:
