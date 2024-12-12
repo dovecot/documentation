@@ -81,51 +81,60 @@ See [[link,auth_ldap]].
 
 ::: code-group
 ```[dovecot.conf]
-dict_legacy {
-  somedict = ldap:/path/to/dovecot-ldap-dict.conf.ext
+dict_server {
+  dict ldap {
+    driver = ldap
+    ldap_uris = ldap://{{LDAPHOST}}
+    ldap_auth_dn = uid=testadmin,cn=users,dc=dovecot,dc=net
+    ldap_auth_dn_password = testadmin
+    ldap_timeout_secs = 5
+    ldap_base = dc=dovecot,dc=net
+    ldap_starttls = no
+    ssl_client_require_valid_cert = no
+
+    dict_map priv/test/home {
+      ldap_filter = (&(homeDirectory=*)(uid=%{user}))
+      value = %{ldap:homeDirectory}
+    }
+  }
 }
 ```
 :::
 
-#### LDAP Parameters
+#### LDAP Settings
 
-| Parameter | Required | Description |
-| --------- | -------- | ----------- |
-| `uri` | **YES**  | LDAP connection URI as expected by OpenLDAP. |
-| `bind_dn` | NO | DN or upn to use for binding. (default: none) |
-| `debug` | NO | Enable debug. `0` = off (default), `1` = on. |
-| `password` | NO | Password to use, only SIMPLE auth is supported at the moment. (default: none) |
-| `timeout` | NO | How long to wait for reply, in seconds. (default:30 seconds) |
-| `max_idle_time` | NO | Disconnect from LDAP server after connection has been idle for this many seconds. (default: never) |
-| `tls` | NO | Use TLS?<br/>`yes`: Require either ldaps or successful start TLS<br/> `try`: Send start TLS if necessary (default)<br/> `no`:  Do not send start TLS. |
+| Parameter | Mandatory | Description |
+| --------- | --------- | ----------- |
+| `ldap_uris` | **YES**  | LDAP connection URI as expected by OpenLDAP. |
+| `ldap_auth_dn` | NO | DN or upn to use for binding. |
+| `ldap_auth_dn_password`  | NO | Password to use, only SIMPLE auth is supported at the moment. |
+| `ldap_timeout` | NO | How long to wait for reply, in seconds. (default:30 seconds) |
+| `ldap_max_idle_time` | NO | Disconnect from LDAP server after connection has been idle for this many seconds. |
+| `ldap_debug_level` | NO | Enable debug. `0` = off, `1` = on. |
+| `ldap_starttls` | NO | Causes starttls on a cleartext ldap channel |
+| `ldap_base` | NO | Basedn for the search |
+| `ldap_scope` | NO | Scope of the search |
+| `ldap_filter` | YES | The ldap filter to use |
+| `dict_map_value` |  YES | The value to be returned. |
+| `dict_map_pattern` | NO | The pattern for the attribute. Defaults to the filter name. |
 
 #### Examples
 
 To map a key to a search:
-
 ```
-map {
-  pattern = priv/test/mail
-  filter = (mail=*)  # the () is required
-  base_dn = ou=container,dc=domain
-  username_attribute = uid # default is cn
-  value_attribute = mail
+dict_map priv/test/mail {
+  ldap_filter = (&(uid=%{user})(mail=*))
+  ldap_base = ou=container,dc=domain
+  value = %{ldap:mail}
 }
 ```
 
 To do a more complex search:
-
 ```
-map {
-  pattern = priv/test/mail/$location
-  filter = (&(mail=*)(location=%{location}) # the () is required
-  base_dn = ou=container,dc=domain
-  username_attribute = uid # default is cn
-  value_attribute = mail
-
-  fields {
-    location=$location
-  }
+dict_map priv/test/mail/$location {
+  ldap_filter = (&(uid=%{user})(mail=*)(uid=%{pattern:location}))
+  ldap_base = ou=container,dc=domain
+  value = %{ldap:mail}
 }
 ```
 

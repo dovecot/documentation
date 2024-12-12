@@ -53,6 +53,7 @@ backported
 badpassword
 bantime
 barfoo
+Basedn
 bayes
 bcc
 benumber
@@ -270,12 +271,10 @@ hdr
 hendrik
 hexblob
 hexlify
-hexuc
 hhmm
 highestmodseq
 HIGHESTPVTMODSEQ
 Hopmann
-hostaddr
 hostdomain
 hostip
 howto
@@ -358,6 +357,7 @@ lda
 ldapi
 ldapmodify
 ldaps
+ldaptest
 LDFLAGS
 ldif
 leastconn
@@ -532,7 +532,6 @@ NOCHILDREN
 nodelay
 nodeps
 NOINFERIORS
-noiv
 nolock
 nologin
 nonindexable
@@ -580,8 +579,8 @@ opie
 opsec
 optboolean
 optname
-orcpt
 OR'ing
+orcpt
 ORing
 OSFILE
 otherinstance
@@ -642,7 +641,6 @@ qmail
 qmgr
 QQACg
 qresync
-qwerty
 rampup
 randkey
 randomfail
@@ -666,7 +664,6 @@ resolv
 restorecon
 resyncing
 rfcs
-RHu
 Roskakori
 roundcube
 roundrobin
@@ -731,7 +728,6 @@ socketpath
 solib
 solrcloud
 solrconfig
-somedict
 sourceforge
 sourceuser
 sourceware
@@ -799,6 +795,7 @@ tempdisabled
 tempfail
 tempfailing
 terabyte
+testadmin
 testdomain
 testmbox
 testpass
@@ -913,11 +910,9 @@ wikis
 winbind
 wso
 xapian
-XBAR
 xchange
 xclient
 Xes
-XFOO
 xfs
 xoauth
 XRCPTFORWARD
