@@ -82,7 +82,7 @@ $ ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f doveauth_access.ldif
 
 The two important settings in password lookups are:
 
-- [[setting,ldap_filter]] specifies the LDAP filter how user is found from the
+- [[setting,passdb_ldap_filter]] specifies the LDAP filter how user is found from the
   LDAP. You can use all the normal [[variable]] like `%{user}` in the filter.
 
 - [[setting,passdb_fields]] specifies a list of attributes that are returned and
@@ -97,10 +97,12 @@ expression can include ldap specific variables and other variables too.
 For example:
 ::: code-group
 ```[dovecot.conf]
+passdb ldap {
   fields {
     user = %{ldap:uid}
     password = %{ldap:userPassword}
   }
+}
 ```
 :::
 
@@ -187,8 +189,8 @@ to configure this: lookup or template.
 
 ### DN Lookup
 
-DN is looked up by sending a [[setting,ldap_filter]] LDAP request and getting
-the DN from the reply. This is very similar to doing a
+DN is looked up by sending a [[setting,passdb_ldap_filter]] LDAP request and
+getting the DN from the reply. This is very similar to doing a
 [password lookup](#password-lookups). The only difference is that
 `userPassword` attribute isn't returned.
 
@@ -221,7 +223,8 @@ of two LDAP requests per login in both cases).
 If you're also using Dovecot for SMTP AUTH, it doesn't do a userdb lookup
 so the prefetch optimization doesn't help.
 
-If you're using DN template, [[setting,passdb_fields]] and [[setting,ldap_filter]] settings
+If you're using DN template, [[setting,passdb_fields]] and
+[[setting,passdb_ldap_filter]] settings
 are completely ignored. That means you can't make passdb return any
 [[link,passdb_extra_fields]]. You should also set
 [[setting,auth_username_format,%{user | lower}]] in `dovecot.conf` to normalize the
@@ -355,8 +358,10 @@ The most important settings are:
 
 ::: code-group
 ```[dovecot.conf]
-  passdb_ldap_bind_userdn = %{user}
-  passdb_ldap_bind = yes
+passdb ldap {
+  bind_userdn = %{user}
+  bind = yes
+}
 ```
 :::
 
@@ -372,16 +377,18 @@ concurrent LDAP connections. Otherwise only a single LDAP connection is used.
 :::
 
 - Normalize the username to exactly the `mailRoutingAddress` field's value
-regardless of how the [[setting,ldap_filter]] found the user:
+regardless of how the [[setting,passdb_ldap_filter]] found the user:
 
 ::: code-group
 ```[dovecot.conf]
+passdb ldap {
   fields {
       user     = %{ldap:mailRoutingAddress}
       password = %{ldap:userPassword}
       proxy    = y
       proxy_timeout = 10
   }
+}
 ```
 :::
 
@@ -391,10 +398,12 @@ other means:
 
 ::: code-group
 ```[dovecot.conf]
+passdb ldap {
   fields {
     user = %{ldap:mailRoutingAddress}
     quota_storage_size = %{ldap:messageQuotaHard}B
   }
+}
 ```
 :::
 
@@ -403,7 +412,9 @@ distinct values inside each [[setting,passdb]] / [[setting,userdb]] section):
 
 ::: code-group
 ```[dovecot.conf]
-ldap_filter = (mailRoutingAddress=%{user})
+passdb ldap {
+  filter = (mailRoutingAddress=%{user})
+}
 ```
 :::
 
@@ -411,11 +422,13 @@ ldap_filter = (mailRoutingAddress=%{user})
 
 ::: code-group
 ```[dovecot.conf]
-  ldap_filter = (mailRoutingAddress=%{user})
-  ldap_iterate_filter = (objectClass=messageStoreRecipient)
+userdb ldap {
+  filter = (mailRoutingAddress=%{user})
+  iterate_filter = (objectClass=messageStoreRecipient)
   iterate_fields {
     user = %{ldap:mailRoutingAddress}
   }
+}
 ```
 :::
 
@@ -509,6 +522,7 @@ returning the userdb information already in the passdb lookup.
 ## LDAP Settings
 
 <SettingsComponent tag="ldap" level="2" />
+<SettingsComponent tag="auth-ldap" level="2" />
 
 ## LDAP userdb
 
@@ -526,25 +540,31 @@ without knowing the user's password).
 
 The userdb lookups are configured in very much the same way as
 [password lookups](#password-lookups). [[setting,userdb_fields]] and
-[[setting,ldap_filter]], are used in the same way in passdb.
+[[setting,userdb_ldap_filter]], are used in the same way in passdb.
 
 If you're using a single UID and GID for all the users, you can specify
 them globally with [[setting,mail_uid]] and [[setting,mail_gid]] settings instead of
 returning them from LDAP.
 
 ```
-ldap_filter = (&(objectClass=posixAccount)(uid=%{user}))
-ldap_iterate_filter = (objectClass=posixAccount)
-fields {
+userdb ldap {
+  filter = (&(objectClass=posixAccount)(uid=%{user}))
+  fields {
     home = %{ldap:homeDirectory}
     uid = %{ldap:uidNumber}
     gid = %{ldap:gidNumber}
+  }
 }
 ```
 
-```
 # For using doveadm -A:
-fields=user=%{ldap:uid}
+```
+userdb ldap {
+  iterate_filter = (objectClass=posixAccount)
+  iterate_fields {
+    user = %{ldap:uid}
+  }
+}
 ```
 
 ### Attribute Templates
@@ -558,8 +578,10 @@ Create a `quota_storage_size` field with value `<n>B` where `<n>` comes
 from "quotaBytes" LDAP attribute:
 
 ```
-fields {
-  quota_storage_size = %{ldap:quotaBytes}B
+userdb ldap {
+  fields {
+    quota_storage_size = %{ldap:quotaBytes}B
+  }
 }
 ```
 
@@ -567,8 +589,10 @@ Create a `mail_path` field with value `/var/mail/<dir>/Maildir` where
 `<dir>` comes from "sAMAccountName" LDAP attribute:
 
 ```
-fields {
-  mail_path = /var/spool/vmail/%{ldap:sAMAccountName}/Maildir
+userdb ldap {
+  fields {
+    mail_path = /var/spool/vmail/%{ldap:sAMAccountName}/Maildir
+  }
 }
 ```
 
@@ -576,9 +600,11 @@ You can add static fields that aren't looked up from LDAP. For example
 create a "mail_path" field with value `/var/vmail/%{user | domain}/%{user | username}/Maildir`:
 
 ```
-fields {
+userdb ldap {
+  fields {
     quota_storage_size = %{ldap:quotaBytes}B
     mail_path = /var/vmail/%{user | domain}/%{user | username}/Maildir
+  }
 }
 ```
 
@@ -603,9 +629,11 @@ User names and domains may be distinguished using the [[variable]]
 
 The userdb may set a new username, too, using
 ```
+userdb ldap {
   fields {
     user = ...
   }
+}
 ```
 
 This will be used for:

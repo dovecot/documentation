@@ -44,10 +44,10 @@ passdb sql {
 
 ## LDAP
 
-Just like with SQL, you can use `%{protocol}` in [[setting,ldap_filter]]:
+Just like with SQL, you can use `%{protocol}` in [[setting,passdb_ldap_filter]]:
 
 ```
-pass_filter = (&(objectClass=posixAccount)(uid=%{user})(protocol=%{protocol}))
+passdb_ldap__filter = (&(objectClass=posixAccount)(uid=%{user})(protocol=%{protocol}))
 ```
 
 That would require setting both protocol=pop3 and protocol=imap attributes

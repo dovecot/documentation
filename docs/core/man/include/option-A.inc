@@ -9,5 +9,5 @@
 	[[setting,userdb_sql_iterate_query]] setting matches your database layout.
 
 	When using the LDAP userdb module, make sure that the [[setting,userdb_fields]]
-	and [[setting,ldap_iterate_fields]] settings match your LDAP schema.
+	and [[setting,userdb_ldap_iterate_fields]] settings match your LDAP schema.
 	Otherwise [[man,doveadm]] will be unable to iterate over all users.
