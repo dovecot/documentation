@@ -11071,10 +11071,6 @@ LDAP protocol version to use. Likely \`2\` or \`3\`.`
 		default: 'no',
 		values: setting_types.BOOLEAN,
 		text: `
-::: info
-	LDAP Authentication Only
-:::
-
 Set \`yes\` to use authentication binding for verifying password's validity.
 
 This works by logging into LDAP server using the username and password given by client.
@@ -11095,10 +11091,6 @@ Otherwise the binding is changed to the default DN before each user lookup.`
 		tags: [ 'auth-ldap' ],
 		values: setting_types.STRING,
 		text: `
-::: info
-	LDAP Authentication Only
-:::
-
 If authentication binding is used, you can save one LDAP request per login
 if users' DN can be specified with a common template. The template can use
 the standard [[variable]].
@@ -11112,10 +11104,6 @@ Example: \`passdb_ldap_bind_userdn = cn=%u,ou=people,o=org\``
 		tags: [ 'auth-ldap' ],
 		values: setting_types.STRING,
 		text: `
-::: info
-	LDAP Authentication Only
-:::
-
 Filter for passdb lookup.
 
 Variables that can be used (see [[variable]] for full list).
@@ -11134,10 +11122,6 @@ passdb ldap {
 		tags: [ 'auth-ldap' ],
 		values: setting_types.STRING,
 		text: `
-::: info
-	LDAP Authentication Only
-:::
-
 Filter for userdb lookup.
 
 Variables that can be used (see [[variable]] for full list).
@@ -11156,10 +11140,6 @@ userdb ldap {
 		tags: [ 'auth-ldap' ],
 		values: setting_types.STRLIST,
 		text: `
-::: info
-	LDAP Authentication Only
-:::
-
 Attributes to get a list of all users. Currently only the attribute
 \`user\` is supported.
 
@@ -11178,10 +11158,6 @@ userdb ldap {
 		tags: [ 'auth-ldap' ],
 		values: setting_types.STRING,
 		text: `
-::: info
-	LDAP Authentication Only
-:::
-
 Filter to get a list of all users.
 
 \`\`\`
