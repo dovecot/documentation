@@ -160,7 +160,7 @@ account   required        pam_unix.so
 
 For Solaris you will have to edit `/etc/pam.conf`.
 
-Here is a working Solaris example (using [[setting,service_name,%L{service}]]
+Here is a working Solaris example (using [[setting,service_name,%{service}]]
 instead of the default `dovecot` service):
 
 ```
