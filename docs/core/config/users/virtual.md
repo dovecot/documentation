@@ -224,12 +224,10 @@ mail_driver = maildir
 mail_path = /home/%{user | domain}/%{user | username}/Maildir
 
 passdb passwd-file {
-  auth_username_format = %Ln
   passwd_file_path = /home/%{user | domain}/etc/shadow
 }
 
 userdb passwd-file {
-  auth_username_format = %Ln
   passwd_file_path = /home/%{user | domain}/etc/passwd
 }
 ```
