@@ -20,6 +20,11 @@ export const doveadm = {
 				// If true, only show for cli, not HTTP.
 				// cli_only: true,
 
+				// If set, will use as command example argument.
+				// i.e., for HTTP API requests, this argument will be added
+				// to the example argument string.
+				example: false,
+
 				// If true, this is an optional positional argument.
 				// optional: true,
 
