@@ -106,6 +106,7 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
         <th>Argument(s)</th>
         <th>Type</th>
         <th>Description</th>
+        <th>Example</th>
        </tr>
       </thead>
       <tbody>
@@ -114,6 +115,7 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
          <td><code>{{ elem.flag }}</code></td>
          <td>{{ elem.type }}</td>
          <td v-html="elem.text" />
+         <td><code v-if="elem.example">{{ elem.example }}</code></td>
         </tr>
        </template>
       </tbody>
@@ -130,6 +132,7 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
         <th>Parameter</th>
         <th>Type</th>
         <th>Description</th>
+        <th>Example</th>
        </tr>
       </thead>
       <tbody>
@@ -138,6 +141,7 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
          <td><code>{{ elem.param }}</code></td>
          <td>{{ elem.type }}</td>
          <td v-html="elem.text" />
+         <td><code v-if="elem.example">{{ elem.example }}</code></td>
         </tr>
        </template>
       </tbody>
