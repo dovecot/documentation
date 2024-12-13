@@ -1830,9 +1830,8 @@ See the \`decode2text.sh\` script included in Dovecot for how to use this.
 Example:
 
 \`\`\`
-plugin {
-  fts_decoder = decode2text
-}
+fts_decoder_driver = script
+fts_decoder_script_socket_path = decode2text
 
 service decode2text {
   executable = script /usr/lib/dovecot/decode2text.sh
