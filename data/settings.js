@@ -2747,8 +2747,11 @@ The URI of the dictionary to use. This MUST be set for the plugin to be active.
 See [[link,dict]] for how to configure dictionaries.
 
 \`\`\`
-plugin {
-  notify_status_dict = proxy:dict-async:notify_status
+notify_status {
+  dict proxy {
+    name = notify_status
+    socket_path = dict-async
+  }
 }
 \`\`\``
 	},
