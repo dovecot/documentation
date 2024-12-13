@@ -55,7 +55,7 @@ mail_driver = maildir
 mail_path = ~/Maildir
 
 # If you're using POP3, you'll need this:
-pop3_uidl_format = %g
+pop3_uidl_format = %{guid}
 
 # Authentication configuration:
 auth_verbose = yes

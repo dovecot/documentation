@@ -85,7 +85,11 @@ metric imap_command {
 metric login_domains {
   filter = event=auth_request_finished
   fields = user
-  group_by = discrete:%L{domain}
+  group_by user {
+    method discrete {
+      modifier = %{value | domain | lower}
+    }
+  }
 }
 ```
 

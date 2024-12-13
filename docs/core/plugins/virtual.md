@@ -196,19 +196,19 @@ namespace real {
   list = no
   hidden = yes
 }
-```
 
-```[mysql.ext]
 # Note: none of the namespaces have inbox=yes. This is because for IMAP users
 # you want the inbox namespace to have 'inbox=yes', but for POP3 users you want
 # the virtual namespace to have 'inbox=yes'. This requires setting the
 # 'inbox=yes' in userdb extra fields. For example with MySQL you can do
 # this like:
 
-ser_query = SELECT ..., \
-  CASE '%s' WHEN 'pop3' THEN NULL ELSE 'yes' END AS 'namespace/inbox/inbox', \
-  CASE '%s' WHEN 'pop3' THEN 'yes' ELSE NULL END AS 'namespace/virtual/inbox' \
-  WHERE ...
+userdb sql {
+  query = SELECT ..., \
+    CASE '%{protocol}' WHEN 'pop3' THEN NULL ELSE 'yes' END AS 'namespace/inbox/inbox', \
+    CASE '%{protocol}' WHEN 'pop3' THEN 'yes' ELSE NULL END AS 'namespace/virtual/inbox' \
+    WHERE ...
+}
 ```
 
 ```[/etc/dovecot/virtual/INBOX/dovecot-virtual]
@@ -229,7 +229,7 @@ Also to avoid accidental POP3 UIDL changes, you shouldn't base the UIDLs on
 IMAP UIDs. Instead use GUIDs (with Maildir the same as base filename):
 
 ```
-pop3_uidl_format = %g
+pop3_uidl_format = %{guid}
 ```
 
 ## Configuration Examples
