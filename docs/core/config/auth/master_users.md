@@ -71,10 +71,10 @@ The options for handling this are:
    You can create a `default ACL`, that applies to all mailboxes. See example
    below.
 
-2. Set `plugin { acl_user=%{user} }`. This preserves the master_user for other
+2. Set [[setting,acl_user,%{user}]]. This preserves the master_user for other
    purposes (e.g. `%{master_user}` variable).
 
-3. Set `plugin { master_user=%{user} }`. This fully hides that master user login is
+3. Change userdb to return `userdb_fields { master_user=%{user} }`. This fully hides that master user login is
    being used.
 
 Example configuration:
