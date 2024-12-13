@@ -195,9 +195,11 @@ end
 ```lua:line-numbers
 -- To use:
 --
--- plugin {
---   push_notification_driver = lua:file=/home/example/empty.lua
---   push_lua_url = http://push.notification.server/handler
+-- push_notification lua {
+--   lua_file = /home/example/empty.lua
+--   lua_settings {
+--     push_lua_url = http://push.notification.server/handler
+--   }
 -- }
 --
 -- server is sent a POST message to given url with parameters

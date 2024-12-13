@@ -73,10 +73,6 @@ acl_driver = vfile
 # Move messages to an .EXPUNGED mailbox
 lazy_expunge_mailbox = .EXPUNGED
 
-plugin {
-  # Define ACL so that user cannot list the .EXPUNGED mailbox
-  acl = vfile:/etc/dovecot/dovecot.acl
-}
 mailbox .EXPUNGED {
   # Expunged messages most likely don't want to be included in quota:
   quota_ignore = yes
