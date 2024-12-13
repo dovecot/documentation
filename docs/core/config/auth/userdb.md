@@ -203,8 +203,7 @@ helpful to know how Dovecot internally passes them:
 
 1. First all actual settings are first read into memory.
 2. Next all the extra fields returned by `userdb` lookup are used to override
-   the settings. Any unknown setting is placed into the plugin {} section
-   (e.g. `foo=bar` will be parsed as if it were `plugin { foo=bar }`).
+   the settings.
 3. Last, if [[link,post_login_scripting]] is used, it may modify the
    settings.
 

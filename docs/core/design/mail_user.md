@@ -22,9 +22,6 @@ directly. Some of the most useful things you can do with a user are:
 - `mail_user_home_expand()` expands `~/` at the beginning of given
    path to user's actual home directory.
 
-- `mail_user_plugin_getenv()` returns value for a setting defined in
-  `plugin {}` section.
-
 Typically each new IMAP/POP3/etc. connection creates a single mail user.
 If the same process handles multiple connections for the same user, they
 don't share the same mail_user (especially since each mail_user has a

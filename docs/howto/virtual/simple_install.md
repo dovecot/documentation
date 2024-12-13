@@ -174,8 +174,7 @@ protocol imap {
   }
 }
 
-plugin {
-  quota = maildir
+quota User {
 }
 ```
 
