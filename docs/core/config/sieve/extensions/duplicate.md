@@ -34,10 +34,10 @@ The duplicate extension is available by default.
 ### Example
 
 ```[dovecot.conf]
-plugin {
-  sieve = ~/.dovecot.sieve
-
-  sieve_duplicate_default_period = 1h
-  sieve_duplicate_max_period = 1d
+sieve_script personal {
+  path = ~/.dovecot.sieve
 }
+
+sieve_duplicate_default_period = 1h
+sieve_duplicate_max_period = 1d
 ```

@@ -53,5 +53,5 @@ stored scripts.
 This plugin uses the normal configuration settings used by the [[link,lda]]
 Sieve plugin at delivery.
 
-The [[setting,sieve_before]] and [[setting,sieve_after]] scripts
-are currently ignored by this plugin.
+The `before`, `after` and `discard` Sieve script storage types (FIXME: ref) are
+currently ignored by this plugin.
