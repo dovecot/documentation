@@ -487,7 +487,7 @@ will generally not be useful.`
 
 	managesieve_notify_capability: {
 		tags: [ 'managesieve', 'sieve' ],
-		default: '<dynamically determined>',
+		default: '\\<dynamically determined\\>',
 		values: setting_types.STRING,
 		advanced: true,
 		text: `
@@ -630,7 +630,7 @@ would be when no discard script is configured.`
 	sieve_extensions: {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
-		default: '<see description>',
+		default: '\\<see description\\>',
 		values: setting_types.STRING,
 		text: `
 The Sieve language extensions available to users.
@@ -2002,7 +2002,7 @@ fts_decoder_tika_url = http://tikahost:9998/tika/
 
 	textcat_config_path: {
 		plugin: 'fts',
-		default: '<textcat dir>',
+		default: '\\<textcat dir\\>',
 		values: setting_types.STRING,
 		seealso: [ 'language' ],
 		text: `
@@ -2025,7 +2025,7 @@ textcat_config_path = /usr/share/libexttextcat/fpdb.conf
 
 	language: {
 		plugin: 'fts',
-		default: '<textcat dir>',
+		default: '\\<textcat dir\\>',
 		values: setting_types.NAMED_LIST_FILTER,
 		dependencies: [ 'language_default' ],
 		seealso: [ 'textcat_config_path', '[[link,fts_tokenization]]' ],
@@ -4165,7 +4165,7 @@ This setting doesn't affect internal failures. See
 	},
 
 	auth_gssapi_hostname: {
-		default: '<name returned by gethostname()>',
+		default: '\\<name returned by gethostname()\\>',
 		values: setting_types.STRING,
 		text: `
 This supplies the hostname to use in Generic Security Services API
@@ -4191,7 +4191,7 @@ immediate retries.`
 	},
 
 	auth_krb5_keytab: {
-		default: '<system default (e.g. /etc/krb5.keytab)>',
+		default: '\\<system default (e.g. /etc/krb5.keytab)\\>',
 		values: setting_types.STRING,
 		text: `
 This specifies the Kerberos keytab to use for the GSSAPI mechanism.
@@ -4694,7 +4694,7 @@ Name of the dict. The [[setting,dict_driver]] setting defaults to this.`
 	dict_driver: {
 		tags: [ 'dict' ],
 		values: setting_types.STRING,
-		default: '<dict_name>',
+		default: '\\<dict_name\\>',
 		text: `
 The dict driver to use. Defaults to [[setting,dict_name]].`
 	},
@@ -5379,7 +5379,7 @@ for HAProxy are aborted immediately.`
 	},
 
 	hostname: {
-		default: '<system\'s real hostname@domain.tld>',
+		default: '\\<system\'s real hostname@domain.tld\\>',
 		tags: [ 'submission' ],
 		values: setting_types.STRING,
 		text: `
@@ -7704,7 +7704,7 @@ automatically.`
 	mail_path: {
 		tags: [ 'mail-location' ],
 		values: setting_types.STRING,
-		default: '<specific to mail_driver setting>',
+		default: '\\<specific to mail_driver setting\\>',
 		seealso: [
 			'[[link,settings_variables_mail_user_variables]]',
 			'[[link,home_directories_for_virtual_users]]',
@@ -7744,7 +7744,7 @@ This can also be used to specify a different INBOX path with Maildir:
 	mail_index_path: {
 		tags: [ 'mail-location' ],
 		values: setting_types.STRING,
-		default: '<same as mail_path setting>',
+		default: '\\<same as mail_path setting\\>',
 		seealso: [
 			'[[link,design_indexes_index_format]]',
 			'[[link,mail_location_index_files]]',
@@ -7765,7 +7765,7 @@ The private index files are used with shared mailboxes to provide private
 	mail_cache_path: {
 		tags: [ 'mail-location' ],
 		values: setting_types.STRING,
-		default: '<same as mail_index_path setting',
+		default: '\\<same as mail_index_path setting\\>',
 		text: `
 Place \`dovecot.index.cache\` files to this directory instead of among the
 other index files. This may be used as an optimization to split most index
@@ -7840,7 +7840,7 @@ Specifies the filename used for storing mailbox subscriptions.`
 	mailbox_directory_name: {
 		tags: [ 'mail-location' ],
 		values: setting_types.STRING,
-		default: '<specific to mail_driver setting',
+		default: '\\<specific to mail_driver setting\\>',
 		seealso: [ 'mail_driver', 'mailbox_directory_name_legacy' ],
 		text: `
 Specifies the directory name used for mailbox, index, and control directory
@@ -10114,7 +10114,7 @@ This setting is used for both incoming and outgoing SSL connections.`
 	},
 
 	ssl_cipher_suites: {
-		default: '<OpenSSL version specific>',
+		default: '\\<OpenSSL version specific\\>',
 		seealso: [ 'ssl', 'ssl_cipher_list', '[[link,ssl_configuration]]' ],
 		values: setting_types.STRING,
 		text: `
@@ -10214,7 +10214,7 @@ Which SSL crypto device to use.`
 	},
 
 	ssl_curve_list: {
-		default: '<defaults from the SSL library>',
+		default: '\\<defaults from the SSL library\\>',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
 		values: setting_types.STRING,
 		text: `
