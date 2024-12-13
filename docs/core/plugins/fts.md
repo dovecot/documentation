@@ -287,9 +287,9 @@ They are configured through [[setting,language_filters]].
 Example:
 
 ```
-plugin {
-  language_filters = normalizer-icu snowball stopwords
-  language_filters_en = lowercase snowball english-possessive stopwords
+language_filters = normalizer-icu snowball stopwords
+language en {
+  language_filters = lowercase snowball english-possessive stopwords
 }
 ```
 
