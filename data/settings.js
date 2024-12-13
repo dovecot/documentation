@@ -2391,7 +2391,7 @@ last_login {
 	},
 
 	last_login_key: {
-		default: 'last-login/%u',
+		default: 'last-login/%{user}',
 		plugin: 'last-login',
 		values: setting_types.STRING,
 		text: `
@@ -4468,7 +4468,7 @@ If you want to allow all characters, leave the value empty.`
 	},
 
 	auth_username_format: {
-		default: '%Lu',
+		default: '%{user | lower}',
 		values: setting_types.STRING,
 		text: `
 Formatting applied to username before querying the auth database.
@@ -4477,9 +4477,9 @@ You can use the standard variables here.
 
 Examples:
 
-- \`%Lu\`: Lowercases the username
-- \`%n\`: Drops the domain if one was supplied
-- \`%n-AT-%d\`: Changes the "@" symbol into "-AT-" before lookup
+- \`%{user | lower}\`: Lowercases the username
+- \`%{user | username}\`: Drops the domain if one was supplied
+- \`%{user | username}-AT-%{user | domain}\`: Changes the "@" symbol into "-AT-" before lookup
 
 This translation is done after the changes specified with the
 [[setting,auth_username_translation]] setting.`
@@ -4631,31 +4631,31 @@ service-specific configuration.`
 	},
 
 	deliver_log_format: {
-		default: 'msgid=%m: %$',
+		default: 'msgid=%{msgid}: %{message}',
 		values: setting_types.STRING_NOVAR,
 		text: `
 The format to use for logging mail deliveries.
 
 Variables that can be used for this setting (see [[variable,global]]):
 
-| Variable Name | Short Form | Description |
-| ------------- | ---------- | ----------- |
-| \`%$\` | | Delivery status message (e.g., saved to INBOX) |
-| \`%{msgid}\` | \`%m\` | Message-ID |
-| \`%{subject}\` | \`%s\` | Subject |
-| \`%{from}\` | \`%f\` | From address |
-| \`%{from_envelope}\` | \`%e\` | SMTP FROM envelope |
-| \`%{size}\` | \`%p\` | Physical size |
-| \`%{vsize}\` | \`%w\` | Virtual size |
-| \`%{to_envelope}\` | | RCPT TO envelope |
-| \`%{delivery_time}\` | | How many milliseconds to deliver the mail |
-| \`%{session_time}\` | | LMTP session duration, not including \`%{delivery_time}\` |
-| \`%{storage_id}\` | | Backend-specific ID for mail, e.g. Maildir filename |
+| Variable Name | Description |
+| ------------- | ----------- |
+| \`%{message}\` | Delivery status message (e.g., saved to INBOX) |
+| \`%{msgid}\` | | Message-ID |
+| \`%{subject}\` | Subject |
+| \`%{from}\` | From address |
+| \`%{from_envelope}\` | SMTP FROM envelope |
+| \`%{size}\` | Physical size |
+| \`%{vsize}\` | Virtual size |
+| \`%{to_envelope}\` | RCPT TO envelope |
+| \`%{delivery_time}\` | How many milliseconds to deliver the mail |
+| \`%{session_time}\` | LMTP session duration, not including \`%{delivery_time}\` |
+| \`%{storage_id}\` | Backend-specific ID for mail, e.g. Maildir filename |
 
 Example:
 
 \`\`\`
-deliver_log_format = stime=%{session_time} msgid=%m: %$
+deliver_log_format = stime=%{session_time} msgid=%{msgid}: %{message}
 \`\`\``
 	},
 
@@ -6071,26 +6071,26 @@ when the client is in IDLE operation.`
 	},
 
 	imap_logout_format: {
-		default: 'in=%i out=%o deleted=%{deleted} expunged=%{expunged} trashed=%{trashed} hdr_count=%{fetch_hdr_count} hdr_bytes=%{fetch_hdr_bytes} body_count=%{fetch_body_count} body_bytes=%{fetch_body_bytes}',
+		default: 'in=%{input} out=%{output} deleted=%{deleted} expunged=%{expunged} trashed=%{trashed} hdr_count=%{fetch_hdr_count} hdr_bytes=%{fetch_hdr_bytes} body_count=%{fetch_body_count} body_bytes=%{fetch_body_bytes}',
 		tags: [ 'imap' ],
 		values: setting_types.STRING_NOVAR,
 		text: `
 This setting specifies the IMAP logout format string. Supported variables,
 in addition to [[variable,mail-user]] are:
 
-| Variable Name | Short Form | Description |
-| ------------- | ---------- | ----------- |
-| \`%{input}\` | \`%i\` | Total number of bytes read from client |
-| \`%{output}\` | \`%o\` | Total number of bytes sent to client |
-| \`%{fetch_hdr_count}\` | | Number of mails with mail header data sent to client |
-| \`%{fetch_hdr_bytes}\` | | Number of bytes with mail header data sent to client |
-| \`%{fetch_body_count}\` | | Number of mails with mail body data sent to client |
-| \`%{fetch_body_bytes}\` | | Number of bytes with mail body data sent to client |
-| \`%{deleted}\` | | Number of mails where client added \Deleted flag |
-| \`%{expunged}\` | | Number of mails that client expunged, which does not include automatically expunged mails |
-| \`%{autoexpunged}\` | | Number of mails that were automatically expunged after client disconnected |
-| \`%{trashed}\` | | Number of mails that client copied/moved to the special_use=\Trash mailbox. |
-| \`%{appended}\` | | Number of mails saved during the session |`
+| Variable Name | Description |
+| ------------- | ----------- |
+| \`%{input}\` | Total number of bytes read from client |
+| \`%{output}\` | Total number of bytes sent to client |
+| \`%{fetch_hdr_count}\` | Number of mails with mail header data sent to client |
+| \`%{fetch_hdr_bytes}\` | Number of bytes with mail header data sent to client |
+| \`%{fetch_body_count}\` | Number of mails with mail body data sent to client |
+| \`%{fetch_body_bytes}\` | Number of bytes with mail body data sent to client |
+| \`%{deleted}\` | Number of mails where client added \Deleted flag |
+| \`%{expunged}\` | Number of mails that client expunged, which does not include automatically expunged mails |
+| \`%{autoexpunged}\` | Number of mails that were automatically expunged after client disconnected |
+| \`%{trashed}\` | Number of mails that client copied/moved to the special_use=\Trash mailbox. |
+| \`%{appended}\` | Number of mails saved during the session |`
 	},
 
 	imap_max_line_length: {
@@ -6123,7 +6123,7 @@ Example:
 # Store METADATA information within user's Maildir directory
 mail_attribute {
   dict file {
-    path = %h/Maildir/dovecot-attributes
+    path = %{home}/Maildir/dovecot-attributes
   }
 }
 
@@ -6156,7 +6156,7 @@ be active.
 	},
 
 	imap_urlauth_logout_format: {
-		default: 'in=%i out=%o',
+		default: 'in=%{input} out=%{output}',
 		seealso: [ 'imap_urlauth_host' ],
 		tags: [ 'imap' ],
 		values: setting_types.STRING_NOVAR,
@@ -6172,8 +6172,8 @@ Variables allowed:
 
 | Name | Description |
 | ---- | ----------- |
-| \`%i\` | Total number of bytes read from the client |
-| \`%o\` | Total number of bytes sent to the client |`
+| \`%{input}\` | Total number of bytes read from the client |
+| \`%{output}\` | Total number of bytes sent to the client |`
 	},
 
 	imap_urlauth_port: {
@@ -6403,7 +6403,7 @@ following configuration should be employed, where the credentials are
 represented by masteruser and masteruser-secret:
 
 \`\`\`
-imapc_user = %u
+imapc_user = %{user}
 imapc_master_user = masteruser
 imapc_password = masteruser-secret
 \`\`\`
@@ -6963,7 +6963,7 @@ Variables allowed:
 	},
 
 	login_log_format: {
-		default: '%$: %s',
+		default: '%{message}: %{elements}',
 		values: setting_types.STRING_NOVAR,
 		text: `
 The formatting of login log messages.
@@ -6972,12 +6972,12 @@ Variables allowed (in addition to [[variable,global]]):
 
 | Variable Name | Description |
 | ------------- | ----------- |
-| \`%s\` | A [[setting,login_log_format_elements]] string |
-| \`%$\` | The log data |`
+| \`%{elements}\` | A [[setting,login_log_format_elements]] string |
+| \`%{message}\` | The log data |`
 	},
 
 	login_log_format_elements: {
-		default: 'user=<%u> method=%m rip=%r lip=%l mpid=%e %c session=<%{session}>',
+		default: 'user=<%{user}> method=%{mechanism} rip=%{remote_ip} lip=%{local_ip} mpid=%{mail_pid} %{secured} session=<%{session}>',
 		// TODO: Provide join example
 		values: setting_types.STRING_NOVAR,
 		text: `
@@ -7289,7 +7289,7 @@ Example:
 \`\`\`
 mail_attribute {
   dict file {
-    path = %h/dovecot-attributes
+    path = %{home}/dovecot-attributes
   }
 }
 \`\`\``
@@ -7399,7 +7399,7 @@ The following example is one option when home is in \`/var/vmail/domain/user/\`
 and mails are in \`/var/vmail/domain/user/mail/\`:
 
 \`\`\`[dovecot.conf]
-mail_home = /var/vmail/%d/%n
+mail_home = /var/vmail/%{user | domain}/%{user | username}
 mail_path = ~/mail
 \`\`\`
 
@@ -7407,7 +7407,7 @@ mail_path = ~/mail
 	},
 
 	mail_log_prefix: {
-		default: '%s(%u)\<%{process:pid}\>\<%{session}\>',
+		default: '%{service}(%{user})<%{process:pid}><%{session}>: ',
 		values: setting_types.STRING,
 		text: `
 You can specify a log prefix for mail processes here.
@@ -8211,7 +8211,7 @@ The maximum time to wait for all locks to be released before aborting.`
 		advanced: true,
 		text: `
 The mail-header selection algorithm to use for MD5 POP3 UIDLs when the
-setting [[setting,pop3_uidl_format,%m]] is applied.`
+setting [[setting,pop3_uidl_format,%{md5}]] is applied.`
 	},
 
 	mbox_min_index_size: {
@@ -8948,7 +8948,7 @@ Username attribute in response.`
 	oauth2_username_validation_format: {
 		tags: [ 'oauth2' ],
 		values: setting_types.STRING,
-		default: '%u',
+		default: '%{user}',
 		seealso: [ 'oauth2_username_attribute' ],
 		text: `
 Normalization for oauth2 provided username, this setting is normally not
@@ -9436,7 +9436,7 @@ If enabled, only one POP3 session may exist for any single user.`
 	},
 
 	pop3_logout_format: {
-		default: 'top=%t/%p retr=%r/%b del=%d/%m size=%s',
+		default: 'top=%{top_count}/%{top_bytes}, retr=%{retr_count}/%{retr_bytes}, del=%{deleted_count}/%{deleted_bytes}, size=%{message_bytes}',
 		tags: [ 'pop3' ],
 		values: setting_types.STRING_NOVAR,
 		text: `
@@ -9444,19 +9444,19 @@ The string to display to the client on POP3 logout (informational only).
 
 Variables available (in addition to [[variable,mail-user]]):
 
-| Variable Name | Short Form | Description |
-| ------------- | ---------- | ----------- |
-| \`%{input}\` | \`%i\` | Bytes read from the client |
-| \`%{output}\` | \`%o\` | Bytes sent to the client |
-| \`%{top_count}\` | \`%t\` | Number of TOP commands run |
-| \`%{top_bytes}\` | \`%p\` | Bytes sent to the client because of TOP commands |
-| \`%{retr_count}\` | \`%r\` | Number of RETR commands run |
-| \`%{retr_bytes}\` | \`%b\` | Bytes sent to the client because of RETR commands |
-| \`%{deleted_count}\` | \`%d\` | Number of deleted messages |
-| \`%{deleted_bytes}\` | | Number of bytes in deleted messages |
-| \`%{message_count}\` | \`%m\` | Number of messages before deletion |
-| \`%{message_bytes}\` | \`%s\` | Mailbox size, in bytes, before deletion |
-| \`%{uidl_change}\` | \`%u\` | The old and the new UIDL hash (which can be useful for identifying unexpected changes in UIDLs) |`
+| Variable Name | Description |
+| ------------- | ----------- |
+| \`%{input}\` | Bytes read from the client |
+| \`%{output}\` | Bytes sent to the client |
+| \`%{top_count}\` | Number of TOP commands run |
+| \`%{top_bytes}\` | Bytes sent to the client because of TOP commands |
+| \`%{retr_count}\` | Number of RETR commands run |
+| \`%{retr_bytes}\` | Bytes sent to the client because of RETR commands |
+| \`%{deleted_count}\` | Number of deleted messages |
+| \`%{deleted_bytes}\` | Number of bytes in deleted messages |
+| \`%{message_count}\` | Number of messages before deletion |
+| \`%{message_bytes}\` | Mailbox size, in bytes, before deletion |
+| \`%{uidl_change}\` | The old and the new UIDL hash (which can be useful for identifying unexpected changes in UIDLs) |`
 	},
 
 	pop3_no_flag_updates: {
@@ -9505,23 +9505,23 @@ Options:
 	},
 
 	pop3_uidl_format: {
-		default: '%08Xu%08Xv',
+		default: '%{uid | hex(8)}%{uidvalidity | hex(8)}',
 		tags: [ 'pop3' ],
 		values: setting_types.STRING_NOVAR,
 		text: `
 The POP3 unique mail identifier (UIDL) format to use.
 
 The following variables can be used in combination with the
-standard variable modifiers (e.g., \`%Uf\` supplies the filename in uppercase)
-and with [[variable,global]]:
+standard variable filters (e.g., \`%{filename | upper}\` supplies the filename
+in uppercase) and with [[variable,global]]:
 
-| Variable Name | Short Form | Description |
-| ------------- | ---------- | ----------- |
-| \`%{uidvalidity}\` | \`%v\` | Mailbox's IMAP UIDVALIDITY value |
-| \`%{uid}\` | \`%u\` | IMAP UID associated with the message |
-| \`%{md5}\` | \`%m\` | MD5 sum of the mailbox headers in hex ([[link,mbox]] only) |
-| \`%{filename}\` | \`%f\` | Filename ([[link,maildir]] only) |
-| \`%{guid}\` | \`%g\`| Dovecot GUID for the message |`
+| Variable Name | Description |
+| ------------- | ----------- |
+| \`%{uidvalidity}\` | Mailbox's IMAP UIDVALIDITY value |
+| \`%{uid}\` | IMAP UID associated with the message |
+| \`%{md5}\` | MD5 sum of the mailbox headers in hex ([[link,mbox]] only) |
+| \`%{filename}\` | Filename ([[link,maildir]] only) |
+| \`%{guid}\` | Dovecot GUID for the message |`
 	},
 
 	pop3c_features: {
@@ -9554,7 +9554,7 @@ following configuration should be employed, where the credentials are
 represented by masteruser and masteruser-secret:
 
 \`\`\`
-pop3c_user = %u
+pop3c_user = %{user}
 pop3c_master_user = masteruser
 pop3c_password = masteruser-secret
 \`\`\`
@@ -9625,7 +9625,7 @@ Only used if [[setting,pop3c_ssl]] is enabled.`
 	},
 
 	pop3c_user: {
-		default: '%u',
+		default: '%{user}',
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_master_user', 'pop3c_password' ],
 		values: setting_types.STRING,
@@ -9637,13 +9637,13 @@ POP3 server.
 	},
 
 	postmaster_address: {
-		default: 'postmaster@%{if;%d;ne;;%d;%{hostname}}',
+		default: 'postmaster@%{user|domain|default(hostname)}',
 		tags: [ 'lda', 'lmtp' ],
 		values: setting_types.STRING,
 		text: `
 The From address from which email rejection messages (bounces) are sent.
 
-As used here, the variable \`%d\` expands to the domain of the local user.
+As used here, \`%{user | domain}\` expands to the domain of the local user.
 Other [[variable,mail-user]] can be used as well.`
 	},
 
@@ -9709,9 +9709,9 @@ Example:
 
 \`\`\`
 protocol imap {
-  rawlog_dir = /tmp/rawlog/%u
+  rawlog_dir = /tmp/rawlog/%{user}
   # if you want to put files into user's homedir, use this, do not use ~
-  #rawlog_dir = %h/rawlog
+  #rawlog_dir = %{home}/rawlog
 }
 \`\`\``
 	},
@@ -9724,7 +9724,7 @@ protocol imap {
 	},
 
 	rejection_reason: {
-		default: 'Your message to \<%t\> was automatically rejected:%n%r',
+		default: 'Your message to <%{to}> was automatically rejected:%{literal(\'\\r\\n\')}%{reason}',
 		tags: [ 'lda', 'lmtp' ],
 		values: setting_types.STRING_NOVAR,
 		text: `
@@ -9732,19 +9732,18 @@ A human-readable message for the recipients of bounce messages.
 
 The following variables are allowed, including [[variable,global]]:
 
-| Variable Name | Short Form | Description |
-| ------------- | ---------- | ----------- |
-| \`%{crlf}\` | \`%n\` | Newline (CRLF) |
-| \`%{reason}\` | \`%r\` | Reason for rejection |
-| \`%{subject}\` | \`%s\` | Original subject line |
-| \`%{to}\` | \`%t\` | Recipient address |
+| Variable Name | Description |
+| ------------- | ----------- |
+| \`%{reason}\` | Reason for rejection |
+| \`%{subject}\` | Original subject line |
+| \`%{to}\` | Recipient address |
 
 The variable values are obtained from the mail being delivered or the
 delivery protocol.`
 	},
 
 	rejection_subject: {
-		default: 'Rejected: %s',
+		default: 'Rejected: %{subject}',
 		seealso: [ 'rejection_reason' ],
 		tags: [ 'lda', 'lmtp' ],
 		values: setting_types.STRING_NOVAR,
@@ -10449,7 +10448,7 @@ Overrides [[setting,sendmail_path]] value, if set.`
 	},
 
 	submission_logout_format: {
-		default: 'in=%i out=%o',
+		default: 'in=%{input} out=%{output}',
 		tags: [ 'submission' ],
 		values: setting_types.STRING_NOVAR,
 		text: `
@@ -10457,13 +10456,13 @@ The SMTP Submission logout format string.
 
 Variables supported, including [[variable,mail-user]]:
 
-| Variable Name | Short Form | Description |
-| ------------- | ---------- | ----------- |
-| \`%{input}\` | \`%i\` | Bytes read from client |
-| \`%{output}\` | \`%o\` | Bytes sent to client |
-| \`%{command_count}\` | | Number of commands received from client |
-| \`%{reply_count}\` | | Number of replies sent to client |
-| \`%{transaction_id}\` | | ID of the current transaction, if any |`
+| Variable Name | Description |
+| ------------- | ----------- |
+| \`%{input}\` | Bytes read from client |
+| \`%{output}\` | Bytes sent to client |
+| \`%{command_count}\` | Number of commands received from client |
+| \`%{reply_count}\` | Number of replies sent to client |
+| \`%{transaction_id}\` | ID of the current transaction, if any |`
 	},
 
 	submission_max_mail_size: {
@@ -11073,7 +11072,7 @@ the standard [[variable]].
 
 Note that you can't use any [[setting,passdb_fields]] declaration if you use this setting.
 
-Example: \`passdb_ldap_bind_userdn = cn=%u,ou=people,o=org\``
+Example: \`passdb_ldap_bind_userdn = cn=%{user},ou=people,o=org\``
 	},
 
 	passdb_ldap_filter: {
@@ -11088,7 +11087,7 @@ Example:
 
 \`\`\`
 passdb ldap {
-  filter = (&(objectClass=posixAccount)(uid=%u))
+  filter = (&(objectClass=posixAccount)(uid=%{user}))
   #...
 }
 \`\`\``
@@ -11106,7 +11105,7 @@ Example:
 
 \`\`\`
 userdb ldap {
-  filter = (&(objectClass=posixAccount)(uid=%u))
+  filter = (&(objectClass=posixAccount)(uid=%{user}))
   #...
 }
 \`\`\``
