@@ -277,9 +277,7 @@ See [[setting,quota_exceeded_message]].
 Example:
 
 ```[dovecot.conf]
-plugin {
-  quota_exceeded_message = Quota exceeded, please go to http://www.example.com/over_quota_help for instructions on how to fix this.
-}
+quota_exceeded_message = Quota exceeded, please go to http://www.example.com/over_quota_help for instructions on how to fix this.
 ```
 ## Quota Drivers
 
