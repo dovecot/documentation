@@ -2079,9 +2079,6 @@ Exactly one language must be marked with this flag.`
 		text: `
 The list of filters to apply.
 
-Language specific filter chains can be specified with
-\`language_filters_<lang>\` (e.g. \`language_filters_en\`).
-
 See [[link,fts_filter_configuration]] for configuration information.`
 	},
 
@@ -2095,9 +2092,6 @@ See [[link,fts_filter_configuration]] for configuration information.`
 		],
 		text: `
 The list of tokenizers to use.
-
-This setting can be overridden for specific tokenizers by using
-\`language_tokenizer_<lang>\` (e.g. \`language_tokenizer_generic\`).
 
 See [[link,fts_tokenizer_configuration]] for configuration information.`
 	},
@@ -5987,20 +5981,6 @@ The following values are currently supported:
     selectable, and users may receive pop-ups with not selectable errors.
     Showing \\Noselect flags for these replies (e.g., in mbox use) causes them
     to be grayed out.`
-	},
-
-	'imap_compress_<algorithm>_level': {
-		default: '<algorithm dependent>',
-		tags: ['imap'],
-		values: setting_types.UINT,
-		text: `
-Defines the compression level for the given algorithm.
-
-Per [[rfc,4978]], only the deflate algorithm is currently supported.
-
-| Algorithm | Minimum | Default | Maximum |
-| --------- | ------- | ------- | ------- |
-| \`deflate\` | 0 (no compression) | 6 | 9 |`
 	},
 
 	imap_fetch_failure: {
