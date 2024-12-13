@@ -56,7 +56,7 @@ This is based on already having Dovecot already compiled and installed.
      args = host=10.1.2.3
      fields {
        userdb_imapc_user = %{user}
-       userdb_imapc_password = %w
+       userdb_imapc_password = %{password}
      }
    }
 

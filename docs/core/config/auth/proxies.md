@@ -275,7 +275,7 @@ See [[link,auth_master_users]] for more information how to configure this.
 ## OAuth2 Forwarding
 
 If you want to forward [[link,auth_oauth2]] tokens, return field
-`proxy_mech=%m` as extra field.
+`proxy_mech=%{mechanism}` as extra field.
 
 ## Examples
 

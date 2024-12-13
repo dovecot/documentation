@@ -108,13 +108,13 @@ For new POP3 servers, the easiest way to set up UIDLs is to use IMAP's
 UIDVALIDITY and UID values. The default is:
 
 ```
-pop3_uidl_format = %08Xu%08Xv
+pop3_uidl_format = %{uid | hex(8)}%{uidvalidity | hex(8)}
 ```
 
 Another good default is to use the message's global UID:
 
 ```
-pop3_uidl_format = %g
+pop3_uidl_format = %{guid}
 ```
 
 However, note that GUIDs may not be unique, as the GUID does not change when a
@@ -124,7 +124,7 @@ done using IMAP, Sieve, or doveadm.)
 ### MD5 UIDL format (mbox-only)
 
 ```
-pop3_uidl_format = %m
+pop3_uidl_format = %{md5}
 ```
 
 This works by getting the MD5 sum of a couple of message headers that uniquely
@@ -162,7 +162,7 @@ calculation:
 
 * X-Delivery-ID: header
 
-If you use [[link,lda]] or IMAP APPEND and [[setting,pop3_uidl_format,%m]]
+If you use [[link,lda]] or IMAP APPEND and [[setting,pop3_uidl_format,%{md5}]]
 it always appends the X-Delivery-ID: header to saved mailbox. Any existing
 X-Delivery-ID: headers in the saved mails are dropped.
 
