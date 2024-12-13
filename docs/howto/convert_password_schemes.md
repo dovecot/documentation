@@ -36,9 +36,9 @@ https://kaworu.ch/blog/2016/04/20/strong-crypt-scheme-with-dovecot-postfixadmin-
     # default_pass_scheme = CRYPT
 
     # update your sql query so it will look at the new field
-    # AND add a %w field in the query so we have the plain password in our
-    # Enviroment ($PLAIN_PASS)
-    query = SELECT id as user, newpassword as password, home as userdb_home, uid as userdb_uid, gid as userdb_gid, '%w' as userdb_plain_pass \
+    # AND add a %{password} field in the query so we have the plain password in
+    # our Enviroment ($PLAIN_PASS)
+    query = SELECT id as user, newpassword as password, home as userdb_home, uid as userdb_uid, gid as userdb_gid, '%{password}' as userdb_plain_pass \
       FROM users \
       WHERE id = '%{user}'
 
@@ -48,7 +48,7 @@ https://kaworu.ch/blog/2016/04/20/strong-crypt-scheme-with-dovecot-postfixadmin-
     # driver = mysql
     # connect = host=127.0.0.1 user=mailauth password=secret dbname=postfixadmin
     # default_pass_scheme = SHA512-CRYPT
-    # query = SELECT username AS user, password, CONCAT('/var/mail/vdomains/', maildir) as userdb_home, 'vmail' as userdb_uid, 'vmail' as userdb_gid, '%w' as userdb_plain_pass \
+    # query = SELECT username AS user, password, CONCAT('/var/mail/vdomains/', maildir) as userdb_home, 'vmail' as userdb_uid, 'vmail' as userdb_gid, '%{password}' as userdb_plain_pass \
     #   FROM mailbox \
     #   WHERE username = '%{user}'
   }
@@ -273,7 +273,7 @@ passdb passwd-file {
 userdb passwd-file {
   passwd_file_path = /var/vmail/auth.d/%{user | domain}/passwd
   fields {
-    plain_pass = %w
+    plain_pass = %{password}
   }
 }
 ```

@@ -6,9 +6,6 @@ dovecotlinks:
   shared_mailboxes_listing:
     hash: shared-mailbox-listing
     text: shared mailbox listing
-  shared_mailboxes_percent:
-    hash: vs
-    text: \% vs. \%\%
   shared_mailboxes_permissions:
     hash: filesystem-permissions
     text: shared mailboxes filesystem permissions

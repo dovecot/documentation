@@ -65,10 +65,10 @@ Certain settings require specific variables and thus don't use the default
 [[variable]]. For example:
 
 ```[dovecot.conf]
-imap_logout_format = in=%i out=%o
+imap_logout_format = in=%{input} out=%{output}
 ```
 
-Here the `%i` and `%o` refer to variables specific to the
+Here the `%{input}` and `%{output}` refer to variables specific to the
 [[setting,imap_logout_format]] setting.
 
 ## Unsigned Integer
