@@ -468,7 +468,7 @@ See [[plugin,acl]] for list of `<rights>`.
 
 ### Sharing Mailboxes to Everyone
 
-See [[setting,acl_anyone]].
+See [[setting,imap_acl_allow_anyone]].
 
 Note that you can also do this only for some users by using the second
 table "`anyone_shares`". Every user listed in this table shares his

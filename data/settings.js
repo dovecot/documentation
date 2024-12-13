@@ -2358,23 +2358,17 @@ fts_solr_batch_size = 1000
 
 	/* imap-acl plugin */
 
-	acl_anyone: {
+	imap_acl_allow_anyone: {
 		plugin: 'imap-acl',
-		values: setting_types.ENUM,
-		values_enum: [ 'allow' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
 		text: `
-Users who have different set of keys cannot share mails when the mails are
-encrypted, but sharing is possible within the scope of a key.
-
 By default Dovecot doesn't allow using the IMAP \`anyone\` or
 \`authenticated\` identifier, because it would be an easy way to spam
-other users in the system. If you wish to allow it, set:
+other users in the system.
 
-\`\`\`
-plugin {
-  acl_anyone = allow
-}
-\`\`\``
+If [[plugin,mail-crypt]] is used, users who have different set of encryption
+keys cannot share mails, but sharing is possible within the scope of a key.`
 	},
 
 	/* last-login plugin */
