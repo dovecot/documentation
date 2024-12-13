@@ -10926,7 +10926,7 @@ If enabled, ignore version mismatches between different Dovecot versions.`
 	},
 
 	ldap_auth_dn: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap' ],
 		values: setting_types.STRING,
 		text: `
 Specify the Distinguished Name (the username used to login to the LDAP server).
@@ -10937,14 +10937,14 @@ Example: \`ldap_auth_dn = uid=dov-read,dc=example,dc=com,dc=.\``
 	},
 
 	ldap_auth_dn_password: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap' ],
 		values: setting_types.STRING,
 		text: `
 Password for LDAP server. Used if [[setting,ldap_auth_dn]] is specified.`
 	},
 
 	ldap_auth_sasl_authz_id: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		values: setting_types.STRING,
 		text: `
 SASL authorization ID, ie. the [[setting,ldap_auth_dn_password]] is for this "master user", but the
@@ -10952,21 +10952,21 @@ SASL authorization ID, ie. the [[setting,ldap_auth_dn_password]] is for this "ma
 	},
 
 	ldap_auth_sasl_mechanisms: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		values: setting_types.BOOLLIST,
 		text: `
 List of SASL mechanism names to use.`
 	},
 
 	ldap_auth_sasl_realm: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		values: setting_types.STRING,
 		text: `
 SASL realm to use.`
 	},
 
 	ldap_base: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		values: setting_types.STRING,
 		text: `
 LDAP base.
@@ -10977,7 +10977,7 @@ Example: \`ldap_base = dc=mail, dc=example, dc=org\``
 	},
 
 	ldap_connection_group: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		values: setting_types.STRING,
 		text: `
 Only databases with the same connection group share the ldap connections.
@@ -10986,7 +10986,7 @@ and as such share the connections.`
 	},
 
 	ldap_debug_level: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap' ],
 		default: '0',
 		values: setting_types.UINT,
 		text: `
@@ -10998,7 +10998,7 @@ You may need to recompile OpenLDAP with debugging enabled to get enough output.`
 	},
 
 	ldap_deref: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		default: 'never',
 		values: setting_types.ENUM,
 		values_enum: [ 'never', 'searching', 'finding', 'always' ],
@@ -11007,7 +11007,7 @@ Specify dereference which is set as an LDAP option.`
 	},
 
 	ldap_scope: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		default: 'subtree',
 		values: setting_types.ENUM,
 		values_enum: [ 'base', 'onelevel', 'subtree' ],
@@ -11017,7 +11017,7 @@ This specifies the search scope.`
 
 
 	ldap_starttls: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap' ],
 		default: 'no',
 		values: setting_types.BOOLEAN,
 		text: `
@@ -11025,7 +11025,7 @@ Set to \`yes\` to use TLS to connect to the LDAP server.`
 	},
 
 	ldap_uris: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap' ],
 		values: setting_types.STRING,
 		text: `
 LDAP URIs to use.
@@ -11039,7 +11039,7 @@ Example: \`ldap_uris = ldaps://secure.domain.org\``
 	},
 
 	ldap_version: {
-		tags: [ 'ldap' ],
+		tags: [ 'auth-ldap' ],
 		default: '3',
 		values: setting_types.UINT,
 		text: `
