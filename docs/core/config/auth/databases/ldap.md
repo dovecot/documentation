@@ -521,7 +521,6 @@ returning the userdb information already in the passdb lookup.
 
 ## LDAP Settings
 
-<SettingsComponent tag="ldap" level="2" />
 <SettingsComponent tag="auth-ldap" level="2" />
 
 ## LDAP userdb
