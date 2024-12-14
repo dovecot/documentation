@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@sindresorhus/slugify": "^2.2.1",
+    "camelcase": "^8.0.0",
     "commander": "^12.1.0",
     "dayjs": "^1.11.13",
     "fast-glob": "^3.3.2",
