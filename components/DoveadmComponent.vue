@@ -1,5 +1,6 @@
 <script setup>
 import { data } from '../lib/data/doveadm.data.js'
+import { ref } from 'vue'
 
 /* Properties for this component:
  * 'plugin' (string): Filter by the plugin property.
@@ -16,6 +17,11 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
 	 ((v.plugin && v.plugin == props.tag) ||
 	  (v.tags.includes(props.tag))))
 ).sort())
+
+let apiComponent = ref({})
+function httpApiClick(k) {
+	apiComponent.value[k] = 'DoveadmHttpApiComponent'
+}
 </script>
 
 <style scoped>
@@ -115,7 +121,7 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
          <td><code>{{ elem.flag }}</code></td>
          <td>{{ elem.type }}</td>
          <td v-html="elem.text" />
-         <td><code v-if="elem.example">{{ elem.example }}</code></td>
+         <td><code v-if="elem.example !== undefined">{{ JSON.stringify(elem.example) }}</code></td>
         </tr>
        </template>
       </tbody>
@@ -123,30 +129,9 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
     </div>
    </div>
 
-   <details v-if="v.args" class="details custom-block">
+   <details v-if="v.args" @click.capture.once="httpApiClick(k)" class="details custom-block">
     <summary v-html="data.http_api_link" />
-    <div>
-     <table>
-      <thead>
-       <tr>
-        <th>Parameter</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Example</th>
-       </tr>
-      </thead>
-      <tbody>
-       <template v-for="elem in v.args">
-        <tr>
-         <td><code>{{ elem.param }}</code></td>
-         <td>{{ elem.type }}</td>
-         <td v-html="elem.text" />
-         <td><code v-if="elem.example">{{ elem.example }}</code></td>
-        </tr>
-       </template>
-      </tbody>
-     </table>
-    </div>
+    <component v-if="apiComponent[k]" :is="apiComponent[k]" :data="v" />
    </details>
 
   </article>
