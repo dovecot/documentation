@@ -245,6 +245,8 @@ See also:
 | `service` | imap, pop3, smtp, lda (and doveadm, etc.) |
 | `local_ip` | local IP address |
 | `remote_ip` | remote IP address |
+| `local_port` | local port |
+| `remote_port` | remote port |
 | `userdb:<name>` | Return userdb extra field "name". |
 
 ## Mail User Variables
