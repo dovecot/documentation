@@ -99,6 +99,8 @@ See also [Global Variables](#global-variables) and [User Variables](#user-variab
 | -------- | --------- | ----------- |
 | `%l` | `local_ip` | local IP address |
 | `%r` | `remote_ip` | remote IP address |
+| '%a' | `local_port` | local port |
+| '%b' | `remote_port` | remote port |
 | | `userdb:<name>` | Return userdb extra field "name". `%{userdb:name:default}` returns "default" if "name" doesn't exist (not returned if name exists but is empty) |
 
 ## Mail User Variables
