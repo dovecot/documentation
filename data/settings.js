@@ -10095,7 +10095,7 @@ Note: [[setting,auth_ssl_username_from_cert]] MUST be enabled.`
 	},
 
 	ssl_cipher_list: {
-		default: 'ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH',
+		default: 'ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH (for ssl_server, empty for ssl_client)',
 		seealso: [ 'ssl', 'ssl_cipher_suites', 'ssl_min_protocol', '[[link,ssl_configuration]]' ],
 		tags: [ 'ssl-ldap', 'sql-mysql' ],
 		values: setting_types.STRING,
@@ -10120,6 +10120,13 @@ preference. Use [[setting,ssl_cipher_list]] for TLSv1.2 and below connections.
 This setting is used for both incoming and outgoing SSL connections.
 
 See: https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites`
+	},
+
+	ssl_client: {
+		seealso: [ 'ssl', 'ssl_server', '[[link,ssl_configuration]]' ],
+		values: setting_types.NAMED_FILTER,
+		text: `
+Named filter, which can be used for specifying SSL client settings.`
 	},
 
 	ssl_client_ca_dir: {
@@ -10382,6 +10389,13 @@ If enabled, the imap/pop3/etc. client is requested to send an SSL certificate.
 
 Note: This setting doesn't yet require the certificate to be valid or
 to even exist. See [[setting,auth_ssl_require_client_cert]].`
+	},
+
+	ssl_server: {
+		seealso: [ 'ssl', 'ssl_client', '[[link,ssl_configuration]]' ],
+		values: setting_types.NAMED_FILTER,
+		text: `
+Named filter, which can be used for specifying SSL server settings.`
 	},
 
 	state_dir: {
