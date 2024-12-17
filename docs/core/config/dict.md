@@ -90,6 +90,7 @@ dict_legacy {
 #### LDAP Settings
 
 <SettingsComponent tag="dict-ldap" level="2" />
+<SettingsComponent tag="ssl-ldap" level="2" />
 
 #### Examples
 
