@@ -10097,6 +10097,7 @@ Note: [[setting,auth_ssl_username_from_cert]] MUST be enabled.`
 	ssl_cipher_list: {
 		default: 'ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH',
 		seealso: [ 'ssl', 'ssl_cipher_suites', 'ssl_min_protocol', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl-ldap' ],
 		values: setting_types.STRING,
 		text: `
 The list of SSL ciphers to use for TLSv1.2 and below connections, in order
@@ -10123,6 +10124,7 @@ See: https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites`
 
 	ssl_client_ca_dir: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl-ldap' ],
 		values: setting_types.STRING,
 		text: `
 The directory where trusted SSL CA certificates can be found. For example
@@ -10135,6 +10137,7 @@ operation instead of all the root CAs.`
 	},
 
 	ssl_client_ca_file: {
+		tags: [ 'ssl-ldap' ],
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
 		values: setting_types.FILE,
 		text: `
@@ -10158,6 +10161,7 @@ the server operation.`
 			'ssl_client_key_file',
 			'[[link,ssl_configuration]]',
 		],
+		tags: [ 'ssl-ldap' ],
 		values: setting_types.FILE,
 		text: `
 Public SSL certificate used for outgoing SSL connections. This is generally
@@ -10179,6 +10183,7 @@ ssl_client_key_file = /etc/dovecot/dovecot-client.key
 			'ssl_client_cert_file',
 			'[[link,ssl_configuration]]',
 		],
+		tags: [ 'ssl-ldap' ],
 		values: setting_types.FILE,
 		text: `
 Private key for [[setting,ssl_client_cert_file]]. If it is password protected,
@@ -10211,6 +10216,7 @@ Which SSL crypto device to use.`
 	ssl_curve_list: {
 		default: '\\<defaults from the SSL library\\>',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl-ldap' ],
 		values: setting_types.STRING,
 		text: `
 Colon separated list of elliptic curves to use, in order of preference.
@@ -10246,6 +10252,7 @@ ssl_dh_file = /path/to/dh.pem
 	ssl_client_require_valid_cert: {
 		default: 'yes',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl-ldap' ],
 		values: setting_types.BOOLEAN,
 		text: `
 Require a valid certificate when connecting to external SSL services?`
@@ -10288,6 +10295,7 @@ Alternatively, you can supply the password via the -p parameter at startup.`
 	ssl_min_protocol: {
 		default: 'TLSv1.2',
 		seealso: [ 'ssl', 'ssl_cipher_list', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl-ldap' ],
 		values: setting_types.STRING,
 		text: `
 The minimum SSL protocol version Dovecot accepts.
