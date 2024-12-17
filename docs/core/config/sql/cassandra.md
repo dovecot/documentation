@@ -25,6 +25,13 @@ and headers installed.
 
 <SettingsComponent tag="sql-cassandra" />
 
+## SSL/TLS Settings
+
+Not all of Dovecot SSL settings are supported by the Cassandra library. Below
+is the list of supported settings:
+
+<SettingsComponent tag="ssl-cassandra" />
+
 ## Consistency
 
 Consistency levels in Cassandra can be configured to manage availability
