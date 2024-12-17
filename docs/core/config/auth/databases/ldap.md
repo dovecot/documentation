@@ -291,7 +291,11 @@ You can enable TLS in two alternative ways:
 * Connect to ldap port (389) and use STARTTLS command. Use [[setting,ssl,yes]] to
   enable this.
 
-See the [[link,ssl_configuration]] settings for how to configure TLS.
+See the [[link,ssl_configuration]] settings for how to configure TLS. Not all
+of Dovecot SSL settings are supported by the LDAP library. Below is the list
+of supported settings:
+
+<SettingsComponent tag="ssl-ldap" level="2" />
 
 #### Custom Certs
 
