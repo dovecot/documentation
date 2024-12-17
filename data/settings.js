@@ -10095,7 +10095,7 @@ Note: [[setting,auth_ssl_username_from_cert]] MUST be enabled.`
 	},
 
 	ssl_cipher_list: {
-		default: 'ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH',
+		default: 'ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH (for ssl_server, empty for ssl_client)',
 		seealso: [ 'ssl', 'ssl_cipher_suites', 'ssl_min_protocol', '[[link,ssl_configuration]]' ],
 		tags: [ 'ssl-ldap', 'sql-mysql' ],
 		values: setting_types.STRING,
