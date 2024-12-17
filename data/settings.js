@@ -10121,6 +10121,13 @@ This setting is used for both incoming and outgoing SSL connections.
 See: https://wiki.openssl.org/index.php/TLS1.3#Ciphersuites`
 	},
 
+	ssl_client: {
+		seealso: [ 'ssl', 'ssl_server', '[[link,ssl_configuration]]' ],
+		values: setting_types.NAMED_FILTER,
+		text: `
+Named filter, which can be used for specifying SSL client settings.`
+	},
+
 	ssl_client_ca_dir: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
 		values: setting_types.STRING,
@@ -10373,6 +10380,13 @@ If enabled, the imap/pop3/etc. client is requested to send an SSL certificate.
 
 Note: This setting doesn't yet require the certificate to be valid or
 to even exist. See [[setting,auth_ssl_require_client_cert]].`
+	},
+
+	ssl_server: {
+		seealso: [ 'ssl', 'ssl_client', '[[link,ssl_configuration]]' ],
+		values: setting_types.NAMED_FILTER,
+		text: `
+Named filter, which can be used for specifying SSL server settings.`
 	},
 
 	state_dir: {
