@@ -10137,7 +10137,7 @@ operation instead of all the root CAs.`
 	},
 
 	ssl_client_ca_file: {
-		tags: [ 'ssl-ldap' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra' ],
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
 		values: setting_types.FILE,
 		text: `
@@ -10161,7 +10161,7 @@ the server operation.`
 			'ssl_client_key_file',
 			'[[link,ssl_configuration]]',
 		],
-		tags: [ 'ssl-ldap' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra' ],
 		values: setting_types.FILE,
 		text: `
 Public SSL certificate used for outgoing SSL connections. This is generally
@@ -10183,7 +10183,7 @@ ssl_client_key_file = /etc/dovecot/dovecot-client.key
 			'ssl_client_cert_file',
 			'[[link,ssl_configuration]]',
 		],
-		tags: [ 'ssl-ldap' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra' ],
 		values: setting_types.FILE,
 		text: `
 Private key for [[setting,ssl_client_cert_file]]. If it is password protected,
@@ -10200,6 +10200,7 @@ ssl_client_key_file = /etc/dovecot/dovecot-client.key
 	ssl_client_key_password: {
 		values: setting_types.STRING,
 		seealso: [ 'ssl', 'ssl_client_key_file', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl-cassandra' ],
 		text: `
 Password for the [[setting,ssl_client_key_file]].`
 	},
@@ -10252,7 +10253,7 @@ ssl_dh_file = /path/to/dh.pem
 	ssl_client_require_valid_cert: {
 		default: 'yes',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra' ],
 		values: setting_types.BOOLEAN,
 		text: `
 Require a valid certificate when connecting to external SSL services?`
