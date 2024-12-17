@@ -19,3 +19,10 @@ For MariaDB, you need to have compatibility headers installed.
 ## Settings
 
 <SettingsComponent tag="sql-mysql" />
+
+## SSL/TLS Settings
+
+Not all of Dovecot SSL settings are supported by the MySQL library. Below
+is the list of supported settings:
+
+<SettingsComponent tag="ssl-mysql" />
