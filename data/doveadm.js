@@ -1321,6 +1321,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
+		man: 'doveadm-mailbox-cryptokey',
 		text: `
 Generate new keypair for user or folder.
 
@@ -1357,6 +1358,7 @@ to secure it.
 		fields: {},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
+		man: 'doveadm-mailbox-cryptokey',
 		text: `List all keys for user or mailbox.`
 	},
 
@@ -1376,6 +1378,7 @@ to secure it.
 		fields: {},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
+		man: 'doveadm-mailbox-cryptokey',
 		text: `Exports user or folder private keys.`
 	},
 
@@ -1410,6 +1413,7 @@ to secure it.
 		fields: {},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
+		man: 'doveadm-mailbox-cryptokey',
 		text: `Sets, changes or clears password for user's private key.`
 	},
 
@@ -1563,7 +1567,7 @@ to secure it.
 				type: doveadm_arg_types.ARRAY
 			},
 		},
-		// TODO: Missing man page
+		man: 'doveadm-mailbox',
 	},
 
 	'mailbox path': {
@@ -2022,7 +2026,7 @@ returned.`,
 		man: 'doveadm-sieve'
 	},
 
-	/* Deprecated. TODO: No man page, but that might be ok? */
+	/* Deprecated. */
 	'sis find': {
 		args: {
 			'root-dir': {
