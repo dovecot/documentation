@@ -2,7 +2,8 @@
 import { doveadm_arg_types,
 		 doveadm_args_query,
 		 doveadm_args_usermask,
-		 doveadm_flag_types } from '../lib/doveadm.js'
+		 doveadm_flag_types,
+		 doveadm_response_types } from '../lib/doveadm.js'
 
 export const doveadm = {
 
@@ -51,8 +52,21 @@ export const doveadm = {
 		// deprecated: {},
 		// removed: {},
 
-		// Fields/Values returned. Values are rendered w/Markdown.
-		// fields: {},
+		// Response data.
+		// KEY = identifier
+		// response: {
+		//     key: {
+		//         // An example value to be used in documentation.
+		//         example: 0,
+		//
+		//         // The description of the response data type.
+		//         // Rendered w/Markdown.
+		//         text: `Description`,
+		//
+		//         // The response data type
+		//         type: doveadm_response_types.INTEGER,
+		//     }
+		// },
 
 		// What doveadm flags does this command support (bit field)
 		// Arguments are automatically added for each flag set
@@ -237,8 +251,11 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				text: `UID of user to apply operation to.`,
 			},
 		},
-		fields: {
-			'entries': 0
+		response: {
+			entries: {
+				type: doveadm_response_types.INTEGER,
+				text: `The number of cache entries flushed.`
+			},
 		},
 		man: 'doveadm-auth',
 		text: `Flush authentication cache.`,
@@ -1355,7 +1372,7 @@ to secure it.
 				text: `Mailbox mask.`
 			},
 		},
-		fields: {},
+		response: {},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
 		man: 'doveadm-mailbox-cryptokey',
@@ -1375,7 +1392,7 @@ to secure it.
 				text: `Mailbox mask.`
 			},
 		},
-		fields: {},
+		response: {},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
 		man: 'doveadm-mailbox-cryptokey',
@@ -1410,7 +1427,7 @@ to secure it.
 				text: `Old password.`
 			},
 		},
-		fields: {},
+		response: {},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
 		man: 'doveadm-mailbox-cryptokey',
