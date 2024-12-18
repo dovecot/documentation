@@ -20,6 +20,22 @@ const jsonReq =
 		"tag1"
 	]
 ]
+
+const resp = {}
+if (d.response) {
+	for (let elem of d.response) {
+		resp[elem.key] = elem.example
+	}
+}
+
+const jsonResp =
+[
+	[
+		"doveadmResponse",
+		[ resp ],
+		"tag1"
+	]
+]
 </script>
 
 <template>
@@ -88,5 +104,15 @@ const jsonReq =
    <span class="lang"></span>
    <pre><code>wget --header="Content-Type: application/json" --user=doveadm --password=password --auth-no-challenge --post-data='{{ JSON.stringify(jsonReq) }}' --output-document - http://example.com:8080/doveadm/v1</code></pre>
   </div>
+
+  <template v-if="d.response?.length">
+   <p class="custom-block-title">Example Server Response</p>
+
+   <div class="language- vp-adaptive-theme">
+    <button class="copy" title="Copy" />
+    <span class="lang"></span>
+     <pre><code>{{ JSON.stringify(jsonResp, null, 4) }}</code></pre>
+   </div>
+  </template>
  </div>
 </template>
