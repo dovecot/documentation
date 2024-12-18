@@ -1,5 +1,6 @@
 <script setup>
 import { data } from '../lib/data/doveadm.data.js'
+import { ref } from 'vue'
 
 /* Properties for this component:
  * 'plugin' (string): Filter by the plugin property.
@@ -16,6 +17,16 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
 	 ((v.plugin && v.plugin == props.tag) ||
 	  (v.tags.includes(props.tag))))
 ).sort())
+
+const cliComponent = ref({})
+function cliClick(k) {
+	cliComponent.value[k] = 'DoveadmCliComponent'
+}
+
+const httpComponent = ref({})
+function httpClick(k) {
+	httpComponent.value[k] = 'DoveadmHttpApiComponent'
+}
 </script>
 
 <style scoped>
@@ -38,7 +49,7 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
     <a class="header-anchor" :href="'#' + k"></a>
    </h3>
 
-   <table v-if="v.man_link || v.fields || v.added || v.changed || v.deprecated || v.removed">
+   <table v-if="v.man_link || v.response || v.added || v.changed || v.deprecated || v.removed">
     <tbody>
      <tr v-if="v.man_link">
       <th style="text-align: right;">Man Page</th>
@@ -69,20 +80,22 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
       </td>
     </tr>
 
-     <tr v-if="v.fields">
-      <th style="text-align: right;">Return Values</th>
+     <tr v-if="v.response">
+      <th style="text-align: right;">Response Values</th>
       <td>
        <table>
         <thead>
          <tr>
           <th>Key</th>
-          <th>Value</th>
+          <th>Type</th>
+          <th>Description</th>
          </tr>
         </thead>
         <tbody>
-         <tr v-for="elem in v.fields">
+         <tr v-for="elem in v.response">
           <td><code>{{ elem.key }}</code></td>
-          <td v-html="elem.value" />
+          <td v-html="elem.type" />
+          <td v-html="elem.text" />
          </tr>
         </tbody>
        </table>
@@ -93,58 +106,15 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
 
    <div v-if="v.text" v-html="v.text" />
 
-   <div class="info custom-block">
-    <p class="custom-block-title">CLI</p>
-    <div>
-     <ul>
-      <li>Usage: <code>doveadm {{ v.usage }}</code></li>
-     </ul>
-
-     <table v-if="v.args">
-      <thead>
-       <tr>
-        <th>Argument(s)</th>
-        <th>Type</th>
-        <th>Description</th>
-       </tr>
-      </thead>
-      <tbody>
-       <template v-for="elem in v.args">
-        <tr>
-         <td><code>{{ elem.flag }}</code></td>
-         <td>{{ elem.type }}</td>
-         <td v-html="elem.text" />
-        </tr>
-       </template>
-      </tbody>
-     </table>
-    </div>
-   </div>
-
-   <details v-if="v.args" class="details custom-block">
-    <summary v-html="data.http_api_link" />
-    <div>
-     <table>
-      <thead>
-       <tr>
-        <th>Parameter</th>
-        <th>Type</th>
-        <th>Description</th>
-       </tr>
-      </thead>
-      <tbody>
-       <template v-for="elem in v.args">
-        <tr>
-         <td><code>{{ elem.param }}</code></td>
-         <td>{{ elem.type }}</td>
-         <td v-html="elem.text" />
-        </tr>
-       </template>
-      </tbody>
-     </table>
-    </div>
+   <details @click.capture.once="cliClick(k)" class="details custom-block">
+    <summary>CLI</summary>
+    <component v-if="cliComponent[k]" :is="cliComponent[k]" :data="v" />
    </details>
 
+   <details v-if="v.args" @click.capture.once="httpClick(k)" class="details custom-block">
+    <summary v-html="data.http_api_link" />
+    <component v-if="httpComponent[k]" :is="httpComponent[k]" :data="v" />
+   </details>
   </article>
  </section>
 </template>

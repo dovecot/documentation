@@ -2,7 +2,8 @@
 import { doveadm_arg_types,
 		 doveadm_args_query,
 		 doveadm_args_usermask,
-		 doveadm_flag_types } from '../lib/doveadm.js'
+		 doveadm_flag_types,
+		 doveadm_response_types } from '../lib/doveadm.js'
 
 export const doveadm = {
 
@@ -19,6 +20,11 @@ export const doveadm = {
 
 				// If true, only show for cli, not HTTP.
 				// cli_only: true,
+
+				// If set, will use as command example argument.
+				// i.e., for HTTP API requests, this argument will be added
+				// to the example argument string.
+				example: false,
 
 				// If true, this is an optional positional argument.
 				// optional: true,
@@ -46,8 +52,21 @@ export const doveadm = {
 		// deprecated: {},
 		// removed: {},
 
-		// Fields/Values returned. Values are rendered w/Markdown.
-		// fields: {},
+		// Response data.
+		// KEY = identifier
+		// response: {
+		//     key: {
+		//         // An example value to be used in documentation.
+		//         example: 0,
+		//
+		//         // The description of the response data type.
+		//         // Rendered w/Markdown.
+		//         text: `Description`,
+		//
+		//         // The response data type
+		//         type: doveadm_response_types.INTEGER,
+		//     }
+		// },
 
 		// What doveadm flags does this command support (bit field)
 		// Arguments are automatically added for each flag set
@@ -232,8 +251,11 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				text: `UID of user to apply operation to.`,
 			},
 		},
-		fields: {
-			'entries': 0
+		response: {
+			entries: {
+				type: doveadm_response_types.INTEGER,
+				text: `The number of cache entries flushed.`
+			},
 		},
 		man: 'doveadm-auth',
 		text: `Flush authentication cache.`,
@@ -1316,6 +1338,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
+		man: 'doveadm-mailbox-cryptokey',
 		text: `
 Generate new keypair for user or folder.
 
@@ -1349,9 +1372,10 @@ to secure it.
 				text: `Mailbox mask.`
 			},
 		},
-		fields: {},
+		response: {},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
+		man: 'doveadm-mailbox-cryptokey',
 		text: `List all keys for user or mailbox.`
 	},
 
@@ -1368,9 +1392,10 @@ to secure it.
 				text: `Mailbox mask.`
 			},
 		},
-		fields: {},
+		response: {},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
+		man: 'doveadm-mailbox-cryptokey',
 		text: `Exports user or folder private keys.`
 	},
 
@@ -1402,9 +1427,10 @@ to secure it.
 				text: `Old password.`
 			},
 		},
-		fields: {},
+		response: {},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
+		man: 'doveadm-mailbox-cryptokey',
 		text: `Sets, changes or clears password for user's private key.`
 	},
 
@@ -1558,7 +1584,7 @@ to secure it.
 				type: doveadm_arg_types.ARRAY
 			},
 		},
-		// TODO: Missing man page
+		man: 'doveadm-mailbox',
 	},
 
 	'mailbox path': {
@@ -2017,7 +2043,7 @@ returned.`,
 		man: 'doveadm-sieve'
 	},
 
-	/* Deprecated. TODO: No man page, but that might be ok? */
+	/* Deprecated. */
 	'sis find': {
 		args: {
 			'root-dir': {
