@@ -18,9 +18,14 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
 	  (v.tags.includes(props.tag))))
 ).sort())
 
-let apiComponent = ref({})
-function httpApiClick(k) {
-	apiComponent.value[k] = 'DoveadmHttpApiComponent'
+const cliComponent = ref({})
+function cliClick(k) {
+	cliComponent.value[k] = 'DoveadmCliComponent'
+}
+
+const httpComponent = ref({})
+function httpClick(k) {
+	httpComponent.value[k] = 'DoveadmHttpApiComponent'
 }
 </script>
 
@@ -99,41 +104,15 @@ function httpApiClick(k) {
 
    <div v-if="v.text" v-html="v.text" />
 
-   <div class="info custom-block">
-    <p class="custom-block-title">CLI</p>
-    <div>
-     <ul>
-      <li>Usage: <code>doveadm {{ v.usage }}</code></li>
-     </ul>
-
-     <table v-if="v.args">
-      <thead>
-       <tr>
-        <th>Argument(s)</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Example</th>
-       </tr>
-      </thead>
-      <tbody>
-       <template v-for="elem in v.args">
-        <tr>
-         <td><code>{{ elem.flag }}</code></td>
-         <td>{{ elem.type }}</td>
-         <td v-html="elem.text" />
-         <td><code v-if="elem.example !== undefined">{{ JSON.stringify(elem.example) }}</code></td>
-        </tr>
-       </template>
-      </tbody>
-     </table>
-    </div>
-   </div>
-
-   <details v-if="v.args" @click.capture.once="httpApiClick(k)" class="details custom-block">
-    <summary v-html="data.http_api_link" />
-    <component v-if="apiComponent[k]" :is="apiComponent[k]" :data="v" />
+   <details @click.capture.once="cliClick(k)" class="details custom-block">
+    <summary>CLI</summary>
+    <component v-if="cliComponent[k]" :is="cliComponent[k]" :data="v" />
    </details>
 
+   <details v-if="v.args" @click.capture.once="httpClick(k)" class="details custom-block">
+    <summary v-html="data.http_api_link" />
+    <component v-if="httpComponent[k]" :is="httpComponent[k]" :data="v" />
+   </details>
   </article>
  </section>
 </template>
