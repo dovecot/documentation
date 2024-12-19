@@ -1,8 +1,10 @@
 /* List of Dovecot doveadm types. */
 import { doveadm_arg_types,
+		 doveadm_args_human_timestamp,
 		 doveadm_args_query,
 		 doveadm_args_usermask,
-		 doveadm_flag_types } from '../lib/doveadm.js'
+		 doveadm_flag_types,
+		 doveadm_response_types } from '../lib/doveadm.js'
 
 export const doveadm = {
 
@@ -19,6 +21,11 @@ export const doveadm = {
 
 				// If true, only show for cli, not HTTP.
 				// cli_only: true,
+
+				// If set, will use as command example argument.
+				// i.e., for HTTP API requests, this argument will be added
+				// to the example argument string.
+				example: false,
 
 				// If true, this is an optional positional argument.
 				// optional: true,
@@ -46,8 +53,21 @@ export const doveadm = {
 		// deprecated: {},
 		// removed: {},
 
-		// Fields/Values returned. Values are rendered w/Markdown.
-		// fields: {},
+		// Response data.
+		// KEY = identifier
+		// response: {
+		//     key: {
+		//         // An example value to be used in documentation.
+		//         example: 0,
+		//
+		//         // The description of the response data type.
+		//         // Rendered w/Markdown.
+		//         text: `Description`,
+		//
+		//         // The response data type
+		//         type: doveadm_response_types.INTEGER,
+		//     }
+		// },
 
 		// What doveadm flags does this command support (bit field)
 		// Arguments are automatically added for each flag set
@@ -74,16 +94,19 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'acl add': {
 		args: {
 			mailbox: {
+				example: 'INBOX',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox to add to.`,
 			},
 			id: {
+				example: 'acl_id',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `ID to add to.`,
 			},
 			right: {
+				example: ['r', 'w'],
 				positional: true,
 				type: doveadm_arg_types.ARRAY,
 				text: `ACL rights to add.`,
@@ -98,6 +121,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'acl debug': {
 		args: {
 			mailbox: {
+				example: 'INBOX',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox to query.`,
@@ -112,11 +136,13 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'acl delete': {
 		args: {
 			mailbox: {
+				example: 'INBOX',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox to delete.`,
 			},
 			id: {
+				example: 'acl_id',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `ID to delete.`,
@@ -135,6 +161,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				type: doveadm_arg_types.BOOL,
 			},
 			mailbox: {
+				example: 'INBOX',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox to query.`,
@@ -157,6 +184,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'acl remove': {
 		args: {
 			mailbox: {
+				example: 'INBOX',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox to remove rights from.`,
@@ -181,6 +209,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'acl rights': {
 		args: {
 			mailbox: {
+				example: 'INBOX',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox to show.`,
@@ -195,16 +224,19 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'acl set': {
 		args: {
 			mailbox: {
+				example: 'INBOX',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox to replace rights.`,
 			},
 			id: {
+				example: 'acl_id',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `ID to replace.`,
 			},
 			right: {
+				example: ['r', 'w'],
 				positional: true,
 				type: doveadm_arg_types.ARRAY,
 				text: `ACL rights to replace.`,
@@ -219,21 +251,24 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'auth cache flush': {
 		args: {
 			'socket-path': {
-				//example: `/var/run/dovecot/doveadm-server`,
 				cli: 'a',
 				cli_only: true,
+				example: `/var/run/dovecot/doveadm-server`,
 				type: doveadm_arg_types.STRING,
 				text: `Path to doveadm socket.`,
 			},
 			user: {
-				//example: `foo`,
+				example: `username`,
 				positional: true,
 				type: doveadm_arg_types.ARRAY,
 				text: `UID of user to apply operation to.`,
 			},
 		},
-		fields: {
-			'entries': 0
+		response: {
+			entries: {
+				type: doveadm_response_types.INTEGER,
+				text: `The number of cache entries flushed.`
+			},
 		},
 		man: 'doveadm-auth',
 		text: `Flush authentication cache.`,
@@ -244,15 +279,18 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			'auth-login-socket-path': {
 				cli: 'a',
 				cli_only: true,
+				example: `/var/run/dovecot/auth-login`,
 				type: doveadm_arg_types.STRING,
 			},
 			'auth-master-socket-path': {
 				cli: 'm',
 				cli_only: true,
+				example: `/var/run/dovecot/auth-master`,
 				type: doveadm_arg_types.STRING,
 			},
 			'sasl-mech': {
-				cli: 'm',
+				cli: 'A',
+				example: 'PLAIN',
 				type: doveadm_arg_types.STRING,
 			},
 			'auth-info': {
@@ -262,17 +300,18 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			},
 			'master-user': {
 				cli: 'M',
+				example: 'masteruser',
 				type: doveadm_arg_types.STRING,
 				text: `Master user.`,
 			},
 			user: {
-				//example: `foo`,
+				example: `username`,
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Login UID.`,
 			},
 			password: {
-				//example: `bar`,
+				example: `password`,
 				positional: true,
 				optional: true,
 				type: doveadm_arg_types.STRING,
@@ -286,9 +325,9 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'auth lookup': {
 		args: {
 			'socket-path': {
-				//example: `/var/run/dovecot/doveadm-server`,
 				cli: 'a',
 				cli_only: true,
+				example: `/var/run/dovecot/doveadm-server`,
 				type: doveadm_arg_types.STRING,
 				text: `Path to doveadm socket.`,
 			},
@@ -299,11 +338,12 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			},
 			field: {
 				cli: 'f',
+				example: 'fieldname',
 				type: doveadm_arg_types.STRING,
 				text: `Only return value of this field.`,
 			},
 			user: {
-				//example: `foo`,
+				example: `username`,
 				positional: true,
 				type: doveadm_arg_types.ARRAY,
 				text: `UID of user to query.`,
@@ -316,14 +356,15 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'auth test': {
 		args: {
 			'socket-path': {
-				//example: `/var/run/dovecot/doveadm-server`,
 				cli: 'a',
 				cli_only: true,
+				example: `/var/run/dovecot/doveadm-server`,
 				type: doveadm_arg_types.STRING,
 				text: `Path to doveadm socket.`,
 			},
 			'sasl-mech': {
 				cli: 'A',
+				example: 'PLAIN',
 				type: doveadm_arg_types.STRING,
 			},
 			'auth-info': {
@@ -333,17 +374,18 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			},
 			'master-user': {
 				cli: 'M',
+				example: 'masteruser',
 				type: doveadm_arg_types.STRING,
 				text: `Master user.`
 			},
 			user: {
-				//example: `foo`,
+				example: `username`,
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Login UID.`
 			},
 			password: {
-				//example: `bar`,
+				example: `password`,
 				positional: true,
 				optional: true,
 				type: doveadm_arg_types.STRING,
@@ -359,82 +401,124 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			'full-sync': {
 				cli: 'f',
 				type: doveadm_arg_types.BOOL,
+				text: `Full sync?`,
 			},
 			'purge-remote': {
 				cli: 'P',
 				type: doveadm_arg_types.BOOL,
+				text: `Purge destination after sync?`,
 			},
 			'reverse-sync': {
 				cli: 'R',
 				type: doveadm_arg_types.BOOL,
+				text: `Do a reverse sync?`,
 			},
 			'lock-timeout': {
 				cli: 'l',
+				example: 60,
 				type: doveadm_arg_types.INTEGER,
+				text: `Lock timeout for the user (in seconds).`,
 			},
 			rawlog: {
 				cli: 'r',
+				example: 'rawlog_name',
 				type: doveadm_arg_types.STRING,
+				text: `Write rawlog to this file.`,
 			},
 			mailbox: {
 				cli: 'm',
+				example: 'INBOX',
 				type: doveadm_arg_types.STRING,
+				text: `Sync only this mailbox.`,
 			},
 			'mailbox-guid': {
 				cli: 'g',
+				example: 'mailbox_guid',
 				type: doveadm_arg_types.STRING,
+				text: `Sync only this mailbox GUID.`,
 			},
 			namespace: {
 				cli: 'n',
+				example: ['namespace'],
 				type: doveadm_arg_types.ARRAY,
+				text: `Sync only these namespaces.`,
 			},
 			'all-namespaces': {
 				cli: 'N',
 				type: doveadm_arg_types.BOOL,
+				text: `Sync all namespaces?`,
 			},
 			'exclude-mailbox': {
 				cli: 'x',
+				example: ['excluded_mailbox'],
 				type: doveadm_arg_types.ARRAY,
+				text: `Exclude these mailbox names/masks.`,
 			},
 			'all-mailbox': {
 				cli: 'a',
+				example: 'VirtualAll',
 				type: doveadm_arg_types.STRING,
+				text: `The name of the virtual All mailbox.`,
 			},
 			state: {
 				cli: 's',
+				example: 'state_string',
 				type: doveadm_arg_types.STRING,
+				text: `State string of last dsync run.`,
 			},
 			'sync-since-time': {
 				cli: 't',
+				example: '7 days',
 				type: doveadm_arg_types.STRING,
+				text: `Sync since timestamp.
+
+` + doveadm_args_human_timestamp,
 			},
 			'sync-until-time': {
 				cli: 'e',
+				example: '1 day',
 				type: doveadm_arg_types.STRING,
+				text: `Sync until timestamp.
+
+` + doveadm_args_human_timestamp,
 			},
 			'sync-flags': {
 				cli: 'O',
+				example: '\\deleted',
 				type: doveadm_arg_types.STRING,
+				text: `
+Sync only mails that have the specified flag. If the flag name begins with
+\`-\`, sync all mails except the ones with the specified flag.`
 			},
 			'sync-max-size': {
 				cli: 'I',
+				example: '20M',
 				type: doveadm_arg_types.STRING,
+				text: `Skip any mails larger than the specified size.
+
+Format: [[link,settings_types_size]]`
 			},
 			timeout: {
 				cli: 'T',
+				example: 60,
 				type: doveadm_arg_types.INTEGER,
+				text: `Timeout (in seconds).`,
 			},
 			'default-destination': {
 				cli: 'd',
 				type: doveadm_arg_types.BOOL,
+				text: `Use the default destination?`,
 			},
 			'legacy-dsync': {
 				cli: 'E',
 				type: doveadm_arg_types.BOOL,
+				text: `Use legacy dsync?`,
 			},
 			destination: {
 				positional: true,
 				type: doveadm_arg_types.ARRAY,
+				text: `
+The synchronized destination. See [[man,doveadm-sync]] for options.`
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
@@ -444,11 +528,13 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'compress connect': {
 		args: {
 			host: {
+				example: 'hostname',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Hostname to connect to.`
 			},
 			port: {
+				example: '123',
 				positional: true,
 				optional: true,
 				type: doveadm_arg_types.INTEGER,
@@ -462,25 +548,26 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	copy: {
 		args: {
 			'destination-mailbox': {
+				example: 'DestinationMailbox',
 				positional: true,
 				type: doveadm_arg_types.STRING,
+				text: `The destination mailbox.`,
 			},
 			'source-user': {
-				// TODO: key-value with 'user'
+				example: 'sourceuser',
 				positional: true,
 				optional: true,
 				type: doveadm_arg_types.STRING,
-			},
-			'user': {
-				// TODO: key-value with 'source-user'
-				positional: true,
-				optional: true,
-				type: doveadm_arg_types.STRING,
+				text: `
+Apply the search query to this user's \`mail_location\`.
+
+For CLI use, this is specified by adding the keyword \`user\` followed by
+the source user name, e.g., \`user sourceuser\`.`
 			},
 			query: doveadm_args_query,
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
-		man: 'doveadm-move',
+		man: 'doveadm-copy',
 		text: `Copy messages matching the given search query into another mailbox.`,
 	},
 
@@ -501,17 +588,19 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'dict get': {
 		args: {
 			user: {
-				//example: 'foo',
 				cli: 'u',
+				example: 'username',
 				type: doveadm_arg_types.STRING,
 				text: `uid of user to query.`,
 			},
 			'dict-uri': {
+				example: 'dict_label',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `URI for dictionary to query.`,
 			},
 			key: {
+				example: 'example_key',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Key to query.`,
@@ -524,22 +613,25 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'dict inc': {
 		args: {
 			user: {
-				//example: 'foo',
 				cli: 'u',
+				example: 'username',
 				type: doveadm_arg_types.STRING,
 				text: `uid of user to modify.`,
 			},
 			'dict-uri': {
+				example: 'dict_label',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `URI for dictionary to query.`,
 			},
 			key: {
+				example: 'example_key',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Key to query.`,
 			},
 			difference: {
+				example: 1,
 				positional: true,
 				type: doveadm_arg_types.INTEGER,
 				text: `The amount to increment.`,
@@ -552,8 +644,8 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'dict iter': {
 		args: {
 			user: {
-				//example: 'foo',
 				cli: 'u',
+				example: 'username',
 				type: doveadm_arg_types.STRING,
 				text: `uid of user to query.`,
 			},
@@ -573,11 +665,13 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				text: `List keys that have no value set?`,
 			},
 			'dict-uri': {
+				example: 'dict_label',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `URI for dictionary to query.`,
 			},
 			prefix: {
+				example: 'testprefix',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Search only keys with this prefix.`,
@@ -590,22 +684,25 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'dict set': {
 		args: {
 			user: {
-				//example: 'foo',
 				cli: 'u',
+				example: 'username',
 				type: doveadm_arg_types.STRING,
 				text: `uid of user to query.`,
 			},
 			'dict-uri': {
+				example: 'dict_label',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `URI for dictionary to query.`,
 			},
 			key: {
+				example: 'example_key',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Key to query.`,
 			},
 			value: {
+				example: 'value',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Value to set.`,
@@ -618,16 +715,18 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'dict unset': {
 		args: {
 			user: {
-				//example: 'foo',
+				example: 'username',
 				type: doveadm_arg_types.STRING,
 				text: `uid of user to query.`,
 			},
 			'dict-uri': {
+				example: 'dict_label',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `URI for dictionary to query.`,
 			},
 			key: {
+				example: 'example_key',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Key to unset.`,
@@ -641,16 +740,22 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		args: {
 			type: {
 				cli: 't',
+				example: 'index',
 				type: doveadm_arg_types.STRING,
+				text: `The type of file to be dumped.`,
 			},
 			path: {
+				example: '/path/to/file',
 				positional: true,
 				type: doveadm_arg_types.STRING,
+				text: `Path to the file specified by the type argument.`,
 			},
 			args: {
+				example: ['uid=123'],
 				positional: true,
 				optional: true,
 				type: doveadm_arg_types.ARRAY,
+				text: `Type specific arguments.`,
 			},
 		},
 		man: 'doveadm-dump',
@@ -660,11 +765,13 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	exec: {
 		args: {
 			binary: {
+				example: 'dovecot-lda',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `The name of an executable located in \`/usr/libexec/dovecot\`.`,
 			},
 			args: {
+				example: ['-a arg1', '-b arg2'],
 				positional: true,
 				optional: true,
 				type: doveadm_arg_types.ARRAY,
@@ -692,7 +799,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	fetch: {
 		args: {
 			field: {
-				//example: ['text'],
+				example: ['text'],
 				type: doveadm_arg_types.ARRAY,
 				text: `Search fields to fetch.`,
 			},
@@ -709,6 +816,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'flags add': {
 		args: {
 			flag: {
+				example: ['\\flag1'],
 				type: doveadm_arg_types.ARRAY,
 				text: `List of flags to add.`,
 			},
@@ -722,6 +830,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'flags remove': {
 		args: {
 			flag: {
+				example: ['\\flag1'],
 				type: doveadm_arg_types.ARRAY,
 				text: `List of flags to remove.`,
 			},
@@ -735,6 +844,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'flags replace': {
 		args: {
 			flag: {
+				example: ['\\flag1'],
 				type: doveadm_arg_types.ARRAY,
 				text: `List of flags to replace with.`
 			},
@@ -843,10 +953,12 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'fs iter': {
 		args: {
 			noCache: {
+				// TODO: Needs to be documented in man page
 				cli: 'C',
 				type: doveadm_arg_types.BOOL
 			},
 			objectIds: {
+				// TODO: Needs to be documented in man page
 				cli: 'O',
 				type: doveadm_arg_types.BOOL
 			},
@@ -916,10 +1028,12 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'fs put': {
 		args: {
 			hash: {
+				// TODO: Needs to be documented in man page
 				cli: 'h',
 				type: doveadm_arg_types.STRING
 			},
 			metadata: {
+				// TODO: Needs to be documented in man page
 				cli: 'm',
 				type: doveadm_arg_types.ARRAY
 			},
@@ -991,6 +1105,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'fts optimize': {
 		args: {
 			namespace: {
+				example: '#shared',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Namespace to optimize.`,
@@ -1004,6 +1119,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'fts rescan': {
 		args: {
 			namespace: {
+				example: '#shared',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Namespace to rebuild.`,
@@ -1014,13 +1130,14 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		text: `Rebuild FTS indexes.`,
 	},
 
+	// TODO: Needs to be documented in man page
 	'fts tokenize': {
 		args: {
 			language: {
 				type: doveadm_arg_types.STRING,
 			},
 			text: {
-				//example: `c’est la vie`,
+				example: `c’est la vie`,
 				positional: true,
 				type: doveadm_arg_types.ARRAY,
 				text: `String to tokenize.`,
@@ -1035,6 +1152,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		args: {
 			'source-user': {
 				cli: 'U',
+				example: 'sourceuser',
 				type: doveadm_arg_types.STRING,
 				text: `UID of user to apply import to.`,
 			},
@@ -1044,11 +1162,13 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				text: `Newly created folders are also subscribed to.`,
 			},
 			'source-location': {
+				example: 'maildir:/backup/Maildir',
 				positional: true,
 				type: doveadm_arg_types.STRING,
-				text: `Location of source mailboxes.`,
+				text: `Location of source mailbox.`,
 			},
 			'dest-parent-mailbox': {
+				example: 'backup',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Destination parent mailbox where to import.`,
@@ -1069,10 +1189,12 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			},
 			'max-recent': {
 				cli: 'n',
+				example: 10,
 				type: doveadm_arg_types.STRING,
 				text: `Max number of recent mails to index.`,
 			},
 			'mailbox-mask': {
+				example: 'INBOX',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox search mask to apply indexing to.`,
@@ -1092,15 +1214,21 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			},
 			'max-recent': {
 				cli: 'n',
+				example: 10,
+				// TODO: This is treated/documented as an integer value
+				// (CMD_PARAM_INT64), but is defined as a string in source
+				// (CMD_PARAM_STR).
 				type: doveadm_arg_types.STRING,
 				text: `The maximum number of \\Recent messages in the mailboxes.`,
 			},
 			user: {
+				example: 'username',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `The user to add.`,
 			},
 			mailbox: {
+				example: 'INBOX',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `The mailbox to index.`,
@@ -1122,6 +1250,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		args: {
 			'user-mask': doveadm_args_usermask,
 			'mailbox-mask': {
+				example: 'Trash',
 				positional: true,
 				optional: true,
 				type: doveadm_arg_types.STRING,
@@ -1139,6 +1268,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				type: doveadm_arg_types.BOOL,
 			},
 			name: {
+				example: 'instance_name',
 				positional: true,
 				optional: true,
 				type: doveadm_arg_types.STRING,
@@ -1151,6 +1281,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'instance remove': {
 		args: {
 			name: {
+				example: 'instance_name',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `The instance to remove.`,
@@ -1165,21 +1296,24 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			'socket-path': {
 				cli: 'a',
 				cli_only: true,
+				example: '/rundir/anvil',
 				type: doveadm_arg_types.STRING,
 				text: `Anvil socket path.`
 			},
 			'passdb-field': {
 				cli: 'f',
+				example: 'alt_username_field',
 				type: doveadm_arg_types.STRING,
-				text: `Passdb field.`
+				text: `Alternative username field to use for kicking`,
 			},
 			'dest-host': {
 				cli: 'h',
+				example: 'destination_host',
 				type: doveadm_arg_types.STRING,
-				text: `Destination host.`
+				text: `Disconnect proxy connections to this destination host.`,
 			},
 			mask: {
-				//example: `testuser001`,
+				example: `username`,
 				positional: true,
 				type: doveadm_arg_types.ARRAY,
 				text: `UID mask.`,
@@ -1193,6 +1327,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		args: {
 			since: {
 				cli: 'c',
+				example: 2147483647,
 				type: doveadm_arg_types.INTEGER,
 				text: `Only show errors since this point in time (UNIX timestamp).`,
 			},
@@ -1204,6 +1339,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	'log find': {
 		args: {
 			'log-dir': {
+				example: '/syslogd/write/path',
 				positional: true,
 				optional: true,
 				type: doveadm_arg_types.STRING,
@@ -1230,38 +1366,51 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		args: {
 			all: {
 				cli: 'a',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `List or change all fields.`,
 			},
 			fieldstr: {
 				cli: 'f',
-				type: doveadm_arg_types.STRING
+				example: 'field1 field2',
+				type: doveadm_arg_types.STRING,
+				text: `List or change these fields (comma/space separated).`,
 			},
 			'last-used': {
 				cli: 'l',
-				type: doveadm_arg_types.INTEGER
+				example: 2147483647,
+				type: doveadm_arg_types.INTEGER,
+				text: `Set last used timestamp.`,
 			},
 			decision: {
 				cli: 'd',
-				type: doveadm_arg_types.STRING
+				example: 'yes',
+				type: doveadm_arg_types.STRING,
+				text: `Set field caching decision`,
 			},
 			mailbox: {
+				example: ['Trash'],
 				positional: true,
-				type: doveadm_arg_types.ARRAY
+				type: doveadm_arg_types.ARRAY,
+				text: `Mailboxes to change cache decisions for.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `List or change caching decisions for field(s).`,
 	},
 
 	'mailbox cache purge': {
 		args: {
 			mailbox: {
+				example: ['Trash'],
 				positional: true,
-				type: doveadm_arg_types.ARRAY
+				type: doveadm_arg_types.ARRAY,
+				text: `Mailboxes to purge index file.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Purge the dovecot.index.cache file.`,
 	},
 
 	'mailbox cache remove': {
@@ -1270,25 +1419,32 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Remove matching mails from the cache.`,
 	},
 
 	'mailbox create': {
 		args: {
 			subscriptions: {
 				cli: 's',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Add to subscription list.`,
 			},
 			guid: {
 				cli: 'g',
-				type: doveadm_arg_types.STRING
+				example: 'mailbox-guid',
+				type: doveadm_arg_types.STRING,
+				text: `Create mailbox with this GUID.`,
 			},
 			mailbox: {
+				example: ['Test'],
 				positional: true,
-				type: doveadm_arg_types.ARRAY
+				type: doveadm_arg_types.ARRAY,
+				text: `Mailboxes to create.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Create mailboxes.`,
 	},
 
 	'mailbox cryptokey generate': {
@@ -1309,6 +1465,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				text: `Force keypair creation, normally keypair is only created if none found.`
 			},
 			'mailbox': {
+				example: 'INBOX',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox mask.`
@@ -1316,6 +1473,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
+		man: 'doveadm-mailbox-cryptokey',
 		text: `
 Generate new keypair for user or folder.
 
@@ -1344,14 +1502,16 @@ to secure it.
 				text: `Operate on user keypair only.`
 			},
 			'mailbox': {
+				example: 'INBOX',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox mask.`
 			},
 		},
-		fields: {},
+		response: {},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
+		man: 'doveadm-mailbox-cryptokey',
 		text: `List all keys for user or mailbox.`
 	},
 
@@ -1363,14 +1523,16 @@ to secure it.
 				text: `Operate on user keypair only.`
 			},
 			'mailbox': {
+				example: 'INBOX',
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox mask.`
 			},
 		},
-		fields: {},
+		response: {},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
+		man: 'doveadm-mailbox-cryptokey',
 		text: `Exports user or folder private keys.`
 	},
 
@@ -1388,6 +1550,7 @@ to secure it.
 			},
 			'new-password': {
 				cli: 'n',
+				example: 'newpassword',
 				type: doveadm_arg_types.STRING,
 				text: `New password.`
 			},
@@ -1398,13 +1561,15 @@ to secure it.
 			},
 			'old-password': {
 				cli: 'o',
+				example: 'oldpassword',
 				type: doveadm_arg_types.STRING,
 				text: `Old password.`
 			},
 		},
-		fields: {},
+		response: {},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
+		man: 'doveadm-mailbox-cryptokey',
 		text: `Sets, changes or clears password for user's private key.`
 	},
 
@@ -1412,163 +1577,210 @@ to secure it.
 		args: {
 			'require-empty': {
 				cli: 'e',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Require mailboxes to be empty before deleting.`,
 			},
 			subscriptions: {
 				cli: 's',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Unsubscribe deleted mailboxes.`,
 			},
 			recursive: {
 				cli: 'r',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Delete mailboxes recursively.`,
 			},
 			unsafe: {
 				cli: 'Z',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Delete mailboxes as efficiently as possible.`,
 			},
 			mailbox: {
+				example: ['Test'],
 				positional: true,
-				type: doveadm_arg_types.ARRAY
+				type: doveadm_arg_types.ARRAY,
+				text: `The mailboxes to delete.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Delete mailboxes.`,
 	},
 
 	'mailbox metadata get': {
 		args: {
 			'allow-empty-mailbox-name': {
 				cli: 's',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Allow to specify an empty mailbox name string.`,
 			},
 			mailbox: {
+				example: 'INBOX',
 				positional: true,
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `Target mailbox to query.`,
 			},
 			key: {
+				example: 'key',
 				positional: true,
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `Metadata key to retrieve.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Get metadata for a mailbox.`,
 	},
 
 	'mailbox metadata list': {
 		args: {
 			'allow-empty-mailbox-name': {
 				cli: 's',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Allow to specify an empty mailbox name string.`,
 			},
 			'prepend-prefix': {
 				cli: 'p',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Prepend the prefix to results.`,
 			},
 			mailbox: {
+				example: 'INBOX',
 				positional: true,
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `Target mailbox to query.`,
 			},
 			'key-prefix': {
+				example: 'key-prefix',
 				positional: true,
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `The key prefix to look for.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `List metadata for a mailbox.`,
 	},
 
 	'mailbox metadata set': {
 		args: {
 			'allow-empty-mailbox-name': {
 				cli: 's',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Allow to specify an empty mailbox name string.`,
 			},
 			mailbox: {
+				example: 'INBOX',
 				positional: true,
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `Target mailbox.`,
 			},
 			key: {
+				example: 'key',
 				positional: true,
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `The key to add.`,
 			},
 			value: {
+				example: 'value',
 				positional: true,
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `The value to add.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Set metadata for a mailbox.`,
 	},
 
 	'mailbox metadata unset': {
 		args: {
 			'allow-empty-mailbox-name': {
 				cli: 's',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Allow to specify an empty mailbox name string.`,
 			},
 			mailbox: {
+				example: 'INBOX',
 				positional: true,
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `Target mailbox.`,
 			},
 			key: {
+				example: 'key',
 				positional: true,
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `The key to delete.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Unset metadata for a mailbox.`,
 	},
 
 	'mailbox list': {
 		args: {
 			mutf7: {
 				cli: '7',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Lists mailboxes with mUTF-7 encoding.`,
 			},
 			utf8: {
 				cli: '8',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Lists mailboxes with UTF-8 encoding.`,
 			},
 			subscriptions: {
 				cli: 's',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Only list subscribed mailboxes?`,
 			},
 			'mailbox-mask': {
+				example: ['INBOX'],
 				positional: true,
 				optional: true,
-				type: doveadm_arg_types.ARRAY
+				type: doveadm_arg_types.ARRAY,
+				text: `A list of mailbox masks to list.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Get list of existing mailboxes.`,
 	},
 
 	'mailbox mutf7': {
 		args: {
 			toUtf8: {
 				cli: '7',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Mailbox is in mUTF-7 format.`,
 			},
 			fromUtf8: {
 				cli: '8',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Mailbox is in UTF-8 format.`,
 			},
 			name: {
+				example: ['Test'],
 				positional: true,
-				type: doveadm_arg_types.ARRAY
+				type: doveadm_arg_types.ARRAY,
+				text: `Mailbox names to convert.`,
 			},
 		},
-		// TODO: Missing man page
+		man: 'doveadm-mailbox',
+		text: `Convert mailbox names from mUTF-7 to UTF-8.`,
 	},
 
 	'mailbox path': {
 		args: {
 			type: {
 				cli: 't',
+				example: 'index',
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox path type.`
 			},
 			mailbox: {
+				example: ['INBOX'],
 				positional: true,
 				type: doveadm_arg_types.ARRAY,
 				text: `Mailbox name to query.`
@@ -1576,102 +1788,131 @@ to secure it.
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Returns filesystem paths for the mailboxes.`,
 	},
 
 	'mailbox rename': {
 		args: {
 			subscriptions: {
 				cli: 's',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Unsubscribe old mailbox and subscribe new mailbox.`,
 			},
 			mailbox: {
+				example: 'OldName',
 				positional: true,
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `The source mailbox name.`,
 			},
 			'new-name': {
+				example: 'NewName',
 				positional: true,
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `The destination mailbox name.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Rename mailbox.`,
 	},
 
 	'mailbox status': {
 		args: {
 			'total-sum': {
 				cli: 't',
-				type: doveadm_arg_types.BOOL
+				type: doveadm_arg_types.BOOL,
+				text: `Sum values of status fields.`,
 			},
 			field: {
 				cli: 'f',
+				example: ['all'],
 				positional: true,
-				type: doveadm_arg_types.ARRAY
+				type: doveadm_arg_types.ARRAY,
+				text: `Fields that should be shown.`,
 			},
 			'mailbox-mask': {
+				example: ['INBOX'],
 				positional: true,
-				type: doveadm_arg_types.ARRAY
+				type: doveadm_arg_types.ARRAY,
+				text: `Mailboxes to query.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Show status of mailboxes.`,
 	},
 
 	'mailbox subscribe': {
 		args: {
 			mailbox: {
+				example: ['Test'],
 				positional: true,
-				type: doveadm_arg_types.ARRAY
+				type: doveadm_arg_types.ARRAY,
+				text: `Mailboxes to subscribe to.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Subscribe to mailboxes.`,
 	},
 
 	'mailbox unsubscribe': {
 		args: {
 			mailbox: {
+				example: ['Test'],
 				positional: true,
-				type: doveadm_arg_types.ARRAY
+				type: doveadm_arg_types.ARRAY,
+				text: `Mailboxes to unsubscribe from.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Unsubscribe from mailboxes.`,
 	},
 
 	'mailbox update': {
+		/* No examples in here, because this command's use should not be
+		 * encouraged. */
 		args: {
 			'mailbox-guid': {
 				cli: 'g',
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `Mailbox GUID.`,
 			},
 			'uid-validity': {
 				cli: 'V',
-				type: doveadm_arg_types.INTEGER
+				type: doveadm_arg_types.INTEGER,
+				text: `UID validity.`,
 			},
 			'min-next-uid': {
 				cli: 'N',
-				type: doveadm_arg_types.INTEGER
+				type: doveadm_arg_types.INTEGER,
+				text: `Minimum NEXTUID.`,
 			},
 			'min-first-recent-uid': {
 				cli: 'R',
-				type: doveadm_arg_types.INTEGER
+				type: doveadm_arg_types.INTEGER,
+				text: `First recent UID.`,
 			},
 			'min-highest-modseq': {
 				cli: 'H',
-				type: doveadm_arg_types.INTEGER
+				type: doveadm_arg_types.INTEGER,
+				text: `Minimum highest MODSEQ.`,
 			},
 			'min-highest-private-modseq': {
 				cli: 'P',
-				type: doveadm_arg_types.INTEGER
+				type: doveadm_arg_types.INTEGER,
+				text: `Minimum highest private MODSEQ.`,
 			},
 			mailbox: {
 				positional: true,
-				type: doveadm_arg_types.STRING
+				type: doveadm_arg_types.STRING,
+				text: `Mailbox to update.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		text: `Set internal mailbox metadata.`,
 	},
 
 	move: {
@@ -2017,7 +2258,7 @@ returned.`,
 		man: 'doveadm-sieve'
 	},
 
-	/* Deprecated. TODO: No man page, but that might be ok? */
+	/* Deprecated. */
 	'sis find': {
 		args: {
 			'root-dir': {
