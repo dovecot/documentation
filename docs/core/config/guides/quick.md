@@ -56,8 +56,8 @@ namespace inbox {
 passdb pam {
 }
 
-ssl_cert_file = /etc/dovecot/ssl-cert.pem
-ssl_key_file = /etc/dovecot/ssl-key.pem
+ssl_server_cert_file = /etc/dovecot/ssl-cert.pem
+ssl_server_key_file = /etc/dovecot/ssl-key.pem
 ```
 :::
 
@@ -175,8 +175,8 @@ them than the defaults.
 
 ## SSL and Plaintext Authentication
 
-Configure SSL certificate and private key paths with [[setting,ssl_cert_file]]
-and [[setting,ssl_key_file]] settings.
+Configure SSL certificate and private key paths with [[setting,ssl_server_cert_file]]
+and [[setting,ssl_server_key_file]] settings.
 
 An easy way to build a self-signed test certificate is using Dovecot's
 `doc/mkcert.sh` script. For more information see [[link,ssl_configuration]].
