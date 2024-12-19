@@ -89,7 +89,7 @@ for execution at delivery.
 
 ### sieve deactivate
 
-**doveadm** [*GLOBAL OPTIONS*] sieve deactivate [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] *scriptname*
+**doveadm** [*GLOBAL OPTIONS*] sieve deactivate [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*]
 
 This command deactivates Sieve processing.
 
