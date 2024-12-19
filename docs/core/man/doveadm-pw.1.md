@@ -72,13 +72,13 @@ configuring Dovecot first, you can use `doveadm -O pw` to do so.
     specified, [[man,doveadm]] will prompt interactively for one.
 
 **-u** *user*
-    When the **DIGEST-MD5** *scheme* is used, also the *user* name must
+:   When the **DIGEST-MD5** *scheme* is used, also the *user* name must
     be given, because the user name is a part of the generated hash. For
     more information about Digest-MD5 please read also
     [[link,auth_digest_md5]].
 
 **-V**
-    When this option is given, the hashed password will be internally
+:   When this option is given, the hashed password will be internally
     verified. The result of the verification will be shown after the
     hashed password, enclosed in parenthesis.
 
