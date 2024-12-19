@@ -4409,8 +4409,8 @@ It is usually neither necessary nor advisable to change the default.`
 	auth_ssl_require_client_cert: {
 		default: 'no',
 		seealso: [
-			'ssl_ca_file',
-			'ssl_request_client_cert',
+			'ssl_server_ca_file',
+			'ssl_server_request_client_cert',
 			'[[link,ssl_configuration]]',
 		],
 		values: setting_types.BOOLEAN,
@@ -4421,7 +4421,7 @@ provided.`
 
 	auth_ssl_username_from_cert: {
 		default: 'no',
-		seealso: [ 'ssl_cert_username_field' ],
+		seealso: [ 'ssl_server_cert_username_field' ],
 		values: setting_types.BOOLEAN,
 		text: `
 Setting to \`yes\` indicates that the username should be taken from the
@@ -4432,7 +4432,7 @@ Generally, this will be either \`commonName\` or \`x500UniqueIdentifier\`.
 The text is looked up from subject DN's specified field using OpenSSL's
 X509_NAME_get_text_by_NID() function. By default the CommonName field is
 used. You can change the field with
-[[setting,ssl_cert_username_field,name]] setting (parsed using OpenSSL's
+[[setting,ssl_server_cert_username_field,name]] setting (parsed using OpenSSL's
 OBJ_txt2nid() function).
 
 \`x500UniqueIdentifier\` is a common choice.`
@@ -10013,7 +10013,7 @@ This setting affects the \`secured\` state of connections. See
 [[link,secured_connections]].`
 	},
 
-	ssl_alt_cert_file: {
+	ssl_server_alt_cert_file: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
 		values: setting_types.FILE,
 		text: `
@@ -10025,29 +10025,29 @@ This is useful when migrating to e.g. an ECDSA certificate.
 Example:
 
 \`\`\`[dovecot.conf]
-ssl_alt_cert_file = /path/to/alternative/cert.pem
+ssl_server_alt_cert_file = /path/to/alternative/cert.pem
 \`\`\``
 	},
 
-	ssl_alt_key_file: {
-		seealso: [ 'ssl', 'ssl_alt_cert_file', '[[link,ssl_configuration]]' ],
+	ssl_server_alt_key_file: {
+		seealso: [ 'ssl', 'ssl_server_alt_cert_file', '[[link,ssl_configuration]]' ],
 		values: setting_types.FILE,
 		text: `
-Private key for [[setting,ssl_alt_cert_file]].
+Private key for [[setting,ssl_server_alt_cert_file]].
 
 Example:
 
 \`\`\`[dovecot.conf]
-ssl_alt_key_file = /path/to/alternative/key.pem
-ssl_alt_cert_file = /path/to/alternative/cert.pem
+ssl_server_alt_key_file = /path/to/alternative/key.pem
+ssl_server_alt_cert_file = /path/to/alternative/cert.pem
 \`\`\``
 	},
 
-	ssl_ca_file: {
+	ssl_server_ca_file: {
 		seealso: [
 			'ssl',
 			'ssl_client_require_valid_cert',
-			'ssl_request_client_cert',
+			'ssl_server_request_client_cert',
 		],
 		values: setting_types.FILE,
 		text: `
@@ -10058,30 +10058,30 @@ valid.
 Example:
 
 \`\`\`[dovecot.conf]
-ssl_ca_file = /etc/dovecot/ca.crt
-ssl_request_client_cert = yes
+ssl_server_ca_file = /etc/dovecot/ca.crt
+ssl_server_request_client_cert = yes
 auth_ssl_require_client_cert = yes
 \`\`\``
 	},
 
-	ssl_cert_file: {
-		seealso: [ 'ssl', 'ssl_key_file', '[[link,ssl_configuration]]' ],
+	ssl_server_cert_file: {
+		seealso: [ 'ssl', 'ssl_server_key_file', '[[link,ssl_configuration]]' ],
 		values: setting_types.FILE,
 		text: `
 Path to the PEM-encoded X.509 SSL/TLS certificate presented for incoming
 imap/pop3/etc. client connections.
 
-The [[setting,ssl_key_file]] is also needed for the private certificate.
+The [[setting,ssl_server_key_file]] is also needed for the private certificate.
 
 Example:
 
 \`\`\`[dovecot.conf]
-ssl_cert_file = /etc/ssl/private/dovecot.crt
-ssl_key_file = /etc/ssl/private/dovecot.key
+ssl_server_cert_file = /etc/ssl/private/dovecot.crt
+ssl_server_key_file = /etc/ssl/private/dovecot.key
 \`\`\``
 	},
 
-	ssl_cert_username_field: {
+	ssl_server_cert_username_field: {
 		default: 'commonName',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
 		values: setting_types.STRING,
@@ -10232,7 +10232,7 @@ ssl_curve_list = P-521:P-384:P-256
 \`\`\``
 	},
 
-	ssl_dh_file: {
+	ssl_server_dh_file: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
 		values: setting_types.FILE,
 		text: `
@@ -10246,7 +10246,7 @@ You can generate a new parameters file by, for example, running
 Example:
 
 \`\`\`[dovecot.conf]
-ssl_dh_file = /path/to/dh.pem
+ssl_server_dh_file = /path/to/dh.pem
 \`\`\``
 	},
 
@@ -10258,35 +10258,35 @@ ssl_dh_file = /path/to/dh.pem
 Require a valid certificate when connecting to external SSL services?`
 	},
 
-	ssl_key_file: {
+	ssl_server_key_file: {
 		seealso: [
 			'ssl',
-			'ssl_cert_file',
-			'ssl_key_password',
+			'ssl_server_cert_file',
+			'ssl_server_key_password',
 			'[[link,ssl_configuration]]',
 		],
 		values: setting_types.FILE,
 		text: `
 Path to the PEM-encoded X.509 SSL/TLS private key for
-[[setting,ssl_cert_file]].
+[[setting,ssl_server_cert_file]].
 
 Example:
 
 \`\`\`[dovecot.conf]
-ssl_cert_file = /etc/ssl/private/dovecot.crt
-ssl_key_file = /etc/ssl/private/dovecot.key
+ssl_server_cert_file = /etc/ssl/private/dovecot.crt
+ssl_server_key_file = /etc/ssl/private/dovecot.key
 \`\`\``
 	},
 
-	ssl_key_password: {
-		seealso: [ 'ssl', 'ssl_key_file', '[[link,ssl_configuration]]' ],
+	ssl_server_key_password: {
+		seealso: [ 'ssl', 'ssl_server_key_file', '[[link,ssl_configuration]]' ],
 		values: setting_types.STRING,
 		text: `
-The password to use if [[setting,ssl_key_file]] is password-protected.
+The password to use if [[setting,ssl_server_key_file]] is password-protected.
 
 Since this file is often world-readable, you may wish to specify the path
 to a file containing the password, rather than the password itself, by
-using the format \`ssl_key_password = <path\` here. The path should
+using the format \`ssl_server_key_password = <path\` here. The path should
 be to a root-owned file with mode 0600.
 
 Alternatively, you can supply the password via the -p parameter at startup.`
@@ -10342,28 +10342,27 @@ Currently supported options are:
 :   Disable SSL session tickets.`
 	},
 
-	ssl_prefer_server_ciphers: {
-		default: 'no',
+	ssl_server_prefer_ciphers: {
+		default: 'client',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
-		values: setting_types.BOOLEAN,
+		values: setting_types.ENUM,
+		values_enum: [ 'client', 'server' ],
 		text: `
-If enabled, give preference to the server's cipher list over a client's
-list. This setting is used only for server connections.`
+Whether to give preference to the server's cipher list over a client's
+list.`
 	},
 
-	ssl_require_crl: {
+	ssl_server_require_crl: {
 		default: 'yes',
-		seealso: [ 'ssl', 'ssl_ca_file', '[[link,ssl_configuration]]' ],
+		seealso: [ 'ssl', 'ssl_server_ca_file', '[[link,ssl_configuration]]' ],
 		values: setting_types.BOOLEAN,
 		text: `
 If enabled, the CRL check must succeed for presented SSL client
 certificate and any intermediate certificates. The CRL list is generally
-appended to the [[setting,ssl_ca_file]] file.
-
-This setting is used only for server connections.`
+appended to the [[setting,ssl_server_ca_file]] file.`
 	},
 
-	ssl_request_client_cert: {
+	ssl_server_request_client_cert: {
 		changed: {
 			settings_ssl_request_client_cert_changed: `
 Renamed from \`ssl_verify_client_cert\` setting.`
