@@ -272,12 +272,10 @@ hdr
 hendrik
 hexblob
 hexlify
-hexuc
 hhmm
 highestmodseq
 HIGHESTPVTMODSEQ
 Hopmann
-hostaddr
 hostdomain
 hostip
 howto
@@ -536,7 +534,6 @@ NOCHILDREN
 nodelay
 nodeps
 NOINFERIORS
-noiv
 nolock
 nologin
 nonindexable
@@ -584,8 +581,8 @@ opie
 opsec
 optboolean
 optname
-orcpt
 OR'ing
+orcpt
 ORing
 OSFILE
 otherinstance
@@ -646,7 +643,6 @@ qmail
 qmgr
 QQACg
 qresync
-qwerty
 rampup
 randkey
 randomfail
@@ -736,7 +732,6 @@ socketpath
 solib
 solrcloud
 solrconfig
-somedict
 sourceforge
 sourceuser
 sourceware
@@ -804,6 +799,7 @@ tempdisabled
 tempfail
 tempfailing
 terabyte
+testadmin
 testdomain
 testmbox
 testpass
@@ -861,7 +857,6 @@ unsubscribable
 unsubscriptions
 uoff
 Uou
-upn
 uppercased
 uppercasing
 upperfirst
@@ -918,11 +913,9 @@ wikis
 winbind
 wso
 xapian
-XBAR
 xchange
 xclient
 Xes
-XFOO
 xfs
 xoauth
 XRCPTFORWARD
