@@ -36,9 +36,9 @@ userdb {
 :   This option is used to specify an absolute path to an alternative
     UNIX domain socket.
 
-By default [[man,doveadm]] will use the socket */rundir/auth-userdb*.
-The socket may be located in another directory, when the default
-*base_dir* setting was overridden in */etc/dovecot/dovecot.conf*.
+    By default [[man,doveadm]] will use the socket */rundir/auth-userdb*.
+    The socket may be located in another directory, when the default
+    *base_dir* setting was overridden in */etc/dovecot/dovecot.conf*.
 
 **-f** *field*
 :   When this option and the name of a userdb field is given,
@@ -57,7 +57,7 @@ The socket may be located in another directory, when the default
 *user*
 :   Is a *user*'s login name. Depending on the configuration, a login
     name may be for example **jane** or **john@example.com**. It's also
-    possible to use '*****' and '**?**' wildcards (e.g. -u
+    possible to use '**\***' and '**?**' wildcards (e.g. -u
     \*@example.org).
 
 ## EXAMPLE
