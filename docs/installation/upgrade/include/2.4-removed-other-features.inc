@@ -4,7 +4,7 @@
 | IPC process | Has been merged to anvil. |
 | OpenSSL support for older than 1.0.2 | Older versions are not supported anymore. |
 | Sieve extensions: `notify`, `imapflags`, `vnd.dovecot.duplicate` | These deprecated Sieve extensions have been removed. |
-| `ssl-parameters.dat` | This file is no longer converted automatically by config process, you need to set [[setting,ssl_dh_file]] setting if you need non-ECC Diffie-Hellman. |
+| `ssl-parameters.dat` | This file is no longer converted automatically by config process, you need to set [[setting,ssl_server_dh_file]] setting if you need non-ECC Diffie-Hellman. |
 | TCP wrapper support | Use [[link,auth_lua]] instead. |
 | Weak password schemes | Weak password schemes are disabled by default; you need to use [[setting,auth_allow_weak_schemes]] to enable them. |
 

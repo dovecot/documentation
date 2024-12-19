@@ -206,8 +206,8 @@ plugin {
 
 ::: code-group
 ```[dovecot.conf]
-ssl_cert_file = /etc/ssl/certs/domain_tld_2009.crt
-ssl_key_file = /etc/ssl/private/domain_tld_2009.key
+ssl_server_cert_file = /etc/ssl/certs/domain_tld_2009.crt
+ssl_server_key_file = /etc/ssl/private/domain_tld_2009.key
 ```
 :::
 

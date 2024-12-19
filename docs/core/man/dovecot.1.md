@@ -51,7 +51,7 @@ little memory.
     as *doveconf -n*.
 
 **-p**
-:   Prompt for the ssl key password for the configured *ssl_key* on startup.
+:   Prompt for the ssl key password for the configured *ssl_server_key* on startup.
 
 **-\-build-options**
 :   Show Dovecot's build options and exit successfully.
