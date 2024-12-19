@@ -4803,7 +4803,7 @@ How long to wait for answer before aborting request.`
 	},
 
 	dict_map: {
-		tags: [ 'dict', 'dict-sql' ],
+		tags: [ 'dict', 'dict-sql', 'dict-ldap' ],
 		values: setting_types.NAMED_LIST_FILTER,
 		seealso: [ 'dict_map_pattern' ],
 		text: `
@@ -4812,7 +4812,7 @@ Creates a new dict mapping. The filter name refers to the
 	},
 
 	dict_map_pattern: {
-		tags: [ 'dict', 'dict-sql' ],
+		tags: [ 'dict', 'dict-sql', 'dict-ldap' ],
 		values: setting_types.STRING,
 		text: `
 Pattern that is matched to the accessed dict keys. The [[setting,dict_map]]
@@ -4845,13 +4845,15 @@ optional if no expiration is used by the code accessing the dict map.`
 	},
 
 	dict_map_value: {
-		tags: [ 'dict', 'dict-sql' ],
+		tags: [ 'dict', 'dict-sql', 'dict-ldap' ],
 		values: setting_types.NAMED_LIST_FILTER,
 		seealso: [ 'dict_map_value_name' ],
 		text: `
-Creates a new value for the dict map. The filter name refers to the
+- sql: Creates a new value for the dict map. The filter name refers to the
 [[setting,dict_map_value_name]] setting. Dict supports reading/writing multiple
-values for the same key.`
+values for the same key.
+
+- ldap: Value to be returned from an ldap search, as a [[link,settings_variables,variable-expression]]`
 	},
 
 	dict_map_field: {
@@ -10983,7 +10985,7 @@ SASL realm to use.`
 	},
 
 	ldap_base: {
-		tags: [ 'auth-ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap' ],
 		values: setting_types.STRING,
 		text: `
 LDAP base.
@@ -11023,8 +11025,24 @@ You may need to recompile OpenLDAP with debugging enabled to get enough output.`
 Specify dereference which is set as an LDAP option.`
 	},
 
+	dict_map_ldap_filter: {
+		tags: [ 'dict-ldap' ],
+		values: setting_types.STRING,
+		text: `
+The ldap filter to use to find the ldap entry.
+
+This setting is required for ldap [[setting,dict_map]]`
+	},
+
+	ldap_max_idle_time: {
+		tags: [ 'dict-ldap' ],
+		values: setting_types.TIME,
+		text: `
+Disconnect from LDAP server after connection has been idle for this many seconds.`
+	},
+
 	ldap_scope: {
-		tags: [ 'auth-ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap' ],
 		default: 'subtree',
 		values: setting_types.ENUM,
 		values_enum: [ 'base', 'onelevel', 'subtree' ],
