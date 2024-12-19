@@ -51,6 +51,7 @@ configuring Dovecot first, you can use `doveadm -O pw` to do so.
     number of encryption rounds will be applied.
 
     | Scheme | Minimum | Maximum | Default |
+    | ------ | ------- | ------- | ------- |
     | BLF-CRYPT | 4 | 31 | 5 |
     | SHA256-CRYPT | 1000 | 999999999 | 5000 |
     | SHA512-CRYPT | 1000 | 999999999 | 5000 |
