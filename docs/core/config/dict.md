@@ -81,8 +81,22 @@ See [[link,auth_ldap]].
 
 ::: code-group
 ```[dovecot.conf]
-dict_legacy {
-  somedict = ldap:/path/to/dovecot-ldap-dict.conf.ext
+dict_server {
+  dict ldap {
+    driver = ldap
+    ldap_uris = ldap://{{LDAPHOST}}
+    ldap_auth_dn = uid=testadmin,cn=users,dc=dovecot,dc=net
+    ldap_auth_dn_password = testadmin
+    ldap_timeout_secs = 5
+    ldap_base = dc=dovecot,dc=net
+    ldap_starttls = no
+    ssl_client_require_valid_cert = no
+
+    dict_map priv/test/home {
+      ldap_filter = (&(homeDirectory=*)(uid=%{user}))
+      value = %{ldap:homeDirectory}
+    }
+  }
 }
 ```
 :::
@@ -95,30 +109,20 @@ dict_legacy {
 #### Examples
 
 To map a key to a search:
-
 ```
-map {
-  pattern = priv/test/mail
-  filter = (mail=*)  # the () is required
-  base_dn = ou=container,dc=domain
-  username_attribute = uid # default is cn
-  value_attribute = mail
+dict_map priv/test/mail {
+  ldap_filter = (&(uid=%{user})(mail=*))
+  ldap_base = ou=container,dc=domain
+  value = %{ldap:mail}
 }
 ```
 
 To do a more complex search:
-
 ```
-map {
-  pattern = priv/test/mail/$location
-  filter = (&(mail=*)(location=%{location}) # the () is required
-  base_dn = ou=container,dc=domain
-  username_attribute = uid # default is cn
-  value_attribute = mail
-
-  fields {
-    location=$location
-  }
+dict_map priv/test/mail/$location {
+  ldap_filter = (&(uid=%{user})(mail=*)(uid=%{pattern:location}))
+  ldap_base = ou=container,dc=domain
+  value = %{ldap:mail}
 }
 ```
 
