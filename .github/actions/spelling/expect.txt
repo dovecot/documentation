@@ -58,7 +58,6 @@ bayes
 bcc
 benumber
 bernat
-bindir
 bitfield
 BITMIME
 blitiri
@@ -135,6 +134,7 @@ deinitialized
 Deinitializing
 delaycompress
 deleteheader
+DELETESCRIPT
 dentries
 DESTNAME
 destuser
@@ -149,7 +149,7 @@ dlog
 dlua
 dnl
 dnotify
-dnpass
+dnpassword
 doct
 DOI
 domainless
