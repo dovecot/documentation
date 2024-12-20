@@ -432,7 +432,7 @@ Rewrite the index when the number of bytes that needs to be read from the
 
 	managesieve_client_workarounds: {
 		tags: [ 'managesieve', 'sieve' ],
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		advanced: true,
 		text: `
 Enables various workarounds for ManageSieve clients. Currently there are
@@ -451,16 +451,25 @@ capability.`
 
 	managesieve_logout_format: {
 		tags: [ 'managesieve', 'sieve' ],
-		default: 'bytes=%i/%o',
+		default: 'bytes=%{input}/%{output}',
 		values: setting_types.STRING_NOVAR,
 		text: `
 Specifies the string pattern used to compose the logout message of an
 authenticated session. The following substitutions are available:
 
-| Variable | Substitution |
-| -------- | ------------ |
-| \`%i\` | Total number of bytes read from client. |
-| \`%o\` | Total number of bytes sent to client. |`
+| Variable Name | Description |
+| ------------- | ----------- |
+| \`%{input}\` | Total number of bytes read from client |
+| \`%{output}\` | Total number of bytes sent to client |
+| \`%{put_count}\` | Number of scripts uploaded by client using PUTSCRIPT command |
+| \`%{put_bytes}\` | Number of bytes with script data sent by client using PUTSCRIPT command |
+| \`%{get_count}\` | Number of scripts downloaded by client using GETSCRIPT command |
+| \`%{get_bytes}\` | Number of bytes with script data sent to client using GETSCRIPT command |
+| \`%{check_count}\` | Number of scripts checked by client using CHECKSCRIPT command |
+| \`%{check_bytes}\` | Number of bytes with script data sent by client using CHECKSCRIPT command |
+| \`%{deleted_count}\` | Number of scripts deleted by client using DELETESCRIPT command |
+| \`%{renamed_count}\` | Number of scripts renamed by client using RENAMESCRIPT command |
+| \`%{session}\` | The client session ID |`
 	},
 
 	managesieve_max_compile_errors: {
@@ -475,8 +484,8 @@ script upload or script verification.`
 
 	managesieve_max_line_length: {
 		tags: [ 'managesieve', 'sieve' ],
-		default: 65536,
-		values: setting_types.UINT,
+		default: '64k',
+		values: setting_types.SIZE,
 		advanced: true,
 		text: `
 The maximum ManageSieve command line length in bytes.
@@ -488,150 +497,235 @@ will generally not be useful.`
 	managesieve_notify_capability: {
 		tags: [ 'managesieve', 'sieve' ],
 		default: '\\<dynamically determined\\>',
-		values: setting_types.STRING,
+		values: setting_types.BOOLLIST,
 		advanced: true,
 		text: `
 \`NOTIFY\` capabilities reported by the ManageSieve service before
 authentication.
 
-If left unassigned, these will be assigned dynamically according to what
-the Sieve interpreter supports by default (after login this may differ
-depending on the authenticated user).`
+This does normally not need to be configured. If left unassigned, these will be
+assigned dynamically according to what the Sieve interpreter is configured to
+support using the global [[setting,sieve_extensions]] setting (after login this
+may differ depending on the settings applicable to the authenticated user).`
 	},
 
 	managesieve_sieve_capability: {
 		tags: [ 'managesieve', 'sieve' ],
-		default: 'fileinto reject envelope encoded-character vacation subaddress comparator-i;ascii-numeric relational regex imap4flags copy include variables body enotify environment mailbox date index ihave duplicate mime foreverypart extracttext',
-		values: setting_types.STRING,
+		default: '\\<dynamically determined\\>',
+		values: setting_types.BOOLLIST,
 		advanced: true,
 		text: `
 \`SIEVE\` capabilities reported by the ManageSieve service before
 authentication.
 
-If left unassigned, these will be assigned dynamically according to what
-the Sieve interpreter supports by default (after login this may differ
-depending on the authenticated user).`
+This does normally not need to be configured. If left unassigned, these will be
+assigned dynamically according to what the Sieve interpreter is configured to
+support using the global [[setting,sieve_extensions]] setting (after login this
+may differ depending on the settings applicable to the authenticated user).`
 	},
 
 	/* Pigeonhole plugin settings. */
 
-	sieve: {
-		tags: [ 'sieve' ],
+	sieve_script: {
+		tags: [ 'sieve-storage' ],
 		plugin: 'sieve',
-		default: 'file:~/sieve;active=~/.dovecot.sieve',
-		seealso: [ '[[link,sieve_location]]' ],
-		values: setting_types.STRING,
+		seealso: [ '[[link,sieve_storage]]' ],
+		values: setting_types.NAMED_LIST_FILTER,
 		text: `
-The location of the user's main Sieve script or script storage.
+Creates a new Sieve script storage to the list of script storages. The filter
+name refers to the [[setting,sieve_script_storage]] setting.
 
-The LDA Sieve plugin uses this to find the active script for Sieve
-filtering at delivery.
+Example:
 
-The Sieve include extension uses this location for retrieving \`:personal\`
-scripts.
-
-This location is also where the ManageSieve service will store the user's
-scripts, if supported by the location type.
-
-For the file location type, the location will then be the path to the
-storage directory for all the user's personal Sieve scripts.
-
-ManageSieve maintains a symbolic link pointing to the currently active
-script (the script executed at delivery).  The location of this symbolic
-link can be configured using the \`;active=<path>\` option.`
+\`\`\`
+sieve_script personal {
+  [...]
+}
+\`\`\``
 	},
 
-	sieve_after: {
-		tags: [ 'sieve' ],
+	sieve_script_storage: {
+		tags: [ 'sieve-storage' ],
 		plugin: 'sieve',
+		seealso: [ '[[link,sieve_storage]]' ],
 		values: setting_types.STRING,
 		text: `
-This setting can be specified multiple times by adding a number after the
-setting name, such as \`sieve_after2\` and so on.
-
-[[link,sieve_location,Location]] of scripts that need to be executed after
-the user's personal script.
-
-If a [[link,sieve_file]] location path points to a directory, all
-the Sieve scripts contained therein (with the proper .sieve extension) are
-executed. The order of execution within that directory is determined by the
-file names, using a normal 8bit per-character comparison.
-
-Multiple script locations can be specified by appending an increasing
-number to the setting name.
-
-The Sieve scripts found from these locations are added to the script
-execution sequence in the specified order.
-
-Reading the numbered [[setting,sieve_before]] settings stops at the
-first missing setting, so no numbers may be skipped.`
+The identifier of the Sieve script storage. This is used only in configurations
+and by command line tools - it's not visible to the user. The
+[[setting,sieve_script]] filter refers to this setting.`
 	},
 
-	sieve_before: {
-		tags: [ 'sieve' ],
+	sieve_script_name: {
+		tags: [ 'sieve-storage' ],
 		plugin: 'sieve',
+		default: 'personal',
+		seealso: [ '[[link,sieve_storage]]' ],
 		values: setting_types.STRING,
-		seealso: [ 'sieve_after' ],
 		text: `
-This setting can be specified multiple times by adding a number after the
-setting name, such as \`sieve_before2\` and so on.
+The (default) name of a Sieve script retrieved from this storage. If the
+name of the Sieve script cannot be derived somehow from the storage (e.g. from
+a file name) and the storage for a single script is specified, this option is
+required (e.g. for dict locations that must point to a particular script).
 
-See [[setting,sieve_after]] for configuration details, as this
-setting behaves the same way, except the scripts are run **before** user's
-personal scripts (instead of **after**).`
+If the name of the script is derived from the storage, the value of the
+[[setting,sieve_script_name]] setting overrides that name. If the Sieve
+interpreter explicitly queries for a specific name (e.g. to let the Sieve
+[[link,sieve_include]] retrieve a script from the
+[[link,sieve_storage_type_global,global script storage]]),
+this setting has no effect.
+
+For the Sieve script storage with type
+[[link,sieve_storage_type_default,default]], the name is required to make
+the default script visible in ManageSieve. See
+'[[link,sieve_visible_default_script]]'`
 	},
 
-	sieve_default: {
-		tags: [ 'sieve' ],
+	sieve_script_type: {
+		tags: [ 'sieve-storage' ],
 		plugin: 'sieve',
+		default: 'personal',
+		seealso: [ '[[link,sieve_storage_type]]' ],
 		values: setting_types.STRING,
 		text: `
-[[link,sieve_location,Location]] of the default personal sieve script file
-which gets executed ONLY if user's private Sieve script does not exist, e.g.
-\`file:/var/lib/dovecot/default.sieve\` (check the
-[[link,sieve_multiscript,multiscript section]]
-for instructions on running global Sieve scripts before and after the user's
-personal script).
-
-This is usually a global script, so be sure to pre-compile the specified
-script manually in that case using the sievec command line tool, as
-explained by [[man,sievec]].`
+The type of the configured Sieve script storage. See
+[[link,sieve_storage_type]].`
 	},
 
-	sieve_default_name: {
-		tags: [ 'sieve' ],
+	sieve_script_cause: {
+		tags: [ 'sieve-storage' ],
 		plugin: 'sieve',
-		values: setting_types.STRING,
-		seealso: [ '[[link,sieve_visible_default_script]]' ],
+		default: 'delivery',
+		seealso: [ '[[link,sieve_storage]]' ],
+		values: setting_types.STRLIST,
 		text: `
-The name by which the default Sieve script is visible to ManageSieve
-clients. Normally, it is not visible at all.`
+The causes for executing Sieve scripts from this storage. This is currently only
+relevant for the IMAPSieve plugin. For standard Sieve execution at message
+delivery the cause is "delivery".`
 	},
 
-	sieve_discard: {
-		tags: [ 'sieve' ],
+	sieve_script_precedence: {
+		tags: [ 'sieve-storage' ],
 		plugin: 'sieve',
+		default: 'infinite',
+		seealso: [ '[[link,sieve_storage]]' ],
+		values: setting_types.UINT,
+		text: `
+The precedence of this Sieve storage in the configuration. Normally, script
+storages with matching type and cause are accessed in the order these are
+specified in the configuration. This setting can be used to configure an
+explicit order. Storages will be accessed with lower precedence first.`
+	},
+
+	sieve_script_driver: {
+		tags: [ 'sieve-storage' ],
+		plugin: 'sieve',
+		default: 'file',
+		seealso: [ '[[link,sieve_storage]]' ],
 		values: setting_types.STRING,
 		text: `
-The location of a Sieve script that is run for any message that is about
-to be discarded; i.e., it is not delivered anywhere by the normal Sieve
-execution.
+The Sieve script storage driver to use. See [[link,sieve_storage_driver]].`
+	},
 
-This only happens when the "implicit keep" is canceled, by e.g. the
-"discard" action, and no actions that deliver the message are executed.
+	sieve_script_bin_path: {
+		tags: [ 'sieve-storage' ],
+		plugin: 'sieve',
+		default: 'personal',
+		seealso: [ '[[link,sieve_storage]]' ],
+		values: setting_types.STRING,
+		text: `
+Points to the directory where the compiled binaries for this script
+location are stored. This directory is created automatically if possible.
 
-This "discard script" can prevent discarding the message, by executing
-alternative actions.
+If this option is omitted, the behavior depends on the storage driver. For the
+[[link,sieve_storage_file, file storage driver]], the binaries are for
+example stored in the same directory as the corresponding sieve scripts.
 
-If the discard script does nothing, the message is still discarded as it
-would be when no discard script is configured.`
+Don't specify the same directory for multiple script storages (e.g. with
+different types), as this will result in undefined behavior. For one, the same
+script name could point to different scripts for different storages, leading to
+a conflict, because the storages will try to use the same binary file. Multiple
+mail users can share a single script directory if the associated script storage
+configuration is identical between users and all users share the same system
+credentials (uid, gid). All users will then use the same scripts for that
+storage type.`
+	},
+
+	sieve_script_path: {
+		tags: [ 'sieve_storage-file' ],
+		plugin: 'sieve',
+		default: '~/sieve',
+		seealso: [ '[[link,sieve_storage_file]]' ],
+		values: setting_types.STRING,
+		text: `
+A file system path pointing to a Sieve script file or a directory containing one
+or more Sieve script files with names structured as \`<script-name>.sieve\`.
+This setting only applies when [[setting,sieve_script_driver,file]]`
+	},
+
+	sieve_script_active_path: {
+		tags: [ 'sieve-storage-file' ],
+		plugin: 'sieve',
+		default: '~/.dovecot.sieve',
+		seealso: [ '[[link,sieve_storage_file]]' ],
+		values: setting_types.STRING,
+		text: `
+When [[link,managesieve_server]] is used, one script in the storage can
+be active; i.e., evaluated at delivery.
+
+This setting only applies when [[setting,sieve_script_driver,file]]. For that
+storage driver, the active script in the storage directory is pointed to by a
+symbolic link.
+
+This setting configures where this symbolic link is located. If the
+[[setting,sieve_script_path]] setting points to a regular file, this setting has
+no effect (and ManageSieve cannot be used).`
+	},
+
+	sieve_script_ldap_script_attribute: {
+		tags: [ 'sieve-storage-ldap' ],
+		plugin: 'sieve',
+		seealso: [ '[[link,sieve_storage_ldap]]' ],
+		values: setting_types.STRING,
+		text: `
+The name of the attribute containing the Sieve script.
+`
+	},
+
+	sieve_script_ldap_modified_attribute: {
+		tags: [ 'sieve-storage-ldap' ],
+		plugin: 'sieve',
+		seealso: [ '[[link,sieve_storage_ldap]]' ],
+		values: setting_types.STRING,
+		text: `
+The name of the attribute used to detect modifications to the LDAP entry.`
+	},
+
+	sieve_script_ldap_filter: {
+		tags: [ 'sieve-storage-ldap' ],
+		plugin: 'sieve',
+		seealso: [ '[[link,sieve_storage_ldap]]' ],
+		values: setting_types.STRING,
+		text: `
+The LDAP search filter that is used to find the entry containing the Sieve
+script.
+
+These variables can be used:
+
+| Variable | Description |
+| -------- | ----------- |
+| \`%{user}\` | username |
+| \`%{user \\| username}\` | user part in user@domain, same as \`%{user}\` if there's no domain |
+| \`%{user \\| domain}\` | domain part in user@domain, empty if user there's no domain |
+| \`%{home}\` | user's home directory |
+| \`%{name}\` | name of the Sieve script |
+`
 	},
 
 	sieve_extensions: {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
 		default: '\\<see description\\>',
-		values: setting_types.STRING,
+		values: setting_types.STRLIST,
 		text: `
 The Sieve language extensions available to users.
 
@@ -645,33 +739,22 @@ enable those that are not available by default.
 
 Supported extensions are listed at [[link,sieve_extensions]].
 
-This setting can use \`+\` and \`-\` to specify differences relative to the
-default.
-
 Example:
 
 \`\`\`
-# Enable the deprecated imapflags extension in addition to all
+# Enable the vacation-seconds extension in addition to all
 # extensions enabled by default.
-plugin {
-	sieve_extensions = +imapflags
+sieve_extensions {
+  vacation-seconds = yes
 }
 \`\`\``
-	},
-
-	sieve_global: {
-		tags: [ 'sieve' ],
-		plugin: 'sieve',
-		values: setting_types.STRING,
-		text: `
-Location for \`:global\` include scripts for the Sieve include extension.`
 	},
 
 	sieve_global_extensions: {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
 		default: '[[setting,sieve_extensions]]',
-		values: setting_types.STRING,
+		values: setting_types.STRLIST,
 		text: `
 Which Sieve language extensions are **only** available in global scripts.
 
@@ -682,10 +765,10 @@ security concerns.
 This setting has higher precedence than [[setting,sieve_extensions]], meaning
 that the extensions enabled with this setting are never available to the
 user's personal script no matter what is specified for the
-\`sieve_extensions\` setting.
+[[setting,sieve_extensions]] setting.
 
-The syntax of this setting is similar to \`sieve_extensions\`, with the
-difference that extensions are enabled or disabled for exclusive use in
+The syntax of this setting is identical to [[setting,sieve_extensions]], with
+the difference that extensions are enabled or disabled for exclusive use in
 global scripts.
 
 Currently, no extensions are marked as such by default.`
@@ -796,12 +879,11 @@ If set to \`0\`, no limit on the script size is enforced.`
 	sieve_plugins: {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
-		values: setting_types.STRING,
+		values: setting_types.STRLIST,
 		text: `
 The Pigeonhole Sieve interpreter can have plugins of its own.
 
-Using this setting, the used plugins can be specified. Plugin names should
-be space-separated in the setting.
+Using this setting, the used plugins can be specified.
 
 Check [[link,sieve_plugins]] for available plugins.`
 	},
@@ -888,7 +970,7 @@ this setting is not configured. Options are:
 | \`matching\` |  Print all executed commands, performed tests and the values matched in those tests. |`
 	},
 
-	sieve_quota_max_scripts: {
+	sieve_quota_script_count: {
 		tags: [ 'sieve', 'managesieve_quota' ],
 		plugin: 'sieve',
 		default: 0,
@@ -899,7 +981,7 @@ The maximum number of personal Sieve scripts a single user can have.
 Default is \`0\`, which is unlimited.`
 	},
 
-	sieve_quota_max_storage: {
+	sieve_quota_storage_size: {
 		tags: [ 'sieve', 'managesieve_storage' ],
 		plugin: 'sieve',
 		default: 0,
@@ -928,18 +1010,20 @@ This setting is important when there is no message envelope to extract
 addresses from, such as when the script is executed in IMAP.`
 	},
 
-	sieve_user_log: {
+	sieve_user_log_path: {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
 		values: setting_types.STRING,
 		text: `
 The path to the file where the user log file is written.
-a default location is used.
 
-If the main user's personal Sieve (as configured with [[setting,sieve]]
-is a file, the logfile is set to \`<filename>.log\` by default.
+A default location is used if this setting is not explicitly configured:
 
-If it is not a file, the default user log file is \`~/.dovecot.sieve.log\`.`
+* If the main user's personal Sieve script storage (as configured with
+[[setting,sieve_script]] uses the [[link,sieve_storage_file]], the logfile is
+set to \`<filename>.log\` by default.
+
+* If the script is not stored as a file, the default user log file is \`~/.dovecot.sieve.log\`.`
 	},
 
 	sieve_duplicate_default_period: {
@@ -966,7 +1050,7 @@ Maximum period after which tracked values are purged from the duplicate
 tracking database.`
 	},
 
-	sieve_editheader_forbid_add: {
+	sieve_editheader_header_forbid_add: {
 		tags: [ 'sieve', 'sieve-editheader' ],
 		plugin: 'sieve',
 		values: setting_types.STRING,
@@ -979,7 +1063,7 @@ the RFC specification. Therefore, adding this header to this setting has no
 effect.`
 	},
 
-	sieve_editheader_forbid_delete: {
+	sieve_editheader_header_forbid_delete: {
 		tags: [ 'sieve', 'sieve-editheader' ],
 		plugin: 'sieve',
 		values: setting_types.STRING,
@@ -997,30 +1081,14 @@ to this setting has no effect.`
 	sieve_editheader_max_header_size: {
 		tags: [ 'sieve', 'sieve-editheader' ],
 		plugin: 'sieve',
-		default: 2048,
-		values: setting_types.UINT,
+		default: '2k',
+		values: setting_types.SIZE,
 		seealso: [ '[[link,sieve_editheader]]' ],
 		text: `
 The maximum size in bytes of a header field value passed to the addheader
 command.
 
 The minimum value for this setting is \`1024\` bytes.`
-	},
-
-	sieve_editheader_protected: {
-		tags: [ 'sieve', 'sieve-editheader' ],
-		plugin: 'sieve',
-		values: setting_types.STRING,
-		seealso: [ '[[link,sieve_editheader]]' ],
-		text: `
-A space-separated list of headers that cannot be added to or deleted from
-the message header.
-
-This setting is provided for backwards compatibility.
-
-It is a combination of the [[setting,sieve_editheader_forbid_add]] and
-[[setting,sieve_editheader_forbid_delete]] settings. The same limitations
-apply.`
 	},
 
 	sieve_notify_mailto_envelope_from: {
@@ -1056,11 +1124,10 @@ number of scripts involved in the include tree.`
 The maximum nesting depth for the include tree.`
 	},
 
-	sieve_spamtest_max_header: {
+	sieve_spamtest_score_max_header: {
 		tags: [ 'sieve', 'sieve-spamtest' ],
 		plugin: 'sieve',
 		values: setting_types.STRING,
-		default: 10,
 		seealso: [ '[[link,sieve_spamtest]]' ],
 		text: `
 Value format: \`<header-field> [ ":" <regexp> ]\`
@@ -1068,19 +1135,23 @@ Value format: \`<header-field> [ ":" <regexp> ]\`
 Some spam scanners include the maximum score value in one of their status
 headers. Using this setting, this maximum can be extracted from the message
 itself instead of specifying the maximum manually using the setting
-[[setting,sieve_spamtest_max_value]].
+[[setting,sieve_spamtest_score_max_value]].
 
 The syntax is identical to the [[setting,sieve_spamtest_status_header]]
-setting.`
+setting. This setting cannot be used together with
+[[setting,sieve_spamtest_score_max_value]].`
 	},
 
-	sieve_spamtest_max_value: {
+	sieve_spamtest_score_max_value: {
 		tags: [ 'sieve', 'sieve-spamtest' ],
 		plugin: 'sieve',
-		values: setting_types.UINT,
+		values: setting_types.STRING,
 		seealso: [ '[[link,sieve_spamtest]]' ],
 		text: `
-This statically specifies the maximum value a numeric spam score can have.`
+This statically specifies the maximum value a numeric spam score can have. This
+setting cannot be used together with
+[[setting,sieve_spamtest_score_max_header]].
+This setting can specify a fractional score with a decimal point.`
 	},
 
 	sieve_spamtest_status_header: {
@@ -1120,24 +1191,34 @@ execution.`
 This specifies the type of status result that the spam/virus scanner
 produces.
 
-This can either be a numeric score \`(score)\`, a string of identical
-characters \`(strlen)\`, e.g. \`'*******'\`, or a textual description
-\`(text)\`, e.g. \`'Spam'\` or \`'Not Spam'\`.`
+This can either be a numeric score (\`score\`), a string of identical
+characters (\`strlen\`), e.g. \`'*******'\`, or a textual description
+(\`text\`), e.g. \`'Spam'\` or \`'Not Spam'\` (see
+[[setting,sieve_spamtest_text_value]]).`
 	},
 
-	'sieve_spamtest_text_value<X>': {
+	'sieve_spamtest_text_value': {
 		tags: [ 'sieve', 'sieve-spamtest' ],
 		plugin: 'sieve',
-		values: setting_types.STRING,
+		values: setting_types.STRLIST,
 		seealso: [ '[[link,sieve_spamtest]]' ],
 		text: `
 When the [[setting,sieve_spamtest_status_type]] setting is set to
-\`text\`, these settings specify that the spamtest test will match against
-the value \`<X>\` when the specified string is equal to the text (extracted)
-from the status header.
+\`text\`, this setting specifies what values the spamtest test will match
+against to obtain the score value. For each recognized numeric score value this
+string list setting yields the text to match against. Score values between 0
+and 10 are recognized.
 
-For spamtest and spamtestplus, values of X between 0 and 10 are
-recognized, while virustest only uses values between 0 and 5.`,
+Example:
+
+\`\`\`
+sieve_spamtest_status_header = X-Spam-Verdict
+sieve_spamtest_status_type = text
+sieve_spamtest_text_value {
+  1 = Not Spam
+  10 = Spam
+}
+\`\`\``,
 	},
 
 	'sieve_vacation_default_period': {
@@ -1154,18 +1235,18 @@ The configured value must lie between [[setting,sieve_vacation_min_period]]
 and [[setting,sieve_vacation_max_period]].`
 	},
 
-	sieve_vacation_dont_check_recipient: {
+	sieve_vacation_check_recipient: {
 		tags: [ 'sieve', 'sieve-vacation' ],
 		plugin: 'sieve',
-		default: 'no',
+		default: 'yes',
 		values: setting_types.BOOLEAN,
 		seealso: [ '[[link,sieve_vacation]]' ],
 		text: `
-This disables the checks for implicit delivery entirely. This means that
-the vacation command does not verify that the message is explicitly
-addressed at the recipient.
+This setting determines whether the checks for implicit delivery are performed.
+If this is skipped, this means that the vacation command does not verify that
+the message is explicitly addressed at the recipient.
 
-Use this option with caution. Specifying \`yes\` will violate the Sieve
+Use this option with caution. Specifying \`no\` will violate the Sieve
 standards and can cause vacation replies to be sent for messages not
 directly addressed at the recipient.`
 	},
@@ -1173,7 +1254,7 @@ directly addressed at the recipient.`
 	sieve_vacation_max_period: {
 		tags: [ 'sieve', 'sieve-vacation' ],
 		plugin: 'sieve',
-		default: 0,
+		default: "60d",
 		values: setting_types.TIME,
 		seealso: [ '[[link,sieve_vacation]]' ],
 		text: `
@@ -1248,7 +1329,7 @@ option or the LMTP/LDA [[setting,lda_original_recipient_header]] setting to
 make the original SMTP recipient available to Sieve.`
 	},
 
-	sieve_variables_max_scope_size: {
+	sieve_variables_max_scope_count: {
 		tags: [ 'sieve', 'sieve-variables' ],
 		plugin: 'sieve',
 		default: 255,
@@ -1264,7 +1345,7 @@ global scope created by the [[link,sieve_include]].
 The minimum value for this setting is \`128\`.`
 	},
 
-	sieve_variables_max_variable_size: {
+	sieve_variables_max_value_size: {
 		tags: [ 'sieve', 'sieve-variables' ],
 		plugin: 'sieve',
 		default: '4k',
@@ -1278,7 +1359,7 @@ runtime, the value is always truncated to the configured maximum.
 The minimum value for this setting is \`4000 bytes\`.`
 	},
 
-	sieve_virustest_max_header: {
+	sieve_virustest_score_max_header: {
 		tags: [ 'sieve', 'sieve-virustest' ],
 		plugin: 'sieve',
 		values: setting_types.STRING,
@@ -1289,18 +1370,23 @@ Value Format: \`<header-field> [ ":" <regexp> ]\`
 Some spam scanners include the maximum score value in one of their status
 headers. Using this setting, this maximum can be extracted from the message
 itself instead of specifying the maximum manually using the setting
-[[setting,sieve_virustest_max_value]].
+[[setting,sieve_virustest_score_max_value]].
 
-The syntax is identical to [[setting,sieve_virustest_status_header]].`
+The syntax is identical to [[setting,sieve_virustest_status_header]]. This
+setting cannot be used together with
+[[setting,sieve_virustest_score_max_value]].`
 	},
 
-	sieve_virustest_max_value: {
+	sieve_virustest_score_max_value: {
 		tags: [ 'sieve', 'sieve-virustest' ],
 		plugin: 'sieve',
-		values: setting_types.UINT,
+		values: setting_types.STRING,
 		seealso: [ '[[link,sieve_virustest]]' ],
 		text: `
-This statically specifies the maximum value a numeric spam score can have.`
+This statically specifies the maximum value a numeric spam score can have. This
+setting cannot be used together with
+[[setting,sieve_virustest_score_max_header]].
+This setting can specify a fractional score with a decimal point.`
 	},
 
 	sieve_virustest_status_header: {
@@ -1339,112 +1425,63 @@ execution.`
 		text: `
 This specifies the type of status result that the spam/virus scanner produces.
 
-This can either be a numeric score \`(score)\`, a string of identical
-characters \`(strlen)\`, e.g. \`'*******'\`, or a textual description
-\`(text)\`, e.g. \`'Spam'\` or \`'Not Spam'\`.`
+This can either be a numeric score (\`score\`), a string of identical
+characters (\`strlen\`), e.g. \`'*******'\`, or a textual description
+(\`text\`), e.g. \`'Spam'\` or \`'Not Spam'\` (see
+[[setting,sieve_virustest_text_value]]).`
 	},
 
-	'sieve_virustest_text_value<X>': {
+	'sieve_virustest_text_value': {
 		tags: [ 'sieve', 'sieve-virustest' ],
 		plugin: 'sieve',
-		values: setting_types.STRING,
+		values: setting_types.STRLIST,
 		seealso: [ '[[link,sieve_virustest]]' ],
 		text: `
 When the [[setting,sieve_virustest_status_type]] setting is set to
-\`text\`, these settings specify that the spamtest test will match against
-the value \`<X>\` when the specified string is equal to the text (extracted)
-from the status header.
+\`text\`, this setting specifies what values the spamtest test will match
+against to obtain the score value. For each recognized numeric score value this
+string list setting yields the text to match against. Score values between 0
+and 10 are recognized.
 
-For spamtest and spamtestplus, values of X between 0 and 10 are recognized,
-while virustest only uses values between 0 and 5.`
+Example:
+
+\`\`\`
+sieve_virustest_status_header = X-VirusCheck
+sieve_virustest_status_type = text
+sieve_virustest_text_value {
+  1 = Clean
+  2 = Presumed Clean
+  3 = Not sure
+  4 = Almost Certain
+  5 = Definitely
+}
+\`\`\``
 	},
 
 	/* imapsieve plugin */
 
-	'imapsieve_mailbox<XXX>_after': {
+	imapsieve_from: {
 		plugin: 'imap-sieve',
-		values: setting_types.STRING,
-		seealso: [ '[[plugin,sieve-imapsieve]]' ],
-		text: `
-Points to a directory relative to the [[setting,base_dir]] where
-the plugin looks for script service sockets.
-
-The \`XXX\` in this setting is a sequence number, which allows configuring
-multiple associations between Sieve scripts and mailboxes.`
-	},
-
-	'imapsieve_mailbox<XXX>_before': {
-		plugin: 'imap-sieve',
-		values: setting_types.STRING,
-		seealso: [ '[[plugin,sieve-imapsieve]]' ],
-		text: `
-When an IMAP event of interest occurs, this sieve script is executed before
-any user script respectively.
-
-This setting each specify the location of a single sieve script. The
-semantics of this setting is similar to [[setting,sieve_before]]: the
-specified scripts form a sequence together with the user script in which
-the next script is only executed when an (implicit) keep action is
-executed.
-
-The \`XXX\` in this setting is a sequence number, which allows configuring
-multiple associations between Sieve scripts and mailboxes.`
-	},
-
-	'imapsieve_mailbox<XXX>_causes': {
-		plugin: 'imap-sieve',
-		values: setting_types.STRING,
-		values_enum: [ 'APPEND', 'COPY', 'FLAG' ],
+		values: setting_types.NAMED_LIST_FILTER,
 		seealso: [ '[[plugin,sieve-imapsieve]]' ],
 		text: `
 Only execute the administrator Sieve scripts for the mailbox configured
-with [[setting,imapsieve_mailbox\<XXX\>_name]] when one of the listed
-\`IMAPSIEVE\` causes apply.
-
-This has no effect on the user script, which is always executed no matter
-the cause.
-
-The \`XXX\` in this setting is a sequence number, which allows configuring
-multiple associations between Sieve scripts and mailboxes.`
+with [[setting,sieve_script]] and type [[link,sieve_storage_type_before,before]]
+or [[link,sieve_storage_type_after,after]] when the message originates from the
+indicated mailbox. The filter name refers to the [[setting,imapsieve_from_name]]
+setting. Therefore, the contained [[setting,sieve_script]] blocks only apply
+when the source mailbox of the IMAP action match this filter.`
 	},
 
-	'imapsieve_mailbox<XXX>_from': {
+	imapsieve_from_name: {
 		plugin: 'imap-sieve',
-		values: setting_types.STRING,
 		seealso: [ '[[plugin,sieve-imapsieve]]' ],
-		text: `
-Only execute the administrator Sieve scripts for the mailbox configured
-with [[setting,imapsieve_mailbox<XXX>_name]] when the message
-originates from the indicated mailbox.
-
-This setting supports wildcards with a syntax compatible with the \`IMAP
-LIST\` command, meaning that this setting can apply to multiple or even
-all \`("*")\` mailboxes.
-
-The \`XXX\` in this setting is a sequence number, which allows configuring
-multiple associations between Sieve scripts and mailboxes.`
-	},
-
-	'imapsieve_mailbox<XXX>_name': {
-		plugin: 'imap-sieve',
 		values: setting_types.STRING,
-		seealso: [ '[[plugin,sieve-imapsieve]]' ],
 		text: `
-This setting configures the name of a mailbox for which administrator
-scripts are configured.
-
-The \`XXX\` in this setting is a sequence number, which allows configuring
-multiple associations between Sieve scripts and mailboxes.
-
-All \`imapsieve_mailbox<XXX>_*\` settings with matching sequence numbers apply
-to the mailbox named by this setting.
-
-The sequence of configured mailboxes ends at the first missing
-\`imapsieve_mailbox<XXX>_name\` setting.
-
-This setting supports wildcards with a syntax compatible with the \`IMAP
-LIST\` command, meaning that this setting can apply to multiple or even
-all \`("*")\` mailboxes.`
+The name of the source mailbox for IMAPSieve
+[[link,sieve_storage_type_before,before]] or
+[[link,sieve_storage_type_after,after]] scripts. The [[setting,imapsieve_from]]
+filter refers to this setting.`
 	},
 
 	imapsieve_url: {
@@ -1463,67 +1500,143 @@ associate Sieve scripts with mailboxes.
 This has no effect on the administrator-controlled Sieve scripts.
 
 \`\`\`
-plugin {
-  imapsieve_url = sieve://sieve.example.com
-}
+imapsieve_url = sieve://sieve.example.com
 \`\`\``
+	},
+
+	imapsieve_expunge_discarded: {
+		plugin: 'imap-sieve',
+		seealso: [ '[[plugin,sieve-imapsieve]]' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+This setting determines whether de IMAPSieve plugin implicitly also expunges
+messages that were discarded by the executed Sieve script sequence; i.e., Sieve
+yielded no (implicit) keep.`
 	},
 
 	/* sieve_extprograms plugin */
 
-	'sieve_<extension>_socket_dir': {
+	'sieve_pipe_socket_dir': {
 		plugin: 'sieve-extprograms',
 		values: setting_types.STRING,
 		text: `
 Points to a directory relative to the [[setting,base_dir]] where
-the plugin looks for script service sockets.
-
-"&lt;extension&gt;" in the setting name is replaced by either
-\`pipe\`, \`filter\` or \`execute\` depending on which extension is
-being configured.`
+the plugin looks for script service sockets for the \`vnd.dovecot.pipe\`
+extension.`
 	},
 
-	'sieve_<extension>_bin_dir': {
+	'sieve_filter_socket_dir': {
+		plugin: 'sieve-extprograms',
+		values: setting_types.STRING,
+		text: `
+Points to a directory relative to the [[setting,base_dir]] where
+the plugin looks for script service sockets for the \`vnd.dovecot.filter\`
+extension.`
+	},
+
+	'sieve_execute_socket_dir': {
+		plugin: 'sieve-extprograms',
+		values: setting_types.STRING,
+		text: `
+Points to a directory relative to the [[setting,base_dir]] where
+the plugin looks for script service sockets for the \`vnd.dovecot.execute\`
+extension.`
+	},
+
+	'sieve_pipe_bin_dir': {
 		plugin: 'sieve-extprograms',
 		values: setting_types.STRING,
 		text: `
 Points to a directory where the plugin looks for programs (shell
-scripts) to execute directly and pipe messages to.
-
-"&lt;extension&gt;" in the setting name is replaced by either
-\`pipe\`, \`filter\` or \`execute\` depending on which extension is
-being configured.`
+scripts) to execute directly and pipe messages to for the \`vnd.dovecot.pipe\`
+extension.`
 	},
 
-	'sieve_<extension>_exec_timeout': {
+	'sieve_filter_bin_dir': {
+		plugin: 'sieve-extprograms',
+		values: setting_types.STRING,
+		text: `
+Points to a directory where the plugin looks for programs (shell
+scripts) to execute directly and filter messages through for the
+\`vnd.dovecot.filter\` extension.`
+	},
+
+	'sieve_execute_bin_dir': {
+		plugin: 'sieve-extprograms',
+		values: setting_types.STRING,
+		text: `
+Points to a directory where the plugin looks for programs (shell
+scripts) to execute directly for the \`vnd.dovecot.execute\` extension.`
+	},
+
+	'sieve_pipe_exec_timeout': {
 		default: '10s',
 		plugin: 'sieve-extprograms',
 		values: setting_types.TIME,
 		text: `
-Configures the maximum execution time after which the program is
-forcibly terminated.
-
-"&lt;extension&gt;" in the setting name is replaced by either
-\`pipe\`, \`filter\` or \`execute\` depending on which extension is
-being configured.`
+Configures the maximum execution time after which the program run by the
+\`vnd.dovecot.pipe\` extension is forcibly terminated.`
 	},
 
-	'sieve_<extension>_input_eol': {
+	'sieve_filter_exec_timeout': {
+		default: '10s',
+		plugin: 'sieve-extprograms',
+		values: setting_types.TIME,
+		text: `
+Configures the maximum execution time after which the program run by the
+\`vnd.dovecot.filter\` extension is forcibly terminated.`
+	},
+
+	'sieve_execute_exec_timeout': {
+		default: '10s',
+		plugin: 'sieve-extprograms',
+		values: setting_types.TIME,
+		text: `
+Configures the maximum execution time after which the program run by the
+\`vnd.dovecot.execute\` extension is forcibly terminated.`
+	},
+
+	'sieve_pipe_input_eol': {
 		default: 'crlf',
 		plugin: 'sieve-extprograms',
 		values: setting_types.ENUM,
 		values_enum: [ 'crlf', 'lf' ],
 		text: `
 Determines the end-of-line character sequence used for the data piped
-to external programs. The default is currently "crlf", which
-represents a sequence of the carriage return (CR) and line feed (LF)
-characters. This matches the Internet Message Format ([[rfc,5322]]) and
-what Sieve itself uses as a line ending. Set this setting to "lf" to
-use a single LF character instead.
+to external programs run by the \`vnd.dovecot.pipe\` extension. The default is
+currently "crlf", which represents a sequence of the carriage return (CR) and
+line feed (LF) characters. This matches the Internet Message Format
+([[rfc,5322]]) and what Sieve itself uses as a line ending. Set this setting to
+"lf" to use a single LF character instead.`
+	},
 
-"&lt;extension&gt;" in the setting name is replaced by either
-\`pipe\`, \`filter\` or \`execute\` depending on which extension is
-being configured.`
+	'sieve_filter_input_eol': {
+		default: 'crlf',
+		plugin: 'sieve-extprograms',
+		values: setting_types.ENUM,
+		values_enum: [ 'crlf', 'lf' ],
+		text: `
+Determines the end-of-line character sequence used for the data piped
+to external programs run by the \`vnd.dovecot.filter\` extension. The default is
+currently "crlf", which represents a sequence of the carriage return (CR) and
+line feed (LF) characters. This matches the Internet Message Format
+([[rfc,5322]]) and what Sieve itself uses as a line ending. Set this setting to
+"lf" to use a single LF character instead.`
+	},
+
+	'sieve_execute_input_eol': {
+		default: 'crlf',
+		plugin: 'sieve-extprograms',
+		values: setting_types.ENUM,
+		values_enum: [ 'crlf', 'lf' ],
+		text: `
+Determines the end-of-line character sequence used for the data piped
+to external programs run by the \`vnd.dovecot.execute\` extension. The default
+is currently "crlf", which represents a sequence of the carriage return (CR) and
+line feed (LF) characters. This matches the Internet Message Format
+([[rfc,5322]]) and what Sieve itself uses as a line ending. Set this setting to
+"lf" to use a single LF character instead.`
 	},
 
 	/* acl plugin */
@@ -10945,7 +11058,7 @@ If enabled, ignore version mismatches between different Dovecot versions.`
 	},
 
 	ldap_auth_dn: {
-		tags: [ 'auth-ldap', 'dict-ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
 		values: setting_types.STRING,
 		text: `
 Specify the Distinguished Name (the username used to login to the LDAP server).
@@ -10956,14 +11069,14 @@ Example: \`ldap_auth_dn = uid=dov-read,dc=example,dc=com,dc=.\``
 	},
 
 	ldap_auth_dn_password: {
-		tags: [ 'auth-ldap', 'dict-ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
 		values: setting_types.STRING,
 		text: `
 Password for LDAP server. Used if [[setting,ldap_auth_dn]] is specified.`
 	},
 
 	ldap_auth_sasl_authz_id: {
-		tags: [ 'auth-ldap' ],
+		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
 		values: setting_types.STRING,
 		text: `
 SASL authorization ID, ie. the [[setting,ldap_auth_dn_password]] is for this "master user", but the
@@ -10971,21 +11084,21 @@ SASL authorization ID, ie. the [[setting,ldap_auth_dn_password]] is for this "ma
 	},
 
 	ldap_auth_sasl_mechanisms: {
-		tags: [ 'auth-ldap' ],
+		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
 		values: setting_types.BOOLLIST,
 		text: `
 List of SASL mechanism names to use.`
 	},
 
 	ldap_auth_sasl_realm: {
-		tags: [ 'auth-ldap' ],
+		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
 		values: setting_types.STRING,
 		text: `
 SASL realm to use.`
 	},
 
 	ldap_base: {
-		tags: [ 'auth-ldap', 'dict-ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
 		values: setting_types.STRING,
 		text: `
 LDAP base.
@@ -11005,7 +11118,7 @@ and as such share the connections.`
 	},
 
 	ldap_debug_level: {
-		tags: [ 'auth-ldap', 'dict-ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
 		default: '0',
 		values: setting_types.UINT,
 		text: `
@@ -11017,7 +11130,7 @@ You may need to recompile OpenLDAP with debugging enabled to get enough output.`
 	},
 
 	ldap_deref: {
-		tags: [ 'auth-ldap' ],
+		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
 		default: 'never',
 		values: setting_types.ENUM,
 		values_enum: [ 'never', 'searching', 'finding', 'always' ],
@@ -11042,7 +11155,7 @@ Disconnect from LDAP server after connection has been idle for this many seconds
 	},
 
 	ldap_scope: {
-		tags: [ 'auth-ldap', 'dict-ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
 		default: 'subtree',
 		values: setting_types.ENUM,
 		values_enum: [ 'base', 'onelevel', 'subtree' ],
@@ -11052,7 +11165,7 @@ This specifies the search scope.`
 
 
 	ldap_starttls: {
-		tags: [ 'auth-ldap', 'dict-ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
 		default: 'no',
 		values: setting_types.BOOLEAN,
 		text: `
@@ -11060,7 +11173,7 @@ Set to \`yes\` to use TLS to connect to the LDAP server.`
 	},
 
 	ldap_uris: {
-		tags: [ 'auth-ldap', 'dict-ldap' ],
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
 		values: setting_types.STRING,
 		text: `
 LDAP URIs to use.
@@ -11074,7 +11187,7 @@ Example: \`ldap_uris = ldaps://secure.domain.org\``
 	},
 
 	ldap_version: {
-		tags: [ 'auth-ldap' ],
+		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
 		default: '3',
 		values: setting_types.UINT,
 		text: `
