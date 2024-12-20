@@ -62,13 +62,46 @@ using the [[setting,imapsieve_url]] setting. This URL points to the
 scripts. This URL will be shown to the client in the IMAP CAPABILITY
 response as `IMAPSIEVE=<URL>`.
 
+User scripts are retrieved from the user's
+[[link,sieve_storage_type_personal,personal]] storage by name ([[rfc,6785]]),
+which requires no additional configuration.
+
+Script storages for administrator scripts are defined in
+[[setting,sieve_script]] blocks with [[setting,sieve_script_type]]
+[[link,sieve_storage_type_before,before]] or
+[[link,sieve_storage_type_after,after]]. These execute administrator scripts
+before or after the user's personal script, respectively. The
+[[setting,sieve_script_cause]] setting for the administrator storages used by
+the `imap_sieve` plugin must include the cause of the IMAP event ([[rfc,6785]]):
+either `append`, `copy`, or `flag`. The [[setting,sieve_script_cause]] setting
+can list several causes together, including the default `delivery`, which in
+that case means that those administrator scripts are also executed at delivery.
+
+The applicability of administrator scripts can be limited to a destination
+mailbox by placing the corresponding [[setting,sieve_script]] blocks inside
+a [[setting,mailbox]] block for that mailbox. For a source mailbox, limiting the
+applicability of administrator scripts can similarly be achieved by placing the
+corresponding [[setting,sieve_script]] blocks inside a
+[[setting,imapsieve_from]] block with that mailbox name. The [[setting,mailbox]]
+and [[setting,imapsieve_from]] blocks can be nested when both are required.
+
+The `imap_sieve` plugin defines an additional
+[[link,sieve_storage_type,script storage type]] called `copy-source-after`.
+Administrator scripts in such storages only apply when the cause is `copy` and
+are executed for the message in the source mailbox after the Sieve scripts for
+the corresponding message in the destination mailbox successfully finish
+executing. This does not apply to moved messages, since the message is removed
+from the source mailbox in that case.
+
 ### sieve-imapsieve
 
 The Sieve plugin is activated by adding it to the [[setting,sieve_plugins]]
 setting:
 
 ```[dovecot.conf]
-sieve_plugins = sieve_imapsieve
+sieve_plugins {
+  sieve_imapsieve = yes
+}
 ```
 
 This plugin registers the `imapsieve` extension with the Sieve
