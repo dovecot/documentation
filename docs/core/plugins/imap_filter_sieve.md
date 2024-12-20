@@ -53,5 +53,7 @@ stored scripts.
 This plugin uses the normal configuration settings used by the [[link,lda]]
 Sieve plugin at delivery.
 
-The [[setting,sieve_before]] and [[setting,sieve_after]] scripts
-are currently ignored by this plugin.
+The [[link,sieve_storage_type_before,before]],
+[[link,sieve_storage_type_after,after]] and
+[[link,sieve_storage_type_discard,discard]] Sieve script storage types are
+currently ignored by this plugin.
