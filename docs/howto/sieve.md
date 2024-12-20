@@ -317,18 +317,23 @@ include :personal "my-own-spam";
 The lookup directories can be specified with:
 
 ```[dovecot.conf]
-plugin {
+sieve_script personal {
+  type = personal
   # Directory where the sieve include plugin retrieves :personal scripts from.
-  sieve = file:~/sieve;active=~/.dovecot.sieve
+  path = ~/sieve
+  active_path = ~/.dovecot.sieve
+}
 
-  # Directory for :global include scripts (not to be confused with
-  # sieve_default).
-  # If unset, the include fails.
-  sieve_global = /etc/dovecot/sieve/
+# Storage for :global include scripts. If no type=global storage is configured,
+# any :global include fails.
+sieve_script global1 {
+  type = global
+  path = /etc/dovecot/sieve/
 }
 ```
 
-Both [[setting,sieve]] and [[setting,sieve_global]] may also be
+Settings for both [[link,sieve_storage_type_personal,personal]] and
+[[link,sieve_storage_type_global,global]] Sieve script storage types may also be
 overridden by [[link,userdb_extra_fields]].
 
 It's not currently possible to use subdirectories for the scripts.

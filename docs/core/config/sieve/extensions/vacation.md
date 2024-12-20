@@ -33,11 +33,6 @@ period of less than a day.
 
 ### Settings
 
-::: warning
-Invalid values for these settings will make the Sieve interpreter
-log a warning and revert to the default values.
-:::
-
 <SettingsComponent tag="sieve-vacation" level="3" />
 
 ### Auto-Reply
@@ -100,17 +95,17 @@ The automatic replies aren't sent if any of the following is true:
 ### Example
 
 ```[dovecot.conf]
-plugin {
-  # Use vacation-seconds
-  sieve_extensions = +vacation-seconds
-
-  # One hour at minimum
-  sieve_vacation_min_period = 1h
-
-  # Ten days default
-  sieve_vacation_default_period = 10d
-
-  # Thirty days at maximum
-  sieve_vacation_max_period = 30d
+# Use vacation-seconds
+sieve_extensions {
+  vacation-seconds = yes
 }
+
+# One hour at minimum
+sieve_vacation_min_period = 1h
+
+# Ten days default
+sieve_vacation_default_period = 10d
+
+# Thirty days at maximum
+sieve_vacation_max_period = 30d
 ```
