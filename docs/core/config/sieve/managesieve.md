@@ -65,16 +65,12 @@ accepts a few more. The following settings can be configured in the
 ### Sieve Interpreter Configuration
 
 The part of the [[link,sieve]] configuration that is relevant
-for ManageSieve mainly consists of the settings that specify where the
-user's scripts are stored and where the active script is located.
-
-The ManageSieve service primarily uses the following Sieve interpreter
-setting in the `plugin` section of the Dovecot configuration:
-
-[[setting,sieve,file:~/sieve;active=~/.dovecot.sieve]]
-
-This specifies the [[link,sieve_location]] where the scripts that are
-uploaded through ManageSieve are stored.
+for ManageSieve mainly consists of the configuration of the
+[[link,sieve_storage_type_personal,personal]] Sieve script storage type.
+Currently, only the [[link,sieve_storage_file,file driver]] Sieve script
+storage driver supports the management functions needed by Managesieve. For
+ManageSieve, the configuration of [[setting,sieve_script_active_path]] is
+required.
 
 ### Quota Support
 
@@ -165,10 +161,10 @@ protocol sieve {
   #managesieve_max_compile_errors = 5
 }
 
-
-plugin {
-  # Used by both the Sieve plugin and the ManageSieve protocol
-  sieve = file:~/sieve;active=~/.dovecot.sieve
+# Used by both the Sieve plugin and the ManageSieve protocol
+sieve_script personal {
+  path = ~/sieve
+  active_path = ~/.dovecot.sieve
 }
 ```
 

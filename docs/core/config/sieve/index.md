@@ -36,7 +36,8 @@ about the extensions from the Sieve Mail Filtering Language Charter
 or the [Sieve.info wiki page](http://sieve.info/).
 
 ::: info
-Sieve doesn't support running external programs.
+Standard Sieve does not support running external programs. However, Dovecot
+provides non-standard extensions that provide limited support for doing that.
 :::
 
 ### Extensions
@@ -188,22 +189,31 @@ global scripts using the `sievec` command line tool. For example:
 sievec /var/lib/dovecot/sieve/global/
 ```
 
-This is necessary for scripts listed in [[setting,sieve_global]],
-[[setting,sieve_before]], and [[setting,sieve_after]] settings.
+This is necessary for script in storages with
+[[link,sieve_storage_type_after,after]],
+[[link,sieve_storage_type_before,before]],
+[[link,sieve_storage_type_default,default]], and
+[[link,sieve_storage_type_global,global]] storage type.
 
 For global scripts that are only included in other scripts using the Sieve
-include extension, this step is not necessary since included scripts
-are incorporated into the binary produced for the main script.
+include extension (from the [[link,sieve_storage_type_personal,personal]] and
+[[link,sieve_storage_type_global,global]] storage types), this step is
+not necessary since included scripts are incorporated into the binary produced
+for the main script.
 
 ## Compile and Runtime Logging
 
 Log messages produced during script compilation or during script
 execution are written to two locations by the LDA Sieve plugin:
 
-- A log file is written in the same directory as the user's main
-  private script (as specified by [[setting,sieve]]). This
-  log file bears the name of that script file appended with ".log", e.g.
-  `.dovecot.sieve.log`.
+- If the user's personal storage is using the
+  [[link,sieve_storage_file,file driver]], a log file is written in the same
+  directory as the user's active personal script as defined by
+  [[setting,sieve_script_active_path]]. This log file bears the name
+  of that script file appended with ".log", e.g. `.dovecot.sieve.log`.
+  Alternatively, e.g. when using another storage driver,
+  [[setting,sieve_user_log_path]] can be used to configure the log file
+  explicitly.
 
   If there are errors or warnings in the script, the messages are appended
   to that log file until it eventually grows too large (>10 kB currently).
@@ -213,7 +223,7 @@ execution are written to two locations by the LDA Sieve plugin:
   Informational messages are not written to this log file and the log
   file is not created until messages are actually logged, i.e. when an
   error or warning is produced. The log file name can be overridden with
-  [[setting,sieve_user_log]].
+  [[setting,sieve_user_log_path]].
 
 - Messages that could be of interest to the system administrator are
   also written to the Dovecot logging facility (usually syslog). This
