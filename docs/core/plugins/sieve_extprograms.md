@@ -50,10 +50,9 @@ and the directly executed binaries. The socket directory is searched
 first. Since the use of "/" in program names is prohibited, it is not
 possible to build a hierarchical structure.
 
-Directly forked programs are executed with a limited set of environment
-variables: `HOME`, `USER`, `SENDER`, `RECIPIENT`, and `ORIG_RECIPIENT`.
-Programs executed through the script-pipe socket service currently have
-no environment set at all.
+Programs are executed with a limited set of environment variables: `HOME`,
+`USER`, `SENDER`, `RECIPIENT`, and `ORIG_RECIPIENT`. The
+[[setting,import_environment]] setting does not apply here.
 
 If a shell script is expected to read a message or string data, it must
 fully read the provided input until the data ends with EOF, otherwise
