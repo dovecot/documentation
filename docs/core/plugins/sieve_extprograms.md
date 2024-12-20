@@ -22,7 +22,9 @@ The plugin is activated by adding it to the [[setting,sieve_plugins]]
 setting:
 
 ```
-sieve_plugins = sieve_extprograms
+sieve_plugins {
+  sieve_extprograms = yes
+}
 ```
 
 This plugin registers the `vnd.dovecot.pipe`, `vnd.dovecot.filter`,
@@ -81,18 +83,23 @@ for detailed information on how to use the new language extensions.
 ### Socket Service for "pipe" and "execute"
 
 ```
-plugin {
-  sieve = ~/.dovecot.sieve
-
-  sieve_plugins = sieve_extprograms
-  sieve_global_extensions = +vnd.dovecot.pipe +vnd.dovecot.execute
-
-  # pipe sockets in /var/run/dovecot/sieve-pipe
-  sieve_pipe_socket_dir = sieve-pipe
-
-  # execute sockets in /var/run/dovecot/sieve-execute
-  sieve_execute_socket_dir = sieve-execute
+sieve_script personal {
+  path = ~/.dovecot.sieve
 }
+
+sieve_plugins {
+  sieve_extprograms = yes
+}
+sieve_global_extensions {
+  vnd.dovecot.pipe = yes
+  vnd.dovecot.execute = yes
+}
+
+# pipe sockets in /var/run/dovecot/sieve-pipe
+sieve_pipe_socket_dir = sieve-pipe
+
+# execute sockets in /var/run/dovecot/sieve-execute
+sieve_execute_socket_dir = sieve-execute
 
 service sieve-pipe-script {
   # This script is executed for each service connection
@@ -122,19 +129,24 @@ service sieve-execute-action {
 ### Direct Execution for "pipe" and "filter"
 
 ```
-plugin {
-  sieve = ~/.dovecot.sieve
-
-  sieve_plugins = sieve_extprograms
-  sieve_global_extensions = +vnd.dovecot.pipe +vnd.dovecot.filter
-
-  # This directory contains the scripts that are available for the pipe command.
-  sieve_pipe_bin_dir = /usr/lib/dovecot/sieve-pipe
-
-  # This directory contains the scripts that are available for the filter
-  # command.
-  sieve_filter_bin_dir = /usr/lib/dovecot/sieve-filter
+sieve_script personal {
+  path = ~/.dovecot.sieve
 }
+
+sieve_plugins {
+  sieve_extprograms = yes
+}
+sieve_global_extensions {
+  vnd.dovecot.pipe = yes
+  vnd.dovecot.filter = yes
+}
+
+# This directory contains the scripts that are available for the pipe command.
+sieve_pipe_bin_dir = /usr/lib/dovecot/sieve-pipe
+
+# This directory contains the scripts that are available for the filter
+# command.
+sieve_filter_bin_dir = /usr/lib/dovecot/sieve-filter
 ```
 
 ### Test Incoming Message
@@ -144,12 +156,13 @@ to perform some sort of test on the incoming message.
 
 ::: code-group
 ```[dovecot.conf]
-plugin {
-  sieve_extensions = +vnd.dovecot.execute
-
-  sieve_plugins = sieve_extprograms
-  sieve_execute_bin_dir = /usr/lib/dovecot/sieve-execute
+sieve_extensions {
+  vnd.dovecot.execute = yes
 }
+sieve_plugins {
+  sieve_extprograms = yes
+}
+sieve_execute_bin_dir = /usr/lib/dovecot/sieve-execute
 ```
 
 ```[Sieve Script]
@@ -180,7 +193,7 @@ executable script `hasfrop.sh`.
 
 In this example, the `hasfrop.sh` checks whether the message contains
 the literal text "FROP" anywhere in the message. The Sieve script shown
-above discards the message if this scripts ends with an exit code other
+above discards the message if this script ends with an exit code other
 than 0, which happens when "FROP" was found.
 
 ### Query/Update MySQL
@@ -194,12 +207,13 @@ Note that this particular use case could also be implemented using the Sieve
 
 ::: code-group
 ```[dovecot.conf]
-plugin {
-  sieve_extensions = +vnd.dovecot.execute
-
-  sieve_plugins = sieve_extprograms
-  sieve_execute_bin_dir = /usr/lib/dovecot/sieve-execute
+sieve_extensions {
+  vnd.dovecot.execute = yes
 }
+sieve_plugins {
+  sieve_extprograms = yes
+}
+sieve_execute_bin_dir = /usr/lib/dovecot/sieve-execute
 ```
 
 ```[Sieve Script]

@@ -5,12 +5,42 @@ dovecotlinks:
   sieve_configuration:
     hash: configuration
     text: Sieve configuration
-  sieve_file:
-    hash: file
-    text: Sieve file storage location
-  sieve_location:
-    hash: script-locations
-    text: Sieve script locations
+  sieve_storage:
+    hash: script-storage
+    text: Script storage
+  sieve_storage_type:
+    hash: script-storage-types
+    text: Script storage types
+  sieve_storage_type_personal:
+    hash: script-storage-type-personal
+    text: Script storage type `personal`
+  sieve_storage_type_after:
+    hash: script-storage-type-after
+    text: Script storage type `after`
+  sieve_storage_type_before:
+    hash: script-storage-type-before
+    text: Script storage type `before`
+  sieve_storage_type_default:
+    hash: script-storage-type-default
+    text: Script storage type `default`
+  sieve_storage_type_discard:
+    hash: script-storage-type-discard
+    text: Script storage type `discard`
+  sieve_storage_type_global:
+    hash: script-storage-type-global
+    text: Script storage type `global`
+  sieve_storage_driver:
+    hash: script-storage-drivers
+    text: Script storage drivers
+  sieve_storage_file:
+    hash: file-storage-driver
+    text: File storage driver
+  sieve_storage_dict:
+    hash: dict-storage-driver
+    text: Dict storage driver
+  sieve_storage_ldap:
+    hash: ldap-storage-driver
+    text: LDAP storage driver
   sieve_multiscript:
     hash: executing-multiple-scripts-sequentially
     text: executing multiple Sieve scripts sequentially
@@ -46,128 +76,209 @@ protocol lmtp {
 }
 ```
 
-## Script Locations
+## Script storage
 
-The Sieve interpreter can retrieve Sieve scripts from several types of
-locations.
+Sieve scripts are retrieved from a script storage. This can currently be the
+local filesystem, an LDAP database or any dict storage. Depending on the storage
+implementation, its type and its configuration, storages can contain one script,
+several scripts identified by name, and a series of scripts in a well-defined
+order to be executed in sequence.
 
-The default [file](#file) location type is a directory containing
-one or more Sieve script files with a symlink pointing to the active
-one.
-
-More complex setups can use other location types such as [LDAP](#ldap) or
-[dict](#dict) to fetch Sieve scripts from remote databases.
-
-All settings that specify the location of one or more Sieve scripts
-accept the following syntax:
+Script storages are configured in a named [[setting,sieve_script]] block:
 
 ```
-<setting> = [<type>:]path[;<option>[=<value>][;...]]
+sieve_script personal {
+  path = ~/.dovecot.sieve
+}
 ```
 
-If `<type>` is omitted, the script location type is `file` and the location
-is interpreted as a local filesystem path pointing to a Sieve script file
-or directory.
+The storage name (`personal` in the example) is used internally within
+configurations, as an identifier for logging, and as an identifier for command
+line tools. It also allows updating a storage that was defined earlier - by
+repeating the [[setting,sieve_script]] block and adding additional configuration
+settings - or it allows userdb to override storage settings for specific users.
 
-### Common Settings
+### Script storage types
 
-All location types support the following settings:
+Sieve scripts can be evaluated at various stages in message delivery and for
+stored messages. The type of the Sieve script storage determines where it is
+applicable, how the storage is accessed and how the retrieved Sieve script is
+evaluated.
 
-#### `name=<script-name>`
+The type of the Sieve script storage is configured using the
+[[setting,sieve_script_type]] setting. The following types are currently
+recognized (others are defined by the [[plugin,sieve-imapsieve]] plugin):
 
-Set the name of the Sieve script that this location points to. If the
-name of the Sieve script is not contained in the location path and
-the location of a single script is specified, this option is required
-(e.g. for dict locations that must point to a particular script).
+#### `personal` {#script-storage-type-personal}
 
-If the name of the script is contained in the location path, the
-value of the name option overrides the name retrieved from the
-location. If the Sieve interpreter explicitly queries for a specific
-name (e.g. to let the Sieve [[link,sieve_include]] retrieve a script from
-the [[setting,sieve_global]]), this option has no effect.
+The `personal` storage serves as the user's main personal storage. Although more
+than a single `personal` storage can be defined, only the first one listed in
+the configuration is used. 
 
-#### `bindir=<dirpath>`
+The LDA Sieve plugin uses the personal storage to find the active script for
+Sieve filtering at delivery. If the storage supports storing more than a single
+script (e.g. the [[link,sieve_storage_file,file storage]] does), personal
+scripts can also be retrieved by name. The Sieve include extension will then use
+this  storage for retrieving `:personal` scripts and the ManageSieve service
+will be able to store the user's scripts there.
 
-Points to the directory where the compiled binaries for this script
-location are stored. This directory is created automatically if
-possible.
+If the storage supports storing more than a single script, only one of those
+scripts will be the active script used at delivery. The active script can be
+managed by the user through the ManageSieve service. If the personal storage has
+no active script, the [[link,sieve_storage_type_default,default script]] will be
+executed if configured.
 
-If this option is omitted, the behavior depends on the location type.
+If no personal storage is defined explicitly, auto-detection will be attempted.
+This is currently only trying the
+[[link,sieve_storage_file,file storage driver], which looks for a
+`~/.dovecot.sieve` script file or a directory at `~/sieve/` containing script
+files. In the latter case `~/.dovecot.sieve` is expected to be a symbolic link
+pointing to the active script file. If auto-detection also finds no personal
+storage, Sieve processing will be skipped and no default script is executed.
 
-Don't specify the same directory for different script locations, as this
-will result in undefined behavior. Multiple mail users can share a single
-script directory if the script location is the same and all users share
-the same system credentials (uid, gid).
+#### `after` {#script-storage-type-after}
 
-### File
+An `after` storage is the source of one script or several scripts that are to be
+executed after the user's personal script. If the storage supports storing more
+than a single script, these scripts will be executed in a well-defined order
+defined by the storage driver. Multiple `after` storages can be configured and
+each storage will be accessed in sequence to retrieve scripts for execution
+after the personal script. The storages will be accessed in the order these
+storages are defined in the configuration, unless the order is overridden by the
+[[setting,sieve_script_precedence]] setting.
 
-The `file` location is used to retrieve Sieve scripts from the file system.
-This is the default type if the type specifier is omitted from the location
-specification.
+This is usually a global script, so be sure to pre-compile the specified
+script manually in that case using the sievec command line tool, as
+explained by [[man,sievec]].`
 
-The location can either point to a directory or to a regular file. If the
-location points to a directory, a script called `name` is retrieved by
-reading a file from that directory with the file name `name.sieve`.
+#### `before` {#script-storage-type-before}
 
-When this location type is involved in a [[setting,sieve_before]] or
-[[setting,sieve_after]] script sequence, and the location points to a
-directory, all files in that directory with a `.sieve` extension are part of
-the sequence. The sequence order of the scripts in that directory is
-determined by the file names, using a normal 8bit per-character
-comparison.
+A `before` storage behaves identical to an `after` storage, except the contained
+script or scripts are run **before** user's personal script (instead of
+**after**).
 
-Unless overridden using the `;bindir=<path>` location option, compiled
-binaries for scripts retrieved from the `file` location type are by
+#### `default` {#script-storage-type-default}
+
+The `default` storage yields the sieve script that gets executed **only** if
+the user's personal Sieve script does not exist. Although more
+than a single `default` storage can be defined, only the first one listed in
+the configuration is used. 
+
+If [[setting,sieve_script_name]] is set for this script storage, the default
+script can be seen and accessed by this name through ManageSieve (and
+doveadm sieve). See below ([[link,sieve_visible_default_script]]).
+
+This is usually a global script, so be sure to pre-compile the specified
+script manually in that case using the sievec command line tool, as
+explained by [[man,sievec]].`
+
+#### `discard` {#script-storage-type-discard}
+
+The `discard` storage yields the sieve script that gets executed for any message
+that is about to be discarded; i.e., it is not delivered anywhere by the normal
+Sieve execution. Although more than a single `discard` storage can be defined,
+only the first one listed in the configuration is used. The `discard` storage
+is currently only applicable for message delivery.
+
+The script from the `discard` storage is only executed when the "implicit keep"
+is canceled, by e.g. the "discard" action, and no actions that deliver the
+message are executed. Delivery in this case means both local delivery to a
+mailbox and redirection to a remote recipient. This "discard script" can prevent
+discarding the message, by executing alternative actions. If the discard
+script does nothing, the message is still discarded as it would be when no
+discard script is configured.
+
+#### `global` {#script-storage-type-global}
+
+A `global` storage is the source of `:global` include scripts for the Sieve
+include extension. Scripts are accessed by name, so if the storage yields only
+one script, a name must be defined for it; either implicitly by the storage
+driver or explicitly using [[setting,sieve_script_name]]. Multiple `global`
+storages can be configured and each storage will be queried in sequence to
+retrieve the requested script by name. The storages will be queried in the order
+these storages are defined in the configuration until the script is found. The
+order can be overridden by the [[setting,sieve_script_precedence]] setting.
+
+### Script storage drivers
+
+Sieve script storages are implemented as a storage driver. The default
+[file](#sieve_storage_file) storage driver uses the local filesystem. It can use
+a single script file or a directory containing several Sieve script files with a
+symbolic link pointing to the active script.
+
+More complex setups can use other storage drivers such as
+[ldap](#sieve_storage_ldap) or [dict](#sieve_storage_dict) to fetch Sieve
+scripts from LDAP databases or dict storages, respectively.
+
+The storage driver is configured using the [[setting,sieve_script_driver]]
+setting. If not explicitly configured for a [[setting,sieve_script]] block, the
+storage driver is [[link,sieve_storage_file,file]] and the default directory is
+`~/sieve/` with a symbolic link at `~/.dovecot.sieve` pointing to the active
+script file in that directory.
+
+#### Common Settings
+
+All Sieve script storages support the following common settings:
+
+<SettingsComponent tag="sieve-storage" />
+
+### File storage driver
+
+The `file` script storage driver is used to retrieve Sieve scripts from the file
+system. This is the default type if the [[setting,sieve_script_driver]] setting
+is omitted.
+
+The path configured using the [[setting,sieve_script_path]] setting can either
+point to a directory or to a regular file. If the path points to a directory, a
+script called `name` is retrieved by reading a file from that directory with the
+file name `name.sieve`.
+
+When a script storage with type [[link,sieve_storage_type_personal,personal]] is
+using the `file` driver and the[[setting,sieve_script_path]] points to a
+directory, a symbolic link points to the currently active script (the script
+executed at delivery). The active script can be modified by the user through
+ManageSieve and by the administrator using [[doveadm,sieve activate]]. The
+location of this symbolic link can be configured using the
+[[setting,sieve_script_active_path]] setting.
+
+When a script storage with type [[link,sieve_storage_type_before,before]] or
+[[link,sieve_storage_type_after,after]] is using the `file` driver
+and [[setting,sieve_script_path]] points to a directory, all files in that
+directory with a `.sieve` extension are part of the sequence. The sequence order
+of the scripts in that directory is determined by the file names, using a normal
+8-bit per-octet comparison.
+
+Unless overridden using the [[setting,sieve_script_bin_path]] setting, compiled
+binaries for scripts retrieved from a `file` script storage are by
 default stored in the same directory as where the script file was found
 if possible.
 
 #### Configuration
 
-The script location syntax is specified as follows:
+The `file` storage driver supports all settings described in
+[Common Settings](#common-settings). Additionally, the following settings apply
+to this driver:
+
+<SettingsComponent tag="sieve-storage-file" />
+
+#### Example
 
 ```
-location = file:<path>[;<option>[=<value>][;...]]
-```
+sieve_script personal {
+  driver = file
+  path = ~/sieve
+  active_path = ~/.dovecot.sieve
+}
 
-The location `<path>` is a file system path pointing to a directory
-containing one or more script files with names structured as
-`<script-name>.sieve` with the active option (default `~/.dovecot.sieve`)
-specifying a symlink to the one that will be used, or without the active
-option specified, it may be a script file instead of a directory.
-
-##### Settings
-
-This location supports all settings described in
-[Common Settings](#common-settings).
-
-##### `bindir`
-
-If the `bindir` setting is omitted, the binary is stored in the same
-directory as where the script file was found, if possible
-
-###### `active=<path>`
-
-When [[link,managesieve_server]] is used, one script in the storage can
-be active; i.e., evaluated at delivery.
-
-For the `file` location type, the active script in the storage directory
-is pointed to by a symbolic link.
-
-This option configures where this symbolic link is located. If the `file`
-location path points to a regular file, this setting has no effect
-(and ManageSieve cannot be used).
-
-##### Example
-
-```
-plugin {
-   ...
-   sieve = file:~/sieve;active=~/.dovecot.sieve
-   sieve_default = file:/var/lib/dovecot/;name=default
+sieve_script default {
+  type = default
+  name = default
+  driver = file
+  path = /etc/dovecot/sieve/default/
 }
 ```
 
-### Dict
+### Dict storage driver
 
 To retrieve a Sieve script from a [[link,dict]] database, two lookups are
 performed.
@@ -194,34 +305,36 @@ binary containing the updated data ID.
 
 #### Configuration
 
-The script location syntax is specified as follows:
-
-```
-sieve = dict:<dict-uri>[;<option>[=<value>][;...]]
-```
-The `<dict-uri>` path is a Dovecot dict uri.
-
-If the name of the Script is left unspecified and is not otherwise
-provided by the Sieve interpreter, the name defaults to `default`.
-
-##### Settings
-
-This location supports all settings described in
+The `dict` storage driver supports all settings described in
 [Common Settings](#common-settings).
 
-##### `bindir`
+##### `sieve_script_name`
+
+If the name of the Script is left unspecified and not otherwise provided by the
+Sieve interpreter, the name defaults to `default`.
+
+##### `sieve_script_bin_path`
 
 By default, compiled binaries are not stored at all for Sieve
 scripts retrieved from a dict database. Thus, the Sieve binaries will be
 compiled each time they are called.
 
-To improve performance, this setting should be specified to cache the
-compiled binaries on the local filesystem. For Example:
+To improve performance, [[setting,sieve_script_bin_path]] should be specified to
+cache the compiled binaries on the local filesystem. For Example:
 
 ```[dovecot.conf]
-sieve = dict:file:/etc/dovecot/sieve.dict;name=keep;bindir=~/.sieve-bin
-# or
-#sieve = dict:file:/etc/dovecot/sieve.dict;name=keep;bindir=/var/sieve-scripts/%{user}
+sieve_script personal {
+  driver = dict
+  name = keep
+
+  bin_path = ~/.sieve-bin
+  # or
+  #bin_path=/var/sieve-scripts/%{user}
+
+  dict file {
+    path = /etc/dovecot/sieve.dict
+  }
+}
 ```
 
 ::: tip
@@ -230,14 +343,9 @@ need to compile. Therefore, if a script is changed, then its ID must
 also be changed for it to be reloaded.
 :::
 
-##### `user=<username>`
+#### Examples
 
-Overrides the user name used for the dict lookup. Normally, the name
-of the user running the Sieve interpreter is used.
-
-##### Examples
-
-###### Flat File Driver
+##### Flat File Driver
 
 To retrieve the Sieve script named "keep" from the dict file
 /etc/dovecot/sieve.dict:
@@ -245,7 +353,13 @@ To retrieve the Sieve script named "keep" from the dict file
 ::: code-group
 ```[dovecot.conf]
 # Only the "keep" script will be used.
-sieve = dict:file:/etc/dovecot/sieve.dict;name=keep
+sieve_script personal {
+  driver = dict
+  name = keep
+  dict file {
+    path = /etc/dovecot/sieve.dict
+  }
+}
 ```
 
 ```[/etc/dovecot/sieve.dict]
@@ -274,7 +388,7 @@ require ["enotify", "variables"]; if header :matches "From" "*" { set "from" "${
 ```
 :::
 
-###### Using a SQL Driver
+##### Using a SQL Driver
 
 For greater flexibility, it's possible to use a SQL driver for your
 dict scripts.
@@ -350,8 +464,12 @@ dict_server {
 }
 
 # dict lookup
-plugin {
-  sieve = dict:proxy::sieve;name=active
+sieve_script personal {
+  driver = dict
+  name = active
+  dict proxy {
+    name = sieve
+  }
 }
 ```
 :::
@@ -363,11 +481,11 @@ script all in one line, otherwise the subsequent lines will be ignored.
 You might need to configure the [[link,dict_proxy,dict proxy permissions]].
 :::
 
-### LDAP
+### LDAP storage driver
 
-The `ldap` location is used to retrieve Sieve scripts from an LDAP database.
-To retrieve a Sieve script from the LDAP database, at most two lookups are
-performed.
+The `ldap` storage driver is used to retrieve Sieve scripts from an LDAP
+database. To retrieve a Sieve script from the LDAP database, at most two lookups
+are performed.
 
 First, the LDAP entry containing the Sieve script is searched using the
 specified LDAP search filter. If the LDAP entry changed since it was
@@ -383,153 +501,100 @@ when a plugin called `sieve_storage_ldap` is loaded.
 
 #### Configuration
 
-If support for the `ldap` location type is compiled as a plugin, it
-needs to be added to the sieve_plugins setting before it can be used,
-e.g.:
+The `ldap` storage driver supports all settings described in
+[Common Settings](#common-settings). The following settings apply to this script
+storage driver:
 
-```
-sieve_plugins = sieve_storage_ldap
-```
+<SettingsComponent tag="sieve-storage-ldap" />
 
-The `ldap` script location syntax is specified as follows:
+##### `sieve_script_name`
 
-```
-location = ldap:<config-file>[;<option>[=<value>][;...]]
-```
+If the name of the Script is left unspecified and not otherwise provided by the
+Sieve interpreter, the name defaults to `default`.
 
-`<config-file>` is a filesystem path that points to a configuration file
-containing the actual configuration for this `ldap` script location.
+##### `sieve_script_bin_path`
 
-If the name of the Script is left unspecified and not otherwise provided
-by the Sieve interpreter, the name defaults to `default`.
+By default, compiled binaries are not stored at all for Sieve scripts retrieved
+from LDAP. Thus, the Sieve binaries will be compiled each time they are called.
 
-##### Settings
-
-This location supports all settings described in
-[Common Settings](#common-settings).
-
-##### `bindir`
-
-By default, compiled binaries are not stored at all for Sieve
-scripts retrieved from LDAP. Thus, the Sieve binaries will be
-compiled each time they are called.
-
-To improve performance, this setting should be specified to cache the
-compiled binaries on the local filesystem. For Example:
+To improve performance, [[setting,sieve_script_bin_path]] should be specified to
+cache the compiled binaries on the local filesystem. For Example:
 
 ```[dovecot.conf]
-sieve = ldap:/etc/dovecot/sieve.ldap;name=keep;bindir=~/.sieve-bin
-# or
-#sieve = ldap:/etc/dovecot/sieve.ldap;name=keep;bindir=/var/sieve-scripts/%{user}
-```
+sieve_script personal {
+  driver = ldap
+  name = keep
 
+  bin_path = ~/.sieve-bin
+  # or
+  #bin_path = /var/sieve-scripts/%{user}
+
+  # LDAP settings:
+  ...
+}
+```
 ::: tip
-Sieve uses the ID number as its cache index and to detect the
-need to compile. Therefore, if a script is changed, then its ID must
-also be changed for it to be reloaded.
+Sieve uses the LDAP entry configured using
+[[setting,sieve_script_ldap_modified_attribute]] to detect the need to compile.
+Therefore, if a script is changed, then this entry must also be changed for it
+to be reloaded. Depending on which LDAP entry is configured, this can happen
+implicitly by the LDAP database itself (which is normally the case for the
+default `modifyTimestamp` entry).
 :::
 
-##### `user=<username>`
+#### Example
 
-Overrides the user name used for the lookup. Normally, the name of
-the user running the Sieve interpreter is used.
+If support for the `ldap` script storage driver is compiled as a plugin, it
+needs to be added to the [[setting,sieve_plugins]] setting before it can be
+used, e.g.:
 
-##### LDAP Settings
-
-The configuration file is based on the [[link,auth_ldap]]. These
-parameters are specific to the Sieve ldap configuration:
-
-###### `sieve_ldap_filter`
-
-- Default: `(&(objectClass=posixAccount)(uid=%{user}))`
-- Values: [[link,settings_types_string]]
-
-The LDAP search filter that is used to find the entry containing the
-Sieve script.
-
-These variables can be used:
-
-| Variable | Long Name | Description |
-| -------- | --------- | ----------- |
-| `%{user}` | `%{user}` | username |
-| `%{user | username}` | `%{user | username}` | user part in user@domain, same as `%{user}` if there's no domain |
-| `%{user | domain}` | %{user | domain} | domain part in user@domain, empty if user there's no domain |
-| | `%{home}` | user's home directory |
-| | `%{name}` | name of the Sieve script |
-
-###### `sieve_ldap_script_attr`
-
-- Default: `mailSieveRuleSource`
-- Values: [[link,settings_types_string]]
-
-The name of the attribute containing the Sieve script.
-
-###### `sieve_ldap_mod_attr`
-
-- Default: `modifyTimestamp`
-- Values: [[link,settings_types_string]]
-
-The name of the attribute used to detect modifications to the LDAP entry.
-
-##### Example
-
-::: code-group
-```[dovecot.conf]
-plugin {
-  sieve = ldap:/etc/dovecot/sieve-ldap.conf;bindir=~/.sieve-bin/
+```
+sieve_plugins {
+  sieve_storage_ldap = yes
 }
 ```
 
-```[/etc/dovecot/sieve-ldap.conf]
-# This file needs to be accessible by the Sieve interpreter running in LDA/LMTP.
-# This requires access by the mail user. Don't use privileged LDAP credentials
-# here as these may likely leak. Only search and read access is required.
+::: code-group
+```[dovecot.conf]
+sieve_script personal {
+  driver = ldap
+  bin_path = ~/.sieve-bin/
 
-# Space separated list of LDAP hosts to use. host:port is allowed too.
-hosts = localhost
+  # Don't use privileged LDAP credentials here as these may likely leak. Only
+  # search and read access is required.
 
-# Distinguished Name - the username used to login to the LDAP server.
-# Leave it commented out to bind anonymously.
-dn = cn=sieve,ou=Programs,dc=example,dc=org
+  # Space separated list of LDAP URIs to use.
+  ldap_uris = ldap://localhost
 
-# Password for LDAP server, if dn is specified.
-dnpass = secret
+  # Distinguished Name - the username used to login to the LDAP server.
+  # Leave it commented out to bind anonymously.
+  ldap_auth_dn = cn=sieve,ou=Programs,dc=example,dc=org
 
-# Simple binding.
-sasl_bind = no
+  # Password for LDAP server, if dn is specified.
+  ldap_auth_dnpassword = secret
 
-# No TLS
-tls = no
+  # LDAP base
+  ldap_base = dc=mail,dc=example,dc=org
 
-# LDAP library debug level as specified by LDAP_DEBUG_* in ldap_log.h.
-# -1 = everything. You may need to recompile OpenLDAP with debugging enabled
-# to get enough output.
-debug_level = 0
+  # Dereference: never, searching, finding, always
+  ldap_deref = never
 
-# LDAP protocol version to use. Likely 2 or 3.
-ldap_version = 3
+  # Search scope: base, onelevel, subtree
+  ldap_scope = subtree
 
-# LDAP base
-base = dc=mail,dc=example,dc=org
+  # Filter for user lookup. Some variables can be used:
+  #   %{user}      - username
+  #   %{user | username}      - user part in user@domain, same as %{user} if there's no domain
+  #   %{user | domain}      - domain part in user@domain, empty if there's no domain
+  #   %{name} - name of the Sieve script
+  ldap_filter = (&(objectClass=posixAccount)(uid=%{user}))
 
-# Dereference: never, searching, finding, always
-deref = never
+  # Attribute containing the Sieve script
+  ldap_script_attribute = mailSieveRuleSource
 
-# Search scope: base, onelevel, subtree
-scope = subtree
-
-# Filter for user lookup. Some variables can be used:
-#   %{user}      - username
-#   %{user | username}      - user part in user@domain, same as %{user} if there's no domain
-#   %{user | domain}      - domain part in user@domain, empty if there's no domain
-#   %{name} - name of the Sieve script
-sieve_ldap_filter = (&(objectClass=posixAccount)(uid=%{user}))
-
-# Attribute containing the Sieve script
-sieve_ldap_script_attr = mailSieveRuleSource
-
-# Attribute used for modification tracking
-sieve_ldap_mod_attr = modifyTimestamp
+  # Attribute used for modification tracking
+  ldap_modified_attribute = modifyTimestamp
+}
 ```
 :::
 
@@ -551,20 +616,20 @@ file in the user's home directory (`~/.dovecot.sieve`). This requires
 that the [[link,home_directories_for_virtual_users]] is set for the user.
 
 If you want to store the script elsewhere, you can override the default
-using the `sieve` setting, which specifies the path to the user's
-script file. This can be done in two ways:
+by configuring a [[link,sieve_storage_type_personal,personal script storage]].
+This can be done in two ways:
 
-1. Define the `sieve` setting in the plugin section of `dovecot.conf`.
+1. Define the full [[setting,sieve_script]] block in dovecot configuration.
 
-2. Return `sieve` extra field from [[link,userdb_extra_fields]].
+2. Return the user-specific settings as a extra fields from
+   [[link,userdb_extra_fields]].
 
 For example, to use a Sieve script file named `<username>.sieve` in
 `/var/sieve-scripts`, use:
 
 ```
-plugin {
-  ...
-  sieve = /var/sieve-scripts/%{user}.sieve
+sieve_script personal {
+  path = /var/sieve-scripts/%{user}.sieve
 }
 ```
 
@@ -578,12 +643,10 @@ the user's home directory.
 The Dovecot Sieve plugin allows executing multiple Sieve scripts
 sequentially. The extra scripts can be executed before and after the
 user's private script. For example, this allows executing global Sieve
-policies before the user's script. This is not possible using the
-[[setting,sieve_default]] setting because that is only used when the
-user's private script does not exist.
-
-See [[setting,sieve_before]] and [[setting,sieve_after]] for details on how
-to configure the execution sequence.
+policies before the user's script. See the
+[[link,sieve_storage_type_before,before]] and
+[[link,sieve_storage_type_after,after]] Sieve storage
+types for details on how to configure the execution sequence.
 
 The script execution ends when the currently executing script in the
 sequence does not yield a "keep" result: when the script terminates, the
@@ -622,75 +685,95 @@ actions are simply discarded.
 For example:
 
 ```[dovecot.conf]
-plugin {
-  # Global scripts executed before the user's personal script.
-  #   E.g. handling messages marked as dangerous
-  sieve_before = /var/lib/dovecot/sieve/discard-viruses.sieve
+# Global scripts executed before the user's personal script.
+#   E.g. handling messages marked as dangerous
+sieve_script before1 {
+  type = before
+  path = /var/lib/dovecot/sieve/discard-viruses.sieve
+}
 
-  # Domain-level scripts retrieved from LDAP
-  sieve_before2 = ldap:/etc/dovecot/sieve-ldap.conf;name=ldap-domain
+# Domain-level scripts retrieved from LDAP
+sieve_script before2 {
+  type = before
+  name = ldap-domain
+  driver = ldap
+  # ldap settings here: ...
+}
 
-  # User-specific scripts executed before the user's personal script.
-  #   E.g. a vacation script managed through a non-ManageSieve GUI.
-  sieve_before3 = /var/vmail/%{user | domain}/%{user | username}/sieve-before
+# User-specific scripts executed before the user's personal script.
+#   E.g. a vacation script managed through a non-ManageSieve GUI.
+sieve_script before3 {
+  type = before
+  path = /var/vmail/%{user | domain}/%{user | username}/sieve-before
+}
 
-  # User-specific scripts executed after the user's personal script.
-  # (if keep is still in effect)
-  #   E.g. user-specific default mail filing rules
-  sieve_after = /var/vmail/%{user | domain}/%{user | username}/sieve-after
+# User-specific scripts executed after the user's personal script.
+# (if keep is still in effect)
+#   E.g. user-specific default mail filing rules
+sieve_script after1 {
+  type = after
+  path = /var/vmail/%{user | domain}/%{user | username}/sieve-after
+}
 
-  # Global scripts executed after the user's personal script
-  # (if keep is still in effect)
-  #   E.g. default mail filing rules.
-  sieve_after2 = /var/lib/dovecot/sieve/after.d/
+# Global scripts executed after the user's personal script
+# (if keep is still in effect)
+#   E.g. default mail filing rules.
+sieve_script after2 {
+  type = after
+  path = /var/lib/dovecot/sieve/after.d/
 }
 ```
 
 ::: tip
 Be sure to manually pre-compile the scripts specified by
-[[setting,sieve_before]] and [[setting,sieve_after]] by using the
+[[link,sieve_storage_type_before,before]] and
+[[link,sieve_storage_type_after,after]] Sieve storage types by using the
 [[link,sievec]] tool.
 :::
 
 ## Visible Default Script
 
-The [[setting,sieve_default]] setting specifies the location of a default
-script that is executed when the user has no active personal script.
+The [[link,sieve_storage_type_default,default]] Sieve storage type
+specifies the location of a default script that is executed when the user has no
+active personal script.
 
 Normally, this default script is invisible to the user; i.e., it is not
 listed in [[link,managesieve_server]].
 
 To give the user the ability to see and read the default script, it is
 possible to make it visible under a specific configurable name using
-[[setting,sieve_default_name]]. The [[setting,sieve_default]]
-setting needs to point to a valid script location as well for this to
-work. If the default script does not exist at the indicated location, it
-is not shown.
+[[setting,sieve_script_name]] in the [[setting,sieve_script]] block of the
+[[link,sieve_storage_type_default,default]] storage setting. The
+[[link,sieve_storage_type_default,default]] storage needs to point to a valid
+script location as well for this to work: if the default script does not exist
+at the indicated location, it is not shown.
 
 ManageSieve will magically list the default script under that name, even
-though it does not actually exist in the user's normal script storage
-location. This way, the ManageSieve client can see that it exists and it
-can retrieve its contents. If no normal script is active, the default is
-always listed as active. The user can replace the default with a custom
-script, by uploading it under the default script's name. If that custom
-script is ever deleted, the default script will reappear from the
-shadows implicitly.
+though it does not actually exist in the user's normal personal script storage.
+This way, the ManageSieve client can see that it exists and it can retrieve its
+contents. If no normal script is active, the default is always listed as active.
+The user can replace the default with a custom script, by uploading it under the
+default script's name. If that custom script is ever deleted, the default script
+will reappear from the shadows implicitly.
 
-This way, ManageSieve clients will not need any special handling for
-this feature. If the name of the default script is equal to the name the
-client uses for the main script, it will initially see and read the
-default script when the user account is freshly created. The user can
-edit the script, and when the edited script is saved through the
-ManageSieve client, it will override the default script. If the
-user ever wants to revert to the default, the user only needs to delete
-the edited script and the default will reappear.
+This way, ManageSieve clients will not need any special handling for this
+feature. If the name of the default script is equal to the name the client uses
+for the main script, it will initially see and read the default script when the
+user account is freshly created. The user can edit the script, and when the
+edited script is saved through the ManageSieve client, it will override the
+default script. If the user ever wants to revert to the default, the user only
+needs to delete the edited script and the default will reappear.
 
 ```[dovecot.conf]
-plugin {
-  sieve = file:~/sieve;active=~/.dovecot.sieve
+sieve_script personal {
+  path = ~/sieve
+  active_path = ~/.dovecot.sieve
+}
 
-  sieve_default = /var/lib/dovecot/sieve/default.sieve
-  sieve_default_name = roundcube
+sieve_script default {
+  type = default
+  name = roundcube
+  path = /var/lib/dovecot/sieve/default.sieve
 }
 ```
 

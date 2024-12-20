@@ -18,25 +18,25 @@ enabled explicitly by adding it to [[setting,sieve_extensions]].
 
 ### Settings
 
-::: warning
-Invalid values for these settings will make the Sieve interpreter
-log a warning and revert to the default values.
-:::
-
 <SettingsComponent tag="sieve-editheader" level="3" />
 
 ### Example
 
 ```
-plugin {
-  # Use editheader
-  sieve_extensions = +editheader
+# Use editheader
+sieve_extensions {
+  editheader = yes
+}
 
-  # Header fields must not exceed one kilobyte
-  sieve_editheader_max_header_size = 1k
+# Header fields must not exceed one kilobyte
+sieve_editheader_max_header_size = 1k
 
-  # Protected special headers
-  sieve_editheader_forbid_add = X-Verified
-  sieve_editheader_forbid_delete = X-Verified X-Seen
+# Protected special headers
+sieve_editheader_header X-Verified {
+  forbid_add = yes
+  forbid_delete = yes
+}
+sieve_editheader_header X-Seen {
+  forbid_delete = yes
 }
 ```
