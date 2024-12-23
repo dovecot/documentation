@@ -636,8 +636,8 @@ The Sieve script storage driver to use. See [[link,sieve_storage_driver]].`
 Points to the directory where the compiled binaries for this script
 location are stored. This directory is created automatically if possible.
 
-If this option is omitted, the behavior depends on the storage driver. For the
-[[link,sieve_storage_file, file storage driver]], the binaries are for
+If this setting is not configured, the behavior depends on the storage driver.
+For the [[link,sieve_storage_file, file storage driver]], the binaries are for
 example stored in the same directory as the corresponding sieve scripts.
 
 Don't specify the same directory for multiple script storages (e.g. with
