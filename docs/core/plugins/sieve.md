@@ -261,6 +261,18 @@ to this driver:
 
 <SettingsComponent tag="sieve-storage-file" />
 
+##### `sieve_script_name`
+
+If the [[setting,sieve_script_name]] setting is not configured and the Sieve
+script is not retrieved by name (e.g. using the
+[[link,sieve_include,include extension]] or by [[link,managesieve]]), the name
+defaults to the file name without the `.sieve` suffix.
+
+##### `sieve_script_bin_path`
+
+If the [[setting,sieve_script_bin_path]] setting is not configured, the binaries
+are stored in the same directory as the corresponding sieve scripts by default.
+
 #### Example
 
 ```
@@ -310,8 +322,10 @@ The `dict` storage driver supports all settings described in
 
 ##### `sieve_script_name`
 
-If the name of the Script is left unspecified and not otherwise provided by the
-Sieve interpreter, the name defaults to `default`.
+If the [[setting,sieve_script_name]] setting is not configured and the Sieve
+script is not retrieved by name (e.g. using the
+[[link,sieve_include,include extension]] or by [[link,managesieve]]), the name
+defaults to `default`.
 
 ##### `sieve_script_bin_path`
 
@@ -509,8 +523,10 @@ storage driver:
 
 ##### `sieve_script_name`
 
-If the name of the Script is left unspecified and not otherwise provided by the
-Sieve interpreter, the name defaults to `default`.
+If the [[setting,sieve_script_name]] setting is not configured and the Sieve
+script is not retrieved by name (e.g. using the
+[[link,sieve_include,include extension]] or by [[link,managesieve]]), the name
+defaults to `default`.
 
 ##### `sieve_script_bin_path`
 
