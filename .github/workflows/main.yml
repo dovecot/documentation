@@ -34,11 +34,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dovecot/dovecot-sphinx-action@0.11
-    - uses: dovecot/rsync-deployments@master
+    - uses: dovecot/rsync-deployments@v2.0.2
       with:
-        RSYNC_OPTIONS: -azr --delete
-        RSYNC_TARGET: docs@doc.dovecot.org:public_html/2.3/.
-        RSYNC_BASEDIR: /build/.
+        FLAGS: -azr --delete
+        HOST: doc.dovecot.org
+        USER: docs
+        LOCALPATH: /build/.
+        REMOTEPATH: public_html/2.3/
+        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
       if: env.DEPLOY_KEY
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
