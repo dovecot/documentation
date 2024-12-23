@@ -651,7 +651,7 @@ storage type.`
 	},
 
 	sieve_script_path: {
-		tags: [ 'sieve_storage-file' ],
+		tags: [ 'sieve-storage-file' ],
 		plugin: 'sieve',
 		default: '~/sieve',
 		seealso: [ '[[link,sieve_storage_file]]' ],
