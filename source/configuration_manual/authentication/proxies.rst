@@ -38,7 +38,11 @@ addition of proxy field. The common fields to use for both proxying ways are:
   the ``proxy`` extra field to login process, but not necessarily the host.
   Useful when dividing users across multiple director clusters.
 
-* ``host=s``: The destination server's IP address. This field is required.
+* ``host=s``: The destination server's IP address or hostname. This field is required.
+* ``hostip=s``: Use this IP as destination server's IP. If not provided, host address is determined by DNS lookup if necessary.
+
+  .. versionadded:: v2.3.0
+
 * ``source_ip=s``: The source IP address to use for outgoing connections.
 
   .. versionadded:: v2.2.14
