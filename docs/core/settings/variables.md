@@ -288,6 +288,8 @@ See also:
 | `ssl_security` | TLS session security string. If HAProxy is configured and it terminated the TLS connection, contains "(proxied)". |
 | `ssl_ja3` | [[link,ssl_ja3]] composed from TLS Client Hello. |
 | `ssl_ja3_hash` | MD5 hash from [[link,ssl_ja3]] composed from TLS Client Hello. |
+| `ssl_ccert_fp` | [[setting,ssl_peer_certificate_fingerprint_hash]] of client certificate. |
+| `ssl_ccert_pubkey_fp` | [[setting,ssl_peer_certificate_fingerprint_hash]] of client certificate public key. |
 | `mail_pid` | PID for process that handles the mail session post-login. |
 | `original_user` | Same as `user`, except using the original username the client sent before any changes by auth process. With master user logins (also with [[setting,auth_master_user_separator]] based logins),this contains only the original master username. |
 | `listener` | Socket listener name as specified in config file, which accepted the client connection. |
@@ -323,6 +325,8 @@ See also:
 | `password` | Cleartext password from cleartext authentication mechanism. |
 | `secured` | "TLS" with established SSL/TLS connections, "secured" with secured connections (see: [[setting,ssl]]). Otherwise empty. |
 | `ssl_ja3_hash` | MD5 hash from JA3 string composed from TLS Client Hello. |
+| `ssl_ccert_fp` | [[setting,ssl_peer_certificate_fingerprint_hash]] of client certificate. |
+| `ssl_ccert_pubkey_fp` | [[setting,ssl_peer_certificate_fingerprint_hash]] of client certificate public key. |
 | `cert` | "valid" if client had sent a valid client certificate, otherwise empty. |
 | `login_user` | For master user logins: Logged in user@domain. |
 | `master_user` | For master user logins: The master username. |
