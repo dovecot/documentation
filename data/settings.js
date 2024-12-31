@@ -10290,6 +10290,17 @@ The most common choices are \`commonName\` and \`x500UniqueIdentifier\`.
 Note: [[setting,auth_ssl_username_from_cert]] MUST be enabled.`
 	},
 
+	ssl_peer_certificate_fingerprint_hash: {
+		default: '',
+		seealso: [ 'ssl', '[[link,ssl_configuration]]', '[[link,passdb_check_client_fp]]' ],
+		values: setting_types.STRING,
+		text: `
+An OpenSSL digest algorithm name to use to hash peer certificate names.
+Setting this value is required for \`ssl_client_cert_fp\` and \`ssl_client_cert_pubkey_fp\`
+availability in [[setting,login_log_format_elements]] and also in authentication
+variables. Weak algorithms are explicitly disallowed, such as MD5.`,
+	},
+
 	ssl_cipher_list: {
 		default: 'ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH (for ssl_server, empty for ssl_client)',
 		seealso: [ 'ssl', 'ssl_cipher_suites', 'ssl_min_protocol', '[[link,ssl_configuration]]' ],
