@@ -36,7 +36,7 @@ This command uses by default the output formatter **table**.
     setting was overridden in */etc/dovecot/dovecot.conf*.
 
 **-f** *passdb_field*
-:   Alternative username field to use for kicking, as returned by passdb.
+:   Alternative username field to use for querying, as returned by passdb.
     Only the passdb fields beginning with the *user_* prefix are
     tracked.
 
