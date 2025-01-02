@@ -420,6 +420,9 @@ read immediately whenever parsing the configuration file, so if it changes
 afterwards it requires a configuration reload to see the changes. This
 functionality is especially useful for reading SSL certificates and keys.
 
+If you use `%{variables}` in file names, these will be expanded by target
+process and not config process, which can cause problems with permissions.
+
 ## Variable Expansion
 
 It's possible to refer to other earlier settings as `$SET:name`.
@@ -436,6 +439,8 @@ However, you must be careful with the ordering of these in the configuration
 file, because the `$SET:variables` are expanded immediately while parsing the
 config file and they're not updated later.
 
+See also [[link,settings_variables]].
+
 ## Environment Variables
 
 It is possible use `$ENV:name` to expand values from environment.
@@ -447,3 +452,7 @@ Note that these are also Case Sensitive.
 
 These can also be used for external config files, but you need to list them in
 [[setting,import_environment]] so that processes can see them.
+
+If you use `${env:}` instead of `$ENV`, this will cause the environment variable(s) to be
+evaluated later. This can cause problems with files since config process cannot open
+them anymore. It is recommended to use `$ENV` instead when possible.
