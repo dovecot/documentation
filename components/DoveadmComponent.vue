@@ -49,7 +49,7 @@ function httpClick(k) {
     <a class="header-anchor" :href="'#' + k"></a>
    </h3>
 
-   <table v-if="v.man_link || v.response || v.added || v.changed || v.deprecated || v.removed">
+   <table v-if="v.man_link || v.added || v.changed || v.deprecated || v.removed">
     <tbody>
      <tr v-if="v.man_link">
       <th style="text-align: right;">Man Page</th>
@@ -79,28 +79,6 @@ function httpClick(k) {
        </ul>
       </td>
     </tr>
-
-     <tr v-if="v.response">
-      <th style="text-align: right;">Response Values</th>
-      <td>
-       <table>
-        <thead>
-         <tr>
-          <th>Key</th>
-          <th>Type</th>
-          <th>Description</th>
-         </tr>
-        </thead>
-        <tbody>
-         <tr v-for="elem in v.response">
-          <td><code>{{ elem.key }}</code></td>
-          <td v-html="elem.type" />
-          <td v-html="elem.text" />
-         </tr>
-        </tbody>
-       </table>
-      </td>
-     </tr>
     </tbody>
    </table>
 
