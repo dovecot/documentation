@@ -40,14 +40,22 @@ quota is enforced.
 :   Store mail to specified mailbox instead of INBOX.
 
 **-U** *uid*
-:    Save the mail using the given UID, if possible.
+:   Save the mail using the given UID, if possible.
 
 **-g** *guid*
-:    Save the mail using the given GUID.
+:   Save the mail using the given GUID.
 
 **-r** *received-date*
-:    Save the mail using the given received-date timestamp. This is in the
-     "human timestamp" format as described by [[man,doveadm-search-query,,7]].
+:   Save the mail using the given received-date timestamp. This is in the
+    "human timestamp" format as described by [[man,doveadm-search-query,,7]].
+
+## ARGUMENTS
+
+*mail-file*
+:   The message data to save.
+
+    - If *mail-file* is `-`, the message is read from stdin (default).
+    - Otherwise, *mail-file* resolves as a file path.
 
 ## EXAMPLE
 
