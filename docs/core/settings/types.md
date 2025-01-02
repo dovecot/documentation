@@ -179,7 +179,10 @@ the file permissions don't usually matter. However, some callers need to open
 the file again (e.g. the `ssl_client_cert_file` setting with MySQL) after
 the process has dropped root privileges.
 
-The file paths do not support [[link,settings_variables,%variables]].
+If you use [[link,settings_variables,%variables]] in file names, the expansion
+is delayed until the process accessing the setting expands it. The process
+is usually not running as root at this point, so you may need to adjust file
+permissions.
 
 It's possible to give inline values (instead of a path to a file) for the
 setting by using `inline:` prefix in the value. For example userdb could be
