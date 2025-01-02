@@ -436,6 +436,8 @@ However, you must be careful with the ordering of these in the configuration
 file, because the `$SET:variables` are expanded immediately while parsing the
 config file and they're not updated later.
 
+See also [[link,settings_variables]].
+
 ## Environment Variables
 
 It is possible use `$ENV:name` to expand values from environment.
@@ -447,3 +449,9 @@ Note that these are also Case Sensitive.
 
 These can also be used for external config files, but you need to list them in
 [[setting,import_environment]] so that processes can see them.
+
+For [[link,settings_types_file]] it is better to use `$ENV:` instead of `%{env:}`.
+This is because with `$ENV:` the expansion and file reading is done by the config
+process, which normally runs as root. With `%{env:}` the expansion is delayed
+until the process accessing the setting expands it, but the process may not
+have enough permissions to open the file.
