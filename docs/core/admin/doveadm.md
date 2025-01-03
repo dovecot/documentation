@@ -101,27 +101,54 @@ service doveadm {
 Connecting to the endpoint can be done by using standard HTTP protocol and
 authentication headers.
 
-To get list the commands supported by the endpoint, the following example
-commands can be used:
+::: info
+There is also https://github.com/dovecot/doveadm-http-cli that can be
+used for accessing the API.
+:::
 
-#### `X-Dovecot-API` Auth
+All doveadm commands are accessed under the `/doveadm/v1` path.
+
+#### Command List
+
+To get the list of commands supported by the endpoint, send an authenticated
+GET request to the root of the endpoint (for all endpoint commands), or to
+`/doveadm/v1` path (for doveadm API commands).
+
+For example, using [[setting,doveadm_password]] authentication:
+
+```console
+curl -X GET –u doveadm:password http://host:port/
+```
+
+#### Authentication
+
+##### Basic Auth
+
+Use password as configured in [[setting,doveadm_password]]. User name is
+`doveadm`.
+
+```
+curl -H "Authorization: Basic <base64 doveadm:doveadm_password>" http://host:port/doveadm/v1
+```
+
+or
+
+```console
+curl –u doveadm:password http://host:port/doveadm/v1
+```
+
+##### `X-Dovecot-API` Auth
+
+Use API Key as configured in [[setting,doveadm_api_key]].
 
 ```console
 $ curl -H "Authorization: X-Dovecot-API <base64 dovecot_api_key>" \
       http://host:port/doveadm/v1
 ```
 
-#### Basic Auth
+### API Overview
 
-```
-curl -H "Authorization: Basic <base64 doveadm:doveadm_password>" http://host:port/doveadm/v1
-curl –u doveadm:password http://host:port/doveadm/v1
-```
-
-There is also https://github.com/dovecot/doveadm-http-cli that can be
-used for accessing the API.
-
-### API overview
+#### Request
 
 All commands sent to the API needs to be posted in json format using
 `Content-Type: application/json` in headers for the request type and the
@@ -176,6 +203,56 @@ Also it is not guaranteed that the commands will be processed in order.
 All commands are case sensitive.
 :::
 
+#### Response
+
+Requests that fail *before* the doveadm command is run returns 400/500
+HTTP response codes:
+
+| Code | Reason |
+| ---- | ------ |
+| 400 | Invalid request. Response body contains error message in text/plain. |
+| 401 | Unauthorized (missing authentication). |
+| 403 | Forbidden (authentication failed). |
+| 404 | Unknown doveadm command. |
+| 500 | Internal server error (see Dovecot logs for more information). |
+
+Otherwise, the response will be a 200 code, Content-Type `application/json`,
+and the body will be a JSON object.
+
+##### Success
+
+::: info Note
+All data returned in the JSON object will be strings (e.g., counting fields
+will be strings, not numbers/integers).
+:::
+
+```json
+[
+    [
+        "doveadmResponse",
+        [],
+        "tag1"
+    ]
+]
+```
+
+##### Failure
+
+`exitCode` are the [[link,doveadm_error_codes]].
+
+```json
+[
+    [
+        "error",
+        {
+            "exitCode": 68,
+            "type": "exitCode"
+        },
+        "tag1"
+    ]
+]
+```
+
 ### Example Session
 
 Reload Dovecot configuration:
@@ -198,32 +275,6 @@ $ curl -v -u doveadm:secretpassword -X POST http://localhost:8080/doveadm/v1 \
 ```
 
 This is equivalent to the command [[doveadm,reload]].
-
-Successful Response:
-
-```json
-[
-    [
-        "doveadmResponse",
-        [],
-        "tag1"
-    ]
-]
-```
-
-Failure Response:
-```json
-[
-    [
-        "error",
-        {
-            "exitCode": 68,
-            "type": "exitCode"
-        },
-        "tag1"
-    ]
-]
-```
 
 ## Mailbox Commands
 

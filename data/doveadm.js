@@ -2,8 +2,7 @@
 import { doveadm_arg_types,
 		 doveadm_args_query,
 		 doveadm_args_usermask,
-		 doveadm_flag_types,
-		 doveadm_response_types } from '../lib/doveadm.js'
+		 doveadm_flag_types } from '../lib/doveadm.js'
 
 export const doveadm = {
 
@@ -52,20 +51,21 @@ export const doveadm = {
 		// deprecated: {},
 		// removed: {},
 
-		// Response data.
-		// KEY = identifier
+		// Response data. (HTTP API)
+		//
+		// Since doveadm responses are so variable, it is difficult to create
+		// an abstracted system to document the format.
+		//
+		// Thus, (for now) simply provide a place to describe HTTP API
+		// responses.
 		// response: {
-		//     key: {
-		//         // An example value to be used in documentation.
-		//         example: 0,
+		//     // This is the JSON data returned from the server. Do NOT
+		//     // include the enclosing array, as this will be added
+		//     // automatically when displaying.
+		//     example: {},
 		//
-		//         // The description of the response data type.
-		//         // Rendered w/Markdown.
-		//         text: `Description`,
-		//
-		//         // The response data type
-		//         type: doveadm_response_types.INTEGER,
-		//     }
+		//     // A description of the response. Rendered w/Markdown.
+		//     text: ``,
 		// },
 
 		// What doveadm flags does this command support (bit field)
@@ -252,10 +252,14 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			},
 		},
 		response: {
-			entries: {
-				type: doveadm_response_types.INTEGER,
-				text: `The number of cache entries flushed.`
+			example: {
+				entries: 1
 			},
+			text: `
+| Key | Description |
+| --- | ----------- |
+| \`entries\` | The number of cache entries flushed. |
+`
 		},
 		man: 'doveadm-auth',
 		text: `Flush authentication cache.`,
@@ -1372,7 +1376,7 @@ to secure it.
 				text: `Mailbox mask.`
 			},
 		},
-		response: {},
+		response: null,
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
 		man: 'doveadm-mailbox-cryptokey',
@@ -1392,7 +1396,7 @@ to secure it.
 				text: `Mailbox mask.`
 			},
 		},
-		response: {},
+		response: null,
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
 		man: 'doveadm-mailbox-cryptokey',
@@ -1427,7 +1431,7 @@ to secure it.
 				text: `Old password.`
 			},
 		},
-		response: {},
+		response: null,
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
 		man: 'doveadm-mailbox-cryptokey',
@@ -2268,6 +2272,37 @@ returned.`,
 				type: doveadm_arg_types.ARRAY,
 				text: `UID mask.`,
 			},
+		},
+		response: {
+			example: [
+				{
+					username: "foo",
+					connections: "1",
+					service: "imap",
+					pid: "(47)",
+					ip: "(10.0.2.100)"
+				}
+			],
+			text: `
+Returns an array of objects.
+
+If \`separate-connections\` is \`false\`, each object represents a single
+username/service combination, and the \`pid\` and \`ip\` fields will include
+all entries for that combination.
+
+If \`separate-connections\` is \`true\`, each object will contain a single
+connection.
+
+Object fields:
+
+| Key | Description |
+| --- | ----------- |
+| \`connections\` | The total number of connections for the user. This is only returned if \`separate-connections\` is \`false\`. |
+| \`ip\` | IP addresses where the user's connections are originating. |
+| \`pid\` | Process IDs of the session. |
+| \`service\` | The Dovecot service. |
+| \`username\` | Username |
+`
 		},
 		man: 'doveadm-who',
 		text: `Show who is logged into the Dovecot server.`,
