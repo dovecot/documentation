@@ -2273,6 +2273,37 @@ returned.`,
 				text: `UID -or- IP Address mask.`,
 			},
 		},
+		response: {
+			example: [
+				{
+					username: "foo",
+					connections: "1",
+					service: "imap",
+					pid: "(47)",
+					ip: "(10.0.2.100)"
+				}
+			],
+			text: `
+Returns an array of objects.
+
+If \`separate-connections\` is \`false\`, each object represents a single
+username/service combination, and the \`pid\` and \`ip\` fields will include
+all entries for that combination.
+
+If \`separate-connections\` is \`true\`, each object will contain a single
+connection.
+
+Object fields:
+
+| Key | Description |
+| --- | ----------- |
+| \`connections\` | The total number of connections for the user. This is only returned if \`separate-connections\` is \`false\`. |
+| \`ip\` | IP addresses where the user's connections are originating. |
+| \`pid\` | Process IDs of the session. |
+| \`service\` | The Dovecot service. |
+| \`username\` | Username |
+`
+		},
 		man: 'doveadm-who',
 		text: `Show who is logged into the Dovecot server.`,
 	},
