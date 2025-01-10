@@ -1,4 +1,5 @@
 {
+  "name": "dovecot-ce-documentation",
   "devDependencies": {
     "@sindresorhus/slugify": "^2.2.1",
     "camelcase": "^8.0.0",
