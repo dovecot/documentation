@@ -3,6 +3,12 @@ layout: doc
 title: lib-dcrypt
 dovecotlinks:
   lib_dcrypt: lib-dcrypt
+  lib_dcrypt_key_formats:
+    hash: key-formats
+    text: "lib-dcrypt: Key Formats"
+  lib_dcrypt_flags:
+    hash: flags
+    text: "lib-dcrypt: Flags"
 ---
 
 # lib-dcrypt
@@ -16,55 +22,55 @@ alternative backends for dcrypt.
 
 ECDH (Elliptic curve Diffie-Hellman) is widely used in lib-dcrypt for
 both key and data storage. This algorithm is also known as
-[ECIES (Elliptic Curve Integrated Encryption Scheme)](https://en.wikipedia.org/wiki/ECIES).
+[ECIES (Elliptic Curve Integrated Encryption Scheme)][ECIES].
 
 When encrypting data, we perform following steps, this is the currently
 used algorithm. There is also a legacy algorithm, but since that has not
 been used publicly, we do not describe it here. You can deduce it from
 the code if you want to.
 
-`ENCRYPT(RECIPIENT-KEY, DATA)`:
+### `ENCRYPT(RECIPIENT-KEY, DATA)`
 
 1. Ensure recipient key is not point at infinity
 
-2. Generate new keypair from same group
+1. Generate new keypair from same group
 
-3. Choose ephemeral public key as `R`
+1. Choose ephemeral public key as `R`
 
-4. Calculate $P = R * RECIPIENT-KEY$
+1. Calculate $P = R * RECIPIENT-KEY$
 
-5. From $P = (x,y)$ choose `x` as `S`
+1. From $P = (x,y)$ choose `x` as `S`
 
-6. Generate random IV+key and HMAC seed or AAD as encryption key material
+1. Generate random IV+key and HMAC seed or AAD as encryption key material
 
-7. Use $PBKDF2(mac-algorithm, S, salt, rounds)$ to produce IV+key, and AAD if used by cipher algorithm for encrypting the encryption key
+1. Use $PBKDF2(mac-algorithm, S, salt, rounds)$ to produce IV+key, and AAD if used by cipher algorithm for encrypting the encryption key
 
-8. Encrypt encryption key material with the values generated in step 7
+1. Encrypt encryption key material with the values generated in step 7
 
-8. Encrypt data using encryption key material
+1. Encrypt data using encryption key material
 
-9. OUTPUT R, salt and encrypted data.
+1. OUTPUT R, salt and encrypted data.
 
 In dcrypt-openssl.c, we use `EVP_PKEY_derive_*` for the actual
 derivations. ephemeral public key is exported with EC_POINT_point2oct in
 compressed form.
 
-`DECRYPT(PRIVATE-KEY, R, SALT, DATA)`:
+### `DECRYPT(PRIVATE-KEY, R, SALT, DATA)`
 
 1. Ensure R is not point at infinity
 
-2. Calculate $P = R * PRIVATE-KEY$
+1. Calculate $P = R * PRIVATE-KEY$
 
-3. From $P = (x,y)$ choose x as S
+1. From $P = (x,y)$ choose x as S
 
-4. Use $PBKDF2(mac-algorithm, S, salt, rounds)$ to produce IV+key, and HMAC seed or
+1. Use $PBKDF2(mac-algorithm, S, salt, rounds)$ to produce IV+key, and HMAC seed or
    AAD for encryption key decryption
 
-5. Decrypt encryption key (if you are using GCM, AAD and TAG need to provided for encryption key decryption)
+1. Decrypt encryption key (if you are using GCM, AAD and TAG need to provided for encryption key decryption)
 
-6. Decrypt data using encryption key
+1. Decrypt data using encryption key
 
-6. OUTPUT decrypted data
+1. OUTPUT decrypted data
 
 ## Key Formats
 
@@ -100,7 +106,7 @@ Currently supported flags are:
  - 0x02 - Use AEAD for key and data integrity
  - 0x04 - No data integrity verification
  - 0x08 - Encrypted using obsolete version 1 algorithm
- - 0x10 - Use same cipher algorithm for key and data, [[added,dcrypt_same_cipher_algo_added]]
+ - 0x10 - Use same cipher algorithm for key and data [[added,dcrypt_same_cipher_algo_added]]
 
 ## File Format
 
@@ -109,7 +115,7 @@ asymmetric key pair. File encryption can be done using whatever
 algorithm(s) the underlying library supports. For integrity support,
 either HMAC based or AEAD based system is used when requested.
 
-File format is described below
+File format 2 is described below
 
 ```
 000 - 008 CRYPTED\x03\x07 (MAGIC)
@@ -134,5 +140,10 @@ eokb - +4  MSB length of encryption key hash
 ekh - (eof-maclen) payload data
 ```
 
+## Decryption Script
+
 There is a small script for decrypting these files, see
-[`dcrypt-decrypt.rb`](https://github.com/dovecot/tools/blob/main/dcrypt-decrypt.rb).
+[`dcrypt-decrypt.py`][dcrypt-decrypt].
+
+[ECIES]: https://en.wikipedia.org/wiki/ECIES
+[dcrypt-decrypt]: https://github.com/dovecot/tools/blob/main/dcrypt-decrypt.py
