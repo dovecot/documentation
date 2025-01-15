@@ -5,6 +5,7 @@ addflag
 addprinc
 ADDRESULT
 ADH
+Adleman
 Aildir
 allbackups
 alloconly
@@ -122,6 +123,7 @@ dcrypt
 DDTHH
 debian
 debuginfo
+decapsulated
 deeplinks
 defaultdelivery
 deinitialization
@@ -327,6 +329,7 @@ kde
 kdump
 keeptemp
 Kek
+kem
 keychain
 keyid
 keypair
@@ -412,7 +415,7 @@ lsearch
 lucene
 lugog
 lwq
-maclen
+macl
 madboa
 mailauth
 mailboxdir
@@ -661,6 +664,7 @@ restorecon
 resyncing
 rfcs
 RHu
+Rivest
 roundcube
 roundrobin
 rpa
