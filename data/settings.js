@@ -7771,6 +7771,15 @@ by returning UID or GID fields.  You can use either numeric IDs or
 usernames here.`
 	},
 
+	mail_utf8_extensions: {
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		text: `
+If Dovecot has been compiled with --enable-experimental-mail-utf8 configure option,
+this setting can be used to enable the feature. Settings this to \`yes\` will
+enable SMTPUTF8 for LMTP and Submission sessions, and UTF8=ACCEPT for IMAP sessions.`
+	},
+
 	mail_vsize_bg_after_count: {
 		default: 0,
 		seealso: [ '[[plugin,quota]]' ],
