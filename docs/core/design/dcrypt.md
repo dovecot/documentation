@@ -149,5 +149,176 @@ macl - eof  message integrity tag
 There is a small script for decrypting these files, see
 [`dcrypt-decrypt.py`][dcrypt-decrypt].
 
+### Dependencies
+
+First fetch the script by cloning the [dovecot-tools][dovecot-tools]
+repository or fetching the single tool.
+
+::: info
+To clone the repository:
+
+```sh
+git clone https://github.com/dovecot/tools
+```
+
+To fetch only the script (e.g. by using `wget`):
+
+```sh
+wget https://raw.githubusercontent.com/dovecot/tools/refs/heads/main/dcrypt-decrypt.py
+```
+:::
+
+Setup a local python environment (optional) and install the necessary
+dependencies.
+
+```sh
+# Optional but recommended: Create a virtual environment for the necessary
+# python dependencies to run this script.
+python -m venv venv
+source venv/bin/activate
+# Install the dependencies.
+pip install asn1 cryptography
+```
+
+### Operation
+
+Probably the most common installation uses the [[plugin,mail-compress]] and
+[[plugin,mail-crypt]] plugins for compression and encryption respectively. See
+also [[link,fs_crypt]] for this setup.
+
+To simulate this scenario consider storing an input file `$in_file` using:
+- `$private_key_path` and `$public_key_path` - the private and public key files
+  to allow encryption with,
+- `$prefix` - the path prefix to use for storing the output file,
+- `$out_file` - the file path to store the file as.
+
+```sh
+doveadm fs put compress \
+    gz:6:crypt:private_key_path=$private_key_path:public_key_path=$public_key_path:posix:prefix=$prefix \
+    $in_file $out_file
+```
+
+Using the `dcrypt-decrypt` script you can then retrieve the key and file
+information using the following command. Make sure to supply the same
+`$private_key_path`, `$prefix` and `$out_file` as above:
+
+```sh
+dcrypt-decrypt.py -i -k $private_key_path -f ${prefix}${out_file} | gunzip
+```
+
+::: info
+The piped `gunzip` will ensure the contents are decompressed after decryption.
+:::
+
+### Output Description
+
+Run `dcrypt-decrypt.py --help` to read the tool's help text, which gives hints
+about its supported flags and its output.
+
+Supplying the private key file via the `-k`/`--key` flag will decrypt the
+encrypted file contents.
+
+::: info
+Fields that contain binary data are represented in hexadecimal form. Other
+fields are converted or displayed in human readable form.
+:::
+
+#### File information
+
+The `-i`/`--info` flag outputs a list of fields of the supplied file:
+
+`Version`
+:   What version of the dovecot [[link,lib_dcrypt_key_formats,Key Formats]] has
+    been used to encrypt this file.
+
+`Flags`
+:   What [[link,lib_dcrypt_flags,Flags]] have been used when encrypting the
+    file.
+
+`Header length`
+:   Number of bytes in the header.
+
+`Cipher algo`
+:   Name and Object Identifier (OID) of the cipher used for encrypting the
+    data. If the same cipher algorithm [[link,lib_dcrypt_flags,flag]] is set
+    this algorithm is used to encrypt the encryption key material as well.
+    By default the encryption key material is encrypted with `AES256-CTR`.
+
+`Digest algo`
+:   Name and OID of the digest algorithm used for the key and data.
+
+Key(s) used for encrypting the file
+
+`Key type`
+:   Either `EC` for Elliptic-Curve or `RSA` for Rivest-Shamir-Adleman key
+    type.
+
+`Key digest`
+:   Hash of public key id in Distinguished Encoding Rules (DER) format.
+
+`Peer key`
+:   Ephemeral key used to derive shared secret used for key material
+    encryption.
+
+`Encrypted`
+:   The encrypted encryption key material.
+
+`Kd hash`
+:   The checksum of the key data.
+
+#### Key information
+
+The following information are only available if the `-k`/`--key` flag was
+supplied with the matching key.
+
+`Provided key`
+:   Checksum of the key that was provided.
+
+##### Key derivation data
+
+`Key derivation`
+:   General information about key derivation for the
+    [Key Encapsulation Mechanism][kem] to decrypt the encryption key.
+
+With its attributes:
+
+`Rounds`
+:   Number of iterations that the digestion algorithm is repeated.
+
+`Secret`
+:   Decrypted secret from the peer key.
+
+`Salt`
+:   Salt used for hashing. `Peer key` is used here.
+
+##### Encryption and Decryption data
+
+`Encryption key decryption`
+:   General information regarding the payload decryption. This uses the
+    decapsulated random data to derive the key for decrypting the payload.
+
+`Decryption`
+:   General information regarding the key used to encrypt the data.
+
+Both sections contain:
+
+`Key`
+:   In the Encryption section: Ephemeral key material. In the Decryption
+    section: Decryption key material.
+
+`IV`
+:   The initialization vector from derived or deciphered key material.
+
+Decryption additionally contains:
+
+`AAD`
+:   Additional data used to authenticate the data.
+
+`TAG`
+:   Tag used to verify the message integrity.
+
+
 [ECIES]: https://en.wikipedia.org/wiki/ECIES
+[dovecot-tools]: https://github.com/dovecot/tools/
 [dcrypt-decrypt]: https://github.com/dovecot/tools/blob/main/dcrypt-decrypt.py
+[kem]: https://en.wikipedia.org/wiki/Key_encapsulation_mechanism
