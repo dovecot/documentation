@@ -118,26 +118,30 @@ either HMAC based or AEAD based system is used when requested.
 File format 2 is described below
 
 ```
-000 - 008 CRYPTED\x03\x07 (MAGIC)
-009 - 009 \x02 (VERSION FIELD, 2)
-010 - 013 MSB flags
-014 - 017 MSB total header length (starting from 000)
-018 - cod cipher oid in DER format
-cod - mod MAC algorithm oid in DER format
-mod - +4  MSB PBKDF2 rounds
-+5  - +8  MSB length of key data
-+9  - +9  number of key blocks
+----- header -----
+000  - 008  CRYPTED\x03\x07 (MAGIC)
+009  - 009  \x02 (VERSION FIELD, 2)
+010  - 013  MSB flags
+014  - 017  MSB total header length (starting from 000)
+018  - cod  cipher oid in DER format
+cod  - mod  MAC algorithm oid in DER format
+mod  - +4   MSB PBKDF2 rounds
++5   - +8   MSB length of key data
++9   - +9   number of key blocks
 ----- key block -----
-+10 - +10  key type (1 = RSA, 2 = ECC)
-+11 - +43 public key id (SHA256 of public key in DER format, point compressed)
-+44 - +48 MSB length of ephemeral key
-+49 - epk ephemeral key
-epk - +4  MSB length of encryption key
-+4  - ek  encrypted key[+ TAG when AEAD used]
++10  - +10  key type (1 = RSA, 2 = EC)
++11  - +43  public key id (SHA256 of public key in DER format, point compressed)
++44  - +48  MSB length of ephemeral key
++49  - epk  ephemeral key
+epk  - +4   MSB length of encryption key
++4   - ek   encrypted key[+ TAG when AEAD used]
+ek   - +4   MSB length of checksum
++4   - chk  checksum of the payload
 ----- end of key block (this can then repeat) -----
-eokb - +4  MSB length of encryption key hash
-+4 - ekh  encryption key hash
-ekh - (eof-maclen) payload data
+eokb - +4   MSB length of encryption key hash
++4   - ekh  encryption key hash
+ekh  - (eof-macl)  payload data
+macl - eof  message integrity tag
 ```
 
 ## Decryption Script
