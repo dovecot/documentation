@@ -28,10 +28,12 @@ This is a non-exhaustive list of RFCs that Dovecot implements/supports.
 - Using TLS with IMAP, POP3 and ACAP ([[rfc,2595]])
 - Using Digest Authentication as a SASL Mechanism (DIGEST-MD5) ([[rfc,2831]])
 - Salted Challenge Response Authentication Mechanism (SCRAM) ([[rfc,5802]])
+- SCRAM-SHA-256 and SCRAM-SHA-256-PLUS Simple Authentication and Security Layer (SASL) Mechanisms ([[rfc,7677]])
 - GSS-API (Kerberos V5) SASL Mechanism ([[rfc,4752]])
 - A Set of Simple Authentication and Security Layer (SASL) Mechanisms for
   OAuth ([[rfc,7628]])
 - [Google XOAUTH2 Protocol](https://developers.google.com/gmail/xoauth2_protocol)
+- Channel Bindings for TLS 1.3 ([[rfc,9266]])
 
 ## POP3
 
