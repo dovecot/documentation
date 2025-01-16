@@ -184,7 +184,7 @@ pip install asn1 cryptography
 
 Probably the most common installation uses the [[plugin,mail-compress]] and
 [[plugin,mail-crypt]] plugins for compression and encryption respectively. See
-also [[link,fs_crypt]] for this setup.
+also [[link,mail_crypt_fs_crypt]] for this setup.
 
 To simulate this scenario consider storing an input file `$in_file` using:
 - `$private_key_path` and `$public_key_path` - the private and public key files
