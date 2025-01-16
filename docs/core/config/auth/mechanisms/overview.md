@@ -49,8 +49,10 @@ all, because they only support verifying a known cleartext password.
 | --------- | ------- |
 | CRAM-MD5 | Protects the password in transit against eavesdroppers. Somewhat good support in clients.|
 | [[link,auth_digest_md5]] | Somewhat stronger cryptographically than CRAM-MD5, but clients rarely support it. |
-| SCRAM-SHA-1 | Salted Challenge Response Authentication Mechanism (SCRAM) SAS and GSS-API Mechanisms. Intended as DIGEST-MD5 replacement. |
+| SCRAM-SHA-1 | Salted Challenge Response Authentication Mechanism (SCRAM) SAS and GSS-API Mechanisms. Intended as DIGEST-MD5 replacement. [[rfc,5802]] |
+| SCRAM-SHA-1-PLUS| SCRAM-SHA-1 with channel binding support [[rfc,5802]]. |
 | SCRAM-SHA-256 | Stronger replacement for SCRAM-SHA-1 [[rfc,7677]]. |
+| SCRAM-SHA-256-PLUS| SCRAM-SHA-256 with channel binding support [[rfc,7677]]. |
 | APOP | This is a POP3-specific authentication. Similar to CRAM-MD5, but requires storing password in cleartext. |
 | [[link,auth_gssapi,GSS-SPNEGO]] | A wrapper mechanism defined by [[rfc,4178]]. Can be accessed via GSSAPI. |
 | [[link,auth_gssapi]] | Kerberos v5 support. |
