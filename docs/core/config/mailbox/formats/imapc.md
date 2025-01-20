@@ -48,6 +48,6 @@ Example:
 
 ```
 plugin {
-  quota = imapc:root=User Quota
+  quota = imapc:Remote Quota:root=User Quota
 }
 ```
