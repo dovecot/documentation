@@ -13,6 +13,7 @@ import pdc from 'pdc'
 import path from 'path'
 import { VFile } from 'vfile'
 import { dovecotSettingBootstrap } from '../lib/utility.js'
+import remarkContainer from 'remark-flexible-containers'
 import remarkDeflist from 'remark-definition-list'
 import remarkMan from 'remark-man'
 import remarkParse from 'remark-parse'
@@ -84,6 +85,14 @@ const processDovecotMdPost = () => {
 			}
 
 			node.node.children = [ u('blockquote', node.children) ]
+		})
+
+		/* Convert container node to elements that remark-man can handle. */
+		visit(tree, 'container', function (node, index, parent) {
+			if (typeof index !== 'number' || !parent) return
+			/* container node is just a containing element so remove it. */
+			parent.children.splice(index, 1, ...node.children)
+			return [SKIP, index]
 		})
 	}
 }
@@ -201,6 +210,10 @@ const main = async (component, outPath) => {
 		await unified().
 			use(processDovecotMdPre).
 			use(remarkParse).
+			use(remarkContainer, {
+				// Strip out container labels
+				title: () => null,
+			}).
 			use(remarkDeflist).
 			use(processDovecotMdPost).
 			use(remarkMan, {
