@@ -11,6 +11,9 @@ dovecotlinks:
   settings_connection_filters:
     hash: connection-filters
     text: Connection Filters
+  settings_groups_includes:
+    hash: groups-includes
+    text: Groups Includes
 ---
 
 # Dovecot Config File Syntax
