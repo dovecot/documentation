@@ -1,7 +1,5 @@
 /* Generates man pages (groff format) from markdown source.
  *
- * REQUIRES pandoc to be installed on the system.
- *
  * Usage: From the base directory of the documentation, run
  * "node util/generate_man.js <output dir>" */
 
@@ -34,7 +32,7 @@ let outPath
 const program = new Command()
 program
 	.name('generate_man.js')
-	.description("Generates man pages from markdown source.\n\nRequires \"pandoc\" to be installed on the system!")
+	.description("Generates man pages from markdown source.")
 	.argument('<component>', 'component to render')
 	.argument('<path>', 'path to output man pages')
 	.option('-d, --debug', 'print debug output')
