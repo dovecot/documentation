@@ -32,3 +32,17 @@
 | `quota_over_script` | Replaced by [[setting,quota_over_status]] named filter with [[setting,execute]]. |
 | `quota_max_mail_size` | Renamed to [[setting,quota_mail_size]]. The default value is set to `unlimited`. |
 | `fts_index_timeout` | Renamed to [[setting,fts_search_timeout]]. The default value is set to `30 secs`. |
+| `namespace/alias_for` | Renamed to [[setting,namespace_alias_for]]. |
+| `namespace/disabled` | Renamed to [[setting,namespace_disabled]]. |
+| `namespace/hidden` | Renamed to [[setting,namespace_hidden]]. |
+| `namespace/ignore_on_failure` | Renamed to [[setting,namespace_ignore_on_failure]]. |
+| `namespace/inbox` | Renamed to [[setting,namespace_inbox]]. |
+| `namespace/list` | Renamed to [[setting,namespace_list]]. |
+| `namespace/order` | Renamed to [[setting,namespace_order]]. |
+| `namespace/separator` | Renamed to [[setting,namespace_separator]]. |
+| `namespace/subscriptions` | Renamed to [[setting,namespace_subscriptions]]. |
+| `namespace/type` | Renamed to [[setting,namespace_type]]. |
+| `namespace/mailbox/auto` | Renamed to [[setting,mailbox_auto]]. |
+| `namespace/mailbox/autoexpunge` | Renamed to [[setting,mailbox_autoexpunge]]. |
+| `namespace/mailbox/autoexpunge_max_mails` | Renamed to [[setting,mailbox_autoexpunge_max_mails]]. |
+| `namespace/mailbox/special_use` | Renamed to [[setting,mailbox_special_use]]. |
