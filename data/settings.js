@@ -2356,17 +2356,6 @@ should be sufficient to allow indexing in a 256 MB maximum size process.
 Set to \`0\` to use the Xapian default.`
 	},
 
-	fts_flatcurve_max_term_size: {
-		default: 30,
-		values: setting_types.UINT,
-		plugin: 'fts-flatcurve',
-		advanced: true,
-		text: `
-The maximum number of characters in a term to index.
-
-The maximum value for this setting is \`200\`.`
-	},
-
 	fts_flatcurve_min_term_size: {
 		default: 2,
 		values: setting_types.UINT,
