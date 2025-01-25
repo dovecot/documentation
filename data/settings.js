@@ -8633,6 +8633,9 @@ The namespace type.  One of:
 Create a new mailbox to the list of mailboxes. The filter name refers to the
 [[setting,mailbox_name]] setting.
 
+The mailbox name can contain \`?\` and \`*\` wildcards. Settings are applied
+for all matching mailbox filters.
+
 ::: tip
 If the mailbox name has spaces, you can put it into quotes:
 
@@ -8641,6 +8644,20 @@ mailbox "Test Mailbox" {
   # ...
 }
 \`\`\`
+:::
+
+::: tip
+It's possible to rename the mailbox in userdb. For example:
+
+\`\`\`[dovecot.conf]
+mailbox junk {
+  name = Junk
+  special_use = \\Junk
+}
+\`\`\`
+
+The userdb can then return \`mailbox/junk/name=Spam\` to rename the mailbox
+for a specific user.
 :::`
 	},
 
