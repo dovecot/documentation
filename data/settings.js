@@ -4573,7 +4573,13 @@ If you want to allow all characters, leave the value empty.`
 		default: '%{user | lower}',
 		values: setting_types.STRING,
 		text: `
-Formatting applied to username before querying the auth database.
+When this setting is used globally, it changes the username, including
+\`%{user}\` variable, for all passdb and userdb lookups.
+
+This setting can also be used in [[link,auth_passwd_file,passdb/userdb
+passwd_file { auth_username_format }]] to change the username for the duration
+of the lookup. The \`%{user}\` variable is not changed. If used inside other
+passdbs/userdbs the setting is ignored.
 
 You can use the standard variables here.
 
