@@ -596,7 +596,7 @@ The type of the configured Sieve script storage. See
 		plugin: 'sieve',
 		default: 'delivery',
 		seealso: [ '[[link,sieve_storage]]' ],
-		values: setting_types.STRLIST,
+		values: setting_types.BOOLLIST,
 		text: `
 The causes for executing Sieve scripts from this storage. This is currently only
 relevant for the IMAPSieve plugin. For standard Sieve execution at message
@@ -725,7 +725,7 @@ These variables can be used:
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
 		default: '\\<see description\\>',
-		values: setting_types.STRLIST,
+		values: setting_types.BOOLLIST,
 		text: `
 The Sieve language extensions available to users.
 
@@ -754,7 +754,7 @@ sieve_extensions {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
 		default: '[[setting,sieve_extensions]]',
-		values: setting_types.STRLIST,
+		values: setting_types.BOOLLIST,
 		text: `
 Which Sieve language extensions are **only** available in global scripts.
 
@@ -879,7 +879,7 @@ If set to \`0\`, no limit on the script size is enforced.`
 	sieve_plugins: {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
-		values: setting_types.STRLIST,
+		values: setting_types.BOOLLIST,
 		text: `
 The Pigeonhole Sieve interpreter can have plugins of its own.
 
