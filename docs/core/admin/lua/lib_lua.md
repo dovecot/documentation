@@ -3,6 +3,9 @@ layout: doc
 title: lib-lua
 dovecotlinks:
   lua_lib-lua: lib-lua
+  lua_lib-http:
+    hash: http-functions
+    text: "lib-lua: HTTP Functions"
 ---
 
 # Lua: lib-lua
