@@ -340,7 +340,3 @@ Once all users have been converted, you can update the global *mail_driver* and
 ## SEE ALSO
 
 [[man,doveadm]], [[man,doveadm-purge]]
-
-Additional resources:
-
-- [[link,design_dsync]]
