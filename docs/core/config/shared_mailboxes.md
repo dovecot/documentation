@@ -423,6 +423,7 @@ CREATE TABLE anyone_shares (
 );
 COMMENT ON TABLE anyone_shares IS 'User from_user shares folders to anyone.';
 ```
+:::
 
 ### Mailbox Sharing
 
