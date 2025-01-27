@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: Overview
+order: 1
 dovecotlinks:
   design_dovecot: Dovecot Design
 ---
