@@ -41,7 +41,6 @@ You can use special variables in several places:
 [[changed,var_expand]]
 
 We have introduced an entirely new variable expansion syntax.
-See [[link,var_expand]] for in-depth details how it works.
 
 The basic syntax is `%{variable (| filter | filter ...)}`, which means that most existing
 variables work, but there are some changes, so check variable usage carefully when converting old syntax.
