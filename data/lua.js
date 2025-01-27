@@ -120,20 +120,13 @@ are not restricted.`
 	{
 		name: 'client',
 		args: {
-			debug: {
+			auto_redirect: {
+				dovecot_setting: 'http_client_auto_redirect',
 				hash_arg: true,
-				type: 'boolean',
-				text: `Enable debug logging.`
 			},
-			no_auto_redirect: {
+			auto_retry: {
+				dovecot_setting: 'http_client_auto_retry',
 				hash_arg: true,
-				type: 'boolean',
-				text: `Don't automatically act upon redirect responses.`
-			},
-			no_auto_retry: {
-				hash_arg: true,
-				type: 'boolean',
-				text: `Never automatically retry requests.`
 			},
 			connect_backoff_time: {
 				dovecot_setting: 'http_client_connect_backoff_time',
@@ -152,7 +145,7 @@ are not restricted.`
 				type: 'event',
 				text: `Parent event to use.`
 			},
-			max_attempts: {
+			request_max_attempts: {
 				dovecot_setting: 'http_client_request_max_attempts',
 				hash_arg: true,
 			},
@@ -168,14 +161,13 @@ are not restricted.`
 				dovecot_setting: 'http_client_max_idle_time',
 				hash_arg: true,
 			},
-			max_redirects: {
+			request_max_redirects: {
 				dovecot_setting: 'http_client_request_max_redirects',
 				hash_arg: true,
 			},
 			proxy_url: {
 				dovecot_setting: 'http_client_proxy_url',
 				hash_arg: true,
-				text: `Proxy URL to use, can include username and password.`
 			},
 			request_absolute_timeout: {
 				dovecot_setting: 'http_client_request_absolute_timeout',
