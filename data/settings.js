@@ -7855,11 +7855,10 @@ This can also be used to specify a different INBOX path with Maildir:
 		values: setting_types.STRING,
 		default: '\\<same as mail_path setting\\>',
 		seealso: [
-			'[[link,design_indexes_index_format]]',
 			'[[link,mail_location_index_files]]',
 		],
 		text: `
-Location of [[link,design_indexes_index_format]].`
+Location of [[link,mail_location_index_files,index files]].`
 	},
 
 	mail_index_private_path: {
