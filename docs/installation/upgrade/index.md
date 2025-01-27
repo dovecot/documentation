@@ -1,5 +1,5 @@
 ---
-title: Upgrading Docs
+title: Upgrading
 exclude: true
 order: 4
 ---
