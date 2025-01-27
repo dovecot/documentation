@@ -364,27 +364,6 @@ protocol imap {
 }
 ```
 
-## External Config Files
-
-Due to historical reasons, there are still some config files that are
-external to the main `dovecot.conf`, which are typically named `*.conf.ext`.
-
-Example:
-
-* dict_legacy { .. } points to `dovecot-dict-*.conf.ext`.
-
-Although these external config files look similar to the main `dovecot.conf`
-file, they have quite a lot of differences in details. Their parsing is done
-with a completely different config parser, so things like `filters`,
-`$variables`, `!includes` and `<files` don't work.
-
-The external config files are also not loaded by the config process at
-startup, but instead they're parsed whenever the value is being used. So the
-external passdb/userdb files are loaded by auth process at startup, while
-the dict config is loaded by dict process at startup.
-
-Eventually these external config files will hopefully be removed.
-
 ## Long lines
 
 It's possible to split the setting values into multiple lines.
