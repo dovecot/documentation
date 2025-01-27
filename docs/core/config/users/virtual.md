@@ -43,7 +43,7 @@ but they have no direct functionality.
 
 So although Dovecot makes it easier to handle "user@domain" style
 usernames (eg. `%{user | username}` and `%{user | domain}` [[variable]]), nothing breaks if you use,
-for example, `domain%{user}ser` style usernames instead.
+for example, `domain%user` style usernames instead.
 
 However some [[link,authentication_mechanisms]] do have an explicit support
 for realms (pretty much the same as domains). If those mechanisms are used,
