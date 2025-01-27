@@ -2,6 +2,7 @@
 layout: doc
 title: Config Syntax
 dovecotlinks:
+  settings_syntax: Dovecot Config File Syntax
   settings_syntax_expansion:
     hash: variable-expansion
     text: variable expansion
