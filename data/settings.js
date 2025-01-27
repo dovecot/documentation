@@ -7320,7 +7320,7 @@ Options:
 :   Do not consider any attachment with disposition inlined.`
 	},
 
-	mail_ext_attachment_dir: {
+	mail_ext_attachment_path: {
 		values: setting_types.STRING,
 		text: `
 The directory in which to store mail attachments.
@@ -7335,7 +7335,7 @@ If no value is specified, attachment saving to external files is disabled.
 
 	mail_ext_attachment: {
 		values: setting_types.NAMED_FILTER,
-		seealso: [ 'fs_driver', 'mail_ext_attachment_dir' ],
+		seealso: [ 'fs_driver', 'mail_ext_attachment_path' ],
 		text: `
 Named filter for initializing [[link,fs,FS Driver]] for external attachments.
 
@@ -7362,7 +7362,7 @@ Commonly used options:
 
 	mail_ext_attachment_hash: {
 		default: '%{sha1}',
-		seealso: [ 'mail_ext_attachment_dir' ],
+		seealso: [ 'mail_ext_attachment_path' ],
 		values: setting_types.ENUM,
 		values_enum: [ '%{md4}', '%{md5}', '%{sha1}', '%{sha256}', '%{sha512}', '%{size}' ],
 		advanced: true,
@@ -7378,7 +7378,7 @@ will return only the first 80 bits of the SHA256 output.`
 
 	mail_ext_attachment_min_size: {
 		default: '128k',
-		seealso: [ 'mail_ext_attachment_dir' ],
+		seealso: [ 'mail_ext_attachment_path' ],
 		values: setting_types.SIZE,
 		text: `Attachments below this size will not be saved externally.`
 	},
