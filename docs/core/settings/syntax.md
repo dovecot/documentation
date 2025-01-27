@@ -24,14 +24,6 @@ See Also:
 * [[link,settings_variables]].
 :::
 
-## Example Configuration
-
-The example configuration files are split into multiple files in `conf.d/`
-directory for grouping the settings. This is just for human readability though.
-Dovecot doesn't care which settings are in which files. They could all be put
-into a single `dovecot.conf` if preferred (except for
-[external config files](#external-config-files)).
-
 ## Config Version
 
 The first setting in the configuration file must be
