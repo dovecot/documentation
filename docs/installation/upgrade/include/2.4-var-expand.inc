@@ -1,6 +1,6 @@
 #### Variable expansion
 
-A new [[link,var_expand]] syntax has been introduced.
+A new [[link,settings_variables]] syntax has been introduced.
 All old one-letter %variables have been removed,
 and some old variable aliases have been dropped too.
 
