@@ -3,18 +3,12 @@ layout: doc
 title: Dictionary
 dovecotlinks:
   dict: dictionary
-  dict_idle_timeout:
-    hash: proxy-parameters
-    text: dictionary idle timeout setting
   dict_proxy:
     hash: dictionary-proxy-process
     text: Dictionary Proxy Process
   dict_redis:
     hash: redis
     text: Redis
-  dict_slow_warn:
-    hash: proxy-parameters
-    text: dictionary slow warning setting
 ---
 
 # Dovecot Dictionary (dict)
