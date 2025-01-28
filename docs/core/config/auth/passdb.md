@@ -53,10 +53,23 @@ setting, you'll need to prefix each password with `{<scheme>}`:
 Dovecot authenticates users against password databases. It can also be used to
 configure things like [[link,authentication_proxies]].
 
+## Multiple Passdbs
+
 You can use multiple databases, so if the password doesn't match in the first
 database, Dovecot checks the next one. This can be useful if you want to easily
 support having both virtual users and also local system users (see
 [[link,auth_multiple_dbs]]).
+
+You can control the behavior of what happens after a passdb lookup is
+successful or unsuccessful with settings:
+
+ * [[setting,passdb_result_success]]
+ * [[setting,passdb_result_failure]]
+ * [[setting,passdb_result_internalfail]]
+
+When using passdbs inside a `protocol ... { ... }` filter, the protocol-specific
+passdbs are executed first, and only then followed by the globally defined
+passdbs. Currently it's not possible to configure passdbs inside other filters.
 
 ## Success/Failure Database
 
