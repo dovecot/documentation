@@ -32,6 +32,22 @@ post-login information specific to the authenticated user. This may include:
 The `userdb` and [[link,passdb]] may be the same or they may be different
 depending on your needs. You can also have [[link,auth_multiple_dbs]].
 
+## Multiple Userdbs
+
+You can use multiple databases, so if the user isn't found from the first
+database, Dovecot checks the next one.
+
+You can control the behavior of what happens after a userdb lookup is
+successful or unsuccessful with settings:
+
+ * [[setting,userdb_result_success]]
+ * [[setting,userdb_result_failure]]
+ * [[setting,userdb_result_internalfail]]
+
+When using userdbs inside a `protocol ... { ... }` filter, the protocol-specific
+userdbs are executed first, and only then followed by the globally defined
+userdbs. Currently it's not possible to configure userdbs inside other filters.
+
 ## Fields
 
 The user database lookup can return these fields:
