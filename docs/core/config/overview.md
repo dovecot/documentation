@@ -8,6 +8,8 @@ order: 1
 
  * [[link,settings_syntax]]
  * [[link,summary_settings]]
+ * [[link,quick_config]]
+ * [[link,basic_config]]
 
 # Dovecot Backend
 
