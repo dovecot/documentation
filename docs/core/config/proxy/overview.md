@@ -1,6 +1,7 @@
 ---
 layout: doc
-title: Proxy passdb
+title: Overview
+order: 101
 dovecotlinks:
   authentication_proxies: proxy passdb
   auth_forward_fields:
