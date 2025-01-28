@@ -1,6 +1,9 @@
 ---
 layout: doc
 title: Basic Configuration
+order: 3
+dovecotlinks:
+  basic_config: Basic configuration
 ---
 
 # Basic Configuration
