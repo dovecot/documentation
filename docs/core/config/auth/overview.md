@@ -1,6 +1,7 @@
 ---
 layout: doc
-title: Authentication
+title: Overview
+order: 101
 dovecotlinks:
   authentication: authentication
   authentication_debug:
