@@ -1,6 +1,6 @@
 ---
 layout: doc
-title: mail_location Setting
+title: Mail Location
 dovecotlinks:
   mail_location:
     hash: mail-location-setting
@@ -13,7 +13,7 @@ dovecotlinks:
     text: Mailbox Root Autodetection
 ---
 
-# Mail Location Setting
+# Mail Location
 
 ## Settings
 
