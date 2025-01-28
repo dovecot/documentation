@@ -1,8 +1,9 @@
 ---
 layout: doc
 title: Quick Configuration
+order: 2
 dovecotlinks:
-  quick_config: quick configuration
+  quick_config: Quick configuration
 ---
 
 # Quick Configuration
