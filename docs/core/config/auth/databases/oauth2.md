@@ -227,7 +227,7 @@ To use local validation, put into `dovecot.conf`:
 ```[dovecot.conf]
 oauth2 {
   introspection_mode = local
-  local_validation {
+  oauth2_local_validation {
     dict fs {
       fs posix {
         prefix=/etc/dovecot/keys/

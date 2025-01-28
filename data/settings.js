@@ -9055,7 +9055,7 @@ A dictionary for fetching validation keys.
 Example:
 
 \`\`\`[dovecot.conf]
-local_validation {
+oauth2_local_validation {
   dict fs {
     fs posix {
       prefix = /tmp/keys/
