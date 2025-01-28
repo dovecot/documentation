@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: Running Dovecot
+order: 101
 dovecotlinks:
   running_dovecot: running Dovecot
 ---
