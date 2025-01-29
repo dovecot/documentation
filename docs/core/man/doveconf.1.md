@@ -30,7 +30,8 @@ dovecotComponent: core
 into a simpler format used by the rest of Dovecot.
 
 All standalone programs, such as [[man,dovecot]], will first get their settings
-by executing doveconf.
+by executing doveconf, unless they can get the settings by connecting to the
+config UNIX socket.
 
 For system administrators, **doveconf** is mainly useful for dumping the
 configuration in easy human readable output.
