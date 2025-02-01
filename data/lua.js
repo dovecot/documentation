@@ -400,6 +400,12 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	{
+		name: 'set_always_log_source',
+		tags: [ 'event', 'event_passthrough' ],
+		text: `Add source path:line to the log messages.`
+	},
+
+	{
 		name: 'set_name',
 		args: {
 			name: {
