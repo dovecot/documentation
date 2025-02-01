@@ -406,6 +406,22 @@ If header is not found from the response, an empty string is returned.`
 	},
 
 	{
+		name: 'set_forced_debug',
+		tags: [ 'event' ],
+		text: `
+[[added,event_set_forced_debug_added]] Enable forced debugging for the event
+and its child events.`
+	},
+
+	{
+		name: 'unset_forced_debug',
+		tags: [ 'event' ],
+		text: `
+[[added,event_set_forced_debug_added]] Disable previously enabled forced
+debugging.`
+	},
+
+	{
 		name: 'set_name',
 		args: {
 			name: {
