@@ -1,5 +1,5 @@
 ---
-layout: doct
+layout: doc
 title: Exim and Dovecot SASL
 dovecotlinks:
   howto_exim_and_dovecot_sasl: Exim and Dovecot SASL
