@@ -19,7 +19,9 @@ auth_mechanisms = plain login
 service auth {
   ...
   # SASL
-  unix_listener auth-client {
+  unix_listener auth-exim {
+    # Exim requires legacy auth type until it gets updated
+    type = auth-legacy
     mode = 0660
     user = mail
   }
@@ -31,7 +33,7 @@ service auth {
 dovecot_login:
   driver = dovecot
   public_name = LOGIN
-  server_socket = /var/run/dovecot/auth-client
+  server_socket = /var/run/dovecot/auth-exim
   # setting server_set_id might break several headers in mails sent by
   # authenticated smtp. So be careful.
   server_set_id = $auth1
@@ -39,7 +41,7 @@ dovecot_login:
 dovecot_plain:
   driver = dovecot
   public_name = PLAIN
-  server_socket = /var/run/dovecot/auth-client
+  server_socket = /var/run/dovecot/auth-exim
   server_set_id = $auth1
 ```
 :::
