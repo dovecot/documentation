@@ -119,7 +119,7 @@ export default defineConfig({
 		},
 
 		editLink: {
-			pattern: 'https://github.com/dovecot/documentation/edit/main/docs/:path'
+			pattern: 'https://github.com/dovecot/documentation/edit/main/:path'
 		},
 
 		socialLinks: [
