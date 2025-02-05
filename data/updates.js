@@ -22,6 +22,7 @@ export const updates = {
 	auth_oauth2_no_passdb_changed: '2.4.0',
 	auth_policy_fail_type: '2.4.0',
 	auth_policy_reject: '2.4.0',
+	auth_protocol_handshake_changed: '2.4.0',
 	auth_server_common_secured: '2.4.0',
 	dcrypt_same_cipher_algo_added: '2.4.0',
 	dict_protocol_v4: '2.4.0',
