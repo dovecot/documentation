@@ -8,7 +8,7 @@ dovecotlinks:
 # Dovecot Authentication Protocol
 
 ::: info
-This document specifies the Dovecot Auth protocol v1.2.
+This document specifies the Dovecot Auth protocol v1.3.
 :::
 
 This is a line based protocol. Each line is a command which ends with an
@@ -51,12 +51,26 @@ can perform multiple authentications against different users.
 
 Server is the auth process.
 
-The connection starts by both client and server sending handshakes:
+The connection starts by both client and server sending the VERSION:
 
 ```
 C: "VERSION" TAB <major> TAB <minor>
-C: "CPID" TAB <pid>
 S: "VERSION" TAB <major> TAB <minor>
+```
+
+The client can also pipeline the rest of the handshake with the VERSION:
+
+```
+C: "CPID" TAB <pid>
+```
+
+[[changed,auth_protocol_handshake_changed]] The server no longer pipelines
+the rest of the handshake with the VERSION. It first waits for the client
+to provide the VERSION. Based on that, it may give a different response.
+
+The rest of the server handshake:
+
+```
 S: "SPID" TAB <pid>
 S: "CUID" TAB <pid>
 S: "COOKIE" TAB <cookie>
@@ -92,6 +106,8 @@ be ignored.
 ### Authentication Mechanisms
 
 MECH command announces an available authentication SASL mechanism.
+If the client advertises minor version 3 or higher, also SASL mechanisms using
+channel binding are returned.
 
 Mechanisms may have parameters giving some details about them:
 
@@ -103,6 +119,7 @@ Mechanisms may have parameters giving some details about them:
 | `active` | Subject to active (non-dictionary) attack |
 | `forward-secrecy` | Provides forward secrecy between sessions |
 | `mutual-auth` | Provides mutual authentication |
+| `channel-binding` | Uses channel binding (v1.3+ protocol) |
 | `private` | Don't advertise this as available SASL mechanism (eg. APOP) |
 
 ### Authentication Request
