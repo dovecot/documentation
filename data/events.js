@@ -1342,6 +1342,18 @@ Proxying error codes:
 | \`proxy_dest_redirected\` | Local authentication succeeded, but destination hop redirected to another host. |`
 	},
 
+	proxy_session_reconnecting: {
+		inherit: 'login_proxy_session',
+		fields: {
+			error: `Reason for the attempt failure.`,
+			error_code: `<a href="#proxy_session_finished_error_code">Error code</a> for the attempt failure.`,
+		},
+		text: `
+Connection to proxy failed, but reconnect will be attempted.
+\`reconnect_attempts=1\` for the first event and increases for each subsequent
+event.`
+	},
+
 }
 
 /* 'Global Inherits': All events inherit these fields. */
