@@ -17,6 +17,7 @@ dovecotComponent: core
   [**-m** *mailbox*]
   [**-o** *setting=value*]
   [**-p** *path*]
+  [**-r** *address*]
 
 ## DESCRIPTION
 
@@ -35,8 +36,8 @@ Main features of the **dovecot-lda** are:
 Options accepted by **dovecot-lda**:
 
 **-a** *address*
-:   Destination address (e.g. user+ext@domain). Default is the same as
-    *username*.
+:   Destination address (e.g. user+ext@domain). If not specified, default is
+    based on the [[setting,lda_original_recipient_header]] setting.
 
 **-c** *config_file*
 :   Alternative configuration file path.
@@ -52,16 +53,33 @@ Options accepted by **dovecot-lda**:
     ourself.
 
 **-f** *envelope_sender*
-:   Envelope sender address.
+:   Envelope sender address. If not specified and message data begins with
+    a valid mbox-style `"From "` line, the address is taken from it.
 
 **-k**
 :   Don't clear all environment at startup.
 
 **-m** *mailbox*
 :   Destination mailbox (default is **INBOX**). If the mailbox doesn't
-    exist, it will not be created (unless the *lda_mailbox_autocreate*
-    setting is set to **yes**). If a message couldn't be saved to the
-    *mailbox* for any reason, it's delivered to **INBOX** instead.
+    exist, it will not be created (unless
+    [[setting,lda_mailbox_autocreate,yes]]). If a message couldn't be saved to
+    the *mailbox* for any reason, it's delivered to **INBOX** instead.
+
+    - If Sieve plugin is used, this mailbox is used as the `keep`
+      action's mailbox. It's also used if there is no Sieve script or if
+      the script fails for some reason.
+
+    - Deliveries to namespace prefix will result in saving the mail to
+      INBOX instead. For example if you have `Mail/` namespace, this
+      allows you to specify `dovecot-lda -m Mail/$mailbox` where mail
+      is stored to `Mail/$mailbox` or to INBOX if `$mailbox` is empty.
+
+    - The mailbox name is specified the same as it's visible in IMAP
+      client. For example if you've a Maildir with `.box.sub/`
+      directory, your namespace configuration is
+      [[setting,namespace_prefix,INBOX/]] and
+      [[setting,namespace_separator,/]], the correct way to deliver mail there
+      is to use `-m INBOX/box/sub`
 
 **-o** *setting*<!-- -->**=**<!-- -->*value*
 :   Overrides the configuration *setting* from
@@ -75,6 +93,10 @@ Options accepted by **dovecot-lda**:
     This allows a single mail to be delivered to multiple users using
     hard links, but currently it also prevents deliver from updating
     cache file so it shouldn't be used unless really necessary.
+
+**-r** *address*
+:   Final envelope recipient address. Defaults to `-a` address, but may differ
+    if, e.g., aliases are used or when dropping the `+detail` part.
 
 ## EXIT STATUS
 
