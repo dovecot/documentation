@@ -139,7 +139,6 @@ size (in bytes) of the item is returned.
 
 <!-- @include: ./reporting-bugs.inc -->
 
-SEE ALSO
+## SEE ALSO
 
 [[man,doveadm]]
-
