@@ -139,6 +139,20 @@ size (in bytes) of the item is returned.
 
 <!-- @include: ./reporting-bugs.inc -->
 
+## EXAMPLE
+
+How to decompress a file.
+
+```sh
+doveadm -o fs=compress,posix -o fs/compress/fs_driver=compress -o fs/posix/fs_driver=posix -o fs_posix_prefix=/tmp/ fs get empty test.gz
+```
+
+Using a named filter.
+
+```sh
+doveadm mail fs -u testuser get obox path/to/file
+```
+
 ## SEE ALSO
 
 [[man,doveadm]]
