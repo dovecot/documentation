@@ -6792,10 +6792,14 @@ save a mail message?`
 
 	lda_original_recipient_header: {
 		tags: [ 'lda' ],
+		default: '\\<lda/lmtp specific\\>',
 		values: setting_types.STRING,
 		text: `
 The header from which the original recipient address (used in the SMTP RCPT
 TO: address) is obtained if that address is not available elsewhere.
+
+With [[link,lda]] the default is based on the username in \`-d\` parameter.
+With [[link,lmtp]] the default is the same as RCPT TO.
 
 Example:
 
