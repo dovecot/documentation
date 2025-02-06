@@ -203,62 +203,9 @@ It's not possible to run dovecot-lda as root without `-d` parameter.
 
 If you're using more than one UID for users, you're going to have
 problems running dovecot-lda, as most MTAs won't let you run dovecot-lda
-as root.
-
-Best solution is to use [[link,lmtp]] instead, but if you can't
-do that, there are two ways to work around this problem:
-
-1. Make dovecot-lda setuid-root.
-2. Use sudo to wrap the invocation of dovecot-lda.
-
-#### Making dovecot-lda setuid-root
-
-::: danger
-**It's insecure to make dovecot-lda setuid-root**, especially if
-you have untrusted users in your system. **Setuid-root dovecot-lda can
-be used to gain root privileges**.
-:::
-
-You should take extra steps to make sure that untrusted users can't run it
-and potentially gain root privileges. You can do this by making sure only
-your MTA has execution access to it. For example:
-
-```
-# chgrp secmail /usr/local/libexec/dovecot/dovecot-lda
-# chmod 04750 /usr/local/libexec/dovecot/dovecot-lda
-# ls -l /usr/local/libexec/dovecot/dovecot-lda
--rwsr-x--- 1 root secmail 4023932 2010-06-15 16:23 dovecot-lda
-```
-
-Then start dovecot-lda as a user that belongs to secmail group. Note
-that you have to recreate these rights after each update of Dovecot.
-
-#### Using sudo
-
-::: danger
-Alternatively, you can use sudo to wrap the invocation of dovecot-lda.
-This has the advantage that updates will not clobber the setuid bit, but
-note that **it is just as insecure being able to run dovecot-lda via
-sudo as setuid-root**. Make sure you only give your MTA the ability to
-invoke dovecot-lda via sudo.
-:::
-
-First configure sudo to allow 'dovelda' user to invoke dovecot-lda by
-adding the following to your `/etc/sudoers`:
-
-```
-Defaults:dovelda !syslog
-dovelda          ALL=NOPASSWD:/usr/local/libexec/dovecot/dovecot-lda
-```
-
-Then configure your MTA to invoke dovecot-lda as user 'dovelda' and via
-sudo:
-
-```sh
-/usr/bin/sudo /usr/local/libexec/dovecot/dovecot-lda
-```
-
-instead of just plain `/usr/local/libexec/dovecot/dovecot-lda`.
+as root. The only recommended solution is to use [[link,lmtp]]. It is not
+recommended to make `dovecot-lda` binary setuid-root, nor to run it via
+`sudo`, as these cannot be used safely.
 
 ## Problems with dovecot-lda
 
