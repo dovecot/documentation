@@ -191,7 +191,7 @@ it's run for system users:
 HOME=/path/to/user/homedir dovecot-lda -f $FROM_ENVELOPE
 ```
 
-This way you don't need to have a master listener socket. Note that you
+This way you don't need to have a userdb listener socket. Note that you
 should verify the user's existence prior to running dovecot-lda,
 otherwise you'll end up having mail delivered to nonexistent users as
 well.
