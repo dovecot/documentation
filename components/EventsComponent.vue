@@ -36,7 +36,7 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 <template>
  <section class="eventsList">
   <article v-for="(v, k) in d">
-   <h3 id="k" tabindex="-1">
+   <h3 :id="k" tabindex="-1">
     <code>{{ k }}</code>
     <a class="header-anchor" :href="'#' + k"></a>
    </h3>
