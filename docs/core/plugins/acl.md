@@ -23,11 +23,16 @@ themselves).
 The ACL code was written to allow multiple ACL backends, but currently Dovecot
 supports only virtual ACL files.
 
-Note that using ACLs doesn't grant mail processes any extra filesystem
+::: warning
+Using ACLs doesn't grant mail processes any extra filesystem
 permissions that they already don't have.
+
 [[link,shared_mailboxes_permissions,You must make sure that the processes have enough permissions]]
-to be able to access the mailboxes. When testing you could first try
-accessing shared/public mailboxes without ACL plugin even enabled.
+to be able to access the mailboxes.
+
+To test, you can first try accessing shared/public mailboxes without
+ACL plugin enabled.
+:::
 
 ## Settings (dovecot.conf)
 
