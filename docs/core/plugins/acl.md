@@ -18,7 +18,7 @@ shared mailboxes work, see [[link,shared_mailboxes]].
 
 Dovecot supports both administrator-configured ACL files and the IMAP ACL
 extension (see [[plugin,imap-acl]], which allows users to change ACLs
-themselves.
+themselves).
 
 The ACL code was written to allow multiple ACL backends, but currently Dovecot
 supports only virtual ACL files.
