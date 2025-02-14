@@ -208,7 +208,7 @@ passdb lua {
 If `auth_password_verify` is found, it's always used.
 
 By default, dovecot runs Lua scripts in auth-worker processes. If you do not
-want this, you can disable blocking, and Lua script will be run in auth
+want this, you can disable using worker, and Lua script will be run in auth
 process. This can degrade performance if your script is slow or makes external
 lookups.
 
