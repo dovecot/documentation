@@ -111,6 +111,10 @@ Logs warning message.
 
 ##### `auth_request#response_from_template(template)`
 
+[[removed,auth_lua_string_response_removed]] This was a bit unsafe
+function. Return the table instead with the necessary
+`auth_request#var_expand()` calls.
+
 Takes in `key=value` template and expands it using `var_expand()` and produces
 table suitable for passdb result.
 
@@ -216,25 +220,29 @@ Lua passdb supports two modes of function:
 
 Function signature is `auth_passdb_lookup(request)`.
 
-Function must return a tuple, which contains a return code, and also
-additionally a string or table.
+Function must return a tuple, which contains:
+ * `dovecot.auth.PASSDB_RESULT_OK` and extra fields table
+ * `dovecot.auth.PASSDB_RESULT_*` error and error string
 
-Table must be in key-value format, as it will be imported into auth request.
+The extra fields table must be in key-value format, as it will be imported into
+auth request.
 
-The string must be in `key=value` format, except if return code indicates
-internal error, the second parameter can be used as error string.
+[[removed,auth_lua_string_response_removed]] String can no longer be returned
+for `PASSDB_RESULT_OK`.
 
 #### Password Verification Database
 
 Function signature is `auth_password_verify(request, password)`.
 
-Function must return a tuple, which contains a return code, and also
-additionally a string or table.
+Function must return a tuple, which contains:
+ * `dovecot.auth.PASSDB_RESULT_OK` and extra fields table
+ * `dovecot.auth.PASSDB_RESULT_*` error and error string
 
-Table must be in key-value format, as it will be imported into auth request.
+The extra fields table must be in key-value format, as it will be imported into
+auth request.
 
-The string must be in `key=value` format, except if return code indicates
-internal error, the second parameter can be used as error string.
+[[removed,auth_lua_string_response_removed]] String can no longer be returned
+for `PASSDB_RESULT_OK`.
 
 ## userdb
 
@@ -254,13 +262,15 @@ Lua userdb supports both single user lookup and iteration.
 
 Function signature is `auth_userdb_lookup(request)`.
 
-The function must return a tuple, which contains a return code, and also
-additionally a string or table.
+Function must return a tuple, which contains:
+ * `dovecot.auth.USERDB_RESULT_OK` and extra fields table
+ * `dovecot.auth.USERDB_RESULT_*` error and error string
 
-Table must be in key-value format, as it will be imported into auth request.
+The extra fields table must be in key-value format, as it will be imported into
+auth request.
 
-The string must be in key=value format, except if return code indicates
-internal error, the second parameter can be used as error string.
+[[removed,auth_lua_string_response_removed]] String can no longer be returned
+for `USERDB_RESULT_OK`.
 
 #### User Iteration
 
@@ -277,14 +287,14 @@ The iteration will hold the whole user database in memory during iteration.
 ```lua:line-numbers
 function auth_passdb_lookup(req)
   if req.user == "testuser1" then
-    return dovecot.auth.PASSDB_RESULT_OK, "password=pass"
+    return dovecot.auth.PASSDB_RESULT_OK, { password = "pass" }
   end
   return dovecot.auth.PASSDB_RESULT_USER_UNKNOWN, "no such user"
 end
 
 function auth_userdb_lookup(req)
   if req.user == "testuser1" then
-    return dovecot.auth.USERDB_RESULT_OK, "uid=vmail gid=vmail"
+    return dovecot.auth.USERDB_RESULT_OK, { uid = "vmail", gid = "vmail" }
   end
   return dovecot.auth.USERDB_RESULT_USER_UNKNOWN, "no such user"
 end
@@ -319,12 +329,12 @@ function auth_passdb_lookup(req)
     for user, pass in string.gmatch(line, "(%w+)%s(.+)") do
       if (user == req.username) then
         -- you can add additional information here, like userdb_uid
-        return dovecot.auth.PASSDB_RESULT_OK, "password=" .. pass
+        return dovecot.auth.PASSDB_RESULT_OK, { password = pass }
       end
     end
   end
 
-  return dovecot.auth.PASSDB_RESULT_USER_UNKNOWN, ""
+  return dovecot.auth.PASSDB_RESULT_USER_UNKNOWN
 end
 ```
 
@@ -349,18 +359,18 @@ function auth_passdb_lookup(req)
   res = db_lookup(req.username)
   if res.result == 0 then
     -- you can add additional information here for passdb
-    return dovecot.auth.PASSDB_RESULT_OK, "password=" .. res.password
+    return dovecot.auth.PASSDB_RESULT_OK, { password = res.password }
   end
-  return dovecot.auth.PASSDB_RESULT_USER_UNKNOWN, ""
+  return dovecot.auth.PASSDB_RESULT_USER_UNKNOWN
 end
 
 function auth_userdb_lookup(req)
   res = db_lookup(req.username)
   if res.result == 0 then
     -- you can add additional information here for userdb, like uid or home
-    return dovecot.auth.USERDB_RESULT_OK, "uid=vmail gid=vmail"
+    return dovecot.auth.USERDB_RESULT_OK, { uid = "vmail, gid = "vmail" }
   end
-  return dovecot.auth.USERDB_RESULT_USER_UNKNOWN, ""
+  return dovecot.auth.USERDB_RESULT_USER_UNKNOWN
 end
 
 function auth_userdb_iterate()
