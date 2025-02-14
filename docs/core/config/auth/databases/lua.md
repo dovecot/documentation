@@ -250,7 +250,8 @@ To configure userdb in dovecot, use:
 
 ```[dovecot.conf]
 userdb lua {
-  args = file=/path/to/lua blocking=yes # default is yes
+  lua_file = /path/to/lua
+  use_worker = yes # default is yes
 }
 ```
 
