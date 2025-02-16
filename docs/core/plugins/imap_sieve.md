@@ -108,6 +108,25 @@ This plugin registers the `imapsieve` extension with the Sieve
 interpreter. This extension is enabled implicitly, which means that it
 does not need to be added to the [[setting,sieve_extensions]] setting.
 
+## Example Configuration
+
+```[dovecot.conf]]]
+imapsieve_from Spam {
+  sieve_script ham {
+    type = before
+    cause = copy
+    path = /etc/dovecot/sieve/ham.sieve
+  }
+}
+mailbox Spam {
+  sieve_script spam {
+    type = before
+    cause = copy
+    path = /etc/dovecot/sieve/spam.sieve
+  }
+}
+```
+
 ## Settings
 
 ### imap-sieve
