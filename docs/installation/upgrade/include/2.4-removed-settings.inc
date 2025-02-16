@@ -10,4 +10,5 @@
 | `sieve_dir` | See [[link,sieve_storage]]. |
 | `sieve_global_dir` | See [[link,sieve_storage]]. |
 | `sieve_global_path` | See [[link,sieve_storage]]. |
+| `sieve_editheader_protected` | Replaced by [[setting,sieve_editheader_header_forbid_add]] and [[setting,sieve_editheader_header_forbid_delete]]. |
 | `sieve_vacation_max_subject_codepoints` | |
