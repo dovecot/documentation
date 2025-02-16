@@ -592,7 +592,7 @@ The type of the configured Sieve script storage. See
 	},
 
 	sieve_script_cause: {
-		tags: [ 'sieve-storage' ],
+		tags: [ 'sieve-storage', 'imap-sieve' ],
 		plugin: 'sieve',
 		default: 'delivery',
 		seealso: [ '[[link,sieve_storage]]' ],
