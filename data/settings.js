@@ -600,7 +600,8 @@ The type of the configured Sieve script storage. See
 		text: `
 The causes for executing Sieve scripts from this storage. This is currently only
 relevant for the IMAPSieve plugin. For standard Sieve execution at message
-delivery the cause is "delivery".`
+delivery the cause is "delivery". Other causes can be \`append\`, \`copy\` and
+\`flag\`.`
 	},
 
 	sieve_script_precedence: {
