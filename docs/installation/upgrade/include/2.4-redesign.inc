@@ -43,3 +43,8 @@ passdb sql2 {
   #query = SELECT ...
 }
 ```
+
+#### Plugin settings
+
+The `plugin { ... }` section no longer exists. Plugin settings are global
+the same as all other settings.
