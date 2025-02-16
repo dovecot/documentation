@@ -16,6 +16,10 @@ headers installed.
 
 For MariaDB, you need to have compatibility headers installed.
 
+## Example Configuration
+
+See [[link,auth_mysql]].
+
 ## Settings
 
 <SettingsComponent tag="sql-mysql" />

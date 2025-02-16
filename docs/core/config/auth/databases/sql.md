@@ -3,6 +3,15 @@ layout: doc
 title: SQL
 dovecotlinks:
   auth_sql: SQL authentication database
+  auth_mysql:
+    hash: mysql
+    text: MySQL authentication
+  auth_postgresql:
+    hash: postgresql
+    text: PostgreSQL authentication
+  auth_sqlite:
+    hash: sqlite
+    text: Sqlite authentication
 ---
 
 # SQL Database (`sql`)
