@@ -59,6 +59,27 @@
 | `quota_over_flag_value` | Renamed to [[setting,quota_over_status_mask]]. |
 | `quota_over_script` | Replaced by [[setting,quota_over_status]] named filter with [[setting,execute]]. |
 | `quota_max_mail_size` | Renamed to [[setting,quota_mail_size]]. The default value is set to `unlimited`. |
+| `sieve` | Replaced by [[link,sieve_storage,storage settings]] inside [[setting,sieve_script]] filter. |
+| `sieve_after` | Replaced by [[setting,sieve_script_type,after]] for [[setting,sieve_script]] filter. |
+| `sieve_default` | Replaced by [[setting,sieve_script_type,default]] for [[setting,sieve_script]] filter. |
+| `sieve_default_name` | Replaced by [[setting,sieve_script_name]]. |
+| `sieve_discard` | Replaced by [[setting,sieve_script_type,discard]] for [[setting,sieve_script]] filter. |
+| `sieve_global` | Replaced by [[setting,sieve_script_type,global]] for [[setting,sieve_script]] filter. |
+| `sieve_quota_max_scripts` | Renamed to [[setting,sieve_quota_script_count]]. |
+| `sieve_quota_max_storage` | Renamed to [[setting,sieve_quota_storage_size]]. |
+| `sieve_user_log` | Renamed to [[setting,sieve_user_log_path]]. |
+| `sieve_editheader_forbid_add` | Renamed to [[setting,sieve_editheader_header_forbid_add]]. |
+| `sieve_editheader_forbid_delete` | Renamed to [[setting,sieve_editheader_header_forbid_delete]]. |
+| `sieve_spamtest_max_header` | Renamed to [[setting,sieve_spamtest_score_max_header]]. |
+| `sieve_spamtest_max_value` | Renamed to [[setting,sieve_spamtest_score_max_value]]. |
+| `sieve_spamtest_text_value<X>` | Changed [[setting,sieve_spamtest_text_value]] into string list. |
+| `sieve_vacation_dont_check_recipient` | replaced by [[setting,sieve_vacation_check_recipient]]. |
+| `sieve_variables_max_scope_size` | Renamed to [[setting,sieve_variables_max_scope_count]]. |
+| `sieve_variables_max_variable_size` | Renamed to [[setting,sieve_variables_max_value_size]]. |
+| `sieve_virustest_max_header` | Renamed to [[setting,sieve_virustest_score_max_header]]. |
+| `sieve_virustest_max_value` | Renamed to [[setting,sieve_virustest_score_max_value]]. |
+| `sieve_virustest_text_value<X>` | Changed [[setting,sieve_virustest_text_value]] into string list. |
+| `imapsieve_mailbox*` | See [[plugin,imap-sieve]]. |
 | `ssl_alt_cert` | Renamed to [[setting,ssl_server_alt_cert_file]]. |
 | `ssl_alt_key` | Renamed to [[setting,ssl_server_alt_key_file]]. |
 | `ssl_ca` | Split to [[setting,ssl_server_ca_file]] and [[setting,ssl_client_ca_file]]. |
