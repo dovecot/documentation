@@ -112,7 +112,7 @@ does not need to be added to the [[setting,sieve_extensions]] setting.
 
 ### imap-sieve
 
-<SettingsComponent tag="imap_sieve" level="3" />
+<SettingsComponent tag="imap-sieve" level="3" />
 
 ### sieve-imapsieve
 
