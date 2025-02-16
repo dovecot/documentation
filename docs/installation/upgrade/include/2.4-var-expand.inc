@@ -4,6 +4,11 @@ A new [[link,settings_variables]] syntax has been introduced.
 All old one-letter %variables have been removed,
 and some old variable aliases have been dropped too.
 
+The new syntax uses `|` character for "filters" which can be chained.
+This is why some of the old variables have been replaced by filters.
+For example the old `%d` variable is now `%{user | domain}`, which gets
+the "user" variable and applies the "domain" filter for it.
+
 ##### List of common short variables and their replacements.
 
 | Old variable | New syntax |
