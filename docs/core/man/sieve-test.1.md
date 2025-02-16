@@ -74,14 +74,6 @@ the execution and evaluation of commands and tests respectively.
     these headers is present either, the sender envelope address defaults
     to *sender@example.com*.
 
-**-l**\ *mail-location*
-:   The location of the user's mail store. The syntax of this option's
-    *mail-location* parameter is identical to what is used for the
-    mail_location setting in the Dovecot config file. This parameter is
-    typically used in combination with **-e** to test the actual delivery
-    of messages. If **-l** is omitted when **-e** is specified, mail
-    store actions like fileinto and keep are skipped.
-
 **-m**\ *default-mailbox*
 :   The mailbox where the keep action stores the message. This is "INBOX"
     by default.
