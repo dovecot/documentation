@@ -9338,7 +9338,7 @@ The static password to be used for all users authenticating using this passdb.`
 		},
 		text: `
 If \`yes\`, run the passdb lookup in auth-worker process instead of the main
-auth process.`
+auth process. This setting is only used by some of the passdb drivers.`
 	},
 
 	passdb_result_success: {
@@ -10968,7 +10968,7 @@ Skip user existence verification via passdb lookup.`
 		},
 		text: `
 If \`yes\`, run the userdb lookup in auth-worker process instead of the main
-auth process.`
+auth process. This setting is only used by some of the userdb drivers.`
 	},
 
 	userdb_result_success: {
