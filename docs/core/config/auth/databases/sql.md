@@ -130,6 +130,15 @@ fields and use [[link,auth_prefetch]] to use those fields.
 If you're using Dovecot's deliver you'll still need to have the
 [[setting,userdb_sql_query]] working.
 
+## Worker processes
+
+MySQL and SQLite lookups are always done using `auth-worker` processes.
+
+[[changed,auth_sql_workers_changed]] PostgreSQL and Cassandra lookups are
+done by default in the main `auth` process. They can be made to use
+`auth-worker` processes by setting [[setting,passdb_use_worker,yes]] and
+[[setting,userdb_use_worker,yes]].
+
 ## High Availability
 
 You can add multiple [[link,sql_mysql]] or [[link,sql_postgresql]] settings to
