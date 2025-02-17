@@ -92,15 +92,15 @@ configuring Dovecot first, you can use `doveadm -O pw` to do so.
 
 ## EXAMPLE
 
-A DIGEST-MD5 hash for jane.roe@example.com.
+An ARGON2ID hash (best at time of this writing) for jane.roe@example.com.
 
 ```sh
-doveadm pw -s digest-md5 -u jane.roe@example.com
+doveadm pw -s ARGON2ID -u jane.roe@example.com
 ``ldas;l;als;las;lkas
 ```
 Enter new password:
 Retype new password:
-{DIGEST-MD5}9b9dcb4466233a9307bbc33708dffda0
+{ARGON2ID}$argon2id$v=19$m=65536,t=3,p=1$AOrrkaFmGxCFtX+NCSHFkg$N3rlzYFqyNkCwrOingnDJ/qDQ09yGHgQa8PQfbu7rIE
 ```
 
 A CRAM-MD5 hash for john.doe@example.com.
