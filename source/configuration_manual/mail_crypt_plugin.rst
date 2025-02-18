@@ -45,6 +45,17 @@ provisioned private key. Provisioned private keys can be Elliptic Curve (EC)
 keys or RSA Encryption is done using the Integrated Encryption Scheme (IES).
 This algorithm is usable both with EC and RSA keys.
 
+Limitations
+-----------
+
+Since mail crypt plugin uses AES-GCM, it is limited to encrypting at most 64 GiB
+emails (after potential compression).
+
+Fs-crypt plugin has same limitation, but you can use AES-CBC instead if you run
+into this problem.
+
+Also, particularly the AES-XTS or AES-CCM cannot be used due to the way they work.
+
 Technical Requirements
 ======================
 
