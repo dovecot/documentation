@@ -62,6 +62,14 @@ Provisioned private keys can be Elliptic Curve (EC) keys or RSA Encryption
 is done using the Integrated Encryption Scheme (IES). This algorithm is
 usable both with EC and RSA keys.
 
+## Limitations
+
+By default, AES-GCM is used. This algorithm is limited to 64 GiB input, after
+potential compression. If you expect to run to this limitation, you should use
+AES-CBC or ChaCha20-Poly1305 algorithm.
+
+Also, particularly the AES-XTS or AES-CCM cannot be used due to the way they work. 
+
 ## Technical Requirements
 
 Using per-folder keys is not considered production quality, but global keys
