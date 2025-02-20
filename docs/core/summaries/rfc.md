@@ -100,6 +100,7 @@ This is a non-exhaustive list of RFCs that Dovecot implements/supports.
   ([[rfc,7162]])
 - IMAP4 Non-synchronizing Literals (updated RFC 2088) ([[rfc,7888]])
 - IMAP Extension for STATUS=SIZE ([[rfc,8438]])
+- IMAP4 Extension for Returning MYRIGHTS Information in Extended LIST ([[rfc,8440]])
 - IMAP “$Important” Keyword and “\\Important” Special-Use Attribute
   ([[rfc,8457]])
 - IMAP REPLACE Extension ([[rfc,8508]])
