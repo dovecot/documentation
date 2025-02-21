@@ -86,6 +86,7 @@ This is a non-exhaustive list of RFCs that Dovecot implements/supports.
 - The IMAP NOTIFY Extension ([[rfc,5465]])
 - Extended URLFETCH for Binary and Converted Parts ([[rfc,5524]])
 - IMAP Response Codes ([[rfc,5530]])
+- Support for PARTIAL in CATENATE and URLAUTH ([[rfc,5550]], Section 5.7.1)
 - IMAP4 Extension for Returning STATUS Information in Extended LIST
   ([[rfc,5819]])
 - Display-Based Address Sorting for the IMAP4 SORT Extension ([[rfc,5957]])
@@ -98,8 +99,10 @@ This is a non-exhaustive list of RFCs that Dovecot implements/supports.
   Quick Mailbox Resynchronization (QRESYNC) (updated RFC 4551 and RFC 5162)
   ([[rfc,7162]])
 - IMAP4 Non-synchronizing Literals (updated RFC 2088) ([[rfc,7888]])
+- IMAP Extension for STATUS=SIZE ([[rfc,8438]])
 - IMAP “$Important” Keyword and “\\Important” Special-Use Attribute
   ([[rfc,8457]])
+- Internet Message Access Protocol (IMAP) - SAVEDATE Extension ([[rfc,8514]])
 - IMAP4 Extension: Message Preview Generation ([[rfc,8970]])
 - IMAP Response Code for Command Progress Notification ([[rfc,9585]])
 
