@@ -6545,7 +6545,7 @@ This setting is used to limit maximum memory usage.`
 
 	imapc_password: {
 		tags: [ 'imapc' ],
-		seealso: [ 'imapc_master_user', 'imapc_user' ],
+		seealso: [ 'imapc_master_user', 'imapc_user', 'imapc_sasl_mechanisms' ],
 		values: setting_types.STRING,
 		text: `
 The authentication password for the remote IMAP server.
@@ -6583,7 +6583,23 @@ imapc_sasl_mechanisms {
   plain = yes
   login = yes
 }
-\`\`\``
+\`\`\`
+
+Supported mechanisms are:
+
+ * ANONYMOUS
+ * EXTERNAL
+ * LOGIN
+ * OAUTHBEARER
+ * PLAIN
+ * SCRAM-SHA-1
+ * SCRAM-SHA-1-PLUS
+ * SCRAM-SHA-256
+ * SCRAM-SHA-256-PLUS
+ * XOAUTH2
+
+Note that [[setting,imapc_password]] is ignored for \`ANONYMOUS\` and \`EXTERNAL\` mechanisms.
+For \`OAUTHBEARER\` and \`XOAUTH2\` [[setting,imapc_password]] should be bearer token.`
 	},
 
 	imapc_ssl: {
@@ -6622,7 +6638,7 @@ Only used if [[setting,imapc_ssl]] is enabled.`
 
 	imapc_user: {
 		tags: [ 'imapc', 'imapc-auth' ],
-		seealso: [ 'imapc_master_user', 'imapc_password' ],
+		seealso: [ 'imapc_master_user', 'imapc_password', 'imapc_sasl_mechanisms' ],
 		values: setting_types.STRING,
 		default: '%{owner_user}',
 		text: `
