@@ -1,5 +1,5 @@
 ---
-layout: doct
+layout: doc
 title: Troubleshooting
 dovecotlinks:
   sieve_troubleshooting: Sieve troubleshooting
