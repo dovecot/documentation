@@ -52,6 +52,18 @@ ManageSieve protocol support in Dovecot is to add `sieve` to the
 
 The managesieve daemon will listen on port 4190 by default.
 
+### TLS Configuration
+
+The ManageSieve network protocol can be used either:
+
+1. unencrypted
+2. encrypted with opportunistic TLS (STARTTLS)
+3. encrypted with implicit TLS
+
+Implicit TLS is the best practice because STARTTLS can be susceptible
+to downgrade attacks. To enable this, set `ssl = yes` in the
+`inet_listener sieve` section.
+
 ### Settings
 
 As the implementation of the managesieve daemon is largely based on the
@@ -98,6 +110,7 @@ are shown.
 service managesieve-login {
   #inet_listener sieve {
   #  port = 4190
+  #  ssl = yes
   #}
 
   #inet_listener sieve_deprecated {
@@ -213,9 +226,9 @@ the direct error messages from the server without intermission of your
 client.
 
 If you do not use TLS, you can connect using a simple `telnet`
-or `netcat` connection to the configured port (typically 4190 or 2000
-for older setups). Otherwise you must use a TLS-capable text protocol
-client like `gnutls-cli` as described below.
+or `netcat` connection to the configured port (typically 4190).
+Otherwise you must use a TLS-capable text protocol client like `openssl`
+or `gnutls-cli` as described below.
 
 Upon connection, the server presents the initial greeting with its
 capabilities:
@@ -229,12 +242,13 @@ OK "Dovecot ready."
 ```
 
 Note that the reported `STARTTLS` capability means that the server
-accepts TLS, but, since you are using telnet/netcat, you cannot use this
-(refer to Manual TLS Login below). The `SASL` capability lists the
+accepts opportunistic TLS, but, since you are using telnet/netcat, you cannot use this
+(refer to Manual Opportunistic TLS Login below). The `SASL` capability lists the
 available SASL authentication mechanisms. If this list is empty and
 `STARTTLS` is available, it probably means that the server forces you
-to initiate TLS first (as dictated by [[setting,auth_allow_cleartext,yes]]
-in `dovecot.conf`).
+to initiate STARTTLS first (as dictated by [[setting,auth_allow_cleartext,yes]]
+in `dovecot.conf`). Note: if you're connecting from the same computer, the
+connection is considered secure and plaintext authentication is allowed!
 
 Now you need to log in. Although potentially multiple SASL mechanisms
 are available, only `PLAIN` is described here. Authentication is
@@ -249,7 +263,7 @@ The credentials are the base64-encoded version of the string
 `"\0<username>\0<password"` (in which `\0` represents the ASCII NUL
 character). Generating this is cumbersome and a bit daunting for the
 novice user, so for convenience a
-[simple Perl script](http://pigeonhole.dovecot.org/utilities/sieve-auth-command.pl)
+[simple Perl script](https://pigeonhole.dovecot.org/utilities/sieve-auth-command.pl)
 is provided to generate the `AUTHENTICATE` command for you. It is used
 as follows:
 
@@ -318,11 +332,21 @@ The symbolic link configured with the `sieve` setting should now point
 to the activated script in the sieve directory. If no script is
 active, this symbolic link is absent.
 
-#### Manual TLS Login
+#### Manual Implicit TLS Login
 ----------------
 
-When TLS needs to be used during manual testing, `gnutls-cli` provides
-the means to do so. This command-line utility is part of the GNUTLS
+If you have enabled implicit TLS, you can use, for example, `openssl`
+to connect:
+
+```
+openssl s_client -quiet -connect <host>:4190
+```
+
+#### Manual Opportunistic TLS Login
+----------------
+
+When opportunistic TLS needs to be used during manual testing, `gnutls-cli`
+provides the means to do so. This command-line utility is part of the GNUTLS
 distribution and on most systems this should be easy to install. It is
 used to connect to ManageSieve as follows:
 
