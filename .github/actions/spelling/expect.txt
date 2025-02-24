@@ -150,7 +150,6 @@ dlua
 dnl
 dnotify
 dnpassword
-doct
 DOI
 domainless
 domainname
@@ -166,7 +165,6 @@ doveconf
 dovecotlinks
 dovecotpro
 DOVECOTPW
-dovelda
 dovemail
 dovenull
 DRhu
@@ -421,7 +419,6 @@ Luonnokset
 lwq
 lwristepai
 macl
-maclen
 madboa
 mailauth
 mailboxlog
@@ -667,7 +664,6 @@ resolv
 restorecon
 resyncing
 rfcs
-RHu
 Rivest
 Roskakori
 roundcube
@@ -697,7 +693,6 @@ scontext
 scriptname
 sdbox
 SEARCHRES
-secmail
 secp
 secretpassword
 seealso
