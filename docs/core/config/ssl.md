@@ -12,6 +12,9 @@ dovecotlinks:
   ssl_ja3:
     hash: ja3-identifier
     text: JA3 string
+  ssl_multiple_certs:
+    hash: multiple-ssl-certificates
+    text: Multiple SSL Certificates
 ---
 
 # SSL/TLS Configuration
@@ -52,34 +55,7 @@ ssl_server_cert_file = /etc/ssl/dovecot.pem
 ssl_server_key_file = /etc/ssl/dovecot.pem
 ```
 
-For using different SSL certificates for different IP addresses you can put
-them inside local {} blocks:
-
-```[dovecot.conf]
-local 10.0.0.1 {
-  ssl_server_cert_file = /etc/dovecot/dovecot.crt
-  ssl_server_key_file = /etc/dovecot/dovecot.key
-}
-
-local 10.0.0.2 {
-  ssl_server_cert_file = /etc/dovecot/dovecot2.crt
-  ssl_server_key_file = /etc/dovecot/dovecot2.key
-}
-```
-
-If you need different SSL certificates for IMAP and POP3 protocols, you can put them inside protocol ``{}`` blocks:
-
-```[dovecot.conf]
-protocol imap {
-  ssl_server_cert_file = /etc/dovecot/dovecot-imap.crt
-  ssl_server_key_file = /etc/dovecot/dovecot-imap.key
-}
-
-protocol pop3 {
-  ssl_server_cert_file = /etc/dovecot/dovecot-pop3.crt
-  ssl_server_key_file = /etc/dovecot/dovecot-pop3.key
-}
-```
+For using multiple SSL certificates, see [[link,ssl_multiple_certs]].
 
 ::: tip
 It's important to note that `ssl = yes` must be set globally if
@@ -87,14 +63,6 @@ you require SSL for any protocol (or Dovecot will not listen on the
 SSL ports), which in turn requires that a certificate and key are
 specified globally even if you intend to specify certificates per protocol.
 :::
-
-Dovecot supports also using TLS SNI extension for giving different SSL
-certificates based on the server name when using only a single IP address,
-but the TLS SNI isn't yet supported by all clients so that may not be
-very useful.
-
-It's anyway possible to configure it by using
-`local_name imap.example.com {}` blocks.
 
 ## How to Specify When SSL/TLS is Required
 
