@@ -81,8 +81,8 @@ There are 3 types of services that need to be optimized in different ways:
    set to the number of CPU cores, so each CPU will be busy serving the process
    but without unnecessary context switches. Then
    [[setting,service_client_limit]] needs to be set high enough to be able to
-   serve all the needed connections (max connections = `process_limit *
-   client_limit`).
+   serve all the needed connections (max connections =
+   [[setting,service_process_limit]] * [[setting,service_client_limit]]).
    [[setting,service_restart_request_count]] is commonly set to `unlimited` for
    these services. Otherwise when the limit is beginning to be reached, the
    total number of available connections will shrink. With very bad luck that

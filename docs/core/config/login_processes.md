@@ -71,9 +71,9 @@ to perform proxying between imap backend process and the client.
 * If the maximum login process count is reached, the oldest process in
   logging-in state (ie. non-proxying) is destroyed.
 * To avoid startup latency for new client connections, set
-  `process_min_avail` to higher than zero. That many idling processes are
-  always kept around waiting for new connections.
-* `vsz_limit` should be fine at its default 64MB value.
+  [[setting,service_process_min_avail]] to higher than zero. That many idling
+  processes are always kept around waiting for new connections.
+* [[setting,service_vsz_limit]] should be fine at its default value.
 
 ## High-Performance Mode
 
@@ -97,13 +97,14 @@ process design, because in case of a security hole (in Dovecot or SSL library)
 the attacker is now able to see other users logging in and steal their
 passwords, read their mails, etc.
 
-* `process_min_avail` should be set to be at least the number of CPU cores in
-  the system, so that all of them will be used.
+* [[setting,service_process_min_avail]] should be set to be at least the number
+  of CPU cores in the system, so that all of them will be used.
 * Otherwise new processes are created only once an existing one's connection
   count reaches [[setting,service_client_limit]].
-* Default `client_limit * process_limit = 1000*100 = 100k` connections.
-* `vsz_limit` should be increased to avoid out of memory errors, especially
-  if you're using SSL/TLS.
+* Default [[setting,service_client_limit]] * [[setting,service_process_limit]] =
+  1000 * 100 = 100k connections.
+* [[setting,service_vsz_limit]] should be increased to avoid out of memory
+  errors, especially if you're using SSL/TLS.
 
 ## Configuring Socket Paths for Login Processes
 
