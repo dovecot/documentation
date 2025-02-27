@@ -83,22 +83,12 @@ configuration file in `/usr/local/etc/dovecot/dovecot.conf`
 
 The default configuration starts from `dovecot.conf`, which contains an
 `!include conf.d/*.conf` statement to read the rest of the configuration.
-The idea is that the settings are nicely grouped into different files to make
-it easier for new admins to scan through related settings. It doesn't matter
-which config file you add which setting.
+You can group settings into these included config files, or you can place
+everything into the `dovecot.conf`, whichever you prefer.
 
-In the production system it's often easier to just have a single
-`dovecot.conf` file, which you can create easily using:
-
-```sh
-doveconf -nP > dovecot.conf
-```
-
-### Hints About Writing Configuration Files
-
-* Usually it does not matter in which file you write the setting. You only need
-  to be aware that later settings replace earlier ones. If you use the same
-  section multiple times, the settings are merged together.
+Usually it does not matter in which file you write the setting. You only need
+ to be aware that later settings replace earlier ones. If you use the same
+section multiple times, the settings are merged together.
 
 ## Authentication
 
