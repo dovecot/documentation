@@ -82,7 +82,7 @@ You can enable high-performance mode with:
 ```[dovecot.conf]
 service imap-login {
   restart_request_count = unlimited
-  process_min_avail = 4 # number of CPU cores
+  process_min_avail = %{system:cpu_count}
   vsz_limit = 1G
 }
 
@@ -98,7 +98,8 @@ the attacker is now able to see other users logging in and steal their
 passwords, read their mails, etc.
 
 * [[setting,service_process_min_avail]] should be set to be at least the number
-  of CPU cores in the system, so that all of them will be used.
+  of CPU cores in the system, so that all of them will be used. You can use
+  `%{system:cpu_count}`, which expands to this automatically.
 * Otherwise new processes are created only once an existing one's connection
   count reaches [[setting,service_client_limit]].
 * Default [[setting,service_client_limit]] * [[setting,service_process_limit]] =
