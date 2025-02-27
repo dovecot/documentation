@@ -1092,6 +1092,61 @@ command.
 The minimum value for this setting is \`1024\` bytes.`
 	},
 
+	sieve_extlists_list: {
+		tags: [ 'sieve', 'sieve-extlists' ],
+		plugin: 'sieve',
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ '[[link,sieve_extlists]]' ],
+		text: `
+This named list filter creates a new list definition for the ":list" match type
+in Sieve (extlists extension). The filter name refers to the
+[[setting,sieve_extlists_list_name]] setting. That is the name of the list as it
+will be accessible from the Sieve. A dict definition that is placed inside
+the scope of this list filter will serve as the lookup for this extlists list.
+So, values from Sieve are looked up in the defined dict. This is often used to
+define an address book or whitelist external to the Sieve script. If no dict is
+present, the list will function as an empty list.
+
+Example:
+
+\`\`\`
+sieve_extlists_list :addrbook:default {
+  dict proxy {
+    name = addressbook
+  }
+}
+\`\`\``
+	},
+
+	sieve_extlists_list_name: {
+		tags: [ 'sieve', 'sieve-extlists' ],
+		plugin: 'sieve',
+		values: setting_types.STRING,
+		seealso: [ '[[link,sieve_extlists]]' ],
+		text: `
+The name of the list as it will be accessible through the Sieve ":list" match
+type (extlists extension). According to the standard, this name must be a valid
+URI. This implementation further limits that to a valid URN or TAG URI. Note
+that the standard URN and TAG equality rules dictate that at least parts of
+these URIs are case-sensitive, so it is best to consider the configured name
+case-sensitive entirely.
+
+The [[setting,sieve_extlists_list]] filter refers to this setting.`
+	},
+
+	sieve_extlists_list_max_lookup_size: {
+		tags: [ 'sieve', 'sieve-extlists' ],
+		plugin: 'sieve',
+		values: setting_types.SIZE,
+		default: '1k',
+		seealso: [ '[[link,sieve_extlists]]' ],
+		text: `
+The maximum size of a value looked up from this Sieve extlists list. If the
+value is too large, the lookup will be skipped and will yield no result. Note
+that individual lists may have different limits, meaning that lookups in other
+lists may still succeed.`
+	},
+
 	sieve_notify_mailto_envelope_from: {
 		tags: [ 'sieve', 'sieve-enotify' ],
 		plugin: 'sieve',
