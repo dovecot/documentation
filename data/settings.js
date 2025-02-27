@@ -7520,7 +7520,7 @@ gid field.`
 	},
 
 	mail_home: {
-		seealso: [ 'mail_path', '[[link,quick_config]]' ],
+		seealso: [ 'mail_path', '[[link,home_directories_for_virtual_users]]' ],
 		values: setting_types.STRING,
 		text: `
 There are various possible ways of specifying this parameter and
