@@ -124,6 +124,20 @@ Note that these settings do NOT directly affect the memory usage:
 - [[link,service_process_limit]] and [[link,service_client_limit]]: These
   are mostly to avoid DoS attacks using up all your memory.
 
+### glibc
+
+For Linux/glibc it's recommended to set:
+
+```[dovecot.conf]
+import_environment {
+  MALLOC_MMAP_THRESHOLD_ = 131072
+}
+```
+
+This allocates all memory larger than 128 kB using mmap(), which allows the OS
+to free the memory afterwards. This is important for backends which have a lot
+of long-running imap and pop3 processes.
+
 ## Operating Systems
 
 ::: warning

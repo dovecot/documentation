@@ -35,19 +35,6 @@ verbose_proctitle = yes
 These are settings for Dovecot nodes that are accessing mail storage
 ("backends").
 
-### Shutdown Clients
-
-By default, all active sessions will be shut down when Dovecot is reloaded or
-restarted. Setting [[setting,shutdown_clients,no]] is dangerous as existing
-sessions are then not killed when Dovecot is restarted or reloaded. This can
-have serious consequences if, for example, storage-related settings are
-changed, as user connection will be using both old and new configuration at
-the same time. Thus, it is recommended to use:
-
-```
-shutdown_clients = yes
-```
-
 ### Memory Allocation
 
 Allocate all memory larger than 128 kB using mmap(). This allows the OS to
