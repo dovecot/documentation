@@ -6,7 +6,6 @@ dovecotlinks:
     hash: secured-connections
     text: secured connections
   ssl: SSL
-  ssl_admin: SSL
   ssl_configuration:
     hash: configuration-overview
     text: SSL configuration
@@ -16,11 +15,6 @@ dovecotlinks:
 ---
 
 # SSL/TLS Configuration
-
-For more details see:
-
-* [[link,ssl_admin]]
-* [[setting,auth_allow_cleartext]]
 
 ## Configuration Overview
 
