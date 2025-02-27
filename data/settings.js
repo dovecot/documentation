@@ -10066,7 +10066,6 @@ no longer in "setuid" mode. This setting can't be used with non-empty chroot.`
 		seealso: [
 		'service_client_limit',
 		'service_restart_request_count',
-		'service_process_min_avail',
 		],
 		text: `
 Minimum number of processes that always should be available to accept more
