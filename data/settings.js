@@ -11339,4 +11339,14 @@ userdb ldap {
 \`\`\``
 	},
 
+	/* Default groups. */
+
+	'@metric_defaults': {
+		values: setting_types.GROUP,
+		values_enum: [ 'proxy', 'backend' ],
+		seealso: [ 'metric' ],
+		text: `
+Group that expands to recommended [[setting,metric]] settings in proxies or
+backends.`
+	},
 }
