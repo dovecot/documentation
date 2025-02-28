@@ -333,6 +333,12 @@ userdb. For example above you can return `namespace/inbox/@mailboxes=finnish`
 from userdb to change mailbox names to Finnish language. Note that groups can't
 be added via overrides unless `@label` is already set in the config file.
 
+You can see the default group contents with e.g.:
+
+```console
+doveconf -d @metric_defaults/proxy
+```
+
 ## Including Config Files
 
 The main `dovecot.conf` file can also include other config files:
