@@ -319,6 +319,15 @@ namespace inbox {
 }
 ```
 
+You can override settings inside a group by adding the override settings
+after it. For example:
+
+```[dovecot.conf]
+@mysql = default
+mysql_host = mysql2.example.com # override the default mysql_host
+
+```
+
 It's possible to override groups using the command line parameter `-o` or
 userdb. For example above you can return `namespace/inbox/@mailboxes=finnish`
 from userdb to change mailbox names to Finnish language. Note that groups can't
