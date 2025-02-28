@@ -111,9 +111,6 @@ service managesieve-login {
 
   # Number of processes to always keep waiting for more connections.
   #process_min_avail = 0
-
-  # If you set restart_request_count=unlimited, you probably need to grow this.
-  #vsz_limit = 64M
 }
 
 service managesieve {

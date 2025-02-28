@@ -41,7 +41,6 @@ You can enable high-security mode with:
 service imap-login {
   restart_request_count = 1
   #process_min_avail = 0
-  #vsz_limit = 64M
 }
 
 service pop3-login {
@@ -73,7 +72,7 @@ to perform proxying between imap backend process and the client.
 * To avoid startup latency for new client connections, set
   `process_min_avail` to higher than zero. That many idling processes are
   always kept around waiting for new connections.
-* `vsz_limit` should be fine at its default 64MB value.
+* `vsz_limit` should be fine at its default value.
 
 ## High-Performance Mode
 
