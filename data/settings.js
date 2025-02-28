@@ -7520,7 +7520,7 @@ gid field.`
 	},
 
 	mail_home: {
-		seealso: [ 'mail_path', '[[link,quick_config]]' ],
+		seealso: [ 'mail_path', '[[link,home_directories_for_virtual_users]]' ],
 		values: setting_types.STRING,
 		text: `
 There are various possible ways of specifying this parameter and
@@ -10031,7 +10031,6 @@ no longer in "setuid" mode. This setting can't be used with non-empty chroot.`
 		seealso: [
 		'service_client_limit',
 		'service_restart_request_count',
-		'service_process_min_avail',
 		],
 		text: `
 Minimum number of processes that always should be available to accept more
@@ -10050,8 +10049,9 @@ is launched.
   time to check mails.
 * For [[setting,service_restart_request_count]] to a value \`!=1\` and
   [[setting,service_client_limit]] to a value \`>1\` processes it could be set
-  to the number of CPU cores on the system to balance the load among them. This
-  is commonly used with \`*-login\` processes.
+  to the number of CPU cores (you can use \`%{system:cpu_count}\`) on the
+  system to balance the load among them. This is commonly used with \`*-login\`
+  processes.
 * For [[setting,service_restart_request_count]] with a value of \`!=1\` and
   [[setting,service_client_limit,1]] processes it is likely not useful to use
   this, because generally there are already some idling processes waiting to
@@ -11339,4 +11339,14 @@ userdb ldap {
 \`\`\``
 	},
 
+	/* Default groups. */
+
+	'@metric_defaults': {
+		values: setting_types.GROUP,
+		values_enum: [ 'proxy', 'backend' ],
+		seealso: [ 'metric' ],
+		text: `
+Group that expands to recommended [[setting,metric]] settings in proxies or
+backends.`
+	},
 }

@@ -1,12 +1,11 @@
 ---
 layout: doc
 title: Debug
-order: 198
 dovecotlinks:
   debug: debugging
 ---
 
-# Debugging and Troubleshooting
+# Debugging
 
 ::: tip
 For reporting issues with Dovecot CE, see https://dovecot.org/bugreport-mail.
@@ -14,37 +13,18 @@ For reporting issues with Dovecot CE, see https://dovecot.org/bugreport-mail.
 
 ## Crashes
 
-Dovecot has been designed to crash rather than continue in a potentially
-unsafe manner that could cause data loss. Most crashes usually happen just
-once and retrying the operation will succeed, so usually even if you see
-them it's not a big problem.
+<!-- @include: ./include/debug_crashes.inc -->
 
-Of course, all crashes are bugs that should eventually be fixed, so feel
-free to report them always even if they're not causing any visible problems.
+### Reporting
 
 Reporting crashes is usually best accompanied with a gdb backtrace as
 described in https://www.dovecot.org/bugreport.html. See
 [core dumps](#core-dumps) for further information.
 
-Instead of crashing, there have been some rare bugs in Dovecot when some
-process could go into infinite loop, which causes the process to use 100%
-CPU.
-
-If you detect such processes, it would be helpful to get a gdb backtrace
-of the running process:
-
-```sh
-gdb -p pid-of-process
-bt full
-```
-
-After getting the backtrace, you can `kill -9` the process.
-
 ## Process Tracing
 
 If a Dovecot process hangs or is just really slow, the best way to debug it
-is to see what it's really doing. Typically you'd be looking into imap or pop3
-processes.
+is to see what it's really doing.
 
 ### Linux
 
@@ -91,8 +71,9 @@ Before posting the output of the script publicly, make sure the exported
 configuration doesn't have anything sensitive in it.
 :::
 
-Use the [dovecot-sysreport](https://raw.githubusercontent.com/dovecot/core/master/src/util/dovecot-sysreport), which can also be found in the Dovecot
-packages:
+Use the
+[dovecot-sysreport](https://raw.githubusercontent.com/dovecot/core/master/src/util/dovecot-sysreport),
+which can also be found in the Dovecot packages:
 
 ```sh
 dovecot-sysreport --core <binary> <core>
@@ -138,15 +119,11 @@ bt full
 
 ## Session IDs
 
-Each `IMAP`, `POP3` and `LMTP` connection has its own unique session ID.
-
-This ID is logged in all the lines and passed between Dovecot services, which
-allows tracking it all the way through proxies to backends and their various
-processes.
-
-The session IDs look like `<ggPiljkBBAAAAAAAAAAAAAAAAAAAAAAB>`.
+<!-- @include: ./include/debug_sessionid.inc -->
 
 ## Mail Debugging
+
+<!-- @include: ./include/debug_mail.inc -->
 
 Setting [[setting,log_debug]] will make Dovecot log all kinds of things
 about mailbox initialization. Note that it won't increase error logging

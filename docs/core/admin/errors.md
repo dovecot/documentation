@@ -329,22 +329,23 @@ forking less processes:
   This alone might be enough.
 
 - You can also switch (most of the) other commonly forked processes to
-  be reused. For example `service imap { restart_request_count = 100 }`
-  reuses the imap process for 100 different IMAP connections before it
-  dies. This is useful mainly for imap, pop3 and managesieve services.
-  It's better to avoid using `restart_request_count=unlimited` in case
-  there are memory leaks.
+  be reused. For example [[setting,service_restart_request_count,100]]
+  reuses the process for 100 different connections before it dies. This is
+  useful especially for imap, pop3 and managesieve services.
+  It's better to avoid using [[setting,service_restart_request_count,unlimited]]
+  in case there are memory leaks.
 
 - You can pre-fork some idling processes to handle bursts with
-  `service { process_min_avail }`.
+  [[setting,service_process_min_avail]].
 
 See [[link,service_configuration]] before changing any service
 settings. Some services require specific values to work correctly.
 
 ### Listener Queue Size
 
-Dovecot uses `service { client_limit } * service { process_limit }` as the
-listener queue size. There is no upper limit in Dovecot.
+Dovecot uses [[setting,service_client_limit]] *
+[[setting,service_process_limit]] as the listener queue size. There is no upper
+limit in Dovecot.
 
 Most OSes use an even lower limit, typically `128`. In Linux you can
 increase this through: `/proc/sys/net/core/somaxconn`.
