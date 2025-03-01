@@ -23,7 +23,7 @@
     "unist-util-parents": "^3.0.0",
     "vitepress": "^1.5.0",
     "vitepress-plugin-pagefind": "^0.4.13",
-    "vitepress-sidebar": "^1.30.2"
+    "vitepress-sidebar": "^1.31.0"
   },
   "scripts": {
     "docs:dev": "vitepress dev",
