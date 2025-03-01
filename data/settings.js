@@ -9815,7 +9815,7 @@ all of it to the OS). The syntax of the filter is described in
 For example:
 
 \`\`\`
-process_shutdown_filter = "event=mail_user_session_finished AND rss > 10M"
+process_shutdown_filter = "event=mail_user_session_finished AND rss > 20MB"
 \`\`\``
 	},
 
