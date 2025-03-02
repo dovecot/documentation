@@ -7431,7 +7431,11 @@ mail_attribute {
 	},
 
 	mail_cache_fields: {
-		default: 'flags',
+		default: `
+flags hdr.date hdr.subject hdr.from hdr.sender hdr.reply-to hdr.to hdr.cc hdr.bcc hdr.in-reply-to hdr.message-id date.received size.virtual imap.bodystructure mime.parts hdr.references hdr.importance hdr.x-priority hdr.x-open-xchange-share-url pop3.uidl pop3.order
+<br /><br />
+[[changed,mail_cache_fields_changed]] The default fields were changed.
+They used to be just "flags".`,
 		seealso: [ 'mail_always_cache_fields', 'mail_never_cache_fields' ],
 		values: setting_types.BOOLLIST,
 		text: `
