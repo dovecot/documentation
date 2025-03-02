@@ -6651,7 +6651,7 @@ source IMAP server.
 	import_environment: {
 		default: `
 TZ=%{env:TZ} CORE_OUTOFMEM=%{env:CORE_OUTOFMEM} CORE_ERROR=%{env:CORE_ERROR}
-PATH=%{env:PATH}`,
+PATH=%{env:PATH} MALLOC_MMAP_THRESHOLD_=131072`,
 		values: setting_types.STRLIST,
 		text: `
 A list of environment key=value pairs, that are preserved and passed to all
