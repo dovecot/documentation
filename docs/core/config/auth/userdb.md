@@ -3,6 +3,9 @@ layout: doc
 title: userdb
 dovecotlinks:
   userdb: userdb
+  userdb_fields:
+    hash: fields
+    text: "userdb: Fields"
   userdb_extra_fields:
     hash: extra-fields
     text: "userdb: Extra Fields"
