@@ -95,7 +95,6 @@ export default defineConfig({
 			useFolderTitleFromIndexFile: true,
 			includeFolderIndexFile: true,
 			collapseDepth: 2,
-			excludeFiles: [],
 			excludeFilesByFrontmatterFieldName: 'exclude',
 			sortMenusByFrontmatterOrder: true,
 			frontmatterOrderDefaultValue: 999,
