@@ -75,7 +75,7 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 
    <table class="settingsListTable">
     <tbody>
-     <tr>
+     <tr v-if="!v.no_default">
       <th>Default</th>
       <td>
        <span v-if="v.default !== undefined" v-html="v.default" />
