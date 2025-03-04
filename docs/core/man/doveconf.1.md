@@ -9,7 +9,7 @@ dovecotComponent: core
 ## SYNOPSIS
 
 **doveconf**
-  [**-adnPNx**]
+  [**-adnPNUx**]
   [**-c** *config-file*]
   [**-f** *filter*]
 
@@ -93,6 +93,9 @@ configuration in easy human readable output.
 
 **-P**
 :   Show passwords and other sensitive values.
+
+**-U**
+:   Ignore all unknown settings in config file.
 
 **-x**
 :   Expand configuration variables (e.g. `$ENV:foo`) and show file contents
