@@ -7,7 +7,7 @@ dovecotlinks:
 
 # Time Synchronization
 
-Dovecot relies on accurate time on syncrhonization the local system.
+Dovecot relies on accurate time on synchronization the local system.
 
 There are two choices for synchronizing your clock:
 
