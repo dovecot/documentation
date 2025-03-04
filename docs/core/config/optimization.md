@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: Optimization
+dovecotlinks:
+  dovecot_optimization: Dovecot Optimizations
 ---
 
 # Dovecot Optimizations
