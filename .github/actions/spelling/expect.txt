@@ -101,6 +101,8 @@ CONDSTORE
 convertpw
 copybox
 COPYUID
+coredump
+corefile
 coretest
 coreutils
 courierimapuiddb
@@ -391,6 +393,7 @@ libsodium
 libsqlite
 lifewithqmail
 listescape
+LISTEXT
 listfile
 listname
 listscripts
@@ -522,6 +525,7 @@ newtok
 NEXTUID
 nfsmount
 ngrams
+ngrep
 ninf
 NLEVEL
 noanonymous
@@ -529,7 +533,6 @@ noatime
 noauthenticate
 NOCHILDREN
 nodelay
-nodeps
 NOINFERIORS
 nolock
 nologin
@@ -657,7 +660,6 @@ remotehost
 remoteprefix
 RENAMESCRIPT
 replicator
-repoquery
 reqbody
 Resnick
 resolv
@@ -772,6 +774,7 @@ subaddress
 subaddresses
 subjwas
 Subtables
+sugid
 sustainability
 svbin
 sysadmin
@@ -877,12 +880,12 @@ usermask
 usernames
 userok
 uuuuuu
-Uvh
 vacationcheck
 valgrind
 Valgrinding
 vdb
 vdomains
+vdp
 vfile
 vfuncs
 vgdb
@@ -909,6 +912,7 @@ websieve
 wforce
 wikis
 winbind
+Wireshark
 wso
 xapian
 xchange

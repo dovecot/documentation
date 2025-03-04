@@ -4,6 +4,9 @@ title: Debug
 order: 198
 dovecotlinks:
   debug: debugging
+  debug_process_tracing:
+    hash: process-tracing
+    text: Process Tracing
 ---
 
 # Debugging and Troubleshooting

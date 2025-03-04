@@ -4,9 +4,253 @@ title: Debugging
 order: 304
 dovecotlinks:
   developer_debug: Developer Debugging
+  debug_clients:
+    hash: client-traffic-sniffing
+    text: Debugging Clients
+  debug_core_dumps:
+    hash: core-dumps
+    text: Core Dumps
+  debug_hangs:
+    hash: hangs
+    text: Debugging Hangs
 ---
 
 # Debugging Tips
+
+## Core Dumps
+
+Whenever Dovecot crashes, you see something like this in log file:
+
+```
+dovecot: Apr 23 11:16:05 Error: child 86116 (imap) killed with signal 11
+```
+
+No matter how that happened, it’s a bug and will be fixed if you can provide
+enough information on how it happened.
+
+### Generating Core Dumps
+
+The best way to debug is to get a backtrace from gdb, but the problem is that
+Dovecot doesn’t dump core files by default. You can solve this in a few ways:
+
+#### systemd-coredump
+
+Install [systemd-coredump](https://www.freedesktop.org/software/systemd/man/systemd-coredump.html)
+if possible. It has proven to be good at capturing core dumps for Dovecot.
+
+#### `core dumps disabled`
+
+Run `ulimit -c unlimited` before starting Dovecot.
+
+If you start Dovecot using some script, note that they often override the
+limit, so you might have to override. Example:
+
+```console
+echo ‘DAEMON_COREFILE_LIMIT=”unlimited”‘ >> /etc/sysconfig/dovecot
+```
+
+#### `core not dumped`
+
+##### Write Permissions
+
+The process dumping the core needs to be able to write to the core dump
+directory.
+
+Check where the core file should be written to and make sure it has enough
+write permissions.
+
+If core doesn’t contain an absolute path, it’s relative to the process’s
+current directory. With imap/pop3 processes this means that the core is
+written to the user’s home directory. Make sure home is returned by
+[[link,userdb]] by setting [[setting,mail_debug,yes]] and checking from the
+logs that the correct home directory is returned.
+
+###### Linux
+
+You can specify where core gets written:
+
+```console
+echo "/var/core/core.%e.%p" > /proc/sys/kernel/core_pattern
+```
+
+The crashing process needs to have write permissions for it:
+
+```console
+chmod 1777 /var/core
+```
+
+You need to allow core dumps in systemd as well. Run
+`systemctl edit dovecot` and add:
+
+```
+[Service]
+LimitCORE=infinity
+```
+
+###### FreeBSD
+You can specify core location with `kern.corefile` sysctl.
+
+##### Chrooted Process
+
+chrooted processes like imap-login will try to write the core inside the
+chroot, even when `core_pattern` is an absolute path.
+
+##### Setuid Process
+
+For some services you may be able to tell Dovecot to drop privileges before
+execv(), making the process non-setuid.
+
+See [[setting,service_drop_priv_before_exec]].
+
+###### Linux
+
+Dovecot usually tells the kernel to dump the core anyway. Modern Linux
+systems require running this to enable:
+
+```console
+sysctl -w fs.suid_dumpable=2
+```
+
+###### FreeBSD
+
+```console
+sysctl kern.sugid_coredump=1
+```
+
+##### Core File Already Exists
+
+If there already exists a core file with the same name, it’s not overwritten.
+
+##### Out of Disk Space
+
+If core files are written to their own filesystem, you may not notice if it
+runs out of disk space.
+
+##### Core is Too Large
+
+If `ulimit -c` wasn't set to `unlimited`, maybe the core size limit was
+reached?
+
+#### `core dumped`
+
+Core file was successfully written!
+
+### Direct GDB Debugging
+
+You can run, e.g., imap binary directly with gdb and talk IMAP protocol to it.
+
+```
+# gdb --args /usr/local/libexec/dovecot/imap -u user@domain
+
+...
+
+(gdb) r
+Starting program: /usr/local/libexec/dovecot/imap
+* PREAUTH [CAPABILITY IMAP4rev1 SORT THREAD=REFERENCES MULTIAPPEND UNSELECT
+LITERAL+ IDLE CHILDREN LISTEXT LIST-SUBSCRIBED] Logged in as user
+```
+
+Then start typing IMAP commands, e.g.,
+`x select inbox, x fetch 1:* (flags envelope bodystructure), x fetch 1 body.peek[]`.
+
+When the program crashes, execute `bt full` command in gdb to debug.
+
+## Hangs
+
+Check for a few seconds what system calls the process is doing.
+See [[link,debug_process_tracing]].
+
+GDB backtrace can also be highly helpful, especially if process tracing
+doesn't show anything happening. Then it means Dovecot is in some infinite
+loop.
+
+You can get the backtrace by attaching GDB into the existing process:
+
+```
+gdb -p pid-of-hanging-process
+
+..
+
+(gdb) bt full
+#0 cmd_select (client=0x808d800) at cmd-select.c:87
+#1 0x0804d36a in client_handle_input (client=0x808d800) at client.c:306
+#2 0x0804d439 in _client_input (context=0x808d800) at client.c:342
+
+..
+
+(gdb) quit
+```
+
+## Client Traffic Sniffing
+
+If a problem happens only with a specific client, the best way to figure out
+what’s happening is to find out what it's actually talking to server.
+
+Some clients may provide logging on their own, or you can use some TCP
+traffic sniffer such as Wireshark or ngrep.
+
+You can also use Dovecot’s [[link,rawlog]] to log the traffic. (It works
+with TLS/SSL.)
+
+### Debugging Core Dumps
+
+You need the core dump, the binary that produced it, and ALL the shared
+libraries on the system.
+
+::: tip
+If using `dovecot-sysreport`, all of this should be done for you.
+:::
+
+::: details Manual collection
+
+```sh
+#!/bin/sh
+
+binary=/usr/libexec/dovecot/imap
+core=/var/core/core.12345
+dest=core.tar.gz
+(echo "info shared"; sleep 1) |
+  gdb $binary $core |
+  grep '^0x.*/' | sed 's,^[^/]*,,' |
+  xargs tar czf $dest --dereference $binary $core
+```
+
+:::
+
+#### Scripting gdb
+
+When you have multiple core dumps, it's troublesome to manually obtain
+the backtraces for all of them.
+
+Here's a script that takes a number of dovecot-sysreport-\*.tar.gz
+files as parameters and creates dovecot-sysreport-\*.tar.bt output
+files for them:
+
+::: details
+
+```bash
+#!/bin/bash -e
+
+for fname in $*; do
+  mkdir tmp-gdb
+  cd tmp-gdb
+  tar xzf ../$fname
+  core_path=$(find . -name '*core*')
+  # FIXME: handles only libexec files - should also support doveadm at least
+  binary_name=$(file $core_path \| grep "dovecot/" \| sed "s/^.*from 'dovecot\/\([^']*\).*$/\1/")
+  cat <<EOF | gdb usr/libexec/dovecot/$binary_name > ../$fname.bt
+set pagination off
+set solib-absolute-prefix .
+core $core_path
+bt full
+quit
+EOF
+  cd ..
+  rm -rf tmp-gdb
+done
+```
+
+:::
 
 ## Debug Pre-auth IMAP with libexec/dovecot/imap
 
@@ -130,71 +374,6 @@ to quote the code.
 #pragma GCC optimize ("O0")
 .... code
 #pragma GCC pop_options
-```
-
-## Debugging Core Dumps in Other Systems
-
-You need the core dump, the binary that produced it and ALL the shared
-libraries on the system. For example:
-
-```sh
-#!/bin/sh
-
-binary=/usr/libexec/dovecot/imap
-core=/var/core/core.12345
-dest=core.tar.gz
-(echo "info shared"; sleep 1) |
-  gdb $binary $core |
-  grep '^0x.*/' | sed 's,^[^/]*,,' |
-  xargs tar czf $dest --dereference $binary $core
-```
-
-## Debugging Core Dumps in Other Systems
-
-::: todo
-Move to Dovecot Pro documentation.
-:::
-
-If you have a tar.gz generated from dovecot-sysreport, you can debug it
-in any Linux distribution. But you still need to have the Dovecot
-debuginfo packages installed globally, which could be a bit tricky.
-
-With yum based systems you can setup /etc/yum.repos.d/dovecot.repo pointing
-to the repository you want according to
-https://doc.dovecot.org/installation_guide/dovecot_pro_releases/. Then
-you can install the packages easily with:
-
-```sh
-rpm -Uvh --nodeps $(repoquery --location dovecot-ee-debuginfo)
-```
-
-## Scripting gdb for Getting Backtrace From Many Core Dumps
-
-When you have tens of core dumps, it's getting a bit troublesome to
-manually get the backtraces. Here's a script that takes a number of
-dovecot-sysreport-*.tar.gz files as parameters and
-creates dovecot-sysreport-*.tar.bt output files for them:
-
-```bash
-#!/bin/bash -e
-
-for fname in $*; do
-  mkdir tmp-gdb
-  cd tmp-gdb
-  tar xzf ../$fname
-  core_path=$(find . -name '*core*')
-  # FIXME: handles only libexec files - should also support doveadm at least
-  binary_name=$(file $core_path \| grep "dovecot/" \| sed "s/^.*from 'dovecot\/\([^']*\).*$/\1/")
-  cat <<EOF | gdb usr/libexec/dovecot/$binary_name > ../$fname.bt
-set pagination off
-set solib-absolute-prefix .
-core $core_path
-bt full
-quit
-EOF
-  cd ..
-  rm -rf tmp-gdb
-done
 ```
 
 ## Following Deep Inside Structs

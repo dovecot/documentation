@@ -36,6 +36,10 @@
   width: var(--vp-sidebar-width) !important;
 }
 
+section.VPSidebarItem.level-0:not(.collapsible) {
+	padding-bottom: 12px !important;
+}
+
 .VPNavBar.has-sidebar .content {
   padding-left: var(--vp-sidebar-width) !important;
   padding-right: 32px !important;
