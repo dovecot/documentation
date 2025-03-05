@@ -336,9 +336,9 @@ connections.
   This improves performance, but it's less secure, because bugs in code
   may leak email data from another user's earlier connection.
 
-* **process_limit** defaults to `1024`, which means that the number of
+* **process_limit** specifies the maximum number of
   simultaneous connections for the protocol that this service handles
-  (IMAP, POP3, Submission, or ManageSieve) is limited by this setting.
+  (IMAP, POP3, Submission, or ManageSieve).
 
   If you expect more connections, increase this value.
 

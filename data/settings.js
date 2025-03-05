@@ -6651,7 +6651,11 @@ source IMAP server.
 	import_environment: {
 		default: `
 TZ=%{env:TZ} CORE_OUTOFMEM=%{env:CORE_OUTOFMEM} CORE_ERROR=%{env:CORE_ERROR}
-PATH=%{env:PATH}`,
+PATH=%{env:PATH} MALLOC_MMAP_THRESHOLD_=131072
+<br />
+<br />
+Also systemd environments: LISTEN_PID=%{env:LISTEN_PID} LISTEN_FDS=%{env:LISTEN_FDS} NOTIFY_SOCKET=%{env:NOTIFY_SOCKET}
+`,
 		values: setting_types.STRLIST,
 		text: `
 A list of environment key=value pairs, that are preserved and passed to all
@@ -7427,7 +7431,11 @@ mail_attribute {
 	},
 
 	mail_cache_fields: {
-		default: 'flags',
+		default: `
+flags hdr.date hdr.subject hdr.from hdr.sender hdr.reply-to hdr.to hdr.cc hdr.bcc hdr.in-reply-to hdr.message-id date.received size.virtual imap.bodystructure mime.parts hdr.references hdr.importance hdr.x-priority hdr.x-open-xchange-share-url pop3.uidl pop3.order
+<br /><br />
+[[changed,mail_cache_fields_changed]] The default fields were changed.
+They used to be just "flags".`,
 		seealso: [ 'mail_always_cache_fields', 'mail_never_cache_fields' ],
 		values: setting_types.BOOLLIST,
 		text: `
@@ -9815,7 +9823,7 @@ all of it to the OS). The syntax of the filter is described in
 For example:
 
 \`\`\`
-process_shutdown_filter = "event=mail_user_session_finished AND rss > 10M"
+process_shutdown_filter = "event=mail_user_session_finished AND rss > 20MB"
 \`\`\``
 	},
 
