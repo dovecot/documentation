@@ -7,6 +7,7 @@
 | `ssl-parameters.dat` | This file is no longer converted automatically by config process, you need to set [[setting,ssl_server_dh_file]] setting if you need non-ECC Diffie-Hellman. |
 | TCP wrapper support | Use [[link,auth_lua]] instead. |
 | Weak password schemes | Weak password schemes are disabled by default; you need to use [[setting,auth_allow_weak_schemes]] to enable them. |
+| `local_name "multiple names" { ... }` | List each name as a separate `local_name { ... }` |
 
 #### Cassandra Parameters
 
