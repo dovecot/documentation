@@ -6651,7 +6651,11 @@ source IMAP server.
 	import_environment: {
 		default: `
 TZ=%{env:TZ} CORE_OUTOFMEM=%{env:CORE_OUTOFMEM} CORE_ERROR=%{env:CORE_ERROR}
-PATH=%{env:PATH} MALLOC_MMAP_THRESHOLD_=131072`,
+PATH=%{env:PATH} MALLOC_MMAP_THRESHOLD_=131072
+<br />
+<br />
+Also systemd environments: LISTEN_PID=%{env:LISTEN_PID} LISTEN_FDS=%{env:LISTEN_FDS} NOTIFY_SOCKET=%{env:NOTIFY_SOCKET}
+`,
 		values: setting_types.STRLIST,
 		text: `
 A list of environment key=value pairs, that are preserved and passed to all
