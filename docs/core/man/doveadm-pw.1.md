@@ -48,7 +48,8 @@ configuring Dovecot first, you can use `doveadm -O pw` to do so.
 **-p** *password*
 :   The plain text *password* for which the hash should be generated. If
     no *password* was given [[man,doveadm]] will prompt interactively
-    for one.
+    for one. (Beware that using this option means the plain text password
+    will be in your shell history!)
 
 **-r** *rounds*
 :   The password *scheme* s **BLF-CRYPT**, **SHA256-CRYPT** and
@@ -80,10 +81,10 @@ configuring Dovecot first, you can use `doveadm -O pw` to do so.
     specified, [[man,doveadm]] will prompt interactively for one.
 
 **-u** *user*
-:   When the **DIGEST-MD5** *scheme* is used, also the *user* name must
+:   When the **DIGEST-MD5** *scheme* is used, the *user* name must also
     be given, because the user name is a part of the generated hash. For
     more information about Digest-MD5 please read also
-    [[link,auth_digest_md5]].
+    [[link,auth_digest_md5]]. For other schemes, this is not required.
 
 **-V**
 :   When this option is given, the hashed password will be internally
@@ -92,26 +93,27 @@ configuring Dovecot first, you can use `doveadm -O pw` to do so.
 
 ## EXAMPLE
 
-A DIGEST-MD5 hash for jane.roe@example.com.
+An ARGON2ID hash (best security at time of this writing, though can be
+heavy on a busy server):
 
 ```sh
-doveadm pw -s digest-md5 -u jane.roe@example.com
+doveadm pw -s ARGON2ID
 ``ldas;l;als;las;lkas
 ```
 Enter new password:
 Retype new password:
-{DIGEST-MD5}9b9dcb4466233a9307bbc33708dffda0
+{ARGON2ID}$argon2id$v=19$m=65536,t=3,p=1$AOrrkaFmGxCFtX+NCSHFkg$N3rlzYFqyNkCwrOingnDJ/qDQ09yGHgQa8PQfbu7rIE
 ```
 
-A CRAM-MD5 hash for john.doe@example.com.
+Alternatively, a SHA512-CRYPT hash:
 
 ```sh
-doveadm pw
+doveadm pw -s SHA512-CRYPT
 ```
 ```
 Enter new password:
 Retype new password:
-{CRAM-MD5}913331d8782236a8ecba7764a63aa27b26437fd40ca878d887f11d81245c2c6b
+{SHA512-CRYPT}$6$qAvxfQ2UbA1QTXSg$SB2aMEK76DBObt.KqTjF5.yDMceaD3dkG2UvrKQD0rZ9PKii/VAn.VS0nBsDqJX18kXieMi8AWJr0f7Ae9dAp/
 ```
 
 <!-- @include: include/reporting-bugs.inc -->
