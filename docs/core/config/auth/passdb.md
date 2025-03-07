@@ -442,6 +442,18 @@ a load spike of everybody getting logged in at exactly the same time.
 
 Do not perform any authentication, just store extra fields if user is found.
 
+##### `client_fp`
+
+Match client certificate or public key fingerprint. See [[setting,ssl_peer_certificate_fingerprint_hash]].
+
+##### `client_cert_fp`
+
+Match client certificate fingerprint. See [[setting,ssl_peer_certificate_fingerprint_hash]].
+
+##### `client_pubkey_fp`
+
+Match client public key fingerprint. See [[setting,ssl_peer_certificate_fingerprint_hash]].
+
 #### `forward_<anything>`
 
 In a proxy, pass the variable to the next hop (backend) as
