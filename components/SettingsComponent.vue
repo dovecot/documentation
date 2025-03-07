@@ -78,7 +78,7 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
      <tr v-if="!v.no_default">
       <th>Default</th>
       <td>
-       <span v-if="v.default !== undefined" v-html="v.default" />
+       <span v-if="v.default !== undefined && (v.default != '')" v-html="v.default" />
        <em v-else>[None]</em>
       </td>
      </tr>

@@ -174,7 +174,7 @@ prefix will cause \`/tmp/foofilename\` to be created.
 
 	fs_posix_mode: {
 		tags: [ 'fs-posix' ],
-		values: setting_types.UINT,
+		values: setting_types.OCTAL_UINT,
 		default: '0600',
 		text: `
 Mode to use for creating files.`
@@ -296,9 +296,9 @@ support larger sizes.
 	},
 
 	mail_cache_min_mail_count: {
-		default: 0,
 		values: setting_types.UINT,
 		advanced: true,
+		default: 0,
 		text: `
 Only update cache file when the mailbox contains at least this many messages.
 
@@ -974,8 +974,8 @@ this setting is not configured. Options are:
 	sieve_quota_script_count: {
 		tags: [ 'sieve', 'managesieve_quota' ],
 		plugin: 'sieve',
-		default: 0,
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 The maximum number of personal Sieve scripts a single user can have.
 
@@ -985,8 +985,8 @@ Default is \`0\`, which is unlimited.`
 	sieve_quota_storage_size: {
 		tags: [ 'sieve', 'managesieve_storage' ],
 		plugin: 'sieve',
-		default: 0,
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 The maximum amount of disk storage a single user's scripts may
 occupy.
@@ -1760,6 +1760,7 @@ by default no one can access them.`
 		},
 		plugin: 'acl',
 		values: setting_types.BOOLEAN,
+		default: 'no',
 		text: `
 Can be used in global config, namespace, or mailbox level to ignore ACLs.
 
@@ -1895,10 +1896,10 @@ mailbox storage/* {
 	},
 
 	fts_autoindex_max_recent_msgs: {
-		default: 0,
 		plugin: 'fts',
 		seealso: [ 'fts_autoindex' ],
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 To exclude infrequently accessed mailboxes from automatic indexing, set
 this value to the maximum number of \`\Recent\` flagged messages that exist
@@ -2681,6 +2682,7 @@ Password to decrypt user's master private key.`
 	crypt_user_key_require_encrypted: {
 		plugin: 'mail-crypt',
 		values: setting_types.BOOLEAN,
+		default: 'no',
 		seealso: [
 			'crypt_user_key_password',
 			'crypt_user_key_encryption_key',
@@ -3015,6 +3017,7 @@ quota_clone {
 			settings_quota_clone_unset_added: false
 		},
 		values: setting_types.BOOLEAN,
+		default: 'no',
 		advanced: true,
 		text: `
 Unset quota information before updating. This is needed with some dict
@@ -3230,7 +3233,7 @@ GETQUOTA commands. Using \`0\` as the value means the same as \`unlimited\`.`
 	},
 
 	quota_message_percentage: {
-		default: '100',
+		default: 100,
 		plugin: 'quota',
 		values: setting_types.UINT,
 		seealso: [ '[[setting,quota_message_count]]' ],
@@ -3400,7 +3403,7 @@ about reaching the quota limit.`
 	},
 
 	quota_storage_percentage: {
-		default: '100',
+		default: 100,
 		plugin: 'quota',
 		values: setting_types.UINT,
 		seealso: [
@@ -3503,6 +3506,7 @@ when it drops under the limit.`
 	trash_priority: {
 		plugin: 'trash',
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 If non-zero, enables the trash plugin for the mailbox with the specified
 priority. Mailboxes with smaller priority number are emptied before mailboxes
@@ -3718,7 +3722,7 @@ Path where to write JSON metrics. See [[link,sql_cassandra_metrics]].`
 	cassandra_io_thread_count: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.UINT,
-		default: 'driver dependent',
+		default: '*[driver dependent]*',
 		text: `
 Set number of IO threads to handle query requests.`
 	},
@@ -3937,6 +3941,7 @@ How long to wait for connection.`
 	mysql_connection_limit: {
 		tags: [ 'sql-mysql' ],
 		values: setting_types.UINT,
+		default: 5,
 		text: `
 Maximum number of parallel connections. Currently MySQL queries are blocking,
 so only a single connection can be used in parallel.`
@@ -4004,6 +4009,7 @@ Timeout when reading data from server.`
 	mysql_ssl: {
 		tags: [ 'sql-mysql' ],
 		values: setting_types.BOOLEAN,
+		default: 'no',
 		seealso: [ '[[link,ssl]]' ],
 		text: `
 Whether to use SSL when connecting to MySQL. Configure it using the
@@ -4040,6 +4046,7 @@ filter name refers to the [[setting,pgsql_host]] setting.`
 	pgsql_connection_limit: {
 		tags: [ 'sql-postgresql' ],
 		values: setting_types.UINT,
+		default: 5,
 		text: `
 Maximum number of parallel connections.`
 	},
@@ -4239,6 +4246,7 @@ Note: You also need to enable [[setting,log_debug,category=auth]].`
 			settings_auth_default_domain_added: false
 		},
 		values: setting_types.BOOLEAN,
+		default: 'no',
 		text: `
 This setting indicates the default realm/domain to use if none has
 been specified. The setting is used for both SASL realms
@@ -4680,7 +4688,7 @@ Path to the CDB database file.`
 
 	default_client_limit: {
 		values: setting_types.UINT,
-		default: '1000',
+		default: 1000,
 		text: `
 Default value for [[setting,service_client_limit]], if not overridden by
 service-specific configuration.`
@@ -4725,7 +4733,7 @@ to anything at all.`
 
 	default_process_limit: {
 		values: setting_types.UINT,
-		default: '100',
+		default: 100,
 		text: `
 Default value for [[setting,service_process_limit]], if not overridden by
 service-specific configuration.`
@@ -5120,8 +5128,8 @@ the doveadm server.`
 	},
 
 	doveadm_worker_count: {
-		default: 0,
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 If the worker count set here is non-zero, mail commands are run via this
 many connections to the doveadm service.
@@ -5574,10 +5582,10 @@ Max time to wait for TCP connect and SSL handshake to finish before retrying.
 	http_client_delete_request_max_attempts: {
 		tags: [ 'http', 'http_client' ],
 		values: setting_types.UINT,
+		default: 0,
 		added: {
 			settings_http_client_settings_added: false,
 		},
-		default: 0,
 		seealso: [ 'http_client_request_max_attempts' ],
 		text: `
 If non-zero, override [[setting,http_client_request_max_attempts]] for
@@ -5639,10 +5647,10 @@ returned.`
 	http_client_max_connect_attempts: {
 		tags: [ 'http', 'http_client' ],
 		values: setting_types.UINT,
+		default: 0,
 		added: {
 			settings_http_client_settings_added: false,
 		},
-		default: 0,
 		text: `
 Maximum number of connection attempts to a host before all associated requests fail.
 
@@ -5761,10 +5769,10 @@ Must be writable by the process creating this log.
 	http_client_read_request_max_attempts: {
 		tags: [ 'http', 'http_client' ],
 		values: setting_types.UINT,
+		default: 0,
 		added: {
 			settings_http_client_settings_added: false,
 		},
-		default: 0,
 		seealso: [ 'http_client_request_max_attempts' ],
 		text: `
 If non-zero, override [[setting,http_client_request_max_attempts]] for \`GET\`
@@ -5787,10 +5795,10 @@ If non-zero, override [[setting,http_client_request_timeout]] for \`GET\` and
 	http_client_request_absolute_timeout: {
 		tags: [ 'http', 'http_client' ],
 		values: setting_types.UINT,
+		default: 0,
 		added: {
 			settings_http_client_settings_added: false,
 		},
-		default: 0,
 		text: `
 Max total time to wait for HTTP request to finish, including all retries. \`0\`
 means no limit.`
@@ -5810,10 +5818,10 @@ Maximum number of attempts for a request.`
 	http_client_request_max_redirects: {
 		tags: [ 'http', 'http_client' ],
 		values: setting_types.UINT,
+		default: 0,
 		added: {
 			settings_http_client_settings_added: false,
 		},
-		default: 0,
 		text: `
 Maximum number of redirects for a request. \`0\` = redirects refused.`
 	},
@@ -5919,10 +5927,10 @@ connection attempt finishes.`
 	http_client_write_request_max_attempts: {
 		tags: [ 'http', 'http_client' ],
 		values: setting_types.UINT,
+		default: 0,
 		added: {
 			settings_http_client_settings_added: false,
 		},
-		default: 0,
 		seealso: [ 'http_client_request_max_attempts' ],
 		text: `
 If non-zero, override [[setting,http_client_request_max_attempts]] for \`PUT\`
@@ -6767,9 +6775,9 @@ name.`
 	},
 
 	last_valid_gid: {
-		default: 0,
 		seealso: [ 'first_valid_gid' ],
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 This setting and [[setting,first_valid_gid]] specify the valid GID
 range for users.
@@ -6783,9 +6791,9 @@ not set.`
 	},
 
 	last_valid_uid: {
-		default: 0,
 		seealso: [ 'first_valid_uid' ],
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 This setting and [[setting,first_valid_uid]] specify the valid UID
 range for users.
@@ -6953,9 +6961,9 @@ format), save the message to the detail mailbox.`
 	},
 
 	lmtp_user_concurrency_limit: {
-		default: 0,
 		tags: [ 'lmtp', 'user_concurrency_limits' ],
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 Limit the number of concurrent deliveries to a single user to this maximum
 value.
@@ -7136,8 +7144,8 @@ comma-separated string.
 	},
 
 	login_proxy_max_disconnect_delay: {
-		default: 0,
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 Specify the delayed disconnection interval of clients when there is a
 server mass-disconnect.
@@ -7517,14 +7525,13 @@ to prefix mailbox names with \`/path/\` or \`~user/\` indicators.`
 	mail_gid: {
 		seealso: [ 'mail_uid' ],
 		values: [ setting_types.STRING, setting_types.UINT ],
-		// TODO: Describe value format (comma-separated list?)
+		default: '',
 		text: `
 The system group ID used for accessing mail messages.
 
-Can be either numeric IDs or group names.
+Can be either a numeric ID or a group name.
 
-If you use multiple values here, userdb can override them by returning the
-gid field.`
+This can be overridden via the \`gid\` [[link,userdb_fields,userdb field]].`
 	},
 
 	mail_home: {
@@ -7577,7 +7584,7 @@ tolerate tempfailing less well.`
 	},
 
 	mail_max_userip_connections: {
-		default: '10',
+		default: 10,
 		values: setting_types.UINT,
 		tags: [ 'user_concurrency_limits' ],
 		text: `
@@ -7641,7 +7648,7 @@ A list of mail plugins to load.`
 	},
 
 	mail_prefetch_count: {
-		default: '0',
+		default: 0,
 		values: setting_types.UINT,
 		text: `
 The number of messages to try to prefetch whenever possible. \`0\` means that
@@ -7730,8 +7737,8 @@ This setting determines whether a shared INBOX should be visible as
 	},
 
 	mail_sort_max_read_count: {
-		default: 0,
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 The number of slow mail accesses an IMAP SORT can perform before it returns
 failure to the client.
@@ -7786,13 +7793,15 @@ A value of \`0\` means this scan never occurs.`
 
 	mail_uid: {
 		seealso: [ 'mail_gid' ],
-		// TODO: Describe value format (comma-separate list?)
 		values: [ setting_types.STRING, setting_types.UINT ],
+		default: '',
 		text: `
 This setting indicates the system userid used for accessing mail
-messages.  If you use multiple values here, userdb can override them
-by returning UID or GID fields.  You can use either numeric IDs or
-usernames here.`
+messages.
+
+Can be either a numeric ID or a username.
+
+This can be overridden via the \`uid\` [[link,userdb_fields,userdb field]].`
 	},
 
 	mail_utf8_extensions: {
@@ -7805,9 +7814,9 @@ enable SMTPUTF8 for LMTP and Submission sessions, and UTF8=ACCEPT for IMAP sessi
 	},
 
 	mail_vsize_bg_after_count: {
-		default: 0,
 		seealso: [ '[[plugin,quota]]' ],
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 Controls transitioning mail size determination to the background instead of
 synchronously during the delivery process.
@@ -8042,7 +8051,7 @@ path (relative to [[setting,mail_index_path]]) to place it in a different
 		seealso: [ 'mailbox_list_storage_escape_char' ],
 		values: setting_types.STRING,
 		default: {
-			value: '*[None]*',
+			value: '',
 			text: `The default for [[link,imapc]] storage is \`~\`.`,
 		},
 		text: `
@@ -8069,7 +8078,7 @@ It's possible to use the same character here as for
 		seealso: [ 'mailbox_list_visible_escape_char' ],
 		values: setting_types.STRING,
 		default: {
-			value: '*[None]*',
+			value: '',
 			text: `The default for [[link,imapc]] storage is \`%\`.`,
 		},
 		text: `
@@ -8578,9 +8587,9 @@ lazy-expunge/*\` lists all folders under it.`
 	},
 
 	namespace_order: {
-		default: 0,
 		tags: [ 'namespace' ],
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 Sets display order in IMAP NAMESPACE ([[rfc,2342]]) command.
 
@@ -8753,9 +8762,9 @@ always available.`
 	},
 
 	mailbox_autoexpunge_max_mails: {
-		default: 0,
 		tags: [ 'mailbox' ],
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 Mails are autoexpunged until mail count is at or below this number of messages.
 
@@ -8870,6 +8879,7 @@ Configures a modifier string for values grouped by the
 	metric_group_by_method_exponential_min_magnitude: {
 		tags: [ 'metrics' ],
 		values: setting_types.UINT,
+		default: 0,
 		seealso: [
 			'[[link,stats_group_by]]',
 			'metric_group_by_method_exponential_max_magnitude',
@@ -8883,6 +8893,7 @@ Configures the minimum magnitude for values grouped by the
 	metric_group_by_method_exponential_max_magnitude: {
 		tags: [ 'metrics' ],
 		values: setting_types.UINT,
+		default: 0,
 		seealso: [
 			'[[link,stats_group_by]]',
 			'metric_group_by_method_exponential_min_magnitude',
@@ -8904,13 +8915,14 @@ Configures the maximum magnitude for values grouped by the
 		],
 		text: `
 Configures the base for values grouped by the
-[[link,stats_group_by_exponential,exponential method]]. Only 2 and 10 are
-supported.`
+[[link,stats_group_by_exponential,exponential method]]. Only \`2\` and
+\`10\` are supported.`
 	},
 
 	metric_group_by_method_linear_min: {
 		tags: [ 'metrics' ],
 		values: setting_types.UINT,
+		default: 0,
 		seealso: [
 			'[[link,stats_group_by]]',
 			'metric_group_by_method_linear_max',
@@ -8924,6 +8936,7 @@ Configures the minimum for values grouped by the
 	metric_group_by_method_linear_max: {
 		tags: [ 'metrics' ],
 		values: setting_types.UINT,
+		default: 0,
 		seealso: [
 			'[[link,stats_group_by]]',
 			'metric_group_by_method_linear_min',
@@ -8937,6 +8950,7 @@ Configures the maximum for values grouped by the
 	metric_group_by_method_linear_step: {
 		tags: [ 'metrics' ],
 		values: setting_types.UINT,
+		default: 0,
 		seealso: [
 			'[[link,stats_group_by]]',
 			'metric_group_by_method_linear_min',
@@ -10666,9 +10680,9 @@ unknown limit exists there, which will be passed back to the client.`
 	},
 
 	submission_max_recipients: {
-		default: 0,
 		tags: [ 'submission' ],
 		values: setting_types.UINT,
+		default: 0,
 		text: `
 Maximum number of recipients accepted per connection.
 
@@ -11168,7 +11182,7 @@ and as such share the connections.`
 
 	ldap_debug_level: {
 		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
-		default: '0',
+		default: 0,
 		values: setting_types.UINT,
 		text: `
 LDAP library debug level as specified by \`LDAP_DEBUG_*\` in \`ldap_log.h\`.
@@ -11199,6 +11213,7 @@ This setting is required for ldap [[setting,dict_map]]`
 	ldap_max_idle_time: {
 		tags: [ 'dict-ldap' ],
 		values: setting_types.TIME,
+		default: 0,
 		text: `
 Disconnect from LDAP server after connection has been idle for this many seconds.`
 	},
@@ -11237,7 +11252,7 @@ Example: \`ldap_uris = ldaps://secure.domain.org\``
 
 	ldap_version: {
 		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
-		default: '3',
+		default: 3,
 		values: setting_types.UINT,
 		text: `
 LDAP protocol version to use. Likely \`2\` or \`3\`.`
