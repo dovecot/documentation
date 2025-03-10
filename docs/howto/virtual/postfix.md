@@ -128,7 +128,7 @@ Dovecot's authentication services will run in the `doveauth` user-context.
 ```[dovecot.conf]
 service imap-login {
   inet_listener imap {
-    address = 1.2.3.4
+    listen = 1.2.3.4
     port = 143
   }
 
