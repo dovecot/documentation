@@ -10589,9 +10589,14 @@ Renamed from \`ssl_verify_client_cert\` setting.`
 			'auth_ssl_require_client_cert',
 			'[[link,ssl_configuration]]',
 		],
-		values: setting_types.BOOLEAN,
+		values: setting_types.ENUM,
+		values_enum: ['no', 'yes', 'any-cert'],
 		text: `
 If enabled, the imap/pop3/etc. client is requested to send an SSL certificate.
+
+You can accept any certificate with \'any-cert\' value, but you must configure
+authentication to check the client certificate with [[link,passdb_check_client_fp,check_client_fp]] (or
+variant) extra field. See [[link,passdb_check_client_fp]].
 
 Note: This setting doesn't yet require the certificate to be valid or
 to even exist. See [[setting,auth_ssl_require_client_cert]].`
