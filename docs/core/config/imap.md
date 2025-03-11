@@ -121,8 +121,10 @@ This is not supported on kqueue based systems currently, such as FreeBSD.
 :::
 
 Dovecot supports moving connections that have issued IDLE to a special holding
-process, called imap-hibernate. This process is responsible for holding the
-idle processes until they need to be thawed.
+process, called `imap-hibernate`. This process is responsible for holding the
+idling connections until they issue some command that requires them to be
+thawed back into a (new) imap process. This way, memory and CPU resources
+are saved, since there is only one hibernation process.
 
 ### Configuration
 
@@ -154,11 +156,3 @@ service imap-hibernate {
   }
 }
 ```
-
-### How it Works
-
-When client issues IDLE, the connection socket is moved to the hibernation
-process. This process is responsible for keeping all connections that are
-idling, until they issue some command that requires them to be thawed into a
-imap process. This way, memory and CPU resources are saved, since there is only
-one hibernation process.
