@@ -92,8 +92,11 @@ mail_attribute {
 
 ### SPECIAL-USE
 
-::: todo
-:::
+No special-use mailboxes are configured by default. However, you can use
+[[setting,@mailbox_defaults]] group to include the recommended default
+mailboxes with special-use flags configured. Alternatively, you can configure
+the [[setting,mailbox]] settings explicitly with
+[[setting,mailbox_special_use]].
 
 ### PREVIEW
 
