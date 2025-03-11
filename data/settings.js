@@ -9321,9 +9321,6 @@ passdb passwd-file {
 
 	passdb_username_filter: {
 		tags: [ 'passdb' ],
-		added: {
-			settings_passdb_username_filter_added: false,
-		},
 		values: setting_types.STRING,
 		text: `
 Skip the passdb if non-empty and the username doesn't match the filter. This is
@@ -10117,10 +10114,6 @@ can be good values.`
 
 	service_idle_kill_interval: {
 		tags: [ 'service' ],
-		changed: {
-			settings_service_idle_kill_changed: `
-This behavior was redesigned to work better in busy servers.`,
-		},
 		values: setting_types.TIME,
 		default: '[[setting,default_idle_kill_interval]]',
 		text: `
