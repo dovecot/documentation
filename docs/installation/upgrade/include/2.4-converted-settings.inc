@@ -15,6 +15,7 @@
 | `event_exporter_transport` | Renamed to [[setting,event_exporter_driver]]. |
 | `event_exporter_transport_args` | Split off to driver-specific settings, see [[link,event_export]]. |
 | `event_exporter_transport_timeout` | Replaced by [[setting,http_client_request_timeout]] and [[setting,event_exporter_unix_connect_timeout]]. |
+| `imap_capability = +CAPA1` | Use [[setting,imap_capability]] { CAPA1 = yes } instead. |
 | `inet_listener { address }` | Replaced by [[setting,listen]] setting. |
 | `push_notification_backend` | Use [[setting,push_notification_driver]] instead. |
 | `mail_crypt_require_encrypted_user_key` | Replaced by [[setting,crypt_user_key_require_encrypted]], [[setting,crypt_user_key_password]] and [[setting,crypt_user_key_encryption_key]]. |
