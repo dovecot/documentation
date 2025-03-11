@@ -11371,4 +11371,13 @@ userdb ldap {
 Group that expands to recommended [[setting,metric]] settings in proxies or
 backends.`
 	},
+
+	'@mailbox_defaults': {
+		values: setting_types.GROUP,
+		values_enum: [ 'english' ],
+		seealso: [ 'mailbox_special_use' ],
+		text: `
+Group that expands to recommended English language mailbox names with
+[[setting,mailbox_special_use]] flags added.`
+	},
 }
