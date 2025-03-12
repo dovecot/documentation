@@ -6962,14 +6962,20 @@ format), save the message to the detail mailbox.`
 
 	lmtp_user_concurrency_limit: {
 		tags: [ 'lmtp', 'user_concurrency_limits' ],
+		changed: {
+			settings_lmtp_user_concurrency_limit_changed: `
+Changed from \`unlimited\` to \`10\`.`
+		},
 		values: setting_types.UINT,
-		default: 0,
+		default: 10,
 		text: `
 Limit the number of concurrent deliveries to a single user to this maximum
 value.
 
 It is useful if one user is receiving numerous mail messages and thereby
-causing delays to other deliveries.`
+causing delays to other deliveries.
+
+To prevent limiting concurrent user deliveries set this to \`unlimited\`.`
 	},
 
 	lmtp_verbose_replies: {
