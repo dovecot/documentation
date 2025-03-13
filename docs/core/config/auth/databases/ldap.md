@@ -309,15 +309,17 @@ Example:
 
 ### DN Template
 
+You can do authentication binding using DN template by configuring it in the
+[[setting,passdb_ldap_bind_userdn]] setting.
+
 The main reason to use DN template is to avoid doing the DN lookup, so
 that the authentication consists only of one LDAP request.
 
 With IMAP and POP3 logins, the same optimization can be done by using
 [[link,auth_prefetch]] and returning userdb info in the DN lookup (a total
-of two LDAP requests per login in both cases).
-
-If you're also using Dovecot for SMTP AUTH, it doesn't do a userdb lookup
-so the prefetch optimization doesn't help.
+of two LDAP requests per login in both cases). If you're also using Dovecot
+for SMTP AUTH, it doesn't do a userdb lookup so the prefetch optimization
+doesn't help.
 
 If you're using DN template, there is no LDAP lookup that returns fields, so
 [[setting,passdb_fields]] can't access any `%{ldap:*}` variables. Also,
