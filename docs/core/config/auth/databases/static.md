@@ -3,6 +3,9 @@ layout: doc
 title: Static
 dovecotlinks:
   auth_staticdb: static authentication database
+  userdb_static:
+    hash: userdb
+    text: Userdb Static
 ---
 
 # Static Password Database (`static`)
