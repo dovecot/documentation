@@ -69,6 +69,14 @@ userdb static {
 The home is optional. You can also return other [[link,userdb_extra_fields]].
 You can use [[variable]] everywhere.
 
+For the above 3 fields a static userdb isn't actually necessary at all.
+Instead, you can just leave out the userdb configuration and set:
+
+ * [[setting,mail_uid]]
+ * [[setting,mail_gid]]
+ * [[setting,mail_home]]
+
+
 ### LDA and passdb Lookup for User Verification
 
 Unless your MTA already verifies that the user exists before calling
