@@ -2,7 +2,7 @@
 layout: doc
 title: Penalty
 dovecotlinks:
-  auth_penalty: authentication penalty
+  auth_penalty: Authentication Penalty
 ---
 
 # Authentication Penalty
