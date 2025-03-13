@@ -3,10 +3,10 @@ layout: doc
 title: Overview
 order: 101
 dovecotlinks:
-  authentication: authentication
+  authentication: Authentication
   authentication_debug:
     hash: debugging
-    text: debugging authentication
+    text: Debugging Authentication
 ---
 
 # Authentication
