@@ -91,7 +91,7 @@ The two important settings in password lookups are:
 Usually the LDAP attribute names aren't the same as
 [[link,passdb,the field names that Dovecot uses internally]]. You must
 create a mapping between them to get the wanted results. This
-is done by listing the fields as `<dovecot field> = <expression>` where
+is done by listing the [[setting,passdb_fields]] as `<dovecot field> = <expression>` where
 expression can include ldap specific variables and other variables too.
 
 For example:
@@ -113,7 +113,7 @@ special [[link,passdb_extra_fields]].
 
 #### Password
 
-Most important, [[setting,passdb_fields]] must return a `password` field,
+Most importantly, [[setting,passdb_fields]] must return a `password` field,
 which contains the user's password.
 
 The next thing Dovecot needs to know is what format the password is in.
@@ -126,32 +126,26 @@ See [[link,password_schemes]] for a list of supported password schemes.
 
 #### Username
 
-LDAP lookups are case-insensitive. Unless you somehow normalize the
-username, it's possible that a user logging in as "user", "User" and
-"uSer" are treated differently.
+LDAP lookups are case-insensitive. Unless the username is normalized, it's
+possible that a user logging in as "user", "User" and "uSer" are treated
+differently. By default Dovecot uses [[setting,auth_username_format,
+%{user | lower}]] to lowercase the username before it reaches the LDAP lookup.
 
-The easiest way to handle this is to tell Dovecot to change the username
-to the same case as it's in the LDAP database. You can do this by
-returning "user" field in [[setting,passdb_fields]] setting, as shown in the above example.
-
-If you can't normalize the username in LDAP, you can alternatively
-lowercase the username via [[setting,auth_username_format,%{user | lower}]].
+Alternatively, you may want to change the username to be exactly as it is in
+the LDAP database. You can do this by returning `user` field in
+[[setting,passdb_fields]] setting, as shown in the above example.
 
 #### Use Worker
 
-By default (`no`) all LDAP lookups are performed by the auth master process.
+If [[setting,passdb_use_worker,no]] / [[setting,userdb_use_worker,no]]
+(default for passdb ldap), all LDAP lookups are performed by the auth master
+process. Each LDAP connection can keep up to 8 requests pipelined. For small
+systems this is sufficient and uses less resources, but it may become a
+bottleneck if there are a lot of queries.
 
-If [[setting,passdb_use_worker]]/[[setting,passdb_use_worker,]]`= yes`,
-auth worker processes are used to perform the lookups. Each auth worker process
-creates its own LDAP connection so this can increase parallelism.
-
-With [[setting,passdb_use_worker]]/[[setting,passdb_use_worker]]`= no`,
-the auth master process can keep 8 requests pipelined for the LDAP connection,
-while with [[setting,passdb_use_worker]]/[[setting,passdb_use_worker,]]`= yes`
-each connection has a maximum of 1 request running.
-
-For small systems, [[setting,passdb_use_worker]]/[[setting,passdb_use_worker]]`= no`
-is sufficient and uses less resources.
+If [[setting,passdb_use_worker,yes]], `auth-worker` processes are used to
+perform the lookups. Each auth worker process creates its own LDAP connection
+so this can increase parallelism.
 
 ### Example
 
