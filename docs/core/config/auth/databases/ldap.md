@@ -338,12 +338,12 @@ If you're using DN template, there is no LDAP lookup that returns fields, so
 
 Usually your LDAP database also contains the [[link,userdb]].
 
-If your home directory can be specified with a template and you're using
-only a single UID and GID, you should use [[link,auth_staticdb]]
-instead to avoid an unnecessary LDAP lookup. You can also use
-[[link,auth_prefetch]] to avoid the userdb LDAP lookup.
+If your home directory can be specified with a template, you're using only a
+single UID and GID, and you don't need any other user-specific fields, you
+should use [[link,userdb_static]] instead to avoid an unnecessary LDAP lookup.
+You can also use [[link,auth_prefetch]] to avoid the userdb LDAP lookup.
 
-Userdb lookups are always done using the default DN (`dn` setting)
+Userdb lookups are always done using the [[setting,ldap_auth_dn]]
 bind. It's not possible to do the lookup using the user's DN (remember
 that e.g. [[link,lda]] or [[link,lmtp]] needs to do userdb lookups
 without knowing the user's password).
@@ -367,7 +367,9 @@ userdb ldap {
 }
 ```
 
-# For using doveadm -A:
+### User Iteration
+
+For using `doveadm -A` or `-u` with wildcards:
 ```
 userdb ldap {
   iterate_filter = (objectClass=posixAccount)
