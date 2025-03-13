@@ -353,58 +353,6 @@ userdb ldap2 {
 ```
 :::
 
-### Variables and Domains
-
-User names and domains may be distinguished using the Variables `%{user | username}` and `%{user | domain}`.
-They split the previous username at the `@` character.
-
-The previous username is:
-
-- For LMTP, it will be `user@hostname`, where hostname depends on,
-  e.g., the Postfix configuration.
-
-- For IMAP, it will be whatever the password database has designated as
-  the username.
-
-  If the (LDAP) password database has:
-  ```
-  fields {
-    user = %{user | username}
-  }
-  ```
-  then the domain part of the login name will be stripped by the password database.
-
-- The userdb will not see any domain part, i.e. `%{user | username}` and `%{user}` are the same
-  thing for the userdb. The userdb may set a new username, too, using:
-  ```
-  fields {
-    user = ...
-  }
-  ```
-  This will be used for Logging `%{user}` and `%{user | domain}`
-  variables in other parts of the configuration (e.g. quota file names).
-
-::: code-group
-```[dovecot.conf]
-passdb ldap {
-  ...
-}
-
-userdb prefetch {
-  driver = prefetch
-}
-
-userdb ldap {
-  ...
-}
-```
-:::
-
-These enable `LDAP` to be used as [[setting,passdb]] / [[setting,userdb]]. The userdb
-prefetch allows `IMAP` or `POP3` logins to do only a single LDAP lookup by
-returning the userdb information already in the passdb lookup.
-[[link,auth_prefetch]] has more details on the prefetch userdb.
-
 ## LDAP Settings
 
 <SettingsComponent tag="auth-ldap" level="2" />
@@ -496,34 +444,3 @@ userdb ldap {
 It is possible to give default values to nonexistent attributes by
 using e.g. `%{ldap:userDomain | default('example.com')}` where if
 userDomain attribute doesn't exist, example.com is used instead.
-
-### Variables and Domains
-
-User names and domains may be distinguished using the [[variable]]
-`%{user | username}` and `%{user | domain}`. They split the *previous username* at the "@" character. The
-*previous username* is:
-
-- For LMTP, it will be `user@hostname`, where hostname depends on e.g.
-  the Postfix configuration.
-
-- For IMAP, it will be whatever the password database has designated as
-  the username. If the (LDAP) password database [[setting,passdb_fields ]]
-  contains `user=%{user | username}`, then the domain part of the login name will be stripped by
-  the password database. The userdb will not see any domain part, i.e.
-  %{user | username} and %{user} are the same thing for the userdb.
-
-The userdb may set a new username, too, using
-```
-userdb ldap {
-  fields {
-    user = ...
-  }
-}
-```
-
-This will be used for:
-
-- Logging
-
-- `%{user}` and `%{user | domain}` variables in other parts of the configuration (e.g. quota
-  file names)
