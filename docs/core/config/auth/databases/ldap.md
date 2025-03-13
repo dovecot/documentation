@@ -7,10 +7,121 @@ dovecotlinks:
 
 # LDAP Authentication (`ldap`)
 
-There are two ways to do LDAP authentication:
+There are two ways to do LDAP authentication in [[link,passdb,passdb]]:
 
-* [Password Lookups](#password-lookups)
 * [Authentication Binds](#authentication-binds)
+* [Password Lookups](#password-lookups)
+
+LDAP can be used as [userdb ldap](#ldap-userdb).
+
+## Connecting
+
+The LDAP server(s) endpoints must be specified as ldap URIs:
+
+* [[setting,ldap_uris]]: A space separated list of LDAP URIs to connect to.
+
+If multiple LDAP servers are specified, it's decided by the LDAP library how
+the server connections are handled. Typically the first working server is used,
+and it's never disconnected from. So there is no load balancing or automatic
+reconnecting to the "primary" server.
+
+### Worker Processes
+
+If [[setting,passdb_use_worker,no]] / [[setting,userdb_use_worker,no]]
+(default for passdb ldap), all LDAP lookups are performed by the auth master
+process. Each LDAP connection can keep up to 8 requests pipelined. For small
+systems this is sufficient and uses less resources, but it may become a
+bottleneck if there are a lot of queries.
+
+If [[setting,passdb_use_worker,yes]], `auth-worker` processes are used to
+perform the lookups. Each auth worker process creates its own LDAP connection
+so this can increase parallelism.
+
+### Connection Optimization
+
+When using
+
+-  auth binds and
+-  userdb ldap lookups,
+
+the userdb lookups should use a separate connection to the LDAP server.
+That way it can send LDAP requests asynchronously to the server, which
+improves the performance. This can be done by specifying distinct
+[[setting,ldap_connection_group]] in the LDAP
+[[setting,passdb]] / [[setting,userdb]] sections.
+
+::: code-group
+```[dovecot.conf]
+passdb ldap {
+  # ldap_connection_group left unchanged, the default is ''
+  ...
+}
+
+userdb ldap {
+  ldap_connection_group = different-connection-group
+  ...
+}
+```
+:::
+
+### SSL/TLS
+
+You can enable TLS in two alternative ways:
+
+* Connect to ldaps port (636) by using "ldaps" protocol, e.g. `ldap_uris =
+  ldaps://secure.domain.org`
+* Connect to ldap port (389) and use STARTTLS command. Use [[setting,ssl,yes]] to
+  enable this.
+
+See the [[link,ssl_configuration]] settings for how to configure TLS. Not all
+of Dovecot SSL settings are supported by the LDAP library. Below is the list
+of supported settings:
+
+<SettingsComponent tag="ssl-ldap" level="2" />
+
+#### Custom Certs
+
+If you need to connect to ldaps secured against a custom certificate of
+authority (CA), you will need to install the custom CA on your system.
+
+For OpenLDAP, by default, the CA must be installed under the directory
+specified in the `TLS_CACERTDIR` option found under `/etc/openldap/ldap.conf`
+(default value is `/etc/openldap/certs`).
+
+After copying the CA, you'll need to run "c_rehash ." inside the directory,
+this will create a symlink pointing to the CA.
+
+You can test the CA installation with this command:
+
+```sh
+$ openssl s_client -connect yourldap.example.org:636 \
+      -CApath /etc/openldap/certs -showcerts
+```
+
+This should report "Verify return code: 0 (ok)".
+
+### SASL binds
+
+It's possible to use SASL binds instead of the regular simple binds if your
+LDAP library supports them.
+
+::: warning Note
+SASL binds are currently incompatible with authentication binds.
+:::
+
+## LDAP Settings
+
+<SettingsComponent tag="auth-ldap" level="2" />
+
+## LDAP-Specific Variables
+
+The following variables can be used inside the [[setting,passdb]] / [[setting,userdb]] sections:
+
+| Variable | Description |
+| -------- | ----------- |
+| `%{ldap:attrName}` | Fetches a single-valued attribute. Fails if the attribute is not present, unless the `|default` filter is given. If there are multiple values, all except the first are ignored (with warning). |
+| `%{ldap_multi:attrName}` | [[added,ldap_multi_added]] Fetches a multi-valued attribute and outputs the values separated by tabs, with each value "tab-escaped". Use the `list` [[link,settings_variables_filters,filter]] to further convert it to a wanted value. For example: `mail_access_groups = %{ldap_multi:userGroups \| list \| default('mail')}` |
+| `%{ldap:dn}` | Retrieves the Distinguished Name of the entry. |
 
 ## Password Lookups
 
@@ -135,18 +246,6 @@ Alternatively, you may want to change the username to be exactly as it is in
 the LDAP database. You can do this by returning `user` field in
 [[setting,passdb_fields]] setting, as shown in the above example.
 
-#### Use Worker
-
-If [[setting,passdb_use_worker,no]] / [[setting,userdb_use_worker,no]]
-(default for passdb ldap), all LDAP lookups are performed by the auth master
-process. Each LDAP connection can keep up to 8 requests pipelined. For small
-systems this is sufficient and uses less resources, but it may become a
-bottleneck if there are a lot of queries.
-
-If [[setting,passdb_use_worker,yes]], `auth-worker` processes are used to
-perform the lookups. Each auth worker process creates its own LDAP connection
-so this can increase parallelism.
-
 ### Example
 
 A typical configuration would look like:
@@ -229,133 +328,6 @@ If you're using DN template, there is no LDAP lookup that returns fields, so
   }
 ```
 :::
-
-### Connection Optimization
-
-When using
-
--  auth binds and
--  userdb ldap lookups,
-
-the userdb lookups should use a separate connection to the LDAP server.
-That way it can send LDAP requests asynchronously to the server, which
-improves the performance. This can be done by specifying distinct
-[[setting,ldap_connection_group]] in the LDAP
-[[setting,passdb]] / [[setting,userdb]] sections.
-
-::: code-group
-```[dovecot.conf]
-passdb ldap {
-  # ldap_connection_group left unchanged, the default is ''
-  ...
-}
-
-userdb ldap {
-  ldap_connection_group = different-connection-group
-  ...
-}
-```
-:::
-
-## Common Configuration
-
-This sections describes the configuration common to LDAP [[link,passdb]] and
-[[link,userdb]].
-
-### Connecting
-
-The LDAP server(s) endpoints must be specified as ldap URIs:
-
-* [[setting,ldap_uris]]: A space separated list of LDAP URIs to connect to.
-
-If multiple LDAP servers are specified, it's decided by the LDAP library how
-the server connections are handled. Typically the first working server is used,
-and it's never disconnected from. So there is no load balancing or automatic
-reconnecting to the "primary" server.
-
-### SSL/TLS
-
-You can enable TLS in two alternative ways:
-
-* Connect to ldaps port (636) by using "ldaps" protocol, e.g. `ldap_uris =
-  ldaps://secure.domain.org`
-* Connect to ldap port (389) and use STARTTLS command. Use [[setting,ssl,yes]] to
-  enable this.
-
-See the [[link,ssl_configuration]] settings for how to configure TLS. Not all
-of Dovecot SSL settings are supported by the LDAP library. Below is the list
-of supported settings:
-
-<SettingsComponent tag="ssl-ldap" level="2" />
-
-#### Custom Certs
-
-If you need to connect to ldaps secured against a custom certificate of
-authority (CA), you will need to install the custom CA on your system.
-
-For OpenLDAP, by default, the CA must be installed under the directory
-specified in the `TLS_CACERTDIR` option found under `/etc/openldap/ldap.conf`
-(default value is `/etc/openldap/certs`).
-
-After copying the CA, you'll need to run "c_rehash ." inside the directory,
-this will create a symlink pointing to the CA.
-
-You can test the CA installation with this command:
-
-```sh
-$ openssl s_client -connect yourldap.example.org:636 \
-      -CApath /etc/openldap/certs -showcerts
-```
-
-This should report "Verify return code: 0 (ok)".
-
-### SASL binds
-
-It's possible to use SASL binds instead of the regular simple binds if your
-LDAP library supports them.
-
-::: warning Note
-SASL binds are currently incompatible with authentication binds.
-:::
-
-### LDAP-Specific Variables
-
-The following variables can be used inside the [[setting,passdb]] / [[setting,userdb]] sections:
-
-| Variable | Description |
-| -------- | ----------- |
-| `%{ldap:attrName}` | Fetches a single-valued attribute. Fails if the attribute is not present, unless the `|default` filter is given. If there are multiple values, all except the first are ignored (with warning). |
-| `%{ldap_multi:attrName}` | [[added,ldap_multi_added]] Fetches a multi-valued attribute and outputs the values separated by tabs, with each value "tab-escaped". Use the `list` [[link,settings_variables_filters,filter]] to further convert it to a wanted value. For example: `mail_access_groups = %{ldap_multi:userGroups \| list \| default('mail')}` |
-| `%{ldap:dn}` | Retrieves the Distinguished Name of the entry. |
-
-### Multiple Queries via userdbs
-
-Example: Give the user a class attribute, which defines the default quota:
-
-::: code-group
-```[dovecot.conf]
-userdb ldap1 {
-  driver = ldap
-  result_success = continue-ok
-  fields {
-    class = %{ldap:userClass}
-    quota_storage_size = %{ldap:quotaBytes}B
-  }
-}
-
-userdb ldap2 {
-  driver = ldap
-  skip = notfound
-  fields {
-    quota_storage_size:default = %{ldap:classQuotaBytes}B
-  }
-}
-```
-:::
-
-## LDAP Settings
-
-<SettingsComponent tag="auth-ldap" level="2" />
 
 ## LDAP userdb
 
@@ -444,3 +416,28 @@ userdb ldap {
 It is possible to give default values to nonexistent attributes by
 using e.g. `%{ldap:userDomain | default('example.com')}` where if
 userDomain attribute doesn't exist, example.com is used instead.
+
+### Multiple Queries via userdbs
+
+Example: Give the user a class attribute, which defines the default quota:
+
+::: code-group
+```[dovecot.conf]
+userdb ldap1 {
+  driver = ldap
+  result_success = continue-ok
+  fields {
+    class = %{ldap:userClass}
+    quota_storage_size = %{ldap:quotaBytes}B
+  }
+}
+
+userdb ldap2 {
+  driver = ldap
+  skip = notfound
+  fields {
+    quota_storage_size:default = %{ldap:classQuotaBytes}B
+  }
+}
+```
+:::
