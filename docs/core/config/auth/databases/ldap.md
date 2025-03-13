@@ -41,6 +41,8 @@ so this can increase parallelism.
 
 When using
 
+-  [[setting,passdb_use_worker,no]],
+-  [[setting,userdb_use_worker,no]],
 -  auth binds and
 -  userdb ldap lookups,
 
