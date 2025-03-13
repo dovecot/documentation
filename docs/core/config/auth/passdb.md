@@ -2,7 +2,7 @@
 layout: doc
 title: passdb
 dovecotlinks:
-  passdb: passdb
+  passdb: Passdb
   passdb_auth_nologin:
     hash: nologin
     text: "passdb: Authentication `nologin` Extra Field"
