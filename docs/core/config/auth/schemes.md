@@ -2,7 +2,7 @@
 layout: doc
 title: Password Schemes
 dovecotlinks:
-  password_schemes: password schemes
+  password_schemes: Password Schemes
 ---
 
 # Password Schemes

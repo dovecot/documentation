@@ -4,8 +4,8 @@ title: Master Users
 dovecotlinks:
   acl_master_users:
     hash: acls
-    text: ACL master users
-  auth_master_users: master users
+    text: ACL Master Users
+  auth_master_users: Master Users
 ---
 
 # Master Users/Passwords
