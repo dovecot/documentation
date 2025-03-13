@@ -60,3 +60,25 @@ the "user" variable and applies the "domain" filter for it.
 | `%{rip}` | `%{remote_ip}` |
 | `%{rport}` | `%{remote_port }` |
 | `%{service}` | `%{protocol}` |
+
+##### Shared namespace variables
+
+Previously `%%u`, `%%n` and `%%d` could be used in shared namespace
+configuration.
+
+These were changed for the [[setting,namespace_prefix]]:
+
+| Old variable | New syntax |
+| ------------ | ---------- |
+| `%%u` | `$user` |
+| `%%n` | `$username` |
+| `%%d` | `$domain` |
+
+For other settings, such as [[setting,mail_path]]:
+
+| Old variable | New syntax |
+| ------------ | ---------- |
+| `%%u` | `%{owner_user}` |
+| `%%n` | `%{owner_user | username}` |
+| `%%d` | `%{owner_user | domain}` |
+| `%%h` | `%{owner_home}` |
