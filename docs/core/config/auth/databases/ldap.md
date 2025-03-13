@@ -25,6 +25,16 @@ the server connections are handled. Typically the first working server is used,
 and it's never disconnected from. So there is no load balancing or automatic
 reconnecting to the "primary" server.
 
+### Connection Authentication
+
+If LDAP server requires authentication, set:
+
+ * [[setting,ldap_auth_dn]]
+ * [[setting,ldap_auth_dn_password]]
+ * [[setting,ldap_auth_sasl_mechanisms]] can be set to list of SASL mechanisms
+   to authenticate with. Note that this is used only for the initial connection
+   authentication, not for any subsequent [authentication binds](#authentication-binds).
+
 ### Worker Processes
 
 If [[setting,passdb_use_worker,no]] / [[setting,userdb_use_worker,no]]
@@ -101,15 +111,6 @@ $ openssl s_client -connect yourldap.example.org:636 \
 ```
 
 This should report "Verify return code: 0 (ok)".
-
-### SASL binds
-
-It's possible to use SASL binds instead of the regular simple binds if your
-LDAP library supports them.
-
-::: warning Note
-SASL binds are currently incompatible with authentication binds.
-:::
 
 ## LDAP Settings
 
