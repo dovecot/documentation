@@ -25,6 +25,7 @@ export const updates = {
 	auth_protocol_handshake_changed: '2.4.0',
 	auth_server_common_secured: '2.4.0',
 	auth_sql_workers_changed: '2.4.1',
+	config_design_changed: '2.4.0',
 	dcrypt_same_cipher_algo_added: '2.4.0',
 	dict_protocol_v4: '2.4.0',
 	doveadm_ex_expired_code: '2.4.0',

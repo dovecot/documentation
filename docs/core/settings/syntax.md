@@ -31,6 +31,30 @@ The first setting in the configuration file must be
 [[setting,dovecot_config_version]]. It specifies the configuration syntax,
 the used setting names and the expected default values.
 
+[[changed,config_design_changed]] All settings are now global settings, i.e.
+there is no settings hierarchy. There are various filters, which can limit
+where the settings are used. It is possible to configure any setting inside
+any filter, although they may not actually do anything in there. Setting
+name prefixes can be stripped out (and they are in [[man,doveconf]] output)
+when the prefix matches the parent [[link,settings_syntax_named_filters,named
+[list] filter]]. For example:
+
+```[dovecot.conf]
+# named list filter
+namespace inbox {
+  # namespace_separator setting
+  separator = /
+}
+# named list filter
+passdb static {
+  # passdb_static_password setting
+  password = foo
+
+  # this is allowed, but it does nothing here
+  namespace_separator = /
+}
+```
+
 ## Basic Syntax
 
 The syntax generally looks like this:
