@@ -89,7 +89,7 @@ See the [[link,ssl_configuration]] settings for how to configure TLS. Not all
 of Dovecot SSL settings are supported by the LDAP library. Below is the list
 of supported settings:
 
-<SettingsComponent tag="ssl-ldap" level="2" />
+<SettingsComponent tag="ssl-ldap" level="3" />
 
 #### Custom Certs
 
