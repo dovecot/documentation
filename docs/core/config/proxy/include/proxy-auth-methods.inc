@@ -8,6 +8,6 @@
     * `proxy_mech` is needed only if both OAUTH and cleartext mechanisms
       are enabled.
 
-1. Let Dovecot proxy perform the authentication and login to remote server
-   using the proxy's [[link,auth_master_users]]. This allows client
-   to use also non-cleartext authentication.
+1. Login to the remote server using a [[link,auth_master_passwords,master
+   password]]. This is done by returning `pass=master_secret` extra field. This
+   allows client to use also non-cleartext authentication.

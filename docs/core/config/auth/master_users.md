@@ -6,6 +6,9 @@ dovecotlinks:
     hash: acls
     text: ACL Master Users
   auth_master_users: Master Users
+  auth_master_passwords:
+    hash: master-passwords
+    text: Master Passwords
 ---
 
 # Master Users/Passwords
