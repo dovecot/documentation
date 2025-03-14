@@ -53,17 +53,6 @@ login fails with `Proxying loops` error.
 * `auth_proxy_self` setting in `dovecot.conf` can be used to specify extra
   IPs that are also considered to be the proxy's own IPs.
 
-### `proxy_always`
-
-Can be used with `proxy_maybe` to conditionally do proxying to specified
-remote host (host isn't self) or to let cluster assign a backend host (host
-is self).
-
-Basically, this setting just always sends the `proxy` extra field to login
-process, but not necessarily the host.
-
-Useful when dividing users across multiple clusters.
-
 ### `host=<s>`
 
 The destination server's IP address.
