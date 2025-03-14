@@ -211,7 +211,13 @@ expression can include ldap specific variables and other variables too.
 For example:
 ::: code-group
 ```[dovecot.conf]
+ldap_uris = ldap://ldap.example.org
+ldap_auth_dn = cn=admin,dc=example,dc=org
+ldap_auth_dn_password = secret
+ldap_base = dc=example,dc=org
+
 passdb ldap {
+  filter = (&(objectClass=posixAccount)(uid=%{user}))
   fields {
     user = %{ldap:uid}
     password = %{ldap:userPassword}
@@ -255,15 +261,20 @@ A typical configuration would look like:
 
 ::: code-group
 ```[dovecot.conf]
-  passdb ldap {
-    bind = no
-    default_password_scheme = MD5
-    ldap_filter = (&(objectClass=posixAccount)(uid=%{user}))
-    fields {
-      user = %{ldap:uid}
-      password = %{ldap:userPassword}
-    }
+ldap_uris = ldap://ldap.example.org
+ldap_auth_dn = cn=admin,dc=example,dc=org
+ldap_auth_dn_password = secret
+ldap_base = dc=example,dc=org
+
+passdb ldap {
+  bind = no
+  default_password_scheme = MD5
+  filter = (&(objectClass=posixAccount)(uid=%{user}))
+  fields {
+    user = %{ldap:uid}
+    password = %{ldap:userPassword}
   }
+}
 ```
 :::
 
@@ -297,13 +308,18 @@ Example:
 
 ::: code-group
 ```[dovecot.conf]
-  passdb ldap {
-    bind = yes
-    ldap_filter = (&(objectClass=posixAccount)(uid=%{user}))
-    fields {
-      user = %{ldap:uid}
-    }
+ldap_uris = ldap://ldap.example.org
+ldap_auth_dn = cn=admin,dc=example,dc=org
+ldap_auth_dn_password = secret
+ldap_base = dc=example,dc=org
+
+passdb ldap {
+  bind = yes
+  filter = (&(objectClass=posixAccount)(uid=%{user}))
+  fields {
+    user = %{ldap:uid}
   }
+}
 ```
 :::
 
@@ -327,10 +343,15 @@ If you're using DN template, there is no LDAP lookup that returns fields, so
 
 ::: code-group
 ```[dovecot.conf]
-  passdb ldap {
-    bind = yes
-    bind_userdn = cn=%{user},ou=people,o=org
-  }
+ldap_uris = ldap://ldap.example.org
+ldap_auth_dn = cn=admin,dc=example,dc=org
+ldap_auth_dn_password = secret
+ldap_base = dc=example,dc=org
+
+passdb ldap {
+  bind = yes
+  bind_userdn = cn=%{user},ou=people,o=org
+}
 ```
 :::
 
@@ -357,6 +378,11 @@ them globally with [[setting,mail_uid]] and [[setting,mail_gid]] settings instea
 returning them from LDAP.
 
 ```
+ldap_uris = ldap://ldap.example.org
+ldap_auth_dn = cn=admin,dc=example,dc=org
+ldap_auth_dn_password = secret
+ldap_base = dc=example,dc=org
+
 userdb ldap {
   filter = (&(objectClass=posixAccount)(uid=%{user}))
   fields {
@@ -371,6 +397,11 @@ userdb ldap {
 
 For using `doveadm -A` or `-u` with wildcards:
 ```
+ldap_uris = ldap://ldap.example.org
+ldap_auth_dn = cn=admin,dc=example,dc=org
+ldap_auth_dn_password = secret
+ldap_base = dc=example,dc=org
+
 userdb ldap {
   iterate_filter = (objectClass=posixAccount)
   iterate_fields {
