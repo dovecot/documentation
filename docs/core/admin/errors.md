@@ -3,6 +3,9 @@ layout: doc
 title: Errors
 dovecotlinks:
   troubleshooting: Dovecot troubleshooting
+  error_time_moved_backwards:
+    hash: time-moved-backwards-error
+    text: Time Moved Backwards Error
 ---
 
 # Dovecot Errors and Troubleshooting
@@ -127,79 +130,7 @@ There are usually three possibilities why it's moving backwards:
 
 3. Dovecot is started before time is synchronized at server startup.
 
-Moving time backwards might cause various problems (see below).
-
-### Time Synchronization
-
-There are two choices for synchronizing your clock:
-
-1. Use [ntpd](https://www.ntp.org/). It periodically checks the
-   current time from NTP server and slows down or speeds up the clock if
-   necessary. Unlike ntpdate, it doesn't just move the time forwards or
-   backwards (unless the difference is large).
-
-   - If the time difference is too large for ntpd and it "steps", then
-     use "-x" as a command line option for ntpd or use "tinker step 0"
-     in `/etc/ntp.conf`.
-
-     - This shows up in logs as: `ntpd[17697]: time reset -2.075483 s`
-
-2. If ntpd doesn't work well (e.g. a bad network connection), you can
-   use [clockspeed](https://cr.yp.to/clockspeed.html) or
-   [chrony](https://chrony.tuxfamily.org/) as well.
-
-In some systems ntpd/ntpdate is run at boot, but only after Dovecot has
-started. That can cause Dovecot to die immediately. If you have this
-problem, fix your init scripts to run ntpd/ntpdate first, before
-starting Dovecot. Also, seriously consider running ntp-wait before
-starting Dovecot.
-
-### Server Startup Time Synchronization
-
-With systemd add `time-sync.target` to the `After` setting. This isn't
-enough though, because it only waits for time-sync to start, not finish.
-To do that, enable also `systemd-time-wait-sync.service`.
-
-### What about Daylight Saving/Summer Time?
-
-On Unix-like systems, time is stored internally as the number of seconds
-since January 1, 1970, 00:00:00 UTC
-(see [UNIX time](https://en.wikipedia.org/wiki/Unix_time)); concepts
-such as time zones and daylight saving time are applied in user space by the C
-library, and will normally not have an impact on Dovecot's behavior.
-
-### Dovecot Shouldn't Just Die!
-
-Dovecot's behavior when time moves backwards is:
-
-- Existing imap and pop3 processes either sleep or die
-
-- Master process stops creating new processes until either the original
-  time is reached, or after a maximum wait of 3 minutes.
-
-- Other processes log a warning, but do nothing else.
-
-- Timeouts are updated so that the timeout is executed approximately at
-  the original intended time.
-
-Dovecot also notices when time unexpectedly jumps forwards. In that
-situation it logs a warning and also updates timeouts.
-
-The reason why imap/pop3 processes get killed and new ones can't be
-created for a while is to avoid problems related to timestamps. Some
-issues are:
-
-- Uniqueness of Maildir filenames and dbox global unique identifiers
-  relies on a growing timestamp.
-
-- Dotlock files' staleness is detected by looking at its mtime.
-
-- Timestamps are stored internally all around in memory (as well as in
-  index files) and compared to current time. Those checks may or may
-  not be buggy if current time shrinks.
-
-While killing mail processes doesn't fully solve any of those issues,
-they're at least less likely to happen then.
+See [[link,time_synchronization]].
 
 ## CentOS/RHEL8 Mail Location
 
@@ -329,22 +260,23 @@ forking less processes:
   This alone might be enough.
 
 - You can also switch (most of the) other commonly forked processes to
-  be reused. For example `service imap { restart_request_count = 100 }`
-  reuses the imap process for 100 different IMAP connections before it
-  dies. This is useful mainly for imap, pop3 and managesieve services.
-  It's better to avoid using `restart_request_count=unlimited` in case
-  there are memory leaks.
+  be reused. For example [[setting,service_restart_request_count,100]]
+  reuses the process for 100 different connections before it dies. This is
+  useful especially for imap, pop3 and managesieve services.
+  It's better to avoid using [[setting,service_restart_request_count,unlimited]]
+  in case there are memory leaks.
 
 - You can pre-fork some idling processes to handle bursts with
-  `service { process_min_avail }`.
+  [[setting,service_process_min_avail]].
 
 See [[link,service_configuration]] before changing any service
 settings. Some services require specific values to work correctly.
 
 ### Listener Queue Size
 
-Dovecot uses `service { client_limit } * service { process_limit }` as the
-listener queue size. There is no upper limit in Dovecot.
+Dovecot uses [[setting,service_client_limit]] *
+[[setting,service_process_limit]] as the listener queue size. There is no upper
+limit in Dovecot.
 
 Most OSes use an even lower limit, typically `128`. In Linux you can
 increase this through: `/proc/sys/net/core/somaxconn`.
