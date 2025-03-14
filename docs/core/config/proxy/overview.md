@@ -9,25 +9,48 @@ dovecotlinks:
     text: forwarding fields
 ---
 
-# Proxy passdb
+# Dovecot Proxying
 
 Dovecot supports proxying IMAP, POP3, [[link,submission]], [[link,lmtp]],
-and [[link,managesieve]] connections to other hosts.
+[[link,managesieve]] and doveadm connections to other hosts.
 
 The proxying can be done for all users, or only for some specific users. There
-are two ways to do the authentication:
+are two ways to do the authentication on the remote server:
 
-1. Forward the password to the remote server. The proxy may or may not perform
-   authentication itself. This requires that the client uses only cleartext
-   authentication, or alternatively the proxy has access to users' passwords in
-   cleartext.
+1. Forward the user-given password (or OAUTH token) to the remote server. This
+   is done by returning `pass=%{password}` and `proxy_mech=%{mechanism}` extra
+   fields.
 
-2. Let Dovecot proxy perform the authentication and login to remote server
+    * This doesn't work if any non-cleartext, non-token-based
+      [[link,authentication_mechanisms, authentication mechanisms]] are used,
+      because they prevent such password forwarding by design.
+    * `proxy_mech` is needed only if both OAUTH and cleartext mechanisms
+      are enabled.
+
+1. Let Dovecot proxy perform the authentication and login to remote server
    using the proxy's [[link,auth_master_users]]. This allows client
    to use also non-cleartext authentication.
 
-The proxy is configured pretty much the same way as [[link,auth_referral]],
-with the addition of `proxy` field.
+## Configuration
+
+Proxying is enabled by the `proxy` or `proxy_maybe` extra field.
+Additionally, `host` is also a required field. See below for details on
+them and other optional extra fields.
+
+In backends, set [[setting,login_trusted_networks]] to point to the proxies'
+IP addresses. This way you'll get the clients' actual IP addresses logged
+instead of the proxy's.
+
+The destination servers don't need to be running Dovecot, but you should make
+sure that the Dovecot proxy doesn't advertise more capabilities than the
+destination server can handle. For IMAP you can do this by changing
+[[setting,imap_capability]]. For POP3 you'll have to modify Dovecot's sources
+for now (`src/pop3/capability.h`).
+
+Dovecot IMAP proxy also automatically sends updated untagged CAPABILITY reply
+if it detects that the remote server has different capabilities than what it
+already advertised to the client, but some clients simply ignore the
+updated CAPABILITY reply.
 
 ## Fields
 
@@ -35,23 +58,22 @@ with the addition of `proxy` field.
 
 Enables the proxying.
 
-Either this or `proxy_maybe` is required.
+Either this or `proxy_maybe` is required to enable proxying.
 
 ### `proxy_maybe`
 
-Enables the proxying.
+Enables optional proxying.
 
-Either this or `proxy` is required.
+Either this or `proxy` is required to enable proxying.
 
-`proxy_maybe` can be used to implement "automatic proxying". If the
+`proxy_maybe` can be used to implement "automatic proxying" to implement
+a mixed mode of running proxies and backends in the same servers. If the
 proxy destination matches the current connection, the user gets logged in
 normally instead of being proxied. If the same happens with `proxy`, the
 login fails with `Proxying loops` error.
 
-* `proxy_maybe` with LMTP require.
-* `proxy_maybe` with `host=<dns name>` requires.
-* `auth_proxy_self` setting in `dovecot.conf` can be used to specify extra
-  IPs that are also considered to be the proxy's own IPs.
+[[setting,auth_proxy_self]] can be used to specify extra IPs that are also
+considered to be the proxy's own IPs.
 
 ### `host=<s>`
 
@@ -81,6 +103,7 @@ Tell client to use a different username when logging in.
 ### `proxy_mech=<s>`
 
 Tell client to use this SASL authentication mechanism when logging in.
+See [[setting,imapc_sasl_mechanisms]] for supported mechanisms
 
 ### `proxy_timeout=<time_msecs>`
 
@@ -98,62 +121,31 @@ that hang otherwise.
 
 ### `proxy_not_trusted`
 
-IMAP/POP3 proxying never sends the `ID/XCLIENT` command to remote.
+IMAP/POP3 proxying never sends the `ID/XCLIENT` command to remote. This can be
+used when proxying to remote servers that shouldn't see the clients' original
+IP addresses or other information.
 
 ## SSL
 
 You can use SSL/TLS connection to destination server by returning:
 
-* [[setting,ssl,yes]]
-
-  Use SSL and require a valid verified remote certificate.
-
-  ::: warning
-  Unless used carefully, this is an insecure setting!
-  The only way to use this securely is to only use and allow your own private
-  CA's certs; anything else is exploitable by a man-in-the-middle attack.
-  :::
-
-  ::: info
-  Login processes don't currently use the [[setting,ssl_client_ca_dir]] setting
-  for verifying the remote certificate, mainly because login processes can't
-  really read the files chrooted. You can instead use
-  [[setting,ssl_client_ca_file]].
-  :::
-
-  ::: warning
-  doveadm proxying doesn't support SSL/TLS currently - any ssl/starttls
-  extra field is ignored.
-  :::
+* `ssl=yes`: Use SSL and require a valid verified remote certificate.
 
 * `ssl=any-cert`: Use SSL, but don't require a valid remote certificate.
 
 * `starttls=yes`: Use STARTTLS command instead of doing SSL handshake
   immediately after connected.
 
-* `starttls=any-cert`: Combine starttls and `ssl=any-cert`.
+* `starttls=any-cert`: Combine `starttl` and `ssl=any-cert`.
+
+::: info
+Login processes are chrooted, so [[setting,ssl_client_ca_dir]] setting
+doesn't work. You can instead use [[setting,ssl_client_ca_file]].
+:::
 
 Additionally you can also tell Dovecot to send SSL client certificate to the
 remote server using [[setting,ssl_client_cert_file]] and
-[[setting,ssl_client_key_file]] settings in `dovecot.conf`.
-
-Set [[setting,login_trusted_networks]] to point to the proxies in the
-backends. This way you'll get the clients' actual IP addresses logged instead
-of the proxy's.
-
-The destination servers don't need to be running Dovecot, but you should make
-sure that the Dovecot proxy doesn't advertise more capabilities than the
-destination server can handle.
-
-For IMAP you can do this by changing [[setting,imap_capability]].
-
-For POP3 you'll have to modify Dovecot's sources for now
-(`src/pop3/capability.h`).
-
-Dovecot also automatically sends updated untagged CAPABILITY reply if it
-detects that the remote server has different capabilities than what it
-already advertised to the client, but some clients simply ignore the
-updated CAPABILITY reply.
+[[setting,ssl_client_key_file]] settings.
 
 ## Source IPs
 
@@ -175,8 +167,7 @@ To avoid reconnection load spikes when a backend server dies, you can tell
 proxy to spread the client disconnections over a longer time period (after the
 server side of the connection is already disconnected).
 
-[[setting,login_proxy_max_disconnect_delay]] controls this (disabled by
-default).
+[[setting,login_proxy_max_disconnect_delay]] controls this.
 
 ## Forwarding Fields
 
@@ -191,7 +182,7 @@ passdb extra fields, so they are visible in, e.g.,
 If the proxying continues, all these fields are further forwarded to the next
 hop again.
 
-This feature requires that the sending host is in
+This feature requires that the sending host is in the destination's
 [[setting,login_trusted_networks]].
 
 See [[link,forwarding_parameters]] for more details on how this is implemented
@@ -246,26 +237,23 @@ If you don't want proxy itself to do authentication, you can configure it to
 succeed with any given password. You can do this by returning an empty
 password and `nopassword` field.
 
-## Master Password
+## Master Users
+
+Note that this is different from master passwords.
 
 This way of forwarding requires the destination server to support master user
 feature. The users will be normally authenticated in the proxy and the common
 proxy fields are returned, but you'll need to return two fields specially:
 
-* `master=<s>`: This contains the master username (e.g. proxy). It's used as
+* `master=<s>`: This contains the master username (e.g. `proxy`). It's used as
   SASL authentication ID.
 
   * Alternatively you could return `destuser=user*master` and set
     [[setting,auth_master_user_separator,*]].
 
-* `pass=<s`>: This field contains the master user's password.
+* `pass=<s>`: This field contains the master user's password.
 
 See [[link,auth_master_users]] for more information how to configure this.
-
-## OAuth2 Forwarding
-
-If you want to forward [[link,auth_oauth2]] tokens, return field
-`proxy_mech=%{mechanism}` as extra field.
 
 ## Examples
 
