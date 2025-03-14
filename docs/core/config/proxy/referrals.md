@@ -7,7 +7,9 @@ dovecotlinks:
 
 # Login Referrals
 
-Login referrals are an IMAP extension specified by [[rfc,2221]].
+Login referrals are an IMAP extension specified by [[rfc,2221]]. It is
+practically not used by anyone, so this page exists mainly for historical
+reasons.
 
 Their purpose is to redirect clients to an different IMAP server in case
 of hardware failures or organizational changes. No client action is needed
