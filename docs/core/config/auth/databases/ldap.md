@@ -223,12 +223,9 @@ of two LDAP requests per login in both cases).
 If you're also using Dovecot for SMTP AUTH, it doesn't do a userdb lookup
 so the prefetch optimization doesn't help.
 
-If you're using DN template, [[setting,passdb_fields]] and
-[[setting,passdb_ldap_filter]] settings
-are completely ignored. That means you can't make passdb return any
-[[link,passdb_extra_fields]]. You should also set
-[[setting,auth_username_format,%{user | lower}]] in `dovecot.conf` to normalize the
-username by lowercasing it.
+If you're using DN template, there is no LDAP lookup that returns fields, so
+[[setting,passdb_fields]] can't access any `%{ldap:*}` variables. Also,
+[[setting,passdb_ldap_filter]] setting is ignored.
 
 ::: code-group
 ```[dovecot.conf]
