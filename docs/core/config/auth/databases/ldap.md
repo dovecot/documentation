@@ -457,24 +457,30 @@ userDomain attribute doesn't exist, example.com is used instead.
 
 ### Multiple Queries via userdbs
 
-Example: Give the user a class attribute, which defines the default quota:
+Example: Give the user a class attribute, which defines the quota:
 
 ::: code-group
 ```[dovecot.conf]
-userdb ldap1 {
+ldap_uris = ldap://ldap.example.org
+ldap_auth_dn = cn=admin,dc=example,dc=org
+ldap_auth_dn_password = secret
+ldap_base = dc=example,dc=org
+
+userdb ldap-user {
   driver = ldap
   result_success = continue-ok
+  ldap_filter = (&(objectClass=posixAccount)(uid=%{user}))
   fields {
     class = %{ldap:userClass}
-    quota_storage_size = %{ldap:quotaBytes}B
   }
 }
 
-userdb ldap2 {
+userdb ldap-class {
   driver = ldap
   skip = notfound
+  ldap_filter = (&(objectClass=classSettings)(class=%{userdb:class}))
   fields {
-    quota_storage_size:default = %{ldap:classQuotaBytes}B
+    quota_storage_size = %{ldap:quotaBytes}B
   }
 }
 ```
