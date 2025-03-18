@@ -190,8 +190,8 @@ protocol lmtp {
 
 ::: code-group
 ```[dovecot.conf]
+quota_storage_size = 1GB
 quota user {
-  quota_storage_size = 1GB
 }
 mailbox Trash {
   quota_storage_percentage = 110

@@ -79,8 +79,11 @@ protocol imap {
   }
 }
 
+# Keep this setting outside the quota { .. } to allow easily overriding it
+# in userdb lookups.
+quota_storage_size = 1G
+
 quota "User quota" {
-  quota_storage_size = 1G
 }
 ```
 
@@ -330,9 +333,10 @@ protocol !indexer-worker {
   mail_vsize_bg_after_count = 100
 }
 
+# 10MB quota limit
+quota_storage_size = 10M
+
 quota "User quota" {
-  # 10MB quota limit
-  quota_storage_size = 10M
 }
 ```
 
