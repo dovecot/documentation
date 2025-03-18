@@ -1284,7 +1284,7 @@ that meets the other reply criteria (refer to [[rfc,5230]]). A value of zero
 is not recommended.`
 	},
 
-	sieve_vacation_send_from_receipt: {
+	sieve_vacation_send_from_recipient: {
 		tags: [ 'sieve', 'sieve-vacation' ],
 		plugin: 'sieve',
 		default: 'no',
