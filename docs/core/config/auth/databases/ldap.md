@@ -609,7 +609,7 @@ userdb ldap {
 ```
 
 It is possible to give default values to nonexistent attributes by
-using e.g. `%{ldap:userDomain:example.com}` where if
+using e.g. `%{ldap:userDomain | default('example.com')}` where if
 userDomain attribute doesn't exist, example.com is used instead.
 
 ### Variables and Domains
