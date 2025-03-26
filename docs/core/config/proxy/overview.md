@@ -124,7 +124,7 @@ You can use SSL/TLS connection to destination server by returning:
 * `starttls=yes`: Use STARTTLS command instead of doing SSL handshake
   immediately after connected.
 
-* `starttls=any-cert`: Combine `starttl` and `ssl=any-cert`.
+* `starttls=any-cert`: Combine `starttls` and `ssl=any-cert`.
 
 ::: info
 Login processes are chrooted, so [[setting,ssl_client_ca_dir]] setting
