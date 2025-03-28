@@ -10271,6 +10271,17 @@ The most common choices are \`commonName\` and \`x500UniqueIdentifier\`.
 Note: [[setting,auth_ssl_username_from_cert]] MUST be enabled.`
 	},
 
+	ssl_peer_certificate_fingerprint_hash: {
+		default: '',
+		seealso: [ 'ssl', '[[link,ssl_configuration]]', '[[link,passdb_check_client_fp]]' ],
+		values: setting_types.STRING,
+		text: `
+An OpenSSL digest algorithm name to use to hash peer certificate names.
+Setting this value enables \`ssl_client_cert_fp\` and \`ssl_client_cert_pubkey_fp\`
+availability in [[setting,login_log_format_elements]] and also in authentication
+variables. Weak algorithms are explicitly blacklisted, such as MD5.`,
+	},
+
 	ssl_cipher_list: {
 		default: 'ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH (for ssl_server, empty for ssl_client)',
 		seealso: [ 'ssl', 'ssl_cipher_suites', 'ssl_min_protocol', '[[link,ssl_configuration]]' ],
@@ -10559,9 +10570,14 @@ Renamed from \`ssl_verify_client_cert\` setting.`
 			'auth_ssl_require_client_cert',
 			'[[link,ssl_configuration]]',
 		],
-		values: setting_types.BOOLEAN,
+		values: setting_types.ENUM,
+		values_enum: ['no', 'yes', 'any-cert'],
 		text: `
 If enabled, the imap/pop3/etc. client is requested to send an SSL certificate.
+
+You can accept any certificate with \'any-cert\' value, but you must configure
+authentication to check the client certificate with [[link,passdb_check_client_fp,check_client_fp]] (or
+variant) extra field. See [[link,passdb_check_client_fp]].
 
 Note: This setting doesn't yet require the certificate to be valid or
 to even exist. See [[setting,auth_ssl_require_client_cert]].`
