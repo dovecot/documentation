@@ -2,7 +2,7 @@
 layout: doc
 title: Multiple Databases
 dovecotlinks:
-  auth_multiple_dbs: multiple authentication databases
+  auth_multiple_dbs: Multiple Authentication Databases
 ---
 
 # Multiple Authentication Databases

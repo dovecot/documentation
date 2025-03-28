@@ -55,10 +55,6 @@ Three plugins are associated with quota:
 | quota (this plugin) | Implements the actual quota handling and includes all quota drivers. |
 | [[plugin,quota-clone]] | Copy the current quota usage to a dict. |
 
-## Settings
-
-<SettingsComponent plugin="quota" />
-
 ## Configuration
 
 ### Enabling Quota Plugins
@@ -799,3 +795,8 @@ smtpd_recipient_restrictions =
 ### Configuration
 
 <SettingsComponent tag="quota-status-service" level="3" />
+
+## Settings
+
+<SettingsComponent plugin="quota" />
+

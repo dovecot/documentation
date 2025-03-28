@@ -2,7 +2,7 @@
 layout: doc
 title: Policy
 dovecotlinks:
-  auth_policy: authentication policy
+  auth_policy: Authentication Policy
   auth_policy_configuration:
     hash: configuration
     text: Auth Policy Configuration

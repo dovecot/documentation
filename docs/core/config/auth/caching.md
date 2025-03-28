@@ -2,7 +2,7 @@
 layout: doc
 title: Caching
 dovecotlinks:
-  auth_caching: authentication caching
+  auth_caching: Authentication Caching
 ---
 
 # Authentication Caching
