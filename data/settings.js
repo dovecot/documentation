@@ -3638,7 +3638,11 @@ consistency.`
 	cassandra_execution_retry_interval: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.TIME_MSECS,
-		default: 0,
+		default: '500 ms',
+		changed: {
+			settings_cassandra_execution_retry_changed: `
+Default changed from 0.`
+		},
 		text: `
 If the driver supports speculative execution policy, configures constant
 speculative execution policy. See
@@ -3648,7 +3652,11 @@ https://docs.datastax.com/en/developer/java-driver/latest/manual/core/speculativ
 	cassandra_execution_retry_times: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.TIME_MSECS,
-		default: 0,
+		default: 3,
+		changed: {
+			settings_cassandra_execution_retry_changed: `
+Default changed from 0.`
+		},
 		text: `
 If the driver supports speculative execution policy, configures constant
 speculative execution policy. See
