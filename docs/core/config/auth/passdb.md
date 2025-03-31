@@ -18,6 +18,9 @@ dovecotlinks:
   passdb_result_values:
     hash: result-values
     text: "passdb: Result Values"
+  passdb_check_client_fp:
+    hash: check-client-fp
+    text: "passdb: check_client_fp Extra field"
 ---
 
 # Password Databases (`passdb`)
@@ -441,6 +444,39 @@ a load spike of everybody getting logged in at exactly the same time.
 #### `noauthenticate`
 
 Do not perform any authentication, just store extra fields if user is found.
+
+##### `check_client_fp`
+
+Match client certificate or public key fingerprint.
+
+Requires configuring [[setting,ssl_peer_certificate_fingerprint_hash]], [[setting,auth_ssl_require_client_cert]],
+and [[setting,ssl_server_request_client_cert]] to require a client cert.
+
+This is intended to replace CA certificates with verifying client certificates using fingerprints, or to enforce
+that particular public key is being used. If you are using CA certificates,
+you can only fail authentication if the value is non-empty and does not match. If CA certificates are not used, then
+if no passdb matches the fingerprint, then authentication is failed.
+
+The failure is per-passdb, so next passdb can continue authenticating the user.
+
+::warning If CA certificates are not used, a passdb must provide a valid check_client_fp (or variant) to validate the
+          client certificate. If none is provided, the authentication will fail.
+
+##### `check_client_cert_fp`
+
+Match client certificate fingerprint. See [[setting,ssl_peer_certificate_fingerprint_hash]].
+
+Certificate fingerprint is calculated by taking hash value of DER encoded X509 client certificate.
+
+See [[link,passdb_check_client_fp]]
+
+##### `check_client_pubkey_fp
+`
+Match client public key fingerprint (but not certificate). See [[setting,ssl_peer_certificate_fingerprint_hash]].
+
+Public key fingerprint is calculated by taking hash value of DER encoded certificate public key.
+
+See [[link,passdb_check_client_fp]]
 
 #### `forward_<anything>`
 
