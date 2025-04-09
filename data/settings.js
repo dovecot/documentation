@@ -3642,7 +3642,14 @@ consistency.`
 		text: `
 If the driver supports speculative execution policy, configures constant
 speculative execution policy. See
-https://docs.datastax.com/en/developer/java-driver/latest/manual/core/speculative_execution/index.html`
+https://docs.datastax.com/en/developer/java-driver/latest/manual/core/speculative_execution/index.html
+
+::: warning
+If Cassandra is completely unavailable and speculative execution is used,
+Cassandra cpp-driver library starts hanging all queries due to a bug. This may
+cause problems in the dict process even after Cassandra is back online.
+When this happens, "Dict server timeout" errors are being logged.
+:::`
 	},
 
 	cassandra_execution_retry_times: {
@@ -3652,7 +3659,14 @@ https://docs.datastax.com/en/developer/java-driver/latest/manual/core/speculativ
 		text: `
 If the driver supports speculative execution policy, configures constant
 speculative execution policy. See
-https://docs.datastax.com/en/developer/java-driver/latest/manual/core/speculative_execution/index.html`
+https://docs.datastax.com/en/developer/java-driver/latest/manual/core/speculative_execution/index.html
+
+::: warning
+If Cassandra is completely unavailable and speculative execution is used,
+Cassandra cpp-driver library starts hanging all queries due to a bug. This may
+cause problems in the dict process even after Cassandra is back online.
+When this happens, "Dict server timeout" errors are being logged.
+:::`
 	},
 
 	cassandra_heartbeat_interval: {
