@@ -178,8 +178,8 @@ transport and another one is the "virtual" transport.
 ```[dovecot.conf]
 # postconf mailbox_delivery_lock
 mailbox_delivery_lock = fcntl, dotlock
-# postconf virtual_mailbox_lock 
-virtual_mailbox_lock = fcntl 
+# postconf virtual_mailbox_lock
+virtual_mailbox_lock = fcntl
 ```
 
 In the above case, if you used the mailbox transport, you'd have to change
