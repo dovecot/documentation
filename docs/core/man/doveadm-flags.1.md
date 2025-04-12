@@ -48,8 +48,8 @@ This command is used to manipulate flags of messages.
 :   Message flags as described in [[rfc,3501]], section 2.3.2 (Flags
     Message Attribute): **\\Answered**, **\\Deleted**, **\\Draft**,
     **\\Flagged**, **\\Recent** and **\\Seen**. And the IMAP keywords
-    **$Forwarded**, **$MDNSent**, **$SubmitPending** and **$Submitted**
-    or user-defined keywords, e.g. Junk, $NonSpam or $Label1.
+    **\$Forwarded**, **\$MDNSent**, **\$SubmitPending** and **\$Submitted**
+    or user-defined keywords, e.g. **Junk**, **\$NonSpam** or **\$Label1**.
 
     One or multiple flags and/or keywords can be specified.
 
