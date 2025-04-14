@@ -1128,6 +1128,147 @@ the source user name, e.g., \`user sourceuser\`.`
 		text: `Search mail with FTS plugin.`,
 	},
 
+	/* flatcurve FTS commands */
+
+	'fts flatcurve check': {
+		args: {
+			'mailbox-mask': {
+				example: [ 'INBOX' ],
+				positional: true,
+				type: doveadm_arg_types.ARRAY,
+				text: `A list of mailbox masks to check.`,
+			},
+		},
+		man: 'doveadm-fts',
+		plugin: 'fts-flatcurve',
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		text: `
+Run a simple check on Dovecot Xapian databases, and attempt to fix basic
+errors (it is the same checking done by the xapian-check command with the
+\`-F\` command-line option).`,
+		response: {
+			example: [
+				{
+					mailbox: "INBOX",
+					guid: "guid_string",
+					errors: 0,
+					shards: 1
+				}
+			],
+			text: `
+For each mailbox that has FTS data, it outputs the following key/value fields:
+
+| Key | Value |
+| --- | ----- |
+| mailbox | The human-readable mailbox name. (key is hidden) |
+| guid | The GUID of the mailbox. |
+| errors | The number of errors reported by the Xapian library. |
+| shards | The number of index shards processed. |
+`
+		},
+	},
+
+	'fts flatcurve remove': {
+		args: {
+			'mailbox-mask': {
+				example: [ 'INBOX' ],
+				positional: true,
+				type: doveadm_arg_types.ARRAY,
+				text: `A list of mailbox masks to remove.`,
+			},
+		},
+		man: 'doveadm-fts',
+		plugin: 'fts-flatcurve',
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		text: `Removes all FTS data for a mailbox.`,
+		response: {
+			example: [
+				{
+					mailbox: "INBOX",
+					guid: "guid_string"
+				}
+			],
+			text: `
+For each mailbox removed, it outputs the following key/value fields:
+
+| Key | Value |
+| --- | ----- |
+| mailbox | The human-readable mailbox name. (key is hidden) |
+| guid | The GUID of the mailbox. |
+`
+		},
+	},
+
+	'fts flatcurve rotate': {
+		args: {
+			'mailbox-mask': {
+				example: [ 'INBOX' ],
+				positional: true,
+				type: doveadm_arg_types.ARRAY,
+				text: `A list of mailbox masks to rotate.`,
+			},
+		},
+		man: 'doveadm-fts',
+		plugin: 'fts-flatcurve',
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		text: `Triggers an FTS index rotation for a mailbox.`,
+		response: {
+			example: [
+				{
+					mailbox: "INBOX",
+					guid: "guid_string"
+				}
+			],
+			text: `
+For each mailbox rotated, it outputs the following key/value fields:
+
+| Key | Value |
+| --- | ----- |
+| mailbox | The human-readable mailbox name. (key is hidden) |
+| guid | The GUID of the mailbox. |
+`
+		},
+	},
+
+	'fts flatcurve stats': {
+		args: {
+			'mailbox-mask': {
+				example: [ 'INBOX' ],
+				positional: true,
+				type: doveadm_arg_types.ARRAY,
+				text: `A list of mailbox masks to process.`,
+			},
+		},
+		man: 'doveadm-fts',
+		plugin: 'fts-flatcurve',
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		text: `Returns FTS data for a mailbox.`,
+		response: {
+			example: [
+				{
+					mailbox: "INBOX",
+					guid: "guid_string",
+					last_uid: 123,
+					messages: 2,
+					shards: 1,
+					version: 1
+				}
+			],
+			text: `
+For each mailbox that has FTS data, it outputs the following key/value fields:
+
+| Key | Value |
+| --- | ----- |
+| mailbox | The human-readable mailbox name. (key is hidden) |
+| guid | The GUID of the mailbox. |
+| last_uid | The last UID indexed in the mailbox. |
+| messages | The number of messages indexed in the mailbox. |
+| shards | The number of index shards. |
+| version | The (Dovecot internal) version of the FTS data. |
+`
+		},
+	},
+
 	'import': {
 		args: {
 			'source-user': {
