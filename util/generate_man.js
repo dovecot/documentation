@@ -44,10 +44,14 @@ const debug = program.opts().debug
 const doInclude = (content, includes, f) => {
 	const result = content.replace(includesRE, (m, m1) => {
 		if (!m1.length) return m
+		/* VitePress MD supports paths relative to base with leading
+		 * '@'. */
+		if (m1.startsWith('@'))
+			return doInclude(fs.readFileSync(process.cwd() + '/' + m1.slice(1), 'utf8'), includes, f)
 		const inc_f = path.basename(m1)
 		for (const fn of includes) {
 			if (path.basename(fn) == inc_f)
-			   return doInclude(fs.readFileSync(fn, 'utf8'), includes, f)
+				return doInclude(fs.readFileSync(fn, 'utf8'), includes, f)
 		}
 		throw new Error("Missing include " + inc_f)
 	})
