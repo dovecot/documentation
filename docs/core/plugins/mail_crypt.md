@@ -415,7 +415,7 @@ share the key to groups or someone with no public key.
 
 ## Decrypting Files Encrypted with mail-crypt Plugin
 
-You can use [`decrypt.rb`][decrypt.rb] to decrypt encrypted files.
+You can use [`decrypt.py`][https://github.com/dovecot/tools/blob/main/dcrypt-decrypt.py] to decrypt encrypted files.
 
 ## `fs-crypt`
 
@@ -467,5 +467,3 @@ doveadm \
 ```
 
 <DoveadmComponent plugin="mail-crypt" />
-
-[decrypt.rb]: https://github.com/dovecot/tools/blob/main/dcrypt-decrypt.rb
