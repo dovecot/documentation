@@ -6,6 +6,7 @@ import { dovecotMdExtend } from '../lib/markdown.js'
 import { getExcludes } from '../lib/utility.js'
 
 const base = '/2.4'
+const base_url = 'https://doc.dovecot.org'
 
 export const dovecotConfig = {
 	data_paths: {
@@ -52,7 +53,7 @@ export default defineConfig({
 
 	base: base,
 	sitemap: {
-		hostname: 'https://doc.dovecot.org' + base
+		hostname: base_url + base + '/'
 	},
 
 	vite: {
