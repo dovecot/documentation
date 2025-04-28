@@ -43,7 +43,7 @@ e-mail address, using the
 #### Configuration
 
 ::: code-group
-```[dovecot.conf]
+```[/etc/dovecot/conf.d/99-antispam.conf]
 # Display \Junk special-flag for Spam mailbox
 namespace inbox {
   mailbox Spam {
@@ -153,7 +153,7 @@ to do classification.
 #### Configuration
 
 ::: code-group
-```[dovecot.conf]
+```[/etc/dovecot/conf.d/99-antispam.conf]
 # Display \Junk special-flag for Spam mailbox
 namespace inbox {
   mailbox Spam {
@@ -316,7 +316,7 @@ exec /usr/bin/rspamc -h /run/rspamd/worker-controller.socket -P <secret> learn_h
 ```
 :::
 
-Before running following commands, make sure `dovecot.conf` has all the
+Before running following commands, make sure `/etc/dovecot/conf.d/99-antispam.conf` has all the
 sieve configuration you want. Then run following commands:
 
 ```sh
