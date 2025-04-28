@@ -72,7 +72,7 @@ mailbox Spam {
   sieve_script report-spam {
     type = before
     cause = copy
-    path = /etc/dovecot/report-spam.sieve
+    path = /etc/dovecot/sieve/report-spam.sieve
   }
 }
 
@@ -81,7 +81,7 @@ imapsieve_from Spam {
   sieve_script report-ham {
     type = before
     cause = copy
-    path = /etc/dovecot/report-ham.sieve
+    path = /etc/dovecot/sieve/report-ham.sieve
   }
 }
 
@@ -89,13 +89,13 @@ imapsieve_from Spam {
 submission_host = 127.0.0.1:587
 ```
 
-```[/etc/dovecot/report-spam.sieve]
+```[/etc/dovecot/sieve/report-spam.sieve]
 require "vnd.dovecot.report";
 
 report "abuse" "User added this message to the Spam folder." "spam-report@example.com";
 ```
 
-```[/etc/dovecot/report-ham.sieve]
+```[/etc/dovecot/sieve/report-ham.sieve]
 require "vnd.dovecot.report";
 require "environment";
 require "imapsieve";
@@ -186,7 +186,7 @@ mailbox Spam {
   sieve_script report-spam {
     type = before
     cause = copy
-    path = /etc/dovecot/report-spam.sieve
+    path = /etc/dovecot/sieve/report-spam.sieve
   }
 }
 
@@ -195,12 +195,12 @@ imapsieve_from Spam {
   sieve_script report-ham {
     type = before
     cause = copy
-    path = /etc/dovecot/report-ham.sieve
+    path = /etc/dovecot/sieve/report-ham.sieve
   }
 }
 ```
 
-```[/etc/dovecot/report-spam.sieve]
+```[/etc/dovecot/sieve/report-spam.sieve]
 require ["vnd.dovecot.pipe", "copy", "imapsieve", "environment", "variables"];
 
 if environment :matches "imap.user" "*" {
@@ -211,7 +211,7 @@ if environment :matches "imap.user" "*" {
 pipe :copy "sa-learn-spam.sh" [ "${username}" ];
 ```
 
-```[/etc/dovecot/report-ham.sieve]
+```[/etc/dovecot/sieve/report-ham.sieve]
 require ["vnd.dovecot.pipe", "copy", "imapsieve", "environment", "variables"];
 
 if environment :matches "imap.mailbox" "*" {
