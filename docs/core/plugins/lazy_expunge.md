@@ -12,9 +12,8 @@ dovecotlinks:
 The lazy expunge plugin provides a "second-chance" to recover messages that
 would otherwise be deleted from a mailbox by user action.
 
-It does this by moving the message to a defined location (either a mailbox, or
-a namespace -- see below for further details) when a user deletes the message
-from a mailbox.
+It does this by moving the message to a defined location when a user deletes
+the message from a mailbox.
 
 This behavior is useful for a variety of reasons:
 
@@ -33,13 +32,11 @@ should be used to prune the mailbox to control storage usage.
 
 ## Configuration
 
-### Storage Locations
-
-#### Mailbox
+### Storage Location
 
 Messages that are expunged are moved to a single mailbox.
 
-This is the simplest configuration. The mailbox is created automatically.
+The mailbox is created automatically.
 
 You probably also want to hide it with an [[link,acl]] from the user, if
 recovery is only expected to be an action performed by an admin/operator.
@@ -47,7 +44,7 @@ recovery is only expected to be an action performed by an admin/operator.
 To move to a mailbox, do NOT add a trailing delimiter to the
 [[setting,lazy_expunge_mailbox]] setting.
 
-##### Example Configuration
+#### Example Configuration
 
 ::: code-group
 
@@ -130,15 +127,13 @@ See [[plugin,quota]].
 
 Doveadm can be used to manually clean expunge storage.
 
-Example to delete all messages in `.EXPUNGED` namespace older than one day:
+Example to delete all messages in `.EXPUNGED` mailbox older than one day:
 
 ```sh
-doveadm expunge mailbox '.EXPUNGED/*' savedsince 1d
+doveadm expunge mailbox '.EXPUNGED' savedsince 1d
 ```
 
 ### Autoexpunge
 
-Set autoexpunge configuration for expunge storage to automatically clean
+Set [[setting,mailbox_autoexpunge]] configuration to automatically clean
 old messages.
-
-See [[link,namespaces]].
