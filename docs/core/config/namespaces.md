@@ -206,7 +206,7 @@ namespace {
   prefix = "#mbox/"
   mail_driver = mbox
   mail_path = ~/mail
-  mail_index_path = /var/mail/%{user}
+  mail_inbox_path = /var/mail/%{user}
   inbox = yes
   hidden = yes
   list = no
