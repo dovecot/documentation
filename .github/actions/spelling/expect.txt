@@ -3,6 +3,7 @@ ACAP
 actimeo
 addflag
 addprinc
+addressbook
 ADDRESULT
 ADH
 Adleman
@@ -208,6 +209,7 @@ euid
 examplescripts
 execv
 exim
+extlists
 exportkeytab
 extprograms
 extracttext
