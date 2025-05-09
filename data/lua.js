@@ -92,6 +92,30 @@ as the parent.`
 	},
 
 	{
+		name: 'base64.encode',
+		args: {
+			input: {
+				type: 'string',
+				text: 'Data to encode',
+			}
+		},
+		tags: [ 'dovecot' ],
+		text: `Base64 encodes the provided input.`
+	},
+
+	{
+		name: 'base64.decode',
+		args: {
+			input: {
+				type: 'string',
+				text: 'Data to decode',
+			}
+		},
+		tags: [ 'dovecot' ],
+		text: `Base64 decodes the provided input.`
+	},
+
+	{
 		name: 'restrict_global_variables',
 		args: {
 			toggle: {
