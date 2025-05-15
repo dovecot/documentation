@@ -363,7 +363,10 @@ The codes contain error codes as well as HTTP codes, e.g., '200 HTTP_OK'
 and error code that denote connection to remote server failed.
 
 A human-readable string of the error can then be read using \`reason()\`
-function.`
+function.
+
+Besides the status codes sent by remote HTTP servers, the status code can also
+contain Dovecot's internal 9xxx errors. See [[link,lib_http_response_codes]].`
 	},
 
 	{
