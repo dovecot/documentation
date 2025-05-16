@@ -363,7 +363,7 @@ The codes contain error codes as well as HTTP codes, e.g., '200 HTTP_OK'
 and error code that denote connection to remote server failed.
 
 A human-readable string of the error can then be read using \`reason()\`
-function.`
+function. See also [[link,lib_http_response_codes]].`
 	},
 
 	{
