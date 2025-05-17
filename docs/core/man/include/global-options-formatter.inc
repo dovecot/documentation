@@ -7,6 +7,9 @@
     **flow**
     :    prints each line with *key*<!-- -->**=**<!-- -->*value* pairs.
 
+    **json**
+    :    prints a JSON array of JSON objects.
+
     **pager**
     :    prints each *key*: *value* pair on its own line and separates
          records with form feed character (**^L**).
