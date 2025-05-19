@@ -156,7 +156,7 @@ only be used for legacy message access and not for new systems.
 ### Maildir
 
 For better performance you may want to set
-[[setting,mbox_very_dirty_syncs,yes]].
+[[setting,maildir_very_dirty_syncs,yes]].
 
 ## Client Workarounds
 
