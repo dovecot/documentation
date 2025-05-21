@@ -5052,6 +5052,23 @@ dict_server {
 \`\`\``
 	},
 
+	dns_client_socket_path: {
+		advanced: true,
+		tags: [ 'dns', 'dns_client' ],
+		values: setting_types.STRING,
+		default: 'dns-client',
+		text: `
+UNIX socket path to the dns-client service.`
+	},
+
+	dns_client_timeout: {
+		tags: [ 'dns', 'dns_client' ],
+		values: setting_types.TIME_MSECS,
+		default: '10s',
+		text: `
+Timeout for DNS lookups.`
+	},
+
 	dotlock_use_excl: {
 		default: 'yes',
 		values: setting_types.BOOLEAN,
