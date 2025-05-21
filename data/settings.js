@@ -5605,18 +5605,6 @@ If non-zero, override [[setting,http_client_request_timeout]] for
 \`DELETE\` requests.`
 	},
 
-	http_client_dns_client_socket_path: {
-		advanced: true,
-		tags: [ 'http', 'http_client' ],
-		added: {
-			settings_http_client_settings_added: false,
-		},
-		values: setting_types.STRING,
-		default: 'dns-client',
-		text: `
-UNIX socket path to the dns-client service.`
-	},
-
 	http_client_dns_ttl: {
 		advanced: true,
 		tags: [ 'http', 'http_client' ],
