@@ -133,3 +133,34 @@ itself doesn't care about that.
 
 Unlock the maildir by sending a TERM signal to the maildirlock process (killing
 the PID it wrote to stdout).
+
+## Benchmarking
+
+::: info
+A simple benchmarking exercise to compare compression ratios/speed between
+the various supported compression algorithms.
+:::
+
+### Setup
+
+* Compression of a real-world corpus of mails of various lengths,
+  compositions, and types
+* 128,788 messages
+* Messages imported via [[man,doveadm-import]] into a single [[link,sdbox]]
+  mailbox
+  * Mailbox storage in tmpfs partition, so drive performance should be
+    irrelevant
+* Time is total clock time (real + sys) to compress the entire mailbox
+* Size is the total size of the sdbox mail data directory ONLY
+  * Dovecot indexes are not included in size
+
+### Results
+
+| Algorithm | Size (GB) | Compression | Time (MM:SS) |
+| --------- | --------- | ----------- | ------------ |
+| None | 7.99 | 0% | 0:21 |
+| `bz2` | 3.41 | 57% | 7:08 |
+| `gz`  | 3.44 | 57% | 2:30 |
+| `deflate` | 3.44 | 57% | 2:34 |
+| `lz4` | 4.76 | 40% | 0:23 |
+| `zstd` | 3.41 | 57% | 0:34 |
