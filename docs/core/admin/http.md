@@ -1,16 +1,25 @@
 ---
 layout: doc
-title: lib-http
+title: HTTP Client
 dovecotlinks:
-  lib_http: lib-http
   lib_http_response_codes:
     hash: internal-http-response-codes
     text: "Dovecot HTTP Internal Response Codes"
 ---
 
-# lib-http
+# Dovecot HTTP Client
+
+HTTP requests within Dovecot are performed using its internal HTTP client
+(internally referred to as "lib-http").
 
 ## Internal HTTP Response Codes
+
+Dovecot's lib-http uses custom HTTP response codes for some error
+conditions.
+
+In certain locations, e.g. [[link,lua_lib-http]], these codes may be visible
+to an admin or in logging, so these response codes must be handled in the
+same way that standard RFC codes are.
 
 | Number | Code | Description |
 | ------ | ---- | ----------- |
