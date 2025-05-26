@@ -79,6 +79,6 @@ For other settings, such as [[setting,mail_path]]:
 | Old variable | New syntax |
 | ------------ | ---------- |
 | `%%u` | `%{owner_user}` |
-| `%%n` | `%{owner_user | username}` |
-| `%%d` | `%{owner_user | domain}` |
+| `%%n` | `%{owner_user \| username}` |
+| `%%d` | `%{owner_user \| domain}` |
 | `%%h` | `%{owner_home}` |
