@@ -48,19 +48,19 @@ Using this setting will set these settings by default:
 
 ::: details Click to show settings
 ```[dovecot.conf]
-    namespace inbox {
+  namespace inbox {
     inbox = yes
     mailbox Drafts {
-      special_use = "\\Drafts"
+      special_use = \Drafts
     }
     mailbox Junk {
-      special_use = "\\Junk"
+      special_use = \Junk
     }
     mailbox Sent {
-      special_use = "\\Sent"
+      special_use = \Sent
     }
     mailbox Trash {
-      special_use = "\\Trash"
+      special_use = \Trash
     }
   }
 ```
