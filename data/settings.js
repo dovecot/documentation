@@ -2092,6 +2092,21 @@ A value of \`0\` means no timeout.`
 		text: `Maximum body size that is processed by fts. \`0\` means unlimited.`
 	},
 
+	fts_decoder_tika: {
+		plugin: 'fts',
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'fts_decoder_tika_url' ],
+		text: `
+Named filter used for [Apache Tika](https://tika.apache.org/) HTTP lookups.
+For example:
+
+\`\`\`[dovecot.conf]
+fts_decoder_tika {
+  http_client_request_timeout = 10s
+}
+\`\`\``
+	},
+
 	fts_decoder_tika_url: {
 		added: {
 			settings_fts_tika_changed_auth: `
@@ -2103,6 +2118,7 @@ Renamed from \`fts_tika\`.`
 		},
 		plugin: 'fts',
 		values: setting_types.STRING,
+		seealso: [ 'fts_decoder_tika' ],
 		text: `
 URL for [Apache Tika](https://tika.apache.org/) decoder for attachments.
 
