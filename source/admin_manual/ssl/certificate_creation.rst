@@ -14,7 +14,7 @@ The only way to be fully secure is to import the SSL certificate to client's (or
 Self-signed certificate creation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Dovecot includes a script to build self-signed SSL certificates using OpenSSL. In the source distribution this exists in https://dovecot.org/tools/mkcert.sh. Binary installations usually create the certificate automatically when installing Dovecot and don't include the script.
+Dovecot includes a script to build self-signed SSL certificates using OpenSSL (see https://github.com/dovecot/tools/blob/main/mkcert.sh). Binary installations usually create the certificate automatically when installing Dovecot and don't include the script.
 
 The SSL certificate's configuration is taken from https://dovecot.org/doc/dovecot-openssl.cnf file. Modify the file before running mkcert.sh. Especially important field is the CN (Common Name) field, which should contain your server's host name. The clients will verify that the CN matches the connected host name, otherwise they'll say the certificate is invalid. It's also possible to use wildcards (eg. \*.domain.com) in the host name. They should work with most clients.
 
