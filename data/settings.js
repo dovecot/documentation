@@ -5829,7 +5829,7 @@ If non-zero, override [[setting,http_client_request_timeout]] for \`GET\` and
 
 	http_client_request_absolute_timeout: {
 		tags: [ 'http', 'http_client' ],
-		values: setting_types.UINT,
+		values: setting_types.TIME_MSECS,
 		default: 0,
 		added: {
 			settings_http_client_settings_added: false,
@@ -7185,7 +7185,7 @@ comma-separated string.
 	},
 
 	login_proxy_max_disconnect_delay: {
-		values: setting_types.UINT,
+		values: setting_types.TIME,
 		default: 0,
 		text: `
 Specify the delayed disconnection interval of clients when there is a
