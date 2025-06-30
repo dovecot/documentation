@@ -90,6 +90,18 @@ export const lua_functions = [
 `Generate new event. If \`parent\` is not specified, the lua script is used
 as the parent.`
 	},
+	{
+		name: 'var_expand',
+		args: {
+			input: {
+				type: 'string',
+				text: 'String containing variables to expand.',
+			}
+		},
+		tags: [ 'dovecot' ],
+		text:
+`Expand variables in the input string, [[link,settings_variables]].`
+	},
 
 	{
 		name: 'base64.encode',
