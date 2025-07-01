@@ -15,7 +15,6 @@ the "user" variable and applies the "domain" filter for it.
 | -------- | ---------- |
 | `%a` | `%{local_port}` |
 | `%b` | `%{remote_port}` |
-| `%c` | `%{certificate}` |
 | `%c` | `%{secured}` |
 | `%d` | `%{user \| domain }` |
 | `%h` | `%{home}` |
