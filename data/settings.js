@@ -4603,6 +4603,17 @@ The UNIX socket path to the master authentication server for finding users.
 It is usually neither necessary nor advisable to change the default.`
 	},
 
+	auth_master_socket_path: {
+		default: 'auth-master',
+		advanced: true,
+		values: setting_types.STRING,
+		text: `
+The UNIX socket path to the master authentication server for finishing
+user logins.
+
+It is usually neither necessary nor advisable to change the default.`
+	},
+
 	auth_ssl_require_client_cert: {
 		default: 'no',
 		seealso: [
