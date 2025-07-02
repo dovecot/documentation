@@ -4540,6 +4540,7 @@ auth_realms = example.com another.example.com foo
 
 	auth_socket_path: {
 		default: 'auth-userdb',
+		advanced: true,
 		values: setting_types.STRING,
 		text: `
 The UNIX socket path to the master authentication server for finding users.
@@ -7125,6 +7126,7 @@ The prefix for each line written to the log file.
 
 	login_socket_path: {
 		values: setting_types.STRING,
+		advanced: true,
 		added: {
 			settings_login_socket_path_added: false,
 		},
