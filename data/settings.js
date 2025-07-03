@@ -127,7 +127,7 @@ files).`
 		seealso: [ '[[link,mail_compress_compression_methods]]' ],
 		text: `
 Which [[link,mail_compress_compression_methods,Compression Method]] to use for
-writing new files.`
+writing new files. Empty value means that compression is disabled.`
 	},
 
 	fs_crypt_read_plain_fallback: {
