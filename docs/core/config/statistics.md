@@ -385,7 +385,9 @@ Quantized sub-metrics are exported as histograms.
 Histograms are exported as `dovecot_<metric_name>_bucket` with corresponding
 labels. Each histogram will have an automatically generated `_sum`
 (specifying sum of all values in quantiles) and `_count` (total number
-of samples in the quantiles) metrics.
+of samples in the quantiles) metrics. 
+
+Durations, including histogram ranges, are converted to seconds.
 
 Dovecot will also export version information and startup time as special
 metrics even if nothing is configured. These are called `dovecot_build_info`
@@ -492,53 +494,53 @@ dovecot_imap_command_duration_seconds_total{cmd_name="EXPUNGE",tagged_reply_stat
 dovecot_imap_command_duration_seconds_sum 2.719657
 # HELP dovecot_smtp_command Histogram
 # TYPE dovecot_smtp_command histogram
-dovecot_smtp_command_bucket{cmd_name="LHLO",status_code="250",le="10"} 0
-dovecot_smtp_command_bucket{cmd_name="LHLO",status_code="250",le="100"} 1
-dovecot_smtp_command_bucket{cmd_name="LHLO",status_code="250",le="1000"} 1
-dovecot_smtp_command_bucket{cmd_name="LHLO",status_code="250",le="10000"} 1
-dovecot_smtp_command_bucket{cmd_name="LHLO",status_code="250",le="100000"} 1
+dovecot_smtp_command_bucket{cmd_name="LHLO",status_code="250",le="0.000010"} 0
+dovecot_smtp_command_bucket{cmd_name="LHLO",status_code="250",le="0.000100"} 1
+dovecot_smtp_command_bucket{cmd_name="LHLO",status_code="250",le="0.001000"} 1
+dovecot_smtp_command_bucket{cmd_name="LHLO",status_code="250",le="0.010000"} 1
+dovecot_smtp_command_bucket{cmd_name="LHLO",status_code="250",le="0.100000"} 1
 dovecot_smtp_command_bucket{cmd_name="LHLO",status_code="250",le="+Inf"} 1
 dovecot_smtp_command_sum{cmd_name="LHLO",status_code="250"} 0.000020
 dovecot_smtp_command_count{cmd_name="LHLO",status_code="250"} 1
-dovecot_smtp_command_bucket{cmd_name="MAIL",status_code="250",le="10"} 0
-dovecot_smtp_command_bucket{cmd_name="MAIL",status_code="250",le="100"} 1
-dovecot_smtp_command_bucket{cmd_name="MAIL",status_code="250",le="1000"} 1
-dovecot_smtp_command_bucket{cmd_name="MAIL",status_code="250",le="10000"} 1
-dovecot_smtp_command_bucket{cmd_name="MAIL",status_code="250",le="100000"} 1
+dovecot_smtp_command_bucket{cmd_name="MAIL",status_code="250",le="0.000010"} 0
+dovecot_smtp_command_bucket{cmd_name="MAIL",status_code="250",le="0.000100"} 1
+dovecot_smtp_command_bucket{cmd_name="MAIL",status_code="250",le="0.001000"} 1
+dovecot_smtp_command_bucket{cmd_name="MAIL",status_code="250",le="0.010000"} 1
+dovecot_smtp_command_bucket{cmd_name="MAIL",status_code="250",le="0.100000"} 1
 dovecot_smtp_command_bucket{cmd_name="MAIL",status_code="250",le="+Inf"} 1
 dovecot_smtp_command_sum{cmd_name="MAIL",status_code="250"} 0.000021
 dovecot_smtp_command_count{cmd_name="MAIL",status_code="250"} 1
-dovecot_smtp_command_bucket{cmd_name="RCPT",status_code="250",le="10"} 0
-dovecot_smtp_command_bucket{cmd_name="RCPT",status_code="250",le="100"} 0
-dovecot_smtp_command_bucket{cmd_name="RCPT",status_code="250",le="1000"} 1
-dovecot_smtp_command_bucket{cmd_name="RCPT",status_code="250",le="10000"} 1
-dovecot_smtp_command_bucket{cmd_name="RCPT",status_code="250",le="100000"} 1
+dovecot_smtp_command_bucket{cmd_name="RCPT",status_code="250",le="0.000010"} 0
+dovecot_smtp_command_bucket{cmd_name="RCPT",status_code="250",le="0.000100"} 0
+dovecot_smtp_command_bucket{cmd_name="RCPT",status_code="250",le="0.001000"} 1
+dovecot_smtp_command_bucket{cmd_name="RCPT",status_code="250",le="0.010000"} 1
+dovecot_smtp_command_bucket{cmd_name="RCPT",status_code="250",le="0.100000"} 1
 dovecot_smtp_command_bucket{cmd_name="RCPT",status_code="250",le="+Inf"} 1
 dovecot_smtp_command_sum{cmd_name="RCPT",status_code="250"} 0.000195
 dovecot_smtp_command_count{cmd_name="RCPT",status_code="250"} 1
-dovecot_smtp_command_bucket{cmd_name="DATA",status_code="250",le="10"} 0
-dovecot_smtp_command_bucket{cmd_name="DATA",status_code="250",le="100"} 0
-dovecot_smtp_command_bucket{cmd_name="DATA",status_code="250",le="1000"} 0
-dovecot_smtp_command_bucket{cmd_name="DATA",status_code="250",le="10000"} 1
-dovecot_smtp_command_bucket{cmd_name="DATA",status_code="250",le="100000"} 1
+dovecot_smtp_command_bucket{cmd_name="DATA",status_code="250",le="0.000010"} 0
+dovecot_smtp_command_bucket{cmd_name="DATA",status_code="250",le="0.000100"} 0
+dovecot_smtp_command_bucket{cmd_name="DATA",status_code="250",le="0.001000"} 0
+dovecot_smtp_command_bucket{cmd_name="DATA",status_code="250",le="0.010000"} 1
+dovecot_smtp_command_bucket{cmd_name="DATA",status_code="250",le="0.100000"} 1
 dovecot_smtp_command_bucket{cmd_name="DATA",status_code="250",le="+Inf"} 1
 dovecot_smtp_command_sum{cmd_name="DATA",status_code="250"} 0.001249
 dovecot_smtp_command_count{cmd_name="DATA",status_code="250"} 1
-dovecot_smtp_command_bucket{cmd_name="QUIT",status_code="221",le="10"} 1
-dovecot_smtp_command_bucket{cmd_name="QUIT",status_code="221",le="100"} 1
-dovecot_smtp_command_bucket{cmd_name="QUIT",status_code="221",le="1000"} 1
-dovecot_smtp_command_bucket{cmd_name="QUIT",status_code="221",le="10000"} 1
-dovecot_smtp_command_bucket{cmd_name="QUIT",status_code="221",le="100000"} 1
+dovecot_smtp_command_bucket{cmd_name="QUIT",status_code="221",le="0.000010"} 1
+dovecot_smtp_command_bucket{cmd_name="QUIT",status_code="221",le="0.000100"} 1
+dovecot_smtp_command_bucket{cmd_name="QUIT",status_code="221",le="0.001000"} 1
+dovecot_smtp_command_bucket{cmd_name="QUIT",status_code="221",le="0.010000"} 1
+dovecot_smtp_command_bucket{cmd_name="QUIT",status_code="221",le="0.100000"} 1
 dovecot_smtp_command_bucket{cmd_name="QUIT",status_code="221",le="+Inf"} 1
 dovecot_smtp_command_sum{cmd_name="QUIT",status_code="221"} 0.000010
 dovecot_smtp_command_count{cmd_name="QUIT",status_code="221"} 1
 # HELP dovecot_mail_delivery Histogram
 # TYPE dovecot_mail_delivery histogram
-dovecot_mail_delivery_bucket{le="10"} 0
-dovecot_mail_delivery_bucket{le="100"} 0
-dovecot_mail_delivery_bucket{le="1000"} 1
-dovecot_mail_delivery_bucket{le="10000"} 1
-dovecot_mail_delivery_bucket{le="100000"} 1
+dovecot_mail_delivery_bucket{le="0.000010"} 0
+dovecot_mail_delivery_bucket{le="0.000100"} 0
+dovecot_mail_delivery_bucket{le="0.001000"} 1
+dovecot_mail_delivery_bucket{le="0.010000"} 1
+dovecot_mail_delivery_bucket{le="0.100000"} 1
 dovecot_mail_delivery_bucket{le="+Inf"} 1
 dovecot_mail_delivery_sum 0.000656
 dovecot_mail_delivery_count 1
