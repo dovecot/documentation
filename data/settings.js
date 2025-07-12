@@ -9283,14 +9283,6 @@ The driver used for this password database. If empty, defaults to
 drivers.`
 	},
 
-	passdb_args: {
-		tags: [ 'passdb' ],
-		values: setting_types.STRING,
-		text: `
-Arguments for the passdb driver. The format of this value depends on the
-passdb driver. Each one uses different args.`
-	},
-
 	passdb_fields: {
 		tags: [ 'passdb' ],
 		values: setting_types.STRLIST,
@@ -10960,13 +10952,6 @@ userdb passwd-file {
 The driver used for this user database. If empty, defaults to
 [[setting,userdb_name]]. See [[link,userdb]] for the list of available
 drivers.`
-	},
-
-	userdb_args: {
-		tags: [ 'userdb' ],
-		values: setting_types.STRING,
-		text: `
-Arguments for the userdb driver. The format of this value depends on the userdb driver. Each one uses different args.`
 	},
 
 	userdb_fields: {
