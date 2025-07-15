@@ -94,6 +94,7 @@ html_title = "Dovecot documentation"
 # documentation.
 #
 html_theme_options = {
+  'description': '<div style="background-color:#f8d7da; color:#721c24; font-family:Arial,Helvetica; padding:15px;"><strong>WARNING</strong><br />This site contains documentation for an unmaintained version of Dovecot CE.<br />For up-to-date documentation, please visit <a href="https://doc.dovecot.org">Dovecot 2.4 CE</a>.</div>',
   'font_family': 'Roboto',
   'logo' : 'dovecot.gif',
 #  'github_user': 'dovecot',
@@ -103,6 +104,8 @@ html_theme_options = {
     'Edit Documentation': 'https://github.com/dovecot/documentation/pulls/',
     'Repositories' : 'https://repo.dovecot.org/',
     'Download'     : 'https://dovecot.org/download.html',
+    'Dovecot CE 2.4': 'https://doc.dovecot.org/latest/',
+    'Dovecot Pro': 'https://doc.dovecotpro.com/'
   },
   'show_powered_by': True,
   'page_width': '92%',
