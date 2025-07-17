@@ -8117,6 +8117,16 @@ creating \`.../foo/bar/mbox\` file.`
 	mailbox_directory_name_legacy: {
 		tags: [ 'mail-location' ],
 		values: setting_types.BOOLEAN,
+		changed: {
+			settings_mailbox_directory_name_legacy_deprecated: `
+The default value changed from \`yes\` to \`no\`.`,
+		},
+		deprecated: {
+			settings_mailbox_directory_name_legacy_deprecated: `
+This legacy setting is obsolete and destined to be removed. Changing this
+setting requires migration, see
+[[link,dbox_migrating_away_from_mailbox_directory_name_legacy]]`,
+		},
 		default: 'no',
 		seealso: [ 'mailbox_directory_name' ],
 		text: `
