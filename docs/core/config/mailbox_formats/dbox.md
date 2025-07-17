@@ -12,6 +12,9 @@ dovecotlinks:
   sdbox:
     hash: single-dbox-sdbox
     text: sdbox
+  dbox_migrating_away_from_mailbox_directory_name_legacy:
+    hash: migrating-away-from-mailbox-directory-name-legacy
+    text: "dbox: Migrating away from `mailbox_directory_name_legacy`"
 ---
 
 # dbox Mailbox Format
@@ -287,3 +290,18 @@ mail_path = ~/mdbox
 * [[setting,mailbox_list_layout,fs]],
 * [[setting,mailbox_directory_name,dbox-Mails]], and
 * [[setting,mailbox_root_directory_name,mailboxes]].
+
+### Migrating away from `mailbox_directory_name_legacy`
+
+[[deprecated,settings_mailbox_directory_name_legacy_deprecated]]
+[[setting,mailbox_directory_name_legacy]] setting is deprecated and its default
+value is changed from `true` to `false`. This change requires migrations, though:
+
+* Start with [[setting,mailbox_directory_name_legacy,yes]],
+* for each user run:
+  `doveadm -o mail_home=/var/newmails/$user -o mailbox_directory_name_legacy=no sync -u $user`,
+* shutdown all mail access,
+* for each user run [[man,doveadm-sync]] again,
+* switch the [[setting_text,mail_path,mail directory]],
+* set [[setting,mailbox_directory_name_legacy,no]],
+* start dovecot.
