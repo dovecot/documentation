@@ -20,7 +20,8 @@ dovecotlinks:
 Mbox format is deprecated and should not be used in production setups at all.
 
 Mbox is no longer being maintained for write fixes, for any new or advanced
-features, nor for optimization improvements.
+features, nor for optimization improvements. E.g. mbox is incapable of writing
+very large payloads approaching 4GB in size.
 
 It still exists solely to read old mail storages, and for backwards utility
 purposes (specifically for archival purposes, as mbox allows multiple
@@ -178,8 +179,8 @@ transport and another one is the "virtual" transport.
 ```[dovecot.conf]
 # postconf mailbox_delivery_lock
 mailbox_delivery_lock = fcntl, dotlock
-# postconf virtual_mailbox_lock 
-virtual_mailbox_lock = fcntl 
+# postconf virtual_mailbox_lock
+virtual_mailbox_lock = fcntl
 ```
 
 In the above case, if you used the mailbox transport, you'd have to change
