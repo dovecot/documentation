@@ -269,7 +269,7 @@ Dict server is used for providing dictionary access via server
 processes instead of doing it directly from whichever process wants to access
 the dictionary. This is useful for some drivers with relatively high
 connection cost (e.g. [`sql`](#sql)), but not necessarily for others (e.g.,
-[`redis`](#redis).
+[`redis`](#redis)).
 
 When a mail process uses the dict proxy, it needs to have access the dict
 UNIX socket. By default only the `dovecot` user has access to the dict
