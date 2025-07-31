@@ -7287,7 +7287,10 @@ aren't attempted.`
 		text: `
 Login processes write rawlogs for proxied connections to this directory for
 debugging purposes. Note that login processes are usually chrooted, so the
-directory is relative to \`$base_dir/login/\`.`
+directory is relative to \`$base_dir/login/\`.
+
+[[changed,login_proxy_rawlog_dir_changed]] You can use [[link,login_variables]] with this setting.
+`
 	},
 
 	login_proxy_timeout: {
