@@ -436,19 +436,36 @@ functionality is especially useful for reading SSL certificates and keys.
 
 ## Variable Expansion
 
-It's possible to refer to other earlier settings as `$SET:name`.
+It's possible to refer to other settings as `$SET:name`.
+
+[[changed,settings_delayed_expansion_changed]] Generally, the setting values
+are expanded at the end of the configuration parsing. Also the expansion takes
+into account what filters are active, as well as chaining of settings.
 
 Example:
 
 ```
-key = value1
-key2 = $SET:key value2
-# Equivalent to key2 = value1 value2
+service imap {
+  # expands to "_dovecot"
+  service_user = $SET:default_internal_user
+  unix_listener imap {
+    # expands to the parent filter's service_user, which expands to "_dovecot"
+    user = $SET:service_user
+  }
+}
+# This can be set after the $SET:default_internal_user usage above
+default_internal_user = _dovecot
 ```
 
-However, you must be careful with the ordering of these in the configuration
-file, because the `$SET:variables` are expanded immediately while parsing the
-config file and they're not updated later.
+One exception is that if the setting refers to itself, the whole value is
+expanded immediately with the current settings' values. For example:
+
+```
+login_log_format_elements = user=<%{user}>
+login_log_format_elements = $SET:login_log_format_elements method=%{mechanism}
+login_log_format_elements = $SET:login_log_format_elements session=<%{session}>
+# Expands to: user=<%{user}> method=%{mechanism} session=<%{session}>
+```
 
 See also [[link,settings_variables]].
 

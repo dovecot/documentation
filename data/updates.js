@@ -69,6 +69,7 @@ export const updates = {
 	service_auth_listener_type: '2.4.0',
 	service_dict_expire: '2.4.0',
 	service_listener_type: '2.4.0',
+	settings_delayed_expansion_changed: '2.4.2',
 	settings_syntax_named_filters_added: '2.4.0',
 	sieve_ext_imapflags: '2.4.0',
 	sieve_ext_notify: '2.4.0',
