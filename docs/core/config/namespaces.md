@@ -43,7 +43,8 @@ All visible namespaces must have the same separator.
 Inside each namespace there is a list of folders, which form a sub-hierarchy.
 
 ::: info
-Enable default INBOX namespace and English language mailbox names with mailbox_special_use flags with [[setting,@mailbox_defaults,english]]
+Enable default INBOX namespace and English language mailbox names with
+[[setting,mailbox_special_use]] flags with [[setting,@mailbox_defaults,english]]
 Using this setting will set these settings by default:
 
 ::: details Click to show settings
