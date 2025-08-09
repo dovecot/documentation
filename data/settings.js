@@ -3631,15 +3631,6 @@ welcome {
 		default: 'no',
 		seealso: [ '[[link,welcome]]' ],
 		text: `
-Should the welcome plugin wait for the script execution to finish before
-continuing.`
-	},
-
-	welcome_wait: {
-		plugin: 'welcome',
-		values: setting_types.BOOLEAN,
-		default: 'no',
-		text: `
 If enabled, wait for the script to finish. By default, the welcome script
 is run asynchronously.`
 	},
