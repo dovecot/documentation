@@ -89,13 +89,13 @@ dict_server {
       }
 
       key_field userid {
-        pattern = $user
+        value = $user
       }
       key_field service {
-        pattern = $service
+        value = $service
       }
       key_field last_ip {
-        pattern = $remote_ip
+        value = $remote_ip
       }
     }
   }
@@ -147,13 +147,13 @@ dict_server {
       }
 
       key_field userid {
-        pattern = $user
+        value = $user
       }
       key_field service {
-        pattern = $service
+        value = $service
       }
       key_field last_ip {
-        pattern = $remote_ip
+        value = $remote_ip
       }
     }
   }
@@ -206,10 +206,10 @@ dict_server {
       }
 
       key_field userid {
-        pattern = $user
+        value = $user
       }
       key_field last_imap_ip {
-        pattern = $remote_ip
+        value = $remote_ip
       }
     }
 
@@ -220,10 +220,10 @@ dict_server {
       }
 
       key_field userid {
-        pattern = $user
+        value = $user
       }
       key_field last_pop3_ip {
-        pattern = $remote_ip
+        value = $remote_ip
       }
     }
 
@@ -234,10 +234,10 @@ dict_server {
       }
 
       key_field userid {
-        pattern = $user
+        value = $user
       }
       key_field last_lmtp_ip {
-        pattern = $remote_ip
+        value = $remote_ip
       }
     }
   }
