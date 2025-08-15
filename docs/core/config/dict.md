@@ -188,10 +188,10 @@ dict_map shared/shared-boxes/user/$to/$from {
   }
 
   key_field from_user {
-    pattern = $from
+    value = $from
   }
   key_field to_user {
-    pattern = $to
+    value = $to
   }
 }
 ```
@@ -236,10 +236,10 @@ dict_map priv/$mailbox_guid/$key {
   }
 
   key_field attr_key {
-    pattern = $key
+    value = $key
   }
   key_field mailbox_guid {
-    pattern = $mailbox_guid
+    value = $mailbox_guid
   }
 }
 
@@ -255,10 +255,10 @@ dict_map shared/$mailbox_guid/$key {
   }
 
   key_field attr_key {
-    pattern = $key
+    value = $key
   }
   key_field mailbox_guid {
-    pattern = $mailbox_guid
+    value = $mailbox_guid
   }
 }
 ```
