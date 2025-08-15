@@ -1,6 +1,6 @@
 /* Dovecot settings. */
 
-import { setting_types } from '../lib/settings.js'
+import { setting_types } from '../lib/constants/settings.js'
 
 export const settings = {
 
