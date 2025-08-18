@@ -11,6 +11,9 @@ dovecotlinks:
   mail_crypt_fs_crypt:
     hash: fs-crypt
     text: "Mail Crypt Plugin: fs-crypt"
+  mail_crypt_global_keys:
+    hash: global-keys
+    text: "Mail Crypt Plugin: Global Keys"
   mail_crypt_supported_sym_algorithms:
     hash: supported-symmetric-algorithms
     text: "Mail Crypt Plugin: Supported symmetric algorithms"
