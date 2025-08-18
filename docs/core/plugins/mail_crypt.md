@@ -224,9 +224,13 @@ when the password changes, **you must re-encrypt the user private key**.
 
 ### Global keys
 
-In this mode, all keying material is taken from plugin environment. You can use
-either Elliptic Curve (EC) keys (recommended) or RSA keys. No key generation
-is automatically performed.
+In this mode, all keying material is taken from the settings:
+ * [[setting,crypt_global_public_key_file]]
+ * [[setting,crypt_global_private_key]] - List of
+   [[setting,crypt_private_key_file]] keys
+
+You can use either Elliptic Curve (EC) keys (recommended) or RSA keys. See
+below for examples using them. No key generation is automatically performed.
 
 A good solution for environments where no user folder sharing is needed is to
 generate per-user EC key pair and encrypt that with something derived from
