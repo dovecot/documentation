@@ -262,9 +262,9 @@ mail_plugins {
   mail_crypt = yes
 }
 
-crypt_global_public_key_file = rsapubkey.pem
+crypt_global_public_key_file = ecpubkey.pem
 crypt_global_private_key main {
-  crypt_private_key_file = rsaprivkey.pem
+  crypt_private_key_file = ecprivkey.pem
   crypt_private_password = secret
 }
 ```
