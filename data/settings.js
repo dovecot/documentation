@@ -9144,6 +9144,15 @@ sent to OpenMetrics.`
 Filter for oauth2 specific settings.`
 	},
 
+	oauth2_token_expire_grace: {
+		tags: [ 'oauth2' ],
+		values: setting_types.TIME,
+		default: '1min',
+		text: `
+Specifies how long after token expiration it is still accepted. It shouldn't be
+0 because clocks aren't exact, and network can add some delays.`
+	},
+
 	oauth2_tokeninfo_url: {
 		tags: [ 'oauth2' ],
 		values: setting_types.STRING,
