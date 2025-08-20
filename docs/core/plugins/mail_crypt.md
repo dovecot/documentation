@@ -11,6 +11,9 @@ dovecotlinks:
   mail_crypt_fs_crypt:
     hash: fs-crypt
     text: "Mail Crypt Plugin: fs-crypt"
+  mail_crypt_global_keys:
+    hash: global-keys
+    text: "Mail Crypt Plugin: Global Keys"
   mail_crypt_supported_sym_algorithms:
     hash: supported-symmetric-algorithms
     text: "Mail Crypt Plugin: Supported symmetric algorithms"
@@ -221,9 +224,13 @@ when the password changes, **you must re-encrypt the user private key**.
 
 ### Global keys
 
-In this mode, all keying material is taken from plugin environment. You can use
-either Elliptic Curve (EC) keys (recommended) or RSA keys. No key generation
-is automatically performed.
+In this mode, all keying material is taken from the settings:
+ * [[setting,crypt_global_public_key_file]]
+ * [[setting,crypt_global_private_key]] - List of
+   [[setting,crypt_private_key_file]] keys
+
+You can use either Elliptic Curve (EC) keys (recommended) or RSA keys. See
+below for examples using them. No key generation is automatically performed.
 
 A good solution for environments where no user folder sharing is needed is to
 generate per-user EC key pair and encrypt that with something derived from
@@ -262,9 +269,9 @@ mail_plugins {
   mail_crypt = yes
 }
 
-crypt_global_public_key_file = rsapubkey.pem
+crypt_global_public_key_file = ecpubkey.pem
 crypt_global_private_key main {
-  crypt_private_key_file = rsaprivkey.pem
+  crypt_private_key_file = ecprivkey.pem
   crypt_private_password = secret
 }
 ```

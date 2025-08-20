@@ -1,0 +1,27 @@
+name: Deploy 2.3
+
+on:
+  push:
+    branches:
+      - release-2.3
+    tags:
+      - '2.3.*'
+
+jobs:
+  release_2_3:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/release-2.3'
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dovecot/dovecot-sphinx-action@0.11
+    - uses: dovecot/rsync-deployments@v2.0.2
+      with:
+        FLAGS: -azr --delete
+        HOST: doc.dovecot.org
+        USER: docs
+        LOCALPATH: /build/.
+        REMOTEPATH: public_html/2.3
+        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+      if: env.DEPLOY_KEY
+      env:
+        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
