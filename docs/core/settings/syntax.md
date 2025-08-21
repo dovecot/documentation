@@ -467,6 +467,10 @@ login_log_format_elements = $SET:login_log_format_elements session=<%{session}>
 # Expands to: user=<%{user}> method=%{mechanism} session=<%{session}>
 ```
 
+[[changed,settings_delayed_expansion_changed]] The setting name can now
+contain a filter path, for example `$SET:service/auth/service_client_limit`.
+Full setting names must be used here - automatic prefixing isn't attempted.
+
 See also [[link,settings_variables]].
 
 ## Environment Variables
