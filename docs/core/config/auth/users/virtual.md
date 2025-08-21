@@ -217,7 +217,7 @@ The usernames in the passwd and shadow files are expected to contain
 only the user part, no domain. This is because the path itself already
 contained %{user | domain} to specify the domain. If you want the files to contain
 full `user@domain` names, you can change [[setting,auth_username_format]] to
-`%{user}` or leave it out (it's default value is `%{user|lower}`).
+`%{user}` or leave it out (its default value is `%{user|lower}`).
 
 ```[dovecot.conf]
 mail_driver = maildir
