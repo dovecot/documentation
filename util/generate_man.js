@@ -144,6 +144,7 @@ const DovecotMd = (md) => {
 				}
 			]
 	case 'link':
+	case 'event':
 		return [{type:'text', value:parts[1]}]
 	default:
 		throw new Error('unknown dovecot markdown command: ' + parts[0])
