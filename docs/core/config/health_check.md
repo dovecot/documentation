@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: Health Checking
+dovecotlinks:
+  health_checking:  Health Checking
 ---
 
 # Health Check Scripting
