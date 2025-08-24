@@ -36,7 +36,7 @@ service auth {
 auth_mechanisms = plain login
 ```
 
-```[postfix: main.cf]]
+```[postfix: main.cf]
 smtpd_sasl_type = dovecot
 
 # Can be an absolute path, or relative to $queue_directory
