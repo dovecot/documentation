@@ -856,6 +856,12 @@ This event is useful for logging and tracking mail deliveries.`
 	dns_worker_request_finished: {
 		root: 'dns-worker',
 		inherit: 'dns',
+		text: `DNS request finished being processed by DNS worker process.`
+	},
+
+	dns_request_finished: {
+		root: 'dns-client',
+		inherit: 'dns',
 		fields: {
 			cached: {
 				added: {
@@ -864,12 +870,6 @@ This event is useful for logging and tracking mail deliveries.`
 				text: `Set to \`yes\` or \`no\` depending if it was a cached reply or not.`,
 			},
 		},
-		text: `DNS request finished being processed by DNS worker process.`
-	},
-
-	dns_request_finished: {
-		root: 'dns-client',
-		inherit: 'dns',
 		text: `
 DNS request sent by DNS client library to DNS worker process has been
 finished.`
