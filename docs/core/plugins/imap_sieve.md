@@ -68,7 +68,7 @@ which requires no additional configuration.
 
 Script storages for administrator scripts are defined in
 [[setting,sieve_script]] blocks with [[setting,sieve_script_type]]
-[[link,sieve_storage_type_before,before]] or
+ [[link,sieve_storage_type_before,before]] or
 [[link,sieve_storage_type_after,after]]. These execute administrator scripts
 before or after the user's personal script, respectively. The
 [[setting,sieve_script_cause]] setting for the administrator storages used by
@@ -81,7 +81,7 @@ The applicability of administrator scripts can be limited to a destination
 mailbox by placing the corresponding [[setting,sieve_script]] blocks inside
 a [[setting,mailbox]] block for that mailbox. For a source mailbox, limiting the
 applicability of administrator scripts can similarly be achieved by placing the
-corresponding [[setting,sieve_script]] blocks inside a
+corresponding [[setting,sieve_script]] blocks inside an
 [[setting,imapsieve_from]] block with that mailbox name. The [[setting,mailbox]]
 and [[setting,imapsieve_from]] blocks can be nested when both are required.
 
@@ -108,9 +108,12 @@ This plugin registers the `imapsieve` extension with the Sieve
 interpreter. This extension is enabled implicitly, which means that it
 does not need to be added to the [[setting,sieve_extensions]] setting.
 
+Additional information about using the plugin with virtual mailboxes can be
+found at [[link,plugin_virtual_imapsieve,virtual mailbox plugin]].
+
 ## Example Configuration
 
-```[dovecot.conf]]]
+```[dovecot.conf]
 imapsieve_from Spam {
   sieve_script ham {
     type = before

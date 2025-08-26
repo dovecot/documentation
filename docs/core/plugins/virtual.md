@@ -1,6 +1,10 @@
 ---
 layout: doc
 title: virtual
+dovecotlinks:
+  plugin_virtual_imapsieve:
+    hash: imapsieve
+    text: IMAPSieve script for virtual plugins
 ---
 
 # Virtual Mailbox Plugin (`virtual`)
@@ -32,18 +36,24 @@ Then, you'll have to create a [[link,namespaces,namespace]] for the virtual
 mailboxes, for example:
 
 ```[dovecot.conf]
-namespace {
+namespace virtual {
   prefix = virtual/
   separator = /
   mail_driver = virtual
   mail_path = ~/Maildir/virtual
+
+  mailbox All {
+    auto = no
+    special_use = \All
+  }
+  [...]
 }
 ```
 
 After this you can create virtual mailboxes under `~/Maildir/virtual`. By
 default it uses the `fs` layout, so you can create directories such as:
 
-* INBOX: `~/Maildir/virtual/INBOX/`
+* All: `~/Maildir/virtual/All/`
 * Sub/mailbox: `~/Maildir/virtual/Sub/mailbox/`
 
 If you prefer to use the Maildir++ layout instead, set
@@ -51,8 +61,8 @@ If you prefer to use the Maildir++ layout instead, set
 
 ### Virtual Mailboxes
 
-For each virtual directory you need to create a `dovecot-virtual` file. Its
-syntax is like:
+For each directory (virtual mailbox) you need to create a `dovecot-virtual` file.
+Its syntax is like:
 
 ```
 <1+ mailbox patterns>
@@ -71,13 +81,15 @@ aren't noticed.
 prefix. For example if you have namespaces with an empty prefix and a prefix
 `mail/`:
 
-* `*` matches only mailboxes from the namespace with empty prefix
-* `mail*` matches mailboxes beginning with name `mail` from the namespace
-  with empty prefix
-* `mail/*` matches only mailboxes from the `mail/` namespace
+* `*` only matches mailboxes from the namespace with an empty prefix.
+* `mail*` matches mailboxes that begin with `mail` from the namespace with
+  an empty prefix.
+* `mail/*` only matches mailboxes from the `mail/` namespace.
 
-Beware that `*` will not match any mailbox which already has a more
+Beware that `*` will not match any mailbox that already has a more
 specialized match!
+
+Currently, `*` doesn't match INBOX.
 
 The mailbox names have special prefixes:
 
@@ -120,7 +132,7 @@ The `!-prefixed` virtual mailbox is also selected from; you don't need to
 list it again without an ! or you'll get two copies of your messages in the
 virtual mailbox.
 
-## IMAPSieve Filters
+## IMAPSieve Filters {#imapsieve}
 
 [[added,imapsieve_filters]]
 
@@ -131,13 +143,21 @@ Virtual/All folder was configured with INBOX as the save destination, this
 Virtual/All folder:
 
 ```[sieve.before]
-imapsieve_mailbox_name = INBOX # Virtual/All would NOT work
-imapsieve_mailbox_causes = COPY
-imapsieve_mailbox_before = /etc/dovecot/sieve.before
+mailbox INBOX { # Virtual/All would NOT work
+  sieve_script before-copy {
+    type = before
+    cause = copy
+    path = /etc/dovecot/sieve.before
+  }
+}
 ```
 
-Also, the `imap.mailbox` environment always contains INBOX, even when
+Also, the `imap.mailbox` Sieve `environment` variable always contains INBOX, even when
 saving via Virtual/All folder.
+
+::: warning
+Currently, imapsieve scripts that are defined within a virtual mailbox are not being called.
+:::
 
 ## Mailbox Selection Based on METADATA
 
