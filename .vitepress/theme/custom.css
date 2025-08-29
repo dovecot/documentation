@@ -65,3 +65,9 @@ section.VPSidebarItem.level-0:not(.collapsible) {
     padding-left: 0px !important;
   }
 }
+
+.large {
+  font-size: 20pt;
+  margin-bottom: 1em;
+  line-height: 125%;
+}

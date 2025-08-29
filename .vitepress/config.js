@@ -9,6 +9,7 @@ const base = '/2.4'
 const base_url = 'https://doc.dovecot.org'
 
 export const dovecotConfig = {
+	base_url: base_url,
 	data_paths: {
 		doveadm: '../data/doveadm.js',
 		event_categories: '../data/event_categories.js',
