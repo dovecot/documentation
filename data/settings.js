@@ -7445,6 +7445,11 @@ See [[link,mail_cache]] for details and for the list of fields.`
 
 	mail_attachment_detection_options: {
 		values: setting_types.BOOLLIST,
+		default: `
+- mbox, imapc: &lt;empty&gt;<br />
+- others: add-flags content-type=!application/signature
+<br /><br />
+[[changed,mail_attachment_detection_options_changed]] The default was set.`,
 		text: `
 Settings to control adding \`$HasAttachment\` or \`$HasNoAttachment\`
 keywords. By default, all MIME parts with \`Content-Disposition=attachment\`
