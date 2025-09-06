@@ -3,7 +3,7 @@ import { doveadm_arg_types,
 		 doveadm_args_human_timestamp,
 		 doveadm_args_query,
 		 doveadm_args_usermask,
-		 doveadm_flag_types } from '../lib/doveadm.js'
+		 doveadm_flag_types } from '../lib/constants/doveadm.js'
 
 export const doveadm = {
 
