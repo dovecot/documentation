@@ -303,7 +303,7 @@ location. This will only result in mailbox corruption.
 Dovecot assumes that it can access the other users' mailboxes. If you
 use multiple UNIX UIDs, you may have problems setting up the permissions
 so that the mailbox sharing works. Dovecot never modifies existing
-files' permissions. See [Filesystem Permissions](#filesystem-permissions)
+files' permissions. See [Filesystem Permissions](#filesystem-permissions-1)
 for more information.
 
 ### Shared Mailbox Listing
