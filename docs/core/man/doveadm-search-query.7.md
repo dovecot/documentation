@@ -63,15 +63,17 @@ revision 1 (see: [[rfc,3501,6.4.4]]) are supported:
 
 *sequence-set*
 :   Matches messages with the given sequence numbers. The
-    *sequence-set* may be a single UID. Can be a sequence range,
+    *sequence-set* may be a single sequence number. Can be a sequence range,
     written as *from*:*to*, e.g. **100**:**125**. As comma separated
     list of sequences, e.g. **11,50,4**. It's also possible to combine
-    multiple sequences, e.g. **1,3,5,7,10:20**. Using ***** selects
+    multiple sequences, e.g. **1,3,5,7,10:20**. Using \* selects
     the last mail in the mailbox.
 
     For example 1:100 matches the first 100 mails and 101:200 the next
     second hundred mails. 1,5,* matches the first, the fifth and the
     last email.
+
+    Use `UID` (see below) to search by unique ID.
 
 **ALL**
 :   Matches all messages.
