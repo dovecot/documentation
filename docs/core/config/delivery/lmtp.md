@@ -42,7 +42,7 @@ By general convention, LMTP is expected to listen on port 24.
 
 ```[dovecot.conf]
 # add lmtp to protocols, otherwise its listeners are ignored
-protocols = {
+protocols {
   lmtp = yes
 }
 

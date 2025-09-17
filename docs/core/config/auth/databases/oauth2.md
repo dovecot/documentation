@@ -31,7 +31,7 @@ the [[setting,oauth2]] named filter.
 
 ::: code-group
 ```[dovecot.conf]
-auth_mechanisms = {
+auth_mechanisms {
   oauthbearer = yes
   xoauth2 = yes
 }

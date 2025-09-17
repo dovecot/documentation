@@ -36,7 +36,7 @@ you might want to use [[link,auth_staticdb]] instead of prefetch.
 ```[dovecot.conf]
 passdb ldap {
   ...
-  fields = {
+  fields {
     user        = %{ldap:uid}
     password    = %{ldap:userPassword}
     userdb_home = %{ldap:homeDirectory}
@@ -52,7 +52,7 @@ userdb prefetch {
 # The userdb below is used only by LDA.
 userdb ldap {
   ...
-  fields = {
+  fields {
     home = %{ldap:homeDirectory}
     uid  = %{ldap:uidNumber}
     gid  = %{ldap:gidNumber}

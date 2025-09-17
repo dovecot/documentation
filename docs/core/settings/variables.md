@@ -407,7 +407,7 @@ For best results, you should leave salt and IV management to Dovecot.
 ### Examples
 
 ```[dovecot.conf]
-import_environment = {
+import_environment {
    SECRET_KEY = %{env:SECRET_KEY}
 }
 imapc_password = "%{literal('s=3-?I&-a|,r=10000$e80e6ab3c18c0da69b20bf201eaf6269$') | decrypt(key=env:SECRET_KEY)}"
