@@ -62,7 +62,6 @@ fts flatcurve {
   # They are listed here for documentation purposes; most people should not
   # need to define/override in their config.
   commit_limit = 500
-  max_term_size = 30
   min_term_size = 2
   optimize_limit = 10
   rotate_count = 5000
