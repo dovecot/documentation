@@ -365,6 +365,8 @@ acl_sharing_map {
   }
 }
 
+acl_dict_index = yes
+
 dict_server {
   dict acl {
     driver = sql
@@ -385,6 +387,19 @@ dict_server {
 
       key_field from_user {
         value = $from
+      }
+      key_field to_user {
+        value = $to
+      }
+    }
+
+    dict_map shared/shared-user-boxes-rev/$from/$to {
+      sql_table = user_shares
+      value_field dummy {
+      }
+
+      key_field from_user {
+	value = $from
       }
       key_field to_user {
         value = $to
@@ -413,8 +428,8 @@ CREATE TABLE user_shares (
 );
 COMMENT ON TABLE user_shares IS 'User from_user shares folders to user to_user.';
 
-CREATE INDEX to_user
-  ON user_shares (to_user); -- because we always search for to_user
+CREATE INDEX user_shares_from_user
+  ON user_shares (from_user); -- because we search for from_user when rebuilding ACLs
 
 CREATE TABLE anyone_shares (
   from_user varchar(100) not null,
