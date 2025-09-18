@@ -1694,6 +1694,18 @@ Specifies identity to match. See [[link,acl_file_format]] for values. The
 [[setting,acl]] filter name refers to this setting.`
 	},
 
+	acl_dict_index: {
+		added: {
+			acl_dict_index_added: false,
+		},
+		plugin: 'acl',
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		text: `
+Should ACL dict updates assume that there is a reverse lookup index. This
+should be used with SQL/CQL based dicts.`
+	},
+
 	acl_rights: {
 		added: {
 			settings_acl_global_settings_added: false,
