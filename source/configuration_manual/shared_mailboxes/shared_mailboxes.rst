@@ -172,6 +172,7 @@ Using SQL dictionary
 
    plugin {
      acl_shared_dict = proxy::acl
+     acl_dict_index = yes # v2.3.21.1.4 and later only
    }
 
    dict {
@@ -192,8 +193,8 @@ Database tables:
    );
    COMMENT ON TABLE user_shares IS 'User from_user shares folders to user to_user.';
 
-   CREATE INDEX to_user
-   ON user_shares (to_user); -- because we always search for to_user
+   CREATE INDEX user_shares_from_user
+     ON user_shares (from_user); -- because we search for from_user when rebuilding ACLs
 
    CREATE TABLE anyone_shares (
      from_user varchar(100) not null,
@@ -209,6 +210,17 @@ Database tables:
    connect = host=localhost dbname=mails user=sqluser password=sqlpass
    map {
      pattern = shared/shared-boxes/user/$to/$from
+     table = user_shares
+     value_field = dummy
+
+     fields {
+       from_user = $from
+       to_user = $to
+     }
+   }
+
+   map {
+     pattern = shared/shared-user-boxes-rev/$from/$to
      table = user_shares
      value_field = dummy
 
