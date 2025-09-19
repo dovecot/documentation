@@ -71,6 +71,16 @@ Settings
    INBOX's.
 
 
+.. dovecot_plugin:setting:: acl_dict_index
+   :added: v2.3.21.1.4
+   :default: no
+   :plugin: acl
+   :values: @boolean
+
+   Should ACL dict updates assume that there is a reverse lookup index. This
+   should be used with SQL/CQL based dicts.
+
+
 .. dovecot_plugin:setting:: acl_globals_only
    :added: v2.2.31
    :default: no
