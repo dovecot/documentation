@@ -222,6 +222,14 @@ It is important to note that having multiple SSL certificates per IP will
 not be compatible with all clients, especially mobile ones. It is a TLS
 SNI limitation.
 
+When using wildcard certificates, keep in mind that the `*` applies only to a single label.
+This is a general limitation of TLS, not Dovecot specifically.
+For example, `*.example.org` will match `mail.example.org` but not `int.mail.example.org`.
+
+Also note that the ordering of [[link,settings_connection_filters,local_name]] is important.
+The wildcard certificate must be listed first, followed by more specific names. Note that the
+last matching [[link,settings_connection_filters,local_name]] filter will be used.
+
 ```[dovecot.conf]
 local_name imap.example.org {
   ssl_server_cert_file = /etc/ssl/certs/imap.example.org.crt
