@@ -6500,6 +6500,12 @@ List of features, optimizations, and workarounds that can be enabled.
         user authentication. Normally this would be done using the SASL PLAIN
         authentication.
 
+:   \`send-id\`
+    :   Send session ID with the IMAP ID \`x-session-ext-id\` parameter. If
+        [[setting,login_trusted_networks]] on the target host is
+	configured to trust the connecting imapc IP, the session ID is
+	preserved as the new imapc connection's session ID prefix.
+
 :   \`throttle:<INIT>:<MAX>:<SHRINK>\`
     :   When receiving [THROTTLED] response (from GMail), throttling is
         applied.
