@@ -14,3 +14,9 @@
 
 `login_aborted`
 :  Number of aborted logins, grouped by reason. See [[event,login_aborted]].
+
+`proxy_session_established`
+:  [[added,metric_defaults_proxy_session_established_added]] Number of
+   successful proxy sessions. This can be used to see post-authentication
+   latency until session is logged into a backend. See
+   [[event,proxy_session_established]].
