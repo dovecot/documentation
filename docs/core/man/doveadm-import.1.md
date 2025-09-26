@@ -43,8 +43,7 @@ level if *dest_parent* is empty (""). The *search_query* can be used to
 restrict which mailboxes or messages are imported. By default the import
 is done in destination user's context, you can use -U to change this.
 
-In the first form, [[man,doveadm]] will executed the **import** action
-mails will be imported for all users.
+In the first form, the **import** action will be performed for all users.
 
 In the second form, the mails will be imported for all users listed in
 the given *file*.
