@@ -7755,7 +7755,7 @@ and [[setting,mail_fsync,optimized]].`
 		values: setting_types.BOOLEAN,
 		text: `
 This setting attempts to flush NFS caches when accessing mail storage. The
-intention was that it would allow accessing the same user's index files in
+intention was that it would allow accessing the same user's mails in
 multiple servers at the same time. However, this couldn't be made to work
 perfectly due to the way Linux and BSD kernels work internally. The setting
 exists for now, but it is not a supported way of running Dovecot.`
