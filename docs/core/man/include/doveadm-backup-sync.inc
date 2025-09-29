@@ -175,7 +175,6 @@ parameters.
     for stalled I/O operations. The default timeout is 600 seconds.
 
 <!-- @include: option-p.inc -->
-<!-- @include: include/option-p.inc -->
 
 **-g** *mailbox_guid*
 :   Same as -m, but find the mailbox to be synchronized by its GUID
