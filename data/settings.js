@@ -7736,22 +7736,29 @@ See [[link,mail_cache]] for details and for the list of fields.`
 
 	mail_nfs_index: {
 		default: 'no',
-		seealso: [ 'mail_fsync' ],
+		seealso: [ 'mail_nfs_storage', 'mail_fsync' ],
 		values: setting_types.BOOLEAN,
 		text: `
-When mail-index files exist in NFS storage and you're running a
-multi-server setup that you wish to flush NFS caches, this can be set
-to \`yes\` (in this case, make sure also to use [[setting,mmap_disable,yes]]
-and [[setting,mail_fsync,optimized]]).`
+This setting attempts to flush NFS caches when accessing index files. The
+intention was that it would allow accessing the same user's index files in
+multiple servers at the same time. However, this couldn't be made to work
+perfectly due to the way Linux and BSD kernels work internally. The setting
+exists for now, but it is not a supported way of running Dovecot.
+
+When using this setting, be sure also to use [[setting,mmap_disable,yes]]
+and [[setting,mail_fsync,optimized]].`
 	},
 
 	mail_nfs_storage: {
 		default: 'no',
+		seealso: [ 'mail_nfs_index' ],
 		values: setting_types.BOOLEAN,
 		text: `
-Flush NFS caches whenever it is necessary to do so.
-
-This setting should only be enabled if you are using multiple servers on NFS.`
+This setting attempts to flush NFS caches when accessing mail storage. The
+intention was that it would allow accessing the same user's index files in
+multiple servers at the same time. However, this couldn't be made to work
+perfectly due to the way Linux and BSD kernels work internally. The setting
+exists for now, but it is not a supported way of running Dovecot.`
 	},
 
 	mail_plugin_dir: {
