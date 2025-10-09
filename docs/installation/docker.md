@@ -38,7 +38,7 @@ To change configuration, put configuration drop-ins to `/etc/dovecot/conf.d`.
 Example:
 
 ```console
-docker run -v /etc/dovecot-config:/etc/dovecot/conf.d,ro -v /srv/vmail:/srv/vmail -p 143:31143 -p 993:31993 dovecot/dovecot:latest
+docker run -v /etc/dovecot-config:/etc/dovecot/conf.d:ro -v /srv/vmail:/srv/vmail -p 143:31143 -p 993:31993 dovecot/dovecot:latest
 ```
 
 Dovecot uses TLS certificates from `/etc/dovecot/ssl` directory. The full chain certificate name is expected to be `tls.crt`, and key file `tls.key`.
@@ -109,5 +109,5 @@ service imap-urlauth-login {
 and run Dovecot using:
 
 ```console
-docker run -v /etc/dovecot-config:/etc/dovecot/conf.d,ro --security-opt "no-new-privileges" --rm -it dovecot/dovecot:latest
+docker run -v /etc/dovecot-config:/etc/dovecot/conf.d:ro --security-opt "no-new-privileges" --rm -it dovecot/dovecot:latest
 ```
