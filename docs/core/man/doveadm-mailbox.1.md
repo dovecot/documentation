@@ -305,6 +305,9 @@ This command uses by default the output *formatter* **flow**.
     :   **messages**
         :   The number of messages in the *mailbox*.
 
+    :   **deleted**
+        :   The number of messages with the \\Deleted flag set.
+
     :   **recent**
         :   The number of messages with the \\Recent flag set.
 
