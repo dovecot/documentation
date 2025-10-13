@@ -349,7 +349,22 @@ after it. For example:
 ```[dovecot.conf]
 @mysql = default
 mysql_host = mysql2.example.com # override the default mysql_host
+```
 
+Note that explicit settings always override group settings. For example this
+is not possible:
+
+```[dovecot.conf]
+mailbox trash {
+  name = Trash
+}
+
+group @mailboxes finnish {
+  mailbox trash {
+    name = Roskakori
+  }
+}
+@mailboxes = finnish # Does not work - name is still Trash
 ```
 
 It's possible to override groups using the command line parameter `-o` or
