@@ -38,7 +38,7 @@ for storing the entires.
 CREATE TABLE metadata (
   username VARCHAR(255) NOT NULL DEFAULT '',
   attr_name VARCHAR(255) NOT NULL,
-  attr_value VARCHAR(65535),
+  attr_value TEXT,
   PRIMARY KEY(username, attr_name)
 );
 ```
