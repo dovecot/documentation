@@ -73,7 +73,7 @@ containing the following details:
 doveadm service status
 ```
 ```
-name: fs-auth
+name: imap-login
 process_count: 0
 process_avail: 0
 process_limit: 1
@@ -86,8 +86,6 @@ listen_pending: n
 listening: y
 doveadm_stop: n
 process_total: 0
-
-name: fs-server
 ```
 
 <!-- @include: include/reporting-bugs.inc -->
