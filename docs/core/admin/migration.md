@@ -179,15 +179,10 @@ Ensure both source and target system agree on usernames.
 Configure IMAP client on the target system.
 
 ::: tip [[changed,migration_imapc_features]]
-Some selected IMAPC features are auto-enabled by default. Please refer
-to [[setting,imapc_features]] for description on individual flags.
+All IMAPC features are auto-enabled by default. Please refer
+to [[setting,imapc_features]] for description on individual flags
+on how to turn these off when necessary.
 :::
-
-Common settings:
-
-* [[setting,imapc_features,rfc822.size fetch-headers]]
-
-  * These are supported by standard adhering servers.
 
 * [[setting,imapc_list_prefix,INBOX]]
 
