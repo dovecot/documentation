@@ -7418,6 +7418,11 @@ The details of how this setting works depends on the used protocol:
 
 	mail_access_groups: {
 		values: setting_types.BOOLLIST,
+		default: '[[setting,default_internal_group]]',
+		changed: {
+			settings_mail_access_groups_changed: `
+Changed from empty to [[setting,default_internal_group]].`
+		},
 		text: `
 Supplementary groups that are granted access for mail processes.
 
