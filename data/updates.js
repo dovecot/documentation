@@ -145,6 +145,7 @@ export const updates = {
 	settings_inet_listener_type_added: '2.4.0',
 	settings_login_socket_path_added: '2.4.0',
 	settings_lmtp_user_concurrency_limit_changed: '2.4.1',
+	settings_mail_access_groups_changed: '2.4.3',
 	settings_mail_attachment_sis_option_changed: '2.4.0',
 	settings_mail_cache_max_headers_count_added: '2.4.0',
 	settings_mail_cache_max_header_name_length_added: '2.4.0',
