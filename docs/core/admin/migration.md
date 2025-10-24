@@ -101,7 +101,7 @@ First, setup doveadm service on old server:
 
 ```[dovecot.conf]
 service doveadm {
-  inet_listener {
+  inet_listener doveadm {
     port = 12354
   }
 }
