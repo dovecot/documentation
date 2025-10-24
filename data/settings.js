@@ -2617,7 +2617,11 @@ namespace inbox {
 	},
 
 	lazy_expunge_only_last_instance: {
-		default: 'no',
+		default: 'yes',
+		changed: {
+			settings_lazy_expunge_only_last_instance_changed: `
+Changed from \`no\` to \`yes\`.`
+		},
 		plugin: 'lazy-expunge',
 		values: setting_types.BOOLEAN,
 		text: `
