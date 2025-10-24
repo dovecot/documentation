@@ -143,6 +143,7 @@ export const updates = {
 	settings_imapc_features_changed: '2.4.0',
 	settings_imapc_ssl_verify_removed: '2.4.0',
 	settings_inet_listener_type_added: '2.4.0',
+	settings_lazy_expunge_only_last_instance_changed: '2.4.3',
 	settings_login_socket_path_added: '2.4.0',
 	settings_lmtp_user_concurrency_limit_changed: '2.4.1',
 	settings_mail_access_groups_changed: '2.4.3',
