@@ -16,13 +16,13 @@ the "user" variable and applies the "domain" filter for it.
 | `%a` | `%{local_port}` |
 | `%b` | `%{remote_port}` |
 | `%c` | `%{secured}` |
-| `%d` | `%{user \| domain }` |
+| `%d` | `%{user \| domain}` |
 | `%h` | `%{home}` |
-| `%l` | `%{local_ip }` |
+| `%l` | `%{local_ip}` |
 | `%m` | `%{mechanism}` |
-| `%n` | `%{user \| username }` |
-| `%p` | `%{client_pid }` |
-| `%r` | `%{remote_ip }` |
+| `%n` | `%{user \| username}` |
+| `%p` | `%{client_pid}` |
+| `%r` | `%{remote_ip}` |
 | `%s` | `%{protocol}` |
 | `%u` | `%{user}` |
 | `%w` | `%{password}` |
@@ -33,11 +33,11 @@ the "user" variable and applies the "domain" filter for it.
 | ---------- | ---------- |
 | `%1Mu` | `%{user \| md5 \| hexlify(1)}` |
 | `%2.1Mu` | `%{user \| md5 \| hexlify \| substr(2,1)}` |
-| `%2.256N` | `%{ user \| md5 \| substr(0, 8) % 256 \| hex(2)}` |
-| `%256Nu` | `%{ user \| md5 \| substr(0, 8) % 256 \| hex}` |
+| `%2.256N` | `%{user \| md5 \| substr(0, 8) % 256 \| hex(2)}` |
+| `%256Nu` | `%{user \| md5 \| substr(0, 8) % 256 \| hex}` |
 | `%Hu` | No conversion available, use one of the syntaxes. |
-| `%Ln` | `%{user \| username \| lower }` |
-| `%Lu` | `%{user \| lower }` |
+| `%Ln` | `%{user \| username \| lower}` |
+| `%Lu` | `%{user \| lower}` |
 | `%Mu` | `%{user \| md5}` |
 
 ##### Common long variables and their replacements.
@@ -49,15 +49,15 @@ the "user" variable and applies the "domain" filter for it.
 | `%{lip}` | `%{local_ip}` |
 | `%{lport}` | `%{local_port}` |
 | `%{mech}` | `%{mechanism}` |
-| `%{orig_domain }` | `%{original_user \| domain }` |
-| `%{orig_username}` | `%{original_user \| username }` |
+| `%{orig_domain}` | `%{original_user \| domain}` |
+| `%{orig_username}` | `%{original_user \| username}` |
 | `%{orig_user}` | `%{original_user}` |
 | `%{real_lip}` | `%{real_local_ip}` |
-| `%{real_lport}` | `%{real_local_port }` |
-| `%{real_rip}` | `%{real_remote_ip }` |
+| `%{real_lport}` | `%{real_local_port}` |
+| `%{real_rip}` | `%{real_remote_ip}` |
 | `%{real_rport}` | `%{real_remote_port}` |
 | `%{rip}` | `%{remote_ip}` |
-| `%{rport}` | `%{remote_port }` |
+| `%{rport}` | `%{remote_port}` |
 | `%{service}` | `%{protocol}` |
 
 ##### Shared namespace variables
