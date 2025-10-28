@@ -15,7 +15,7 @@
 | `event_exporter_transport` | Renamed to [[setting,event_exporter_driver]]. |
 | `event_exporter_transport_args` | Split off to driver-specific settings, see [[link,event_export]]. |
 | `event_exporter_transport_timeout` | Replaced by [[setting,http_client_request_timeout]] and [[setting,event_exporter_unix_connect_timeout]]. |
-| `imap_capability = +CAPA1` | Use [[setting,imap_capability]] { CAPA1 = yes } instead. |
+| `imap_capability = +CAPA1` | Use [[setting,imap_capability]] `{ CAPA1 = yes }` instead. |
 | `inet_listener { address }` | Replaced by [[setting,listen]] setting. |
 | `push_notification_backend` | Use [[setting,push_notification_driver]] instead. |
 | `mail_crypt_require_encrypted_user_key` | Replaced by [[setting,crypt_user_key_require_encrypted]], [[setting,crypt_user_key_password]] and [[setting,crypt_user_key_encryption_key]]. |
@@ -32,7 +32,7 @@
 | `fts` | Replaced by [[setting,fts]] named filter. |
 | `fts_autoindex_exclude` | Replaced by boolean property [[setting,fts_autoindex]], nested inside [[setting,mailbox]] blocks. Note that the values are inverted as compared to those in the old `fts_autoindex_exclude`. |
 | `fts_decoder` | Replaced by [[setting,fts_decoder_driver]] and [[setting,fts_decoder_script_socket_path]]. |
-| `fts_enforced` | Replaced by [[setting,fts_search_add_missing]] and [[setting,fts_search_read_fallback]] |
+| `fts_enforced` | Replaced by [[setting,fts_search_add_missing]] and [[setting,fts_search_read_fallback]]. |
 | `fts_index_timeout` | Renamed to [[setting,fts_search_timeout]]. The default value is set to `30 secs`. |
 | `fts_solr` | Replaced by [[setting,fts_solr_url]], [[setting,fts_solr_batch_size]], [[setting,fts_solr_soft_commit]], and [[setting,http_client_rawlog_dir]] settings. |
 | `fts_tika` | Replaced by [[setting,fts_decoder_driver]] and [[setting,fts_decoder_tika_url]]. |
@@ -49,10 +49,10 @@
 | oauth2 `timeout_msecs`, `max_idle_time_msecs`, `max_parallel_connections`, `max_pipelined_requests`, `rawlog_dir` | Replaced by `http_client_*` settings inside [[setting,oauth2]] named filter. |
 | oauth2 `tls_*` | Replaced by `ssl_client_*` settings inside [[setting,oauth2]] named filter. |
 | oauth2 `debug` | Use [[setting,log_debug]] filter instead. Example: `log_debug=category=oauth2`. |
-| oauth `use_grant_password` | Replaced by [[link,auth_oauth2,passdb oauth2]] `
-| passdb/userdb `:protected` | Renamed to `:default` |
-| `passdb { default_fields`, `override_fields` } | Replaced by [[setting,passdb_fields]] |
-| `userdb { default_fields`, `override_fields` } | Replaced by [[setting,userdb_fields]] |
+| oauth `use_grant_password` | Replaced by [[link,auth_oauth2,passdb oauth2]]. |
+| passdb/userdb `:protected` | Renamed to `:default`. |
+| `passdb { default_fields`, `override_fields` } | Replaced by [[setting,passdb_fields]]. |
+| `userdb { default_fields`, `override_fields` } | Replaced by [[setting,userdb_fields]]. |
 | `plugin` | All plugin settings are now global settings. |
 | `quota`, `quota_rule` | Split into separate [[plugin,quota,quota settings]]. |
 | `quota_grace` | Renamed to [[setting,quota_storage_grace]]. |
