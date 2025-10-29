@@ -216,8 +216,13 @@ parameters.
     specified log file.
 
 **-s** *previous_state*
-:   Use stateful synchronization. If the previous state is unknown, use
-    an empty string. The new state is always printed to standard output.
+:   Use stateful synchronization. This allows for optimized incremental
+    synchronization by providing a "sync state string" from the previous
+    dsync run. dsync will use this state to only synchronize the
+    changes that have occurred since that state was captured, avoiding
+    a full mailbox scan. If the previous state is unknown, use an empty
+    string. The new state is always printed to standard output if this
+    parameter is specified.
 
 <!-- @include: ./option-u-user.inc -->
 
