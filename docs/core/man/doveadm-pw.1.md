@@ -97,9 +97,7 @@ An ARGON2ID hash (best security at time of this writing, though can be
 heavy on a busy server):
 
 ```sh
-doveadm pw -s ARGON2ID
-``ldas;l;als;las;lkas
-```
+# doveadm pw -s ARGON2ID
 Enter new password:
 Retype new password:
 {ARGON2ID}$argon2id$v=19$m=65536,t=3,p=1$AOrrkaFmGxCFtX+NCSHFkg$N3rlzYFqyNkCwrOingnDJ/qDQ09yGHgQa8PQfbu7rIE
@@ -108,9 +106,7 @@ Retype new password:
 Alternatively, a SHA512-CRYPT hash:
 
 ```sh
-doveadm pw -s SHA512-CRYPT
-```
-```
+# doveadm pw -s SHA512-CRYPT
 Enter new password:
 Retype new password:
 {SHA512-CRYPT}$6$qAvxfQ2UbA1QTXSg$SB2aMEK76DBObt.KqTjF5.yDMceaD3dkG2UvrKQD0rZ9PKii/VAn.VS0nBsDqJX18kXieMi8AWJr0f7Ae9dAp/
