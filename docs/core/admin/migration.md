@@ -410,3 +410,36 @@ with GMail migration. It will:
     ```sh
     doveadm backup -a 'virtual/All' -O '-$GmailHaveLabels' -R -u user@domain imapc:
     ```
+
+## Optimizing Synchronization
+
+The `-s` (state) parameter can be used to significantly improve performance for incremental migrations.
+
+By using a "sync state string", dsync can avoid a full mailbox scan and only synchronize the changes
+that have occurred since the last synchronization.
+
+### How it Works
+
+When you run dsync with the `-s` parameter, it will perform the synchronization as usual. At the end of the operation, doveadm will output a state string. This string is a snapshot of the mailbox's state.
+
+By providing this state string in the subsequent dsync call using the `-s` parameter, doveadm can avoid a full mailbox scan and instead only synchronize the changes that have occurred since the last synchronization. This can significantly reduce the time and resources required for the sync operation.
+
+### Example Usage
+
+1. **Initial sync:**
+
+```sh
+doveadm sync -s "" <destination>
+```
+
+After the initial sync, doveadm will return a state string.
+
+2. **Subsequent syncs:**
+
+Save the state string from the previous sync and use it in the next one:
+
+```sh
+doveadm sync -s "<state string from previous sync>" <destination>
+```
+
+This will perform an incremental sync based on the provided state.
