@@ -8,6 +8,52 @@ order: 8
 
 Dovecot CE comes with Docker images published at https://hub.docker.com/r/dovecot/dovecot.
 
+## Image flavors
+
+Currently we provide aarch64 and amd64 architecture for the images. There are three kinds of images:
+
+Image naming follows pattern `<VERSION>{,-dev,-root}`, where version can be latest or exact published version.
+
+Images are based on Debian slim image, distribution is occasionally upgraded when new versions are released.
+
+### dovecot/dovecot:latest
+
+This is a hardened rootless image, which runs everything as vmail user, and minimal amount of binaries installed. This image
+uses non-standard ports, see [Listening ports](#listening-ports) for more information.
+
+Linux capability `CAP_SYS_CHROOT` is needed for the container, unless chrooting is disabled by placing `no-chroot.conf` drop-in to `conf.d`:
+
+```doveconf
+service imap-login {
+  chroot =
+}
+
+service pop3-login {
+  chroot =
+}
+
+service submission-login {
+  chroot =
+}
+
+service managesieve-login {
+  chroot =
+}
+
+service imap-urlauth-login {
+  chroot =
+}
+```
+
+### dovecot/dovecot:latest-dev
+
+This is the same as latest, but without hardening. It still runs rootless with vmail, and if you want to drop `CAP_SYS_CHROOT`, you still need to add the same configuration drop-in.
+
+### dovecot/dovecot:latest-root
+
+This image is suitable for running as root, which means there will be different users like `dovenull`, `dovecot` and `vmail` used.
+Also listening ports will be default ports, and not the non-privileged ones.
+
 ## Minimal setup
 
 To run Dovecot you can start it with:
@@ -41,11 +87,9 @@ Example:
 docker run -v /etc/dovecot-config:/etc/dovecot/conf.d:ro -v /srv/vmail:/srv/vmail -p 143:31143 -p 993:31993 dovecot/dovecot:latest
 ```
 
-Dovecot uses TLS certificates from `/etc/dovecot/ssl` directory. The full chain certificate name is expected to be `tls.crt`, and key file `tls.key`.
+POP3 service is not enabled by default, if you need pop3, place a `pop3.conf` drop-in to `conf.d`:
 
-POP3 service is not enabled by default, if you need pop3, place a pop3.conf drop-in to conf.d:
-
-```
+```doveconf
 protocols {
   pop3 = yes
 }
@@ -53,10 +97,30 @@ protocols {
 
 By default imap, submission, lmtp and sieve protocols are enabled.
 
+### Authentication
+
+The default auth configuration is in `conf.d/auth.conf`, which has
+```doveconf
+passdb static {
+  password = $ENV:USER_PASSWORD
+}
+```
+
+This is useful only for testing purposes and single-user instances. To configure multiple users or other authentication methods, you need to override this file.
+
+### TLS configuration
+
+Default certificate is expected at `/etc/dovecot/ssl/tls.crt` and key at `/etc/dovecot/ssl/tls.key`. You can override `conf.d/ssl.conf` to change this.
+
+### Complex configuration
+
+You can also override the entire `/etc/dovecot/dovecot.conf` file, just make sure you include `/etc/dovecot/vendor.d/rootless.conf` in your configuration either
+direcly, or with `!include` directive. This is not needed if you use the `-root` variant image.
+
 ## Listening ports
 
 Since v2.4.1 ports are exposed as non-privileged ports. You need to map these
-to the ports that you need.
+to the ports that you need. For latest-root image, the ports are standard, and this does not apply.
 
 ### Exposed protocols
 
@@ -65,7 +129,7 @@ to the ports that you need.
 | imap        | 31143 |
 | imaps       | 31993 |
 | pop3        | 31110 |
-| pop3s       | 31990 |
+| pop3s       | 31995 |
 | submissions | 31465 |
 | submission  | 31587 |
 | lmtps       | 31024 |
@@ -81,12 +145,12 @@ To run the system fully read-only, use:
 docker run --read-only --tmpfs /tmp --tmpfs /run/dovecot -v /srv/vmail:/srv/vmail --rm -it dovecot/dovecot:latest
 ```
 
-Dovecot will need write permissions to `/tmp`, `/run` and persistent mail storage at `/srv/vmail`.
+Dovecot will need write permissions to `/tmp`, `/run/dovecot` and persistent mail storage at `/srv/vmail`.
 
 ## Running without Linux capabilities
 
 By default, Dovecot needs `CAP_SYS_CHROOT` capability. To remove this requirements, you can prevent chrooting
-by placing no-chroot.conf to drop-in directory:
+by placing no-chroot.conf to `conf.d` directory:
 
 ```
 service submission-login {
