@@ -2,12 +2,6 @@
 
 **doveadm** [*GLOBAL OPTIONS*] **move**
   [**-S** *socket_path*]
-  **-A** **destination**
-  [**user** *source_user*]
-  *search_query*
-
-**doveadm** [*GLOBAL OPTIONS*] **move**
-  [**-S** *socket_path*]
   **-F** *file* **destination**
   [**user** *source_user*]
   *search_query*
@@ -24,12 +18,6 @@
   [**user** *source_user*]
   *search_query*
 
-
-**doveadm** [*GLOBAL OPTIONS*] **copy**
-  [**-S** *socket_path*]
-  **-A** **destination**
-  [**user** *source_user*]
-  *search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] **copy**
   [**-S** *socket_path*]
@@ -73,8 +61,6 @@ given *user*(s).
 <!-- @include: ./global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: ./option-A.inc -->
 
 <!-- @include: ./option-F-file.inc -->
 

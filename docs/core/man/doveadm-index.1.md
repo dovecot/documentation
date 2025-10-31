@@ -10,13 +10,6 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] **index**
   [**-S** *socket_path*]
-  **-A**
-  [**-q**]
-  [**-n** *max_recent*]
-  *mailbox*
-
-**doveadm** [*GLOBAL OPTIONS*] **index**
-  [**-S** *socket_path*]
   **-F** *file*
   [**-q**]
   [**-n** *max_recent*]
@@ -58,8 +51,6 @@ fts_autoindex = yes
 <!-- @include: include/global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 

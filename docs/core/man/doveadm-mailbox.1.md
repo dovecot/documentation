@@ -23,8 +23,6 @@ dovecotComponent: core
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
-
 <!-- @include: include/option-F-file.inc -->
 
 <!-- @include: include/option-no-userdb-lookup.inc -->
@@ -47,7 +45,7 @@ dovecotComponent: core
 ### mailbox create
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox create
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-g** *guid*]
   [**-s**]
@@ -75,7 +73,7 @@ Please see [[man,doveadm-mailbox-cryptokey]] for more details.
 ### mailbox delete
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox delete
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-s**]
   [**-r**]
@@ -105,7 +103,7 @@ contains. If the mailbox has any children, they won't be deleted, unless
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox list
   [**-7** | **-8**]
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-s**]
   [*mailbox* ...]
@@ -126,7 +124,7 @@ already deleted.
 ### mailbox metadata list
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox metadata list
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-s**]
   [**-p**]
@@ -151,7 +149,7 @@ already deleted.
 ### mailbox metadata get
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox metadata get
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-s**]
   *mailbox* *key*
@@ -171,7 +169,7 @@ already deleted.
 ### mailbox metadata set
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox metadata set
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-s**]
   *mailbox* *key* *value*
@@ -194,7 +192,7 @@ already deleted.
 ### mailbox metadata unset
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox metadata unset
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-s**]
   *mailbox* *key*
@@ -233,7 +231,9 @@ Convention).
 
 ### mailbox path
 
-**doveadm** [*GLOBAL OPTIONS*] mailbox path [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**] [**-S** *socket_path*] [**-s**] [**-t** *type*] *mailbox*
+**doveadm** [*GLOBAL OPTIONS*] mailbox path
+[**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+[**-S** *socket_path*] [**-s**] [**-t** *type*] *mailbox*
 
 The **mailbox path** command returns the filesystem path for the given
 mailbox.  By default, this is the path to the "index" directory.
@@ -257,7 +257,7 @@ mailbox.  By default, this is the path to the "index" directory.
 ### mailbox rename
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox rename
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-s**]
   *old_name* *new_name*
@@ -271,7 +271,7 @@ When the **-s** option is given, *old_name* will be unsubscribed and
 ### mailbox status
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox status
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-t**]
   *fields* *mailbox*...
@@ -330,7 +330,7 @@ This command uses by default the output *formatter* **flow**.
 ### mailbox subscribe
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox subscribe
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *mailbox* *...*
 
@@ -339,7 +339,7 @@ This command is used to subscribe one or more mailboxes.
 ### mailbox unsubscribe
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox unsubscribe
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *mailbox* *...*
 
@@ -348,7 +348,7 @@ This command is used to unsubscribe one or more mailboxes.
 ### mailbox update
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox update
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-\-mailbox-guid** *guid*]
   [**-\-uid-validity** *uid*]
@@ -368,7 +368,7 @@ is not supported for all mail backends.
 ### mailbox cache purge
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox cache purge
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *mailbox* *...*
 
@@ -380,7 +380,7 @@ automatically.
 ### mailbox cache decision
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox cache decision
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-\-all**]
   [**-\-fields** *list of fields*]
@@ -413,7 +413,7 @@ cache.
 ### mailbox cache remove
 
 **doveadm** [*GLOBAL OPTIONS*] mailbox cache remove
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *search query*
 

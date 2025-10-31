@@ -22,8 +22,6 @@ The **doveadm sieve** commands can be used to manage Sieve filtering.
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
-
 <!-- @include: include/option-F-file.inc -->
 
 <!-- @include: include/option-no-userdb-lookup.inc -->
@@ -47,7 +45,7 @@ The **doveadm sieve** commands can be used to manage Sieve filtering.
 ### sieve put
 
 **doveadm** [*GLOBAL OPTIONS*] sieve put
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-a**]
   *scriptname*
@@ -61,7 +59,7 @@ for execution at delivery.
 ### sieve get
 
 **doveadm** [*GLOBAL OPTIONS*] sieve get
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *scriptname*
 
@@ -70,7 +68,7 @@ This command retrieves the Sieve script named *scriptname*.
 ### sieve delete
 
 **doveadm** [*GLOBAL OPTIONS*] sieve delete
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-a**]
   *scriptname* ...
@@ -81,7 +79,7 @@ not be the active script, unless the **-a** option is present.
 ### sieve list
 
 **doveadm** [*GLOBAL OPTIONS*] sieve list
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
 
 List existing Sieve scripts, and their active state.
@@ -89,7 +87,7 @@ List existing Sieve scripts, and their active state.
 ### sieve rename
 
 **doveadm** [*GLOBAL OPTIONS*] sieve rename
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *old_name* *new_name*
 
@@ -99,7 +97,7 @@ to *new_name*.
 ### sieve activate
 
 **doveadm** [*GLOBAL OPTIONS*] sieve activate
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *scriptname*
 
@@ -109,7 +107,7 @@ for execution at delivery.
 ### sieve deactivate
 
 **doveadm** [*GLOBAL OPTIONS*] sieve deactivate
-  [**-A** | **-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *scriptname*
 

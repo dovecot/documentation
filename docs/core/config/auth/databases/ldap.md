@@ -395,7 +395,7 @@ userdb ldap {
 
 ### User Iteration
 
-For using `doveadm -A` or `-u` with wildcards:
+For using `doveadm -u` with wildcards:
 ```
 ldap_uris = ldap://ldap.example.org
 ldap_auth_dn = cn=admin,dc=example,dc=org

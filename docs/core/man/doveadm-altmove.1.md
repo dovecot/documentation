@@ -11,11 +11,6 @@ dovecotComponent: core
 **doveadm** [*GLOBAL OPTIONS*] **altmove**
   [**-r**]
   [**-S** *socket_path*]
-  **-A** *search_query*
-
-**doveadm** [*GLOBAL OPTIONS*] **altmove**
-  [**-r**]
-  [**-S** *socket_path*]
   **-F** *file search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] **altmove**
@@ -48,8 +43,6 @@ moved to the alternative storage.
 <!-- @include: include/global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 

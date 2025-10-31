@@ -10,10 +10,6 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] **force-resync**
   [**-S** *socket_path*]
-  **-A** *mailbox*
-
-**doveadm** [*GLOBAL OPTIONS*] **force-resync**
-  [**-S** *socket_path*]
   **-F** *file* *mailbox*
 
 **doveadm** [*GLOBAL OPTIONS*] **force-resync**
@@ -35,8 +31,6 @@ also checked.
 <!-- @include: include/global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 

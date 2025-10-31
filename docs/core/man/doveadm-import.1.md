@@ -12,13 +12,6 @@ dovecotComponent: core
   [**-S** *socket_path*]
   [**-U** *source_user*]
   [**-s**]
-  **-A**
-  *source_mail_driver*:*source_mail_path*
-
-**doveadm** [*GLOBAL OPTIONS*] **import**
-  [**-S** *socket_path*]
-  [**-U** *source_user*]
-  [**-s**]
   **-F** *file* *source_mail_driver*:*source_mail_path*
 
 **doveadm** [*GLOBAL OPTIONS*] **import**
@@ -57,8 +50,6 @@ In the final form, the mails will be imported only for given *user* (s).
 <!-- @include: include/global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 

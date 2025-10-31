@@ -10,10 +10,6 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **quota**
   [**-S** *socket_path*]
-  *command* **-A**
-
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **quota**
-  [**-S** *socket_path*]
   *command* **-F** *file*
 
 **doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **quota**
@@ -43,8 +39,6 @@ In the last form, the command will affect only the matching *user*(s).
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
-
 <!-- @include: include/option-F-file.inc -->
 
 <!-- @include: include/option-no-userdb-lookup.inc -->
@@ -58,7 +52,7 @@ In the last form, the command will affect only the matching *user*(s).
 ### quota get
 
 **doveadm** [*GLOBAL OPTIONS*] **quota get**
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
 
 The **quota get** command is used to display the current quota usage.
 The storage values are reported in kilobytes.
@@ -68,7 +62,7 @@ This command uses by default the output formatter **table**.
 ### quota recalc
 
 **doveadm** [*GLOBAL OPTIONS*] quota recalc
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
 
 The **quota recalc** command is used to recalculate the current quota
 usage.

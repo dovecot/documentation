@@ -10,10 +10,6 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] **purge**
   [**-S** *socket_path*]
-  **-A**
-
-**doveadm** [*GLOBAL OPTIONS*] **purge**
-  [**-S** *socket_path*]
   **-F** *file*
 
 **doveadm** [*GLOBAL OPTIONS*] **purge**
@@ -45,8 +41,6 @@ In the last form, only messages of the given *user* (s) will be purged.
 <!-- @include: include/global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 
