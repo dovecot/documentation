@@ -1,6 +1,7 @@
 {
   "name": "dovecot-ce-documentation",
   "devDependencies": {
+    "@mdit/plugin-plantuml": "^0.22.3",
     "@sindresorhus/slugify": "^2.2.1",
     "camelcase": "^8.0.0",
     "commander": "^13.1.0",
