@@ -22,8 +22,6 @@ This command uses by default the output formatter **flow** (without the
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
-
 <!-- @include: include/option-F-file.inc -->
 
 <!-- @include: include/option-no-userdb-lookup.inc -->
@@ -43,7 +41,7 @@ This command uses by default the output formatter **flow** (without the
 ### fts optimize
 
 **doveadm** [*GLOBAL OPTIONS*] fts optimize
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [*namespace*]
 
@@ -53,7 +51,7 @@ the full text search engines, but this enforces it to happen.
 ### fts rescan
 
 **doveadm** [*GLOBAL OPTIONS*] fts rescan
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [*namespace*]
 

@@ -11,11 +11,6 @@ dovecotComponent: core
 **doveadm** [*GLOBAL OPTIONS*] **expunge**
   [**-S** *socket_path*]
   [**-d**]
-  **-A** *search_query*
-
-**doveadm** [*GLOBAL OPTIONS*] **expunge**
-  [**-S** *socket_path*]
-  [**-d**]
   **-F** *file* *search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] **expunge**
@@ -49,8 +44,6 @@ expunged.
 <!-- @include: include/global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 **-d**
 :   Delete the mailbox if it is empty after expunging.

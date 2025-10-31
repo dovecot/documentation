@@ -1,7 +1,7 @@
 ### fts flatcurve check
 
 **doveadm** [*GLOBAL OPTIONS*] fts flatcurve check
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [*mailbox* ...]
 
@@ -24,7 +24,7 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 ### fts flatcurve remove
 
 **doveadm** [*GLOBAL OPTIONS*] fts flatcurve remove
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [*mailbox* ...]
 
@@ -43,7 +43,7 @@ For each mailbox removed, it outputs the following key/value fields:
 ### fts flatcurve rotate
 
 **doveadm** [*GLOBAL OPTIONS*] fts flatcurve rotate
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [*mailbox* ...]
 
@@ -62,7 +62,7 @@ For each mailbox rotated, it outputs the following key/value fields:
 ### fts flatcurve stats
 
 **doveadm** [*GLOBAL OPTIONS*] fts flatcurve stats
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [*mailbox* ...]
 

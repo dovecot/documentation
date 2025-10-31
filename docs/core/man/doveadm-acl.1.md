@@ -21,8 +21,6 @@ This command uses by default the output formatter **table**.
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
-
 <!-- @include: include/option-F-file.inc -->
 
 <!-- @include: include/option-no-userdb-lookup.inc -->
@@ -116,7 +114,7 @@ This command uses by default the output formatter **table**.
 ### acl add
 
 **doveadm** [*GLOBAL OPTIONS*] acl add
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *mailbox id* *right*
   [*right* ...]
@@ -127,7 +125,7 @@ existing rights are preserved.
 ### acl debug
 
 **doveadm** [*GLOBAL OPTIONS*] acl debug
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *mailbox*
 
@@ -137,7 +135,7 @@ to the user. It will list exactly what the problem is.
 ### acl delete
 
 **doveadm** [*GLOBAL OPTIONS*] acl delete
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *mailbox id*
 
@@ -146,7 +144,7 @@ Remove the whole ACL entry for the *mailbox*/*id*.
 ### acl get
 
 **doveadm** [*GLOBAL OPTIONS*] acl get
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-m**]
   *mailbox*
@@ -159,7 +157,7 @@ Show all the ACLs for the *mailbox*.
 ### acl recalc
 
 **doveadm** [*GLOBAL OPTIONS*] acl recalc
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
 
 Make sure the *user*'s shared mailboxes exist correctly in the
@@ -168,7 +166,7 @@ Make sure the *user*'s shared mailboxes exist correctly in the
 ### acl remove
 
 **doveadm** [*GLOBAL OPTIONS*] acl remove
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *mailbox id* *right* [*right* ...]
 
@@ -178,7 +176,7 @@ are removed, the entry still exists without any rights.
 ### acl rights
 
 **doveadm** [*GLOBAL OPTIONS*] acl rights
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *mailbox*
 
@@ -187,7 +185,7 @@ Show the *user*'s current ACL rights for the *mailbox*.
 ### acl set
 
 **doveadm** [*GLOBAL OPTIONS*] acl set
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *mailbox id* *right* [*right* ...]
 

@@ -24,8 +24,6 @@ storage driver is designed.
 
 ## OPTIONS
 
-<!-- @include: ./option-A.inc -->
-
 <!-- @include: ./option-u-user.inc -->
 
 <!-- @include: ./option-F-file.inc -->
@@ -40,7 +38,7 @@ storage driver is designed.
   *config-filter-name* *source-path* *dest-path*
 
 **doveadm** [*GLOBAL OPTIONS*] mail fs copy
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
   [**-S** *socket_path*]
   *config-filter-name* *source-path* *dest-path*
 
@@ -54,7 +52,7 @@ Copy source path to the destination path.
   *config-filter-name* *path* [*path* ...]
 
 **doveadm** [*GLOBAL OPTIONS*] mail fs delete
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
   [**-S** *socket_path*]
   [**-R**]
   [**-n** *count*]
@@ -73,7 +71,7 @@ Delete all data associated with the path provided.
 **doveadm** [*GLOBAL OPTIONS*] fs get *config-filter-name* *path*
 
 **doveadm** [*GLOBAL OPTIONS*] mail fs get
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
   [**-S** *socket_path*]
   *config-filter-name* *path*
 
@@ -84,7 +82,7 @@ Retrieve data associated with the path provided.
 **doveadm** [*GLOBAL OPTIONS*] fs iter *config-filter-name* *path*
 
 **doveadm** [*GLOBAL OPTIONS*] mail fs iter
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
   [**-S** *socket_path*]
   *config-filter-name* *path*
 
@@ -95,7 +93,7 @@ Iterate through all data files in the path provided.
 **doveadm** [*GLOBAL OPTIONS*] fs iter-dirs *config-filter-name* *path*
 
 **doveadm** [*GLOBAL OPTIONS*] mail fs iter-dirs
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
   [**-S** *socket_path*]
   *config-filter-name* *path*
 
@@ -109,7 +107,7 @@ Iterate through all directories in the path provided.
   *config-filter-name* *input_path* *path*
 
 **doveadm** [*GLOBAL OPTIONS*] mail fs put
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
   [**-S** *socket_path*]
   [**-h** *hash*]
   [**-m** *key*=*value*]
@@ -130,7 +128,7 @@ Store data at the path provided.
 **doveadm** [*GLOBAL OPTIONS*] fs stat *config-filter-name* *path*
 
 **doveadm** [*GLOBAL OPTIONS*] mail fs stat
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
   [**-S** *socket_path*]
   *config-filter-name* *path*
 
