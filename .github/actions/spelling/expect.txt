@@ -8,7 +8,6 @@ ADDRESULT
 ADH
 Adleman
 Aildir
-allbackups
 alloconly
 altmove
 altpath
@@ -156,7 +155,6 @@ dnpassword
 DOI
 domainless
 domainname
-dontlognull
 Dorner
 dotlock
 dotlocking
@@ -193,6 +191,7 @@ Eing
 ekh
 emaillookup
 endscript
+enduml
 ENHANCEDSTATUSCODES
 enotify
 entra
@@ -209,8 +208,8 @@ euid
 examplescripts
 execv
 exim
-extlists
 exportkeytab
+extlists
 extprograms
 extracttext
 exttextcat
@@ -234,9 +233,7 @@ foofilename
 foop
 foos
 foreverypart
-forwardfor
 fpdb
-Frontends
 FROP
 fscache
 fsgid
@@ -283,8 +280,6 @@ hostip
 howto
 htdigest
 htpasswd
-httpchk
-httplog
 iana
 idfield
 IES
@@ -363,7 +358,6 @@ ldapmodify
 ldaps
 LDFLAGS
 ldif
-leastconn
 lenumber
 letsencrypt
 LFs
@@ -400,7 +394,6 @@ listfile
 listname
 listscripts
 LISTSERV
-lkas
 lmtp
 lmtponly
 lmtptest
@@ -453,7 +446,6 @@ masteradmin
 masterpass
 masteruser
 matadata
-maxconn
 maxproc
 maxretry
 mboxcl
@@ -671,7 +663,6 @@ rfcs
 Rivest
 Roskakori
 roundcube
-roundrobin
 rport
 rquota
 rsaprivkey
@@ -692,7 +683,6 @@ savedbefore
 SAVEDON
 savedsince
 SAVEONLY
-scality
 scontext
 scriptname
 sdbox
@@ -755,6 +745,7 @@ sqluser
 SSHA
 ssldir
 stackbuf
+startuml
 STATEDIR
 staticbuf
 staticdb
@@ -868,6 +859,7 @@ urandom
 Urg
 urlauth
 URLFETCH
+usecase
 usecs
 userdata
 userdb

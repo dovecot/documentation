@@ -16,6 +16,7 @@ It is currently implemented as a proxy that acts as a front-end for any
 [[link,mta]], adding the necessary functionality required for a submission
 service: it adds the required AUTH ([[rfc,4954]]) support, avoiding
 the need to configure the MTA for [[link,sasl]].
+:::
 
 ::: danger
 Dovecot's submission server is NOT a full-featured SMTP server. It REQUIRES
@@ -80,6 +81,10 @@ service:
 * **STARTTLS** ([[rfc,3207]])
 * **VRFY** ([[rfc,5321]])
 * **XCLIENT**: See https://www.postfix.org/XCLIENT_README.html
+
+## Flow Diagram
+
+<!-- @include: @docs/core/config/include/submission_flow.inc -->
 
 ## Configuration
 
