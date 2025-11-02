@@ -7494,7 +7494,7 @@ external files, which also allows single-instance storage of them.
 
 If no value is specified, attachment saving to external files is disabled.
 
-[[variable,mail-user]] can be used.`
+[[variable,mail-user]] and \`~/\` can be used.`
 	},
 
 	mail_ext_attachment: {
@@ -7669,6 +7669,10 @@ This can be overridden via the \`gid\` [[link,userdb_fields,userdb field]].`
 		seealso: [ 'mail_path', '[[link,home_directories_for_virtual_users]]' ],
 		values: setting_types.STRING,
 		text: `
+User's home directory. This is used as the root for some of the user-specific
+files and directories. The \`%{home}\` variable expands to this value. Also
+some path settings expand \`~/\` to this value.
+
 There are various possible ways of specifying this parameter and
 [[setting,mail_path]].
 
@@ -8009,7 +8013,9 @@ but not the home directory itself (see
 [[link,home_directories_for_virtual_users]]).
 
 The path must be absolute, not a relative path. Even if relative paths appear
-to work, this usage is deprecated and will likely stop working at some point.`
+to work, this usage is deprecated and will likely stop working at some point.
+
+[[variable,mail-user]] and \`~/\` can be used.`
 	},
 
 	mail_inbox_path: {
@@ -8029,7 +8035,9 @@ This can also be used to specify a different INBOX path with Maildir:
  mail_driver = maildir
  mail_path = ~/Maildir
  mail_inbox_path = ~/Maildir/.INBOX
-\`\`\``
+\`\`\`
+
+[[variable,mail-user]] and \`~/\` can be used.`
 	},
 
 	mail_index_path: {
@@ -8040,7 +8048,9 @@ This can also be used to specify a different INBOX path with Maildir:
 			'[[link,mail_location_index_files]]',
 		],
 		text: `
-Location of [[link,mail_location_index_files,index files]].`
+Location of [[link,mail_location_index_files,index files]].
+
+[[variable,mail-user]] and \`~/\` can be used.`
 	},
 
 	mail_index_private_path: {
@@ -8049,7 +8059,9 @@ Location of [[link,mail_location_index_files,index files]].`
 		seealso: [ '[[link,shared_mailboxes_public]]' ],
 		text: `
 The private index files are used with shared mailboxes to provide private
-(per-user) message flags.`
+(per-user) message flags.
+
+[[variable,mail-user]] and \`~/\` can be used.`
 	},
 
 	mail_cache_path: {
@@ -8060,14 +8072,18 @@ The private index files are used with shared mailboxes to provide private
 Place \`dovecot.index.cache\` files to this directory instead of among the
 other index files. This may be used as an optimization to split most index
 files to the fastest (smallest) storage while keeping cache files in a slightly
-slower (larger) storage.`
+slower (larger) storage.
+
+[[variable,mail-user]] and \`~/\` can be used.`
 	},
 
 	mail_control_path: {
 		tags: [ 'mail-location' ],
 		values: setting_types.STRING,
 		text: `
-Location for (mailbox-format specific) control files.`
+Location for (mailbox-format specific) control files.
+
+[[variable,mail-user]] and \`~/\` can be used.`
 	},
 
 	mail_alt_path: {
@@ -8075,7 +8091,9 @@ Location for (mailbox-format specific) control files.`
 		values: setting_types.STRING,
 		seealso: [ '[[link,dbox_alt_storage]]' ],
 		text: `
-Specifies the [[link,dbox_alt_storage]] path.`
+Specifies the [[link,dbox_alt_storage]] path.
+
+[[variable,mail-user]] and \`~/\` can be used.`
 	},
 
 	mail_alt_check: {
@@ -8181,7 +8199,9 @@ example \`mailboxes\` with [[link,dbox]].`
 Specifies the location of volatile files. This includes lock files and
 potentially other files that don't need to exist permanently, so it can point
 to an in-memory filesystem (\`tmpfs\`). This is especially useful to avoid
-creating lock files to NFS or other remote filesystems.`
+creating lock files to NFS or other remote filesystems.
+
+[[variable,mail-user]] and \`~/\` can be used.`
 	},
 
 	mailbox_list_index_prefix: {
