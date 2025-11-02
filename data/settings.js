@@ -5061,13 +5061,13 @@ Field in the SQL table to use for tracking dict key expiration. This field is
 optional if no expiration is used by the code accessing the dict map.`
 	},
 
-	dict_map_value: {
+	dict_map_value_field: {
 		tags: [ 'dict', 'dict-sql', 'dict-ldap' ],
 		values: setting_types.NAMED_LIST_FILTER,
-		seealso: [ 'dict_map_value_name' ],
+		seealso: [ 'dict_map_value_field_name' ],
 		text: `
 - sql: Creates a new value for the dict map. The filter name refers to the
-[[setting,dict_map_value_name]] setting. Dict supports reading/writing multiple
+[[setting,dict_map_value_field_name]] setting. Dict supports reading/writing multiple
 values for the same key.
 
 - ldap: Value to be returned from an ldap search, as a [[link,settings_variables,variable-expression]]`
@@ -5083,22 +5083,22 @@ Creates a new field for the dict map. The filter name refers to the
 query looking up the dict key.`
 	},
 
-	dict_map_value_name: {
+	dict_map_value_field_name: {
 		tags: [ 'dict', 'dict-sql' ],
 		values: setting_types.STRING,
-		seealso: [ 'dict_map_value' ],
+		seealso: [ 'dict_map_value_field' ],
 		text: `
-Field in the SQL table to use for the [[setting,dict_map_value]].`
+Field in the SQL table to use for the [[setting,dict_map_value_field]].`
 	},
 
-	dict_map_value_type: {
+	dict_map_value_field_type: {
 		tags: [ 'dict', 'dict-sql' ],
 		values: setting_types.ENUM,
 		values_enum: [ 'string', 'int', 'uint', 'double', 'hexblob', 'uuid' ],
 		default: 'string',
-		seealso: [ 'dict_map_value' ],
+		seealso: [ 'dict_map_value_field' ],
 		text: `
-Type of the field in the SQL table for the [[setting,dict_map_value]].`
+Type of the field in the SQL table for the [[setting,dict_map_value_field]].`
 	},
 
 	dict_map_field_pattern: {
