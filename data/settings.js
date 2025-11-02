@@ -5073,13 +5073,13 @@ values for the same key.
 - ldap: Value to be returned from an ldap search, as a [[link,settings_variables,variable-expression]]`
 	},
 
-	dict_map_field: {
+	dict_map_key_field: {
 		tags: [ 'dict', 'dict-sql' ],
 		values: setting_types.NAMED_LIST_FILTER,
-		seealso: [ 'dict_map_field_pattern' ],
+		seealso: [ 'dict_map_pattern' ],
 		text: `
 Creates a new field for the dict map. The filter name refers to the
-[[setting,dict_map_field_pattern]] setting. The fields are part of the SQL
+[[setting,dict_map_key_field_value]] setting. The fields are part of the SQL
 query looking up the dict key.`
 	},
 
@@ -5101,31 +5101,31 @@ Field in the SQL table to use for the [[setting,dict_map_value_field]].`
 Type of the field in the SQL table for the [[setting,dict_map_value_field]].`
 	},
 
-	dict_map_field_pattern: {
+	dict_map_key_field_value: {
 		tags: [ 'dict', 'dict-sql' ],
 		values: setting_types.STRING,
-		seealso: [ 'dict_map_pattern', 'dict_map_field' ],
+		seealso: [ 'dict_map_pattern', 'dict_map_key_field' ],
 		text: `
 Variable in the [[setting,dict_map_pattern]] that maps to this
-[[setting,dict_map_field]]. The value must always begin with \`$\`.`
+[[setting,dict_map_key_field]]. The value must always begin with \`$\`.`
 	},
 
-	dict_map_field_name: {
+	dict_map_key_field_name: {
 		tags: [ 'dict', 'dict-sql' ],
 		values: setting_types.STRING,
-		seealso: [ 'dict_map_field' ],
+		seealso: [ 'dict_map_key_field' ],
 		text: `
-Field in the SQL table to use for the [[setting,dict_map_field]].`
+Field in the SQL table to use for the [[setting,dict_map_key_field]].`
 	},
 
-	dict_map_field_type: {
+	dict_map_key_field_type: {
 		tags: [ 'dict', 'dict-sql' ],
 		values: setting_types.ENUM,
 		values_enum: [ 'string', 'int', 'uint', 'double', 'hexblob', 'uuid' ],
 		default: 'string',
-		seealso: [ 'dict_map_field' ],
+		seealso: [ 'dict_map_key_field' ],
 		text: `
-Type of the field in the SQL table for the [[setting,dict_map_field]].`
+Type of the field in the SQL table for the [[setting,dict_map_key_field]].`
 	},
 
 	dict_server: {
