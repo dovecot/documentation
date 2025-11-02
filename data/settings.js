@@ -7669,6 +7669,10 @@ This can be overridden via the \`gid\` [[link,userdb_fields,userdb field]].`
 		seealso: [ 'mail_path', '[[link,home_directories_for_virtual_users]]' ],
 		values: setting_types.STRING,
 		text: `
+User's home directory. This is used as the root for some of the user-specific
+files and directories. The \`%{home}\` variable expands to this value. Also
+some path settings expand \`~/\` to this value.
+
 There are various possible ways of specifying this parameter and
 [[setting,mail_path]].
 
