@@ -48,3 +48,26 @@ passdb sql2 {
 
 The `plugin { ... }` section no longer exists. Plugin settings are global
 the same as all other settings.
+
+#### Config $variables
+
+Using `$setting` variables in config files requires `$SET:` prefix now.
+For example `user = $default_internal_user` is now
+`user = $SET:default_internal_user`. See [[link,settings_syntax_expansion]]
+for more details.
+
+Note that earlier it was common to refer to the same setting, e.g.:
+
+```
+mail_plugins = $mail_plugins quota
+```
+
+Most of this is now unnecessary, because of the new
+[[link,settings_types_boollist,boollist]] setting type, which allows you to
+use:
+
+```
+mail_plugins {
+  quota = yes
+}
+```
