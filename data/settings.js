@@ -6855,7 +6855,10 @@ try to initialize encryption if the global [[setting,ssl]] is \`yes\`. This is
 for example done to accommodate STARTTLS commands for IMAP/SUBMISSION/LMTP
 protocols. In other words, SSL is truly disabled only when the global
 [[setting,ssl]] is \`no\`.
-:::`
+:::
+
+Note: Do not confuse this with the [[setting,ssl]] setting. When used as
+\`inet_listener { ssl }\`, it expands to this \`inet_listener_ssl\` setting.`
 	},
 
 	inet_listener_haproxy: {
@@ -10328,7 +10331,7 @@ SQL driver to use for any SQL database accesses.`
 
 	ssl: {
 		default: 'yes',
-		seealso: [ '[[link,ssl_configuration]]' ],
+		seealso: [ '[[link,ssl_configuration]]', 'inet_listener_ssl' ],
 		values: setting_types.ENUM,
 		values_enum: [ 'yes', 'no', 'required' ],
 		text: `
@@ -10350,7 +10353,10 @@ Options:
     authentication mechanisms aren't allowed without SSL/TLS.
 
 This setting affects the \`secured\` state of connections. See
-[[link,secured_connections]].`
+[[link,secured_connections]].
+
+Note: Do not confuse this with the [[setting,inet_listener_ssl]] setting,
+which gets used inside \`inet_listener { ssl }\`.`
 	},
 
 	ssl_server_alt_cert_file: {
