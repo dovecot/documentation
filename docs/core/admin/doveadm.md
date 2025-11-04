@@ -293,7 +293,7 @@ guarantees that two backend servers don't attempt to modify the same user's
 mailbox at the same time (which might cause problems).
 
 ::: warning [[changed,doveadm_mailbox_commands_user]]
-All mail commands require providing `-u`, `-F` or `-A` parameter.
+All mail commands require providing `-u` or `-F` parameter.
 
 `USER` environment variable is no longer supported.
 

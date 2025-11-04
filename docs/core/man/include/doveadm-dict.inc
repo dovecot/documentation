@@ -36,8 +36,6 @@ Otherwise the commands behave identically.
 
 **doveadm mail dict** command-specific *options*:
 
-<!-- @include: ./option-A.inc -->
-
 <!-- @include: ./option-F-file.inc -->
 
 <!-- @include: ./option-S-socket.inc -->
@@ -52,7 +50,7 @@ Otherwise the commands behave identically.
   *config-filter-name* *key*
 
 **doveadm** [*GLOBAL OPTIONS*] mail dict get
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
   [**-S** *socket_path*]
   *config-filter-name* *key*
 
@@ -69,7 +67,7 @@ Fetch a key from a dictionary.
   *config-filter-name* *prefix*
 
 **doveadm** [*GLOBAL OPTIONS*] mail dict iter
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
   [**-S** *socket_path*]
   [**-1RV**]
   *config-filter-name* *prefix*
@@ -98,7 +96,7 @@ List keys into the dictionary.
   *config-filter-name* *key* *diff*
 
 **doveadm** [*GLOBAL OPTIONS*] mail dict inc
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
   [**-S** *socket_path*]
   [**-t** *timestamp-msecs*]
   *config-filter-name* *key* *diff*
@@ -123,7 +121,7 @@ Increment the value of a numeric key in the keys into the dictionary.
   *config-filter-name* *key* *value*
 
 **doveadm** [*GLOBAL OPTIONS*] mail dict set
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
   [**-S** *socket_path*]
   [**-t** *timestamp-msecs*]
   [**-e** *expire-secs*]
@@ -151,7 +149,7 @@ Set/create keys into the dictionary.
   *config-filter-name* *key*
 
 **doveadm** [*GLOBAL OPTIONS*] mail dict unset
-  [**-A** | **-u** *user* | **-F** *file*]
+  [**-u** *user* | **-F** *file*]
   [**-S** *socket_path*]
   [**-t** *timestamp-msecs*]
   *config-filter-name* *key*

@@ -1,7 +1,7 @@
 ## SYNOPSIS
 
 **doveadm** [*GLOBAL OPTIONS*] **sync**
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-1fPR**]
   [**-l** *secs*]
@@ -21,7 +21,7 @@
   *destination*
 
 **doveadm** [*GLOBAL OPTIONS*] **backup**
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-fPR**]
   [**-l** *secs*]
@@ -136,14 +136,9 @@ dsync can be run completely standalone. It doesn't require any Dovecot
 server processes to be running, except when using -u parameter to do a
 *userdb* lookup from auth process.
 
-dsync can sync either one or multiple users using the -u or -A
-parameters.
-
 <!-- @include: ./global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: ./option-A.inc -->
 
 <!-- @include: ./option-F-file.inc -->
 

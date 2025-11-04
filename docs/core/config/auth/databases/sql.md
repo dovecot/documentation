@@ -111,7 +111,7 @@ mail_gid = vmail
 
 ## User Iteration
 
-Some commands, such as `doveadm -A` need to get a list of users. With SQL
+Some commands (using `-u "*"`) need to get a list of users. With SQL
 userdb this is done with the [[setting,userdb_sql_iterate_query]] setting.
 
 You can either return:
@@ -195,7 +195,7 @@ userdb sql {
   query = SELECT home, uid, gid \
     FROM users \
     WHERE userid = '%{user | username}' AND domain = '%{user | domain}'
-  # For using doveadm -A:
+  # For using doveadm -u "*":
   iterate_query = SELECT userid AS username, domain FROM users
 }
 ```
@@ -226,7 +226,7 @@ userdb sql {
   query = SELECT home, uid, gid \
     FROM users \
     WHERE userid = '%{user | username}' AND domain = '%{user | domain}'
-  # For using doveadm -A:
+  # For using doveadm -u "*":
   iterate_query = SELECT userid AS username, domain FROM users
 }
 ```
@@ -248,7 +248,7 @@ userdb sql {
   query = SELECT home, uid, gid \
     FROM users \
     WHERE userid = '%{user | username}' AND domain = '%{user | domain}'
-  # For using doveadm -A:
+  # For using doveadm -u "*":
   iterate_query = SELECT userid AS username, domain FROM users
 }
 ```
