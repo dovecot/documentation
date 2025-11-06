@@ -297,6 +297,11 @@ Full config file
   ## Timeout in milliseconds
   # timeout_msecs = 0
 
+  ## Specifies how long after token expiration it is still accepted. It
+  ## shouldn't be 0 because clocks aren't exact, and network can add some
+  ## delays. v2.3.22+
+  # token_expire_grace_secs = 60
+
   ## Enable debug logging
   # debug = no
 
