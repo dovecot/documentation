@@ -395,14 +395,13 @@ userdb ldap {
 
 ### User Iteration
 
-For using `doveadm -A` or `-u` with wildcards:
+For using `doveadm -A` or `-u` with wildcards you need to configure the userdb
+to support user iteration. This is done by adding
+[[setting,userdb_ldap_iterate_filter]] and
+[[setting,userdb_ldap_iterate_fields]] settings to the userdb:
 ```
-ldap_uris = ldap://ldap.example.org
-ldap_auth_dn = cn=admin,dc=example,dc=org
-ldap_auth_dn_password = secret
-ldap_base = dc=example,dc=org
-
 userdb ldap {
+  # filter = ...
   iterate_filter = (objectClass=posixAccount)
   iterate_fields {
     user = %{ldap:uid}
