@@ -1,6 +1,10 @@
 ---
 layout: doc
 title: Certificate Creation
+dovecotlinks:
+  howto_ssl_self_signed_certificate_creation:
+    hash: self-signed-certificate-creation
+    text: How To SSL Self-signed Certificate Creation
 ---
 
 # SSL Certificate Creation
