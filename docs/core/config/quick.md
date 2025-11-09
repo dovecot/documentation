@@ -170,7 +170,7 @@ Configure SSL certificate and private key paths with [[setting,ssl_server_cert_f
 and [[setting,ssl_server_key_file]] settings.
 
 An easy way to build a self-signed test certificate is using Dovecot's
-`doc/mkcert.sh` script. For more information see [[link,ssl_configuration]].
+`doc/mkcert.sh` script. For more information see [[link,howto_ssl_self_signed_certificate_creation]] and [[link,ssl_configuration]].
 
 By default [[setting,auth_allow_cleartext,no]], which means that Dovecot
 will fail the authentication if the client doesn't use SSL (or use
