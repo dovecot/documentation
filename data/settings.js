@@ -11520,7 +11520,7 @@ Example:
 \`\`\`
 userdb ldap {
   iterate_filter = (objectClass=smiMessageRecipient)
-  iterate_attrs {
+  iterate_fields {
     user = %{ldap:mailRoutingAddress}
   }
 }
@@ -11536,7 +11536,7 @@ Filter to get a list of all users.
 \`\`\`
 userdb ldap {
   iterate_filter = (objectClass=smiMessageRecipient)
-  iterate_attrs {
+  iterate_fields {
     user = %{ldap:mailRoutingAddress}
   }
 }
