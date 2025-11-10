@@ -605,6 +605,7 @@ pidof
 pids
 Piljk
 pki
+plantuml
 popafter
 postconf
 postfixadmin
@@ -631,6 +632,7 @@ proctitle
 proofpoint
 proxymap
 pubout
+puml
 putscript
 pvo
 pwcheck
@@ -825,6 +827,7 @@ toolarge
 transitioning
 Troost
 tscript
+tsvg
 TTLs
 tuxfamily
 typedef
@@ -838,6 +841,7 @@ UIDPLUS
 uids
 uidv
 uidvalidity
+UML
 unaccessed
 unaliased
 unauth
