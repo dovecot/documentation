@@ -84,7 +84,7 @@ service:
 
 ## Flow Diagram
 
-<!-- @include: @docs/core/config/include/submission_flow.inc -->
+![Submission Flow Diagram](/docs/core/config/images/submission_flow.svg)
 
 ## Configuration
 
