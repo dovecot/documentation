@@ -58,6 +58,7 @@ bayes
 bcc
 benumber
 bernat
+bigcrypt
 bitfield
 BITMIME
 blitiri
@@ -68,6 +69,7 @@ boollist
 Borenstein
 bsd
 bsdauth
+bsdicrypt
 bsearch
 bugreport
 bugzilla
@@ -138,6 +140,7 @@ delaycompress
 deleteheader
 DELETESCRIPT
 dentries
+descrypt
 DESTNAME
 destuser
 dextended
@@ -259,6 +262,7 @@ gmatch
 gno
 gnomint
 gnutls
+gost
 gss
 gssapi
 halon
@@ -893,7 +897,6 @@ vlast
 vmail
 vname
 vnd
-vpv
 vsize
 vsz
 vuejs
@@ -916,6 +919,7 @@ xfs
 xoauth
 XRCPTFORWARD
 xuidl
+yescrypt
 yourldap
 zimbra
 Zstandard
