@@ -298,14 +298,6 @@ You must not try to change [[setting,mail_index_path]] to a user-specific
 location. This will only result in mailbox corruption.
 ([[setting,mail_index_private_path]] can be used though.)
 
-### Filesystem Permissions
-
-Dovecot assumes that it can access the other users' mailboxes. If you
-use multiple UNIX UIDs, you may have problems setting up the permissions
-so that the mailbox sharing works. Dovecot never modifies existing
-files' permissions. See [Filesystem Permissions](#filesystem-permissions)
-for more information.
-
 ### Shared Mailbox Listing
 
 With the above configuration it's possible to open shared mailboxes if
