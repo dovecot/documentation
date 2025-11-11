@@ -72,6 +72,35 @@ algorithm as described in the hash, e.g, `{ARGON2}$argon2id$...` is
 recognized and processed properly as ARGON2I/ARGON2ID (as long as
 libsodium is recent enough to support it).
 
+### CRYPT
+
+This is an umbrella term for all password schemes libc's `crypt()` can verify.
+On a current Linux system (2025) these are the following roughly in the order
+from strongest to weakest:
+
+| Scheme        | Prefix   | Maximum passphrase length        |
+|---------------|----------|----------------------------------|
+| yescrypt      | `$y$`    | unlimited                        |
+| gost-yescrypt | `$gy$`   | unlimited                        |
+| sm3-yescrypt  | `$sm3y$` | unlimited                        |
+| scrypt        | `$7$`    | unlimited                        |
+| bcrypt        | `$2b$`   | 72 characters                    |
+| sha512crypt   | `$6$`    | unlimited                        |
+| sha256crypt   | `$5$`    | unlimited                        |
+| sm3crypt      | `$sm3$`  | unlimited                        |
+| sha1crypt     | `$sha1`  | unlimited                        |
+| SunMD5        | `$md5`   | unlimited                        |
+| md5crypt      | `$1$`    | unlimited                        |
+| bsdicrypt     | `_`      | (ignores 8th bit)                |
+| descrypt      |          | 8 characters (ignores 8th bit)   |
+| bigcrypt      |          | 128 characters (ignores 8th bit) |
+| NT            | `$3$`    | unlimited                        |
+
+::: warning
+On older Linux distros `crypt()` might not include all of the schemes in the list above.
+You can verify which ones are supported on your system by reading `man 5 crypt`
+:::
+
 ### BLF-CRYPT
 
 This is the Blowfish crypt (bcrypt) scheme. It is generally considered to
@@ -92,7 +121,9 @@ A strong scheme. The encrypted password will start with `$6$`.
 
 A strong scheme. The encrypted password will start with `$5$`.
 
-### MD5-CRYPT: A weak but common scheme often used in `/etc/shadow`. The
+### MD5-CRYPT
+
+A weak but common scheme often used in `/etc/shadow`. The
 encrypted password will start with `$1$`.
 
 ## Generating Encrypted Passwords
@@ -165,16 +196,12 @@ Password is in cleartext.
 
 ### CRYPT
 
-Traditional DES-crypted password in `/etc/passwd` (e.g.
-"pass" = `vpvKh.SaNbR6s`.
+Password is encrypted.
 
-* Dovecot uses libc's `crypt()` function, which means that CRYPT is usually
-  able to recognize MD5-CRYPT and possibly also other password schemes. See
-  all of the `*-CRYPT` schemes at the top of this page.
+Dovecot uses libc's `crypt()` function, which means that it is able to recognize
+all password schemes available on your system (e.g. the ones used in `/etc/passwd`).
 
-* The traditional DES-crypt scheme only uses the first 8 characters of the
-  password, the rest are ignored. Other schemes may have other password length
-  limitations (if they limit the password length at all).
+See [CRYPT](#crypt) above for a list.
 
 #### BLF-CRYPT
 
@@ -183,6 +210,10 @@ Bcrypt based hash. (`$2y$`)
 #### DES-CRYPT
 
 Traditional DES based hash.
+
+The DES-crypt scheme only uses the first 8 characters of the password, the rest
+is ignored. Other schemes may have other password length limitations (if they
+limit the password length at all).
 
 ::: warning [[changed,crypt_des_md5_schemes]]
 Disabled by default.
@@ -204,7 +235,7 @@ SHA-256 based hash (`$5$`)
 
 SHA-512 based hash (`$6$`)
 
-#### OTP
+### OTP
 
 [[rfc,2289]] based One-Time Password system.
 
