@@ -25,12 +25,6 @@ dovecotComponent: core
   [**-S** *socket_path*]
   [**-U** *source_user*]
   [**-s**]
-  **\-\-no-userdb-lookup** *source_mail_driver*:*source_mail_path*
-
-**doveadm** [*GLOBAL OPTIONS*] **import**
-  [**-S** *socket_path*]
-  [**-U** *source_user*]
-  [**-s**]
   **-u** *user* *source_mail_driver*:*source_mail_path*
 
 ## DESCRIPTION
@@ -47,9 +41,6 @@ In the first form, the mails will be imported for all users.
 
 In the second form, the mails will be imported for all users listed in
 the given *file*.
-
-In the third form, the command will be performed for the user contained in the
-*USER* environment variable.
 
 In the final form, the mails will be imported only for given *user* (s).
 
