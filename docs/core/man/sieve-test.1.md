@@ -31,6 +31,10 @@ and it can provide more detailed information about script execution
 problems that are reported by the Sieve plugin, for example by tracing
 the execution and evaluation of commands and tests respectively.
 
+The tool does not parse the userdb database. If virtual users have different
+user and group IDs, these should be specified on the command line using the
+following syntax: **-o mail_uid=5000 -o mail_gid=5000**.
+
 ## OPTIONS
 
 **-a** *orig-recipient-address*
