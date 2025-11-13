@@ -28,8 +28,8 @@ See [[variable]] for a full list, but the most commonly used ones are:
 | Variable | Description |
 | -------- | ----------- |
 | `%{user}` | Full username. |
-| `%{user | username}` | User part in `user@domain`; same as `%{user}` if there's no domain. |
-| `%{user | domain}` | Domain part in `user@domain`; empty if there's no domain. |
+| `%{user \| username}` | User part in `user@domain`; same as `%{user}` if there's no domain. |
+| `%{user \| domain}` | Domain part in `user@domain`; empty if there's no domain. |
 
 ### Directory Hashing
 
