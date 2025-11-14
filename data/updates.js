@@ -78,6 +78,7 @@ export const updates = {
 	sieve_ext_notify: '2.4.0',
 	sieve_vnd_duplicate: '2.4.0',
 	sqlite_filename: '2.4.0',
+	setting_sqlite_synchronous_added: '2.4.3',
 	ssl_sni_settings_reload_added: '2.4.0',
 	weak_password_schemes: '2.4.0',
 	variables_auth_variables_protocol: '2.4.0',
