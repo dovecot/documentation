@@ -6804,6 +6804,13 @@ Creates a new network socket listener for a [[setting,service]]. The filter
 name refers to the [[setting,inet_listener_name]] setting.`
 	},
 
+	inet_listener_listen: {
+		tags: [ 'service' ],
+		values: setting_types.IPADDR,
+		text: `
+Overrides the [[setting,listen]] setting for this listener.`
+	},
+
 	inet_listener_name: {
 		tags: [ 'service' ],
 		values: setting_types.STRING,
@@ -6824,13 +6831,6 @@ unless [[setting,inet_listener_type]] overrides it. The
 		text: `
 Listener type. This string value has service-specific meaning and is used to
 distinguish different listener types that one service may employ.`
-	},
-
-	inet_listener_address: {
-		tags: [ 'service' ],
-		values: setting_types.IPADDR,
-		text: `
-Overrides the [[setting,listen]] setting for this listener.`
 	},
 
 	inet_listener_port: {
