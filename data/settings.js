@@ -6829,6 +6829,7 @@ distinguish different listener types that one service may employ.`
 	inet_listener_port: {
 		tags: [ 'service' ],
 		values: setting_types.IN_PORT,
+		seealso: [ 'listen' ],
 		default: 0,
 		text: `
 Port number where to listen. \`0\` disables the listener.`
@@ -6970,6 +6971,17 @@ Example:
 
 \`\`\`
 listen = 127.0.0.1, 192.168.0.1
+\`\`\`
+
+This setting can be used also inside an [[setting,inet_listener]] to override
+the listener address, e.g.:
+
+\`\`\`
+service imap-login {
+  inet_listener imap {
+    listen = 192.168.0.1
+  }
+}
 \`\`\``
 	},
 
