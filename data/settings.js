@@ -6826,13 +6826,6 @@ Listener type. This string value has service-specific meaning and is used to
 distinguish different listener types that one service may employ.`
 	},
 
-	inet_listener_address: {
-		tags: [ 'service' ],
-		values: setting_types.IPADDR,
-		text: `
-Overrides the [[setting,listen]] setting for this listener.`
-	},
-
 	inet_listener_port: {
 		tags: [ 'service' ],
 		values: setting_types.IN_PORT,
