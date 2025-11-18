@@ -114,7 +114,7 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | `if(left, operator, right, true, false)` | String | String | Evaluates given comparison and returns true or false value. See [conditionals](#conditionals). |
 | `if(operator, right, true, false)` | String | String | Evaluates given comparison against input value and retuns true or false value. |
 | `index(separator, nth)` | String | String | Returns nth element from separator separated string. Zero based. Negative values are looked relative to end of list. |
-| `ldap_dn` | String | String | Converts `domain.com` to `dc=domain,dc=com`. |
+| `ldap_dn` | String | String | Converts any `.` into `,dc=`. For example `domain.com` converts into `domain,dc=com`. |
 | `lenumber` | Bytes | Number | Convert little-endian encoded input into a number. |
 | `lfill(width, filler)` | Any | Any | Pads value from left with filler until length is width. Default filler is `0`. |
 | `list(separator)` | String | String | Converts tab-escaped list into separator separated list. There is no escaping if the value already contains the separator. Defaults to `,`. |
