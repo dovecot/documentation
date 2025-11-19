@@ -4,6 +4,7 @@ import { pagefindPlugin } from 'vitepress-plugin-pagefind'
 import { generateSidebar } from 'vitepress-sidebar'
 import { dovecotMdExtend } from '../lib/markdown.js'
 import { getExcludes } from '../lib/utility.js'
+import dovecotVitepressInit from '../lib/dovecot_vitepress_init.js'
 
 const base = '/2.4'
 const base_url = 'https://doc.dovecot.org'
@@ -62,7 +63,8 @@ export default defineConfig({
 			chunkSizeWarningLimit: 1000,
 		},
 		plugins: [
-			pagefindPlugin()
+			pagefindPlugin(),
+			dovecotVitepressInit()
 		],
 	},
 
