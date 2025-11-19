@@ -13,3 +13,4 @@ lib/data/*.mjs
 .vitepress/local.js
 .vitepress/.temp
 /man/
+public/datafiles/
