@@ -119,6 +119,7 @@ cydir
 cyrusimap
 datacenter
 DATAERR
+datafiles
 datalake
 datastack
 datastax
@@ -541,6 +542,7 @@ noout
 nopassword
 nopipelining
 nordirplus
+noreferrer
 noscheme
 noselect
 nosep
