@@ -4,6 +4,7 @@ import { pagefindPlugin } from 'vitepress-plugin-pagefind'
 import { generateSidebar } from 'vitepress-sidebar'
 import { dovecotMdExtend } from '../lib/markdown.js'
 import { getExcludes } from '../lib/utility.js'
+import path from 'path'
 
 const base = '/2.4'
 const base_url = 'https://doc.dovecot.org'
@@ -60,6 +61,18 @@ export default defineConfig({
 	vite: {
 		build: {
 			chunkSizeWarningLimit: 1000,
+			rollupOptions: {
+				output: {
+					manualChunks(id) {
+						if (id.startsWith(path.resolve(process.cwd(), 'lib/data'))) {
+							return 'data-chunk-' + path.basename(id, '.data.js')
+						}
+						if (id.includes('node_modules')) {
+							return 'vendor'
+						}
+					}
+				}
+			}
 		},
 		plugins: [
 			pagefindPlugin()
