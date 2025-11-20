@@ -48,7 +48,12 @@ export default defineConfig({
 	lang: "en-us",
 
 	srcDir: ".",
-	srcExclude: [ '*.md' ].concat(getExcludes()),
+	srcExclude: [
+		// Exclude anything that is not in docs
+		'!(docs)/**/*.md',
+		// Exclude base-level markdown files
+		'*.md'
+	].concat(getExcludes()),
 	rewrites: {
 		'docs/:path(.*)': ':path',
 	},
