@@ -133,7 +133,7 @@ Some of the messages' metadata can be updated:
     allows concurrent flag updates not to overwrite each others
     changes.
 
-- mail_expunge()` expunges a message.
+- `mail_expunge()` expunges a message.
 
 Other functions are mainly intended for mailbox replication or restoring
 an existing mailbox (e.g. dsync):
