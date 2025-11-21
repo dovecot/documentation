@@ -22,10 +22,10 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 	/* Filter entries (by plugin or tag). */
 	((!props.plugin && !tag) ||
 	 (props.plugin &&
-	  (v.plugin && v.plugin.includes(props.plugin))) ||
+	  v.plugin?.includes(props.plugin)) ||
 	 (tag && tag.find((t) =>
-	  (v.plugin && v.plugin.includes(t)) ||
-	  (v.tags.includes(t)))
+	  v.plugin?.includes(t) ||
+	  v.tags?.includes(t))
 	 )) &&
 	/* Apply filter. */
 	((filter == 'all') ||
@@ -88,13 +88,13 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
        <span class="comma" v-for="v in v.values" v-html="v.url" />
       </td>
      </tr>
-     <tr v-if="v.values_enum.length">
+     <tr v-if="v.values_enum?.length">
       <th>Allowed Values</th>
       <td>
        <span class="comma" v-for="v in v.values_enum.values()"><code>{{ v }}</code></span>
       </td>
      </tr>
-     <tr v-if="v.dependencies.length">
+     <tr v-if="v.dependencies?.length">
       <th>Dependencies</th>
       <td>
        <ul>
@@ -102,7 +102,7 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
        </ul>
       </td>
      </tr>
-     <tr v-if="v.seealso.length">
+     <tr v-if="v.seealso?.length">
       <th>See Also</th>
       <td>
        <ul>
