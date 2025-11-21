@@ -2130,8 +2130,7 @@ fts_header_includes {
 	fts_header_includes: {
 		plugin: 'fts',
 		values: setting_types.BOOLLIST,
-		seealso: [ 'fts_header_excludes' ],
-		text: ``
+		seealso: [ 'fts_header_excludes' ]
 	},
 
 	fts_search_timeout: {
