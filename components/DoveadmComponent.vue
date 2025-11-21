@@ -15,7 +15,7 @@ const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
 	 (v.plugin && v.plugin == props.plugin)) ||
 	(props.tag &&
 	 ((v.plugin && v.plugin == props.tag) ||
-	  (v.tags.includes(props.tag))))
+	  (v.tags?.includes(props.tag))))
 ).sort())
 
 const cliComponent = ref({})

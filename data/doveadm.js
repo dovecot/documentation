@@ -27,7 +27,7 @@ export const doveadm = {
 				// If set, will use as command example argument.
 				// i.e., for HTTP API requests, this argument will be added
 				// to the example argument string.
-				example: false,
+				// example: "foo",
 
 				// If true, this is an optional positional argument.
 				// optional: true,
