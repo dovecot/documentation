@@ -3,6 +3,7 @@
   "devDependencies": {
     "@sindresorhus/slugify": "^2.2.1",
     "camelcase": "^8.0.0",
+    "clean-deep": "^3.4.0",
     "commander": "^13.1.0",
     "dayjs": "^1.11.13",
     "fast-glob": "^3.3.3",
