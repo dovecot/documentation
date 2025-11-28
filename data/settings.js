@@ -4178,6 +4178,18 @@ Path to the sqlite database.`
 Allows using write-ahead logging mode for database.`
 	},
 
+	sqlite_synchronous: {
+		tags: [ 'sql-sqlite' ],
+		values: setting_types.ENUM,
+		added: {
+			setting_sqlite_synchronous_added: false,
+		},
+		values_enum: ['default', 'off', 'normal', 'full', 'extra'],
+		default: 'default',
+		text: `
+Sets the synchronization mode for SQlite database. See https://sqlite.org/pragma.html#pragma_synchronous for full explanation of values. This has no effect if database is opened in read-only mode. Setting special value \`default\` elides pragma call.`
+	},
+
 	sqlite_readonly: {
 		tags: [ 'sql-sqlite' ],
 		values: setting_types.BOOLEAN,
