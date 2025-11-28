@@ -29,7 +29,7 @@ export const events = {
 
 		// Event(s) this field inherits fields from.
 		// Can be a single event or an array of events.
-		inherit: '',
+		// inherit: '',
 
 		// List of fields emitted. Keys are field names, values are
 		// descriptions (string) or an object with multiple keys (see below for
