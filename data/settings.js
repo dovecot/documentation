@@ -9464,8 +9464,13 @@ If yes, import all fields returned by the passdb lookup. If no, require
 		tags: [ 'passdb' ],
 		values: setting_types.STRING,
 		default: {
-			value: 'PLAIN',
-			text: 'specific [[link,passdb]] have different defaults',
+			value: 'CRYPT',
+			text: `specific [[link,passdb]] have different defaults<br />
+\`passdb_static\`: \`PLAIN\``,
+		},
+		changed: {
+			settings_passdb_default_password_scheme_changed: `
+Changed from \`PLAIN\` to \`CRYPT\`.`
 		},
 		text: `
 The scheme that passwords are in the passdb, unless overridden by the passdb
