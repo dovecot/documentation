@@ -243,13 +243,13 @@ pipe :copy "sa-learn-ham.sh" [ "${username}" ];
 ```sh[sa-learn-spam.sh]
 #!/bin/sh
 # you can also use tcp/ip here, consult spamc(1)
-exec /usr/bin/spamc -u ${1} -L spam
+exec /usr/bin/spamc -u "$1" -L spam
 ```
 
 ```sh[sa-learn-ham.sh]
 #!/bin/sh
 # you can also use tcp/ip here, consult spamc(1)
-exec /usr/bin/spamc -u ${1} -L ham
+exec /usr/bin/spamc -u "$1" -L ham
 ```
 :::
 
@@ -267,12 +267,12 @@ spamc for further details.
 ::: code-group
 ```sh[sa-learn-spam.sh]
 #!/bin/sh
-exec /usr/bin/sa-learn -u ${1} --spam
+exec /usr/bin/sa-learn -u "$1" --spam
 ```
 
 ```sh[sa-learn-ham.sh]
 #!/bin/sh
-exec /usr/bin/sa-learn -u ${1} --ham
+exec /usr/bin/sa-learn -u "$1" --ham
 ```
 :::
 
@@ -281,12 +281,12 @@ exec /usr/bin/sa-learn -u ${1} --ham
 ::: code-group
 ```sh[sa-learn-spam.sh]
 #!/bin/sh
-exec /usr/bin/dspam --client --user ${1} --class=spam --source=error
+exec /usr/bin/dspam --client --user "$1" --class=spam --source=error
 ```
 
 ```sh[sa-learn-ham.sh]
 #!/bin/sh
-exec /usr/bin/dspam --client --user ${1} --class=innocent --source=error
+exec /usr/bin/dspam --client --user "$1" --class=innocent --source=error
 ```
 :::
 
