@@ -1259,7 +1259,8 @@ Proxying \`reason\` values:
 | \`proxy_dest_protocol_failure\` | Local authentication succeeded, but destination hop unexpectedly violated the protocol standard. |
 | \`proxy_dest_auth_failed\` | Local authentication succeeded, but proxying failed to authenticate to the destination hop. |
 | \`proxy_dest_auth_temp_failed\` | Local authentication succeeded, but proxying failed to temporarily authenticate to the destination hop. |
-| \`proxy_dest_redirected\` | Local authentication succeeded, but destination hop redirected to another host. |`
+| \`proxy_dest_redirected\` | Local authentication succeeded, but destination hop redirected to another host. |
+| \`proxy_dest_connection_limit\` | [[added,events_proxy_dest_connection_limit_added]] Login to backend failed because client reached [[setting,mail_max_userip_connections]] limit. |`
 	},
 
 	/* Login Proxy
@@ -1338,7 +1339,8 @@ Proxying error codes:
 | \`proxy_dest_protocol_failure\` | Local authentication succeeded, but destination hop unexpectedly violated the protocol standard. |
 | \`proxy_dest_auth_failed\` | Local authentication succeeded, but proxying failed to authenticate to the destination hop. |
 | \`proxy_dest_auth_temp_failed\` | Local authentication succeeded, but proxying failed to temporarily authenticate to the destination hop. |
-| \`proxy_dest_redirected\` | Local authentication succeeded, but destination hop redirected to another host. |`
+| \`proxy_dest_redirected\` | Local authentication succeeded, but destination hop redirected to another host. |
+| \`proxy_dest_connection_limit\` | [[added,events_proxy_dest_connection_limit_added]] Login to backend failed because client reached [[setting,mail_max_userip_connections]] limit. |`
 	},
 
 	proxy_session_reconnecting: {
