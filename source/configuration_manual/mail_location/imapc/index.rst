@@ -152,6 +152,12 @@ Connection Settings
 
      .. versionadded:: 2.3.22
 
+   ``sort``
+
+     Enable using IMAP SORT, ESORT and SORT=DISPLAY extensions.
+
+     .. versionadded:: 2.3.22
+
    ``zimbra-workarounds``
 
      Fetch full message using ``BODY.PEEK[HEADER] BODY.PEEK[TEXT]`` instead of
