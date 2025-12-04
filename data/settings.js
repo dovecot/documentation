@@ -6406,6 +6406,10 @@ dropped. In their place new flags to disable these features were added.`
 		text: `
 List of features, optimizations, and workarounds that can be enabled.
 
+[[changed,settings_imapc_features_auto_capabilities]] Any remote IMAP server
+extension can now be disabled by using \`no-\` prefixed with the capability
+name. For example \`no-sort\`, \`no-sort=display\` or \`no-quota\`.
+
 **Features**
 :   \`no-acl\`
     :   If the [[plugin,imap-acl]] is loaded, the imapc acl feature is

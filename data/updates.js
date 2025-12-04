@@ -131,6 +131,7 @@ export const updates = {
 	settings_auth_policy_request_attributes_changed: '2.4.0',
 	settings_dovecot_config_version_added: '2.4.0',
 	settings_dovecot_storage_version_added: '2.4.0',
+	settings_imapc_features_auto_capabilities: '2.4.3',
 	settings_fifo_listener_type_added: '2.4.0',
 	settings_fts_decoder_tika_url_changed: '2.4.0',
 	settings_fts_decoder_script_socket_path_changed: '2.4.0',
