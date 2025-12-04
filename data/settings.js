@@ -4110,6 +4110,11 @@ be enabled.
         default.
         :::
 
+:   \`no-sort\` [[added,imapc_features_no_sort]]
+    :   Disable sorting messages using the IMAP \`SORT\` command.
+        Instead, all the message headers/metadata are fetched to perform
+        the sort locally.
+
 **Workarounds**
 :   \`fetch-fix-broken-mails\`
     :   If a \`FETCH\` returns \`NO\` (but not \`NO [LIMIT]\` or \`NO
