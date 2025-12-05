@@ -2787,8 +2787,9 @@ non-encrypted keys.`
 		values: setting_types.STRING,
 		default: 'aes-256-gcm-sha256',
 		text: `
-Set the encryption algorithm. If empty new mails are not encrypted, but
-existing mails can still be decrypted.`
+Set the encryption algorithm for newly written mails. If empty, new mails are
+not encrypted. Existing encrypted mails (with any algorithm) can be decrypted
+regardless of this setting.`
 	},
 
 	crypt_private_key_name: {
