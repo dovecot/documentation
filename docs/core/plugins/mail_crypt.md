@@ -340,6 +340,9 @@ brute force attacks.
 Another issue that you must consider when using the login password is that
 when the password changes, **you must re-encrypt the user private key**.
 
+Instead of using the login password, another possibility could be to store the
+encryption password in a separate database (e.g. SQL or LDAP).
+
 Example config where the user's login password is used as the encryption key
 password:
 
