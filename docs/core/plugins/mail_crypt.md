@@ -334,7 +334,8 @@ provided via the [[setting,crypt_user_key_password]] setting. See below.
 It is recommended to use a hash of the user's plaintext login password as the
 encryption key password instead of the plaintext password directly. This way
 the plaintext password is less likely to become visible accidentally, such as
-in debug logs.
+in debug logs. Also using a strong hash makes the key more resistant against
+brute force attacks.
 
 Another issue that you must consider when using the login password is that
 when the password changes, **you must re-encrypt the user private key**.
@@ -344,7 +345,7 @@ password:
 
 ```[dovecot.conf]
 passdb sql {
-  query = SELECT email as user, password, '%{password | sha256}' AS userdb_crypt_user_key_password \
+  query = SELECT email as user, password, '%{password | hash("pbkdf2")}' AS userdb_crypt_user_key_password \
     FROM virtual_users \
     WHERE email='%{user}'
 }
