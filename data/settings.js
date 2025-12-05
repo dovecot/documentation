@@ -2720,15 +2720,6 @@ the user's key pair.
 For EdDSA, you need to use X448 or X25519, case sensitive.`
 	},
 
-	crypt_global_private_keys: {
-		plugin: 'mail-crypt',
-		values: setting_types.NAMED_LIST_FILTER,
-		seealso: [ 'crypt_private_key_file', 'crypt_private_key_password' ],
-		text: `
-List of private keys to decrypt files. Add [[setting,crypt_private_key_file]]
-and optionally [[setting,crypt_private_key_password]] inside each filter.`
-	},
-
 	crypt_global_public_key_file: {
 		plugin: 'mail-crypt',
 		values: setting_types.FILE,
@@ -2796,11 +2787,11 @@ regardless of this setting.`
 		plugin: 'mail-crypt',
 		values: setting_types.STRING,
 		seealso: [
-			'crypt_global_private_keys',
+			'crypt_global_private_key',
 			'crypt_user_key_encryption_key',
 		],
 		text: `
-Name of the private key inside [[setting,crypt_global_private_keys]] or
+Name of the private key inside [[setting,crypt_global_private_key]] or
 [[setting,crypt_user_key_encryption_key]].`
 	},
 
@@ -2809,7 +2800,7 @@ Name of the private key inside [[setting,crypt_global_private_keys]] or
 		values: setting_types.FILE,
 		seealso: [
 			'[[link,mail_crypt_converting_ec_key_to_pkey]]',
-			'crypt_global_private_keys',
+			'crypt_global_private_key',
 			'crypt_user_key_encryption_key',
 		],
 		text: `
@@ -2817,7 +2808,7 @@ Private key in [[link,mail_crypt_converting_ec_key_to_pkey]]. The PEM key may
 additionally be base64-encoded into a single line, which can make it easier to
 store into userdb extra fields.
 
-Used inside [[setting,crypt_global_private_keys]] and
+Used inside [[setting,crypt_global_private_key]] and
 [[setting,crypt_user_key_encryption_key]] lists.`
 	},
 
