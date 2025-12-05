@@ -131,20 +131,6 @@ List of known algorithms that Dovecot supports as of writing.
 
 <sup>3</sup> Requires recent enough OpenSSL.
 
-### Dynamic Settings
-
-Per-user settings may be returned by [[link,userdb_extra_fields]].
-To provide [[setting,crypt_global_private_key]] or
-[[setting,crypt_global_public_key_file]] as a single line userdb attribute you
-can base64 encode the original PEM key contents. For example:
-
-```sh
-cat ecprivkey.pem | base64 -w0
-```
-
-All configured keys must be in
-[[link,mail_crypt_converting_ec_key_to_pkey,PEM]] format.
-
 ## Modes Of Operation
 
 Mail crypt plugin can operate using **either** global keys or folder keys.
