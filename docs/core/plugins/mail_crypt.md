@@ -14,6 +14,9 @@ dovecotlinks:
   mail_crypt_global_keys:
     hash: global-keys
     text: "Mail Crypt Plugin: Global Keys"
+  mail_crypt_ec_key:
+    hash: elliptic-curve-ec-key
+    text: "Mail Crypt Plugin: Elliptic Curve (EC) Keys"
   mail_crypt_supported_sym_algorithms:
     hash: supported-symmetric-algorithms
     text: "Mail Crypt Plugin: Supported symmetric algorithms"
@@ -304,7 +307,7 @@ Note that ED25519 keys are not suitable for X25519.
 #### RSA key
 
 ::: warning
-Use of RSA keys is discouraged, please use [[setting,crypt_user_key_curve]]
+Use of RSA keys is discouraged, please use [[link,mail_crypt_ec_key,EC keys]]
 instead.
 :::
 
