@@ -135,78 +135,6 @@ List of known algorithms that Dovecot supports as of writing.
 Mail crypt plugin can operate using **either** global keys or folder keys.
 Using both is not supported.
 
-### Folder Keys Mode
-
-In this mode, for the user a key pair is generated. Then for each folder a key
-pair is generated. This folder is encrypted using the user's key pair. A user
-can have more than one key pair but only one can be active.
-
-* [[setting,crypt_user_key_curve]] must be set.
-* [[setting,mail_attribute]] must be set, as is is used to store the keys.
-
-#### Unencrypted User Keys
-
-In this version of the folder keys mode, each user's private key is stored
-unencrypted on the server.
-
-Example config for folder keys with Maildir:
-
-```[dovecot.conf]
-mail_plugins {
-  mail_crypt = yes
-}
-mail_attribute {
-  dict file {
-    path = %{home}/Maildir/dovecot-attributes
-  }
-}
-
-crypt_user_key_curve = secp521r1
-```
-
-#### Encrypted User Keys
-
-In this version of the folder keys mode, the users private key is stored
-encrypted on the server.
-
-Example config for mandatory encrypted folder keys with Maildir:
-
-```[dovecot.conf]
-mail_plugins {
-  mail_crypt = yes
-}
-mail_attribute {
-  dict file {
-    path = %{home}/Maildir/dovecot-attributes
-  }
-}
-
-crypt_user_key_curve = secp521r1
-crypt_user_key_require_encrypted = yes
-```
-
-The password that is used to decrypt the users master/private key, must be
-provided via password query:
-
-```[dovecot.conf]
-passdb sql {
-  query = SELECT email as user, password, '%{password | sha256}' AS userdb_crypt_user_key_password \
-    FROM virtual_users \
-    WHERE email='%{user}'
-}
-```
-
-#### Choosing Encryption Password
-
-DO NOT use passwords directly. It can contain `%` which is interpreted as
-variable expansion and can cause errors. Also, it might be visible in
-debug logging. Suggested approaches are base64 encoding, hex encoding
-or hashing the password. With hashing, you get the extra benefit that
-password won't be directly visible in logs.
-
-Another issue that you must consider when using user's password is that
-when the password changes, **you must re-encrypt the user private key**.
-
 ### Global keys
 
 In this mode, all keying material is taken from the settings:
@@ -343,6 +271,78 @@ crypt_global_private_key main {
   crypt_private_password = secret
 }
 ```
+
+### Folder Keys Mode
+
+In this mode, for the user a key pair is generated. Then for each folder a key
+pair is generated. This folder is encrypted using the user's key pair. A user
+can have more than one key pair but only one can be active.
+
+* [[setting,crypt_user_key_curve]] must be set.
+* [[setting,mail_attribute]] must be set, as is is used to store the keys.
+
+#### Unencrypted User Keys
+
+In this version of the folder keys mode, each user's private key is stored
+unencrypted on the server.
+
+Example config for folder keys with Maildir:
+
+```[dovecot.conf]
+mail_plugins {
+  mail_crypt = yes
+}
+mail_attribute {
+  dict file {
+    path = %{home}/Maildir/dovecot-attributes
+  }
+}
+
+crypt_user_key_curve = secp521r1
+```
+
+#### Encrypted User Keys
+
+In this version of the folder keys mode, the users private key is stored
+encrypted on the server.
+
+Example config for mandatory encrypted folder keys with Maildir:
+
+```[dovecot.conf]
+mail_plugins {
+  mail_crypt = yes
+}
+mail_attribute {
+  dict file {
+    path = %{home}/Maildir/dovecot-attributes
+  }
+}
+
+crypt_user_key_curve = secp521r1
+crypt_user_key_require_encrypted = yes
+```
+
+The password that is used to decrypt the users master/private key, must be
+provided via password query:
+
+```[dovecot.conf]
+passdb sql {
+  query = SELECT email as user, password, '%{password | sha256}' AS userdb_crypt_user_key_password \
+    FROM virtual_users \
+    WHERE email='%{user}'
+}
+```
+
+#### Choosing Encryption Password
+
+DO NOT use passwords directly. It can contain `%` which is interpreted as
+variable expansion and can cause errors. Also, it might be visible in
+debug logging. Suggested approaches are base64 encoding, hex encoding
+or hashing the password. With hashing, you get the extra benefit that
+password won't be directly visible in logs.
+
+Another issue that you must consider when using user's password is that
+when the password changes, **you must re-encrypt the user private key**.
 
 ## Base64-encoded Keys
 
