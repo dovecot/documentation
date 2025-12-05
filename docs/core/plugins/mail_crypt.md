@@ -322,8 +322,21 @@ crypt_user_key_curve = secp521r1
 crypt_user_key_require_encrypted = yes
 ```
 
-The password that is used to decrypt the users master/private key, must be
-provided via password query:
+The password that is used to decrypt the user's private key must be
+provided via the [[setting,crypt_user_key_password]] setting. See below.
+
+#### Choosing Encryption Password
+
+It is recommended to use a hash of the user's plaintext login password as the
+encryption key password instead of the plaintext password directly. This way
+the plaintext password is less likely to become visible accidentally, such as
+in debug logs.
+
+Another issue that you must consider when using the login password is that
+when the password changes, **you must re-encrypt the user private key**.
+
+Example config where the user's login password is used as the encryption key
+password:
 
 ```[dovecot.conf]
 passdb sql {
@@ -332,17 +345,6 @@ passdb sql {
     WHERE email='%{user}'
 }
 ```
-
-#### Choosing Encryption Password
-
-DO NOT use passwords directly. It can contain `%` which is interpreted as
-variable expansion and can cause errors. Also, it might be visible in
-debug logging. Suggested approaches are base64 encoding, hex encoding
-or hashing the password. With hashing, you get the extra benefit that
-password won't be directly visible in logs.
-
-Another issue that you must consider when using user's password is that
-when the password changes, **you must re-encrypt the user private key**.
 
 ## Base64-encoded Keys
 
