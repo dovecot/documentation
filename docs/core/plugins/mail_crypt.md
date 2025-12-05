@@ -89,10 +89,6 @@ encryption with care and backup encryption keys!
 This page assumes you are using configuring mail encryption from scratch with
 a recent version of Dovecot.
 
-## Settings
-
-<SettingsComponent plugin="mail-crypt" />
-
 ### Supported symmetric algorithms
 
 While mail crypt plugin does not support setting encryption algorithm,
@@ -413,6 +409,11 @@ share the key to groups or someone with no public key.
 
 You can use [`decrypt.py`][https://github.com/dovecot/tools/blob/main/dcrypt-decrypt.py] to decrypt encrypted files.
 
+## Settings
+
+<SettingsComponent plugin="mail-crypt" />
+
+
 ## `fs-crypt`
 
 `fs-crypt` is a [[link,fs,lib-fs wrapper]] that can encrypt and decrypt files.
@@ -427,7 +428,7 @@ combined. Please make sure that compression is always applied before
 encryption. See [[plugin,fs-compress]] for an example and more details about
 compression.
 
-## `fs-crypt` settings
+### `fs-crypt` settings
 
 See [[link,mail_crypt_settings]] for generic mail-crypt settings.
 
