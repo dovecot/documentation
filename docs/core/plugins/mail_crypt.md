@@ -14,6 +14,9 @@ dovecotlinks:
   mail_crypt_global_keys:
     hash: global-keys
     text: "Mail Crypt Plugin: Global Keys"
+  mail_crypt_folder_keys:
+    hash: folder-keys
+    text: "Mail Crypt Plugin: Folder Keys"
   mail_crypt_ec_key:
     hash: elliptic-curve-ec-key
     text: "Mail Crypt Plugin: Elliptic Curve (EC) Keys"
@@ -272,14 +275,15 @@ crypt_global_private_key main {
 }
 ```
 
-### Folder Keys Mode
+### Folder Keys
 
-In this mode, for the user a key pair is generated. Then for each folder a key
-pair is generated. This folder is encrypted using the user's key pair. A user
-can have more than one key pair but only one can be active.
+In this mode, a key pair is generated for the user. Then for each folder a key
+pair is generated. This folder is encrypted using the user key. A user
+can have more than one key pair for reading, but only one can be active for
+writing.
 
 * [[setting,crypt_user_key_curve]] must be set.
-* [[setting,mail_attribute]] must be set, as is is used to store the keys.
+* [[setting,mail_attribute]] must be set, as it is used to store the keys.
 
 #### Unencrypted User Keys
 
@@ -303,7 +307,7 @@ crypt_user_key_curve = secp521r1
 
 #### Encrypted User Keys
 
-In this version of the folder keys mode, the users private key is stored
+In this version of the folder keys mode, the user's private key is stored
 encrypted on the server.
 
 Example config for mandatory encrypted folder keys with Maildir:

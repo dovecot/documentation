@@ -2698,7 +2698,14 @@ If enabled, you cannot share a key to groups or someone without a public key.`
 		plugin: 'mail-crypt',
 		values: setting_types.STRING,
 		text: `
-Defines the elliptic curve to use for key generation.
+Defines the elliptic curve to use for key generation. A key pair is generated
+for the user, and a key pair is generated for each folder. The folder key is
+encrypted using the user key.
+
+This must be set if you wish to use [[link,mail_crypt_folder_keys,folder keys]]
+rather than [[link,mail_crypt_global_keys,global keys]]. With global keys
+(either RSA or EC keys), all keying material is taken from the global key
+settings and no key generation is performed.
 
 Any valid curve supported by the underlying cryptographic library is allowed.
 
@@ -2707,15 +2714,6 @@ Example:
 \`\`\`
 crypt_user_key_curve = secp521r1
 \`\`\`
-
-This must be set if you wish to use folder keys rather than global keys.
-
-With global keys (either RSA or EC keys), all keying material is taken
-from the setting and no key generation is performed.
-
-In folder-keys mode, a key pair is generated for the user, and a
-folder-specific key pair is generated. The latter is encrypted by means of
-the user's key pair.
 
 For EdDSA, you need to use X448 or X25519, case sensitive.`
 	},
