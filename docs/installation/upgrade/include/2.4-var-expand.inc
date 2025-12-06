@@ -23,7 +23,7 @@ the "user" variable and applies the "domain" filter for it.
 | `%n` | `%{user \| username }` |
 | `%p` | `%{client_pid }` |
 | `%r` | `%{remote_ip }` |
-| `%s` | `%{protocol}` |
+| `%s` | `%{protocol}` for login & auth settings, `%{service}` for storage settings |
 | `%u` | `%{user}` |
 | `%w` | `%{password}` |
 
@@ -58,7 +58,7 @@ the "user" variable and applies the "domain" filter for it.
 | `%{real_rport}` | `%{real_remote_port}` |
 | `%{rip}` | `%{remote_ip}` |
 | `%{rport}` | `%{remote_port }` |
-| `%{service}` | `%{protocol}` |
+| `%{service}` for login & auth settings (but not storage settings) | `%{protocol}` |
 
 ##### Shared namespace variables
 
