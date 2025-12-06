@@ -32,6 +32,18 @@ user=kim lrw
 ```
 :::
 
+Or the same ACLs in a global ACL file:
+
+```[/etc/dovecot/acl-file]
+INBOX owner lrwstipekxa
+INBOX anyone lr
+INBOX user=kim l
+INBOX/foo user=timo lr
+INBOX/foo user=kim lrw
+INBOX/foo/bar user=kim lrw
+```
+:::
+
 You have to create the new ACLs to `dovecot.conf`:
 
 ```[dovecot.conf]
