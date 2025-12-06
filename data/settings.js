@@ -1774,8 +1774,8 @@ usually used in [[setting,acl]] block.`
 	},
 
 	acl_global_path: {
-		added: {
-			settings_acl_global_settings_added: false,
+		removed: {
+			settings_acl_global_path_removed: false,
 		},
 		plugin: 'acl',
 		values: setting_types.STRING,
