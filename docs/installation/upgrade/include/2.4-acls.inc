@@ -1,5 +1,3 @@
-### ACLs
-
 #### Use ACL settings instead of Global ACL Directories or Global ACL File
 
 With the following starting configuration:
