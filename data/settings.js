@@ -3262,7 +3262,8 @@ used. Used only with [[link,quota_driver_imapc]].`
 		seealso: [ '[[link,quota_mail_size]]' ],
 		text: `
 The maximum message size that is allowed to be saved (e.g. by LMTP, IMAP
-APPEND or [[doveadm,save]]).`
+APPEND or [[doveadm,save]]). If configured, will also be advertized with
+\`APPENDLIMIT\` extensions for IMAP clients, and \`SIZE\` extension for LMTP clients.`
 	},
 
 	quota_mailbox_count: {
