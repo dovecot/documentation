@@ -74,7 +74,7 @@ This is based on already having Dovecot already compiled and installed.
    service auth {
      unix_listener auth-userdb {
      }
-     inet_listener {
+     inet_listener auth {
        port = 12345
      }
    }

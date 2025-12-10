@@ -516,7 +516,7 @@ is a single Dovecot server.
 ```[dovecot.conf]
 service quota-status {
   executable = quota-status -p postfix
-  inet_listener {
+  inet_listener quota-status {
     # You can choose any port you want
     port = 12340
   }
