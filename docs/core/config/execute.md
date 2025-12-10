@@ -64,7 +64,7 @@ execute localhost:12345 {
 }
 service test-script-service {
   execute = script /usr/local/bin/test-script.sh one
-  inet_listener {
+  inet_listener script {
     port = 12345
   }
 }

@@ -85,7 +85,7 @@ service doveadm {
     user = vmail
   }
 
-  inet_listener {
+  inet_listener doveadm {
     port = 2425
   }
 

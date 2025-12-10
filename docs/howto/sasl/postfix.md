@@ -93,7 +93,7 @@ authenticate via TCP. For Dovecot, set up an `inet_listener`:
 ::: code-group
 ```[dovecot.conf]
 service auth {
-  inet_listener {
+  inet_listener auth {
     port = 12345
   }
 }
