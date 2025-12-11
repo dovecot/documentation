@@ -179,6 +179,10 @@ Sets the mitigation option for Spectre Variant 2. This can be `keep` (no mitigat
 
 Turns on LTO (Link-time Optimization) support using fat objects. Requires support from compiler and linker.
 
+###### `--with-harden-sls=<choice>`
+
+Sets the Straight-Line Speculation (SLS) mitigation mode. Defaults to none, see https://gcc.gnu.org/onlinedocs/gcc/x86-Options.html#index-mharden-sls-1.
+
 #### Dovecot specific Options
 
 Here is a list of options that Dovecot adds. You should not usually have
