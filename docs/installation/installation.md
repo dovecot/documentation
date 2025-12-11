@@ -183,6 +183,10 @@ Turns on LTO (Link-time Optimization) support using fat objects. Requires suppor
 
 Sets the Straight-Line Speculation (SLS) mitigation mode. Defaults to none, see https://gcc.gnu.org/onlinedocs/gcc/x86-Options.html#index-mharden-sls-1.
 
+###### `--with-fcf-protection=<choice>`
+
+Sets Control-Flow protection mode, see https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#index-fcf-protection.
+
 #### Dovecot specific Options
 
 Here is a list of options that Dovecot adds. You should not usually have
