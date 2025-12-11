@@ -153,6 +153,28 @@ Gives a full list of available options.
 List the dovecot specific options only and hide the generic configuration
 options.
 
+#### Compiler options
+
+##### `--enable-hardening`
+
+Enables various compiler hardenings. Defaults to yes.
+
+##### `--enable-ubsan`
+
+Compiles code with Unspecified Behaviour sanitizer.
+
+##### `--with-fuzzer=clang`
+
+Enables AFL Fuzzing support with clang. Requires clang compiler.
+
+##### `--enable-local-fuzzer=yes`
+
+Assumes fuzzing is not done in an isolated environment.
+
+###### `--with-retpoline=<choice>`
+
+Sets the mitigation option for Spectre Variant 2. This can be `keep` (no mitigation), `thunk` or `thunk-inline` to enable it.
+
 #### Dovecot specific Options
 
 Here is a list of options that Dovecot adds. You should not usually have
@@ -207,6 +229,33 @@ system.
 
 Enables Lua support for authentication and push notifications.
 
+##### `--with-pcre2`
+
+Enables regular expression support with libpcre2.
+
+##### `--with-apparmor`
+
+Enabled support for apparmor context hats.
+
+#### `--with-systemd`
+
+Enables Systemd integration support.
+
+#### `--with-libcap`
+
+Enables libcap to drop capabilities when not needed.
+
+#### Experimental features
+
+##### `--enable-experimental-mail-utf8`
+
+Enables support from MAIL UTF8 and SMTPUTF8.
+These still need to be enabled with [[setting,mail_utf8_extensions]].
+
+##### `--enable-experimental-imap4rev2`
+
+Enables support for IMAPrev2.
+
 #### FTS Options
 
 ##### `--with-flatcurve`
@@ -216,6 +265,14 @@ Flatcurve full text search (requires Xapian libraries).
 ##### `--with-solr`
 
 Build with Solr full text search support
+
+##### `--with-textcat`
+
+Build with support for text language detection with libtextcat.
+
+##### `--with-stemmer`
+
+Build with stemmer support from libstemmer.
 
 #### Compression Libraries
 
@@ -251,6 +308,12 @@ or similar package)
 
 Build with SQLite3 driver support (requires `sqlite-devel`,
 `libsqlite3-dev` or similar package)
+
+#### Authentication Hash Options
+
+##### `--with-sodium`
+
+Build with libsodium support, enabling ARGON2 and ARGON2ID password hashes.
 
 #### Authentication Driver Options
 
