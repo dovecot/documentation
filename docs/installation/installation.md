@@ -175,6 +175,10 @@ Assumes fuzzing is not done in an isolated environment.
 
 Sets the mitigation option for Spectre Variant 2. This can be `keep` (no mitigation), `thunk` or `thunk-inline` to enable it.
 
+###### `--enable-lto`
+
+Turns on LTO (Link-time Optimization) support using fat objects. Requires support from compiler and linker.
+
 #### Dovecot specific Options
 
 Here is a list of options that Dovecot adds. You should not usually have
