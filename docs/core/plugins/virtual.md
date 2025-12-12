@@ -32,7 +32,7 @@ Then, you'll have to create a [[link,namespaces,namespace]] for the virtual
 mailboxes, for example:
 
 ```[dovecot.conf]
-namespace {
+namespace virtual {
   prefix = virtual/
   separator = /
   mail_driver = virtual

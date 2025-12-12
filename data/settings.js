@@ -8785,7 +8785,7 @@ Must end with [[setting,namespace_separator]].
 Example:
 
 \`\`\`
-namespace {
+namespace shared {
   prefix = Shared/
   separator = /
 }
