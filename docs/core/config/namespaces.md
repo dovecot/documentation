@@ -182,7 +182,7 @@ trouble with different IMAP clients. The `^` separator is troublesome with
 Thunderbird. If `\` has to be used, it needs to be escaped in configuration:
 
 ```[dovecot.conf]
-namespace {
+namespace inbox {
   separator = "\\"
 }
 ```
@@ -226,7 +226,7 @@ mailboxes in Maildir format under `~/Maildir`, you can do this by creating two
 namespaces:
 
 ```[dovecot.conf]
-namespace {
+namespace inbox {
   separator = /
   prefix = "#mbox/"
   mail_driver = mbox
@@ -237,7 +237,7 @@ namespace {
   list = no
 }
 
-namespace {
+namespace maildir {
   separator = /
   prefix =
   mail_driver = maildir
@@ -424,7 +424,7 @@ namespace inbox {
   }
 }
 
-namespace {
+namespace shared {
   type = shared
   prefix = shared/$user/
   mail_driver = mdbox
@@ -434,7 +434,7 @@ namespace {
   subscriptions = no
 }
 
-namespace {
+namespace public {
   type = public
   separator = /
   prefix = public/

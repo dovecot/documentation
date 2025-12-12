@@ -47,7 +47,7 @@ mail_driver = maildir
 mail_path = ~/Maildir
 
 # When creating any namespaces, you must also have a private namespace:
-namespace {
+namespace inbox {
   type = private
   separator = /
   prefix =
@@ -55,7 +55,7 @@ namespace {
   inbox = yes
 }
 
-namespace {
+namespace public {
   type = public
   separator = /
   prefix = Public/
@@ -87,7 +87,7 @@ files, which contain only the message UIDs and the private flags. Currently the
 list of private flags is hardcoded only to the \\Seen flag.
 
 ```[dovecot.conf]
-namespace {
+namespace public {
   type = public
   separator = /
   prefix = Public/
@@ -133,7 +133,7 @@ If you have a read-only directory structure containing mbox files,
 you'll need to store index files elsewhere:
 
 ```[dovecot.conf]
-namespace {
+namespace public {
   type = public
   prefix = Public/
   mail_driver = mbox
@@ -168,7 +168,7 @@ is however possible to use shared control files but per-user index
 files, assuming you've set up permissions properly.
 
 ```[dovecot.conf]
-namespace {
+namespace public {
   type = public
   separator = /
   prefix = Public/
@@ -179,7 +179,7 @@ namespace {
   subscriptions = no
 }
 
-namespace {
+namespace public {
   type = public
   separator = /
   prefix = Team/
@@ -196,7 +196,7 @@ namespace {
 See [[plugin,acl]] for more information about ACLs.
 
 ```[dovecot.conf]
-namespace {
+namespace public {
   type = public
   separator = .
   prefix = public.
@@ -230,7 +230,7 @@ mail_driver = maildir
 mail_path = ~/Maildir
 
 # When creating any namespaces, you must also have a private namespace:
-namespace {
+namespace inbox {
   type = private
   separator = /
   prefix =
@@ -238,7 +238,7 @@ namespace {
   inbox = yes
 }
 
-namespace {
+namespace shared {
   type = shared
   separator = /
   prefix = shared/$user/

@@ -4,7 +4,7 @@ With the following starting configuration:
 
 ::: code-group
 ```[dovecot.conf]
-namespace {
+namespace inbox {
   prefix = INBOX/
   separator = /
 }
