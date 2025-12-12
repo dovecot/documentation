@@ -39,7 +39,7 @@ mail_plugins {
   quota = yes
 }
 
-namespace {
+namespace inbox {
   type = private
   separator = /
   prefix =
@@ -47,7 +47,7 @@ namespace {
   inbox = yes
 }
 
-namespace {
+namespace public {
   type = public
   separator = /
   prefix = Public/
