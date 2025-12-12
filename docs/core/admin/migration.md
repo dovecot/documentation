@@ -257,7 +257,7 @@ pop3c_port = 995
 pop3c_ssl = starttls
 pop3c_port = 110
 
-namespace {
+namespace pop3-migration {
   prefix = POP3-MIGRATION-NS/
   mail_driver = pop3c
   mail_path =
