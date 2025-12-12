@@ -188,7 +188,7 @@ mail_plugins {
 crypt_global_public_key_file = ecpubkey.pem
 crypt_global_private_key main {
   crypt_private_key_file = ecprivkey.pem
-  crypt_private_password = secret
+  crypt_private_key_password = secret
 }
 ```
 
@@ -271,7 +271,7 @@ mail_plugins {
 crypt_global_public_key_file = rsapubkey.pem
 crypt_global_private_key main {
   crypt_private_key_file = rsaprivkey.pem
-  crypt_private_password = secret
+  crypt_private_key_password = secret
 }
 ```
 
@@ -456,7 +456,7 @@ For doveadm commands that are working with password protected keys, the global
 `-o` option should be used to provide the password.  Example:
 
 ```sh
-doveadm -o crypt_private_password=some_password <...doveadm command...>
+doveadm -o crypt_private_key_password=some_password <...doveadm command...>
 ```
 :::
 
