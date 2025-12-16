@@ -355,6 +355,25 @@ header to be sent.`
 	},
 
 	{
+		name: 'set_event',
+		args: {
+			value: {
+				type: 'event',
+				text: `Event to be used as parent event.`
+			},
+		},
+		tags: [ 'http_request' ],
+		text: `Pass the parent event to be used for this request.`
+	},
+
+	{
+		name: 'get_event',
+		tags: [ 'http_request' ],
+		return: `An event object`,
+		text: `Returns the event used by the http_request.`
+	},
+
+	{
 		name: 'submit',
 		return: `An http_response object.`,
 		tags: [ 'http_request' ],
