@@ -1,9 +1,28 @@
 <script setup>
 import DefaultTheme from 'vitepress/theme'
 import { useData } from 'vitepress'
+import { nextTick, watch } from 'vue'
+import { createMermaidRenderer } from 'vitepress-mermaid-renderer'
 
 const { site, theme } = useData()
 const { Layout } = DefaultTheme
+
+const initMermaid = () => {
+  if (typeof window === "undefined") return
+  const renderer = createMermaidRenderer({
+    theme: "neutral",
+  })
+  renderer.setToolbar({
+    showLanguageLabel: true,
+    downloadFormat: "png",
+    desktop: {
+      positions: { vertical: "bottom", horizontal: "right" },
+    }
+  })
+}
+
+nextTick(() => initMermaid())
+watch(() => initMermaid())
 
 const re = new RegExp("^[/][0-9.]+[/]?$")
 const prod = re.test(site._value.base)
