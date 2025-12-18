@@ -985,7 +985,7 @@ Default is \`0\`, which is unlimited.`
 	sieve_quota_storage_size: {
 		tags: [ 'sieve', 'managesieve_storage' ],
 		plugin: 'sieve',
-		values: setting_types.UINT,
+		values: setting_types.SIZE,
 		default: 0,
 		text: `
 The maximum amount of disk storage a single user's scripts may
@@ -3513,7 +3513,7 @@ namespace inbox {
 	quota_storage_size: {
 		default: 'unlimited',
 		plugin: 'quota',
-		values: setting_types.UINT,
+		values: setting_types.SIZE,
 		seealso: [
 			'[[setting,quota_storage_extra]]',
 			'[[setting,quota_storage_percentage]]',
