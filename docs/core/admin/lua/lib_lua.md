@@ -30,20 +30,41 @@ When script is loaded, `script_init()` function is called, if found.
 if necessary.
 :::
 
+To use an event in script_init(), use the dovecot.event() API call.
+This returns an event that uses the script event as its parent.
+
+```lua
+function script_init()
+  local event = dovecot.event()
+  event:log_debug("log message")
+  return 0
+end
+```
+
 ## De-initialization
 
 When script is being unloaded, `script_deinit()` function is called, if found.
 
 ## C API
 
+### `struct event *dlua_check_event(lua_State *L, int arg)`
+
+Check the argument with index `arg` from stack and try to convert
+it to an Dovecot Event. Throws an error if the argument is not a valid
+Dovecot Event.
+
 ### `void dlua_dovecot_register(struct dlua_script *script)`
 
 Register dovecot variable. This item can also be extended by context specific
 tables, like authentication database adds `dovecot.auth`.
 
-### `void dlua_push_event(struct event *event)`
+### `void dlua_push_event(lua_State *L, struct event *event)`
 
 Pushes an Dovecot Event to stack.
+
+### `void dlua_push_timeval(lua_State *L, const struct timeval *tv)`
+
+Pushes an timeval struct to stack as integer.
 
 ## Lua API
 
