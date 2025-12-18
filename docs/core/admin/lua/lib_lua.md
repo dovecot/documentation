@@ -30,6 +30,17 @@ When script is loaded, `script_init()` function is called, if found.
 if necessary.
 :::
 
+To use an event in script_init(), use the dovecot.event() API call.
+This returns an event that uses the script event as its parent.
+
+```lua
+function script_init()
+  local event = dovecot.event()
+  event:log_debug("log message")
+  return 0
+end
+```
+
 ## De-initialization
 
 When script is being unloaded, `script_deinit()` function is called, if found.
