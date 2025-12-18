@@ -22,6 +22,7 @@
     "unist-util-map": "^4.0.0",
     "unist-util-parents": "^3.0.0",
     "vitepress": "^1.6.3",
+    "vitepress-mermaid-renderer": "^1.1.7",
     "vitepress-plugin-pagefind": "^0.4.13",
     "vitepress-sidebar": "^1.31.0"
   },
