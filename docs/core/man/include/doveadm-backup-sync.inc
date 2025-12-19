@@ -200,9 +200,13 @@ parameters.
 
 **-t** *start date*
 :   Skip any mails whose received-timestamp is older than the specified time.
+    The format follows IMAP4rev1 standard format, e.g. "13-Apr-2007 14:23:05
+    +0200"
 
 **-e** *end date*
 :   Skip any mails whose received-timestamp is newer than the specified time.
+    The format follows IMAP4rev1 standard format, e.g. "13-Apr-2007 14:23:05
+    +0200"
 
 **-O** *sync flag*
 :   Sync only mails that have the specified flag. If the flag name begins
