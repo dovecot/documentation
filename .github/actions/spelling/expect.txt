@@ -224,6 +224,7 @@ fetc
 fetchmail
 FETCHs
 fgrep
+FHIn
 fieldstr
 fileinto
 findtime
@@ -566,7 +567,6 @@ OIDC
 olc
 oldkey
 oldpassword
-oldpath
 oldstats
 onelevel
 onerr
@@ -882,6 +882,7 @@ usermask
 usernames
 userok
 uuuuuu
+Uwx
 vacationcheck
 valgrind
 Valgrinding
