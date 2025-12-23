@@ -9,7 +9,7 @@ dovecotComponent: core
 ## SYNOPSIS
 
 **doveconf**
-  [**-aCdFHInPNUwx**]
+  [**-aCdFInPNUwx**]
   [**-c** *config-file*]
   [**-f** *filter*]
 
@@ -53,7 +53,30 @@ configuration in easy human readable output.
     configured.
 
 **-F**
-:   TODO (dump full and simple output and expand values).
+:   Show the configuration in a filter-based format, which is how Dovecot
+    internally accesses it. This can be useful for debugging why configuration
+    is not working as expected.
+
+    The settings are grouped into different "structs", which are all accessed
+    independently. A new struct is started in the output as `# struct_name`.
+
+    Next is the list of filters, which begin with `:FILTER` followed by the
+    filter in the event filter syntax. An empty filter matches everything.
+    The filters are processed from end to beginning. The settings are taken
+    from the first matching filter (i.e. the last in the output). Since not
+    all filters have all settings defined, the processing continues until all
+    settings have been found.
+
+    Named list filter such as `protocols = imap pop3` are shown as
+    `protocol/imap=yes` and `protocol/pop3=yes # stop list`. The "stop list"
+    means that the value is not modified by any following filters that match.
+    If the setting was defined as `protocols { imap=yes, pop3=yes }`, the
+    "stop list" would be missing, because this setting is only adding the
+    protocols, not replacing the list.
+
+    Settings groups are included in `:INCLUDE` lines. The includes are
+    processed last, after all filters have been applied, so all settings inside
+    the groups can be overridden.
 
 **-f** *filter*
 :   Show the matching configuration for the specified *filter*
@@ -82,35 +105,6 @@ configuration in easy human readable output.
 
             This matches filters which were configured like:
             :   **remote 1.2.3.0/24 { # special settings }**
-
-**-F**
-:   Show the configuration in a filter-based format, which is how Dovecot
-    internally accesses it. This can be useful for debugging why configuration
-    is not working as expected.
-
-    The settings are grouped into different "structs", which are all accessed
-    independently. A new struct is started in the output as `# struct_name`.
-
-    Next is the list of filters, which begin with `:FILTER` followed by the
-    filter in the event filter syntax. An empty filter matches everything.
-    The filters are processed from end to beginning. The settings are taken
-    from the first matching filter (i.e. the last in the output). Since not
-    all filters have all settings defined, the processing continues until all
-    settings have been found.
-
-    Named list filter such as `protocols = imap pop3` are shown as
-    `protocol/imap=yes` and `protocol/pop3=yes # stop list`. The "stop list"
-    means that the value is not modified by any following filters that match.
-    If the setting was defined as `protocols { imap=yes, pop3=yes }`, the
-    "stop list" would be missing, because this setting is only adding the
-    protocols, not replacing the list.
-
-    Settings groups are included in `:INCLUDE` lines. The includes are
-    processed last, after all filters have been applied, so all settings inside
-    the groups can be overridden.
-
-**-H**
-:   TODO (verify host).
 
 **-h**
 :   Hide the setting's name, show only the setting's value.

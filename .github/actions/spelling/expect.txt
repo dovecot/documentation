@@ -224,7 +224,6 @@ fetc
 fetchmail
 FETCHs
 fgrep
-FHIn
 fieldstr
 fileinto
 findtime
