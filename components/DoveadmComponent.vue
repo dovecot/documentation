@@ -89,7 +89,7 @@ function httpClick(k) {
     <component v-if="cliComponent[k]" :is="cliComponent[k]" :data="v" />
    </details>
 
-   <details v-if="v.args" @click.capture.once="httpClick(k)" class="details custom-block">
+   <details v-if="v.args && !v.cli_only_cmd" @click.capture.once="httpClick(k)" class="details custom-block">
     <summary v-html="data.http_api_link" />
     <component v-if="httpComponent[k]" :is="httpComponent[k]" :data="v" />
    </details>

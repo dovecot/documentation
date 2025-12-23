@@ -9,6 +9,9 @@ export const doveadm = {
 
 	// Doveadm command name (each command is a separate object)
 	altmove: {
+		// If true, this command only works for CLI, not HTTP.
+		cli_only_cmd: false,
+
 		// Command specific arguments.
 		args: {
 			// The argument (name is the doveadm CLI representation)
@@ -18,7 +21,7 @@ export const doveadm = {
 				// The short command line argument (no dash needed)
 				cli: 'r',
 
-				// If true, only show for cli, not HTTP.
+				// If true, only show argument for CLI, not HTTP.
 				// cli_only: true,
 
 				// If set, will use as command example argument.
@@ -279,6 +282,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	},
 
 	'auth login': {
+		cli_only_cmd: true,
 		args: {
 			'auth-login-socket-path': {
 				cli: 'a',
@@ -327,6 +331,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	},
 
 	'auth lookup': {
+		cli_only_cmd: true,
 		args: {
 			'socket-path': {
 				cli: 'a',
@@ -358,6 +363,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 	},
 
 	'auth test': {
+		cli_only_cmd: true,
 		args: {
 			'socket-path': {
 				cli: 'a',
@@ -530,6 +536,7 @@ The synchronized destination. See [[man,doveadm-sync]] for options.`
 	},
 
 	'compress connect': {
+		cli_only_cmd: true,
 		args: {
 			host: {
 				example: 'hostname',
@@ -741,6 +748,7 @@ the source user name, e.g., \`user sourceuser\`.`
 	},
 
 	dump: {
+		cli_only_cmd: true,
 		args: {
 			type: {
 				cli: 't',
@@ -767,6 +775,7 @@ the source user name, e.g., \`user sourceuser\`.`
 	},
 
 	exec: {
+		cli_only_cmd: true,
 		args: {
 			binary: {
 				example: 'dovecot-lda',
@@ -2359,6 +2368,7 @@ returned.`,
 	},
 
 	pw: {
+		cli_only_cmd: true,
 		args: {
 			list: {
 				cli: 'l',
