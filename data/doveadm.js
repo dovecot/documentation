@@ -588,7 +588,7 @@ The synchronized destination. See [[man,doveadm-sync]] for options.`
 				cli: 'F',
 				optional: true,
 				type: doveadm_arg_types.BOOL,
-				text: `TODO (dump full and simple output and expand values).`,
+				text: `Show the configuration in a filter-based format.`,
 			},
 			f: {
 				cli: 'f',
@@ -596,12 +596,6 @@ The synchronized destination. See [[man,doveadm-sync]] for options.`
 				optional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Apply filters to limit output.`,
-			},
-			H: {
-				cli: 'H',
-				optional: true,
-				type: doveadm_arg_types.BOOL,
-				text: `TODO (verify host).`,
 			},
 			h: {
 				cli: 'h',
@@ -1396,6 +1390,20 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 | version | The (Dovecot internal) version of the FTS data. |
 `
 		},
+	},
+
+	help: {
+		cli_only_cmd: true,
+		args: {
+			command: {
+				example: 'mailbox',
+				optional: true,
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `The command/group to show the man page of.`,
+			},
+		},
+		text: `Provide doveadm usage information.`,
 	},
 
 	'import': {
