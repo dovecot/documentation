@@ -113,7 +113,7 @@ recognized (others are defined by the [[plugin,sieve-imapsieve]] plugin):
 
 The `personal` storage serves as the user's main personal storage. Although more
 than a single `personal` storage can be defined, only the first one listed in
-the configuration is used. 
+the configuration is used.
 
 The LDA Sieve plugin uses the personal storage to find the active script for
 Sieve filtering at delivery. If the storage supports storing more than a single
@@ -149,7 +149,7 @@ storages are defined in the configuration, unless the order is overridden by the
 
 This is usually a global script, so be sure to pre-compile the specified
 script manually in that case using the sievec command line tool, as
-explained by [[man,sievec]].`
+explained by [[man,sievec]].
 
 #### `before` {#script-storage-type-before}
 
@@ -162,7 +162,7 @@ script or scripts are run **before** user's personal script (instead of
 The `default` storage yields the sieve script that gets executed **only** if
 the user's personal Sieve script does not exist. Although more
 than a single `default` storage can be defined, only the first one listed in
-the configuration is used. 
+the configuration is used.
 
 If [[setting,sieve_script_name]] is set for this script storage, the default
 script can be seen and accessed by this name through ManageSieve (and
@@ -170,7 +170,7 @@ doveadm sieve). See below ([[link,sieve_visible_default_script]]).
 
 This is usually a global script, so be sure to pre-compile the specified
 script manually in that case using the sievec command line tool, as
-explained by [[man,sievec]].`
+explained by [[man,sievec]].
 
 #### `discard` {#script-storage-type-discard}
 
