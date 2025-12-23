@@ -9,7 +9,7 @@ dovecotComponent: core
 ## SYNOPSIS
 
 **doveconf**
-  [**-adnPNUx**]
+  [**-aCdFHInPNUwx**]
   [**-c** *config-file*]
   [**-f** *filter*]
 
@@ -41,6 +41,9 @@ configuration in easy human readable output.
 **-a**
 :   Show all settings with their currently configured values.
 
+**-C**
+:   TODO (check full config).
+
 **-c** *config-file*
 :   Read configuration from the given *config-file*. By default
     */etc/dovecot/dovecot.conf* will be used.
@@ -48,6 +51,9 @@ configuration in easy human readable output.
 **-d**
 :   Show the setting's default value instead of the one currently
     configured.
+
+**-F**
+:   TODO (dump full and simple output and expand values).
 
 **-f** *filter*
 :   Show the matching configuration for the specified *filter*
@@ -103,8 +109,14 @@ configuration in easy human readable output.
     processed last, after all filters have been applied, so all settings inside
     the groups can be overridden.
 
+**-H**
+:   TODO (verify host).
+
 **-h**
 :   Hide the setting's name, show only the setting's value.
+
+**-I**
+:   TODO (dump config import).
 
 **-n**
 :   Show only settings with non-default values. This is the default behavior
@@ -123,17 +135,20 @@ configuration in easy human readable output.
 **-U**
 :   Ignore all unknown settings in config file.
 
+**-w**
+:   TODO (hide obsolete warnings).
+
 **-x**
 :   Expand configuration variables (e.g. `$ENV:foo`) and show file contents
-    (from e.g. `ssl_server_key_password = \</etc/ssl/password.txt`).
+    (from e.g. `ssl_server_key_password = </etc/ssl/password.txt`).
 
 *section_name*
 :   Show only the current configuration of one or more specified sections.
 
 *setting_name*
-:   Show only the setting of one or more *setting_name* (s) with the
-:   currently configured value. You can show a setting inside a section
-:   using '/' as the section separator, e.g. service/imap/executable.
+:   Show only the setting of one or more *setting_name*(s) with the
+    currently configured value. You can show a setting inside a section
+    using `/` as the section separator, e.g. `service/imap/executable`.
 
 ## EXAMPLE
 
@@ -143,13 +158,6 @@ for a specific connection.
 
 ```sh
 doveconf -f local=10.0.0.110 -f remote=10.11.1.2 -f protocol=pop3 -n
-```
-
-**doveconf** can be also used to convert v1.x configuration files into
-v2.x format.
-
-```sh
-doveconf -n -c /oldpath/dovecot.conf > /etc/dovecot/dovecot.conf.new
 ```
 
 Ask **doveconf** for a global setting:
