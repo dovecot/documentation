@@ -14,7 +14,7 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 	  (v.root && v.root == props.root)) ||
 	 (props.tag &&
 	  ((v.root && v.root == props.tag) ||
-	   (v.tags.includes(props.tag)))))
+	   (v.tags?.includes(props.tag)))))
 ).sort())
 </script>
 
