@@ -34,21 +34,21 @@ mail_plugins {
 namespace inbox {
   # Spam mailbox is emptied before Trash
   mailbox Spam {
-    priority = 1
+    trash_priority = 1
   }
 
   # Trash mailbox is emptied before Sent
   mailbox Trash {
-    priority = 2
+    trash_priority = 2
   }
 
   # If both Sent and "Sent Messages" mailboxes exist, the next oldest message
   # to be deleted is looked up from both of the mailboxes.
   mailbox Sent {
-    priority = 3
+    trash_priority = 3
   }
   mailbox "Sent Messages" {
-    priority = 3
+    trash_priority = 3
   }
 ```
 :::
