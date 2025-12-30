@@ -363,11 +363,26 @@ The following operators are supported:
 | `~` | Regular expression match (pattern on value2, [POSIX Extended Regular Expression syntax](https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html)). |
 | `!~` | String inequality (pattern on value2, [POSIX Extended Regular Expression syntax](https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html)). |
 
-Examples:
+Dovecot supports two kinds of conditional filters, the `if` and the `switch `filter.
+The difference is that `if` can be used to do single comparison, and `switch` can do multiple comparisons.
 
+::: warning
+  Nested `if` or `switch` statements will not work. You also cannot chain `if` or `switch` in a pipeline to emulate this.
+  If you need to do complicated `if` or `switch` statements, you should use [[link,auth_lua]] instead.
+
+Examples:
 ```
 # If %{user} is "testuser", return "INVALID". Otherwise return %{user} uppercased.
 %{user | if ("=", "testuser, "invalid", user) | upper }
+
+# Select subdomain for tenant
+postmaster@%{switch(userdb:tenant, 'eq', 'one', 'one.com', 'two', 'two.com', 'default.com')}
+
+# Or default to user variable's domain, if it's provided. Note the domain operator at the end since you can't use pipelines in values either.
+postmaster@%{switch(userdb:tenant, 'eq', 'one', '@one.com', 'two', '@two.com', user) | domain | default('default.com')}
+
+# Choose by limit.
+%{switch(number, '<', 100, 'one', 200, 'two', 300, 'three', 'bigger')}
 ```
 
 ## Cryptography support
