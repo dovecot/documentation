@@ -130,6 +130,8 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | `sha384(rounds=number, salt=string)` | Bytes | Bytes | Alias for hash with method sha384. |
 | `sha512(rounds=number, salt=string)` | Bytes | Bytes | Alias for hash with method sha512. |
 | `substr(offset, length)` | Any | Any | Extracts a substring out of input and returns it. First character is at offset zero. If offset is negative, starts that far back from the end of the string. If length is omitted, returns everything through the end of the string. If length is negative, leaves that many characters off the end of the string. |
+| `switch(left, operator, condition1, value1, condition2, value2[, ...][, default])` | String | String | Evaluates given comparison with left variable and returns matching condition value or default. See [conditionals](#conditionals). [[added,variables_switch_added]] |
+| `switch(operator, right, condition1, value1, condition2, value2[, ...][, default])` | String | String | Evaluates given comparison against pipeline and returns matching condition value or default. See [conditionals](#conditionals). [[added,variables_switch_added]] |
 | `text` | Bytes | String | Sanitize input into text and clear binary tag. |
 | `truncate(len, bits=number)` | Bytes | Bytes | Truncate to len bytes, or number of bits. The parameters are mutually exclusive. |
 | `unbase64(pad=boolean, url=boolean)` | String | Bytes | Base64 decode given input, defaults to pad and not url scheme. |
