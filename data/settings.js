@@ -8028,10 +8028,20 @@ to work, this usage is deprecated and will likely stop working at some point.
 	mail_inbox_path: {
 		tags: [ 'mail-location' ],
 		values: setting_types.STRING,
-		seealso: [ 'mail_path' ],
+		seealso: [ 'mail_home', 'mail_path' ],
 		text: `
 Path to the INBOX mailbox. The path doesn't have to be absolute - it is
 relative to the [[setting,mail_path]].
+
+::: warning
+If your inbox *does not* reside in some weird location, you should *not*
+set this setting to any value.
+
+Setting it to \`.\` or \`$MAIL_HOME/\` will just cause problems.
+
+You almost certainly want to change \`mail_home\` or \`mail_path\`
+settings instead.
+:::
 
 This is often used with mbox format where INBOX is in \`/var/mail/\` while the
 rest of the folders are under the user's home directory.
