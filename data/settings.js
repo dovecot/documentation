@@ -8913,7 +8913,7 @@ subscriptions file, unless SUBSCRIBE command is explicitly used for them.`
 		values: setting_types.TIME,
 		text: `
 Expunge all mails in this mailbox whose saved-timestamp is older than this
-value.
+value. \`0\` means autoexpunging is disabled.
 
 For IMAP and POP3 this happens after the client is already disconnected.
 
