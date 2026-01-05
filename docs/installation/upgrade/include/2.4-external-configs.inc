@@ -18,7 +18,7 @@ connect = host=127.0.0.1 user=mysql_user pass=mysql_pass
 password_query = SELECT password FROM users WHERE user = '%u'
 ```
 
-```[dovecot-2.4.conf.ext]
+```[dovecot-new.conf]
 # Use these mysql settings globally. These could be also inside passdb sql {}
 mysql 127.0.0.1 {
   user = mysql_user
