@@ -162,6 +162,7 @@ See [[variable]] for details.
 ##### `auth_request#orig_user`
 ##### `auth_request#orig_username`
 ##### `auth_request#password`
+##### `auth_request#protocol`
 ##### `auth_request#pid`
 ##### `auth_request#real_lip`
 ##### `auth_request#real_lport`
@@ -170,7 +171,6 @@ See [[variable]] for details.
 ##### `auth_request#rip`
 ##### `auth_request#rport`
 ##### `auth_request#secured`
-##### `auth_request#service`
 ##### `auth_request#session`
 ##### `auth_request#session_pid`
 ##### `auth_request#user`
