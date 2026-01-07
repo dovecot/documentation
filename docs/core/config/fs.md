@@ -3,6 +3,7 @@ layout: doc
 title: Dovecot Filesystems
 dovecotlinks:
   fs: Dovecot Filesystems
+  fs_wrappers: Dovecot Filesystem Wrappers
   fs_posix:
     hash: posix-filesystem
     text: "fs: POSIX Filesystem"
@@ -29,6 +30,9 @@ Currently supported FS drivers are:
 | [[link,fs_dict,dict]] | Dictionary (`lib-dict` wrapper). |
 <!-- @include: @docs/storage/providers/includes/fs.inc -->
 
+
+## Dovecot Filesystem Wrappers
+
 Wrapper drivers used on top of other drivers:
 
 | Name | Description |
@@ -37,6 +41,23 @@ Wrapper drivers used on top of other drivers:
 | [[link,mail_crypt,crypt]] | File encryption. |
 | [[link,fs_compress,compress]] | File compression. |
 <!-- @include: @docs/storage/providers/includes/fs-wrapper.inc -->
+
+To wrap a fs driver into one of the wrapper it is to be listed after the
+wrapper in the configuration.
+So to wrap [[link,fs_posix,posix]] with the [[link,fs_metawrap,metawrap]] to
+support storing metadata with `fs posix` it should be added before the
+`fs posix {}` block. The same applies to all other wrapping fs drivers
+in the aforementioned table.
+
+Example:
+```
+fs metawrap {
+}
+fs posix {
+}
+```
+
+It is also possible to use multiple fs wrappers on top of each other.
 
 ## FS Settings
 
