@@ -1896,4 +1896,22 @@ characters and no control characters.
 			sql_driver: `Name of the sql driver, e.g. \`mysql\` or \`cassandra\`.`,
 		},
 	},
+
+	doveadm_http_request_finished: {
+		inherit: 'connection_client_finished',
+		fields: {
+			local_port: `Local port.`,
+			remote_ip: `Remote IP address.`,
+			remote_port: `Remote port.`,
+			user: `Full username.`,
+			command: `Doveadm command used`,
+			exit_code: `Exit code of the command`,
+			method: `HTTP method used`,
+			url: `HTTP URL used`,
+			agent: `Value of User-Agent header`,
+			http_status: `HTTP response status code`,
+			http_reason: `Reason for status code`,
+		},
+	},
+
 }
