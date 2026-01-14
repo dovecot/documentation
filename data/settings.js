@@ -2007,18 +2007,16 @@ Renamed from \`fts_decoder\`.`
 		text: `
 Name of the script service used to decode the attachments.
 
-See the \`decode2text.sh\` script included in Dovecot for how to use this.
-
 Example:
 
 \`\`\`
 fts_decoder_driver = script
-fts_decoder_script_socket_path = decode2text
+fts_decoder_script_socket_path = fts-decoder
 
-service decode2text {
-  executable = script /usr/lib/dovecot/decode2text.sh
+service fts-decoder {
+  executable = script /path/to/fts-decoder.sh
   user = vmail
-  unix_listener decode2text {
+  unix_listener fts-decoder {
 	mode = 0666
   }
 }
