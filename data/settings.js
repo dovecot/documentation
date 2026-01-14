@@ -2006,6 +2006,7 @@ Renamed from \`fts_decoder\`.`
 		values: setting_types.STRING,
 		text: `
 Name of the script service used to decode the attachments.
+We strongly recommend using [[setting,fts_decoder_driver,tika]] instead.
 
 Example:
 
