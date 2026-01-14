@@ -129,7 +129,7 @@ Settings
    :values: @string
 
    Decode attachments to plaintext using this service and index the resulting
-   plaintext.
+   plaintext. It is strongly recommended to use fts_tika setting with Apache Tika instead.
 
    Example:
 
