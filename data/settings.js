@@ -1991,7 +1991,7 @@ fts_autoindex_max_recent_msgs = 999
 	fts_decoder_driver: {
 		plugin: 'fts',
 		values: setting_types.ENUM,
-		values_enum: [ 'script', 'tika' ],
+		values_enum: [  '<empty>', 'script', 'tika' ],
 		text: `
 Optional setting. If set, decode attachments to plaintext using the selected
 service and index the resulting plaintext.`
