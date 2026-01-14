@@ -1624,7 +1624,7 @@ plugin {
 		values: setting_types.STRING,
 		text: `
 Decode attachments to plaintext using this service and index the resulting
-plaintext.
+plaintext. We strongly recommend using [[setting,fts_tika]] instead.
 
 Example:
 
