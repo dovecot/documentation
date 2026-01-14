@@ -131,20 +131,18 @@ Settings
    Decode attachments to plaintext using this service and index the resulting
    plaintext.
 
-   See the ``decode2text.sh`` script included in Dovecot for how to use this.
-
    Example:
 
    .. code-block:: none
 
      plugin {
-       fts_decoder = decode2text
+       fts_decoder = fts-decoder
      }
 
-     service decode2text {
-       executable = script /usr/lib/dovecot/decode2text.sh
+     service fts-decoder {
+       executable = script /path/to/fts-decoder.sh
        user = vmail
-       unix_listener decode2text {
+       unix_listener fts-decoder {
          mode = 0666
        }
      }
