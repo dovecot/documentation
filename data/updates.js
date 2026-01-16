@@ -84,6 +84,7 @@ export const updates = {
 	variables_login_variables_protocol: '2.4.0',
 	variables_owner_user_added: '2.4.0',
 	var_expand: '2.4.0',
+	variables_oauth2: '2.4.3',
 
 	/* Tags used in doveadm.js */
 
