@@ -132,7 +132,7 @@ oauth2 {
   introspection_mode = post
   username_attribute = username
   fields {
-    pass = %{oauth2:access_token}
+    pass = %{token}
   }
 }
 
@@ -145,7 +145,7 @@ passdb oauth2 {
       host = 127.0.0.1
       proxy = y
       proxy_mech = xoauth2
-      pass = %{passdb:token}
+      pass = %{oauth2:access_token}
     }
   }
 }
