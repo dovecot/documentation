@@ -64,5 +64,7 @@ all, because they only support verifying a known cleartext password.
 
 ## Configuration
 
+Clearly explain what the EXTERNAL SASL mechanism is with an example.
+
 By default only PLAIN mechanism is enabled. To use more, see
 [[setting,auth_mechanisms]].
