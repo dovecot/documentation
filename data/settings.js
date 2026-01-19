@@ -1991,7 +1991,7 @@ fts_autoindex_max_recent_msgs = 999
 	fts_decoder_driver: {
 		plugin: 'fts',
 		values: setting_types.ENUM,
-		values_enum: [ 'script', 'tika' ],
+		values_enum: [  '<empty>', 'script', 'tika' ],
 		text: `
 Optional setting. If set, decode attachments to plaintext using the selected
 service and index the resulting plaintext.`
@@ -2006,19 +2006,18 @@ Renamed from \`fts_decoder\`.`
 		values: setting_types.STRING,
 		text: `
 Name of the script service used to decode the attachments.
-
-See the \`decode2text.sh\` script included in Dovecot for how to use this.
+We strongly recommend using [[setting,fts_decoder_driver,tika]] instead.
 
 Example:
 
 \`\`\`
 fts_decoder_driver = script
-fts_decoder_script_socket_path = decode2text
+fts_decoder_script_socket_path = fts-decoder
 
-service decode2text {
-  executable = script /usr/lib/dovecot/decode2text.sh
+service fts-decoder {
+  executable = script /path/to/fts-decoder.sh
   user = vmail
-  unix_listener decode2text {
+  unix_listener fts-decoder {
 	mode = 0666
   }
 }
