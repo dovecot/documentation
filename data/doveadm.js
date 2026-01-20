@@ -255,16 +255,16 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		args: {
 			'socket-path': {
 				cli: 'a',
-				cli_only: true,
+				cli_only: false,
 				example: `/run/dovecot/doveadm-server`,
 				type: doveadm_arg_types.STRING,
 				text: `Path to doveadm socket.`,
 			},
-			user: {
-				example: 'username',
+			"user-mask": {
+				example: 'username_?',
 				positional: true,
 				type: doveadm_arg_types.ARRAY,
-				text: `UID of user to apply operation to.`,
+				text: `user-mask of users to apply operation to.`,
 			},
 		},
 		response: {
