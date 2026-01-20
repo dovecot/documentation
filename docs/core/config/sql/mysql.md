@@ -2,10 +2,10 @@
 layout: doc
 title: MySQL
 dovecotlinks:
-  sql_mysql: MySQL Configuration
+  sql_mysql: MySQL/MariaDB Configuration
 ---
 
-# SQL Driver: MySQL
+# SQL Driver: MySQL/MariaDB
 
 Driver name `mysql`.
 
