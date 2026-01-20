@@ -195,7 +195,6 @@ Eing
 ekh
 emaillookup
 endscript
-enduml
 ENHANCEDSTATUSCODES
 enotify
 entra
@@ -752,7 +751,6 @@ sqluser
 SSHA
 ssldir
 stackbuf
-startuml
 STATEDIR
 staticbuf
 staticdb
@@ -866,7 +864,6 @@ urandom
 Urg
 urlauth
 URLFETCH
-usecase
 usecs
 userdata
 userdb
