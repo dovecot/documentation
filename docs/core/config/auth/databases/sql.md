@@ -5,7 +5,7 @@ dovecotlinks:
   auth_sql: SQL authentication database
   auth_mysql:
     hash: mysql
-    text: MySQL authentication
+    text: MySQL/MariaDB authentication
   auth_postgresql:
     hash: postgresql
     text: PostgreSQL authentication
@@ -166,7 +166,7 @@ CREATE TABLE users (
 );
 ```
 
-### MySQL
+### MySQL/MariaDB
 
 Add to your `dovecot.conf` file:
 
