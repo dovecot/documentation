@@ -383,6 +383,7 @@ libkrb
 libldap
 liblib
 liblz
+libmariadb
 libmysqlclient
 libntlm
 libotp

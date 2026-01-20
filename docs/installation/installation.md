@@ -313,8 +313,8 @@ similar package)
 
 ##### `--with-mysql`
 
-Build with MySQL support (requires `mysql-devel`, `libmysqlclient-dev`
-or similar package)
+Build with MySQL or MariaDB support (requires `mysql-devel`,
+`libmysqlclient-dev`, `libmariadb-dev-compat` or similar package)
 
 ##### `--with-sqlite`
 
