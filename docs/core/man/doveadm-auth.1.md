@@ -37,12 +37,12 @@ authentication related actions.
 
 **doveadm** [*GLOBAL OPTIONS*] auth cache flush
   [**-a** *master_socket_path*]
-  [*user* ...]
+  [*user-mask* ...]
 
 Flush the authentication cache. By default the cache is flushed for all
 the users (which can also be done by sending SIGHUP to the auth
 process). You can also flush the cache for one or more users by
-providing their usernames.
+providing a user-mask matching their usernames.
 
 **-a** *master_socket_path*
 :   This option is used to specify an absolute path to an alternative
