@@ -9,7 +9,7 @@ dovecotComponent: core
 ## SYNOPSIS
 
 **doveconf**
-  [**-adnPNUx**]
+  [**-aCdFInPNUwx**]
   [**-c** *config-file*]
   [**-f** *filter*]
 
@@ -41,6 +41,9 @@ configuration in easy human readable output.
 **-a**
 :   Show all settings with their currently configured values.
 
+**-C**
+:   TODO (check full config).
+
 **-c** *config-file*
 :   Read configuration from the given *config-file*. By default
     */etc/dovecot/dovecot.conf* will be used.
@@ -48,6 +51,32 @@ configuration in easy human readable output.
 **-d**
 :   Show the setting's default value instead of the one currently
     configured.
+
+**-F**
+:   Show the configuration in a filter-based format, which is how Dovecot
+    internally accesses it. This can be useful for debugging why configuration
+    is not working as expected.
+
+    The settings are grouped into different "structs", which are all accessed
+    independently. A new struct is started in the output as `# struct_name`.
+
+    Next is the list of filters, which begin with `:FILTER` followed by the
+    filter in the event filter syntax. An empty filter matches everything.
+    The filters are processed from end to beginning. The settings are taken
+    from the first matching filter (i.e. the last in the output). Since not
+    all filters have all settings defined, the processing continues until all
+    settings have been found.
+
+    Named list filter such as `protocols = imap pop3` are shown as
+    `protocol/imap=yes` and `protocol/pop3=yes # stop list`. The "stop list"
+    means that the value is not modified by any following filters that match.
+    If the setting was defined as `protocols { imap=yes, pop3=yes }`, the
+    "stop list" would be missing, because this setting is only adding the
+    protocols, not replacing the list.
+
+    Settings groups are included in `:INCLUDE` lines. The includes are
+    processed last, after all filters have been applied, so all settings inside
+    the groups can be overridden.
 
 **-f** *filter*
 :   Show the matching configuration for the specified *filter*
@@ -77,34 +106,11 @@ configuration in easy human readable output.
             This matches filters which were configured like:
             :   **remote 1.2.3.0/24 { # special settings }**
 
-**-F**
-:   Show the configuration in a filter-based format, which is how Dovecot
-    internally accesses it. This can be useful for debugging why configuration
-    is not working as expected.
-
-    The settings are grouped into different "structs", which are all accessed
-    independently. A new struct is started in the output as `# struct_name`.
-
-    Next is the list of filters, which begin with `:FILTER` followed by the
-    filter in the event filter syntax. An empty filter matches everything.
-    The filters are processed from end to beginning. The settings are taken
-    from the first matching filter (i.e. the last in the output). Since not
-    all filters have all settings defined, the processing continues until all
-    settings have been found.
-
-    Named list filter such as `protocols = imap pop3` are shown as
-    `protocol/imap=yes` and `protocol/pop3=yes # stop list`. The "stop list"
-    means that the value is not modified by any following filters that match.
-    If the setting was defined as `protocols { imap=yes, pop3=yes }`, the
-    "stop list" would be missing, because this setting is only adding the
-    protocols, not replacing the list.
-
-    Settings groups are included in `:INCLUDE` lines. The includes are
-    processed last, after all filters have been applied, so all settings inside
-    the groups can be overridden.
-
 **-h**
 :   Hide the setting's name, show only the setting's value.
+
+**-I**
+:   TODO (dump config import).
 
 **-n**
 :   Show only settings with non-default values. This is the default behavior
@@ -123,17 +129,20 @@ configuration in easy human readable output.
 **-U**
 :   Ignore all unknown settings in config file.
 
+**-w**
+:   TODO (hide obsolete warnings).
+
 **-x**
 :   Expand configuration variables (e.g. `$ENV:foo`) and show file contents
-    (from e.g. `ssl_server_key_password = \</etc/ssl/password.txt`).
+    (from e.g. `ssl_server_key_password = </etc/ssl/password.txt`).
 
 *section_name*
 :   Show only the current configuration of one or more specified sections.
 
 *setting_name*
-:   Show only the setting of one or more *setting_name* (s) with the
-:   currently configured value. You can show a setting inside a section
-:   using '/' as the section separator, e.g. service/imap/executable.
+:   Show only the setting of one or more *setting_name*(s) with the
+    currently configured value. You can show a setting inside a section
+    using `/` as the section separator, e.g. `service/imap/executable`.
 
 ## EXAMPLE
 
@@ -143,13 +152,6 @@ for a specific connection.
 
 ```sh
 doveconf -f local=10.0.0.110 -f remote=10.11.1.2 -f protocol=pop3 -n
-```
-
-**doveconf** can be also used to convert v1.x configuration files into
-v2.x format.
-
-```sh
-doveconf -n -c /oldpath/dovecot.conf > /etc/dovecot/dovecot.conf.new
 ```
 
 Ask **doveconf** for a global setting:
