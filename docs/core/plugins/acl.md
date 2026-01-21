@@ -113,6 +113,62 @@ namespace shared {
 #acl_username = %{master_user}
 ```
 
+### Creating rule sets with group
+
+You can also simplify ACL rule set management by defining rule sets.
+Group settings expand as configuration where they are used,
+so they can include values from other filters too.
+
+```[dovecot.conf]
+# define rule sets
+
+group @acl_rule_set set1 {
+   acl user=user1 {
+     rights = lri
+   }
+}
+
+group @acl_rule_set set2 {
+   acl user=user2 {
+     rights = lri
+   }
+}
+
+group @acl_rule_set set3 {
+   acl user=user3 {
+     rights = lri
+   }
+}
+
+group @acl_rule_set default {
+  acl user=admin {
+     rights = lwristepai
+  }
+}
+
+namespace public {
+   @acl_rule_set = default
+   mailbox "Secret" {
+     @acl_rule_set = set1
+   }
+   mailbox "TopSecret" {
+     @acl_rule_set = set2
+   }
+   mailbox "Foo*" {
+     @acl_rule_set = set3
+   }
+   mailbox "FooBar" {
+     @acl_rule_set = set1
+   }
+}
+```
+
+With this configuration user `admin` will have full rights to all folders under public unless negated.
+Folders `Secret` and `FooBar` will have `user1` with rights, while folders `TopSecret` has `user2` with rights.
+This includes user `admin` from namespace level.
+
+User `user3` will have rights on anything that starts with `Foo`, including `FooBar`.
+
 ## Master Users
 
 ::: info
