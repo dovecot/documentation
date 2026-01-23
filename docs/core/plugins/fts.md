@@ -35,21 +35,7 @@ search through all messages (default behavior). If storage latencies are high,
 this searching may not be completed in a reasonable time, or resource
 utilization may be too large, especially in mailboxes with large messages.
 
-Dovecot maintains these FTS indexing engines:
-
-| Name | Description |
-| ---- | ----------- |
-| Dovecot Pro FTS | Dovecot native, object storage optimized driver. Only available as part of Dovecot Pro. |
-| [[plugin,fts_solr]] | Interface to [Apache Solr](https://solr.apache.org/); stores data remotely. |
-| [[plugin,fts_flatcurve]] | [Xapian](https://xapian.org/) based driver; stores data locally. |
-
-There are also 3rd party provided FTS plugins:
-
-| Name | Description |
-| ---- | ----------- |
-| fts-xapian | https://github.com/grosjo/fts-xapian |
-
-If you want your plugin here, please open pull request to [dovecot/documentation](https://github.com/dovecot/documentation/pulls/new) repository.
+<!-- @include: @docs/core/plugins/include/fts.inc -->
 
 ## Searching In Dovecot
 
