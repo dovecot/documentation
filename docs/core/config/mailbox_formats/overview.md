@@ -109,7 +109,7 @@ that you are comfortable with data loss. Example:
 mail_fsync = optimized
 
 protocol pop3 {
-  # Enable fsyncing for POP3
+  # Disable fsyncing for POP3
   mail_fsync = never
 }
 ```
