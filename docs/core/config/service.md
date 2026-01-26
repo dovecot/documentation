@@ -202,8 +202,7 @@ be used.
 * **client_limit=1**, because only the master auth process connects to
   auth worker.
 
-* **process_limit** should be a bit higher than
-  [[setting,auth_worker_max_count]].
+* **process_limit** indicates the maximum number of workers.
 
 * **user=root** by default, because by default PAM authentication is used,
   which usually requires reading `/etc/shadow`.
