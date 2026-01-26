@@ -4745,17 +4745,6 @@ auth_winbind_helper_path = /usr/bin/ntlm_auth
 \`\`\``
 	},
 
-	auth_worker_max_count: {
-		default: 30,
-		values: setting_types.UINT,
-		text: `
-Maximum number of dovecot-auth worker processes active.
-
-The auth workers are used to execute blocking passdb and userdb queries
-(e.g., MySQL and PAM). They are automatically created and destroyed as
-necessary.`
-	},
-
 	base_dir: {
 		default: '/var/run/dovecot/',
 		values: setting_types.STRING,
