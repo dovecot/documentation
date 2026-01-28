@@ -54,6 +54,7 @@ export const updates = {
 	lua_dns_client: '2.4.0',
 	lua_script_init: '2.4.0',
 	mail_attachment_detection_options_changed: '2.4.2',
+	mail_attachment_detection_options_maildir_changed: '2.4.3',
 	mail_cache_fields_changed: '2.4.1',
 	mail_crypt_eddsa: '2.4.0',
 	mail_crypt_fs_maybe: '2.4.0',
