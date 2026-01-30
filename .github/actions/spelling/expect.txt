@@ -195,7 +195,6 @@ Eing
 ekh
 emaillookup
 endscript
-enduml
 ENHANCEDSTATUSCODES
 enotify
 entra
@@ -383,6 +382,7 @@ libkrb
 libldap
 liblib
 liblz
+libmariadb
 libmysqlclient
 libntlm
 libotp
@@ -751,7 +751,6 @@ sqluser
 SSHA
 ssldir
 stackbuf
-startuml
 STATEDIR
 staticbuf
 staticdb
@@ -865,7 +864,6 @@ urandom
 Urg
 urlauth
 URLFETCH
-usecase
 usecs
 userdata
 userdb

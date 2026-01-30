@@ -3997,7 +3997,7 @@ consistency.`
 		values: setting_types.NAMED_LIST_FILTER,
 		seealso: [ 'mysql_host' ],
 		text: `
-Creates a new MySQL connection. If more than one is specified, the connections
+Creates a new MySQL/MariaDB connection. If more than one is specified, the connections
 are automatically used for load balancing and for failover. The filter name
 refers to the [[setting,mysql_host]] setting.`
 	},
