@@ -10355,12 +10355,14 @@ Options:
 :   SSL/TLS is enabled, but not necessarily required for clients.
 
 \`required\`
-:   SSL/TLS is required for all imap, pop3, managesieve and
+:   SSL/TLS (or otherwise secure connection) is required for all imap, pop3, managesieve and
     submission protocol client connections. This differs from
     [[setting,auth_allow_cleartext]] in that even non-cleartext
-    authentication mechanisms aren't allowed without SSL/TLS.
+    authentication mechanisms aren't allowed without SSL/TLS. See
+    [[link,secured_connections]] for details which connections are considered
+    \`secured\`.
 
-This setting affects the \`secured\` state of connections. See
+The value of this setting affects the \`secured\` state of connections. See
 [[link,secured_connections]].
 
 Note: Do not confuse this with the [[setting,inet_listener_ssl]] setting,

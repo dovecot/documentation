@@ -148,9 +148,19 @@ The value of [[setting,ssl]] influences whether a connection is considered
     intentional. If such connection wasn't treated `secured`, it would
     prevent using `ssl=required` to enforce end clients to use TLS.
 
-* Non-haproxy connections from localhost are always `secured`.
+* Connections from a client to HAProxy running on localhost are always
+  `secured`.
 
-* Localhost connections from HAProxy server to HAProxy are always `secured`.
+  * This is true even if HAProxy isn't running on the same server as
+    Dovecot, and the connection between HAProxy and Dovecot isn't secured.
+
+    The reasoning here is similar to above on why connections marked as TLS
+    by HAProxy are treated as secured.
+
+  * It doesn't matter whether a connection from HAProxy to Dovecot is on
+    localhost.
+
+* Non-haproxy connections from localhost are always `secured`.
 
 * Other connections from [[setting,login_trusted_networks]] are `secured`, but
   only if `ssl` setting is not `required`.
