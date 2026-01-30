@@ -249,7 +249,7 @@ cache fetch.
 
 Also, attempting to fetch a specific aliased header will succeed even if
 the header does not actually exist (this does NOT happen when the feature
-is disable with explicitly with [[setting,mail_cache_max_header_name_length,0]])
+is disabled with explicitly with [[setting,mail_cache_max_header_name_length,unlimited]])
 
 Example: ([[setting,mail_cache_max_header_name_length,5]])
 
@@ -975,23 +975,18 @@ this setting is not configured. Options are:
 		tags: [ 'sieve', 'managesieve_quota' ],
 		plugin: 'sieve',
 		values: setting_types.UINT,
-		default: 0,
+		default: 'unlimited',
 		text: `
-The maximum number of personal Sieve scripts a single user can have.
-
-Default is \`0\`, which is unlimited.`
+The maximum number of personal Sieve scripts a single user can have.`
 	},
 
 	sieve_quota_storage_size: {
 		tags: [ 'sieve', 'managesieve_storage' ],
 		plugin: 'sieve',
 		values: setting_types.SIZE,
-		default: 0,
+		default: 'unlimited',
 		text: `
-The maximum amount of disk storage a single user's scripts may
-occupy.
-
-Default is \`0\`, which is unlimited.`
+The maximum amount of disk storage a single user's scripts may occupy.`
 	},
 
 	sieve_user_email: {
@@ -2148,13 +2143,13 @@ A value of \`0\` means no timeout.`
 	},
 
 	fts_message_max_size: {
-		default: 0,
+		default: 'unlimited',
 		added: {
 			settings_fts_message_max_size_added: false,
 		},
 		plugin: 'fts',
 		values: setting_types.SIZE,
-		text: `Maximum body size that is processed by fts. \`0\` means unlimited.`
+		text: `Maximum body size that is processed by fts.`
 	},
 
 	fts_decoder_tika: {
@@ -6874,14 +6869,12 @@ name.`
 	last_valid_gid: {
 		seealso: [ 'first_valid_gid' ],
 		values: setting_types.UINT,
-		default: 0,
+		default: 'unlimited',
 		text: `
 This setting and [[setting,first_valid_gid]] specify the valid GID
 range for users.
 
 A user whose primary GID is outside this range is not allowed to log in.
-
-\`0\` means there is no explicit last GID.
 
 If the user belongs to any supplementary groups, the corresponding IDs are
 not set.`
@@ -6890,12 +6883,10 @@ not set.`
 	last_valid_uid: {
 		seealso: [ 'first_valid_uid' ],
 		values: setting_types.UINT,
-		default: 0,
+		default: 'unlimited',
 		text: `
 This setting and [[setting,first_valid_uid]] specify the valid UID
 range for users.
-
-\`0\` means there is no explicit last UID.
 
 A user whose UID is outside this range is not allowed to log in.`
 	},
@@ -7889,7 +7880,7 @@ This setting determines whether a shared INBOX should be visible as
 
 	mail_sort_max_read_count: {
 		values: setting_types.UINT,
-		default: 0,
+		default: 'unlimited',
 		text: `
 The number of slow mail accesses an IMAP SORT can perform before it returns
 failure to the client.
@@ -7967,7 +7958,7 @@ enable SMTPUTF8 for LMTP and Submission sessions, and UTF8=ACCEPT for IMAP sessi
 	mail_vsize_bg_after_count: {
 		seealso: [ '[[plugin,quota]]' ],
 		values: setting_types.UINT,
-		default: 0,
+		default: 'unlimited',
 		text: `
 Controls transitioning mail size determination to the background instead of
 synchronously during the delivery process.
@@ -10896,11 +10887,9 @@ unknown limit exists there, which will be passed back to the client.`
 	submission_max_recipients: {
 		tags: [ 'submission' ],
 		values: setting_types.UINT,
-		default: 0,
+		default: 'unlimited',
 		text: `
-Maximum number of recipients accepted per connection.
-
-\`0\` means unlimited.`
+Maximum number of recipients accepted per connection.`
 	},
 
 	submission_relay_command_timeout: {
