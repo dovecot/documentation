@@ -98,10 +98,11 @@ There are 3 types of services that need to be optimized in different ways:
 
 ### anvil
 
-The anvil process tracks state of users and their connections.
+The anvil process tracks state of users and their connections. It is also
+used to kick users' connections.
 
-* **chroot=empty** and **user=$SET:default_internal_user**, because anvil
-  doesn't need access to anything.
+* **user=root**, because it needs the ability to send signals to mail
+  processes to kick the users.
 
 * **process_limit=1**, because there can be only one.
 
@@ -202,8 +203,7 @@ be used.
 * **client_limit=1**, because only the master auth process connects to
   auth worker.
 
-* **process_limit** should be a bit higher than
-  [[setting,auth_worker_max_count]].
+* **process_limit** indicates the maximum number of workers.
 
 * **user=root** by default, because by default PAM authentication is used,
   which usually requires reading `/etc/shadow`.

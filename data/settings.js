@@ -4745,17 +4745,6 @@ auth_winbind_helper_path = /usr/bin/ntlm_auth
 \`\`\``
 	},
 
-	auth_worker_max_count: {
-		default: 30,
-		values: setting_types.UINT,
-		text: `
-Maximum number of dovecot-auth worker processes active.
-
-The auth workers are used to execute blocking passdb and userdb queries
-(e.g., MySQL and PAM). They are automatically created and destroyed as
-necessary.`
-	},
-
 	base_dir: {
 		default: '/var/run/dovecot/',
 		values: setting_types.STRING,
@@ -7456,10 +7445,12 @@ See [[link,mail_cache]] for details and for the list of fields.`
 	mail_attachment_detection_options: {
 		values: setting_types.BOOLLIST,
 		default: `
-- mbox, imapc: &lt;empty&gt;<br />
+- mbox, imapc, maildir: &lt;empty&gt;<br />
 - others: add-flags content-type=!application/signature
 <br /><br />
-[[changed,mail_attachment_detection_options_changed]] The default was set.`,
+[[changed,mail_attachment_detection_options_changed]] The default was set.
+<br />
+[[changed,mail_attachment_detection_options_maildir_changed]] The Maildir default was reverted to empty.`,
 		text: `
 Settings to control adding \`$HasAttachment\` or \`$HasNoAttachment\`
 keywords. By default, all MIME parts with \`Content-Disposition=attachment\`
@@ -10364,12 +10355,14 @@ Options:
 :   SSL/TLS is enabled, but not necessarily required for clients.
 
 \`required\`
-:   SSL/TLS is required for all imap, pop3, managesieve and
+:   SSL/TLS (or otherwise secure connection) is required for all imap, pop3, managesieve and
     submission protocol client connections. This differs from
     [[setting,auth_allow_cleartext]] in that even non-cleartext
-    authentication mechanisms aren't allowed without SSL/TLS.
+    authentication mechanisms aren't allowed without SSL/TLS. See
+    [[link,secured_connections]] for details which connections are considered
+    \`secured\`.
 
-This setting affects the \`secured\` state of connections. See
+The value of this setting affects the \`secured\` state of connections. See
 [[link,secured_connections]].
 
 Note: Do not confuse this with the [[setting,inet_listener_ssl]] setting,
