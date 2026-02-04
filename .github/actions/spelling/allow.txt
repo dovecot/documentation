@@ -3,6 +3,8 @@ APPENDLIMIT
 bitmask
 bitmasks
 configurations
+DESTADDR
+DESTPORT
 DOkv
 ede
 fcf

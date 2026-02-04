@@ -72,6 +72,8 @@ other AUTH error.
 | ----- | ----------- |
 | `ADDR` | Client IP |
 | `PORT` | Client port |
+| `DESTADDR` | [[added,xclient_dest_added]] Server IP  |
+| `DESTPORT` | [[added,xclient_dest_added]] Server port |
 | `SESSION` | Session ID |
 | `TTL` | TTL which is reduced by each hop, loop prevention. When TTL drops to 0, the connection is dropped. |
 | `DESTNAME` | Name provided by TLS SNI. |
@@ -86,6 +88,8 @@ See [XCLIENT information](https://www.postfix.org/XCLIENT_README.html).
 | Field | Description |
 | ----- | ----------- |
 | `ADDR` | Client IP; prefix (`IPV6:<ipv6_address>`) is required for IPv6. However, Dovecot currently forwards without the IPv6 prefix, which does not follow the correct Postfix XCLIENT syntax. |
+| `DESTADDR` | [[added,xclient_dest_added]] Server IP  |
+| `DESTPORT` | [[added,xclient_dest_added]] Server port |
 | `PORT` | Client port |
 | `TTL` | TTL which is reduced by each hop, loop prevention. When TTL drops to 0, the connection is dropped. |
 | `HELO` | Original `HELO`/`EHLO` |

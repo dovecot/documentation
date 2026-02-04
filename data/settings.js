@@ -7367,6 +7367,7 @@ The details of how this setting works depends on the used protocol:
 
     * Session ID
     * Client IP and port (\`%{remote_ip}\`, \`%{remote_port}\`)
+    * [[added,xclient_dest_added]] Server IP and port (\`%{local_ip}\`, \`%{local_port}\`)
 
     \`forward_*\` fields can be sent to auth process's passdb lookup
 
@@ -7378,6 +7379,7 @@ The details of how this setting works depends on the used protocol:
 
     * Session ID
     * Client IP and port (\`%{remote_ip}\`, \`%{remote_port}\`)
+    * [[added,xclient_dest_added]] Server IP and port (\`%{local_ip}\`, \`%{local_port}\`)
 
     The trust is always checked against the connecting IP address.
     Except if HAProxy is used, then the original client IP address is used.
@@ -7390,6 +7392,7 @@ The details of how this setting works depends on the used protocol:
     * HELO - Overrides what the client sent earlier in the EHLO command
     * LOGIN - Currently unused
     * PROTO - Currently unused
+    * [[added,xclient_dest_added]] Server IP and port (\`%{local_ip}\`, \`%{local_port}\`)
 
     \`forward_*\` fields can be sent to auth process's passdb lookup
 
@@ -7405,6 +7408,7 @@ The details of how this setting works depends on the used protocol:
     * LOGIN - Currently unused
     * PROTO - Currently unused
     * TIMEOUT (overrides [[setting,mail_max_lock_timeout]])
+    * [[added,xclient_dest_added]] Server IP and port (\`%{local_ip}\`, \`%{local_port}\`)
 
     The trust is always checked against the connecting IP address.
     Except if HAProxy is used, then the original client IP address is used.`
