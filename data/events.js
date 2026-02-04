@@ -795,6 +795,35 @@ This event is currently not sent for pre-login IMAP commands.
 			events_imap_id_received_added: false,
 		},
 		fields: {
+			internal: {
+				added: {
+					events_imap_id_received_internal_added: false
+				},
+				text: `
+If \`yes\`, ID command parameters include the internally known \`x-*\` fields
+to update e.g. the IP or session ID. Typically these fields would be sent only
+by Dovecot proxies. The internal fields are not actually used, unless
+\`trusted=yes\` also.`,
+			},
+			external: {
+				added: {
+					events_imap_id_received_internal_added: false
+				},
+				text: `
+If \`yes\`, ID command parameters include fields sent by a regular IMAP client
+(non-internal fields). Dovecot proxy can send an ID command to a backend
+containing both internal and external fields. If the IMAP client sends only
+\`tag ID NIL\` command, the event is sent but \`external\` is not set.`,
+			},
+			trusted: {
+				added: {
+					events_imap_id_received_internal_added: false
+				},
+				text: `
+If \`yes\`, the ID command came from an IP matching
+[[setting,login_trusted_networks]]. If any internal fields were sent, they were
+processed.`,
+			},
 			'id_param_<param>': `
 Received parameters. The event name is the lowercase parameter key prefixed
 with \`id_param_\`, the value is the parameter value.`,
