@@ -10677,7 +10677,7 @@ Alternatively, you can supply the password via the -p parameter at startup.`
 		tags: [ 'ssl-ldap' ],
 		values: setting_types.STRING,
 		text: `
-The minimum SSL protocol version Dovecot accepts.
+The minimum SSL protocol version Dovecot accepts. It cannot be empty.
 
 This setting is used for both incoming and outgoing SSL connections.
 
