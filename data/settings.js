@@ -8958,6 +8958,7 @@ Using non-standard special-use flags will result in a warning message at
 startup.`
 		},
 		values: setting_types.BOOLLIST,
+		seealso: [ '[[link,namespaces]]' ],
 		text: `
 List of SPECIAL-USE ([[rfc,6154]]) flags to broadcast for the mailbox.
 
