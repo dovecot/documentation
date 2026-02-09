@@ -11566,6 +11566,11 @@ backends.`
 	},
 
 	'@mailbox_defaults': {
+		changed: {
+			settings_mailbox_defaults_english_changed: `
+Changed default [[setting,mailbox_auto]] value for the mailboxes from \`no\`
+to \`subscribe\`.`
+		},
 		values: setting_types.GROUP,
 		values_enum: [ 'english' ],
 		seealso: [ 'mailbox_special_use' ],
