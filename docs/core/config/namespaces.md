@@ -457,6 +457,11 @@ so it only applies to the specific namespace.
 
 ### Example
 
+In general it's recommended to use [[setting,@mailbox_defaults,english]], which
+will create and autosubscribe to a standard default set of mailboxes with
+appropriate [[setting,mailbox_special_use]] settings. In case you need separate
+or additional folders with special use flags, consider the following example:
+
 ```[dovecot.conf]
 namespace inbox {
   # the namespace prefix isn't added again to the mailbox names.
