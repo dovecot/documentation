@@ -139,3 +139,8 @@ See [[link,authentication_debug]].
 ## Developer Debugging
 
 For detailed debugging of Dovecot issues, see [[link,developer_debug]].
+
+## Docker Debugging
+
+You can run a local, temporary instance of Dovecot to test and debug.
+See [[link,docker_debug]].

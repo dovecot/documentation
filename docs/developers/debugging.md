@@ -623,3 +623,8 @@ import_environment {
 
 See [[link,debug]] for scripts that are useful for reporting
 issues to the Dovecot developers.
+
+### Docker Debugging
+
+You can run a local, temporary instance of Dovecot to test and debug.
+See [[link,docker_debug]].
