@@ -2,6 +2,10 @@
 layout: doc
 title: Running with Docker
 order: 8
+dovecotlinks:
+  docker_debug:
+    hash: running-as-debug-testing-install
+    text: Docker Container Debugging/Testing
 ---
 
 # Running with Docker
@@ -174,4 +178,35 @@ and run Dovecot using:
 
 ```console
 docker run -v /etc/dovecot-config:/etc/dovecot/conf.d:ro --security-opt "no-new-privileges" --rm -it dovecot/dovecot:latest
+```
+
+## Running as Debug/Testing Install
+
+To run the Docker image as a test install, a password needs to be set - by
+default, the Docker image does not allow authentication.
+
+To quickly setup a local system to test IMAP:
+
+```console
+docker run --rm --name dovecot-test -p 31143:31143 -e USER_PASSWORD=password --pull always dovecot/dovecot:latest-dev
+```
+
+This command:
+- Exposes IMAP (non-secure) only on port 31143
+- Allows any username to authenticate with "password"
+- Attempts to use/download the latest version of the container
+- Names the container as "dovecot-test"
+- All data will be removed when the container exits
+- Provides shell access to the container (requires `latest-dev`)
+
+To run a command on the container (for example, doveadm):
+
+```console
+docker exec -it dovecot-test doveadm
+```
+
+For shell access to the container:
+
+```console
+docker exec -it dovecot-test bash
 ```
