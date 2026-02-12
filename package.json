@@ -24,7 +24,7 @@
     "vitepress": "^1.6.3",
     "vitepress-mermaid-renderer": "^1.1.7",
     "vitepress-plugin-pagefind": "^0.4.13",
-    "vitepress-sidebar": "^1.31.0"
+    "vitepress-sidebar": "^1.33.1"
   },
   "scripts": {
     "docs:dev": "vitepress dev",
