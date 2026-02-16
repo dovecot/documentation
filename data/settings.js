@@ -7813,12 +7813,14 @@ depends on the mailbox format:
 
 	mail_privileged_group: {
 		values: setting_types.STRING,
+		seealso: [ 'mail_access_groups' ],
 		text: `
 This group is enabled temporarily for privileged operations.  Currently,
-this is used only with the INBOX when either its initial creation or
-dotlocking fails.
+this is used only with the [[link,mbox,mbox format]] with INBOX when either its
+initial creation or dotlocking fails.
 
-Typically, this is set to \`mail\` to give access to \`/var/mail\`.
+Typically, this is set to \`mail\` to give access to \`/var/mail\` when using
+the [[link,mbox,mbox format]].
 
 You can give Dovecot access to mail group by setting
 \`mail_privileged_group = mail\`.`
