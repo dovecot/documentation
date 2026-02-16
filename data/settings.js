@@ -10213,9 +10213,15 @@ to use this setting for mail processes.`
 
 	service_extra_groups: {
 		tags: [ 'service' ],
+		seealso: [ 'mail_access_groups' ],
 		values: setting_types.STRING,
 		text: `
-Secondary UNIX groups that this process belongs to.`
+Secondary UNIX groups that this process belongs to.
+
+::: warning
+This may be dangerous to use for the same reason as
+[[setting,mail_access_groups]].
+:::`
 	},
 
 	service_chroot: {
