@@ -4786,9 +4786,12 @@ service-specific configuration.`
 
 	default_internal_group: {
 		default: 'dovecot',
-		seealso: [ 'default_internal_user' ],
+		seealso: [ 'default_internal_user', 'mail_access_groups' ],
 		values: setting_types.STRING,
-		text: `Define the default internal group.`
+		text: `Define the default internal group. The
+[[setting,mail_access_groups]] uses this as the default for giving mail
+processes UNIX socket access to various services. For proper security, no files
+or directories should be made writable for this group.`
 	},
 
 	default_internal_user: {
