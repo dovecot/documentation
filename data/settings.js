@@ -7417,19 +7417,23 @@ The details of how this setting works depends on the used protocol:
 	mail_access_groups: {
 		values: setting_types.BOOLLIST,
 		default: '[[setting,default_internal_group]]',
+		seealso: [ 'mail_privileged_group', 'service_extra_groups' ],
 		changed: {
 			settings_mail_access_groups_changed: `
 Changed from empty to [[setting,default_internal_group]].`
 		},
 		text: `
-Supplementary groups that are granted access for mail processes.
-
-Typically, these are used to set up access to shared mailboxes.
+Supplementary groups that are granted access for mail processes (imap, pop3,
+lmtp, etc.) The default is to include [[setting,default_internal_group]] to
+allow UNIX socket access to various internal Dovecot services. For proper
+security, there should be no regular files or directories writable for the
+[[setting,default_internal_group]].
 
 ::: warning
-It may be dangerous to set these up if users can create symlinks.
+It may be dangerous to use access groups if (untrusted) users can create
+symlinks to any paths the mail processes access.
 
-Examples for if the "mail" group is chosen here:
+For example if using [[setting,mail_access_groups,mail]]:
 * \`ln -s /var/mail ~/mail/var\` could allow a user to delete others'
   mailboxes, or
 * \`ln -s /secret/shared/box ~/mail/mybox\` would allow reading others' mail.
