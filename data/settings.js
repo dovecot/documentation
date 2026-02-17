@@ -4786,9 +4786,12 @@ service-specific configuration.`
 
 	default_internal_group: {
 		default: 'dovecot',
-		seealso: [ 'default_internal_user' ],
+		seealso: [ 'default_internal_user', 'mail_access_groups' ],
 		values: setting_types.STRING,
-		text: `Define the default internal group.`
+		text: `Define the default internal group. The
+[[setting,mail_access_groups]] uses this as the default for giving mail
+processes UNIX socket access to various services. For proper security, no files
+or directories should be made writable for this group.`
 	},
 
 	default_internal_user: {
@@ -7417,19 +7420,23 @@ The details of how this setting works depends on the used protocol:
 	mail_access_groups: {
 		values: setting_types.BOOLLIST,
 		default: '[[setting,default_internal_group]]',
+		seealso: [ 'mail_privileged_group', 'service_extra_groups' ],
 		changed: {
 			settings_mail_access_groups_changed: `
 Changed from empty to [[setting,default_internal_group]].`
 		},
 		text: `
-Supplementary groups that are granted access for mail processes.
-
-Typically, these are used to set up access to shared mailboxes.
+Supplementary groups that are granted access for mail processes (imap, pop3,
+lmtp, etc.) The default is to include [[setting,default_internal_group]] to
+allow UNIX socket access to various internal Dovecot services. For proper
+security, there should be no regular files or directories writable for the
+[[setting,default_internal_group]].
 
 ::: warning
-It may be dangerous to set these up if users can create symlinks.
+It may be dangerous to use access groups if (untrusted) users can create
+symlinks to any paths the mail processes access.
 
-Examples for if the "mail" group is chosen here:
+For example if using [[setting,mail_access_groups,mail]]:
 * \`ln -s /var/mail ~/mail/var\` could allow a user to delete others'
   mailboxes, or
 * \`ln -s /secret/shared/box ~/mail/mybox\` would allow reading others' mail.
@@ -7813,12 +7820,14 @@ depends on the mailbox format:
 
 	mail_privileged_group: {
 		values: setting_types.STRING,
+		seealso: [ 'mail_access_groups' ],
 		text: `
 This group is enabled temporarily for privileged operations.  Currently,
-this is used only with the INBOX when either its initial creation or
-dotlocking fails.
+this is used only with the [[link,mbox,mbox format]] with INBOX when either its
+initial creation or dotlocking fails.
 
-Typically, this is set to \`mail\` to give access to \`/var/mail\`.
+Typically, this is set to \`mail\` to give access to \`/var/mail\` when using
+the [[link,mbox,mbox format]].
 
 You can give Dovecot access to mail group by setting
 \`mail_privileged_group = mail\`.`
@@ -10204,9 +10213,15 @@ to use this setting for mail processes.`
 
 	service_extra_groups: {
 		tags: [ 'service' ],
+		seealso: [ 'mail_access_groups' ],
 		values: setting_types.STRING,
 		text: `
-Secondary UNIX groups that this process belongs to.`
+Secondary UNIX groups that this process belongs to.
+
+::: warning
+This may be dangerous to use for the same reason as
+[[setting,mail_access_groups]].
+:::`
 	},
 
 	service_chroot: {
