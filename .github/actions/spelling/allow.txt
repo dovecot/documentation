@@ -24,6 +24,7 @@ libcap
 libpcre
 libstemmer
 libtextcat
+lri
 lto
 mharden
 mmaped
