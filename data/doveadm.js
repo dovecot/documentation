@@ -532,7 +532,10 @@ The synchronized destination. See [[man,doveadm-sync]] for options.`
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
-		man: 'doveadm-sync'
+		man: 'doveadm-sync',
+		text: `Dovecot's mailbox synchronization utility.
+
+This command cannot be used safely via API by untrusted users.`
 	},
 
 	'compress connect': {
@@ -2857,7 +2860,9 @@ returned.`,
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-sync',
-		text: `Dovecot's mailbox synchronization utility.`,
+		text: `Dovecot's mailbox synchronization utility.
+
+This command cannot be used safely via API by untrusted users.`
 	},
 
 	user: {
