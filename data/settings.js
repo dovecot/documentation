@@ -5165,7 +5165,14 @@ by default.`
 		text: `
 Lists the commands that the client may use with the doveadm server.
 
-The setting \`ALL\` allows all commands.`
+The setting \`ALL\` allows all commands.
+
+::: warning
+This setting provides rather weak security. Do not assume that it is safe to
+give doveadm access to untrusted users by simply limiting the allowed commands.
+Many commands (especially \`sync\`, \`backup\` and \`import\`) have parameters
+that cannot safely be accessed by untrusted users.
+:::`
 	},
 
 	doveadm_api_key: {
