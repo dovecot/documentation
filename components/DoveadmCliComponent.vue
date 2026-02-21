@@ -1,9 +1,11 @@
 <script setup>
+import { computed } from 'vue'
+
 /* Properties for this component:
  * 'data' (object): The command argument data.
  */
 const props = defineProps(['data'])
-const d = props.data
+const d = computed(() => props.data)
 </script>
 
 <template>
