@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 import { data } from '../lib/data/events.data.js'
 
 /* Properties for this component:
@@ -7,7 +8,7 @@ import { data } from '../lib/data/events.data.js'
  */
 const props = defineProps(['root', 'tag'])
 
-const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
+const d = computed(() => Object.entries(data).filter(([k, v]) =>
 	/* Filter entries (by root or tag). */
 	((!props.root && !props.tag) ||
 	 (props.root &&
@@ -35,7 +36,7 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 
 <template>
  <section class="eventsList">
-  <article v-for="(v, k) in d">
+  <article v-for="[k, v] in d">
    <h3 :id="k" tabindex="-1">
     <code>{{ k }}</code>
     <a class="header-anchor" :href="'#' + k"></a>

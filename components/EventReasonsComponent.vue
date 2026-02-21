@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 import { data } from '../lib/data/event_reasons.data.js'
 
 /* Properties for this component:
@@ -6,7 +7,7 @@ import { data } from '../lib/data/event_reasons.data.js'
  */
 const props = defineProps(['category'])
 
-const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
+const d = computed(() => Object.entries(data).filter(([k, v]) =>
 	/* Filter entries (by category). */
 	!props.category ||
 	(v.category && v.category == props.category)
@@ -22,7 +23,7 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
    </tr>
   </thead>
   <tbody>
-   <tr v-for="(v, k) in d">
+   <tr v-for="[k, v] in d">
     <td><code>{{ k }}</code></td>
     <td v-html="v.description" />
    </tr>
