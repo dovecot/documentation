@@ -46,8 +46,15 @@ const doInclude = (content, includes, f) => {
 		if (!m1.length) return m
 		/* VitePress MD supports paths relative to base with leading
 		 * '@'. */
-		if (m1.startsWith('@'))
-			return doInclude(fs.readFileSync(process.cwd() + '/' + m1.slice(1), 'utf8'), includes, f)
+		if (m1.startsWith('@')) {
+			const cwd = process.cwd()
+			const targetPath = path.resolve(cwd, m1.slice(1))
+			const relative = path.relative(cwd, targetPath)
+			if (relative.startsWith('..') || path.isAbsolute(relative)) {
+				throw new Error("Path traversal detected in include: " + m1)
+			}
+			return doInclude(fs.readFileSync(targetPath, 'utf8'), includes, f)
+		}
 		const inc_f = path.basename(m1)
 		for (const fn of includes) {
 			if (path.basename(fn) == inc_f)
