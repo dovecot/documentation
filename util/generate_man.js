@@ -19,7 +19,6 @@ import remarkMan from 'remark-man'
 import remarkParse from 'remark-parse'
 import { unified } from 'unified'
 import { u } from 'unist-builder'
-import { map } from 'unist-util-map'
 import { parents } from 'unist-util-parents'
 import { SKIP, visit } from 'unist-util-visit'
 
@@ -155,27 +154,34 @@ const processDovecotMdPre = () => {
 	return tree => {
 		/* Go through and replace Dovecot markdown items with man-friendly
 		 * textual equivalents. */
-		return map(tree, (para) => {
-			visit(para, 'text', (node, index, para) => {
-				/* if the text contains at least one tag, we need to convert
-				 * this into an array of children that replace the parent's children. */
-				var result;
-				var newChildren = []
-				var pos = 0;
-				while ((result = includesDM.exec(node.value))) {
-					const pre = node.value.substr(pos, result.index - pos)
-					pos = result.index + result[0].length
-					if (pre != "")
-						newChildren.push({type: 'text', value: pre})
-					newChildren.push(...DovecotMd(result[1]))
-				}
-				if (newChildren.length != 0) {
-					if (pos < node.value.length)
-						newChildren.push({type: 'text', value: node.value.substr(pos)})
-					para.children = newChildren
-				}
-			})
-			return para
+		visit(tree, 'text', (node, index, parent) => {
+			if (!parent) return
+
+			/* If the text contains at least one tag, we need to convert
+			 * this into an array of children that replace the parent's
+			 * children. */
+			let result
+			const newChildren = []
+			let pos = 0
+
+			/* Check if there are any matches first to avoid unnecessary
+			 * work. */
+			if (!includesDM.test(node.value)) return
+			includesDM.lastIndex = 0
+
+			while ((result = includesDM.exec(node.value))) {
+				const pre = node.value.substr(pos, result.index - pos)
+				pos = result.index + result[0].length
+				if (pre != "")
+					newChildren.push({type: 'text', value: pre})
+				newChildren.push(...DovecotMd(result[1]))
+			}
+			if (newChildren.length != 0) {
+				if (pos < node.value.length)
+					newChildren.push({type: 'text', value: node.value.substr(pos)})
+				parent.children.splice(index, 1, ...newChildren)
+				return [SKIP, index + newChildren.length]
+			}
 		})
 	}
 }
