@@ -1,6 +1,6 @@
 <script setup>
 import { data } from '../lib/data/doveadm.data.js'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 /* Properties for this component:
  * 'plugin' (string): Filter by the plugin property.
@@ -8,7 +8,7 @@ import { ref } from 'vue'
  */
 const props = defineProps(['plugin', 'tag'])
 
-const d = Object.fromEntries(Object.entries(data.doveadm).filter(([k, v]) =>
+const d = computed(() => Object.entries(data.doveadm).filter(([k, v]) =>
 	/* Filter entries by plugin or tag. */
 	(!props.plugin && !props.tag) ||
 	(props.plugin &&
@@ -43,7 +43,7 @@ function httpClick(k) {
 
 <template>
  <section class="doveadmList">
-  <article v-for="(v, k) in d">
+  <article v-for="[k, v] in d">
    <h3 :id="k" tabindex="-1">
     <code>{{ k }}</code>
     <a class="header-anchor" :href="'#' + k"></a>
