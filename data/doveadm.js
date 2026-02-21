@@ -559,6 +559,120 @@ This command cannot be used safely via API by untrusted users.`
 		text: `Connects to a compression-enabled IMAP service.`
 	},
 
+	config: {
+		cli_only_cmd: true,
+		args: {
+			a: {
+				cli: 'a',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `Show all settings.`,
+			},
+			C: {
+				cli: 'C',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `TODO (check full config).`,
+			},
+			c: {
+				cli: 'c',
+				example: '/etc/dovecot/dovecot.conf',
+				optional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Read configuration from this file.`,
+			},
+			d: {
+				cli: 'd',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `Show setting's default value.`,
+			},
+			F: {
+				cli: 'F',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `Show the configuration in a filter-based format.`,
+			},
+			f: {
+				cli: 'f',
+				example: 'protocol=imap',
+				optional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Apply filters to limit output.`,
+			},
+			h: {
+				cli: 'h',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `Hide the setting's name.`,
+			},
+			I: {
+				cli: 'I',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `TODO (dump config import).`,
+			},
+			N: {
+				cli: 'N',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `Show settings with non-default values and explicitly set default values.`,
+			},
+			n: {
+				cli: 'n',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `Show only settings with non-default values.`,
+			},
+			P: {
+				cli: 'P',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `Show passwords and other sensitive values.`,
+			},
+			s: {
+				cli: 's',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `Show hidden settings.`,
+			},
+			U: {
+				cli: 'U',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `Ignore unknown settings.`,
+			},
+			w: {
+				cli: 'w',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `TODO (hide obsolete warnings).`,
+			},
+			x: {
+				cli: 'x',
+				optional: true,
+				type: doveadm_arg_types.BOOL,
+				text: `Expand variables and show file contents.`,
+			},
+			'section_name': {
+				example: 'namespace',
+				optional: true,
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Show only the configuration of these section names.`,
+			},
+			'setting_name': {
+				example: 'mailbox',
+				optional: true,
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Show only the configuration of these setting names.`,
+			}
+		},
+		man: 'doveconf',
+		text: `Read and parse Dovecot's configuration files.`
+	},
+
 	copy: {
 		args: {
 			'destination-mailbox': {
@@ -1279,6 +1393,20 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 | version | The (Dovecot internal) version of the FTS data. |
 `
 		},
+	},
+
+	help: {
+		cli_only_cmd: true,
+		args: {
+			command: {
+				example: 'mailbox',
+				optional: true,
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `The command/group to show the man page of.`,
+			},
+		},
+		text: `Provide doveadm usage information.`,
 	},
 
 	'import': {
