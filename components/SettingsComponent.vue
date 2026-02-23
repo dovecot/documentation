@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 import { data } from '../lib/data/settings.data.js'
 
 /* Properties for this component:
@@ -14,23 +15,23 @@ const props = defineProps(
     ['filter', 'level', 'plugin', 'show_plugin', 'tag']
 )
 
-const filter = props.filter ?? 'all'
-const level = `h${(props.level ? Number(props.level) : 2) + 1}`
-const tag = props.tag ? [ props.tag ].flat() : false
+const filter = computed(() => props.filter ?? 'all')
+const level = computed(() => `h${(props.level ? Number(props.level) : 2) + 1}`)
+const tag = computed(() => props.tag ? [ props.tag ].flat() : false)
 
-const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
+const d = computed(() => Object.entries(data).filter(([k, v]) =>
 	/* Filter entries (by plugin or tag). */
-	((!props.plugin && !tag) ||
+	((!props.plugin && !tag.value) ||
 	 (props.plugin &&
 	  v.plugin?.includes(props.plugin)) ||
-	 (tag && tag.find((t) =>
+	 (tag.value && tag.value.find((t) =>
 	  v.plugin?.includes(t) ||
 	  v.tags?.includes(t))
 	 )) &&
 	/* Apply filter. */
-	((filter == 'all') ||
-	 ((filter == 'advanced') && v.advanced) ||
-	 ((filter == 'no_advanced') && !v.advanced))
+	((filter.value == 'all') ||
+	 ((filter.value == 'advanced') && v.advanced) ||
+	 ((filter.value == 'no_advanced') && !v.advanced))
 ).sort())
 </script>
 
@@ -67,7 +68,7 @@ const d = Object.fromEntries(Object.entries(data).filter(([k, v]) =>
 
 <template>
  <section class="settingsList">
-  <article v-for="(v, k) in d">
+  <article v-for="[k, v] in d">
    <component :is="level" :id="k" tabindex="-1">
     <code>{{ k }}</code>
     <a class="header-anchor" :href="'#' + k"></a>

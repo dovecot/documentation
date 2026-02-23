@@ -339,6 +339,15 @@ Then for each user:
 Once all users have been converted, you can update the global *mail_driver* and
 *mail_path* settings and remove the per-user mail locations from *userdb*.
 
+## SECURITY
+
+This command cannot be used safely by untrusted users, unless the input is
+heavily sanitized. The destination allows running arbitrary commands.
+If using *dsync_remote_cmd*, the username and hostname may contain spaces
+or begin with a dash, which can allow passing unsafe parameters to `ssh`.
+Also since `ssh` runs commands via shell, parameters containing e.g. `;`
+or `&&` can result in running multiple commands.
+
 <!-- @include: ./reporting-bugs.inc -->
 
 ## SEE ALSO

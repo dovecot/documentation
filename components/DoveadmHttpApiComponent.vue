@@ -1,29 +1,53 @@
 <script setup>
+import { computed } from 'vue'
+
 /* Properties for this component:
  * 'data' (object): The command argument data.
  *
  * Note: Clipboard behavior is handled by re-using the Vitepress code.
  */
 const props = defineProps(['data'])
-const d = props.data
+const d = computed(() => props.data)
 
-const args = {}
-for (let elem of d.args.filter(e => e.example !== undefined && !e.cli_only)) {
-	args[elem.param] = elem.example
-}
+const jsonReq = computed(() => {
+	const args = {}
+	for (let elem of d.value.args.filter(e => e.example !== undefined && !e.cli_only)) {
+		args[elem.param] = elem.example
+	}
 
-const jsonReq =
-[
-	[
-		d.http_cmd,
+	return [
+		d.value.http_cmd,
 		args,
 		"tag1"
 	]
-]
+})
 
-const jsonResp = d.response?.example
-	? [ [ "doveadmResponse", [ d.response.example ], "tag1" ] ]
+const jsonResp = computed(() => d.value.response?.example
+	? [ [ "doveadmResponse", [ d.value.response.example ], "tag1" ] ]
 	: null
+)
+
+const examples = computed(() => {
+	const reqStr = JSON.stringify(jsonReq.value)
+	return [
+		{
+			title: 'Example Curl Request (using Dovecot API Key)',
+			code: `curl -X POST -H "Authorization: X-Dovecot-API <base64 encoded dovecot_api_key>" -H "Content-Type: application/json" -d '${reqStr}' http://example.com:8080/doveadm/v1`
+		},
+		{
+			title: 'Example Curl Request (using Doveadm Password)',
+			code: `curl -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '${reqStr}' http://example.com:8080/doveadm/v1`
+		},
+		{
+			title: 'Example Wget Request (using Dovecot API Key)',
+			code: `wget --header="Authorization: X-Dovecot-API <base64 encoded dovecot_api_key>" --header="Content-Type: application/json" --post-data='${reqStr}' --output-document - http://example.com:8080/doveadm/v1`
+		},
+		{
+			title: 'Example Wget Request (using Doveadm Password)',
+			code: `wget --header="Content-Type: application/json" --user=doveadm --password=password --auth-no-challenge --post-data='${reqStr}' --output-document - http://example.com:8080/doveadm/v1`
+		}
+	]
+})
 
 </script>
 
@@ -62,44 +86,22 @@ const jsonResp = d.response?.example
    <pre><code>{{ JSON.stringify(jsonReq, null, 4) }}</code></pre>
   </div>
 
-  <p class="custom-block-title">Example Curl Request (using Dovecot API Key)</p>
+  <template v-for="ex in examples">
+   <p class="custom-block-title">{{ ex.title }}</p>
 
-  <div class="language- vp-adaptive-theme">
-   <button class="copy" title="Copy" />
-   <span class="lang"></span>
-   <pre><code>curl -X POST -H "Authorization: X-Dovecot-API &lt;base64 encoded dovecot_api_key&gt;" -H "Content-Type: application/json" -d '{{ JSON.stringify(jsonReq) }}' http://example.com:8080/doveadm/v1</code></pre>
-  </div>
-
-  <p class="custom-block-title">Example Curl Request (using Doveadm Password)</p>
-
-  <div class="language- vp-adaptive-theme">
-   <button class="copy" title="Copy" />
-   <span class="lang"></span>
-   <pre><code>curl -X POST -u doveadm:secretpassword -H "Content-Type: application/json" -d '{{ JSON.stringify(jsonReq) }}' http://example.com:8080/doveadm/v1</code></pre>
-  </div>
-
-  <p class="custom-block-title">Example Wget Request (using Dovecot API Key)</p>
-
-  <div class="language- vp-adaptive-theme">
-   <button class="copy" title="Copy" />
-   <span class="lang"></span>
-   <pre><code>wget --header="Authorization: X-Dovecot-API &lt;base64 encoded dovecot_api_key&gt;" --header="Content-Type: application/json" --post-data='{{ JSON.stringify(jsonReq) }}' --output-document - http://example.com:8080/doveadm/v1</code></pre>
-  </div>
-
-  <p class="custom-block-title">Example Wget Request (using Doveadm Password)</p>
-
-  <div class="language- vp-adaptive-theme">
-   <button class="copy" title="Copy" />
-   <span class="lang"></span>
-   <pre><code>wget --header="Content-Type: application/json" --user=doveadm --password=password --auth-no-challenge --post-data='{{ JSON.stringify(jsonReq) }}' --output-document - http://example.com:8080/doveadm/v1</code></pre>
-  </div>
+   <div class="language- vp-adaptive-theme">
+    <button class="copy" title="Copy" />
+    <span class="lang"></span>
+	<pre><code>{{ ex.code }}</code></pre>
+   </div>
+  </template>
 
   <template v-if="d.response">
    <p class="custom-block-title">Example Server Response</p>
 
    <div v-html="d.response.text" />
 
-   <div class="language- vp-adaptive-theme" v-id="jsonResp">
+   <div class="language- vp-adaptive-theme" v-if="jsonResp">
     <button class="copy" title="Copy" />
     <span class="lang"></span>
      <pre><code>{{ JSON.stringify(jsonResp, null, 4) }}</code></pre>

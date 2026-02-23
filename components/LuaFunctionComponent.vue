@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 import { data } from '../lib/data/lua.data.js'
 
 /* Properties for this component:
@@ -6,9 +7,9 @@ import { data } from '../lib/data/lua.data.js'
  * 'tag' (string): Filter by tag property.
  */
 const props = defineProps(['level', 'tag'])
-const level = (props.level ? Number(props.level) : 2) + 1
+const level = computed(() => (props.level ? Number(props.level) : 2) + 1)
 
-const d = Object.fromEntries(Object.entries(data.functions).filter(([k, v]) =>
+const d = computed(() => Object.entries(data.functions).filter(([k, v]) =>
 	/* Filter entries (by tag). */
 	!props.tag || (v.tags === props.tag)
 ))
@@ -46,7 +47,7 @@ function buildFunctionSignature(k, v) {
 </script>
 
 <template>
- <template v-for="(v, k) in d">
+ <template v-for="[k, v] in d">
   <div class="lua-function-separator" />
 
   <component :is="'h' + level" :id="k" tabindex="-1">
