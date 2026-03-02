@@ -4,7 +4,6 @@
  * "node util/generate_man.js <output dir>" */
 
 import { Command } from 'commander'
-import dayjs from 'dayjs'
 import fg from 'fast-glob'
 import fs from 'fs'
 import gitCommitInfo from 'git-commit-info'
