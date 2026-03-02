@@ -38,7 +38,7 @@ program
 	.parse()
 const debug = program.opts().debug
 
-const doInclude = (content, includes, f) => {
+const doInclude = (content, includes) => {
 	const result = content.replace(includesRE, (m, m1) => {
 		if (!m1.length) return m
 		/* VitePress MD supports paths relative to base with leading
@@ -50,12 +50,12 @@ const doInclude = (content, includes, f) => {
 			if (relative.startsWith('..') || path.isAbsolute(relative)) {
 				throw new Error("Path traversal detected in include: " + m1)
 			}
-			return doInclude(fs.readFileSync(targetPath, 'utf8'), includes, f)
+			return doInclude(fs.readFileSync(targetPath, 'utf8'), includes)
 		}
 		const inc_f = path.basename(m1)
 		for (const fn of includes) {
 			if (path.basename(fn) == inc_f)
-				return doInclude(fs.readFileSync(fn, 'utf8'), includes, f)
+				return doInclude(fs.readFileSync(fn, 'utf8'), includes)
 		}
 		throw new Error("Missing include " + inc_f)
 	})
@@ -218,7 +218,7 @@ const main = async (component, outPath) => {
 		const page = matter(str)
 		const vf = new VFile({
 			path: f,
-			value: await doInclude(page.content, includes, f)
+			value: await doInclude(page.content, includes)
 		})
 		if (page.data.dovecotComponent != component)
 			continue
