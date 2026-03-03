@@ -7464,14 +7464,16 @@ See [[link,mail_cache]] for details and for the list of fields.`
 	},
 
 	mail_attachment_detection_options: {
+		changed: {
+			mail_attachment_detection_options_changed: `
+The default was set.`,
+			mail_attachment_detection_options_maildir_changed: `
+The Maildir default was reverted to empty.`,
+		},
 		values: setting_types.BOOLLIST,
 		default: `
-- mbox, imapc, maildir: &lt;empty&gt;<br />
-- others: add-flags content-type=!application/signature
-<br /><br />
-[[changed,mail_attachment_detection_options_changed]] The default was set.
-<br />
-[[changed,mail_attachment_detection_options_maildir_changed]] The Maildir default was reverted to empty.`,
+- mbox, imapc, maildir: &lt;empty&gt;<br />&nbsp;
+- others: add-flags content-type=!application/signature`,
 		text: `
 Settings to control adding \`$HasAttachment\` or \`$HasNoAttachment\`
 keywords. By default, all MIME parts with \`Content-Disposition=attachment\`
@@ -7587,11 +7589,12 @@ mail_attribute {
 	},
 
 	mail_cache_fields: {
+		changed: {
+			mail_cache_fields_changed: `
+The default fields were changed. They used to be just "flags".`
+		},
 		default: `
-flags hdr.date hdr.subject hdr.from hdr.sender hdr.reply-to hdr.to hdr.cc hdr.bcc hdr.in-reply-to hdr.message-id date.received size.virtual imap.bodystructure mime.parts hdr.references hdr.importance hdr.x-priority hdr.x-open-xchange-share-url pop3.uidl pop3.order
-<br /><br />
-[[changed,mail_cache_fields_changed]] The default fields were changed.
-They used to be just "flags".`,
+flags hdr.date hdr.subject hdr.from hdr.sender hdr.reply-to hdr.to hdr.cc hdr.bcc hdr.in-reply-to hdr.message-id date.received size.virtual imap.bodystructure mime.parts hdr.references hdr.importance hdr.x-priority hdr.x-open-xchange-share-url pop3.uidl pop3.order`,
 		seealso: [ 'mail_always_cache_fields', 'mail_never_cache_fields' ],
 		values: setting_types.BOOLLIST,
 		text: `
