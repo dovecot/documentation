@@ -367,6 +367,37 @@ group @mailboxes finnish {
 @mailboxes = finnish # Does not work - name is still Trash
 ```
 
+Within one `group` it's not possible to enumerate different kind of settings,
+like `prefix`, `separator`, and multiple `mailboxes`. For these cases, group
+the hierarchy one above, like `namespace`. For example:
+
+```[dovecot.conf]
+group @namespaces-virtual english {
+  namespace virtual {
+    prefix = virtual/
+
+    mail_driver = virtual
+    mail_path = /var/lib/dovecot/virtual/en
+    mail_index_path = %{home}/index/virtual/en
+
+    mailbox All {
+      auto = no
+      special_use = \All
+    }
+    mailbox Flagged {
+      auto = no
+      special_use = \Flagged
+    }
+  }
+}
+
+@namespaces-virtual = english
+```
+
+::: warning
+Currently, indices are not created for namespaces that are defined within groups.
+:::
+
 It's possible to override groups using the command line parameter `-o` or
 userdb. For example above you can return `namespace/inbox/@mailboxes=finnish`
 from userdb to change mailbox names to Finnish language. Note that groups can't

@@ -150,7 +150,7 @@ doveadm -o fs=compress,posix -o fs/compress/fs_driver=compress -o fs/posix/fs_dr
 Using a named filter.
 
 ```sh
-doveadm mail fs -u testuser get obox path/to/file
+doveadm mail fs get -u testuser obox path/to/file
 ```
 
 ## SEE ALSO
