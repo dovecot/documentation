@@ -101,13 +101,14 @@ There are 3 types of services that need to be optimized in different ways:
 The anvil process tracks state of users and their connections. It is also
 used to kick users' connections.
 
-* **user=root**, because it needs the ability to send signals to mail
-  processes to kick the users.
+* [[setting_text,service_user,user=root]], because it needs the ability to send
+  signals to mail processes to kick the users.
 
-* **process_limit=1**, because there can be only one.
+* [[setting_text,service_process_limit,process_limit=1]], because there can be
+  only one.
 
-* **client_limit** should be large enough to handle all the simultaneous
-  connections.
+* [[setting_text,service_client_limit,client_limit]] should be large enough to
+  handle all the simultaneous connections.
 
   Dovecot attempts to verify that the limit is high enough at startup.
   If it's not, it logs a warning such as:
@@ -118,8 +119,8 @@ used to kick users' connections.
       auth and login services, because each of them has a persistent connection
       to anvil.
 
-* **idle_kill_interval=infinite**, because it should never die or all of its
-  tracked state would be lost.
+* [[setting_text,service_idle_kill_interval,idle_kill_interval=infinite]],
+  because it should never die or all of its tracked state would be lost.
 
 * [[doveadm,who]] and some other doveadm commands connect to anvil's UNIX
   listener and request its state.
@@ -160,8 +161,8 @@ You can add as many `auth` and `userdb` listeners as you want (and you
 probably shouldn't touch the `login` and `master` listeners).
 :::
 
-* **client_limit** should be large enough to handle all the simultaneous
-  connections.
+* [[setting_text,service_client_limit,client_limit]] should be large enough to
+  handle all the simultaneous connections.
 
   Dovecot attempts to verify that the limit is high enough at startup.
   If it's not, it logs a warning such as:
@@ -169,20 +170,23 @@ probably shouldn't touch the `login` and `master` listeners).
     * Warning: service auth { client_limit=1000 } is lower than required under max. load (1328)
 
       This is calculated by counting the [[setting,service_process_limit]] of
-      every service that is enabled with the `protocol` setting (e.g. imap,
-      pop3, lmtp). Only services with the
-      [[setting,service_restart_request_count]] setting being `!= 1` are
-      counted, because they have persistent connections to auth, while
-      [[setting,service_restart_request_count,1]] processes only do short-lived
-      auth connections.
+      every service that is enabled with the
+      [[setting_text,service_protocol,protocol]] setting (e.g. imap, pop3,
+      lmtp). Only services with the [[setting,service_restart_request_count]]
+      setting being `!= 1` are counted, because they have persistent
+      connections to auth, while [[setting,service_restart_request_count,1]]
+      processes only do short-lived auth connections.
 
-* **process_limit=1**, because there can be only one auth master process.
+* [[setting_text,service_process_limit,process_limit=1]], because there can be
+  only one auth master process.
 
-* **user=$SET:default_internal_user**, because it typically doesn't need
-  permissions to do anything (PAM lookups are done by auth-workers).
+* [[setting_text,service_user,user=$SET:default_internal_user]], because it
+  typically doesn't need permissions to do anything (PAM lookups are done by
+  auth-workers).
 
-* **chroot** could be set (to e.g. `empty`) if passdb/userdb doesn't need
-  to read any files (e.g. SQL, LDAP config is read before chroot)
+* [[setting_text,service_chroot,chroot]] could be set (to e.g. `empty`) if
+  passdb/userdb doesn't need to read any files (e.g. SQL, LDAP config is read
+  before chroot)
 
 ### auth-worker
 
@@ -200,21 +204,22 @@ worker processes at all.
 With some passdbs and userdbs you can select if worker processes should
 be used.
 
-* **client_limit=1**, because only the master auth process connects to
-  auth worker.
+* [[setting_text,service_client_limit,client_limit=1]], because only the master
+  auth process connects to auth worker.
 
-* **process_limit** indicates the maximum number of workers.
+* [[setting_text,service_process_limit,process_limit]] indicates the maximum
+  number of workers.
 
-* **user=root** by default, because by default PAM authentication is used,
-  which usually requires reading `/etc/shadow`.
+* [[setting_text,service_user,user=root]] by default, because by default PAM
+  authentication is used, which usually requires reading `/etc/shadow`.
 
   If this isn't needed, it's a good idea to change this to something else,
   such as `$SET:default_internal_user`.
 
-* **chroot** could also be set if possible.
+* [[setting_text,service_chroot,chroot]] could also be set if possible.
 
-* **restart_request_count=unlimited** counts the number of processed auth
-  requests.
+* [[setting_text,service_restart_request_count,restart_request_count=unlimited]]
+  counts the number of processed auth requests.
 
   This can be used to cycle the process after the specified number of auth
   requests (default is unlimited). The worker processes also stop after
@@ -225,8 +230,8 @@ be used.
 Config process reads and parses the `dovecot.conf` file, and exports the
 parsed data in simpler format to config clients.
 
-* **user=root**, because the process needs to be able to reopen the
-  config files during a config reload, and often some parts of the
+* [[setting_text,service_user,user=root]], because the process needs to be able to
+  reopen the config files during a config reload, and often some parts of the
   config having secrets are readable only by root.
 
 * Only root should be able to connect to its UNIX listener, unless there
@@ -257,9 +262,9 @@ connections are the client connections of dict processes.
     CPU cores. Although with Cassandra this may not be true, because Cassandra
     library can use multiple threads.
 
-* **user=$SET:default_internal_user**, because the proxy dict lookups are
-  typically SQL lookups, which require no filesystem access. (The SQL
-  config files are read while still running as root.)
+* [[setting_text,service_user,user=$SET:default_internal_user]], because the
+  proxy dict lookups are typically SQL lookups, which require no filesystem
+  access. (The SQL config files are read while still running as root.)
 
 * The dict clients can do any kind of dict lookups and updates for all users,
   so they can be rather harmful if exposed to an attacker. That's why by
@@ -275,9 +280,11 @@ This process periodically goes through configured dicts and deletes all
 expired rows in them. Currently this works only for dict-sql when
 `expire_field` has been configured.
 
-* **process_limit=1**, because only one process should be running expires.
+* [[setting_text,service_process_limit,process_limit=1]], because only one
+  process should be running expires.
 
-* **user** and other permissions should be the same as for the dict service.
+* [[setting_text,service_user,user]] and other permissions should be the same
+  as for the dict service.
 
 ### dns_client
 
@@ -286,13 +293,14 @@ Used by lib-dns library to perform asynchronous DNS lookups.
 The dns-client processes internally use the synchronous `gethostbyname()`
 function.
 
-* **client_limit=1**, because the DNS lookup is synchronous.
+* [[setting_text,service_client_limit,client_limit=1]], because the DNS lookup
+  is synchronous.
 
-* **user=$SET:default_internal_user**, because typically no special
-  privileged files need to be read.
+* [[setting_text,service_user,user=$SET:default_internal_user]], because
+  typically no special privileged files need to be read.
 
-* **chroot** can be used only if it contains `etc/resolv.conf` and other
-  files necessary for DNS lookups.
+* [[setting_text,service_chroot,chroot]] can be used only if it contains
+  `etc/resolv.conf` and other files necessary for DNS lookups.
 
 ### doveadm
 
@@ -302,13 +310,15 @@ This is useful for running doveadm commands for multiple users
 simultaneously, and it's also useful in a multiserver system where
 doveadm can automatically connect to the correct backend to run the command.
 
-* **client_limit=1**, because doveadm command execution is synchronous.
+* [[setting_text,service_client_limit,client_limit=1]], because doveadm command
+  execution is synchronous.
 
-* **restart_request_count=1** just in case there were any memory leaks. This
-  could be set to some larger value (or `unlimited`) for higher performance.
+* [[setting_text,service_restart_request_count,restart_request_count=1]] just
+  in case there were any memory leaks. This could be set to some larger value
+  (or `unlimited`) for higher performance.
 
-* **user=root**, but the privileges are (temporarily) dropped to the
-  mail user's privileges after userdb lookup.
+* [[setting_text,service_user,user=root]], but the privileges are (temporarily)
+  dropped to the mail user's privileges after userdb lookup.
 
   If only a single UID is used, user can be set to the mail UID for
   higher security, because the process can't gain root privileges anymore.
@@ -318,10 +328,10 @@ doveadm can automatically connect to the correct backend to run the command.
 Post-login process for handling IMAP/POP3/Submission/ManageSieve client
 connections.
 
-* **client_limit** may be increased from the default `1` to save some CPU
-  and memory, but it also increases the latency when one process
-  serving multiple clients is waiting for a long time for a lock or disk
-  I/O.
+* [[setting_text,service_client_limit,client_limit]] may be increased from the
+  default `1` to save some CPU and memory, but it also increases the latency
+  when one process serving multiple clients is waiting for a long time for a
+  lock or disk I/O.
 
   In the future these waits may be reduced or avoided completely, but for
   now it's not safe to set this value higher than `1` in enterprise mail
@@ -330,14 +340,14 @@ connections.
   For small, mostly-idling hobbyist servers, a larger number may work
   without problems.
 
-* **restart_request_count** can be changed from `1` if only a single UID is
-  used for mail users.
+* [[setting_text,service_restart_request_count,restart_request_count=1]] can be
+  changed if only a single UID is used for mail users.
 
   This improves performance, but it's less secure, because bugs in code
   may leak email data from another user's earlier connection.
 
-* **process_limit** specifies the maximum number of
-  simultaneous connections for the protocol that this service handles
+* [[setting_text,service_process_limit,process_limit]] specifies the maximum
+  number of simultaneous connections for the protocol that this service handles
   (IMAP, POP3, Submission, or ManageSieve).
 
   If you expect more connections, increase this value.
@@ -359,13 +369,15 @@ with new messages and updating full text search indexes (if enabled).
 The indexer master process guarantees that the FTS index is never modified
 by more than one process.
 
-* **process_limit=1**, because only one process can keep the FTS guarantee.
+* [[setting_text,service_process_limit,process_limit=1]], because only one
+  process can keep the FTS guarantee.
 
-* **user=$SET:default_internal_user**, because the process doesn't need any
-  permissions.
+* [[setting_text,service_user,user=$SET:default_internal_user]], because the
+  process doesn't need any permissions.
 
-* **chroot** could be set to [[setting,base_dir]] for extra security. It
-  still needs to be able to connect to indexer-worker socket.
+* [[setting_text,service_chroot,chroot]] could be set to [[setting,base_dir]]
+  for extra security. It still needs to be able to connect to indexer-worker
+  socket.
 
 ### indexer-worker
 
@@ -386,33 +398,35 @@ service indexer-worker {
 }
 ```
 
-* **client_limit=1**, because indexing is a synchronous operation.
+* [[setting_text,service_client_limit,client_limit=1]], because indexing is a
+  synchronous operation.
 
-* **process_limit** defaults to `10`, because the FTS index updating can
-  eat a lot of CPU and disk I/O. You may need to adjust this value
-  depending on your system.
+* [[setting_text,service_process_limit,process_limit=10]], because the FTS
+  index updating can eat a lot of CPU and disk I/O. You may need to adjust this
+  value depending on your system.
 
-* **user=root**, but the privileges are (temporarily) dropped to the
-  mail user's privileges after userdb lookup. If only a single UID is
-  used, user can be set to the mail UID for higher security, because
-  the process can't gain root privileges anymore.
+* [[setting_text,service_user,user=root]], but the privileges are (temporarily)
+  dropped to the mail user's privileges after userdb lookup. If only a single
+  UID is used, user can be set to the mail UID for higher security, because the
+  process can't gain root privileges anymore.
 
 ### lmtp
 
 LMTP process for delivering new mails.
 
-* **client_limit=1**, because most of the time spent on an LMTP client is
-  spent waiting for disk I/O and other blocking operations. There's no
-  point in having more clients waiting around during that doing nothing.
+* [[setting_text,service_client_limit,client_limit=1]], because most of the
+  time spent on an LMTP client is spent waiting for disk I/O and other blocking
+  operations. There's no point in having more clients waiting around during
+  that doing nothing.
 
   However, LMTP proxying is only writing to temporary files that normally
   stay only in memory. So for LMTP proxying, a `client_limit` above `1`
   could be useful.
 
-* **user=root**, but the privileges are (temporarily) dropped to the mail
-  user's privileges after userdb lookup. If only a single UID is used,
-  user can be set to the mail UID for higher security, because the process
-  can't gain root privileges anymore.
+* [[setting_text,service_user,user=root]], but the privileges are (temporarily)
+  dropped to the mail user's privileges after userdb lookup. If only a single
+  UID is used, user can be set to the mail UID for higher security, because the
+  process can't gain root privileges anymore.
 
 ### log
 
@@ -420,11 +434,11 @@ All processes started via Dovecot master process log their messages via
 the `log` process. This allows some nice features compared to directly
 logging via syslog.
 
-* **process_limit=1**, because the log process keeps track of all the
-  other logging processes.
+* [[setting_text,service_process_limit,process_limit=1]], because the log
+  process keeps track of all the other logging processes.
 
-* **user=root**, because it guarantees being able to write to syslog
-  socket and to the log files directly.
+* [[setting_text,service_user,user=root]], because it guarantees being able to
+  write to syslog socket and to the log files directly.
 
 ### stats
 
@@ -432,8 +446,8 @@ Event statistics tracking. Its behavior is very similar to the anvil process,
 but anvil's data is of higher importance and lower traffic than stats, so stats
 are tracked in a separate process.
 
-* **client_limit** should be large enough to handle all the simultaneous
-  connections.
+* [[setting_text,service_client_limit,client_limit]] should be large enough to
+  handle all the simultaneous connections.
 
   Dovecot attempts to verify that the limit is high enough at startup.
   If it's not, it logs a warning such as:
