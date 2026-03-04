@@ -59,6 +59,12 @@ error codes.
 
 ## HTTP API
 
+::: warning
+Do not expose Doveadm HTTP API to untrusted networks. It is an unsafe API with dangerous features.
+It should always be exposed only to your integration API with TLS enabled, secure and random
+password or API key configured, and relevant network level restrictions applied.
+:::
+
 ### Configuration
 
 To be able to use doveadm HTTP API it's mandatory to configure either
