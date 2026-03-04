@@ -161,21 +161,7 @@ You can add as many `auth` and `userdb` listeners as you want (and you
 probably shouldn't touch the `login` and `master` listeners).
 :::
 
-* [[setting_text,service_client_limit,client_limit]] should be large enough to
-  handle all the simultaneous connections.
-
-  Dovecot attempts to verify that the limit is high enough at startup.
-  If it's not, it logs a warning such as:
-
-    * Warning: service auth { client_limit=1000 } is lower than required under max. load (1328)
-
-      This is calculated by counting the [[setting,service_process_limit]] of
-      every service that is enabled with the
-      [[setting_text,service_protocol,protocol]] setting (e.g. imap, pop3,
-      lmtp). Only services with the [[setting,service_restart_request_count]]
-      setting being `!= 1` are counted, because they have persistent
-      connections to auth, while [[setting,service_restart_request_count,1]]
-      processes only do short-lived auth connections.
+<!-- @include: @docs/core/config/include/service_default_services_auth_client_limit.inc -->
 
 * [[setting_text,service_process_limit,process_limit=1]], because there can be
   only one auth master process.
@@ -266,6 +252,8 @@ connections are the client connections of dict processes.
   proxy dict lookups are typically SQL lookups, which require no filesystem
   access. (The SQL config files are read while still running as root.)
 
+<!-- @include: @docs/core/config/include/service_default_services_dict_vsz_limit.inc -->
+
 * The dict clients can do any kind of dict lookups and updates for all users,
   so they can be rather harmful if exposed to an attacker. That's why by
   default only root can connect to dict socket. Unfortunately that is too
@@ -313,9 +301,7 @@ doveadm can automatically connect to the correct backend to run the command.
 * [[setting_text,service_client_limit,client_limit=1]], because doveadm command
   execution is synchronous.
 
-* [[setting_text,service_restart_request_count,restart_request_count=1]] just
-  in case there were any memory leaks. This could be set to some larger value
-  (or `unlimited`) for higher performance.
+<!-- @include: @docs/core/config/include/service_default_services_doveadm_restart_request_count.inc -->
 
 * [[setting_text,service_user,user=root]], but the privileges are (temporarily)
   dropped to the mail user's privileges after userdb lookup.
@@ -340,11 +326,7 @@ connections.
   For small, mostly-idling hobbyist servers, a larger number may work
   without problems.
 
-* [[setting_text,service_restart_request_count,restart_request_count=1]] can be
-  changed if only a single UID is used for mail users.
-
-  This improves performance, but it's less secure, because bugs in code
-  may leak email data from another user's earlier connection.
+<!-- @include: @docs/core/config/include/service_default_services_post_login_restart_request_count.inc -->
 
 * [[setting_text,service_process_limit,process_limit]] specifies the maximum
   number of simultaneous connections for the protocol that this service handles
@@ -427,6 +409,10 @@ LMTP process for delivering new mails.
   dropped to the mail user's privileges after userdb lookup. If only a single
   UID is used, user can be set to the mail UID for higher security, because the
   process can't gain root privileges anymore.
+
+<!-- @include: @docs/core/config/include/service_default_services_lmtp_restart_request_count.inc -->
+
+<!-- @include: @docs/core/config/include/service_default_services_lmtp_process_limit.inc -->
 
 ### log
 
