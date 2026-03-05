@@ -5189,20 +5189,35 @@ that cannot safely be accessed by untrusted users.
 
 	doveadm_api_key: {
 		values: setting_types.STRING,
+		seealso: [ 'doveadm_password' ],
 		text: `
 Set an API key for use of the HTTP API for the doveadm server.
 
-If set, the key must be included in the HTTP request (via X-API-Key header)
-base64 encoded.`
+If set, this allows HTTP clients to authenticate to the doveadm HTTP server
+using the X-API-Key header, which contains the API key base64 encoded.
+
+This API key must be kept secret. The doveadm API allows doing almost anything
+in the server, including accessing users' mailboxes.
+
+It's possible to use both [[setting,doveadm_password]] and API key. This
+allows clients to use either method to authenticate.`
 	},
 
 	doveadm_password: {
 		values: setting_types.STRING,
+		seealso: [ 'doveadm_api_key' ],
 		text: `
-The doveadm client and server must have a shared secret. This setting
-configures the doveadm server's password, used for client authentication.
+Specify the password, which is used by both doveadm server and client.
+The client sends this password to the server for authentication, and the
+server accepts only this password. Alternatively, doveadm HTTP API can be
+authenticated to using [[setting,doveadm_api_key]].
 
-Because it grants access to users' mailboxes, it must be kept secret.`
+This password must be kept secret. The doveadm API allows doing almost anything
+in the server, including accessing users' mailboxes.
+
+If doveadm server is accessed via UNIX socket that has 0600 permissions, the
+authentication is skipped. However, the doveadm HTTP API always requires
+authentication.`
 	},
 
 	doveadm_port: {
