@@ -9438,11 +9438,10 @@ passdb passwd-file {
 	passdb_driver: {
 		tags: [ 'passdb' ],
 		values: setting_types.STRING,
-		seealso: [ 'passdb_name', '[[link,passdb]]' ],
+		seealso: [ 'passdb_name', '[[link,passdb]]', '[[link,auth_databases]]' ],
 		text: `
 The driver used for this password database. If empty, defaults to
-[[setting,passdb_name]]. See [[link,passdb]] for the list of available
-drivers.`
+[[setting,passdb_name]].`
 	},
 
 	passdb_fields: {
@@ -11139,11 +11138,10 @@ userdb passwd-file {
 	userdb_driver: {
 		tags: [ 'userdb' ],
 		values: setting_types.STRING,
-		seealso: [ 'userdb_name', '[[link,userdb]]' ],
+		seealso: [ 'userdb_name', '[[link,userdb]]', '[[link,auth_databases]]' ],
 		text: `
 The driver used for this user database. If empty, defaults to
-[[setting,userdb_name]]. See [[link,userdb]] for the list of available
-drivers.`
+[[setting,userdb_name]].`
 	},
 
 	userdb_fields: {
