@@ -35,6 +35,10 @@ post-login information specific to the authenticated user. This may include:
 The `userdb` and [[link,passdb]] may be the same or they may be different
 depending on your needs. You can also have [[link,auth_multiple_dbs]].
 
+## Authentication Databases
+
+See [[link,auth_databases]].
+
 ## Multiple Userdbs
 
 You can use multiple databases, so if the user isn't found from the first

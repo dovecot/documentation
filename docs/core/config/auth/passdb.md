@@ -2,7 +2,7 @@
 layout: doc
 title: passdb
 dovecotlinks:
-  passdb: Passdb
+  passdb: passdb
   passdb_auth_nologin:
     hash: nologin
     text: "passdb: Authentication `nologin` Extra Field"
@@ -40,6 +40,10 @@ information needed for users, such as:
 | doveadm commands | YES | YES |
 
 See also [[link,userdb]].
+
+## Authentication Databases
+
+See [[link,auth_databases]].
 
 ## Passwords
 
