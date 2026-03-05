@@ -116,11 +116,13 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | `index(separator, nth)` | String | String | Returns nth element from separator separated string. Zero based. Negative values are looked relative to end of list. |
 | `ldap_dn` | String | String | Converts any `.` into `,dc=`. For example `domain.com` converts into `domain,dc=com`. |
 | `lenumber` | Bytes | Number | Convert little-endian encoded input into a number. |
-| `lfill(width, filler)` | Any | Any | Pads value from left with filler until length is width. Default filler is `0`. |
+| `lfill(width, filler)` | Any | Any | Pads value from left with filler until length is width. Default filler is `0`. |i
 | `list(separator)` | String | String | Converts tab-escaped list into separator separated list. There is no escaping if the value already contains the separator. Defaults to `,`. |
 | `literal(string)` | None | String | Expands into literally the value. If variable is used, works like lookup. Input is ignored. |
 | `lookup(name)` | None | String | Lookup var from table. If var is variable, the name is taken from variable's contents. Input is ignored. |
 | `lower` | String | String | Lowercases input. |
+| `lua_file(<file>, <function>,...)` | See [[link,var_expand_lua,mail-lua plugin]]. This only works in post-login context. |
+| `lua_call(<function>, ...)` | See [[link,var_expand_lua,mail-lua plugin]]. This only works in post-login context. |
 | `md5(rounds=number, salt=string)` | Bytes | Bytes | Alias for hash with method md5. |
 | `regexp(expression, replacement)` | String | String |Performs regular expression replacement using [POSIX Extended Regular Expression syntax](https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html). Supports up to 9 capture groups. |
 | `reverse` | Any | Any | Reverse input bytes. |
@@ -338,9 +340,7 @@ See also:
 | `passdb:forward_<name>` | Used by proxies to pass on extra fields to the next hop, see [[link,auth_forward_fields]]. |
 | `id` | Internal ID number of the current passdb/userdb. |
 | `token` | Used OAUTH2 token. This is only present in [[setting,oauth2_fields]]. [[added,variables_oauth2]] |
-| `oauth2:<name>` | Return oauth2 field "name". This is only present in [[setting,oauth2_fields]]. |
-
-## Conditionals
+| `oauth2:<name>` | Return oauth2 field "name". This is only present in [[setting,oauth2_fields]]. |## Conditionals
 
 The following operators are supported:
 
