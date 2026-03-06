@@ -52,7 +52,6 @@ avc
 azp
 backported
 badpassword
-bantime
 barfoo
 bayes
 bcc
@@ -218,7 +217,6 @@ extracttext
 exttextcat
 FADV
 fadvise
-failregex
 fcontext
 fetc
 fetchmail
@@ -226,7 +224,6 @@ FETCHs
 fgrep
 fieldstr
 fileinto
-findtime
 findutils
 firewalls
 firstsaved
@@ -407,7 +404,6 @@ lockd
 lockf
 LOGINDISABLED
 loginuser
-logpath
 lowwater
 lport
 lrs
@@ -419,6 +415,7 @@ lsearch
 lucene
 lugog
 Luonnokset
+lwn
 lwq
 lwristepai
 macl
@@ -452,7 +449,6 @@ masterpass
 masteruser
 matadata
 maxproc
-maxretry
 mboxcl
 mboxes
 mboxmetadata
@@ -492,7 +488,6 @@ mta
 mtimes
 MUAs
 MULTIAPPEND
-multiport
 multiscript
 murchison
 mutltiple
