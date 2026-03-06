@@ -49,7 +49,7 @@ if you're setting up [[link,shared_mailboxes]].
 You can change the index file location with the [[setting,mail_index_path]]
 setting. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
 mail_index_path = /var/indexes/%{user}
@@ -144,7 +144,7 @@ a "real home directory".
 
 If you really don't want to set any home directory, you can use something like:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = /home/%{user}/Maildir
 ```
@@ -165,7 +165,7 @@ need to be overridden in userdb with `namespace/<name>/` prefix. For example
 
 ### SQL
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb sql {
   query = SELECT home, uid, gid, mail_path FROM users WHERE user = '%{user}'
 }
@@ -174,7 +174,7 @@ userdb sql {
 ### LDAP
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb ldap {
   ...
   fields {
@@ -206,7 +206,7 @@ formats within the same namespace is not supported.
 If you need to override namespace's mail location settings, first give it a
 name (`inbox` in this example):
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   [...]
 }

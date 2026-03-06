@@ -19,7 +19,7 @@ The remote POP3 mailbox is visible as the INBOX folder on the Dovecot side.
 ## Configuration Example
 
 Connect using STARTTLS to pop3.example.com:
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # In-memory index files:
 mail_driver = pop3c
 mail_path =

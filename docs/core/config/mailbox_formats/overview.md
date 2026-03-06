@@ -104,7 +104,7 @@ However, this is dangerous, especially with IMAP, LDA, and LMTP. If you do
 want to set to `never`, you should only explicitly do this for services
 that you are comfortable with data loss. Example:
 
-```
+```doveconf[dovecot.conf]
 # Default
 mail_fsync = optimized
 
@@ -177,7 +177,7 @@ GlusterFS clients to access the same mailboxes, you're going to have
 problems. Worst of these problems can be avoided by using NFS cache flushes,
 which just happen to work with FUSE as well:
 
-```
+```doveconf[dovecot.conf]
 mail_nfs_index = yes
 mail_nfs_storage = yes
 ```

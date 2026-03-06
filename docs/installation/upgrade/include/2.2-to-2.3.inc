@@ -83,7 +83,7 @@ If the old behavior is still wanted, it's possible to do nowadays even
 more generically with e.g. setting following as the first passdb:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb {
   driver = passwd-file
   args = username_format=%{rip} /etc/dovecot/passdb
@@ -187,7 +187,7 @@ that case one must also remove (or rename)
   To avoid these errors, give enough permissions for the processes to
   connect to the stats-writer, for example:
 
-  ```
+  ```doveconf[dovecot.conf]
   service stats {
     client_limit = 10000 # make this large enough so all Dovecot processes (especially imap, pop3, lmtp) can connect to it
     unix_listener stats-writer {

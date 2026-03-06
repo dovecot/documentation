@@ -17,7 +17,7 @@ done when the INBOX is (auto)created. The scripts are called similarly to
 
 ## Example Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   welcome = yes
 }

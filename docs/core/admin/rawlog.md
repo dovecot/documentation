@@ -39,7 +39,7 @@ SSL/TLS sessions are currently not decrypted to rawlogs.
 You can enable pre-login rawlog for all users by telling the login processes
 to log to a rawlog directory:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service imap-login {
    executable = imap-login -R rawlogs
 }
@@ -95,7 +95,7 @@ In the above configuration, rawlog would expect to find
 
 If your userdb can't return a home directory directly, you can add:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb db1 {
   # ...
   fields {
@@ -108,7 +108,7 @@ userdb db1 {
 You can also set `DEBUG` environment to have rawlog log an info message why
 it's not doing anything:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 import_environment {
   DEBUG = 1
 }
@@ -120,7 +120,7 @@ See [[setting,import_environment]].
 
 To enable rawlog binary, use post-login scripting:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service imap {
   executable = imap postlogin
 }

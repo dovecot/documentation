@@ -82,7 +82,7 @@ The options for handling this are:
 
 Example configuration:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 auth_master_user_separator = *
 
 passdb passwd-file {
@@ -121,7 +121,7 @@ htpasswd -b -c -s passwd.masterusers user password
 The master passdb doesn't have to be passwd-file, it could be an SQL query as
 well:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sql_driver = mysql
 mysql localhost {
 }
@@ -163,7 +163,7 @@ You can configure a passdb which first performs authentication using the
 master password. Then it continues to the primary passdb to verify that
 the user exists and get other extra fields.
 
-```
+```doveconf[dovecot.conf]
 # master password passdb
 passdb static {
   password = master-password
@@ -212,7 +212,7 @@ CREATE TABLE `ownership` (
 The `dovecot.conf` file for all 3 master user configurations will be as
 follows:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb db1 {
   driver = sql
   args = /etc/dovecot/ownership-sql.conf
@@ -243,7 +243,7 @@ passdb db4 {
 Before we get into the master user tricks, we start with normal email
 authentication. The query for that is as follows:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb sql {
   query = SELECT user_name, domain_name, password \
     FROM users \
@@ -255,7 +255,7 @@ In this first example, suppose you want to allow a few people to be
 master users over all domains. These users will have the `masteradmin` field
 set to `1`. The query would be:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb sql {
   query = SELECT user_name, domain_name, password \
     FROM users \
@@ -268,7 +268,7 @@ want to allow a few users to become master users of their domain only.
 
 Your query would be as follows:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb sql {
   query = SELECT user_name, domain_name, password \
     FROM users \
@@ -284,7 +284,7 @@ between owner email addresses and domains that are owned. That way if a person
 controls a lot of domains then they can view all the users in all the domains
 they control. The query would be as follows:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb sql {
   query = SELECT user_name, domain_name, password \
     FROM users, ownership \
@@ -295,7 +295,7 @@ passdb sql {
 If you really want to get tricky and efficient you can combine all 3 queries
 into one giant query that does everything.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb sql {
   query = SELECT user_name, domain_name, password \
     FROM users, ownership \

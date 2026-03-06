@@ -35,7 +35,7 @@ certain it's also enabled.
 
 ## Example Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Enable the plugin globally for all services
 mail_plugins {
   notify = yes

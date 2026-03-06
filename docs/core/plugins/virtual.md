@@ -20,7 +20,7 @@ a listing of messages that don't exist in a physical mailbox.
 
 First, you'll have to load the plugin:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   virtual = yes
 }
@@ -31,7 +31,7 @@ mail_plugins {
 Then, you'll have to create a [[link,namespaces,namespace]] for the virtual
 mailboxes, for example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace virtual {
   prefix = virtual/
   separator = /
@@ -167,7 +167,7 @@ If you want POP3 INBOX to contain some or all mailboxes, you can do this in the
 following way:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Namespace Configuration
 
 # The default namespace that is visible to IMAP clients
@@ -228,7 +228,7 @@ INBOX and that would create a loop.
 Also to avoid accidental POP3 UIDL changes, you shouldn't base the UIDLs on
 IMAP UIDs. Instead use GUIDs (with Maildir the same as base filename):
 
-```
+```doveconf[dovecot.conf]
 pop3_uidl_format = %{guid}
 ```
 

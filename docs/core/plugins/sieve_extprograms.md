@@ -21,7 +21,7 @@ configuration.
 The plugin is activated by adding it to the [[setting,sieve_plugins]]
 setting:
 
-```
+```doveconf[dovecot.conf]
 sieve_plugins {
   sieve_extprograms = yes
 }
@@ -82,7 +82,7 @@ for detailed information on how to use the new language extensions.
 
 ### Socket Service for "pipe" and "execute"
 
-```
+```doveconf[dovecot.conf]
 sieve_script personal {
   path = ~/.dovecot.sieve
 }
@@ -128,7 +128,7 @@ service sieve-execute-action {
 
 ### Direct Execution for "pipe" and "filter"
 
-```
+```doveconf[dovecot.conf]
 sieve_script personal {
   path = ~/.dovecot.sieve
 }
@@ -155,7 +155,7 @@ This simple example shows how to use the "vnd.dovecot.execute" extension
 to perform some sort of test on the incoming message.
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_extensions {
   vnd.dovecot.execute = yes
 }
@@ -206,7 +206,7 @@ Note that this particular use case could also be implemented using the Sieve
 [[link,sieve_duplicate]].
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_extensions {
   vnd.dovecot.execute = yes
 }

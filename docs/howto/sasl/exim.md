@@ -13,7 +13,7 @@ authenticating SMTP clients.
 ## Configuration Example
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 auth_mechanisms = plain login
 
 service auth {

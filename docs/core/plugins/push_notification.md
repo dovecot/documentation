@@ -49,7 +49,7 @@ This can either be set globally or restricted to the protocols where you
 want push notifications to be generated.  For example, to restrict to mail
 delivery notifications only, this config should be used:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 protocol lmtp {
   mail_plugins {
     notify = yes
@@ -83,7 +83,7 @@ notification with the same driver but different endpoints.
 
 Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 push_notification ox1 {
   driver = ox
   ox_url = http://example.com/foo
@@ -109,7 +109,7 @@ enable it you will have to define it explicitly, otherwise it is disabled.
 
 #### Example Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 push_notification dlog {
   driver = dlog
 }
@@ -135,7 +135,7 @@ be used by any push endpoint that implements this API, not just OX App Suite.
 
 #### Example Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 push_notification ox {
   ox_url = http://login:pass@node1.domain.tld:8009/preliminary/http-notify/v1/notify
   user_from_metadata = yes

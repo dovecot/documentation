@@ -135,7 +135,7 @@ effectively bypassed.
 
 To listen on SMTPS port (465/tcp), add this to `dovecot.conf`:
 
-```
+```doveconf[dovecot.conf]
 service submission-login {
   inet_listener submissions {
     port = 465

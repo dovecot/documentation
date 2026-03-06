@@ -94,7 +94,7 @@ This plugin requires the [[plugin,fts]] to be activated and configured
 
 ## Example Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   fts = yes
   fts_solr = yes
@@ -237,7 +237,7 @@ it are:
 
   - LDAP:
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb ldap {
   ...
   fields {
@@ -277,11 +277,11 @@ Some additional things which might help you configuring Solr search:
   include the core name (ie: `dovecot`: `https://localhost:8939/solr/dovecot`).
 
 - To troubleshoot the settings you can enable debug logs using:
-  ```[dovecot.conf]
+  ```doveconf[dovecot.conf]
   log_debug = category=fts-solr
   ```
   and rawlogs using:
-  ```[dovecot.conf]
+  ```doveconf[dovecot.conf]
   fts_solr {
     http_client_rawlog_dir = /path/to/writable/directory/solr-rawlogs
   }

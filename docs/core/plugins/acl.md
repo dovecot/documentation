@@ -58,7 +58,7 @@ plugin should only be loaded inside a `protocol imap {}` block.
 
 ### Sample Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Enable internal ACL support
 mail_plugins {
   acl = yes
@@ -311,7 +311,7 @@ publish shared mailboxes to clients if this is not set up. You have to
 configure this manually by defining an appropriate [[link,dict]] to
 store the map using [[setting,acl_sharing_map]].
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 acl_sharing_map {
   dict file {
     path = /var/lib/dovecot/dovecot-acl.db

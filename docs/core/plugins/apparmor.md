@@ -29,7 +29,7 @@ If you provide from [[link,userdb]], use `apparmor_hats=hat`.
 
 ## Sample Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   apparmor = yes
 }

@@ -1,6 +1,6 @@
 You can enable high-performance mode with:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service imap-login {
   restart_request_count = unlimited
   process_min_avail = %{system:cpu_count}

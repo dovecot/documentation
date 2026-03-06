@@ -290,7 +290,7 @@ The proper way to configure procmail to deliver to a Maildir is to use
 Maildir exists almost always in `~/Maildir` directory. The mail location is
 specified with:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
 ```
@@ -311,7 +311,7 @@ If you want Maildirs to use hierarchical directories, such as:
 
 you'll need to enable fs layout:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mailbox_list_layout = fs
 ```
 
@@ -346,7 +346,7 @@ avoid problems with this,
 you should place control files into a partition where quota isn't checked. You
 can specify this with the [[setting,mail_control_path]] setting:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
 mail_control_path = /var/no-quota/%{user}
@@ -359,7 +359,7 @@ By default, index files are stored in the actual Maildirs.
 See [[link,mail_location]] for an explanation of how to change the index
 path. Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
 mail_index_path = /var/indexes/%{user}
@@ -391,7 +391,7 @@ with Maildir's three subdirectory names is perceived, then the
 [[setting,mailbox_directory_name]] setting can be used. For example, if we
 specify the mail location as:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
 mailbox_list_layout = fs
@@ -424,7 +424,7 @@ or not.
 
 For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
 mailbox_list_layout = fs
@@ -447,7 +447,7 @@ namespace empty {
 The solution is to disable `dovecot.list.index` for the alias namespace. In
 the above example, this is done by adding:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace empty {
   mailbox_list_index_prefix =
 }

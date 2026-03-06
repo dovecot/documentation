@@ -51,7 +51,7 @@ Enable [[link,fs_metawrap,metawrap]] to support storing metadata with
 `fs posix {}` block:
 
 Example:
-```
+```doveconf[dovecot.conf]
 fs metawrap {
 }
 fs posix {
@@ -61,7 +61,7 @@ fs posix {
 It is also possible to use multiple fs wrappers on top of each other like this:
 
 Example:
-```
+```doveconf[dovecot.conf]
 fs metawrap {
 }
 fs compress {

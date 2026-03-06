@@ -80,7 +80,7 @@ moved to the alternative storage.
 This example moves seen mails older than one week to alternative
 storage under /nfsmount:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = mdbox
 mail_path = ~/mdbox
 mail_alt_path = /nfsmount/%{home}/mdbox

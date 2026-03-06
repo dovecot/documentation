@@ -30,7 +30,7 @@ https://kaworu.ch/blog/2016/04/20/strong-crypt-scheme-with-dovecot-postfixadmin-
 * Change `dovecot.conf`, so it will look at the new fields
 
   ::: details
-  ```[dovecot.conf]
+  ```doveconf[dovecot.conf]
   passdb sql {
     # Comment default_pass_scheme so dovecot will look at the prefix
     # default_pass_scheme = CRYPT
@@ -61,7 +61,7 @@ https://kaworu.ch/blog/2016/04/20/strong-crypt-scheme-with-dovecot-postfixadmin-
 
 * `dovecot.conf`:
 
-  ```
+  ```doveconf[dovecot.conf]
   userdb prefetch {
   }
   ```
@@ -119,7 +119,7 @@ https://kaworu.ch/blog/2016/04/20/strong-crypt-scheme-with-dovecot-postfixadmin-
 
 * Update your `dovecot.conf` so it will use the scripts we just made:
 
-  ```
+  ```doveconf[dovecot.conf]
   # insert these lines so dovecot uses our scripts
   service pop3 {
     executable = pop3 pop3-postlogin
@@ -247,7 +247,7 @@ Create a new service for the postlogin script and reference it in the
 
 `/etc/dovecot/conf.d/10-master.conf`:
 
-```
+```doveconf[dovecot.conf]
 service imap {
   executable = imap imap-postlogin
   unix_listener imap-master {
@@ -265,7 +265,7 @@ service imap-postlogin {
 
 Enable the `plain_pass` variable in the auth-passwdfile configuration.
 
-```
+```doveconf[dovecot.conf]
 passdb passwd-file {
   passwd_file_path = /var/vmail/auth.d/%{user | domain}/passwd
 }

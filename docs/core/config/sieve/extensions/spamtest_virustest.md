@@ -46,7 +46,7 @@ will work on.
 X-Spam-Score: No, score=-3.2
 ```
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_extensions {
   spamtest = yes
   spamtestplus = yes
@@ -64,7 +64,7 @@ sieve_spamtest_score_max_value = 5.0
 X-Spam-Status: Yes
 ```
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_extensions {
   spamtest = yes
   spamtestplus = yes
@@ -84,7 +84,7 @@ sieve_spamtest_text_value {
 X-Spam-Score: sssssss
 ```
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_extensions {
   spamtest = yes
   spamtestplus = yes
@@ -104,7 +104,7 @@ X-Spam-Score: status=3.2 required=5.0
 X-Virus-Scan: Found to be clean.
 ```
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_extensions {
   spamtest = yes
   spamtestplus = yes

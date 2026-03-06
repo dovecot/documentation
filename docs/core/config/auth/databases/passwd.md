@@ -17,7 +17,7 @@ The lookup is by default done in the auth worker processes. If you have only a
 small local passwd file, you can avoid having extra auth worker processes by
 disabling it:
 
-```
+```doveconf[dovecot.conf]
 userdb passwd {
   use_worker = yes
 }
@@ -30,7 +30,7 @@ It's possible to override fields from passwd and add
 
 For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb passwd {
   fields {
     home = /var/mail/%{user | username}
@@ -47,7 +47,7 @@ overridden. Also the default [[link,mail_location]] setting is overridden.
 [[setting,userdb_fields_import_all]] defaults to `yes`. If it is set to `no`
 the fields to be imported need to be explicitly defined.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb passwd {
   fields_import_all = no
   fields {

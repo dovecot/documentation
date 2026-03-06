@@ -9,7 +9,7 @@ title: Postfix
 
 The first step is to enable LMTP in `dovecot.conf`:
 
-```
+```doveconf[dovecot.conf]
 protocols = imap lmtp
 ```
 
@@ -20,7 +20,7 @@ The LMTP service can be bound to both INET or Unix sockets.
 In this example, a Unix socket is placed inside the Postfix spool with
 appropriate permissions set:
 
-```
+```doveconf[dovecot.conf]
 service lmtp {
   unix_listener /var/spool/postfix/private/dovecot-lmtp {
     group = postfix
@@ -38,7 +38,7 @@ limited to this directory.
 Plugin support can be enabled at protocol level for [[plugin,quota]] and
 [[plugin,sieve]].
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 protocol lmtp {
   # REQUIRED
   postmaster_address = postmaster@domainname

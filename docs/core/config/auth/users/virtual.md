@@ -174,7 +174,7 @@ If for example `home=/var/vmail/domain/user/` and
 `mail_path=/var/vmail/domain/user/mail/`, set:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_home = /var/vmail/%{user | domain}/%{user | username}
 mail_driver = maildir
 mail_path = ~/mail
@@ -187,7 +187,7 @@ If your LDAP database uses, e.g., `mailDirectory = domain/user/`, you
 can use it as a base for home directory:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb ldap {
   ...
   fields {
@@ -219,7 +219,7 @@ contained %{user | domain} to specify the domain. If you want the files to conta
 full `user@domain` names, you can change [[setting,auth_username_format]] to
 `%{user}` or leave it out (its default value is `%{user|lower}`).
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = /home/%{user | domain}/%{user | username}/Maildir
 
@@ -238,7 +238,7 @@ Many people store only usernames and passwords in their database and
 don't want to deal with UIDs or GIDs. In that case the easiest way to
 get Dovecot running is to use the [[link,auth_staticdb,static userdb]].
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
 
@@ -264,7 +264,7 @@ If you need to do PAM/passwd lookup for system users, and also have
 domain users, you can configure authentication to drop the domain part
 after doing virtual user lookup.
 
-```[dovecot.conf]
+``doveconf[dovecot.conf]
 ## Your virtual passdb
 passdb ldap {
   args = /path/to/ldap/config

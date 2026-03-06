@@ -38,7 +38,7 @@ configuration.
 
 If you want to configure SSL, see [[link,ssl]].
 
-```[dovecot.conf]
+```dovecot[dovecot.conf]
 protocols = imap pop3
 
 # It's nice to have separate log files for Dovecot. You could do this
@@ -144,7 +144,7 @@ Alternatively, you can also use [[link,lmtp]].
 
 In config you should have:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 protocol lda {
   postmaster_address = postmaster@example.com
 }
@@ -163,7 +163,7 @@ authenticate SMTP.
 
 If you need to have [[plugin,quota,quota]], add this to `dovecot.conf`:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   quota = yes
 }

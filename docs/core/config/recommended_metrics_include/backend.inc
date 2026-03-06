@@ -9,7 +9,7 @@
 :  Number of unsuccessful authentications. See [[event,auth_request_finished]].
    These are not usually expected to happen in backends. It may be useful to
    export these events into log:
-   ```[dovecot.conf]
+   ```doveconf[dovecot.conf]
    metric auth_failures {
      exporter = log-export
    }

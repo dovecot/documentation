@@ -149,7 +149,7 @@ minutes they time out and fail the operation.
 For Dovecot you can configure locking using the [[setting,mbox_read_locks]]
 and [[setting,mbox_write_locks]] settings. The defaults are:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mbox_read_locks = fcntl
 mbox_write_locks = dotlock fcntl
 ```
@@ -176,7 +176,7 @@ Locking strategies:     dotlocking, fcntl()
 Postfix has two different ways to deliver to mboxes. One is the "mailbox"
 transport and another one is the "virtual" transport.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # postconf mailbox_delivery_lock
 mailbox_delivery_lock = fcntl, dotlock
 # postconf virtual_mailbox_lock
@@ -521,7 +521,7 @@ well. Usually `~/mail` is a good choice for this.
 
 For an installation such as this, the mail location is specified with:
 
-```[dovecot.con]
+```doveconf[dovecot.conf]
 # %{user} is replaced with the username that logs in
 mail_driver = mbox
 mail_path = ~/mail
@@ -533,7 +533,7 @@ fact, this often just brings problems because Dovecot might not be able to
 write dotlock files to the directory (see below). You can avoid this
 completely by just keeping everything in `~/mail/`:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # INBOX exists in ~/mail/inbox
 mail_driver = mbox
 mail_path = ~/mail
@@ -554,7 +554,7 @@ By default, index files are stored under an `.imap/` directory.
 See the [[link,mail_location]] for an explanation of how to
 change the index path. Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = mbox
 mail_path = ~/mail
 mail_inbox_path = /var/mail/%{user}
@@ -585,7 +585,7 @@ directory's permissions have traditionally been set up:
 
 You can give Dovecot access to mail group by setting:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_privileged_group = mail
 ```
 
@@ -662,7 +662,7 @@ If you want to put this somewhere else, you can change the directory in which
 the `.subscriptions` file is kept by using the [[setting,mail_control_path]]
 setting. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = mbox
 mail_path = ~/mail
 mail_control_path = ~/mail-control
@@ -739,7 +739,7 @@ example:
 This can be enabled by adding the [[setting,mailbox_list_layout,maildir++]]
 setting to the mail location:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Incomplete example. Do not use!
 mail_driver = mbox
 mail_path = ~/mail
@@ -756,7 +756,7 @@ the `~/mail` directory by using names which do not begin with a dot. So we
 could think to use [[setting,mail_index_path]] to store indexes at
 `~/mail/index/`. Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Incomplete example. Do not use!
 mail_driver = mbox
 mail_path = ~/mail
@@ -777,7 +777,7 @@ choosing a name which doesn't begin with a dot so we don't collide with the
 names of mbox files storing mail folders).
 That gives us:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Trick mbox configuration which allows a mail folder which contains both
 # messages and sub-folders
 mail_driver = mbox
@@ -813,7 +813,7 @@ a folder name. We could think to use something like `mBoX-MeSsAgEs`. Now,
 it turns out that you can configure Dovecot to do this using the
 [[setting,mailbox_directory_name]] setting:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Incomplete example. Do not use!
 mail_driver = mbox
 mail_path = ~/mail
@@ -849,7 +849,7 @@ the `.subscriptions` file to another directory by using the
 [[setting,mail_control_path]] setting. To get around these issues, we can add
 another directory layer which separates these purposes. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Trick mbox configuration which allows a mail folder which contains both
 # messages and sub-folders
 mail_driver = mbox

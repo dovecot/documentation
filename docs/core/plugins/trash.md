@@ -25,7 +25,7 @@ Requires [[plugin,quota]] to be loaded and configured to use non-FS quota.
 Example:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   quota = yes
   trash = yes

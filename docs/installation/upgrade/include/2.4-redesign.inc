@@ -28,7 +28,7 @@ to be prefixed to their parent filter names. For example these are equivalent
 for the [[setting,passdb_sql_query]] setting inside the [[setting,passdb]]
 filter:
 
-```
+```doveconf[dovecot.conf]
 passdb sql {
   passdb_sql_query = SELECT ...
 }
@@ -58,7 +58,7 @@ for more details.
 
 Note that earlier it was common to refer to the same setting, e.g.:
 
-```
+```doveconf[dovecot.conf]
 mail_plugins = $mail_plugins quota
 ```
 
@@ -66,7 +66,7 @@ Most of this is now unnecessary, because of the new
 [[link,settings_types_boollist,boollist]] setting type, which allows you to
 use:
 
-```
+```doveconf[dovecot.conf]
 mail_plugins {
   quota = yes
 }

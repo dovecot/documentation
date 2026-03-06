@@ -46,7 +46,7 @@ authentication attempts for the IP.
 
 Authentication penalty tracking can be disabled completely with:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service anvil {
   unix_listener anvil-auth-penalty {
     mode = 0

@@ -29,7 +29,7 @@ Lua push notification handler requires [[plugin,push-notification]],
 
 ## Example Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   mail_lua = yes
   notify = yes

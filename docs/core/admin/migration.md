@@ -99,7 +99,7 @@ If the old system is older, see
 
 First, setup doveadm service on old server:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service doveadm {
   inet_listener doveadm {
     port = 12354
@@ -111,7 +111,7 @@ doveadm_password = supersecret
 
 Then set doveadm password on new server:
 
-```
+```doveconf[dovecot.conf]
 doveadm_password = supersecret
 ```
 
@@ -207,14 +207,14 @@ on how to turn these off when necessary.
 
 Master password auth:
 
-```
+```doveconf[dovecot.conf]
 imapc_user = %{user}
 imapc_password = supersecret
 ```
 
 Master user auth:
 
-```
+```doveconf[dovecot.conf]
 imapc_user = %{user}
 imapc_master_user = master-user
 imapc_password = master-password
@@ -222,7 +222,7 @@ imapc_password = master-password
 
 Individual password auth:
 
-```
+```doveconf[dovecot.conf]
 imapc_user = %{user}
 
 # doveadm -o imapc_password=password backup -Ru user imapc:
@@ -239,7 +239,7 @@ doveadm -o imapc_password=password -o mail_driver=imapc -o mail_path= mailbox li
 If you need to retain POP3 support on your new system, you should use
 [[plugin,pop3-migration]].
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 pop3c_host = hostname
 
 # Authenticate as masteruser / masteruser-secret, but use a separate login

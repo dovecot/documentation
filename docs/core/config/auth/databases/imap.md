@@ -22,7 +22,7 @@ can be used instead (also inside `passdb { ... }` if wanted).
 
 Authenticates users against remote IMAP server in IP address 192.168.1.123:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb imap {
   imapc_host = 192.168.1.123
   imapc_port = 143

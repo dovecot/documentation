@@ -77,7 +77,7 @@ The important settings to change for rootless installation are:
 
 - Set usernames and group to the user which dovecot will be run under:
 
-  ```
+  ```doveconf[dovecot.conf]
   default_internal_user = user
   default_login_user = user
   default_internal_group = group
@@ -86,7 +86,7 @@ The important settings to change for rootless installation are:
 - Remove default chrooting from all services, this is optional if you want
   to use Linux capabilities instead.
 
-  ```
+  ```doveconf[dovecot.conf]
   service anvil {
     chroot =
   }
@@ -101,7 +101,7 @@ The important settings to change for rootless installation are:
 - Change listener ports, this is optional if you want to use Linux
   capabilities instead:
 
-  ```
+  ```doveconf[dovecot.conf]
   service imap-login {
     inet_listener imap {
       port = 10143
@@ -123,13 +123,13 @@ The important settings to change for rootless installation are:
 
 - Change logging destination:
 
-  ```
+  ```doveconf[dovecot.conf]
   log_path = /home/user/dovecot.log
   ```
 
 - Instead of [[link,auth_pam]], use, for example, [[link,auth_passwd_file]]:
 
-  ```
+  ```doveconf[dovecot.conf]
   passdb passwd-file {
     passwd_file_path = /home/user/dovecot/etc/passwd
   }

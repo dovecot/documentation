@@ -9,7 +9,7 @@ a parameter to the appropriate service's executable.
 This example sets up the global socket "general-login-socket" but
 overrides this for the imap-login process individually (in `dovecot.conf`):
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 login_socket_path = general-login-socket
 
 service imap-login {

@@ -94,7 +94,7 @@ The automatic replies aren't sent if any of the following is true:
 
 ### Example
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Use vacation-seconds
 sieve_extensions {
   vacation-seconds = yes

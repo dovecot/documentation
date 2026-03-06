@@ -18,7 +18,7 @@ properly.
 
 ## Sample Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   charset_alias = yes
 }

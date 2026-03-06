@@ -48,7 +48,7 @@ To move to a mailbox, do NOT add a trailing delimiter to the
 
 ::: code-group
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   mailbox .EXPUNGED {
     autoexpunge = 7days
@@ -109,7 +109,7 @@ is hidden from users via ACL).
 
 Example to exclude expunged storage from the quota:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 quota "User quota" {
   quota_storage_size = 1GB
 }

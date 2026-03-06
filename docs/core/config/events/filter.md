@@ -129,7 +129,7 @@ For example, to match events with the event name `abc`, one would use one of
 the following expressions.  Note that white space is not significant between
 tokens, and therefore the following are all equivalent:
 
-```
+```doveconf[dovecot.conf]
 event=abc
 event="abc"
 event = abc
@@ -138,14 +138,14 @@ event = "abc"
 
 A more complicated example:
 
-```
+```doveconf[dovecot.conf]
 event=abc OR (event=def AND (category=imap OR category=lmtp) AND \
     NOT category=debug AND NOT (net_in_bytes<1024 OR net_out_bytes<1024))
 ```
 
 A complicated example using size matching:
 
-```
+```doveconf[dovecot.conf]
 (category=debug AND NOT (net_in_bytes<1KB OR net_out_bytes<1KB)) OR \
     (event=abc AND (message_size>1gb and message_size<1tB)) OR \
     (event=def AND (duration<1mins))
@@ -160,7 +160,7 @@ values.
 The `filter` metric key is set to the desired common filter language
 expression. For example:
 
-```
+```doveconf[dovecot.conf]
 metric example_http_metric {
   filter = event=http_request_finished AND \
       source_location=http-client.c:123 AND category=storage AND \
@@ -173,7 +173,7 @@ metric example_http_metric {
 Settings such as [[setting,log_debug]] use the common filtering language.
 For example:
 
-```
+```doveconf[dovecot.conf]
 log_debug = (event=http_request_finished AND category=imap) OR \
     (event=imap_command_finished AND user=testuser)
 ```

@@ -30,7 +30,7 @@ enabled explicitly by adding it to [[setting,sieve_extensions]].
 
 ### Example
 
-```
+```doveconf[dovecot.conf]
 # Use extlists
 sieve_extensions {
   extlists = yes

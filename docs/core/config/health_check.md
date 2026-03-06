@@ -10,7 +10,7 @@ dovecotlinks:
 If you need dovecot to offer health-check functionality, use the health-check
 service by extending it's configuration with a listener like this:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service health-check {
   # this is the default configuration using the simple PING->PONG
   # example health-check.

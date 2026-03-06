@@ -27,7 +27,7 @@ Last login information is also useful in determining system usage statistics.
 
 ## Example Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 protocol imap {
   mail_plugins {
     last_login = yes
@@ -64,7 +64,7 @@ This includes the service and remote IP address as well.
 
 ::: code-group
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 last_login {
   dict proxy {
     name = sql
@@ -119,7 +119,7 @@ This includes the service and remote IP address as well.
 
 ::: code-group
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 last_login {
   dict proxy {
     name = cassandra
@@ -178,7 +178,7 @@ separate fields to the main users table.
 
 ::: code-group
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 last_login {
   dict proxy {
     name = cassandra

@@ -374,7 +374,7 @@ steal resources from other processes that are user facing.
 A recommendation is to execute the process at a lower priority. This can be
 done by prefixing the executable location with a priority modifier, such as:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service indexer-worker {
   executable = /usr/bin/nice -n 10 /usr/libexec/dovecot/indexer-worker
 }

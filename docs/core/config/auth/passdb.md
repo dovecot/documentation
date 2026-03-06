@@ -274,7 +274,7 @@ configuration it may cause problems, such as `/var/mail/user` and
 
 An example [[setting,passdb_sql_query]] would be:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb sql {
   query = SELECT concat(user, '@', domain) AS user, password \
     FROM users \
@@ -284,7 +284,7 @@ passdb sql {
 
 You can also update "username" and "domain" fields separately:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb sql {
   query = SELECT user AS username, domain, password \
     FROM users \
@@ -331,7 +331,7 @@ The keyword `local` is accepted for Non-IP connections like Unix socket.
 For example, with a Postfix/LMTP delivery setup, you must include `local` for
 Postfix to verify the email account:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb static {
   password = test
   fields {
@@ -500,7 +500,7 @@ Import `name=value` to login events.
 
 #### SQL
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb sql {
   query = SELECT userid AS user, password, 'Y' as proxy, host \
     FROM users WHERE userid = '%{user}'
@@ -511,7 +511,7 @@ passdb sql {
 #### LDAP
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb ldap {
   ...
   fields {
@@ -533,7 +533,7 @@ be selectable per user.
 To have it `always` on, use a template, e.g.:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 fields {
     user     = %{ldap:user}
     password = %{ldap:userPassword}

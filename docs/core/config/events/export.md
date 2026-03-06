@@ -39,7 +39,7 @@ setting.
 For example, the following block defines an exporter that uses the `http-post`
 driver and `json` format:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 event_exporter http-localhost {
   driver = http-post
   http_post_url = http://localhost:1234/
@@ -153,7 +153,7 @@ filter the event to be exported. See [[setting,metric_exporter]] and
 If one wishes to send the events associated with IMAP commands completion to
 a datalake having a HTTP API, one could use config such as:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 event_exporter datalake {
   driver = http-post
   http_post_url = https://datalake.example.com/api/endpoint/somewhere
@@ -173,7 +173,7 @@ metric imap_commands {
 When debugging, it is sometimes useful to dump information to the log.
 For example, to output all named events from the IMAP service:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 event_exporter log {
   driver = log
 

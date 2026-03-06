@@ -11,7 +11,7 @@ If you want to do something special after authentication, but before beginning
 the IMAP or POP3 session, you can do this by telling imap/pop3 executable to
 use post-login service by editing `dovecot.conf`:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service imap {
   # tell imap to do post-login lookup using a socket called "imap-postlogin"
   executable = imap imap-postlogin
@@ -33,7 +33,7 @@ service imap-postlogin {
 You can run multiple post-login scripts by just giving multiple scripts as
 parameters to `script-login`, for example:
 
-```
+```doveconf[dovecot.conf]
 executable = script-login rawlog /usr/local/bin/postlogin.sh /usr/local/bin/postlogin2.sh
 ```
 

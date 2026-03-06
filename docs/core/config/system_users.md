@@ -117,7 +117,7 @@ It's also possible to give all the users access to extra groups with
 Depending on passdb and userdb configuration, the lookups are done either by
 auth process or auth worker process. They have different default users:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service auth {
   user = $SET:default_internal_user
 }
@@ -135,7 +135,7 @@ If you don't need this, you should change it to `$SET:default_internal_user`.
 [[link,auth_pam]] is usually configured to read `/etc/shadow` file.
 Even this doesn't need root access if the file is readable by shadow group:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service auth-worker {
   user = $SET:default_internal_user
   group = shadow

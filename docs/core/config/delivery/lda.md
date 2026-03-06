@@ -67,7 +67,7 @@ dovecot-lda -f $FROM_ENVELOPE -d $DEST_USERNAME
 You'll need to set up a auth-userdb socket for dovecot-lda so it knows
 where to find mailboxes for the users:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service auth {
   unix_listener auth-userdb {
     mode = 0600
@@ -152,7 +152,7 @@ don't have to give any extra write permissions to other log files or the
 syslog socket. You can do this by overriding the [[setting,log_path]]
 and [[setting,info_log_path]] settings:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 protocol lda {
   ...
   # remember to give proper permissions for these files as well
@@ -163,7 +163,7 @@ protocol lda {
 
 For using syslog with dovecot-lda, set the paths empty:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 protocol lda {
   ...
   log_path =

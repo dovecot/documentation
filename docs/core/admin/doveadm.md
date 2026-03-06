@@ -72,20 +72,20 @@ To be able to use doveadm HTTP API it's mandatory to configure either
 
 To configure password for doveadm service in `dovecot.conf`:
 
-```
+```doveconf[dovecot.conf]
 doveadm_password = secretpassword
 ```
 
 Or, if preferred to use separate key for doveadm HTTP API, then it can
 be enabled by defining key in config:
 
-```
+```doveconf[dovecot.conf]
 doveadm_api_key = key
 ```
 
 Enable the doveadm http listener:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service doveadm {
   unix_listener doveadm-server {
     user = vmail

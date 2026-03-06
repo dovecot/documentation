@@ -107,13 +107,13 @@ the UIDLs to be compatible with your previous POP3 server.
 For new POP3 servers, the easiest way to set up UIDLs is to use IMAP's
 UIDVALIDITY and UID values. The default is:
 
-```
+```doveconf[dovecot.conf]
 pop3_uidl_format = %{uid | hex(8)}%{uidvalidity | hex(8)}
 ```
 
 Another good default is to use the message's global UID:
 
-```
+```doveconf[dovecot.conf]
 pop3_uidl_format = %{guid}
 ```
 
@@ -123,7 +123,7 @@ done using IMAP, Sieve, or doveadm.)
 
 ### MD5 UIDL format (mbox-only)
 
-```
+```doveconf[dovecot.conf]
 pop3_uidl_format = %{md5}
 ```
 

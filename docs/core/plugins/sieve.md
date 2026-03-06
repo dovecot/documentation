@@ -62,7 +62,7 @@ mailboxes.
 
 Then, you need to enable the Sieve plugin in your configuration:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 protocol lda {
   mail_plugins {
     sieve = yes
@@ -86,7 +86,7 @@ order to be executed in sequence.
 
 Script storages are configured in a named [[setting,sieve_script]] block:
 
-```
+```doveconf[dovecot.conf]
 sieve_script personal {
   path = ~/.dovecot.sieve
 }
@@ -275,7 +275,7 @@ are stored in the same directory as the corresponding sieve scripts by default.
 
 #### Example
 
-```
+```doveconf[dovecot.conf]
 sieve_script personal {
   driver = file
   path = ~/sieve
@@ -336,7 +336,7 @@ compiled each time they are called.
 To improve performance, [[setting,sieve_script_bin_path]] should be specified to
 cache the compiled binaries on the local filesystem. For Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_script personal {
   driver = dict
   name = keep
@@ -365,7 +365,7 @@ To retrieve the Sieve script named "keep" from the dict file
 /etc/dovecot/sieve.dict:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Only the "keep" script will be used.
 sieve_script personal {
   driver = dict
@@ -417,7 +417,7 @@ create a dict proxy service (in `dovecot.conf`). Finally, configure Sieve to
 check the dict to lookup up a script called "active" in the database:
 
 ::: code-group
-```[/etc/dovecot/dict-sieve-sql.conf.inc]
+```doveconf[/etc/dovecot/dict-sieve-sql.conf.inc]
 # The name mapping that yields the ID of the Sieve script
 
 # The name of the script, as per the "sieve" config parameter
@@ -459,7 +459,7 @@ dict_map priv/sieve/data/$id {
 }
 ```
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 dict_server {
   dict sieve {
     driver = sql
@@ -536,7 +536,7 @@ from LDAP. Thus, the Sieve binaries will be compiled each time they are called.
 To improve performance, [[setting,sieve_script_bin_path]] should be specified to
 cache the compiled binaries on the local filesystem. For Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_script personal {
   driver = ldap
   name = keep
@@ -564,14 +564,14 @@ If support for the `ldap` script storage driver is compiled as a plugin, it
 needs to be added to the [[setting,sieve_plugins]] setting before it can be
 used, e.g.:
 
-```
+```doveconf[dovecot.conf]
 sieve_plugins {
   sieve_storage_ldap = yes
 }
 ```
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_script personal {
   driver = ldap
   bin_path = ~/.sieve-bin/
@@ -643,7 +643,7 @@ This can be done in two ways:
 For example, to use a Sieve script file named `<username>.sieve` in
 `/var/sieve-scripts`, use:
 
-```
+```doveconf[dovecot.conf]
 sieve_script personal {
   path = /var/sieve-scripts/%{user}.sieve
 }
@@ -700,7 +700,7 @@ actions are simply discarded.
 
 For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Global scripts executed before the user's personal script.
 #   E.g. handling messages marked as dangerous
 sieve_script before1 {
@@ -780,7 +780,7 @@ edited script is saved through the ManageSieve client, it will override the
 default script. If the user ever wants to revert to the default, the user only
 needs to delete the edited script and the default will reappear.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_script personal {
   path = ~/sieve
   active_path = ~/.dovecot.sieve

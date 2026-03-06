@@ -26,7 +26,7 @@ For a simple setup, a single `dovecot.conf` file is recommended.
 You need to create group `vmail` and user `vmail`.
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Start new configs with the latest Dovecot version numbers here:
 dovecot_config_version = 2.4.0
 dovecot_storage_version = 2.4.0
@@ -128,7 +128,7 @@ is configured.
 Switch to passwd-file authentication by replacing `passdb pam` in
 `dovecot.conf` with `passdb passwd-file`:
 
-```
+```doveconf[dovecot.conf]
 passdb passwd-file {
   passwd_file_path = /etc/dovecot/passwd
 }

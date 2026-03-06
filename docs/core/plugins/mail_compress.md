@@ -31,7 +31,7 @@ The following algorithms are supported:
 
 ## Example Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Enable compression plugin globally for reading/writing:
 mail_plugins {
   mail_compress = yes

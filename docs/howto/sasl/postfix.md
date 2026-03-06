@@ -22,7 +22,7 @@ SASL, it's very simple to configure:
 ## Configuration
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service auth {
   ...
   unix_listener /var/spool/postfix/private/auth {

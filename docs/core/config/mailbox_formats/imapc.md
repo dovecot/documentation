@@ -22,7 +22,7 @@ optionally a more capable storage.
 
 Do a regular IMAP LOGIN, using STARTTLS, to imap.example.com:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # In-memory index files:
 mail_driver = imapc
 mail_path =
@@ -49,7 +49,7 @@ up:
 
 ### Example
 
-```
+```doveconf[dovecot.conf]
 quota "User Quota" {
   driver = imapc
   imapc_root_name = Remote Quota

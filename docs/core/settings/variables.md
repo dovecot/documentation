@@ -425,7 +425,7 @@ For best results, you should leave salt and IV management to Dovecot.
 
 ### Examples
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 import_environment {
    SECRET_KEY = %{env:SECRET_KEY}
 }

@@ -316,7 +316,7 @@ include :personal "my-own-spam";
 
 The lookup directories can be specified with:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_script personal {
   type = personal
   # Directory where the sieve include plugin retrieves :personal scripts from.

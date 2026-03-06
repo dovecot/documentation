@@ -61,7 +61,7 @@ Three plugins are associated with quota:
 
 Enable in configuration files, e.g.:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Enable quota plugin for tracking and enforcing the quota.
 mail_plugins {
   quota = yes
@@ -115,7 +115,7 @@ quota.
 
 #### Example
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 quota_storage_size = 1G
 namespace inbox {
   mailbox Trash {
@@ -149,7 +149,7 @@ quota settings.
 Example [[link,auth_ldap]] where the quota limit is in `quotaBytes` field:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb ldap {
   ...
   fields {
@@ -164,7 +164,7 @@ userdb ldap {
 
 Example (for MySQL):
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb sql {
   query = SELECT uid, gid, home, CONCAT(quota_limit_bytes, 'B') AS quota_storage_size \
     FROM users \
@@ -182,7 +182,7 @@ passdb sql {
 
 Example (for PostgreSQL and SQLite):
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sql_driver = sqlite # alternatively: pgsql
 
 userdb sql {
@@ -215,7 +215,7 @@ You can create a separate namespace-specific quota that's shared between all
 users. This is done by configuring the quota root inside the namespace filter.
 For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace public {
   type = public
   prefix = Public/
@@ -239,7 +239,7 @@ You can create a separate namespace-specific quota for a folder hierarchy.
 This is done by configuring the quota root inside the namespace filter.
 For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   quota "User quota" {
     #quota_storage_size = ...
@@ -275,7 +275,7 @@ See [[setting,quota_exceeded_message]].
 
 Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 quota_exceeded_message = Quota exceeded, please go to http://www.example.com/over_quota_help for instructions on how to fix this.
 ```
 ## Quota Drivers
@@ -317,7 +317,7 @@ mailbox vsizes for all the users before doing the configuration change:
 
 `count` driver doesn't have any additional parameters.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mailbox_list_index = yes
 
 # Avoid spending excessive time waiting for the quota calculation to finish
@@ -381,7 +381,7 @@ allocated inside the mbox file for flag changes.
 
 Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = mbox
 mail_path = ~/mail
 mail_inbox_path = /var/mail/%{user}
@@ -400,7 +400,7 @@ the [[setting,mail_control_path]] setting.
 
 Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
 mail_index_path = /var/no-quotas/index/%{user}
@@ -413,7 +413,7 @@ mailbox `subscriptions` file.
 
 #### Configuration Examples
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   quota = yes
 }
@@ -431,7 +431,7 @@ quota user {
 If you want to see both user and group quotas as separate quota roots, you can
 use:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 quota "User quota" {
   driver = fs
   fs_type = user
@@ -444,7 +444,7 @@ quota "Group quota" {
 
 If you have your mails in two filesystems, you can create two quota roots:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 quota INBOX {
   driver = fs
   # Assuming INBOX in /var/mail/ which is mounted to /
@@ -513,7 +513,7 @@ The quota service allows Postfix to check quota before delivery. This service
 does not support proxying, so it works only in non-clustered setups when there
 is a single Dovecot server.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service quota-status {
   executable = quota-status -p postfix
   inet_listener quota-status {
@@ -559,7 +559,7 @@ as the \`quota-warning socket name\` argument).
 
 ### Example Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 quota user {
   warning warn-95 {
     quota_storage_percentage = 95
@@ -643,7 +643,7 @@ These settings are available:
 
 Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 quota_over_status {
   # If quota_over_status_current=TRUE, the overquota-flag is enabled.
   # Otherwise not.
@@ -672,7 +672,7 @@ so by default this limit is 10 MB.
 
 To change the quota grace, use:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # allow user to become max 50 MB over quota
 quota_storage_grace = 50 M
 }
@@ -768,7 +768,7 @@ server protocol. This allows Postfix to check the quota before mail delivery.
 Example:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service quota-status {
   executable = quota-status -p postfix
   unix_listener /var/spool/postfix/private/quota-status {

@@ -35,7 +35,7 @@ This is based on already having Dovecot already compiled and installed.
 
 3. Create `dovecot.conf`:
 
-   ```[dovecot.conf]
+   ```doveconf[dovecot.conf]
    ## Dovecot configuration file
 
    mail_uid = imapproxy
