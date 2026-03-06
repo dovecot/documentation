@@ -30,7 +30,7 @@ the [[setting,oauth2]] named filter.
 ### Common
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 auth_mechanisms {
   oauthbearer = yes
   xoauth2 = yes
@@ -51,7 +51,7 @@ oauth2 {
 Configuration file example for
 [Google](https://developers.google.com/identity/protocols/OAuth2):
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 oauth2 {
   tokeninfo_url = https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=
   introspection_url = https://www.googleapis.com/oauth2/v2/userinfo
@@ -64,7 +64,7 @@ oauth2 {
 Configuration file example for
 [WSO2 Identity Server](https://wso2.com/identity-and-access-management/):
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 oauth2 {
   introspection_mode = post
   introspection_url = https://client_id:client_secret@server.name:port/oauth2/introspect
@@ -78,7 +78,7 @@ oauth2 {
 Configuration file example for
 [Microsoft Identity Platform](https://learn.microsoft.com/en-us/entra/identity-platform/userinfo):
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 oauth2 {
   introspection_mode = auth
   introspection_url = https://graph.microsoft.com/v1.0/me
@@ -95,7 +95,7 @@ various ways.
 
 Without proxy authentication:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb static {
   fields {
     nopassword = yes
@@ -108,7 +108,7 @@ passdb static {
 
 With proxy authentication, put into `dovecot.conf`:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 oauth2 {
   # ...
   fields {
@@ -123,7 +123,7 @@ oauth2 {
 If you want to configure proxy to get token and pass it to backend:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 oauth2 {
   client_id = verySecretClientId
   client_secret = verySecretSecret
@@ -224,7 +224,7 @@ introspection roundtrip to oauth2 server.
 
 To use local validation, put into `dovecot.conf`:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 oauth2 {
   introspection_mode = local
   oauth2_local_validation {

@@ -24,7 +24,7 @@ lookups.
 
 ## Dovecot Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # sql driver-specific settings
 
 passdb sql {
@@ -77,7 +77,7 @@ return NULL as the password and return the row only if the password matches.
 You'll also need to return a non-NULL `nopassword` field. The password is in
 `%{password}` variable. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb sql {
   query = SELECT NULL AS password, 'Y' as nopassword, userid AS user \
     FROM users \
@@ -104,7 +104,7 @@ other fields that can be returned.
 If you're using a single UID and GID for all users, you can set them in
 dovecot.conf with:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_uid = vmail
 mail_gid = vmail
 ```
@@ -170,7 +170,7 @@ CREATE TABLE users (
 
 Add to your `dovecot.conf` file:
 
-```
+```doveconf[dovecot.conf]
 sql_driver = mysql
 
 # The mysqld.sock socket may be in different locations in different systems.
@@ -204,7 +204,7 @@ userdb sql {
 
 Add to your `dovecot.conf` file:
 
-```
+```doveconf[dovecot.conf]
 sql_driver = pgsql
 
 pgsql localhost {
@@ -235,7 +235,7 @@ userdb sql {
 
 Add to your `dovecot.conf` file:
 
-```
+```doveconf[dovecot.conf]
 sql_driver = sqlite
 sqlite_path = /path/to/sqlite.db
 

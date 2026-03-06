@@ -44,7 +44,7 @@ The keys that are written:
 
 ## Example Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   quota = yes
   quota_clone = yes
@@ -60,7 +60,7 @@ quota_clone {
 
 More complex example using SQL:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 dict_server {
   dict mysql {
     driver = sql

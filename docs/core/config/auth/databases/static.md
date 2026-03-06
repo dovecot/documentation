@@ -59,7 +59,7 @@ a simple template.
 
 The syntax is:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb static {
   fields {
     uid = <uid>
@@ -99,7 +99,7 @@ which case the passdb lookup is skipped.
 
 ### Example
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb static {
   fields {
     uid = 500

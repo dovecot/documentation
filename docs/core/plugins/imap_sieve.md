@@ -46,7 +46,7 @@ tested using the `ihave` test ([[rfc,5463]]) as usual.
 The IMAP plugin is activated by adding it to the
 [[setting,mail_plugins]] setting for the imap protocol:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 protocol imap {
   mail_plugins {
     imap_sieve = yes
@@ -98,7 +98,7 @@ from the source mailbox in that case.
 The Sieve plugin is activated by adding it to the [[setting,sieve_plugins]]
 setting:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_plugins {
   sieve_imapsieve = yes
 }
@@ -110,7 +110,7 @@ does not need to be added to the [[setting,sieve_extensions]] setting.
 
 ## Example Configuration
 
-```[dovecot.conf]]]
+```doveconf[dovecot.conf]
 imapsieve_from Spam {
   sieve_script ham {
     type = before

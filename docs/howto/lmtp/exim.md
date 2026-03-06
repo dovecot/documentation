@@ -115,7 +115,7 @@ Exim retains the case of the local part. Dovecot's LMTP *may* fail
 looking up an incorrect cased local part in your userdb. You can solve
 this problem by extending the *protocol lmtp* section:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 protocol lmtp {
   ...
   # strip away the domain part

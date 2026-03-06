@@ -31,7 +31,7 @@ See Also:
 This plugin requires a pop3c namespace configured for accessing the source
 POP3 server. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace pop3c {
   prefix = POP3-MIGRATION-NS/
   separator = /

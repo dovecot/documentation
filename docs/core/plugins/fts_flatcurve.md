@@ -31,7 +31,7 @@ This plugin requires the [[plugin,fts]] to be activated and configured
 
 Enabling flatcurve is designed to be as easy as adding this to configuration:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   fts = yes
   fts_flatcurve = yes
@@ -51,7 +51,7 @@ The default settings should be fine in most scenarios.
 
 ## Configuration Example
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   fts = yes
   fts_flatcurve = yes

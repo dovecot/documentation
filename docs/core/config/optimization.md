@@ -29,7 +29,7 @@ export TZ=:/etc/localtime
 
 or directly from inside the Dovecot configuration file:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 import_environment {
   TZ = :/etc/localtime
 }
@@ -130,7 +130,7 @@ Note that these settings do NOT directly affect the memory usage:
 
 For Linux/glibc it's recommended to set:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 import_environment {
   MALLOC_MMAP_THRESHOLD_ = 131072
 }

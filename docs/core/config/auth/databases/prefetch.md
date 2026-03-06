@@ -33,7 +33,7 @@ you might want to use [[link,auth_staticdb]] instead of prefetch.
 ### Example
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb ldap {
   ...
   fields {
@@ -65,7 +65,7 @@ userdb ldap {
 
 ### Example
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sql_driver = mysql
 mysql localhost {
 }

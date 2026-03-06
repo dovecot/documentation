@@ -2,7 +2,7 @@
 
 [[link,passdb]] and [[link,userdb]] sections now require a name, i.e.:
 
-```
+```doveconf[dovecot.conf]
 # This gives an error:
 passdb {
   ...

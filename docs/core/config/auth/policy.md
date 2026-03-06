@@ -40,7 +40,7 @@ them inside [[setting,auth_policy]] [[link,settings_syntax_named_filters]].
 
 ### Required Minimum Configuration
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 auth_policy_server_url = http://example.com:4001/
 auth_policy_hash_nonce = localized_random_string
 
@@ -105,7 +105,7 @@ login=%{orig_username} pwhash=%{hashed_password} remote=%{real_rip} attrs/ja3=%{
 
 
 ::: code-group
-```[Configuration]
+```doveconf[dovecot.conf]
 login=%{orig_username} pwhash=%{hashed_password} remote=%{real_rip} attrs/cos=%{userdb:cos}
 ```
 

@@ -84,7 +84,7 @@ There are few ways you can use this script.
 
 First, is drop-in replacement for director with no authentication.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb lua {
   lua_file = /etc/dovecot/director.lua
   fields {
@@ -98,7 +98,7 @@ passdb lua {
 
 Alternatively, if you wish to do authentication:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb pam {
   result_success = continue-ok
 }

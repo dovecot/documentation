@@ -271,7 +271,7 @@ Working data could look like this:
 | joe | 192.168.0.2 | joe@example.com |
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # If you want to trade a bit of security for higher performance, change
 # these settings:
 service imap-login {
@@ -316,7 +316,7 @@ CREATE TABLE users (
 );
 ```
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # user/group who owns the message files:
 mail_uid = vmail
 mail_gid = vmail

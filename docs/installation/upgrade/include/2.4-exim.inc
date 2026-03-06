@@ -6,7 +6,7 @@ Dovecot authentication to hang. Use the `auth-legacy` listener type to work
 around it until Exim supports the updated protocol:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service auth {
   unix_listener auth-exim {
     type = auth-legacy

@@ -74,7 +74,7 @@ variables are provided:
 
 Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 metric imap_command {
   filter = event=imap_command_finished
   group_by cmd_name {
@@ -151,7 +151,7 @@ upper bounds for the range.
 
 Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 metric imap_command {
   filter = event=imap_command_finished
   group_by cmd_name {
@@ -305,7 +305,7 @@ doveadm stats remove imap_cmd_select
 
 ### IMAP Command Statistics
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 metric imap_select_no {
   filter = event=imap_command_finished AND cmd_name=SELECT AND \
       tagged_reply_state=NO
@@ -331,7 +331,7 @@ metric imap_command {
 
 ### Push Notifications
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 metric push_notifications {
   filter = event=push_notification_finished
 }
@@ -351,7 +351,7 @@ format for statistics.
 
 This can be enabled by adding following configuration:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service stats {
   inet_listener http {
     port = 9900
@@ -399,7 +399,7 @@ An excerpt of an example Dovecot configuration that defines a set of metrics,
 and the sample exported data with such metrics configuration:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 metric auth_success {
   filter = (event=auth_request_finished AND success=yes)
 }

@@ -42,7 +42,7 @@ Examples:
 
 * Use `/etc/pam.d/imap` and `/etc/pam.d/pop3`:
 
-  ```[dovecot.conf]
+  ```doveconf[dovecot.conf]
   passdb pam {
     service_name = %{protocol}
   }
@@ -50,7 +50,7 @@ Examples:
 
 * Use `/etc/pam.d/mail`:
 
-  ```[dovecot.conf]
+  ```doveconf[dovecot.conf]
   passdb pam {
     service_name = mail
   }
@@ -63,7 +63,7 @@ PAM session and close it immediately. Some PAM plugins need this, for instance
 `pam_mkhomedir`. With this parameter, `dovecot.conf` might look something like
 this:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb pam {
   session = yes
   service_name = dovecot
@@ -87,7 +87,7 @@ If you notice that PAM authentication stops working after some time, you
 can limit the number of lookups done by the auth worker process before it
 dies using the [[setting,passdb_pam_max_requests]] setting:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb pam {
   max_requests = 100
 }
@@ -104,7 +104,7 @@ A PAM module can change the username.
 You can replace the default "Authentication failed" reply with PAM's failure
 reply by setting [[setting,passdb_pam_failure_show_msg]]:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb pam {
   failure_show_msg = yes
 }
@@ -122,7 +122,7 @@ you're supposed to give:
 
 You can restrict the IP-Addresses allowed to connect via PAM:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb pam {
   fields {
     allow_nets = 10.1.100.0/23,2001:db8:a0b:12f0::/64
@@ -137,7 +137,7 @@ Dovecot supports caching password lookups by setting
 
 Examples:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # 1MB auth cache size
 auth_cache_size = 1024
 passdb pam {
@@ -191,7 +191,7 @@ password    required       pam_opendirectory.so
 versions of OS X (e.g. 10.4), can be represented (where?) as the following in
 the on that OS:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb pam {
   service_name = login
 }
@@ -205,7 +205,7 @@ username/password authenticator.
 This will provide full system user authentication with true homedir mail
 storage, without resorting to a single virtual mail user or LDAP:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb passwd {
 }
 ```

@@ -93,7 +93,7 @@ KVNO Principal
 
 If you only want to use Kerberos ticket-based authentication:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 auth_gssapi_hostname = "$ALL"
 auth_mechanisms = gssapi
 auth_krb5_keytab = /etc/dovecot/dovecot.keytab
@@ -113,7 +113,7 @@ userdb static {
 If you also want to support plaintext authentication in addition to
 ticket-based authentication, you will need something like:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 auth_mechanisms = plain login gssapi
 auth_gssapi_hostname = "$ALL"
 auth_krb5_keytab = /etc/dovecot/dovecot.keytab
@@ -143,7 +143,7 @@ account sufficient pam_krb5.so
 
 Then enable PAM passdb:
 
-```
+```doveconf[dovecot.conf]
 passdb pam {
 }
 ```

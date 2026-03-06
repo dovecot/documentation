@@ -40,7 +40,7 @@ You can configure LMTP to be listening on TCP or UNIX sockets:
 By general convention, LMTP is expected to listen on port 24.
 :::
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # add lmtp to protocols, otherwise its listeners are ignored
 protocols {
   lmtp = yes
@@ -70,7 +70,7 @@ deliveries to more than a single user with different UID.
 If you're using only a single global UID/GID (i.e. virtual users), you can
 improve security by running lmtp processes as that user:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service lmtp {
   user = vmail
 }
@@ -89,7 +89,7 @@ need to tell Dovecot LMTP to issue passdb lookups: [[setting,lmtp_proxy,yes]].
 For higher volume sites, it may be desirable to increase the number of
 active listener processes. A range of 5 - 20 is probably good for most sites:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service lmtp {
   process_min_avail = 5
 }
@@ -100,7 +100,7 @@ service lmtp {
 If you want to store LMTP delivery logs to a different file, you can do
 it with:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service lmtp {
   executable = lmtp -L
 }

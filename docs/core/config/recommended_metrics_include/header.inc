@@ -6,7 +6,7 @@ can be found [[link,summary_events,here]].
 
 The following examples use the custom `log-export` exporter.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 event_exporter log-export {
   format = json
   format_args = time-rfc3339

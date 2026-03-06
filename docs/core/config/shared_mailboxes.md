@@ -41,7 +41,7 @@ See [[link,namespaces]] for details of how namespaces are configured.
 
 For example to create a public Maildir mailboxes, use:
 
-```[dovecot.conf]
+```dovecot[dovecot.conf]
 # User's private mail location
 mail_driver = maildir
 mail_path = ~/Maildir
@@ -86,7 +86,7 @@ mailboxes is to create private indexes with
 files, which contain only the message UIDs and the private flags. Currently the
 list of private flags is hardcoded only to the \\Seen flag.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace public {
   type = public
   separator = /
@@ -113,7 +113,7 @@ parent namespace's subscriptions file.
 
 If you don't otherwise have a namespace with empty prefix, create one:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace subscriptions {
   prefix =
   separator = /
@@ -132,7 +132,7 @@ namespace subscriptions {
 If you have a read-only directory structure containing mbox files,
 you'll need to store index files elsewhere:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace public {
   type = public
   prefix = Public/
@@ -167,7 +167,7 @@ the index files to a per-user directory, otherwise you'll get errors. It
 is however possible to use shared control files but per-user index
 files, assuming you've set up permissions properly.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace public {
   type = public
   separator = /
@@ -195,7 +195,7 @@ namespace public {
 
 See [[plugin,acl]] for more information about ACLs.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace public {
   type = public
   separator = .
@@ -224,7 +224,7 @@ for shared).
 To enable mailbox sharing, you'll need to create a shared namespace. See
 [[plugin,acl]] for more information about ACL-specific settings.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # User's private mail location.
 mail_driver = maildir
 mail_path = ~/Maildir
@@ -285,7 +285,7 @@ These can be used in [[link,mail_location]]. If the users' mailboxes can be
 found using a template, it's a bit more efficient to not use `%{owner_home}`.
 For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = /var/mail/%{owner_domain}/%{owner_username}/Maildir
 mail_index_private_path = ~/Maildir/shared/%{owner_user}
@@ -320,7 +320,7 @@ See [[setting,acl_sharing_map]] for plugin setting information.
 You could use any dictionary driver, including SQL or Cassandra, but a
 simple flat file should work pretty well too:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 acl_sharing_map {
   dict file {
     path = /var/lib/dovecot/db/shared-mailboxes.db
@@ -337,7 +337,7 @@ If you use multiple domains and don't wish users to share their
 mailboxes to users in other domains, you can use separate dict files for
 each domain:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 acl_sharing_map {
   dict file {
     path = /var/mail/%{user | domain}/shared-mailboxes.db
@@ -350,7 +350,7 @@ acl_sharing_map {
 See [[link,dict]] for more information, especially about permission issues.
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 acl_sharing_map {
   dict proxy {
     name = acl
@@ -699,7 +699,7 @@ chmod 02770 /var/mail # or perhaps 03770 for extra security
 
 and in `dovecot.conf`:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = /var/vmail/%{user | domain}/%{user | username}/Maildir
 mail_access_groups = dovemail

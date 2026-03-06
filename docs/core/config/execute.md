@@ -35,7 +35,7 @@ must execute the `script` binary to provide the proper communication API.
 
 Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 execute test-script {
   #driver = unix # default
   args = hello %{user}
@@ -57,7 +57,7 @@ must execute the `script` binary to provide the proper communication API.
 
 Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 execute localhost:12345 {
   driver = tcp # default
   args = hello %{user}
@@ -78,7 +78,7 @@ Fork the process and execute the script directly.
 
 Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 execute /usr/local/bin/test-script.sh {
   driver = fork
   args = hello %{user}

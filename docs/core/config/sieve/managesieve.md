@@ -93,7 +93,7 @@ The following provides example configurations for ManageSieve in
 `dovecot.conf`. Only sections relevant to ManageSieve and the Sieve plugin
 are shown.
 
-```
+```doveconf[dovecot.conf]
 ...
 service managesieve-login {
   #inet_listener sieve {

@@ -12,7 +12,7 @@ https://technet.microsoft.com/en-us/library/cc978012.aspx.
 # LDAP Driver Configuration
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb ldap {
   ...
 }
@@ -26,7 +26,7 @@ The most important settings are:
 (Active directory allows binding with username@domain):
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
   ldap_uris = ldap://ldap.example.com
   ldap_auth_dn = cn=admin,dc=example,dc=com
   ldap_auth_dn_password = secret
@@ -37,7 +37,7 @@ The most important settings are:
 - Use LDAP authentication binding for verifying users' passwords:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb ldap {
   bind_userdn = %{user}
   bind = yes
@@ -49,7 +49,7 @@ passdb ldap {
 concurrent LDAP connections. Otherwise only a single LDAP connection is used.
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 (passdb|userdb) ... {
   use_worker = yes
 }
@@ -60,7 +60,7 @@ concurrent LDAP connections. Otherwise only a single LDAP connection is used.
 regardless of how the [[setting,passdb_ldap_filter]] found the user:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb ldap {
   fields {
       user     = %{ldap:mailRoutingAddress}
@@ -77,7 +77,7 @@ The username is again normalized in case `user_filter` found it via some
 other means:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb ldap {
   fields {
     user = %{ldap:mailRoutingAddress}
@@ -91,7 +91,7 @@ passdb ldap {
 distinct values inside each [[setting,passdb]] / [[setting,userdb]] section):
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb ldap {
   filter = (mailRoutingAddress=%{user})
 }
@@ -101,7 +101,7 @@ passdb ldap {
 - How to iterate through all the valid usernames:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb ldap {
   filter = (mailRoutingAddress=%{user})
   iterate_filter = (objectClass=messageStoreRecipient)

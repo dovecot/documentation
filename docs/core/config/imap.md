@@ -34,7 +34,7 @@ This is not supported on kqueue based systems currently, such as FreeBSD.
 `imap-hibernate` process. This requires inter-process communication between
 `imap` and `imap-hibernate` process.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 imap_hibernate_timeout = 5s
 
 service imap {

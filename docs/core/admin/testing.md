@@ -38,7 +38,7 @@ interfaces/addresses. The simplest way to do that would be using
 ```sh
 doveconf protocols listen
 ```
-```
+```doveconf[dovecot.conf]
 protocols = imap pop3 lmtp sieve
 listen = *, ::
 ```
@@ -258,7 +258,7 @@ System configuration
 
 Enable LMTP delivery times in the configuration:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 deliver_log_format = msgid=%{msgid} from=<%{from}> size=%{size} vsize=%{vsize} session=%{session_time}ms delivery=%{delivery_time}ms: %{message}
 ```
 

@@ -64,7 +64,7 @@ String can contain any character. Strings support [[variable]].
 Certain settings require specific variables and thus don't use the default
 [[variable]]. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 imap_logout_format = in=%{input} out=%{output}
 ```
 
@@ -207,7 +207,7 @@ within the list (i.e. giving the same key multiple times overrides the previous
 one). The string list is configured similarly to
 [[link,settings_syntax_named_filters]]:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 fs_randomfail_ops {
   read = 100
   write = 50
@@ -217,7 +217,7 @@ fs_randomfail_ops {
 You can clear out an existing string list by setting it to an empty value.
 This is mainly useful to drop default settings. For example:
 
-```
+```doveconf[dovecot.conf]
 auth_policy_request_attributes =
 auth_policy_request_attributes {
   login = %{requested_username}
@@ -231,21 +231,21 @@ within the list (i.e. giving the same key multiple times overrides the previous
 one). The boolean list can be configured as a space or comma-separated list,
 which replaces the previous boolean  list entirely. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins = quota imap_quota
 mail_plugins = acl,imap_acl # removes quota and imap_quota
 ```
 
 Quotes are also supported:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 doveadm_allowed_commands = "mailbox list" "mailbox create"
 ```
 
 The boolean list can also be configured to update an existing boolean list. For
 example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins = quota acl
 protocol imap {
   mail_plugins {

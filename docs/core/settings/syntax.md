@@ -39,7 +39,7 @@ name prefixes can be stripped out (and they are in [[man,doveconf]] output)
 when the prefix matches the parent [[link,settings_syntax_named_filters,named
 [list] filter]]. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # named list filter
 namespace inbox {
   # namespace_separator setting
@@ -59,7 +59,7 @@ passdb static {
 
 The syntax generally looks like this:
 
-```
+```doveconf[dovecot.conf]
 # this is a comment
 
 settings_key = settings_value
@@ -69,7 +69,7 @@ The `#` character and everything after it are comments. Extra spaces and tabs
 are ignored. If you need to use these, put the value inside quotes. The quote
 character inside a quoted string is escaped with `\"`:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 settings_key = "# char, \"quote\", and trailing whitespace    "
 ```
 
@@ -87,7 +87,7 @@ filters".
 Named filters are used to access settings in some specific situations. For
 example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_attribute {
   dict file {
   }
@@ -103,7 +103,7 @@ Setting names that begin with the same prefix as a named filter will be treated
 as if they belong inside the named filter. For example all these settings are
 equivalent and modify the exact same setting:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 auth_policy_server_url = example.com
 auth_policy {
   server_url = example.com
@@ -114,7 +114,7 @@ auth_policy {
 Regardless of which method is used in `dovecot.conf`, the [[man,doveconf]]
 output will be:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 auth_policy {
   server_url = example.com
 }
@@ -123,7 +123,7 @@ auth_policy {
 Named list filters are similar to named filters, except there can be many of
 them, each with a unique name. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   prefix = INBOX/
 }
@@ -135,7 +135,7 @@ namespace virtual {
 Both named filters and named list filters can be updated later on in the
 configuration. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   prefix = INBOX/
 }
@@ -154,7 +154,7 @@ namespace inbox {
 The named list filter's name may also sometimes be used as part of the settings
 instead of simply a name. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service auth {
   unix_listener auth-master {
     # ...
@@ -168,7 +168,7 @@ acts as the `unix_listener_path` setting.
 Settings inside filters are automatically attempted to be prefixed by the
 innermost filter prefix to avoid repetition. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service imap {
   inet_listener imaps {
     ssl = yes
@@ -187,7 +187,7 @@ The first setting that exists is used.
 The filters must currently be written with the linefeeds as shown above.
 For example this doesn't work:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox { prefix = INBOX/ } # DOES NOT WORK
 ```
 :::
@@ -197,7 +197,7 @@ namespace inbox { prefix = INBOX/ } # DOES NOT WORK
 It's possible to add/update/replace named (list) filters via userdb settings or
 via `-o` command line parameters. For example if you have:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 oauth2 {
   http_client_request_max_attempts = 1
 }
@@ -208,7 +208,7 @@ command line parameters.
 
 Similarly for named list filters if you have:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
  separator = /
 }
@@ -245,7 +245,7 @@ settings are also global and can't be filtered, such as [[setting,log_path]].
 
 An example, which uses all of the filters:
 
-```
+```doveconf[dovecot.conf]
 local 127.0.0.1 {
   local_name imap.example.com {
     remote 10.0.0.0/24 {
@@ -266,7 +266,7 @@ in config file doesn't matter.
 
 Example:
 
-```
+```doveconf[dovecot.conf]
 local 127.0.0.2 {
   key = 127.0.0.2
 }
@@ -299,7 +299,7 @@ You can create groups of settings, which can be referred to elsewhere. The
 groups themselves are grouped into labels. The label prefix can be omitted from
 the settings' names. The syntax is:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 group @label name {
   # settings, with label_ prefix automatically attempted to be added
 }
@@ -307,7 +307,7 @@ group @label name {
 
 For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 group @mysql default {
   host = mysql.example.com
   mysql_ssl = yes
@@ -346,7 +346,7 @@ namespace inbox {
 You can override settings inside a group by adding the override settings
 after it. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 @mysql = default
 mysql_host = mysql2.example.com # override the default mysql_host
 ```
@@ -354,7 +354,7 @@ mysql_host = mysql2.example.com # override the default mysql_host
 Note that explicit settings always override group settings. For example this
 is not possible:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mailbox trash {
   name = Trash
 }
@@ -382,7 +382,7 @@ doveconf -d @metric_defaults/proxy
 
 The main `dovecot.conf` file can also include other config files:
 
-```
+```doveconf[dovecot.conf]
 !include local.conf
 !include /path/to/another.conf
 !include conf.d/*.conf
@@ -392,7 +392,7 @@ The paths are relative to the currently parsed config file's directory.
 
 Example:
 
-```
+```doveconf[dovecot.conf]
 # /etc/dovecot/dovecot.conf:
 !include conf.d/imap.conf
 # /etc/dovecot/conf.d/imap.conf:
@@ -405,7 +405,7 @@ denied), it results in an error. It's not an error if wildcards don't result
 in any matching files. To avoid these errors, you can use `!include_try`
 instead:
 
-```
+```doveconf[dovecot.conf]
 !include_try passwords.conf
 ```
 
@@ -413,7 +413,7 @@ Including a file preserves the context where it's included from.
 
 Example:
 
-```
+```doveconf[dovecot.conf]
 protocol imap {
   !include imap-settings.conf
 }
@@ -423,7 +423,7 @@ protocol imap {
 
 It's possible to split the setting values into multiple lines.
 
-```
+```doveconf[dovecot.conf]
 setting_key = \
   long \
   value
@@ -438,7 +438,7 @@ the '\'. Even if there is zero whitespace a single space is added.
 
 It's possible to read the value for a setting from a file:
 
-```
+```doveconf[dovecot.conf]
 key = </path/to/file
 ```
 
@@ -459,7 +459,7 @@ into account what filters are active, as well as chaining of settings.
 
 Example:
 
-```
+```doveconf[dovecot.conf]
 service imap {
   # expands to "_dovecot"
   service_user = $SET:default_internal_user
@@ -475,7 +475,7 @@ default_internal_user = _dovecot
 One exception is that if the setting refers to itself, the whole value is
 expanded immediately with the current settings' values. For example:
 
-```
+```doveconf[dovecot.conf]
 login_log_format_elements = user=<%{user}>
 login_log_format_elements = $SET:login_log_format_elements method=%{mechanism}
 login_log_format_elements = $SET:login_log_format_elements session=<%{session}>

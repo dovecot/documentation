@@ -275,7 +275,7 @@ Where mech_list is a list of all the mechanism names to enable.
 
 # Configuring Dovecot
 
-```[dovecot.conf]
+```dovecot[dovecot.conf]
 mail_driver = maildir
 
 sql_driver = pgsql

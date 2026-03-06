@@ -30,7 +30,7 @@ You can easily print the last 1000 error messages of a running Dovecot:
 
 If you don't want to use syslog, you can make Dovecot log to files directly:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 log_path = /var/log/dovecot.log
 # If not set, use the value from log_path
 info_log_path = /var/log/dovecot-info.log

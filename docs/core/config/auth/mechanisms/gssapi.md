@@ -75,7 +75,7 @@ KVNO Principal
 
 Once you have a keytab, configure GSSAPI on Dovecot.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 auth_mechanisms {
   gssapi = yes
 }

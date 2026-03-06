@@ -564,7 +564,7 @@ valgrind --leak-check=full /usr/libexec/dovecot/imap -u user@example.com
 
 ### Service Settings
 
-```
+```doveconf[dovecot.conf]
 service imap {
   executable = /usr/bin/valgrind --vgdb=no --num-callers=50
                --leak-check=full -q /usr/local/libexec/dovecot/imap
@@ -613,7 +613,7 @@ unloading. This will cause some extra warnings about leaking memory in
 dl\*() functions which can be ignored. You can also do this in
 dovecot.conf:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 import_environment {
   GDB = 1
 }

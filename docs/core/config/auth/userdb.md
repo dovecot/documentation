@@ -233,7 +233,7 @@ helpful to know how Dovecot internally passes them:
 If you want to override settings inside sections, you can separate the
 section name and key with `/`. For example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace default {
   inbox = yes
   separator = .
@@ -248,7 +248,7 @@ The separator setting can be overridden by returning
 #### SQL
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb sql {
   query = SELECT home, uid, gid, CONCAT(quota_bytes, 'B') AS quota_storage_size, separator AS "namespace/default/separator" \
     FROM users \
@@ -260,7 +260,7 @@ userdb sql {
 #### LDAP
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb ldap {
   ...
   fields {

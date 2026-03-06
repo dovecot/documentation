@@ -33,7 +33,7 @@ The duplicate extension is available by default.
 
 ### Example
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 sieve_script personal {
   path = ~/.dovecot.sieve
 }

@@ -39,7 +39,7 @@ The following is an example of what the Sieve config and rules could look
 like:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Use editheader
 sieve_extensions {
   editheader = yes

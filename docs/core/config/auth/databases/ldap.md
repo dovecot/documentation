@@ -63,7 +63,7 @@ improves the performance. This can be done by specifying distinct
 [[setting,passdb]] / [[setting,userdb]] sections.
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb ldap {
   # ldap_connection_group left unchanged, the default is ''
   ...
@@ -210,7 +210,7 @@ expression can include ldap specific variables and other variables too.
 
 For example:
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 ldap_uris = ldap://ldap.example.org
 ldap_auth_dn = cn=admin,dc=example,dc=org
 ldap_auth_dn_password = secret
@@ -260,7 +260,7 @@ the LDAP database. You can do this by returning `user` field in
 A typical configuration would look like:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 ldap_uris = ldap://ldap.example.org
 ldap_auth_dn = cn=admin,dc=example,dc=org
 ldap_auth_dn_password = secret
@@ -307,7 +307,7 @@ Just as with password lookups, the [[setting,passdb_fields]] may contain special
 Example:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 ldap_uris = ldap://ldap.example.org
 ldap_auth_dn = cn=admin,dc=example,dc=org
 ldap_auth_dn_password = secret
@@ -342,7 +342,7 @@ If you're using DN template, there is no LDAP lookup that returns fields, so
 [[setting,passdb_ldap_filter]] setting is ignored.
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 ldap_uris = ldap://ldap.example.org
 ldap_auth_dn = cn=admin,dc=example,dc=org
 ldap_auth_dn_password = secret
@@ -377,7 +377,7 @@ If you're using a single UID and GID for all the users, you can specify
 them globally with [[setting,mail_uid]] and [[setting,mail_gid]] settings instead of
 returning them from LDAP.
 
-```
+```doveconf[dovecot.conf]
 ldap_uris = ldap://ldap.example.org
 ldap_auth_dn = cn=admin,dc=example,dc=org
 ldap_auth_dn_password = secret
@@ -399,7 +399,7 @@ For using `doveadm -A` or `-u` with wildcards you need to configure the userdb
 to support user iteration. This is done by adding
 [[setting,userdb_ldap_iterate_filter]] and
 [[setting,userdb_ldap_iterate_fields]] settings to the userdb:
-```
+```doveconf[dovecot.conf]
 userdb ldap {
   # filter = ...
   iterate_filter = (objectClass=posixAccount)
@@ -419,7 +419,7 @@ You can mix static text with the value returned from LDAP by using
 Create a `quota_storage_size` field with value `<n>B` where `<n>` comes
 from "quotaBytes" LDAP attribute:
 
-```
+```doveconf[dovecot.conf]
 userdb ldap {
   fields {
     quota_storage_size = %{ldap:quotaBytes}B
@@ -430,7 +430,7 @@ userdb ldap {
 Create a `mail_path` field with value `/var/mail/<dir>/Maildir` where
 `<dir>` comes from "sAMAccountName" LDAP attribute:
 
-```
+```doveconf[dovecot.conf]
 userdb ldap {
   fields {
     mail_path = /var/spool/vmail/%{ldap:sAMAccountName}/Maildir
@@ -441,7 +441,7 @@ userdb ldap {
 You can add static fields that aren't looked up from LDAP. For example
 create a "mail_path" field with value `/var/vmail/%{user | domain}/%{user | username}/Maildir`:
 
-```
+```doveconf[dovecot.conf]
 userdb ldap {
   fields {
     quota_storage_size = %{ldap:quotaBytes}B
@@ -459,7 +459,7 @@ userDomain attribute doesn't exist, example.com is used instead.
 Example: Give the user a class attribute, which defines the quota:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 ldap_uris = ldap://ldap.example.org
 ldap_auth_dn = cn=admin,dc=example,dc=org
 ldap_auth_dn_password = secret

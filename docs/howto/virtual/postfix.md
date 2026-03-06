@@ -15,7 +15,7 @@ This document describes how to user virtual users with
 ## Basic Configuration
 
 ::: code-group
-```[dovecot.conf]
+```dovecot[dovecot.conf]
 protocols = imap lmtp
 ```
 :::
@@ -30,7 +30,7 @@ index-information.
 The index will be stored in the `public` dir under the home directories.
 This allows individual /SEEN information for the public namespace.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 #mail_driver = mdbox
 #mail_path = ~/mdbox
 mail_driver = maildir
@@ -81,7 +81,7 @@ Additional parameters may be used to override defaults, such as individual
 quotas or mailbox formats.
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 auth_mechanisms = plain
 
 passdb passwd-file {
@@ -125,7 +125,7 @@ Database as another socket to Postfix allowing SASL submission.
 Dovecot's authentication services will run in the `doveauth` user-context.
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service imap-login {
   inet_listener imap {
     listen = 1.2.3.4
@@ -168,7 +168,7 @@ verbose_proctitle = yes
 ## Protocols
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 protocol imap {
   mail_plugins {
     imap_quota = yes
@@ -189,7 +189,7 @@ protocol lmtp {
 ## Plugins
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 quota_storage_size = 1GB
 quota user {
 }
@@ -205,7 +205,7 @@ sieve_script personal {
 ## TLS
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 ssl_server_cert_file = /etc/ssl/certs/domain_tld_2009.crt
 ssl_server_key_file = /etc/ssl/private/domain_tld_2009.key
 ```
@@ -217,7 +217,7 @@ Simple logging using the internal mechanism. See [[link,logging]]
 for more complex configurations.
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 log_path = /var/log/dovecot.log
 info_log_path = /var/log/dovecot-info.log
 ```
@@ -226,7 +226,7 @@ info_log_path = /var/log/dovecot-info.log
 ### Syslog Logging
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 #log_path =
 #info_log_path =
 syslog_facility = local1

@@ -6,7 +6,7 @@
 `auth_failures`
 :  Number of unsuccessful authentications. See [[event,auth_request_finished]].
    It may be useful to export these events into log:
-   ```[dovecot.conf]
+   ```doveconf[dovecot.conf]
    metric auth_failures {
      exporter = log-export
    }

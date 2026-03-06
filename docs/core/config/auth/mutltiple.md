@@ -36,7 +36,7 @@ returning mail [[link,passdb_extra_fields]].
 * Virtual users' mails: /var/vmail/domain/user/Maildir
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Mail location for both system and virtual users:
 mail_driver = maildir
 mail_path = ~/Maildir

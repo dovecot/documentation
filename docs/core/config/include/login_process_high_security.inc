@@ -1,6 +1,6 @@
 You can enable high-security mode with:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 service imap-login {
   restart_request_count = 1
   #process_min_avail = 0

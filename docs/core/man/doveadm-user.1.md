@@ -26,7 +26,7 @@ database and you are using %variables, like **%{protocol}** or **%{local_ip}**,
 in the *userdb_sql_query* setting. Or when you have configured the userdb in a
 way like this:
 
-```
+```doveconf[dovecot.conf]
 userdb passwd-file {
   passwd_file_path = /etc/%{protocol}.passwd
 }

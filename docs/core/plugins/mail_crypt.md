@@ -180,7 +180,7 @@ openssl pkey -in ecprivkey.pem -pubout -out ecpubkey.pem
 
 These keys can now be used with this configuration:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   mail_crypt = yes
 }
@@ -263,7 +263,7 @@ openssl pkey -in rsaprivkey.pem -pubout -out rsapubkey.pem
 
 These keys can then be used with this configuration:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   mail_crypt = yes
 }
@@ -292,7 +292,7 @@ unencrypted on the server.
 
 Example config for folder keys with Maildir:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   mail_crypt = yes
 }
@@ -312,7 +312,7 @@ encrypted on the server.
 
 Example config for mandatory encrypted folder keys with Maildir:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   mail_crypt = yes
 }
@@ -346,7 +346,7 @@ encryption password in a separate database (e.g. SQL or LDAP).
 Example config where the user's login password is used as the encryption key
 password:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb sql {
   query = SELECT email as user, password, '%{password | hash("pbkdf2")}' AS userdb_crypt_user_key_password \
     FROM virtual_users \
@@ -368,7 +368,7 @@ openssl ecparam -name secp256k1 -genkey | openssl pkey | base64 -w0 > ecprivkey.
 base64 -d ecprivkey.pem | openssl ec -pubout | base64 -w0 > ecpubkey.pem
 ```
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   mail_crypt = yes
 }
@@ -392,7 +392,7 @@ passdb static {
 If you have encrypted mailboxes that you need to read, but no longer want to
 encrypt new mail, use empty [[setting,crypt_write_algorithm]] setting:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 crypt_write_algorithm =
 crypt_global_private_key main {
   crypt_private_key_file = server.key

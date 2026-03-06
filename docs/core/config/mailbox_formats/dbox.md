@@ -195,7 +195,7 @@ stored in primary storage and alternate storage.
 To enable this functionality, use the [[setting,mail_alt_path]] setting. For
 example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = mdbox
 mail_path = /var/vmail/%{user | domain}/%{user | username}
 mail_alt_path = /altstorage/vmail/%{user | domain}/%{user | username}
@@ -264,7 +264,7 @@ available. Instead, the MTA should use [[link,lmtp]] or [[link,lda]].
 
 To use **single-dbox**, use the tag `sdbox` in [[setting,mail_driver]]:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # single-dbox
 mail_driver = sdbox
 mail_path = ~/dbox
@@ -277,7 +277,7 @@ location. (This usage is deprecated.)
 
 To use **multi-dbox**, use the tag `mdbox` in [[setting,mail_driver]]:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # multi-dbox
 mail_driver = mdbox
 mail_path = ~/mdbox

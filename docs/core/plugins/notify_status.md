@@ -26,7 +26,7 @@ This plugin updates the `priv/status/<mailbox name>` key.
 
 ### Example
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_plugins {
   notify = yes
   notify_status = yes

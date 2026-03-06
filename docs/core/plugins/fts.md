@@ -211,7 +211,7 @@ textcat, see [[setting,textcat_config_path]].
 
 Example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 language en {
   default = yes
 }
@@ -280,7 +280,7 @@ They are configured through [[setting,language_filters]].
 
 Example:
 
-```
+```doveconf[dovecot.conf]
 language_filters = normalizer-icu snowball stopwords
 language en {
   language_filters = lowercase snowball english-possessive stopwords

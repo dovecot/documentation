@@ -52,7 +52,7 @@ This is a wrapper for lib-fs, which most importantly has the `posix`
 driver. Use the [[setting,fs]] setting to configure the filesystem.
 For example:
 
-```
+```doveconf[dovecot.conf]
 dict fs {
   fs posix {
     prefix = /var/lib/dovecot/dict/
@@ -74,7 +74,7 @@ See [[link,auth_ldap]].
 #### Configuration
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 dict_server {
   dict ldap {
     driver = ldap
@@ -103,7 +103,7 @@ dict_server {
 #### Examples
 
 To map a key to a search:
-```
+```doveconf[dovecot.conf]
 dict_map priv/test/mail {
   ldap_filter = (&(uid=%{user})(mail=*))
   ldap_base = ou=container,dc=domain
@@ -112,7 +112,7 @@ dict_map priv/test/mail {
 ```
 
 To do a more complex search:
-```
+```doveconf[dovecot.conf]
 dict_map priv/test/mail/$location {
   ldap_filter = (&(uid=%{user})(mail=*)(uid=%{pattern:location}))
   ldap_base = ou=container,dc=domain
@@ -157,7 +157,7 @@ key.
 
 For example when using dict for a per-user quota value the map looks like:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 dict_map priv/quota/storage {
   sql_table = quota
   username_field = username
@@ -181,7 +181,7 @@ dict_map priv/quota/storage {
 You can also access multiple SQL fields. For example
 [[setting,acl_sharing_map]] can contain:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 dict_map shared/shared-boxes/user/$to/$from {
   sql_table = user_shares
   value_field dummy {
@@ -280,7 +280,7 @@ cause problems.
 If all users share a single UNIX UID (e.g. `vmail`), you could make the dict
 socket accessible only to it:
 
-```
+```doveconf[dovecot.conf]
 service dict {
   unix_listener dict {
     mode = 0600
@@ -293,7 +293,7 @@ If you use multiple UNIX UIDs, you can add an extra group for all Dovecot mail
 processes. This works even if you have untrusted system users who have shell
 access to the server:
 
-```
+```doveconf[dovecot.conf]
 mail_access_groups = dovecot
 
 service dict {

@@ -34,7 +34,7 @@ used to pass arguments to the script using [[setting,lua_settings]].
 These settings can be used to pass out initialization parameters from Dovecot.
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb lua {
   lua_file = /etc/dovecot/auth.lua
   lua_settings {
@@ -198,7 +198,7 @@ If some previous userdb has had internal failure.
 
 To configure passdb in dovecot, use:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 passdb lua {
   lua_file = /path/to/lua
   use_worker = yes # default is yes
@@ -248,7 +248,7 @@ for `PASSDB_RESULT_OK`.
 
 To configure userdb in dovecot, use:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb lua {
   lua_file = /path/to/lua
   use_worker = yes # default is yes

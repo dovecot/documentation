@@ -82,7 +82,7 @@ where to store the other mailboxes. Typically they're stored in
 included in mailbox location autodetection. You can specify them
 manually with:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = mbox
 mail_path = ~/mail
 mail_inbox_path = /var/mail/%{user}
@@ -103,7 +103,7 @@ accordingly. See locking section in [[link,mbox]] for more information.
 Maildir is typically stored in `~/Maildir` directory. You can specify
 this manually with:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mail_driver = maildir
 mail_path = ~/Maildir
 ```

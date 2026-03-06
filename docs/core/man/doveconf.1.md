@@ -159,7 +159,7 @@ Ask **doveconf** for a global setting:
 ```sh
 doveconf mail_plugins
 ```
-```
+```doveconf
 mail_plugins = quota
 ```
 
@@ -178,7 +178,7 @@ Dump a whole configuration section:
 ```sh
 doveconf service
 ```
-```
+```doveconf
 service imap {
   ...
 }
@@ -192,7 +192,7 @@ Or dump only the imap service:
 ```sh
 doveconf service/imap
 ```
-```
+```doveconf
 service imap {
   ...
 }

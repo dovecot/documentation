@@ -3,7 +3,7 @@
 With the following starting configuration:
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   prefix = INBOX/
   separator = /
@@ -43,7 +43,7 @@ INBOX/foo/bar user=kim lrw
 
 You have to create the new ACLs to `dovecot.conf`:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   # previously from /etc/dovecot/acls/INBOX
   mailbox INBOX {
@@ -77,7 +77,7 @@ namespace inbox {
 Note that at this point you could simplify specific rules, e.g. use mailbox
 name wildcards to replace lines for a specific user:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 mailbox INBOX/* {
   acl user=kim {
     rights = lrw
@@ -87,7 +87,7 @@ mailbox INBOX/* {
 
 And re-configure the ACL plugin:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 acl_driver = vfile
 acl_globals_only = yes
 ```

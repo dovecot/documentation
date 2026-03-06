@@ -48,7 +48,7 @@ Enable default INBOX namespace and English language mailbox names with
 Using this setting will set these settings by default:
 
 ::: details Click to show settings
-```[dovecot.conf]
+```doveconf[dovecot.conf]
   namespace inbox {
     inbox = yes
     mailbox Drafts {
@@ -117,7 +117,7 @@ inbox namespace is created automatically.
 Namespace configuration is defined within a dovecot configuration block with
 the format:
 
-```
+```doveconf[dovecot.conf]
 namespace <name> {
   [... namespace settings ...]
 }
@@ -134,7 +134,7 @@ namespace/name/prefix=foo/
 
 Example configuration for default namespace:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   separator = .
   prefix =
@@ -185,7 +185,7 @@ A commonly used separator is `/`. It probably causes the least amount of
 trouble with different IMAP clients. The `^` separator is troublesome with
 Thunderbird. If `\` has to be used, it needs to be escaped in configuration:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   separator = "\\"
 }
@@ -207,7 +207,7 @@ To create a namespace, make sure you first return
 This adds a new given namespace. Without `+` all the namespaces are replaced
 with the given list.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb static {
   fields {
     namespace += special
@@ -229,7 +229,7 @@ If you have your INBOX as mbox in `/var/mail/username` and the rest of the
 mailboxes in Maildir format under `~/Maildir`, you can do this by creating two
 namespaces:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   separator = /
   prefix = "#mbox/"
@@ -260,7 +260,7 @@ When switching from UW-IMAP and you don't want to give users full access to
 filesystem, you can create hidden namespaces which allow users to access their
 mails using their existing namespace settings in clients.
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # default namespace
 namespace inbox {
   separator = /
@@ -296,7 +296,7 @@ namespace compat3 {
 
 **Recommended:** You can continue using the same `INBOX.` namespace as Courier:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   separator = .
   prefix = INBOX.
@@ -307,7 +307,7 @@ namespace inbox {
 **Alternatively:** Create the `INBOX.` as a compatibility name, so old clients
 can continue using it while new clients will use the empty prefix namespace:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   separator = /
   prefix =
@@ -345,7 +345,7 @@ See also [[link,migrating_mailboxes]]
 
 You need to give the namespace a name, for example "docs" below:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace docs {
   type = public
   separator = /
@@ -366,7 +366,7 @@ CREATE TABLE Namespaces (
 Now if you want to set the namespace location from the Namespaces table, use
 something like:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 userdb sql {
   query = SELECT Location as 'namespace/docs/mail_path' \
     FROM Namespaces \
@@ -388,7 +388,7 @@ One good solution is, to create a so called "hidden subscription namespace"
 with subscriptions turned on and setting `subscriptions = no` for the
 other namespaces:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace subscriptions {
   subscriptions = yes
   prefix = ""
@@ -466,7 +466,7 @@ will create and autosubscribe to a standard default set of mailboxes with
 appropriate [[setting,mailbox_special_use]] settings. In case you need separate
 or additional folders with special use flags, consider the following example:
 
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 namespace inbox {
   # the namespace prefix isn't added again to the mailbox names.
   #prefix = INBOX.

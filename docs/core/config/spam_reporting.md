@@ -43,7 +43,7 @@ e-mail address, using the
 #### Configuration
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Display \Junk special-flag for Spam mailbox
 namespace inbox {
   mailbox Spam {
@@ -153,7 +153,7 @@ to do classification.
 #### Configuration
 
 ::: code-group
-```[dovecot.conf]
+```doveconf[dovecot.conf]
 # Display \Junk special-flag for Spam mailbox
 namespace inbox {
   mailbox Spam {
