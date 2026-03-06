@@ -22,32 +22,12 @@ Images are based on Debian slim image, distribution is occasionally upgraded whe
 
 ### dovecot/dovecot:latest
 
-This is a hardened rootless image, which runs everything as vmail user, and minimal amount of binaries installed. This image
-uses non-standard ports, see [Listening ports](#listening-ports) for more information.
+This is a hardened rootless image, which runs everything as vmail user, and minimal amount of
+binaries installed. This image uses non-standard ports, see [Listening ports](#listening-ports) for
+more information.
 
-Linux capability `CAP_SYS_CHROOT` is needed for the container, unless chrooting is disabled by placing `no-chroot.conf` drop-in to `conf.d`:
-
-```doveconf
-service imap-login {
-  chroot =
-}
-
-service pop3-login {
-  chroot =
-}
-
-service submission-login {
-  chroot =
-}
-
-service managesieve-login {
-  chroot =
-}
-
-service imap-urlauth-login {
-  chroot =
-}
-```
+Linux capability `CAP_SYS_CHROOT` is needed for the container. See
+[below](#running-without-linux-capabilities) for how to remove this requirement.
 
 ### dovecot/dovecot:latest-dev
 
@@ -156,7 +136,7 @@ Dovecot will need write permissions to `/tmp`, `/run/dovecot` and persistent mai
 By default, Dovecot needs `CAP_SYS_CHROOT` capability. To remove this requirements, you can prevent chrooting
 by placing no-chroot.conf to `conf.d` directory:
 
-```
+```doveconf[dovecot.conf]
 service submission-login {
   chroot =
 }
@@ -164,13 +144,13 @@ service imap-login {
   chroot =
 }
 service pop3-login {
-   chroot =
+  chroot =
 }
 service managesieve-login {
-   chroot =
+  chroot =
 }
 service imap-urlauth-login {
-   chroot =
+  chroot =
 }
 ```
 
