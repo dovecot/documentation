@@ -6849,6 +6849,17 @@ distinguish different listener types that one service may employ.`
 Port number where to listen. \`0\` disables the listener.`
 	},
 
+	/* HIDDEN: Broken, DOP-392 needed to fix.
+	inet_listener_reuse_port: {
+		tags: [ 'service' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Use [SO_REUSEPORT](https://lwn.net/Articles/542629/) (allow multiple
+processes to listen on the same port simultaneously) on Linux.`
+	},
+	*/
+
 	inet_listener_ssl: {
 		tags: [ 'service' ],
 		values: setting_types.BOOLEAN,
