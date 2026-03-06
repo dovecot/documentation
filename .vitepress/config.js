@@ -3,9 +3,10 @@ import { defineConfig } from 'vitepress'
 import { pagefindPlugin } from 'vitepress-plugin-pagefind'
 import { generateSidebar } from 'vitepress-sidebar'
 import { dovecotMdExtend } from '../lib/markdown.js'
-import { getExcludes } from '../lib/utility.js'
+import { getExcludes, lib_dirname } from '../lib/utility.js'
 import dovecotVitepressInit from '../lib/dovecot_vitepress_init.js'
 import path from 'path'
+import fs from 'fs'
 
 const base = '/2.4'
 const base_url = 'https://doc.dovecot.org'
@@ -156,6 +157,9 @@ export default defineConfig({
 		image: {
 			lazyLoading: true,
 		},
+		languages: [
+			JSON.parse(fs.readFileSync(path.resolve(lib_dirname, '../.vitepress/theme/doveconf.tmLanguage.json'), 'utf-8'))
+		],
 		math: true,
 	},
 
