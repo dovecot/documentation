@@ -1,0 +1,238 @@
+{
+  "name": "doveconf",
+  "scopeName": "source.dovecot",
+  "aliases": ["dovecot"],
+  "fileTypes": ["conf"],
+  "patterns": [
+    {
+      "include": "#dovecot_config"
+    }
+  ],
+  "repository": {
+    "dovecot_config": {
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#includes"
+        },
+        {
+          "include": "#group_declaration"
+        },
+        {
+          "include": "#block"
+        },
+        {
+          "include": "#key_value"
+        }
+      ]
+    },
+    "comments": {
+      "name": "comment.line.number-sign.dovecot",
+      "match": "(#).*$\\n?",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.comment.dovecot"
+        }
+      }
+    },
+    "includes": {
+      "name": "meta.include.dovecot",
+      "match": "^\\s*(!include_try|!include)\\s+(.+)$",
+      "captures": {
+        "1": {
+          "name": "keyword.control.include.dovecot"
+        },
+        "2": {
+          "name": "string.unquoted.filename.dovecot"
+        }
+      }
+    },
+    "group_declaration": {
+      "name": "meta.group.dovecot",
+      "begin": "^\\s*(group)\\s+(@[a-zA-Z0-9_\\-]+)\\s+([a-zA-Z0-9_\\-]+)\\s*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.group.dovecot"
+        },
+        "2": {
+          "name": "entity.name.label.dovecot"
+        },
+        "3": {
+          "name": "entity.name.group.dovecot"
+        },
+        "4": {
+          "name": "punctuation.section.block.begin.dovecot"
+        }
+      },
+      "end": "(\\})",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.section.block.end.dovecot"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#dovecot_config"
+        }
+      ]
+    },
+    "block": {
+      "name": "meta.block.dovecot",
+      "begin": "^\\s*([a-zA-Z0-9_\\-]+)(?:\\s+([a-zA-Z0-9_\\-\\./]+))?(?:\\s+([a-zA-Z0-9_\\-\\./]+))?\\s*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.block.dovecot"
+        },
+        "2": {
+          "name": "entity.name.section.dovecot"
+        },
+        "3": {
+          "name": "entity.name.section.secondary.dovecot"
+        },
+        "4": {
+          "name": "punctuation.section.block.begin.dovecot"
+        }
+      },
+      "end": "(\\})",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.section.block.end.dovecot"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#dovecot_config"
+        }
+      ]
+    },
+    "key_value": {
+      "name": "meta.key-value.dovecot",
+      "begin": "^\\s*(?:(@[a-zA-Z0-9_\\-]+)|([a-zA-Z0-9_\\-]+(?:\\+[=])?))\\s*(=|\\+=)\\s*",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.label.dovecot"
+        },
+        "2": {
+          "name": "variable.other.dovecot"
+        },
+        "3": {
+          "name": "keyword.operator.assignment.dovecot"
+        }
+      },
+      "end": "$",
+      "patterns": [
+        {
+          "include": "#value_patterns"
+        }
+      ]
+    },
+    "value_patterns": {
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#file_read"
+        },
+        {
+          "include": "#strings"
+        },
+        {
+          "include": "#variables"
+        },
+        {
+          "include": "#booleans"
+        },
+        {
+          "include": "#line_continuation"
+        }
+      ]
+    },
+    "file_read": {
+      "name": "meta.file-read.dovecot",
+      "match": "(<)\\s*(\"[^\"]*\"|'[^']*'|[^\\s#]+)",
+      "captures": {
+        "1": {
+          "name": "keyword.operator.file-read.dovecot"
+        },
+        "2": {
+          "name": "string.unquoted.path.dovecot"
+        }
+      }
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.dovecot",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.dovecot",
+              "match": "\\\\."
+            },
+            {
+              "include": "#variables"
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.dovecot",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.dovecot",
+              "match": "\\\\."
+            },
+            {
+              "include": "#variables"
+            }
+          ]
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.expansion.set.dovecot",
+          "match": "(\\$SET:)([^\\s\"'#]+)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.expansion.set.dovecot"
+            },
+            "2": {
+              "name": "variable.parameter.dovecot"
+            }
+          }
+        },
+        {
+          "name": "variable.other.expansion.env.dovecot",
+          "match": "(\\$ENV:)([^\\s\"'#]+)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.expansion.env.dovecot"
+            },
+            "2": {
+              "name": "variable.parameter.dovecot"
+            }
+          }
+        },
+        {
+          "name": "variable.other.macro.dovecot",
+          "match": "%(\\{[^}]+\\}|[a-zA-Z])"
+        }
+      ]
+    },
+    "booleans": {
+      "name": "constant.language.boolean.dovecot",
+      "match": "\\b(yes|no)\\b"
+    },
+    "line_continuation": {
+      "name": "constant.character.escape.line-continuation.dovecot",
+      "match": "\\\\\\s*$"
+    }
+  }
+}
