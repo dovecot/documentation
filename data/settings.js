@@ -1046,13 +1046,37 @@ Maximum period after which tracked values are purged from the duplicate
 tracking database.`
 	},
 
-	sieve_editheader_header_forbid_add: {
+	sieve_editheader_header: {
+		tags: [ 'sieve', 'sieve-editheader' ],
+		plugin: 'sieve',
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ '[[link,sieve_editheader]]',
+			'sieve_editheader_header_name',
+			'sieve_editheader_header_forbid_add',
+			'sieve_editheader_header_forbid_delete' ],
+		text: `
+Configures a new message header, which can be forbidden to be added or deleted.
+The filter name refers to the [[setting,sieve_editheader_header_name]] setting.`
+	},
+
+	sieve_editheader_header_name: {
 		tags: [ 'sieve', 'sieve-editheader' ],
 		plugin: 'sieve',
 		values: setting_types.STRING,
-		seealso: [ '[[link,sieve_editheader]]' ],
+		seealso: [ '[[link,sieve_editheader]]', 'sieve_editheader_header' ],
 		text: `
-A space-separated list of headers that cannot be added to the message header.
+The name of the message header that is forbidden to be added or deleted.`
+	},
+
+	sieve_editheader_header_forbid_add: {
+		tags: [ 'sieve', 'sieve-editheader' ],
+		plugin: 'sieve',
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		seealso: [ '[[link,sieve_editheader]]', 'sieve_editheader_header' ],
+		text: `
+Forbid adding the [[setting,sieve_editheader_header_name]] to the message
+header.
 
 Addition of the \`Subject:\` header cannot be prohibited, as required by
 the RFC specification. Therefore, adding this header to this setting has no
@@ -1062,16 +1086,17 @@ effect.`
 	sieve_editheader_header_forbid_delete: {
 		tags: [ 'sieve', 'sieve-editheader' ],
 		plugin: 'sieve',
+		default: 'no',
 		values: setting_types.STRING,
-		seealso: [ '[[link,sieve_editheader]]' ],
+		seealso: [ '[[link,sieve_editheader]]', 'sieve_editheader_header' ],
 		text: `
-A space-separated list of headers that cannot be deleted from the message
+Forbid deleting the [[setting,sieve_editheader_header_name]] from the message
 header.
 
 Deleting the \`Received:\` and \`Auto-Submitted:\` fields is always
 forbidden, while removing the \`Subject:\` header cannot be prohibited, as
-required by the RFC specification. Therefore, adding one of these headers
-to this setting has no effect.`
+required by the RFC specification. Therefore, using this setting with one of
+these headers has no effect.`
 	},
 
 	sieve_editheader_max_header_size: {
