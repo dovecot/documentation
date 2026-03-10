@@ -10,6 +10,7 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] **user**
   [**-a** *userdb_socket_path*]
+  [**-e** *template*]
   [**-f** *field*]
   [**-u**]
   [**-x** *auth_info*]
@@ -44,15 +45,22 @@ userdb passwd-file {
     The socket may be located in another directory, when the default
     *base_dir* setting was overridden in */etc/dovecot/dovecot.conf*.
 
+**-e** *template*
+:   When this option and a string with %variables is given,
+    [[man,doveadm]] will show the expanded string for the user.
+    This option can't be used together with the `-f` or `-u` options.
+
 **-f** *field*
 :   When this option and the name of a userdb field is given,
     [[man,doveadm]] will show only the value of the specified field.
+    This option can't be used together with the `-e` or `-u` options.
 
 **-u**
 :   When this option is given, [[man,doveadm]] will only show values
-    from the *userdb*. Without -u parameter if any of the *uid*, *gid*,
+    from the *userdb*. Without `-u` parameter if any of the *uid*, *gid*,
     *home* or *mail_path* fields are missing, their defaults are taken from
     configuration file.
+    This option can't be used together with the `-e` or `-f` options.
 
 <!-- @include: include/option-x.inc -->
 
