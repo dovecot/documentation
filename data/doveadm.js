@@ -3014,10 +3014,11 @@ This command cannot be used safely via API by untrusted users.`
 				type: doveadm_arg_types.STRING,
 				text: `Only show value of this field.`,
 			},
-			// TODO: Needs documentation in man file
 			'expand-field': {
 				cli: 'e',
-				type: doveadm_arg_types.STRING
+				example: 'userdb_field',
+				type: doveadm_arg_types.STRING,
+				text: `Expand all %variables in this template string.`,
 			},
 			'userdb-only': {
 				cli: 'u',
