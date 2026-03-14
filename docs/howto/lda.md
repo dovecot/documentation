@@ -368,7 +368,7 @@ to use "relay_recipient_maps" instead of "virtual_mailbox_maps".
 
 ### Dynamic address verification with LMTP
 
-Uou can also use LMTP and the Postfix setting
+You can also use LMTP and the Postfix setting
 "reject_unverified_recipient" for dynamic address verification. It's
 really nice because Postfix doesn't need to query an external datasource
 (MySQL, LDAP...). Postfix maintain a local database with existing/non
