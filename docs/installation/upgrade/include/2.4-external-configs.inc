@@ -22,7 +22,7 @@ password_query = SELECT password FROM users WHERE user = '%u'
 # Use these mysql settings globally. These could be also inside passdb sql {}
 mysql 127.0.0.1 {
   user = mysql_user
-  pass = mysql_pass
+  password = mysql_pass
 }
 sql_driver = mysql
 
