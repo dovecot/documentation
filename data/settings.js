@@ -11433,9 +11433,12 @@ SASL realm to use.`
 		text: `
 LDAP base.
 
-[[variable]] can be used.
+[[variable]] can be used. [[changed,variables_safe_added]] To avoid unwanted
+escaping of the output, add \`| safe\` filter to the variable.
 
-Example: \`ldap_base = dc=mail, dc=example, dc=org\``
+Examples:
+ * \`ldap_base = dc=mail, dc=example, dc=org\`
+ * \`ldap_base = %{passdb:classOfServiceDN | safe}\``
 	},
 
 	ldap_connection_group: {
@@ -11554,9 +11557,16 @@ If authentication binding is used, you can save one LDAP request per login
 if users' DN can be specified with a common template. The template can use
 the standard [[variable]].
 
-Note that you can't use any [[setting,passdb_fields]] declaration if you use this setting.
+[[changed,variables_safe_added]] To avoid unwanted escaping of the output,
+add \`| safe\` filter to the safe variables (i.e. NOT \`%{user}\`).
 
-Example: \`passdb_ldap_bind_userdn = cn=%{user},ou=people,o=org\``
+Note that you can't use any \`%{ldap:*}\` variables in
+[[setting,passdb_fields]] if you use this setting, because no LDAP fields are
+looked up.
+
+Examples:
+ * \`passdb_ldap_bind_userdn = cn=%{user},ou=people,o=org\`
+ * \`passdb_ldap_bind_userdn = cn=%{user},%{passdb:domain_dn | safe}\``
 	},
 
 	passdb_ldap_filter: {
