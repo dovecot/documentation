@@ -267,7 +267,8 @@ Insert data to SQL corresponding your users.
 Working data could look like this:
 
 | user | host | destuser |
-| john |192.168.0.1 | |
+| ---- | ---- | -------- |
+| john | 192.168.0.1 | |
 | joe | 192.168.0.2 | joe@example.com |
 
 ::: code-group
