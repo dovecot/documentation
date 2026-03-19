@@ -137,6 +137,7 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | `unhexlify` | String | Bytes | Convert hex encoded input into bytes. |
 | `upper` | String | String | Uppercases input. |
 | `username` | String | String | Provides user part of user@domain value. |
+| `safe` | String | String | Don't escape the variable output. This is mainly intended for [[setting,ldap_base]] when the DN comes from a variable. [[added,variables_safe_added]] |
 
 ## Global providers
 
