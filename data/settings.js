@@ -6874,17 +6874,6 @@ distinguish different listener types that one service may employ.`
 Port number where to listen. \`0\` disables the listener.`
 	},
 
-	/* HIDDEN: Broken, DOP-392 needed to fix.
-	inet_listener_reuse_port: {
-		tags: [ 'service' ],
-		values: setting_types.BOOLEAN,
-		default: 'no',
-		text: `
-Use [SO_REUSEPORT](https://lwn.net/Articles/542629/) (allow multiple
-processes to listen on the same port simultaneously) on Linux.`
-	},
-	*/
-
 	inet_listener_ssl: {
 		tags: [ 'service' ],
 		values: setting_types.BOOLEAN,
@@ -10383,6 +10372,41 @@ performance this can be set higher, but ideally not \`unlimited\` since more
 complex services can have small memory leaks and/or memory fragmentation and
 the process should get restarted eventually. For example \`100\` or \`1000\`
 can be good values.`
+	},
+
+	service_reuse_port: {
+		added: {
+			settings_service_reuse_port_added: false,
+		},
+		tags: [ 'service' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Distribute TCP connections to processes more evenly using the
+[SO_REUSEPORT](https://lwn.net/Articles/542629/) option on Linux. When enabled,
+[[setting,service_process_min_avail]] must be the same as
+[[setting,service_process_limit]].
+
+This setting is mainly intended to be enabled for login processes.
+
+When \`no\`, all processes listening on the socket try to accept it at the
+same time. Whichever process is fastest (gets scheduled first by the kernel)
+gets the connection. This can lead to rather uneven distribution of connections.
+On the positive side, this behaves more gracefully once the process reaches
+[[setting,service_client_limit]]: it simply doesn't accept new connections,
+allowing other processes to handle them instead. If all processes are full,
+the master process rejects new connections.
+
+When \`yes\`, a separate listener socker is created for each process at startup.
+This is why [[setting,service_process_min_avail]] must be the same as
+[[setting,service_process_limit]]. Each process gets one of these listener
+sockets and uses it to accept connections. The kernel assigns incoming
+connections to these listener sockets based on the connection hash, so the
+connections should be rather evenly distributed across processes. This also
+means that if any process has reached [[setting,service_client_limit]], it
+must start rejecting new connections, even if other processes aren't full.
+However, because of the more even distribution of connections, it's expected
+that when one process is full, other processes are nearly full as well.`
 	},
 
 	service_idle_kill_interval: {
