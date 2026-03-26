@@ -168,6 +168,7 @@ export const updates = {
 	settings_passdb_default_password_scheme_changed: '2.4.3',
 	settings_passdb_mechanisms_filter_added: '2.4.0',
 	settings_passdb_static_password_added: '2.4.0',
+	settings_service_reuse_port_added: '2.4.4',
 	settings_ssl_client_ca_added: '2.4.0',
 	settings_ssl_imapc_removed: '2.4.0',
 	settings_ssl_request_client_cert_changed: '2.4.0',
