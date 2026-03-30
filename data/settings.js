@@ -10580,7 +10580,7 @@ Named filter, which can be used for specifying SSL client settings.`
 	},
 
 	ssl_client_ca_dir: {
-		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		seealso: [ 'ssl', 'ssl_client_ca_file', '[[link,ssl_configuration]]' ],
 		tags: [ 'ssl-ldap', 'sql-mysql' ],
 		values: setting_types.STRING,
 		text: `
@@ -10590,12 +10590,15 @@ connections (e.g. with the imapc driver).
 
 For extra security you might want to point to a directory containing
 certificates only for the CAs that are actually needed for the server
-operation instead of all the root CAs.`
+operation instead of all the root CAs.
+
+If both [[setting,ssl_client_ca_dir]] and [[setting,ssl_client_ca_file]] are
+empty, the system CA certificates are used.`
 	},
 
 	ssl_client_ca_file: {
 		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
-		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		seealso: [ 'ssl', 'ssl_client_ca_dir', '[[link,ssl_configuration]]' ],
 		values: setting_types.FILE,
 		text: `
 File containing the trusted SSL CA certificates. For example
@@ -10609,7 +10612,10 @@ because all the certificates are read into memory. This leads to excessive
 memory usage, because it gets multiplied by the number of imap processes.
 It's better to either use [[setting,ssl_client_ca_dir]] setting or
 use a CA bundle that only contains the CAs that are actually necessary for
-the server operation.`
+the server operation.
+
+If both [[setting,ssl_client_ca_dir]] and [[setting,ssl_client_ca_file]] are
+empty, the system CA certificates are used.`
 	},
 
 	ssl_client_cert_file: {
