@@ -122,7 +122,7 @@ The following variables can be used inside the [[setting,passdb]] / [[setting,us
 
 | Variable | Description |
 | -------- | ----------- |
-| `%{ldap:attrName}` | Fetches a single-valued attribute. Fails if the attribute is not present, unless the `|default` filter is given. If there are multiple values, all except the first are ignored (with warning). |
+| `%{ldap:attrName}` | Fetches a single-valued attribute. Fails if the attribute is not present, unless the `\|default` filter is given. If there are multiple values, all except the first are ignored (with warning). |
 | `%{ldap_multi:attrName}` | [[added,ldap_multi_added]] Fetches a multi-valued attribute and outputs the values separated by tabs, with each value "tab-escaped". Use the `list` [[link,settings_variables_filters,filter]] to further convert it to a wanted value. For example: `mail_access_groups = %{ldap_multi:userGroups \| list \| default('mail')}` |
 | `%{ldap:dn}` | Retrieves the Distinguished Name of the entry. |
 
