@@ -15,6 +15,7 @@ import { VFile } from 'vfile'
 import { dovecotSettingBootstrap } from '../lib/utility.js'
 import remarkContainer from 'remark-flexible-containers'
 import remarkDeflist from 'remark-definition-list'
+import remarkGfm from 'remark-gfm'
 import remarkMan from 'remark-man'
 import remarkParse from 'remark-parse'
 import { unified } from 'unified'
@@ -226,6 +227,7 @@ const main = async (component, outPath) => {
 				title: () => null,
 			}).
 			use(remarkDeflist).
+			use(remarkGfm).
 			use(processDovecotMdPost).
 			use(remarkMan, {
 				manual: 'Dovecot',
