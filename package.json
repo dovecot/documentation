@@ -4,7 +4,7 @@
     "@sindresorhus/slugify": "^3.0.0",
     "camelcase": "^9.0.0",
     "clean-deep": "^3.4.0",
-    "commander": "^13.1.0",
+    "commander": "^14.0.3",
     "fast-glob": "^3.3.3",
     "git-commit-info": "^2.0.2",
     "markdown-it-container": "^4.0.0",
