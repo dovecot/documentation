@@ -10189,15 +10189,6 @@ The Subject: header to use for bounce messages.
 See [[setting,rejection_reason]] for the list of variables that can be used.`
 	},
 
-	sendmail_path: {
-		default: '/usr/sbin/sendmail',
-		values: setting_types.STRING,
-		text: `
-The binary to use for sending email.
-
-Used only if [[setting,submission_host]] is not set.`
-	},
-
 	service: {
 		tags: [ 'service' ],
 		values: setting_types.NAMED_LIST_FILTER,
@@ -10925,13 +10916,55 @@ Supported workaround identifiers are:
     between 'RCPT TO:' and path.`
 	},
 
+	sendmail_path: {
+		tags: [ 'outgoing_mail' ],
+		default: '/usr/sbin/sendmail',
+		values: setting_types.STRING,
+		text: `
+The binary to use for sending email.
+
+Used only if [[setting,submission_host]] is not set.`
+	},
+
 	submission_host: {
-		tags: [ 'submission' ],
+		tags: [ 'outgoing_mail' ],
+		seealso: [ 'submission_ssl'],
 		values: setting_types.URL,
 		text: `
 Use this SMTP submission host to send messages.
 
 Overrides [[setting,sendmail_path]] value, if set.`
+	},
+
+	submission_ssl: {
+		tags: [ 'outgoing_mail' ],
+		default: 'no',
+		seealso: [ 'submission_host' ],
+		values: setting_types.STRING,
+		values_enum: [ 'no', 'smtps', 'starttls' ],
+		text: `
+If enabled, use SSL/TLS to connect to [[setting,submission_host]].
+
+Available values:
+
+\`no\`
+:   No SSL connection is used.
+
+\`smtps\`
+:   An SMTPS connection (immediate SSL) is used.
+
+\`starttls\`
+:   The STARTTLS command is used to establish the TLS layer.
+
+Used only if [[setting,submission_host]] is set.`
+	},
+
+	submission_timeout: {
+		tags: [ 'outgoing_mail' ],
+		default: '30secs',
+		seealso: [ 'submission_host' ],
+		values: setting_types.TIME,
+		text: `Timeout for submitting outgoing messages.`
 	},
 
 	submission_logout_format: {
@@ -11084,33 +11117,6 @@ relay server (only if enabled).`
 		values: setting_types.STRING,
 		text: `
 User name for authentication to the relay MTA if authentication is required.`
-	},
-
-	submission_ssl: {
-		default: 'no',
-		seealso: [ 'submission_host' ],
-		values: setting_types.STRING,
-		values_enum: [ 'no', 'smtps', 'starttls' ],
-		text: `
-If enabled, use SSL/TLS to connect to [[setting,submission_host]].
-
-Available values:
-
-\`no\`
-:   No SSL connection is used.
-
-\`smtps\`
-:   An SMTPS connection (immediate SSL) is used.
-
-\`starttls\`
-:   The STARTTLS command is used to establish the TLS layer.`
-	},
-
-	submission_timeout: {
-		default: '30secs',
-		seealso: [ 'submission_host' ],
-		values: setting_types.TIME,
-		text: `Timeout for submitting outgoing messages.`
 	},
 
 	syslog_facility: {
