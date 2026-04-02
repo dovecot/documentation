@@ -41,9 +41,9 @@ execute test-script {
   args = hello %{user}
 }
 service test-script-service {
-  execute = script /usr/local/bin/test-script.sh one
+  executable = script /usr/local/bin/test-script.sh one
   unix_listener test-script {
-    path = 0666
+    mode = 0666
   }
 }
 ```
@@ -63,7 +63,7 @@ execute localhost:12345 {
   args = hello %{user}
 }
 service test-script-service {
-  execute = script /usr/local/bin/test-script.sh one
+  executable = script /usr/local/bin/test-script.sh one
   inet_listener script {
     port = 12345
   }

@@ -9776,7 +9776,11 @@ Make Dovecot open a PAM session and close it immediately.`
 		tags: [ 'passwd-file' ],
 		values: setting_types.STRING,
 		text: `
-Path to the passwd-file.`
+Path to the passwd-file. The path can consists from per-user variables such as s\`%{user | domain}\`. If the path starts with static path, then Dovecot ensures that the expanded path does not point outside of this static path. If the path starts with variable, this protection is disabled.
+
+For example if this is set to \`/etc/dovecot/%{user | domain}/passwd\`, then using login username such as \`root@..\` won't be allowed to expand into \`/etc/dovecot../passwd\`, as that would escape \`/etc/dovecot\`.
+
+If you use something like \`%{env:PREFIX}}/%{user | domain}/passwd\` as path, it is recommended that PREFIX points to deep enough path, such as \`/etc/dovecot/domains/\`, and you do not modify [[setting,auth_username_chars]] to avoid including \`/\` as allowed character.`
 	},
 
 	pop3_client_workarounds: {
