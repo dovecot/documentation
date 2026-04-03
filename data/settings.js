@@ -10351,7 +10351,13 @@ is launched.
 		values: setting_types.UINT,
 		default: '[[setting,default_process_limit]]',
 		text: `
-The maximum number of processes that may exist for this service.`
+The maximum number of processes that may exist for this service.
+
+[[changed,service_process_limit_changed]] However, if
+[[setting,service_client_limit]] > 1, when the process reaches
+[[setting,service_restart_request_count]], the process is no longer counted
+towards its process limit. Otherwise long-lived connections in the old process
+could prevent creation of new processes.`
 	},
 
 	service_client_limit: {
