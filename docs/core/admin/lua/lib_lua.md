@@ -53,7 +53,7 @@ Pushes an Dovecot Event to stack.
 
 ### `void dlua_push_timeval(lua_State *L, const struct timeval *tv)`
 
-Pushes an timeval struct to stack as integer.
+Pushes a timeval struct to stack as integer.
 
 ## Lua API
 
