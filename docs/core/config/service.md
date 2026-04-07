@@ -89,7 +89,7 @@ There are 3 types of services that need to be optimized in different ways:
    could mean that all the processes are simply waiting for the existing
    connections to die away before the process can die and a new one can be
    created. Although this could be made less likely by setting
-   [[setting,service_process_limit]] higher than
+   [[setting,service_process_limit]] greater than
    [[setting,service_process_min_avail]], but that's still not a guarantee
    since each process could get a very long running connection and the
    [[setting,service_process_limit]] would be eventually reached.
@@ -320,7 +320,7 @@ connections.
   lock or disk I/O.
 
   In the future these waits may be reduced or avoided completely, but for
-  now it's not safe to set this value higher than `1` in enterprise mail
+  now it's not safe to set this value greater than `1` in enterprise mail
   systems.
 
   For small, mostly-idling hobbyist servers, a larger number may work

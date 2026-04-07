@@ -100,7 +100,7 @@ if header :contains "X-Spam-Flag" "YES" {
 ```
 
 The following example discards SpamAssassin-tagged mails with level
-higher than or equal to 10:
+greater than or equal to 10:
 
 ```
 if header :contains "X-Spam-Level" "**********" {
