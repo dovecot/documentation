@@ -5361,7 +5361,7 @@ Available options:
 
 \`no-header-hashes\`
 :   When this setting is enabled and one dsync side doesn't support mail
-    GUIDs (i.e. imapc), there is no fallback to using header hashes. Instead,
+    GUIDs (i.e. imapc), it does not fall back to using header hashes. Instead,
     dsync assumes that all mails with identical IMAP UIDs contain the same
     mail content. This can significantly improve dsync performance with some
     IMAP servers that don't support caching Date/Message-ID headers.`
