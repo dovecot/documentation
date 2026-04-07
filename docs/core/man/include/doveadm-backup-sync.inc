@@ -78,7 +78,7 @@ You can run dsync in one of three modes:
     changes begin.
 
     Example: Source mailbox has messages UID 1..5; source mailbox is
-    sync'd using **doveadm backup** to the destination. Subsequently,
+    synchronized using **doveadm backup** to the destination. Subsequently,
     UID 6 is delivered to the source mailbox and UID 1 is expunged
     from the destination mailbox. In this example, UID 1 is kept
     removed (in destination) because UID 1..5 have identical
