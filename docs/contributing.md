@@ -34,7 +34,7 @@ submit your changes directly to the documentation repository.
 
    The commit message should use imperative language ("Fix", "Change", "Add"),
    not past-tense ("Fixed", "Changed", "Added"). Use a single prefix term
-   that describes the area of the documentation the commit affects (e.g.,
+   that describes the area of that the documentation the commit affects (e.g.,
    "settings", "fts").
    ```shell
    git commit -am "installation: Fix a typo in the installation guide"
