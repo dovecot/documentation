@@ -1625,7 +1625,7 @@ the plugin looks for script service sockets. Used by the
 		values: setting_types.STRING,
 		text: `
 Points to a directory where the plugin looks for programs (shell
-scripts) to execute directly and pipe messages to. Used by the
+scripts) to execute directly and to pipe messages. Used by the
 \`vnd.dovecot.pipe\` extension.`
 	},
 
