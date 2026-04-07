@@ -35,7 +35,7 @@ When used with the **-A** or **-u** *wildcard* options,
 and **uid** for each matching message.
 
 In the first form, [[man,doveadm]] will execute the **search** action
-will be performed for all users.
+for all users.
 
 In the second form, the command will be performed for all users listed in
 the given *file*.
