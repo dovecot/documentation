@@ -5799,7 +5799,7 @@ returned.`
 Maximum number of connection attempts to a host before all associated requests fail.
 
 If non-zero, the maximum will be enforced across all IPs for that host, meaning
-that IPs may be tried more than once eventually if the number of IPs is less
+that IPs may eventually be tried more than once if the number of IPs is less
 than the specified maximum attempts. If the number of IPs is greater than the
 maximum attempts not all IPs are tried.
 
