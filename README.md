@@ -362,7 +362,7 @@ If section is defined, will link to the sub-section. Valid sub-sections:
 
 ***Syntax: `[[(update),tag_name]]`***
 
-Create a update tag based on a tag_name.
+Create an update tag based on a tag_name.
 
 The tag_name must be defined in `data/updates.js`.
 

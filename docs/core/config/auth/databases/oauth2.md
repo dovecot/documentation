@@ -15,7 +15,7 @@ You are recommended to use `oauthbearer` (preferred) or `xoauth2`
 The responses from endpoints must be JSON objects.
 
 [[changed,auth_oauth2_no_passdb_changed]]: The OAuth2 mechanism no longer uses
-a passdb for token authentication. Password Grant still needs a oauth2 passdb.
+a passdb for token authentication. Password Grant still needs an oauth2 passdb.
 
 ## Settings
 

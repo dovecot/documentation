@@ -9733,7 +9733,8 @@ mechanism.`
 		default: 100,
 		seealso: [ 'service_restart_request_count' ],
 		text: `
-Number of requests a auth-worker process handles for passdb pam before it dies.
+Number of requests an auth-worker process handles for passdb pam before it
+dies.
 This configures similar behaviour as the
 [[setting,service_restart_request_count]] setting but it limits only the number
 of pam passdb requests, not all requests to be handled by an auth-worker.`

@@ -126,7 +126,7 @@ Used to iterate over a key path.
 C: I<flags>TAB<max rows>TAB<path>TAB<user>
 ```
 
-The iteration flag is a integer with following options, which can be `OR`ed
+The iteration flag is an integer with following options, which can be `OR`ed
 together.
 
 | Flag | Value | Description |
