@@ -1586,7 +1586,7 @@ imapsieve_url = sieve://sieve.example.com
 		values: setting_types.BOOLEAN,
 		default: 'no',
 		text: `
-This setting determines whether de IMAPSieve plugin implicitly also expunges
+This setting determines whether de IMAPSieve plugin also implicitly expunges
 messages that were discarded by the executed Sieve script sequence; i.e., Sieve
 yielded no (implicit) keep.`
 	},
