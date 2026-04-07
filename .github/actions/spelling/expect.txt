@@ -50,6 +50,7 @@ autotools
 auxw
 avc
 azp
+azr
 backported
 badpassword
 barfoo
@@ -72,6 +73,7 @@ bsdicrypt
 bsearch
 bugreport
 bugzilla
+Buildx
 bzlib
 CACERTDIR
 CANTCREAT
@@ -111,6 +113,7 @@ cpanel
 CPID
 CPPFLAGS
 cql
+crammd
 CRLFs
 crt
 currentdate
@@ -146,6 +149,7 @@ destuser
 dextended
 DHd
 Dhesi
+digestmd
 dirnamename
 Dirsize
 dispo
@@ -161,7 +165,6 @@ domainname
 Dorner
 dotlock
 dotlocking
-dotnet
 dov
 doveadm
 doveauth
@@ -196,7 +199,6 @@ emaillookup
 endscript
 ENHANCEDSTATUSCODES
 enotify
-entra
 envid
 eoh
 eokb
@@ -365,31 +367,8 @@ LFs
 lgdb
 LHLO
 LIBADD
-libanonymous
-libbzip
-libcrammd
-libcs
-libdigestmd
-libdovecot
-libexec
-libexpat
-libexttextcat
-libicu
-libkrb
-libldap
-liblib
-liblz
-libmariadb
-libmysqlclient
-libntlm
-libotp
-libpam
-libpq
-libsasl
-libsasldb
-libsodium
-libsqlite
 lifewithqmail
+lighttpd
 listescape
 LISTEXT
 listfile
@@ -399,6 +378,7 @@ LISTSERV
 lmtp
 lmtponly
 lmtptest
+LOCALPATH
 localuser
 lockd
 lockf
@@ -443,6 +423,7 @@ manmaster
 manualroute
 mapuser
 MARF
+mariadb
 markdownguide
 masteradmin
 masterpass
@@ -473,7 +454,6 @@ missingok
 MITM
 mkhomedir
 mmencode
-MMIME
 mnt
 modseq
 mountpoint
@@ -650,7 +630,9 @@ realname
 recalc
 RECURSIVEMATCH
 redownloading
+releasenew
 remotehost
+REMOTEPATH
 remoteprefix
 RENAMESCRIPT
 replicator
@@ -670,6 +652,7 @@ rsapubkey
 rspamc
 rspamd
 rsyslog
+rtsp
 rubygems
 rundir
 Rvdm
@@ -678,6 +661,7 @@ rwstipekxacd
 rwxt
 salesforce
 saslauthd
+sasldb
 SAVEDATE
 savedbefore
 SAVEDON
@@ -718,7 +702,7 @@ smi
 smtps
 snarf
 snowballstem
-snprintf
+snprint
 socketpath
 solib
 solrcloud
@@ -780,6 +764,7 @@ sysreport
 tabindex
 TABLEGEN
 Taddressverification
+tarballs
 Tarpit
 tarpitted
 tarpitting
@@ -798,6 +783,7 @@ testpass
 testprefix
 testshared
 textcat
+tgz
 thead
 tika
 tikahost
@@ -822,6 +808,7 @@ Troost
 tscript
 TTLs
 tuxfamily
+txz
 typedef
 tzknvtr
 UCXWQx
@@ -842,14 +829,12 @@ unhibernate
 unhibernated
 unhibernating
 unhibernation
-unistd
 unixtime
 UNKEYWORD
 unpriv
 unsubscribable
 unsubscriptions
 uoff
-Uou
 uppercased
 uppercasing
 upperfirst
@@ -896,7 +881,6 @@ vsize
 vsz
 vuejs
 wal
-wcf
 weakforced
 webmail
 webpage

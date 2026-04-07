@@ -33,14 +33,14 @@ name: Spell checking
 #
 #   For background, see: https://github.com/check-spelling/check-spelling/wiki/Feature:-Update-with-deploy-key
 
-# Sarif reporting
+# SARIF reporting
 #
-# Access to Sarif reports is generally restricted (by GitHub) to members of the repository.
+# Access to SARIF reports is generally restricted (by GitHub) to members of the repository.
 #
 # Requires enabling `security-events: write`
 # and configuring the action with `use_sarif: 1`
 #
-#   For information on the feature, see: https://github.com/check-spelling/check-spelling/wiki/Feature:-Sarif-output
+#   For information on the feature, see: https://github.com/check-spelling/check-spelling/wiki/Feature:-SARIF-output
 
 # Minimal workflow structure:
 #
@@ -54,7 +54,7 @@ name: Spell checking
 #   spelling:
 #     # remove `security-events: write` and `use_sarif: 1`
 #     # remove `experimental_apply_changes_via_bot: 1`
-#     ... otherwise adjust the `with:` as you wish
+#     ... otherwise, adjust the `with:` as you wish
 
 on:
   push:
@@ -73,6 +73,8 @@ on:
     types:
     - 'created'
 
+permissions: {}
+
 jobs:
   spelling:
     name: Spell checking
@@ -84,7 +86,7 @@ jobs:
     outputs:
       followup: ${{ steps.spelling.outputs.followup }}
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event_name, 'pull_request') || github.event_name == 'push' }}
+    if: ${{ (contains(github.event_name, 'pull_request') && github.event.pull_request.state == 'open') || github.event_name == 'push' }}
     concurrency:
       group: spelling-${{ github.event.pull_request.number || github.ref }}
       # note: If you use only_check_changed_files, you do not want cancel-in-progress
@@ -127,34 +129,31 @@ jobs:
   comment-push:
     name: Report (Push)
     # If your workflow isn't running on push, you can remove this job
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     needs: spelling
     permissions:
+      actions: read
       contents: write
     if: (success() || failure()) && needs.spelling.outputs.followup && github.event_name == 'push'
     steps:
     - name: comment
       uses: check-spelling/check-spelling@v0.0.26
       with:
-        checkout: true
-        spell_check_this: check-spelling/spell-check-this@prerelease
         task: ${{ needs.spelling.outputs.followup }}
 
   comment-pr:
     name: Report (PR)
     # If you workflow isn't running on pull_request*, you can remove this job
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     needs: spelling
     permissions:
-      contents: read
+      actions: read
       pull-requests: write
     if: (success() || failure()) && needs.spelling.outputs.followup && contains(github.event_name, 'pull_request')
     steps:
     - name: comment
       uses: check-spelling/check-spelling@v0.0.26
       with:
-        checkout: true
-        spell_check_this: check-spelling/spell-check-this@prerelease
         task: ${{ needs.spelling.outputs.followup }}
         experimental_apply_changes_via_bot: ${{ github.repository_owner != 'dovecot' && 1 }}
 
@@ -164,19 +163,21 @@ jobs:
       contents: write
       pull-requests: write
       actions: read
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     if: ${{
         github.repository_owner != 'dovecot' &&
         github.event_name == 'issue_comment' &&
         github.event.issue.pull_request &&
-        contains(github.event.comment.body, '@check-spelling-bot apply')
+        contains(github.event.comment.body, '@check-spelling-bot') &&
+        contains(github.event.comment.body, 'apply') &&
+        contains(github.event.comment.body, 'https://')
       }}
     concurrency:
       group: spelling-update-${{ github.event.issue.number }}
       cancel-in-progress: false
     steps:
     - name: apply spelling updates
-      uses: check-spelling/check-spelling@prerelease
+      uses: check-spelling/check-spelling@v0.0.26
       with:
         experimental_apply_changes_via_bot: 1
         checkout: true
