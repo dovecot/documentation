@@ -637,7 +637,7 @@ This can be done in two ways:
 
 1. Define the full [[setting,sieve_script]] block in dovecot configuration.
 
-2. Return the user-specific settings as a extra fields from
+2. Return the user-specific settings as extra fields from
    [[link,userdb_extra_fields]].
 
 For example, to use a Sieve script file named `<username>.sieve` in
