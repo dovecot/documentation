@@ -141,7 +141,7 @@ you probably should split it into two.
 
 ### Bracing
 
-- Braces are kept on same line, and not moved onto line on it's own.
+- Braces are kept on same line, and not moved onto line on its own.
 
 - Unnecessary braces can be left out, but avoid removing them to create
   extra diff.
