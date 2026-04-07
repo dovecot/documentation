@@ -175,7 +175,7 @@ Obsolete field indicating whether the request was rejected by policy server.
 
 ### `success`
 
-Overall indicator whether the request succeeded or not.
+Overall indicator whether or not the request succeeded.
 
 ## Expected Response
 
