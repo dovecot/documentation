@@ -2733,7 +2733,7 @@ Example:
 crypt_user_key_curve = secp521r1
 \`\`\`
 
-For EdDSA, you need to use X448 or X25519, case sensitive.`
+For EdDSA, you need to use X448 or X25519, case-sensitive.`
 	},
 
 	crypt_global_public_key_file: {

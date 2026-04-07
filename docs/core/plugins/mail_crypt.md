@@ -220,7 +220,7 @@ Then `newkey.pem` can be used with mail-crypt plugin.
 
 [[added,mail_crypt_eddsa]]
 
-You can use EdSDA keys by using algorithm `X25519` or `X448` (case sensitive).
+You can use EdSDA keys by using algorithm `X25519` or `X448` (case-sensitive).
 
 To generate a suitable keypair, use
 
