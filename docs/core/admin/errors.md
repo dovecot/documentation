@@ -29,7 +29,7 @@ tries to help with it.
 
 IMAP uses unsigned 32bit integers for unique message identifiers.
 Unfortunately a lot of IMAP clients use 32bit signed integers, which
-means that if the UIDs go higher than 2147483647, they'll wrap to
+means that if the UIDs exceed 2147483647, they'll wrap to
 negative integers. This causes errors such as above.
 
 However normally the UIDs should never go that high, so it's possible to
