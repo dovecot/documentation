@@ -107,7 +107,7 @@ http://www.exim.org/exim-html-current/doc/html/spec_html/ch-access_control_lists
 ## Delivering Mails Case Insensitively
 
 ::: WARNING
-Just use this setup if all your login names contain only lower case
+Just use this setup if all your login names contain only lowercase
 characters! (On Linux see `/etc/adduser.conf` under NAME_REGEX variable).
 :::
 
@@ -127,12 +127,12 @@ protocol lmtp {
 authentication, you may set [[setting,auth_username_format]] in the global
 configuration accordingly and renounce the above change).
 
-In case you prefer to configure exim to lower case the local part
+In case you prefer to configure exim to lowercase the local part
 instead, add a router just before your local delivery router:
 
 ```
 lowercase_local:
-    debug_print = "R: lower case local_part for local delivery"
+    debug_print = "R: lowercase local_part for local delivery"
     driver = redirect
     redirect_router = local_user
     data = ${lc:${local_part}}

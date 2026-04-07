@@ -229,7 +229,7 @@ direction of the data flow needs some special attention.
 In filters, the data flows from parent to child, so tokens are first passed
 to the grandparent of all filters and then further down the chain. For some
 filtering chains the order is important. E.g. the snowball stemmer wants all
-input in lower case, so the filter lower casing the tokens will need to be
+input in lowercase, so the filter lower casing the tokens will need to be
 listed before it.
 
 In tokenizers however, the data however flows from child to parent. This
@@ -291,7 +291,7 @@ Available filters:
 
 ### `lowercase`
 
-Change all text to lower case. Supports UTF8, when compiled with libicu
+Change all text to lowercase. Supports UTF8, when compiled with libicu
 and the library is installed. Otherwise only ASCII characters are
 lowercased.
 

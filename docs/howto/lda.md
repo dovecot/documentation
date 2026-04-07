@@ -241,7 +241,7 @@ to deliver to the folder 'extension' in your maildir (If you wish to
 preserve the case of `${extension}`, remove the `hu`
 [flags](http://www.postfix.org/pipe.8.html), and be sure to utilize
 [[variable]] in your `dovecot.conf` for mail locations and other
-configuration parameters that are expecting lower case):
+configuration parameters that are expecting lowercase):
 
 ```
 dovecot unix    -       n       n       -       -      pipe
