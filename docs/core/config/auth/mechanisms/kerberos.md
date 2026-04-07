@@ -20,7 +20,7 @@ If you only wish to authenticate clients using their Kerberos
 want to use [[link,auth_pam]] with `pam_krb5.so` instead.
 :::
 
-## Pre-requisites
+## Prerequisites
 
 This document assumes that you already have a Kerberos Realm up and
 functioning correctly at your site, and that each host in your realm
