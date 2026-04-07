@@ -1831,7 +1831,8 @@ used.`
 		plugin: 'acl',
 		values: setting_types.STRING,
 		text: `
-A comma-separated string which contains all the groups the user belongs to.
+A comma-separated string which contains all the groups to which the user
+belongs.
 
 A user's UNIX groups have no effect on ACLs (you can enable them by using a
 special [[link,post_login_scripting]].
