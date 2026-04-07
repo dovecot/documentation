@@ -1598,7 +1598,7 @@ yielded no (implicit) keep.`
 		values: setting_types.STRING,
 		text: `
 Points to a directory relative to the [[setting,base_dir]] where
-the plugin looks for script service sockets for the \`vnd.dovecot.pipe\`
+the plugin looks for script service sockets. Used by the \`vnd.dovecot.pipe\`
 extension.`
 	},
 
@@ -1607,7 +1607,7 @@ extension.`
 		values: setting_types.STRING,
 		text: `
 Points to a directory relative to the [[setting,base_dir]] where
-the plugin looks for script service sockets for the \`vnd.dovecot.filter\`
+the plugin looks for script service sockets. Used by the \`vnd.dovecot.filter\`
 extension.`
 	},
 
@@ -1616,8 +1616,8 @@ extension.`
 		values: setting_types.STRING,
 		text: `
 Points to a directory relative to the [[setting,base_dir]] where
-the plugin looks for script service sockets for the \`vnd.dovecot.execute\`
-extension.`
+the plugin looks for script service sockets. Used by the
+\`vnd.dovecot.execute\` extension.`
 	},
 
 	'sieve_pipe_bin_dir': {
@@ -1625,8 +1625,8 @@ extension.`
 		values: setting_types.STRING,
 		text: `
 Points to a directory where the plugin looks for programs (shell
-scripts) to execute directly and pipe messages to for the \`vnd.dovecot.pipe\`
-extension.`
+scripts) to execute directly and pipe messages to. Used by the
+\`vnd.dovecot.pipe\` extension.`
 	},
 
 	'sieve_filter_bin_dir': {
@@ -1634,7 +1634,7 @@ extension.`
 		values: setting_types.STRING,
 		text: `
 Points to a directory where the plugin looks for programs (shell
-scripts) to execute directly and filter messages through for the
+scripts) to execute directly and filter messages through. Used by the
 \`vnd.dovecot.filter\` extension.`
 	},
 
@@ -1643,7 +1643,7 @@ scripts) to execute directly and filter messages through for the
 		values: setting_types.STRING,
 		text: `
 Points to a directory where the plugin looks for programs (shell
-scripts) to execute directly for the \`vnd.dovecot.execute\` extension.`
+scripts) to execute directly. Used by the \`vnd.dovecot.execute\` extension.`
 	},
 
 	'sieve_pipe_exec_timeout': {
