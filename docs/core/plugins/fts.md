@@ -327,7 +327,7 @@ There is a caveat for the Norwegian language:
 
 The default normalizer filter does not modify `U+00F8` (Latin Small Letter O
 with Stroke). In some configurations it might be desirable to rewrite it to,
-e.g., `o`. Same goes for the upper case version. This can be done by passing
+e.g., `o`. Same goes for the uppercase version. This can be done by passing
 a modified `id` setting to the normalizer filter.
 
 Similar cases can exist for other languages as well.
