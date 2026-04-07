@@ -230,7 +230,7 @@ exec env "NAMESPACE/INBOX/MAIL_DRIVER=$mail_driver" "NAMESPACE/INBOX/MAIL_PATH=$
 Before configuring Dovecot, you'll need to know where your mails are
 located. You should already have an SMTP server installed and configured
 to deliver mails somewhere, so the easiest way to make Dovecot work is
-to just use the same location. Otherwise you could create a `~/Maildir`
+to just use the same location. Otherwise, you could create a `~/Maildir`
 directory and configure your SMTP server to use the Maildir format.
 
 First send a test mail to yourself (as your own non-root user):

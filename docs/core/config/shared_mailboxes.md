@@ -101,7 +101,7 @@ namespace public {
 ### Maildir: Keyword Sharing
 
 Make sure you don't try to use per-user [[setting,mail_control_path]]
-directory. Otherwise `dovecot-keywords` file doesn't get shared and keyword
+directory. Otherwise, `dovecot-keywords` file doesn't get shared and keyword
 mapping breaks.
 
 ### Subscriptions
@@ -158,7 +158,7 @@ per-user path. Note that if the Maildir has any keywords, the per-user control
 directory breaks the keywords since there is no `dovecot-keywords` file.
 
 When configuring multiple namespaces, the control/index path must be
-different for each namespace. Otherwise if namespaces have identically
+different for each namespace. Otherwise, if namespaces have identically
 named mailboxes their control/index directories will conflict and cause
 all kinds of problems.
 

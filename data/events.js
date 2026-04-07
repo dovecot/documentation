@@ -1470,8 +1470,8 @@ Transport security indicator. Values:
 			user: `Full username. This can change during authentication, for example due to passdb lookups.`,
 			original_user: `Original username exactly as provided by the client.`,
 			translated_user: `Similar to \`original_user\`, except after [[setting,auth_username_translation]] translations are applied.`,
-			login_user: `When doing a master user login, the user we are logging in as. Otherwise not set.`,
-			master_user: `When doing a master user login, the master username. Otherwise not set.`,
+			login_user: `When doing a master user login, the user we are logging in as. Otherwise, not set.`,
+			master_user: `When doing a master user login, the master username. Otherwise, not set.`,
 			mechanism: `Name of used SASL mechanism (e.g. PLAIN).`,
 			service: {
 				removed: {

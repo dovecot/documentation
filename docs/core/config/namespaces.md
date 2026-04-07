@@ -324,7 +324,7 @@ namespace compat {
 }
 ```
 
-The `separator=/` allows the INBOX to have child mailboxes. Otherwise with
+The `separator=/` allows the INBOX to have child mailboxes. Otherwise, with
 `separator=.` it wouldn't be possible to know if "INBOX.foo" means INBOX's
 "foo" child or the root "foo" mailbox in "INBOX." compatibility namespace. With
 `separator=/` the difference is clear with "INBOX/foo" vs. "INBOX.foo".

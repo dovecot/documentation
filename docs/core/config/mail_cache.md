@@ -80,7 +80,7 @@ IMAP ENVELOPE is used by many clients, which includes:
 | `imap.bodystructure` | IMAP BODYSTRUCTURE response, which describes what the message's MIME structure looks like. |
 | `imap.body` | IMAP BODY response. This is the short version of imap.bodystructure, not the message body itself. If imap.bodystructure is cached, this field isn't cached because it can be generated from the imap.bodystructure. |
 | `imap.envelope` | IMAP ENVELOPE response, which contains the From, To, Cc, Bcc, Sender, Reply-To, Date, Subject, Message-ID and In-Reply-To headers in parsed forms. This is typically in the [[setting,mail_never_cache_fields]] because the raw headers are more useful in the cache and the ENVELOPE can be generated from them. |
-| `pop3.uidl` | POP3 UIDL responses. This is useful especially if some of the UIDLs have been migrated from an old system or if [[setting,pop3_reuse_xuidl]] is used. Otherwise Dovecot generates the UIDL in a way that usually doesn't require cache. |
+| `pop3.uidl` | POP3 UIDL responses. This is useful especially if some of the UIDLs have been migrated from an old system or if [[setting,pop3_reuse_xuidl]] is used. Otherwise, Dovecot generates the UIDL in a way that usually doesn't require cache. |
 | `pop3.order` | POP3 messages' order. This is used after migration from another system where the IMAP and POP3 messages' order differs. |
 | `guid` | Internal Dovecot GUID for messages. |
 | `mime.parts` | MIME parts' sizes. |

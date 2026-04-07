@@ -84,7 +84,7 @@ There are 3 types of services that need to be optimized in different ways:
    serve all the needed connections (max connections =
    [[setting,service_process_limit]] * [[setting,service_client_limit]]).
    [[setting,service_restart_request_count]] is commonly set to `unlimited` for
-   these services. Otherwise when the limit is beginning to be reached, the
+   these services. Otherwise, when the limit is beginning to be reached, the
    total number of available connections will shrink. With very bad luck that
    could mean that all the processes are simply waiting for the existing
    connections to die away before the process can die and a new one can be

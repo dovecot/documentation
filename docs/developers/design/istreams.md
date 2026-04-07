@@ -221,7 +221,7 @@ common helper functions and variables:
   - `i_stream_compress()` attempts to compress the current
     `w_buffer` by removing already-skipped data with `memmove()`.
     If `skip` is 0, it does nothing. Note that this function must
-    not be called if `memarea` has refcount &gt; 1. Otherwise that could
+    not be called if `memarea` has refcount &gt; 1. Otherwise, that could
     be modifying a snapshotted memarea.
 
 The snapshots have made implementing istreams slightly more complicated than

@@ -21,7 +21,7 @@ to all mailbox access, including mail delivery.
   (i.e. keep them as `no`)
 * Do **not** use the `quota-status` service.
 * Unmounted NFS mount point directory should not be writable to Dovecot
-  mail processes (i.e. often the `vmail` user). Otherwise if the NFS
+  mail processes (i.e. often the `vmail` user). Otherwise, if the NFS
   isn't mounted for some reason and user access mails, a new empty user
   mail directory is created, which breaks things.
 

@@ -266,7 +266,7 @@ Remove this field entirely.
 Change the username (eg. lowercase it).
 
 This is mostly useful in case-insensitive username lookups to get the username
-returned back using the same casing always. Otherwise depending on your
+returned back using the same casing always. Otherwise, depending on your
 configuration it may cause problems, such as `/var/mail/user` and
 `/var/mail/User` mailboxes created for the same user.
 

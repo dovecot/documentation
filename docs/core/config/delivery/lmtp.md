@@ -64,7 +64,7 @@ protocols setting contains lmtp.
 ## Security
 
 Unfortunately LMTP process currently needs to run as root, and only
-temporarily drop privileges to users. Otherwise it couldn't handle mail
+temporarily drop privileges to users. Otherwise, it couldn't handle mail
 deliveries to more than a single user with different UID.
 
 If you're using only a single global UID/GID (i.e. virtual users), you can

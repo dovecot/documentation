@@ -262,7 +262,7 @@ only the keywords are listed in X-IMAP header are used.
 
 The UID for a new message is calculated from last used UID in X-IMAP header +
 1. This is done always, so fake X-UID headers don't really matter. This is
-also why the pseudo-message is important. Otherwise the UIDs could easily
+also why the pseudo-message is important. Otherwise, the UIDs could easily
 grow over 231 which some clients start treating as negative numbers, which
 then cause all kinds of problems. Also when 232 is exceeded, Dovecot will also
 start having some problems.
@@ -494,7 +494,7 @@ Since the problems usually have been related to broken headers, you
 should be able to avoid them by filtering out all the Dovecot's internal
 metadata headers. This is a good idea to do in any case.
 
-If you use [[link,lda]] it does this filtering automatically. Otherwise you
+If you use [[link,lda]] it does this filtering automatically. Otherwise, you
 could do this in your SMTP server. The headers that you should filter out are:
 
 - Content-Length

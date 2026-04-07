@@ -2070,7 +2070,7 @@ cache. This may be a useful optimization if the user's client only uses header
 searches.
 
 ::: info
-Only the \`yes\` option guarantees consistent search results. Otherwise it's
+Only the \`yes\` option guarantees consistent search results. Otherwise, it's
 possible that the search results will be different depending on whether the
 search was performed via FTS index or not.
 :::`
@@ -9125,7 +9125,7 @@ Configures a modifier string for values grouped by the
 
 \`%{user | domain}\`
 :   If the value is in \`user@domain\` format, this contains the \`domain\`
-    text. Otherwise empty.`
+    text. Otherwise, empty.`
 	},
 
 	metric_group_by_method_exponential_min_magnitude: {
@@ -10357,7 +10357,7 @@ The maximum number of processes that may exist for this service.
 [[changed,service_process_limit_changed]] However, if
 [[setting,service_client_limit]] > 1, when the process reaches
 [[setting,service_restart_request_count]], the process is no longer counted
-towards its process limit. Otherwise long-lived connections in the old process
+towards its process limit. Otherwise, long-lived connections in the old process
 could prevent creation of new processes.`
 	},
 
