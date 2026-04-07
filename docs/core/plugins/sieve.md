@@ -582,7 +582,7 @@ sieve_script personal {
   # Space separated list of LDAP URIs to use.
   ldap_uris = ldap://localhost
 
-  # Distinguished Name - the username used to login to the LDAP server.
+  # Distinguished Name - the username used to log in to the LDAP server.
   # Leave it commented out to bind anonymously.
   ldap_auth_dn = cn=sieve,ou=Programs,dc=example,dc=org
 

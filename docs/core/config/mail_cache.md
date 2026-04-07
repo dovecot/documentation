@@ -18,7 +18,7 @@ to be cached. So Dovecot needs to be told what to initially add to
 
 This can be useful even after migration. For example a user might
 normally use their mobile app IMAP client, but once a few months they
-would login to the webmail. Dovecot would normally preserve the fields
+would log in to the webmail. Dovecot would normally preserve the fields
 used by the mobile IMAP client, but drop the extra fields used only by
 webmail after a month. This might not be wanted.
 

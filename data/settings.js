@@ -11408,7 +11408,7 @@ If enabled, ignore version mismatches between different Dovecot versions.`
 		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
 		values: setting_types.STRING,
 		text: `
-Specify the Distinguished Name (the username used to login to the LDAP server).
+Specify the Distinguished Name (the username used to log in to the LDAP server).
 
 Leave it commented out to bind anonymously (useful with [[setting,passdb_ldap_bind,yes]]).
 
