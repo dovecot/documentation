@@ -343,7 +343,7 @@ See also [[link,migrating_mailboxes]]
 
 ### Per-user Namespace Location From SQL
 
-You need to give the namespace a name, for example "docs" below:
+You need to name the namespace, for example "docs" below:
 
 ```doveconf[dovecot.conf]
 namespace docs {
