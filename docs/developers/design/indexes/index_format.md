@@ -41,8 +41,8 @@ At times there have been thoughts about changing index handling so it wouldn't
 care about CPU endianness or alignment, but this would be a huge change and
 the end result would almost certainly be worse performance. This is mostly a
 theoretical problem anyway: It's very unlikely that index files are moving
-between little and big endian CPUs, and if that is actually wanted the mails
-can be migrated with dsync.
+between little-endian and big-endian CPUs, and if that is actually wanted the
+mails can be migrated with dsync.
 
 ## Main Index
 
