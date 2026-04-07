@@ -42,7 +42,7 @@ especially contained these intentionally broken `X-UID:` headers.
 With newer Dovecot versions these broken `X-UID:` headers aren't
 practically ever used. It happens only if the mail has a valid
 `X-IMAPbase`: header, `X-UID:` header, and the mail is written to an empty
-mbox file. Note that this can happen only to new mboxes, because expunging
+mbox file. Note that this can only happen to new mboxes, because expunging
 all messages in a mailbox causes Dovecot to create a metadata message at
 the beginning of the mbox file.
 
