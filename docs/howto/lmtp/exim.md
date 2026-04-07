@@ -123,7 +123,7 @@ protocol lmtp {
 }
 ```
 
-(If you don't mind allowing case insensitive logins for dovecot
+(If you don't mind allowing case-insensitive logins for dovecot
 authentication, you may set [[setting,auth_username_format]] in the global
 configuration accordingly and renounce the above change).
 

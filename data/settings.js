@@ -2095,7 +2095,7 @@ The list of headers to include or exclude.
 - The default is the preexisting behavior, i.e. index all headers.
 - \`includes\` take precedence over \`excludes\`: if a header matches both,
   it is indexed.
-- The terms are case insensitive.
+- The terms are case-insensitive.
 - An asterisk \`*\` at the end of a header name matches anything starting
 	 with that header name.
 - The asterisk can only be used at the end of the header name.
