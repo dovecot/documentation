@@ -165,7 +165,7 @@ docker run -v /etc/dovecot-config:/etc/dovecot/conf.d:ro --security-opt "no-new-
 To run the Docker image as a test install, a password needs to be set - by
 default, the Docker image does not allow authentication.
 
-To quickly setup a local system to test IMAP:
+To quickly set up a local system to test IMAP:
 
 ```console
 docker run --rm --name dovecot-test -p 31143:31143 -e USER_PASSWORD=password --pull always dovecot/dovecot:latest-dev
