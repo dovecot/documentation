@@ -33,8 +33,11 @@ All standalone programs, such as [[man,dovecot]], will first get their settings
 by executing doveconf, unless they can get the settings by connecting to the
 config UNIX socket.
 
-For system administrators, **doveconf** is mainly useful for dumping the
-configuration in easy human readable output.
+For system administrators, **doveconf** is mainly useful for inspecting the
+current configuration in an easy human readable format, checking individual
+settings, and comparing configured values against their defaults.
+
+It can also be used to inspect configuration @groups by querying them directly.
 
 ## OPTIONS
 
@@ -51,6 +54,11 @@ configuration in easy human readable output.
 **-d**
 :   Show the setting's default value instead of the one currently
     configured.
+
+    This can also be used to show the contents of default setting groups by
+    querying the group name directly, for example:
+
+    `doveconf -d @mailbox_defaults/english`
 
 **-F**
 :   Show the configuration in a filter-based format, which is how Dovecot
@@ -145,6 +153,24 @@ configuration in easy human readable output.
     using `/` as the section separator, e.g. `service/imap/executable`.
 
 ## EXAMPLE
+
+Show only settings with non-default values (default behavior):
+
+```sh
+doveconf -n
+```
+
+Show all settings with their default values:
+
+```sh
+doveconf -ad
+```
+
+Show the contents of a default settings group:
+
+```sh
+doveconf -d @mailbox_defaults/english
+```
 
 When Dovecot was configured to use different settings for some
 networks/subnets it is possible to show which settings will be applied
