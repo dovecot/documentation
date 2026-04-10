@@ -7286,13 +7286,20 @@ Variables allowed (in addition to [[variable,global]]):
 
 	login_log_format_elements: {
 		default: 'user=<%{user}> method=%{mechanism} rip=%{remote_ip} lip=%{local_ip} mpid=%{mail_pid} %{secured} session=<%{session}>',
-		// TODO: Provide join example
 		values: setting_types.STRING_NOVAR,
 		text: `
 A space-separated list of elements of the login log formatting.
 
 Elements that have a non-empty value are joined together to form a
 comma-separated string.
+
+Example:
+
+\`\`\`doveconf[dovecot.conf]
+# If \`secured\` is empty, the output for \`%{elements}\` will look like:
+# \`user=<user>, method=PLAIN, session=<abc>\`
+login_log_format_elements = user=<%{user}> method=%{mechanism} %{secured} session=<%{session}>
+\`\`\`
 
 [[variable,login]] can be used.`
 	},
