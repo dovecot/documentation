@@ -72,6 +72,9 @@ export default defineConfig({
 		nav: [
 			{
 				text: base.substring(1),
+				// Dynamic version population code requires at
+				// least one entry (so it can clone the DOM
+				// to create additional entries).
 				items: [
 					{ text: '2.3', link: 'https://doc.dovecot.org/2.3/' },
 				]
