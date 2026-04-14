@@ -64,7 +64,7 @@ example:
 dovecot-lda -f $FROM_ENVELOPE -d $DEST_USERNAME
 ```
 
-You'll need to set up a auth-userdb socket for dovecot-lda so it knows
+You'll need to set up an auth-userdb socket for dovecot-lda so it knows
 where to find mailboxes for the users:
 
 ```doveconf[dovecot.conf]

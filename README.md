@@ -84,7 +84,7 @@ npm run docs:preview
 Depending on when an issue occurs, errors may be displayed on the development
 screen (and in the terminal where the `docs:dev` command is being run).
 
-However, some errors only occur when viewing a page, and will oftentimes
+However, some errors only occur when viewing a page, and will often
 result in a blank or incomplete page render. In these cases, looking at the
 browser developer console will generally show the error that has occurred.
 
@@ -362,7 +362,7 @@ If section is defined, will link to the sub-section. Valid sub-sections:
 
 ***Syntax: `[[(update),tag_name]]`***
 
-Create a update tag based on a tag_name.
+Create an update tag based on a tag_name.
 
 The tag_name must be defined in `data/updates.js`.
 

@@ -13,7 +13,7 @@ dovecotlinks:
 Dovecot provides a lib-lua internal helper as part of libdovecot.so. It has
 facilities for loading scripts from various sources, and also helps with
 reusing scripts by keeping track of which scripts are loaded. Each script has
-it's own memory pool, which is guaranteed to be released when script is
+its own memory pool, which is guaranteed to be released when script is
 unloaded.
 
 ::: danger
@@ -53,7 +53,7 @@ Pushes an Dovecot Event to stack.
 
 ### `void dlua_push_timeval(lua_State *L, const struct timeval *tv)`
 
-Pushes an timeval struct to stack as integer.
+Pushes a timeval struct to stack as integer.
 
 ## Lua API
 

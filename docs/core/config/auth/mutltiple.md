@@ -50,7 +50,7 @@ passdb sql {
   query = SELECT userid AS user, password FROM users WHERE userid = '%{user}'
 }
 
-# fallback to PAM
+# fall back to PAM
 passdb pam {
 }
 
@@ -59,7 +59,7 @@ userdb sql {
   query = SELECT uid, gid, '/var/vmail/%{user | domain}/%{user | username}' AS home FROM users WHERE userid = '%{user}'
 }
 
-# if not found, fallback to /etc/passwd
+# if not found, fall back to /etc/passwd
 userdb passwd {
 }
 ```

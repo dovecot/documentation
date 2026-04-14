@@ -2,7 +2,6 @@
 
 File | Purpose | Format | Info
 -|-|-|-
-[dictionary.txt](dictionary.txt) | Replacement dictionary (creating this file will override the default dictionary) | one word per line | [dictionary](https://github.com/check-spelling/check-spelling/wiki/Configuration#dictionary)
 [allow.txt](allow.txt) | Add words to the dictionary | one word per line (only letters and `'`s allowed) | [allow](https://github.com/check-spelling/check-spelling/wiki/Configuration#allow)
 [reject.txt](reject.txt) | Remove words from the dictionary (after allow) | grep pattern matching whole dictionary words | [reject](https://github.com/check-spelling/check-spelling/wiki/Configuration-Examples%3A-reject)
 [excludes.txt](excludes.txt) | Files to ignore entirely | perl regular expression | [excludes](https://github.com/check-spelling/check-spelling/wiki/Configuration-Examples%3A-excludes)

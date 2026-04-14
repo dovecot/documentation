@@ -74,7 +74,7 @@ Fetch a key from a dictionary.
   [**-1RV**]
   *config-filter-name* *prefix*
 
-Find the keys matching the a prefix in a dictionary.
+Find the keys matching a prefix in a dictionary.
 
 **-1**
 :   Exact match.

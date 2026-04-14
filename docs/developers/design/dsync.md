@@ -105,7 +105,7 @@ the mailbox is included in sync.
 ::: warning
 A superfast mode should still be implemented, where once a
 mailbox is selected for syncing, it should sync only mails whose modseq
-is higher than a given one. This would improve performance and network
+is greater than a given one. This would improve performance and network
 traffic with large mailboxes.
 :::
 

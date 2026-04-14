@@ -96,7 +96,7 @@ All these are case-insensitive. Other values give errors.
 
 The size value type is used in Dovecot configuration to define the amount of
 space taken by something, such as a file, cache or memory limit. The size value
-type is case insensitive. The following suffixes can be used to define size:
+type is case-insensitive. The following suffixes can be used to define size:
 
 | Suffix | Value |
 | ------ | ----- |

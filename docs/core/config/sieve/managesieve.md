@@ -211,7 +211,7 @@ client.
 
 If you do not use TLS, you can connect using a simple `telnet`
 or `netcat` connection to the configured port (typically 4190 or 2000
-for older setups). Otherwise you must use a TLS-capable text protocol
+for older setups). Otherwise, you must use a TLS-capable text protocol
 client like `gnutls-cli` as described below.
 
 Upon connection, the server presents the initial greeting with its

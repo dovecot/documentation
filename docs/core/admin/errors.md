@@ -29,7 +29,7 @@ tries to help with it.
 
 IMAP uses unsigned 32bit integers for unique message identifiers.
 Unfortunately a lot of IMAP clients use 32bit signed integers, which
-means that if the UIDs go higher than 2147483647, they'll wrap to
+means that if the UIDs exceed 2147483647, they'll wrap to
 negative integers. This causes errors such as above.
 
 However normally the UIDs should never go that high, so it's possible to
@@ -42,7 +42,7 @@ especially contained these intentionally broken `X-UID:` headers.
 With newer Dovecot versions these broken `X-UID:` headers aren't
 practically ever used. It happens only if the mail has a valid
 `X-IMAPbase`: header, `X-UID:` header, and the mail is written to an empty
-mbox file. Note that this can happen only to new mboxes, because expunging
+mbox file. Note that this can only happen to new mboxes, because expunging
 all messages in a mailbox causes Dovecot to create a metadata message at
 the beginning of the mbox file.
 
@@ -208,7 +208,7 @@ These usually happen because the `dovecot.index.cache` file is so large
 that it can't fit into the memory.
 
 The solution is usually to either raise the imap service's
-[[setting,service_vsz_limit]] or to somewhat higher than the maximum cache file
+[[setting,service_vsz_limit]] or to somewhat above the maximum cache file
 size. For example to `1500M`.
 
 An alternative solution to this is to reduce the maximum cache file size to

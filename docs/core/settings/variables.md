@@ -232,7 +232,7 @@ Variables that work nearly everywhere where there is a username:
 | -------- | ----------- |
 | `user` | Full username (e.g. user@domain) |
 | `session` | Session ID for this client connection (unique for 9 years) |
-| `auth_user` | SASL authentication ID (e.g. if master user login is done, this contains the master username). If username changes during authentication, this value contains the original username. Otherwise the same as `user`. |
+| `auth_user` | SASL authentication ID (e.g. if master user login is done, this contains the master username). If username changes during authentication, this value contains the original username. Otherwise, the same as `user`. |
 
 ## Mail Service User Variables
 
@@ -286,7 +286,7 @@ See also:
 | `real_remote_port` | Similar to `real_remote_ip` except for port instead of IP. |
 | `real_local_port` | Similar to `real_local_ip` except for port instead of IP. |
 | `mechanism` | [[link,sasl]], e.g., PLAIN. |
-| `secured` | "TLS" with established SSL/TLS connections, "TLS handshaking", or "TLS [handshaking]: error text" if disconnecting due to TLS error. "secured" with secured connections (see: [[setting,ssl]]). Otherwise empty. |
+| `secured` | "TLS" with established SSL/TLS connections, "TLS handshaking", or "TLS [handshaking]: error text" if disconnecting due to TLS error. "secured" with secured connections (see: [[setting,ssl]]). Otherwise, empty. |
 | `ssl_security` | TLS session security string. If HAProxy is configured and it terminated the TLS connection, contains "(proxied)". |
 | `ssl_ja3` | [[link,ssl_ja3]] composed from TLS Client Hello. |
 | `ssl_ja3_hash` | MD5 hash from [[link,ssl_ja3]] composed from TLS Client Hello. |
@@ -325,7 +325,7 @@ See also:
 | `session_pid` | For user logins: The PID of the IMAP/POP3 process handling the session. |
 | `mechanism` | [[link,sasl]], e.g., PLAIN. |
 | `password` | Cleartext password from cleartext authentication mechanism. |
-| `secured` | "TLS" with established SSL/TLS connections, "secured" with secured connections (see: [[setting,ssl]]). Otherwise empty. |
+| `secured` | "TLS" with established SSL/TLS connections, "secured" with secured connections (see: [[setting,ssl]]). Otherwise, empty. |
 | `ssl_ja3_hash` | MD5 hash from JA3 string composed from TLS Client Hello. |
 | `ssl_client_cert_fp` | [[setting,ssl_peer_certificate_fingerprint_hash]] of client certificate. |
 | `ssl_client_cert_pubkey_fp` | [[setting,ssl_peer_certificate_fingerprint_hash]] of client certificate public key. |
@@ -373,7 +373,7 @@ The difference is that `if` can be used to do single comparison, and `switch` ca
 
 Examples:
 ```
-# If %{user} is "testuser", return "INVALID". Otherwise return %{user} uppercased.
+# If %{user} is "testuser", return "INVALID". Otherwise, return %{user} uppercased.
 %{user | if ("=", "testuser, "invalid", user) | upper }
 
 # Select subdomain for tenant

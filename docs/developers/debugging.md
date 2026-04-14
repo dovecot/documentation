@@ -366,7 +366,7 @@ and
 Then just use #include those files around just the functions you want
 un-optimised.
 
-Another dirty and quick way to opt out the optimization is to use pragma
+Another quick and dirty way to opt out the optimization is to use pragma
 to quote the code.
 
 ```c

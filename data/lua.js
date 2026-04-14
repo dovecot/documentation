@@ -607,7 +607,7 @@ debugging.`
 		name: 'passthrough_event',
 		tags: [ 'event' ],
 		text: `
-Returns an passthrough event.
+Returns a passthrough event.
 
 A log message *must be* logged or else a panic will occur.`
 	},

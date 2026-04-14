@@ -100,6 +100,6 @@ memory used by it with `pool_unref(&changes->pool)`.
 ## Atomic Changes
 
 `mailbox_transaction_set_max_modseq()` can be used to implement atomic
-conditional flag changes. If message's modseq is higher than the given
+conditional flag changes. If message's modseq is greater than the given
 max_modseq while transaction is being committed, the change isn't done
 and the message's sequence number is added to the given array.

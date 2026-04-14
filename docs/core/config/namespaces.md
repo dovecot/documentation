@@ -324,7 +324,7 @@ namespace compat {
 }
 ```
 
-The `separator=/` allows the INBOX to have child mailboxes. Otherwise with
+The `separator=/` allows the INBOX to have child mailboxes. Otherwise, with
 `separator=.` it wouldn't be possible to know if "INBOX.foo" means INBOX's
 "foo" child or the root "foo" mailbox in "INBOX." compatibility namespace. With
 `separator=/` the difference is clear with "INBOX/foo" vs. "INBOX.foo".
@@ -343,7 +343,7 @@ See also [[link,migrating_mailboxes]]
 
 ### Per-user Namespace Location From SQL
 
-You need to give the namespace a name, for example "docs" below:
+You need to name the namespace, for example "docs" below:
 
 ```doveconf[dovecot.conf]
 namespace docs {

@@ -168,7 +168,7 @@ wget https://raw.githubusercontent.com/dovecot/tools/refs/heads/main/dcrypt-decr
 ```
 :::
 
-Setup a local python environment (optional) and install the necessary
+Set up a local python environment (optional) and install the necessary
 dependencies.
 
 ```sh

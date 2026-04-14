@@ -34,8 +34,8 @@ When used with the **-A** or **-u** *wildcard* options,
 [[man,doveadm]] will print the fields **username**, **mailbox-guid**
 and **uid** for each matching message.
 
-In the first form, [[man,doveadm]] will executed the **search** action
-will be performed for all users.
+In the first form, [[man,doveadm]] will execute the **search** action
+for all users.
 
 In the second form, the command will be performed for all users listed in
 the given *file*.

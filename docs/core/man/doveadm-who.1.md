@@ -27,7 +27,7 @@ This command uses by default the output formatter **table**.
 ## OPTIONS
 
 **-1**
-:   Print one line per user and connection. Otherwise the connections are
+:   Print one line per user and connection. Otherwise, the connections are
     grouped by the username.
 
 **-a** *anvil_socket_path*

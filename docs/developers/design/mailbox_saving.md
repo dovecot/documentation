@@ -43,7 +43,7 @@ metadata.
 
 ### `mailbox_save_set_uid()`
 
-Set message's UID. If mailbox's next_uid is already higher than the specified
+Set message's UID. If mailbox's next_uid is already greater than the specified
 UID, the UID request is ignored.
 
 ::: info

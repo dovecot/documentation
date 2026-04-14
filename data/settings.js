@@ -1586,7 +1586,7 @@ imapsieve_url = sieve://sieve.example.com
 		values: setting_types.BOOLEAN,
 		default: 'no',
 		text: `
-This setting determines whether de IMAPSieve plugin implicitly also expunges
+This setting determines whether the IMAPSieve plugin also implicitly expunges
 messages that were discarded by the executed Sieve script sequence; i.e., Sieve
 yielded no (implicit) keep.`
 	},
@@ -1598,7 +1598,7 @@ yielded no (implicit) keep.`
 		values: setting_types.STRING,
 		text: `
 Points to a directory relative to the [[setting,base_dir]] where
-the plugin looks for script service sockets for the \`vnd.dovecot.pipe\`
+the plugin looks for script service sockets. Used by the \`vnd.dovecot.pipe\`
 extension.`
 	},
 
@@ -1607,7 +1607,7 @@ extension.`
 		values: setting_types.STRING,
 		text: `
 Points to a directory relative to the [[setting,base_dir]] where
-the plugin looks for script service sockets for the \`vnd.dovecot.filter\`
+the plugin looks for script service sockets. Used by the \`vnd.dovecot.filter\`
 extension.`
 	},
 
@@ -1616,8 +1616,8 @@ extension.`
 		values: setting_types.STRING,
 		text: `
 Points to a directory relative to the [[setting,base_dir]] where
-the plugin looks for script service sockets for the \`vnd.dovecot.execute\`
-extension.`
+the plugin looks for script service sockets. Used by the
+\`vnd.dovecot.execute\` extension.`
 	},
 
 	'sieve_pipe_bin_dir': {
@@ -1625,8 +1625,8 @@ extension.`
 		values: setting_types.STRING,
 		text: `
 Points to a directory where the plugin looks for programs (shell
-scripts) to execute directly and pipe messages to for the \`vnd.dovecot.pipe\`
-extension.`
+scripts) to execute directly and to pipe messages. Used by the
+\`vnd.dovecot.pipe\` extension.`
 	},
 
 	'sieve_filter_bin_dir': {
@@ -1634,7 +1634,7 @@ extension.`
 		values: setting_types.STRING,
 		text: `
 Points to a directory where the plugin looks for programs (shell
-scripts) to execute directly and filter messages through for the
+scripts) to execute directly and filter messages through. Used by the
 \`vnd.dovecot.filter\` extension.`
 	},
 
@@ -1643,7 +1643,7 @@ scripts) to execute directly and filter messages through for the
 		values: setting_types.STRING,
 		text: `
 Points to a directory where the plugin looks for programs (shell
-scripts) to execute directly for the \`vnd.dovecot.execute\` extension.`
+scripts) to execute directly. Used by the \`vnd.dovecot.execute\` extension.`
 	},
 
 	'sieve_pipe_exec_timeout': {
@@ -1831,7 +1831,8 @@ used.`
 		plugin: 'acl',
 		values: setting_types.STRING,
 		text: `
-A comma-separated string which contains all the groups the user belongs to.
+A comma-separated string which contains all the groups to which the user
+belongs.
 
 A user's UNIX groups have no effect on ACLs (you can enable them by using a
 special [[link,post_login_scripting]].
@@ -2070,7 +2071,7 @@ cache. This may be a useful optimization if the user's client only uses header
 searches.
 
 ::: info
-Only the \`yes\` option guarantees consistent search results. Otherwise it's
+Only the \`yes\` option guarantees consistent search results. Otherwise, it's
 possible that the search results will be different depending on whether the
 search was performed via FTS index or not.
 :::`
@@ -2095,7 +2096,7 @@ The list of headers to include or exclude.
 - The default is the preexisting behavior, i.e. index all headers.
 - \`includes\` take precedence over \`excludes\`: if a header matches both,
   it is indexed.
-- The terms are case insensitive.
+- The terms are case-insensitive.
 - An asterisk \`*\` at the end of a header name matches anything starting
 	 with that header name.
 - The asterisk can only be used at the end of the header name.
@@ -2733,7 +2734,7 @@ Example:
 crypt_user_key_curve = secp521r1
 \`\`\`
 
-For EdDSA, you need to use X448 or X25519, case sensitive.`
+For EdDSA, you need to use X448 or X25519, case-sensitive.`
 	},
 
 	crypt_global_public_key_file: {
@@ -5361,9 +5362,9 @@ Available options:
 
 \`no-header-hashes\`
 :   When this setting is enabled and one dsync side doesn't support mail
-    GUIDs (i.e. imapc), there is no fallback to using header hashes. Instead,
+    GUIDs (i.e. imapc), it does not fall back to using header hashes. Instead,
     dsync assumes that all mails with identical IMAP UIDs contain the same
-    mail contents. This can significantly improve dsync performance with some
+    mail content. This can significantly improve dsync performance with some
     IMAP servers that don't support caching Date/Message-ID headers.`
 	},
 
@@ -5799,8 +5800,8 @@ returned.`
 Maximum number of connection attempts to a host before all associated requests fail.
 
 If non-zero, the maximum will be enforced across all IPs for that host, meaning
-that IPs may be tried more than once eventually if the number of IPs is smaller
-than the specified maximum attempts. If the number of IPs is higher than the
+that IPs may eventually be tried more than once if the number of IPs is less
+than the specified maximum attempts. If the number of IPs is greater than the
 maximum attempts not all IPs are tried.
 
 If \`0\`, all IPs are tried at most once.`
@@ -9114,7 +9115,7 @@ Configures a modifier string for values grouped by the
 
 \`%{user | domain}\`
 :   If the value is in \`user@domain\` format, this contains the \`domain\`
-    text. Otherwise empty.`
+    text. Otherwise, empty.`
 	},
 
 	metric_group_by_method_exponential_min_magnitude: {
@@ -9722,7 +9723,8 @@ mechanism.`
 		default: 100,
 		seealso: [ 'service_restart_request_count' ],
 		text: `
-Number of requests a auth-worker process handles for passdb pam before it dies.
+Number of requests an auth-worker process handles for passdb pam before it
+dies.
 This configures similar behaviour as the
 [[setting,service_restart_request_count]] setting but it limits only the number
 of pam passdb requests, not all requests to be handled by an auth-worker.`
@@ -10345,7 +10347,7 @@ The maximum number of processes that may exist for this service.
 [[changed,service_process_limit_changed]] However, if
 [[setting,service_client_limit]] > 1, when the process reaches
 [[setting,service_restart_request_count]], the process is no longer counted
-towards its process limit. Otherwise long-lived connections in the old process
+towards its process limit. Otherwise, long-lived connections in the old process
 could prevent creation of new processes.`
 	},
 
@@ -11431,7 +11433,7 @@ If enabled, ignore version mismatches between different Dovecot versions.`
 		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
 		values: setting_types.STRING,
 		text: `
-Specify the Distinguished Name (the username used to login to the LDAP server).
+Specify the Distinguished Name (the username used to log in to the LDAP server).
 
 Leave it commented out to bind anonymously (useful with [[setting,passdb_ldap_bind,yes]]).
 

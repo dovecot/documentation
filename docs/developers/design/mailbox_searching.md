@@ -47,7 +47,7 @@ Dovecot optimizes them internally.
 
 If the search needs to parse message bodies and the mailbox is large,
 this call can take a long time. If you want to do other things while
-searching, you can use `mailbox_search_next_nonblock()` that does only
+searching, you can use `mailbox_search_next_nonblock()` that only does
 a bit of work and then returns either with a result or "try again later"
 status. Dovecot attempts to keep each non-matching call to this function
 between 200 and 250 milliseconds, although the upper bound can't be

@@ -245,7 +245,7 @@ which contains the user's password.
 
 The next thing Dovecot needs to know is what format the password is in.
 If all the passwords are in same format, you can use [[setting,passdb_default_password_scheme]]
-setting in `dovecot.conf` to specify it. Otherwise each password needs
+setting in `dovecot.conf` to specify it. Otherwise, each password needs
 to be prefixed with `{password-scheme}`, for example
 `{plain}plaintext-password`.
 

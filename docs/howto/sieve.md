@@ -100,7 +100,7 @@ if header :contains "X-Spam-Flag" "YES" {
 ```
 
 The following example discards SpamAssassin-tagged mails with level
-higher than or equal to 10:
+greater than or equal to 10:
 
 ```
 if header :contains "X-Spam-Level" "**********" {
@@ -212,7 +212,7 @@ The following more advanced example uses the subaddress extension to handle
 recipient addresses structured as `sales+<name>@company.com` in a
 special way. The `<name>` part is extracted from the address using
 [[link,sieve_variables]] extension, transformed into a format with the
-first letter in upper case and subsequently used to create the folder
+first letter in uppercase and subsequently used to create the folder
 name where the message is stored.
 
 The folder name is structured as `users/<name>`. If the `+<name>`

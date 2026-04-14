@@ -24,7 +24,7 @@ Since one login process can handle only one connection, the service's
 be logging in at the same time (defaults to [[setting,default_process_limit]]).
 
 SSL/TLS proxying processes are also counted here, so if you're using
-SSL/TLS you'll need to make sure this count is higher than the maximum
+SSL/TLS you'll need to make sure this count is greater than the maximum
 number of users that can be logged in simultaneously.
 
 With TLS/SSL connections, the login process will not terminate, and remains
@@ -33,6 +33,6 @@ to perform proxying between imap backend process and the client.
 * If the maximum login process count is reached, the oldest process in
   logging-in state (ie. non-proxying) is destroyed.
 * To avoid startup latency for new client connections, set
-  [[setting,service_process_min_avail]] to higher than zero. That many idling
+  [[setting,service_process_min_avail]] to greater than zero. That many idling
   processes are always kept around waiting for new connections.
 * [[setting,service_vsz_limit]] should be fine at its default value.

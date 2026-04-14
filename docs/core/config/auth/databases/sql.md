@@ -43,7 +43,7 @@ password ..`).
 You can use all the normal [[variable]] such as `%{user}` in the SQL query.
 
 If all the passwords are in same format, you can use
-[[setting,passdb_default_password_scheme]] to specify it. Otherwise each
+[[setting,passdb_default_password_scheme]] to specify it. Otherwise, each
 password needs to be prefixed with `{password-scheme}`, for example
 `{plain}cleartext-password`. See [[link,password_schemes]] for a list of
 supported password schemes.

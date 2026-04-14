@@ -215,7 +215,7 @@ Also it is not guaranteed that the commands will be processed in order.
 :::
 
 ::: info
-All commands are case sensitive.
+All commands are case-sensitive.
 :::
 
 #### Response

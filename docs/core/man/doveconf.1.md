@@ -70,7 +70,7 @@ It can also be used to inspect configuration @groups by querying them directly.
 
     Next is the list of filters, which begin with `:FILTER` followed by the
     filter in the event filter syntax. An empty filter matches everything.
-    The filters are processed from end to beginning. The settings are taken
+    The filters are processed from last to first. The settings are taken
     from the first matching filter (i.e. the last in the output). Since not
     all filters have all settings defined, the processing continues until all
     settings have been found.

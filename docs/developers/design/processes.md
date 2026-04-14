@@ -5,7 +5,7 @@ title: Processes
 
 # Dovecot processes
 
-Dovecot is split into multiple processes where each process does only
+Dovecot is split into multiple processes where each process only does
 one thing. This is partially because it makes the code cleaner, but also
 because it allows setting up different privileges for each process. The
 most important processes are:

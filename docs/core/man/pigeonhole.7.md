@@ -11,7 +11,7 @@ dovecotComponent: pigeonhole
 Pigeonhole adds support for the Sieve language ([[rfc,5228]]) and the
 ManageSieve protocol ([[rfc,5804]]) to Dovecot ([[man,dovecot]]).
 
-In the literal sense, a pigeonhole is a a hole or recess inside a dovecot for
+In the literal sense, a pigeonhole is a hole or recess inside a dovecot for
 pigeons to nest in. It is, however, also the name for one of a series of
 small, open compartments in a cabinet used for filing or sorting mail.
 As a verb, it describes the act of putting an item into one of those
