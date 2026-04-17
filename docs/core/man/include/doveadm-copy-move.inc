@@ -95,6 +95,8 @@ given *user*(s).
 :   Move/copy messages matching the given search query. See
     [[man,doveadm-search-query,,7]] for details.
 
+    For the *move* command, the **mailbox** parameter is REQUIRED.
+
 **user** *source_user*
 :   The keyword **user** followed by a valid user name. When this
     argument is present, [[man,doveadm]] will apply the *search_query*
