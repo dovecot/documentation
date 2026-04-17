@@ -2376,6 +2376,12 @@ the source user name, e.g., \`user sourceuser\`.`
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-move',
+		text: `
+Move messages to new mailbox.
+
+::: warning
+The move command REQUIRES a mailbox parameter in the query argument.
+:::`
 	},
 
 	penalty: {
