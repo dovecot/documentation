@@ -67,9 +67,10 @@ The encryption keys for the symmetric encryption are randomly
 generated. These keys in turn are encrypted using a key derived with from the
 provisioned private key.
 
-Provisioned private keys can be Elliptic Curve (EC) keys or RSA Encryption
-is done using the Integrated Encryption Scheme (IES). This algorithm is
-usable both with EC and RSA keys.
+Provisioned keys can be Elliptic Curve (EC) keys or RSA keys.
+[[changed,mail_crypt_ml_kem_keys]] ML-KEM keys are also
+supported with OpenSSL 3.3+. Encryption is done using the Integrated
+Encryption Scheme (IES). This algorithm is usable both with EC and RSA keys.
 
 ## Limitations
 
@@ -145,8 +146,10 @@ In this mode, all keying material is taken from the settings:
  * [[setting,crypt_global_private_key]] - List of
    [[setting,crypt_private_key_file]] keys
 
-You can use either Elliptic Curve (EC) keys (recommended) or RSA keys. See
-below for examples using them. No key generation is automatically performed.
+You can use either Elliptic Curve (EC) keys (recommended) or RSA keys.
+[[changed,mail_crypt_ml_kem_keys]] ML-KEM keys are also
+supported with OpenSSL 3.3+. See below for examples using them. No key
+generation is automatically performed.
 
 A good solution for environments where no user folder sharing is needed is to
 generate per-user EC key pair and encrypt that with something derived from
@@ -441,6 +444,10 @@ compression.
 ### `fs-crypt` settings
 
 See [[link,mail_crypt_settings]] for generic mail-crypt settings.
+
+`fs-crypt` supports the same key types as `mail-crypt`.
+[[changed,mail_crypt_ml_kem_keys]] ML-KEM keys are also
+supported with OpenSSL 3.3+.
 
 ::: warning
 [[changed,fs_crypt_require_encryption_keys]] fs-crypt requires encryption keys
