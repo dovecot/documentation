@@ -53,6 +53,21 @@ These automatically generated metrics are indistinguishable from those
 statically defined in the config file. "sub-metric" names can be up to
 256 bytes in total.
 
+::: warning
+Do not group by high-cardinality fields. Each distinct value observed
+creates a new sub-metric that is kept in memory for the lifetime of the
+stats process, and there is no upper limit on how many sub-metrics can be
+retained. Grouping by fields such as usernames, email addresses, remote
+IPs, message IDs, or mailbox GUIDs will cause unbounded memory growth.
+
+Prefer low-cardinality fields (e.g., IMAP command name, reply status), or
+quantize numeric fields with the [[link,stats_group_by_exponential,exponential]]
+or [[link,stats_group_by_linear,linear]] aggregation method. For
+`discrete`, use [[setting,metric_group_by_method_discrete_modifier]] to
+reduce cardinality (e.g., `%{value | domain}` to group by domain instead
+of per-user).
+:::
+
 Dovecot supports a number of aggregation methods that can be used to quantize
 a field's value before it is used to generate a metric.
 
