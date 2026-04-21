@@ -26,7 +26,10 @@ const d = computed(() => props.data)
    <tbody>
     <template v-for="elem in d.args">
      <tr>
-      <td><code>{{ elem.flag }}</code></td>
+      <td>
+       <code>{{ elem.flag }}</code>
+       <span v-if="elem.singleval"><Badge type="warning">single value</Badge></span>
+      </td>
       <td>{{ elem.type }}</td>
       <td v-html="elem.text" />
       <td><code v-if="elem.example !== undefined">{{ JSON.stringify(elem.example) }}</code></td>
