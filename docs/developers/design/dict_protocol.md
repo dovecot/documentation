@@ -82,17 +82,16 @@ Prior to Dovecot v2.3.17, `user` was included in the initial handshake
 but it's currently not used and the field is empty.
 :::
 
-The server then checks client's protocol version and can either accept the
-handshake and proceed to response with OK or reject the `HELLO` and close the
-connection.
-
-If the handshake is accepted by server, the optional extra values
-in the response line contain server's major and minor protocol versions (tab
-separated). The client also checks the protocol version and can decide to
-close the connection if versions do not match.
+The server validates the client's protocol version and checks that the
+requested dictionary is configured. If validation fails (unsupported major
+version, unconfigured dictionary name, or malformed message), the server
+closes the connection. Otherwise the server accepts the handshake and the
+client proceeds to send commands immediately — no response is sent by the
+server for the `HELLO` command.
 
 Currently, Dovecot's client and server check that they support the same major
-version number. Minor version can be ignored.
+version number. Minor version is not currently checked and can differ between
+client and server.
 
 Other dict commands and their line format is described as follows.
 
