@@ -8,11 +8,7 @@ dovecotlinks:
 # Dovecot Dict Protocol
 
 ::: info
-This document describes Dovecot Dict protocol v3.2 which is supported in
-Dovecot v2.3.17+.
-
-[[changed,dict_protocol_v4]] Dict protocol version was updated to v4, but
-it's otherwise compatible with v3.2.
+This document describes Dovecot Dict protocol v4.
 :::
 
 Dovecot's dict protocol is a line based protocol between the dict client and
@@ -78,7 +74,7 @@ C: H<major>TAB<minor>TAB<value type>TAB<obsolete user>TAB<dict name>
 ```
 
 ::: info
-Prior to Dovecot v2.3.17, `user` was included in the initial handshake
+In older dict protocol versions, `user` was included in the initial handshake
 but it's currently not used and the field is empty.
 :::
 
@@ -94,13 +90,6 @@ version number. Minor version is not currently checked and can differ between
 client and server.
 
 Other dict commands and their line format is described as follows.
-
-::: info
-Prior to Dovecot v2.3.17 none of the following commands included the
-username for which the dict operation is performed. Instead, the
-username from the initial handshake message was used.
-:::
-
 
 ## `LOOKUP` Command
 
