@@ -102,7 +102,7 @@ C: L<key>TAB<user>
 | Result Status | Status Short Name | Description |
 | ------------- | ----------------- | ----------- |
 | `OK` | `O` | Lookup was performed successfully and there was a single value for the key. Value is then appended to the response line. |
-| `MULTI_OK` | `M` | Lookup was performed successfully and there were multiple values for the key. In this case all results are joined together with a tab and then double-escaped so the end result looks like a single value. Client would then need to unescape twice to get the list of values separated by tabs. |
+| `MULTI_OK` | `M` | Lookup was successful and returned multiple values. Each value is tab-escaped individually, then joined with tabs. The entire joined string is then tab-escaped once more so it appears as a single parameter in the protocol. To recover the values, the client must first unescape the parameter to restore the tab-separated structure, then split the result by tabs and unescape each individual value. |
 | `NOTFOUND` | `N` | Lookup was performed successfully but no value was found with this key. |
 | `FAIL` | `F` | Lookup failed due to an error. A tab-escaped error string is appended to the response line. |
 
