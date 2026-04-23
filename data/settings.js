@@ -9081,7 +9081,16 @@ the [[setting,metric_group_by_field]].`
 		seealso: [ '[[link,stats_group_by]]' ],
 		text: `
 Generate sub-metrics based on this event field name. The
-[[setting,metric_group_by]] filter name refers to this setting.`
+[[setting,metric_group_by]] filter name refers to this setting.
+
+::: warning
+Avoid high-cardinality fields. Each distinct value creates a sub-metric
+kept in memory with no upper limit, so fields like usernames, email
+addresses, remote IPs, message IDs, or mailbox GUIDs will cause unbounded
+memory growth. Use low-cardinality fields, or reduce cardinality with the
+\`exponential\`/\`linear\` aggregation methods or
+[[setting,metric_group_by_method_discrete_modifier]].
+:::`
 	},
 
 	metric_group_by_method: {
