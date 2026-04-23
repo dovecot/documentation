@@ -10187,15 +10187,6 @@ The Subject: header to use for bounce messages.
 See [[setting,rejection_reason]] for the list of variables that can be used.`
 	},
 
-	sendmail_path: {
-		default: '/usr/sbin/sendmail',
-		values: setting_types.STRING,
-		text: `
-The binary to use for sending email.
-
-Used only if [[setting,submission_host]] is not set.`
-	},
-
 	service: {
 		tags: [ 'service' ],
 		values: setting_types.NAMED_LIST_FILTER,
@@ -10964,13 +10955,143 @@ Supported workaround identifiers are:
     between 'RCPT TO:' and path.`
 	},
 
+	sendmail_path: {
+		tags: [ 'outgoing_mail' ],
+		default: '/usr/sbin/sendmail',
+		values: setting_types.STRING,
+		text: `
+The binary to use for sending email.
+
+Used only if [[setting,submission_host]] is not set.`
+	},
+
 	submission_host: {
-		tags: [ 'submission' ],
+		tags: [ 'outgoing_mail' ],
+		seealso: [ 'submission_ssl', 'submission_sasl_mechanisms'],
 		values: setting_types.URL,
 		text: `
 Use this SMTP submission host to send messages.
 
 Overrides [[setting,sendmail_path]] value, if set.`
+	},
+
+	submission_ssl: {
+		tags: [ 'outgoing_mail' ],
+		default: 'no',
+		seealso: [ 'submission_host' ],
+		values: setting_types.STRING,
+		values_enum: [ 'no', 'smtps', 'starttls' ],
+		text: `
+If enabled, use SSL/TLS to connect to [[setting,submission_host]].
+
+Available values:
+
+\`no\`
+:   No SSL connection is used.
+
+\`smtps\`
+:   An SMTPS connection (immediate SSL) is used.
+
+\`starttls\`
+:   The STARTTLS command is used to establish the TLS layer.
+
+Used only if [[setting,submission_host]] is set.`
+	},
+
+	submission_timeout: {
+		tags: [ 'outgoing_mail' ],
+		default: '30secs',
+		seealso: [ 'submission_host' ],
+		values: setting_types.TIME,
+		text: `Timeout for submitting outgoing messages.`
+	},
+
+	submission_master_user: {
+		tags: [ 'outgoing_mail' ],
+		seealso: [ 'submission_host', 'submission_password', 'submission_user', 'submission_sasl_mechanisms' ],
+		values: setting_types.STRING,
+		text: `
+The master username to authenticate as on the remote SMTP host used to send
+messages.
+
+To authenticate as a master user but use a separate login user, the
+following configuration should be employed, where the credentials are
+represented by masteruser and masteruser-secret:
+
+\`\`\`
+submission_user = %{user}
+submission_master_user = masteruser
+submission_password = masteruser-secret
+\`\`\`
+
+[[variable,mail-user]] can be used.
+
+Used only if [[setting,submission_host]] is set.
+Authentication is skipped if this setting is left unconfigured.`
+	},
+
+	submission_password: {
+		tags: [ 'outgoing_mail' ],
+		seealso: [ 'submission_host', 'submission_master_user', 'submission_user', 'submission_sasl_mechanisms' ],
+		values: setting_types.STRING,
+		text: `
+The authentication password forthe remote SMTP host used to send messages
+
+If using master users, this setting will be the password of the master user.
+
+Used only if [[setting,submission_host]] is set.`
+	},
+
+	submission_sasl_mechanisms: {
+		default: 'plain',
+		tags: [ 'outgoing_mail' ],
+		seealso: [ 'submission_host', 'submission_password', 'submission_user', 'submission_master_user' ],
+		values: setting_types.BOOLLIST,
+		text: `
+The [[link,sasl]] mechanisms to use for authentication when connection to the
+remote SMTP host used to send messages
+
+The first one advertised by the remote SMTP server is used.
+
+\`\`\`[dovecot.conf]
+submission_sasl_mechanisms {
+  external = yes
+  plain = yes
+  login = yes
+}
+\`\`\`
+
+Supported mechanisms are:
+
+ * ANONYMOUS
+ * EXTERNAL
+ * LOGIN
+ * OAUTHBEARER
+ * PLAIN
+ * SCRAM-SHA-1
+ * SCRAM-SHA-1-PLUS
+ * SCRAM-SHA-256
+ * SCRAM-SHA-256-PLUS
+ * XOAUTH2
+
+Note that [[setting,submission_password]] is ignored for \`ANONYMOUS\` and \`EXTERNAL\` mechanisms.
+For \`OAUTHBEARER\` and \`XOAUTH2\` [[setting,submission_password]] should be bearer token.
+
+Used only if [[setting,submission_host]] is set.`
+	},
+
+	submission_user: {
+		tags: [ 'outgoing_mail' ],
+		seealso: [ 'submission_host', 'submission_master_user', 'submission_password', 'submission_sasl_mechanisms' ],
+		values: setting_types.STRING,
+		default: '%{owner_user}',
+		text: `
+The user identity to be used for performing a regular IMAP LOGIN to the
+source IMAP server.
+
+[[variable,mail-user]] can be used.
+
+Used only if [[setting,submission_host]] is set.`
 	},
 
 	submission_logout_format: {
@@ -11123,33 +11244,6 @@ relay server (only if enabled).`
 		values: setting_types.STRING,
 		text: `
 User name for authentication to the relay MTA if authentication is required.`
-	},
-
-	submission_ssl: {
-		default: 'no',
-		seealso: [ 'submission_host' ],
-		values: setting_types.STRING,
-		values_enum: [ 'no', 'smtps', 'starttls' ],
-		text: `
-If enabled, use SSL/TLS to connect to [[setting,submission_host]].
-
-Available values:
-
-\`no\`
-:   No SSL connection is used.
-
-\`smtps\`
-:   An SMTPS connection (immediate SSL) is used.
-
-\`starttls\`
-:   The STARTTLS command is used to establish the TLS layer.`
-	},
-
-	submission_timeout: {
-		default: '30secs',
-		seealso: [ 'submission_host' ],
-		values: setting_types.TIME,
-		text: `Timeout for submitting outgoing messages.`
 	},
 
 	syslog_facility: {
