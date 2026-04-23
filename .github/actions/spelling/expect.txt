@@ -490,7 +490,6 @@ MUAs
 MULTIAPPEND
 multiscript
 murchison
-mutltiple
 muttmua
 Muttrc
 mybox
@@ -836,6 +835,7 @@ uidvalidity
 unaccessed
 unaliased
 unauth
+unconfigured
 UNDRAFT
 unhexlify
 unhibernate
@@ -849,7 +849,6 @@ unpriv
 unsubscribable
 unsubscriptions
 uoff
-Uou
 uppercased
 uppercasing
 upperfirst

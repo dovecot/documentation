@@ -97,6 +97,11 @@ given *user*(s).
 
     For the *move* command, the **mailbox** parameter is REQUIRED.
 
+    For the *move* command, a message range limiter is REQUIRED.
+    In other words, you must have at least one query parameter that limits
+    the message range. If all messages are needed, the "all" query parameter
+    can be used.
+
 **user** *source_user*
 :   The keyword **user** followed by a valid user name. When this
     argument is present, [[man,doveadm]] will apply the *search_query*

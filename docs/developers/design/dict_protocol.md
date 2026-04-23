@@ -8,11 +8,7 @@ dovecotlinks:
 # Dovecot Dict Protocol
 
 ::: info
-This document describes Dovecot Dict protocol v3.2 which is supported in
-Dovecot v2.3.17+.
-
-[[changed,dict_protocol_v4]] Dict protocol version was updated to v4, but
-it's otherwise compatible with v3.2.
+This document describes Dovecot Dict protocol v4.
 :::
 
 Dovecot's dict protocol is a line based protocol between the dict client and
@@ -78,30 +74,22 @@ C: H<major>TAB<minor>TAB<value type>TAB<obsolete user>TAB<dict name>
 ```
 
 ::: info
-Prior to Dovecot v2.3.17, `user` was included in the initial handshake
+In older dict protocol versions, `user` was included in the initial handshake
 but it's currently not used and the field is empty.
 :::
 
-The server then checks client's protocol version and can either accept the
-handshake and proceed to response with OK or reject the `HELLO` and close the
-connection.
-
-If the handshake is accepted by server, the optional extra values
-in the response line contain server's major and minor protocol versions (tab
-separated). The client also checks the protocol version and can decide to
-close the connection if versions do not match.
+The server validates the client's protocol version and checks that the
+requested dictionary is configured. If validation fails (unsupported major
+version, unconfigured dictionary name, or malformed message), the server
+closes the connection. Otherwise the server accepts the handshake and the
+client proceeds to send commands immediately — no response is sent by the
+server for the `HELLO` command.
 
 Currently, Dovecot's client and server check that they support the same major
-version number. Minor version can be ignored.
+version number. Minor version is not currently checked and can differ between
+client and server.
 
 Other dict commands and their line format is described as follows.
-
-::: info
-Prior to Dovecot v2.3.17 none of the following commands included the
-username for which the dict operation is performed. Instead, the
-username from the initial handshake message was used.
-:::
-
 
 ## `LOOKUP` Command
 
@@ -114,7 +102,7 @@ C: L<key>TAB<user>
 | Result Status | Status Short Name | Description |
 | ------------- | ----------------- | ----------- |
 | `OK` | `O` | Lookup was performed successfully and there was a single value for the key. Value is then appended to the response line. |
-| `MULTI_OK` | `M` | Lookup was performed successfully and there were multiple values for the key. In this case all results are joined together with a tab and then double-escaped so the end result looks like a single value. Client would then need to unescape twice to get the list of values separated by tabs. |
+| `MULTI_OK` | `M` | Lookup was successful and returned multiple values. Each value is tab-escaped individually, then joined with tabs. The entire joined string is then tab-escaped once more so it appears as a single parameter in the protocol. To recover the values, the client must first unescape the parameter to restore the tab-separated structure, then split the result by tabs and unescape each individual value. |
 | `NOTFOUND` | `N` | Lookup was performed successfully but no value was found with this key. |
 | `FAIL` | `F` | Lookup failed due to an error. A tab-escaped error string is appended to the response line. |
 

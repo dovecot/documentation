@@ -40,7 +40,7 @@ as the escape character. After it follows:
 * `1`: `\001` character
 * `t`: TAB
 * `r`: CR
-* `l`: LF
+* `n`: LF
 * anything else writes the character itself (skipping the `\001`)
 
 ## Client &lt;-&gt; Server
