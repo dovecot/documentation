@@ -710,6 +710,7 @@ showcerts
 showq
 sievec
 sievemailinglist
+singleval
 slashdot
 smartsieve
 smbfs
