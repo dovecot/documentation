@@ -40,3 +40,15 @@ sieve_editheader_header X-Seen {
   forbid_delete = yes
 }
 ```
+
+## Sieve Example
+
+```sieve
+require ["editheader"];
+
+deleteheader "X-Spam-Flag";
+addheader "X-Processed-By" "Dovecot Sieve";
+```
+
+This example removes an existing header field and adds a new header field to
+mark the message as processed.

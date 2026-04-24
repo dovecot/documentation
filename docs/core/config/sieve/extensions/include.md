@@ -24,3 +24,14 @@ The include extension is available by default.
 ### Settings
 
 <SettingsComponent tag="sieve-include" level="3" />
+
+## Sieve Example
+
+```sieve
+require ["include"];
+
+include :personal "spam_rules";
+```
+
+This example includes a personal Sieve script named `spam_rules` from the
+user's script storage.
