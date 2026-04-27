@@ -2600,7 +2600,7 @@ last_login {
 		plugin: 'last-login',
 		values: setting_types.STRING,
 		text: `
-The key that is updated in the dictionary with the last login information.`
+The key that is updated in the dictionary with the last login timestamp.`
 	},
 
 	last_login_precision: {
@@ -2609,6 +2609,18 @@ The key that is updated in the dictionary with the last login information.`
 		values: setting_types.ENUM,
 		values_enum: [ 's', 'ms', 'us', 'ns' ],
 		text: `Precision for last login timestamp.`
+	},
+
+	last_login_dict_fields: {
+		default: '',
+		added: {
+			settings_last_login_dict_fields_added: false
+		},
+		plugin: 'last-login',
+		values: setting_types.STRING,
+		text: `
+Space-separated list of additional \`key=value\` pairs to be updated in the
+dictionary. Both keys and values support variable expansion.`
 	},
 
 	/* lazy-expunge plugin */
