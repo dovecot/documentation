@@ -86,11 +86,21 @@ By default imap, submission, lmtp and sieve protocols are enabled.
 The default auth configuration is in `conf.d/auth.conf`, which has
 ```doveconf
 passdb static {
-  password = $ENV:USER_PASSWORD
+  password = %{env:USER_PASSWORD}
+}
+```
+This is useful only for testing purposes and single-user instances. To configure multiple users or other authentication methods, you need to override this file.
+
+If you override this file, it also contains
+
+```doveconf
+import_environment {
+  DOVEADM_PASSWORD = %{env:DOVEADM_PASSWORD | default}
+  USER_PASSWORD = %{env:USER_PASSWORD | default('{CRYPT}*')}
 }
 ```
 
-This is useful only for testing purposes and single-user instances. To configure multiple users or other authentication methods, you need to override this file.
+If you rely on either of these variables, you need to ensure you carry it over.
 
 ### TLS configuration
 
