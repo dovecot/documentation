@@ -8403,7 +8403,13 @@ file storage is on a faster storage.`
 		values: setting_types.BOOLEAN,
 		default: 'no',
 		text: `
-Store mailbox names on disk using UTF-8 instead of modified UTF-7 (mUTF-7).`
+Store mailbox names on disk using UTF-8 instead of modified UTF-7 (mUTF-7).
+This applies also to the mailbox list index with
+[[setting,mailbox_list_layout,index]].
+
+::: warning
+Changing this breaks already existing non-ASCII mailbox names.
+:::`
 	},
 
 	mailbox_idle_check_interval: {
