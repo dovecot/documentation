@@ -12,7 +12,7 @@
     "markdown-it-mathjax3": "^4.3.2",
     "pagefind": "^1.4.0",
     "remark-definition-list": "^2.0.0",
-    "remark-flexible-containers": "^1.5.3",
+    "remark-flexible-containers": "^1.5.4",
     "remark-gfm": "^4.0.1",
     "remark-man": "^9.0.0",
     "remark-parse": "^11.0.0",
