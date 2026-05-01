@@ -162,6 +162,7 @@ export const updates = {
 	settings_mail_cache_max_headers_count_added: '2.4.0',
 	settings_mail_cache_max_header_name_length_added: '2.4.0',
 	settings_mail_lua_added: '2.4.0',
+	settings_mail_volatile_path_changed: '2.4.5',
 	settings_mailbox_defaults_english_changed: '2.4.3',
 	settings_mailbox_directory_name_legacy_deprecated: '2.4.2',
 	settings_mailbox_special_use_changed: '2.4.0',

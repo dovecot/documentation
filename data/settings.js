@@ -8274,11 +8274,17 @@ example \`mailboxes\` with [[link,dbox]].`
 	mail_volatile_path: {
 		tags: [ 'mail-location' ],
 		values: setting_types.STRING,
+		changed: {
+			settings_mail_volatile_path_changed: `Fixed behavior to avoid collisions across multiple namespaces.`,
+		},
 		text: `
 Specifies the location of volatile files. This includes lock files and
 potentially other files that don't need to exist permanently, so it can point
 to an in-memory filesystem (\`tmpfs\`). This is especially useful to avoid
 creating lock files to NFS or other remote filesystems.
+
+This setting can be shared between multiple namespaces. Dovecot makes the
+filenames unique for each namespace to avoid collisions.
 
 [[variable,mail-user]] and \`~/\` can be used.`
 	},
