@@ -184,10 +184,19 @@ is delayed until the process accessing the setting expands it. The process
 is usually not running as root at this point, so you may need to adjust file
 permissions.
 
-It's possible to give inline values (instead of a path to a file) for the
-setting by using `inline:` prefix in the value. For example userdb could be
-returning `crypt_global_public_key_file=inline:<public key content>` without
-having to use files.
+It's possible to give inline values (instead of a path to a file) using the
+[[link,settings_syntax,heredoc syntax]] (`<<MARKER`). For example:
+
+```doveconf[dovecot.conf]
+ssl_server_ca_file = <<END
+-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----
+END
+```
+
+When returning file settings from userdb (where heredoc isn't available), use
+the `inline:` prefix: `crypt_global_public_key_file=inline:<public key content>`.
 
 ## Named Filter
 
