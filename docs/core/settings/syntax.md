@@ -449,6 +449,39 @@ read immediately whenever parsing the configuration file, so if it changes
 afterwards it requires a configuration reload to see the changes. This
 functionality is especially useful for reading SSL certificates and keys.
 
+## Inline Multi-line Values (Heredoc)
+
+[[added,settings_syntax_heredoc_added]]
+
+It's possible to set multi-line values directly in the configuration file
+using the heredoc syntax `<<MARKER`:
+
+```doveconf[dovecot.conf]
+key = <<END
+line one
+line two
+END
+```
+
+The marker (`END` above) can be any string that does not appear as a line on
+its own within the value. The terminating marker line must match exactly —
+any extra whitespace after the marker will prevent it from being recognized.
+Each content line is included in the value as-is, including a trailing newline.
+
+This is especially useful for [[link,settings_types_file,file settings]] such
+as SSL certificates and keys, where the content spans multiple lines:
+
+```doveconf[dovecot.conf]
+ssl_server_ca_file = <<END
+-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----
+END
+```
+
+`doveconf` output preserves the original marker, so `<<FOO` in `dovecot.conf`
+is reproduced as `<<FOO` in `doveconf` output.
+
 ## Variable Expansion
 
 It's possible to refer to other settings as `$SET:name`.
