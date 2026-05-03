@@ -49,31 +49,32 @@ To move to a mailbox, do NOT add a trailing delimiter to the
 ::: code-group
 
 ```doveconf[dovecot.conf]
-namespace inbox {
-  mailbox .EXPUNGED {
-    autoexpunge = 7days
-    autoexpunge_max_mails = 100000
-
-    # Define ACL so that user cannot list the .EXPUNGED mailbox
-    acl owner {
-      rights = rwstipekxa
-    }
-  }
-}
 
 mail_plugins {
   lazy_expunge = yes
   acl = yes
 }
+
 acl_driver = vfile
 
-# Move messages to an .EXPUNGED mailbox
-lazy_expunge_mailbox = .EXPUNGED
+namespace inbox {
+  mailbox "-EXPUNGED" {
+    autoexpunge = 7days
+    autoexpunge_max_mails = 100000
+    # Expunged messages most likely don't want to be included in quota
+    quota_ignore = yes
+    # If you use fulltext search, you may want to exclude:
+    fts_autoindex = no
 
-mailbox .EXPUNGED {
-  # Expunged messages most likely don't want to be included in quota:
-  quota_ignore = yes
+    # Define ACL so that user cannot list the -EXPUNGED mailbox
+    acl owner {
+      acl_rights = rwstipekxa
+    }
+  }
 }
+
+lazy_expunge_mailbox = "-EXPUNGED"
+
 ```
 
 :::
@@ -127,10 +128,10 @@ See [[plugin,quota]].
 
 Doveadm can be used to manually clean expunge storage.
 
-Example to delete all messages in `.EXPUNGED` mailbox older than one day:
+Example to delete all messages in `-EXPUNGED` mailbox older than one day:
 
 ```sh
-doveadm expunge mailbox '.EXPUNGED' savedsince 1d
+doveadm expunge mailbox -- '-EXPUNGED' savedsince 1d
 ```
 
 ### Autoexpunge
