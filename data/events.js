@@ -1268,7 +1268,7 @@ compiling it at delivery).`
 | \`authorization_failed\` | Master user authentication succeeded, but authorization to access the requested login user wasn't allowed. |
 | \`auth_aborted_by_client\` | Client started SASL authentication, but returned "*" reply to abort it. |
 | \`auth_failed\` | Generic authentication failure. Possibly due to invalid username/password, but could have been some other unspecified reason also. |
-| \`auth_nologin_referral\` | Authentication returned auth referral to redirect the client to another server. This is normally configured to be sent only when the client is a Dovecot proxy, which handles the redirection. |
+| \`auth_nologin_referral\` | Authentication returned auth referral to redirect the client to another server. This is normally configured to be sent only when the client is a Dovecot proxy, which handles the redirection. For example site1-proxy1 connects to site2-proxy2, and site2-proxy2 decides to ask site1-proxy1 to connect to site3 instead. See also \`proxy_dest_redirected\` code, which is used when the proxy itself does the redirection. |
 | \`auth_process_comm_fail\` | Internal error communicating with the auth process. |
 | \`auth_process_not_ready\` | Client disconnected before auth process was ready. This may indicate a hanging auth process if \`connected_usecs\` is large. |
 | \`auth_waiting_client\` | Client started SASL authentication, but disconnected instead of sending the next SASL continuation reply. |
@@ -1298,7 +1298,7 @@ Proxying \`reason\` values:
 | \`proxy_dest_protocol_failure\` | Local authentication succeeded, but destination hop unexpectedly violated the protocol standard. |
 | \`proxy_dest_auth_failed\` | Local authentication succeeded, but proxying failed to authenticate to the destination hop. |
 | \`proxy_dest_auth_temp_failed\` | Local authentication succeeded, but proxying failed to temporarily authenticate to the destination hop. |
-| \`proxy_dest_redirected\` | Local authentication succeeded, but destination hop redirected to another host. |
+| \`proxy_dest_redirected\` | Local authentication succeeded, but destination hop redirected to another host. A new \`proxy_session_started\` event is started for the redirection by this same proxy. See also \`auth_nologin_referral\` code, which is used when the connecting proxy is asked to do the redirection. |
 | \`proxy_dest_connection_limit\` | [[added,events_proxy_dest_connection_limit_added]] Login to backend failed because client reached [[setting,mail_max_userip_connections]] limit. |`
 	},
 
@@ -1367,6 +1367,7 @@ List of error codes:
 | \`invalid_mech\` | Used mechanism isn't supported. |
 | \`cleartext_auth_disabled\` | Cleartext authentication is not enabled, use TLS. |
 | \`anonymous_auth_disabled\` | Anonymous authentication is not enabled. |
+| \`auth_nologin_referral\` | Authentication returned auth referral to redirect the client to another server. This is normally configured to be sent only when the client is a Dovecot proxy, which handles the redirection. For example site1-proxy1 connects to site2-proxy2, and site2-proxy2 decides to ask site1-proxy1 to connect to site3 instead. See also \`proxy_dest_redirected\` code, which is used when the proxy itself does the redirection. |
 
 Proxying error codes:
 
@@ -1378,7 +1379,7 @@ Proxying error codes:
 | \`proxy_dest_protocol_failure\` | Local authentication succeeded, but destination hop unexpectedly violated the protocol standard. |
 | \`proxy_dest_auth_failed\` | Local authentication succeeded, but proxying failed to authenticate to the destination hop. |
 | \`proxy_dest_auth_temp_failed\` | Local authentication succeeded, but proxying failed to temporarily authenticate to the destination hop. |
-| \`proxy_dest_redirected\` | Local authentication succeeded, but destination hop redirected to another host. |
+| \`proxy_dest_redirected\` | Local authentication succeeded, but destination hop redirected to another host. A new \`proxy_session_started\` event is started for the redirection by this same proxy. See also \`auth_nologin_referral\` code, which is used when the connecting proxy is asked to do the redirection. |
 | \`proxy_dest_connection_limit\` | [[added,events_proxy_dest_connection_limit_added]] Login to backend failed because client reached [[setting,mail_max_userip_connections]] limit. |`
 	},
 
