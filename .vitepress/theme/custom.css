@@ -37,7 +37,7 @@
 }
 
 section.VPSidebarItem.level-0:not(.collapsible) {
-	padding-bottom: 12px !important;
+  padding-bottom: 12px !important;
 }
 
 .VPNavBar.has-sidebar .content {
