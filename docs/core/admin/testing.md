@@ -493,6 +493,6 @@ client AppleMail {
 ##### Generate Read Load (BODY FETCHs):
 
 ```sh
-imaptest - user=terra.29.%d select=100 fetch2=100,0 logout=0 clients=10 \
+imaptest - user=testuser%d select=100 fetch2=100,0 logout=0 clients=10 \
   msgs=100000 no_pipelining users=400 no_tracking
 ```

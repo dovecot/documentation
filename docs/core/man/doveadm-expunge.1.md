@@ -69,6 +69,12 @@ expunged.
 :   Expunge messages matching this search query. See
     [[man,doveadm-search-query,,7]] for details.
 
+    A mailbox parameter is REQUIRED.
+
+    A message range limiter is REQUIRED. In other words, you must have at
+    least one query parameter that limits the message range. If all messages
+    are needed, the "all" query parameter can be used.
+
 ## EXAMPLE
 
 This example expunges messages from Spam mailbox that were saved/copied

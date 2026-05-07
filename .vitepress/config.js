@@ -94,6 +94,9 @@ export default defineConfig({
 		nav: [
 			{
 				text: base.substring(1),
+				// Dynamic version population code requires at
+				// least one entry (so it can clone the DOM
+				// to create additional entries).
 				items: [
 					{ text: '2.3', link: 'https://doc.dovecot.org/2.3/' },
 				]
@@ -164,8 +167,7 @@ export default defineConfig({
 	},
 
 	head: [
-		['link', { rel: 'icon', type: 'image/x-icon', href: base + '/favicon.ico' } ],
-		['script', { async: '', src: '/js/versions.js' } ]
+		['link', { rel: 'icon', type: 'image/x-icon', href: base + '/favicon.ico' } ]
 	]
 
 })

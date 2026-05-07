@@ -923,7 +923,15 @@ the source user name, e.g., \`user sourceuser\`.`
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-expunge',
-		text: `Expunge messages matching given search query.`,
+		text: `
+Expunge messages matching given search query.
+
+::: warning
+The expunge command REQUIRES a mailbox parameter in the query argument.
+
+The expunge command REQUIRES a message range limiter in the query argument.
+If all messages are desired to be expunged, the "all" query can be used.
+:::`
 	},
 
 	fetch: {
@@ -2376,6 +2384,15 @@ the source user name, e.g., \`user sourceuser\`.`
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-move',
+		text: `
+Move messages to new mailbox.
+
+::: warning
+The move command REQUIRES a mailbox parameter in the query argument.
+
+The move command REQUIRES a message range limiter in the query argument.
+If all messages are desired to be moved, the "all" query can be used.
+:::`
 	},
 
 	penalty: {

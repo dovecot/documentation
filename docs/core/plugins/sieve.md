@@ -107,7 +107,7 @@ evaluated.
 
 The type of the Sieve script storage is configured using the
 [[setting,sieve_script_type]] setting. The following types are currently
-recognized (others are defined by the [[plugin,sieve-imapsieve]] plugin):
+recognized (others are defined by the [[plugin,sieve-imapsieve]]):
 
 #### `personal` {#script-storage-type-personal}
 
@@ -130,7 +130,7 @@ executed if configured.
 
 If no personal storage is defined explicitly, auto-detection will be attempted.
 This is currently only trying the
-[[link,sieve_storage_file,file storage driver], which looks for a
+[[link,sieve_storage_file,file storage driver]], which looks for a
 `~/.dovecot.sieve` script file or a directory at `~/sieve/` containing script
 files. In the latter case `~/.dovecot.sieve` is expected to be a symbolic link
 pointing to the active script file. If auto-detection also finds no personal
@@ -166,7 +166,7 @@ the configuration is used.
 
 If [[setting,sieve_script_name]] is set for this script storage, the default
 script can be seen and accessed by this name through ManageSieve (and
-doveadm sieve). See below ([[link,sieve_visible_default_script]]).
+doveadm sieve). See [[link,sieve_visible_default_script]].
 
 This is usually a global script, so be sure to pre-compile the specified
 script manually in that case using the sievec command line tool, as
@@ -667,9 +667,14 @@ types for details on how to configure the execution sequence.
 The script execution ends when the currently executing script in the
 sequence does not yield a "keep" result: when the script terminates, the
 next script is only executed if an implicit or explicit "keep" is in
-effect. Thus, to end all script execution, a script must not execute
-keep and it must cancel the implicit keep, e.g. by executing
-`discard; stop;`.
+effect.
+
+::: info
+To end all script execution, a script MUST NOT execute
+keep and it MUST cancel the implicit keep.
+
+For example, executing: `discard; stop;`.
+:::
 
 This means that the command `keep;` has different semantics when used in
 a sequence of scripts. For normal Sieve execution, `keep;` is equivalent
@@ -690,7 +695,7 @@ that when a script in the sequence encounters an error, actions from
 earlier executed scripts are not affected. The sequence is broken
 however, meaning that the script execution of the offending script is
 aborted and no further scripts are executed. An implicit keep is
-executed in stead.
+executed instead.
 
 Just as for executing a single script the normal way, the Dovecot Sieve
 plugin takes care never to duplicate deliveries, forwards or responses.

@@ -6874,17 +6874,6 @@ distinguish different listener types that one service may employ.`
 Port number where to listen. \`0\` disables the listener.`
 	},
 
-	/* HIDDEN: Broken, DOP-392 needed to fix.
-	inet_listener_reuse_port: {
-		tags: [ 'service' ],
-		values: setting_types.BOOLEAN,
-		default: 'no',
-		text: `
-Use [SO_REUSEPORT](https://lwn.net/Articles/542629/) (allow multiple
-processes to listen on the same port simultaneously) on Linux.`
-	},
-	*/
-
 	inet_listener_ssl: {
 		tags: [ 'service' ],
 		values: setting_types.BOOLEAN,
@@ -7297,13 +7286,20 @@ Variables allowed (in addition to [[variable,global]]):
 
 	login_log_format_elements: {
 		default: 'user=<%{user}> method=%{mechanism} rip=%{remote_ip} lip=%{local_ip} mpid=%{mail_pid} %{secured} session=<%{session}>',
-		// TODO: Provide join example
 		values: setting_types.STRING_NOVAR,
 		text: `
 A space-separated list of elements of the login log formatting.
 
 Elements that have a non-empty value are joined together to form a
 comma-separated string.
+
+Example:
+
+\`\`\`doveconf[dovecot.conf]
+# If \`secured\` is empty, the output for \`%{elements}\` will look like:
+# \`user=<user>, method=PLAIN, session=<abc>\`
+login_log_format_elements = user=<%{user}> method=%{mechanism} %{secured} session=<%{session}>
+\`\`\`
 
 [[variable,login]] can be used.`
 	},
@@ -8407,7 +8403,13 @@ file storage is on a faster storage.`
 		values: setting_types.BOOLEAN,
 		default: 'no',
 		text: `
-Store mailbox names on disk using UTF-8 instead of modified UTF-7 (mUTF-7).`
+Store mailbox names on disk using UTF-8 instead of modified UTF-7 (mUTF-7).
+This applies also to the mailbox list index with
+[[setting,mailbox_list_layout,index]].
+
+::: warning
+Changing this breaks already existing non-ASCII mailbox names.
+:::`
 	},
 
 	mailbox_idle_check_interval: {
@@ -9085,7 +9087,16 @@ the [[setting,metric_group_by_field]].`
 		seealso: [ '[[link,stats_group_by]]' ],
 		text: `
 Generate sub-metrics based on this event field name. The
-[[setting,metric_group_by]] filter name refers to this setting.`
+[[setting,metric_group_by]] filter name refers to this setting.
+
+::: warning
+Avoid high-cardinality fields. Each distinct value creates a sub-metric
+kept in memory with no upper limit, so fields like usernames, email
+addresses, remote IPs, message IDs, or mailbox GUIDs will cause unbounded
+memory growth. Use low-cardinality fields, or reduce cardinality with the
+\`exponential\`/\`linear\` aggregation methods or
+[[setting,metric_group_by_method_discrete_modifier]].
+:::`
 	},
 
 	metric_group_by_method: {
@@ -9776,7 +9787,11 @@ Make Dovecot open a PAM session and close it immediately.`
 		tags: [ 'passwd-file' ],
 		values: setting_types.STRING,
 		text: `
-Path to the passwd-file.`
+Path to the passwd-file. The path can consists from per-user variables such as s\`%{user | domain}\`. If the path starts with static path, then Dovecot ensures that the expanded path does not point outside of this static path. If the path starts with variable, this protection is disabled.
+
+For example if this is set to \`/etc/dovecot/%{user | domain}/passwd\`, then using login username such as \`root@..\` won't be allowed to expand into \`/etc/dovecot../passwd\`, as that would escape \`/etc/dovecot\`.
+
+If you use something like \`%{env:PREFIX}}/%{user | domain}/passwd\` as path, it is recommended that PREFIX points to deep enough path, such as \`/etc/dovecot/domains/\`, and you do not modify [[setting,auth_username_chars]] to avoid including \`/\` as allowed character.`
 	},
 
 	pop3_client_workarounds: {
@@ -10347,7 +10362,13 @@ is launched.
 		values: setting_types.UINT,
 		default: '[[setting,default_process_limit]]',
 		text: `
-The maximum number of processes that may exist for this service.`
+The maximum number of processes that may exist for this service.
+
+[[changed,service_process_limit_changed]] However, if
+[[setting,service_client_limit]] > 1, when the process reaches
+[[setting,service_restart_request_count]], the process is no longer counted
+towards its process limit. Otherwise long-lived connections in the old process
+could prevent creation of new processes.`
 	},
 
 	service_client_limit: {
@@ -10373,6 +10394,41 @@ performance this can be set higher, but ideally not \`unlimited\` since more
 complex services can have small memory leaks and/or memory fragmentation and
 the process should get restarted eventually. For example \`100\` or \`1000\`
 can be good values.`
+	},
+
+	service_reuse_port: {
+		added: {
+			settings_service_reuse_port_added: false,
+		},
+		tags: [ 'service' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		text: `
+Distribute TCP connections to processes more evenly using the
+[SO_REUSEPORT](https://lwn.net/Articles/542629/) option on Linux. When enabled,
+[[setting,service_process_min_avail]] must be the same as
+[[setting,service_process_limit]].
+
+This setting is mainly intended to be enabled for login processes.
+
+When \`no\`, all processes listening on the socket try to accept it at the
+same time. Whichever process is fastest (gets scheduled first by the kernel)
+gets the connection. This can lead to rather uneven distribution of connections.
+On the positive side, this behaves more gracefully once the process reaches
+[[setting,service_client_limit]]: it simply doesn't accept new connections,
+allowing other processes to handle them instead. If all processes are full,
+the master process rejects new connections.
+
+When \`yes\`, a separate listener socker is created for each process at startup.
+This is why [[setting,service_process_min_avail]] must be the same as
+[[setting,service_process_limit]]. Each process gets one of these listener
+sockets and uses it to accept connections. The kernel assigns incoming
+connections to these listener sockets based on the connection hash, so the
+connections should be rather evenly distributed across processes. This also
+means that if any process has reached [[setting,service_client_limit]], it
+must start rejecting new connections, even if other processes aren't full.
+However, because of the more even distribution of connections, it's expected
+that when one process is full, other processes are nearly full as well.`
 	},
 
 	service_idle_kill_interval: {
@@ -10580,7 +10636,7 @@ Named filter, which can be used for specifying SSL client settings.`
 	},
 
 	ssl_client_ca_dir: {
-		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		seealso: [ 'ssl', 'ssl_client_ca_file', '[[link,ssl_configuration]]' ],
 		tags: [ 'ssl-ldap', 'sql-mysql' ],
 		values: setting_types.STRING,
 		text: `
@@ -10590,12 +10646,15 @@ connections (e.g. with the imapc driver).
 
 For extra security you might want to point to a directory containing
 certificates only for the CAs that are actually needed for the server
-operation instead of all the root CAs.`
+operation instead of all the root CAs.
+
+If both [[setting,ssl_client_ca_dir]] and [[setting,ssl_client_ca_file]] are
+empty, the system CA certificates are used.`
 	},
 
 	ssl_client_ca_file: {
 		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
-		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		seealso: [ 'ssl', 'ssl_client_ca_dir', '[[link,ssl_configuration]]' ],
 		values: setting_types.FILE,
 		text: `
 File containing the trusted SSL CA certificates. For example
@@ -10609,7 +10668,10 @@ because all the certificates are read into memory. This leads to excessive
 memory usage, because it gets multiplied by the number of imap processes.
 It's better to either use [[setting,ssl_client_ca_dir]] setting or
 use a CA bundle that only contains the CAs that are actually necessary for
-the server operation.`
+the server operation.
+
+If both [[setting,ssl_client_ca_dir]] and [[setting,ssl_client_ca_file]] are
+empty, the system CA certificates are used.`
 	},
 
 	ssl_client_cert_file: {
