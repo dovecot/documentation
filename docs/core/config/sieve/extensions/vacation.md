@@ -109,3 +109,15 @@ sieve_vacation_default_period = 10d
 # Thirty days at maximum
 sieve_vacation_max_period = 30d
 ```
+
+## Sieve Example
+
+```sieve
+require ["vacation"];
+
+vacation :days 7
+  :subject "Out of office"
+  "I am currently away and will reply when I return.";
+```
+
+This example sends an automatic reply at most once every 7 days per sender.
