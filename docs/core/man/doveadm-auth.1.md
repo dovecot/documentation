@@ -40,8 +40,7 @@ authentication related actions.
   [*user-mask* ...]
 
 Flush the authentication cache. By default the cache is flushed for all
-the users (which can also be done by sending SIGHUP to the auth
-process). You can also flush the cache for one or more users by
+the users. You can also flush the cache for one or more users by
 providing a user-mask matching their usernames.
 
 **-a** *master_socket_path*
@@ -53,6 +52,28 @@ providing a user-mask matching their usernames.
     *base_dir* setting was overridden in */etc/dovecot/dovecot.conf*.
 
 <!-- @include: include/option-x.inc -->
+
+### auth cache status
+
+**doveadm** [*GLOBAL OPTIONS*] auth cache status
+  [**-a** *master_socket_path*]
+  [**--reset**]
+
+Show authentication cache statistics: number of hits, misses, hit
+ratio, number of positive/negative cache entries and the
+positive/negative/used/max cache sizes. This information can be used
+for tuning the cache size and TTL.
+
+**-a** *master_socket_path*
+:   This option is used to specify an absolute path to an alternative
+    UNIX domain socket.
+
+    By default [[man,doveadm]] will use the socket */rundir/auth-master*.
+    The socket may be located in another directory, when the default
+    *base_dir* setting was overridden in */etc/dovecot/dovecot.conf*.
+
+**--reset**
+:   Reset the hit/miss/insert counters after reading them.
 
 ### auth lookup
 

@@ -94,6 +94,7 @@ export const updates = {
 
 	/* Tags used in doveadm.js */
 
+	doveadm_auth_cache_status_added: '2.4.5',
 	doveadm_proxy_kick_args: '2.4.0',
 	doveadm_proxy_list_args_added: '2.4.0',
 	doveadm_proxy_list_response_changed: '2.4.0',
