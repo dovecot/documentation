@@ -821,6 +821,12 @@ policy limit".`
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
 		default: '30s',
+		changed: {
+			settings_sieve_max_cpu_time_changed: `
+Changed from \`0\` (unlimited) to \`30s\`. Previously, \`30s\` was the default
+only for the \`sieve_env_location_ms\` (IMAP) filter; it now applies globally
+including MDA execution.`
+		},
 		values: setting_types.TIME,
 		text: `
 The maximum amount of CPU time that a Sieve script is allowed to use while
