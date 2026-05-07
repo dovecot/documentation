@@ -281,6 +281,52 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		text: `Flush authentication cache.`,
 	},
 
+	'auth cache status': {
+		args: {
+			'socket-path': {
+				cli: 'a',
+				cli_only: false,
+				type: doveadm_arg_types.STRING,
+				text: `Path to doveadm socket.`,
+			},
+			reset: {
+				type: doveadm_arg_types.BOOL,
+				text: `Reset hit/miss/insert counters after reading them.`,
+			},
+		},
+		response: {
+			example: {
+				hits: 1234,
+				misses: 56,
+				hit_ratio_percent: 95,
+				pos_entries: 100,
+				neg_entries: 2,
+				pos_size: 8192,
+				neg_size: 64,
+				used_size: 8256,
+				max_size: 1048576,
+			},
+			text: `
+| Key | Description |
+| --- | ----------- |
+| \`hits\` | Number of cache hits since last reset. |
+| \`misses\` | Number of cache misses since last reset. |
+| \`hit_ratio_percent\` | Cache hit ratio in percent. |
+| \`pos_entries\` | Number of positive cache entries. |
+| \`neg_entries\` | Number of negative cache entries. |
+| \`pos_size\` | Bytes used by positive cache entries. |
+| \`neg_size\` | Bytes used by negative cache entries. |
+| \`used_size\` | Total bytes used by the cache. |
+| \`max_size\` | Maximum cache size in bytes. |
+`
+		},
+		man: 'doveadm-auth',
+		text: `Show authentication cache statistics.`,
+		added: {
+			'doveadm_auth_cache_status_added': false
+		},
+	},
+
 	'auth login': {
 		cli_only_cmd: true,
 		args: {

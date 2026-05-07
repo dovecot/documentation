@@ -22,12 +22,13 @@ lookups. The following rules apply to using the authentication cache:
   This allows Dovecot to log in some users even if the database is
   temporarily down.
 
-The authentication cache can be flushed by sending a SIGHUP to
-dovecot-auth.
+The authentication cache can be flushed with the
+[[doveadm,auth cache flush]] command.
 
-Sending SIGUSR2 to dovecot-auth makes it log the number of cache hits
-and misses. You can use that information for tuning the cache size and
-TTL.
+The [[doveadm,auth cache status]] command shows the number
+of cache hits and misses, hit ratio, and cache size. You can use that
+information for tuning the cache size and TTL. Pass `--reset` to clear
+the hit/miss counters after reading them.
 
 ## Settings
 
