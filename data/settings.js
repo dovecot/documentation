@@ -2505,6 +2505,24 @@ write DB. Most people should not change this setting.
 Set to \`0\` to disable rotation.`
 	},
 
+	fts_flatcurve_optimize_density_percentage: {
+		default: 25,
+		values: setting_types.UINT,
+		plugin: 'fts-flatcurve',
+		advanced: true,
+		seealso: [ 'fts_flatcurve_rotate_count' ],
+		text: `
+When an index shard's message count falls below this percentage of
+[[setting,fts_flatcurve_rotate_count]], the mailbox is scheduled for
+deferred optimization. This helps prevent accumulation of sparse shards
+that degrade mailbox open performance.
+
+Set to \`0\` to disable density-based optimization.
+
+This optimization requires [[setting,fts_flatcurve_rotate_count]] to be
+enabled.`
+	},
+
 	fts_flatcurve_substring_search: {
 		default: 'no',
 		values: setting_types.BOOLEAN,
