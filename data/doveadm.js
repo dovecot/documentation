@@ -315,8 +315,8 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			user: {
 				example: 'username',
 				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Login UID.`,
+				type: doveadm_arg_types.STRING_SINGLEVAL,
+				text: `The user to add.`,
 			},
 			password: {
 				example: `password`,
@@ -354,8 +354,8 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			user: {
 				example: 'username',
 				positional: true,
-				type: doveadm_arg_types.ARRAY,
-				text: `UID of user to query.`,
+				type: doveadm_arg_types.STRING_SINGLEVAL,
+				text: `Login UID.`,
 			},
 		},
 		man: 'doveadm-auth',
@@ -391,8 +391,8 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			user: {
 				example: 'username',
 				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `Login UID.`
+				type: doveadm_arg_types.STRING_SINGLEVAL,
+				text: `Login UID.`,
 			},
 			password: {
 				example: `password`,
@@ -718,7 +718,7 @@ the source user name, e.g., \`user sourceuser\`.`
 			user: {
 				cli: 'u',
 				example: 'username',
-				type: doveadm_arg_types.STRING,
+				type: doveadm_arg_types.STRING_SINGLEVAL,
 				text: `uid of user to query.`,
 			},
 			'dict-uri': {
@@ -743,7 +743,7 @@ the source user name, e.g., \`user sourceuser\`.`
 			user: {
 				cli: 'u',
 				example: 'username',
-				type: doveadm_arg_types.STRING,
+				type: doveadm_arg_types.STRING_SINGLEVAL,
 				text: `uid of user to modify.`,
 			},
 			'dict-uri': {
@@ -774,8 +774,8 @@ the source user name, e.g., \`user sourceuser\`.`
 			user: {
 				cli: 'u',
 				example: 'username',
-				type: doveadm_arg_types.STRING,
-				text: `uid of user to query.`,
+				type: doveadm_arg_types.STRING_SINGLEVAL,
+				text: `Username to use for schemes that require one.`,
 			},
 			exact: {
 				cli: '1',
@@ -814,7 +814,7 @@ the source user name, e.g., \`user sourceuser\`.`
 			user: {
 				cli: 'u',
 				example: 'username',
-				type: doveadm_arg_types.STRING,
+				type: doveadm_arg_types.STRING_SINGLEVAL,
 				text: `uid of user to query.`,
 			},
 			'dict-uri': {
@@ -844,7 +844,7 @@ the source user name, e.g., \`user sourceuser\`.`
 		args: {
 			user: {
 				example: 'username',
-				type: doveadm_arg_types.STRING,
+				type: doveadm_arg_types.STRING_SINGLEVAL,
 				text: `uid of user to query.`,
 			},
 			'dict-uri': {
@@ -1493,8 +1493,8 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 			user: {
 				example: 'username',
 				positional: true,
-				type: doveadm_arg_types.STRING,
-				text: `The user to add.`,
+				type: doveadm_arg_types.STRING_SINGLEVAL,
+				text: `UID of user to query.`,
 			},
 			mailbox: {
 				example: 'INBOX',
@@ -2550,8 +2550,8 @@ returned.`,
 			user: {
 				cli: 'u',
 				example: 'username',
-				type: doveadm_arg_types.STRING,
-				text: `Username to use for schemes that require one.`,
+				type: doveadm_arg_types.STRING_SINGLEVAL,
+				text: `uid of user to query.`,
 			},
 			'reverse-verify': {
 				cli: 'V',
