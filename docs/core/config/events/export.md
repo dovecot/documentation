@@ -12,6 +12,9 @@ dovecotlinks:
   event_export_drivers:
     hash: drivers
     text: "Event Export: Drivers"
+  event_export_opentelemetry:
+    hash: opentelemetry
+    text: "Event Export: OpenTelemetry"
   stats_sample_by:
     hash: sampling
     text: "Event Export: Sampling"
@@ -61,8 +64,9 @@ Supported Formats:
 
 | Formats | Description |
 | ------- | ----------- |
-| `json` | JSON output |
+| `json` | JSON output. With the [[setting,event_exporter_driver,opentelemetry]] driver this produces OTLP/HTTP+JSON `TracesData` payload (proto3 canonical encoding); with all other drivers, the legacy event-envelope JSON shown below. |
 | `tab-text` | TAB-separated text fields |
+| `protobuf` | OTLP/HTTP+protobuf `TracesData` payload. Only valid with [[setting,event_exporter_driver,opentelemetry]] driver.<br />[[added,settings_event_exporter_opentelemetry_added]] |
 
 #### Example: JSON
 
@@ -115,6 +119,7 @@ Supported drivers:
 | `http-post` | Send the serialized event as a HTTP POST payload to [[setting,event_exporter_http_post_url]]. The driver defaults to [[setting,http_client_request_absolute_timeout,250 milliseconds]]. |
 | `file` | Send serialized events to a file specified in [[setting,event_exporter_file_path]]<br />[[added,event_export_drivers_file_unix_added]] |
 | `unix` | Send serialised events to a unix socket specified in [[setting,event_exporter_unix_path]]. The [[setting,event_exporter_unix_connect_timeout]] setting is used to specify how long the unix socket connection can take. Default is `250 milliseconds`.<br />[[added,event_export_drivers_file_unix_added]] |
+| `opentelemetry` | Send events as OTLP/HTTP spans to an OpenTelemetry collector at [[setting,event_exporter_opentelemetry_url]]. Wire format is selected by [[setting,event_exporter_format]] (`protobuf` or `json`). See [[link,event_export_opentelemetry]].<br />[[added,settings_event_exporter_opentelemetry_added]] |
 
 The `drop` driver is useful when one wants to disable the event exporter
 temporarily.  Note that serialization still occurs, but the resulting
@@ -146,6 +151,214 @@ filter, etc.) specified in the metric block.
 One uses the `metric` block settings documented in [[link,stats]] to select and
 filter the event to be exported. See [[setting,metric_exporter]] and
 [[setting,metric_exporter_include]] settings.
+
+## OpenTelemetry
+
+[[added,settings_event_exporter_opentelemetry_added]]
+
+The `opentelemetry` driver sends spans to an OTLP/HTTP collector (Jaeger v2,
+Grafana Tempo, the OpenTelemetry Collector, etc.) as serialized
+[OTLP `TracesData`](https://opentelemetry.io/docs/concepts/signals/traces/)
+payloads. Spans are queued and sent in batches, see
+[Batching](#batching).
+
+The `opentelemetry` driver requires [[setting,event_exporter_format]]
+to be set to one of:
+
+| Format | Wire format | `Content-Type` |
+| ------ | ----------- | -------------- |
+| `protobuf` | OTLP/HTTP+protobuf (binary `TracesData`) | `application/x-protobuf` |
+| `json` | OTLP/HTTP+JSON (proto3 ProtoJSON canonical encoding) | `application/json` |
+
+The `protobuf` format produces a compact binary payload; the `json`
+format is easier to inspect with `curl` / `jq`. Both POST to the same
+`<url>/v1/traces` path and carry identical trace/span content; they
+differ only in serialization.
+
+Any other format value is rejected at config load time. `protobuf` may
+only be paired with this driver.
+
+::: tip
+Only OTLP/HTTP is implemented. OTLP/gRPC is **not** supported; point
+[[setting,event_exporter_opentelemetry_url]] at a collector that
+accepts OTLP/HTTP (most collectors expose both endpoints on different
+ports — use the HTTP one, typically port `4318`).
+
+The driver is available only when Dovecot is built with `libprotobuf-c`
+support.
+:::
+
+Minimal configuration (protobuf):
+
+```doveconf[dovecot.conf]
+event_exporter otlp {
+  driver = opentelemetry
+  format = protobuf
+  event_exporter_opentelemetry_url = http://collector.example.com:4318
+}
+
+metric traces {
+  filter = event=*
+  exporter = otlp
+}
+```
+
+To export as JSON instead, set `format = json`.
+
+The driver accepts the standard `http_client_*` settings (for example
+[[setting,http_client_request_timeout]]) directly under the exporter block. The exporter overrides some defaults:
+
+| Setting | Exporter default |
+| ------- | ---------------- |
+| [[setting,http_client_request_timeout]] | `2s` |
+| [[setting,http_client_request_absolute_timeout]] | `5s` |
+
+[[setting,http_client_request_absolute_timeout]] must not be `0`; the
+configuration is rejected otherwise.
+
+```doveconf[dovecot.conf]
+event_exporter otlp {
+  driver = opentelemetry
+  format = json
+  event_exporter_opentelemetry_url = http://collector.example.com:4318
+  http_client_request_timeout = 1s
+}
+```
+
+The JSON output follows the
+[OTLP/HTTP+JSON encoding](https://opentelemetry.io/docs/specs/otlp/#json-protobuf-encoding):
+`trace_id` / `span_id` are lowercase hex strings (OTLP deviates from
+proto3 ProtoJSON here, which would use base64), `int64` values including
+`startTimeUnixNano` / `endTimeUnixNano` / `intValue` are JSON strings,
+and enums (`SpanKind`, `Status.code`) are name strings (e.g.
+`"SPAN_KIND_SERVER"`, `"STATUS_CODE_ERROR"`).
+
+### Spans
+
+Spans are produced per *span owner*, not per event. A span owner is an
+object that has a lifetime, and each owner is one span, which is sent when
+the owner ends:
+
+| Span name | Owner | Span kind |
+| --------- | ----- | --------- |
+| `login_client` | Client connection in a login process | `SERVER` |
+| `imap_client` | IMAP client session | `SERVER` |
+| `pop3_client` | POP3 client session | `SERVER` |
+| `submission_client` | Submission client session | `SERVER` |
+| `lmtp_client` | LMTP client connection | `SERVER` |
+| `imap_command` | IMAP command | `INTERNAL` |
+| `auth_request` | Authentication request in the auth process | `SERVER` |
+| `auth_client_request` | Authentication request made by a service | `CLIENT` |
+| `smtp_server_transaction` | SMTP/LMTP server transaction | `INTERNAL` |
+| `doveadm_command` | doveadm command | `INTERNAL` for the CLI, otherwise `SERVER` |
+
+Other events that match the metric's filter become child spans of the
+span they happened in. They have the kind `INTERNAL`, are named after the
+event and have a random span id.
+
+While an IMAP command runs, events of the session that have no span of their
+own and were created after the command started are children of the
+`imap_command` span, for example `mail_opened`. Events created earlier, such as
+`mail_expunged` and `mail_user_session_finished`, stay children of the
+`imap_client` span.
+
+The span of an owner is named after the owner's span name (for example
+`imap_command` or `auth_request`). The name of the event that ended the
+owner (for example `imap_command_finished`) is the name of the span's
+`Span.Event`.
+
+If a process disconnects unexpectedly before an owner ends, the span is sent
+when the connection to the stats process is closed, with the attribute
+`dovecot.span.truncated = true` and the closing time as its end time.
+
+The span status is `ERROR` if the event has an `error` field (the field
+value becomes the status message), if an IMAP command was replied to with
+`BAD` (the status message is the tagged reply text), or if a POP3 reply was
+`-ERR`. An IMAP `NO` reply is a normal protocol result and leaves the
+status `UNSET`, as does everything else.
+
+Event fields and the category list are sent as span `attributes`, subject to
+[[setting,metric_exporter_include]] and [[setting,metric_fields]]. Fields whose
+name begins with `_` are not sent.
+
+#### Span timing
+
+The span `start_time` is the creation time of the event that owns the span. For
+an IMAP command this is when its first data arrives, not when the full line is
+received. Other exported events start at their own creation time, except events
+that only extend another event (for example `mail_user_session_finished` and
+the auth and SMTP `*_finished` events), which start at the creation time of the
+event they extend.
+
+The span `end_time` is the time the event that ends the span was sent (for
+example `imap_command_finished`). An owner with no such event ends when its
+last reference is released, or when the stats connection closes for truncated
+spans.
+
+#### Which spans are exported
+
+An owner span is exported only if at least one record under it was exported
+by the same exporter: an event of the owner itself, or of a span nested
+inside it in the same process. With a filter such as
+
+```doveconf[dovecot.conf]
+metric imap_commands {
+  filter = event=imap_command_finished
+  exporter = otlp
+}
+```
+
+the `imap_command` and `imap_client` spans are emitted, but the
+`login_client` span of the login process is not, because no event of that
+process matched. The collector then shows the trace with a missing parent.
+
+For complete traces use `filter = event=*`, or include the events of the
+session level (login, authentication and client sessions) in the filter.
+Combine it with [[link,stats_sample_by]] to keep the volume bounded.
+
+### Trace correlation
+
+Every session gets a random `trace_id`, and every span owner a random
+`span_id`. The ids are not derived from the session id. The id of the trace
+is created by the first Dovecot process that handles the connection
+(normally a login process, or `doveadm` for its own commands) and is passed
+on, with the span id of the sender as the parent of the receiving span:
+
+* login process to the IMAP/POP3/submission process: in the login
+  request, together with the id of the `login_client` span as the parent.
+* services to the auth process: the `trace_id` and `parent_span_id`
+  fields of the auth protocol request. Userdb lookups carry them as well.
+
+This ties the events of one mail session, and the work it causes in other
+processes, into one trace.
+
+### Resource attributes
+
+Each batch carries an OTel
+[Resource](https://opentelemetry.io/docs/concepts/resources/) with
+`service.name = "Dovecot"`, `service.version` set to the Dovecot version,
+`service.instance.id` set to a random version 4 UUID, one per exporter
+(a new one after a configuration reload), and `host.name` set to the
+hostname. Sub-system context (`imap`, `imap-login`, `auth`, `indexer-worker`,
+…) lands on the span's InstrumentationScope rather than on `service.name`, so
+all traces show up under a single `Dovecot` service in collector UIs.
+
+### Batching
+
+Spans are queued and sent in batches, one HTTP request per batch, rather than
+one request per event. A batch is sent when it has
+[[setting,event_exporter_opentelemetry_flush_count]] spans, and at the latest
+[[setting,event_exporter_opentelemetry_flush_interval]] after its first span
+was queued.
+
+While [[setting,event_exporter_opentelemetry_max_pending_requests]] requests
+are waiting for the collector, a further batch is dropped and an error with the
+number of dropped records is logged.
+
+### Sampling traces
+
+Sample by `trace_id` to keep or drop whole traces, see
+[[link,stats_sample_by]].
 
 ## Sampling
 
