@@ -10476,6 +10476,73 @@ Human-readable description of the metric. This is included in the HELP text
 sent to OpenMetrics.`
 	},
 
+	metric_export_sample_by: {
+		added: {
+			settings_metric_export_sample_by_added: false,
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ '[[link,stats_sample_by]]',
+			   'metric_export_sample_by_field',
+			   'metric_export_sample_by_percent' ],
+		text: `
+Defines a [[link,stats_sample_by,sampling rule]] that decides whether an
+event matching this metric is forwarded to the
+[[setting,metric_exporter]]. The filter name is an arbitrary identifier
+for the rule; the actual sampled field is the
+[[setting,metric_export_sample_by_field]] setting inside the block.
+
+Multiple [[setting,metric_export_sample_by]] blocks combine with AND
+semantics: an event is exported only if every rule passes. Sampling is
+deterministic: events that share the same field value are always sampled
+in or out together. Statistics counters are unaffected; sampling applies
+only to exported events.`
+	},
+
+	metric_export_sample_by_field: {
+		added: {
+			settings_metric_export_sample_by_added: false,
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,stats_sample_by]]',
+			   'metric_export_sample_by',
+			   'metric_export_sample_by_percent' ],
+		text: `
+Name of the event field whose value is hashed to make the sampling
+decision. A common choice is \`session\`, which causes every event in
+the same session to be sampled in or out together.
+
+The value \`trace_id\` always uses the trace id of the event; an event field named
+\`trace_id\` is not looked up. Sampling by \`trace_id\` keeps every event of a
+trace together, including events of other systems sharing the trace id (a
+\`traceparent\` header from a trusted network, or IMAP \`ID\` / \`XCLIENT\` from a
+trusted proxy). It also keeps a \`doveadm\` command whole: the command's own
+events have no \`session\` field, so sampling by \`session\` drops them.
+
+An event without the field, or for \`trace_id\` without a trace id, is dropped
+from the export.`
+	},
+
+	metric_export_sample_by_percent: {
+		added: {
+			settings_metric_export_sample_by_added: false,
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.STRING,
+		default: '100',
+		seealso: [ '[[link,stats_sample_by]]',
+			   'metric_export_sample_by',
+			   'metric_export_sample_by_field' ],
+		text: `
+Percentage of distinct field values that are exported. The valid range is
+\`0.001\`..\`100\`; \`0\` is rejected. The default \`100\` exports every event,
+which makes the [[setting,metric_export_sample_by]] block a no-op.
+
+For example, \`percent = 10\` exports approximately 10% of distinct field
+values, and \`percent = 0.5\` exports approximately 0.5%.`
+	},
+
 	oauth2: {
 		tags: [ 'oauth2' ],
 		values: setting_types.NAMED_FILTER,

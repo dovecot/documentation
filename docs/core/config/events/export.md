@@ -12,6 +12,9 @@ dovecotlinks:
   event_export_drivers:
     hash: drivers
     text: "Event Export: Drivers"
+  stats_sample_by:
+    hash: sampling
+    text: "Event Export: Sampling"
 ---
 
 # Event Export
@@ -143,6 +146,82 @@ filter, etc.) specified in the metric block.
 One uses the `metric` block settings documented in [[link,stats]] to select and
 filter the event to be exported. See [[setting,metric_exporter]] and
 [[setting,metric_exporter_include]] settings.
+
+## Sampling
+
+[[added,settings_metric_export_sample_by_added]]
+
+When a metric's exporter would emit too many events (for example, every
+IMAP command from every session), the
+[[setting,metric_export_sample_by]] block selects a deterministic subset
+to forward to the exporter.
+
+For each block, Dovecot hashes the configured event field with SHA-1,
+folds the digest to a 64-bit integer, and exports the event when
+`hash % 100000 < percent * 1000`. Because the decision is a pure function of
+the field value, every event that shares the same value (e.g. every event
+in the same IMAP session, when sampling by `session`) is either
+exported in full or dropped in full. This is the property that makes
+the resulting export usable for tracing: a sampled session has all of
+its events, not a random scattering.
+
+The field `trace_id` always uses the trace id of the event; an event field named
+`trace_id` is not looked up. Sampling by `trace_id` keeps every event of a
+trace together, including events of other systems sharing the trace id (a
+`traceparent` header from a trusted network, or IMAP `ID` / `XCLIENT` from a
+trusted proxy). It also keeps a `doveadm` command whole: the command's own
+events have no `session` field, so sampling by `session` drops them.
+
+::: tip
+Sampling only affects what reaches the [[setting,metric_exporter]].
+The metric's in-process counters (`doveadm stats dump`,
+OpenMetrics) still count every event.
+:::
+
+Multiple [[setting,metric_export_sample_by]] blocks combine with AND
+semantics: an event is exported only if every rule passes. This lets a
+metric require, say, both a sampled session *and* a sampled user.
+
+An event without the configured [[setting,metric_export_sample_by_field]], or
+for `trace_id` without a trace id, is dropped from the export.
+
+### Example: sample 10% of IMAP sessions
+
+```doveconf[dovecot.conf]
+event_exporter datalake {
+  driver = http-post
+  http_post_url = https://datalake.example.com/api/endpoint
+  format = json
+  time_format = rfc3339
+}
+
+metric imap_traced {
+  exporter = datalake
+  filter = event=imap_command_finished
+
+  metric_export_sample_by sess {
+    field = session
+    percent = 10
+  }
+}
+```
+
+Roughly 10% of distinct session IDs are forwarded to the exporter, and
+the same session always produces the same decision across restarts.
+
+### Example: sample 1% of traces
+
+```doveconf[dovecot.conf]
+metric traces {
+  exporter = datalake
+  filter = event=*
+
+  metric_export_sample_by traces {
+    field = trace_id
+    percent = 1
+  }
+}
+```
 
 ## Settings
 
