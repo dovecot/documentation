@@ -6371,7 +6371,7 @@ Creates a new event exporter. The filter name refers to the
 	event_exporter_driver: {
 		tags: [ 'event-export' ],
 		values: setting_types.ENUM,
-		values_enum: [ 'log', 'file', 'unix', 'http-post', 'drop' ],
+		values_enum: [ 'log', 'file', 'unix', 'http-post', 'drop', 'opentelemetry' ],
 		default: 'log',
 		seealso: [ '[[link,event_export_drivers]]' ],
 		text: `
@@ -6443,6 +6443,74 @@ Timeout when connecting to unix socket with
 		seealso: [ 'event_exporter_unix_connect_timeout' ],
 		text: `
 Path to event unix socket with [[setting,event_exporter_driver,unix]].`
+	},
+
+	event_exporter_opentelemetry_url: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.STRING,
+		default: 'http://localhost:4318',
+		seealso: [ '[[link,event_export_opentelemetry]]' ],
+		text: `
+Base URL of the OTLP/HTTP collector when using
+[[setting,event_exporter_driver,opentelemetry]]. The exporter POSTs
+spans to \`<url>/v1/traces\`. The wire format and
+\`Content-Type\` are selected by [[setting,event_exporter_format]]:
+
+* \`protobuf\` → \`application/x-protobuf\` (OTLP/HTTP+protobuf binary)
+* \`json\` → \`application/json\` (OTLP/HTTP+JSON, proto3 ProtoJSON
+  canonical encoding)
+
+Spans are sent in batches, see
+[[setting,event_exporter_opentelemetry_flush_interval]].
+
+Only OTLP/HTTP is implemented. OTLP/gRPC is not supported; point this
+setting at a collector that accepts OTLP/HTTP (the OpenTelemetry
+Collector, Jaeger v2, Grafana Tempo, etc.).`
+	},
+
+	event_exporter_opentelemetry_flush_interval: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.TIME_MSECS,
+		default: '5 secs',
+		seealso: [ 'event_exporter_opentelemetry_flush_count' ],
+		text: `
+Spans are sent at the latest this long after the first one was queued,
+even when [[setting,event_exporter_opentelemetry_flush_count]] has not been
+reached. Must not be \`0\`.`
+	},
+
+	event_exporter_opentelemetry_flush_count: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.UINT,
+		default: 512,
+		seealso: [ 'event_exporter_opentelemetry_flush_interval',
+			   'event_exporter_opentelemetry_max_pending_requests' ],
+		text: `
+Spans are sent as soon as this many are queued, without waiting for
+[[setting,event_exporter_opentelemetry_flush_interval]]. Must not be \`0\`.`
+	},
+
+	event_exporter_opentelemetry_max_pending_requests: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.UINT,
+		default: 4,
+		seealso: [ 'event_exporter_opentelemetry_flush_count' ],
+		text: `
+Maximum number of export requests that can be waiting for the collector's
+response. While this many requests are pending, a further batch is dropped
+and an error is logged with the number of dropped records. Must not be \`0\`.`
 	},
 
 	execute: {
