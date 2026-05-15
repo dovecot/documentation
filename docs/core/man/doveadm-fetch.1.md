@@ -166,7 +166,7 @@ This command uses by default the output formatter **pager**.
 
 *search_query*
 :   Fetch messages matching this search query. See
-    [[man,doveadm-search-query,7]] for details.
+    [[man,doveadm-search-query,,7]] for details.
 
 ## EXAMPLE
 
