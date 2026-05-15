@@ -9292,6 +9292,61 @@ Human-readable description of the metric. This is included in the HELP text
 sent to OpenMetrics.`
 	},
 
+	metric_export_sample_by: {
+		added: {
+			settings_metric_export_sample_by_added: false,
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ '[[link,stats_sample_by]]' ],
+		text: `
+Defines a [[link,stats_sample_by,sampling rule]] that decides whether an
+event matching this metric is forwarded to the
+[[setting,metric_exporter]]. The filter name is an arbitrary identifier
+for the rule; the actual sampled field is the
+[[setting,metric_export_sample_by_field]] setting inside the block.
+
+Multiple [[setting,metric_export_sample_by]] blocks combine with AND
+semantics: an event is exported only if every rule passes. Sampling is
+deterministic: events that share the same field value are always sampled
+in or out together. Statistics counters are unaffected; sampling applies
+only to exported events.`
+	},
+
+	metric_export_sample_by_field: {
+		added: {
+			settings_metric_export_sample_by_added: false,
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,stats_sample_by]]' ],
+		text: `
+Name of the event field whose value is hashed to make the sampling
+decision. A common choice is \`session\`, which causes every event in
+the same session to be sampled in or out together.
+
+If the configured field is missing from the event, the event is dropped
+from the export.`
+	},
+
+	metric_export_sample_by_permille: {
+		added: {
+			settings_metric_export_sample_by_added: false,
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.UINT,
+		default: 1000,
+		seealso: [ '[[link,stats_sample_by]]' ],
+		text: `
+Fraction of distinct field values that are exported, expressed in
+permille (parts per thousand). The valid range is \`1\`..\`1000\`;
+\`0\` is rejected. The default \`1000\` exports every event, which
+makes the [[setting,metric_export_sample_by]] block a no-op.
+
+For example, \`permille = 100\` exports approximately 10% of distinct
+field values, and \`permille = 500\` exports approximately 50%.`
+	},
+
 	oauth2: {
 		tags: [ 'oauth2' ],
 		values: setting_types.NAMED_FILTER,

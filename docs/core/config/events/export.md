@@ -12,6 +12,9 @@ dovecotlinks:
   event_export_drivers:
     hash: drivers
     text: "Event Export: Drivers"
+  stats_sample_by:
+    hash: sampling
+    text: "Event Export: Sampling"
 ---
 
 # Event Export
@@ -143,6 +146,61 @@ filter, etc.) specified in the metric block.
 One uses the `metric` block settings documented in [[link,stats]] to select and
 filter the event to be exported. See [[setting,metric_exporter]] and
 [[setting,metric_exporter_include]] settings.
+
+## Sampling
+
+[[added,settings_metric_export_sample_by_added]]
+
+When a metric's exporter would emit too many events (for example, every
+IMAP command from every session), the
+[[setting,metric_export_sample_by]] block selects a deterministic subset
+to forward to the exporter.
+
+For each block, Dovecot hashes the configured event field with SHA-1,
+folds the digest to a 64-bit integer, and exports the event when
+`hash % 1000 < permille`. Because the decision is a pure function of the
+field value, every event that shares the same value (e.g. every event
+in the same IMAP session, when sampling by `session`) is either
+exported in full or dropped in full. This is the property that makes
+the resulting export usable for tracing: a sampled session has all of
+its events, not a random scattering.
+
+::: tip
+Sampling only affects what reaches the [[setting,metric_exporter]].
+The metric's in-process counters (`doveadm stats dump`,
+OpenMetrics) still count every event.
+:::
+
+Multiple [[setting,metric_export_sample_by]] blocks combine with AND
+semantics: an event is exported only if every rule passes. This lets a
+metric require, say, both a sampled session *and* a sampled user.
+
+If the configured [[setting,metric_export_sample_by_field]] is missing
+from the event, the event is dropped from the export.
+
+### Example: sample 10% of IMAP sessions
+
+```doveconf[dovecot.conf]
+event_exporter datalake {
+  driver = http-post
+  http_post_url = https://datalake.example.com/api/endpoint
+  format = json
+  time_format = rfc3339
+}
+
+metric imap_traced {
+  exporter = datalake
+  filter = event=imap_command_finished
+
+  metric_export_sample_by sess {
+    field = session
+    permille = 100
+  }
+}
+```
+
+Roughly 10% of distinct session IDs are forwarded to the exporter, and
+the same session always produces the same decision across restarts.
 
 ## Settings
 
