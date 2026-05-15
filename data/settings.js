@@ -5394,7 +5394,7 @@ Creates a new event exporter. The filter name refers to the
 	event_exporter_driver: {
 		tags: [ 'event-export' ],
 		values: setting_types.ENUM,
-		values_enum: [ 'log', 'file', 'unix', 'http-post', 'drop' ],
+		values_enum: [ 'log', 'file', 'unix', 'http-post', 'drop', 'opentelemetry' ],
 		default: 'log',
 		seealso: [ '[[link,event_export_drivers]]' ],
 		text: `
@@ -5464,6 +5464,59 @@ Timeout when connecting to unix socket with
 		seealso: [ 'event_exporter_unix_connect_timeout' ],
 		text: `
 Path to event unix socket with [[setting,event_exporter_driver,unix]].`
+	},
+
+	event_exporter_opentelemetry_endpoint_url: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.STRING,
+		default: 'http://localhost:4318',
+		seealso: [ '[[link,event_export_drivers]]',
+			   'event_exporter_opentelemetry_trace_id_field' ],
+		text: `
+Base URL of the OTLP/HTTP collector to send traces to when using
+[[setting,event_exporter_driver,opentelemetry]]. The exporter POSTs to
+\`<endpoint_url>/v1/traces\`; the wire format and \`Content-Type\` are
+selected by [[setting,event_exporter_format]]:
+
+* \`protobuf\` → \`application/x-protobuf\` (OTLP/HTTP+protobuf binary)
+* \`json\` → \`application/json\` (OTLP/HTTP+JSON, proto3 ProtoJSON
+  canonical encoding)
+
+Both formats carry identical trace/span content and the same
+deterministic \`trace_id\` for a given session; choose based on the
+collector's preference and operational convenience (JSON is easier to
+inspect with \`curl\` / \`jq\`).
+
+Only OTLP/HTTP is implemented. OTLP/gRPC is not supported; point this
+setting at a collector that accepts OTLP/HTTP (the OpenTelemetry
+Collector, Jaeger v2, Grafana Tempo, etc.).`
+	},
+
+	event_exporter_opentelemetry_trace_id_field: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.STRING,
+		default: 'session',
+		seealso: [ '[[link,event_export_drivers]]' ],
+		text: `
+Name of the event field whose value is hashed (SHA-1) to derive the
+[OTLP trace_id](https://opentelemetry.io/docs/concepts/signals/traces/)
+for every emitted span. The default \`session\` correlates every event
+of a single mail session under the same trace.
+
+If the field is missing from an event, that event is not exported.
+
+Child sessions of the form \`<base>:<rest>\` (e.g. \`session:2\`,
+\`session:indexer-worker\`, \`doveadm:<guid>\`) get their own trace_id
+derived from the full value, plus a Span.Link back to the parent's
+trace_id derived from \`<base>\`. This lets collectors render the
+indexer / doveadm / sub-session traffic as references off the parent
+session.`
 	},
 
 	execute: {
