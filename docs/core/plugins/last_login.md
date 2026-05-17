@@ -60,7 +60,9 @@ to include `%{service}`.
 
 ### MySQL Example
 
-This includes the service and remote IP address as well.
+This includes the service and remote IP address as well. Using
+`last_login_dict_fields` ensures that both the timestamp and the IP address are
+updated if a login record for that user/service already exists.
 
 ::: code-group
 
@@ -69,7 +71,8 @@ last_login {
   dict proxy {
     name = sql
   }
-  key = last-login/%{service}/%{user}/%{remote_ip}
+  key = last-login/%{service}/%{user}/access
+  last_login_dict_fields = last-login/%{service}/%{user}/ip=%{remote_ip}
   precision = ms
 }
 
@@ -82,7 +85,7 @@ dict_server {
       password = pass
     }
 
-    dict_map shared/last-login/$service/$user/$remote_ip {
+    dict_map shared/last-login/$service/$user/access {
       sql_table = last_login
       value_field last_access {
         type = uint
@@ -94,8 +97,18 @@ dict_server {
       key_field service {
         value = $service
       }
-      key_field last_ip {
-        value = $remote_ip
+    }
+
+    dict_map shared/last-login/$service/$user/ip {
+      sql_table = last_login
+      value_field last_ip {
+      }
+
+      key_field userid {
+        value = $user
+      }
+      key_field service {
+        value = $service
       }
     }
   }
@@ -125,7 +138,8 @@ last_login {
     name = cassandra
     socket_path = dict-async
   }
-  key = last-login/%{service}/%{user}/%{remote_ip}
+  key = last-login/%{service}/%{user}/access
+  last_login_dict_fields = last-login/%{service}/%{user}/ip=%{remote_ip}
   precision = ms
 }
 
@@ -140,7 +154,7 @@ dict_server {
       password = pass
     }
 
-    dict_map shared/last-login/$service/$user/$remote_ip {
+    dict_map shared/last-login/$service/$user/access {
       sql_table = last_login
       value_field last_access {
         type = uint
@@ -152,8 +166,18 @@ dict_server {
       key_field service {
         value = $service
       }
-      key_field last_ip {
-        value = $remote_ip
+    }
+
+    dict_map shared/last-login/$service/$user/ip {
+      sql_table = last_login
+      value_field last_ip {
+      }
+
+      key_field userid {
+        value = $user
+      }
+      key_field service {
+        value = $service
       }
     }
   }
