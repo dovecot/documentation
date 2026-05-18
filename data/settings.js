@@ -836,6 +836,38 @@ single script execution.
 \`0\` means redirect is prohibited.`
 	},
 
+	sieve_notify_max_notifications: {
+		added: {
+			settings_sieve_notify_max_notifications_added:`
+			Setting to limit maximum number of notifications per
+			script is added.`
+		},
+		advanced: true,
+		tags: [ 'sieve', 'sieve-enotify' ],
+		plugin: 'sieve',
+		default: 10,
+		values: setting_types.UINT,
+		seealso: [ 'sieve_max_actions', 'sieve_max_redirects', '[[link,sieve_enotify]]' ],
+		text: `
+The maximum number of \`notify\` actions ([[rfc,5435]]) that can be performed
+during a single script execution.
+
+\`0\` means \`notify\` is prohibited; scripts using the \`notify\` command will
+fail to compile with "local policy prohibits the use of a notify action".
+
+Note that this is independent of [[setting,sieve_max_redirects]]; the
+\`redirect\` action and the \`notify\` mailto method are governed by
+separate limits.
+
+The effective per-script limit on \`notify\` actions is
+\`min(sieve_notify_max_notifications, sieve_max_actions)\`: when the total
+number of actions in a script reaches [[setting,sieve_max_actions]]
+(default \`32\`), execution aborts with "total number of actions
+exceeds policy limit" before this per-class limit is reached. To
+allow more than [[setting,sieve_max_actions]] notify actions, raise
+that setting as well.`
+	},
+
 	sieve_resource_usage_timeout: {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
