@@ -5394,7 +5394,7 @@ Creates a new event exporter. The filter name refers to the
 	event_exporter_driver: {
 		tags: [ 'event-export' ],
 		values: setting_types.ENUM,
-		values_enum: [ 'log', 'file', 'unix', 'http-post', 'drop' ],
+		values_enum: [ 'log', 'file', 'unix', 'http-post', 'drop', 'opentelemetry' ],
 		default: 'log',
 		seealso: [ '[[link,event_export_drivers]]' ],
 		text: `
@@ -5464,6 +5464,105 @@ Timeout when connecting to unix socket with
 		seealso: [ 'event_exporter_unix_connect_timeout' ],
 		text: `
 Path to event unix socket with [[setting,event_exporter_driver,unix]].`
+	},
+
+	event_exporter_opentelemetry_endpoint_url: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.STRING,
+		default: 'http://localhost:4318',
+		seealso: [ '[[link,event_export_drivers]]',
+			   'event_exporter_opentelemetry_trace_id_field',
+			   'event_exporter_opentelemetry_emit_logs' ],
+		text: `
+Base URL of the OTLP/HTTP collector when using
+[[setting,event_exporter_driver,opentelemetry]]. The exporter POSTs
+spans to \`<endpoint_url>/v1/traces\` and (when
+[[setting,event_exporter_opentelemetry_emit_logs]] is enabled) log
+records to \`<endpoint_url>/v1/logs\`. The wire format and
+\`Content-Type\` are selected by [[setting,event_exporter_format]]:
+
+* \`protobuf\` → \`application/x-protobuf\` (OTLP/HTTP+protobuf binary)
+* \`json\` → \`application/json\` (OTLP/HTTP+JSON, proto3 ProtoJSON
+  canonical encoding)
+
+Both formats carry identical trace/span content and the same
+deterministic \`trace_id\` for a given session; choose based on the
+collector's preference and operational convenience (JSON is easier to
+inspect with \`curl\` / \`jq\`). Log records are emitted as JSON only.
+
+Only OTLP/HTTP is implemented. OTLP/gRPC is not supported; point this
+setting at a collector that accepts OTLP/HTTP (the OpenTelemetry
+Collector, Jaeger v2, Grafana Tempo, etc.).`
+	},
+
+	event_exporter_opentelemetry_trace_id_field: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.STRING,
+		default: 'session',
+		seealso: [ '[[link,event_export_drivers]]' ],
+		text: `
+Name of the event field whose value is hashed (SHA-1) to derive the
+[OTLP trace_id](https://opentelemetry.io/docs/concepts/signals/traces/)
+for every emitted span. The default \`session\` correlates every event
+of a single mail session under the same trace.
+
+If the field is missing from an event, that event is not exported.
+
+Child sessions of the form \`<base>:<rest>\` (e.g. \`session:2\`,
+\`session:indexer-worker\`, \`doveadm:<guid>\`) get their own trace_id
+derived from the full value, plus a Span.Link back to the parent's
+trace_id derived from \`<base>\`. This lets collectors render the
+indexer / doveadm / sub-session traffic as references off the parent
+session.`
+	},
+
+	event_exporter_opentelemetry_emit_spans: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		seealso: [ '[[link,event_export_drivers]]',
+			   'event_exporter_opentelemetry_emit_logs' ],
+		text: `
+When enabled (the default), the exporter emits one OTLP Span per
+matched event to \`<endpoint_url>/v1/traces\`. Disable only when you
+want the exporter to ship log records exclusively (set together with
+[[setting,event_exporter_opentelemetry_emit_logs,yes]]).`
+	},
+
+	event_exporter_opentelemetry_emit_logs: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ '[[link,event_export_drivers]]',
+			   'event_exporter_opentelemetry_emit_spans' ],
+		text: `
+When enabled, the exporter emits an OTLP LogRecord to
+\`<endpoint_url>/v1/logs\` for every matched event that carries a
+formatted log message (\`e_info()\`, \`e_warning()\`, \`e_error()\`,
+\`e_debug()\` call sites). The LogRecord shares its \`trace_id\` and
+\`span_id\` with the corresponding Span, so collectors link logs and
+traces for the same session.
+
+Only JSON output is supported for log records, regardless of
+[[setting,event_exporter_format]]. Severity is mapped to the OTel
+severity model (DEBUG=5, INFO=9, WARN=13, ERROR=17, FATAL=21,
+PANIC→FATAL4=24).
+
+Enabling this setting opts the stats process into receiving the
+formatted message text from each dovecot service; the wire cost is
+zero when the corresponding metric's filter does not match an event.`
 	},
 
 	execute: {
@@ -9290,6 +9389,61 @@ includes nothing and the exported event will be empty (i.e. \`{}\` in JSON).`
 		text: `
 Human-readable description of the metric. This is included in the HELP text
 sent to OpenMetrics.`
+	},
+
+	metric_export_sample_by: {
+		added: {
+			settings_metric_export_sample_by_added: false,
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ '[[link,stats_sample_by]]' ],
+		text: `
+Defines a [[link,stats_sample_by,sampling rule]] that decides whether an
+event matching this metric is forwarded to the
+[[setting,metric_exporter]]. The filter name is an arbitrary identifier
+for the rule; the actual sampled field is the
+[[setting,metric_export_sample_by_field]] setting inside the block.
+
+Multiple [[setting,metric_export_sample_by]] blocks combine with AND
+semantics: an event is exported only if every rule passes. Sampling is
+deterministic: events that share the same field value are always sampled
+in or out together. Statistics counters are unaffected; sampling applies
+only to exported events.`
+	},
+
+	metric_export_sample_by_field: {
+		added: {
+			settings_metric_export_sample_by_added: false,
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,stats_sample_by]]' ],
+		text: `
+Name of the event field whose value is hashed to make the sampling
+decision. A common choice is \`session\`, which causes every event in
+the same session to be sampled in or out together.
+
+If the configured field is missing from the event, the event is dropped
+from the export.`
+	},
+
+	metric_export_sample_by_permille: {
+		added: {
+			settings_metric_export_sample_by_added: false,
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.UINT,
+		default: 1000,
+		seealso: [ '[[link,stats_sample_by]]' ],
+		text: `
+Fraction of distinct field values that are exported, expressed in
+permille (parts per thousand). The valid range is \`1\`..\`1000\`;
+\`0\` is rejected. The default \`1000\` exports every event, which
+makes the [[setting,metric_export_sample_by]] block a no-op.
+
+For example, \`permille = 100\` exports approximately 10% of distinct
+field values, and \`permille = 500\` exports approximately 50%.`
 	},
 
 	oauth2: {
