@@ -5474,12 +5474,15 @@ Path to event unix socket with [[setting,event_exporter_driver,unix]].`
 		values: setting_types.STRING,
 		default: 'http://localhost:4318',
 		seealso: [ '[[link,event_export_drivers]]',
-			   'event_exporter_opentelemetry_trace_id_field' ],
+			   'event_exporter_opentelemetry_trace_id_field',
+			   'event_exporter_opentelemetry_emit_logs' ],
 		text: `
-Base URL of the OTLP/HTTP collector to send traces to when using
-[[setting,event_exporter_driver,opentelemetry]]. The exporter POSTs to
-\`<endpoint_url>/v1/traces\`; the wire format and \`Content-Type\` are
-selected by [[setting,event_exporter_format]]:
+Base URL of the OTLP/HTTP collector when using
+[[setting,event_exporter_driver,opentelemetry]]. The exporter POSTs
+spans to \`<endpoint_url>/v1/traces\` and (when
+[[setting,event_exporter_opentelemetry_emit_logs]] is enabled) log
+records to \`<endpoint_url>/v1/logs\`. The wire format and
+\`Content-Type\` are selected by [[setting,event_exporter_format]]:
 
 * \`protobuf\` → \`application/x-protobuf\` (OTLP/HTTP+protobuf binary)
 * \`json\` → \`application/json\` (OTLP/HTTP+JSON, proto3 ProtoJSON
@@ -5488,7 +5491,7 @@ selected by [[setting,event_exporter_format]]:
 Both formats carry identical trace/span content and the same
 deterministic \`trace_id\` for a given session; choose based on the
 collector's preference and operational convenience (JSON is easier to
-inspect with \`curl\` / \`jq\`).
+inspect with \`curl\` / \`jq\`). Log records are emitted as JSON only.
 
 Only OTLP/HTTP is implemented. OTLP/gRPC is not supported; point this
 setting at a collector that accepts OTLP/HTTP (the OpenTelemetry
@@ -5517,6 +5520,49 @@ derived from the full value, plus a Span.Link back to the parent's
 trace_id derived from \`<base>\`. This lets collectors render the
 indexer / doveadm / sub-session traffic as references off the parent
 session.`
+	},
+
+	event_exporter_opentelemetry_emit_spans: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		seealso: [ '[[link,event_export_drivers]]',
+			   'event_exporter_opentelemetry_emit_logs' ],
+		text: `
+When enabled (the default), the exporter emits one OTLP Span per
+matched event to \`<endpoint_url>/v1/traces\`. Disable only when you
+want the exporter to ship log records exclusively (set together with
+[[setting,event_exporter_opentelemetry_emit_logs,yes]]).`
+	},
+
+	event_exporter_opentelemetry_emit_logs: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ '[[link,event_export_drivers]]',
+			   'event_exporter_opentelemetry_emit_spans' ],
+		text: `
+When enabled, the exporter emits an OTLP LogRecord to
+\`<endpoint_url>/v1/logs\` for every matched event that carries a
+formatted log message (\`e_info()\`, \`e_warning()\`, \`e_error()\`,
+\`e_debug()\` call sites). The LogRecord shares its \`trace_id\` and
+\`span_id\` with the corresponding Span, so collectors link logs and
+traces for the same session.
+
+Only JSON output is supported for log records, regardless of
+[[setting,event_exporter_format]]. Severity is mapped to the OTel
+severity model (DEBUG=5, INFO=9, WARN=13, ERROR=17, FATAL=21,
+PANIC→FATAL4=24).
+
+Enabling this setting opts the stats process into receiving the
+formatted message text from each dovecot service; the wire cost is
+zero when the corresponding metric's filter does not match an event.`
 	},
 
 	execute: {

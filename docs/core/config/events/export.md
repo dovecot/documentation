@@ -15,6 +15,9 @@ dovecotlinks:
   event_export_opentelemetry:
     hash: opentelemetry
     text: "Event Export: OpenTelemetry"
+  event_export_opentelemetry_logs:
+    hash: log-records
+    text: "Event Export: OpenTelemetry LogRecords"
   stats_sample_by:
     hash: sampling
     text: "Event Export: Sampling"
@@ -240,6 +243,13 @@ id is taken from the event field named by
 This ties all events of one mail session into one trace, deterministic
 across restarts.
 
+Each span's `span_id` is deterministically derived from
+`SHA-1(<session-id> + <event-name> + <event-create-time>)[:8]`. The
+same logical event produces the same `span_id` across re-emissions and
+across processes, and (when log records are enabled) lets every
+LogRecord reference the Span it belongs to via the shared
+`span_id`. See [[link,event_export_opentelemetry_logs]].
+
 Dovecot internally creates sub-sessions of the form `<base>:<rest>`
 (per-user mail_storage retry counters, `indexer-worker`,
 `doveadm:<guid>`, etc.). Each sub-session is emitted under its own
@@ -267,6 +277,63 @@ and `service.version` set to the dovecot version. Sub-system context
 (`imap`, `imap-login`, `auth`, `indexer-worker`, …) lands on the span's
 InstrumentationScope rather than on `service.name`, so all traces show
 up under a single `Dovecot` service in collector UIs.
+
+### Log records
+
+When [[setting,event_exporter_opentelemetry_emit_logs,yes]] is set, the
+exporter additionally POSTs an OTLP
+[LogRecord](https://opentelemetry.io/docs/specs/otel/logs/data-model/)
+to `<endpoint_url>/v1/logs` for every matched event that carries a
+formatted log message (i.e. events produced by `e_info()`,
+`e_warning()`, `e_error()`, `e_debug()` and friends).
+
+Log records always use the OTLP/HTTP+JSON wire format regardless of
+[[setting,event_exporter_format]]; the protobuf encoding is not
+emitted for logs.
+
+Each LogRecord carries:
+
+* the same `trace_id` and `span_id` as its corresponding Span, so the
+  collector can navigate from a log line to its Span and vice versa,
+* a `severityNumber` and `severityText` derived from the dovecot
+  log type (DEBUG=5, INFO=9, WARN=13, ERROR=17, FATAL=21, PANIC=24),
+* `body.stringValue` with the formatted message text from the
+  `e_*()` call site,
+* the event's fields and category list as `attributes`, identical to
+  what the matching Span carries.
+
+The exporter ships log records only for events whose corresponding
+metric's `filter` matches. Use the metric filter to scope log
+forwarding to the sessions you want to trace - typically a session
+predicate plus a category restriction:
+
+```doveconf[dovecot.conf]
+event_exporter otlp_logs {
+  driver = opentelemetry
+  format = json
+  event_exporter_opentelemetry_endpoint_url = http://collector.example.com:4318
+  event_exporter_opentelemetry_emit_logs = yes
+}
+
+metric traced_session_logs {
+  exporter = otlp_logs
+  # Pick whichever events should ship as both spans and log records.
+  filter = event=imap_command_finished or event=mail_user_session_finished
+}
+```
+
+Disable [[setting,event_exporter_opentelemetry_emit_spans,no]]
+together with `emit_logs = yes` to ship log records only.
+
+When the metric filter does not match an event, no log message is
+formatted or transmitted - the wire cost of enabling log records on a
+heavy-traffic service is therefore proportional to the matched
+volume, not the total event volume.
+
+The corresponding ResourceLogs carries the same `service.name`,
+`service.instance.id`, and `service.version` attributes as
+ResourceSpans, so collectors group traces and logs under the same
+service.
 
 ### Sampling
 
