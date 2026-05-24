@@ -69,7 +69,10 @@ const examples = computed(() => {
    <tbody>
     <template v-for="elem in d.args">
      <tr v-if="!elem.cli_only">
-      <td><code>{{ elem.param }}</code></td>
+      <td>
+       <code>{{ elem.param }}</code>
+       <span v-if="elem.singleval"><Badge type="warning">single value</Badge></span>
+      </td>
       <td>{{ elem.type }}</td>
       <td v-html="elem.text" />
       <td><code v-if="elem.example">{{ JSON.stringify(elem.example) }}</code></td>
