@@ -802,11 +802,19 @@ The syntax and semantics of this setting are otherwise identical to
 		plugin: 'sieve',
 		default: 32,
 		values: setting_types.UINT,
+		seealso: [ 'sieve_max_redirects', 'sieve_notify_max_notifications' ],
 		text: `
 The maximum number of actions that can be performed during a single script
 execution.
 
-If set to \`0\`, no limit on the total number of actions is enforced.`
+If set to \`0\`, no limit on the total number of actions is enforced.
+
+This is the total across all action classes. Per-class limits such as
+[[setting,sieve_max_redirects]] and [[setting,sieve_notify_max_notifications]]
+apply on top: the effective per-class limit is
+\`min(per_class_setting, sieve_max_actions)\`. When the total cap is
+hit first, execution aborts with "total number of actions exceeds
+policy limit".`
 	},
 
 	sieve_max_cpu_time: {
@@ -829,11 +837,20 @@ cumulatively for the last executions within a configurable timeout
 		plugin: 'sieve',
 		default: 4,
 		values: setting_types.UINT,
+		seealso: [ 'sieve_max_actions'],
 		text: `
 The maximum number of redirect actions that can be performed during a
 single script execution.
 
-\`0\` means redirect is prohibited.`
+\`0\` means redirect is prohibited.
+
+The effective per-script limit on \`redirect\` actions is
+\`min(sieve_max_redirects, sieve_max_actions)\`: when the total number
+of actions in a script reaches [[setting,sieve_max_actions]] (default
+\`32\`), execution aborts with "total number of actions exceeds policy
+limit" before this per-class limit is reached. To allow more than
+[[setting,sieve_max_actions]] redirect actions, raise that setting as
+well.`
 	},
 
 	sieve_notify_max_notifications: {
