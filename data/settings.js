@@ -1226,6 +1226,44 @@ Defines the source of the notification sender address for e-mail
 notifications.`
 	},
 
+	sieve_notify_mailto_max_recipients: {
+		added: {
+			settings_sieve_notify_mailto_max_recipients_added:`
+			Setting to limit the number of recipients per mailto
+			notification is added.`
+		},
+		advanced: true,
+		tags: [ 'sieve', 'sieve-enotify' ],
+		plugin: 'sieve',
+		default: 8,
+		values: setting_types.UINT,
+		seealso: [ 'sieve_notify_mailto_max_headers', '[[link,sieve_enotify]]' ],
+		text: `
+The maximum number of recipients a single \`mailto:\` notify action may
+specify, counted across the URI and any \`to\`/\`cc\`/\`bcc\` headers.
+
+\`0\` means no limit on the number of recipients is enforced.`
+	},
+
+	sieve_notify_mailto_max_headers: {
+		added: {
+			settings_sieve_notify_mailto_max_headers_added:`
+			Setting to limit the number of additional headers per
+			mailto notification is added.`
+		},
+		advanced: true,
+		tags: [ 'sieve', 'sieve-enotify' ],
+		plugin: 'sieve',
+		default: 16,
+		values: setting_types.UINT,
+		seealso: [ 'sieve_notify_mailto_max_recipients', '[[link,sieve_enotify]]' ],
+		text: `
+The maximum number of additional headers a single \`mailto:\` notify action
+may specify in its URI.
+
+\`0\` means no limit on the number of headers is enforced.`
+	},
+
 	sieve_include_max_includes: {
 		tags: [ 'sieve', 'sieve-include' ],
 		plugin: 'sieve',
