@@ -10,9 +10,9 @@
     "markdown-it-container": "^4.0.0",
     "markdown-it-deflist": "^3.0.0",
     "markdown-it-mathjax3": "^4.3.2",
-    "pagefind": "^1.4.0",
+    "pagefind": "^1.5.2",
     "remark-definition-list": "^2.0.0",
-    "remark-flexible-containers": "^1.5.3",
+    "remark-flexible-containers": "^1.5.4",
     "remark-gfm": "^4.0.1",
     "remark-man": "^9.0.0",
     "remark-parse": "^11.0.0",
@@ -20,8 +20,8 @@
     "unist-builder": "^4.0.0",
     "unist-util-parents": "^3.0.0",
     "vitepress": "^1.6.4",
-    "vitepress-mermaid-renderer": "^1.1.7",
-    "vitepress-plugin-pagefind": "^0.4.19",
+    "vitepress-mermaid-renderer": "^1.1.23",
+    "vitepress-plugin-pagefind": "^0.4.20",
     "vitepress-sidebar": "^1.33.1"
   },
   "scripts": {
