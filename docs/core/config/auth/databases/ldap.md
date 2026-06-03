@@ -475,7 +475,7 @@ ldap_base = dc=example,dc=org
 userdb ldap-user {
   driver = ldap
   result_success = continue-ok
-  ldap_filter = (&(objectClass=posixAccount)(uid=%{user}))
+  filter = (&(objectClass=posixAccount)(uid=%{user}))
   fields {
     class = %{ldap:userClass}
   }
@@ -484,7 +484,7 @@ userdb ldap-user {
 userdb ldap-class {
   driver = ldap
   skip = notfound
-  ldap_filter = (&(objectClass=classSettings)(class=%{userdb:class}))
+  filter = (&(objectClass=classSettings)(class=%{userdb:class}))
   fields {
     quota_storage_size = %{ldap:quotaBytes}B
   }
