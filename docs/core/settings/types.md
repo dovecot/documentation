@@ -214,6 +214,11 @@ fs_randomfail_ops {
 }
 ```
 
+[[changed,settings_list_key_variables_changed]] Both the `key` and the `value`
+support [[variable]]; previously only the `value` was expanded. Keys are
+expanded before duplicate keys are resolved, so deduplication operates on the
+final key name.
+
 You can clear out an existing string list by setting it to an empty value.
 This is mainly useful to drop default settings. For example:
 
@@ -261,3 +266,8 @@ local 10.0.0.0/24 {
   }
 }
 ```
+
+[[changed,settings_list_key_variables_changed]] The `key` names support
+[[variable]]; previously they were always used literally. Keys are expanded
+before duplicate keys are resolved, so deduplication operates on the final key
+name.
