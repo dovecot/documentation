@@ -88,6 +88,7 @@ export const updates = {
 	variables_owner_user_added: '2.4.0',
 	var_expand: '2.4.0',
 	variables_oauth2: '2.4.3',
+	variables_escape_added: '2.4.5',
 	variables_safe_added: '2.4.3',
 	variables_switch_added: '2.4.3',
 	xclient_dest_added: '2.4.3',

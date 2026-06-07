@@ -110,6 +110,7 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | `domain` | String | String | Provides domain part of user@domain value. |
 | `encrypt(key=bytes, iv=bytes, raw=boolean, algorithm=string)` | Any | Any | Encrypts given input, see [cryptography support](#cryptography-support). |
 | `encrypt(key=string, salt=string, rounds=number, raw=boolean, hash=string, algorithm=string)` | Any | Any | Encrypts given input, see [cryptography support](#cryptography-support). |
+| `escape` | String | String | Apply the configured escape function to the input. Returns an error if no escape function is configured. This filter is intended to be used with `safe` filter, when used without, the output is escaped again at output time (double-escaped). [[added,variables_escape_added]] |
 | `hash(method, rounds=number, salt=string)` | Bytes | Bytes | Returns raw hash from input using given hash method. Rounds and salt are optional. |
 | `hexlify(width)` | Bytes | String | Convert bytes into hex with optional width, truncates or pads up to width. |
 | `hex(width)` | Number | Number | Convert base-10 number to base-16 number. If width is specified the result is truncated or padded with 0 to width. Negative width is applied after number. |
