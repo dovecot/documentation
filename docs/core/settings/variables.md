@@ -53,6 +53,8 @@ a provider. There are global providers, and context-specific providers.
 
 A variable can be then filtered with various filters, such as `%{variable | upper}` to get
 uppercase representation of variable. You can chain as many filters as you need.
+If a pipeline contains the `safe` filter, it applies to the whole pipeline output.
+The `safe` filter must always be the last filter in the pipeline.
 
 Filters can accept parameters, both positional and named. E.g. `%{literal('\r\n\')}` will expand
 to CR LF. `%{user | substr(0, 1)}` will take first character of username. Example of named parameters
@@ -108,6 +110,7 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | `domain` | String | String | Provides domain part of user@domain value. |
 | `encrypt(key=bytes, iv=bytes, raw=boolean, algorithm=string)` | Any | Any | Encrypts given input, see [cryptography support](#cryptography-support). |
 | `encrypt(key=string, salt=string, rounds=number, raw=boolean, hash=string, algorithm=string)` | Any | Any | Encrypts given input, see [cryptography support](#cryptography-support). |
+| `escape` | String | String | Apply the configured escape function to the input. Returns an error if no escape function is configured. This filter is intended to be used with `safe` filter, when used without, the output is escaped again at output time (double-escaped). [[added,variables_escape_added]] |
 | `hash(method, rounds=number, salt=string)` | Bytes | Bytes | Returns raw hash from input using given hash method. Rounds and salt are optional. |
 | `hexlify(width)` | Bytes | String | Convert bytes into hex with optional width, truncates or pads up to width. |
 | `hex(width)` | Number | Number | Convert base-10 number to base-16 number. If width is specified the result is truncated or padded with 0 to width. Negative width is applied after number. |
@@ -139,7 +142,7 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | `unhexlify` | String | Bytes | Convert hex encoded input into bytes. |
 | `upper` | String | String | Uppercases input. |
 | `username` | String | String | Provides user part of user@domain value. |
-| `safe` | String | String | Don't escape the variable output. This is mainly intended for [[setting,ldap_base]] when the DN comes from a variable. [[added,variables_safe_added]] |
+| `safe` | String | String | Don't escape the output of the whole pipeline. This must always be the last filter in the pipeline. This is mainly intended for [[setting,ldap_base]] when the DN comes from a variable. [[added,variables_safe_added]] |
 
 ## Global providers
 
