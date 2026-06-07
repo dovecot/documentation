@@ -53,6 +53,8 @@ a provider. There are global providers, and context-specific providers.
 
 A variable can be then filtered with various filters, such as `%{variable | upper}` to get
 uppercase representation of variable. You can chain as many filters as you need.
+If a pipeline contains the `safe` filter, it applies to the whole pipeline output.
+The `safe` filter must always be the last filter in the pipeline.
 
 Filters can accept parameters, both positional and named. E.g. `%{literal('\r\n\')}` will expand
 to CR LF. `%{user | substr(0, 1)}` will take first character of username. Example of named parameters
@@ -139,7 +141,7 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | `unhexlify` | String | Bytes | Convert hex encoded input into bytes. |
 | `upper` | String | String | Uppercases input. |
 | `username` | String | String | Provides user part of user@domain value. |
-| `safe` | String | String | Don't escape the variable output. This is mainly intended for [[setting,ldap_base]] when the DN comes from a variable. [[added,variables_safe_added]] |
+| `safe` | String | String | Don't escape the output of the whole pipeline. This must always be the last filter in the pipeline. This is mainly intended for [[setting,ldap_base]] when the DN comes from a variable. [[added,variables_safe_added]] |
 
 ## Global providers
 
