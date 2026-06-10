@@ -1956,6 +1956,8 @@ namespace ignore {
 A shared mailbox dictionary that defines which users may LIST mailboxes
 shared by other users.
 
+Not every dictionary driver is supported here. The map needs dict_iterate which is not supported by redis and ldap.
+
 See [[link, shared_mailboxes_listing]] for further details on the contents
 of the dictionary entries.
 
