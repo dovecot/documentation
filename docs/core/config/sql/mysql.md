@@ -9,7 +9,8 @@ dovecotlinks:
 
 Driver name `mysql`.
 
-Driver for MySQL / MariaDB server.
+The mysql driver works with both MySQL and MariaDB. MariaDB is the recommended
+choice, as a community-governed, fully open-source drop-in replacement.
 
 To compile support for this driver, you need to have the MySQL or MariaDB
 client library and development headers installed (for example
