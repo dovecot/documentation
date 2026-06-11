@@ -802,11 +802,19 @@ The syntax and semantics of this setting are otherwise identical to
 		plugin: 'sieve',
 		default: 32,
 		values: setting_types.UINT,
+		seealso: [ 'sieve_max_redirects', 'sieve_notify_max_notifications' ],
 		text: `
 The maximum number of actions that can be performed during a single script
 execution.
 
-If set to \`0\`, no limit on the total number of actions is enforced.`
+If set to \`0\`, no limit on the total number of actions is enforced.
+
+This is the total across all action classes. Per-class limits such as
+[[setting,sieve_max_redirects]] and [[setting,sieve_notify_max_notifications]]
+apply on top: the effective per-class limit is
+\`min(per_class_setting, sieve_max_actions)\`. When the total cap is
+hit first, execution aborts with "total number of actions exceeds
+policy limit".`
 	},
 
 	sieve_max_cpu_time: {
@@ -829,11 +837,52 @@ cumulatively for the last executions within a configurable timeout
 		plugin: 'sieve',
 		default: 4,
 		values: setting_types.UINT,
+		seealso: [ 'sieve_max_actions'],
 		text: `
 The maximum number of redirect actions that can be performed during a
 single script execution.
 
-\`0\` means redirect is prohibited.`
+\`0\` means redirect is prohibited.
+
+The effective per-script limit on \`redirect\` actions is
+\`min(sieve_max_redirects, sieve_max_actions)\`: when the total number
+of actions in a script reaches [[setting,sieve_max_actions]] (default
+\`32\`), execution aborts with "total number of actions exceeds policy
+limit" before this per-class limit is reached. To allow more than
+[[setting,sieve_max_actions]] redirect actions, raise that setting as
+well.`
+	},
+
+	sieve_notify_max_notifications: {
+		added: {
+			settings_sieve_notify_max_notifications_added:`
+			Setting to limit maximum number of notifications per
+			script is added.`
+		},
+		advanced: true,
+		tags: [ 'sieve', 'sieve-enotify' ],
+		plugin: 'sieve',
+		default: 10,
+		values: setting_types.UINT,
+		seealso: [ 'sieve_max_actions', 'sieve_max_redirects', '[[link,sieve_enotify]]' ],
+		text: `
+The maximum number of \`notify\` actions ([[rfc,5435]]) that can be performed
+during a single script execution.
+
+\`0\` means \`notify\` is prohibited; scripts using the \`notify\` command will
+fail to compile with "local policy prohibits the use of a notify action".
+
+Note that this is independent of [[setting,sieve_max_redirects]]; the
+\`redirect\` action and the \`notify\` mailto method are governed by
+separate limits.
+
+The effective per-script limit on \`notify\` actions is
+\`min(sieve_notify_max_notifications, sieve_max_actions)\`: when the total
+number of actions in a script reaches [[setting,sieve_max_actions]]
+(default \`32\`), execution aborts with "total number of actions
+exceeds policy limit" before this per-class limit is reached. To
+allow more than [[setting,sieve_max_actions]] notify actions, raise
+that setting as well.`
 	},
 
 	sieve_resource_usage_timeout: {
@@ -1175,6 +1224,44 @@ lists may still succeed.`
 		text: `
 Defines the source of the notification sender address for e-mail
 notifications.`
+	},
+
+	sieve_notify_mailto_max_recipients: {
+		added: {
+			settings_sieve_notify_mailto_max_recipients_added:`
+			Setting to limit the number of recipients per mailto
+			notification is added.`
+		},
+		advanced: true,
+		tags: [ 'sieve', 'sieve-enotify' ],
+		plugin: 'sieve',
+		default: 8,
+		values: setting_types.UINT,
+		seealso: [ 'sieve_notify_mailto_max_headers', '[[link,sieve_enotify]]' ],
+		text: `
+The maximum number of recipients a single \`mailto:\` notify action may
+specify, counted across the URI and any \`to\`/\`cc\`/\`bcc\` headers.
+
+\`0\` means no limit on the number of recipients is enforced.`
+	},
+
+	sieve_notify_mailto_max_headers: {
+		added: {
+			settings_sieve_notify_mailto_max_headers_added:`
+			Setting to limit the number of additional headers per
+			mailto notification is added.`
+		},
+		advanced: true,
+		tags: [ 'sieve', 'sieve-enotify' ],
+		plugin: 'sieve',
+		default: 16,
+		values: setting_types.UINT,
+		seealso: [ 'sieve_notify_mailto_max_recipients', '[[link,sieve_enotify]]' ],
+		text: `
+The maximum number of additional headers a single \`mailto:\` notify action
+may specify in its URI.
+
+\`0\` means no limit on the number of headers is enforced.`
 	},
 
 	sieve_include_max_includes: {
