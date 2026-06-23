@@ -118,6 +118,7 @@ export const updates = {
 	events_dns_worker_request_finished_cached_added: '2.4.0',
 	events_imap_id_received_added: '2.4.0',
 	events_imap_id_received_internal_added: '2.4.3',
+	events_invalid_credentials_added: '2.4.5',
 	events_login_aborted_added: '2.4.0',
 	events_mail_storage_service_user_service_added: '2.4.0',
 	events_mail_metadata_accessed_added: '2.4.0',
