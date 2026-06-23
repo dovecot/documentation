@@ -1335,7 +1335,7 @@ make the original SMTP recipient available to Sieve.`
 		plugin: 'sieve',
 		default: 255,
 		values: setting_types.UINT,
-		seealso: [ '[[link,sieve_vacation]]' ],
+		seealso: [ '[[link,sieve_variables]]' ],
 		advanced: true,
 		text: `
 The maximum number of variables that can be declared in a scope.
