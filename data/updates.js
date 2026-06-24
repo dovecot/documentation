@@ -57,6 +57,7 @@ export const updates = {
 	mail_attachment_detection_options_maildir_changed: '2.4.3',
 	mail_cache_fields_changed: '2.4.1',
 	mail_crypt_eddsa: '2.4.0',
+	mail_crypt_ml_kem_keys: '2.4.4',
 	mail_crypt_fs_maybe: '2.4.0',
 	mail_location_keep_noselect: '2.4.0',
 	mail_location_no_noselect: '2.4.0',
