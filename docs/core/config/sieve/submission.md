@@ -75,12 +75,16 @@ passdb sql {
 }
 ```
 
-## `submission_host`
+## Outgoing Mail
 
 `submission_host = smtp-out.example.com:25`
 
-SMTP server which is used for sending email rejects, Sieve forwards,
-vacations, etc.
+The `submission_host` setting configures the SMTP server used for sending email
+rejects, Sieve forwards, vacation notifications, etc.
 
-Alternatively, `sendmail_path` setting can be used to send mails using the
-sendmail binary.
+Alternatively, the `sendmail_path` setting can be used to send mails using the
+local sendmail binary.
+
+The following settings apply to outgoing mail submitted from Sieve:
+
+<SettingsComponent tag="outgoing_mail" />
