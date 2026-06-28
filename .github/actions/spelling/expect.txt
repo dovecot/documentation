@@ -256,6 +256,7 @@ gitlab
 gitrev
 Gluster
 gmatch
+gmt
 gno
 gnomint
 gnutls
@@ -506,6 +507,7 @@ mysqlpassword
 mysqltable
 mysqluser
 mysqlusername
+mytimestamp
 myuser
 myusername
 NBF
