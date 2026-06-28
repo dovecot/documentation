@@ -104,19 +104,23 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | `base64(pad=boolean, url=boolean)` | Bytes | String | Base64 encode given input, defaults to pad and not url scheme. |
 | `benumber` | Bytes | Number | Convert big-endian encoded input into a number. |
 | `concat(any, any...)` | Bytes | Bytes | Concatenates input with value(s). Numbers are coerced to strings. Input is optional. |
+| `date(format, tz=string)` | Number | String | Format a UNIX timestamp using [`strftime(3)`](https://man7.org/linux/man-pages/man3/strftime.3.html) `format`. The input may be a plain seconds value or the `<seconds>.<nanoseconds>` form produced by the [`time:unix`](#time-variables) provider; any fractional part is ignored. `tz` selects the timezone used to break the timestamp into calendar fields: `utc` (alias `gmt`, the default) or `local`. [[added,variables_timestamp_added]] |
 | `decrypt(key=bytes, iv=bytes, raw=boolean, algorithm=string)` | Any | Any | Decrypts given input, see [cryptography support](#cryptography-support). |
 | `decrypt(key=string, salt=string, rounds=number, raw=boolean, hash=string, algorithm=string)` | Any | Any | Decrypts given input, see [cryptography support](#cryptography-support). |
 | `default(value)` | String | String | Replace empty or missing input with value. Clears missing variable error. If no value is provided, empty string is used. |
 | `domain` | String | String | Provides domain part of user@domain value. |
 | `encrypt(key=bytes, iv=bytes, raw=boolean, algorithm=string)` | Any | Any | Encrypts given input, see [cryptography support](#cryptography-support). |
 | `encrypt(key=string, salt=string, rounds=number, raw=boolean, hash=string, algorithm=string)` | Any | Any | Encrypts given input, see [cryptography support](#cryptography-support). |
+| `epoch(unit=string)` | Number | Number | Convert a UNIX timestamp into an integer in the requested `unit`: `s` (seconds, the default), `ms` (milliseconds), `us` (microseconds) or `ns` (nanoseconds). The input may be a plain seconds value or the `<seconds>.<nanoseconds>` form produced by the [`time:unix`](#time-variables) provider. The output never contains a decimal point. [[added,variables_timestamp_added]] |
 | `escape` | String | String | Apply the configured escape function to the input. Returns an error if no escape function is configured. This filter is intended to be used with `safe` filter, when used without, the output is escaped again at output time (double-escaped). [[added,variables_escape_added]] |
+| `from_epoch(unit=string)` | Number | Number | Inverse of `epoch`: convert an integer UNIX timestamp expressed in `unit` (`s`, `ms`, `us` or `ns`, default `s`) into the canonical `<seconds>.<nanoseconds>` form produced by the [`time:unix`](#time-variables) provider. Useful for feeding millisecond/nanosecond timestamps from external input into the `date` filter. [[added,variables_timestamp_added]] |
 | `hash(method, rounds=number, salt=string)` | Bytes | Bytes | Returns raw hash from input using given hash method. Rounds and salt are optional. |
 | `hexlify(width)` | Bytes | String | Convert bytes into hex with optional width, truncates or pads up to width. |
 | `hex(width)` | Number | Number | Convert base-10 number to base-16 number. If width is specified the result is truncated or padded with 0 to width. Negative width is applied after number. |
 | `if(left, operator, right, true, false)` | String | String | Evaluates given comparison and returns true or false value. See [conditionals](#conditionals). |
 | `if(operator, right, true, false)` | String | String | Evaluates given comparison against input value and retuns true or false value. |
 | `index(separator, nth)` | String | String | Returns nth element from separator separated string. Zero based. Negative values are looked relative to end of list. |
+| `iso8601(tz=string)` | Number | String | Format a UNIX timestamp as an ISO 8601 / RFC 3339 date-time string, e.g. `2025-06-08T10:40:00Z`. The input may be a plain seconds value or the `<seconds>.<nanoseconds>` form from the [`time:unix`](#time-variables) provider; any fractional part is ignored. `tz` is `utc` (alias `gmt`, the default), which uses the `Z` suffix, or `local`, which uses a `+HH:MM`/`-HH:MM` offset. [[added,variables_timestamp_added]] |
 | `ldap_dn` | String | String | Converts any `.` into `,dc=`. For example `domain.com` converts into `domain,dc=com`. |
 | `lenumber` | Bytes | Number | Convert little-endian encoded input into a number. |
 | `lfill(width, filler)` | Any | Any | Pads value from left with filler until length is width. Default filler is `0`. |
@@ -150,13 +154,14 @@ Global providers that work everywhere are:
 
 | Long Name | Description |
 | --------- | ----------- |
-| `date:<name>`    | Get a date field, available keys are `year`, `month`, `day`. |
+| `date:<name>`    | [[deprecated,variables_timestamp_added]] Get a local-time date field, available keys are `year`, `month`, `day`. See [replacements](#time-variables). |
 | `dovecot:<name>` | Get a distribution variable, see [below](#distribution-variables) for a list of supported names. |
 | `env:<name>` | Environment variable \<name\>. Returns empty string if unset. |
 | `event:<name>`   | Get an event field. Returns empty string if no such field is found from event. |
 | `process:<name>` | Get a process variable, see [below](#process-variables) for list of supported names. |
 | `system:<name>` | Get a system variable, see [below](#system-variables) for list of supported names. |
-| `time:<name>`    | Get a time field, available keys are `hour`, `min`, `minute`, `sec`, `second` and `usec`. |
+| `time:unix`    | [[added,variables_timestamp_added]] Returns the current time as a `<seconds>.<nanoseconds>` UNIX timestamp. See [below](#time-variables). |
+| `time:<name>`    | [[deprecated,variables_timestamp_added]] Get a local-time field, available keys are `hour`, `min`, `minute`, `sec`, `second`, `usec`. See [replacements](#time-variables). |
 | `generate:<name>`    | Generate a GUID/UUID. Available keys are `guid`, `guid128`, `uuid`, `uuid:record`, `uuid:compact` and `uuid:microsoft`. |
 
 ## System Variables
@@ -221,6 +226,31 @@ Support email set in Dovecot distribution. (Default: `dovecot@dovecot.org`)
 
 Short commit hash of Dovecot git source tree HEAD. (Same as the commit hash
 reported in `dovecot --version`.)
+
+## Time variables
+
+### `unix`
+
+Returns the current time as a `<seconds>.<nanoseconds>` UNIX timestamp
+(for example `1749379200.123456789`). This is the starting point for the
+[`epoch`](#list-of-filters), [`from_epoch`](#list-of-filters) and
+[`date`](#list-of-filters) filters. These also work on UNIX timestamps coming
+from any other variable, not just the current time:
+
+```
+# Current time as a UNIX timestamp with nanosecond precision:
+%{time:unix}                                 -> 1749379200.123456789
+# Current time in milliseconds:
+%{time:unix | epoch('ms')}                   -> 1749379200123
+# Format an arbitrary UNIX timestamp variable in UTC:
+%{mytimestamp | date('%Y-%m-%d %H:%M:%S')}   -> 2025-06-08 10:40:00
+# ...or in the local timezone:
+%{mytimestamp | date('%H:%M', 'local')}
+# Convert a millisecond timestamp from input and format it:
+%{ms_timestamp | from_epoch('ms') | date('%Y-%m-%d')}
+# Current time as an ISO 8601 / RFC 3339 string:
+%{time:unix | iso8601}                        -> 2025-06-08T10:40:00Z
+```
 
 ## User Variables
 
