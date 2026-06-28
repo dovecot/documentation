@@ -92,6 +92,7 @@ export const updates = {
 	variables_escape_added: '2.4.5',
 	variables_safe_added: '2.4.3',
 	variables_switch_added: '2.4.3',
+	variables_timestamp_added: '2.4.5',
 	xclient_dest_added: '2.4.3',
 
 	/* Tags used in doveadm.js */
