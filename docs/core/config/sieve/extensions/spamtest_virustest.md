@@ -125,3 +125,16 @@ sieve_virustest_text_value {
 }
 ```
 :::
+
+## Sieve Example
+
+```sieve
+require ["spamtest", "fileinto", "relational", "comparator-i;ascii-numeric"];
+
+if spamtest :value "ge" :comparator "i;ascii-numeric" "5" {
+  fileinto "Spam";
+}
+```
+
+This example files messages into the Spam folder when the spam score
+meets or exceeds the configured threshold.
