@@ -1279,6 +1279,7 @@ compiling it at delivery).`
 | \`connection_limit\` | Client reached [[setting,mail_max_userip_connections]] limit. |
 | \`internal_failure\` | Internal failure. The error log has more details. |
 | \`invalid_base64\` | Client sent invalid base64 in SASL response. |
+| \`invalid_credentials\` | Unusable credentials. |
 | \`invalid_mech\` | Unknown SASL authentication mechanism requested. |
 | \`login_disabled\` | The user has the [[link,passdb_auth_nologin]] field set in passdb and is thereby not able to login. |
 | \`no_auth_attempts\` | Client didn't send any authentication attempts. |
@@ -1368,6 +1369,7 @@ List of error codes:
 | \`cleartext_auth_disabled\` | Cleartext authentication is not enabled, use TLS. |
 | \`anonymous_auth_disabled\` | Anonymous authentication is not enabled. |
 | \`auth_nologin_referral\` | Authentication returned auth referral to redirect the client to another server. This is normally configured to be sent only when the client is a Dovecot proxy, which handles the redirection. For example site1-proxy1 connects to site2-proxy2, and site2-proxy2 decides to ask site1-proxy1 to connect to site3 instead. See also \`proxy_dest_redirected\` code, which is used when the proxy itself does the redirection. |
+| \`invalid_credentials\` | Unusable credentials. Usually due to control codes in user/pass that can't be sent unencoded over cleartext. |
 
 Proxying error codes:
 
