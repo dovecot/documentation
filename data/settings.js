@@ -4294,6 +4294,18 @@ Allows using write-ahead logging mode for database.`
 Sets the synchronization mode for SQlite database. See https://sqlite.org/pragma.html#pragma_synchronous for full explanation of values. This has no effect if database is opened in read-only mode. Setting special value \`default\` elides pragma call.`
 	},
 
+	sqlite_busy_timeout: {
+		advanced: true,
+		tags: [ 'sql-sqlite' ],
+		values: setting_types.TIME_MSECS,
+		added: {
+			setting_sqlite_busy_timeout_added: false,
+		},
+		default: '1s',
+		text: `
+Time to wait for a locked sqlite database to become available before giving up with an \`SQLITE_BUSY\` error. Even in write-ahead logging mode (see [[setting,sqlite_journal_mode]]) only one writer runs at a time, so concurrent writers may need to wait. Increase this on slow storage where writes contend.`
+	},
+
 	sqlite_readonly: {
 		tags: [ 'sql-sqlite' ],
 		values: setting_types.BOOLEAN,
