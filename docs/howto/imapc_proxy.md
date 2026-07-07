@@ -52,8 +52,8 @@ This is based on already having Dovecot already compiled and installed.
    imapc_port = 143
 
    passdb imap {
-     # Change the line below to reflect the IP address of your Exchange Server.
-     args = host=10.1.2.3
+     # You can optionally override the IP here.
+     # imapc_host = 10.1.2.5
      fields {
        userdb_imapc_user = %{user}
        userdb_imapc_password = %{password}
@@ -87,7 +87,6 @@ This is based on already having Dovecot already compiled and installed.
    ssl_server_cert_file = /etc/pki/tls/certs/machine.example.org.crt
    ssl_server_key_file = /etc/pki/tls/private/machine.example.org.key
    ssl_server_ca_file = /etc/pki/tls/certs/gd_bundle.crt
-   ssl_cipher_list = ALL:!LOW:!SSLv2:!EXP:!aNULL
    ```
 
 Start dovecot and test it with openssl as:
