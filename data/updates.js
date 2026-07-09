@@ -157,6 +157,8 @@ export const updates = {
 	settings_fts_tika_changed_auth: '2.4.0',
 	settings_http_client_settings_added: '2.4.0',
 	settings_http_server_settings_added: '2.4.0',
+	settings_imap_compress_on_proxy_added: '2.4.2',
+	settings_imap_compress_on_proxy_changed: '2.4.5',
 	settings_imapc_features_changed: '2.4.0',
 	settings_imapc_ssl_verify_removed: '2.4.0',
 	settings_inet_listener_type_added: '2.4.0',
