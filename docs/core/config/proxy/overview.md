@@ -102,6 +102,46 @@ This overrides the default [[setting,login_proxy_timeout]].
 This setting applies only to proxying via login processes, not to lmtp or
 doveadm processes.
 
+### `proxy_no_multiplex`
+
+[[added,proxy_no_multiplex_added]]
+
+IMAP only: Do not enable multiplexing for the backend connection.
+
+By default the proxy requests a multiplexed connection from the backend by
+sending `x-multiplex` in the pre-login `ID` command. The multiplexed stream
+adds a side channel that the backend uses to hand off work to the proxy.
+Currently this is used only for handling the IMAP `COMPRESS` extension in
+the proxy, see [[setting,imap_compress_on_proxy]].
+
+::: warning
+This field should normally not be set: the multiplexed connection is the
+intended default between a Dovecot proxy and a backend.
+:::
+
+When the field is set, the proxy-backend connection is a plain stream and
+the side channel functionality is disabled:
+
+* [[setting,imap_compress_on_proxy]] has no effect for the connection. The
+  `COMPRESS` extension keeps working, but compression is handled by the
+  backend imap process instead of the proxy, increasing CPU usage on the
+  backends.
+
+This is a passdb extra field [[link,passdb_extra_fields]] only; there is no
+equivalent global setting. To disable multiplexing for all connections,
+return the field unconditionally from the proxy's passdb, e.g.:
+
+```
+passdb static {
+  fields {
+    proxy = yes
+    host = 10.0.0.1
+    proxy_no_multiplex = yes
+    nopassword = yes
+  }
+}
+```
+
 ### `proxy_nopipelining`
 
 Don't pipeline IMAP commands. This is a workaround for broken IMAP servers

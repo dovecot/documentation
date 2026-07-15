@@ -69,6 +69,7 @@ export const updates = {
 	process_title_imap_process: '2.4.0',
 	process_title_initializing: '2.4.0',
 	process_title_mail_processes: '2.4.0',
+	proxy_no_multiplex_added: '2.4.0',
 	quota_maildir_driver_removed: '2.4.0',
 	service_auth_listener_type: '2.4.0',
 	service_dict_expire: '2.4.0',
