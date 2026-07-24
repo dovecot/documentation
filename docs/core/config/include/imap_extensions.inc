@@ -31,7 +31,7 @@ See [[setting,imap_metadata]] for configuration instructions.
 #### Storing Metadata in SQL Dictionary
 
 You can store metadata into a database. This works best with a dedicated table
-for storing the entires.
+for storing the entries.
 
 ::: code-group
 ```sql [SQL Schema]
