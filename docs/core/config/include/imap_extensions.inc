@@ -10,6 +10,10 @@ IMAP session.
 The extension is enabled by default and configured with the default
 compression level for the available mechanism.
 
+When the client connection comes through a Dovecot proxy, the compression
+is by default handled by the proxy instead of the backend's imap process.
+See [[setting,imap_compress_on_proxy]].
+
 ### SEARCH=FUZZY
 
 IMAP provides SEARCH as part of the core protocol, so it is useful to activate
@@ -27,7 +31,7 @@ See [[setting,imap_metadata]] for configuration instructions.
 #### Storing Metadata in SQL Dictionary
 
 You can store metadata into a database. This works best with a dedicated table
-for storing the entires.
+for storing the entries.
 
 ::: code-group
 ```sql [SQL Schema]

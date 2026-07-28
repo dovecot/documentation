@@ -6361,6 +6361,30 @@ The following values are currently supported:
     to be grayed out.`
 	},
 
+	imap_compress_on_proxy: {
+		default: 'yes',
+		added: {
+			settings_imap_compress_on_proxy_added: false
+		},
+		changed: {
+			settings_imap_compress_on_proxy_changed: `
+Changed from \`no\` to \`yes\`.`
+		},
+		tags: [ 'imap' ],
+		values: setting_types.BOOLEAN,
+		advanced: true,
+		seealso: [ 'login_trusted_networks' ],
+		text: `
+If enabled, the IMAP COMPRESS ([[rfc,4978]]) extension is handled by the
+Dovecot proxy instead of the backend's imap process when the client
+connection comes through a Dovecot proxy. This moves the compression work
+from the backend to the proxy.
+
+This setting must be set on the backend, not on the proxy. For this to
+work, [[setting,login_trusted_networks]] on the backend must be set to
+point to the proxy.`
+	},
+
 	imap_fetch_failure: {
 		default: 'disconnect-immediately',
 		tags: [ 'imap' ],
