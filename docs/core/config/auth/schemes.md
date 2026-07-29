@@ -237,6 +237,11 @@ SHA-512 based hash (`$6$`)
 
 ### OTP
 
+::: warning [[removed,otp_password_scheme_removed]]
+The `OTP` password scheme has been removed together with the
+`OTP` [[link,authentication_mechanisms]].
+:::
+
 [[rfc,2289]] based One-Time Password system.
 
 ### MD5 Based Schemes
