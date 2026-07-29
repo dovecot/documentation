@@ -57,7 +57,7 @@ all, because they only support verifying a known cleartext password.
 | [[link,auth_gssapi,GSS-SPNEGO]] | A wrapper mechanism defined by [[rfc,4178]]. Can be accessed via GSSAPI. |
 | [[link,auth_gssapi]] | Kerberos v5 support. |
 | ANONYMOUS | Support for logging in anonymously. This may be useful if you're intending to provide publicly accessible IMAP archive. |
-| OTP | One time password mechanisms. |
+| OTP | [[removed,otp_auth_mechanism_removed]] One time password mechanisms. |
 | EXTERNAL | EXTERNAL SASL mechanism. |
 | [[link,auth_oauth2,OAUTHBEARER]] | OAuth2 bearer authentication [[rfc,7628]]. |
 | [[link,auth_oauth2,XOAUTH2]] | [Google flavor OAUTHBEARER](https://developers.google.com/gmail/imap/xoauth2-protocol) |

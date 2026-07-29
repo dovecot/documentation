@@ -9880,6 +9880,11 @@ SQL query to lookup the passdb fields (\`password\` and other extra fields).`
 	},
 
 	passdb_sql_update_query: {
+		removed: {
+			settings_passdb_sql_update_query_removed: `
+Removed together with the \`OTP\` [[link,authentication_mechanisms]], which
+was its only user.`
+		},
 		tags: [ 'passdb' ],
 		values: setting_types.STRING,
 		text: `
