@@ -16,7 +16,7 @@
     "remark-gfm": "^4.0.1",
     "remark-man": "^9.0.0",
     "remark-parse": "^11.0.0",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "unified": "^11.0.5",
     "unist-builder": "^4.0.0",
     "unist-util-parents": "^3.0.0",
