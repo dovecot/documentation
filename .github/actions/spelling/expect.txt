@@ -192,6 +192,7 @@ egid
 EID
 Eing
 ekh
+elv
 emaillookup
 endscript
 ENHANCEDSTATUSCODES
@@ -228,6 +229,7 @@ findutils
 firewalls
 firstsaved
 flatcurve
+Flyout
 Fng
 foofilename
 foop
@@ -267,6 +269,7 @@ halon
 hardlinking
 hardlinks
 hasfrop
+haspopup
 hatv
 hba
 hdr
@@ -893,6 +896,7 @@ vlast
 vmail
 vname
 vnd
+vpi
 vsize
 vsz
 vuejs

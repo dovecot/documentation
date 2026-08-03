@@ -4,6 +4,8 @@ import { useData } from 'vitepress'
 import { nextTick, watch } from 'vue'
 import { createMermaidRenderer } from 'vitepress-mermaid-renderer'
 
+import VersionDropdown from '../../components/VersionDropdown.vue'
+
 const { site, theme } = useData()
 const { Layout } = DefaultTheme
 
@@ -32,6 +34,13 @@ const latest = site._value.themeConfig.dovecot.base_url + "/latest/"
 
 <template>
  <Layout>
+  <template #nav-bar-content-before>
+   <VersionDropdown />
+  </template>
+  <template #nav-screen-content-before>
+   <VersionDropdown is-mobile />
+  </template>
+
   <template #doc-before v-if="!prod">
    <div class="container custom-block warning large">
     <p>
