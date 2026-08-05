@@ -925,6 +925,12 @@ finished.`
 		fields: {
 			error: `Human readable error.`,
 			error_code: `Error code (if available).`,
+			error_code_extended: {
+				added: {
+					events_sql_error_code_extended_added: false
+				},
+				text: `[Extended result code](https://sqlite.org/rescode.html#extrc) for the error, which describes the failure more precisely than \`error_code\` (SQLite only).`
+			},
 			query_first_word: `First word of the query (e.g. \`SELECT\`).`,
 			consistency: {
 				added: {
@@ -948,6 +954,12 @@ finished.`
 		fields: {
 			error: `Human readable error.`,
 			error_code: `Error code (if available).`,
+			error_code_extended: {
+				added: {
+					events_sql_error_code_extended_added: false
+				},
+				text: `[Extended result code](https://sqlite.org/rescode.html#extrc) for the error, which describes the failure more precisely than \`error_code\` (SQLite only).`
+			},
 		},
 		text: `SQL transaction was committed or rolled back.`
 	},
