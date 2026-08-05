@@ -135,6 +135,7 @@ export const updates = {
 	events_proxy_session_finished_idle_usecs_changed: '2.4.0',
 	events_smtp_server_transaction_rcpt_finished_dest_host_added: '2.4.0',
 	events_smtp_server_transaction_rcpt_finished_dest_ip_added: '2.4.0',
+	events_sql_error_code_extended_added: '2.4.5',
 	events_sql_query_finished_consistency_added: '2.4.0',
 	events_pre_login_client_local_name_added: '2.4.0',
 	events_pre_login_client_protocol_added: '2.4.0',
