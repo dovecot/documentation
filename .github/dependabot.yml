@@ -5,3 +5,8 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+  # Checks for dependency updates in github actions workflows
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
