@@ -5,11 +5,13 @@ import { generateSidebar } from 'vitepress-sidebar'
 import { dovecotMdExtend } from '../lib/markdown.js'
 import { getExcludes, lib_dirname } from '../lib/utility.js'
 import dovecotVitepressInit from '../lib/dovecot_vitepress_init.js'
+import { dovecotVitepressLlmPlugin } from '../lib/vitepress_llm.js'
 import path from 'path'
 import fs from 'fs'
 
-const base = '/2.4'
+const base = '2.4'
 const base_url = 'https://doc.dovecot.org'
+const hostname = `${base_url}/${base}`
 
 export const dovecotConfig = {
 	base_url: base_url,
@@ -44,25 +46,27 @@ export const dovecotConfig = {
 	]
 }
 
+const excludes = [
+	// Exclude anything that is not in docs
+	'!(docs)/**/*.md',
+	// Exclude base-level markdown files
+	'*.md'
+].concat(getExcludes())
+
 export default defineConfig({
 	title: "Dovecot CE",
 	description: "Dovecot CE Documentation",
 	lang: "en-us",
 
 	srcDir: ".",
-	srcExclude: [
-		// Exclude anything that is not in docs
-		'!(docs)/**/*.md',
-		// Exclude base-level markdown files
-		'*.md'
-	].concat(getExcludes()),
+	srcExclude: excludes,
 	rewrites: {
 		'docs/:path(.*)': ':path',
 	},
 
-	base: base,
+	base: `/${base}/`,
 	sitemap: {
-		hostname: base_url + base + '/'
+		hostname: hostname,
 	},
 
 	vite: {
@@ -83,7 +87,11 @@ export default defineConfig({
 		},
 		plugins: [
 			pagefindPlugin(),
-			dovecotVitepressInit()
+			dovecotVitepressInit(),
+			dovecotVitepressLlmPlugin({
+				hostname: hostname,
+				ignore: excludes,
+			})
 		],
 	},
 
@@ -158,7 +166,7 @@ export default defineConfig({
 	},
 
 	head: [
-		['link', { rel: 'icon', type: 'image/x-icon', href: base + '/favicon.ico' } ]
+		['link', { rel: 'icon', type: 'image/x-icon', href: `/${base}/favicon.ico` } ]
 	]
 
 })

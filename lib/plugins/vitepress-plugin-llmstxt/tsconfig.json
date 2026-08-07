@@ -1,0 +1,33 @@
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		/**
+		 * Options.
+		 */
+		"strict": true,
+		"alwaysStrict": true,
+		"strictPropertyInitialization": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"sourceMap": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"useDefineForClassFields": true,
+		"allowJs": true,
+		"checkJs": true,
+		"noEmit": true,
+		"isolatedModules": true,
+		"importHelpers": true,
+		"removeComments": false,
+		"allowSyntheticDefaultImports": true,
+		"outDir": "./dist",
+	},
+	"include": [
+		"src",
+		"tests"
+	]
+}

@@ -1,0 +1,78 @@
+{
+	"name": "vitepress-plugin-llmstxt",
+	"version": "0.5.2",
+	"description": "VitePress plugin to generate llms.txt files automatically",
+	"keywords": [
+		"ai",
+		"docs",
+		"documentation",
+		"llm",
+		"llms",
+		"llms-txt",
+		"llmstxt",
+		"pigeonposse",
+		"plugin",
+		"pp",
+		"vite",
+		"vite-plugin",
+		"vitepress",
+		"vitepress-plugin"
+	],
+	"homepage": "https://www.npmjs.com/package/vitepress-plugin-llmstxt",
+	"bugs": {
+		"url": "https://github.com/angelespejo/vitepress-plugin-llmstxt/issues",
+		"email": "dev@pigeonposse.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/angelespejo/vitepress-plugin-llmstxt.git"
+	},
+	"funding": {
+		"type": "individual",
+		"url": "https://pigeonposse.com/contribute"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Angelo",
+		"email": "angelo@pigeonposse.com",
+		"url": "https://github.com/angelespejo"
+	},
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./client": {
+			"types": "./dist/client.d.ts",
+			"import": "./dist/client.js"
+		}
+	},
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup src/index.ts src/client.ts --clean --dts --format esm",
+		"dev": "vitepress dev tests/docs --force",
+		"dev-build": "vitepress build tests/docs",
+		"dev-preview": "vitepress preview tests/docs",
+		"test": "pnpx tsx tests/run.ts"
+	},
+	"devDependencies": {
+		"vitepress": "1.6.4",
+		"vue": "3.5.39"
+	},
+	"peerDependencies": {
+		"vitepress": "^1.0.0"
+	},
+	"engines": {
+		"node": ">=20.19.4"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/"
+	}
+}
