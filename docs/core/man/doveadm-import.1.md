@@ -13,19 +13,19 @@ dovecotComponent: core
   [**-U** *source_user*]
   [**-s**]
   **-A**
-  *source_mail_driver*:*source_mail_path*
+  *source_mail_driver*:*source_mail_path* *dest_parent* *search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] **import**
   [**-S** *socket_path*]
   [**-U** *source_user*]
   [**-s**]
-  **-F** *file* *source_mail_driver*:*source_mail_path*
+  **-F** *file* *source_mail_driver*:*source_mail_path* *dest_parent* *search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] **import**
   [**-S** *socket_path*]
   [**-U** *source_user*]
   [**-s**]
-  **-u** *user* *source_mail_driver*:*source_mail_path*
+  **-u** *user* *source_mail_driver*:*source_mail_path* *dest_parent* *search_query*
 
 ## DESCRIPTION
 
