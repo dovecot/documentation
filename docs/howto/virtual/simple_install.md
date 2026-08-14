@@ -135,12 +135,11 @@ Joe would now have "foo" as his password.
 ### Delivering Mails
 
 You can configure the SMTP server to deliver mails internally, or you can use
-[[link,lda]]. Using dovecot-lda gives you better performance because it updates
-Dovecot's index files while saving the mails.
+Dovecot [[link,lda]] or Dovecot [[link,lmtp]]. Using Dovecot's tools to deliver
+mails gives you better performance because they update Dovecot's index files
+while saving the mails.
 
-See [[link,lda]] for configuration information.
-
-Alternatively, you can also use [[link,lmtp]].
+See [[link,lda]] or [[link,lmtp]] for configuration information.
 
 In config you should have:
 
