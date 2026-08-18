@@ -27,6 +27,10 @@ export type LlmsPageData = {
 	frontmatter : Record<string, Any>
 	/** The raw content of the page. */
 	content     : string
+	/** The filename on disk of the generated HTML page (if applicable). */
+	htmlFile?   : string
+	/** The filename on disk the LLM markdown file will be written to. */
+	llmFile?    : string
 }
 
 export type LlmsClientPageData = {
