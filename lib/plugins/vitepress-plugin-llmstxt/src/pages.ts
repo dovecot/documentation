@@ -196,7 +196,11 @@ export const getPagesData = async ( config: PagesDataConfig, vpConfig?: VPConfig
 		}
 
 		// Strip original frontmatter so transform sees clean markdown
-		const content = removeFrontmatter( page.src || '' )
+		const content  = removeFrontmatter( page.src || '' )
+		const outDir   = vpConfig?.outDir
+		const htmlPath = path.endsWith( '.md' ) ? path.slice( 0, -3 ) + '.html' : path
+		const htmlFile = outDir ? join( outDir, htmlPath ) : undefined
+		const llmFile  = outDir ? join( outDir, path ) : undefined
 
 		mdFiles.push( {
 			path,
@@ -205,6 +209,8 @@ export const getPagesData = async ( config: PagesDataConfig, vpConfig?: VPConfig
 			content : content,
 			title   : page.frontmatter.title || getMDTitleLine( content ) || page.frontmatter.layout || '',
 			frontmatter,
+			htmlFile,
+			llmFile,
 		} )
 
 	}
@@ -212,6 +218,7 @@ export const getPagesData = async ( config: PagesDataConfig, vpConfig?: VPConfig
 	if ( config?.llmsFullFile ) {
 
 		const path    = '/' + LLM_FULL_FILENAME
+		const outDir  = vpConfig?.outDir
 		const extra   = {
 			URL      : joinUrl( originURL, path ),
 			LLMS_URL : joinUrl( originURL, path ),
@@ -224,6 +231,7 @@ export const getPagesData = async ( config: PagesDataConfig, vpConfig?: VPConfig
 			content     : content,
 			title       : getMDTitleLine( content ) || '',
 			frontmatter : extra,
+			llmFile     : outDir ? join( outDir, path ) : undefined,
 		} )
 
 	}
@@ -233,6 +241,7 @@ export const getPagesData = async ( config: PagesDataConfig, vpConfig?: VPConfig
 	if ( config?.llmsFile ) {
 
 		const path    = '/' + LLM_FILENAME
+		const outDir  = vpConfig?.outDir
 		const extra   = {
 			URL      : joinUrl( originURL, path ),
 			LLMS_URL : joinUrl( originURL, path ),
@@ -246,6 +255,7 @@ export const getPagesData = async ( config: PagesDataConfig, vpConfig?: VPConfig
 			content,
 			title       : getMDTitleLine( content ) || '',
 			frontmatter : extra,
+			llmFile     : outDir ? join( outDir, path ) : undefined,
 		} )
 
 	}

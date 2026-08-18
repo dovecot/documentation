@@ -229,9 +229,23 @@ export const llmstxtPlugin = ( config?: LlmsConfig ): VitePlugin => {
 					// console.log( 'buildEnd' )
 					data = await getPagesData(
 						c,
-						vpConfig,
+						siteConfig,
 					)
 					addVPConfigLllmData( data, siteConfig )
+
+				}
+				else if ( siteConfig.outDir ) {
+
+					for ( const page of data ) {
+
+						if ( !page.llmFile ) page.llmFile = join( siteConfig.outDir, page.path )
+						if ( !page.htmlFile && page.path.endsWith( '.md' ) ) {
+
+							page.htmlFile = join( siteConfig.outDir, page.path.slice( 0, -3 ) + '.html' )
+
+						}
+
+					}
 
 				}
 
