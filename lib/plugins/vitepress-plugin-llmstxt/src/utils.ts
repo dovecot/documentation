@@ -208,6 +208,47 @@ export const getMDTitleLine = ( markdown: string ): string | undefined => {
 }
 
 /**
+ * Resolves path rewrites for a single page's path.
+ *
+ * @param   {string}                 path     - The original page path.
+ * @param   {Record<string, string>} rewrites - The rewrites map.
+ * @returns {string}                          The rewritten path.
+ */
+export const resolveRewrites = (
+	path: string,
+	rewrites: Record<string, string>,
+): string => {
+
+	// Rewrite keys don't have a leading slash but path does — strip it
+	// for matching
+	const pathHasLeadingSlash = path.startsWith( '/' )
+	let resolvedPath          = pathHasLeadingSlash ? path.slice( 1 ) : path
+
+	if ( rewrites[resolvedPath] ) {
+
+		resolvedPath = rewrites[resolvedPath]
+
+	}
+	else {
+
+		for ( const [ from, to ] of Object.entries( rewrites ) ) {
+
+			if ( resolvedPath.startsWith( from ) ) {
+
+				resolvedPath = to + resolvedPath.slice( from.length )
+				break
+
+			}
+
+		}
+
+	}
+
+	return pathHasLeadingSlash ? '/' + resolvedPath : resolvedPath
+
+}
+
+/**
  * ********************************************************************************
  * ********************************************************************************
  * **** SYSTEM ********************************************************************

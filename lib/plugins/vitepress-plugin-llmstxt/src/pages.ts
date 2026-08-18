@@ -7,6 +7,7 @@ import {
 	overrideFrontmatter,
 	getMDTitleLine,
 	markdownPathToUrlRoute,
+	resolveRewrites,
 } from './utils'
 
 import type {
@@ -183,10 +184,24 @@ export const getPagesData = async ( config: PagesDataConfig, vpConfig?: VPConfig
 
 	for ( const page of pages.slice().reverse() ) {
 
-		const route       = page.url
-		const pathname    = route.replace( '.html', '' )
-		const path        = join( ( pathname === '/' ? '/index' : pathname.endsWith( '/' ) ? pathname.slice( 0, -1 ) : pathname ) + '.md' )
-		const URL         = joinUrl( originURL, route )
+		const route    = page.url
+		const pathname = route.replace( /\.html$/, '' )
+
+		let path = join( pathname.endsWith( '/' ) ? `${pathname}index.md` : `${pathname}.md` )
+
+		// Apply path rewrites before content generation
+		const vpRewrites = ( vpConfig as { rewrites?: { map?: Record<string, string> | undefined } | undefined } )?.rewrites?.map
+		if ( vpRewrites ) {
+
+			path = resolveRewrites( path, vpRewrites )
+
+		}
+
+		const relPath     = path.startsWith( '/' ) ? path.slice( 1 ) : path
+		const pageRoute   = '/' + relPath
+			.replace( /(^|\/)index\.md$/, '$1' )
+			.replace( /\.md$/, vpConfig?.cleanUrls ? '' : '.html' )
+		const URL         = joinUrl( originURL, pageRoute )
 		const LLMS_URL    = joinUrl( originURL, path )
 		const frontmatter = {
 			URL,
