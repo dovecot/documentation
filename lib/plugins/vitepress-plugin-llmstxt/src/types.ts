@@ -132,7 +132,7 @@ export type LlmsConfig = {
 		/**
 		 * Helper functions for content processing and generation.
 		 */
-		utils     : {
+		utils : {
 			/**
 			 * Generates a Table of Contents (TOC) formatted as a string for the specified index type.
 			 *
@@ -149,5 +149,5 @@ export type LlmsConfig = {
 			 */
 			removeFrontmatter : ( content: string ) => string
 		}
-	} ) => Promise<LlmsPageData> | LlmsPageData
+	} ) => Promise<LlmsPageData | void> | LlmsPageData | void
 }

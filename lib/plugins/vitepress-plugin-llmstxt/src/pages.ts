@@ -4,7 +4,6 @@ import {
 	joinUrl,
 	join,
 	removeFrontmatter,
-	overrideFrontmatter,
 	getMDTitleLine,
 	markdownPathToUrlRoute,
 	resolveRewrites,
@@ -55,32 +54,7 @@ const replaceMarkdownTemplate = (
 const orderContent = ( content: PageData[] ) =>
 	content.sort( ( a, b ) => b.url.localeCompare( a.url ) )
 
-const transformPages = async ( pages: LlmsPageData[], config?: LlmsConfig, vpConfig?: VPConfig ) => {
-
-	if ( !config?.transform ) return pages
-
-	const utils = {
-		getIndexTOC : ( type: IndexTOC ) => getIndex( pages, { llmsFile: { indexTOC: type } }, vpConfig ),
-		removeFrontmatter,
-	}
-
-	for ( const key in pages ) {
-
-		const tRes = await config?.transform( {
-			page  : pages[key],
-			pages : pages,
-			vpConfig,
-			utils,
-		} )
-		if ( tRes ) pages[key] = tRes
-
-	}
-
-	return pages
-
-}
-
-const getIndex = ( pages: LlmsPageData[], config?: LlmsConfig, vpConfig?: VPConfig ) => {
+export const getIndex = ( pages: LlmsPageData[], config?: LlmsConfig, vpConfig?: VPConfig ) => {
 
 	try {
 
@@ -110,6 +84,18 @@ const getIndex = ( pages: LlmsPageData[], config?: LlmsConfig, vpConfig?: VPConf
 	}
 
 }
+
+export const createTransformUtils = (
+	pages : LlmsPageData[],
+	config? : LlmsConfig,
+	vpConfig? : VPConfig,
+) => ( {
+	getIndexTOC : ( type: IndexTOC ) => getIndex( pages, {
+		...config,
+		llmsFile : { indexTOC: type },
+	}, vpConfig ),
+	removeFrontmatter : ( content: string ) => removeFrontmatter( content ),
+} )
 
 const getPages = async ( config?: LlmsConfig, vpConfig?: VPConfig ) => {
 
@@ -264,14 +250,8 @@ export const getPagesData = async ( config: PagesDataConfig, vpConfig?: VPConfig
 
 	}
 
-	const res = await transformPages( allFiles, config, vpConfig )
-
-	// Embed frontmatter into content after transform
-	for ( const page of allFiles ) {
-
-		page.content = overrideFrontmatter( page.content, page.frontmatter )
-
-	}
+	// Transform + overrideFrontmatter run once in buildEnd (HTML files available)
+	const res = allFiles
 
 	// console.log( {
 	// 	config,
