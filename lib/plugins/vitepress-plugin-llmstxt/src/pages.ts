@@ -209,7 +209,8 @@ export const getPagesData = async ( config: PagesDataConfig, vpConfig?: VPConfig
 			...page.frontmatter,
 		}
 
-		const content = overrideFrontmatter( page.src || '', frontmatter )
+		// Strip original frontmatter so transform sees clean markdown
+		const content = removeFrontmatter( page.src || '' )
 
 		mdFiles.push( {
 			path,
@@ -264,6 +265,13 @@ export const getPagesData = async ( config: PagesDataConfig, vpConfig?: VPConfig
 	}
 
 	const res = await transformPages( allFiles, config, vpConfig )
+
+	// Embed frontmatter into content after transform
+	for ( const page of allFiles ) {
+
+		page.content = overrideFrontmatter( page.content, page.frontmatter )
+
+	}
 
 	// console.log( {
 	// 	config,
