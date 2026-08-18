@@ -1,11 +1,14 @@
-
-import { getPagesData } from './pages'
+import {
+	createTransformUtils,
+	getPagesData,
+} from './pages'
 import {
 	ensureDir,
 	joinUrl,
 	join,
 	dirname,
 	writeFile,
+	overrideFrontmatter,
 	PLUGIN_NAME,
 	log,
 } from './utils'
@@ -92,29 +95,6 @@ export const llmstxtPlugin = ( config?: LlmsConfig ): VitePlugin => {
 		// enforce : 'pre',
 
 		/**
-		 * **NOTE:**
-		 * 'buildStart' runs in server mode too!
-		 * That's why it's not necessary to add this function in 'configureServer'
-		 *
-		 * @see https://vite.dev/guide/api-plugin.html#universal-hooks
-		 * @see https://rollupjs.org/plugin-development/#buildstart
-		 */
-
-		async buildStart() {
-
-			if ( !vpConfig ) return
-			// Avoid calling the function twice, since we don't know how many times this hook is called in the vitepress build.
-			if ( data ) return
-
-			data = await getPagesData(
-				c,
-				vpConfig,
-			)
-			addVPConfigLllmData( data, vpConfig )
-
-		},
-
-		/**
 		 * Called when a watched file changes during development.
 		 */
 
@@ -151,7 +131,7 @@ export const llmstxtPlugin = ( config?: LlmsConfig ): VitePlugin => {
 
 				try {
 
-					// The data is already compiled in the 'buildStart' hook, but if it fails, it will be compiled here.
+					// Data computed lazily on first llms route request.
 					if ( !data ) {
 
 						// console.log( 'configureServer' )
@@ -175,8 +155,28 @@ export const llmstxtPlugin = ( config?: LlmsConfig ): VitePlugin => {
 
 						if ( llmRoute.includes( url.pathname ) ) {
 
+							let page: LlmsPageData = {
+								...d,
+								frontmatter : { ...d.frontmatter },
+							}
+
+							if ( c.transform ) {
+
+								const utils = createTransformUtils( data, c, vpConfig )
+								const tRes  = await c.transform( {
+									page,
+									pages : data,
+									vpConfig,
+									utils,
+								} )
+								if ( tRes ) page = tRes
+
+							}
+
+							const content = overrideFrontmatter( page.content, page.frontmatter )
+
 							res.setHeader( 'Content-Type', 'text/markdown' )
-							res.end( d.content )
+							res.end( content )
 							// log.info( `Serving ${url.pathname}` )
 							return
 
@@ -223,9 +223,7 @@ export const llmstxtPlugin = ( config?: LlmsConfig ): VitePlugin => {
 
 				await selfBuildEnd?.( siteConfig )
 
-				const outDir = siteConfig.outDir
-
-				// The data is already compiled in the 'buildStart' hook, but if it fails for unknown reasons, it will be compiled here.
+				// Data loaded lazily — compute if not already done by configureServer
 				if ( !data ) {
 
 					// console.log( 'buildEnd' )
@@ -236,6 +234,34 @@ export const llmstxtPlugin = ( config?: LlmsConfig ): VitePlugin => {
 					addVPConfigLllmData( data, siteConfig )
 
 				}
+
+				// Transform runs ONCE here — HTML files exist now, after selfBuildEnd.
+				if ( c.transform ) {
+
+					const utils = createTransformUtils( data, c, siteConfig )
+
+					for ( let i = 0; i < data.length; i++ ) {
+
+						const tRes = await c.transform( {
+							page     : data[i],
+							pages    : data,
+							vpConfig : siteConfig,
+							utils,
+						} )
+						if ( tRes ) data[i] = tRes
+
+					}
+
+				}
+
+				// Embed frontmatter into content after transform
+				for ( const page of data ) {
+
+					page.content = overrideFrontmatter( page.content, page.frontmatter )
+
+				}
+
+				const outDir = siteConfig.outDir
 
 				for ( const page of data ) {
 
