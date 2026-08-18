@@ -1440,6 +1440,41 @@ Connection to proxy failed, but reconnect will be attempted.
 event.`
 	},
 
+	/* doveadm */
+
+	doveadm_command_finished: {
+		root: 'doveadm',
+		added: {
+			events_doveadm_command_finished_added: false,
+		},
+		fields: {
+			command: `Name of the doveadm command that was run. Not set if no command could be resolved.`,
+			exit_code: `Exit code of the command. See [[link,doveadm_error_codes]].`,
+			user: `
+Username the command was run for, if known.
+
+Set for [[link,doveadm_http_api]] requests (from the command's \`user\`
+parameter) and for doveadm server connections. Not set when doveadm is run
+from the command line.`,
+			agent: `Value of the \`User-Agent\` header. Only set for [[link,doveadm_http_api]] requests, and only if the client sent the header.`,
+			local_ip: `Local IP address the client connected to. Not set when doveadm is run from the command line.`,
+			local_port: `Local port the client connected to. Not set when doveadm is run from the command line.`,
+			remote_ip: `Remote IP address of the client. Not set when doveadm is run from the command line.`,
+			remote_port: `Remote port of the client. Not set when doveadm is run from the command line.`,
+			origin: `Origin of the command: \`cli\`, \`http\` or \`tcp\`, depending on how the command was issued.`,
+		},
+		text: `
+A doveadm command has finished running.
+
+Emitted for all three ways a command can be run: from the command line, over
+the doveadm server protocol, and via the [[link,doveadm_http_api]].
+
+For doveadm server connections the event also inherits the fields of the
+connection the command was run for; for the HTTP API this additionally
+includes the request's [[event,http_server_request_started]] fields, e.g.
+\`method\`, \`target\` and \`request_id\`.`
+	},
+
 }
 
 /* 'Global Inherits': All events inherit these fields. */

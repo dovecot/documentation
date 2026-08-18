@@ -122,6 +122,7 @@ export const updates = {
 	events_auth_server_userdb_userdb_driver_added: '2.4.0',
 	events_auth_server_userdb_userdb_name_removed: '2.4.0',
 	events_dns_worker_request_finished_cached_added: '2.4.0',
+	events_doveadm_command_finished_added: '2.4.6',
 	events_imap_id_received_added: '2.4.0',
 	events_imap_id_received_internal_added: '2.4.3',
 	events_invalid_credentials_added: '2.4.5',
