@@ -1,4 +1,6 @@
 aarch
+authid
+authzid
 APPENDLIMIT
 bitmask
 bitmasks
@@ -8,6 +10,7 @@ DESTPORT
 DOkv
 ede
 fcf
+frop
 fuzzer
 github
 hardenings
