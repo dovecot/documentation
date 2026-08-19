@@ -62,6 +62,126 @@ destination IP address belongs to, for instance, a load-balancer rather
 than the server itself.`
 	},
 
+	client_auth: {
+		tags: [ 'client-auth' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'client_auth_mechanism', 'client_auth_authzid',
+			   'client_auth_authid', 'client_auth_password' ],
+		text: `
+This settings filter provides a scope for client authentication settings for
+a particular authentication mechanism and declares the availability of that
+mechanism for client authentication. The mechanism will be used if support is
+also indicated by the server. This way, several different mechanisms can be
+configured, each with specific settings.
+
+The filter name refers to the [[setting,client_auth_mechanism]] setting.
+
+Mechanisms are attempted in the order of configuration, so preferred mechanisms
+should be configured first. If [[setting,client_auth_mechanism]] is set
+outside the scope of this filter, the indicated mechanism is used with settings
+in that context (a client_auth filter block for that mechanism is not used).
+Also, in that case, server support is not checked and the mechanism is attempted
+blindly.
+
+Client authentication settings are expected to be scoped further by settings
+filters for the various protocol clients that need authentication, such as
+[[setting,imapc]], [[setting,pop3c]], [[setting,submission_relay]], and
+[[setting,mail_submit]].
+
+Example:
+\`\`\`[dovecot.conf]
+mail_driver = imapc
+mail_path =
+mailbox_list_index = no
+imapc {
+  host = 127.0.0.1
+  port = 993
+  ssl = imaps
+
+  client_auth PLAIN {
+    authid = master-user
+    authzid = owner-user
+    password = frop
+  }
+  client_auth OAUTHBEARER {
+    authzid = owner-user
+    password = vF9dft4qmTc2Nvb3RlckBhbHRhdmlzdGEuY29tCg==
+  }
+}
+
+submission_relay {
+  smtp_client_host = submission.example.com
+  smtp_client_port = 587
+  smtp_client_ssl = no
+
+  client_auth_authzid = user
+  client_auth_password = frop
+
+  client_auth SCRAM-SHA-256 { }
+  client_auth SCRAM-SHA-1 { }
+  client_auth CRAM-MD5 { }
+  client_auth PLAIN { }
+}
+
+mail_submit {
+  smtp_client_host = localhost
+  smtp_client_port = 25
+
+  client_auth_mechanism = PLAIN
+  client_auth_authzid = mail-out
+  client_auth_password = frop
+}
+\`\`\``
+	},
+
+	client_auth_authid: {
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authzid', 'client_auth_password',
+			   'client_auth_mechanism' ],
+		values: setting_types.STRING,
+		text: `
+The authentication identity to be used for authenticating as a client to a
+remote service.`
+	},
+
+	client_auth_authzid: {
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authid', 'client_auth_password',
+			   'client_auth_mechanism' ],
+		values: setting_types.STRING,
+		text: `
+The authorization identity to be used after authenticating as a client to a
+remote service.`
+	},
+
+	client_auth_password: {
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authzid', 'client_auth_authid',
+			   'client_auth_mechanism' ],
+		values: setting_types.STRING,
+		text: `
+The password to be used for authenticating as a client to a remote service. This
+is the password belonging to the authentication identity \`client_auth_authid\`.`
+	},
+
+	client_auth_mechanism: {
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authzid', 'client_auth_authid',
+			   'client_auth_password' ],
+		values: setting_types.STRING,
+		text: `
+The authentication mechanism (sometimes called scheme) to be used for
+authenticating as a client to a remote service. Currently, this is always a SASL
+mechanism. If left unconfigured, SASL authentication will use the PLAIN
+mechanism by default. For IMAP and POP3 clients, it will use the basic login
+commands in that case if possible (LOGIN for IMAP and USER + PASS for POP3, so
+SASL support is not required). However, if the authentication
+\`client_auth_authid\` and authorization \`client_auth_authzid\` identities are
+both also unconfigured, no authentication is configured at all. In that case,
+authentication will be skipped if it is optional or this will be reported as an
+error otherwise.`
+	},
+
 	fs: {
 		tags: [ 'fs' ],
 		values: setting_types.NAMED_LIST_FILTER,
