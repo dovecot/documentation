@@ -4,7 +4,8 @@ import { useData } from 'vitepress'
 import { nextTick, watch } from 'vue'
 import { createMermaidRenderer } from 'vitepress-mermaid-renderer'
 
-import VersionDropdown from '../../components/VersionDropdown.vue'
+import VersionDropdown from './VersionDropdown.vue'
+import VPDocAsideMeta from './VPDocAsideMeta.vue'
 
 const { site, theme } = useData()
 const { Layout } = DefaultTheme
@@ -50,47 +51,11 @@ const latest = site._value.themeConfig.dovecot.base_url + "/latest/"
    </div>
   </template>
 
-  <template #doc-footer-before>
-   <div class="edit-info">
-    <div :class="'edit-rev edit-rev-' + theme.dovecot.gitrev.align">
-     <div>
-      <p class="edit-updated">Revision: {{ theme.dovecot.gitrev.hash }}</p>
-     </div>
-    </div>
-   </div>
+  <template #aside-top>
+   <VPDocAsideMeta :revision="theme.dovecot.gitrev.hash" />
   </template>
  </Layout>
 </template>
 
 <style scoped>
-.edit-rev {
-  padding-bottom: 18px;
-}
-
-@media (min-width: 640px) {
-  .edit-rev {
-    display: flex;
-    align-items: center;
-    padding-bottom: 0;
-  }
-  .edit-rev-left {
-    justify-content: left;
-  }
-  .edit-rev-right {
-    justify-content: right;
-  }
-}
-.edit-updated {
-  line-height: 24px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--vp-c-text-2);
-}
-@media (min-width: 640px) {
-  .edit-updated {
-    line-height: 32px;
-    font-size: 14px;
-    font-weight: 500;
-  }
-}
 </style>

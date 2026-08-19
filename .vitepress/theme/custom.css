@@ -71,3 +71,7 @@ section.VPSidebarItem.level-0:not(.collapsible) {
   margin-bottom: 1em;
   line-height: 125%;
 }
+
+.VPDocFooter .edit-info {
+  display: none;
+}
