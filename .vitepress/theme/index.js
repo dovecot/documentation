@@ -1,5 +1,5 @@
 import DefaultTheme from 'vitepress/theme'
-import DovecotLayout from './DovecotLayout.vue'
+import DovecotLayout from './components/DovecotLayout.vue'
 import './custom.css'
 
 const modules = import.meta.glob(
