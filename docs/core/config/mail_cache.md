@@ -60,7 +60,7 @@ IMAP ENVELOPE is used by many clients, which includes:
 
 * Some (but not all) of the IMAP ENVELOPE headers:
 
-  `hdr.date hdr.subject hdr.from hdr.tohdr.cc hdr.bcc hdr.message-id hdr.in-reply-to`
+  `hdr.date hdr.subject hdr.from hdr.to hdr.cc hdr.bcc hdr.message-id hdr.in-reply-to`
 
 * `hdr.content-type hdr.references`
 
