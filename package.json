@@ -17,6 +17,7 @@
     "remark-gfm": "^4.0.1",
     "remark-man": "^9.0.0",
     "remark-parse": "^11.0.0",
+    "tsx": "^4.23.12",
     "turndown": "^7.2.4",
     "turndown-plugin-gfm": "^1.0.2",
     "typescript": "^5.9.3",
@@ -32,7 +33,7 @@
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
-    "man:build": "node util/generate_man.js"
+    "man:build": "tsx util/generate_man.js"
   },
   "type": "module"
 }
