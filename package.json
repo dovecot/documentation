@@ -8,7 +8,7 @@
     "fast-glob": "^3.3.3",
     "git-commit-info": "^2.0.2",
     "markdown-it-container": "^4.0.0",
-    "markdown-it-deflist": "^3.0.0",
+    "markdown-it-deflist": "^4.0.0",
     "markdown-it-mathjax3": "^4.3.2",
     "node-html-parser": "^9.0.1",
     "pagefind": "^1.5.2",
