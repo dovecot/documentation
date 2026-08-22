@@ -18,6 +18,12 @@ dovecotlinks:
   settings_types_string_novar:
     hash: string-without-variables
     text: String without variables
+  settings_types_path_file:
+    hash: file-path
+    text: file path
+  settings_types_path_dir:
+    hash: directory-path
+    text: directory path
   settings_types_time:
     hash: time
     text: time
@@ -70,6 +76,28 @@ imap_logout_format = in=%{input} out=%{output}
 
 Here the `%{input}` and `%{output}` refer to variables specific to the
 [[setting,imap_logout_format]] setting.
+
+## File Path
+
+[[added,settings_path_types_added]]
+
+Like [String](#string), but the value is a filesystem path. If the value
+begins with `~/` (or is only `~`), the prefix is expanded to the user's home
+directory, the same as if `%{home}` had been used. This works only for
+settings that are looked up for a specific mail user, i.e. wherever the
+`%{home}` [[link,settings_variables_mail_user_variables,variable]] is
+available.
+
+For userdb and `-o` command line parameter overrides only the `~/` prefix is
+expanded, while the rest of the value is used literally, the same way as
+%variables in override values.
+
+## Directory Path
+
+[[added,settings_path_types_added]]
+
+Like [File Path](#file-path), but the value is a path to a directory. A
+trailing `/` in the value is dropped.
 
 ## Unsigned Integer
 
