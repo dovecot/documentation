@@ -9,7 +9,7 @@ import { dovecotVitepressLlmPlugin } from '../lib/vitepress_llm.js'
 import path from 'path'
 import fs from 'fs'
 
-const base = '/2.4'
+const base = '2.4'
 const base_url = 'https://doc.dovecot.org'
 const hostname = `${base_url}/${base}`
 
