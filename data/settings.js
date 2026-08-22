@@ -6068,8 +6068,11 @@ Username for HTTP proxy.`
 	},
 
 	http_client_rawlog_dir: {
+		changed: {
+			settings_path_types_added: `Setting type changed. A leading \`~/\` in the value is now expanded to the user's home directory.`,
+		},
 		tags: [ 'http', 'http_client' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		added: {
 			settings_http_client_settings_added: false,
 		},
@@ -6355,8 +6358,11 @@ defaults.`
 	},
 
 	http_server_rawlog_dir: {
+		changed: {
+			settings_path_types_added: `Setting type changed. A leading \`~/\` in the value is now expanded to the user's home directory.`,
+		},
 		tags: [ 'http', 'http-server' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Directory for writing raw log data for debugging purposes.`
 	},
@@ -6918,9 +6924,12 @@ If using master users, this setting will be the password of the master user.`
 	},
 
 	imapc_rawlog_dir: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		seealso: [ '[[link,rawlog]]' ],
 		tags: [ 'imapc', 'imapc-auth' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `Log all IMAP traffic input/output to this directory.`
 	},
 
@@ -7746,7 +7755,10 @@ Options:
 	},
 
 	mail_ext_attachment_path: {
-		values: setting_types.STRING,
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
+		values: setting_types.PATH_DIR,
 		text: `
 The directory in which to store mail attachments.
 
@@ -8261,8 +8273,11 @@ automatically.`
 	},
 
 	mail_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		default: '\\<specific to mail_driver setting\\>',
 		seealso: [
 			'[[link,settings_variables_mail_user_variables]]',
@@ -8283,8 +8298,11 @@ to work, this usage is deprecated and will likely stop working at some point.
 	},
 
 	mail_inbox_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		seealso: [ 'mail_home', 'mail_path' ],
 		text: `
 Path to the INBOX mailbox. The path doesn't have to be absolute - it is
@@ -8315,8 +8333,11 @@ This can also be used to specify a different INBOX path with Maildir:
 	},
 
 	mail_index_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		default: '\\<same as mail_path setting\\>',
 		seealso: [
 			'[[link,mail_location_index_files]]',
@@ -8328,8 +8349,11 @@ Location of [[link,mail_location_index_files,index files]].
 	},
 
 	mail_index_private_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		seealso: [ '[[link,shared_mailboxes_public]]' ],
 		text: `
 The private index files are used with shared mailboxes to provide private
@@ -8339,8 +8363,11 @@ The private index files are used with shared mailboxes to provide private
 	},
 
 	mail_cache_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		default: '\\<same as mail_index_path setting\\>',
 		text: `
 Place \`dovecot.index.cache\` files to this directory instead of among the
@@ -8352,8 +8379,11 @@ slower (larger) storage.
 	},
 
 	mail_control_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Location for (mailbox-format specific) control files.
 
@@ -8361,8 +8391,11 @@ Location for (mailbox-format specific) control files.
 	},
 
 	mail_alt_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		seealso: [ '[[link,dbox_alt_storage]]' ],
 		text: `
 Specifies the [[link,dbox_alt_storage]] path.
@@ -8468,8 +8501,9 @@ example \`mailboxes\` with [[link,dbox]].`
 
 	mail_volatile_path: {
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		changed: {
+			settings_path_types_added: `Setting type changed.`,
 			settings_mail_volatile_path_changed: `Fixed behavior to avoid collisions across multiple namespaces.`,
 		},
 		text: `
@@ -10242,9 +10276,12 @@ get the metadata.`
 	},
 
 	pop3c_rawlog_dir: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		seealso: [ '[[link,rawlog]]' ],
 		tags: [ 'pop3c' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `Log all POP3 traffic input/output to this directory.`
 	},
 
@@ -10349,8 +10386,11 @@ sending server.`
 	},
 
 	rawlog_dir: {
+		changed: {
+			settings_path_types_added: `Setting type changed. A leading \`~/\` in the value is now expanded to the user's home directory.`,
+		},
 		seealso: [ '[[link,rawlog]]' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Directory where to create \`*.in\` and \`*.out\` rawlog files, one per TCP
 connection. The directory must already exist and be writable by the process.
@@ -11289,9 +11329,12 @@ Port for the submission relay server.`
 	},
 
 	submission_relay_rawlog_dir: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'submission_relay' ],
 		seealso: [ '[[link,rawlog]]' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Write protocol logs for relay connection to this directory for debugging.
 
