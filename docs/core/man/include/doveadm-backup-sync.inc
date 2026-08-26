@@ -309,32 +309,39 @@ doveadm backup -u user maildir:~/Maildir
 ```
 
 If you want to do this without any downtime, you can do the conversion
-one user at a time. Initially:
+one user at a time. We consider this scenario:
 
 - Configuration uses **mail_driver = maildir** and **mail_path = ~/Maildir**
+
+- We want to convert to the mdbox format: **mail_driver = mdbox** and
+  **mail_path = ~/mdbox**
+
+Initially:
 
 - Set up the possibility of doing per-user mail location using
   *userdb* extra fields.
 
 Then for each user:
 
-1. Run *doveadm sync* once to do the initial conversion.
+1. Run *doveadm sync mdbox:~/mdbox* once to do the initial conversion.
 
-2. Run *doveadm sync* again, because the initial conversion could
-   have taken a while and new changes could have occurred during it.
-   This second time only applies changes, so it should be fast.
+2. Run *doveadm sync mdbox:~/mdbox* again, because the initial
+   conversion could have taken a while and new changes could have
+   occurred during it. This second time only applies changes, so it
+   should be fast.
 
-3. Update userdb to return the wanted new mail format configuration. For
-   example: **mail_driver = mdbox** and **mail_path = ~/mdbox**. If you're
-   using auth cache, you need to flush it, e.g. **doveadm auth cache flush**.
+3. Update userdb to return the wanted new mail format configuration. In
+   this scenario: **mail_driver = mdbox** and **mail_path = ~/mdbox**.
+   If you're using auth cache, you need to flush it, e.g.
+   **doveadm auth cache flush**.
 
 4. Wait for a few seconds and then kill (doveadm kick) the user's all
    existing imap and pop3 sessions (that are still using maildir).
 
-5. Run *doveadm sync* once more to apply final changes that were
-   possibly done. After this there should be no changes to Maildir,
-   because the user's mail location has been changed and all existing
-   processes using it have been killed.
+5. Run *doveadm sync maildir:~/Maildir* with the old location to apply
+   final changes that were possibly done. After this there should be no
+   changes to Maildir, because the user's mail location has been changed
+   and all existing processes using it have been killed.
 
 Once all users have been converted, you can update the global *mail_driver* and
 *mail_path* settings and remove the per-user mail locations from *userdb*.
