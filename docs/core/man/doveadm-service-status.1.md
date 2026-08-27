@@ -59,6 +59,12 @@ containing the following details:
 :   the total number of processes forked for the service since the service
     start.
 
+*generation*
+:   the configuration generation the service belongs to. This increases by one
+    for every reload, so services preserved from before a reload (see
+    [[setting,shutdown_clients_timeout]]) have a smaller number than the
+    current one.
+
 <!-- @include: include/global-options-formatter.inc -->
 
 ## ARGUMENTS
@@ -86,6 +92,7 @@ listen_pending: n
 listening: y
 doveadm_stop: n
 process_total: 0
+generation: 1
 ```
 
 <!-- @include: include/reporting-bugs.inc -->

@@ -2635,7 +2635,21 @@ returned.`,
 	},
 
 	reload: {
-		args: {},
+		args: {
+			'kick-timeout': {
+				example: '4h',
+				type: doveadm_arg_types.STRING,
+				text: `
+Override [[setting,shutdown_clients_timeout]] for this reload: how long the
+processes of the old configuration may keep serving their existing clients.
+\`0\` disconnects them immediately, \`infinite\` keeps them until the
+clients disconnect.`,
+			},
+		},
+		added: {
+			'doveadm_reload_kick_timeout_added': `
+\`kick-timeout\` argument added.`
+		},
 		man: 'doveadm',
 		text: `Reload Dovecot configuration.`,
 	},
