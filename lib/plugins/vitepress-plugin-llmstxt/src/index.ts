@@ -1,6 +1,8 @@
 import {
 	createTransformUtils,
 	getPagesData,
+	LLM_FILENAME,
+	LLM_FULL_FILENAME,
 } from './pages'
 import {
 	ensureDir,
@@ -9,6 +11,7 @@ import {
 	dirname,
 	writeFile,
 	overrideFrontmatter,
+	getMDTitleLine,
 	PLUGIN_NAME,
 	log,
 } from './utils'
@@ -50,6 +53,8 @@ const addVPConfigLllmData = ( data: LlmsPageData[] | undefined, vpConfig?: VPCon
 	vpConfig.site.themeConfig.llmstxt = config
 
 }
+
+const isSpecialPath = ( p: string ) => p === '/' + LLM_FULL_FILENAME || p === '/' + LLM_FILENAME
 
 /**
  * [VitePress](http://vitepress.dev/) plugin for generating "llms.txt" files automatically
@@ -160,10 +165,27 @@ export const llmstxtPlugin = ( config?: LlmsConfig ): VitePlugin => {
 								frontmatter : { ...d.frontmatter },
 							}
 
-							if ( c.transform ) {
+							const isPagesSource = typeof c.llmsFullFile === 'object' && c.llmsFullFile?.source === 'pages'
+							const utils = c.transform ? createTransformUtils( data, c, vpConfig ) : undefined
 
-								const utils = createTransformUtils( data, c, vpConfig )
-								const tRes  = await c.transform( {
+							if ( d.path === '/' + LLM_FULL_FILENAME && isPagesSource ) {
+
+								const mdPages = data.filter( p => !isSpecialPath( p.path ) )
+								const transformedMdPages = await Promise.all( mdPages.map( async mdPage => {
+
+									const pageCopy: LlmsPageData = { ...mdPage, frontmatter : { ...mdPage.frontmatter } }
+									return ( utils && await c.transform?.( { page: pageCopy, pages: data, vpConfig, utils } ) ) || pageCopy
+
+								} ) )
+
+								page.content = transformedMdPages.map( p => p.content ).join( '\n\n' )
+								page.title   = getMDTitleLine( page.content ) || ''
+
+							}
+
+							if ( c.transform && utils ) {
+
+								const tRes = await c.transform( {
 									page,
 									pages : data,
 									vpConfig,
@@ -249,24 +271,50 @@ export const llmstxtPlugin = ( config?: LlmsConfig ): VitePlugin => {
 
 				}
 
-				// Transform runs ONCE here — HTML files exist now, after selfBuildEnd.
-				if ( c.transform ) {
+				const isPagesSource = typeof c.llmsFullFile === 'object' && c.llmsFullFile?.source === 'pages'
+				const utils         = c.transform ? createTransformUtils( data, c, siteConfig ) : undefined
 
-					const utils = createTransformUtils( data, c, siteConfig )
+				const transformPages = async ( predicate: ( p: LlmsPageData ) => boolean ) => {
 
+					if ( !c.transform || !utils ) return
 					for ( let i = 0; i < data.length; i++ ) {
 
-						const tRes = await c.transform( {
-							page     : data[i],
-							pages    : data,
-							vpConfig : siteConfig,
-							utils,
-						} )
-						if ( tRes ) data[i] = tRes
+						if ( predicate( data[i] ) ) {
+
+							const tRes = await c.transform( {
+								page     : data[i],
+								pages    : data,
+								vpConfig : siteConfig,
+								utils,
+							} )
+							if ( tRes ) data[i] = tRes
+
+						}
 
 					}
 
 				}
+
+				// Phase 1: Transform individual documentation pages (HTML files exist now)
+				await transformPages( p => !isSpecialPath( p.path ) )
+
+				// Phase 2: If llmsFullFile is configured from pages, assemble from transformed pages
+				if ( isPagesSource ) {
+
+					const llmsFullPage = data.find( p => p.path === '/' + LLM_FULL_FILENAME )
+
+					if ( llmsFullPage ) {
+
+						const mdPages        = data.filter( p => !isSpecialPath( p.path ) )
+						llmsFullPage.content = mdPages.map( d => d.content ).join( '\n\n' )
+						llmsFullPage.title   = getMDTitleLine( llmsFullPage.content ) || ''
+
+					}
+
+				}
+
+				// Phase 3: Transform special aggregate pages (/llms-full.txt, /llms.txt)
+				await transformPages( p => isSpecialPath( p.path ) )
 
 				// Embed frontmatter into content after transform
 				for ( const page of data ) {
