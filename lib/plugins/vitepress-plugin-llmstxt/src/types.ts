@@ -47,6 +47,8 @@ export type LlmsClientConfig = {
 	pageData? : LlmsClientPageData[]
 }
 
+export type LlmsFullFileSource = 'source' | 'pages'
+
 export type LlmsConfig = {
 	/**
 	 * Hostname
@@ -87,9 +89,20 @@ export type LlmsConfig = {
 	/**
 	 * Build `llms-full.txt` file
 	 *
+	 * - `true` / `false` - enable or disable using raw markdown source files (default: true)
+	 * - `{ source: 'pages' }` - build from individual transformed page outputs
+	 * - `{ source: 'source' }` - build from raw markdown source files
+	 *
 	 * @default true
 	 */
-	llmsFullFile?  : boolean
+	llmsFullFile?  : boolean | {
+		/**
+		 * Source for llms-full.txt content.
+		 * - _'source'_ - concatenate raw Markdown files (default)
+		 * - _'pages'_ - concatenate transformed Markdown page outputs
+		 */
+		source? : LlmsFullFileSource
+	}
 	/**
 	 * Build `.md` file for each route
 	 *

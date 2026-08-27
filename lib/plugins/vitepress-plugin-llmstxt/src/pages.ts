@@ -18,8 +18,8 @@ import type {
 	VPConfig,
 } from './types'
 
-const LLM_FILENAME      = 'llms.txt' as const
-const LLM_FULL_FILENAME = 'llms-full.txt' as const
+export const LLM_FILENAME      = 'llms.txt' as const
+export const LLM_FULL_FILENAME = 'llms-full.txt' as const
 
 const replaceMarkdownTemplate = (
 	template: string,
