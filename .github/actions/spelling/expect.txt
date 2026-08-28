@@ -36,7 +36,6 @@ Atilika
 atimes
 atmail
 auid
-authdb
 AUTHENTICATIONFAILED
 authpriv
 authtok
@@ -128,7 +127,6 @@ coi
 commitlog
 Compuserve
 CONDSTORE
-CONTAINERNAME
 convertpw
 copybox
 COPYUID
@@ -274,7 +272,6 @@ fieldvalue
 fileinto
 findtime
 firewalls
-firstsaved
 flagsmodseq
 flatcurve
 flushall
@@ -312,11 +309,10 @@ gethosterror
 getmail
 getmailbird
 GETSCRIPT
-Globalsign
 getscript
 gitlab
+Globalsign
 Gluster
-gitlab
 gmatch
 gno
 gnomint
@@ -345,8 +341,6 @@ HIGHESTPVTMODSEQ
 hordeauth
 hostaddr
 hostchange
-Hotspot
-hostdomain
 hostip
 howto
 howtoforge
@@ -383,7 +377,6 @@ inboxes
 INCLUDERC
 indexfiles
 INDEXPVT
-inetd
 inka
 Inno
 inodes
@@ -408,7 +401,6 @@ JMK
 johndoh
 joulu
 junkflag
-kadmin
 kaworu
 kde
 kdump
@@ -424,7 +416,6 @@ kio
 klist
 kludgy
 kmail
-kocmuk
 korvatunturi
 KPOP
 krb
@@ -479,8 +470,8 @@ libsasldb
 libsodium
 libsqlite
 libstemmer
-libwrap
 libta
+libwrap
 lifewithqmail
 linelen
 linenos
@@ -550,14 +541,12 @@ managesieve
 managesieved
 manmaster
 manualroute
-mapuser
 MARF
 markasjunk
 masteradmin
 masterpass
 masterpassword
 masteruser
-metadata
 MATCHGECOS
 maxconn
 maxdepth
@@ -571,7 +560,6 @@ mboxlocking
 mboxmetadata
 mboxo
 mboxrd
-mclroy
 mda
 mdbox
 Mdovecot
@@ -589,7 +577,6 @@ millisecs
 mimencode
 missingok
 mkhomedir
-mmap
 mmencode
 MMIME
 modseq
@@ -639,11 +626,7 @@ newmail
 Newsgroups
 newtok
 nexthop
-NFKD
-NEXTUID
-nfsmount
 ngrams
-ngrep
 ninf
 NLEVEL
 nlinks
@@ -774,14 +757,11 @@ proctitle
 promotionalmail
 proofpoint
 proxymap
-Ptest
-ptr
 ptrace
 pubout
 pukki
 pushmail
 putscript
-pvo
 pwcheck
 pwdfile
 pwhash
@@ -838,7 +818,6 @@ rspamc
 rspamd
 rsyslog
 rubygems
-rundir
 Rvdm
 rwstipekxa
 rwstipekxacd
@@ -937,6 +916,7 @@ strdup
 strescape
 strfuncs
 strlcpy
+strmap
 strocpy
 strp
 subaccounts
@@ -1047,7 +1027,6 @@ upn
 uppercased
 uppercasing
 upperfirst
-upserting
 urandom
 Urg
 urlauth
@@ -1081,9 +1060,8 @@ vfile
 vfuncs
 vgdb
 vhosts
-virtualdate
-virtualenv
 VIRT
+virtualdate
 virtualdomain
 virtualised
 virtuserdomains

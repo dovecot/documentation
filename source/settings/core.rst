@@ -2194,6 +2194,26 @@ See :ref:`settings` for list of all setting groups.
    used.
 
 
+.. dovecot_core:setting:: mail_index_strmap_v2
+   :default: no
+   :values: @boolean
+
+   .. versionadded:: 2.3.22.2
+
+   Write the ``dovecot.index.thread`` index, used by the IMAP ``THREAD``
+   command, in the v2 format. The Message-ID hashes stored in it are
+   calculated with a keyed hash using a random per-file key instead of
+   CRC32, so users can no longer craft Message-IDs whose hashes
+   deliberately collide.
+
+   Existing v1 index files are deleted and rebuilt in the v2 format when the
+   mailbox is next opened for threading, so the first ``THREAD`` command for
+   a large mailbox can be slower than usual. Dovecot versions older than
+   v2.3.22.2 don't understand the v2 format and rebuild the index in the v1
+   format again, so enable this setting only once a rollback to an older
+   version is no longer possible.
+
+
 .. dovecot_core:setting:: mail_location
    :seealso: @mail_location_settings
    :values: @string

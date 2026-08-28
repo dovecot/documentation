@@ -101,3 +101,14 @@ Upgrading Dovecot v2.3.x to v2.3.20
    To revert to the pre 2.3.20 behavior, set ``fts_stopwords_workaround = no``.
    See the :dovecot_plugin:ref:`setting description <fts_stopwords_workaround>`
    for more details.
+
+Upgrading Dovecot v2.3.x to v2.3.22.2
+=====================================
+ * :dovecot_core:ref:`mail_index_strmap_v2` has been introduced. Enabling it
+   writes the ``dovecot.index.thread`` index, used by the IMAP ``THREAD``
+   command, in a new v2 format where the Message-ID hashes are calculated
+   with a keyed hash using a random per-file key instead of CRC32. This
+   prevents users from crafting Message-IDs whose hashes deliberately
+   collide, which would otherwise slow down threading. The default is ``no``,
+   because Dovecot versions older than v2.3.22.2 don't understand the v2
+   format and rebuild such indexes in the v1 format again.
