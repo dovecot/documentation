@@ -100,6 +100,7 @@ export const updates = {
 	settings_auth_policy_request_attributes_changed: '2.4.0',
 	settings_dovecot_config_version_added: '2.4.0',
 	settings_dovecot_storage_version_added: '2.4.0',
+	settings_dovecot_storage_version_thread_index_changed: '2.4.5',
 	settings_fts_autoindex_exclude_namespaces_changed: '2.4.0',
 	settings_fts_message_max_size_added: '2.4.0',
 	settings_fts_tika_changed_auth: '2.4.0',
