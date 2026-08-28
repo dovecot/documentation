@@ -1160,6 +1160,37 @@ compiling it at delivery).`
 		text: `Activated a Sieve script.`
 	},
 
+	sieve_script_disabled: {
+		added: {
+			events_sieve_script_disabled_added: false,
+		},
+		root: 'sieve',
+		inherit: 'sieve',
+		fields: {
+			cpu_time_msecs: `The cumulative CPU time (in milliseconds) that triggered the disable.`,
+		},
+		text: `
+Emitted when a Sieve script is disabled because its cumulative resource
+usage exceeded the configured \`sieve_max_cpu_time\` limit.`
+	},
+
+	sieve_script_execution_blocked: {
+		added: {
+			events_sieve_script_execution_blocked_added: false,
+		},
+		root: 'sieve',
+		inherit: 'sieve',
+		fields: {
+			cpu_time_msecs: `The cumulative CPU time (in milliseconds) that exceeds the limit.`,
+		},
+		text: `
+Emitted when execution of an already-disabled Sieve script is blocked
+because its cumulative resource usage exceeds the configured
+\`sieve_max_cpu_time\` limit. Unlike [[event,sieve_script_disabled]], which
+fires once at the moment of disabling, this is emitted on each subsequent
+attempt to open the script while it remains disabled.`
+	},
+
 	sieve_script_renamed: {
 		root: 'sieve-storage',
 		inherit: 'sieve_storage',
