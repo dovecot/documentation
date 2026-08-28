@@ -778,6 +778,7 @@ Subtables
 subvalue
 sustainability
 svbin
+sync'd
 sysadmin
 syscalls
 syscr
