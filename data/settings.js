@@ -820,6 +820,7 @@ policy limit".`
 	sieve_max_cpu_time: {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
+		seealso: [ 'sieve_resource_usage_timeout' ],
 		default: '30s',
 		changed: {
 			settings_sieve_max_cpu_time_changed: `
@@ -833,9 +834,18 @@ The maximum amount of CPU time that a Sieve script is allowed to use while
 executing. If the execution exceeds this resource limit, the script ends with
 an error, causing the implicit "keep" action to be executed.
 
-This limit is not only enforced for a single script execution, but also
-cumulatively for the last executions within a configurable timeout
-(see [[setting,sieve_resource_usage_timeout]]).`
+This limit is not only enforced per single script execution; CPU time used
+across executions within [[setting,sieve_resource_usage_timeout]] is summed
+and compared against this limit as well.
+
+See [[setting,sieve_resource_usage_timeout]] for more details on how the
+limits work.
+
+[[changed,sieve_rusage_restore_changed]] Execution is refused while the
+cumulative usage is over the limit, and resumes automatically once the
+recorded usage falls below the limit. Previously, exceeding the cumulative
+limit blocked the script permanently until it was recompiled (e.g. via
+\`sievec\`) or re-uploaded.`
 	},
 
 	sieve_max_redirects: {
@@ -894,29 +904,34 @@ that setting as well.`
 	sieve_resource_usage_timeout: {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
+		seealso: [ 'sieve_max_cpu_time' ],
 		default: '1h',
 		values: setting_types.TIME,
 		text: `
-To prevent abuse, the Sieve interpreter can record resource usage of a Sieve
-script execution in the compiled binary if it is significant. Currently, this
-happens when CPU system + user time exceeds 1.5 seconds for one execution.
-Such high resource usage is summed over time in the binary and once that
-cumulative resource usage exceeds the limits ([[setting,sieve_max_cpu_time]]),
-the Sieve script is disabled in the binary for future execution, even if an
-individual execution exceeded no limits.
+To prevent abuse, the Sieve interpreter records CPU time used by Sieve
+script executions in a per-user file \`sieve-rusage\` at the root of the
+user's INBOX namespace. Only significant executions are recorded;
+currently this means CPU system + user time exceeding 1.5 seconds for
+one execution. Such high resource usage is summed over time and once
+the cumulative total exceeds [[setting,sieve_max_cpu_time]], further
+script execution is refused for that user, even if an individual
+execution exceeded no limits.
 
 If the last time high resource usage was recorded is older than
-[[setting,sieve_resource_usage_timeout]], the resource usage in the binary is
-reset. This means that the Sieve script is only disabled when the limits are
-cumulatively exceeded within this timeout. With the default configuration this
-means that the Sieve script is only disabled when the total CPU time of Sieve
-executions that lasted more than 1.5 seconds exceeds 30 seconds in the last
-hour.
+\`sieve_resource_usage_timeout\`, the recorded value is
+treated as zero. This means a user is only blocked when the limits
+are cumulatively exceeded within this timeout, and is automatically
+re-enabled once the timeout elapses with no further significant CPU
+consumption. With the default configuration a user is blocked only
+when the total CPU time of Sieve executions that lasted more than 1.5
+seconds exceeds 30 seconds within the last hour, and execution
+resumes one hour after the last significant run.
 
-A disabled Sieve script can be reactivated by the user by uploading a new
-version of the Sieve script after the excessive resource usage times out. An
-administrator can force reactivation by forcing a script compile (e.g. using
-the sievec command line tool).`
+[[changed,sieve_rusage_restore_changed]] Tracking is per user, not
+per script: re-uploading a script under a different name, renaming
+or deleting and recreating it does not reset the recorded usage.
+An administrator can force an immediate reset by removing the
+\`sieve-rusage\` file from the user's INBOX namespace root.`
 	},
 
 	sieve_max_script_size: {
