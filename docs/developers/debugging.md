@@ -88,6 +88,7 @@ LimitCORE=infinity
 ```
 
 ###### FreeBSD
+
 You can specify core location with `kern.corefile` sysctl.
 
 ##### Chrooted Process
@@ -539,7 +540,7 @@ stack frames into the function calls that the gdb backtrace shows. For example:
 Here you can see that #1 matches is inside the `data-stack.c:514` data
 stack frame and #12 is inside the `index-storage.c:1056` data stack frame.
 So you could start placing more `T_BEGIN { .. } T_END` frames between
-#2 and #11 frames shown by gdb to get more details where the data stack is
+\#2 and #11 frames shown by gdb to get more details where the data stack is
 being used.
 
 ## Valgrind
@@ -548,7 +549,7 @@ The most useful Valgrind parameters:
 
 | Parameter | Description |
 | --------- | ----------- |
-| `–-vgdb=no` | Needed on some systems to avoid problems. |
+| `--vgdb=no` | Needed on some systems to avoid problems. |
 | `--keep-debuginfo=yes` | Prevent unhelpful `??` for already unloaded plugins. |
 | `--num-callers=<n>` | Display last \<n\> functions calls in the backtrace for each error. |
 | `--leak-check=full` | Show also unfreed memory as being leaked. |
