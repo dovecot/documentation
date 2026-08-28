@@ -116,14 +116,65 @@ All doveadm commands are accessed under the `/doveadm/v1` path.
 
 #### Command List
 
-To get the list of commands supported by the endpoint, send an authenticated
-GET request to the root of the endpoint (for all endpoint commands), or to
-`/doveadm/v1` path (for doveadm API commands).
+Sending an authenticated GET request to the root of the endpoint returns all
+routes exposed by the endpoint, while a GET request to the `/doveadm/v1` path
+returns the list of doveadm API commands supported by the endpoint. Both
+responses are JSON arrays.
 
-For example, using [[setting,doveadm_password]] authentication:
+##### Root endpoint
+
+Example, using [[setting,doveadm_password]] authentication:
 
 ```console
-curl -X GET –u doveadm:password http://host:port/
+curl -X GET -u doveadm:password http://host:port/
+```
+
+```json
+[
+  {"method": "OPTIONS", "path": "*"},
+  {"method": "GET", "path": "/"},
+  {"method": "GET", "path": "/doveadm/v1"},
+  {"method": "POST", "path": "/doveadm/v1"}
+]
+```
+
+##### /doveadm/v1 endpoint
+
+```console
+curl -X GET -u doveadm:password http://host:port/doveadm/v1
+```
+
+Each entry in the array describes one command: the command name and the list
+of parameters it accepts. Each parameter has a name and a JSON type -
+`string`, `boolean`, `integer`, or `array` (a list of values). The returned
+command set depends on the release and configuration of the endpoint.
+
+Example output:
+
+```json
+[
+  {
+    "command": "reload",
+    "parameters": []
+  },
+  {
+    "command": "statsDump",
+    "parameters": [
+      {"name": "socketPath", "type": "string"},
+      {"name": "reset", "type": "boolean"},
+      {"name": "fields", "type": "string"}
+    ]
+  },
+  {
+    "command": "fsDelete",
+    "parameters": [
+      {"name": "recursive", "type": "boolean"},
+      {"name": "maxParallel", "type": "integer"},
+      {"name": "filterName", "type": "string"},
+      {"name": "path", "type": "array"}
+    ]
+  }
+]
 ```
 
 #### Authentication
