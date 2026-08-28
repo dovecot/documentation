@@ -48,14 +48,13 @@ error codes.
 | 78 | EX_CONFIG | Invalid Settings/Configuration | This error should not be obtained once the migration system is correctly configured, e.g. after testing the migration system in a staging environment. If this error occurs, all migrations should be suspended until the problem can be resolved. |
 | 1003 | DOVEADM_EX_EXPIRED | Outdated/Expired | The command could not complete successfully because the requested contents are no longer valid or no longer up to date. [[added,doveadm_ex_expired_code]] |
 
-### Other Issues:
+### Other Issues
 
 * Folder renames if the names are invalid or too long.  dsync attempts to fix
   invalid folder names automatically. If the folder name is too long, a new
   generated GUID is given it as the name. A related issue is that if any
   renaming happens, the folder won't be synced incrementally because dsync
   doesn't realize that the folder was renamed (dsync is stateless).
-
 
 ## HTTP API
 
@@ -108,7 +107,7 @@ Connecting to the endpoint can be done by using standard HTTP protocol and
 authentication headers.
 
 ::: info
-There is also https://github.com/dovecot/doveadm-http-cli that can be
+There is also <https://github.com/dovecot/doveadm-http-cli> that can be
 used for accessing the API.
 :::
 
@@ -140,7 +139,7 @@ curl -H "Authorization: Basic <base64 doveadm:doveadm_password>" http://host:por
 or
 
 ```console
-curl –u doveadm:password http://host:port/doveadm/v1
+curl -u doveadm:password http://host:port/doveadm/v1
 ```
 
 ##### `X-Dovecot-API` Auth
@@ -155,12 +154,13 @@ curl -H "Authorization: X-Dovecot-API <base64 dovecot_api_key>" \
 ### API Overview
 
 #### Request
+
 ```sh
 curl -H "Authorization: Basic <base64 doveadm:doveadm_password>" http://host:port/doveadm/v1
-curl –u doveadm:password http://host:port/doveadm/v1
+curl -u doveadm:password http://host:port/doveadm/v1
 ```
 
-There is also https://github.com/dovecot/doveadm-http-cli that can be
+There is also <https://github.com/dovecot/doveadm-http-cli> that can be
 used for accessing the API.
 
 ### API overview
