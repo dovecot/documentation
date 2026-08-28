@@ -777,6 +777,7 @@ Subtables
 sugid
 sustainability
 svbin
+sync'd
 sysadmin
 syscalls
 syscr
