@@ -5475,7 +5475,17 @@ that must be able to read files written by this Dovecot instance. The intention
 is that when upgrading Dovecot cluster, this setting is first kept as the old
 Dovecot version. Once the cluster is fully upgraded to a new version and
 there is no intention to rollback to the old version anymore, this version
-number can be increased.`
+number can be increased.
+
+[[changed,settings_dovecot_storage_version_thread_index_changed]] The
+\`dovecot.index.thread\` index, used by the IMAP \`THREAD\` command, is written
+in a new v2 format. The Message-ID hashes stored in it are calculated with a
+keyed hash using a random per-file key instead of CRC32, so users can no
+longer craft Message-IDs whose hashes deliberately collide. Existing v1 index
+files are deleted and rebuilt in the v2 format when the mailbox is next
+opened for threading. Older Dovecot versions don't understand the v2 format
+and rebuild the index in the v1 format, so keep this setting at the old
+version until a rollback is no longer possible.`
 	},
 
 	dsync_alt_char: {
