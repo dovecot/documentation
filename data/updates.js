@@ -83,6 +83,7 @@ export const updates = {
 	settings_syntax_named_filters_added: '2.4.0',
 	sieve_ext_imapflags: '2.4.0',
 	sieve_ext_notify: '2.4.0',
+	sieve_rusage_restore_changed: '2.4.5',
 	sieve_vnd_duplicate: '2.4.0',
 	sqlite_filename: '2.4.0',
 	setting_sqlite_synchronous_added: '2.4.3',
