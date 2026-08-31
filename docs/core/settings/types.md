@@ -281,7 +281,7 @@ mail_plugins = acl,imap_acl # removes quota and imap_quota
 Quotes are also supported:
 
 ```doveconf[dovecot.conf]
-doveadm_allowed_commands = "mailbox list" "mailbox create"
+mail_attachment_detection_options = add-flags "content-type=!application/signature"
 ```
 
 The boolean list can also be configured to update an existing boolean list. For
