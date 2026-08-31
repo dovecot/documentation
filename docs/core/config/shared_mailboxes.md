@@ -212,9 +212,10 @@ acl_driver = vfile
 It's important that the namespace type is "public" regardless of whether
 you set the namespace prefix to "shared." or something else.
 
-After this you have to place `dovecot-acl` files in every
-mailbox/folder below `/var/mail/public` with rights for that folder
-(e.g. `user=someone lr`).
+After this you have to grant rights to the folders, either with an
+[[setting,acl]] block per folder in `dovecot.conf` (see [[link,acl_global_file]])
+or by placing a `dovecot-acl` file in every mailbox/folder below
+`/var/mail/public` (e.g. `user=someone lr`).
 
 [[setting,acl_sharing_map]] is not relevant for public mailboxes (only
 for shared).
