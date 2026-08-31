@@ -820,6 +820,7 @@ policy limit".`
 	sieve_max_cpu_time: {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
+		seealso: [ 'sieve_resource_usage_timeout' ],
 		default: '30s',
 		changed: {
 			settings_sieve_max_cpu_time_changed: `
@@ -833,9 +834,18 @@ The maximum amount of CPU time that a Sieve script is allowed to use while
 executing. If the execution exceeds this resource limit, the script ends with
 an error, causing the implicit "keep" action to be executed.
 
-This limit is not only enforced for a single script execution, but also
-cumulatively for the last executions within a configurable timeout
-(see [[setting,sieve_resource_usage_timeout]]).`
+This limit is not only enforced per single script execution; CPU time used
+across executions within [[setting,sieve_resource_usage_timeout]] is summed
+and compared against this limit as well.
+
+See [[setting,sieve_resource_usage_timeout]] for more details on how the
+limits work.
+
+[[changed,sieve_rusage_restore_changed]] Execution is refused while the
+cumulative usage is over the limit, and resumes automatically once the
+recorded usage falls below the limit. Previously, exceeding the cumulative
+limit blocked the script permanently until it was recompiled (e.g. via
+\`sievec\`) or re-uploaded.`
 	},
 
 	sieve_max_redirects: {
@@ -894,29 +904,34 @@ that setting as well.`
 	sieve_resource_usage_timeout: {
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
+		seealso: [ 'sieve_max_cpu_time' ],
 		default: '1h',
 		values: setting_types.TIME,
 		text: `
-To prevent abuse, the Sieve interpreter can record resource usage of a Sieve
-script execution in the compiled binary if it is significant. Currently, this
-happens when CPU system + user time exceeds 1.5 seconds for one execution.
-Such high resource usage is summed over time in the binary and once that
-cumulative resource usage exceeds the limits ([[setting,sieve_max_cpu_time]]),
-the Sieve script is disabled in the binary for future execution, even if an
-individual execution exceeded no limits.
+To prevent abuse, the Sieve interpreter records CPU time used by Sieve
+script executions in a per-user file \`sieve-rusage\` at the root of the
+user's INBOX namespace. Only significant executions are recorded;
+currently this means CPU system + user time exceeding 1.5 seconds for
+one execution. Such high resource usage is summed over time and once
+the cumulative total exceeds [[setting,sieve_max_cpu_time]], further
+script execution is refused for that user, even if an individual
+execution exceeded no limits.
 
 If the last time high resource usage was recorded is older than
-[[setting,sieve_resource_usage_timeout]], the resource usage in the binary is
-reset. This means that the Sieve script is only disabled when the limits are
-cumulatively exceeded within this timeout. With the default configuration this
-means that the Sieve script is only disabled when the total CPU time of Sieve
-executions that lasted more than 1.5 seconds exceeds 30 seconds in the last
-hour.
+\`sieve_resource_usage_timeout\`, the recorded value is
+treated as zero. This means a user is only blocked when the limits
+are cumulatively exceeded within this timeout, and is automatically
+re-enabled once the timeout elapses with no further significant CPU
+consumption. With the default configuration a user is blocked only
+when the total CPU time of Sieve executions that lasted more than 1.5
+seconds exceeds 30 seconds within the last hour, and execution
+resumes one hour after the last significant run.
 
-A disabled Sieve script can be reactivated by the user by uploading a new
-version of the Sieve script after the excessive resource usage times out. An
-administrator can force reactivation by forcing a script compile (e.g. using
-the sievec command line tool).`
+[[changed,sieve_rusage_restore_changed]] Tracking is per user, not
+per script: re-uploading a script under a different name, renaming
+or deleting and recreating it does not reset the recorded usage.
+An administrator can force an immediate reset by removing the
+\`sieve-rusage\` file from the user's INBOX namespace root.`
 	},
 
 	sieve_max_script_size: {
@@ -1898,6 +1913,15 @@ Location of global ACL configuration file. This option is deprecated, you
 should use [[setting,acl]] instead.`
 	},
 
+	acl_cache_ttl: {
+		default: '30s',
+		plugin: 'acl',
+		values: setting_types.TIME,
+		text: `
+How long to cache the ACLs read from \`dovecot-acl\` files. Set to \`0\` to
+re-read the files on every lookup.`
+	},
+
 	acl_defaults_from_inbox: {
 		default: 'no',
 		plugin: 'acl',
@@ -2598,6 +2622,24 @@ commit changes, it is rotated to a read-only database and replaced by a new
 write DB. Most people should not change this setting.
 
 Set to \`0\` to disable rotation.`
+	},
+
+	fts_flatcurve_optimize_density_percentage: {
+		default: 25,
+		values: setting_types.UINT,
+		plugin: 'fts-flatcurve',
+		advanced: true,
+		seealso: [ 'fts_flatcurve_rotate_count' ],
+		text: `
+When an index shard's message count falls below this percentage of
+[[setting,fts_flatcurve_rotate_count]], the mailbox is scheduled for
+deferred optimization. This helps prevent accumulation of sparse shards
+that degrade mailbox open performance.
+
+Set to \`0\` to disable density-based optimization.
+
+This optimization requires [[setting,fts_flatcurve_rotate_count]] to be
+enabled.`
 	},
 
 	fts_flatcurve_substring_search: {
@@ -5442,7 +5484,17 @@ that must be able to read files written by this Dovecot instance. The intention
 is that when upgrading Dovecot cluster, this setting is first kept as the old
 Dovecot version. Once the cluster is fully upgraded to a new version and
 there is no intention to rollback to the old version anymore, this version
-number can be increased.`
+number can be increased.
+
+[[changed,settings_dovecot_storage_version_thread_index_changed]] The
+\`dovecot.index.thread\` index, used by the IMAP \`THREAD\` command, is written
+in a new v2 format. The Message-ID hashes stored in it are calculated with a
+keyed hash using a random per-file key instead of CRC32, so users can no
+longer craft Message-IDs whose hashes deliberately collide. Existing v1 index
+files are deleted and rebuilt in the v2 format when the mailbox is next
+opened for threading. Older Dovecot versions don't understand the v2 format
+and rebuild the index in the v1 format, so keep this setting at the old
+version until a rollback is no longer possible.`
 	},
 
 	dsync_alt_char: {

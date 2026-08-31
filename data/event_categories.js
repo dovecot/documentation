@@ -37,6 +37,11 @@ export const categories = {
 		description: `DNS client library`
 	},
 
+	doveadm: {
+		category: 'root',
+		description: `[[link,doveadm]] commands`
+	},
+
 	fs: {
 		category: 'root',
 		description: `FS library`

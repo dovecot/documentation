@@ -48,14 +48,13 @@ error codes.
 | 78 | EX_CONFIG | Invalid Settings/Configuration | This error should not be obtained once the migration system is correctly configured, e.g. after testing the migration system in a staging environment. If this error occurs, all migrations should be suspended until the problem can be resolved. |
 | 1003 | DOVEADM_EX_EXPIRED | Outdated/Expired | The command could not complete successfully because the requested contents are no longer valid or no longer up to date. [[added,doveadm_ex_expired_code]] |
 
-### Other Issues:
+### Other Issues
 
 * Folder renames if the names are invalid or too long.  dsync attempts to fix
   invalid folder names automatically. If the folder name is too long, a new
   generated GUID is given it as the name. A related issue is that if any
   renaming happens, the folder won't be synced incrementally because dsync
   doesn't realize that the folder was renamed (dsync is stateless).
-
 
 ## HTTP API
 
@@ -108,7 +107,7 @@ Connecting to the endpoint can be done by using standard HTTP protocol and
 authentication headers.
 
 ::: info
-There is also https://github.com/dovecot/doveadm-http-cli that can be
+There is also <https://github.com/dovecot/doveadm-http-cli> that can be
 used for accessing the API.
 :::
 
@@ -116,14 +115,65 @@ All doveadm commands are accessed under the `/doveadm/v1` path.
 
 #### Command List
 
-To get the list of commands supported by the endpoint, send an authenticated
-GET request to the root of the endpoint (for all endpoint commands), or to
-`/doveadm/v1` path (for doveadm API commands).
+Sending an authenticated GET request to the root of the endpoint returns all
+routes exposed by the endpoint, while a GET request to the `/doveadm/v1` path
+returns the list of doveadm API commands supported by the endpoint. Both
+responses are JSON arrays.
 
-For example, using [[setting,doveadm_password]] authentication:
+##### Root endpoint
+
+Example, using [[setting,doveadm_password]] authentication:
 
 ```console
-curl -X GET –u doveadm:password http://host:port/
+curl -X GET -u doveadm:password http://host:port/
+```
+
+```json
+[
+  {"method": "OPTIONS", "path": "*"},
+  {"method": "GET", "path": "/"},
+  {"method": "GET", "path": "/doveadm/v1"},
+  {"method": "POST", "path": "/doveadm/v1"}
+]
+```
+
+##### /doveadm/v1 endpoint
+
+```console
+curl -X GET -u doveadm:password http://host:port/doveadm/v1
+```
+
+Each entry in the array describes one command: the command name and the list
+of parameters it accepts. Each parameter has a name and a JSON type -
+`string`, `boolean`, `integer`, or `array` (a list of values). The returned
+command set depends on the release and configuration of the endpoint.
+
+Example output:
+
+```json
+[
+  {
+    "command": "reload",
+    "parameters": []
+  },
+  {
+    "command": "statsDump",
+    "parameters": [
+      {"name": "socketPath", "type": "string"},
+      {"name": "reset", "type": "boolean"},
+      {"name": "fields", "type": "string"}
+    ]
+  },
+  {
+    "command": "fsDelete",
+    "parameters": [
+      {"name": "recursive", "type": "boolean"},
+      {"name": "maxParallel", "type": "integer"},
+      {"name": "filterName", "type": "string"},
+      {"name": "path", "type": "array"}
+    ]
+  }
+]
 ```
 
 #### Authentication
@@ -140,7 +190,7 @@ curl -H "Authorization: Basic <base64 doveadm:doveadm_password>" http://host:por
 or
 
 ```console
-curl –u doveadm:password http://host:port/doveadm/v1
+curl -u doveadm:password http://host:port/doveadm/v1
 ```
 
 ##### `X-Dovecot-API` Auth
@@ -155,12 +205,13 @@ curl -H "Authorization: X-Dovecot-API <base64 dovecot_api_key>" \
 ### API Overview
 
 #### Request
+
 ```sh
 curl -H "Authorization: Basic <base64 doveadm:doveadm_password>" http://host:port/doveadm/v1
-curl –u doveadm:password http://host:port/doveadm/v1
+curl -u doveadm:password http://host:port/doveadm/v1
 ```
 
-There is also https://github.com/dovecot/doveadm-http-cli that can be
+There is also <https://github.com/dovecot/doveadm-http-cli> that can be
 used for accessing the API.
 
 ### API overview

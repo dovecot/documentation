@@ -192,7 +192,6 @@ egid
 EID
 Eing
 ekh
-elv
 emaillookup
 endscript
 ENHANCEDSTATUSCODES
@@ -215,6 +214,7 @@ exportkeytab
 extlists
 extprograms
 extracttext
+extrc
 exttextcat
 FADV
 fadvise
@@ -229,7 +229,6 @@ findutils
 firewalls
 firstsaved
 flatcurve
-Flyout
 Fng
 foofilename
 foop
@@ -269,7 +268,6 @@ halon
 hardlinking
 hardlinks
 hasfrop
-haspopup
 hatv
 hba
 hdr
@@ -400,6 +398,8 @@ listfile
 listname
 listscripts
 LISTSERV
+llms
+llmstxt
 lmtp
 lmtponly
 lmtptest
@@ -659,6 +659,7 @@ remoteprefix
 RENAMESCRIPT
 replicator
 reqbody
+rescode
 Resnick
 resolv
 restorecon
@@ -897,7 +898,6 @@ vlast
 vmail
 vname
 vnd
-vpi
 vsize
 vsz
 vuejs

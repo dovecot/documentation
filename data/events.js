@@ -925,6 +925,12 @@ finished.`
 		fields: {
 			error: `Human readable error.`,
 			error_code: `Error code (if available).`,
+			error_code_extended: {
+				added: {
+					events_sql_error_code_extended_added: false
+				},
+				text: `[Extended result code](https://sqlite.org/rescode.html#extrc) for the error, which describes the failure more precisely than \`error_code\` (SQLite only).`
+			},
 			query_first_word: `First word of the query (e.g. \`SELECT\`).`,
 			consistency: {
 				added: {
@@ -948,6 +954,12 @@ finished.`
 		fields: {
 			error: `Human readable error.`,
 			error_code: `Error code (if available).`,
+			error_code_extended: {
+				added: {
+					events_sql_error_code_extended_added: false
+				},
+				text: `[Extended result code](https://sqlite.org/rescode.html#extrc) for the error, which describes the failure more precisely than \`error_code\` (SQLite only).`
+			},
 		},
 		text: `SQL transaction was committed or rolled back.`
 	},
@@ -1146,6 +1158,37 @@ compiling it at delivery).`
 		root: 'sieve-storage',
 		inherit: 'sieve_storage',
 		text: `Activated a Sieve script.`
+	},
+
+	sieve_script_disabled: {
+		added: {
+			events_sieve_script_disabled_added: false,
+		},
+		root: 'sieve',
+		inherit: 'sieve',
+		fields: {
+			cpu_time_msecs: `The cumulative CPU time (in milliseconds) that triggered the disable.`,
+		},
+		text: `
+Emitted when a Sieve script is disabled because its cumulative resource
+usage exceeded the configured \`sieve_max_cpu_time\` limit.`
+	},
+
+	sieve_script_execution_blocked: {
+		added: {
+			events_sieve_script_execution_blocked_added: false,
+		},
+		root: 'sieve',
+		inherit: 'sieve',
+		fields: {
+			cpu_time_msecs: `The cumulative CPU time (in milliseconds) that exceeds the limit.`,
+		},
+		text: `
+Emitted when execution of an already-disabled Sieve script is blocked
+because its cumulative resource usage exceeds the configured
+\`sieve_max_cpu_time\` limit. Unlike [[event,sieve_script_disabled]], which
+fires once at the moment of disabling, this is emitted on each subsequent
+attempt to open the script while it remains disabled.`
 	},
 
 	sieve_script_renamed: {
@@ -1395,6 +1438,41 @@ Proxying error codes:
 Connection to proxy failed, but reconnect will be attempted.
 \`reconnect_attempts=1\` for the first event and increases for each subsequent
 event.`
+	},
+
+	/* doveadm */
+
+	doveadm_command_finished: {
+		root: 'doveadm',
+		added: {
+			events_doveadm_command_finished_added: false,
+		},
+		fields: {
+			command: `Name of the doveadm command that was run. Not set if no command could be resolved.`,
+			exit_code: `Exit code of the command. See [[link,doveadm_error_codes]].`,
+			user: `
+Username the command was run for, if known.
+
+Set for [[link,doveadm_http_api]] requests (from the command's \`user\`
+parameter) and for doveadm server connections. Not set when doveadm is run
+from the command line.`,
+			agent: `Value of the \`User-Agent\` header. Only set for [[link,doveadm_http_api]] requests, and only if the client sent the header.`,
+			local_ip: `Local IP address the client connected to. Not set when doveadm is run from the command line.`,
+			local_port: `Local port the client connected to. Not set when doveadm is run from the command line.`,
+			remote_ip: `Remote IP address of the client. Not set when doveadm is run from the command line.`,
+			remote_port: `Remote port of the client. Not set when doveadm is run from the command line.`,
+			origin: `Origin of the command: \`cli\`, \`http\` or \`tcp\`, depending on how the command was issued.`,
+		},
+		text: `
+A doveadm command has finished running.
+
+Emitted for all three ways a command can be run: from the command line, over
+the doveadm server protocol, and via the [[link,doveadm_http_api]].
+
+For doveadm server connections the event also inherits the fields of the
+connection the command was run for; for the HTTP API this additionally
+includes the request's [[event,http_server_request_started]] fields, e.g.
+\`method\`, \`target\` and \`request_id\`.`
 	},
 
 }

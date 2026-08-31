@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - name: Setup Node
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v7
       with:
         node-version: ${{ vars.NODE_VERSION }}
         cache: npm
@@ -22,7 +22,7 @@ jobs:
       run: npm ci
     - name: Fix site prefix
       run: |
-        sed -i -e "s|'/2.4'|'/${{ github.ref_name }}'|" .vitepress/config.js
+        sed -i -e "s|const base = .*|const base = '${{ github.ref_name }}'|" .vitepress/config.js
     - name: Build with VitePress
       run: |
         mkdir mans
@@ -39,7 +39,7 @@ jobs:
         done
         mv tars/* .vitepress/dist/
     - name: Deploy to doc.dovecot.org
-      uses: dovecot/rsync-deployments@v2.0.2
+      uses: dovecot/rsync-deployments@v2.0.3
       with:
         FLAGS: -azr --delete
         HOST: doc.dovecot.org
@@ -76,7 +76,7 @@ jobs:
     name: Publish documentation tarball
     steps:
     - name: Download artifact
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: documentation-tar
         path: ./
