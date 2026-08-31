@@ -1913,6 +1913,15 @@ Location of global ACL configuration file. This option is deprecated, you
 should use [[setting,acl]] instead.`
 	},
 
+	acl_cache_ttl: {
+		default: '30s',
+		plugin: 'acl',
+		values: setting_types.TIME,
+		text: `
+How long to cache the ACLs read from \`dovecot-acl\` files. Set to \`0\` to
+re-read the files on every lookup.`
+	},
+
 	acl_defaults_from_inbox: {
 		default: 'no',
 		plugin: 'acl',
