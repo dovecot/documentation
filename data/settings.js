@@ -5358,6 +5358,9 @@ by default.`
 	},
 
 	doveadm_allowed_commands: {
+		removed: {
+			settings_doveadm_allowed_commands_removed: false,
+		},
 		default: 'ALL',
 		values: setting_types.BOOLLIST,
 		text: `
@@ -5366,10 +5369,12 @@ Lists the commands that the client may use with the doveadm server.
 The setting \`ALL\` allows all commands.
 
 ::: warning
-This setting provides rather weak security. Do not assume that it is safe to
-give doveadm access to untrusted users by simply limiting the allowed commands.
-Many commands (especially \`sync\`, \`backup\` and \`import\`) have parameters
-that cannot safely be accessed by untrusted users.
+This setting provided a false sense of security and was removed. It only
+matched the command name, while the allowed commands themselves gave full
+access to any user's mails: most commands accept a \`-u\`/\`-A\` user
+parameter, and commands such as \`sync\`, \`backup\` and \`import\` accept
+parameters that access arbitrary paths. Give doveadm server access only to
+trusted clients.
 :::`
 	},
 
