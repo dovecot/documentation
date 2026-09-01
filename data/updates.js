@@ -171,6 +171,7 @@ export const updates = {
 	settings_http_server_settings_added: '2.4.0',
 	settings_imap_compress_on_proxy_added: '2.4.2',
 	settings_imap_compress_on_proxy_changed: '2.4.5',
+	settings_imapc_credentials_removed: '2.4.5',
 	settings_imapc_features_changed: '2.4.0',
 	settings_imapc_ssl_verify_removed: '2.4.0',
 	settings_inet_listener_type_added: '2.4.0',
@@ -192,6 +193,7 @@ export const updates = {
 	settings_passdb_mechanisms_filter_added: '2.4.0',
 	settings_passdb_sql_update_query_removed: '2.4.5',
 	settings_passdb_static_password_added: '2.4.0',
+	settings_pop3c_credentials_removed: '2.4.5',
 	settings_service_reuse_port_added: '2.4.4',
 	settings_sieve_max_cpu_time_changed: '2.4.5',
 	settings_sieve_notify_mailto_max_headers_added: '2.4.5',
@@ -209,5 +211,4 @@ export const updates = {
 	settings_quota_mailbox_message_count_added: '2.4.0',
 	settings_submission_add_received_header_added: '2.4.0',
 	settings_verbose_ssl_removed: '2.4.0',
-
 }

@@ -62,6 +62,159 @@ destination IP address belongs to, for instance, a load-balancer rather
 than the server itself.`
 	},
 
+	client_auth: {
+		tags: [ 'client-auth' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'client_auth_mechanism', 'client_auth_authzid',
+			   'client_auth_authid', 'client_auth_password'],
+		text: `
+This settings filter provides a scope for client authentication settings for
+a particular authentication mechanism and declares the availability of that
+mechanism for client authentication. The mechanism will be used if support is
+also indicated by the server. This way, several different mechanisms can be
+configured, each with specific settings.
+
+The filter name refers to the [[setting,client_auth_mechanism]] setting.
+
+Mechanisms are attempted in the order of configuration, so preferred mechanisms
+should be configured first. If [[setting,client_auth_mechanism]] is set
+outside the scope of this filter, the indicated mechanism is used with settings
+in that context (a client_auth filter block for that mechanism is not used).
+Also, in that case, server support is not checked and the mechanism is attempted
+blindly.
+
+Client authentication settings are expected to be scoped further by settings
+filters for the various protocol clients that need authentication, such as
+[[setting,imapc]] and [[setting,pop3c]].
+
+Example:
+\`\`\`[dovecot.conf]
+mail_driver = imapc
+mail_path =
+mailbox_list_index = no
+imapc {
+  host = 127.0.0.1
+  port = 993
+  ssl = imaps
+
+  client_auth PLAIN {
+    authid = master-user
+    authzid = owner-user
+    password = frop
+  }
+  client_auth OAUTHBEARER {
+    authzid = owner-user
+    password = vF9dft4qmTc2Nvb3RlckBhbHRhdmlzdGEuY29tCg==
+  }
+}
+
+submission_relay {
+  smtp_client_host = submission.example.com
+  smtp_client_port = 587
+  smtp_client_ssl = no
+
+  client_auth_authzid = user
+  client_auth_password = frop
+
+  client_auth SCRAM-SHA-256 { }
+  client_auth SCRAM-SHA-1 { }
+  client_auth CRAM-MD5 { }
+  client_auth PLAIN { }
+}
+
+mail_submit {
+  smtp_client_host = localhost
+  smtp_client_port = 25
+
+  client_auth_mechanism = PLAIN
+  client_auth_authzid = mail-out
+  client_auth_password = frop
+}
+\`\`\``
+	},
+
+	client_auth_authid: {
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authzid', 'client_auth_password',
+			   'client_auth_mechanism' ],
+		values: setting_types.STRING,
+		text: `
+The authentication identity to be used for authenticating as a client to a
+remote service.
+
+To authenticate as a master user to e.g. an IMAP server but use a separate login
+user, the following configuration should be employed, where the credentials are
+represented by masteruser and masteruser-secret:
+
+\`\`\`
+imapc {
+  client_auth_authid = masteruser
+  client_auth_authzid = %{user}
+  client_auth_password = masteruser-secret
+}
+\`\`\`
+
+[[variable,mail-user]] can be used.`
+	},
+
+	client_auth_authzid: {
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authid', 'client_auth_password',
+			   'client_auth_mechanism' ],
+		values: setting_types.STRING,
+		text: `
+The authorization identity to be used after authenticating as a client to a
+remote service.
+
+[[variable,mail-user]] can be used.`
+	},
+
+	client_auth_password: {
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authzid', 'client_auth_authid',
+			   'client_auth_mechanism' ],
+		values: setting_types.STRING,
+		text: `
+The password to be used for authenticating as a client to a remote service. This
+is the password belonging to the authentication identity \`client_auth_authid\`.`
+	},
+
+	client_auth_mechanism: {
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authzid', 'client_auth_authid',
+			   'client_auth_password' ],
+		values: setting_types.STRING,
+		text: `
+The authentication mechanism (sometimes called scheme) to be used for
+authenticating as a client to a remote service. Currently, this is always a SASL
+mechanism. If left unconfigured, SASL authentication will use the PLAIN
+mechanism by default. For IMAP and POP3 clients, it will use the basic login
+commands in that case if possible (LOGIN for IMAP and USER + PASS for POP3, so
+SASL support is not required). However, if the authentication
+\`client_auth_authid\` and authorization \`client_auth_authzid\` identities are
+both also unconfigured, no authentication is configured at all. In that case,
+authentication will be skipped if it is optional or this will be reported as an
+error otherwise.
+
+Supported mechanisms are:
+
+ * ANONYMOUS
+ * CRAM-MD5
+ * DIGEST-MD5
+ * EXTERNAL
+ * LOGIN
+ * OAUTHBEARER
+ * PLAIN
+ * SCRAM-SHA-1
+ * SCRAM-SHA-1-PLUS
+ * SCRAM-SHA-256
+ * SCRAM-SHA-256-PLUS
+ * XOAUTH2
+
+Note that [[setting,client_auth_password]] is ignored for \`ANONYMOUS\` and \`EXTERNAL\` mechanisms.
+For \`OAUTHBEARER\` and \`XOAUTH2\` [[setting,client_auth_password]] should be a bearer token.`
+	},
+
 	fs: {
 		tags: [ 'fs' ],
 		values: setting_types.NAMED_LIST_FILTER,
@@ -6654,6 +6807,16 @@ Variables allowed:
 The port is used with the URLAUTH extension in IMAP operation.`
 	},
 
+	imapc: {
+		tags: [ 'imapc', 'client-auth'  ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'client_auth_mechanism', 'client_auth_authzid',
+			   'client_auth_authid', 'client_auth_password' ],
+		text: `
+This settings filter provides a scope for settings for imapc. This is for example
+used to configure [[setting,client_auth] for imapc specifically.`
+	},
+
 	imapc_cmd_timeout: {
 		default: '5 mins',
 		tags: [ 'imapc' ],
@@ -6871,6 +7034,11 @@ imapc_list_prefix = INBOX
 	},
 
 	imapc_master_user: {
+		removed: {
+			settings_imapc_credentials_removed: `
+Dropped in favor of using the global
+[[setting,client_auth_authid]].`
+		},
 		tags: [ 'imapc' ],
 		seealso: [ 'imapc_password', 'imapc_user' ],
 		values: setting_types.STRING,
@@ -6912,6 +7080,11 @@ This setting is used to limit maximum memory usage.`
 	},
 
 	imapc_password: {
+		removed: {
+			settings_imapc_credentials_removed: `
+Dropped in favor of using the global
+[[setting,client_auth_password]].`
+		},
 		tags: [ 'imapc' ],
 		seealso: [ 'imapc_master_user', 'imapc_user', 'imapc_sasl_mechanisms' ],
 		values: setting_types.STRING,
@@ -6939,6 +7112,12 @@ If using master users, this setting will be the password of the master user.`
 	},
 
 	imapc_sasl_mechanisms: {
+		deprecated: {
+			settings_auth_debug_deprecated: `
+The setting is obsolete, and kept only for backwards compatibility.
+
+Use [[setting,client_auth]] instead.`
+		},
 		default: 'plain',
 		tags: [ 'imapc' ],
 		values: setting_types.BOOLLIST,
@@ -7008,6 +7187,11 @@ Only used if [[setting,imapc_ssl]] is enabled.`
 	},
 
 	imapc_user: {
+		removed: {
+			settings_imapc_credentials_removed: `
+Dropped in favor of using the global
+[[setting,client_auth_authzid]].`
+		},
 		tags: [ 'imapc', 'imapc-auth' ],
 		seealso: [ 'imapc_master_user', 'imapc_password', 'imapc_sasl_mechanisms' ],
 		values: setting_types.STRING,
@@ -10216,6 +10400,16 @@ in uppercase) and with [[variable,global]]:
 | \`%{guid}\` | Dovecot GUID for the message |`
 	},
 
+	pop3c: {
+		tags: [ 'pop3c', 'client-auth'  ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ 'client_auth_mechanism', 'client_auth_authzid',
+			   'client_auth_authid', 'client_auth_password' ],
+		text: `
+This settings filter provides a scope for settings for pop3c. This is for example
+used to configure [[setting,client_auth] for pop3c specifically.`
+	},
+
 	pop3c_features: {
 		tags: [ 'pop3c' ],
 		values: setting_types.BOOLLIST,
@@ -10235,6 +10429,11 @@ Workarounds:
 	},
 
 	pop3c_master_user: {
+		removed: {
+			settings_pop3c_credentials_removed: `
+Dropped in favor of using the global
+[[setting,client_auth_authid]].`
+		},
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_password', 'pop3c_user' ],
 		values: setting_types.STRING,
@@ -10255,6 +10454,11 @@ pop3c_password = masteruser-secret
 	},
 
 	pop3c_password: {
+		removed: {
+			settings_pop3c_credentials_removed: `
+Dropped in favor of using the global
+[[setting,client_auth_password]].`
+		},
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_master_user', 'pop3c_user' ],
 		values: setting_types.STRING,
@@ -10320,6 +10524,11 @@ Only used if [[setting,pop3c_ssl]] is enabled.`
 	},
 
 	pop3c_user: {
+		removed: {
+			settings_pop3c_credentials_removed: `
+Dropped in favor of using the global
+[[setting,client_auth_authzid]].`
+		},
 		default: '%{user}',
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_master_user', 'pop3c_password' ],
