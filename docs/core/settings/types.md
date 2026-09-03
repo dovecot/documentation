@@ -92,6 +92,17 @@ For userdb and `-o` command line parameter overrides only the `~/` prefix is
 expanded, while the rest of the value is used literally, the same way as
 %variables in override values.
 
+[[added,settings_path_types_confined]]
+
+After the %variables have been expanded an absolute path is normalized: `.`
+and `..` components are resolved, but symbolic links are not. The normalized
+path must still be under the literal part of the value preceding its first
+%variable. For example with `/var/vmail/%{user | domain}/%{user | username}`
+the result has to stay under `/var/vmail/`, otherwise the settings are invalid,
+e.g. the user's login fails. A value beginning with `~/` or a %variable has no
+literal part and is only normalized. Userdb and `-o` overrides are not
+templates and are only normalized as well.
+
 ## Directory Path
 
 [[added,settings_path_types_added]]

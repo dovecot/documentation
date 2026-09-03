@@ -4853,6 +4853,13 @@ domain (either AD or NT).`
 	},
 
 	auth_username_chars: {
+		changed: {
+			auth_username_dots_rejected: `
+Regardless of this setting, a username is rejected if any of its \`/\` or
+\`@\` delimited components consists solely of dots, e.g. \`..\`. Such a
+component would escape its parent directory when the username is used in a
+path, e.g. in [[setting,mail_path]] or in a dict key.`,
+		},
 		default: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890.-_@',
 		values: setting_types.STRING,
 		text: `
@@ -7766,6 +7773,7 @@ Options:
 	mail_ext_attachment_path: {
 		changed: {
 			settings_path_types_added: `Setting type changed.`,
+			settings_path_types_confined: `The expanded path is normalized and confined to the literal part of the setting, see [[link,settings_types_path_dir]].`,
 		},
 		values: setting_types.PATH_DIR,
 		text: `
@@ -7949,8 +7957,21 @@ This can be overridden via the \`gid\` [[link,userdb_fields,userdb field]].`
 	},
 
 	mail_home: {
+		changed: {
+			settings_path_types_confined: `
+Setting type changed to a directory path: a trailing \`/\` in the value is
+dropped, and after the %variables have been expanded the path is normalized
+(\`.\` and \`..\` components are resolved) and must still be under the literal
+part of the setting preceding its first variable. For example with
+\`mail_home = /var/vmail/%{user | domain}/%{user | username}\` the result has to
+stay under \`/var/vmail/\`, otherwise the user's settings are invalid and the
+login fails. A value beginning with a %variable has no literal part and is only
+normalized. A home returned by the [[link,userdb]] is not a template and is only
+normalized as well. Symbolic links are not resolved. See
+[[link,settings_types_path_dir]].`,
+		},
 		seealso: [ 'mail_path', '[[link,home_directories_for_virtual_users]]' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 User's home directory. This is used as the root for some of the user-specific
 files and directories. The \`%{home}\` variable expands to this value. Also
@@ -8284,6 +8305,16 @@ automatically.`
 	mail_path: {
 		changed: {
 			settings_path_types_added: `Setting type changed.`,
+			settings_path_types_confined: `
+After the %variables have been expanded the path is normalized (\`.\` and
+\`..\` components are resolved) and must still be under the literal part of
+the setting preceding its first variable. For example with
+\`mail_path = /srv/mail/%{user}\` the result has to stay under \`/srv/mail/\`,
+otherwise the user's settings are invalid and the login fails. A value
+beginning with \`~/\` or a %variable has no literal part and is only
+normalized. A value returned by the [[link,userdb]] or given with \`-o\` is
+not a template and is only normalized as well. Symbolic links are not
+resolved. See [[link,settings_types_path_dir]].`,
 		},
 		tags: [ 'mail-location' ],
 		values: setting_types.PATH_DIR,
@@ -8309,6 +8340,7 @@ to work, this usage is deprecated and will likely stop working at some point.
 	mail_inbox_path: {
 		changed: {
 			settings_path_types_added: `Setting type changed.`,
+			settings_path_types_confined: `The expanded path is normalized and confined to the literal part of the setting, see [[link,settings_types_path_dir]].`,
 		},
 		tags: [ 'mail-location' ],
 		values: setting_types.PATH_DIR,
@@ -8344,6 +8376,7 @@ This can also be used to specify a different INBOX path with Maildir:
 	mail_index_path: {
 		changed: {
 			settings_path_types_added: `Setting type changed.`,
+			settings_path_types_confined: `The expanded path is normalized and confined to the literal part of the setting, see [[link,settings_types_path_dir]].`,
 		},
 		tags: [ 'mail-location' ],
 		values: setting_types.PATH_DIR,
@@ -8360,6 +8393,7 @@ Location of [[link,mail_location_index_files,index files]].
 	mail_index_private_path: {
 		changed: {
 			settings_path_types_added: `Setting type changed.`,
+			settings_path_types_confined: `The expanded path is normalized and confined to the literal part of the setting, see [[link,settings_types_path_dir]].`,
 		},
 		tags: [ 'mail-location' ],
 		values: setting_types.PATH_DIR,
@@ -8374,6 +8408,7 @@ The private index files are used with shared mailboxes to provide private
 	mail_cache_path: {
 		changed: {
 			settings_path_types_added: `Setting type changed.`,
+			settings_path_types_confined: `The expanded path is normalized and confined to the literal part of the setting, see [[link,settings_types_path_dir]].`,
 		},
 		tags: [ 'mail-location' ],
 		values: setting_types.PATH_DIR,
@@ -8390,6 +8425,7 @@ slower (larger) storage.
 	mail_control_path: {
 		changed: {
 			settings_path_types_added: `Setting type changed.`,
+			settings_path_types_confined: `The expanded path is normalized and confined to the literal part of the setting, see [[link,settings_types_path_dir]].`,
 		},
 		tags: [ 'mail-location' ],
 		values: setting_types.PATH_DIR,
@@ -8402,6 +8438,7 @@ Location for (mailbox-format specific) control files.
 	mail_alt_path: {
 		changed: {
 			settings_path_types_added: `Setting type changed.`,
+			settings_path_types_confined: `The expanded path is normalized and confined to the literal part of the setting, see [[link,settings_types_path_dir]].`,
 		},
 		tags: [ 'mail-location' ],
 		values: setting_types.PATH_DIR,
@@ -8513,6 +8550,7 @@ example \`mailboxes\` with [[link,dbox]].`
 		values: setting_types.PATH_DIR,
 		changed: {
 			settings_path_types_added: `Setting type changed.`,
+			settings_path_types_confined: `The expanded path is normalized and confined to the literal part of the setting, see [[link,settings_types_path_dir]].`,
 			settings_mail_volatile_path_changed: `Fixed behavior to avoid collisions across multiple namespaces.`,
 		},
 		text: `
