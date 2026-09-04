@@ -13,6 +13,8 @@ The `sieve_imapsieve` plugin implements the `imapsieve` extension
 for the Sieve filtering language, adding functionality for using Sieve
 scripts from within IMAP.
 
+It also provides the Dovecot-specific `vnd.dovecot.imapsieve` extension, which exposes environment items such as `vnd.dovecot.mailbox-from` (source mailbox during IMAP `COPY`/`MOVE`) and `vnd.dovecot.mailbox-to` (destination mailbox).
+
 ::: tip
 Full details about this plugin can be found at [[plugin,imap-sieve]].
 :::
