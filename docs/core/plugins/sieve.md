@@ -587,7 +587,7 @@ sieve_script personal {
   ldap_auth_dn = cn=sieve,ou=Programs,dc=example,dc=org
 
   # Password for LDAP server, if dn is specified.
-  ldap_auth_dnpassword = secret
+  ldap_auth_dn_password = secret
 
   # LDAP base
   ldap_base = dc=mail,dc=example,dc=org
