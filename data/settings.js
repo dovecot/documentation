@@ -869,6 +869,35 @@ limit" before this per-class limit is reached. To allow more than
 well.`
 	},
 
+	sieve_max_filter_redirects: {
+		added: {
+			settings_sieve_max_filter_redirects_added: `
+Setting to limit the cumulative number of redirects performed by a single
+IMAP \`FILTER=SIEVE\` command is added.`
+		},
+		tags: [ 'sieve' ],
+		plugin: 'sieve',
+		default: 1024,
+		values: setting_types.UINT,
+		seealso: [ 'sieve_max_redirects', 'sieve_max_actions' ],
+		text: `
+The maximum cumulative number of messages that may be redirected across a
+single IMAP \`FILTER=SIEVE\` command.
+
+\`0\` disables redirecting via \`FILTER=SIEVE\` entirely: such a command is
+aborted rather than performing any redirect. Set this to the maximum value
+to allow an unlimited number of redirects.
+
+Unlike [[setting,sieve_max_redirects]], which limits redirect actions per
+single script execution (that is, per message), this setting bounds the
+total number of messages redirected while a script is run against a whole
+set of messages via the IMAP \`FILTER\` command. It throttles bulk
+forwarding ("redirect bombs") when a redirect script is applied to a large
+mailbox.
+
+When the limit is reached, the \`FILTER\` command aborts with an error.`
+	},
+
 	sieve_notify_max_notifications: {
 		added: {
 			settings_sieve_notify_max_notifications_added:`
