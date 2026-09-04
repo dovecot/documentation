@@ -718,7 +718,11 @@ These variables can be used:
 | \`%{user \\| username}\` | user part in user@domain, same as \`%{user}\` if there's no domain |
 | \`%{user \\| domain}\` | domain part in user@domain, empty if user there's no domain |
 | \`%{home}\` | user's home directory |
-| \`%{name}\` | name of the Sieve script |
+| \`%{name}\` | name of the Sieve script [[added,sieve_ldap_name_variable_added]] |
+
+[[changed,sieve_ldap_variables_escaped]] The variables are LDAP-escaped, so
+that they cannot break out of the filter. To avoid the escaping, add the
+\`| safe\` filter to the variable.
 `
 	},
 
@@ -11751,6 +11755,10 @@ LDAP base.
 
 [[variable]] can be used. [[changed,variables_safe_added]] To avoid unwanted
 escaping of the output, add \`| safe\` filter to the variable.
+
+[[added,sieve_ldap_name_variable_added]] With the [[link,sieve_storage_ldap]]
+storage the variables are escaped. That storage also supports
+\`%{name}\`, which expands to the name of the Sieve script.
 
 Examples:
  * \`ldap_base = dc=mail, dc=example, dc=org\`
