@@ -10488,15 +10488,22 @@ If non-empty, this service is enabled only when the protocol name is listed in
 	},
 
 	service_type: {
+		changed: {
+			settings_service_type_client_added: `
+Added the \`client\` type, and changed the default for the services that
+serve client connections (imap, pop3, submission, lmtp, imap-hibernate,
+imap-urlauth, imap-urlauth-worker, doveadm and managesieve).`
+		},
 		tags: [ 'service' ],
 		values: setting_types.STRING,
-		seealso: [ 'service_process_limit' ],
+		seealso: [ 'service_process_limit', 'shutdown_clients_timeout' ],
 		text: `
 Type of this service:
 
 | Value | Description |
 | --- | --- |
 | \`<empty>\` | The default. |
+| \`client\` | Used by services whose processes serve externally visible client connections that can't be transparently re-established. A configuration reload preserves these processes, see [[setting,shutdown_clients_timeout]]. |
 | \`login\` | Used by login services. The login processes have "all processes full" notification fd. It's used by the processes to figure out when no more client connections can be accepted because client and process limits have been reached. The login processes can then kill some of their oldest connections that haven't logged in yet. |
 | \`worker\` | Used by various worker services. It's normal for worker processes to fill up to [[setting,service_process_limit]], and there shouldn't be a warning logged about it. |
 | \`startup\` | Creates one process at startup. |
@@ -10711,6 +10718,12 @@ low. Use \`unlimited\` to disable this entirely.`
 	},
 
 	shutdown_clients: {
+		removed: {
+			settings_shutdown_clients_removed: `
+Replaced by [[setting,shutdown_clients_timeout]], which is the same setting
+with the time in between also available: \`yes\` became \`0\` and \`no\`
+became \`infinite\`.`
+		},
 		default: 'yes',
 		values: setting_types.BOOLEAN,
 		text: `
@@ -10719,6 +10732,53 @@ If enabled, all processes are killed when the master process is shutdown.
 Otherwise, existing processes will continue to run. This may be useful to not
 interrupt earlier sessions, but may not be desirable if restarting Dovecot
 to apply a security update, for example.`
+	},
+
+	shutdown_clients_timeout: {
+		added: {
+			settings_shutdown_clients_timeout_added: false
+		},
+		default: '0',
+		seealso: [ 'service_type' ],
+		values: setting_types.TIME,
+		text: `
+How long the processes of the old configuration may keep serving their
+existing clients after [[doveadm,reload]], and how long the processes may keep
+running after the master process was stopped.
+
+| Value | Description |
+| --- | --- |
+| \`0\` | The default. All the clients are disconnected immediately. |
+| *time* | The clients are disconnected after this time. |
+| \`infinite\` | The clients are never disconnected. The processes stop once their last client is gone. |
+
+Only the processes of \`type=client\` and \`type=login\` services (see
+[[setting,service_type]]) and the log process are preserved. The internal
+services are replaced by the reload, so their old processes are stopped
+regardless of this setting - otherwise they would pile up with every reload.
+This means that requests which are in flight to an internal service when its
+old process is stopped fail, the same way they do when a reload disconnects
+the clients instead.
+
+The main use case is taking new SSL certificates into use without
+disconnecting anyone:
+
+\`\`\`
+shutdown_clients_timeout = 4h
+\`\`\`
+
+A single reload can override the setting with
+[[doveadm,reload]] \`--kick-timeout\`.
+
+::: warning
+After the master process has been stopped there is nobody left to escalate to
+SIGKILL, so a non-zero timeout only means that the processes shut themselves
+down gracefully at the deadline.
+
+With systemd the default \`KillMode=control-group\` kills the preserved
+processes anyway on \`systemctl restart\`. Preserving them across a restart
+needs \`KillMode=mixed\` or \`KillMode=process\`.
+:::`
 	},
 
 	sql_driver: {

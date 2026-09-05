@@ -4,6 +4,7 @@ title: Running Dovecot
 order: 101
 dovecotlinks:
   running_dovecot: running Dovecot
+  running_reload: reloading the configuration
 ---
 
 # Running Dovecot
@@ -16,13 +17,51 @@ to error log at page [[link,logging]] as well.
 
 * See [[link,startup_scripts]]
 
+## Reloading
+
+The configuration is reloaded with [[doveadm,reload]]. The internal processes
+(config, stats, auth, dict, ...) are always replaced by the reload. What
+happens to the processes that are serving clients is decided by
+[[setting,shutdown_clients_timeout]]:
+
+| Value | Description |
+| --- | --- |
+| `0` | The default. The clients are disconnected immediately. |
+| *time* | The clients keep their sessions for this long. |
+| `infinite` | The clients are never disconnected. |
+
+This makes it possible to take a new SSL certificate into use without
+disconnecting anyone:
+
+```
+shutdown_clients_timeout = 4h
+```
+
+```sh
+doveadm reload
+```
+
+New connections use the new certificate immediately, while the sessions that
+were open during the reload keep running - at most for four hours, after which
+they are disconnected. A single reload can override the setting with
+`doveadm reload --kick-timeout <time>`.
+
+The preserved processes are visible in [[doveadm,process status]] and
+[[doveadm,service status]], whose `generation` column increases by one for
+every reload.
+
+Note that the preserved processes keep using the old configuration for as
+long as they live, including the old passdb/userdb and mail settings.
+
 ## Stopping
 
 Killing the Dovecot master process with a normal TERM signal does a clean
 shutdown. This can be done easily with [[doveadm,stop]].
 
-[[setting,shutdown_clients]] controls whether existing IMAP and POP3
-sessions are killed.
+[[setting,shutdown_clients_timeout]] also controls how long existing IMAP and
+POP3 sessions are kept alive after the master process is gone. Note that there
+is nobody left to escalate to SIGKILL, so the processes stop themselves at the
+deadline.
 
 If you are using systemd, you need to set:
 

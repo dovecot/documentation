@@ -106,6 +106,7 @@ export const updates = {
 
 	doveadm_auth_cache_status_added: '2.4.5',
 	doveadm_proxy_kick_args: '2.4.0',
+	doveadm_reload_kick_timeout_added: '2.4.5',
 	doveadm_proxy_list_args_added: '2.4.0',
 	doveadm_proxy_list_response_changed: '2.4.0',
 	doveadm_save_args_added: '2.4.0',
@@ -193,6 +194,9 @@ export const updates = {
 	settings_passdb_sql_update_query_removed: '2.4.5',
 	settings_passdb_static_password_added: '2.4.0',
 	settings_service_reuse_port_added: '2.4.4',
+	settings_service_type_client_added: '2.4.5',
+	settings_shutdown_clients_removed: '2.4.5',
+	settings_shutdown_clients_timeout_added: '2.4.5',
 	settings_sieve_max_cpu_time_changed: '2.4.5',
 	settings_sieve_notify_mailto_max_headers_added: '2.4.5',
 	settings_sieve_notify_mailto_max_recipients_added: '2.4.5',

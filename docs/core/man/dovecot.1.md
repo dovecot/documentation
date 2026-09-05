@@ -74,11 +74,12 @@ little memory.
 **stop**
 :   Shutdown **dovecot** and all its child processes.
 
-When *shutdown_clients* is set to **no**, existing sessions will
-continue to use the old settings, after a **dovecot reload**. Also all
-sessions will keep alive after a **dovecot stop**.
+When *shutdown_clients_timeout* is set to a non-zero value, existing sessions
+will continue to use the old settings after a **dovecot reload**, until the
+timeout is reached. With **infinite** they are never disconnected, and they
+also keep alive after a **dovecot stop**.
 
-By default all active sessions will be shut down.
+By default (**0**) all active sessions will be shut down.
 
 ## SIGNALS
 
