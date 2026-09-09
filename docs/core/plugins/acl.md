@@ -4,8 +4,8 @@ title: acl
 dovecotlinks:
   acl: ACL
   acl_global_file:
-    hash: global-acl-file
-    text: global ACL file
+    hash: global-acls
+    text: global ACLs
   acl_file_format:
     hash: acl-file-format
     text: ACL File Format
@@ -22,9 +22,10 @@ dovecotlinks:
 This page talks mainly about how ACLs work, for more general description of how
 shared mailboxes work, see [[link,shared_mailboxes]].
 
-Dovecot supports both administrator-configured ACL files and the IMAP ACL
+Dovecot supports both administrator-configured ACLs and the IMAP ACL
 extension (see [[plugin,imap-acl]], which allows users to change ACLs
-themselves).
+themselves). Administrator ACLs are configured in `dovecot.conf`; users' own
+ACLs are stored in per-mailbox `dovecot-acl` files.
 
 The ACL code was written to allow multiple ACL drivers, but currently Dovecot
 supports only virtual ACL files.
@@ -72,12 +73,11 @@ protocol imap {
 }
 
 acl_driver = vfile
-# If enable, don't try to find dovecot-acl files from mailbox directories.
+# If enabled, don't try to find dovecot-acl files from mailbox directories.
 # This reduces unnecessary disk I/O when only global ACLs are used.
-# (v2.2.31+)
 acl_globals_only = yes
 
-namespace inbox [
+namespace inbox {
   inbox = yes
   mailbox Foo {
     acl owner {
@@ -110,7 +110,7 @@ namespace shared {
 
 # ACL username
 # defaults to master_user, but if it expands to empty, will use current user.
-#acl_username = %{master_user}
+#acl_user = %{master_user}
 ```
 
 ### Creating rule sets with group
@@ -171,20 +171,17 @@ User `user3` will have rights on anything that starts with `Foo`, including `Foo
 
 ## Master Users
 
-::: info
-[[deprecated,settings_acl_global_settings_added]]: This setting is deprecated
-in favor of configuration-file embedded settings.
-:::
-
 Master users have their own ACLs. They're not the mailbox owners, so by
 default they have no permissions to any of the mailboxes. See
 [[link,acl_master_users]] for more information.
 
 ## ACL vfile Driver
 
-`vfile` driver supports per-mailbox ACLs and global ACLs.
+`vfile` driver stores per-mailbox ACLs in a `dovecot-acl` file. Global ACLs
+are not read from a file; they are defined in `dovecot.conf` with the
+[[setting,acl]] filter, see [Global ACLs](#global-acls).
 
-Per-mailbox ACLs are stored in `dovecot-acl` named file, which exists in:
+The `dovecot-acl` file exists in:
 
 * Maildir:: The Maildir's mail directory (e.g., `~/Maildir`,
   `~/Maildir/.folder/`).
@@ -275,17 +272,25 @@ owner):
 anyone lr
 ```
 
-Prevent all users from deleting their Spam folder (notice no x flag):
+Prevent users from deleting the Spam folder (notice no x flag), in the
+`dovecot-acl` file of that folder:
 
 ```[dovecot-acl]
-INBOX.Spam owner lrwstipeka
+owner lrwstipeka
 ```
 
-Allow a masteruser full access to all mailboxes, except no access to INBOX:
+Note that `dovecot-acl` files apply only to the mailbox they live in. Rules
+that apply to more than one mailbox belong in `dovecot.conf`, see
+[Global ACLs](#global-acls). The same example as configuration:
 
-```[dovecot-acl]
-* user=masteruser lrwstipekxa
-INBOX -user=masteruser lrwstipekxa
+```doveconf[dovecot.conf]
+namespace inbox {
+  mailbox Spam {
+    acl owner {
+      rights = lrwstipeka
+    }
+  }
+}
 ```
 
 ## ACL Inheritance and Default ACLs
@@ -311,42 +316,73 @@ default ACL gives access to `user1` and a per-mailbox ACL gives access to
 
 ## Global ACLs
 
-Global ACLs can be used to apply ACLs globally to all user's specific
-mailboxes. They are used mainly for two purposes:
+Global ACLs are set by the administrator and apply to all users. Unlike
+per-mailbox `dovecot-acl` files, users cannot change them with the IMAP ACL
+extension. They are used mainly for two purposes:
 
 1. Removing some permissions from users' personal mailboxes. For example each
    user might have an `Invoices` mailbox which will be read-only.
 2. Giving permissions to master user logins. See [[link,acl_master_users]]
    for more information.
 
-If a mailbox has both global ACLs and the per-mailbox ACL file, both of them
-are read and the ACLs are merged. If there are any conflicts, the global ACL
-file overrides per-mailbox ACL file. This is because users can modify their own
-per-mailbox ACL files via IMAP ACL extension. Global ACLs can only be modified
-by administrator, so users shouldn't be able to override them.
+[[removed,settings_acl_global_path_removed]] Global ACLs used to be read from a
+separate global ACL file, configured with the [[setting,acl_global_path]]
+setting. Both the setting and the file format are gone; there is no ACL file
+that takes a mailbox name prefix. See [[link,upgrading_2_4_acls]] for how to
+convert an existing global ACL file or global ACL directory.
 
-### Global ACL File
+Global ACLs are defined in `dovecot.conf` with the [[setting,acl]] filter.
+The filter can be used at global, [[setting,namespace]] or [[setting,mailbox]]
+level, and the level it is used at is what limits which mailboxes it applies
+to:
 
-Global ACL file path is specified as a parameter to vfile driver in
-[[setting,acl]], `/etc/dovecot/dovecot-acl` in the above example.
+```doveconf[dovecot.conf]
+# applies to every mailbox of every namespace
+acl user=foo {
+  rights = lrw
+}
 
-The file contains otherwise the same data as regular per-mailbox `dovecot-acl`
-files, except each line is prefixed by the mailbox name pattern.
+namespace inbox {
+  # applies to every mailbox of this namespace
+  acl user=admin {
+    rights = lrwstipekxa
+  }
 
-The pattern may contain `*` and `?` wildcards that do the shell-string
-matching, not stopping at any boundaries.
-
-Example:
-
-```[dovecot-acl]
-* user=foo lrw
-Public user=bar lrwstipekxa
-Public/* user=bar lrwstipekxa
+  mailbox Public {
+    acl user=bar {
+      rights = lrwstipekxa
+    }
+  }
+  mailbox "Public/*" {
+    acl user=bar {
+      rights = lrwstipekxa
+    }
+  }
+}
 ```
 
-The first line shares every mailbox of every user to the user `foo` with a
-limited set of rights, and the last line shares every folder below `Public`
-of every user to the user `bar`.
+[[setting,mailbox]] filter names may contain `*` and `?` wildcards that do
+shell-string matching, not stopping at any boundaries. The pattern is matched
+against the mailbox name without the namespace prefix. All matching
+[[setting,mailbox]] filters apply, not just the first one.
+
+To deny rights, prefix [[setting,acl_rights]] with `-`:
+
+```doveconf[dovecot.conf]
+namespace inbox {
+  mailbox INBOX {
+    acl user=masteruser {
+      rights = -lrwstipekxa
+    }
+  }
+}
+```
+
+If a mailbox has both configured ACLs and a per-mailbox `dovecot-acl` file,
+both are read and the rules are merged.
+
+Set [[setting,acl_globals_only,yes]] if `dovecot-acl` files are not used at
+all. This skips looking for them and saves disk I/O.
 
 ## List Cache
 

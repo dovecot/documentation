@@ -718,7 +718,11 @@ These variables can be used:
 | \`%{user \\| username}\` | user part in user@domain, same as \`%{user}\` if there's no domain |
 | \`%{user \\| domain}\` | domain part in user@domain, empty if user there's no domain |
 | \`%{home}\` | user's home directory |
-| \`%{name}\` | name of the Sieve script |
+| \`%{name}\` | name of the Sieve script [[added,sieve_ldap_name_variable_added]] |
+
+[[changed,sieve_ldap_variables_escaped]] The variables are LDAP-escaped, so
+that they cannot break out of the filter. To avoid the escaping, add the
+\`| safe\` filter to the variable.
 `
 	},
 
@@ -1911,6 +1915,15 @@ usually used in [[setting,acl]] block.`
 		text: `
 Location of global ACL configuration file. This option is deprecated, you
 should use [[setting,acl]] instead.`
+	},
+
+	acl_cache_ttl: {
+		default: '30s',
+		plugin: 'acl',
+		values: setting_types.TIME,
+		text: `
+How long to cache the ACLs read from \`dovecot-acl\` files. Set to \`0\` to
+re-read the files on every lookup.`
 	},
 
 	acl_defaults_from_inbox: {
@@ -5349,6 +5362,9 @@ by default.`
 	},
 
 	doveadm_allowed_commands: {
+		removed: {
+			settings_doveadm_allowed_commands_removed: false,
+		},
 		default: 'ALL',
 		values: setting_types.BOOLLIST,
 		text: `
@@ -5357,10 +5373,12 @@ Lists the commands that the client may use with the doveadm server.
 The setting \`ALL\` allows all commands.
 
 ::: warning
-This setting provides rather weak security. Do not assume that it is safe to
-give doveadm access to untrusted users by simply limiting the allowed commands.
-Many commands (especially \`sync\`, \`backup\` and \`import\`) have parameters
-that cannot safely be accessed by untrusted users.
+This setting provided a false sense of security and was removed. It only
+matched the command name, while the allowed commands themselves gave full
+access to any user's mails: most commands accept a \`-u\`/\`-A\` user
+parameter, and commands such as \`sync\`, \`backup\` and \`import\` accept
+parameters that access arbitrary paths. Give doveadm server access only to
+trusted clients.
 :::`
 	},
 
@@ -6059,8 +6077,11 @@ Username for HTTP proxy.`
 	},
 
 	http_client_rawlog_dir: {
+		changed: {
+			settings_path_types_added: `Setting type changed. A leading \`~/\` in the value is now expanded to the user's home directory.`,
+		},
 		tags: [ 'http', 'http_client' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		added: {
 			settings_http_client_settings_added: false,
 		},
@@ -6346,8 +6367,11 @@ defaults.`
 	},
 
 	http_server_rawlog_dir: {
+		changed: {
+			settings_path_types_added: `Setting type changed. A leading \`~/\` in the value is now expanded to the user's home directory.`,
+		},
 		tags: [ 'http', 'http-server' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Directory for writing raw log data for debugging purposes.`
 	},
@@ -6909,9 +6933,12 @@ If using master users, this setting will be the password of the master user.`
 	},
 
 	imapc_rawlog_dir: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		seealso: [ '[[link,rawlog]]' ],
 		tags: [ 'imapc', 'imapc-auth' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `Log all IMAP traffic input/output to this directory.`
 	},
 
@@ -7737,7 +7764,10 @@ Options:
 	},
 
 	mail_ext_attachment_path: {
-		values: setting_types.STRING,
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
+		values: setting_types.PATH_DIR,
 		text: `
 The directory in which to store mail attachments.
 
@@ -8252,8 +8282,11 @@ automatically.`
 	},
 
 	mail_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		default: '\\<specific to mail_driver setting\\>',
 		seealso: [
 			'[[link,settings_variables_mail_user_variables]]',
@@ -8274,8 +8307,11 @@ to work, this usage is deprecated and will likely stop working at some point.
 	},
 
 	mail_inbox_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		seealso: [ 'mail_home', 'mail_path' ],
 		text: `
 Path to the INBOX mailbox. The path doesn't have to be absolute - it is
@@ -8306,8 +8342,11 @@ This can also be used to specify a different INBOX path with Maildir:
 	},
 
 	mail_index_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		default: '\\<same as mail_path setting\\>',
 		seealso: [
 			'[[link,mail_location_index_files]]',
@@ -8319,8 +8358,11 @@ Location of [[link,mail_location_index_files,index files]].
 	},
 
 	mail_index_private_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		seealso: [ '[[link,shared_mailboxes_public]]' ],
 		text: `
 The private index files are used with shared mailboxes to provide private
@@ -8330,8 +8372,11 @@ The private index files are used with shared mailboxes to provide private
 	},
 
 	mail_cache_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		default: '\\<same as mail_index_path setting\\>',
 		text: `
 Place \`dovecot.index.cache\` files to this directory instead of among the
@@ -8343,8 +8388,11 @@ slower (larger) storage.
 	},
 
 	mail_control_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Location for (mailbox-format specific) control files.
 
@@ -8352,8 +8400,11 @@ Location for (mailbox-format specific) control files.
 	},
 
 	mail_alt_path: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		seealso: [ '[[link,dbox_alt_storage]]' ],
 		text: `
 Specifies the [[link,dbox_alt_storage]] path.
@@ -8459,8 +8510,9 @@ example \`mailboxes\` with [[link,dbox]].`
 
 	mail_volatile_path: {
 		tags: [ 'mail-location' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		changed: {
+			settings_path_types_added: `Setting type changed.`,
 			settings_mail_volatile_path_changed: `Fixed behavior to avoid collisions across multiple namespaces.`,
 		},
 		text: `
@@ -10233,9 +10285,12 @@ get the metadata.`
 	},
 
 	pop3c_rawlog_dir: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		seealso: [ '[[link,rawlog]]' ],
 		tags: [ 'pop3c' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `Log all POP3 traffic input/output to this directory.`
 	},
 
@@ -10340,8 +10395,11 @@ sending server.`
 	},
 
 	rawlog_dir: {
+		changed: {
+			settings_path_types_added: `Setting type changed. A leading \`~/\` in the value is now expanded to the user's home directory.`,
+		},
 		seealso: [ '[[link,rawlog]]' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Directory where to create \`*.in\` and \`*.out\` rawlog files, one per TCP
 connection. The directory must already exist and be writable by the process.
@@ -11280,9 +11338,12 @@ Port for the submission relay server.`
 	},
 
 	submission_relay_rawlog_dir: {
+		changed: {
+			settings_path_types_added: `Setting type changed.`,
+		},
 		tags: [ 'submission_relay' ],
 		seealso: [ '[[link,rawlog]]' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Write protocol logs for relay connection to this directory for debugging.
 
@@ -11694,6 +11755,10 @@ LDAP base.
 
 [[variable]] can be used. [[changed,variables_safe_added]] To avoid unwanted
 escaping of the output, add \`| safe\` filter to the variable.
+
+[[added,sieve_ldap_name_variable_added]] With the [[link,sieve_storage_ldap]]
+storage the variables are escaped. That storage also supports
+\`%{name}\`, which expands to the name of the Sieve script.
 
 Examples:
  * \`ldap_base = dc=mail, dc=example, dc=org\`
