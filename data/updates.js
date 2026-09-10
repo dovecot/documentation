@@ -31,6 +31,7 @@ export const updates = {
 	dict_protocol_v4: '2.4.0',
 	doveadm_ex_expired_code: '2.4.0',
 	doveadm_mailbox_commands_user: '2.4.0',
+	doveadm_who_ps_added: '2.4.6',
 	extra_fields_default: '2.4.0',
 	extra_fields_empty: '2.4.0',
 	event_export_drivers_file_unix_added: '2.4.0',
