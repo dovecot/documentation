@@ -10,6 +10,7 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] **who**
   [**-1**]
+  [**--ps**]
   [**-f** *passdb_field*]
   [**-a** *anvil_socket_path*]
   [*user_mask*]
@@ -44,6 +45,11 @@ This command uses by default the output formatter **table**.
 :   Alternative username field to use for querying, as returned by passdb.
     Only the passdb fields beginning with the *user_* prefix are
     tracked.
+
+**--ps**
+:   Print one line per process, with the process title as shown by ps(1).
+    This shows what each of the user's processes is currently doing. Can't
+    be used together with **-1**. [[added,doveadm_who_ps_added]]
 
 ## ARGUMENTS
 
