@@ -1829,12 +1829,22 @@ line feed (LF) characters. This matches the Internet Message Format
 		added: {
 			settings_acl_global_settings_added: false,
 		},
+		changed: {
+			settings_acl_global_settings_changed: `
+These entries are now global ACLs. Previously they were handled like the
+rights in a per-mailbox \`dovecot-acl\` file.`,
+		},
 		plugin: 'acl',
 		values: setting_types.NAMED_FILTER,
 		seealso: [ 'acl_id' ,'acl_rights' ],
 		text: `
 Specifies an ACL entry on global, namespace or mailbox level. The filter name
 refers to the [[setting,acl_id]] setting.
+
+These entries are global ACLs: they override the rights of the same identifier
+in a per-mailbox \`dovecot-acl\` file, they apply also to the mailbox owner,
+users can't change them with the IMAP ACL extension, and they are never copied
+into \`dovecot-acl\` files.
 
 Has two settings:
 
