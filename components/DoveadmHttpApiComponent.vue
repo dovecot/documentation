@@ -22,11 +22,6 @@ const jsonReq = computed(() => {
 	]
 })
 
-const jsonResp = computed(() => d.value.response?.example
-	? [ [ "doveadmResponse", [ d.value.response.example ], "tag1" ] ]
-	: null
-)
-
 const examples = computed(() => {
 	const reqStr = JSON.stringify(jsonReq.value)
 	return [
@@ -96,16 +91,5 @@ const examples = computed(() => {
    </div>
   </template>
 
-  <template v-if="d.response">
-   <p class="custom-block-title">Example Server Response</p>
-
-   <div v-html="d.response.text" />
-
-   <div class="language- vp-adaptive-theme" v-if="jsonResp">
-    <button class="copy" title="Copy" />
-    <span class="lang"></span>
-     <pre><code>{{ JSON.stringify(jsonResp, null, 4) }}</code></pre>
-   </div>
-  </template>
  </div>
 </template>
