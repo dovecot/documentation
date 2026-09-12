@@ -7081,10 +7081,43 @@ distinguish different listener types that one service may employ.`
 	inet_listener_port: {
 		tags: [ 'service' ],
 		values: setting_types.IN_PORT,
-		seealso: [ 'listen' ],
+		seealso: [ 'inet_listener_listen' ],
 		default: 0,
 		text: `
 Port number where to listen. \`0\` disables the listener.`
+	},
+
+	inet_listener_listen: {
+		tags: [ 'service' ],
+		default: '\*, \:\:',
+		values: setting_types.IPADDR,
+		changed: {
+			settings_listen_renamed: `
+Renamed from \`listen\`, which still works as an alias.`
+		},
+		text: `
+A comma-separated list of IP addresses or hostnames on which external network
+connections will be handled.
+
+\`*\` listens at all IPv4 interfaces, and \`::\` listens at all IPv6
+interfaces.
+
+Example:
+
+\`\`\`
+listen = 127.0.0.1, 192.168.0.1
+\`\`\`
+
+The setting can be used globally, inside a \`service { .. }\` and inside an
+[[setting,inet_listener]], where the most specific value wins, e.g.:
+
+\`\`\`
+service imap-login {
+  inet_listener imap {
+    listen = 192.168.0.1
+  }
+}
+\`\`\``
 	},
 
 	inet_listener_ssl: {
@@ -7206,31 +7239,10 @@ The directory from which you execute commands via doveadm-exec.`
 	},
 
 	listen: {
-		default: '\*, \:\:',
 		values: setting_types.IPADDR,
+		seealso: [ 'inet_listener_listen' ],
 		text: `
-A comma-separated list of IP addresses or hostnames on which external network
-connections will be handled.
-
-\`*\` listens at all IPv4 interfaces, and \`::\` listens at all IPv6
-interfaces.
-
-Example:
-
-\`\`\`
-listen = 127.0.0.1, 192.168.0.1
-\`\`\`
-
-This setting can be used also inside an [[setting,inet_listener]] to override
-the listener address, e.g.:
-
-\`\`\`
-service imap-login {
-  inet_listener imap {
-    listen = 192.168.0.1
-  }
-}
-\`\`\``
+Alias for [[setting,inet_listener_listen]].`
 	},
 
 	lmtp_add_received_header: {
