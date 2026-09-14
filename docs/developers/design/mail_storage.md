@@ -49,9 +49,21 @@ Allocate memory for a storage and set its virtual functions.
 
 Initialize the storage based on given namespace settings. The same storage
 can be used by other namespaces, but they don't call `create()` again.
+See `storage_match()` for how it's decided whether an existing storage can
+be reused.
 
 This function typically shouldn't fail, except when storage can't handle
 the wanted namespace settings.
+
+### `storage_match(list)`
+
+Returns TRUE if an already existing storage can be used also for the given
+mailbox list, i.e. their settings are compatible. This is called only for
+storages using the same storage class.
+
+If it's unset, storages with the `MAIL_STORAGE_CLASS_FLAG_UNIQUE_ROOT`
+class flag are reused only when their [[setting,mail_path]] is the same,
+while other storages are always reused.
 
 ### `destroy()`
 
