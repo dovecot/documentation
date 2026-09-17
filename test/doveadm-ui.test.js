@@ -80,25 +80,46 @@ async function renderDoveadm(doveadmData, { clicked = true, cmdName = 'testcmd' 
 	return await renderToString(app)
 }
 
-test('DoveadmHttpApiComponent does not render response block or jsonResp', async () => {
+test('DoveadmHttpApiComponent renders Example Server Response for commands with a response', async () => {
 	const comp = await compileVueComponent('components/DoveadmHttpApiComponent.vue')
-	const app = createAppWithBadge(comp, {
+	// Single object response
+	const appSingle = createAppWithBadge(comp, {
 		data: {
 			http_cmd: 'testCmd',
 			args: [
 				{ param: 'arg1', type: 'string', text: 'An argument', example: 'val1' }
 			],
 			response: {
-				text: 'Old response text table',
-				example: { result: 123 }
+				fields: [
+					{ name: 'count', type: 'integer', description: 'Count' },
+					{ name: 'status', type: 'string', description: 'Status' }
+				]
 			}
 		}
 	})
-	const html = await renderToString(app)
-	assert.equal(html.includes('Example Server Response'), false, 'Should not render "Example Server Response"')
-	assert.equal(html.includes('Old response text table'), false, 'Should not render response.text')
-	assert.equal(html.includes('"result": 123'), false, 'Should not render response JSON block')
-	assert.equal(html.includes('doveadmResponse'), false, 'Should not render doveadmResponse')
+	const htmlSingle = await renderToString(appSingle)
+	assert.ok(htmlSingle.includes('Example Server Response'), 'Should render "Example Server Response"')
+	assert.ok(htmlSingle.includes('doveadmResponse'), 'Should render doveadmResponse')
+	assert.ok(htmlSingle.includes('&quot;status&quot;: &quot;example&quot;'), 'String field should use dummy text "example"')
+
+	// List response (should render 2 objects)
+	const appList = createAppWithBadge(comp, {
+		data: {
+			http_cmd: 'testListCmd',
+			args: [],
+			response: {
+				type: 'list',
+				fields: [
+					{ name: 'mailbox', type: 'string', description: 'Mailbox' }
+				]
+			}
+		}
+	})
+	const htmlList = await renderToString(appList)
+	assert.ok(htmlList.includes('Example Server Response'), 'List should render Example Server Response')
+	// Two objects in array
+	const matches = [...htmlList.matchAll(/&quot;mailbox&quot;: &quot;example&quot;/g)]
+	assert.equal(matches.length, 2, 'List response example should contain two objects')
 })
 
 test('DoveadmComponent renders Response Fields details section positioned before CLI block', async () => {
@@ -176,7 +197,7 @@ test('DoveadmComponent State 3: response truthy but no fields array -> renders p
 	assert.equal(html.includes('No output.'), false, 'Should not render No output.')
 })
 
-test('DoveadmComponent State 4: response.fields array present -> renders table (Field/Type/Description), conditional tag for dynamic, note, and example JSON', async () => {
+test('DoveadmComponent State 4: response.fields array present -> renders table (Field/Type/Description), conditional tag for dynamic, and note', async () => {
 	const html = await renderDoveadm({
 		testcmd: {
 			text: '<p>Command description.</p>',
@@ -195,11 +216,7 @@ test('DoveadmComponent State 4: response.fields array present -> renders table (
 						dynamic: true
 					}
 				],
-				note: '<p>Note explaining dynamic fields.</p>',
-				example: {
-					fieldStatic: 'value',
-					fieldDynamic: 42
-				}
+				note: '<p>Note explaining dynamic fields.</p>'
 			}
 		}
 	})
@@ -221,13 +238,6 @@ test('DoveadmComponent State 4: response.fields array present -> renders table (
 	const tablePos = html.indexOf('</table>')
 	const notePos = html.indexOf('<p>Note explaining dynamic fields.</p>')
 	assert.ok(notePos > tablePos, 'response.note should render below the table')
-
-	// Example rendered below note with language-json class and json badge
-	assert.ok(html.includes('class="language-json vp-adaptive-theme"'), 'Should have language-json class')
-	assert.ok(html.includes('<span class="lang">json</span>'), 'Should have json language indicator')
-	const examplePos = html.indexOf('&quot;fieldStatic&quot;: &quot;value&quot;')
-	assert.ok(examplePos > notePos, 'response.example should render below the note')
-	assert.ok(html.includes('&quot;fieldDynamic&quot;: 42'), 'Should render example fieldDynamic')
 })
 
 test('DoveadmComponent renders small "No output." note for all Phase 1 silent commands', async () => {

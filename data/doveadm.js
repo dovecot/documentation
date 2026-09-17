@@ -180,6 +180,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				id: {
 					type: doveadm_response_types.STRING,
@@ -600,7 +601,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				type: doveadm_arg_types.STRING,
 				text: `Sync since timestamp.
 
-` + doveadm_args_human_timestamp,
+${doveadm_args_human_timestamp}`,
 			},
 			'sync-until-time': {
 				cli: 'e',
@@ -608,7 +609,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				type: doveadm_arg_types.STRING,
 				text: `Sync until timestamp.
 
-` + doveadm_args_human_timestamp,
+${doveadm_args_human_timestamp}`,
 			},
 			'sync-flags': {
 				cli: 'O',
@@ -800,6 +801,7 @@ This command cannot be used safely via API by untrusted users.`
 		},
 		man: 'doveconf',
 		response: {
+			type: "list",
 			fields: {
 				name: {
 					type: doveadm_response_types.STRING,
@@ -810,7 +812,7 @@ This command cannot be used safely via API by untrusted users.`
 					description: `Value of the configuration setting.`
 				},
 			},
-			note: `One row per matching setting; which settings appear depends on the filters and flags used.`,
+			note: `Which settings appear depends on the filters and flags used.`,
 		},
 		text: `Read and parse Dovecot's configuration files.`
 	},
@@ -972,6 +974,7 @@ the source user name, e.g., \`user sourceuser\`.`
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				key: {
 					type: doveadm_response_types.STRING,
@@ -1306,6 +1309,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				path: {
 					type: doveadm_response_types.STRING,
@@ -1333,6 +1337,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				path: {
 					type: doveadm_response_types.STRING,
@@ -1360,6 +1365,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				key: {
 					type: doveadm_response_types.STRING,
@@ -1518,6 +1524,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				token: {
 					type: doveadm_response_types.STRING,
@@ -1549,6 +1556,7 @@ Run a simple check on Dovecot Xapian databases, and attempt to fix basic
 errors (it is the same checking done by the xapian-check command with the
 \`-F\` command-line option).`,
 		response: {
+			type: "list",
 			fields: {
 				mailbox: {
 					type: doveadm_response_types.STRING,
@@ -1567,7 +1575,7 @@ errors (it is the same checking done by the xapian-check command with the
 					description: `The number of index shards processed.`
 				},
 			},
-			note: `Returns an array of entries, one per mailbox that has FTS data.`,
+			note: `Mailboxes without an existing flatcurve FTS index produce no output.`,
 			example: [
 				{
 					mailbox: "INBOX",
@@ -1593,6 +1601,7 @@ errors (it is the same checking done by the xapian-check command with the
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		text: `Removes all FTS data for a mailbox.`,
 		response: {
+			type: "list",
 			fields: {
 				mailbox: {
 					type: doveadm_response_types.STRING,
@@ -1603,7 +1612,7 @@ errors (it is the same checking done by the xapian-check command with the
 					description: `The GUID of the mailbox.`
 				},
 			},
-			note: `Returns an array of entries, one per mailbox removed.`,
+			note: `Mailboxes without flatcurve FTS data produce no output.`,
 			example: [
 				{
 					mailbox: "INBOX",
@@ -1627,6 +1636,7 @@ errors (it is the same checking done by the xapian-check command with the
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		text: `Triggers an FTS index rotation for a mailbox.`,
 		response: {
+			type: "list",
 			fields: {
 				mailbox: {
 					type: doveadm_response_types.STRING,
@@ -1637,7 +1647,7 @@ errors (it is the same checking done by the xapian-check command with the
 					description: `The GUID of the mailbox.`
 				},
 			},
-			note: `Returns an array of entries, one per mailbox rotated.`,
+			note: `Mailboxes without an existing flatcurve FTS index produce no output.`,
 			example: [
 				{
 					mailbox: "INBOX",
@@ -1661,6 +1671,7 @@ errors (it is the same checking done by the xapian-check command with the
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		text: `Returns FTS data for a mailbox.`,
 		response: {
+			type: "list",
 			fields: {
 				mailbox: {
 					type: doveadm_response_types.STRING,
@@ -1687,7 +1698,7 @@ errors (it is the same checking done by the xapian-check command with the
 					description: `The (Dovecot internal) version of the FTS data.`
 				},
 			},
-			note: `Returns an array of entries, one per mailbox that has FTS data.`,
+			note: `Mailboxes without an existing flatcurve FTS index produce no output.`,
 			example: [
 				{
 					mailbox: "INBOX",
@@ -1816,6 +1827,7 @@ errors (it is the same checking done by the xapian-check command with the
 			'user-mask': { ...doveadm_args_usermask, ...{ optional: true } }
 		},
 		response: {
+			type: "list",
 			fields: {
 				username: {
 					type: doveadm_response_types.STRING,
@@ -1877,6 +1889,7 @@ errors (it is the same checking done by the xapian-check command with the
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				path: {
 					type: doveadm_response_types.STRING,
@@ -1965,6 +1978,7 @@ errors (it is the same checking done by the xapian-check command with the
 		},
 		man: 'doveadm-log',
 		response: {
+			type: "list",
 			fields: {
 				timestamp: {
 					type: doveadm_response_types.STRING,
@@ -2118,6 +2132,7 @@ errors (it is the same checking done by the xapian-check command with the
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				path: {
 					type: doveadm_response_types.STRING,
@@ -2144,6 +2159,7 @@ errors (it is the same checking done by the xapian-check command with the
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				path: {
 					type: doveadm_response_types.STRING,
@@ -2170,6 +2186,7 @@ errors (it is the same checking done by the xapian-check command with the
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				key: {
 					type: doveadm_response_types.STRING,
@@ -2280,6 +2297,7 @@ errors (it is the same checking done by the xapian-check command with the
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				mailbox: {
 					type: doveadm_response_types.STRING,
@@ -2324,6 +2342,7 @@ errors (it is the same checking done by the xapian-check command with the
 			query: doveadm_args_query,
 		},
 		response: {
+			type: "list",
 			fields: {
 				mailbox: {
 					type: doveadm_response_types.STRING,
@@ -2606,6 +2625,7 @@ to secure it.
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				key: {
 					type: doveadm_response_types.STRING,
@@ -2702,6 +2722,7 @@ to secure it.
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				mailbox: {
 					type: doveadm_response_types.STRING,
@@ -2756,6 +2777,7 @@ to secure it.
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				path: {
 					type: doveadm_response_types.STRING,
@@ -2819,6 +2841,7 @@ to secure it.
 		man: 'doveadm-mailbox',
 		text: `Show status of mailboxes.`,
 		response: {
+			type: "list",
 			fields: {
 				mailbox: {
 					type: doveadm_response_types.STRING,
@@ -3007,6 +3030,7 @@ If all messages are desired to be moved, the "all" query can be used.
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				IP: {
 					type: doveadm_response_types.STRING,
@@ -3040,6 +3064,7 @@ If all messages are desired to be moved, the "all" query can be used.
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				name: {
 					type: doveadm_response_types.STRING,
@@ -3160,6 +3185,7 @@ Dovecot now returns different formats based on the value of
 returned.`,
 		},
 		response: {
+			type: "list",
 			fields: {
 				username: {
 					type: doveadm_response_types.STRING,
@@ -3256,6 +3282,7 @@ returned.`,
 		plugin: 'quota',
 		man: 'doveadm-quota',
 		response: {
+			type: "list",
 			fields: {
 				root: {
 					type: doveadm_response_types.STRING,
@@ -3296,6 +3323,7 @@ returned.`,
 			query: doveadm_args_query,
 		},
 		response: {
+			type: "list",
 			fields: {
 				uid: {
 					type: doveadm_response_types.INTEGER,
@@ -3366,6 +3394,7 @@ returned.`,
 			query: doveadm_args_query,
 		},
 		response: {
+			type: "list",
 			fields: {
 				'mailbox-guid': {
 					type: doveadm_response_types.STRING,
@@ -3393,6 +3422,7 @@ returned.`,
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				name: {
 					type: doveadm_response_types.STRING,
@@ -3541,6 +3571,7 @@ returned.`,
 		plugin: 'sieve',
 		man: 'doveadm-sieve',
 		response: {
+			type: "list",
 			fields: {
 				script: {
 					type: doveadm_response_types.STRING,
@@ -3616,6 +3647,7 @@ returned.`,
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				path: {
 					type: doveadm_response_types.STRING,
@@ -3681,6 +3713,7 @@ returned.`,
 		},
 		man: 'doveadm-stats',
 		response: {
+			type: "list",
 			fields: {
 				metric_name: {
 					type: doveadm_response_types.STRING,
@@ -3900,6 +3933,7 @@ This command cannot be used safely via API by untrusted users.`
 		},
 		man: 'doveadm-user',
 		response: {
+			type: "list",
 			fields: {
 				field: {
 					type: doveadm_response_types.STRING,
@@ -3943,6 +3977,7 @@ This command cannot be used safely via API by untrusted users.`
 			},
 		},
 		response: {
+			type: "list",
 			fields: {
 				username: {
 					type: doveadm_response_types.STRING,
@@ -3973,7 +4008,7 @@ This command cannot be used safely via API by untrusted users.`
 						dynamic: true
 				},
 			},
-			note: `Returns an array of objects. If \`separate-connections\` is \`false\`, each object represents a single username/service combination, and the \`pid\` and \`ip\` fields will include all entries for that combination. If \`separate-connections\` is \`true\`, each object will contain a single connection. Additional columns are added dynamically for each configured alternative username field (\`passdb-field\`).`,
+			note: `If \`separate-connections\` is \`false\`, each object represents a single username/service combination, and the \`pid\` and \`ip\` fields will include all entries for that combination. If \`separate-connections\` is \`true\`, each object will contain a single connection. Additional columns are added dynamically for each configured alternative username field (\`passdb-field\`).`,
 			example: [
 				{
 					username: "foo",

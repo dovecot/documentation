@@ -3,7 +3,7 @@ import sys
 import os
 import importlib.util
 
-SCRIPT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "scripts", "gen-doveadm-response.py"))
+SCRIPT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "util", "gen-doveadm-response.py"))
 spec = importlib.util.spec_from_file_location("gen_doveadm_response", SCRIPT_PATH)
 gdr = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(gdr)

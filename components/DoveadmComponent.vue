@@ -76,7 +76,8 @@ function httpClick(k) {
    <div v-if="v.text" v-html="v.text" />
 
    <details @click.capture.once="responseClick(k)" class="details custom-block">
-    <summary>Response Fields</summary>
+    <summary v-if="v.response?.type === 'list'">Response Fields <Badge type="info" text="List Response" /></summary>
+    <summary v-else>Response Fields</summary>
     <div v-if="responseFields[k]">
      <p v-if="v.response === undefined">
       <Badge type="warning" text="undocumented" />
@@ -113,12 +114,6 @@ function httpClick(k) {
       </table>
 
       <div v-if="v.response.note" v-html="v.response.note" />
-
-      <div class="language-json vp-adaptive-theme" v-if="v.response.example">
-       <button class="copy" title="Copy" />
-       <span class="lang">json</span>
-       <pre><code>{{ JSON.stringify(v.response.example, null, 4) }}</code></pre>
-      </div>
      </template>
     </div>
    </details>
