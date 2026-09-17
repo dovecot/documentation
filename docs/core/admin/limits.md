@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: Limits
+dovecotlinks:
+  limits: Dovecot Limits
 ---
 
 # Dovecot Limits
@@ -39,3 +41,13 @@ limit for all header blocks in a message.
 
 Maximum number of MIME parts per message is 10000. A maximum of 100 MIME parts
 can be nested in the same hierarchy path.
+
+## Search Query Nesting
+
+[[added,imap_search_nesting_limit_added]]
+
+IMAP `SEARCH`, `SORT` and `THREAD` queries and [[doveadm,search]] queries are
+rejected with `Too much nesting in search query` when the search keys are
+nested deeper than the process stack allows. The limit is derived from
+`RLIMIT_STACK` and is 1024 levels with the common 8 MB default stack. See
+[[link,imap_search_nesting_limit]] for the details and how to raise it.
