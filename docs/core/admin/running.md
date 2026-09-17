@@ -4,6 +4,7 @@ title: Running Dovecot
 order: 101
 dovecotlinks:
   running_dovecot: running Dovecot
+  running_reload: reloading the configuration
 ---
 
 # Running Dovecot
@@ -16,13 +17,65 @@ to error log at page [[link,logging]] as well.
 
 * See [[link,startup_scripts]]
 
+## Reloading
+
+The configuration is reloaded with [[doveadm,reload]]. The internal processes
+(config, stats, auth, dict, ...) are always replaced by the reload. What
+happens to the processes that are serving clients is decided by
+[[setting,service_shutdown_clients_timeout]]:
+
+| Value | Description |
+| --- | --- |
+| `0` | The default. The clients are disconnected immediately. |
+| *time* | The clients keep their sessions for this long. |
+| `infinite` | The clients are never disconnected. |
+
+This makes it possible to take a new SSL certificate into use without
+disconnecting anyone:
+
+```
+service_shutdown_clients_timeout = 4h
+```
+
+```sh
+doveadm reload
+```
+
+New connections use the new certificate immediately, while the sessions that
+were open during the reload keep running - at most for four hours, after which
+they are disconnected. The setting can also be set per service, e.g.
+`service pop3 { shutdown_clients_timeout = 0 }` disconnects the POP3 sessions
+immediately regardless of the value set outside the service.
+
+Both processes serving a session need the timeout: with TLS the login process
+keeps proxying the connection also after the login, so the session ends as soon
+as either of the imap and imap-login processes is killed. On a proxy there are
+no local imap processes - the login processes proxy the connections to the
+backends - so the login service's timeout alone decides how long the existing
+sessions keep running.
+
+A single reload can override the setting for all the services with
+[[doveadm,reload,--kick-timeout]].
+
+The preserved processes are visible in [[doveadm,process status]]. Its
+`generation` column increases by one for every reload, so the preserved
+processes have a smaller number than the current generation, and its
+`kill_time` column tells when the master is going to disconnect their clients.
+[[doveadm,service status]] lists only the current generation, unless it's given
+the `-a` parameter.
+
+Note that the preserved processes keep using the old configuration for as
+long as they live, including the old passdb/userdb and mail settings.
+
 ## Stopping
 
 Killing the Dovecot master process with a normal TERM signal does a clean
 shutdown. This can be done easily with [[doveadm,stop]].
 
-[[setting,shutdown_clients]] controls whether existing IMAP and POP3
-sessions are killed.
+[[setting,service_shutdown_clients_timeout]] also controls how long existing
+IMAP and POP3 sessions are kept alive after the master process is gone. Note
+that there is nobody left to escalate to SIGKILL, so the processes stop
+themselves at the deadline.
 
 If you are using systemd, you need to set:
 
