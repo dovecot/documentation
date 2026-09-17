@@ -723,6 +723,19 @@ This is currently used only with Cassandra.`
 	},
 
 	{
+		name: 'set_non_atomic',
+		tags: [ 'dict.transaction' ],
+		text: `
+Don't require the changes in the dict transaction to be atomic. If the
+commit fails, it's acceptable that only some of the changes have been
+written.
+
+This is currently used only with Cassandra, where the transaction is
+committed as an \`UNLOGGED\` batch instead of a \`LOGGED\` batch. See also
+[[setting,cassandra_logged_batches]].`
+	},
+
+	{
 		name: 'commit',
 		tags: [ 'dict.transaction' ],
 		text: `Commit the transaction.`
