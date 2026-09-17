@@ -703,12 +703,12 @@ end`
 	{
 		name: 'set_timestamp',
 		args: {
-			seconds: {
+			tv_sec: {
 				hash_arg: true,
 				type: 'int',
 				text: `UNIX timestamp.`
 			},
-			nanoseconds: {
+			tv_nsec: {
 				hash_arg: true,
 				type: 'int',
 				text: `Nanoseconds part of the timestamp.`
@@ -716,9 +716,23 @@ end`
 		},
 		tags: [ 'dict.transaction' ],
 		text: `
-Set timestamp to the dict transaction.
+Set write timestamp for the entire dict transaction. This must be called
+before any changes are done to the transaction.
 
 This is currently used only with Cassandra.`
+	},
+
+	{
+		name: 'set_non_atomic',
+		tags: [ 'dict.transaction' ],
+		text: `
+Don't require the changes in the dict transaction to be atomic. If the
+commit fails, it's acceptable that only some of the changes have been
+written.
+
+This is currently used only with Cassandra, where the transaction is
+committed as an \`UNLOGGED\` batch instead of a \`LOGGED\` batch. See also
+[[setting,cassandra_logged_batches]].`
 	},
 
 	{
