@@ -150,10 +150,17 @@ After a transaction is successfully started, transaction operations i.e.
 Commit the transaction corresponding to the given ID.
 
 ```
-C: C<transaction id>
+C: C<transaction id>[TAB<flag>...]
 ```
 
 Note that the transaction is looked up from the ID so no username is required.
+
+Optional flags can be added after the transaction ID, each separated by a
+TAB:
+
+| Flag | Description |
+| ---- | ----------- |
+| `non-atomic` | [[added,dict_protocol_non_atomic_added]] The transaction doesn't need to be atomic. If the commit fails, it's acceptable that only some of the transaction's changes have been written. Currently only dict-sql with Cassandra driver does anything with this: the transaction is committed as an `UNLOGGED` batch instead of a `LOGGED` batch. |
 
 Possible responses include:
 

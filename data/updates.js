@@ -28,6 +28,7 @@ export const updates = {
 	auth_sql_workers_changed: '2.4.1',
 	config_design_changed: '2.4.0',
 	dcrypt_same_cipher_algo_added: '2.4.0',
+	dict_protocol_non_atomic_added: '2.4.6',
 	dict_protocol_v4: '2.4.0',
 	doveadm_ex_expired_code: '2.4.0',
 	doveadm_mailbox_commands_user: '2.4.0',
