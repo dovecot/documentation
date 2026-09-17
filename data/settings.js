@@ -3996,6 +3996,23 @@ Whether to log about failed requests that are retried (which may or may
 not succeed after the retry).`
 	},
 
+	cassandra_logged_batches: {
+		added: {
+			settings_cassandra_logged_batches_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		text: `
+Whether transactions with multiple statements are sent as \`LOGGED\` batches.
+When \`no\`, they are sent as \`UNLOGGED\` batches. This is needed for
+Cassandra-compatible databases that don't support \`LOGGED\` batches.
+
+\`UNLOGGED\` batches that update multiple partitions aren't atomic: if the
+batch fails, only some of the changes may have been written. Batches that
+update a single partition are atomic in either case.`
+	},
+
 	cassandra_metrics: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.STRING,
