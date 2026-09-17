@@ -1,5 +1,3 @@
-#### Doveadm Logging Changes
-
 `doveadm-server` no longer writes the Apache-style access log line for each
 [[link,doveadm_http_api]] request. The same information is now available from
 events: [[event,doveadm_command_finished]] for the command, the user and the
