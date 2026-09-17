@@ -8,12 +8,12 @@ dovecotComponent: core
 
 ## SYNOPSIS
 
-**doveadm** [*GLOBAL OPTIONS*] **service status** [*service* [...]]
+**doveadm** [*GLOBAL OPTIONS*] **service status** [**-a**] [*service* [...]]
 
 ## DESCRIPTION
 
-**doveadm service status** produces a table with a line for each service,
-containing the following details:
+**doveadm service status** produces a table with a line for each service of
+the current configuration generation, containing the following details:
 
 *name*
 :   the name of the service
@@ -59,7 +59,25 @@ containing the following details:
 :   the total number of processes forked for the service since the service
     start.
 
+*generation*
+:   the configuration generation the service belongs to. This increases by one
+    for every reload, so services preserved from before a reload (see
+    [[setting,service_shutdown_clients_timeout]]) have a smaller number than the
+    current one.
+
+*kill_time*
+:   timestamp when the master process is going to signal the service's
+    preserved processes next, or 0 if it isn't going to. This is always 0 for
+    the current generation.
+
 <!-- @include: include/global-options-formatter.inc -->
+
+## OPTIONS
+
+**-a**, **--all-generations**
+:   List also the services of the older configuration generations, which are
+    still around because of [[setting,service_shutdown_clients_timeout]]. Each service
+    is then listed once per generation.
 
 ## ARGUMENTS
 
@@ -86,6 +104,8 @@ listen_pending: n
 listening: y
 doveadm_stop: n
 process_total: 0
+generation: 1
+kill_time: 0
 ```
 
 <!-- @include: include/reporting-bugs.inc -->
