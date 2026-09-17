@@ -86,6 +86,7 @@ export const updates = {
 	settings_cassandra_cluster_settings_added: '2.4.6',
 	settings_cassandra_logged_batches_added: '2.4.6',
 	service_shutdown_clients_changed: '2.4.6',
+	settings_boolean_values_changed: '2.4.6',
 	settings_delayed_expansion_changed: '2.4.2',
 	settings_list_key_variables_changed: '2.4.5',
 	settings_path_types_added: '2.4.6',
