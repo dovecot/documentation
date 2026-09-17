@@ -2706,6 +2706,14 @@ clients disconnect.`,
 
 	'service status': {
 		args: {
+			'all-generations': {
+				cli: 'a',
+				type: doveadm_arg_types.BOOL,
+				text: `
+List also the services of the older configuration generations, which are still
+around because of [[setting,service_shutdown_clients_timeout]]. Each service is then
+listed once per generation.`,
+			},
 			service: {
 				example: ['name'],
 				positional: true,
@@ -2713,6 +2721,10 @@ clients disconnect.`,
 				type: doveadm_arg_types.ARRAY,
 				text: `Filter output to only these services.`,
 			},
+		},
+		added: {
+			'service_shutdown_clients_changed': `
+\`all-generations\` argument added.`
 		},
 		man: 'doveadm-service-status',
 		text: `Show information about Dovecot services.`,
