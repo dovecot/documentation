@@ -10494,13 +10494,14 @@ If non-empty, this service is enabled only when the protocol name is listed in
 	service_type: {
 		tags: [ 'service' ],
 		values: setting_types.STRING,
-		seealso: [ 'service_process_limit' ],
+		seealso: [ 'service_process_limit', 'service_shutdown_clients_timeout' ],
 		text: `
 Type of this service:
 
 | Value | Description |
 | --- | --- |
 | \`<empty>\` | The default. |
+| \`client\` | [[added,settings_service_type_client_added]] Used by services whose processes serve externally visible client connections that can't be transparently re-established. A configuration reload preserves these processes, see [[setting,service_shutdown_clients_timeout]]. |
 | \`login\` | Used by login services. The login processes have "all processes full" notification fd. It's used by the processes to figure out when no more client connections can be accepted because client and process limits have been reached. The login processes can then kill some of their oldest connections that haven't logged in yet. |
 | \`worker\` | Used by various worker services. It's normal for worker processes to fill up to [[setting,service_process_limit]], and there shouldn't be a warning logged about it. |
 | \`startup\` | Creates one process at startup. |
@@ -10715,6 +10716,12 @@ low. Use \`unlimited\` to disable this entirely.`
 	},
 
 	shutdown_clients: {
+		removed: {
+			service_shutdown_clients_changed: `
+Replaced by [[setting,service_shutdown_clients_timeout]], which is the same setting
+with the time in between also available: \`yes\` became \`0\` and \`no\`
+became \`infinite\`.`
+		},
 		default: 'yes',
 		values: setting_types.BOOLEAN,
 		text: `
@@ -10723,6 +10730,75 @@ If enabled, all processes are killed when the master process is shutdown.
 Otherwise, existing processes will continue to run. This may be useful to not
 interrupt earlier sessions, but may not be desirable if restarting Dovecot
 to apply a security update, for example.`
+	},
+
+	service_shutdown_clients_timeout: {
+		added: {
+			service_shutdown_clients_changed: false
+		},
+		tags: [ 'service' ],
+		default: '0',
+		seealso: [ 'service_type' ],
+		values: setting_types.TIME,
+		text: `
+How long the processes of the old configuration may keep serving their
+existing clients after [[doveadm,reload]], and how long the processes may keep
+running after the master process was stopped.
+
+| Value | Description |
+| --- | --- |
+| \`0\` | The default. All the clients are disconnected immediately. |
+| *time* | The clients are disconnected after this time. |
+| \`infinite\` | The clients are never disconnected. The processes stop once their last client is gone. |
+
+Only the processes of [[setting,service_type,client]] and
+[[setting,service_type,login]] services and the log process are preserved. The
+internal services are replaced by the reload, so their old processes are
+stopped regardless of this setting - otherwise they would pile up with every
+reload. This means that requests which are in flight to an internal service
+when its old process is stopped fail, the same way they do when a reload
+disconnects the clients instead.
+
+The main use case is taking new SSL certificates into use without
+disconnecting anyone:
+
+\`\`\`
+service_shutdown_clients_timeout = 4h
+\`\`\`
+
+The setting can also be set per service, e.g. to keep only the IMAP sessions
+running:
+
+\`\`\`
+service_shutdown_clients_timeout = 0
+service imap {
+  shutdown_clients_timeout = 4h
+}
+service imap-login {
+  shutdown_clients_timeout = 4h
+}
+\`\`\`
+
+Both processes serving a session need the timeout: with TLS the login process
+keeps proxying the connection also after the login, so the session ends as soon
+as either of the imap and imap-login processes is killed.
+
+On a proxy there are no local imap processes - the login processes proxy the
+connections to the backends - so the login service's timeout alone decides how
+long the existing sessions keep running.
+
+A single reload can override the setting for all the services with
+[[doveadm,reload,--kick-timeout]].
+
+::: warning
+After the master process has been stopped there is nobody left to escalate to
+SIGKILL, so a non-zero timeout only means that the processes shut themselves
+down gracefully at the deadline.
+
+With systemd the default \`KillMode=control-group\` kills the preserved
+processes anyway on \`systemctl restart\`. Preserving them across a restart
+needs \`KillMode=mixed\` or \`KillMode=process\`.
+:::`
 	},
 
 	sql_driver: {
