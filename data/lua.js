@@ -695,12 +695,12 @@ end`
 	{
 		name: 'set_timestamp',
 		args: {
-			seconds: {
+			tv_sec: {
 				hash_arg: true,
 				type: 'int',
 				text: `UNIX timestamp.`
 			},
-			nanoseconds: {
+			tv_nsec: {
 				hash_arg: true,
 				type: 'int',
 				text: `Nanoseconds part of the timestamp.`
@@ -708,7 +708,8 @@ end`
 		},
 		tags: [ 'dict.transaction' ],
 		text: `
-Set timestamp to the dict transaction.
+Set write timestamp for the entire dict transaction. This must be called
+before any changes are done to the transaction.
 
 This is currently used only with Cassandra.`
 	},
