@@ -12,6 +12,9 @@ dovecotlinks:
   auth_sqlite:
     hash: sqlite
     text: Sqlite authentication
+  auth_sql_variables:
+    hash: variables-in-queries
+    text: Variables in Queries
 ---
 
 # SQL Database (`sql`)
@@ -33,6 +36,69 @@ passdb sql {
 }
 ```
 
+## Variables in Queries
+
+Auth SQL queries ([[setting,passdb_sql_query]], [[setting,userdb_sql_query]]
+and [[setting,userdb_sql_iterate_query]]) can use any [[variable]], such as
+`%{user}`. Dovecot does not expand the value into the query text; instead it
+replaces each `%{variable}` with a bind parameter and sends the value to the
+database separately. For example:
+
+```doveconf[dovecot.conf]
+passdb sql {
+  query = SELECT password FROM users WHERE userid = '%{user}'
+}
+```
+
+is sent to the database as `SELECT password FROM users WHERE userid = ?`,
+with the username bound as the value of `?`.
+
+This has several benefits:
+
+* A value can never change the structure of the query, whatever characters
+  it contains. There is no SQL injection risk and no need to escape values.
+* The query text itself never contains the values. Dovecot logs the query
+  with the values filled in for debugging, but `%{password}` is always
+  hidden unless [[setting,auth_debug_passwords,yes]] is set.
+
+### Writing Queries
+
+Because every `%{variable}` becomes one bind parameter, it must stand for
+exactly one whole SQL value.
+
+* A variable may stand on its own (`userid = %{user}`) or be wrapped in
+  single quotes (`userid = '%{user}'`); both mean the same thing, and the
+  quotes are removed. Double quotes (`"%{user}"`) are not accepted.
+* A variable cannot be combined with other text inside a quoted string,
+  since the database cannot bind part of a string. Build the whole value
+  with the [[link,settings_variables_filters,concat filter]] instead:
+
+  | Instead of | Use |
+  | --- | --- |
+  | `'%{user \| username}@example.com'` | `%{user \| username \| concat('@example.com')}` |
+  | `'%{user}%'` (`LIKE` prefix match) | `%{user \| concat('%')}` |
+
+  This works the same on every database. The database's own concatenation,
+  such as `CONCAT()`, also works but is not portable: SQLite has it only from
+  version 3.44, and Cassandra has no such function at all.
+* Filters are applied before the value is bound, so any filter can be used,
+  for example `%{user | lower}`.
+
+### Restrictions
+
+Dovecot has to find the bind parameters in the query text itself, so it
+rejects constructs where it cannot do that reliably. These are reported as
+errors when the query is used, and the lookup fails:
+
+* SQL comments (`--`, `/* */`, `//`, `#`) outside a quoted string.
+* A literal `?` outside a quoted string, since it cannot be told apart from
+  a bind parameter. This includes PostgreSQL's jsonb `?`, `?|` and `?&`
+  operators. A `?` inside a quoted string, such as `'?'`, is fine.
+* PostgreSQL dollar-quoted strings (`$$...$$`, `$tag$...$tag$`) and
+  positional parameters (`$1`, `$2`, ...).
+* A backslash inside a single-quoted string. Write an embedded quote as
+  `''`, not `\'`.
+
 ## passdb
 
 [[setting,passdb_sql_query]] setting contains the SQL query to look up the
@@ -40,7 +106,7 @@ password. It must return a field named `password`. If you have it by any other
 name in the database, you can use the SQL's `AS` keyword (`SELECT pw AS
 password ..`).
 
-You can use all the normal [[variable]] such as `%{user}` in the SQL query.
+See [[link,auth_sql_variables]] for how to use [[variable]] in the query.
 
 If all the passwords are in same format, you can use
 [[setting,passdb_default_password_scheme]] to specify it. Otherwise each
@@ -88,6 +154,9 @@ passdb sql {
 This of course makes the verbose logging a bit wrong, since password
 mismatches are also logged as `unknown user`.
 
+`%{password}` is hidden in logged queries unless
+[[setting,auth_debug_passwords,yes]] is set; see [[link,auth_sql_variables]].
+
 ## userdb
 
 Usually your SQL database contains also the userdb information. This means
@@ -99,7 +168,8 @@ doing the userdb SQL query.
 [[setting,userdb_sql_query]] setting contains the SQL query to look up the
 userdb information. The commonly returned userdb fields are uid, gid, home, and
 mail. See [[link,userdb_extra_fields]] for more information about these and
-other fields that can be returned.
+other fields that can be returned, and [[link,auth_sql_variables]] for how to
+use [[variable]] in the query.
 
 If you're using a single UID and GID for all users, you can set them in
 dovecot.conf with:
@@ -113,6 +183,7 @@ mail_gid = vmail
 
 Some commands, such as `doveadm -A` need to get a list of users. With SQL
 userdb this is done with the [[setting,userdb_sql_iterate_query]] setting.
+See [[link,auth_sql_variables]] for how to use [[variable]] in the query.
 
 You can either return:
 

@@ -78,6 +78,7 @@ export const updates = {
 	service_dict_expire: '2.4.0',
 	service_listener_type: '2.4.0',
 	service_process_limit_changed: '2.4.5',
+	settings_auth_sql_bind_params_changed: '2.4.6',
 	settings_delayed_expansion_changed: '2.4.2',
 	settings_list_key_variables_changed: '2.4.5',
 	settings_path_types_added: '2.4.6',
