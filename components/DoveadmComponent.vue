@@ -11,12 +11,13 @@ const props = defineProps(['plugin', 'tag'])
 const d = computed(() => Object.entries(data.doveadm).filter(([k, v]) =>
 	/* Filter entries by plugin or tag. */
 	(!props.plugin && !props.tag) ||
-	(props.plugin &&
-	 (v.plugin && v.plugin == props.plugin)) ||
-	(props.tag &&
-	 ((v.plugin && v.plugin == props.tag) ||
-	  (v.tags?.includes(props.tag))))
+	(v.plugin == (props.plugin || props.tag)) ||
+	(props.tag && v.tags?.includes(props.tag))
 ).sort())
+const responseFields = ref({})
+function responseClick(k) {
+	responseFields.value[k] = true
+}
 
 const cliComponent = ref({})
 function cliClick(k) {
@@ -60,22 +61,12 @@ function httpClick(k) {
       <th style="text-align: right;">Changes</th>
       <td>
        <ul>
-        <li v-if="v.added" v-for="elem in v.added">
+		<template v-for="[k2, elems] in [['added', v.added], ['changed', v.changed], ['deprecated', v.deprecated], ['removed', v.removed]]" v-if="elems" :key="k2">
+        <li v-for="elem in elems">
          <span v-html="elem.version" />
          <span v-html="elem.text" />
         </li>
-        <li v-if="v.changed" v-for="elem in v.changed">
-         <span v-html="elem.version" />
-         <span v-html="elem.text" />
-        </li>
-        <li v-if="v.deprecated" v-for="elem in v.deprecated">
-         <span v-html="elem.version" />
-         <span v-html="elem.text" />
-        </li>
-        <li v-if="v.removed" v-for="elem in v.removed">
-         <span v-html="elem.version" />
-         <span v-html="elem.text" />
-        </li>
+       </template>
        </ul>
       </td>
     </tr>
@@ -83,6 +74,49 @@ function httpClick(k) {
    </table>
 
    <div v-if="v.text" v-html="v.text" />
+
+   <details @click.capture.once="responseClick(k)" class="details custom-block">
+    <summary v-if="v.response?.type === 'list'">Response Fields <Badge type="info" text="List Response" /></summary>
+    <summary v-else>Response Fields</summary>
+    <div v-if="responseFields[k]">
+     <p v-if="v.response === undefined">
+      <Badge type="warning" text="undocumented" />
+     </p>
+
+     <p v-else-if="v.response === null">
+      <small>No output.</small>
+     </p>
+
+     <template v-else-if="!v.response.fields">
+      <p>This command does not produce JSON output.</p>
+      <div v-if="v.response.note" v-html="v.response.note" />
+     </template>
+
+     <template v-else>
+      <table>
+       <thead>
+        <tr>
+         <th>Field</th>
+         <th>Type</th>
+         <th>Description</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr v-for="field in v.response.fields" :key="field.name">
+         <td>
+          <code>{{ field.name }}</code>
+          <template v-if="field.dynamic"> (conditional)</template>
+         </td>
+         <td>{{ field.type }}</td>
+         <td v-html="field.description" />
+        </tr>
+       </tbody>
+      </table>
+
+      <div v-if="v.response.note" v-html="v.response.note" />
+     </template>
+    </div>
+   </details>
 
    <details @click.capture.once="cliClick(k)" class="details custom-block">
     <summary>CLI</summary>

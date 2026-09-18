@@ -22,11 +22,6 @@ const jsonReq = computed(() => {
 	]
 })
 
-const jsonResp = computed(() => d.value.response?.example
-	? [ [ "doveadmResponse", [ d.value.response.example ], "tag1" ] ]
-	: null
-)
-
 const examples = computed(() => {
 	const reqStr = JSON.stringify(jsonReq.value)
 	return [
@@ -49,6 +44,53 @@ const examples = computed(() => {
 	]
 })
 
+/* Generate a synthetic example object from field definitions.
+ * String keys use dummy text ('example') instead of empty string. */
+function generateExample(fields) {
+	const obj = {}
+	for (const f of fields) {
+		switch (f.type) {
+		case 'integer':   obj[f.name] = 0; break
+		case 'boolean':   obj[f.name] = false; break
+		case 'timestamp': obj[f.name] = '2024-01-01T00:00:00Z'; break
+		case 'array':     obj[f.name] = ['example']; break
+		case 'object':    obj[f.name] = {}; break
+		default:          obj[f.name] = 'example'
+		}
+	}
+	return obj
+}
+
+const jsonResp = computed(() => {
+	const resp = d.value.response
+	if (!resp || (!resp.fields && !resp.example)) {
+		return null
+	}
+
+	let result
+	if (resp.example) {
+		if (Array.isArray(resp.example)) {
+			result = resp.type === 'list' && resp.example.length === 1
+				? [resp.example[0], resp.example[0]]
+				: resp.example
+		} else {
+			result = resp.type === 'list'
+				? [resp.example, resp.example]
+				: [resp.example]
+		}
+	} else if (resp.fields) {
+		const ex = generateExample(resp.fields)
+		result = resp.type === 'list' ? [ex, ex] : [ex]
+	}
+
+	return [
+		[
+			"doveadmResponse",
+			result,
+			"tag1"
+		]
+	]
+})
 </script>
 
 <template>
@@ -96,16 +138,15 @@ const examples = computed(() => {
    </div>
   </template>
 
-  <template v-if="d.response">
-   <p class="custom-block-title">Example Server Response</p>
+  <template v-if="jsonResp">
+   <p class="custom-block-title">Example Server Response <small>(formatting example only; may not indicate actual server response fields returned)</small></p>
 
-   <div v-html="d.response.text" />
-
-   <div class="language- vp-adaptive-theme" v-if="jsonResp">
+   <div class="language- vp-adaptive-theme">
     <button class="copy" title="Copy" />
     <span class="lang"></span>
-     <pre><code>{{ JSON.stringify(jsonResp, null, 4) }}</code></pre>
+    <pre><code>{{ JSON.stringify(jsonResp, null, 4) }}</code></pre>
    </div>
   </template>
+
  </div>
 </template>
