@@ -10366,6 +10366,12 @@ is allowed to login as other users.`
 	},
 
 	passdb_sql_query: {
+		changed: {
+			settings_auth_sql_bind_params_changed: `
+\`%{variable}\` values are now sent to the database as bind parameters
+instead of being expanded into the query text. See
+[[link,auth_sql_variables]] for the resulting restrictions.`
+		},
 		tags: [ 'passdb' ],
 		values: setting_types.STRING,
 		text: `
@@ -12139,6 +12145,12 @@ with \`internal error\`.`
 	},
 
 	userdb_sql_query: {
+		changed: {
+			settings_auth_sql_bind_params_changed: `
+\`%{variable}\` values are now sent to the database as bind parameters
+instead of being expanded into the query text. See
+[[link,auth_sql_variables]] for the resulting restrictions.`
+		},
 		tags: [ 'userdb' ],
 		values: setting_types.STRING,
 		text: `
@@ -12146,6 +12158,12 @@ SQL query to lookup the userdb fields.`
 	},
 
 	userdb_sql_iterate_query: {
+		changed: {
+			settings_auth_sql_bind_params_changed: `
+\`%{variable}\` values are now sent to the database as bind parameters
+instead of being expanded into the query text. See
+[[link,auth_sql_variables]] for the resulting restrictions.`
+		},
 		tags: [ 'userdb' ],
 		values: setting_types.STRING,
 		text: `

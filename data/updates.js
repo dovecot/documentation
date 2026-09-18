@@ -83,6 +83,7 @@ export const updates = {
 	service_dict_expire: '2.4.0',
 	service_listener_type: '2.4.0',
 	service_process_limit_changed: '2.4.5',
+	settings_auth_sql_bind_params_changed: '2.4.6',
 	settings_cassandra_cluster_settings_added: '2.4.6',
 	settings_cassandra_logged_batches_added: '2.4.6',
 	service_shutdown_clients_changed: '2.4.6',
