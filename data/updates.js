@@ -47,6 +47,7 @@ export const updates = {
 	imapc_features_no_search: '2.4.0',
 	imapsieve_filters: '2.4.0',
 	ja3_identifier: '2.4.0',
+	lazy_expunge_mailbox_virtual_changed: '2.4.6',
 	ldap_multi_added: '2.4.0',
 	lmtp_nologin_added: '2.4.0',
 	login_proxy_rawlog_dir_changed: '2.4.2',
