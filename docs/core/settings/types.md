@@ -115,8 +115,10 @@ the number is read as octal (instead of decimal).
 
 Boolean settings interpret any value as true, or false.
 
-`yes` and `no` are the recommended values. However, `y` and `1` also
-work as `yes`. Whereas, only `no` will work as false.
+`yes` and `no` are the values to use in the configuration.
+[[changed,settings_boolean_values_changed]] Values that don't come from the
+configuration, such as a [[link,userdb]] lookup's reply, also accept `y` and
+`1` as `yes`. There is no such alternative for `no`.
 
 All these are case-insensitive. Other values give errors.
 

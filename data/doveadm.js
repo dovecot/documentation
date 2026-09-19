@@ -2635,7 +2635,21 @@ returned.`,
 	},
 
 	reload: {
-		args: {},
+		args: {
+			'kick-timeout': {
+				example: '4h',
+				type: doveadm_arg_types.STRING,
+				text: `
+Override [[setting,service_shutdown_clients_timeout]] for this reload: how long the
+processes of the old configuration may keep serving their existing clients.
+\`0\` disconnects them immediately, \`infinite\` keeps them until the
+clients disconnect.`,
+			},
+		},
+		added: {
+			'service_shutdown_clients_changed': `
+\`kick-timeout\` argument added.`
+		},
 		man: 'doveadm',
 		text: `Reload Dovecot configuration.`,
 	},
@@ -2692,6 +2706,14 @@ returned.`,
 
 	'service status': {
 		args: {
+			'all-generations': {
+				cli: 'a',
+				type: doveadm_arg_types.BOOL,
+				text: `
+List also the services of the older configuration generations, which are still
+around because of [[setting,service_shutdown_clients_timeout]]. Each service is then
+listed once per generation.`,
+			},
 			service: {
 				example: ['name'],
 				positional: true,
@@ -2699,6 +2721,10 @@ returned.`,
 				type: doveadm_arg_types.ARRAY,
 				text: `Filter output to only these services.`,
 			},
+		},
+		added: {
+			'service_shutdown_clients_changed': `
+\`all-generations\` argument added.`
 		},
 		man: 'doveadm-service-status',
 		text: `Show information about Dovecot services.`,
