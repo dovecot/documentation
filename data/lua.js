@@ -104,6 +104,53 @@ as the parent.`
 	},
 
 	{
+		name: 'str_sanitize',
+		args: {
+			input: {
+				type: 'string',
+				text: `String to sanitize.`
+			},
+			max_bytes: {
+				type: 'int',
+				text: `Maximum length of the result in bytes, including the appended \`...\`. Must be at least 1.`
+			},
+		},
+		return: `The sanitized string.`,
+		tags: [ 'dovecot' ],
+		text: `
+[[added,lua_str_sanitize_added]] Replace all control characters in the input
+with \`?\`, and truncate it to \`max_bytes\` bytes.
+
+A truncated result ends with \`...\`. The input is treated as UTF-8, so a
+multi-byte character is never cut in half, but \`max_bytes\` counts bytes
+rather than characters. Use \`str_sanitize_utf8()\` to count characters.
+
+This is mainly useful for including untrusted data in log messages.`
+	},
+
+	{
+		name: 'str_sanitize_utf8',
+		args: {
+			input: {
+				type: 'string',
+				text: `String to sanitize.`
+			},
+			max_cps: {
+				type: 'int',
+				text: `Maximum length of the result in unicode code points, including the appended ellipsis. Must be at least 1.`
+			},
+		},
+		return: `The sanitized string.`,
+		tags: [ 'dovecot' ],
+		text: `
+[[added,lua_str_sanitize_added]] Like \`str_sanitize()\`, but counts unicode
+code points instead of bytes.
+
+Control characters are replaced with the unicode replacement character
+(U+FFFD), and a truncated result ends with a horizontal ellipsis (U+2026).`
+	},
+
+	{
 		name: 'base64.encode',
 		args: {
 			input: {
@@ -352,6 +399,58 @@ Set payload data to the request.
 
 Optionally you can set \`synchronous\`, which will cause "100 Continue"
 header to be sent.`
+	},
+
+	{
+		name: 'set_timeout',
+		args: {
+			value: {
+				type: 'string',
+				text: `Time interval, e.g. \`2s\` or \`500ms\`.`
+			},
+		},
+		tags: [ 'http_request' ],
+		text: `
+[[added,lua_http_request_overrides_added]] Override the client's
+\`request_timeout\` ([[setting,http_client_request_timeout]]) for this
+request.
+
+This is the timeout for a single attempt, so a request that is retried can
+take up to \`max_attempts\` times this long. Use \`set_absolute_timeout()\`
+to limit the total time instead.`
+	},
+
+	{
+		name: 'set_absolute_timeout',
+		args: {
+			value: {
+				type: 'string',
+				text: `Time interval, e.g. \`2s\` or \`500ms\`.`
+			},
+		},
+		tags: [ 'http_request' ],
+		text: `
+[[added,lua_http_request_overrides_added]] Override the client's
+\`request_absolute_timeout\` ([[setting,http_client_request_absolute_timeout]])
+for this request.
+
+This is the maximum total time the request may take, counted from
+\`submit()\` and including any retries.`
+	},
+
+	{
+		name: 'set_max_attempts',
+		args: {
+			value: {
+				type: 'int',
+				text: `Maximum number of attempts. Must be at least 1.`
+			},
+		},
+		tags: [ 'http_request' ],
+		text: `
+[[added,lua_http_request_overrides_added]] Override the client's
+\`request_max_attempts\` ([[setting,http_client_request_max_attempts]]) for
+this request.`
 	},
 
 	{
