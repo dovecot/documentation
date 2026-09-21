@@ -51,6 +51,7 @@ export const updates = {
 	ja3_identifier: '2.4.0',
 	ldap_multi_added: '2.4.0',
 	lmtp_nologin_added: '2.4.0',
+	log_message_control_chars_changed: '2.4.6',
 	login_proxy_rawlog_dir_changed: '2.4.2',
 	lua_auth_init: '2.4.0',
 	lua_dns_client: '2.4.0',
