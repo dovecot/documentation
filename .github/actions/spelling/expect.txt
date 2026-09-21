@@ -313,7 +313,6 @@ inthread
 invol
 IOERR
 ioloop
-IPADDR
 ipairs
 ipt
 iredmail
