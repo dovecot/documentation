@@ -49,7 +49,7 @@ This command uses by default the output formatter **table**.
 **--ps**
 :   Print one line per process, with the process title as shown by ps(1).
     This shows what each of the user's processes is currently doing. Can't
-    be used together with **-1**. [[added,doveadm_who_ps_added]]
+    be used together with **-1**.
 
 ## ARGUMENTS
 
