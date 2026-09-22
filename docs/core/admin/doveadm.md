@@ -278,6 +278,7 @@ HTTP response codes:
 | ---- | ------ |
 | 400 | Invalid request. Response body contains error message in text/plain. |
 | 401 | Unauthorized (missing authentication). |
+| 403 | Forbidden (authentication failed). [[removed,settings_doveadm_allowed_commands_removed]] |
 | 404 | Unknown doveadm command. |
 | 500 | Internal server error (see Dovecot logs for more information). |
 
