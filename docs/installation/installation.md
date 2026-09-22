@@ -224,9 +224,9 @@ Default is 8, to make sure 64bit memory accessing works.
 
 ##### `--with-ioloop=IOLOOP`
 
-Specifies what I/O loop method to use. Possibilities are `select`,
-`poll`, `epoll` and `kqueue`. The default is to use the best
-method available on your system.
+Specifies what I/O loop method to use. Possibilities are `poll`, `epoll`
+and `kqueue`. The default is to use the best method available on your
+system.
 
 ##### `--with-notify=NOTIFY`
 
