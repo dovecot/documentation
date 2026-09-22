@@ -24,9 +24,7 @@ lookups.
 
 ## Requirements
 
-To make the sections available for the configuration to read you need to install
-the respective packages like `dovecot-mysql` else you will
-encounter error message `Unknown section name: mysql`.
+To make the sections available for the configuration to read you need to install the respective packages like `dovecot-mysql` else you will encounter error message `Unknown section name: mysql`.
 
 ## Dovecot Configuration
 
