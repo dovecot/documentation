@@ -154,7 +154,6 @@ dlog
 dlua
 dnl
 dnotify
-dnpassword
 DOI
 domainless
 domainname
@@ -819,9 +818,9 @@ tlsmgr
 TLSs
 tmpfs
 TODOs
-tohdr
 tokeninfo
 toolarge
+tracebacks
 transitioning
 Troost
 tscript
