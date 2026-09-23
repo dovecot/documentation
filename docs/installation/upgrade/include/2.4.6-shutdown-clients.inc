@@ -6,6 +6,13 @@
    [[setting,dovecot_config_version]] is older than this release. A reload
    keeps the existing client sessions running for that long, e.g. to take new
    SSL certificates into use without disconnecting anyone.
+ * When the timeout expires - or right away, with the default `0` - the
+   processes disconnect all their remaining clients, also the ones that are
+   in the middle of a command, and the login processes abort the logins that
+   are still in progress. Previously `shutdown_clients=yes` kept an IMAP
+   session running until the client had been idle for 10 seconds, or for 30
+   seconds if it never was, and the other services waited for up to 30
+   seconds for the clients to disconnect by themselves.
  * Only the processes of [[setting,service_type,client]] and
    [[setting,service_type,login]] services keep serving their clients across a
    reload. The internal services are always replaced by it, so their old
