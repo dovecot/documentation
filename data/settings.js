@@ -4149,7 +4149,8 @@ If empty, the driver uses the datacenter of whichever contact point in
 [[setting,cassandra_hosts]] answers first. This is nondeterministic when
 [[setting,cassandra_hosts]] contains hosts from multiple datacenters. Hosts in
 the other datacenters are never used. It's recommended to set this when the
-Cassandra cluster has multiple datacenters.`
+Cassandra cluster has multiple datacenters. See
+[[link,sql_cassandra_local_datacenter]].`
 	},
 
 	cassandra_log_level: {
