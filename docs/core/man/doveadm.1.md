@@ -37,9 +37,15 @@ Execute **doveadm help**, for a command usage listing.
 
 These commands work directly with Dovecot's master process.
 
-### doveadm reload
+### doveadm reload [**--kick-timeout** *time*]
 
 Force [[man,dovecot]] to reload the configuration.
+
+**--kick-timeout** *time* overrides [[setting,service_shutdown_clients_timeout]] for
+the processes of the old configurations, including the ones that earlier
+reloads left running: how long they may keep serving their existing clients.
+**0** disconnects them immediately, **infinite** keeps them until the clients
+disconnect. The next reload uses the configured setting again.
 
 ### doveadm stop
 

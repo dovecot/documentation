@@ -3463,6 +3463,14 @@ If all messages are desired to be moved, the "all" query can be used.
 					type: doveadm_response_types.TIMESTAMP,
 					description: `Timestamp when a termination signal was last sent to this process.`,
 				},
+				generation: {
+					type: doveadm_response_types.STRING,
+					description: `Configuration generation the process belongs to. Increases by one for every reload, so processes preserved from before a reload (see [[setting,service_shutdown_clients_timeout]]) have a smaller number than the current one.`,
+				},
+				kill_time: {
+					type: doveadm_response_types.TIMESTAMP,
+					description: `Timestamp when the master process is going to signal the process next, or 0 if it isn't going to. For a preserved process this is when its clients are disconnected.`,
+				},
 			},
 		},
 		man: 'doveadm-process-status',
@@ -3731,8 +3739,23 @@ returned.`,
 	},
 
 	reload: {
-		args: {},
+		args: {
+			'kick-timeout': {
+				example: '4h',
+				type: doveadm_arg_types.STRING,
+				text: `
+Override [[setting,service_shutdown_clients_timeout]] for the processes of the old
+configurations, including the ones that earlier reloads left running: how long
+they may keep serving their existing clients. \`0\` disconnects them
+immediately, \`infinite\` keeps them until the clients disconnect. The next
+reload uses the configured setting again.`,
+			},
+		},
 		response: null,
+		added: {
+			'service_shutdown_clients_changed': `
+\`kick-timeout\` argument added.`
+		},
 		man: 'doveadm',
 		text: `Reload Dovecot configuration.`,
 	},
@@ -3811,6 +3834,14 @@ returned.`,
 
 	'service status': {
 		args: {
+			'all-generations': {
+				cli: 'a',
+				type: doveadm_arg_types.BOOL,
+				text: `
+List also the services of the older configuration generations, which are still
+around because of [[setting,service_shutdown_clients_timeout]]. Each service is then
+listed once per generation.`,
+			},
 			service: {
 				example: ['name'],
 				positional: true,
@@ -3874,7 +3905,19 @@ returned.`,
 					type: doveadm_response_types.STRING,
 					description: `Total lifetime count of worker processes spawned for this service.`,
 				},
+				generation: {
+					type: doveadm_response_types.STRING,
+					description: `Configuration generation the service belongs to. Increases by one for every reload, so services preserved from before a reload (see [[setting,service_shutdown_clients_timeout]]) have a smaller number than the current one.`,
+				},
+				kill_time: {
+					type: doveadm_response_types.TIMESTAMP,
+					description: `Timestamp when the master process is going to signal the service's preserved processes next, or 0 if it isn't going to. Always 0 for the current generation.`,
+				},
 			},
+		},
+		added: {
+			'service_shutdown_clients_changed': `
+\`all-generations\` argument added.`
 		},
 		man: 'doveadm-service-status',
 		text: `Show information about Dovecot services.`,
