@@ -4013,7 +4013,7 @@ batch fails, only some of the changes may have been written. Batches that
 update a single partition are atomic in either case.`
 	},
 
-	cassandra_metrics: {
+	cassandra_metrics_path: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.STRING,
 		text: `
