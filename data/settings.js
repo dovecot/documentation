@@ -10888,7 +10888,7 @@ variables. Weak algorithms are explicitly disallowed, such as MD5.`,
 	ssl_cipher_list: {
 		default: 'ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH (for ssl_server, empty for ssl_client)',
 		seealso: [ 'ssl', 'ssl_cipher_suites', 'ssl_min_protocol', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.STRING,
 		text: `
 The list of SSL ciphers to use for TLSv1.2 and below connections, in order
@@ -10903,6 +10903,7 @@ This setting is used for both incoming and outgoing SSL connections.`
 	ssl_cipher_suites: {
 		default: '\\<OpenSSL version specific\\>',
 		seealso: [ 'ssl', 'ssl_cipher_list', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl_client' ],
 		values: setting_types.STRING,
 		text: `
 The list of SSL cipher suites to use for TLSv1.3 connections, in order of
@@ -10922,7 +10923,7 @@ Named filter, which can be used for specifying SSL client settings.`
 
 	ssl_client_ca_dir: {
 		seealso: [ 'ssl', 'ssl_client_ca_file', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.STRING,
 		text: `
 The directory where trusted SSL CA certificates can be found. For example
@@ -10938,7 +10939,7 @@ empty, the system CA certificates are used.`
 	},
 
 	ssl_client_ca_file: {
-		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		seealso: [ 'ssl', 'ssl_client_ca_dir', '[[link,ssl_configuration]]' ],
 		values: setting_types.FILE,
 		text: `
@@ -10965,7 +10966,7 @@ empty, the system CA certificates are used.`
 			'ssl_client_key_file',
 			'[[link,ssl_configuration]]',
 		],
-		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.FILE,
 		text: `
 Public SSL certificate used for outgoing SSL connections. This is generally
@@ -10987,7 +10988,7 @@ ssl_client_key_file = /etc/dovecot/dovecot-client.key
 			'ssl_client_cert_file',
 			'[[link,ssl_configuration]]',
 		],
-		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.FILE,
 		text: `
 Private key for [[setting,ssl_client_cert_file]]. If it is password protected,
@@ -11004,13 +11005,14 @@ ssl_client_key_file = /etc/dovecot/dovecot-client.key
 	ssl_client_key_password: {
 		values: setting_types.STRING,
 		seealso: [ 'ssl', 'ssl_client_key_file', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-cassandra' ],
+		tags: [ 'ssl-cassandra', 'ssl_client' ],
 		text: `
 Password for the [[setting,ssl_client_key_file]].`
 	},
 
 	ssl_crypto_device: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl_client' ],
 		values: setting_types.STRING,
 		text: `
 Available Values: <Obtain by running \`openssl engine\` command>
@@ -11021,7 +11023,7 @@ Which SSL crypto device to use.`
 	ssl_curve_list: {
 		default: '\\<defaults from the SSL library\\>',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap' ],
+		tags: [ 'ssl-ldap', 'ssl_client' ],
 		values: setting_types.STRING,
 		text: `
 Colon separated list of elliptic curves to use, in order of preference.
@@ -11057,7 +11059,7 @@ ssl_server_dh_file = /path/to/dh.pem
 	ssl_client_require_valid_cert: {
 		default: 'yes',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.BOOLEAN,
 		text: `
 Require a valid certificate when connecting to external SSL services?`
@@ -11100,7 +11102,7 @@ Alternatively, you can supply the password via the -p parameter at startup.`
 	ssl_min_protocol: {
 		default: 'TLSv1.2',
 		seealso: [ 'ssl', 'ssl_cipher_list', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap' ],
+		tags: [ 'ssl-ldap', 'ssl_client' ],
 		values: setting_types.STRING,
 		text: `
 The minimum SSL protocol version Dovecot accepts. It cannot be empty.
@@ -11132,6 +11134,7 @@ Supported values are:
 
 	ssl_options: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl_client' ],
 		values: setting_types.ENUM,
 		values_enum: [ 'compression', 'no_ticket' ],
 		text: `
