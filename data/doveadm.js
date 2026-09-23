@@ -3744,10 +3744,11 @@ returned.`,
 				example: '4h',
 				type: doveadm_arg_types.STRING,
 				text: `
-Override [[setting,service_shutdown_clients_timeout]] for this reload: how long the
-processes of the old configuration may keep serving their existing clients.
-\`0\` disconnects them immediately, \`infinite\` keeps them until the
-clients disconnect.`,
+Override [[setting,service_shutdown_clients_timeout]] for the processes of the old
+configurations, including the ones that earlier reloads left running: how long
+they may keep serving their existing clients. \`0\` disconnects them
+immediately, \`infinite\` keeps them until the clients disconnect. The next
+reload uses the configured setting again.`,
 			},
 		},
 		response: null,
