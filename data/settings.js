@@ -10798,6 +10798,12 @@ running after the master process was stopped.
 | *time* | The clients are disconnected after this time. |
 | \`infinite\` | The clients are never disconnected. The processes stop once their last client is gone. |
 
+The time is the maximum: when it is up, the processes disconnect all their
+remaining clients, also the ones that are in the middle of a command, and the
+login processes abort the logins that are still in progress. A login process
+that proxies a connection to a backend waits up to two seconds for the
+connection to become quiet, so that a reply isn't cut in the middle.
+
 Only the processes of [[setting,service_type,client]] and
 [[setting,service_type,login]] services and the log process are preserved. The
 internal services are replaced by the reload, so their old processes are
