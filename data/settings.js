@@ -10835,7 +10835,9 @@ connections to the backends - so the login service's timeout alone decides how
 long the existing sessions keep running.
 
 A single reload can override the setting for all the services with
-[[doveadm,reload,--kick-timeout]].
+[[doveadm,reload,--kick-timeout]]. The override covers also the processes that
+earlier reloads left running, so \`--kick-timeout 0\` disconnects every preserved
+client.
 
 ::: warning
 After the master process has been stopped there is nobody left to escalate to
