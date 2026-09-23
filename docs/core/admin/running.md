@@ -47,6 +47,12 @@ they are disconnected. The setting can also be set per service, e.g.
 `service pop3 { shutdown_clients_timeout = 0 }` disconnects the POP3 sessions
 immediately regardless of the value set outside the service.
 
+The time is the maximum: when it is up, the processes disconnect all their
+remaining clients, also the ones that are in the middle of a command, and the
+login processes abort the logins that are still in progress. A login process
+that proxies a connection to a backend waits up to two seconds for the
+connection to become quiet, so that a reply isn't cut in the middle.
+
 Both processes serving a session need the timeout: with TLS the login process
 keeps proxying the connection also after the login, so the session ends as soon
 as either of the imap and imap-login processes is killed. On a proxy there are
