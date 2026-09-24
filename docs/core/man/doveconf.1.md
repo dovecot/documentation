@@ -162,7 +162,9 @@ It can also be used to inspect configuration @groups by querying them directly.
 :   Ignore all unknown settings in config file.
 
 **-w**
-:   TODO (hide obsolete warnings).
+:   Hide the "Obsolete setting" warnings that are printed when the
+    configuration uses settings that were renamed in a newer Dovecot
+    version.
 
 **-x**
 :   Expand configuration variables (e.g. `$ENV:foo`) and show file contents
