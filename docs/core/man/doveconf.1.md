@@ -52,7 +52,10 @@ It can also be used to inspect configuration @groups by querying them directly.
 :   Show all settings with their currently configured values.
 
 **-C**
-:   TODO (check full config).
+:   With **-F** *command*, check the full configuration immediately and
+    fail on any error, instead of delaying errors until the executed
+    command tries to use the affected settings. This is what **dovecot**
+    uses at startup.
 
 **-c** *config-file*
 :   Read configuration from the given *config-file*. By default
