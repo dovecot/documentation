@@ -24,7 +24,6 @@ datacenter of whichever [[setting,cassandra_hosts]] host answers first.
 | [[setting,cassandra_latency_aware_retry_period]] | Setting was added. |
 | [[setting,cassandra_latency_aware_update_rate]] | Setting was added. |
 | [[setting,cassandra_latency_aware_min_measured]] | Setting was added. |
-| [[setting,cassandra_dns_timeout]] | Setting was added. |
 | [[setting,cassandra_request_queue_size]] | Setting was added. |
 | [[setting,cassandra_application_name]] | Setting was added. |
 | [[setting,cassandra_application_version]] | Setting was added. |
