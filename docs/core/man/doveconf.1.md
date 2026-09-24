@@ -9,7 +9,7 @@ dovecotComponent: core
 ## SYNOPSIS
 
 **doveconf**
-  [**-aCdFInPNUwx**]
+  [**-aCdFnPNUwx**]
   [**-c** *config-file*]
   [**-f** *filter*]
 
@@ -17,6 +17,9 @@ dovecotComponent: core
   [**-C**]
   [**-c** *config-file*]
   **-F** *command* [*args* ...]
+
+**doveconf**
+  **-I** *arg*
 
 **doveconf**
   [**-n**]
@@ -135,8 +138,11 @@ It can also be used to inspect configuration @groups by querying them directly.
 **-h**
 :   Hide the setting's name, show only the setting's value.
 
-**-I**
-:   TODO (dump config import).
+**-I** *arg*
+:   Dump the built-in default setting groups (`@mailbox_defaults`,
+    `@metric_defaults`) and any settings imported by loaded config
+    plugin modules, then exit without parsing the configuration file.
+    An argument is required, but its value is not used.
 
 **-n**
 :   Show only settings with non-default values. This is the default behavior
