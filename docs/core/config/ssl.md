@@ -389,7 +389,7 @@ openssl crl -in class3-revoke.crl -inform DER -outform PEM > class3-revoke.pem
 ```
 
 With the above settings, if a client connects which doesn't present a
-certificate signed by one of the CAs in the [setting,ssl_server_ca_file]], Dovecot won't
+certificate signed by one of the CAs in the [[setting,ssl_server_ca_file]], Dovecot won't
 let the user log in. This could present a problem if you're using Dovecot
 to provide SASL authentication for an MTA (such as Postfix) which is not
 capable of supplying client certificates for SASL authentication.
