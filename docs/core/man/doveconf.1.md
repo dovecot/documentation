@@ -14,6 +14,11 @@ dovecotComponent: core
   [**-f** *filter*]
 
 **doveconf**
+  [**-C**]
+  [**-c** *config-file*]
+  **-F** *command* [*args* ...]
+
+**doveconf**
   [**-n**]
   [**-c** *config-file*]
   *section_name* ...
@@ -87,6 +92,14 @@ It can also be used to inspect configuration @groups by querying them directly.
     Settings groups are included in `:INCLUDE` lines. The includes are
     processed last, after all filters have been applied, so all settings inside
     the groups can be overridden.
+
+    When followed by a *command* argument, **-F** *command* [*args* ...]
+    executes *command* instead of printing anything, passing it the parsed
+    configuration in a file descriptor whose number is given in the
+    `DOVECOT_CONFIG_FD` environment variable. Any arguments after
+    *command* are passed to it untouched. This is used internally by
+    Dovecot's own programs to load their configuration and is not
+    normally run directly.
 
 **-f** *filter*
 :   Show the matching configuration for the specified *filter*
