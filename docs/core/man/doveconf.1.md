@@ -10,11 +10,13 @@ dovecotComponent: core
 
 **doveconf**
   [**-aCdFnPNsUwx**]
+  [**-i** *instance-name*]
   [**-c** *config-file*]
   [**-f** *filter*]
 
 **doveconf**
   [**-C**]
+  [**-i** *instance-name*]
   [**-c** *config-file*]
   **-F** *command* [*args* ...]
 
@@ -23,11 +25,13 @@ dovecotComponent: core
 
 **doveconf**
   [**-n**]
+  [**-i** *instance-name*]
   [**-c** *config-file*]
   *section_name* ...
 
 **doveconf**
   [**-h**]
+  [**-i** *instance-name*]
   [**-c** *config-file*]
   [**-f** *filter*]
   *setting_name* ...
@@ -143,6 +147,11 @@ It can also be used to inspect configuration @groups by querying them directly.
     `@metric_defaults`) and any settings imported by loaded config
     plugin modules, then exit without parsing the configuration file.
     An argument is required, but its value is not used.
+
+**-i** *instance-name*
+:   If using multiple Dovecot instances, choose the config file based
+    on this instance name. See [[setting,instance_name]] for more
+    information.
 
 **-n**
 :   Show only settings with non-default values. This is the default behavior
