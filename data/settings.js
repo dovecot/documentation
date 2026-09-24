@@ -3970,18 +3970,6 @@ Write consistency when deleting from the database fails with primary
 consistency.`
 	},
 
-	cassandra_dns_timeout: {
-		added: {
-			settings_cassandra_cluster_settings_added: false,
-		},
-		tags: [ 'sql-cassandra' ],
-		values: setting_types.TIME_MSECS,
-		seealso: [ 'cassandra_hosts', 'cassandra_connect_timeout' ],
-		default: '2s',
-		text: `
-Timeout for DNS lookups of [[setting,cassandra_hosts]].`
-	},
-
 	cassandra_execution_retry_interval: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.TIME_MSECS,
@@ -5702,11 +5690,21 @@ UNIX socket path to the dns-client service.`
 	},
 
 	dns_client_timeout: {
-		tags: [ 'dns', 'dns_client' ],
+		tags: [ 'dns', 'dns_client', 'sql-cassandra' ],
 		values: setting_types.TIME_MSECS,
 		default: '10s',
 		text: `
-Timeout for DNS lookups.`
+Timeout for DNS lookups.
+
+This is also used by the Cassandra driver for resolving
+[[setting,cassandra_hosts]]. It can be changed for Cassandra only by placing
+it inside a \`cassandra\` filter:
+
+\`\`\`[dovecot.conf]
+cassandra {
+  dns_client_timeout = 5s
+}
+\`\`\``
 	},
 
 	dotlock_use_excl: {
