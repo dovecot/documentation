@@ -1,4 +1,5 @@
 aarch
+abns
 authid
 authzid
 APPENDLIMIT
@@ -14,6 +15,7 @@ frop
 fuzzer
 github
 hardenings
+hostaddr
 https
 iostream
 iostreams
@@ -50,6 +52,8 @@ sls
 sni
 spnego
 ssh
+tlv
+TLVs
 ubsan
 ubuntu
 Uppercases
