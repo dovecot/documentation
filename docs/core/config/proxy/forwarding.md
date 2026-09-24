@@ -11,7 +11,7 @@ Dovecot supports proxying various pieces of information and even
 variables for various protocols when forwarding connection.
 
 It requires that the sender is listed under
-[setting,login_trusted_networks]].
+[[setting,login_trusted_networks]].
 
 For IMAP, it uses the `ID` command, for other protocols, `XCLIENT` is used.
 
