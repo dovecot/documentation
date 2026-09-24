@@ -3845,12 +3845,77 @@ is run asynchronously.`
 
 	/* SQL Cassandra settings. */
 
+	cassandra_application_name: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		seealso: [ 'cassandra_application_version', 'cassandra_client_id' ],
+		default: 'Dovecot',
+		text: `
+Application name sent to the Cassandra server when connecting. This can be
+used to identify Dovecot's client connections on the Cassandra side.
+
+If empty, neither the application name nor
+[[setting,cassandra_application_version]] is sent.
+
+Older cpp-driver versions can't send the application name. The default is
+then empty, and setting a name fails.`
+	},
+
+	cassandra_application_version: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		seealso: [ 'cassandra_application_name' ],
+		default: '*[Dovecot version]*',
+		text: `
+Application version sent to the Cassandra server when connecting. If empty,
+the Dovecot version is used.
+
+This is sent only when [[setting,cassandra_application_name]] is non-empty.`
+	},
+
+	cassandra_client_id: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		seealso: [ 'cassandra_application_name' ],
+		default: '*[random UUID]*',
+		text: `
+Client ID UUID sent to the Cassandra server when connecting, e.g.
+\`01234567-89ab-4def-8123-456789abcdef\`. If empty, the driver generates a
+random UUIDv4.`
+	},
+
 	cassandra_connect_timeout: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.TIME_MSECS,
 		default: '5s',
 		text: `
 Connection timeout.`
+	},
+
+	cassandra_connections_per_host: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.UINT,
+		seealso: [ 'cassandra_io_thread_count' ],
+		default: 1,
+		text: `
+Number of connections to create to each Cassandra host for each IO thread.
+The total number of connections per host is this value multiplied by
+[[setting,cassandra_io_thread_count]].
+
+Increasing this may help to increase concurrency with busy processes.
+Must not be \`0\`.`
 	},
 
 	cassandra_debug_queries: {
@@ -3969,13 +4034,111 @@ How long to idle before disconnecting.`
 Specifies the keyspace name to use.`
 	},
 
+	cassandra_latency_aware_exclusion_threshold: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		seealso: [ 'cassandra_latency_aware_routing' ],
+		default: '2.0',
+		text: `
+Used by [[setting,cassandra_latency_aware_routing]]: how much worse a host's
+average latency may be compared to the best performing host before it is
+penalized. For example the default \`2.0\` penalizes hosts whose average
+latency is more than twice the best host's latency.
+
+This is a floating point number, which must be at least \`1.0\`.`
+	},
+
+	cassandra_latency_aware_min_measured: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.UINT,
+		seealso: [ 'cassandra_latency_aware_routing' ],
+		default: 50,
+		text: `
+Used by [[setting,cassandra_latency_aware_routing]]: minimum number of
+latency measurements per host before the host's latency is taken into
+account.`
+	},
+
+	cassandra_latency_aware_retry_period: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		seealso: [ 'cassandra_latency_aware_routing' ],
+		default: '10s',
+		text: `
+Used by [[setting,cassandra_latency_aware_routing]]: how long a host is
+penalized before it is given another chance.`
+	},
+
 	cassandra_latency_aware_routing: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.BOOLEAN,
+		seealso: [
+			'cassandra_latency_aware_exclusion_threshold',
+			'cassandra_latency_aware_min_measured',
+			'cassandra_latency_aware_retry_period',
+			'cassandra_latency_aware_scale',
+			'cassandra_latency_aware_update_rate',
+		],
 		default: 'no',
 		text: `
 When turned on, latency-aware routing tracks the latency of queries to avoid
 sending new queries to poorly performing Cassandra nodes.`
+	},
+
+	cassandra_latency_aware_scale: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		seealso: [ 'cassandra_latency_aware_routing' ],
+		default: '100ms',
+		text: `
+Used by [[setting,cassandra_latency_aware_routing]]: controls the weight
+given to older latencies when calculating a host's average latency. A larger
+value gives more weight to older measurements.`
+	},
+
+	cassandra_latency_aware_update_rate: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		seealso: [ 'cassandra_latency_aware_routing' ],
+		default: '100ms',
+		text: `
+Used by [[setting,cassandra_latency_aware_routing]]: how often the best
+average latency is recalculated.`
+	},
+
+	cassandra_local_datacenter: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		seealso: [ 'cassandra_hosts', 'cassandra_read_consistency', 'cassandra_write_consistency', 'cassandra_delete_consistency' ],
+		text: `
+Name of the local datacenter. Queries are sent only to the hosts in the
+local datacenter. This also defines the datacenter used by the \`local-one\`
+and \`local-quorum\` consistency levels.
+
+If empty, the driver uses the datacenter of whichever contact point in
+[[setting,cassandra_hosts]] answers first. This is nondeterministic when
+[[setting,cassandra_hosts]] contains hosts from multiple datacenters. Hosts in
+the other datacenters are never used. It's recommended to set this when the
+Cassandra cluster has multiple datacenters. See
+[[link,sql_cassandra_local_datacenter]].`
 	},
 
 	cassandra_log_level: {
@@ -3996,7 +4159,24 @@ Whether to log about failed requests that are retried (which may or may
 not succeed after the retry).`
 	},
 
-	cassandra_metrics: {
+	cassandra_logged_batches: {
+		added: {
+			settings_cassandra_logged_batches_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		text: `
+Whether transactions with multiple statements are sent as \`LOGGED\` batches.
+When \`no\`, they are sent as \`UNLOGGED\` batches. This is needed for
+Cassandra-compatible databases that don't support \`LOGGED\` batches.
+
+\`UNLOGGED\` batches that update multiple partitions aren't atomic: if the
+batch fails, only some of the changes may have been written. Batches that
+update a single partition are atomic in either case.`
+	},
+
+	cassandra_metrics_path: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.STRING,
 		text: `
@@ -4082,12 +4262,101 @@ Read consistency.`
 Read consistency if primary consistency fails.`
 	},
 
+	cassandra_reconnect_base_delay: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		seealso: [ 'cassandra_reconnect_policy', 'cassandra_reconnect_max_delay' ],
+		default: '2s',
+		text: `
+With [[setting,cassandra_reconnect_policy,exponential]] this is the initial
+delay before reconnecting to a Cassandra host. It must be larger than
+1 millisecond.
+
+With [[setting,cassandra_reconnect_policy,constant]] this is the delay
+between all reconnection attempts. \`0\` means reconnecting immediately.`
+	},
+
+	cassandra_reconnect_max_delay: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		seealso: [ 'cassandra_reconnect_policy', 'cassandra_reconnect_base_delay' ],
+		default: '60s',
+		text: `
+With [[setting,cassandra_reconnect_policy,exponential]] this is the maximum
+delay between reconnection attempts. It must not be smaller than
+[[setting,cassandra_reconnect_base_delay]].
+
+Not used with [[setting,cassandra_reconnect_policy,constant]].`
+	},
+
+	cassandra_reconnect_policy: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'exponential', 'constant' ],
+		seealso: [ 'cassandra_reconnect_base_delay', 'cassandra_reconnect_max_delay' ],
+		default: 'exponential',
+		text: `
+How to reconnect to a Cassandra host after the connection is lost:
+
+\`exponential\`
+:   Start with [[setting,cassandra_reconnect_base_delay]] and increase the
+    delay exponentially after each attempt, up to
+    [[setting,cassandra_reconnect_max_delay]]. A random jitter of +/- 15% is
+    added to the delay.
+
+\`constant\`
+:   Always wait [[setting,cassandra_reconnect_base_delay]].
+
+cpp-driver older than v2.14 supports only \`constant\`, which is then also
+the default.`
+	},
+
+	cassandra_request_queue_size: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.UINT,
+		seealso: [ 'cassandra_io_thread_count', 'cassandra_metrics_path' ],
+		default: 8192,
+		text: `
+Maximum number of requests queued for each IO thread while waiting for the
+thread to process them. The total capacity is this value multiplied by
+[[setting,cassandra_io_thread_count]]. The driver rounds the value up to the
+next power of two.
+
+When the queue is full, new requests fail immediately. These failures are
+counted in the \`recv_err_queue_full\` field of
+[[setting,cassandra_metrics_path]]. Must not be \`0\`.`
+	},
+
 	cassandra_request_timeout: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.TIME_MSECS,
 		default: '60s',
 		text: `
 How long to wait for a query to finish.`
+	},
+
+	cassandra_source_ip: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.IPADDR,
+		text: `
+Source IP address to use for connections to Cassandra hosts. Only IP
+addresses are supported, not host names. If empty, the source IP address is
+chosen by the operating system.`
 	},
 
 	cassandra_ssl: {
@@ -4117,6 +4386,53 @@ value must something else than \`no\`.
 
 Configure SSL certificates using the \`ssl_client_*\` settings. See
 [[link,ssl_configuration]].`
+	},
+
+	cassandra_tcp_keepalive: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME,
+		seealso: [ 'cassandra_heartbeat_interval' ],
+		default: 0,
+		text: `
+If non-zero, enable TCP keepalive for Cassandra connections with this
+initial delay. This can detect connections that have been silently dropped by
+e.g. firewalls or NAT devices. \`0\` disables TCP keepalive.`
+	},
+
+	cassandra_token_aware_routing: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.BOOLEAN,
+		seealso: [ 'cassandra_token_aware_shuffle_replicas' ],
+		default: 'yes',
+		text: `
+Send queries directly to a host that has the data (a replica for the
+queried partition), avoiding an extra hop through a coordinator host. This
+should normally be kept enabled, but disabling it may be useful for
+debugging.`
+	},
+
+	cassandra_token_aware_shuffle_replicas: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.BOOLEAN,
+		seealso: [ 'cassandra_token_aware_routing' ],
+		default: 'yes',
+		text: `
+Used by [[setting,cassandra_token_aware_routing]]: randomly shuffle the
+replicas for each query. This distributes load better between the replicas,
+but reduces the effectiveness of the Cassandra server's caching. Disabling
+this may improve performance when the same keys are read repeatedly.
+
+Older cpp-driver versions don't support shuffling. The default is then
+\`no\`, and enabling it fails.`
 	},
 
 	cassandra_user: {
@@ -5374,11 +5690,21 @@ UNIX socket path to the dns-client service.`
 	},
 
 	dns_client_timeout: {
-		tags: [ 'dns', 'dns_client' ],
+		tags: [ 'dns', 'dns_client', 'sql-cassandra' ],
 		values: setting_types.TIME_MSECS,
 		default: '10s',
 		text: `
-Timeout for DNS lookups.`
+Timeout for DNS lookups.
+
+This is also used by the Cassandra driver for resolving
+[[setting,cassandra_hosts]]. It can be changed for Cassandra only by placing
+it inside a \`cassandra\` filter:
+
+\`\`\`[dovecot.conf]
+cassandra {
+  dns_client_timeout = 5s
+}
+\`\`\``
 	},
 
 	dotlock_use_excl: {
@@ -10888,7 +11214,7 @@ variables. Weak algorithms are explicitly disallowed, such as MD5.`,
 	ssl_cipher_list: {
 		default: 'ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH (for ssl_server, empty for ssl_client)',
 		seealso: [ 'ssl', 'ssl_cipher_suites', 'ssl_min_protocol', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.STRING,
 		text: `
 The list of SSL ciphers to use for TLSv1.2 and below connections, in order
@@ -10903,6 +11229,7 @@ This setting is used for both incoming and outgoing SSL connections.`
 	ssl_cipher_suites: {
 		default: '\\<OpenSSL version specific\\>',
 		seealso: [ 'ssl', 'ssl_cipher_list', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl_client' ],
 		values: setting_types.STRING,
 		text: `
 The list of SSL cipher suites to use for TLSv1.3 connections, in order of
@@ -10922,7 +11249,7 @@ Named filter, which can be used for specifying SSL client settings.`
 
 	ssl_client_ca_dir: {
 		seealso: [ 'ssl', 'ssl_client_ca_file', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.STRING,
 		text: `
 The directory where trusted SSL CA certificates can be found. For example
@@ -10938,7 +11265,7 @@ empty, the system CA certificates are used.`
 	},
 
 	ssl_client_ca_file: {
-		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		seealso: [ 'ssl', 'ssl_client_ca_dir', '[[link,ssl_configuration]]' ],
 		values: setting_types.FILE,
 		text: `
@@ -10965,7 +11292,7 @@ empty, the system CA certificates are used.`
 			'ssl_client_key_file',
 			'[[link,ssl_configuration]]',
 		],
-		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.FILE,
 		text: `
 Public SSL certificate used for outgoing SSL connections. This is generally
@@ -10987,7 +11314,7 @@ ssl_client_key_file = /etc/dovecot/dovecot-client.key
 			'ssl_client_cert_file',
 			'[[link,ssl_configuration]]',
 		],
-		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.FILE,
 		text: `
 Private key for [[setting,ssl_client_cert_file]]. If it is password protected,
@@ -11004,13 +11331,14 @@ ssl_client_key_file = /etc/dovecot/dovecot-client.key
 	ssl_client_key_password: {
 		values: setting_types.STRING,
 		seealso: [ 'ssl', 'ssl_client_key_file', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-cassandra' ],
+		tags: [ 'ssl-cassandra', 'ssl_client' ],
 		text: `
 Password for the [[setting,ssl_client_key_file]].`
 	},
 
 	ssl_crypto_device: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl_client' ],
 		values: setting_types.STRING,
 		text: `
 Available Values: <Obtain by running \`openssl engine\` command>
@@ -11021,7 +11349,7 @@ Which SSL crypto device to use.`
 	ssl_curve_list: {
 		default: '\\<defaults from the SSL library\\>',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap' ],
+		tags: [ 'ssl-ldap', 'ssl_client' ],
 		values: setting_types.STRING,
 		text: `
 Colon separated list of elliptic curves to use, in order of preference.
@@ -11057,7 +11385,7 @@ ssl_server_dh_file = /path/to/dh.pem
 	ssl_client_require_valid_cert: {
 		default: 'yes',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.BOOLEAN,
 		text: `
 Require a valid certificate when connecting to external SSL services?`
@@ -11100,7 +11428,7 @@ Alternatively, you can supply the password via the -p parameter at startup.`
 	ssl_min_protocol: {
 		default: 'TLSv1.2',
 		seealso: [ 'ssl', 'ssl_cipher_list', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap' ],
+		tags: [ 'ssl-ldap', 'ssl_client' ],
 		values: setting_types.STRING,
 		text: `
 The minimum SSL protocol version Dovecot accepts. It cannot be empty.
@@ -11132,6 +11460,7 @@ Supported values are:
 
 	ssl_options: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl_client' ],
 		values: setting_types.ENUM,
 		values_enum: [ 'compression', 'no_ticket' ],
 		text: `

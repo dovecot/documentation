@@ -9,11 +9,6 @@ export const lua_functions = [
 		// List of function arguments
 		args: {
 			text: {
-				// If this argument is set, the 'text (w/default)' and
-				// 'values' information from the Dovecot setting is used if it
-				// does NOT otherwise exist in this config.
-				// dovecot_setting: 'dovecot_setting_name',
-
 				// If true, this argument appears inside a Lua hash table
 				// instead of as a standalone argument.
 				// hash_arg: false,
@@ -203,125 +198,23 @@ are not restricted.`
 	{
 		name: 'client',
 		args: {
-			auto_redirect: {
-				dovecot_setting: 'http_client_auto_redirect',
-				hash_arg: true,
-			},
-			auto_retry: {
-				dovecot_setting: 'http_client_auto_retry',
-				hash_arg: true,
-			},
-			connect_backoff_time: {
-				dovecot_setting: 'http_client_connect_backoff_time',
-				hash_arg: true,
-			},
-			connect_backoff_max_time: {
-				dovecot_setting: 'http_client_connect_backoff_max_time',
-				hash_arg: true,
-			},
-			connect_timeout: {
-				dovecot_setting: 'http_client_connect_timeout',
-				hash_arg: true,
-			},
 			event_parent: {
 				hash_arg: true,
 				type: 'event',
 				text: `Parent event to use.`
 			},
-			request_max_attempts: {
-				dovecot_setting: 'http_client_request_max_attempts',
-				hash_arg: true,
-			},
-			max_auto_retry_delay: {
-				dovecot_setting: 'http_client_max_auto_retry_delay',
-				hash_arg: true,
-			},
-			max_connect_attempts: {
-				dovecot_setting: 'http_client_max_connect_attempts',
-				hash_arg: true,
-			},
-			max_idle_time: {
-				dovecot_setting: 'http_client_max_idle_time',
-				hash_arg: true,
-			},
-			request_max_redirects: {
-				dovecot_setting: 'http_client_request_max_redirects',
-				hash_arg: true,
-			},
-			proxy_url: {
-				dovecot_setting: 'http_client_proxy_url',
-				hash_arg: true,
-			},
-			request_absolute_timeout: {
-				dovecot_setting: 'http_client_request_absolute_timeout',
-				hash_arg: true,
-			},
-			request_timeout: {
-				dovecot_setting: 'http_client_request_timeout',
-				hash_arg: true,
-			},
-			soft_connect_timeout: {
-				dovecot_setting: 'http_client_soft_connect_timeout',
-				hash_arg: true,
-			},
-			ssl_cipher_list: {
-				dovecot_setting: 'ssl_cipher_list',
-				hash_arg: true
-			},
-			ssl_cipher_suites: {
-				dovecot_setting: 'ssl_cipher_suites',
-				hash_arg: true
-			},
-			ssl_client_ca_dir: {
-				dovecot_setting: 'ssl_client_ca_dir',
-				hash_arg: true
-			},
-			ssl_client_ca_file: {
-				dovecot_setting: 'ssl_client_ca_file',
-				hash_arg: true
-			},
-			ssl_client_cert_file: {
-				dovecot_setting: 'ssl_client_cert_file',
-				hash_arg: true
-			},
-			ssl_client_key_file: {
-				dovecot_setting: 'ssl_client_key_file',
-				hash_arg: true
-			},
-			ssl_client_key_password: {
-				dovecot_setting: 'ssl_client_key_password',
-				hash_arg: true
-			},
-			ssl_crypto_device: {
-				dovecot_setting: 'ssl_crypto_device',
-				hash_arg: true
-			},
-			ssl_curve_list: {
-				dovecot_setting: 'ssl_curve_list',
-				hash_arg: true
-			},
-			ssl_client_require_valid_cert: {
-				dovecot_setting: 'ssl_client_require_valid_cert',
-				hash_arg: true
-			},
-			ssl_min_protocol: {
-				dovecot_setting: 'ssl_min_protocol',
-				hash_arg: true
-			},
-			ssl_options: {
-				dovecot_setting: 'ssl_options',
-				hash_arg: true
-			},
-			rawlog_dir: {
-				dovecot_setting: 'http_client_rawlog_dir',
-				hash_arg: true,
-			},
-			user_agent: {
-				dovecot_setting: 'http_client_user_agent',
-				hash_arg: true,
-			},
-
 		},
+
+		// Hash arguments pulled automatically from the Dovecot settings with
+		// the listed tags, so new settings show up here without changes. The
+		// code (lib-lua/dlua-dovecot-http.c) accepts any setting with these
+		// tags, so keep the setting tags in sync with it. 'strip_prefix' is
+		// removed from the setting name to form the Lua argument name.
+		args_from_tags: [
+			{ tags: [ 'http_client' ], strip_prefix: 'http_client_' },
+			{ tags: [ 'ssl_client' ] },
+		],
+
 		return: 'An http_client object.',
 		tags: [ 'dovecot.http' ],
 		text: `
@@ -802,12 +695,12 @@ end`
 	{
 		name: 'set_timestamp',
 		args: {
-			seconds: {
+			tv_sec: {
 				hash_arg: true,
 				type: 'int',
 				text: `UNIX timestamp.`
 			},
-			nanoseconds: {
+			tv_nsec: {
 				hash_arg: true,
 				type: 'int',
 				text: `Nanoseconds part of the timestamp.`
@@ -815,9 +708,23 @@ end`
 		},
 		tags: [ 'dict.transaction' ],
 		text: `
-Set timestamp to the dict transaction.
+Set write timestamp for the entire dict transaction. This must be called
+before any changes are done to the transaction.
 
 This is currently used only with Cassandra.`
+	},
+
+	{
+		name: 'set_non_atomic',
+		tags: [ 'dict.transaction' ],
+		text: `
+Don't require the changes in the dict transaction to be atomic. If the
+commit fails, it's acceptable that only some of the changes have been
+written.
+
+This is currently used only with Cassandra, where the transaction is
+committed as an \`UNLOGGED\` batch instead of a \`LOGGED\` batch. See also
+[[setting,cassandra_logged_batches]].`
 	},
 
 	{
