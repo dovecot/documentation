@@ -21,7 +21,7 @@ dovecotComponent: core
   **-F** *command* [*args* ...]
 
 **doveconf**
-  **-I** *arg*
+  **-I**
 
 **doveconf**
   [**-n**]
@@ -142,11 +142,10 @@ It can also be used to inspect configuration @groups by querying them directly.
 **-h**
 :   Hide the setting's name, show only the setting's value.
 
-**-I** *arg*
+**-I**
 :   Dump the built-in default setting groups (`@mailbox_defaults`,
     `@metric_defaults`) and any settings imported by loaded config
     plugin modules, then exit without parsing the configuration file.
-    An argument is required, but its value is not used.
 
 **-i** *instance-name*
 :   If using multiple Dovecot instances, choose the config file based
