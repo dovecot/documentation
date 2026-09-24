@@ -11178,6 +11178,117 @@ Whether to give preference to the server's cipher list over a client's
 list.`
 	},
 
+	ssl_server_require_client_cert_issuer: {
+		added: {
+			settings_ssl_server_require_client_cert_issuer_added: false,
+		},
+		seealso: [
+			'ssl_server_require_client_cert_subject',
+			'ssl_server_request_client_cert',
+			'[[link,ssl_configuration]]',
+		],
+		values: setting_types.BOOLLIST,
+		text: `
+Require the client certificate's issuer (the certificate that signed it,
+not any higher certificate in the chain) to match at least one of the
+given requirements.
+
+Uses the same \`/key=value/key=value/\` element syntax as
+[[setting,ssl_server_require_client_cert_subject]]: the attributes within
+one element must all match (AND), any one element in the list satisfies
+the requirement (OR), and matching is exact and case-insensitive. Only DN
+attribute names are accepted (parsed using OpenSSL's \`OBJ_txt2nid()\`
+function) - the subject alternative name types accepted by
+\`ssl_server_require_client_cert_subject\` (\`dns=\`, \`email=\`, \`uri=\`,
+\`ip=\`) have no issuer equivalent and are rejected.
+
+Setting this (or [[setting,ssl_server_require_client_cert_subject]]) makes
+presenting a client certificate mandatory, including under
+[[setting,ssl_server_request_client_cert,any-cert]]. It is a configuration
+error to set this while [[setting,ssl_server_request_client_cert,no]].
+
+\`any-cert\` only relaxes chain validation, not this check: it accepts a
+certificate that fails chain validation, including an untrusted,
+self-signed one, which can then claim any issuer it likes. Combine this
+with [[link,passdb_check_client_fp]] (or verify the certificate normally
+instead) if the client's identity needs to be trusted, not just present.
+
+An unknown attribute name, or one of the subject alternative name types
+listed above, isn't caught by \`doveconf\`; it only surfaces as an error
+once Dovecot builds the SSL context for the requirement.
+
+::: tip
+A value containing a space cannot be written as a plain inline value - the
+config tokenizer splits it into separate list elements at each space. Use
+the block form instead:
+
+\`\`\`doveconf[dovecot.conf]
+ssl_server_require_client_cert_issuer {
+  "/CN=Acme Issuing CA/" = yes
+}
+\`\`\`
+:::`
+	},
+
+	ssl_server_require_client_cert_subject: {
+		added: {
+			settings_ssl_server_require_client_cert_subject_added: false,
+		},
+		seealso: [
+			'ssl_server_require_client_cert_issuer',
+			'ssl_server_request_client_cert',
+			'[[link,ssl_configuration]]',
+		],
+		values: setting_types.BOOLLIST,
+		text: `
+Require the client certificate's subject (or a subject alternative name)
+to match at least one of the given requirements.
+
+Each element is written OpenSSL-oneline style: \`/key=value/key=value/\`.
+The attributes within one element must all match (AND); satisfying any
+one element in the list satisfies the requirement (OR). Matching is exact
+and case-insensitive.
+
+\`CN=\` matches either the subject's \`CommonName\` or a \`dNSName\` subject
+alternative name. \`dns=\`, \`email=\`, \`uri=\` and \`ip=\` match only the
+corresponding subject alternative name type. Any other key is looked up as
+a DN attribute name (parsed using OpenSSL's \`OBJ_txt2nid()\` function) and
+matches only the DN, not a subject alternative name.
+
+The element must start and end with \`/\`, and every \`key=value\` segment
+must contain \`=\`. A literal \`/\` inside a value is written \`\\/\` - but
+in a quoted element (a plain quoted inline value, or a block form key,
+both of which unescape \`\\\\\` and \`\\"\` before this is parsed) the
+backslash itself needs escaping too, so it becomes \`\\\\/\`.
+
+Setting this (or [[setting,ssl_server_require_client_cert_issuer]]) makes
+presenting a client certificate mandatory, including under
+[[setting,ssl_server_request_client_cert,any-cert]]. It is a configuration
+error to set this while [[setting,ssl_server_request_client_cert,no]].
+
+\`any-cert\` only relaxes chain validation, not this check - but since it
+also accepts an untrusted, self-signed certificate, that certificate can
+claim any subject it likes. Combine this with
+[[link,passdb_check_client_fp]] (or verify the certificate normally
+instead) if the client's identity needs to be trusted, not just present.
+
+An unknown attribute name, or an invalid \`ip=\` address, isn't caught by
+\`doveconf\`; it only surfaces as an error once Dovecot builds the SSL
+context for the requirement.
+
+::: tip
+A value containing a space cannot be written as a plain inline value - the
+config tokenizer splits it into separate list elements at each space. Use
+the block form instead:
+
+\`\`\`doveconf[dovecot.conf]
+ssl_server_require_client_cert_subject {
+  "/CN=Acme Root CA/" = yes
+}
+\`\`\`
+:::`
+	},
+
 	ssl_server_require_crl: {
 		default: 'yes',
 		seealso: [ 'ssl', 'ssl_server_ca_file', '[[link,ssl_configuration]]' ],
@@ -11197,6 +11308,8 @@ Renamed from \`ssl_verify_client_cert\` setting.`
 		seealso: [
 			'ssl',
 			'auth_ssl_require_client_cert',
+			'ssl_server_require_client_cert_issuer',
+			'ssl_server_require_client_cert_subject',
 			'[[link,ssl_configuration]]',
 		],
 		values: setting_types.ENUM,
@@ -11208,8 +11321,12 @@ You can accept any certificate with \'any-cert\' value, but you must configure
 authentication to check the client certificate with [[link,passdb_check_client_fp,check_client_fp]] (or
 variant) extra field. See [[link,passdb_check_client_fp]].
 
-Note: This setting doesn't yet require the certificate to be valid or
-to even exist. See [[setting,auth_ssl_require_client_cert]].`
+Note: This setting alone doesn't require the certificate to be valid or
+to even exist. See [[setting,auth_ssl_require_client_cert]], or
+[[setting,ssl_server_require_client_cert_issuer]] /
+[[setting,ssl_server_require_client_cert_subject]] to require a
+certificate matching specific issuer/subject attributes - either one
+makes presenting a certificate mandatory, even with \`any-cert\`.`
 	},
 
 	ssl_server: {
