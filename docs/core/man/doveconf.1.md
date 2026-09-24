@@ -24,6 +24,8 @@ dovecotComponent: core
   [**-f** *filter*]
   *setting_name* ...
 
+**doveconf -\-help**
+
 ## DESCRIPTION
 
 **doveconf** reads and parses Dovecot's configuration files and converts them
@@ -143,6 +145,9 @@ It can also be used to inspect configuration @groups by querying them directly.
 **-x**
 :   Expand configuration variables (e.g. `$ENV:foo`) and show file contents
     (from e.g. `ssl_server_key_password = </etc/ssl/password.txt`).
+
+**-\-help**
+:   Print a usage message to stdout and exit successfully.
 
 *section_name*
 :   Show only the current configuration of one or more specified sections.
