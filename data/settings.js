@@ -6555,6 +6555,62 @@ range for users.
 A user whose UID is outside this range is not allowed to log in.`
 	},
 
+	haproxy_ssl_client_cert_issuer_tlv: {
+		added: {
+			settings_ssl_cert_requirements_added: false,
+		},
+		tags: [ 'haproxy' ],
+		seealso: [
+			'haproxy_ssl_client_cert_subject_tlv',
+			'ssl_server_require_client_cert',
+			'[[link,ssl_certificate_requirements]]',
+		],
+		values: setting_types.STRING,
+		text: `
+The type of the PROXY protocol v2 TLV in which HAProxy sends the issuer DN of
+the client certificate, \`0xE0\` to \`0xEF\`. Must be set together with
+[[setting,haproxy_ssl_client_cert_subject_tlv]], with a different type. Used
+only for [[setting,ssl_server_require_client_cert]] blocks.
+
+Only the service-level value is used. A value inside a filter is ignored.
+
+Example for the HAProxy \`server\` line:
+
+\`\`\`
+set-proxy-v2-tlv-fmt(0xE2) %[ssl_c_i_dn(,0,rfc2253)]
+\`\`\`
+
+See [[link,ssl_certificate_requirements]].`
+	},
+
+	haproxy_ssl_client_cert_subject_tlv: {
+		added: {
+			settings_ssl_cert_requirements_added: false,
+		},
+		tags: [ 'haproxy' ],
+		seealso: [
+			'haproxy_ssl_client_cert_issuer_tlv',
+			'ssl_server_require_client_cert',
+			'[[link,ssl_certificate_requirements]]',
+		],
+		values: setting_types.STRING,
+		text: `
+The type of the PROXY protocol v2 TLV in which HAProxy sends the subject DN of
+the client certificate, \`0xE0\` to \`0xEF\`. Must be set together with
+[[setting,haproxy_ssl_client_cert_issuer_tlv]], with a different type. Used
+only for [[setting,ssl_server_require_client_cert]] blocks.
+
+Only the service-level value is used. A value inside a filter is ignored.
+
+Example for the HAProxy \`server\` line:
+
+\`\`\`
+set-proxy-v2-tlv-fmt(0xE1) %[ssl_c_s_dn(,0,rfc2253)]
+\`\`\`
+
+See [[link,ssl_certificate_requirements]].`
+	},
+
 	haproxy_timeout: {
 		default: '3secs',
 		tags: [ 'haproxy' ],
@@ -12096,16 +12152,72 @@ ssl_server_dh_file = /path/to/dh.pem
 \`\`\``
 	},
 
+	ssl_client_require_server_cert: {
+		added: {
+			settings_ssl_cert_requirements_added: false,
+		},
+		seealso: [
+			'ssl_client_require_valid_cert',
+			'ssl_server_require_client_cert',
+			'[[link,ssl_configuration]]',
+			'[[link,settings_syntax_named_filters]]',
+		],
+		tags: [ 'ssl_client' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		text: `
+Restrict which server certificates are accepted for outgoing TLS
+connections. Each block must have a unique name and \`issuer\` and
+\`subject\` sections of \`key = value\` lines. See
+[[link,ssl_certificate_requirements]] for the matching rules.
+
+The server certificate must satisfy at least one block, and every key in
+that block's \`issuer\` and \`subject\` sections. The connection fails
+otherwise, with the error \`Server certificate does not satisfy any
+ssl_client_require_server_cert block\`.
+
+Requires [[setting,ssl_client_require_valid_cert,yes]]; otherwise creating
+the TLS context fails. LDAP checks the blocks with \`ldaps\` URIs and
+[[setting,ldap_starttls]]. MySQL (with [[setting,mysql_ssl,yes]]), Cassandra
+and PostgreSQL connections don't support this setting and fail if it applies
+to them. PostgreSQL is excepted only with \`sslmode=disable\` in
+[[setting,pgsql_parameters]], or if every host is a unix socket path and
+\`pgsql_parameters\` has no \`host\`, \`hostaddr\` or \`service\` key. TLS
+renegotiation is refused on connections with blocks.
+
+A block outside of any filter applies to all outgoing TLS connections, such
+as proxying to a backend with a self-signed certificate. Scope it with a
+filter.
+
+Example:
+
+\`\`\`[dovecot.conf]
+protocol imap {
+  ssl_client_require_server_cert backend-ca {
+    issuer {
+      O = Example Corp
+      CN = Example Backend CA
+    }
+    subject {
+      CN = backend.example.com
+    }
+  }
+}
+\`\`\`
+`
+	},
+
 	ssl_client_require_valid_cert: {
 		default: 'yes',
-		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		seealso: [ 'ssl', 'ssl_client_require_server_cert', '[[link,ssl_configuration]]' ],
 		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.BOOLEAN,
 		text: `
 Require a valid certificate when connecting to external SSL services?
 
 To change this for a single client only, set it inside that client's filter,
-e.g. [[setting,imapc]] or [[setting,pop3c]].`
+e.g. [[setting,imapc]] or [[setting,pop3c]].
+
+Required by [[setting,ssl_client_require_server_cert]].`
 	},
 
 	ssl_server_key_file: {
@@ -12204,6 +12316,61 @@ Whether to give preference to the server's cipher list over a client's
 list.`
 	},
 
+	ssl_server_require_client_cert: {
+		added: {
+			settings_ssl_cert_requirements_added: false,
+		},
+		seealso: [
+			'ssl_server_request_client_cert',
+			'ssl_client_require_server_cert',
+			'ssl_server_cert_username_field',
+			'[[link,ssl_configuration]]',
+			'[[link,settings_syntax_named_filters]]',
+		],
+		values: setting_types.NAMED_LIST_FILTER,
+		text: `
+Restrict which client certificates are accepted for incoming TLS
+connections. Each block must have a unique name and \`issuer\` and
+\`subject\` sections of \`key = value\` lines. See
+[[link,ssl_certificate_requirements]] for the matching rules.
+
+The client certificate must satisfy at least one block, and every key in
+that block's \`issuer\` and \`subject\` sections. A client with no
+certificate, or one that satisfies no block, is rejected in the TLS
+handshake. TLS session resumption is disabled where blocks are set.
+
+Requires [[setting,ssl_server_request_client_cert,yes]]; with \`no\` or
+\`any-cert\` creating the TLS context fails. Blocks are ignored with
+[[setting,ssl,no]], except for connections from HAProxy.
+
+Only TLS handshakes are checked: use [[setting,ssl,required]]. Behind
+HAProxy the connection must carry the SSL TLV and a verified certificate. The
+subject and issuer DNs are matched if
+[[setting,haproxy_ssl_client_cert_subject_tlv]] and
+[[setting,haproxy_ssl_client_cert_issuer_tlv]] are set, otherwise only blocks
+with no \`issuer\` keys and a single \`subject\` \`CN\` key are evaluated, against
+the CN HAProxy forwards. A connection that fails this is rejected.
+
+Example:
+
+\`\`\`[dovecot.conf]
+ssl_server_request_client_cert = yes
+
+protocol imap {
+  ssl_server_require_client_cert x1 {
+    issuer {
+      O = Example Corp
+      CN = Example Client CA
+    }
+    subject {
+      OU = Mail Clients
+    }
+  }
+}
+\`\`\`
+`
+	},
+
 	ssl_server_require_crl: {
 		default: 'yes',
 		seealso: [ 'ssl', 'ssl_server_ca_file', '[[link,ssl_configuration]]' ],
@@ -12223,6 +12390,7 @@ Renamed from \`ssl_verify_client_cert\` setting.`
 		seealso: [
 			'ssl',
 			'auth_ssl_require_client_cert',
+			'ssl_server_require_client_cert',
 			'[[link,ssl_configuration]]',
 		],
 		values: setting_types.ENUM,
@@ -12235,7 +12403,9 @@ authentication to check the client certificate with [[link,passdb_check_client_f
 variant) extra field. See [[link,passdb_check_client_fp]].
 
 Note: This setting doesn't yet require the certificate to be valid or
-to even exist. See [[setting,auth_ssl_require_client_cert]].`
+to even exist. See [[setting,auth_ssl_require_client_cert]]. To restrict the
+issuer or subject, see [[setting,ssl_server_require_client_cert]], which
+requires \`yes\`.`
 	},
 
 	ssl_server: {
