@@ -107,7 +107,6 @@ d88ff1001d4bf753a1b800001accfe22
 &U,BTFw-
 &ZeVnLIqe-
 -adn
-PNUx
 F=DFMPhnu9,
 SPfne
 \bAPPEND(?:ed|s)
@@ -162,4 +161,7 @@ key=[0-9a-f]+:\w+\}\s*=\s*(?:[0-9a-f$]+|pass)
 # URNs
 urn:[A-Za-z0-9][A-Za-z0-9-]{0,31}:([A-Za-z0-9()+,\-.:=@;$_!*'?\/&]|%[0-9A-Fa-f]{2})+
 :addrbook:([A-Za-z0-9()+,\-.:=@;$_!*'?\/&]|%[0-9A-Fa-f]{2})+
+
+# man page option clusters, e.g. [**-aCdFnPNsUwx**]
+\*\*-[A-Za-z]{2,}\*\*
 
