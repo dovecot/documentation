@@ -3,9 +3,30 @@ import { doveadm_arg_types,
 		 doveadm_args_human_timestamp,
 		 doveadm_args_query,
 		 doveadm_args_usermask,
-		 doveadm_flag_types } from '../lib/doveadm.js'
+		 doveadm_flag_types,
+		 doveadm_response_types } from '../lib/doveadm.js'
 
 export const doveadm = {
+
+	// Response data (per command):
+	// For commands that produce no output, response should be 'null'
+	// response: {
+	//     // Optional note rendered below response table or when no JSON
+	//     // fields. Rendered w/Markdown.
+	//     note: ``,
+	//
+	//     // Structured response fields.
+	//     fields: {
+	//         fieldName: {
+	//             type: doveadm_response_types.STRING,
+	//             description: ``,
+	//             dynamic: true, // optional
+	//         }
+	//     },
+	//
+	//     // Example JSON data returned from the server.
+	//     example: {},
+	// },
 
 	// Doveadm command name (each command is a separate object)
 	altmove: {
@@ -55,22 +76,7 @@ export const doveadm = {
 		// deprecated: {},
 		// removed: {},
 
-		// Response data. (HTTP API)
-		//
-		// Since doveadm responses are so variable, it is difficult to create
-		// an abstracted system to document the format.
-		//
-		// Thus, (for now) simply provide a place to describe HTTP API
-		// responses.
-		// response: {
-		//     // This is the JSON data returned from the server. Do NOT
-		//     // include the enclosing array, as this will be added
-		//     // automatically when displaying.
-		//     example: {},
-		//
-		//     // A description of the response. Rendered w/Markdown.
-		//     text: ``,
-		// },
+		response: null,
 
 		// What doveadm flags does this command support (bit field)
 		// Arguments are automatically added for each flag set
@@ -115,6 +121,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				text: `ACL rights to add.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER,
 		man: 'doveadm-acl',
 		plugin: 'acl',
@@ -130,6 +137,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				text: `Mailbox to query.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER,
 		man: 'doveadm-acl',
 		plugin: 'acl',
@@ -151,6 +159,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				text: `ID to delete.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER,
 		man: 'doveadm-acl',
 		plugin: 'acl',
@@ -170,6 +179,31 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				text: `Mailbox to query.`,
 			},
 		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				id: {
+					type: doveadm_response_types.STRING,
+					description: `ACL entry ID (user name or shared mailbox name).`
+				},
+				global: {
+					type: doveadm_response_types.STRING,
+					description: `ID of the user owning the ACL entry when it is a global ACL.`
+				},
+				rights: {
+					type: doveadm_response_types.STRING,
+					description: `Comma-separated list of ACL rights.`
+				},
+			},
+		},
 		flags: doveadm_flag_types.USER,
 		man: 'doveadm-acl',
 		plugin: 'acl',
@@ -178,6 +212,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 
 	'acl recalc': {
 		args: {},
+		response: null,
 		flags: doveadm_flag_types.USER,
 		man: 'doveadm-acl',
 		plugin: 'acl',
@@ -203,6 +238,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				text: `ACL rights to remove.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER,
 		man: 'doveadm-acl',
 		plugin: 'acl',
@@ -216,6 +252,22 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Mailbox to show.`,
+			},
+		},
+		response: {
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				rights: {
+					type: doveadm_response_types.STRING,
+					description: `Comma-separated list of ACL rights for the user.`
+				},
 			},
 		},
 		flags: doveadm_flag_types.USER,
@@ -245,6 +297,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				text: `ACL rights to replace.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER,
 		man: 'doveadm-acl',
 		plugin: 'acl',
@@ -268,14 +321,16 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			},
 		},
 		response: {
+			fields: {
+				entries: {
+					type: doveadm_response_types.STRING,
+					description: `Number of cache entries flushed.`,
+				},
+			},
+			note: `Direct stdout output indicates the number of cache entries flushed when executed via CLI.`,
 			example: {
 				entries: 1
 			},
-			text: `
-| Key | Description |
-| --- | ----------- |
-| \`entries\` | The number of cache entries flushed. |
-`
 		},
 		man: 'doveadm-auth',
 		text: `Flush authentication cache.`,
@@ -295,6 +350,44 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			},
 		},
 		response: {
+			fields: {
+				hits: {
+					type: doveadm_response_types.STRING,
+					description: `Number of cache hits since last reset.`,
+				},
+				misses: {
+					type: doveadm_response_types.STRING,
+					description: `Number of cache misses since last reset.`,
+				},
+				hit_ratio_percent: {
+					type: doveadm_response_types.STRING,
+					description: `Cache hit ratio in percent.`,
+				},
+				pos_entries: {
+					type: doveadm_response_types.STRING,
+					description: `Number of positive cache entries.`,
+				},
+				neg_entries: {
+					type: doveadm_response_types.STRING,
+					description: `Number of negative cache entries.`,
+				},
+				pos_size: {
+					type: doveadm_response_types.STRING,
+					description: `Bytes used by positive cache entries.`,
+				},
+				neg_size: {
+					type: doveadm_response_types.STRING,
+					description: `Bytes used by negative cache entries.`,
+				},
+				used_size: {
+					type: doveadm_response_types.STRING,
+					description: `Total bytes used by the cache.`,
+				},
+				max_size: {
+					type: doveadm_response_types.STRING,
+					description: `Maximum cache size in bytes.`,
+				},
+			},
 			example: {
 				hits: 1234,
 				misses: 56,
@@ -306,19 +399,6 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				used_size: 8256,
 				max_size: 1048576,
 			},
-			text: `
-| Key | Description |
-| --- | ----------- |
-| \`hits\` | Number of cache hits since last reset. |
-| \`misses\` | Number of cache misses since last reset. |
-| \`hit_ratio_percent\` | Cache hit ratio in percent. |
-| \`pos_entries\` | Number of positive cache entries. |
-| \`neg_entries\` | Number of negative cache entries. |
-| \`pos_size\` | Bytes used by positive cache entries. |
-| \`neg_size\` | Bytes used by negative cache entries. |
-| \`used_size\` | Total bytes used by the cache. |
-| \`max_size\` | Maximum cache size in bytes. |
-`
 		},
 		man: 'doveadm-auth',
 		text: `Show authentication cache statistics.`,
@@ -372,6 +452,9 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				text: `Login Password.`,
 			},
 		},
+		response: {
+			note: `Direct stdout output containing passdb authentication result and extra fields.`,
+		},
 		man: 'doveadm-auth',
 		text: `Test full login.`,
 	},
@@ -403,6 +486,9 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				type: doveadm_arg_types.ARRAY,
 				text: `UID of user to query.`,
 			},
+		},
+		response: {
+			note: `Direct stdout output containing passdb fields for queried user(s).`,
 		},
 		man: 'doveadm-auth',
 		text: `Perform a passdb lookup.`,
@@ -447,6 +533,9 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				type: doveadm_arg_types.STRING,
 				text: `Login password.`
 			},
+		},
+		response: {
+			note: `Direct stdout output indicating authentication success or failure and extra fields.`,
 		},
 		man: 'doveadm-auth',
 		text: `Test authentication for a user.`,
@@ -528,7 +617,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				type: doveadm_arg_types.STRING,
 				text: `Sync since timestamp.
 
-` + doveadm_args_human_timestamp,
+${doveadm_args_human_timestamp}`,
 			},
 			'sync-until-time': {
 				cli: 'e',
@@ -536,7 +625,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 				type: doveadm_arg_types.STRING,
 				text: `Sync until timestamp.
 
-` + doveadm_args_human_timestamp,
+${doveadm_args_human_timestamp}`,
 			},
 			'sync-flags': {
 				cli: 'O',
@@ -577,6 +666,23 @@ Format: [[link,settings_types_size]]`
 The synchronized destination. See [[man,doveadm-sync]] for options.`
 			},
 		},
+		response: {
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				state: {
+					type: doveadm_response_types.STRING,
+					description: `dsync state string after synchronization.`,
+					dynamic: true
+				},
+			},
+		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-sync',
 		text: `Dovecot's mailbox synchronization utility.
@@ -600,6 +706,9 @@ This command cannot be used safely via API by untrusted users.`
 				type: doveadm_arg_types.INTEGER,
 				text: `Port to connect to.`
 			},
+		},
+		response: {
+			note: `Interactive connection to a compression-enabled IMAP service. The raw IMAP dialog (greeting, capability advertisement, and compression negotiation) is streamed to stdout.`,
 		},
 		man: 'doveadm-compress-connect',
 		text: `Connects to a compression-enabled IMAP service.`
@@ -716,6 +825,7 @@ This command cannot be used safely via API by untrusted users.`
 			}
 		},
 		man: 'doveconf',
+		response: null,
 		text: `Read and parse Dovecot's configuration files.`
 	},
 
@@ -742,6 +852,7 @@ the source user name, e.g., \`user sourceuser\`.`
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-copy',
+		response: null,
 		text: `Copy messages matching the given search query into another mailbox.`,
 	},
 
@@ -754,6 +865,7 @@ the source user name, e.g., \`user sourceuser\`.`
 			},
 			query: doveadm_args_query,
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-deduplicate',
 		text: `Expunge duplicated messages in mailboxes.`,
@@ -778,6 +890,14 @@ the source user name, e.g., \`user sourceuser\`.`
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Key to query.`,
+			},
+		},
+		response: {
+			fields: {
+				value: {
+					type: doveadm_response_types.STRING,
+					description: `Value associated with the requested dictionary key.`,
+				},
 			},
 		},
 		man: 'doveadm-dict',
@@ -811,6 +931,7 @@ the source user name, e.g., \`user sourceuser\`.`
 				text: `The amount to increment.`,
 			},
 		},
+		response: null,
 		man: 'doveadm-dict',
 		text: `Increase key value in dictionary.`,
 	},
@@ -851,6 +972,21 @@ the source user name, e.g., \`user sourceuser\`.`
 				text: `Search only keys with this prefix.`,
 			},
 		},
+		response: {
+			type: 'list',
+			fields: {
+				key: {
+					type: doveadm_response_types.STRING,
+					description: `Dictionary key.`
+				},
+				value: {
+					type: doveadm_response_types.STRING,
+					description: `Value associated with the key.`,
+					dynamic: true
+				},
+			},
+			note: `If \`--no-value\` is set, the \`value\` field is omitted.`,
+		},
 		man: 'doveadm-dict',
 		text: `List keys in dictionary.`,
 	},
@@ -882,6 +1018,7 @@ the source user name, e.g., \`user sourceuser\`.`
 				text: `Value to set.`,
 			},
 		},
+		response: null,
 		man: 'doveadm-dict',
 		text: `Set key value in configured dictionary.`,
 	},
@@ -906,6 +1043,7 @@ the source user name, e.g., \`user sourceuser\`.`
 				text: `Key to unset.`,
 			},
 		},
+		response: null,
 		man: 'doveadm-dict',
 		text: `Unset key value in configured dictionary.`,
 	},
@@ -933,6 +1071,9 @@ the source user name, e.g., \`user sourceuser\`.`
 				text: `Type specific arguments.`,
 			},
 		},
+		response: {
+			note: `Direct stdout output dumping mailbox index or log file structures.`,
+		},
 		man: 'doveadm-dump',
 		text: `Show contents of mailbox index/log files, in human readable format.`
 	},
@@ -955,6 +1096,7 @@ the source user name, e.g., \`user sourceuser\`.`
 			},
 		},
 		man: 'doveadm-exec',
+		response: null,
 		text: `Execute commands from within \`/usr/libexec/dovecot\`.`
 	},
 
@@ -967,6 +1109,7 @@ the source user name, e.g., \`user sourceuser\`.`
 			},
 			query: doveadm_args_query,
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-expunge',
 		text: `
@@ -991,9 +1134,9 @@ If all messages are desired to be expunged, the "all" query can be used.
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-fetch',
-		//example_response: {
-		//	text: "From: Test User <test@example.com>\nSubject: Test\n\nmail body\n",
-		//},
+		response: {
+			note: `The response fields are defined by the \`field\` argument. One entry per matched message, with one field per requested item, e.g. \`user\`, \`mailbox\`, \`mailbox-guid\`, \`seq\`, \`uid\`, \`guid\`, \`flags\`, \`modseq\`, \`hdr\`, \`hdr.<name>\`, \`body\`, \`body.<section>\`, \`binary.<section>\`, \`body.preview\`, \`body.snippet\`, \`text\`, \`text.utf8\`, \`size.physical\`, \`size.virtual\`, \`date.received\`, \`date.sent\`, \`date.saved\`, \`imap.envelope\`, \`imap.body\`, \`imap.bodystructure\`, \`mime.parts\`, \`pop3.uidl\`, \`pop3.order\`, \`refcount\`, \`storageid\`, and their \`.unixtime\` variants.`,
+		},
 		text: `Fetch mail data from user mailbox.`,
 	},
 
@@ -1006,6 +1149,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 			},
 			query: doveadm_args_query,
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-flags',
 		text: `Add flags to message(s).`,
@@ -1020,6 +1164,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 			},
 			query: doveadm_args_query,
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-flags',
 		text: `Remove flags from message(s).`,
@@ -1034,6 +1179,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 			},
 			query: doveadm_args_query,
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-flags',
 		text: `Replace flags with another flag in message or messages. Replaces all current flags with the ones in the parameter list.`,
@@ -1050,6 +1196,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 				type: doveadm_arg_types.STRING
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-force-resync',
 		text: `Under certain circumstances Dovecot may be unable to automatically solve problems with mailboxes. In such situations the force-resync command may be helpful. It tries to fix all problems. For [[link,sdbox]] and [[link,mdbox]] mailboxes the storage files will be also checked.`,
@@ -1073,6 +1220,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 				text: `Destination object path.`,
 			},
 		},
+		response: null,
 		man: 'doveadm-fs',
 		text: `Copy object in storage.`,
 	},
@@ -1102,6 +1250,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 				text: `Object path.`,
 			},
 		},
+		response: null,
 		man: 'doveadm-fs',
 		text: `Delete object from storage.`,
 	},
@@ -1119,6 +1268,14 @@ If all messages are desired to be expunged, the "all" query can be used.
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Object path.`,
+			},
+		},
+		response: {
+			fields: {
+				content: {
+					type: doveadm_response_types.STRING,
+					description: `Raw contents of the file or object from storage.`,
+				},
 			},
 		},
 		man: 'doveadm-fs',
@@ -1150,6 +1307,15 @@ If all messages are desired to be expunged, the "all" query can be used.
 				text: `Object path.`,
 			},
 		},
+		response: {
+			type: 'list',
+			fields: {
+				path: {
+					type: doveadm_response_types.STRING,
+					description: `Path of the object in storage.`,
+				},
+			},
+		},
 		man: 'doveadm-fs',
 		text: `List objects in fs path.`,
 	},
@@ -1169,6 +1335,15 @@ If all messages are desired to be expunged, the "all" query can be used.
 				text: `Object path.`,
 			},
 		},
+		response: {
+			type: 'list',
+			fields: {
+				path: {
+					type: doveadm_response_types.STRING,
+					description: `Directory path in storage.`,
+				},
+			},
+		},
 		man: 'doveadm-fs',
 		text: `List folders in fs path.`,
 	},
@@ -1186,6 +1361,19 @@ If all messages are desired to be expunged, the "all" query can be used.
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Object path.`,
+			},
+		},
+		response: {
+			type: 'list',
+			fields: {
+				key: {
+					type: doveadm_response_types.STRING,
+					description: `Metadata attribute key name.`,
+				},
+				value: {
+					type: doveadm_response_types.STRING,
+					description: `Metadata attribute value.`,
+				},
 			},
 		},
 		man: 'doveadm-fs',
@@ -1221,6 +1409,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 				text: `Object path.`,
 			},
 		},
+		response: null,
 		man: 'doveadm-fs',
 		text: `Store object in storage.`,
 	},
@@ -1240,6 +1429,18 @@ If all messages are desired to be expunged, the "all" query can be used.
 				text: `Object path.`,
 			},
 		},
+		response: {
+			fields: {
+				path: {
+					type: doveadm_response_types.STRING,
+					description: `Path of the queried object.`,
+				},
+				size: {
+					type: doveadm_response_types.INTEGER,
+					description: `Total size of the object in bytes.`,
+				},
+			},
+		},
 		man: 'doveadm-fs',
 		text: `Retrieve files status for the path provided. Currently, only the total size (in bytes) of the item is returned.`,
 	},
@@ -1247,6 +1448,9 @@ If all messages are desired to be expunged, the "all" query can be used.
 	'fts expand': {
 		args: {
 			query: doveadm_args_query,
+		},
+		response: {
+			note: `Prints the expanded search query as a single line (unstructured output).`
 		},
 		man: 'doveadm-fts',
 		plugin: 'fts',
@@ -1256,6 +1460,9 @@ If all messages are desired to be expunged, the "all" query can be used.
 	'fts lookup': {
 		args: {
 			query: doveadm_args_query,
+		},
+		response: {
+			note: `Prints one line per mailbox with the matching UID sequence ranges (unstructured output).`
 		},
 		man: 'doveadm-fts',
 		plugin: 'fts',
@@ -1273,6 +1480,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 		},
 		man: 'doveadm-fts',
 		plugin: 'fts',
+		response: null,
 		text: `Optimize FTS data.`,
 	},
 
@@ -1287,6 +1495,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 		},
 		man: 'doveadm-fts',
 		plugin: 'fts',
+		response: null,
 		text: `Rebuild FTS indexes.`,
 	},
 
@@ -1303,9 +1512,18 @@ If all messages are desired to be expunged, the "all" query can be used.
 				text: `String to tokenize.`,
 			},
 		},
+		response: {
+			type: 'list',
+			fields: {
+				token: {
+					type: doveadm_response_types.STRING,
+					description: `Tokenized word.`
+				},
+			},
+		},
 		man: 'doveadm-fts',
 		plugin: 'fts',
-		text: `Search mail with FTS plugin.`,
+		text: `Tokenize a string using FTS.`,
 	},
 
 	/* flatcurve FTS commands */
@@ -1327,6 +1545,34 @@ Run a simple check on Dovecot Xapian databases, and attempt to fix basic
 errors (it is the same checking done by the xapian-check command with the
 \`-F\` command-line option).`,
 		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				mailbox: {
+					type: doveadm_response_types.STRING,
+					description: `The human-readable mailbox name. (key is hidden)`
+				},
+				guid: {
+					type: doveadm_response_types.STRING,
+					description: `The GUID of the mailbox.`
+				},
+				errors: {
+					type: doveadm_response_types.STRING,
+					description: `The number of errors reported by the Xapian library.`
+				},
+				shards: {
+					type: doveadm_response_types.STRING,
+					description: `The number of index shards processed.`
+				},
+			},
+			note: `Mailboxes without an existing flatcurve FTS index produce no output.`,
 			example: [
 				{
 					mailbox: "INBOX",
@@ -1335,16 +1581,6 @@ errors (it is the same checking done by the xapian-check command with the
 					shards: 1
 				}
 			],
-			text: `
-For each mailbox that has FTS data, it outputs the following key/value fields:
-
-| Key | Value |
-| --- | ----- |
-| mailbox | The human-readable mailbox name. (key is hidden) |
-| guid | The GUID of the mailbox. |
-| errors | The number of errors reported by the Xapian library. |
-| shards | The number of index shards processed. |
-`
 		},
 	},
 
@@ -1362,20 +1598,32 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		text: `Removes all FTS data for a mailbox.`,
 		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				mailbox: {
+					type: doveadm_response_types.STRING,
+					description: `The human-readable mailbox name. (key is hidden)`
+				},
+				guid: {
+					type: doveadm_response_types.STRING,
+					description: `The GUID of the mailbox.`
+				},
+			},
+			note: `Mailboxes without flatcurve FTS data produce no output.`,
 			example: [
 				{
 					mailbox: "INBOX",
 					guid: "guid_string"
 				}
 			],
-			text: `
-For each mailbox removed, it outputs the following key/value fields:
-
-| Key | Value |
-| --- | ----- |
-| mailbox | The human-readable mailbox name. (key is hidden) |
-| guid | The GUID of the mailbox. |
-`
 		},
 	},
 
@@ -1393,20 +1641,32 @@ For each mailbox removed, it outputs the following key/value fields:
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		text: `Triggers an FTS index rotation for a mailbox.`,
 		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				mailbox: {
+					type: doveadm_response_types.STRING,
+					description: `The human-readable mailbox name. (key is hidden)`
+				},
+				guid: {
+					type: doveadm_response_types.STRING,
+					description: `The GUID of the mailbox.`
+				},
+			},
+			note: `Mailboxes without an existing flatcurve FTS index produce no output.`,
 			example: [
 				{
 					mailbox: "INBOX",
 					guid: "guid_string"
 				}
 			],
-			text: `
-For each mailbox rotated, it outputs the following key/value fields:
-
-| Key | Value |
-| --- | ----- |
-| mailbox | The human-readable mailbox name. (key is hidden) |
-| guid | The GUID of the mailbox. |
-`
 		},
 	},
 
@@ -1424,6 +1684,42 @@ For each mailbox rotated, it outputs the following key/value fields:
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		text: `Returns FTS data for a mailbox.`,
 		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				mailbox: {
+					type: doveadm_response_types.STRING,
+					description: `The human-readable mailbox name. (key is hidden)`
+				},
+				guid: {
+					type: doveadm_response_types.STRING,
+					description: `The GUID of the mailbox.`
+				},
+				last_uid: {
+					type: doveadm_response_types.STRING,
+					description: `The last UID indexed in the mailbox.`
+				},
+				messages: {
+					type: doveadm_response_types.STRING,
+					description: `The number of messages indexed in the mailbox.`
+				},
+				shards: {
+					type: doveadm_response_types.STRING,
+					description: `The number of index shards.`
+				},
+				version: {
+					type: doveadm_response_types.STRING,
+					description: `The (Dovecot internal) version of the FTS data.`
+				},
+			},
+			note: `Mailboxes without an existing flatcurve FTS index produce no output.`,
 			example: [
 				{
 					mailbox: "INBOX",
@@ -1434,18 +1730,6 @@ For each mailbox rotated, it outputs the following key/value fields:
 					version: 1
 				}
 			],
-			text: `
-For each mailbox that has FTS data, it outputs the following key/value fields:
-
-| Key | Value |
-| --- | ----- |
-| mailbox | The human-readable mailbox name. (key is hidden) |
-| guid | The GUID of the mailbox. |
-| last_uid | The last UID indexed in the mailbox. |
-| messages | The number of messages indexed in the mailbox. |
-| shards | The number of index shards. |
-| version | The (Dovecot internal) version of the FTS data. |
-`
 		},
 	},
 
@@ -1459,6 +1743,9 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				type: doveadm_arg_types.STRING,
 				text: `The command/group to show the man page of.`,
 			},
+		},
+		response: {
+			note: `Prints doveadm usage and available commands directly to stdout.`,
 		},
 		text: `Provide doveadm usage information.`,
 	},
@@ -1490,6 +1777,7 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 			},
 			query: doveadm_args_query,
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-import',
 		text: `Import messages matching given search query.`,
@@ -1515,6 +1803,7 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `Mailbox search mask to apply indexing to.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-index',
 		text: `Index user mailbox folder or folders.`,
@@ -1549,6 +1838,7 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `The mailbox to index.`,
 			},
 		},
+		response: null,
 		man: 'doveadm-indexer',
 		text: `Add indexing request for the given user and the mailbox to the indexer queue.`,
 	},
@@ -1556,6 +1846,35 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 	'indexer list': {
 		args: {
 			'user-mask': { ...doveadm_args_usermask, ...{ optional: true } }
+		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					type: doveadm_response_types.STRING,
+					description: `Username whose mailbox is queued for indexing.`,
+				},
+				mailbox: {
+					type: doveadm_response_types.STRING,
+					description: `Mailbox queued for indexing.`,
+				},
+				session_id: {
+					type: doveadm_response_types.STRING,
+					description: `Session identifier associated with the index request.`,
+				},
+				max_recent: {
+					type: doveadm_response_types.STRING,
+					description: `Maximum number of recent messages to index before completing the request.`,
+				},
+				type: {
+					type: doveadm_response_types.STRING,
+					description: `Index request type (e.g., optimize or index).`,
+				},
+				status: {
+					type: doveadm_response_types.STRING,
+					description: `Current execution status of the indexing request.`,
+				},
+			},
 		},
 		man: 'doveadm-indexer',
 		text: `List queued index requests.`,
@@ -1572,6 +1891,7 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `The mailbox mask to remove.`,
 			},
 		},
+		response: null,
 		man: 'doveadm-indexer',
 		text: `Remove index requests.`,
 	},
@@ -1589,6 +1909,27 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				type: doveadm_arg_types.STRING,
 			},
 		},
+		response: {
+			type: 'list',
+			fields: {
+				path: {
+					type: doveadm_response_types.STRING,
+					description: `Base directory path of the Dovecot instance.`,
+				},
+				name: {
+					type: doveadm_response_types.STRING,
+					description: `Configured instance name.`,
+				},
+				'last used': {
+					type: doveadm_response_types.TIMESTAMP,
+					description: `Timestamp indicating when the instance was last accessed.`,
+				},
+				running: {
+					type: doveadm_response_types.STRING,
+					description: `Indicates whether the instance master process is currently running (yes or no).`,
+				},
+			},
+		},
 		man: 'doveadm-instance',
 		text: `List Dovecot instances.`,
 	},
@@ -1602,6 +1943,7 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `The instance to remove.`,
 			},
 		},
+		response: null,
 		man: 'doveadm-instance',
 		text: `Remove Dovecot instances.`,
 	},
@@ -1634,6 +1976,14 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `UID mask.`,
 			},
 		},
+		response: {
+			fields: {
+				count: {
+					type: doveadm_response_types.STRING,
+					description: `Number of user sessions successfully disconnected.`,
+				},
+			},
+		},
 		man: 'doveadm-kick',
 		text: `Kick user.`,
 	},
@@ -1648,6 +1998,28 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 			},
 		},
 		man: 'doveadm-log',
+		response: {
+			type: 'list',
+			fields: {
+				timestamp: {
+					type: doveadm_response_types.TIMESTAMP,
+					description: `Timestamp when the log line was written.`
+				},
+				prefix: {
+					type: doveadm_response_types.STRING,
+					description: `Prefix (usually the process name) of the log line.`
+				},
+				type: {
+					type: doveadm_response_types.STRING,
+					description: `Log type (e.g. error, warn, info).`
+				},
+				text: {
+					type: doveadm_response_types.STRING,
+					description: `Log message text.`
+				},
+			},
+			note: `The CLI renders these fields as a formatted line (\`%{timestamp} %{type}: %{prefix}%{text}\`) rather than a table.`,
+		},
 		text: `Fetch error logs.`,
 	},
 
@@ -1661,20 +2033,201 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `Specify directory where syslogd writes files.`,
 			},
 		},
+		response: {
+			note: `Direct stdout output listing paths to detected syslog and Dovecot log files.`,
+		},
 		man: 'doveadm-log',
 		text: `Show the location of logs.`,
 	},
 
 	'log reopen': {
 		args: {},
+		response: null,
 		man: 'doveadm-log',
 		text: `Cause master process to reopen all log files.`,
 	},
 
 	'log test': {
 		args: {},
+		response: null,
 		man: 'doveadm-log',
 		text: `Write a test message to the log files.`,
+	},
+
+	'mail dict get': {
+		args: {
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			key: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `The key to fetch.`
+			},
+		},
+		response: {
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				value: {
+					type: doveadm_response_types.STRING,
+					description: `The value of the key.`
+				}
+			}
+		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-dict',
+		text: `Fetch a key from a dictionary in user context.`,
+	},
+
+	'mail dict inc': {
+		args: {
+			timestamp: {
+				cli: 't',
+				type: doveadm_arg_types.INTEGER,
+				text: `Set the timestamp also.`
+			},
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			key: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `The key to increment.`
+			},
+			diff: {
+				positional: true,
+				type: doveadm_arg_types.INTEGER,
+				text: `The amount of the increment.`
+			},
+		},
+		response: null,
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-dict',
+		text: `Increment the value of a numeric key in a dictionary in user context.`,
+	},
+
+	'mail dict iter': {
+		args: {
+			exact: {
+				cli: '1',
+				type: doveadm_arg_types.BOOL,
+				text: `Exact match.`
+			},
+			recurse: {
+				cli: 'R',
+				type: doveadm_arg_types.BOOL,
+				text: `Recurse.`
+			},
+			'no-value': {
+				cli: 'V',
+				type: doveadm_arg_types.BOOL,
+				text: `Don't print values, just key names.`
+			},
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			prefix: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `The key prefix to look for.`
+			},
+		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				key: {
+					type: doveadm_response_types.STRING,
+					description: `Matching key.`
+				},
+				value: {
+					type: doveadm_response_types.STRING,
+					description: `Key value. Hidden with --no-value.`,
+					dynamic: true
+				}
+			}
+		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-dict',
+		text: `Find the keys matching a prefix in a dictionary in user context.`,
+	},
+
+	'mail dict set': {
+		args: {
+			timestamp: {
+				cli: 't',
+				type: doveadm_arg_types.INTEGER,
+				text: `Set the timestamp also.`
+			},
+			'expire-secs': {
+				cli: 'e',
+				type: doveadm_arg_types.INTEGER,
+				text: `Set the key duration also.`
+			},
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			key: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `The key to set.`
+			},
+			value: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `The value to set.`
+			},
+		},
+		response: null,
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-dict',
+		text: `Set/create a key in a dictionary in user context.`,
+	},
+
+	'mail dict unset': {
+		args: {
+			timestamp: {
+				cli: 't',
+				type: doveadm_arg_types.INTEGER,
+				text: `Set the timestamp also.`
+			},
+			'filter-name': {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `Configuration filter name to use.`
+			},
+			key: {
+				positional: true,
+				type: doveadm_arg_types.STRING,
+				text: `The key to unset.`
+			},
+		},
+		response: null,
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
+		man: 'doveadm-mail-dict',
+		text: `Remove a key from a dictionary in user context.`,
 	},
 
 	'mail fs copy': {
@@ -1693,6 +2246,7 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `Destination object path.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mail-fs',
 		text: `Copy object in storage.`,
@@ -1721,6 +2275,7 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `Object path.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mail-fs',
 		text: `Delete object from storage.`,
@@ -1737,6 +2292,22 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Object path.`,
+			},
+		},
+		response: {
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				content: {
+					type: doveadm_response_types.STRING,
+					description: `Raw contents of the file or object from mail storage.`,
+				},
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
@@ -1765,6 +2336,23 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `Object path.`,
 			},
 		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				path: {
+					type: doveadm_response_types.STRING,
+					description: `Path of the object in mail storage.`,
+				},
+			},
+		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mail-fs',
 		text: `List objects in fs path.`,
@@ -1783,6 +2371,23 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `Object path.`,
 			},
 		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				path: {
+					type: doveadm_response_types.STRING,
+					description: `Directory path in mail storage.`,
+				},
+			},
+		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mail-fs',
 		text: `List folders in fs path.`,
@@ -1799,6 +2404,27 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Object path.`,
+			},
+		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				key: {
+					type: doveadm_response_types.STRING,
+					description: `Metadata attribute key name.`,
+				},
+				value: {
+					type: doveadm_response_types.STRING,
+					description: `Metadata attribute value.`,
+				},
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
@@ -1831,6 +2457,7 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `Object path.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mail-fs',
 		text: `Store object in storage.`,
@@ -1847,6 +2474,26 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Object path.`,
+			},
+		},
+		response: {
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				path: {
+					type: doveadm_response_types.STRING,
+					description: `Path of the queried object in mail storage.`,
+				},
+				size: {
+					type: doveadm_response_types.INTEGER,
+					description: `Total size of the object in bytes.`,
+				},
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
@@ -1886,6 +2533,35 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `Mailboxes to change cache decisions for.`,
 			},
 		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				mailbox: {
+					type: doveadm_response_types.STRING,
+					description: `Mailbox name for which the cache decision applies.`,
+				},
+				field: {
+					type: doveadm_response_types.STRING,
+					description: `Cached message header or body field name.`,
+				},
+				decision: {
+					type: doveadm_response_types.STRING,
+					description: `Caching decision rule (e.g., yes, no, or temp).`,
+				},
+				'last-used': {
+					type: doveadm_response_types.TIMESTAMP,
+					description: `Timestamp indicating when the cached field was last accessed.`,
+				},
+			},
+		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		text: `List or change caching decisions for field(s).`,
@@ -1902,12 +2578,38 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
+		response: null,
 		text: `Purge the dovecot.index.cache file.`,
 	},
 
 	'mailbox cache remove': {
 		args: {
 			query: doveadm_args_query,
+		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				mailbox: {
+					type: doveadm_response_types.STRING,
+					description: `Mailbox name from which cached messages were removed.`,
+				},
+				uid: {
+					type: doveadm_response_types.STRING,
+					description: `Unique identifier (UID) of the message whose cache was removed.`,
+				},
+				result: {
+					type: doveadm_response_types.STRING,
+					description: `Status or result of removing the message from cache.`,
+				},
+			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
@@ -1934,6 +2636,7 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 				text: `Mailboxes to create.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		text: `Create mailboxes.`,
@@ -1966,6 +2669,30 @@ For each mailbox that has FTS data, it outputs the following key/value fields:
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
 		man: 'doveadm-mailbox-cryptokey',
+		response: {
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				success: {
+					type: doveadm_response_types.STRING,
+					description: `Whether the keypair was generated.`
+				},
+				box: {
+					type: doveadm_response_types.STRING,
+					description: `Mailbox the key belongs to.`
+				},
+				pubid: {
+					type: doveadm_response_types.STRING,
+					description: `Public key ID (hex encoded).`
+				},
+			},
+		},
 		text: `
 Generate new keypair for user or folder.
 
@@ -2000,7 +2727,31 @@ to secure it.
 				text: `Mailbox mask.`
 			},
 		},
-		response: null,
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				box: {
+					type: doveadm_response_types.STRING,
+					description: `Mailbox the key belongs to.`
+				},
+				active: {
+					type: doveadm_response_types.STRING,
+					description: `Whether the key is currently active.`
+				},
+				pubid: {
+					type: doveadm_response_types.STRING,
+					description: `Public ID of the key.`
+				}
+			}
+		},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
 		man: 'doveadm-mailbox-cryptokey',
@@ -2021,7 +2772,36 @@ to secure it.
 				text: `Mailbox mask.`
 			},
 		},
-		response: null,
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				box: {
+					type: doveadm_response_types.STRING,
+					description: `Mailbox the key belongs to.`
+				},
+				name: {
+					type: doveadm_response_types.STRING,
+					description: `Public ID of the key.`
+				},
+				error: {
+					type: doveadm_response_types.STRING,
+					description: `Error message, if the export failed for this key.`,
+					dynamic: true
+				},
+				key: {
+					type: doveadm_response_types.STRING,
+					description: `Exported private key data.`
+				}
+			}
+		},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
 		man: 'doveadm-mailbox-cryptokey',
@@ -2058,7 +2838,22 @@ to secure it.
 				text: `Old password.`
 			},
 		},
-		response: null,
+		response: {
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				result: {
+					type: doveadm_response_types.STRING,
+					description: `Result of the password operation, or an error message.`
+				}
+			}
+		},
 		flags: doveadm_flag_types.USER,
 		plugin: 'mail-crypt',
 		man: 'doveadm-mailbox-cryptokey',
@@ -2094,6 +2889,7 @@ to secure it.
 				text: `The mailboxes to delete.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		text: `Delete mailboxes.`,
@@ -2117,6 +2913,22 @@ to secure it.
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Metadata key to retrieve.`,
+			},
+		},
+		response: {
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				value: {
+					type: doveadm_response_types.STRING,
+					description: `Value of the requested mailbox metadata entry.`,
+				},
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
@@ -2147,6 +2959,23 @@ to secure it.
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `The key prefix to look for.`,
+			},
+		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				key: {
+					type: doveadm_response_types.STRING,
+					description: `Key name of the mailbox metadata entry.`,
+				},
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
@@ -2180,6 +3009,7 @@ to secure it.
 				text: `The value to add.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		text: `Set metadata for a mailbox.`,
@@ -2205,6 +3035,7 @@ to secure it.
 				text: `The key to delete.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		text: `Unset metadata for a mailbox.`,
@@ -2235,6 +3066,23 @@ to secure it.
 				text: `A list of mailbox masks to list.`,
 			},
 		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				mailbox: {
+					type: doveadm_response_types.STRING,
+					description: `Name of the mailbox.`,
+				},
+			},
+		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		text: `Get list of existing mailboxes.`,
@@ -2259,6 +3107,9 @@ to secure it.
 				text: `Mailbox names to convert.`,
 			},
 		},
+		response: {
+			note: `Prints converted mailbox names directly to stdout.`,
+		},
 		man: 'doveadm-mailbox',
 		text: `Convert mailbox names from mUTF-7 to UTF-8.`,
 	},
@@ -2276,6 +3127,23 @@ to secure it.
 				positional: true,
 				type: doveadm_arg_types.ARRAY,
 				text: `Mailbox name to query.`
+			},
+		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				path: {
+					type: doveadm_response_types.STRING,
+					description: `Filesystem directory path of the mailbox storage or index files.`,
+				},
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
@@ -2303,6 +3171,7 @@ to secure it.
 				text: `The destination mailbox name.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		text: `Rename mailbox.`,
@@ -2332,6 +3201,74 @@ to secure it.
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		text: `Show status of mailboxes.`,
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				mailbox: {
+					type: doveadm_response_types.STRING,
+					description: `Mailbox name.`
+				},
+				messages: {
+					type: doveadm_response_types.STRING,
+					description: `Number of messages.`,
+					dynamic: true
+				},
+				recent: {
+					type: doveadm_response_types.STRING,
+					description: `Number of recent messages.`,
+					dynamic: true
+				},
+				deleted: {
+					type: doveadm_response_types.STRING,
+					description: `Number of deleted messages.`,
+					dynamic: true
+				},
+				uidnext: {
+					type: doveadm_response_types.STRING,
+					description: `Next UID value.`,
+					dynamic: true
+				},
+				uidvalidity: {
+					type: doveadm_response_types.STRING,
+					description: `UID validity.`,
+					dynamic: true
+				},
+				unseen: {
+					type: doveadm_response_types.STRING,
+					description: `First unseen message sequence number.`,
+					dynamic: true
+				},
+				highestmodseq: {
+					type: doveadm_response_types.STRING,
+					description: `Highest MODSEQ.`,
+					dynamic: true
+				},
+				vsize: {
+					type: doveadm_response_types.STRING,
+					description: `Virtual size of mailbox.`,
+					dynamic: true
+				},
+				guid: {
+					type: doveadm_response_types.STRING,
+					description: `Mailbox GUID.`,
+					dynamic: true
+				},
+				firstsaved: {
+					type: doveadm_response_types.STRING,
+					description: `Saved time of first mail.`,
+					dynamic: true
+				}
+			},
+			note: `Fields shown depend on the positional \`field\` argument; the \`mailbox\` field is omitted when \`total-sum\` is set.`
+		},
 	},
 
 	'mailbox subscribe': {
@@ -2343,6 +3280,7 @@ to secure it.
 				text: `Mailboxes to subscribe to.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		text: `Subscribe to mailboxes.`,
@@ -2357,6 +3295,7 @@ to secure it.
 				text: `Mailboxes to unsubscribe from.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		text: `Unsubscribe from mailboxes.`,
@@ -2402,6 +3341,7 @@ to secure it.
 				text: `Mailbox to update.`,
 			},
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		text: `Set internal mailbox metadata.`,
@@ -2430,6 +3370,7 @@ the source user name, e.g., \`user sourceuser\`.`
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-move',
+		response: null,
 		text: `
 Move messages to new mailbox.
 
@@ -2457,6 +3398,27 @@ If all messages are desired to be moved, the "all" query can be used.
 				text: `Filter output by netmask.`,
 			},
 		},
+		response: {
+			type: 'list',
+			fields: {
+				IP: {
+					type: doveadm_response_types.STRING,
+					description: `Remote IP address subject to penalty tracking.`,
+				},
+				penalty: {
+					type: doveadm_response_types.STRING,
+					description: `Current penalty score or penalty duration applied to the IP.`,
+				},
+				last_penalty: {
+					type: doveadm_response_types.TIMESTAMP,
+					description: `Timestamp of the most recently incurred penalty.`,
+				},
+				last_update: {
+					type: doveadm_response_types.STRING,
+					description: `Elapsed time since the penalty entry was last updated.`,
+				},
+			},
+		},
 		man: 'doveadm-penalty',
 	},
 
@@ -2468,6 +3430,39 @@ If all messages are desired to be moved, the "all" query can be used.
 				optional: true,
 				type: doveadm_arg_types.ARRAY,
 				text: `Filter output to only these services.`,
+			},
+		},
+		response: {
+			type: 'list',
+			fields: {
+				name: {
+					type: doveadm_response_types.STRING,
+					description: `Service name of the worker process.`,
+				},
+				pid: {
+					type: doveadm_response_types.STRING,
+					description: `Process ID of the worker process.`,
+				},
+				available_count: {
+					type: doveadm_response_types.STRING,
+					description: `Number of available client connections this process can accept.`,
+				},
+				total_count: {
+					type: doveadm_response_types.STRING,
+					description: `Total number of client connections currently handled by this process.`,
+				},
+				idle_start: {
+					type: doveadm_response_types.TIMESTAMP,
+					description: `Timestamp indicating when this process entered an idle state.`,
+				},
+				last_status_update: {
+					type: doveadm_response_types.TIMESTAMP,
+					description: `Timestamp of the most recent status report from this process.`,
+				},
+				last_kill_sent: {
+					type: doveadm_response_types.TIMESTAMP,
+					description: `Timestamp when a termination signal was last sent to this process.`,
+				},
 			},
 		},
 		man: 'doveadm-process-status',
@@ -2505,6 +3500,14 @@ If all messages are desired to be moved, the "all" query can be used.
 			'doveadm_proxy_kick_args': `
 * \`host\` argument has been changed to \`dest-host\`.
 * \`user\` argument has been changed to \`mask\`.`,
+		},
+		response: {
+			fields: {
+				count: {
+					type: doveadm_response_types.STRING,
+					description: `Number of proxy connections kicked.`,
+				},
+			},
 		},
 		man: 'doveadm-proxy',
 		text: `Kick user.`,
@@ -2550,12 +3553,47 @@ Dovecot now returns different formats based on the value of
 \`ip\`, \`dest_ip\`, and list of \`alt_username_fields\` (from anvil) is
 returned.`,
 		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					type: doveadm_response_types.STRING,
+					description: `Proxied user account name.`,
+				},
+				connections: {
+					type: doveadm_response_types.STRING,
+					description: `Number of active connections for this proxy user.`,
+					dynamic: true
+				},
+				service: {
+					type: doveadm_response_types.STRING,
+					description: `Protocol or service name handled by the proxy.`,
+				},
+				pids: {
+					type: doveadm_response_types.STRING,
+					description: `Process IDs of the proxy login or connection processes.`,
+					dynamic: true
+				},
+				ips: {
+					type: doveadm_response_types.STRING,
+					description: `Client IP addresses connected to the proxy.`,
+					dynamic: true
+				},
+				dest_ip: {
+					type: doveadm_response_types.STRING,
+					description: `Backend destination IP address the connection is routed to.`,
+					dynamic: true
+				},
+			},
+			note: `Without \`separate-connections\`, each object is one username/service combination with \`connections\`, \`pids\`, and \`ips\` aggregated. With \`separate-connections\`, each object is one connection with \`pid\`, \`ip\`, and \`dest_ip\` instead, plus one column per configured \`passdb-field\`.`,
+		},
 		man: 'doveadm-proxy',
 		text: `Show who is logged into the Dovecot server.`,
 	},
 
 	purge: {
 		args: {},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-purge',
 		text: `Remove all messages with refcount=0 from a user's mail storage.`,
@@ -2605,6 +3643,9 @@ returned.`,
 				text: `Internally verify hashed password.`,
 			},
 		},
+		response: {
+			note: `Direct stdout output displaying formatted password hash or list of schemes.`,
+		},
 		man: 'doveadm-pw',
 		text: `Generate password hashes.`,
 	},
@@ -2614,6 +3655,39 @@ returned.`,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		plugin: 'quota',
 		man: 'doveadm-quota',
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				root: {
+					type: doveadm_response_types.STRING,
+					description: `Quota root name.`
+				},
+				type: {
+					type: doveadm_response_types.STRING,
+					description: `Quota resource type (e.g. bytes, messages).`
+				},
+				value: {
+					type: doveadm_response_types.STRING,
+					description: `Current quota usage.`
+				},
+				limit: {
+					type: doveadm_response_types.STRING,
+					description: `Quota limit.`
+				},
+				percent: {
+					type: doveadm_response_types.STRING,
+					description: `Quota usage in percent of the limit.`
+				},
+			},
+		},
 		text: `Display current quota usage.`,
 	},
 
@@ -2622,12 +3696,34 @@ returned.`,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		plugin: 'quota',
 		man: 'doveadm-quota',
+		response: null,
 		text: `Recalculate current quota usage.`,
 	},
 
 	'rebuild attachments': {
 		args: {
 			query: doveadm_args_query,
+		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				uid: {
+					type: doveadm_response_types.STRING,
+					description: `Message UID for which attachment detection was rebuilt.`,
+				},
+				attachment: {
+					type: doveadm_response_types.STRING,
+					description: `Attachment filename, hash, or status rebuilt in the index.`,
+				},
+			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-rebuild',
@@ -2636,6 +3732,7 @@ returned.`,
 
 	reload: {
 		args: {},
+		response: null,
 		man: 'doveadm',
 		text: `Reload Dovecot configuration.`,
 	},
@@ -2676,6 +3773,7 @@ returned.`,
 			'doveadm_save_args_added': `
 \`received-date\`, \`uid\`, and \`gid\` arguments added.`
 		},
+		response: null,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-save',
 		text: `Save messages to a mailbox.`,
@@ -2684,6 +3782,27 @@ returned.`,
 	search: {
 		args: {
 			query: doveadm_args_query,
+		},
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				'mailbox-guid': {
+					type: doveadm_response_types.STRING,
+					description: `GUID of the mailbox containing the matching message.`,
+				},
+				uid: {
+					type: doveadm_response_types.STRING,
+					description: `Unique identifier (UID) of the matching message.`,
+				},
+			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-search',
@@ -2700,6 +3819,63 @@ returned.`,
 				text: `Filter output to only these services.`,
 			},
 		},
+		response: {
+			type: 'list',
+			fields: {
+				name: {
+					type: doveadm_response_types.STRING,
+					description: `Service name configured in Dovecot.`,
+				},
+				process_count: {
+					type: doveadm_response_types.STRING,
+					description: `Current number of running processes for this service.`,
+				},
+				process_avail: {
+					type: doveadm_response_types.STRING,
+					description: `Number of processes currently available to accept new requests.`,
+				},
+				process_limit: {
+					type: doveadm_response_types.STRING,
+					description: `Configured maximum process limit for this service.`,
+				},
+				client_limit: {
+					type: doveadm_response_types.STRING,
+					description: `Maximum number of concurrent clients allowed per process.`,
+				},
+				throttle_secs: {
+					type: doveadm_response_types.STRING,
+					description: `Service throttling delay in seconds if processes crash frequently.`,
+				},
+				exit_failure_last: {
+					type: doveadm_response_types.STRING,
+					description: `Exit status code of the last abnormal process termination.`,
+				},
+				exit_failures_in_sec: {
+					type: doveadm_response_types.STRING,
+					description: `Number of process failure exits recorded in the current second.`,
+				},
+				last_drop_warning: {
+					type: doveadm_response_types.TIMESTAMP,
+					description: `Timestamp of the last warning issued for dropped connections.`,
+				},
+				listen_pending: {
+					type: doveadm_response_types.STRING,
+					description: `Number of pending connections in the listening queue.`,
+				},
+				listening: {
+					type: doveadm_response_types.STRING,
+					description: `State of listening sockets for this service (1 if active, 0 otherwise).`,
+				},
+				doveadm_stop: {
+					type: doveadm_response_types.STRING,
+					description: `Indicator whether the service was stopped via doveadm (1 if stopped, 0 otherwise).`,
+				},
+				process_total: {
+					type: doveadm_response_types.STRING,
+					description: `Total lifetime count of worker processes spawned for this service.`,
+				},
+			},
+		},
 		man: 'doveadm-service-status',
 		text: `Show information about Dovecot services.`,
 	},
@@ -2713,6 +3889,7 @@ returned.`,
 				text: `The list of services to stop.`,
 			},
 		},
+		response: null,
 		man: 'doveadm-service-stop',
 		text: `Stop Dovecot services.`
 	},
@@ -2729,6 +3906,7 @@ returned.`,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		plugin: 'sieve',
 		man: 'doveadm-sieve',
+		response: null,
 		text: `Mark active Sieve script.`,
 	},
 
@@ -2737,6 +3915,7 @@ returned.`,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		plugin: 'sieve',
 		man: 'doveadm-sieve',
+		response: null,
 		text: `Deactivate Sieve script.`,
 	},
 
@@ -2757,6 +3936,7 @@ returned.`,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		plugin: 'sieve',
 		man: 'doveadm-sieve',
+		response: null,
 		text: `Delete Sieve scripts.`,
 	},
 
@@ -2772,6 +3952,22 @@ returned.`,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		plugin: 'sieve',
 		man: 'doveadm-sieve',
+		response: {
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				'sieve script': {
+					type: doveadm_response_types.STRING,
+					description: `Contents of the Sieve script.`
+				},
+			},
+		},
 		text: `Retrieve a Sieve script.`,
 	},
 
@@ -2780,6 +3976,27 @@ returned.`,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		plugin: 'sieve',
 		man: 'doveadm-sieve',
+		response: {
+			type: 'list',
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				script: {
+					type: doveadm_response_types.STRING,
+					description: `Sieve script name.`
+				},
+				active: {
+					type: doveadm_response_types.STRING,
+					description: `Marked ACTIVE if this is the active script.`
+				},
+			},
+		},
 		text: `List Sieve scripts.`,
 	},
 
@@ -2805,6 +4022,7 @@ returned.`,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		plugin: 'sieve',
 		man: 'doveadm-sieve',
+		response: null,
 		text: `Add Sieve script to storage.`,
 	},
 
@@ -2826,6 +4044,7 @@ returned.`,
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		plugin: 'sieve',
 		man: 'doveadm-sieve',
+		response: null,
 		text: `Rename Sieve script.`,
 	},
 
@@ -2839,6 +4058,15 @@ returned.`,
 			'hash': {
 				positional: true,
 				type: doveadm_arg_types.STRING
+			},
+		},
+		response: {
+			type: 'list',
+			fields: {
+				path: {
+					type: doveadm_response_types.STRING,
+					description: `Filesystem path of the matching single-instance storage attachment file.`,
+				},
 			},
 		},
 	},
@@ -2872,6 +4100,7 @@ returned.`,
 				type: doveadm_arg_types.STRING
 			},
 		},
+		response: null,
 		man: 'doveadm-stats',
 		text: `Add metrics to statistics.`,
 	},
@@ -2897,6 +4126,21 @@ returned.`,
 			},
 		},
 		man: 'doveadm-stats',
+		response: {
+			type: 'list',
+			fields: {
+				metric_name: {
+					type: doveadm_response_types.STRING,
+					description: `Name of the statistic.`
+				},
+				field: {
+					type: doveadm_response_types.INTEGER,
+					description: `Value of the statistic (the per-statistic numeric column).`,
+					dynamic: true
+				},
+			},
+			note: `\`metric_name\` and \`field\` are always present; one additional \`field\` column appears per statistic that carries extra values (e.g. counter names or durations). Which ones appear depends on the configured statistics and the \`fields\` argument.`,
+		},
 		text: `Output statistics.`,
 	},
 
@@ -2909,18 +4153,21 @@ returned.`,
 				text: `The metric to remove.`,
 			},
 		},
+		response: null,
 		man: 'doveadm-stats',
 		text: `Remove metrics from statistics.`,
 	},
 
 	'stats reopen': {
 		args: {},
+		response: null,
 		man: 'doveadm-stats',
 		text: `Reopen file exporter files.`,
 	},
 
 	'stop': {
 		args: {},
+		response: null,
 		man: 'doveadm',
 		text: `Stop Dovecot.`,
 	},
@@ -3049,6 +4296,23 @@ returned.`,
 				text: `Sync destinations.`
 			},
 		},
+		response: {
+			fields: {
+				username: {
+					/* Sticky: doveadm-mail.c prepends a username column when the
+					 * command is run against multiple users (-A, wildcard, or user file). */
+					type: doveadm_response_types.STRING,
+					description: `Username. Included when the command is run against multiple users.`,
+					dynamic: true
+				},
+
+				state: {
+					type: doveadm_response_types.STRING,
+					description: `dsync state string after synchronization.`,
+					dynamic: true
+				},
+			},
+		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-sync',
 		text: `Dovecot's mailbox synchronization utility.
@@ -3091,6 +4355,20 @@ This command cannot be used safely via API by untrusted users.`
 			'user-mask': doveadm_args_usermask,
 		},
 		man: 'doveadm-user',
+		response: {
+			type: 'list',
+			fields: {
+				field: {
+					type: doveadm_response_types.STRING,
+						description: `Userdb field name.`
+				},
+				value: {
+					type: doveadm_response_types.STRING,
+						description: `Value of the userdb field.`
+				},
+			},
+			note: `In the default table mode the fields are the userdb fields, which are installation-specific (e.g. \`uid\`, \`home\`, \`mail\`). With \`-f\` only a single field is shown and with \`-e\` the value is a fully expanded template string.`,
+		},
 		text: `Lookup user in Dovecot's userdbs.`,
 	},
 
@@ -3122,35 +4400,47 @@ This command cannot be used safely via API by untrusted users.`
 			},
 		},
 		response: {
+			type: 'list',
+			fields: {
+				username: {
+					type: doveadm_response_types.STRING,
+					description: `Username.`
+				},
+				connections: {
+					type: doveadm_response_types.STRING,
+					description: `The total number of connections for the user. Only returned if \`separate-connections\` is not set.`,
+					dynamic: true
+				},
+				service: {
+					type: doveadm_response_types.STRING,
+					description: `The Dovecot service.`
+				},
+				pids: {
+					type: doveadm_response_types.STRING,
+					description: `Process IDs of the user's connections.`,
+					dynamic: true
+				},
+				ips: {
+					type: doveadm_response_types.STRING,
+					description: `IP addresses where the user's connections are originating.`,
+					dynamic: true
+				},
+				dest_ip: {
+					type: doveadm_response_types.STRING,
+					description: `Backend destination IP address the connection is routed to.`,
+					dynamic: true
+				},
+			},
+			note: `Without \`separate-connections\`, each object is one username/service combination with \`connections\`, \`pids\`, and \`ips\` aggregated. With \`separate-connections\`, each object is one connection with \`pid\`, \`ip\`, and \`dest_ip\` instead, plus one column per configured \`passdb-field\`.`,
 			example: [
 				{
 					username: "foo",
 					connections: "1",
 					service: "imap",
-					pid: "(47)",
-					ip: "(10.0.2.100)"
+					pids: "(47)",
+					ips: "(10.0.2.100)"
 				}
 			],
-			text: `
-Returns an array of objects.
-
-If \`separate-connections\` is \`false\`, each object represents a single
-username/service combination, and the \`pid\` and \`ip\` fields will include
-all entries for that combination.
-
-If \`separate-connections\` is \`true\`, each object will contain a single
-connection.
-
-Object fields:
-
-| Key | Description |
-| --- | ----------- |
-| \`connections\` | The total number of connections for the user. This is only returned if \`separate-connections\` is \`false\`. |
-| \`ip\` | IP addresses where the user's connections are originating. |
-| \`pid\` | Process IDs of the session. |
-| \`service\` | The Dovecot service. |
-| \`username\` | Username |
-`
 		},
 		man: 'doveadm-who',
 		text: `Show who is logged into the Dovecot server.`,
