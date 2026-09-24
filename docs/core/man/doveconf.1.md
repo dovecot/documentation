@@ -9,7 +9,7 @@ dovecotComponent: core
 ## SYNOPSIS
 
 **doveconf**
-  [**-aCdFnPNUwx**]
+  [**-aCdFnPNsUwx**]
   [**-c** *config-file*]
   [**-f** *filter*]
 
@@ -152,7 +152,8 @@ It can also be used to inspect configuration @groups by querying them directly.
 :   Show settings with non-default values and explicitly set default values.
 
 **-s**
-:   Show also hidden settings. The hidden settings should not be changed
+:   Show all settings, including hidden ones, with their currently
+    configured values. The hidden settings should not be changed
     normally.
 
 **-P**
