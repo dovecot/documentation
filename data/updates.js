@@ -210,6 +210,8 @@ export const updates = {
 	settings_ssl_client_ca_added: '2.4.0',
 	settings_ssl_imapc_removed: '2.4.0',
 	settings_ssl_request_client_cert_changed: '2.4.0',
+	settings_ssl_server_require_client_cert_issuer_added: '2.4.6',
+	settings_ssl_server_require_client_cert_subject_added: '2.4.6',
 	settings_unix_listener_type_added: '2.4.0',
 	settings_userdb_static_allow_all_users_added: '2.4.0',
 	settings_quota_clone_added: '2.4.0',

@@ -423,6 +423,43 @@ currently circumvents Dovecot's security model so it's not recommended to
 use it, but it is possible by making the passdb allow logins using any
 password (typically requiring `nopassword` extra field to be returned).
 
+### Requiring a specific certificate issuer or subject
+
+[[setting,ssl_server_require_client_cert_issuer]] and
+[[setting,ssl_server_require_client_cert_subject]] restrict which client
+certificates are accepted beyond just being signed by a trusted CA.
+Setting either one makes presenting a client certificate mandatory, even
+under [[setting,ssl_server_request_client_cert,any-cert]]:
+
+```doveconf[dovecot.conf]
+ssl_server_request_client_cert = yes
+ssl_server_require_client_cert_issuer = /O=Acme/CN=Acme-Client-CA/
+```
+
+Unknown attribute names and, in
+[[setting,ssl_server_require_client_cert_issuer]], subject alternative
+name types (`dns=`, `email=`, ...) aren't caught by `doveconf`: they only
+surface as an error once Dovecot builds the SSL context for the
+requirement.
+
+Setting [[setting,ssl_server_request_client_cert,any-cert]] instead of
+`yes` only relaxes chain validation, not these requirements - but since it
+also accepts an untrusted, self-signed certificate, that certificate can
+claim any subject or issuer it likes. Combine it with
+[[link,passdb_check_client_fp,check_client_fp]] (or verify the certificate
+normally instead) if the client's identity needs to be trusted, not just
+present.
+
+A value containing a space cannot be written as a plain inline value - the
+config tokenizer splits it into separate list elements at each space. Use
+the block form instead:
+
+```doveconf[dovecot.conf]
+ssl_server_require_client_cert_subject {
+  "/CN=Acme Root CA/" = yes
+}
+```
+
 ## Testing
 
 Try out your new setup:
