@@ -1,6 +1,11 @@
 /* Dovecot settings. */
 
+import fs from 'fs'
 import { setting_types } from '../lib/settings.js'
+
+const include = (name) =>
+	fs.readFileSync(new URL('../docs/core/config/include/' + name,
+	  import.meta.url), 'utf8')
 
 export const settings = {
 
@@ -12330,7 +12335,15 @@ userdb ldap {
 		seealso: [ 'metric' ],
 		text: `
 Group that expands to recommended [[setting,metric]] settings in proxies or
-backends.`
+backends.` +
+		"\n:::: info\n" +
+		"::: details @metric_defaults = proxy\n" +
+		include("metric-defaults-proxy.inc") +
+		":::\n" +
+		"::: details @metric_defaults = backend\n" +
+		include("metric-defaults-backend.inc") +
+		":::\n" +
+		"::::\n"
 	},
 
 	'@mailbox_defaults': {
@@ -12344,6 +12357,11 @@ to \`subscribe\`.`
 		seealso: [ 'mailbox_special_use' ],
 		text: `
 Group that expands to recommended English language mailbox names with
-[[setting,mailbox_special_use]] flags added.`
+[[setting,mailbox_special_use]] flags added.` +
+		"\n:::: info\n" +
+		"::: details @mailbox_defaults = english\n" +
+		include("mailbox-defaults-english.inc") +
+		":::\n" +
+		"::::\n"
 	},
 }
