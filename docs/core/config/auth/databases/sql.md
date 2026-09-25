@@ -22,6 +22,10 @@ If all the SQL settings for the [[link,passdb]] and [[link,userdb]] are equal,
 only one SQL connection is used for both [[link,passdb]] and [[link,userdb]]
 lookups.
 
+## Requirements
+
+To make the sections available for the configuration to read you need to install the respective packages like `dovecot-mysql` else you will encounter error message `Unknown section name: mysql`.
+
 ## Dovecot Configuration
 
 ```doveconf[dovecot.conf]
