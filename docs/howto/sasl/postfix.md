@@ -87,6 +87,7 @@ submission inet n - n - - smtpd
   -o smtpd_sender_restrictions=reject_sender_login_mismatch
   -o smtpd_recipient_restrictions=reject_non_fqdn_recipient,reject_unknown_recipient_domain,permit_sasl_authenticated,reject
 ```
+:::
 
 ## Dovecot Authentication via TCP
 
