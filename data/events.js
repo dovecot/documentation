@@ -1330,6 +1330,7 @@ attempt to open the script while it remains disabled.`
 | \`process_full\` | [[link,service_client_limit]] and [[link,service_process_limit]] was hit and this login session was killed. |
 | \`shutting_down\` | The process is shutting down so the login is aborted. |
 | \`tls_handshake_not_finished\` | TLS handshake failed or was not finished. |
+| \`unauthenticated_client_limit\` | [[added,settings_login_unauthenticated_client_limit_added]] [[setting,login_unauthenticated_client_limit]] was hit and this login session was killed. |
 | \`user_disabled\` | User is in deny passdb, or in some other way disabled passdb. |
 
 Proxying \`reason\` values:

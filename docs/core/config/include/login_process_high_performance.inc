@@ -27,3 +27,8 @@ passwords, read their mails, etc.
   1000 * 100 = 100k connections.
 * [[setting,service_vsz_limit]] should be increased to avoid out of memory
   errors, especially if you're using SSL/TLS.
+* [[setting,login_unauthenticated_client_limit]] can be used to limit how many
+  of the connections in each process are still unauthenticated, e.g. to reduce
+  the impact of DoS attacks that open many connections without logging in.
+  When the limit is reached, the oldest unauthenticated connection is
+  disconnected.
