@@ -5217,14 +5217,24 @@ If you want to allow all characters, leave the value empty.`
 	auth_username_format: {
 		default: '%{user | lower}',
 		values: setting_types.STRING,
+		changed: {
+			settings_auth_username_format_changed: `
+A global or protocol-level value must be empty or reference \`%{user}\` or
+\`%{owner_user}\`, otherwise the configuration is rejected.`
+		},
 		text: `
 When this setting is used globally, it changes the username, including
-\`%{user}\` variable, for all passdb and userdb lookups.
+\`%{user}\` variable, for all passdb and userdb lookups. The value must then
+be empty or reference \`%{user}\` or \`%{owner_user}\`: the result is also
+used as the authentication cache key, so a value that is the same for all users
+would make them share one cache entry. An empty value leaves the username
+unchanged.
 
 This setting can also be used in [[link,auth_passwd_file,passdb/userdb
 passwd_file { auth_username_format }]] to change the username for the duration
-of the lookup. The \`%{user}\` variable is not changed. If used inside other
-passdbs/userdbs the setting is ignored.
+of the lookup. The \`%{user}\` variable is not changed, and the value is not
+restricted to referencing the username. If used inside other passdbs/userdbs
+the setting is ignored.
 
 You can use the standard variables here.
 
