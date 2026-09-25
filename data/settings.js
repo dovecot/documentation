@@ -5199,6 +5199,13 @@ domain (either AD or NT).`
 	},
 
 	auth_username_chars: {
+		changed: {
+			auth_username_dots_rejected: `
+Regardless of this setting, a username is rejected if any of its \`/\` or
+\`@\` delimited components consists solely of dots, e.g. \`..\`. Such a
+component would escape its parent directory when the username is used in a
+path, e.g. in [[setting,mail_path]] or in a dict key.`,
+		},
 		default: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890.-_@',
 		values: setting_types.STRING,
 		text: `
@@ -8305,8 +8312,11 @@ This can be overridden via the \`gid\` [[link,userdb_fields,userdb field]].`
 	},
 
 	mail_home: {
+		changed: {
+			settings_path_types_confined: `Setting type changed.`,
+		},
 		seealso: [ 'mail_path', '[[link,home_directories_for_virtual_users]]' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 User's home directory. This is used as the root for some of the user-specific
 files and directories. The \`%{home}\` variable expands to this value. Also
