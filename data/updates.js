@@ -187,6 +187,7 @@ export const updates = {
 	settings_lazy_expunge_only_last_instance_changed: '2.4.3',
 	settings_last_login_dict_fields_added: '2.4.5',
 	settings_login_socket_path_added: '2.4.0',
+	settings_login_unauthenticated_client_limit_added: '2.4.6',
 	settings_lmtp_user_concurrency_limit_changed: '2.4.1',
 	settings_mail_access_groups_changed: '2.4.3',
 	settings_mail_attachment_sis_option_changed: '2.4.0',

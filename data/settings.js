@@ -8043,6 +8043,41 @@ The details of how this setting works depends on the used protocol:
     Except if HAProxy is used, then the original client IP address is used.`
 	},
 
+	login_unauthenticated_client_limit: {
+		added: {
+			settings_login_unauthenticated_client_limit_added: false,
+		},
+		default: 'unlimited',
+		values: setting_types.UINT,
+		seealso: [ 'service_client_limit' ],
+		text: `
+Maximum number of unauthenticated client connections in a single login process.
+\`unlimited\` means only [[setting,service_client_limit]] limits them. \`0\` is
+not a valid value.
+
+A connection is counted as unauthenticated from the moment it is accepted
+until the login has succeeded, including the time spent in TLS handshake and
+waiting for the auth process. Clients that have logged in and are being proxied
+by the login process are not counted.
+
+When a new connection makes the count exceed the limit, the oldest
+unauthenticated client in the process is disconnected, the same way as when
+[[setting,service_client_limit]] is reached. Clients that have already
+successfully authenticated and are waiting only for the post-login process
+are never disconnected. If there are no other clients that can be disconnected,
+the new client is disconnected. The disconnection is logged with the
+[[event,login_aborted]] event's \`unauthenticated_client_limit\` reason.
+
+The limit is per login process, so the total limit for the service is
+[[setting,service_process_limit]] multiplied by this value. Because of this,
+the setting can be configured globally, inside a \`protocol\` filter or
+inside a \`service\` filter. Client-specific filters, such as \`local\` and
+\`remote\`, are ignored. This setting is
+useful only with [[link,login_processes_high_performance]] mode, where
+[[setting,service_client_limit]] is large. It can be used to reduce the
+impact of DoS attacks that open many TCP connections without logging in.`
+	},
+
 	mail_access_groups: {
 		values: setting_types.BOOLLIST,
 		default: '[[setting,default_internal_group]]',
