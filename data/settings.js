@@ -2102,12 +2102,37 @@ fts solr {
 	},
 
 	fts_autoindex: {
+		changed: {
+			settings_fts_autoindex_direct_changed: `
+Changed from boolean to \`no\`, \`yes\` or \`direct\`.`,
+		},
 		default: 'no',
 		plugin: 'fts',
-		seealso: [ 'fts_autoindex_max_recent_msgs' ],
-		values: setting_types.BOOLEAN,
+		seealso: [ 'fts_autoindex_max_recent_msgs', 'dsync_commit_msgs_interval' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'no', 'yes', 'direct' ],
 		text: `
-If enabled, index mail as it is delivered or appended.
+Index mail as it is delivered or appended:
+
+\`no\`
+:   Don't index new mails automatically.
+
+\`yes\`
+:   Send a request to the \`indexer\` service to index the new mails
+    asynchronously.
+
+\`direct\`
+:   Index the new mails directly in the same process after the mails have
+    been committed. This is mainly useful when importing a lot of mails,
+    e.g. with [[doveadm,sync]], [[doveadm,backup]] or [[doveadm,import]]:
+    the mails are indexed while they are still in caches, instead of the
+    indexer process having to read them again later from storage. The FTS
+    index updates are kept open between the commits (see
+    [[setting,dsync_commit_msgs_interval]]) and written once the mailbox is
+    closed, when an FTS search is started in the same process, or when
+    expunges need to be processed. If direct indexing fails, the
+    \`indexer\` service is used instead.
+    [[setting,fts_autoindex_max_recent_msgs]] is ignored with this value.
 
 It can be overridden at the mailbox level, e.g. you can disable autoindexing
 for selected mailboxes using this setting:
