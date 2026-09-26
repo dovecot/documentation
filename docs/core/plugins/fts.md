@@ -101,6 +101,16 @@ that attempts to access the FTS indexes.
 Automatic FTS indexing can also be done during mail delivery, IMAP APPEND and
 other ways of adding mails to mailboxes using [[setting,fts_autoindex]].
 
+By default the automatic indexing is done asynchronously by the `indexer`
+service. When importing a lot of mails, e.g. with [[doveadm,sync]] or
+[[doveadm,backup]], it's more efficient to index the mails directly in the
+importing process while the mails are still in caches by setting
+[[setting,fts_autoindex]] to `direct`:
+
+```sh
+doveadm -o fts_autoindex=direct backup -R -u user@example.com imapc:
+```
+
 Indexing can also be triggered manually:
 
 ```sh
