@@ -359,7 +359,7 @@ See [[link,authentication_proxies]].
 
 #### `proxy_maybe`
 
-Proxy the connection to another IMAP/POP3 server.
+[[removed,proxy_maybe_removed]] Use `proxy` instead.
 
 See [[link,authentication_proxies]].
 
@@ -525,9 +525,9 @@ passdb ldap {
 :::
 
 ::: warning
-About the `proxy`, `proxy_maybe` and any other boolean type fields: these
-represent an existence test. Currently this translates to `will proxy (or
-proxy_maybe) if this attribute exists`. This allows the proxy behaviour to
+About the `proxy` and any other boolean type fields: these
+represent an existence test. Currently this translates to `will proxy if
+this attribute exists`. This allows the proxy behaviour to
 be selectable per user.
 
 To have it `always` on, use a template, e.g.:

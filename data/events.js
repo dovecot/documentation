@@ -1338,6 +1338,8 @@ Proxying \`reason\` values:
 | Reason | Description |
 | ------ | ----------- |
 | \`proxy_dest_connect_failed\` | Local authentication succeeded, but connection to destination hop failed. |
+| \`proxy_dest_host_not_found\` | Local authentication succeeded, but DNS lookup of the destination host returned "host not found". |
+| \`proxy_dest_host_temp_failed\` | Local authentication succeeded, but DNS lookup of the destination host failed temporarily. |
 | \`proxy_dest_internal_failure\` | Local authentication succeeded, but internal failure occurred after that. |
 | \`proxy_dest_remote_failure\` | Local authentication succeeded, but destination hop reported unspecified failure. |
 | \`proxy_dest_protocol_failure\` | Local authentication succeeded, but destination hop unexpectedly violated the protocol standard. |
@@ -1420,6 +1422,8 @@ Proxying error codes:
 | Reason | Description |
 | ------ | ----------- |
 | \`proxy_dest_connect_failed\` | Local authentication succeeded, but connection to destination hop failed. |
+| \`proxy_dest_host_not_found\` | Local authentication succeeded, but DNS lookup of the destination host returned "host not found". |
+| \`proxy_dest_host_temp_failed\` | Local authentication succeeded, but DNS lookup of the destination host failed temporarily. |
 | \`proxy_dest_internal_failure\` | Local authentication succeeded, but internal failure occurred after that. |
 | \`proxy_dest_remote_failure\` | Local authentication succeeded, but destination hop reported unspecified failure. |
 | \`proxy_dest_protocol_failure\` | Local authentication succeeded, but destination hop unexpectedly violated the protocol standard. |
@@ -1997,9 +2001,9 @@ characters and no control characters.
 		inherit: 'pre_login_client',
 		fields: {
 			dest_host: `Host name of the proxy destination (if proxying is configured with IP address, will have the same value as \`dest_ip\`).`,
-			dest_ip: `Proxy destination IP.`,
+			dest_ip: `Proxy destination IP. Not set until the destination host name has been resolved, so it's missing from \`proxy_session_started\` and also from the other events if the DNS lookup failed.`,
 			dest_port: `Proxy destination port.`,
-			source_ip: `Source IP where proxy connection originated from.`,
+			source_ip: `Source IP where proxy connection originated from. If it wasn't explicitly configured, it's not set until the destination host name has been resolved.`,
 			master_user: `If proxying is done with a master user authentication, contains the full username of master user.`,
 		},
 	},
