@@ -18,6 +18,9 @@ export const settings = {
 		// changed: {},
 		// deprecated: {},
 		// removed: {},
+		removed: {
+			settings_auth_proxy_self_removed: false,
+		},
 
 		// Default value of the setting. If not set, is displayed as "None".
 		// Rendered w/Markdown. Can be a singular value, i.e. "default: value",
@@ -54,12 +57,11 @@ export const settings = {
 
 		// Setting description. Rendered w/Markdown.
 		text: `
-If the destination for proxying matches any of the IP addresses listed
-here, proxying is not performed when \`proxy_maybe=yes\` is returned.
+If the destination for proxying matched any of the IP addresses listed
+here, proxying was not performed when \`proxy_maybe=yes\` was returned.
 
-This parameter isn't normally needed; its main use is if the
-destination IP address belongs to, for instance, a load-balancer rather
-than the server itself.`
+This setting was removed together with the \`proxy_maybe\` passdb field.
+Dovecot fails to start if this setting is present in the configuration.`
 	},
 
 	fs: {

@@ -1337,6 +1337,8 @@ Proxying \`reason\` values:
 | Reason | Description |
 | ------ | ----------- |
 | \`proxy_dest_connect_failed\` | Local authentication succeeded, but connection to destination hop failed. |
+| \`proxy_dest_host_not_found\` | [[added,events_proxy_dest_host_dns_failure_added]] Local authentication succeeded, but DNS lookup of the destination host returned "host not found". |
+| \`proxy_dest_host_temp_failed\` | [[added,events_proxy_dest_host_dns_failure_added]] Local authentication succeeded, but DNS lookup of the destination host failed temporarily. |
 | \`proxy_dest_internal_failure\` | Local authentication succeeded, but internal failure occurred after that. |
 | \`proxy_dest_remote_failure\` | Local authentication succeeded, but destination hop reported unspecified failure. |
 | \`proxy_dest_protocol_failure\` | Local authentication succeeded, but destination hop unexpectedly violated the protocol standard. |
@@ -1351,6 +1353,9 @@ Proxying \`reason\` values:
 	 * Events emitted when login process proxies a connection to a backend. */
 
 	proxy_session_started: {
+		changed: {
+			events_proxy_session_started_after_dns_changed: `If the destination host needs to be resolved, the event is sent after the DNS lookup. If the DNS lookup fails, only \`proxy_session_finished\` is sent.`
+		},
 		inherit: 'login_proxy',
 		text: `Connection to proxy destination has started.`
 	},
@@ -1419,6 +1424,8 @@ Proxying error codes:
 | Reason | Description |
 | ------ | ----------- |
 | \`proxy_dest_connect_failed\` | Local authentication succeeded, but connection to destination hop failed. |
+| \`proxy_dest_host_not_found\` | [[added,events_proxy_dest_host_dns_failure_added]] Local authentication succeeded, but DNS lookup of the destination host returned "host not found". |
+| \`proxy_dest_host_temp_failed\` | [[added,events_proxy_dest_host_dns_failure_added]] Local authentication succeeded, but DNS lookup of the destination host failed temporarily. |
 | \`proxy_dest_internal_failure\` | Local authentication succeeded, but internal failure occurred after that. |
 | \`proxy_dest_remote_failure\` | Local authentication succeeded, but destination hop reported unspecified failure. |
 | \`proxy_dest_protocol_failure\` | Local authentication succeeded, but destination hop unexpectedly violated the protocol standard. |
@@ -1996,7 +2003,7 @@ characters and no control characters.
 		inherit: 'pre_login_client',
 		fields: {
 			dest_host: `Host name of the proxy destination (if proxying is configured with IP address, will have the same value as \`dest_ip\`).`,
-			dest_ip: `Proxy destination IP.`,
+			dest_ip: `Proxy destination IP. Not set if the DNS lookup of the destination host failed.`,
 			dest_port: `Proxy destination port.`,
 			source_ip: `Source IP where proxy connection originated from.`,
 			master_user: `If proxying is done with a master user authentication, contains the full username of master user.`,
