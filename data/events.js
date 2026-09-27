@@ -596,16 +596,70 @@ for 30 days.`
 Cache file was found to be corrupted and the whole file is deleted.`
 	},
 
+	mail_cache_rebuild_finished: {
+		added: {
+			events_mail_cache_rebuild_finished_added: false,
+		},
+		root: 'mail-cache',
+		inherit: 'mail_index_common',
+		fields: {
+			reason: `
+Reason string why the rebuild was needed:
+* Index is missing the cache extension
+* Missing cache extension header in index
+* reset_id mismatch (file_seq=... != reset_id=...)
+* File was truncated (size=... < last_committed_end_offset=...)`,
+			file_seq: `Sequence of the cache file.`,
+			records: `Number of mails whose cache records were found.`,
+			skipped_records: `Number of cache records that were skipped, because they were broken, their UID wasn't in the index, they were written before the mail's UID was known, or they were written before a fields header that conflicts with the previous one. They're counted as deleted records, which may cause the cache file to be purged.`,
+			error: `If reading the cache file stopped at broken data, this is the error. The broken data is usually at the end of the file, but it can also be an entry with an invalid size in the middle of the file. The rest of the file after it is ignored, and it's removed by purging the file when it's written to the next time.`,
+		},
+		text: `
+The index's cache offsets were rebuilt by reading the v2 format
+\`dovecot.index.cache\` file. This happens when the index doesn't match the
+cache file anymore, for example because the index was deleted or restored from
+a backup. With v1 cache files the cache file is deleted in these situations.
+The rebuild is logged as a warning:
+\`Rebuilt cache offsets to index: <reason> (records=<n>, skipped_records=<n>)\`.
+If the \`error\` field is set, \`, broken at end: <error>\` is added inside the
+parentheses.
+
+The rebuild is done only if the mailbox's UIDVALIDITY matches the one in the
+cache file, or if the cache file doesn't have the UIDVALIDITY and the index
+wasn't recreated. Otherwise the cache file is deleted without logging an error.
+The index is rebuilt at most once per cache file by a process. If the index
+still doesn't match the cache file after the rebuild, or the cache file doesn't
+have any valid fields header, the cache file is deleted and
+[[event,mail_cache_corrupted]] is sent.
+See [[setting,dovecot_storage_version]].`
+	},
+
 	mail_cache_record_corrupted: {
 		root: 'mail-cache',
 		inherit: 'mail_index_common',
 		fields: {
 			reason: `Reason string why cache was found to be corrupted.`,
 			uid: `IMAP UID of the mail whose cache record is corrupted.`,
+			offset: {
+				added: {
+					events_mail_cache_record_corrupted_offset_added: false
+				},
+				text: `
+Offset of the corrupted record in the v2 format \`dovecot.index.cache\` file.`,
+			},
 		},
 		text: `
 Cache record for a specific mail was found to be corrupted and the record
-is deleted.`
+is deleted.
+
+[[changed,events_mail_cache_record_corrupted_changed]] The event is now also
+sent when a broken record is found in a v2 format \`dovecot.index.cache\`
+file. Then the \`offset\` field is set, the broken record and the mail's older
+records are ignored, and the cache file is purged later to remove the broken
+record. The event is sent and logged as an error only for the first broken
+record that a process finds in the cache file. The later broken records in the
+same file are only logged as debug messages.
+See [[setting,dovecot_storage_version]].`
 	},
 
 	/* HTTP Client
@@ -1713,8 +1767,12 @@ Renamed to \`userdb\`.`,
 			file_seq: `Sequence of the new cache file that is created.`,
 			prev_file_seq: `Sequence of the cache file that is to be purged.`,
 			prev_file_size: `Size of the cache file that is to be purged.`,
-			prev_deleted_records: `Number of records (mails) marked as deleted in the cache file that is to be purged.`,
-			reason: `
+			prev_deleted_records: `Number of records (mails) marked as deleted in the cache file that is to be purged. With v2 cache files the count is stored in the index's "cache" extension header.`,
+			reason: {
+				changed: {
+					events_mail_cache_purge_reason_changed: `Added \`Partially written data at offset ...\`, \`Uncommitted fields header at offset ...\` and \`Corrupted record at offset ...\` reasons.`,
+				},
+				text: `
 Reason string for purging the cache file:
 * doveadm mailbox cache purge
 * copy cache decisions
@@ -1723,11 +1781,15 @@ Reason string for purging the cache file:
 * rebuilding index
 * Too many continued records (...)
 * Too many deleted records (...)
-* Too many continued headers (...)
-* Minor version too old
+* Too many continued headers (...) (only v1 cache files)
+* Minor version too old (only v1 cache files)
 * Invalid header
 * Drop old field ... (last_used=...)
-* Change cache decision to temp for old field ... (last_used=...)`,
+* Change cache decision to temp for old field ... (last_used=...)
+* Partially written data at offset ... (only v2 cache files)
+* Uncommitted fields header at offset ... (only v2 cache files)
+* Corrupted record at offset ... (only v2 cache files)`,
+			},
 		},
 	},
 
