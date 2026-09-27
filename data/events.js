@@ -1720,8 +1720,14 @@ Reason string for purging the cache file:
 * copy cache decisions
 * creating cache
 * cache is too large
-* syncing
-* rebuilding index`,
+* rebuilding index
+* Too many continued records (...)
+* Too many deleted records (...)
+* Too many continued headers (...)
+* Minor version too old
+* Invalid header
+* Drop old field ... (last_used=...)
+* Change cache decision to temp for old field ... (last_used=...)`,
 		},
 	},
 
