@@ -2573,7 +2573,7 @@ errors (it is the same checking done by the xapian-check command with the
 				example: ['Trash'],
 				positional: true,
 				type: doveadm_arg_types.ARRAY,
-				text: `Mailboxes to purge index file.`,
+				text: `Mailboxes whose cache file is purged.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
