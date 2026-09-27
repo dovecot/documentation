@@ -77,6 +77,15 @@ the caching decisions once in a while:
 
 ## File Format
 
+There are two versions of the cache file format. Both of them can always be
+read. The v2 format is written when [[setting,dovecot_storage_version]] is
+high enough, otherwise the v1 format is written. An existing file keeps its
+format until it's purged. The base header's `major_version` is 1 for v1 files
+and 2 for v2 files. Older Dovecot versions support only v1 files, and they
+delete v2 files as corrupted.
+
+### Version 1
+
 The cache file format is:
 
 * Base header (`struct mail_cache_header`).
@@ -105,6 +114,123 @@ Cache file was designed to be storing only immutable data. The current
 implementation doesn't support modifying existing data, although in theory
 this could be possible. If this is really required, it's possible to drop
 cache for a specific mail entirely and then re-add it.
+
+### Version 2
+
+The v2 file is only appended to. Nothing is ever overwritten, and the file can
+be read without the index:
+
+* Base header (`struct mail_cache_header`). The counters and
+  `field_header_offset` are always 0. The `uid_validity` field (previously
+  the unused `backwards_compat_used_file_size`) contains the mailbox's
+  UIDVALIDITY, or 0 if it wasn't known when the file was created.
+* Sequence of 32bit aligned entries. Each entry begins with two `uint32_t`
+  words. The first one is 0 for `struct mail_cache_header_fields_v2` and the
+  mail's IMAP UID for `struct mail_cache_record_v2`. The second one is the
+  full size of the entry, including the padding at the end. This allows
+  reading the entries sequentially.
+* Each entry contains a CRC32 checksum, which is calculated over the whole
+  entry with the checksum field itself treated as 0.
+
+The fields header is `{ zero, size, fields_count, crc32 }` followed by the
+same arrays as in v1: last_used, size, type, decision and the NUL-separated
+names, padded to 32bit. It contains all the fields in the file. Purging writes
+it as the first entry. When new fields are added, a new fields header
+containing all the fields is appended. The fields are never reordered or
+removed within the file, so each field has the same index in all the fields
+headers. The decisions and last_used timestamps in it are only snapshots of
+the state when the header was written. They're used only when rebuilding the
+cache offsets (see below). Changing a decision never writes a new fields
+header.
+
+The cache record is `{ uid, size, prev_offset, crc32 }` followed by the same
+fields as in v1. The `size` is at the same offset as in the v1 record. The UID
+is `MAIL_CACHE_UID_UNKNOWN` (`0xffffffff`) if the record was written before
+the mail's UID was assigned. Such records can be found only via the index
+offsets. Purging writes them again with the real UID. The records'
+`prev_offset` always points to an earlier offset, so the records can't loop.
+
+All the mutable state is stored in the header of the index's "cache" extension
+(`struct mail_cache_index_ext_hdr`):
+
+* The same counters as in the v1 base header.
+* The offset where the last committed write to the cache file ended.
+* The list of fields, including their caching decisions and last_used
+  timestamps. The fields are self-contained entries, which are only appended,
+  so adding fields and changing decisions can be done with small partial
+  header updates.
+
+The extension header is normally modified only while the
+`dovecot.index.cache` file is locked, which also locks the
+`dovecot.index.log` first. The changes are committed before the cache file is
+unlocked, so they're always based on the latest header. The exceptions are:
+
+* Purging writes the whole header for the new cache file. The purge
+  transaction may be committed after the cache file is unlocked, but the
+  `dovecot.index.log` stays locked until then.
+* A transaction that resets the whole index contains a snapshot of the whole
+  header. It's committed after the cache file is unlocked, so changes
+  committed by other processes meanwhile are lost. Their fields headers are
+  after the last committed end offset, which causes the file to be purged.
+* The counters of expunged records are updated after the expunges are synced,
+  while only the `dovecot.index.log` is locked.
+
+The record offsets that refer to new fields are committed in the same
+transaction or after the fields are committed, so any index view that sees
+the offsets also sees the fields.
+
+When reading, each record's CRC32, size, UID and `prev_offset` are verified.
+If a record is broken, the rest of the file is still usable: The broken
+record and the mail's older records are ignored, but its newer valid records
+are still used. The file is purged later, and purging drops the broken
+records. With v1 files a broken record causes the whole cache file to be
+deleted.
+
+When the cache file is locked, its size is compared to the last committed end
+offset. If the file is larger, a process may have crashed while writing to it,
+so the data after the offset is verified. If it consists of complete valid
+records, it's accepted. If it contains broken data or a fields header, the
+file is purged before anything more is written to it. A fields header is
+never accepted, because its fields weren't committed to the index. The next
+writer could otherwise add different fields using the same field indexes.
+
+If the index no longer matches the cache file, the index's "cache" extension
+(the cache offsets and the extension header) is rebuilt from the cache file.
+This is called rebuilding the cache offsets below. It happens when the
+extension's `reset_id` doesn't match the cache file's `file_seq`, the
+extension header is missing, the file is smaller than the last committed end
+offset, or the index doesn't have the "cache" extension at all (e.g. the index
+was deleted). The cache file is read sequentially: The fields are read from
+the last valid fields header, and each mail's offset is set to the last valid
+record with the mail's UID. Each fields header must begin with the same fields
+as the previous fields header. If it doesn't, the records before it are
+dropped. The cache offsets are rebuilt only if the mailbox's UIDVALIDITY
+matches the one in the cache file header. If the header doesn't have the
+UIDVALIDITY, they're rebuilt only if the index wasn't recreated (the indexid
+matches). Otherwise the cache file is deleted silently, the same as a v1 cache
+file with a different indexid. See the [[event,mail_cache_rebuild_finished]]
+event for the list of reasons.
+
+The cache offsets are rebuilt at most once per cache file by a process. If the
+index still doesn't match the cache file after that, the file is deleted as
+corrupted. The cache offsets aren't rebuilt while the file is being purged.
+Purging copies only the records that the index points to, so the cache
+offsets must be rebuilt before that. `mail_cache_purge()` does it
+automatically, but `mail_cache_purge_with_trans()` doesn't. It's used by the
+mailbox index rebuild (`doveadm force-resync` with sdbox and mdbox, and obox's
+index rebuild), which copies the cache offsets from the old index. So it
+rebuilds the cache offsets with `mail_cache_rebuild_if_needed()` before
+copying them.
+
+A v2 cache file is still deleted as corrupted for example if:
+
+* Its base header is invalid.
+* The fields in the index's extension header are broken
+  (`Broken fields in index`).
+* Rebuilding the cache offsets doesn't find any valid fields header
+  (`No valid fields header`).
+* The index still doesn't match the file after rebuilding the cache offsets.
+* The file becomes too large.
 
 See `lib-index/mail-cache-private.h` in the source code for details about
 these structs.
@@ -166,7 +292,7 @@ the data exist twice (or even more times) means wasting some disk space,
 but otherwise it isn't a problem. The duplicates are dropped the next time
 the file is purged (recreated).
 
-Details of writing to cache file:
+Details of writing to v1 cache file:
 
 * Most of the data is only appended to it.
 * Header is overwritten to update fields:
@@ -184,11 +310,13 @@ Details of writing to cache file:
 * The cache fields header can also be updated directly to update cache
   decisions and "last used" timestamps.
 
-Writing to an existing `dovecot.index.cache` file is done by simply locking
-it. Purging (= recreating) the cache requires also having the
+Writing to an existing v1 `dovecot.index.cache` file is done by simply
+locking it. With v2 files the `dovecot.index.log` is locked first, and then
+the cache file, because the changes to the index are committed while the cache
+file is locked. Purging (= recreating) the cache requires also having the
 `dovecot.index.log` locked first.
 
-There are some issues with lockless reading:
+There are some issues with lockless reading of v1 files:
 
 * Because header can be rewritten, the fields can't be fully trusted. It's
   possible that reading can read only a partially updated header. This
