@@ -330,6 +330,11 @@ size).`
 		default: 4,
 		values: setting_types.UINT,
 		advanced: true,
+		changed: {
+			settings_mail_cache_purge_header_continue_count_changed: `
+Used only with v1 format cache files. The v2 format cache files don't have
+continued headers. See [[setting,dovecot_storage_version]].`
+		},
 		text: `
 Compress the cache file when we need to follow more than n next_offsets to
 find the latest cache header.`
