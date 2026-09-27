@@ -173,6 +173,7 @@ export const updates = {
 	settings_doveadm_allowed_commands_removed: '2.4.6',
 	settings_dovecot_config_version_added: '2.4.0',
 	settings_dovecot_storage_version_added: '2.4.0',
+	settings_dovecot_storage_version_cache_v2_changed: '2.4.6',
 	settings_dovecot_storage_version_thread_index_changed: '2.4.5',
 	settings_imapc_features_auto_capabilities: '2.4.3',
 	settings_fifo_listener_type_added: '2.4.0',

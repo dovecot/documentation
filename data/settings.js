@@ -5859,7 +5859,16 @@ longer craft Message-IDs whose hashes deliberately collide. Existing v1 index
 files are deleted and rebuilt in the v2 format when the mailbox is next
 opened for threading. Older Dovecot versions don't understand the v2 format
 and rebuild the index in the v1 format, so keep this setting at the old
-version until a rollback is no longer possible.`
+version until a rollback is no longer possible.
+
+[[changed,settings_dovecot_storage_version_cache_v2_changed]] The
+\`dovecot.index.cache\` file is written in a new v2 format. Existing v1 cache
+files are converted to v2 when they are purged the next time for any reason.
+Older Dovecot versions don't understand the v2 format and delete the cache
+files, so keep this setting at the old version until a rollback is no longer
+possible. Lowering the setting doesn't convert the existing v2 cache files back
+to v1 until they are purged, so before downgrading make sure no process uses
+the old setting anymore and purge them with [[doveadm,mailbox cache purge]].`
 	},
 
 	dsync_alt_char: {
