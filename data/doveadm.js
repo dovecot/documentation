@@ -2579,7 +2579,9 @@ errors (it is the same checking done by the xapian-check command with the
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		response: null,
-		text: `Purge the dovecot.index.cache file.`,
+		text: `
+Purge the dovecot.index.cache file. The new file is written in the cache file
+format selected by [[setting,dovecot_storage_version]].`,
 	},
 
 	'mailbox cache remove': {
