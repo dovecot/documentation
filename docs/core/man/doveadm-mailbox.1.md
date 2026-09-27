@@ -373,7 +373,7 @@ is not supported for all mail backends.
   *mailbox* *...*
 
 Purge the dovecot.index.cache file. Most importantly this frees up disk
-space from mails that were already deleted. Normally there i no need to
+space from mails that were already deleted. Normally there is no need to
 run this command manually, because the compression is also run
 automatically.
 
