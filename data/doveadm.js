@@ -2573,13 +2573,15 @@ errors (it is the same checking done by the xapian-check command with the
 				example: ['Trash'],
 				positional: true,
 				type: doveadm_arg_types.ARRAY,
-				text: `Mailboxes to purge index file.`,
+				text: `Mailboxes whose cache file is purged.`,
 			},
 		},
 		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-mailbox',
 		response: null,
-		text: `Purge the dovecot.index.cache file.`,
+		text: `
+Purge the dovecot.index.cache file. The new file is written in the cache file
+format selected by [[setting,dovecot_storage_version]].`,
 	},
 
 	'mailbox cache remove': {
