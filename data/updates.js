@@ -90,6 +90,7 @@ export const updates = {
 	settings_delayed_expansion_changed: '2.4.2',
 	settings_fts_autoindex_direct_changed: '2.4.6',
 	settings_list_key_variables_changed: '2.4.5',
+	settings_listen_renamed: '2.4.6',
 	settings_path_types_added: '2.4.6',
 	settings_syntax_named_filters_added: '2.4.0',
 	sieve_ext_imapflags: '2.4.0',
