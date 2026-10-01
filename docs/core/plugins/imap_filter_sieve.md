@@ -31,7 +31,7 @@ compiled and installed with Pigeonhole itself.
 
 ## Settings
 
-There are no `dovecot.conf` settings for this plugin.
+<SettingsComponent tag="imap-filter-sieve" />
 
 ## Configuration
 

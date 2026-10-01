@@ -6,6 +6,9 @@ dovecotlinks:
   imap_hibernation:
     hash: imap-hibernation
     text: IMAP Hibernation
+  imap_search_nesting_limit:
+    hash: search-query-nesting-limit
+    text: Search Query Nesting Limit
 ---
 
 # IMAP Configuration
@@ -58,3 +61,7 @@ service imap-hibernate {
   }
 }
 ```
+
+## Search Query Nesting Limit
+
+<!-- @include: include/imap_search_nesting_limit.inc -->

@@ -36,6 +36,17 @@ containing the following details:
 *last_kill_sent*
 :   timestamp of the latest SIGINT signal sent to the process
 
+*generation*
+:   the configuration generation the process belongs to. This increases by one
+    for every reload, so processes preserved from before a reload (see
+    [[setting,service_shutdown_clients_timeout]]) have a smaller number than the
+    current one.
+
+*kill_time*
+:   timestamp when the master process is going to signal the process next, or 0
+    if it isn't going to. For a preserved process this is when its clients are
+    disconnected.
+
 <!-- @include: include/global-options-formatter.inc -->
 
 ## ARGUMENTS
@@ -50,11 +61,11 @@ containing the following details:
 doveadm process status
 ```
 ```
-name   pid    available_count total_count idle_start last_status_update last_kill_sent
-stats  132400 999             5           0          1685365436         0
-log    132356 971             29          0          1685352909         0
-config 132357 999             6           0          1685365436         0
-anvil  132355 1000            0           1685352908 1685352908         0
+name   pid    available_count total_count idle_start last_status_update last_kill_sent generation kill_time
+stats  132400 999             5           0          1685365436         0              1          0
+log    132356 971             29          0          1685352909         0              1          0
+config 132357 999             6           0          1685365436         0              1          0
+anvil  132355 1000            0           1685352908 1685352908         0              1          0
 ```
 
 <!-- @include: include/reporting-bugs.inc -->

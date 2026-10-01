@@ -1,6 +1,11 @@
 /* Dovecot settings. */
 
+import fs from 'fs'
 import { setting_types } from '../lib/settings.js'
+
+const include = (name) =>
+	fs.readFileSync(new URL('../docs/core/config/include/' + name,
+	  import.meta.url), 'utf8')
 
 export const settings = {
 
@@ -1646,6 +1651,36 @@ sieve_virustest_text_value {
 \`\`\``
 	},
 
+	/* imap-filter-sieve plugin */
+
+	imap_filter_sieve_max_redirects: {
+		added: {
+			settings_imap_filter_sieve_max_redirects_added: `
+Setting to limit the cumulative number of redirects performed by a single
+IMAP \`FILTER=SIEVE\` command is added.`
+		},
+		plugin: 'imap-filter-sieve',
+		default: 1024,
+		values: setting_types.UINT,
+		seealso: [ 'sieve_max_redirects', 'sieve_max_actions' ],
+		text: `
+The maximum cumulative number of messages that may be redirected across a
+single IMAP \`FILTER=SIEVE\` command.
+
+\`0\` disables redirecting via \`FILTER=SIEVE\` entirely: such a command is
+aborted rather than performing any redirect. Set this to the maximum value
+to allow an unlimited number of redirects.
+
+Unlike [[setting,sieve_max_redirects]], which limits redirect actions per
+single script execution (that is, per message), this setting bounds the
+total number of messages redirected while a script is run against a whole
+set of messages via the IMAP \`FILTER\` command. It throttles bulk
+forwarding ("redirect bombs") when a redirect script is applied to a large
+mailbox.
+
+When the limit is reached, the \`FILTER\` command aborts with an error.`
+	},
+
 	/* imapsieve plugin */
 
 	imapsieve_from: {
@@ -2072,12 +2107,37 @@ fts solr {
 	},
 
 	fts_autoindex: {
+		changed: {
+			settings_fts_autoindex_direct_changed: `
+Changed from boolean to \`no\`, \`yes\` or \`direct\`.`,
+		},
 		default: 'no',
 		plugin: 'fts',
-		seealso: [ 'fts_autoindex_max_recent_msgs' ],
-		values: setting_types.BOOLEAN,
+		seealso: [ 'fts_autoindex_max_recent_msgs', 'dsync_commit_msgs_interval' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'no', 'yes', 'direct' ],
 		text: `
-If enabled, index mail as it is delivered or appended.
+Index mail as it is delivered or appended:
+
+\`no\`
+:   Don't index new mails automatically.
+
+\`yes\`
+:   Send a request to the \`indexer\` service to index the new mails
+    asynchronously.
+
+\`direct\`
+:   Index the new mails directly in the same process after the mails have
+    been committed. This is mainly useful when importing a lot of mails,
+    e.g. with [[doveadm,sync]], [[doveadm,backup]] or [[doveadm,import]]:
+    the mails are indexed while they are still in caches, instead of the
+    indexer process having to read them again later from storage. The FTS
+    index updates are kept open between the commits (see
+    [[setting,dsync_commit_msgs_interval]]) and written once the mailbox is
+    closed, when an FTS search is started in the same process, or when
+    expunges need to be processed. If direct indexing fails, the
+    \`indexer\` service is used instead.
+    [[setting,fts_autoindex_max_recent_msgs]] is ignored with this value.
 
 It can be overridden at the mailbox level, e.g. you can disable autoindexing
 for selected mailboxes using this setting:
@@ -3815,12 +3875,77 @@ is run asynchronously.`
 
 	/* SQL Cassandra settings. */
 
+	cassandra_application_name: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		seealso: [ 'cassandra_application_version', 'cassandra_client_id' ],
+		default: 'Dovecot',
+		text: `
+Application name sent to the Cassandra server when connecting. This can be
+used to identify Dovecot's client connections on the Cassandra side.
+
+If empty, neither the application name nor
+[[setting,cassandra_application_version]] is sent.
+
+Older cpp-driver versions can't send the application name. The default is
+then empty, and setting a name fails.`
+	},
+
+	cassandra_application_version: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		seealso: [ 'cassandra_application_name' ],
+		default: '*[Dovecot version]*',
+		text: `
+Application version sent to the Cassandra server when connecting. If empty,
+the Dovecot version is used.
+
+This is sent only when [[setting,cassandra_application_name]] is non-empty.`
+	},
+
+	cassandra_client_id: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		seealso: [ 'cassandra_application_name' ],
+		default: '*[random UUID]*',
+		text: `
+Client ID UUID sent to the Cassandra server when connecting, e.g.
+\`01234567-89ab-4def-8123-456789abcdef\`. If empty, the driver generates a
+random UUIDv4.`
+	},
+
 	cassandra_connect_timeout: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.TIME_MSECS,
 		default: '5s',
 		text: `
 Connection timeout.`
+	},
+
+	cassandra_connections_per_host: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.UINT,
+		seealso: [ 'cassandra_io_thread_count' ],
+		default: 1,
+		text: `
+Number of connections to create to each Cassandra host for each IO thread.
+The total number of connections per host is this value multiplied by
+[[setting,cassandra_io_thread_count]].
+
+Increasing this may help to increase concurrency with busy processes.
+Must not be \`0\`.`
 	},
 
 	cassandra_debug_queries: {
@@ -3939,13 +4064,111 @@ How long to idle before disconnecting.`
 Specifies the keyspace name to use.`
 	},
 
+	cassandra_latency_aware_exclusion_threshold: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		seealso: [ 'cassandra_latency_aware_routing' ],
+		default: '2.0',
+		text: `
+Used by [[setting,cassandra_latency_aware_routing]]: how much worse a host's
+average latency may be compared to the best performing host before it is
+penalized. For example the default \`2.0\` penalizes hosts whose average
+latency is more than twice the best host's latency.
+
+This is a floating point number, which must be at least \`1.0\`.`
+	},
+
+	cassandra_latency_aware_min_measured: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.UINT,
+		seealso: [ 'cassandra_latency_aware_routing' ],
+		default: 50,
+		text: `
+Used by [[setting,cassandra_latency_aware_routing]]: minimum number of
+latency measurements per host before the host's latency is taken into
+account.`
+	},
+
+	cassandra_latency_aware_retry_period: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		seealso: [ 'cassandra_latency_aware_routing' ],
+		default: '10s',
+		text: `
+Used by [[setting,cassandra_latency_aware_routing]]: how long a host is
+penalized before it is given another chance.`
+	},
+
 	cassandra_latency_aware_routing: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.BOOLEAN,
+		seealso: [
+			'cassandra_latency_aware_exclusion_threshold',
+			'cassandra_latency_aware_min_measured',
+			'cassandra_latency_aware_retry_period',
+			'cassandra_latency_aware_scale',
+			'cassandra_latency_aware_update_rate',
+		],
 		default: 'no',
 		text: `
 When turned on, latency-aware routing tracks the latency of queries to avoid
 sending new queries to poorly performing Cassandra nodes.`
+	},
+
+	cassandra_latency_aware_scale: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		seealso: [ 'cassandra_latency_aware_routing' ],
+		default: '100ms',
+		text: `
+Used by [[setting,cassandra_latency_aware_routing]]: controls the weight
+given to older latencies when calculating a host's average latency. A larger
+value gives more weight to older measurements.`
+	},
+
+	cassandra_latency_aware_update_rate: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		seealso: [ 'cassandra_latency_aware_routing' ],
+		default: '100ms',
+		text: `
+Used by [[setting,cassandra_latency_aware_routing]]: how often the best
+average latency is recalculated.`
+	},
+
+	cassandra_local_datacenter: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.STRING,
+		seealso: [ 'cassandra_hosts', 'cassandra_read_consistency', 'cassandra_write_consistency', 'cassandra_delete_consistency' ],
+		text: `
+Name of the local datacenter. Queries are sent only to the hosts in the
+local datacenter. This also defines the datacenter used by the \`local-one\`
+and \`local-quorum\` consistency levels.
+
+If empty, the driver uses the datacenter of whichever contact point in
+[[setting,cassandra_hosts]] answers first. This is nondeterministic when
+[[setting,cassandra_hosts]] contains hosts from multiple datacenters. Hosts in
+the other datacenters are never used. It's recommended to set this when the
+Cassandra cluster has multiple datacenters. See
+[[link,sql_cassandra_local_datacenter]].`
 	},
 
 	cassandra_log_level: {
@@ -3966,7 +4189,24 @@ Whether to log about failed requests that are retried (which may or may
 not succeed after the retry).`
 	},
 
-	cassandra_metrics: {
+	cassandra_logged_batches: {
+		added: {
+			settings_cassandra_logged_batches_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		text: `
+Whether transactions with multiple statements are sent as \`LOGGED\` batches.
+When \`no\`, they are sent as \`UNLOGGED\` batches. This is needed for
+Cassandra-compatible databases that don't support \`LOGGED\` batches.
+
+\`UNLOGGED\` batches that update multiple partitions aren't atomic: if the
+batch fails, only some of the changes may have been written. Batches that
+update a single partition are atomic in either case.`
+	},
+
+	cassandra_metrics_path: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.STRING,
 		text: `
@@ -4052,12 +4292,101 @@ Read consistency.`
 Read consistency if primary consistency fails.`
 	},
 
+	cassandra_reconnect_base_delay: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		seealso: [ 'cassandra_reconnect_policy', 'cassandra_reconnect_max_delay' ],
+		default: '2s',
+		text: `
+With [[setting,cassandra_reconnect_policy,exponential]] this is the initial
+delay before reconnecting to a Cassandra host. It must be larger than
+1 millisecond.
+
+With [[setting,cassandra_reconnect_policy,constant]] this is the delay
+between all reconnection attempts. \`0\` means reconnecting immediately.`
+	},
+
+	cassandra_reconnect_max_delay: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		seealso: [ 'cassandra_reconnect_policy', 'cassandra_reconnect_base_delay' ],
+		default: '60s',
+		text: `
+With [[setting,cassandra_reconnect_policy,exponential]] this is the maximum
+delay between reconnection attempts. It must not be smaller than
+[[setting,cassandra_reconnect_base_delay]].
+
+Not used with [[setting,cassandra_reconnect_policy,constant]].`
+	},
+
+	cassandra_reconnect_policy: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'exponential', 'constant' ],
+		seealso: [ 'cassandra_reconnect_base_delay', 'cassandra_reconnect_max_delay' ],
+		default: 'exponential',
+		text: `
+How to reconnect to a Cassandra host after the connection is lost:
+
+\`exponential\`
+:   Start with [[setting,cassandra_reconnect_base_delay]] and increase the
+    delay exponentially after each attempt, up to
+    [[setting,cassandra_reconnect_max_delay]]. A random jitter of +/- 15% is
+    added to the delay.
+
+\`constant\`
+:   Always wait [[setting,cassandra_reconnect_base_delay]].
+
+cpp-driver older than v2.14 supports only \`constant\`, which is then also
+the default.`
+	},
+
+	cassandra_request_queue_size: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.UINT,
+		seealso: [ 'cassandra_io_thread_count', 'cassandra_metrics_path' ],
+		default: 8192,
+		text: `
+Maximum number of requests queued for each IO thread while waiting for the
+thread to process them. The total capacity is this value multiplied by
+[[setting,cassandra_io_thread_count]]. The driver rounds the value up to the
+next power of two.
+
+When the queue is full, new requests fail immediately. These failures are
+counted in the \`recv_err_queue_full\` field of
+[[setting,cassandra_metrics_path]]. Must not be \`0\`.`
+	},
+
 	cassandra_request_timeout: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.TIME_MSECS,
 		default: '60s',
 		text: `
 How long to wait for a query to finish.`
+	},
+
+	cassandra_source_ip: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.IPADDR,
+		text: `
+Source IP address to use for connections to Cassandra hosts. Only IP
+addresses are supported, not host names. If empty, the source IP address is
+chosen by the operating system.`
 	},
 
 	cassandra_ssl: {
@@ -4087,6 +4416,53 @@ value must something else than \`no\`.
 
 Configure SSL certificates using the \`ssl_client_*\` settings. See
 [[link,ssl_configuration]].`
+	},
+
+	cassandra_tcp_keepalive: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME,
+		seealso: [ 'cassandra_heartbeat_interval' ],
+		default: 0,
+		text: `
+If non-zero, enable TCP keepalive for Cassandra connections with this
+initial delay. This can detect connections that have been silently dropped by
+e.g. firewalls or NAT devices. \`0\` disables TCP keepalive.`
+	},
+
+	cassandra_token_aware_routing: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.BOOLEAN,
+		seealso: [ 'cassandra_token_aware_shuffle_replicas' ],
+		default: 'yes',
+		text: `
+Send queries directly to a host that has the data (a replica for the
+queried partition), avoiding an extra hop through a coordinator host. This
+should normally be kept enabled, but disabling it may be useful for
+debugging.`
+	},
+
+	cassandra_token_aware_shuffle_replicas: {
+		added: {
+			settings_cassandra_cluster_settings_added: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.BOOLEAN,
+		seealso: [ 'cassandra_token_aware_routing' ],
+		default: 'yes',
+		text: `
+Used by [[setting,cassandra_token_aware_routing]]: randomly shuffle the
+replicas for each query. This distributes load better between the replicas,
+but reduces the effectiveness of the Cassandra server's caching. Disabling
+this may improve performance when the same keys are read repeatedly.
+
+Older cpp-driver versions don't support shuffling. The default is then
+\`no\`, and enabling it fails.`
 	},
 
 	cassandra_user: {
@@ -5344,11 +5720,21 @@ UNIX socket path to the dns-client service.`
 	},
 
 	dns_client_timeout: {
-		tags: [ 'dns', 'dns_client' ],
+		tags: [ 'dns', 'dns_client', 'sql-cassandra' ],
 		values: setting_types.TIME_MSECS,
 		default: '10s',
 		text: `
-Timeout for DNS lookups.`
+Timeout for DNS lookups.
+
+This is also used by the Cassandra driver for resolving
+[[setting,cassandra_hosts]]. It can be changed for Cassandra only by placing
+it inside a \`cassandra\` filter:
+
+\`\`\`[dovecot.conf]
+cassandra {
+  dns_client_timeout = 5s
+}
+\`\`\``
 	},
 
 	dotlock_use_excl: {
@@ -7081,10 +7467,43 @@ distinguish different listener types that one service may employ.`
 	inet_listener_port: {
 		tags: [ 'service' ],
 		values: setting_types.IN_PORT,
-		seealso: [ 'listen' ],
+		seealso: [ 'inet_listener_listen' ],
 		default: 0,
 		text: `
 Port number where to listen. \`0\` disables the listener.`
+	},
+
+	inet_listener_listen: {
+		tags: [ 'service' ],
+		default: '\*, \:\:',
+		values: setting_types.IPADDR,
+		changed: {
+			settings_listen_renamed: `
+Renamed from \`listen\`, which still works as an alias.`
+		},
+		text: `
+A comma-separated list of IP addresses or hostnames on which external network
+connections will be handled.
+
+\`*\` listens at all IPv4 interfaces, and \`::\` listens at all IPv6
+interfaces.
+
+Example:
+
+\`\`\`
+listen = 127.0.0.1, 192.168.0.1
+\`\`\`
+
+The setting can be used globally, inside a \`service { .. }\` and inside an
+[[setting,inet_listener]], where the most specific value wins, e.g.:
+
+\`\`\`
+service imap-login {
+  inet_listener imap {
+    listen = 192.168.0.1
+  }
+}
+\`\`\``
 	},
 
 	inet_listener_ssl: {
@@ -7206,31 +7625,10 @@ The directory from which you execute commands via doveadm-exec.`
 	},
 
 	listen: {
-		default: '\*, \:\:',
 		values: setting_types.IPADDR,
+		seealso: [ 'inet_listener_listen' ],
 		text: `
-A comma-separated list of IP addresses or hostnames on which external network
-connections will be handled.
-
-\`*\` listens at all IPv4 interfaces, and \`::\` listens at all IPv6
-interfaces.
-
-Example:
-
-\`\`\`
-listen = 127.0.0.1, 192.168.0.1
-\`\`\`
-
-This setting can be used also inside an [[setting,inet_listener]] to override
-the listener address, e.g.:
-
-\`\`\`
-service imap-login {
-  inet_listener imap {
-    listen = 192.168.0.1
-  }
-}
-\`\`\``
+Alias for [[setting,inet_listener_listen]].`
 	},
 
 	lmtp_add_received_header: {
@@ -9968,6 +10366,12 @@ is allowed to login as other users.`
 	},
 
 	passdb_sql_query: {
+		changed: {
+			settings_auth_sql_bind_params_changed: `
+\`%{variable}\` values are now sent to the database as bind parameters
+instead of being expanded into the query text. See
+[[link,auth_sql_variables]] for the resulting restrictions.`
+		},
 		tags: [ 'passdb' ],
 		values: setting_types.STRING,
 		text: `
@@ -10494,13 +10898,14 @@ If non-empty, this service is enabled only when the protocol name is listed in
 	service_type: {
 		tags: [ 'service' ],
 		values: setting_types.STRING,
-		seealso: [ 'service_process_limit' ],
+		seealso: [ 'service_process_limit', 'service_shutdown_clients_timeout' ],
 		text: `
 Type of this service:
 
 | Value | Description |
 | --- | --- |
 | \`<empty>\` | The default. |
+| \`client\` | [[added,settings_service_type_client_added]] Used by services whose processes serve externally visible client connections that can't be transparently re-established. A configuration reload preserves these processes, see [[setting,service_shutdown_clients_timeout]]. |
 | \`login\` | Used by login services. The login processes have "all processes full" notification fd. It's used by the processes to figure out when no more client connections can be accepted because client and process limits have been reached. The login processes can then kill some of their oldest connections that haven't logged in yet. |
 | \`worker\` | Used by various worker services. It's normal for worker processes to fill up to [[setting,service_process_limit]], and there shouldn't be a warning logged about it. |
 | \`startup\` | Creates one process at startup. |
@@ -10715,6 +11120,12 @@ low. Use \`unlimited\` to disable this entirely.`
 	},
 
 	shutdown_clients: {
+		removed: {
+			service_shutdown_clients_changed: `
+Replaced by [[setting,service_shutdown_clients_timeout]], which is the same setting
+with the time in between also available: \`yes\` became \`0\` and \`no\`
+became \`infinite\`.`
+		},
 		default: 'yes',
 		values: setting_types.BOOLEAN,
 		text: `
@@ -10723,6 +11134,83 @@ If enabled, all processes are killed when the master process is shutdown.
 Otherwise, existing processes will continue to run. This may be useful to not
 interrupt earlier sessions, but may not be desirable if restarting Dovecot
 to apply a security update, for example.`
+	},
+
+	service_shutdown_clients_timeout: {
+		added: {
+			service_shutdown_clients_changed: false
+		},
+		tags: [ 'service' ],
+		default: '0',
+		seealso: [ 'service_type' ],
+		values: setting_types.TIME,
+		text: `
+How long the processes of the old configuration may keep serving their
+existing clients after [[doveadm,reload]], and how long the processes may keep
+running after the master process was stopped.
+
+| Value | Description |
+| --- | --- |
+| \`0\` | The default. All the clients are disconnected immediately. |
+| *time* | The clients are disconnected after this time. |
+| \`infinite\` | The clients are never disconnected. The processes stop once their last client is gone. |
+
+The time is the maximum: when it is up, the processes disconnect all their
+remaining clients, also the ones that are in the middle of a command, and the
+login processes abort the logins that are still in progress. A login process
+that proxies a connection to a backend waits up to two seconds for the
+connection to become quiet, so that a reply isn't cut in the middle.
+
+Only the processes of [[setting,service_type,client]] and
+[[setting,service_type,login]] services and the log process are preserved. The
+internal services are replaced by the reload, so their old processes are
+stopped regardless of this setting - otherwise they would pile up with every
+reload. This means that requests which are in flight to an internal service
+when its old process is stopped fail, the same way they do when a reload
+disconnects the clients instead.
+
+The main use case is taking new SSL certificates into use without
+disconnecting anyone:
+
+\`\`\`
+service_shutdown_clients_timeout = 4h
+\`\`\`
+
+The setting can also be set per service, e.g. to keep only the IMAP sessions
+running:
+
+\`\`\`
+service_shutdown_clients_timeout = 0
+service imap {
+  shutdown_clients_timeout = 4h
+}
+service imap-login {
+  shutdown_clients_timeout = 4h
+}
+\`\`\`
+
+Both processes serving a session need the timeout: with TLS the login process
+keeps proxying the connection also after the login, so the session ends as soon
+as either of the imap and imap-login processes is killed.
+
+On a proxy there are no local imap processes - the login processes proxy the
+connections to the backends - so the login service's timeout alone decides how
+long the existing sessions keep running.
+
+A single reload can override the setting for all the services with
+[[doveadm,reload,--kick-timeout]]. The override covers also the processes that
+earlier reloads left running, so \`--kick-timeout 0\` disconnects every preserved
+client.
+
+::: warning
+After the master process has been stopped there is nobody left to escalate to
+SIGKILL, so a non-zero timeout only means that the processes shut themselves
+down gracefully at the deadline.
+
+With systemd the default \`KillMode=control-group\` kills the preserved
+processes anyway on \`systemctl restart\`. Preserving them across a restart
+needs \`KillMode=mixed\` or \`KillMode=process\`.
+:::`
 	},
 
 	sql_driver: {
@@ -10858,7 +11346,7 @@ variables. Weak algorithms are explicitly disallowed, such as MD5.`,
 	ssl_cipher_list: {
 		default: 'ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH (for ssl_server, empty for ssl_client)',
 		seealso: [ 'ssl', 'ssl_cipher_suites', 'ssl_min_protocol', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.STRING,
 		text: `
 The list of SSL ciphers to use for TLSv1.2 and below connections, in order
@@ -10873,6 +11361,7 @@ This setting is used for both incoming and outgoing SSL connections.`
 	ssl_cipher_suites: {
 		default: '\\<OpenSSL version specific\\>',
 		seealso: [ 'ssl', 'ssl_cipher_list', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl_client' ],
 		values: setting_types.STRING,
 		text: `
 The list of SSL cipher suites to use for TLSv1.3 connections, in order of
@@ -10892,7 +11381,7 @@ Named filter, which can be used for specifying SSL client settings.`
 
 	ssl_client_ca_dir: {
 		seealso: [ 'ssl', 'ssl_client_ca_file', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.STRING,
 		text: `
 The directory where trusted SSL CA certificates can be found. For example
@@ -10908,7 +11397,7 @@ empty, the system CA certificates are used.`
 	},
 
 	ssl_client_ca_file: {
-		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		seealso: [ 'ssl', 'ssl_client_ca_dir', '[[link,ssl_configuration]]' ],
 		values: setting_types.FILE,
 		text: `
@@ -10935,7 +11424,7 @@ empty, the system CA certificates are used.`
 			'ssl_client_key_file',
 			'[[link,ssl_configuration]]',
 		],
-		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.FILE,
 		text: `
 Public SSL certificate used for outgoing SSL connections. This is generally
@@ -10957,7 +11446,7 @@ ssl_client_key_file = /etc/dovecot/dovecot-client.key
 			'ssl_client_cert_file',
 			'[[link,ssl_configuration]]',
 		],
-		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.FILE,
 		text: `
 Private key for [[setting,ssl_client_cert_file]]. If it is password protected,
@@ -10974,13 +11463,14 @@ ssl_client_key_file = /etc/dovecot/dovecot-client.key
 	ssl_client_key_password: {
 		values: setting_types.STRING,
 		seealso: [ 'ssl', 'ssl_client_key_file', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-cassandra' ],
+		tags: [ 'ssl-cassandra', 'ssl_client' ],
 		text: `
 Password for the [[setting,ssl_client_key_file]].`
 	},
 
 	ssl_crypto_device: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl_client' ],
 		values: setting_types.STRING,
 		text: `
 Available Values: <Obtain by running \`openssl engine\` command>
@@ -10991,7 +11481,7 @@ Which SSL crypto device to use.`
 	ssl_curve_list: {
 		default: '\\<defaults from the SSL library\\>',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap' ],
+		tags: [ 'ssl-ldap', 'ssl_client' ],
 		values: setting_types.STRING,
 		text: `
 Colon separated list of elliptic curves to use, in order of preference.
@@ -11027,7 +11517,7 @@ ssl_server_dh_file = /path/to/dh.pem
 	ssl_client_require_valid_cert: {
 		default: 'yes',
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap', 'ssl-cassandra', 'sql-mysql' ],
+		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.BOOLEAN,
 		text: `
 Require a valid certificate when connecting to external SSL services?`
@@ -11070,7 +11560,7 @@ Alternatively, you can supply the password via the -p parameter at startup.`
 	ssl_min_protocol: {
 		default: 'TLSv1.2',
 		seealso: [ 'ssl', 'ssl_cipher_list', '[[link,ssl_configuration]]' ],
-		tags: [ 'ssl-ldap' ],
+		tags: [ 'ssl-ldap', 'ssl_client' ],
 		values: setting_types.STRING,
 		text: `
 The minimum SSL protocol version Dovecot accepts. It cannot be empty.
@@ -11102,6 +11592,7 @@ Supported values are:
 
 	ssl_options: {
 		seealso: [ 'ssl', '[[link,ssl_configuration]]' ],
+		tags: [ 'ssl_client' ],
 		values: setting_types.ENUM,
 		values_enum: [ 'compression', 'no_ticket' ],
 		text: `
@@ -11654,6 +12145,12 @@ with \`internal error\`.`
 	},
 
 	userdb_sql_query: {
+		changed: {
+			settings_auth_sql_bind_params_changed: `
+\`%{variable}\` values are now sent to the database as bind parameters
+instead of being expanded into the query text. See
+[[link,auth_sql_variables]] for the resulting restrictions.`
+		},
 		tags: [ 'userdb' ],
 		values: setting_types.STRING,
 		text: `
@@ -11661,6 +12158,12 @@ SQL query to lookup the userdb fields.`
 	},
 
 	userdb_sql_iterate_query: {
+		changed: {
+			settings_auth_sql_bind_params_changed: `
+\`%{variable}\` values are now sent to the database as bind parameters
+instead of being expanded into the query text. See
+[[link,auth_sql_variables]] for the resulting restrictions.`
+		},
 		tags: [ 'userdb' ],
 		values: setting_types.STRING,
 		text: `
@@ -11971,7 +12474,15 @@ userdb ldap {
 		seealso: [ 'metric' ],
 		text: `
 Group that expands to recommended [[setting,metric]] settings in proxies or
-backends.`
+backends.` +
+		"\n:::: info\n" +
+		"::: details @metric_defaults = proxy\n" +
+		include("metric-defaults-proxy.inc") +
+		":::\n" +
+		"::: details @metric_defaults = backend\n" +
+		include("metric-defaults-backend.inc") +
+		":::\n" +
+		"::::\n"
 	},
 
 	'@mailbox_defaults': {
@@ -11985,6 +12496,11 @@ to \`subscribe\`.`
 		seealso: [ 'mailbox_special_use' ],
 		text: `
 Group that expands to recommended English language mailbox names with
-[[setting,mailbox_special_use]] flags added.`
+[[setting,mailbox_special_use]] flags added.` +
+		"\n:::: info\n" +
+		"::: details @mailbox_defaults = english\n" +
+		include("mailbox-defaults-english.inc") +
+		":::\n" +
+		"::::\n"
 	},
 }

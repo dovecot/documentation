@@ -9,20 +9,34 @@ dovecotComponent: core
 ## SYNOPSIS
 
 **doveconf**
-  [**-aCdFInPNUwx**]
+  [**-aCdFnPNsUwx**]
+  [**-i** *instance-name*]
   [**-c** *config-file*]
   [**-f** *filter*]
 
 **doveconf**
+  [**-C**]
+  [**-i** *instance-name*]
+  [**-c** *config-file*]
+  **-F** *command* [*args* ...]
+
+**doveconf**
+  **-I**
+
+**doveconf**
   [**-n**]
+  [**-i** *instance-name*]
   [**-c** *config-file*]
   *section_name* ...
 
 **doveconf**
   [**-h**]
+  [**-i** *instance-name*]
   [**-c** *config-file*]
   [**-f** *filter*]
   *setting_name* ...
+
+**doveconf -\-help**
 
 ## DESCRIPTION
 
@@ -45,7 +59,10 @@ It can also be used to inspect configuration @groups by querying them directly.
 :   Show all settings with their currently configured values.
 
 **-C**
-:   TODO (check full config).
+:   With **-F** *command*, check the full configuration immediately and
+    fail on any error, instead of delaying errors until the executed
+    command tries to use the affected settings. This is what **dovecot**
+    uses at startup.
 
 **-c** *config-file*
 :   Read configuration from the given *config-file*. By default
@@ -86,6 +103,14 @@ It can also be used to inspect configuration @groups by querying them directly.
     processed last, after all filters have been applied, so all settings inside
     the groups can be overridden.
 
+    When followed by a *command* argument, **-F** *command* [*args* ...]
+    executes *command* instead of printing anything, passing it the parsed
+    configuration in a file descriptor whose number is given in the
+    `DOVECOT_CONFIG_FD` environment variable. Any arguments after
+    *command* are passed to it untouched. This is used internally by
+    Dovecot's own programs to load their configuration and is not
+    normally run directly.
+
 **-f** *filter*
 :   Show the matching configuration for the specified *filter*
     condition. The *filter* option string has to be given as
@@ -118,7 +143,14 @@ It can also be used to inspect configuration @groups by querying them directly.
 :   Hide the setting's name, show only the setting's value.
 
 **-I**
-:   TODO (dump config import).
+:   Dump the built-in default setting groups (`@mailbox_defaults`,
+    `@metric_defaults`) and any settings imported by loaded config
+    plugin modules, then exit without parsing the configuration file.
+
+**-i** *instance-name*
+:   If using multiple Dovecot instances, choose the config file based
+    on this instance name. See [[setting,instance_name]] for more
+    information.
 
 **-n**
 :   Show only settings with non-default values. This is the default behavior
@@ -128,7 +160,8 @@ It can also be used to inspect configuration @groups by querying them directly.
 :   Show settings with non-default values and explicitly set default values.
 
 **-s**
-:   Show also hidden settings. The hidden settings should not be changed
+:   Show all settings, including hidden ones, with their currently
+    configured values. The hidden settings should not be changed
     normally.
 
 **-P**
@@ -138,11 +171,16 @@ It can also be used to inspect configuration @groups by querying them directly.
 :   Ignore all unknown settings in config file.
 
 **-w**
-:   TODO (hide obsolete warnings).
+:   Hide the "Obsolete setting" warnings that are printed when the
+    configuration uses settings that were renamed in a newer Dovecot
+    version.
 
 **-x**
 :   Expand configuration variables (e.g. `$ENV:foo`) and show file contents
     (from e.g. `ssl_server_key_password = </etc/ssl/password.txt`).
+
+**-\-help**
+:   Print a usage message to stdout and exit successfully.
 
 *section_name*
 :   Show only the current configuration of one or more specified sections.

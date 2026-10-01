@@ -6,6 +6,9 @@ dovecotlinks:
   sql_cassandra_consistency:
     hash: consistency
     text: "Cassandra: Consistency"
+  sql_cassandra_local_datacenter:
+    hash: local-datacenter
+    text: "Cassandra: Local Datacenter"
   sql_cassandra_metrics:
     hash: metrics
     text: "Cassandra: Metrics"
@@ -32,10 +35,28 @@ is the list of supported settings:
 
 <SettingsComponent tag="ssl-cassandra" />
 
+## Local Datacenter
+
+Queries are sent only to the Cassandra nodes in the local datacenter. The
+local datacenter is also used by the `local-one`, `local-quorum` and
+`local-serial` consistency levels.
+
+The local datacenter is configured with
+[[setting,cassandra_local_datacenter]]. If it's empty, the local datacenter is
+the datacenter of whichever [[setting,cassandra_hosts]] node happens to answer
+first when connecting. This is nondeterministic if [[setting,cassandra_hosts]]
+contains nodes from multiple datacenters. So with multiple datacenters
+[[setting,cassandra_local_datacenter]] should always be set:
+
+```doveconf[dovecot.conf]
+cassandra_local_datacenter = dc1
+```
+
 ## Consistency
 
 Consistency levels in Cassandra can be configured to manage availability
-versus data accuracy.
+versus data accuracy. The `local-*` consistency levels refer to the
+[local datacenter](#local-datacenter).
 
 ### Read Consistency
 
