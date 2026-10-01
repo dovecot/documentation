@@ -269,3 +269,14 @@ the sender address and a time interval specified in seconds. The time
 interval is used to specify the minimum amount of time that needs to have
 passed since the sender was last seen. If the script returns exit code 0,
 then message is redirected in the Sieve script shown above.
+
+## Sieve Example
+
+```sieve
+require ["vnd.dovecot.pipe"];
+
+pipe "process-message";
+```
+
+This example pipes the message to an external program named
+`process-message`, which must be configured and available via the plugin.
