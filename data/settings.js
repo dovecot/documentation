@@ -7795,6 +7795,14 @@ Options:
 
 	log_core_filter: {
 		values: setting_types.STRING,
+		changed: {
+			event_filter_log_level_added: `
+Use \`log_level=<level>\` instead of the deprecated \`category=<level>\`.`,
+			log_filter_level_match_changed: `
+The filter is matched against the log level of each logged message, also when
+deciding whether to enable logging for messages whose log level is normally
+hidden.`
+		},
 		text: `
 Crash after logging a matching event. The syntax of the filter is described
 in [[link,event_filter_global]].
@@ -7802,17 +7810,44 @@ in [[link,event_filter_global]].
 For example:
 
 \`\`\`
-log_core_filter = category=error
+log_core_filter = log_level>=error
 \`\`\`
 
-will crash any time an error is logged, which can be useful for debugging.`
+will crash any time an error (or worse) is logged, which can be useful for
+debugging.`
 	},
 
 	log_debug: {
 		values: setting_types.STRING,
+		changed: {
+			event_filter_log_level_added: `
+Use \`log_level=<level>\` instead of the deprecated \`category=<level>\`.`,
+			log_filter_level_match_changed: `
+The filter is matched against the log level of each logged message. Previously
+it was always matched as \`debug\` level, so e.g.
+\`log_debug = category=debug AND category=auth\` also enabled the auth
+\`info\` messages hidden by [[setting,auth_verbose]].`
+		},
 		text: `
 Filter to specify what debug logging to enable.  The syntax of the filter is
 described in [[link,event_filter_global]].
+
+The filter also enables logging of messages whose log level is normally
+hidden, such as \`info\` messages of auth processes when
+[[setting,auth_verbose]] is disabled.
+
+For example:
+
+\`\`\`
+# Enable all debug logging
+log_debug = log_level=debug
+# Enable debug logging for auth, but not the hidden info messages
+log_debug = log_level=debug AND category=auth
+# Enable the hidden info messages for auth, but not debug logging
+log_debug = log_level=info AND category=auth
+\`\`\`
+
+See [[link,event_filter_log_level]].
 
 ::: info
 This will eventually replace [[setting,mail_debug]] and
@@ -10752,6 +10787,10 @@ Other [[variable,mail-user]] can be used as well.`
 
 	process_shutdown_filter: {
 		values: setting_types.STRING,
+		changed: {
+			event_filter_log_level_added: `
+Use \`log_level=<level>\` instead of the deprecated \`category=<level>\`.`
+		},
 		text: `
 Filter to specify which events shutdown the process after finishing the
 current connections. This is mainly intended to save memory by preventing
@@ -10763,7 +10802,10 @@ For example:
 
 \`\`\`
 process_shutdown_filter = "event=mail_user_session_finished AND rss > 20MB"
-\`\`\``
+\`\`\`
+
+The filter can also match the log level with \`log_level\`. See
+[[link,event_filter_log_level]].`
 	},
 
 	protocols: {
