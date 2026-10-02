@@ -192,6 +192,7 @@ export const updates = {
 	settings_inet_listener_type_added: '2.4.0',
 	settings_lazy_expunge_only_last_instance_changed: '2.4.3',
 	settings_last_login_dict_fields_added: '2.4.5',
+	settings_local_name_nested_changed: '2.4.6',
 	settings_login_socket_path_added: '2.4.0',
 	settings_login_unauthenticated_client_limit_added: '2.4.6',
 	settings_lmtp_user_concurrency_limit_changed: '2.4.1',
