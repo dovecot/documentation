@@ -260,6 +260,24 @@ local 127.0.0.1 {
 The nesting of the filters must be exactly in that order or the config
 parsing will fail.
 
+A filter can also be nested inside a filter of the same type, but only when
+the inner filter is more specific: a nested `local` or `remote` network must
+be inside the outer network, and a nested `local_name` must be a hostname
+that matches the outer name. For example:
+
+```doveconf[dovecot.conf]
+local_name *.example.com {
+  # settings for all *.example.com names
+  local_name imap.example.com {
+    # settings for imap.example.com only
+  }
+}
+```
+
+[[changed,settings_local_name_nested_changed]] A nested `local_name` that
+doesn't match the outer name, or that contains a wildcard, is now a config
+parsing error.
+
 When applying the settings, the settings within the most-specific filters
 override the less-specific filter's settings, so the order of the filters
 in config file doesn't matter.
