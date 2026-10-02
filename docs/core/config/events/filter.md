@@ -43,6 +43,8 @@ Regardless of the syntax used, matching is performed the same way:
 
   * If wildcard characters are needed as literal characters, they can be
     escaped with the `\` character, e.g. `\*`.
+  * Events without a name never match `event=<name>`, but they do match
+    `NOT event=<name>`. [[changed,event_filter_not_event_name_changed]]
 
 * Event location is compared in two parts: the file name is compared
   case-sensitively, and the line number is compared as an integer.  For a
@@ -55,6 +57,25 @@ Regardless of the syntax used, matching is performed the same way:
   wildcards supported are `?` and `*`.
 * Log levels are compared by their severity: `debug` < `info` < `warning` <
   `error` < `fatal` < `panic`. See [Log Level](#log-level).
+
+## Performance
+
+[[added,event_filter_index_added]]
+
+Filters are indexed by event name, so that an event is matched only against
+the parts of the filter that can match its name. For this to work, the
+filter's `OR` alternatives need to have an exact event name in their
+top-level `AND` conditions, e.g. `event=imap_command_finished AND
+cmd_name=SELECT`. Alternatives with a wildcard event name, or with no event
+name at all, are evaluated for every event.
+
+Top-level `category=service:<name>` conditions are evaluated only once per
+process for filters that are matched against the process's own events (e.g.
+[[setting,log_debug]], [[setting,log_core_filter]],
+[[setting,process_shutdown_filter]] and metric filters in the processes
+sending events to stats). For example a metric filter
+`event=imap_command_finished AND category=service:imap` costs nothing in
+processes other than imap.
 
 ## Common (Unified) Filter Language
 
