@@ -7805,7 +7805,14 @@ For example:
 log_core_filter = category=error
 \`\`\`
 
-will crash any time an error is logged, which can be useful for debugging.`
+will crash any time an error is logged, which can be useful for debugging.
+
+::: warning
+Using \`source_location\` in the filter disables caching the filter results,
+which makes every debug log call several times slower. Use it only
+temporarily while debugging. See
+[[link,event_filter_source_location_performance]].
+:::`
 	},
 
 	log_debug: {
@@ -7813,6 +7820,13 @@ will crash any time an error is logged, which can be useful for debugging.`
 		text: `
 Filter to specify what debug logging to enable.  The syntax of the filter is
 described in [[link,event_filter_global]].
+
+::: warning
+Using \`source_location\` in the filter disables caching the filter results,
+which makes every debug log call several times slower. Use it only
+temporarily while debugging. See
+[[link,event_filter_source_location_performance]].
+:::
 
 ::: info
 This will eventually replace [[setting,mail_debug]] and

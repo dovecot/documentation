@@ -36,6 +36,7 @@ export const updates = {
 	extra_fields_default: '2.4.0',
 	extra_fields_empty: '2.4.0',
 	event_export_drivers_file_unix_added: '2.4.0',
+	event_filter_source_location_changed: '2.4.6',
 	event_set_forced_debug_added: '2.4.1',
 	fs_crypt_require_encryption_keys: '2.4.0',
 	fts_flatcurve: '2.4.0',
