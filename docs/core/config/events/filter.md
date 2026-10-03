@@ -9,6 +9,9 @@ dovecotlinks:
   event_filter_metric:
     hash: metric-filter-syntax
     text: Metric Filters
+  event_filter_source_location_performance:
+    hash: performance-with-source-location
+    text: Performance With source_location
 ---
 
 # Event Filtering
@@ -177,3 +180,25 @@ For example:
 log_debug = (event=http_request_finished AND category=imap) OR \
     (event=imap_command_finished AND user=testuser)
 ```
+
+### Performance With `source_location`
+
+[[changed,event_filter_source_location_changed]] The result of matching
+[[setting,log_debug]] and [[setting,log_core_filter]] against an event is
+normally cached, so the filters are matched only once per event regardless of
+how many lines the event logs. If either setting contains `source_location`
+anywhere (including inside `NOT`), the result can be different for each log
+line, so the caching is disabled for all events in the process. The filters
+are then matched again for every log call, including every debug log call
+that ends up not being logged.
+
+::: warning
+Using `source_location` in [[setting,log_debug]] or
+[[setting,log_core_filter]] makes every debug log call in every process
+several times slower, whether or not it gets logged. The more complex the
+filter is, the slower it gets. This can noticeably slow down busy processes,
+so use `source_location` only temporarily while debugging, and otherwise
+prefer filtering by event name, category or fields.
+:::
+
+Metric filters are not affected by this.
