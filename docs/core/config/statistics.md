@@ -34,10 +34,17 @@ The [`metric_filter`](#metric_filter) setting is the only required setting in a
 calculating the statistics for a given metric block. Event filtering is
 described in detail in [[link,event_filter]].
 
-Note that Dovecot also has many unnamed events. These aren't generally useful
-for statistics, but in some situations they may become visible in statistics.
-To avoid surprises, it's a good idea to always specify `event=name` in the
-filter setting. You can also use `event=*` to match all named events.
+Note that Dovecot also has many unnamed events, e.g. most of the debug log
+messages. These aren't generally useful for statistics, so metrics never
+receive them unless the filter explicitly asks for them with `event=""`. For
+example `event="" AND log_level=error` counts the unnamed error messages.
+A filter without `event=""` matches only named events, even if it doesn't
+contain any `event=<name>` condition.
+[[added,event_filter_unnamed_event_added]]
+
+It's still a good idea to specify `event=name` in the filter setting, because
+it makes the filter faster to evaluate (see [[link,event_filter]]). You can
+also use `event=*` to match all named events.
 
 ## Settings
 
@@ -315,6 +322,13 @@ For example:
 ```sh
 doveadm stats remove imap_cmd_select
 ```
+
+The running processes start using the changed metrics right away.
+[[changed,stats_filter_ack_added]] Each process receives the new metrics only
+after it has taken the previous change into use, so many changes in a row
+don't pile up for processes that are busy, e.g. waiting for a slow storage.
+Such a process receives the latest metrics once it's able to process them.
+Events sent before a process has received a new metric aren't counted in it.
 
 ## Examples
 

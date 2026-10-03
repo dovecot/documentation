@@ -45,6 +45,15 @@ Regardless of the syntax used, matching is performed the same way:
     escaped with the `\` character, e.g. `\*`.
   * Events without a name never match `event=<name>`, but they do match
     `NOT event=<name>`. [[changed,event_filter_not_event_name_changed]]
+  * `event=""` matches the events without a name, and `NOT event=""` matches
+    only the named events. [[added,event_filter_unnamed_event_added]]
+  * Metric filters match unnamed events only through an explicit
+    `event=""` condition, e.g. `event="" AND category=auth`. A metric filter
+    `category=auth` matches only the named events in the `auth` category.
+    The other filters ([[setting,log_debug]], [[setting,log_core_filter]],
+    [[setting,process_shutdown_filter]]) match unnamed events through any
+    `OR` alternative that doesn't require an event name, e.g. `log_debug =
+    category=auth` logs also the unnamed auth debug messages.
 
 * Event location is compared in two parts: the file name is compared
   case-sensitively, and the line number is compared as an integer.  For a
@@ -76,6 +85,13 @@ process for filters that are matched against the process's own events (e.g.
 sending events to stats). For example a metric filter
 `event=imap_command_finished AND category=service:imap` costs nothing in
 processes other than imap.
+
+[[changed,event_rule_set_changed]] All of these filters and the metric
+filters are evaluated together as one rule set, once per event send. The
+result is cached in the event until the event or the filters change, or
+the event is sent from a different source location.
+The stats processes no longer match the events against the metric filters,
+because the processes sending the events tell which metrics matched.
 
 ## Common (Unified) Filter Language
 
@@ -254,22 +270,8 @@ log_debug = (event=http_request_finished AND category=imap) OR \
 
 ### Performance With `source_location`
 
-[[changed,event_filter_source_location_changed]] The result of matching
-[[setting,log_debug]] and [[setting,log_core_filter]] against an event is
-normally cached, so the filters are matched only once per event regardless of
-how many lines the event logs. If either setting contains `source_location`
-anywhere (including inside `NOT`), the result can be different for each log
-line, so the caching is disabled for all events in the process. The filters
-are then matched again for every log call, including every debug log call
-that ends up not being logged.
-
-::: warning
-Using `source_location` in [[setting,log_debug]] or
-[[setting,log_core_filter]] makes every debug log call in every process
-several times slower, whether or not it gets logged. The more complex the
-filter is, the slower it gets. This can noticeably slow down busy processes,
-so use `source_location` only temporarily while debugging, and otherwise
-prefer filtering by event name, category or fields.
-:::
-
-Metric filters are not affected by this.
+[[changed,event_filter_source_location_changed]]
+[[changed,event_rule_set_changed]] The filter results are cached in the event
+separately for each log call's source location, so `source_location`
+conditions don't disable the caching. Using `source_location` doesn't make
+logging slower than filtering by event name, category or fields.

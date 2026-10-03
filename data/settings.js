@@ -7814,14 +7814,7 @@ log_core_filter = log_level>=error
 \`\`\`
 
 will crash any time an error (or worse) is logged, which can be useful for
-debugging.
-
-::: warning
-Using \`source_location\` in the filter disables caching the filter results,
-which makes every debug log call several times slower. Use it only
-temporarily while debugging. See
-[[link,event_filter_source_location_performance]].
-:::`
+debugging.`
 	},
 
 	log_debug: {
@@ -7838,13 +7831,6 @@ it was always matched as \`debug\` level, so e.g.
 		text: `
 Filter to specify what debug logging to enable.  The syntax of the filter is
 described in [[link,event_filter_global]].
-
-::: warning
-Using \`source_location\` in the filter disables caching the filter results,
-which makes every debug log call several times slower. Use it only
-temporarily while debugging. See
-[[link,event_filter_source_location_performance]].
-:::
 
 The filter also enables logging of messages whose log level is normally
 hidden, such as \`info\` messages of auth processes when
@@ -9956,7 +9942,10 @@ Configures the step for values grouped by the
 		seealso: [ '[[link,event_filter_metric]]' ],
 		text: `
 [[link,event_filter_metric,Event filter]] that matches the events belonging to
-this metric.`
+this metric.
+
+Unnamed events are matched only with an explicit \`event=""\` condition, e.g.
+\`event="" AND log_level=error\`. [[added,event_filter_unnamed_event_added]]`
 	},
 
 	metric_exporter: {
@@ -10854,7 +10843,12 @@ process_shutdown_filter = "event=mail_user_session_finished AND rss > 20MB"
 \`\`\`
 
 The filter can also match the log level with \`log_level\`. See
-[[link,event_filter_log_level]].`
+[[link,event_filter_log_level]].
+
+The filter also matches debug events that aren't logged or sent to stats.
+Previously it matched them only if [[setting,log_debug]] or a metric
+wanted the event.
+[[changed,process_shutdown_filter_unlogged_changed]]`
 	},
 
 	protocols: {
