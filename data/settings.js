@@ -2402,23 +2402,49 @@ fts_decoder_tika_url = http://tikahost:9998/tika/
 		plugin: 'fts',
 		default: '\\<textcat dir\\>',
 		values: setting_types.STRING,
-		seealso: [ 'language' ],
+		seealso: [ 'language', 'textcat_filter_languages' ],
 		text: `
 Path to the textcat/exttextcat configuration file, which lists the
 supported languages.
 
-This is recommended to be changed to point to a minimal version of a
-configuration that supports only the languages listed in
-[[setting,language]].
-
-Doing this improves language detection performance during indexing and also
-makes the detection more accurate.
+With [[setting,textcat_filter_languages,yes]] (default) only the
+languages listed in [[setting,language]] are loaded from this file, so there
+is normally no need to create a minimal version of the configuration file.
 
 Example:
 
 \`\`\`
 textcat_config_path = /usr/share/libexttextcat/fpdb.conf
 \`\`\``
+	},
+
+	textcat_filter_languages: {
+		plugin: 'fts',
+		added: {
+			settings_textcat_filter_languages_added: false,
+		},
+		default: 'yes',
+		values: setting_types.BOOLEAN,
+		seealso: [ 'language', 'textcat_config_path' ],
+		text: `
+If enabled, language detection uses only the fingerprints of the languages
+listed in [[setting,language]] from the [[setting,textcat_config_path]] file.
+The textcat configuration file contains fingerprints for a large number of
+languages, and comparing the text against all of them takes most of the
+language detection CPU time.
+
+Text in a language that isn't listed in [[setting,language]] is detected as
+the closest listed language. If disabled, all fingerprints in the textcat
+configuration file are used, and such text is usually detected as an unknown
+language, which uses the default language (see
+[[setting,language_default]]).
+
+The filtered configuration is written to a temporary file in
+[[setting,mail_temp_dir]], which is deleted right after the textcat library
+has read it.
+
+The default is \`no\` if [[setting,dovecot_config_version]] is older than
+the version where this setting was added.`
 	},
 
 	language: {
@@ -2438,10 +2464,8 @@ recognition fails.
 
 The filters used for stemming and stopwords are language dependent.
 
-::: tip
-For better performance it's recommended to synchronize this setting with the
-textcat configuration file; see [[setting,textcat_config_path]].
-:::
+Language detection uses only the textcat fingerprints of the listed
+languages; see [[setting,textcat_filter_languages]].
 
 Example:
 
