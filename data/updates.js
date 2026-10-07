@@ -60,6 +60,7 @@ export const updates = {
 	lua_str_sanitize_added: '2.4.6',
 	mail_attachment_detection_options_changed: '2.4.2',
 	mail_attachment_detection_options_maildir_changed: '2.4.3',
+	malloc_mmap_threshold_default_changed: '2.4.1',
 	mail_cache_fields_changed: '2.4.1',
 	mail_crypt_eddsa: '2.4.0',
 	mail_crypt_ml_kem_keys: '2.4.5',
