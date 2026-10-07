@@ -2495,16 +2495,34 @@ See [[link,fts_tokenizer_configuration]] for configuration information.`
 	},
 
 	language_filter_normalizer_icu_id: {
+		changed: {
+			language_normalizer_icu_module: `
+The default ID and its variants without \`NFC\` and/or \`[\\x20] Remove\` are
+implemented internally without libicu. Other IDs require the
+\`lang_filter_normalizer_icu\` module.`
+		},
 		plugin: 'fts',
 		tags: [ 'language-filter-normalizer-icu' ],
 		values: setting_types.STRING,
-		default: `Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove`,
+		default: `Any-Lower; NFKD; [: Nonspacing Mark :] Remove; NFC; [\\x20] Remove`,
+		seealso: [ '[[link,fts_filter_configuration]]' ],
 		text: `
 Description of the normalizing/transliterating rules to use.
 
 See
 [Normalizer Format](https://unicode-org.github.io/icu/userguide/transforms/general/#transliterator-identifiers)
-for syntax.`
+for syntax.
+
+These IDs are implemented internally by Dovecot:
+
+* \`Any-Lower; NFKD; [: Nonspacing Mark :] Remove; NFC; [\\x20] Remove\`
+* \`Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove\`
+* \`Any-Lower; NFKD; [: Nonspacing Mark :] Remove; NFC\`
+* \`Any-Lower; NFKD; [: Nonspacing Mark :] Remove\`
+
+The ID must match exactly, including the spaces. Any other ID requires the
+\`lang_filter_normalizer_icu\` module, which uses libicu. See
+[[link,fts_filter_configuration]].`
 	},
 
 	language_filter_stopwords_dir: {
