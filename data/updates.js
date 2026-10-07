@@ -73,6 +73,7 @@ export const updates = {
 	mail_location_no_noselect: '2.4.0',
 	metric_defaults_proxy_session_established_added: '2.4.2',
 	metric_group_by_discrete_modifiers_added: '2.4.0',
+	metric_group_by_exponential_limits_changed: '2.4.6',
 	migration_imapc_features: '2.4.0',
 	namespace_prefix_shared_variables_changed: '2.4.0',
 	otp_auth_mechanism_removed: '2.4.5',
