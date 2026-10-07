@@ -1,6 +1,11 @@
 /* Dovecot settings. */
 
+import fs from 'fs'
 import { setting_types } from '../lib/settings.js'
+
+const include = (name) =>
+	fs.readFileSync(new URL('../docs/core/config/include/' + name,
+	  import.meta.url), 'utf8')
 
 export const settings = {
 
@@ -2102,12 +2107,37 @@ fts solr {
 	},
 
 	fts_autoindex: {
+		changed: {
+			settings_fts_autoindex_direct_changed: `
+Changed from boolean to \`no\`, \`yes\` or \`direct\`.`,
+		},
 		default: 'no',
 		plugin: 'fts',
-		seealso: [ 'fts_autoindex_max_recent_msgs' ],
-		values: setting_types.BOOLEAN,
+		seealso: [ 'fts_autoindex_max_recent_msgs', 'dsync_commit_msgs_interval' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'no', 'yes', 'direct' ],
 		text: `
-If enabled, index mail as it is delivered or appended.
+Index mail as it is delivered or appended:
+
+\`no\`
+:   Don't index new mails automatically.
+
+\`yes\`
+:   Send a request to the \`indexer\` service to index the new mails
+    asynchronously.
+
+\`direct\`
+:   Index the new mails directly in the same process after the mails have
+    been committed. This is mainly useful when importing a lot of mails,
+    e.g. with [[doveadm,sync]], [[doveadm,backup]] or [[doveadm,import]]:
+    the mails are indexed while they are still in caches, instead of the
+    indexer process having to read them again later from storage. The FTS
+    index updates are kept open between the commits (see
+    [[setting,dsync_commit_msgs_interval]]) and written once the mailbox is
+    closed, when an FTS search is started in the same process, or when
+    expunges need to be processed. If direct indexing fails, the
+    \`indexer\` service is used instead.
+    [[setting,fts_autoindex_max_recent_msgs]] is ignored with this value.
 
 It can be overridden at the mailbox level, e.g. you can disable autoindexing
 for selected mailboxes using this setting:
@@ -7437,10 +7467,43 @@ distinguish different listener types that one service may employ.`
 	inet_listener_port: {
 		tags: [ 'service' ],
 		values: setting_types.IN_PORT,
-		seealso: [ 'listen' ],
+		seealso: [ 'inet_listener_listen' ],
 		default: 0,
 		text: `
 Port number where to listen. \`0\` disables the listener.`
+	},
+
+	inet_listener_listen: {
+		tags: [ 'service' ],
+		default: '\*, \:\:',
+		values: setting_types.IPADDR,
+		changed: {
+			settings_listen_renamed: `
+Renamed from \`listen\`, which still works as an alias.`
+		},
+		text: `
+A comma-separated list of IP addresses or hostnames on which external network
+connections will be handled.
+
+\`*\` listens at all IPv4 interfaces, and \`::\` listens at all IPv6
+interfaces.
+
+Example:
+
+\`\`\`
+listen = 127.0.0.1, 192.168.0.1
+\`\`\`
+
+The setting can be used globally, inside a \`service { .. }\` and inside an
+[[setting,inet_listener]], where the most specific value wins, e.g.:
+
+\`\`\`
+service imap-login {
+  inet_listener imap {
+    listen = 192.168.0.1
+  }
+}
+\`\`\``
 	},
 
 	inet_listener_ssl: {
@@ -7562,31 +7625,10 @@ The directory from which you execute commands via doveadm-exec.`
 	},
 
 	listen: {
-		default: '\*, \:\:',
 		values: setting_types.IPADDR,
+		seealso: [ 'inet_listener_listen' ],
 		text: `
-A comma-separated list of IP addresses or hostnames on which external network
-connections will be handled.
-
-\`*\` listens at all IPv4 interfaces, and \`::\` listens at all IPv6
-interfaces.
-
-Example:
-
-\`\`\`
-listen = 127.0.0.1, 192.168.0.1
-\`\`\`
-
-This setting can be used also inside an [[setting,inet_listener]] to override
-the listener address, e.g.:
-
-\`\`\`
-service imap-login {
-  inet_listener imap {
-    listen = 192.168.0.1
-  }
-}
-\`\`\``
+Alias for [[setting,inet_listener_listen]].`
 	},
 
 	lmtp_add_received_header: {
@@ -7763,7 +7805,14 @@ For example:
 log_core_filter = category=error
 \`\`\`
 
-will crash any time an error is logged, which can be useful for debugging.`
+will crash any time an error is logged, which can be useful for debugging.
+
+::: warning
+Using \`source_location\` in the filter disables caching the filter results,
+which makes every debug log call several times slower. Use it only
+temporarily while debugging. See
+[[link,event_filter_source_location_performance]].
+:::`
 	},
 
 	log_debug: {
@@ -7771,6 +7820,13 @@ will crash any time an error is logged, which can be useful for debugging.`
 		text: `
 Filter to specify what debug logging to enable.  The syntax of the filter is
 described in [[link,event_filter_global]].
+
+::: warning
+Using \`source_location\` in the filter disables caching the filter results,
+which makes every debug log call several times slower. Use it only
+temporarily while debugging. See
+[[link,event_filter_source_location_performance]].
+:::
 
 ::: info
 This will eventually replace [[setting,mail_debug]] and
@@ -8041,6 +8097,41 @@ The details of how this setting works depends on the used protocol:
 
     The trust is always checked against the connecting IP address.
     Except if HAProxy is used, then the original client IP address is used.`
+	},
+
+	login_unauthenticated_client_limit: {
+		added: {
+			settings_login_unauthenticated_client_limit_added: false,
+		},
+		default: 'unlimited',
+		values: setting_types.UINT,
+		seealso: [ 'service_client_limit' ],
+		text: `
+Maximum number of unauthenticated client connections in a single login process.
+\`unlimited\` means only [[setting,service_client_limit]] limits them. \`0\` is
+not a valid value.
+
+A connection is counted as unauthenticated from the moment it is accepted
+until the login has succeeded, including the time spent in TLS handshake and
+waiting for the auth process. Clients that have logged in and are being proxied
+by the login process are not counted.
+
+When a new connection makes the count exceed the limit, the oldest
+unauthenticated client in the process is disconnected, the same way as when
+[[setting,service_client_limit]] is reached. Clients that have already
+successfully authenticated and are waiting only for the post-login process
+are never disconnected. If there are no other clients that can be disconnected,
+the new client is disconnected. The disconnection is logged with the
+[[event,login_aborted]] event's \`unauthenticated_client_limit\` reason.
+
+The limit is per login process, so the total limit for the service is
+[[setting,service_process_limit]] multiplied by this value. Because of this,
+the setting can be configured globally, inside a \`protocol\` filter or
+inside a \`service\` filter. Client-specific filters, such as \`local\` and
+\`remote\`, are ignored. This setting is
+useful only with [[link,login_processes_high_performance]] mode, where
+[[setting,service_client_limit]] is large. It can be used to reduce the
+impact of DoS attacks that open many TCP connections without logging in.`
 	},
 
 	mail_access_groups: {
@@ -10324,6 +10415,12 @@ is allowed to login as other users.`
 	},
 
 	passdb_sql_query: {
+		changed: {
+			settings_auth_sql_bind_params_changed: `
+\`%{variable}\` values are now sent to the database as bind parameters
+instead of being expanded into the query text. See
+[[link,auth_sql_variables]] for the resulting restrictions.`
+		},
 		tags: [ 'passdb' ],
 		values: setting_types.STRING,
 		text: `
@@ -10850,13 +10947,14 @@ If non-empty, this service is enabled only when the protocol name is listed in
 	service_type: {
 		tags: [ 'service' ],
 		values: setting_types.STRING,
-		seealso: [ 'service_process_limit' ],
+		seealso: [ 'service_process_limit', 'service_shutdown_clients_timeout' ],
 		text: `
 Type of this service:
 
 | Value | Description |
 | --- | --- |
 | \`<empty>\` | The default. |
+| \`client\` | [[added,settings_service_type_client_added]] Used by services whose processes serve externally visible client connections that can't be transparently re-established. A configuration reload preserves these processes, see [[setting,service_shutdown_clients_timeout]]. |
 | \`login\` | Used by login services. The login processes have "all processes full" notification fd. It's used by the processes to figure out when no more client connections can be accepted because client and process limits have been reached. The login processes can then kill some of their oldest connections that haven't logged in yet. |
 | \`worker\` | Used by various worker services. It's normal for worker processes to fill up to [[setting,service_process_limit]], and there shouldn't be a warning logged about it. |
 | \`startup\` | Creates one process at startup. |
@@ -11071,6 +11169,12 @@ low. Use \`unlimited\` to disable this entirely.`
 	},
 
 	shutdown_clients: {
+		removed: {
+			service_shutdown_clients_changed: `
+Replaced by [[setting,service_shutdown_clients_timeout]], which is the same setting
+with the time in between also available: \`yes\` became \`0\` and \`no\`
+became \`infinite\`.`
+		},
 		default: 'yes',
 		values: setting_types.BOOLEAN,
 		text: `
@@ -11079,6 +11183,83 @@ If enabled, all processes are killed when the master process is shutdown.
 Otherwise, existing processes will continue to run. This may be useful to not
 interrupt earlier sessions, but may not be desirable if restarting Dovecot
 to apply a security update, for example.`
+	},
+
+	service_shutdown_clients_timeout: {
+		added: {
+			service_shutdown_clients_changed: false
+		},
+		tags: [ 'service' ],
+		default: '0',
+		seealso: [ 'service_type' ],
+		values: setting_types.TIME,
+		text: `
+How long the processes of the old configuration may keep serving their
+existing clients after [[doveadm,reload]], and how long the processes may keep
+running after the master process was stopped.
+
+| Value | Description |
+| --- | --- |
+| \`0\` | The default. All the clients are disconnected immediately. |
+| *time* | The clients are disconnected after this time. |
+| \`infinite\` | The clients are never disconnected. The processes stop once their last client is gone. |
+
+The time is the maximum: when it is up, the processes disconnect all their
+remaining clients, also the ones that are in the middle of a command, and the
+login processes abort the logins that are still in progress. A login process
+that proxies a connection to a backend waits up to two seconds for the
+connection to become quiet, so that a reply isn't cut in the middle.
+
+Only the processes of [[setting,service_type,client]] and
+[[setting,service_type,login]] services and the log process are preserved. The
+internal services are replaced by the reload, so their old processes are
+stopped regardless of this setting - otherwise they would pile up with every
+reload. This means that requests which are in flight to an internal service
+when its old process is stopped fail, the same way they do when a reload
+disconnects the clients instead.
+
+The main use case is taking new SSL certificates into use without
+disconnecting anyone:
+
+\`\`\`
+service_shutdown_clients_timeout = 4h
+\`\`\`
+
+The setting can also be set per service, e.g. to keep only the IMAP sessions
+running:
+
+\`\`\`
+service_shutdown_clients_timeout = 0
+service imap {
+  shutdown_clients_timeout = 4h
+}
+service imap-login {
+  shutdown_clients_timeout = 4h
+}
+\`\`\`
+
+Both processes serving a session need the timeout: with TLS the login process
+keeps proxying the connection also after the login, so the session ends as soon
+as either of the imap and imap-login processes is killed.
+
+On a proxy there are no local imap processes - the login processes proxy the
+connections to the backends - so the login service's timeout alone decides how
+long the existing sessions keep running.
+
+A single reload can override the setting for all the services with
+[[doveadm,reload,--kick-timeout]]. The override covers also the processes that
+earlier reloads left running, so \`--kick-timeout 0\` disconnects every preserved
+client.
+
+::: warning
+After the master process has been stopped there is nobody left to escalate to
+SIGKILL, so a non-zero timeout only means that the processes shut themselves
+down gracefully at the deadline.
+
+With systemd the default \`KillMode=control-group\` kills the preserved
+processes anyway on \`systemctl restart\`. Preserving them across a restart
+needs \`KillMode=mixed\` or \`KillMode=process\`.
+:::`
 	},
 
 	sql_driver: {
@@ -12013,6 +12194,12 @@ with \`internal error\`.`
 	},
 
 	userdb_sql_query: {
+		changed: {
+			settings_auth_sql_bind_params_changed: `
+\`%{variable}\` values are now sent to the database as bind parameters
+instead of being expanded into the query text. See
+[[link,auth_sql_variables]] for the resulting restrictions.`
+		},
 		tags: [ 'userdb' ],
 		values: setting_types.STRING,
 		text: `
@@ -12020,6 +12207,12 @@ SQL query to lookup the userdb fields.`
 	},
 
 	userdb_sql_iterate_query: {
+		changed: {
+			settings_auth_sql_bind_params_changed: `
+\`%{variable}\` values are now sent to the database as bind parameters
+instead of being expanded into the query text. See
+[[link,auth_sql_variables]] for the resulting restrictions.`
+		},
 		tags: [ 'userdb' ],
 		values: setting_types.STRING,
 		text: `
@@ -12330,7 +12523,15 @@ userdb ldap {
 		seealso: [ 'metric' ],
 		text: `
 Group that expands to recommended [[setting,metric]] settings in proxies or
-backends.`
+backends.` +
+		"\n:::: info\n" +
+		"::: details @metric_defaults = proxy\n" +
+		include("metric-defaults-proxy.inc") +
+		":::\n" +
+		"::: details @metric_defaults = backend\n" +
+		include("metric-defaults-backend.inc") +
+		":::\n" +
+		"::::\n"
 	},
 
 	'@mailbox_defaults': {
@@ -12344,6 +12545,11 @@ to \`subscribe\`.`
 		seealso: [ 'mailbox_special_use' ],
 		text: `
 Group that expands to recommended English language mailbox names with
-[[setting,mailbox_special_use]] flags added.`
+[[setting,mailbox_special_use]] flags added.` +
+		"\n:::: info\n" +
+		"::: details @mailbox_defaults = english\n" +
+		include("mailbox-defaults-english.inc") +
+		":::\n" +
+		"::::\n"
 	},
 }
