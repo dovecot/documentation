@@ -301,9 +301,7 @@ Available filters:
 
 ### `lowercase`
 
-Change all text to lower case. Supports UTF8, when compiled with libicu
-and the library is installed. Otherwise only ASCII characters are
-lowercased.
+Change all text to lower case. Supports UTF-8.
 
 ### `stopwords`
 
