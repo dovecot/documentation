@@ -9958,7 +9958,10 @@ Configures a modifier string for values grouped by the
 		],
 		text: `
 Configures the minimum magnitude for values grouped by the
-[[link,stats_group_by_exponential,exponential method]].`
+[[link,stats_group_by_exponential,exponential method]].
+
+[[changed,metric_group_by_exponential_limits_changed]] Must be smaller than
+[[setting,metric_group_by_method_exponential_max_magnitude]].`
 	},
 
 	metric_group_by_method_exponential_max_magnitude: {
@@ -9972,7 +9975,11 @@ Configures the minimum magnitude for values grouped by the
 		],
 		text: `
 Configures the maximum magnitude for values grouped by the
-[[link,stats_group_by_exponential,exponential method]].`
+[[link,stats_group_by_exponential,exponential method]].
+
+[[changed,metric_group_by_exponential_limits_changed]] The maximum value is
+\`62\` with [[setting,metric_group_by_method_exponential_base,2]] and \`18\`
+with [[setting,metric_group_by_method_exponential_base,10]].`
 	},
 
 	metric_group_by_method_exponential_base: {
