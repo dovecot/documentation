@@ -164,6 +164,7 @@ Currently supported languages:
 
 | Language Code | Language | Stemming | Stopwords |
 | ------------- | -------- | -------- | --------- |
+| ca | Catalan | Yes | Yes |
 | da | Danish | Yes | Yes |
 | de | German | Yes | Yes |
 | en | English | Yes | Yes |
