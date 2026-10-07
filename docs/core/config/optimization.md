@@ -128,7 +128,8 @@ Note that these settings do NOT directly affect the memory usage:
 
 ### glibc
 
-For Linux/glibc it's recommended to set:
+For Linux/glibc, [[setting,import_environment]] defaults to
+[[changed,malloc_mmap_threshold_default_changed]]:
 
 ```doveconf[dovecot.conf]
 import_environment {
