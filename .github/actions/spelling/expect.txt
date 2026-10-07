@@ -377,6 +377,7 @@ libexpat
 libexttextcat
 libicu
 libkrb
+liblang
 libldap
 liblib
 liblz
@@ -390,6 +391,7 @@ libsasl
 libsasldb
 libsodium
 libsqlite
+libstdc
 lifewithqmail
 listescape
 LISTEXT
@@ -535,7 +537,7 @@ nolock
 nologin
 nonindexable
 nonnull
-Nonspacing
+nonspacing
 noout
 nopassword
 nopipelining
