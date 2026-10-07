@@ -141,6 +141,17 @@ This allocates all memory larger than 128 kB using mmap(), which allows the OS
 to free the memory afterwards. This is important for backends which have a lot
 of long-running imap and pop3 processes.
 
+::: info [[changed,malloc_trim_after_disconnect]]
+Processes also release all of their freed memory back to the OS with glibc's
+`malloc_trim()` whenever their last client disconnects. Previously a
+long-running imap process kept several MB of freed heap memory resident after
+each session for the rest of its lifetime, even if it was then idling or the
+following sessions needed much less memory. This happened because glibc
+returns memory only from the top of the heap, and a few long-lived
+allocations near the top pinned everything below them. `malloc_trim()`
+releases also the free pages in the middle of the heap.
+:::
+
 ## Operating Systems
 
 ::: warning
