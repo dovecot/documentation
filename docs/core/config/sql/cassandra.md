@@ -6,6 +6,9 @@ dovecotlinks:
   sql_cassandra_consistency:
     hash: consistency
     text: "Cassandra: Consistency"
+  sql_cassandra_fallback_consistency:
+    hash: fallback-consistency
+    text: "Cassandra: Fallback Consistency"
   sql_cassandra_local_datacenter:
     hash: local-datacenter
     text: "Cassandra: Local Datacenter"
@@ -167,6 +170,52 @@ replica nodes in each datacenter.
 
 A write must be written to the commit log and memtable on all replica nodes
 in the cluster for that partition.
+
+## Fallback Consistency
+
+[[changed,cassandra_fallback_breaker]]
+
+Queries are normally sent with the primary consistency
+([[setting,cassandra_read_consistency]],
+[[setting,cassandra_write_consistency]] and
+[[setting,cassandra_delete_consistency]]). If the corresponding fallback
+consistency ([[setting,cassandra_read_fallback_consistency]],
+[[setting,cassandra_write_fallback_consistency]] or
+[[setting,cassandra_delete_fallback_consistency]]) is different, failures
+caused by unavailable or overloaded Cassandra nodes are handled like this:
+
+1. The query is retried with the primary consistency up to
+   [[setting,cassandra_primary_retry_count]] times, because the error may be
+   transient (e.g. a timeout reported by the Cassandra server). This step is
+   skipped and the query goes directly to step 2 if:
+   * Cassandra reports that there aren't enough replicas available,
+   * no hosts are available,
+   * the query timed out on the client side, or
+   * the queries have already been switched to the fallback consistency
+     (step 3).
+2. The query is retried with the fallback consistency.
+3. If [[setting,cassandra_fallback_failure_threshold]] consecutive queries of
+   the same type (read, write or delete) have failed with the primary
+   consistency within [[setting,cassandra_fallback_window]], all the following
+   queries of that type are sent directly with the fallback consistency. A
+   query that succeeds with the primary consistency resets the count, so
+   problems that affect only some of the queries (e.g. a single slow replica)
+   don't switch all the queries to the fallback consistency.
+
+While the fallback consistency is being used, queries are periodically still
+sent with the primary consistency. The first such query is sent after 50
+milliseconds, and the interval is doubled after each failure up to the
+maximum of 10 seconds. Once a query with the primary consistency succeeds,
+the primary consistency is used again for all queries.
+
+Each retry may take up to [[setting,cassandra_request_timeout]]. Keep in mind
+that the caller may give up earlier - for example the dict client waits for
+the dict server's reply for at most 65 seconds.
+
+Setting [[setting,cassandra_fallback_failure_threshold,1]] and
+[[setting,cassandra_primary_retry_count,0]] restores the behavior of older
+versions, where a single failure switched all the following queries to the
+fallback consistency.
 
 ## Metrics
 
