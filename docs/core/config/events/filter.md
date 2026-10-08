@@ -12,6 +12,9 @@ dovecotlinks:
   event_filter_source_location_performance:
     hash: performance-with-source-location
     text: Performance With source_location
+  event_filter_log_level:
+    hash: log-level
+    text: Log Level Filters
 ---
 
 # Event Filtering
@@ -50,6 +53,8 @@ Regardless of the syntax used, matching is performed the same way:
   categories on the event do not influence the match.
 * Event fields are compared using a case-insensitive wildcard match.  The
   wildcards supported are `?` and `*`.
+* Log levels are compared by their severity: `debug` < `info` < `warning` <
+  `error` < `fatal` < `panic`. See [Log Level](#log-level).
 
 ## Common (Unified) Filter Language
 
@@ -65,6 +70,7 @@ Where the key is one of:
 * `event`
 * `category`
 * `source_location`
+* `log_level`
 * a field name
 
 The operator is one of:
@@ -126,6 +132,50 @@ Times can be specified with the units `milliseconds` (abbrev. `msecs`),
 `seconds` (abbrev. `secs`), `minutes` (abbrev. `mins`), `days`,
 and `weeks`.
 
+### Log Level
+
+[[added,event_filter_log_level_added]] The `log_level` key matches the log
+level that the event is being sent with. The value is one of `debug`, `info`,
+`warning`, `error`, `fatal` or `panic` (case-insensitive). All the comparison
+operators are supported, and they compare the levels by their severity:
+
+| Filter | Matching log levels |
+| ------ | ------------------- |
+| `log_level=debug` | `debug` |
+| `log_level<info` | `debug` |
+| `log_level>=warning` | `warning`, `error`, `fatal`, `panic` |
+| `log_level>error` | `fatal`, `panic` |
+| `NOT log_level=debug` | `info`, `warning`, `error`, `fatal`, `panic` |
+
+Events that are only used for statistics (e.g. most named events) are
+typically sent with the `debug` log level.
+
+[[changed,log_filter_level_match_changed]] [[setting,log_debug]] and
+[[setting,log_core_filter]] are matched against the log level of each
+logged message. This matters for processes that hide some log levels by
+default, for example auth processes hide `info` level messages unless
+[[setting,auth_verbose]] is enabled:
+
+```doveconf[dovecot.conf]
+# Enable debug logging for auth, but not the hidden info messages
+log_debug = log_level=debug AND category=auth
+# Enable the hidden info messages for auth, but not debug logging
+log_debug = log_level=info AND category=auth
+# Enable both debug logging and the hidden info messages for auth
+log_debug = category=auth
+```
+
+A filter without a `log_level` comparison matches all log levels.
+
+::: warning [[deprecated,event_filter_log_level_added]]
+Previously log levels were matched as if they were categories:
+`category=debug`, `category=info`, `category=warning`, `category=error`,
+`category=fatal` and `category=panic`. This still works the same as
+`log_level=<level>`, but it is deprecated and a warning is logged about it.
+Only the exact lowercase names are treated as log levels, e.g.
+`category=Debug` refers to a category named `Debug`.
+:::
+
 ### Examples
 
 For example, to match events with the event name `abc`, one would use one of
@@ -143,13 +193,13 @@ A more complicated example:
 
 ```doveconf[dovecot.conf]
 event=abc OR (event=def AND (category=imap OR category=lmtp) AND \
-    NOT category=debug AND NOT (net_in_bytes<1024 OR net_out_bytes<1024))
+    NOT log_level=debug AND NOT (net_in_bytes<1024 OR net_out_bytes<1024))
 ```
 
 A complicated example using size matching:
 
 ```doveconf[dovecot.conf]
-(category=debug AND NOT (net_in_bytes<1KB OR net_out_bytes<1KB)) OR \
+(log_level=debug AND NOT (net_in_bytes<1KB OR net_out_bytes<1KB)) OR \
     (event=abc AND (message_size>1gb and message_size<1tB)) OR \
     (event=def AND (duration<1mins))
 ```
@@ -157,8 +207,8 @@ A complicated example using size matching:
 ## Metric Filter Syntax
 
 Events can be filtered inside the `metric` blocks (see [[link,stats]])
-based on the event name, source location, the categories present, and field
-values.
+based on the event name, source location, the categories present, log level
+and field values.
 
 The `filter` metric key is set to the desired common filter language
 expression. For example:
