@@ -329,8 +329,8 @@ See also:
 | `original_user` | Same as `user`, except using the original username the client sent before any changes by auth process. With master user logins (also with [[setting,auth_master_user_separator]] based logins),this contains only the original master username. |
 | `listener` | Socket listener name as specified in config file, which accepted the client connection. |
 | `owner_user` | For shared storage this is the `user` variable of the owner, otherwise it is the same as `user`.<br />[[added,variables_owner_user_added]] |
-| `passdb:<name>` | Return passdb extra field "name". |
-| `passdb:forward_<name>` | Used by proxies to pass on extra fields to the next hop, see [[link,auth_forward_fields]]. |
+| `passdb:<name>` | Return passdb extra field "name". ASCII control characters in the value are replaced with `?`. [[changed,login_passdb_variables_sanitized]] |
+| `passdb:forward_<name>` | Used by proxies to pass on extra fields to the next hop, see [[link,auth_forward_fields]]. ASCII control characters in the value are replaced with `?`. [[changed,login_passdb_variables_sanitized]] |
 
 ## Authentication Variables
 
