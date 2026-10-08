@@ -6,9 +6,6 @@ dovecotlinks:
   settings_types_boolean:
     hash: boolean
     text: boolean
-  settings_types_ip:
-    hash: ip-addresses
-    text: IP addresses
   settings_types_size:
     hash: size
     text: size
@@ -182,15 +179,6 @@ following words:
 
 All of these have the same meaning. Similarly to [Time](#time), the suffixes
 can be shortened to e.g. `ms`.
-
-## IP Addresses
-
-The IP can be IPv4 address like `127.0.0.1`, IPv6 address without brackets
-like `::1`, or with brackets like `[::1]`. The DNS name is looked up once
-during config parsing, e.g. `host.example.com`. If a /block is specified,
-then it's a CIDR address like `1.2.3.0/24`. If a /block isn't specified, then
-it defaults to all bits, i.e. /32 for IPv4 addresses and /128 for IPv6
-addresses.
 
 ## Port Number
 
