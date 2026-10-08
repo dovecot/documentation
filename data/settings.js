@@ -4035,7 +4035,7 @@ Write consistency when deleting from the database. See
 			'each-quorum',
 			'all',
 		],
-		default: 'local-quorum',
+		default: '[[setting,cassandra_delete_consistency]]',
 		seealso: [ '[[link,sql_cassandra_consistency]]' ],
 		text: `
 Write consistency when deleting from the database fails with primary
@@ -4328,7 +4328,7 @@ Read consistency.`
 			'each-quorum',
 			'all',
 		],
-		default: 'local-quorum',
+		default: '[[setting,cassandra_read_consistency]]',
 		seealso: [ '[[link,sql_cassandra_consistency]]' ],
 		text: `
 Read consistency if primary consistency fails.`
@@ -4574,7 +4574,7 @@ Write consistency when updating or inserting to the database.`
 			'each-quorum',
 			'all',
 		],
-		default: 'local-quorum',
+		default: '[[setting,cassandra_write_consistency]]',
 		seealso: [ '[[link,sql_cassandra_consistency]]' ],
 		text: `
 Write consistency when updating or inserting to the database fails with primary
