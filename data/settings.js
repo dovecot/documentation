@@ -4382,7 +4382,7 @@ How long to wait for a query to finish.`
 			settings_cassandra_cluster_settings_added: false,
 		},
 		tags: [ 'sql-cassandra' ],
-		values: setting_types.IPADDR,
+		values: setting_types.STRING,
 		text: `
 Source IP address to use for connections to Cassandra hosts. Only IP
 addresses are supported, not host names. If empty, the source IP address is
