@@ -7592,15 +7592,15 @@ Port number where to listen. \`0\` disables the listener.`
 
 	inet_listener_listen: {
 		tags: [ 'service' ],
-		default: '\*, \:\:',
-		values: setting_types.IPADDR,
+		default: '\* \:\:',
+		values: setting_types.BOOLLIST,
 		changed: {
 			settings_listen_renamed: `
 Renamed from \`listen\`, which still works as an alias.`
 		},
 		text: `
-A comma-separated list of IP addresses or hostnames on which external network
-connections will be handled.
+List of IP addresses or hostnames on which external network connections will be
+handled.
 
 \`*\` listens at all IPv4 interfaces, and \`::\` listens at all IPv6
 interfaces.
@@ -7608,7 +7608,7 @@ interfaces.
 Example:
 
 \`\`\`
-listen = 127.0.0.1, 192.168.0.1
+listen = 127.0.0.1 192.168.0.1
 \`\`\`
 
 The setting can be used globally, inside a \`service { .. }\` and inside an
@@ -7742,7 +7742,7 @@ The directory from which you execute commands via doveadm-exec.`
 	},
 
 	listen: {
-		values: setting_types.IPADDR,
+		values: setting_types.BOOLLIST,
 		seealso: [ 'inet_listener_listen' ],
 		text: `
 Alias for [[setting,inet_listener_listen]].`
@@ -8114,11 +8114,8 @@ doveadm processes.`
 	},
 
 	login_source_ips: {
-		values: setting_types.IPADDR,
+		values: setting_types.BOOLLIST,
 		text: `
-Value Format: List of trusted network ranges, see
-[[link,settings_types_boollist]].
-
 A list of hosts / IP addresses that are used in a round-robin manner for
 the source IP address when the proxy creates TCP connections.
 
@@ -8132,10 +8129,10 @@ login_source_ips {
 	},
 
 	login_trusted_networks: {
-		values: setting_types.IPADDR,
+		values: setting_types.BOOLLIST,
 		text: `
-Value Format: List of trusted network ranges, see
-[[link,settings_types_boollist]].
+List of trusted IP addresses (e.g. \`127.0.0.1\` or \`::1\`) or network
+ranges in CIDR notation (e.g. \`192.168.0.0/24\` or \`2001:db8::/32\`).
 
 This setting is used for a few different purposes, but most importantly it
 allows the client connection to tell the server what the original client's
