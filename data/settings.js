@@ -4034,6 +4034,54 @@ When this happens, "Dict server timeout" errors are being logged.
 :::`
 	},
 
+	cassandra_fallback_failure_threshold: {
+		added: {
+			cassandra_fallback_breaker: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.UINT,
+		default: 3,
+		seealso: [
+			'cassandra_fallback_window',
+			'[[link,sql_cassandra_fallback_consistency]]',
+		],
+		text: `
+Number of consecutive queries that must fail with the primary consistency
+within [[setting,cassandra_fallback_window]] before all the following queries
+of the same type are sent with the fallback consistency. A query that succeeds
+with the primary consistency resets the count. A single failing query is
+always retried with the fallback consistency. Must not be \`0\`.
+
+Setting this to \`1\` together with
+[[setting,cassandra_primary_retry_count,0]] restores the behavior of older
+versions, where a single failure switched to the fallback consistency.
+
+See [[link,sql_cassandra_fallback_consistency]].`
+	},
+
+	cassandra_fallback_window: {
+		added: {
+			cassandra_fallback_breaker: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		default: '5s',
+		seealso: [
+			'cassandra_fallback_failure_threshold',
+			'[[link,sql_cassandra_fallback_consistency]]',
+		],
+		text: `
+Time window for counting the consecutive failures for
+[[setting,cassandra_fallback_failure_threshold]]. Must not be \`0\`.
+
+A failure is counted only when the query finishes. A query that times out on
+the client side finishes only after [[setting,cassandra_request_timeout]], so
+such timeouts reach the threshold only if enough queries are running
+concurrently.
+
+See [[link,sql_cassandra_fallback_consistency]].`
+	},
+
 	cassandra_heartbeat_interval: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.TIME,
@@ -4248,6 +4296,33 @@ Password for authentication.`
 		default: 9042,
 		text: `
 CQL port to use.`
+	},
+
+	cassandra_primary_retry_count: {
+		added: {
+			cassandra_fallback_breaker: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.UINT,
+		default: 2,
+		seealso: [ '[[link,sql_cassandra_fallback_consistency]]' ],
+		text: `
+How many times a query that failed with a likely transient error (e.g. a
+timeout reported by the Cassandra server) is retried with the primary
+consistency before it's retried with the fallback consistency. \`0\` disables
+these retries.
+
+The primary consistency retries are skipped, and the failed query is retried
+immediately with the fallback consistency, if:
+
+* Cassandra reports that there aren't enough replicas available,
+* no hosts are available,
+* the query timed out on the client side after
+  [[setting,cassandra_request_timeout]], or
+* the queries have already been switched to the fallback consistency because
+  of [[setting,cassandra_fallback_failure_threshold]].
+
+See [[link,sql_cassandra_fallback_consistency]].`
 	},
 
 	cassandra_read_consistency: {
