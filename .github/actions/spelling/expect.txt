@@ -875,7 +875,6 @@ usermask
 usernames
 userok
 uuuuuu
-Uwx
 vacationcheck
 valgrind
 Valgrinding
