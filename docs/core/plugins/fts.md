@@ -346,6 +346,18 @@ uses libicu. Only the processes using such a filter load the module. The
 module is built only when Dovecot is compiled with libicu, and packages may
 ship it separately. If it is missing, using the filter fails with an error.
 
+The module is loaded when the filter is first used. It can also be loaded
+explicitly via [[setting,mail_plugins]]:
+
+```[dovecot.conf]
+mail_plugins {
+  lang_filter_normalizer_icu = yes
+}
+```
+
+This is required with [[setting,mail_chroot]], because the module can't be
+loaded anymore after the process has chrooted.
+
 The internal implementation uses Dovecot's own Unicode data, while libicu uses
 the Unicode version it was built with. If the versions differ, characters
 assigned only in the newer version, and the few characters whose properties
