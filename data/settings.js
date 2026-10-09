@@ -226,8 +226,11 @@ timer interrupts, which is not remotely close to microsecond precision.`
 	},
 
 	login_proxy_notify_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: 'proxy-notify',
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		advanced: true,
 		text: `
 Path to proxy-notify pipe.
@@ -657,11 +660,14 @@ storage type.`
 	},
 
 	sieve_script_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'sieve-storage-file' ],
 		plugin: 'sieve',
 		default: '~/sieve',
 		seealso: [ '[[link,sieve_storage_file]]' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 A file system path pointing to a Sieve script file or a directory containing one
 or more Sieve script files with names structured as \`<script-name>.sieve\`.
@@ -669,11 +675,14 @@ This setting only applies when [[setting,sieve_script_driver,file]]`
 	},
 
 	sieve_script_active_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'sieve-storage-file' ],
 		plugin: 'sieve',
 		default: '~/.dovecot.sieve',
 		seealso: [ '[[link,sieve_storage_file]]' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 When [[link,managesieve_server]] is used, one script in the storage can
 be active; i.e., evaluated at delivery.
@@ -1019,9 +1028,12 @@ developers.`
 	},
 
 	sieve_trace_dir: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'sieve-trace' ],
 		plugin: 'sieve',
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		seealso: [ '[[link,sieve_trace_debugging]]' ],
 		text: `
 The directory where trace files are written.
@@ -1086,9 +1098,12 @@ addresses from, such as when the script is executed in IMAP.`
 	},
 
 	sieve_user_log_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'sieve' ],
 		plugin: 'sieve',
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 The path to the file where the user log file is written.
 
@@ -1741,8 +1756,11 @@ yielded no (implicit) keep.`
 	/* sieve_extprograms plugin */
 
 	'sieve_pipe_socket_dir': {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		plugin: 'sieve-extprograms',
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Points to a directory relative to the [[setting,base_dir]] where
 the plugin looks for script service sockets for the \`vnd.dovecot.pipe\`
@@ -1750,8 +1768,11 @@ extension.`
 	},
 
 	'sieve_filter_socket_dir': {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		plugin: 'sieve-extprograms',
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Points to a directory relative to the [[setting,base_dir]] where
 the plugin looks for script service sockets for the \`vnd.dovecot.filter\`
@@ -1759,8 +1780,11 @@ extension.`
 	},
 
 	'sieve_execute_socket_dir': {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		plugin: 'sieve-extprograms',
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Points to a directory relative to the [[setting,base_dir]] where
 the plugin looks for script service sockets for the \`vnd.dovecot.execute\`
@@ -1768,8 +1792,11 @@ extension.`
 	},
 
 	'sieve_pipe_bin_dir': {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		plugin: 'sieve-extprograms',
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Points to a directory where the plugin looks for programs (shell
 scripts) to execute directly and pipe messages to for the \`vnd.dovecot.pipe\`
@@ -1777,8 +1804,11 @@ extension.`
 	},
 
 	'sieve_filter_bin_dir': {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		plugin: 'sieve-extprograms',
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Points to a directory where the plugin looks for programs (shell
 scripts) to execute directly and filter messages through for the
@@ -1786,8 +1816,11 @@ scripts) to execute directly and filter messages through for the
 	},
 
 	'sieve_execute_bin_dir': {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		plugin: 'sieve-extprograms',
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Points to a directory where the plugin looks for programs (shell
 scripts) to execute directly for the \`vnd.dovecot.execute\` extension.`
@@ -2202,11 +2235,12 @@ service and index the resulting plaintext.`
 
 	fts_decoder_script_socket_path: {
 		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
 			settings_fts_decoder_script_socket_path_changed: `
 Renamed from \`fts_decoder\`.`
 		},
 		plugin: 'fts',
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 Name of the script service used to decode the attachments.
 We strongly recommend using [[setting,fts_decoder_driver,tika]] instead.
@@ -2399,9 +2433,12 @@ fts_decoder_tika_url = http://tikahost:9998/tika/
 	},
 
 	textcat_config_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		plugin: 'fts',
 		default: '\\<textcat dir\\>',
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		seealso: [ 'language' ],
 		text: `
 Path to the textcat/exttextcat configuration file, which lists the
@@ -2508,9 +2545,12 @@ for syntax.`
 	},
 
 	language_filter_stopwords_dir: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		plugin: 'fts',
 		tags: [ 'language-filter-stopwords-dir' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		seealso: [ '[[link,fts_tokenization]]' ],
 		text: `
 Path to the directory containing stopword files. The files inside the directory
@@ -3400,8 +3440,11 @@ This can be useful with Maildir or sdbox. Used only with
 	},
 
 	quota_fs_mount_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		plugin: 'quota',
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		tags: [ 'quota-fs' ],
 		text: `
 If specified, enable FS quota for the specified mount path. Only mailboxes
@@ -4207,8 +4250,11 @@ update a single partition are atomic in either case.`
 	},
 
 	cassandra_metrics_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'sql-cassandra' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 Path where to write JSON metrics. See [[link,sql_cassandra_metrics]].`
 	},
@@ -4600,8 +4646,11 @@ set [[setting,mysql_host,127.0.0.1]] or set [[setting,mysql_port]] explicitly.
 	},
 
 	mysql_option_file: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'sql-mysql' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 File to read for client library specific configuration.`
 	},
@@ -4701,8 +4750,11 @@ parameters.`
 	/* SQL sqlite settings. */
 
 	sqlite_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'sql-sqlite' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 Path to the sqlite database.`
 	},
@@ -5163,9 +5215,12 @@ auth_realms = example.com another.example.com foo
 	},
 
 	auth_socket_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: 'auth-userdb',
 		advanced: true,
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 The UNIX socket path to the master authentication server for finding users.
 
@@ -5173,9 +5228,12 @@ It is usually neither necessary nor advisable to change the default.`
 	},
 
 	auth_master_socket_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: 'auth-master',
 		advanced: true,
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 The UNIX socket path to the master authentication server for finishing
 user logins.
@@ -5307,7 +5365,10 @@ Available transformations:
 	},
 
 	auth_winbind_helper_path: {
-		values: setting_types.STRING,
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
+		values: setting_types.PATH_FILE,
 		text: `
 This setting tells the system the path for Samba's ntlm_auth helper binary.
 
@@ -5319,8 +5380,11 @@ auth_winbind_helper_path = /usr/bin/ntlm_auth
 	},
 
 	base_dir: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: '/var/run/dovecot/',
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		advanced: true,
 		text: `
 The base directory in which Dovecot should store runtime data.
@@ -5329,15 +5393,21 @@ This can be used to override the base directory determined at compile time.`
 	},
 
 	cdb_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'dict', 'dict-cdb' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 Path to the CDB database file.`
 	},
 
 	debug_log_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: '[[setting,info_log_path]]',
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `The log file to use for debug messages.`
 	},
 
@@ -5471,8 +5541,11 @@ The dict driver to use. Defaults to [[setting,dict_name]].`
 	},
 
 	dict_file_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'dict', 'dict-file' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 Path for the dictionary file.`
 	},
@@ -5487,8 +5560,11 @@ Name of the dict to access in the dict server. This refers to the
 	},
 
 	dict_proxy_socket_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'dict', 'dict-proxy' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		default: 'dict',
 		text: `
 Points to the dict server's UNIX socket. The path is relative to the the
@@ -5516,8 +5592,11 @@ Log a warning about dict lookups that take longer than this interval.`
 	},
 
 	redis_socket_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'dict', 'dict-redis' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 UNIX socket path to the Redis server. This is preferred over
 [[setting,redis_host]] if both are set.`
@@ -5711,9 +5790,12 @@ dict_server {
 	},
 
 	dns_client_socket_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		advanced: true,
 		tags: [ 'dns', 'dns_client' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		default: 'dns-client',
 		text: `
 UNIX socket path to the dns-client service.`
@@ -5819,8 +5901,11 @@ Filter for doveadm server specific settings.`
 	},
 
 	doveadm_socket_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: 'doveadm-server',
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 The UNIX socket or host (\`host:port\` syntax is allowed) for connecting to
 the doveadm server.`
@@ -5975,8 +6060,11 @@ Target URL for [[setting,event_exporter_driver,http-post]].`
 	},
 
 	event_exporter_file_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'event-export' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 Path to event log file with [[setting,event_exporter_driver,file]].`
 	},
@@ -6025,8 +6113,11 @@ Timeout when connecting to unix socket with
 	},
 
 	event_exporter_unix_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'event-export' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		seealso: [ 'event_exporter_unix_connect_timeout' ],
 		text: `
 Path to event unix socket with [[setting,event_exporter_driver,unix]].`
@@ -6071,8 +6162,11 @@ How to execute the external script:
 	},
 
 	execute_fork_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'execute' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		default: '[[setting,execute_name]]',
 		text: `
 Path to the binary that is executed with [[setting,execute_driver,fork]].`
@@ -6112,8 +6206,11 @@ TCP port where to connect to with [[setting,execute_driver,tcp]].`
 	},
 
 	execute_unix_socket_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'execute' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		default: '[[setting,execute_name]]',
 		text: `
 UNIX socket path where to connect to with [[setting,execute_driver,unix]].`
@@ -6418,8 +6515,11 @@ Password for HTTP proxy.`
 	},
 
 	http_client_proxy_socket_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		tags: [ 'http', 'http_client' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		added: {
 			settings_http_client_settings_added: false,
 		},
@@ -7541,8 +7641,11 @@ aborted immediately if this protocol is violated.`
 	},
 
 	info_log_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: '[[setting,log_path]]',
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `The log file to use for informational messages.`
 	},
 
@@ -7617,8 +7720,11 @@ lda_original_recipient_header = X-Original-To
 	},
 
 	libexec_dir: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: '/usr/libexec/dovecot',
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		advanced: true,
 		text: `
 The directory from which you execute commands via doveadm-exec.`
@@ -7688,9 +7794,12 @@ The proxy destination is determined via returned passdb extra fields.`
 	},
 
 	lmtp_proxy_rawlog_dir: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		seealso: [ '[[link,rawlog]]' ],
 		tags: [ 'lmtp' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Directory location to store raw LMTP proxy protocol traffic logs.
 
@@ -7699,9 +7808,12 @@ starts without a user, all user-specific variables expand to empty.`
 	},
 
 	lmtp_rawlog_dir: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		seealso: [ '[[link,rawlog]]' ],
 		tags: [ 'lmtp' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Directory location to store raw LMTP protocol traffic logs.
 
@@ -7835,9 +7947,12 @@ This will eventually replace [[setting,mail_debug]] and
 	},
 
 	log_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: 'syslog',
 		seealso: [ 'debug_log_path', 'info_log_path' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `
 Specify the log file to use for error messages.
 
@@ -7872,7 +7987,10 @@ The prefix for each line written to the log file.
 	},
 
 	login_socket_path: {
-		values: setting_types.STRING,
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
+		values: setting_types.PATH_FILE,
 		advanced: true,
 		added: {
 			settings_login_socket_path_added: false,
@@ -7930,8 +8048,11 @@ login_log_format_elements = user=<%{user}> method=%{mechanism} %{secured} sessio
 	},
 
 	login_plugin_dir: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: '/usr/lib64/dovecot/login',
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `Location of the login plugin directory.`
 	},
 
@@ -7970,8 +8091,11 @@ aren't attempted.`
 	},
 
 	login_proxy_rawlog_dir: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		seealso: [ '[[link,rawlog]]' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 Login processes write rawlogs for proxied connections to this directory for
 debugging purposes. Note that login processes are usually chrooted, so the
@@ -8506,9 +8630,12 @@ exists for now, but it is not a supported way of running Dovecot.`
 	},
 
 	mail_plugin_dir: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: '/usr/lib64/dovecot',
 		seealso: [ 'mail_plugins' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `The directory in which to search for Dovecot mail plugins.`
 	},
 
@@ -8627,9 +8754,12 @@ NO [LIMIT] Requested sort would have taken too long.
 	},
 
 	mail_temp_dir: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: '/tmp',
 		tags: [ 'lda', 'lmtp' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 The directory in which LDA/LMTP will temporarily store incoming message data
 that is above 128kB in size.
@@ -10487,13 +10617,16 @@ Make Dovecot open a PAM session and close it immediately.`
 
 	passwd_file_path: {
 		tags: [ 'passwd-file' ],
+		changed: {
+			settings_path_var_expand_changed: `A path starting with a variable is now also kept inside the variable's expanded value.`,
+		},
 		values: setting_types.STRING,
 		text: `
-Path to the passwd-file. The path can consists from per-user variables such as s\`%{user | domain}\`. If the path starts with static path, then Dovecot ensures that the expanded path does not point outside of this static path. If the path starts with variable, this protection is disabled.
+Path to the passwd-file. The path can contain per-user variables such as \`%{user | domain}\`. Dovecot ensures that the expanded path doesn't point outside the base path that the beginning of the path expands to, the same way as for [[link,settings_types_path_file]] settings. A lookup whose path would escape the base path fails as an unknown user.
 
-For example if this is set to \`/etc/dovecot/%{user | domain}/passwd\`, then using login username such as \`root@..\` won't be allowed to expand into \`/etc/dovecot../passwd\`, as that would escape \`/etc/dovecot\`.
+For example if this is set to \`/etc/dovecot/%{user | domain}/passwd\`, then using login username such as \`root@..\` won't be allowed to expand into \`/etc/passwd\`, as that would escape \`/etc/dovecot/\`. With \`%{env:PREFIX}/%{user | domain}/passwd\` the path must stay inside the PREFIX directory.
 
-If you use something like \`%{env:PREFIX}}/%{user | domain}/passwd\` as path, it is recommended that PREFIX points to deep enough path, such as \`/etc/dovecot/domains/\`, and you do not modify [[setting,auth_username_chars]] to avoid including \`/\` as allowed character.`
+Don't modify [[setting,auth_username_chars]] to allow \`/\` in usernames.`
 	},
 
 	pop3_client_workarounds: {
@@ -11429,9 +11562,12 @@ Named filter, which can be used for specifying SSL client settings.`
 	},
 
 	ssl_client_ca_dir: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		seealso: [ 'ssl', 'ssl_client_ca_file', '[[link,ssl_configuration]]' ],
 		tags: [ 'ssl-ldap', 'ssl_client', 'sql-mysql' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 The directory where trusted SSL CA certificates can be found. For example
 \`/etc/ssl/certs\`. These certificates are used only for outgoing SSL
@@ -11710,8 +11846,11 @@ Named filter, which can be used for specifying SSL server settings.`
 	},
 
 	state_dir: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: '/var/lib/dovecot',
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		advanced: true,
 		text: `
 The compile-time directory PKG_STATEDIR (typically /var/lib/dovecot)
@@ -11731,8 +11870,11 @@ Filter for stats server specific settings.`
 	},
 
 	stats_writer_socket_path: {
+		changed: {
+			settings_path_var_expand_changed: `Setting type changed.`,
+		},
 		default: 'stats-writer',
-		values: setting_types.STRING,
+		values: setting_types.PATH_FILE,
 		text: `The path to the stats-writer socket.`
 	},
 
