@@ -144,6 +144,14 @@ settings you need to in your userdb.
 Use [[doveadm,user]] command to verify that the userdb returns the expected
 quota settings.
 
+::: warning
+A userdb override replaces the top-level [[setting,quota_storage_size]] only.
+If the limit is declared inside a named `quota { .. }` block, the block-scoped
+value shadows the override, which is then silently ignored — even though
+[[doveadm,user]] still echoes the field back. To override a block-scoped
+limit, address the block by name: `userdb_quota/<name>/storage_size=100M`.
+:::
+
 #### Override: LDAP
 
 Example [[link,auth_ldap]] where the quota limit is in `quotaBytes` field:
