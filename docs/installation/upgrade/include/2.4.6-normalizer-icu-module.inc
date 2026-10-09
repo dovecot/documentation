@@ -5,4 +5,6 @@
    the Dovecot module directory), which links with libicu. Dovecot processes no
    longer load libicu and libstdc++ unless such an ID is used, which saves
    about 220 kB of memory per process. Packages may ship the module
-   separately.
+   separately. With [[setting,mail_chroot]], such an ID requires loading the
+   module via [[setting,mail_plugins]]:
+   `mail_plugins { lang_filter_normalizer_icu = yes }`
