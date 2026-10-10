@@ -384,11 +384,19 @@ both are read and the rules are merged.
 Set [[setting,acl_globals_only,yes]] if `dovecot-acl` files are not used at
 all. This skips looking for them and saves disk I/O.
 
-## List Cache
+## Rights Cache
 
-`dovecot-acl-list` file lists all mailboxes that have `l` rights assigned.
-If you manually add/edit `dovecot-acl` files, you may need to delete the
-`dovecot-acl-list` to get the mailboxes visible.
+The `acl-rights.cache` file in the ACL root directory caches all
+mailboxes' `dovecot-acl` file rights. It replaces the earlier
+`dovecot-acl-list` file: shared mailbox listing uses it to find the
+mailboxes that have `l` rights assigned to a non-owner, and the cached
+rights can be served when a mailbox's `dovecot-acl` file is not locally
+available.
+
+The cache is maintained automatically: manually edited `dovecot-acl`
+files are picked up when they are next read, and a missing, deleted or
+unreadable cache file is recreated with a full rebuild. `doveadm acl
+recalc` forces the rebuild.
 
 ## Dictionaries
 
