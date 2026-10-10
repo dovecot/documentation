@@ -42,36 +42,52 @@ the API is too old to support your plugin. For example:
 
 ## Dependencies
 
-Some plugins depend on another one. In some systems (but not all) it's
-possible to handle this by giving a nicer error message than "symbol xyz
-not found". There are two steps for this:
+[[changed,plugin_dependencies_config]] Some plugins depend on another one.
+The dependencies are declared with `struct setting_plugin_info`, which the
+config process writes to the binary config. When loading the
+[[setting,mail_plugins]], Dovecot verifies that all the required plugins are
+also loaded before loading any of the plugins.
 
-First create `<plugin_name>_dependencies` array listing plugin names that
-the plugin depends on, like:
+Plugins in Dovecot core declare these in their source files, which are
+scanned by the config build:
 
 ```c
-const char *imap_quota_plugin_dependencies[] = { "quota", NULL };
+const struct setting_plugin_info imap_quota_plugin_info = {
+	.plugin = "lib11_imap_quota_plugin",
+	.required_plugins = (const char *const []) { "quota", NULL },
+};
 ```
 
-Then you'll also have to make the plugin .so binary link to the other
-plugins:
+The `plugin` field is the plugin's filename without the `.so` suffix. The
+plugin name used in [[setting,mail_plugins]] is derived from it. The info is
+ignored if the plugin file doesn't exist in the module directory.
+
+External plugins export them from their settings plugin (the plugin in the
+`settings/` module directory) in a NULL-terminated
+`<settings_plugin_name>_plugin_infos` array:
+
+```c
+const struct setting_plugin_info *foo_settings_plugin_infos[] = {
+	&foo_plugin_info,
+	NULL
+};
+```
+
+Trying to load imap_quota plugin without quota plugin then gives an error:
 
 ```
-if PLUGIN_DEPS
-lib11_imap_quota_plugin_la_LIBADD = \
-    ../quota/lib10_quota_plugin.la
-endif
+Fatal: mail_plugins: Plugin imap_quota requires also plugin quota to be loaded
 ```
 
-`PLUGIN_DEPS` is set only if plugin dependencies are actually supported.
-Otherwise the build might fail or plugin loading might fail.
+Don't link the plugin against the plugins it depends on. Linking against
+loadable modules isn't portable. Instead, make sure the plugin's filename
+prefix (e.g. `lib11_`) sorts after the plugins it depends on. Plugins are
+loaded in that order, so the dependencies' symbols are already available
+when the plugin is loaded. The config process logs a warning if a required
+plugin would be loaded after the plugin requiring it.
 
-Once all this is done, trying to load imap_quota plugin without quota
-plugin gives a nice error message:
-
-```
-Error: Can't load plugin imap_quota_plugin: Plugin quota must be loaded also
-```
+The old `<plugin_name>_dependencies` array is still checked, but it can't
+be checked before the plugin is loaded.
 
 ## Hooks
 

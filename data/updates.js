@@ -76,6 +76,7 @@ export const updates = {
 	otp_password_scheme_removed: '2.4.5',
 	pbkdf2_hashing: '2.4.0',
 	passwd_file_iteration: '2.4.0',
+	plugin_dependencies_config: '2.4.6',
 	process_title_imap_process: '2.4.0',
 	process_title_initializing: '2.4.0',
 	process_title_mail_processes: '2.4.0',
