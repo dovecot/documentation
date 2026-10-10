@@ -92,6 +92,15 @@ For userdb and `-o` command line parameter overrides only the `~/` prefix is
 expanded, while the rest of the value is used literally, the same way as
 %variables in override values.
 
+[[changed,settings_path_var_expand_changed]] If the value contains
+%variables, the expanded path must stay inside the path that the beginning
+of the value expands to. `.` and `..` components are resolved first. If the
+first variable or literal is followed by `/`, its whole expansion is the base
+path: `%{home}/%{user}` must stay inside the home directory. Otherwise only
+its directory part is: `/etc/dovecot/deny.%{protocol}` must stay inside
+`/etc/dovecot/`. A value that escapes its base path, such as
+`%{home}/../shared/%{user}`, fails the settings lookup.
+
 ## Directory Path
 
 [[added,settings_path_types_added]]
@@ -213,6 +222,9 @@ If you use [[link,settings_variables,%variables]] in file names, the expansion
 is delayed until the process accessing the setting expands it. The process
 is usually not running as root at this point, so you may need to adjust file
 permissions.
+
+[[changed,settings_path_var_expand_changed]] The expanded file name must stay
+inside its base path, the same way as with a [File Path](#file-path).
 
 It's possible to give inline values (instead of a path to a file) using the
 [[link,settings_syntax,heredoc syntax]] (`<<MARKER`). For example:
