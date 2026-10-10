@@ -2402,23 +2402,49 @@ fts_decoder_tika_url = http://tikahost:9998/tika/
 		plugin: 'fts',
 		default: '\\<textcat dir\\>',
 		values: setting_types.STRING,
-		seealso: [ 'language' ],
+		seealso: [ 'language', 'textcat_filter_languages' ],
 		text: `
 Path to the textcat/exttextcat configuration file, which lists the
 supported languages.
 
-This is recommended to be changed to point to a minimal version of a
-configuration that supports only the languages listed in
-[[setting,language]].
-
-Doing this improves language detection performance during indexing and also
-makes the detection more accurate.
+With [[setting,textcat_filter_languages,yes]] (default) only the
+languages listed in [[setting,language]] are loaded from this file, so there
+is normally no need to create a minimal version of the configuration file.
 
 Example:
 
 \`\`\`
 textcat_config_path = /usr/share/libexttextcat/fpdb.conf
 \`\`\``
+	},
+
+	textcat_filter_languages: {
+		plugin: 'fts',
+		added: {
+			settings_textcat_filter_languages_added: false,
+		},
+		default: 'yes',
+		values: setting_types.BOOLEAN,
+		seealso: [ 'language', 'textcat_config_path' ],
+		text: `
+If enabled, language detection uses only the fingerprints of the languages
+listed in [[setting,language]] from the [[setting,textcat_config_path]] file.
+The textcat configuration file contains fingerprints for a large number of
+languages, and comparing the text against all of them takes most of the
+language detection CPU time.
+
+Text in a language that isn't listed in [[setting,language]] is detected as
+the closest listed language. If disabled, all fingerprints in the textcat
+configuration file are used, and such text is usually detected as an unknown
+language, which uses the default language (see
+[[setting,language_default]]).
+
+The filtered configuration is written to a temporary file in
+[[setting,mail_temp_dir]], which is deleted right after the textcat library
+has read it.
+
+The default is \`no\` if [[setting,dovecot_config_version]] is older than
+the version where this setting was added.`
 	},
 
 	language: {
@@ -2438,10 +2464,8 @@ recognition fails.
 
 The filters used for stemming and stopwords are language dependent.
 
-::: tip
-For better performance it's recommended to synchronize this setting with the
-textcat configuration file; see [[setting,textcat_config_path]].
-:::
+Language detection uses only the textcat fingerprints of the listed
+languages; see [[setting,textcat_filter_languages]].
 
 Example:
 
@@ -2495,16 +2519,34 @@ See [[link,fts_tokenizer_configuration]] for configuration information.`
 	},
 
 	language_filter_normalizer_icu_id: {
+		changed: {
+			language_normalizer_icu_module: `
+The default ID and its variants without \`NFC\` and/or \`[\\x20] Remove\` are
+implemented internally without libicu. Other IDs require the
+\`lang_filter_normalizer_icu\` module.`
+		},
 		plugin: 'fts',
 		tags: [ 'language-filter-normalizer-icu' ],
 		values: setting_types.STRING,
-		default: `Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove`,
+		default: `Any-Lower; NFKD; [: Nonspacing Mark :] Remove; NFC; [\\x20] Remove`,
+		seealso: [ '[[link,fts_filter_configuration]]' ],
 		text: `
 Description of the normalizing/transliterating rules to use.
 
 See
 [Normalizer Format](https://unicode-org.github.io/icu/userguide/transforms/general/#transliterator-identifiers)
-for syntax.`
+for syntax.
+
+These IDs are implemented internally by Dovecot:
+
+* \`Any-Lower; NFKD; [: Nonspacing Mark :] Remove; NFC; [\\x20] Remove\`
+* \`Any-Lower; NFKD; [: Nonspacing Mark :] Remove; [\\x20] Remove\`
+* \`Any-Lower; NFKD; [: Nonspacing Mark :] Remove; NFC\`
+* \`Any-Lower; NFKD; [: Nonspacing Mark :] Remove\`
+
+The ID must match exactly, including the spaces. Any other ID requires the
+\`lang_filter_normalizer_icu\` module, which uses libicu. See
+[[link,fts_filter_configuration]].`
 	},
 
 	language_filter_stopwords_dir: {
@@ -3993,7 +4035,7 @@ Write consistency when deleting from the database. See
 			'each-quorum',
 			'all',
 		],
-		default: 'local-quorum',
+		default: '[[setting,cassandra_delete_consistency]]',
 		seealso: [ '[[link,sql_cassandra_consistency]]' ],
 		text: `
 Write consistency when deleting from the database fails with primary
@@ -4032,6 +4074,54 @@ Cassandra cpp-driver library starts hanging all queries due to a bug. This may
 cause problems in the dict process even after Cassandra is back online.
 When this happens, "Dict server timeout" errors are being logged.
 :::`
+	},
+
+	cassandra_fallback_failure_threshold: {
+		added: {
+			cassandra_fallback_breaker: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.UINT,
+		default: 3,
+		seealso: [
+			'cassandra_fallback_window',
+			'[[link,sql_cassandra_fallback_consistency]]',
+		],
+		text: `
+Number of consecutive queries that must fail with the primary consistency
+within [[setting,cassandra_fallback_window]] before all the following queries
+of the same type are sent with the fallback consistency. A query that succeeds
+with the primary consistency resets the count. A single failing query is
+always retried with the fallback consistency. Must not be \`0\`.
+
+Setting this to \`1\` together with
+[[setting,cassandra_primary_retry_count,0]] restores the behavior of older
+versions, where a single failure switched to the fallback consistency.
+
+See [[link,sql_cassandra_fallback_consistency]].`
+	},
+
+	cassandra_fallback_window: {
+		added: {
+			cassandra_fallback_breaker: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.TIME_MSECS,
+		default: '5s',
+		seealso: [
+			'cassandra_fallback_failure_threshold',
+			'[[link,sql_cassandra_fallback_consistency]]',
+		],
+		text: `
+Time window for counting the consecutive failures for
+[[setting,cassandra_fallback_failure_threshold]]. Must not be \`0\`.
+
+A failure is counted only when the query finishes. A query that times out on
+the client side finishes only after [[setting,cassandra_request_timeout]], so
+such timeouts reach the threshold only if enough queries are running
+concurrently.
+
+See [[link,sql_cassandra_fallback_consistency]].`
 	},
 
 	cassandra_heartbeat_interval: {
@@ -4250,6 +4340,33 @@ Password for authentication.`
 CQL port to use.`
 	},
 
+	cassandra_primary_retry_count: {
+		added: {
+			cassandra_fallback_breaker: false,
+		},
+		tags: [ 'sql-cassandra' ],
+		values: setting_types.UINT,
+		default: 2,
+		seealso: [ '[[link,sql_cassandra_fallback_consistency]]' ],
+		text: `
+How many times a query that failed with a likely transient error (e.g. a
+timeout reported by the Cassandra server) is retried with the primary
+consistency before it's retried with the fallback consistency. \`0\` disables
+these retries.
+
+The primary consistency retries are skipped, and the failed query is retried
+immediately with the fallback consistency, if:
+
+* Cassandra reports that there aren't enough replicas available,
+* no hosts are available,
+* the query timed out on the client side after
+  [[setting,cassandra_request_timeout]], or
+* the queries have already been switched to the fallback consistency because
+  of [[setting,cassandra_fallback_failure_threshold]].
+
+See [[link,sql_cassandra_fallback_consistency]].`
+	},
+
 	cassandra_read_consistency: {
 		tags: [ 'sql-cassandra' ],
 		values: setting_types.ENUM,
@@ -4286,7 +4403,7 @@ Read consistency.`
 			'each-quorum',
 			'all',
 		],
-		default: 'local-quorum',
+		default: '[[setting,cassandra_read_consistency]]',
 		seealso: [ '[[link,sql_cassandra_consistency]]' ],
 		text: `
 Read consistency if primary consistency fails.`
@@ -4532,7 +4649,7 @@ Write consistency when updating or inserting to the database.`
 			'each-quorum',
 			'all',
 		],
-		default: 'local-quorum',
+		default: '[[setting,cassandra_write_consistency]]',
 		seealso: [ '[[link,sql_cassandra_consistency]]' ],
 		text: `
 Write consistency when updating or inserting to the database fails with primary
@@ -9838,7 +9955,10 @@ Configures a modifier string for values grouped by the
 		],
 		text: `
 Configures the minimum magnitude for values grouped by the
-[[link,stats_group_by_exponential,exponential method]].`
+[[link,stats_group_by_exponential,exponential method]].
+
+[[changed,metric_group_by_exponential_limits_changed]] Must be smaller than
+[[setting,metric_group_by_method_exponential_max_magnitude]].`
 	},
 
 	metric_group_by_method_exponential_max_magnitude: {
@@ -9852,7 +9972,11 @@ Configures the minimum magnitude for values grouped by the
 		],
 		text: `
 Configures the maximum magnitude for values grouped by the
-[[link,stats_group_by_exponential,exponential method]].`
+[[link,stats_group_by_exponential,exponential method]].
+
+[[changed,metric_group_by_exponential_limits_changed]] The maximum value is
+\`62\` with [[setting,metric_group_by_method_exponential_base,2]] and \`18\`
+with [[setting,metric_group_by_method_exponential_base,10]].`
 	},
 
 	metric_group_by_method_exponential_base: {
