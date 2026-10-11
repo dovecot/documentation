@@ -727,6 +727,7 @@ process depending on which side the error was detected in.
 		inherit: 'imap_client',
 		fields: {
 			mailbox: `Mailbox name where hibernation was started in.`,
+			error: `Reason why the unhibernation failed. Not set when it succeeded.`,
 			reason: `
 Reason why client was unhibernated:
 * \`idle_done\`: IDLE command was stopped with DONE.
