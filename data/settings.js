@@ -7016,7 +7016,12 @@ Set this above the polling interval of the clients in use, because each
 wake-up recreates an imap process.
 
 If messages are expunged while the connection is hibernated, the client is
-asked to relogin.`
+asked to relogin.
+
+[[added,imap_hibernate_commands_added]] This also allows the imap-hibernate
+process to answer DONE, after which the connection stays hibernated without
+IDLE. Some other commands are then also answered without moving the
+connection back to an imap process. See [[link,imap_hibernation_commands]].`
 	},
 
 	imap_id_retain: {
