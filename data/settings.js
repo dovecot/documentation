@@ -6983,6 +6983,7 @@ Behavior when IMAP FETCH fails due to some internal error. Options:
 
 	imap_hibernate_timeout: {
 		default: 0,
+		seealso: [ 'imap_hibernate_nonidle_timeout', '[[link,imap_hibernation]]' ],
 		tags: [ 'imap' ],
 		values: setting_types.TIME,
 		text: `
@@ -6995,6 +6996,27 @@ connection to imap-hibernate process and close the old imap process. This
 saves memory, because connections use very little memory in imap-hibernate
 process. The downside is that recreating the imap process back uses some
 additional system resources.`
+	},
+
+	imap_hibernate_nonidle_timeout: {
+		added: {
+			imap_hibernate_nonidle_added: false,
+		},
+		default: 0,
+		seealso: [ 'imap_hibernate_timeout', '[[link,imap_hibernation_nonidle]]' ],
+		tags: [ 'imap' ],
+		values: setting_types.TIME,
+		text: `
+How long to wait after the client's last command has finished before moving
+the connection to the imap-hibernate process, even though the client is not
+in IDLE state. \`0\` disables this.
+
+Any input from the client moves the connection back to a new imap process.
+Set this above the polling interval of the clients in use, because each
+wake-up recreates an imap process.
+
+If messages are expunged while the connection is hibernated, the client is
+asked to relogin.`
 	},
 
 	imap_id_retain: {
