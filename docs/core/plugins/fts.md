@@ -215,9 +215,9 @@ At least one language must be listed.
 The first language is the default language used in case detection fails.
 
 Each added language makes the indexing and searching slightly slower, so it's
-recommended not to add too many languages unnecessarily. The language detection
-performance can be improved by limiting the number of languages available for
-textcat, see [[setting,textcat_config_path]].
+recommended not to add too many languages unnecessarily. Language detection
+uses only the textcat fingerprints of the listed languages, see
+[[setting,textcat_filter_languages]].
 
 Example:
 
@@ -301,9 +301,7 @@ Available filters:
 
 ### `lowercase`
 
-Change all text to lower case. Supports UTF8, when compiled with libicu
-and the library is installed. Otherwise only ASCII characters are
-lowercased.
+Change all text to lower case. Supports UTF-8.
 
 ### `stopwords`
 
@@ -330,15 +328,50 @@ library.
 
 ### `normalizer-icu`
 
-Normalize text using libicu. This is potentially very resource intensive.
+Normalize text using the transliteration rules in
+[[setting,language_filter_normalizer_icu_id]]. The default rules lowercase the
+text, decompose it, remove accents and other nonspacing marks and remove
+spaces.
+
+[[changed,language_normalizer_icu_module]] The default
+[[setting,language_filter_normalizer_icu_id]] and its variants without `NFC`
+and/or `[\x20] Remove` are implemented internally by Dovecot. Dovecot
+processes don't load libicu and libstdc++ for them, which saves about 220 kB
+of memory per process. The output is the same as with libicu, except possibly
+for unusual input that has more than 30 combining characters in a row.
+
+Any other ID requires the `lang_filter_normalizer_icu` module
+(`liblang_filter_normalizer_icu.so` in the Dovecot module directory), which
+uses libicu. Only the processes using such a filter load the module. The
+module is built only when Dovecot is compiled with libicu, and packages may
+ship it separately. If it is missing, using the filter fails with an error.
+
+The module is loaded when the filter is first used. It can also be loaded
+explicitly via [[setting,mail_plugins]]:
+
+```[dovecot.conf]
+mail_plugins {
+  lang_filter_normalizer_icu = yes
+}
+```
+
+This is required with [[setting,mail_chroot]], because the module can't be
+loaded anymore after the process has chrooted.
+
+The internal implementation uses Dovecot's own Unicode data, while libicu uses
+the Unicode version it was built with. If the versions differ, characters
+assigned only in the newer version, and the few characters whose properties
+changed between the versions, may be normalized differently. Upgrading libicu
+has had the same effect.
 
 ::: warning
 There is a caveat for the Norwegian language:
 
 The default normalizer filter does not modify `U+00F8` (Latin Small Letter O
 with Stroke). In some configurations it might be desirable to rewrite it to,
-e.g., `o`. Same goes for the upper case version. This can be done by passing
-a modified `id` setting to the normalizer filter.
+e.g., `o`. Same goes for the upper case version. This can be done with a
+modified [[setting,language_filter_normalizer_icu_id]], which requires the
+`lang_filter_normalizer_icu` module.
 
 Similar cases can exist for other languages as well.
 :::
