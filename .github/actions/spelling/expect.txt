@@ -655,6 +655,7 @@ realname
 recalc
 RECURSIVEMATCH
 redownloading
+relogin
 remotehost
 remoteprefix
 RENAMESCRIPT
