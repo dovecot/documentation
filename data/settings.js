@@ -2382,10 +2382,10 @@ Basic authentication support (via URL) is added.`
 		},
 		changed: {
 			settings_fts_decoder_tika_url_changed: `
-Renamed from \`fts_tika\`.`
+Renamed from \`fts_tika\`.`,
 		},
 		plugin: 'fts',
-		values: setting_types.STRING,
+		values: setting_types.URL,
 		seealso: [ 'fts_decoder_tika' ],
 		text: `
 URL for [Apache Tika](https://tika.apache.org/) decoder for attachments.
@@ -2788,7 +2788,7 @@ Controls whether new mails are immediately searchable via Solr.`
 
 	fts_solr_url: {
 		plugin: 'fts-solr',
-		values: setting_types.STRING,
+		values: setting_types.URL,
 		text: `
 Required base URL for Solr.
 
@@ -5251,8 +5251,9 @@ auth_policy_server_api_header = Authorization: Basic d2ZvcmNlOnN1cGVy
 		text: `
 URL of the policy server.
 
-URL is appended with \`?command=allow/report\`. If URL ends with \`&\`, the
-\`?\` is not appended.
+\`command=allow\` or \`command=report\` is added as a query parameter:
+\`?command=\` if the URL has no query, otherwise \`&command=\` unless the
+query already ends in \`&\`.
 
 REQUIRED configuration when you want to use authentication policy.
 
@@ -6086,9 +6087,11 @@ The event exporter driver to use.`
 
 	event_exporter_http_post_url: {
 		tags: [ 'event-export' ],
-		values: setting_types.STRING,
+		values: setting_types.URL,
 		text: `
-Target URL for [[setting,event_exporter_driver,http-post]].`
+Target URL for [[setting,event_exporter_driver,http-post]]. Required with
+that driver; an empty value is caught only when that driver starts, not
+when the configuration is read.`
 	},
 
 	event_exporter_file_path: {
@@ -6559,7 +6562,7 @@ creating a \`CONNECT\` tunnel through the proxy for the SSL link.`
 
 	http_client_proxy_url: {
 		tags: [ 'http', 'http_client' ],
-		values: setting_types.STRING,
+		values: setting_types.URL,
 		added: {
 			settings_http_client_settings_added: false,
 		},
@@ -10149,23 +10152,59 @@ Specifies how long after token expiration it is still accepted. It shouldn't be
 	},
 
 	oauth2_tokeninfo_url: {
+		changed: {
+			settings_oauth2_url_access_token_changed: `
+The token is no longer appended to the URL automatically; the URL must
+contain \`%{access_token}\`, and variables in the URL are now URL-escaped.`,
+		},
 		tags: [ 'oauth2' ],
 		values: setting_types.STRING,
 		text: `
-URL for verifying token validity. Token is appended to the URL.
+URL template for verifying token validity.
 
-Example:
+The URL must contain \`%{access_token}\` in the path or query, i.e. after a
+literal \`/\` or \`?\` that follows the host part. It is replaced with the
+token.
+
+Variables expanded into the URL are URL-escaped; the \`| safe\` filter opts
+out. See [[link,auth_oauth2_url_variables]].
+
+Examples:
 
 \`\`\`[dovecot.conf]
-oauth2_tokeninfo_url = http://endpoint/oauth/tokeninfo?access_token=
+oauth2_tokeninfo_url = http://endpoint/oauth/tokeninfo?access_token=%{access_token}
+oauth2_tokeninfo_url = %{env:IDP_URL | safe}/tokeninfo?access_token=%{access_token}
+oauth2_tokeninfo_url = http://idp.example.com:%{env:IDP_PORT | safe}/tokeninfo?access_token=%{access_token}
 \`\`\``
 	},
 
 	oauth2_introspection_url: {
+		changed: {
+			settings_oauth2_url_access_token_changed: `
+With [[setting,oauth2_introspection_mode]] \`get\` the URL must contain
+\`%{access_token}\`, and variables in the URL are now URL-escaped; with
+\`auth\` or \`post\` it must not contain it.`,
+		},
 		tags: [ 'oauth2' ],
 		values: setting_types.STRING,
 		text: `
-URL for getting more information about token.`
+URL template for getting more information about the token.
+
+With [[setting,oauth2_introspection_mode]] \`get\` the URL must contain
+\`%{access_token}\` in the path or query, i.e. after a literal \`/\` or \`?\`
+that follows the host part. With \`auth\` or \`post\` the token is sent via the
+Authorization header or the POST body instead, and the URL must not contain
+it.
+
+Variables expanded into the URL are URL-escaped; the \`| safe\` filter opts
+out. See [[link,auth_oauth2_url_variables]].
+
+Example:
+
+\`\`\`[dovecot.conf]
+oauth2_introspection_mode = get
+oauth2_introspection_url = %{env:IDP_URL | safe}/introspect?token=%{access_token}
+\`\`\``
 	},
 
 	oauth2_introspection_mode: {
@@ -10191,7 +10230,7 @@ With \`local\` validation, [[setting,oauth2_tokeninfo_url]] is also ignored.
 | Value | Description |
 | --- | --- |
 | \`auth\` | GET request with Bearer authentication. |
-| \`get\` | GET request with token appended to URL. |
+| \`get\` | GET request with the token placed into [[setting,oauth2_introspection_url]] via \`%{access_token}\`. |
 | \`post\` | POST request with token=bearer_token as content. |
 | \`local\` | Attempt to locally validate and decode JWT token. |`
 	},
@@ -10275,16 +10314,25 @@ Valid issuer(s) for the token.`
 
 	oauth2_openid_configuration_url: {
 		tags: [ 'oauth2' ],
-		values: setting_types.STRING,
+		values: setting_types.URL,
 		text: `
-URL to [[rfc,7628]] OpenID Provider Configuration Information schema.`
+URL to [[rfc,7628]] OpenID Provider Configuration Information schema.
+
+If the value has no path, e.g. \`https://id.example.com\`, a trailing \`/\`
+is added when it is returned to clients in OAUTHBEARER and XOAUTH2 failure
+responses.`
 	},
 
 	oauth2_fields: {
 		tags: [ 'oauth2' ],
 		values: setting_types.STRLIST,
 		text: `
-Key-value fields to include in successful authentication.`
+Key-value fields to include in successful authentication.
+
+[[variable,auth]] can be used. \`%{access_token}\` is the raw token.
+
+\`%{token}\` [[deprecated,variables_oauth2_token_deprecated]] is the old name
+of \`%{access_token}\` and logs a warning when used.`
 	},
 
 	oauth2_send_auth_headers: {

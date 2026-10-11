@@ -371,8 +371,9 @@ See also:
 | `client_id` | If [[setting,imap_id_retain]] is enabled this variable is populated with the client ID request as IMAP arglist. For directly logging the ID see the [[event,imap_id_received]] event. |
 | `passdb:forward_<name>` | Used by proxies to pass on extra fields to the next hop, see [[link,auth_forward_fields]]. |
 | `id` | Internal ID number of the current passdb/userdb. |
-| `token` | Used OAUTH2 token. This is only present in [[setting,oauth2_fields]]. [[added,variables_oauth2]] |
+| `token` | [[deprecated,variables_oauth2_token_deprecated]] Use `access_token` instead. Only present in [[setting,oauth2_fields]]. [[added,variables_oauth2]] |
 | `oauth2:<name>` | Return oauth2 field "name". This is only present in [[setting,oauth2_fields]]. |
+| `access_token` | The OAuth2 bearer token. Only present in [[setting,oauth2_fields]], [[setting,oauth2_tokeninfo_url]] and [[setting,oauth2_introspection_url]]. In the two URL settings all expanded values are URL-escaped, see [[link,auth_oauth2_url_variables]]. [[added,oauth2_access_token_added]] |
 
 ## Conditionals
 
