@@ -12,6 +12,7 @@ ede
 fcf
 frop
 fuzzer
+fuzzers
 github
 hardenings
 https
