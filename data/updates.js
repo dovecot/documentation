@@ -38,6 +38,7 @@ export const updates = {
 	event_set_forced_debug_added: '2.4.1',
 	fs_crypt_require_encryption_keys: '2.4.0',
 	fts_flatcurve: '2.4.0',
+	fts_language_catalan_added: '2.4.6',
 	imapc_features_no_acl: '2.4.0',
 	imapc_features_no_delay_login: '2.4.0',
 	imapc_features_no_fetch_bodystructure: '2.4.0',
