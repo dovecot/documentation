@@ -367,6 +367,7 @@ lgdb
 LHLO
 LIBADD
 libanonymous
+libasn
 libbzip
 libcrammd
 libcs
@@ -522,6 +523,7 @@ newmail
 Newsgroups
 newtok
 NEXTUID
+nfinish
 nfsmount
 ngrams
 ngrep
