@@ -164,7 +164,7 @@ Currently supported languages:
 
 | Language Code | Language | Stemming | Stopwords |
 | ------------- | -------- | -------- | --------- |
-| ca | Catalan | Yes | Yes |
+| ca | Catalan [[added,fts_language_catalan_added]] | Yes | Yes |
 | da | Danish | Yes | Yes |
 | de | German | Yes | Yes |
 | en | English | Yes | Yes |
