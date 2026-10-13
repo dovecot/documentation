@@ -5365,13 +5365,18 @@ If you want to allow all characters, leave the value empty.`
 		default: '%{user | lower}',
 		values: setting_types.STRING,
 		text: `
-When this setting is used globally, it changes the username, including
-\`%{user}\` variable, for all passdb and userdb lookups.
+When this setting is used globally or inside a protocol filter, it changes the
+username, including \`%{user}\` variable, for all passdb and userdb lookups.
 
 This setting can also be used in [[link,auth_passwd_file,passdb/userdb
 passwd_file { auth_username_format }]] to change the username for the duration
-of the lookup. The \`%{user}\` variable is not changed. If used inside other
-passdbs/userdbs the setting is ignored.
+of the lookup. The \`%{user}\` variable is not changed.
+
+Inside any userdb the setting is also applied to the username mask when
+iterating users, e.g. with [[doveadm,user]]. The result is matched against the
+usernames returned by the userdb.
+
+Otherwise the setting is ignored inside passdbs and userdbs.
 
 You can use the standard variables here.
 
