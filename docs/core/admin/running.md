@@ -75,6 +75,16 @@ the `-a` parameter.
 Note that the preserved processes keep using the old configuration for as
 long as they live, including the old passdb/userdb and mail settings.
 
+The hibernated IMAP sessions (see [[link,imap_hibernation]]) are the
+exception: when such a session wakes up after the reload, it's continued by an
+imap process that uses the new configuration. If the reload changed something
+that the client has already been told - the CAPABILITY, or the namespaces'
+prefixes and separators - the session is instead disconnected with
+`BYE IMAP session state is inconsistent, please relogin`, so that the client
+logs in again. The reason is logged as the disconnection reason. The same
+happens to the sessions that were hibernated by an older Dovecot version
+before an upgrade. [[added,imap_unhibernate_config_check_added]]
+
 ## Stopping
 
 Killing the Dovecot master process with a normal TERM signal does a clean

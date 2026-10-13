@@ -29,3 +29,9 @@
  * A custom `service { .. }` block that relied on `shutdown_clients=no` needs
    `type = client` added to it. Without it the reload stops the service's old
    processes in spite of the converted timeout.
+ * A hibernated IMAP session that the reload preserved is continued by an imap
+   process with the new configuration when it wakes up. If the reload changed
+   the CAPABILITY or the namespaces the client has seen, the session is
+   disconnected with `BYE IMAP session state is inconsistent, please relogin`
+   instead. The same happens to the sessions that were hibernated before this
+   upgrade. See [[link,running_reload]].

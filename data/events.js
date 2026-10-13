@@ -711,6 +711,15 @@ This event is currently not sent for pre-login POP3 commands.
 		inherit: 'imap_client',
 		fields: {
 			mailbox: `Mailbox name where hibernation was started in.`,
+			reason: {
+				added: {
+					imap_hibernate_nonidle_added: false
+				},
+				text: `
+Why the client was hibernated:
+* \`idle\`: IDLE command was running for [[setting,imap_hibernate_timeout]].
+* \`inactivity\`: No command was running for [[setting,imap_hibernate_nonidle_timeout]].`
+			},
 			error: `Reason why hibernation attempt failed.`,
 		},
 		text: `
@@ -727,11 +736,19 @@ process depending on which side the error was detected in.
 		inherit: 'imap_client',
 		fields: {
 			mailbox: `Mailbox name where hibernation was started in.`,
+			error: `
+Reason why the unhibernation failed. Not set when it succeeded.
+
+[[added,imap_hibernate_nonidle_added]] When messages were expunged while a
+client without IDLE running was hibernated, the value is
+\`IMAP session state is inconsistent: Mailbox <name>: <count> messages expunged during hibernation\`.
+See [[link,imap_hibernation_nonidle]].`,
 			reason: `
 Reason why client was unhibernated:
 * \`idle_done\`: IDLE command was stopped with DONE.
 * \`idle_bad_reply\`: IDLE command was stopped with some other command than DONE.
-* \`mailbox_changes\`: Mailbox change notifications need to be sent to the client.`,
+* \`mailbox_changes\`: Mailbox change notifications need to be sent to the client.
+* \`client_input\`: Client sent input while no IDLE command was running. [[added,imap_hibernate_nonidle_added]]`,
 			hibernation_usecs: `Number of microseconds how long the client was hibernated.`,
 		},
 		text: `

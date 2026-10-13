@@ -535,6 +535,7 @@ nodelay
 NOINFERIORS
 nolock
 nologin
+nonidle
 nonindexable
 nonnull
 nonspacing
@@ -655,6 +656,7 @@ realname
 recalc
 RECURSIVEMATCH
 redownloading
+relogin
 remotehost
 remoteprefix
 RENAMESCRIPT
