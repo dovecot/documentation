@@ -61,6 +61,7 @@ export const updates = {
 	lmtp_nologin_added: '2.4.0',
 	login_passdb_variables_sanitized: '2.4.6',
 	login_proxy_rawlog_dir_changed: '2.4.2',
+	login_session_id_validated: '2.4.6',
 	lua_auth_init: '2.4.0',
 	lua_dns_client: '2.4.0',
 	lua_http_request_overrides_added: '2.4.6',

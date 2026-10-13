@@ -918,6 +918,7 @@ Xes
 xfs
 xoauth
 XRCPTFORWARD
+xtext
 xuidl
 yescrypt
 yourldap
