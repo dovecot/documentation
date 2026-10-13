@@ -9815,12 +9815,23 @@ subscriptions file, unless SUBSCRIBE command is explicitly used for them.`
 		default: 0,
 		seealso: [ 'mailbox_autoexpunge_max_mails' ],
 		tags: [ 'mailbox' ],
+		changed: {
+			settings_mailbox_autoexpunge_hibernation_changed: `
+Autoexpunging is also checked before an IMAP session is hibernated.`
+		},
 		values: setting_types.TIME,
 		text: `
 Expunge all mails in this mailbox whose saved-timestamp is older than this
 value. \`0\` means autoexpunging is disabled.
 
 For IMAP and POP3 this happens after the client is already disconnected.
+
+IMAP sessions may end while they are hibernated (see
+[[link,imap_hibernation]]), so autoexpunging is checked also before the
+session is hibernated. The check is rate limited: it's done again only once
+the next mail is known to expire, or at the latest after the smallest
+autoexpunge value configured for the user's mailboxes (at most 24 hours). This
+applies to the session across multiple hibernations.
 
 For LMTP this happens when the user's mail delivery is finished. Note that
 in case there are multiple recipients, autoexpunging is done only for some
