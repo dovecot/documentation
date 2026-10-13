@@ -68,6 +68,11 @@ developers when debugging some problem.
               :   **dump**=*pem|dovecot|jwk*
                   :   to specify format to dump in.
 
+    :    **asn1**
+         :    [[added,doveadm_dump_asn1_added]] Dump the structure of an
+              ASN.1 BER or DER encoded file, one line per element. This
+              type is never detected automatically.
+
     :    **index**
          :    => dovecot.index, dovecot.map.index
 
