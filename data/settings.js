@@ -10209,13 +10209,25 @@ Username attribute in response.`
 
 	oauth2_username_validation_format: {
 		tags: [ 'oauth2' ],
+		changed: {
+			settings_oauth2_username_validation_format_changed: `
+The result now goes through the same username translations as the login
+username.`
+		},
 		values: setting_types.STRING,
 		default: '%{user}',
 		seealso: [ 'oauth2_username_attribute' ],
 		text: `
 Normalization for oauth2 provided username, this setting is normally not
 needed. You only need this if the username that comes from authentication will
-not otherwise match with [[setting,oauth2_username_attribute]] value.`
+not otherwise match with [[setting,oauth2_username_attribute]] value.
+
+The result then goes through the same [[setting,auth_username_chars]],
+[[setting,auth_username_translation]], [[setting,auth_default_domain]] and
+[[setting,auth_username_format]] processing as the login username, before the
+two are compared. So these don't need to be repeated here. The same as for the
+login username, these settings are used globally or from a protocol filter.
+Any passdb-specific values are ignored.`
 	},
 
 	oauth2_active_attribute: {

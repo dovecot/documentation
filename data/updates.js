@@ -211,6 +211,7 @@ export const updates = {
 	settings_mailbox_directory_name_legacy_deprecated: '2.4.2',
 	settings_mailbox_special_use_changed: '2.4.0',
 	settings_metric_fields_changed: '2.4.0',
+	settings_oauth2_username_validation_format_changed: '2.4.6',
 	settings_passdb_default_password_scheme_changed: '2.4.3',
 	settings_passdb_mechanisms_filter_added: '2.4.0',
 	settings_passdb_sql_update_query_removed: '2.4.5',
