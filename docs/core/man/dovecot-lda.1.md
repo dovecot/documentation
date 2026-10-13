@@ -4,7 +4,7 @@ title: dovecot-lda
 dovecotComponent: core
 ---
 
-# dovecot-lda - Dovecot's local mail delivery agent
+# dovecot-lda(1) - Dovecot's local mail delivery agent
 
 ## SYNOPSIS
 
