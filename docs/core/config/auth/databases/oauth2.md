@@ -88,6 +88,12 @@ oauth2 {
 }
 ```
 
+### Master Users
+
+[[added,auth_oauth2_master_login_added]] A token for a different user than the
+requested login user is handled as a master login, if master passdbs exist.
+See [[link,auth_master_users_oauth2]].
+
 ### Proxy
 
 If you want to forward oauth2 authentication to your backend, you can use
