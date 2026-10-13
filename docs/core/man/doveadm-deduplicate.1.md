@@ -65,7 +65,7 @@ guid                             uid
 8aad0f0a30169f4bea620000ca356bad 18756
 923e301ab9219b4b4f440000ca356bad 18748
 923e301ab9219b4b4f440000ca356bad 18753
-...
+[...]
 ```
 ```sh
 doveadm deduplicate -u jane mailbox a_Box
@@ -76,7 +76,7 @@ guid                             uid
 8aad0f0a30169f4bea620000ca356bad 18751
 923e301ab9219b4b4f440000ca356bad 18748
 a7999e1530739c4bd26d0000ca356bad 18749
-...
+[...]
 ```
 
 <!-- @include: include/reporting-bugs.inc -->
