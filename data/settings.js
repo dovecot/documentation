@@ -5595,6 +5595,21 @@ The dict driver to use. Defaults to [[setting,dict_name]].`
 Path for the dictionary file.`
 	},
 
+	dict_file_fsync: {
+		advanced: true,
+		tags: [ 'dict', 'dict-file' ],
+		added: {
+			settings_dict_file_fsync_added: false
+		},
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		text: `
+If enabled, each commit syncs the new dictionary file to disk with
+\`fdatasync()\` before it replaces the old file. Without this, a server crash
+shortly after a commit can leave the dictionary file empty or partially
+written, which loses all of its keys.`
+	},
+
 	dict_proxy_name: {
 		tags: [ 'dict', 'dict-proxy' ],
 		values: setting_types.STRING,
