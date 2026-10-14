@@ -154,6 +154,20 @@ doveadm mailbox metadata set -u user@example.com \
     -s "" /private/vendor/vendor.dovecot/http-notify user=11@3
 ```
 
+The METADATA value is a TAB-separated list of `key=value` pairs:
+
+| Key | Description |
+| --- | ----------- |
+| `user` | User identifier (required). See `push_notification_ox_user_from_metadata`. |
+| `mailbox` | [[added,push_notification_ox_mailbox]] Mailbox to send notifications for, as the user sees it in IMAP (UTF-8, including any namespace prefix, e.g. `INBOX/Work`). INBOX is case-insensitive. Can be given multiple times. An empty value is ignored. If no `mailbox` key is given, only INBOX is notified. |
+
+Example notifying about both INBOX and `Work`:
+
+```sh
+doveadm mailbox metadata set -u user@example.com -s "" \
+    /private/vendor/vendor.dovecot/http-notify $'user=11@3\tmailbox=INBOX\tmailbox=Work'
+```
+
 #### Example Payload
 
 Push notification sent in JSON format with the following fields:

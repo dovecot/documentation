@@ -164,6 +164,7 @@ Currently supported languages:
 
 | Language Code | Language | Stemming | Stopwords |
 | ------------- | -------- | -------- | --------- |
+| ca | Catalan [[added,fts_language_catalan_added]] | Yes | Yes |
 | da | Danish | Yes | Yes |
 | de | German | Yes | Yes |
 | en | English | Yes | Yes |
@@ -325,6 +326,19 @@ is converting `cars` to `car` (in English).
 
 This stemmer is based on the [Snowball stemmer](https://snowballstem.org/)
 library.
+
+::: warning
+The stemmed form of a word can change when the Snowball library is upgraded,
+because new Snowball versions may change the stemming algorithms. Dovecot
+stores the stemmed words in the FTS indexes and stems the search keys while
+searching, so mails indexed with the old Snowball version may no longer be
+found with some search keys after the upgrade. For example Snowball v3.0.0
+changed the output of several languages' stemmers, and Dutch was switched to a
+different algorithm.
+
+To avoid this, the FTS indexes need to be deleted and the mails indexed again
+after upgrading the Snowball library to a version that changes stemming.
+:::
 
 ### `normalizer-icu`
 
