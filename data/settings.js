@@ -2549,6 +2549,32 @@ The ID must match exactly, including the spaces. Any other ID requires the
 [[link,fts_filter_configuration]].`
 	},
 
+	language_filter_snowball_version: {
+		plugin: 'fts',
+		tags: [ 'language-filter-snowball' ],
+		added: {
+			settings_language_filter_snowball_version_added: false,
+		},
+		values: setting_types.UINT,
+		default: 1,
+		seealso: [ '[[link,fts_tokenization]]' ],
+		text: `
+Version of the stemmers used by the \`snowball\` filter:
+
+| Value | Stems |
+| ----- | ----- |
+| 1 | Snowball 2.2.0 stems |
+| 2 | Snowball 3.x stems |
+
+Changing the version changes the stems of some words, so the FTS indexes need
+to be deleted and the mails indexed again. Otherwise searches can't find some
+words in the mails indexed with the old version.
+
+This setting exists only when Dovecot is built with \`--with-stemmer-build\`,
+which links Dovecot's Snowball fork statically. With a system libstemmer the
+stems are whatever that libstemmer version produces.`
+	},
+
 	language_filter_stopwords_dir: {
 		plugin: 'fts',
 		tags: [ 'language-filter-stopwords-dir' ],

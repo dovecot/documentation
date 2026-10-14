@@ -327,6 +327,8 @@ is converting `cars` to `car` (in English).
 This stemmer is based on the [Snowball stemmer](https://snowballstem.org/)
 library.
 
+<SettingsComponent tag="language-filter-snowball" level="4" />
+
 ### `normalizer-icu`
 
 Normalize text using the transliteration rules in

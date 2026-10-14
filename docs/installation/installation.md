@@ -286,6 +286,14 @@ Build with support for text language detection with libtextcat.
 
 Build with stemmer support from libstemmer.
 
+##### `--with-stemmer-build=DIR`
+
+Build with stemmer support by statically linking `libstemmer.a` from a built,
+but not installed, Snowball source tree in `DIR`. The tree must be built with
+`make libstemmer.a CFLAGS="-O2 -fPIC"`. The tree must be Dovecot's Snowball
+fork, which allows selecting the stemmer version with
+[[setting,language_filter_snowball_version]].
+
 #### Compression Libraries
 
 ##### `--with-zlib`
