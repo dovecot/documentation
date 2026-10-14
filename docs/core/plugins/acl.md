@@ -250,10 +250,10 @@ Unknown ACL letters are complained about, but unknown named ACLs are ignored.
 Named ACLs are mostly intended for future extensions.
 
 ::: tip
-The file is rather picky about formatting; using a tab (or multiple spaces)
-instead of a space character between fields may not work. If you are having
-problems, make sure to check for tabs, extra spaces and other unwanted
-characters.
+[[changed,acl_whitespace_parsing]] Any whitespace (spaces, tabs) between the
+identifier and the ACLs is accepted, so `user=foo lr` and `user=foo	lr` are
+equivalent. If you are having problems, make sure to check for other unwanted
+characters around the fields.
 :::
 
 ### Examples

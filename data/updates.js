@@ -12,6 +12,7 @@ export const updates = {
 	/* Tags used in pages. */
 
 	acl_dict_index_added: '2.4.2',
+	acl_whitespace_parsing: '2.4.6',
 	argon_2i_schemes: '2.4.0',
 	argon2_password_scheme_added: '2.4.0',
 	auth_mechanism_scram_sha_added: '2.4.0',
