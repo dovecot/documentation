@@ -5365,13 +5365,18 @@ If you want to allow all characters, leave the value empty.`
 		default: '%{user | lower}',
 		values: setting_types.STRING,
 		text: `
-When this setting is used globally, it changes the username, including
-\`%{user}\` variable, for all passdb and userdb lookups.
+When this setting is used globally or inside a protocol filter, it changes the
+username, including \`%{user}\` variable, for all passdb and userdb lookups.
 
 This setting can also be used in [[link,auth_passwd_file,passdb/userdb
 passwd_file { auth_username_format }]] to change the username for the duration
-of the lookup. The \`%{user}\` variable is not changed. If used inside other
-passdbs/userdbs the setting is ignored.
+of the lookup. The \`%{user}\` variable is not changed.
+
+Inside any userdb the setting is also applied to the username mask when
+iterating users, e.g. with [[doveadm,user]]. The result is matched against the
+usernames returned by the userdb.
+
+Otherwise the setting is ignored inside passdbs and userdbs.
 
 You can use the standard variables here.
 
@@ -10242,13 +10247,25 @@ Username attribute in response.`
 
 	oauth2_username_validation_format: {
 		tags: [ 'oauth2' ],
+		changed: {
+			settings_oauth2_username_validation_format_changed: `
+The result now goes through the same username translations as the login
+username.`
+		},
 		values: setting_types.STRING,
 		default: '%{user}',
 		seealso: [ 'oauth2_username_attribute' ],
 		text: `
 Normalization for oauth2 provided username, this setting is normally not
 needed. You only need this if the username that comes from authentication will
-not otherwise match with [[setting,oauth2_username_attribute]] value.`
+not otherwise match with [[setting,oauth2_username_attribute]] value.
+
+The result then goes through the same [[setting,auth_username_chars]],
+[[setting,auth_username_translation]], [[setting,auth_default_domain]] and
+[[setting,auth_username_format]] processing as the login username, before the
+two are compared. So these don't need to be repeated here. The same as for the
+login username, these settings are used globally or from a protocol filter.
+Any passdb-specific values are ignored.`
 	},
 
 	oauth2_active_attribute: {

@@ -9,6 +9,9 @@ dovecotlinks:
   auth_master_passwords:
     hash: master-passwords
     text: Master Passwords
+  auth_master_users_oauth2:
+    hash: oauth2
+    text: OAuth2 Master Users
 ---
 
 # Master Users/Passwords
@@ -23,7 +26,7 @@ It's also possible to directly log in as any user using a master password.
 There are two ways for master users to log in as other users:
 
 1. Give the login username in the [[link,authentication_mechanisms]]
-   authorization ID field.
+   authorization ID field. With OAuth2 see [[link,auth_master_users_oauth2]].
 
 2. Specify both the master username and the login username in the same
    username field. See [[setting,auth_master_user_separator]] for the format
@@ -158,6 +161,64 @@ userdb sql {
 
 If you had any problems, set [[setting,log_debug,category=auth]] and look at
 the logs.
+
+### OAuth2
+
+[[added,auth_oauth2_master_login_added]]
+
+With the OAUTHBEARER and XOAUTH2 mechanisms (see [[link,auth_oauth2]]) the
+token authenticates the master user, so the master passdb doesn't verify any
+password. It only decides whether the token's user may log in as the
+requested user. A master login can be requested in two ways:
+
+1. Send the login username as the OAUTHBEARER authorization ID, or as the
+   XOAUTH2 user, together with the master user's token. A token for a
+   different user than the requested login user is handled as a master
+   login.
+
+2. Use [[setting,auth_master_user_separator]], e.g. `loginuser*masteruser`
+   with the master user's token. The master username must match the token's
+   user.
+
+Without master passdbs a token for a different user than the requested login
+user fails as before. The login also fails if no master passdb accepts the
+master user.
+
+The master passdb must be able to look up the master user without a password,
+so it can't be e.g. PAM. To restrict which users each master user may log in
+as, use the `%{login_user}` variable in the master passdb lookup, e.g. in an
+SQL query. The master user is still subject to ACLs, see above.
+
+::: warning
+A master passdb that doesn't verify passwords (e.g. `nopassword=yes`) must be
+limited to the OAuth2 mechanisms with [[setting,passdb_mechanisms_filter]].
+Otherwise a password based mechanism, such as PLAIN with
+`loginuser*masteruser`, accepts any password for the master user.
+:::
+
+```doveconf[dovecot.conf]
+auth_mechanisms {
+  oauthbearer = yes
+  xoauth2 = yes
+}
+
+oauth2 {
+  # ...
+}
+
+passdb passwd-file {
+  passwd_file_path = /etc/dovecot/passwd.masterusers
+  master = yes
+  # The token is the master user's only credential
+  mechanisms_filter = oauthbearer xoauth2
+}
+```
+
+Where `passwd.masterusers` lists the master users without passwords:
+
+```
+admin:::::::nopassword=yes
+```
 
 ## Master Passwords
 
