@@ -95,6 +95,7 @@ export const updates = {
 	proxy_no_multiplex_added: '2.4.0',
 	push_notification_ox_mailbox: '2.4.6',
 	quota_maildir_driver_removed: '2.4.0',
+	quota_status_loads_quota: '2.4.6',
 	service_auth_listener_type: '2.4.0',
 	service_dict_expire: '2.4.0',
 	service_listener_type: '2.4.0',
