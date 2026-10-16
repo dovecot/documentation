@@ -71,6 +71,11 @@ Note that the LDAP driver must be used via [`proxy`](#proxy).
 
 See [[link,auth_ldap]].
 
+::: warning
+Currently, not all `ldap_*` settings that work with ldap authentication client are made available to dict ldap driver. See the supported settings below, if the setting is not listed (e. g. `ldap_deref`), then (at least for OpenLDAP) direct setting in `ldap.conf(5)` or as environment variables should make it work.
+If using environment variables, remember to list them in [[setting,import_environment]].
+:::
+
 #### Configuration
 
 ::: code-group
