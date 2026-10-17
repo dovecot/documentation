@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v7
     - uses: dovecot/dovecot-sphinx-action@0.11
-    - uses: dovecot/rsync-deployments@v2.0.3
+    - uses: dovecot/rsync-deployments@v2.0.4
       with:
         FLAGS: -azr --delete
         HOST: doc.dovecot.org
