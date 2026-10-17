@@ -11287,14 +11287,64 @@ is launched.
 		tags: [ 'service' ],
 		values: setting_types.UINT,
 		default: '[[setting,default_process_limit]]',
+		seealso: [ 'service_process_active_limit' ],
 		text: `
-The maximum number of processes that may exist for this service.
+The maximum number of processes that may exist for this service, including
+the retired processes. A process retires when it reaches
+[[setting,service_restart_request_count]] while
+[[setting,service_client_limit]] > 1. It stops accepting new connections, but
+keeps handling its existing ones until they are closed.
 
-[[changed,service_process_limit_changed]] However, if
-[[setting,service_client_limit]] > 1, when the process reaches
-[[setting,service_restart_request_count]], the process is no longer counted
-towards its process limit. Otherwise long-lived connections in the old process
-could prevent creation of new processes.`
+This setting also limits the number of active processes, unless
+[[setting,service_process_active_limit]] is lower.
+
+When this limit is reached and a new process is needed:
+
+* If [[setting,service_process_active_limit]] is lower than this setting, the
+  oldest retired process is killed to make room for the new process. This
+  disconnects its remaining clients.
+* With [[setting,service_reuse_port,yes]] the oldest retired process is also
+  killed, because each listener needs its own process.
+* Otherwise new connections wait until a retired process dies.
+
+[[changed,service_process_limit_changed]] The retired processes were no
+longer counted towards this limit, so the number of retired processes was
+unlimited. Otherwise long-lived connections in the old processes could have
+prevented creation of new processes.
+
+[[changed,settings_service_process_active_limit_added]] The retired
+processes are counted towards this limit again. To keep the number of
+retired processes unlimited, set this to \`unlimited\` and set
+[[setting,service_process_active_limit]] to the wanted number of active
+processes.`
+	},
+
+	service_process_active_limit: {
+		added: {
+			settings_service_process_active_limit_added: false,
+		},
+		tags: [ 'service' ],
+		values: setting_types.UINT,
+		default: 'unlimited',
+		seealso: [ 'service_process_limit', 'service_restart_request_count' ],
+		text: `
+The maximum number of active processes for this service. A process is active
+until it reaches [[setting,service_restart_request_count]] and retires.
+Processes retire only for services with [[setting,service_client_limit]] > 1.
+
+The active processes are limited by both this setting and
+[[setting,service_process_limit]], so with the default \`unlimited\` the
+limit is [[setting,service_process_limit]]. When the limit is reached, new
+connections wait until a process can accept them.
+
+Setting this lower than [[setting,service_process_limit]] allows the
+remaining processes to be used by the retired processes. When
+[[setting,service_process_limit]] is reached, the oldest retired process is
+killed to make room for a new active process, disconnecting its long-running
+connections. Active processes are never killed.
+
+With [[setting,service_reuse_port,yes]], [[setting,service_process_min_avail]]
+must be the same as the active limit.`
 	},
 
 	service_client_limit: {
@@ -11332,8 +11382,15 @@ can be good values.`
 		text: `
 Distribute TCP connections to processes more evenly using the
 [SO_REUSEPORT](https://lwn.net/Articles/542629/) option on Linux. When enabled,
-[[setting,service_process_min_avail]] must be the same as
+[[setting,service_process_min_avail]] must be the same as the active process
+limit, i.e. the lower of [[setting,service_process_active_limit]] and
 [[setting,service_process_limit]].
+
+[[changed,settings_service_process_active_limit_added]] When a process retires,
+a new process is created for its listener. If
+[[setting,service_process_limit]] is reached, the oldest retired process is
+killed to make room for it. Set [[setting,service_process_limit]] higher than
+the active limit to allow retired processes to keep running.
 
 This setting is mainly intended to be enabled for login processes.
 
@@ -11347,7 +11404,7 @@ the master process rejects new connections.
 
 When \`yes\`, a separate listener socker is created for each process at startup.
 This is why [[setting,service_process_min_avail]] must be the same as
-[[setting,service_process_limit]]. Each process gets one of these listener
+the active process limit. Each process gets one of these listener
 sockets and uses it to accept connections. The kernel assigns incoming
 connections to these listener sockets based on the connection hash, so the
 connections should be rather evenly distributed across processes. This also

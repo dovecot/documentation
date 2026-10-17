@@ -225,6 +225,7 @@ export const updates = {
 	settings_passdb_mechanisms_filter_added: '2.4.0',
 	settings_passdb_sql_update_query_removed: '2.4.5',
 	settings_passdb_static_password_added: '2.4.0',
+	settings_service_process_active_limit_added: '2.4.6',
 	settings_service_reuse_port_added: '2.4.4',
 	settings_service_type_client_added: '2.4.6',
 	settings_sieve_max_cpu_time_changed: '2.4.5',
