@@ -41,3 +41,32 @@ sieve_script personal {
 sieve_duplicate_default_period = 1h
 sieve_duplicate_max_period = 1d
 ```
+
+## Sieve Example
+
+```sieve
+require ["duplicate"];
+
+if duplicate {
+  discard;
+  stop;
+}
+```
+
+This example discards duplicate messages based on the default message ID tracking.
+
+## Advanced Sieve Example
+
+```sieve
+require ["duplicate", "fileinto"];
+
+if duplicate :header "Message-ID" {
+  fileinto "Duplicates";
+  stop;
+}
+
+fileinto "Inbox";
+```
+
+This example uses the `Message-ID` header explicitly and files duplicate
+messages into a dedicated mailbox instead of discarding them.
