@@ -51,13 +51,14 @@ The parameters are forwarded as part of the ID command field-value list.
 | `x-connected-port` | Server port address |
 | `x-connected-name` | TLS SNI provided name. |
 | `x-proxy-ttl` | TTL which is reduced by each hop, loop prevention. When TTL drops to 0, the connection is dropped. |
-| `x-session-id`,<br/>`x-session-ext-id` | Session ID to be used. |
+| `x-session-id`,<br/>`x-session-ext-id` | Session ID to be used. 1 to 64 bytes of printable ASCII without space, `"` or `\`. An invalid value fails the `ID` command. [[changed,login_session_id_validated]] |
 | `x-forward-<variable_name>` | Forwarded variable, see [[variable]] |
 
 ## POP3
 
 For POP3, forwarding is done with custom `XCLIENT` command which
-accepts a space separated list of field=value parameters.
+accepts a space separated list of field=value parameters. ManageSieve
+uses the same `XCLIENT` command with the same fields.
 
 ::: warning
 There is a 1024 byte line limit for the XCLIENT command when using POP3.
@@ -74,7 +75,7 @@ other AUTH error.
 | `PORT` | Client port |
 | `DESTADDR` | [[added,xclient_dest_added]] Server IP  |
 | `DESTPORT` | [[added,xclient_dest_added]] Server port |
-| `SESSION` | Session ID |
+| `SESSION` | Session ID. 1 to 64 bytes of printable ASCII without space, `"` or `\`. An invalid or empty value fails the `XCLIENT` command. [[changed,login_session_id_validated]] |
 | `TTL` | TTL which is reduced by each hop, loop prevention. When TTL drops to 0, the connection is dropped. |
 | `DESTNAME` | Name provided by TLS SNI. |
 | `FORWARD` |  Base64-encoded, tab-separated list of `key=value` pairs to be forwarded to auth process. The keys and values are escaped using Dovecot's tab-escape format. |
@@ -103,7 +104,7 @@ See [XCLIENT information](https://www.postfix.org/XCLIENT_README.html).
 | Field | Description |
 | ----- | ----------- |
 | `FORWARD` | Base64-encoded, tab-separated list of `key=value` pairs to be forwarded to auth process. The keys and values are escaped using Dovecot's tab-escape format. This value is effectively limited to around 1000 bytes. |
-| `SESSION` | Session ID |
+| `SESSION` | Session ID. 1 to 64 bytes of printable ASCII without space, `"` or `\`. An invalid or empty value is rejected with `501 5.5.4 Invalid SESSION parameter`. [[changed,login_session_id_validated]] |
 | `DESTNAME` | Name provided by TLS SNI. |
 
 ### Supported Fields LMTP
