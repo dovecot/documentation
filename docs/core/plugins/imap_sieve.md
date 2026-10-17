@@ -108,6 +108,14 @@ This plugin registers the `imapsieve` extension with the Sieve
 interpreter. This extension is enabled implicitly, which means that it
 does not need to be added to the [[setting,sieve_extensions]] setting.
 
+## Dovecot-specific Environment Items
+
+The `imapsieve` extension ([[rfc,6785]]) defines environment items for the `environment` extension ([[rfc,5183]]). Beyond those, Dovecot provides additional environment items via the `vnd.dovecot.imapsieve` extension (enabled with `require "vnd.dovecot.imapsieve";`):
+
+- `vnd.dovecot.mailbox-from`: The source mailbox from which the message is being copied or moved (populated during IMAP `COPY` or `MOVE` commands).
+- `vnd.dovecot.mailbox-to`: The destination mailbox to which the message is being copied. When not executing from an IMAP `COPY` or `MOVE` command, this is equal to `imap.mailbox`.
+
+
 ## Example Configuration
 
 ```doveconf[dovecot.conf]
