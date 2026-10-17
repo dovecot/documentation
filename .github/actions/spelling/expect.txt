@@ -832,6 +832,7 @@ tuxfamily
 typedef
 tzknvtr
 UCXWQx
+UIDBATCHES
 uidgid
 uidlist
 uidls
