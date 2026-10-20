@@ -17,6 +17,10 @@
 # base64 encoded content, possibly wrapped in mime
 (?:^|[\s=;:?])[-a-zA-Z=;:/0-9+]{50,}(?:[\s=;:?]|$)
 
+# hit-count: 0 file-count: 0
+# base64 lines, strict matching
+[A-Za-z0-9+\/]{10,}={0,2}
+
 # hit-count: 10 file-count: 8
 # GitHub SHAs (markdown)
 (?:\[`?[0-9a-f]+`?\]\(https:/|)/(?:www\.|)github\.com(?:/[^/\s"]+){2,}(?:/[^/\s")]+)(?:[0-9a-f]+(?:[-0-9a-zA-Z/#.]*|)\b|)
@@ -28,10 +32,6 @@
 # hit-count: 9 file-count: 6
 # hex runs
 \b[0-9a-fA-F]{16,}\b
-
-# hit-count: 8 file-count: 5
-# base64 encoded content
-([`'"])[-a-zA-Z=;:/0-9+]+=\g{-1}
 
 # hit-count: 6 file-count: 3
 # tar arguments
