@@ -18,8 +18,8 @@
 (?:^|[\s=;:?])[-a-zA-Z=;:/0-9+]{50,}(?:[\s=;:?]|$)
 
 # hit-count: 0 file-count: 0
-# base64 lines, strict matching
-[A-Za-z0-9+\/]{10,}={0,2}
+# base64 strings with padding
+\b[A-Za-z0-9+/]{16,}={1,2}
 
 # hit-count: 10 file-count: 8
 # GitHub SHAs (markdown)
