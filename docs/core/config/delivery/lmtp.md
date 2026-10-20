@@ -82,7 +82,21 @@ It's possible to use Dovecot LMTP server as a proxy to remote LMTP or
 SMTP servers.
 
 The configuration is similar to [[link,authentication_proxies]], but you'll
-need to tell Dovecot LMTP to issue passdb lookups: [[setting,lmtp_proxy,yes]].
+need to tell Dovecot LMTP to issue passdb lookups:
+[[setting,lmtp_proxy_enabled,yes]].
+
+The connections to the backends are configured with the `lmtp_client_*`
+settings inside the [[setting,lmtp_proxy]] filter. The passdb lookup
+normally provides the host and optionally the port and TLS settings, so the
+defaults are usually enough:
+
+```doveconf[dovecot.conf]
+lmtp_proxy_enabled = yes
+lmtp_proxy {
+  # Write the backend connections' protocol logs for debugging
+  #lmtp_client_rawlog_dir = /var/log/dovecot/lmtp-proxy-rawlog
+}
+```
 
 ## Performance
 
