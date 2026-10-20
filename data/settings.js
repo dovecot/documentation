@@ -6576,12 +6576,13 @@ for HAProxy are aborted immediately.`
 
 	hostname: {
 		default: '\\<system\'s real hostname@domain.tld\\>',
-		tags: [ 'submission' ],
+		tags: [ 'submission', 'smtp_client', 'lmtp_client' ],
 		values: setting_types.STRING,
 		text: `
 The hostname to be used in email messages sent out by the local delivery
-agent (such as the Message-ID: header), in LMTP replies, and as the
-hostname advertised by submission SMTP service.`
+agent (such as the Message-ID: header), in LMTP replies, as the
+hostname advertised by submission SMTP service, and in the EHLO/LHLO command
+of the outgoing SMTP and LMTP connections.`
 	},
 
 	http_client_auto_redirect: {
@@ -8064,6 +8065,132 @@ Alias for [[setting,inet_listener_listen]].`
 		values: setting_types.BOOLEAN,
 		text: `
 Controls if "Received:" header should be added to delivered mails.`
+	},
+
+	lmtp_client_command_timeout: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: '5 mins',
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_connect_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for LMTP commands sent to the remote server. The timeout is reset
+every time more data is being sent or received.
+
+The \`lmtp_client_*\` settings configure Dovecot's outgoing LMTP connections.
+They are used inside the [[setting,lmtp_proxy]] filter, where the default is
+\`125 secs\`.`
+	},
+
+	lmtp_client_connect_timeout: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: '30 secs',
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_command_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for connecting to the remote LMTP server, including the TLS handshake.
+
+Inside the [[setting,lmtp_proxy]] filter the default is \`125 secs\`.`
+	},
+
+	lmtp_client_host: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_port', 'lmtp_client_ssl' ],
+		values: setting_types.STRING,
+		text: `
+Host name or IP address of the remote LMTP server. The LMTP proxy gets the
+host from the passdb lookup (see [[link,authentication_proxies]]), so this is
+normally not set.`
+	},
+
+	lmtp_client_peer_trusted: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: 'no',
+		tags: [ 'lmtp_client' ],
+		values: setting_types.BOOLEAN,
+		text: `
+Whether the remote LMTP server is trusted. If enabled, the original client's
+connection information is forwarded to the remote server with the
+(Postfix-specific) XCLIENT command, if the remote server advertises support
+for it.
+
+Inside the [[setting,lmtp_proxy]] filter the default is \`yes\`.`
+	},
+
+	lmtp_client_port: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: 24,
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_host', 'lmtp_client_ssl' ],
+		values: setting_types.IN_PORT,
+		text: `
+Port of the remote LMTP server.
+
+Inside the [[setting,lmtp_proxy]] filter the default is the port that the
+local LMTP server received the connection on (\`%{local_port}\`), so that
+proxying to the same port on the backend doesn't need any configuration.
+The passdb lookup can override it.`
+	},
+
+	lmtp_client_rawlog_dir: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		tags: [ 'lmtp_client' ],
+		seealso: [ '[[link,rawlog]]' ],
+		values: setting_types.PATH_DIR,
+		text: `
+Write protocol logs of the outgoing LMTP connections to this directory for
+debugging.
+
+[[variable,mail-service-user]] can be used. However, because LMTP session
+starts without a user, all user-specific variables expand to empty.`
+	},
+
+	lmtp_client_source_ip: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		tags: [ 'lmtp_client' ],
+		values: setting_types.STRING,
+		text: `
+Local IP address to use as the source address of the outgoing LMTP
+connections. If empty, the kernel chooses the address.`
+	},
+
+	lmtp_client_ssl: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: 'no',
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'ssl_client_require_valid_cert', '[[link,ssl_configuration]]' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'no', 'lmtps', 'starttls' ],
+		text: `
+Whether to use TLS for the connection to the remote LMTP server.
+
+| Value | Description |
+| ----- | ----------- |
+| \`no\` | No TLS |
+| \`lmtps\` | Connect using TLS immediately (implicit TLS) |
+| \`starttls\` | Use the STARTTLS command to switch to TLS |
+
+The connection uses the \`ssl_client_*\` settings, which can be set inside the
+same filter to apply to this client only. The passdb lookup can override this
+setting for the LMTP proxy, see [[link,authentication_proxies]].`
 	},
 
 	lmtp_client_workarounds: {
@@ -11793,6 +11920,128 @@ With systemd the default \`KillMode=control-group\` kills the preserved
 processes anyway on \`systemctl restart\`. Preserving them across a restart
 needs \`KillMode=mixed\` or \`KillMode=process\`.
 :::`
+	},
+
+	smtp_client_command_timeout: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: '5 mins',
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_connect_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for SMTP commands sent to the remote server. The timeout is reset
+every time more data is being sent or received.
+
+The \`smtp_client_*\` settings configure Dovecot's outgoing SMTP connections.
+They are used inside the [[setting,submission_relay]] and
+[[setting,mail_submit]] filters.`
+	},
+
+	smtp_client_connect_timeout: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: '30 secs',
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_command_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for connecting to the remote SMTP server, including the TLS handshake
+and authentication.`
+	},
+
+	smtp_client_host: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_port', 'smtp_client_ssl' ],
+		values: setting_types.STRING,
+		text: `
+Host name or IP address of the remote SMTP server. The port is configured
+separately with [[setting,smtp_client_port]].
+
+Inside the [[setting,submission_relay]] filter this is required. Inside the
+[[setting,mail_submit]] filter setting it switches from executing the sendmail
+binary to sending via SMTP.
+
+[[variable,mail-user]] can be used.`
+	},
+
+	smtp_client_peer_trusted: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: 'no',
+		tags: [ 'smtp_client' ],
+		values: setting_types.BOOLEAN,
+		text: `
+Whether the remote SMTP server is trusted. If enabled, the original client's
+connection information is forwarded to the remote server with the
+(Postfix-specific) XCLIENT command, if the remote server advertises support
+for it.`
+	},
+
+	smtp_client_port: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: 25,
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_host', 'smtp_client_ssl' ],
+		values: setting_types.IN_PORT,
+		text: `
+Port of the remote SMTP server.`
+	},
+
+	smtp_client_rawlog_dir: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		tags: [ 'smtp_client' ],
+		seealso: [ '[[link,rawlog]]' ],
+		values: setting_types.PATH_DIR,
+		text: `
+Write protocol logs of the outgoing SMTP connections to this directory for
+debugging.
+
+[[variable,mail-user]] can be used.`
+	},
+
+	smtp_client_source_ip: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		tags: [ 'smtp_client' ],
+		values: setting_types.STRING,
+		text: `
+Local IP address to use as the source address of the outgoing SMTP
+connections. If empty, the kernel chooses the address.`
+	},
+
+	smtp_client_ssl: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: 'no',
+		tags: [ 'smtp_client' ],
+		seealso: [ 'ssl_client_require_valid_cert', '[[link,ssl_configuration]]' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'no', 'smtps', 'submissions', 'starttls' ],
+		text: `
+Whether to use TLS for the connection to the remote SMTP server.
+
+| Value | Description |
+| ----- | ----------- |
+| \`no\` | No TLS |
+| \`smtps\` | Connect using TLS immediately (implicit TLS) |
+| \`submissions\` | Same as \`smtps\`, the name used by [[rfc,8314]] |
+| \`starttls\` | Use the STARTTLS command to switch to TLS |
+
+The connection uses the \`ssl_client_*\` settings, which can be set inside the
+same filter to apply to this client only.`
 	},
 
 	sql_driver: {
