@@ -55,8 +55,8 @@ This is based on already having Dovecot already compiled and installed.
      # You can optionally override the IP here.
      # imapc_host = 10.1.2.5
      fields {
-       userdb_imapc_user = %{user}
-       userdb_imapc_password = %{password}
+       userdb_imapc/client_auth_authzid = %{user}
+       userdb_imapc/client_auth_password = %{password}
      }
    }
 

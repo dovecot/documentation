@@ -91,7 +91,7 @@ Tell client to use a different username when logging in.
 ### `proxy_mech=<s>`
 
 Tell client to use this SASL authentication mechanism when logging in.
-See [[setting,imapc_sasl_mechanisms]] for supported mechanisms
+See [[setting,client_auth_mechanism]] for supported mechanisms.
 
 ### `proxy_timeout=<time_msecs>`
 

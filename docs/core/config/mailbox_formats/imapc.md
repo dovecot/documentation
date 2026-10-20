@@ -18,6 +18,9 @@ optionally a more capable storage.
 
 <SettingsComponent tag="imapc" />
 
+The login to the remote server is configured with the [[link,client_auth]]
+settings inside the [[setting,imapc]] filter.
+
 ## Configuration Example
 
 Do a regular IMAP LOGIN, using STARTTLS, to imap.example.com:
@@ -30,11 +33,13 @@ mail_path =
 # OR, Store index files locally:
 #mail_path = ~/imapc
 
-imapc_host = imap.example.com
-imapc_password = secret
-imapc_port = 143
-imapc_ssl = starttls
-imapc_user = user@example.com
+imapc {
+  host = imap.example.com
+  port = 143
+  ssl = starttls
+  client_auth_authzid = user@example.com
+  client_auth_password = secret
+}
 ```
 
 ## Quota
