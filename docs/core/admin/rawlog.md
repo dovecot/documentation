@@ -17,11 +17,13 @@ TLS/SSL encrypted). There are several possibilities for this:
 3. For proxying (in \*-login processes), use
    [[setting,login_proxy_rawlog_dir]].
 
-4. For lmtp, you need to use [[setting,lmtp_rawlog_dir]] and
-   [[setting,lmtp_proxy_rawlog_dir]] settings.
+4. For lmtp, you need to use [[setting,lmtp_rawlog_dir]] and, for the
+   proxying connections, [[setting,lmtp_client_rawlog_dir]] inside the
+   [[setting,lmtp_proxy]] filter.
 
-5. For submission, you need to use [[setting,rawlog_dir]] and
-   [[setting,submission_relay_rawlog_dir]] settings.
+5. For submission, you need to use [[setting,rawlog_dir]] and, for the relay
+   connection, [[setting,smtp_client_rawlog_dir]] inside the
+   [[setting,submission_relay]] filter.
 
 6. Using rawlog binary, which is executed as post-login script.
    This is the legacy method, which shouldn't be necessary anymore. See below.
