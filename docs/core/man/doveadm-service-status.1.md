@@ -70,6 +70,17 @@ the current configuration generation, containing the following details:
     preserved processes next, or 0 if it isn't going to. This is always 0 for
     the current generation.
 
+*process_active_limit*
+:   maximum number of active (non-retired) processes. See
+    [[setting,service_process_active_limit]].
+
+*process_retired*
+:   number of retired processes, i.e. processes that reached
+    [[setting,service_restart_request_count]] and are only finishing their
+    existing connections. With *process_active_limit* < *process_limit*,
+    *process_count* (including the retired processes) is limited by
+    *process_limit*.
+
 <!-- @include: include/global-options-formatter.inc -->
 
 ## OPTIONS
@@ -106,6 +117,8 @@ doveadm_stop: n
 process_total: 0
 generation: 1
 kill_time: 0
+process_active_limit: 1
+process_retired: 0
 ```
 
 <!-- @include: include/reporting-bugs.inc -->

@@ -3913,11 +3913,21 @@ listed once per generation.`,
 					type: doveadm_response_types.TIMESTAMP,
 					description: `Timestamp when the master process is going to signal the service's preserved processes next, or 0 if it isn't going to. Always 0 for the current generation.`,
 				},
+				process_active_limit: {
+					type: doveadm_response_types.INTEGER,
+					description: `Maximum number of active (non-retired) processes. See [[setting,service_process_active_limit]].`,
+				},
+				process_retired: {
+					type: doveadm_response_types.INTEGER,
+					description: `Number of retired processes, which reached [[setting,service_restart_request_count]] and are only finishing their existing connections.`,
+				},
 			},
 		},
 		added: {
 			'service_shutdown_clients_changed': `
-\`all-generations\` argument added.`
+\`all-generations\` argument added.`,
+			'settings_service_process_active_limit_added': `
+\`process_active_limit\` and \`process_retired\` fields added.`
 		},
 		man: 'doveadm-service-status',
 		text: `Show information about Dovecot services.`,
