@@ -7667,9 +7667,9 @@ imapc_list_prefix = INBOX
 
 	imapc_master_user: {
 		removed: {
-			settings_imapc_credentials_removed: `
-Dropped in favor of using the global
-[[setting,client_auth_authid]].`
+			settings_imapc_credentials_renamed: `
+Renamed to [[setting,client_auth_authid]] inside the [[setting,imapc]]
+filter, i.e. \`imapc/client_auth_authid\`.`
 		},
 		tags: [ 'imapc' ],
 		seealso: [ 'imapc_password', 'imapc_user' ],
@@ -7713,9 +7713,9 @@ This setting is used to limit maximum memory usage.`
 
 	imapc_password: {
 		removed: {
-			settings_imapc_credentials_removed: `
-Dropped in favor of using the global
-[[setting,client_auth_password]].`
+			settings_imapc_credentials_renamed: `
+Renamed to [[setting,client_auth_password]] inside the [[setting,imapc]]
+filter, i.e. \`imapc/client_auth_password\`.`
 		},
 		tags: [ 'imapc' ],
 		seealso: [ 'imapc_master_user', 'imapc_user', 'imapc_sasl_mechanisms' ],
@@ -7746,9 +7746,10 @@ If using master users, this setting will be the password of the master user.`
 	imapc_sasl_mechanisms: {
 		deprecated: {
 			settings_imapc_sasl_mechanisms_deprecated: `
-The setting is obsolete, and kept only for backwards compatibility.
-
-Use [[setting,client_auth]] instead.`
+The setting is obsolete, and kept only for backwards compatibility. Each
+listed mechanism is translated into a [[setting,client_auth]] filter in the
+listed order, so existing configurations keep working. New configurations
+should use [[setting,client_auth]] directly.`
 		},
 		default: 'plain',
 		tags: [ 'imapc' ],
@@ -7820,9 +7821,9 @@ Only used if [[setting,imapc_ssl]] is enabled.`
 
 	imapc_user: {
 		removed: {
-			settings_imapc_credentials_removed: `
-Dropped in favor of using the global
-[[setting,client_auth_authzid]].`
+			settings_imapc_credentials_renamed: `
+Renamed to [[setting,client_auth_authzid]] inside the [[setting,imapc]]
+filter, i.e. \`imapc/client_auth_authzid\`.`
 		},
 		tags: [ 'imapc', 'imapc-auth' ],
 		seealso: [ 'imapc_master_user', 'imapc_password', 'imapc_sasl_mechanisms' ],
@@ -11204,9 +11205,9 @@ Workarounds:
 
 	pop3c_master_user: {
 		removed: {
-			settings_pop3c_credentials_removed: `
-Dropped in favor of using the global
-[[setting,client_auth_authid]].`
+			settings_pop3c_credentials_renamed: `
+Renamed to [[setting,client_auth_authid]] inside the [[setting,pop3c]]
+filter, i.e. \`pop3c/client_auth_authid\`.`
 		},
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_password', 'pop3c_user' ],
@@ -11229,9 +11230,9 @@ pop3c_password = masteruser-secret
 
 	pop3c_password: {
 		removed: {
-			settings_pop3c_credentials_removed: `
-Dropped in favor of using the global
-[[setting,client_auth_password]].`
+			settings_pop3c_credentials_renamed: `
+Renamed to [[setting,client_auth_password]] inside the [[setting,pop3c]]
+filter, i.e. \`pop3c/client_auth_password\`.`
 		},
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_master_user', 'pop3c_user' ],
@@ -11284,6 +11285,11 @@ Use TLS to connect to the remote POP3 server.
 	},
 
 	pop3c_ssl_verify: {
+		removed: {
+			settings_pop3c_ssl_verify_renamed: `
+Renamed to [[setting,ssl_client_require_valid_cert]] inside the
+[[setting,pop3c]] filter, i.e. \`pop3c/ssl_client_require_valid_cert\`.`
+		},
 		default: 'yes',
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_ssl' ],
@@ -11299,8 +11305,9 @@ Only used if [[setting,pop3c_ssl]] is enabled.`
 
 	pop3c_user: {
 		removed: {
-			settings_pop3c_credentials_removed: `
-Dropped in favor of using the global
+			settings_pop3c_credentials_renamed: `
+Renamed to [[setting,client_auth_authzid]] inside the [[setting,pop3c]]
+filter, i.e. \`pop3c/client_auth_authzid\`. Note that the default changed too, see
 [[setting,client_auth_authzid]].`
 		},
 		default: '%{user}',
@@ -12095,7 +12102,10 @@ ssl_server_dh_file = /path/to/dh.pem
 		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.BOOLEAN,
 		text: `
-Require a valid certificate when connecting to external SSL services?`
+Require a valid certificate when connecting to external SSL services?
+
+To change this for a single client only, set it inside that client's filter,
+e.g. [[setting,imapc]] or [[setting,pop3c]].`
 	},
 
 	ssl_server_key_file: {
