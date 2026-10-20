@@ -68,10 +68,14 @@ than the server itself.`
 	},
 
 	client_auth: {
+		added: {
+			settings_client_auth_added: false
+		},
 		tags: [ 'client-auth' ],
 		values: setting_types.NAMED_LIST_FILTER,
-		seealso: [ 'client_auth_mechanism', 'client_auth_authzid',
-			   'client_auth_authid', 'client_auth_password'],
+		seealso: [ '[[link,client_auth]]', 'client_auth_mechanism',
+			   'client_auth_authzid', 'client_auth_authid',
+			   'client_auth_password' ],
 		text: `
 This settings filter provides a scope for client authentication settings for
 a particular authentication mechanism and declares the availability of that
@@ -80,18 +84,19 @@ also indicated by the server. This way, several different mechanisms can be
 configured, each with specific settings.
 
 The filter name refers to the [[setting,client_auth_mechanism]] setting.
-Mechanisms are attempted in the order of configuration, so preferred mechanisms
-should be configured first.
+The first configured mechanism that the server also advertises is used, so the
+preferred mechanisms should be configured first. There is no fallback to the
+next mechanism if the authentication itself fails.
 
 Client authentication settings are expected to be scoped further by settings
 filters for the various protocol clients that need authentication, such as
-[[setting,imapc]] and [[setting,pop3c]].
+[[setting,imapc]] and [[setting,pop3c]]. See [[link,client_auth]] for an
+overview.
 
 Example:
 \`\`\`[dovecot.conf]
 mail_driver = imapc
 mail_path =
-mailbox_list_index = no
 imapc {
   host = 127.0.0.1
   port = 993
@@ -107,51 +112,28 @@ imapc {
     password = vF9dft4qmTc2Nvb3RlckBhbHRhdmlzdGEuY29tCg==
   }
 }
-
-submission_relay {
-  smtp_client_host = submission.example.com
-  smtp_client_port = 587
-  smtp_client_ssl = no
-
-  client_auth_authzid = user
-  client_auth_password = frop
-
-  client_auth SCRAM-SHA-256 {
-  }
-  client_auth SCRAM-SHA-1 {
-  }
-  client_auth CRAM-MD5 {
-  }
-  client_auth PLAIN {
-  }
-}
-
-mail_submit {
-  smtp_client_host = localhost
-  smtp_client_port = 25
-
-  client_auth PLAIN {
-    authzid = mail-out
-    password = frop
-  }
-}
 \`\`\``
 	},
 
 	client_auth_authid: {
+		added: {
+			settings_client_auth_added: false
+		},
 		tags: [ 'client-auth' ],
 		seealso: [ 'client_auth_authzid', 'client_auth_password',
-			   'client_auth_mechanism' ],
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
 		values: setting_types.STRING,
 		text: `
 The authentication identity to be used for authenticating as a client to a
-remote service.
+remote service. This is the identity whose [[setting,client_auth_password]]
+is used. If it is empty, [[setting,client_auth_authzid]] is used as the
+authentication identity as well.
 
 To authenticate as a master user to e.g. an IMAP server but use a separate login
 user, the following configuration should be employed, where the credentials are
 represented by masteruser and masteruser-secret:
 
-\`\`\`
+\`\`\`[dovecot.conf]
 imapc {
   client_auth_authid = masteruser
   client_auth_authzid = %{user}
@@ -163,31 +145,59 @@ imapc {
 	},
 
 	client_auth_authzid: {
+		added: {
+			settings_client_auth_added: false
+		},
+		changed: {
+			settings_pop3c_authzid_default_changed: `
+For pop3c the default used to be \`%{user}\` (the old [[setting,pop3c_user]]
+default). It is now \`%{owner_user}\`, the same as for imapc. This makes a
+difference only for shared namespaces.`
+		},
 		tags: [ 'client-auth' ],
 		seealso: [ 'client_auth_authid', 'client_auth_password',
-			   'client_auth_mechanism' ],
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
 		values: setting_types.STRING,
+		default: {
+			value: '',
+			text: `Inside the [[setting,imapc]] and [[setting,pop3c]] filters the default is \`%{owner_user}\`: the logged in user, or the owner of a shared namespace.`,
+		},
 		text: `
 The authorization identity to be used after authenticating as a client to a
-remote service.
+remote service, i.e. the user whose mails are accessed. If
+[[setting,client_auth_authid]] is empty, this identity is also used for
+authenticating.
 
 [[variable,mail-user]] can be used.`
 	},
 
 	client_auth_password: {
+		added: {
+			settings_client_auth_added: false
+		},
 		tags: [ 'client-auth' ],
 		seealso: [ 'client_auth_authzid', 'client_auth_authid',
-			   'client_auth_mechanism' ],
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
 		values: setting_types.STRING,
 		text: `
 The password to be used for authenticating as a client to a remote service. This
-is the password belonging to the authentication identity \`client_auth_authid\`.`
+is the password belonging to the authentication identity
+[[setting,client_auth_authid]]. For the \`OAUTHBEARER\` and \`XOAUTH2\`
+mechanisms this is the bearer token. The \`ANONYMOUS\` and \`EXTERNAL\`
+mechanisms don't use it.
+
+The password is required for all the other mechanisms. Its existence is
+checked already when the client is created (e.g. when the namespace is initialized for imapc),
+not only when connecting.`
 	},
 
 	client_auth_mechanism: {
+		added: {
+			settings_client_auth_added: false
+		},
 		tags: [ 'client-auth' ],
-		seealso: [ 'client_auth_authzid', 'client_auth_authid',
-			   'client_auth_password' ],
+		seealso: [ 'client_auth', 'client_auth_authzid', 'client_auth_authid',
+			   'client_auth_password', '[[link,client_auth]]' ],
 		values: setting_types.STRING,
 		text: `
 The authentication mechanism (sometimes called scheme) to be used for
@@ -213,14 +223,17 @@ Note that [[setting,client_auth_password]] is ignored for \`ANONYMOUS\` and
 \`EXTERNAL\` mechanisms. For \`OAUTHBEARER\` and \`XOAUTH2\`
 [[setting,client_auth_password]] should be a bearer token.
 
-Example:
+Normally this setting is not set directly, but through the name of a
+[[setting,client_auth]] filter. The mechanism is then used only if the server
+also advertises it:
+
 \`\`\`[dovecot.conf]
 imapc {
   host = 127.0.0.1
   port = 993
   ssl = imaps
 
-  # Authentication will fail if server does not announce SCRAM-SHA-256 support
+  # Authentication fails if the server doesn't announce SCRAM-SHA-256 support
   client_auth SCRAM-SHA-256 {
     authzid = owner-user
     password = frop
@@ -228,14 +241,20 @@ imapc {
 }
 \`\`\`
 
-If left unconfigured, SASL authentication will use the PLAIN mechanism by
-default. For IMAP and POP3 clients, it will use the basic login
-commands in that case if possible (LOGIN for IMAP and USER + PASS for POP3, so
-SASL support is not required). However, if the authentication
-\`client_auth_authid\` and authorization \`client_auth_authzid\` identities are
-both also unconfigured, no authentication is configured at all. In that case,
-authentication will be skipped if it is optional or this will be reported as an
-error otherwise.
+When a non-PLUS SCRAM mechanism is configured and the server advertises the
+corresponding \`-PLUS\` variant, the client automatically uses channel binding
+if the connection is TLS encrypted and channel binding is available. See
+[[link,client_auth_channel_binding]].
+
+If no mechanism is configured, the PLAIN mechanism is used by default. For IMAP
+and POP3 the basic login commands are used instead in that case, if possible
+(LOGIN for IMAP and USER + PASS for POP3), so SASL support is not required from
+the server. If the server doesn't advertise PLAIN, the first mechanism
+advertised by the server that Dovecot supports and that uses a password is
+used. However, if the authentication [[setting,client_auth_authid]] and
+authorization [[setting,client_auth_authzid]] identities are both also
+unconfigured, no authentication is configured at all and the connection fails
+with an "Authentication not configured" error.
 
 Example:
 \`\`\`[dovecot.conf]
@@ -251,10 +270,10 @@ imapc {
 }
 \`\`\`
 
-If no [[setting,client_auth]] filter block is present in a particular context
-(e.g. a surrounding [[setting,imapc]] and [[setting,pop3c]] filter block), while
-\`client_auth_mechanism\` is set within that context, the indicated mechanism is
-used blindly; server support is not checked.
+If \`client_auth_mechanism\` is set directly, without any [[setting,client_auth]]
+filter block in that context (e.g. inside a surrounding [[setting,imapc]] or
+[[setting,pop3c]] filter block), the indicated mechanism is used blindly;
+server support is not checked.
 
 Example:
 \`\`\`[dovecot.conf]
@@ -7407,13 +7426,27 @@ The port is used with the URLAUTH extension in IMAP operation.`
 	},
 
 	imapc: {
-		tags: [ 'imapc', 'client-auth'  ],
-		values: setting_types.NAMED_LIST_FILTER,
-		seealso: [ 'client_auth_mechanism', 'client_auth_authzid',
-			   'client_auth_authid', 'client_auth_password' ],
+		tags: [ 'imapc', 'client-auth' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,imapc]]', 'client_auth', 'client_auth_authzid',
+			   'client_auth_authid', 'client_auth_password',
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
 		text: `
-This settings filter provides a scope for settings for imapc. This is for example
-used to configure [[setting,client_auth] for imapc specifically.`
+This settings filter provides a scope for settings for imapc.
+
+The filter is needed for configuring the generic [[setting,client_auth]] and
+\`ssl_client_*\` settings for imapc specifically, since the same settings are
+used also by other clients.
+
+Example:
+\`\`\`[dovecot.conf]
+imapc {
+  host = imap.example.com
+  ssl = imaps
+  client_auth_authzid = %{user}
+  client_auth_password = secret
+}
+\`\`\``
 	},
 
 	imapc_cmd_timeout: {
@@ -11127,13 +11160,28 @@ in uppercase) and with [[variable,global]]:
 	},
 
 	pop3c: {
-		tags: [ 'pop3c', 'client-auth'  ],
-		values: setting_types.NAMED_LIST_FILTER,
-		seealso: [ 'client_auth_mechanism', 'client_auth_authzid',
-			   'client_auth_authid', 'client_auth_password' ],
+		tags: [ 'pop3c', 'client-auth' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,pop3c]]', 'client_auth', 'client_auth_authzid',
+			   'client_auth_authid', 'client_auth_password',
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
 		text: `
-This settings filter provides a scope for settings for pop3c. This is for example
-used to configure [[setting,client_auth] for pop3c specifically.`
+This settings filter provides a scope for settings for pop3c.
+
+The filter is needed for configuring the generic [[setting,client_auth]] and
+\`ssl_client_*\` settings for pop3c specifically, since the same settings are
+used also by other clients.
+
+Example:
+\`\`\`[dovecot.conf]
+pop3c {
+  host = pop3.example.com
+  ssl = pop3s
+  port = 995
+  client_auth_authzid = %{user}
+  client_auth_password = secret
+}
+\`\`\``
 	},
 
 	pop3c_features: {
