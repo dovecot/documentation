@@ -19,6 +19,8 @@ istreams
 jvm
 JVM
 JVMs
+KMail
+learntype
 lfill
 libcap
 libpcre
@@ -48,4 +50,5 @@ ssh
 ubsan
 ubuntu
 Uppercases
+Websieve
 workarounds
