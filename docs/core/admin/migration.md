@@ -139,7 +139,7 @@ If it's possible that the destination already has new mails (or other
 changes), use [[doveadm,sync,-1]] instead:
 
 ```sh
-doveadm -o imapc_password=bar sync -1Ru user imapc:
+doveadm -o imapc/client_auth_password=bar sync -1Ru user imapc:
 ```
 
 You can run the command again to perform incremental updates.
@@ -205,33 +205,42 @@ on how to turn these off when necessary.
 
   * These default to system.
 
+The credentials are configured with the [[link,client_auth]] settings inside
+the [[setting,imapc]] filter.
+
 Master password auth:
 
 ```doveconf[dovecot.conf]
-imapc_user = %{user}
-imapc_password = supersecret
+imapc {
+  client_auth_authzid = %{user}
+  client_auth_password = supersecret
+}
 ```
 
 Master user auth:
 
 ```doveconf[dovecot.conf]
-imapc_user = %{user}
-imapc_master_user = master-user
-imapc_password = master-password
+imapc {
+  client_auth_authzid = %{user}
+  client_auth_authid = master-user
+  client_auth_password = master-password
+}
 ```
 
 Individual password auth:
 
 ```doveconf[dovecot.conf]
-imapc_user = %{user}
+imapc {
+  client_auth_authzid = %{user}
+}
 
-# doveadm -o imapc_password=password backup -Ru user imapc:
+# doveadm -o imapc/client_auth_password=password backup -Ru user imapc:
 ```
 
 You can verify that the settings are done correctly with:
 
 ```sh
-doveadm -o imapc_password=password -o mail_driver=imapc -o mail_path= mailbox list -u user
+doveadm -o imapc/client_auth_password=password -o mail_driver=imapc -o mail_path= mailbox list -u user
 ```
 
 ### POP3 notes
@@ -244,10 +253,12 @@ pop3c_host = hostname
 
 # Authenticate as masteruser / masteruser-secret, but use a separate login
 # user.
-# If you don't have a master user, remove the pop3c_master_user setting.
-pop3c_user = %{user}
-pop3c_master_user = masteruser
-pop3c_password = masteruser-secret
+# If you don't have a master user, remove the client_auth_authid setting.
+pop3c {
+  client_auth_authzid = %{user}
+  client_auth_authid = masteruser
+  client_auth_password = masteruser-secret
+}
 
 # if you are using TLS
 pop3c_ssl = pop3s
@@ -282,13 +293,13 @@ You can alternatively configure compatible UIDL format in Dovecot. See
 To migrate users, use:
 
 ```sh
-doveadm -o imapc_password=bar -o pop3c_password=bar backup -Ru user imapc:
+doveadm -o imapc/client_auth_password=bar -o pop3c/client_auth_password=bar backup -Ru user imapc:
 ```
 
 If you are experiencing problems, enable debugging with the `-D` parameter:
 
 ```sh
-doveadm -D -o imapc_password=bar -o pop3c_password=bar backup -Ru username imapc:
+doveadm -D -o imapc/client_auth_password=bar -o pop3c/client_auth_password=bar backup -Ru username imapc:
 ```
 
 The doveadm backup command forces the destination to look exactly like the
@@ -297,7 +308,7 @@ source, deleting mails and mailboxes if necessary.
 If it's possible that the destination already has new mails (or other changes), use [[doveadm,sync,-1]] instead:
 
 ```sh
-doveadm -o imapc_password=bar -o pop3c_password=bar sync -1Ru user imapc:
+doveadm -o imapc/client_auth_password=bar -o pop3c/client_auth_password=bar sync -1Ru user imapc:
 ```
 
 Note that Public and Shared namespaces are synchronized automatically
