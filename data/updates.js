@@ -248,6 +248,7 @@ export const updates = {
 	settings_sieve_notify_mailto_max_headers_added: '2.4.5',
 	settings_sieve_notify_mailto_max_recipients_added: '2.4.5',
 	settings_sieve_notify_max_notifications_added: '2.4.5',
+	settings_smtp_client_settings_changed: '2.4.6',
 	settings_syntax_heredoc_added: '2.4.5',
 	settings_ssl_client_ca_added: '2.4.0',
 	settings_ssl_imapc_removed: '2.4.0',
