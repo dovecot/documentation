@@ -464,7 +464,9 @@ For best results, you should leave salt and IV management to Dovecot.
 import_environment {
    SECRET_KEY = %{env:SECRET_KEY}
 }
-imapc_password = "%{literal('s=3-?I&-a|,r=10000$e80e6ab3c18c0da69b20bf201eaf6269$') | decrypt(key=env:SECRET_KEY)}"
+imapc {
+  client_auth_password = "%{literal('s=3-?I&-a|,r=10000$e80e6ab3c18c0da69b20bf201eaf6269$') | decrypt(key=env:SECRET_KEY)}"
+}
 ```
 
 Stores imap client password securely so that it can be decrypted only if `SECRET_KEY` environment variable is provided.

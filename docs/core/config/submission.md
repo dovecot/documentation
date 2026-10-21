@@ -112,6 +112,29 @@ BURL support requires a working IMAP URLAUTH implementation. See
 The Dovecot SMTP submission service directly proxies the mail transaction to
 the SMTP relay.
 
+The connection to the relay is configured inside the
+[[setting,submission_relay]] filter with the generic `smtp_client_*`
+settings, the [[link,client_auth]] settings for logging into the relay and
+the `ssl_client_*` settings for TLS:
+
+```doveconf[dovecot.conf]
+submission_relay {
+  smtp_client_host = mta.example.com
+  smtp_client_port = 587
+  smtp_client_ssl = starttls
+  # Forward the original client's IP address etc. with XCLIENT
+  smtp_client_peer_trusted = yes
+
+  # Log in to the relay, using the strongest mechanism it advertises
+  client_auth_authzid = dovecot
+  client_auth_password = secret
+  client_auth SCRAM-SHA-256 {
+  }
+  client_auth PLAIN {
+  }
+}
+```
+
 #### Settings
 
 <SettingsComponent tag="submission_relay" />

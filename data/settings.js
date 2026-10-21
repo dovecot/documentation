@@ -67,6 +67,230 @@ destination IP address belongs to, for instance, a load-balancer rather
 than the server itself.`
 	},
 
+	client_auth: {
+		added: {
+			settings_client_auth_added: false
+		},
+		tags: [ 'client-auth' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ '[[link,client_auth]]', 'client_auth_mechanism',
+			   'client_auth_authzid', 'client_auth_authid',
+			   'client_auth_password' ],
+		text: `
+This settings filter provides a scope for client authentication settings for
+a particular authentication mechanism and declares the availability of that
+mechanism for client authentication. The mechanism will be used if support is
+also indicated by the server. This way, several different mechanisms can be
+configured, each with specific settings.
+
+The filter name refers to the [[setting,client_auth_mechanism]] setting.
+The first configured mechanism that the server also advertises is used, so the
+preferred mechanisms should be configured first. There is no fallback to the
+next mechanism if the authentication itself fails.
+
+Client authentication settings are expected to be scoped further by settings
+filters for the various protocol clients that need authentication, such as
+[[setting,imapc]], [[setting,pop3c]], [[setting,submission_relay]] and
+[[setting,mail_submit]]. See [[link,client_auth]] for an overview.
+
+Example:
+\`\`\`[dovecot.conf]
+mail_driver = imapc
+mail_path =
+imapc {
+  host = 127.0.0.1
+  port = 993
+  ssl = imaps
+
+  client_auth PLAIN {
+    authid = master-user
+    authzid = owner-user
+    password = frop
+  }
+  client_auth OAUTHBEARER {
+    authzid = owner-user
+    password = vF9dft4qmTc2Nvb3RlckBhbHRhdmlzdGEuY29tCg==
+  }
+}
+\`\`\``
+	},
+
+	client_auth_authid: {
+		added: {
+			settings_client_auth_added: false
+		},
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authzid', 'client_auth_password',
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
+		values: setting_types.STRING,
+		text: `
+The authentication identity to be used for authenticating as a client to a
+remote service. This is the identity whose [[setting,client_auth_password]]
+is used. If it is empty, [[setting,client_auth_authzid]] is used as the
+authentication identity as well.
+
+To authenticate as a master user to e.g. an IMAP server but use a separate login
+user, the following configuration should be employed, where the credentials are
+represented by masteruser and masteruser-secret:
+
+\`\`\`[dovecot.conf]
+imapc {
+  client_auth_authid = masteruser
+  client_auth_authzid = %{user}
+  client_auth_password = masteruser-secret
+}
+\`\`\`
+
+[[variable,mail-user]] can be used.`
+	},
+
+	client_auth_authzid: {
+		added: {
+			settings_client_auth_added: false
+		},
+		changed: {
+			settings_pop3c_authzid_default_changed: `
+For pop3c the default used to be \`%{user}\` (the old [[setting,pop3c_user]]
+default). It is now \`%{owner_user}\`, the same as for imapc. This makes a
+difference only for shared namespaces.`
+		},
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authid', 'client_auth_password',
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
+		values: setting_types.STRING,
+		default: {
+			value: '',
+			text: '`imapc { "%{owner_user}" }`<br/>`pop3c { "%{owner_user}" }`'
+		},
+		text: `
+The authorization identity to be used after authenticating as a client to a
+remote service, i.e. the user whose mails are accessed. If
+[[setting,client_auth_authid]] is empty, this identity is also used for
+authenticating.
+
+[[variable,mail-user]] can be used.`
+	},
+
+	client_auth_password: {
+		added: {
+			settings_client_auth_added: false
+		},
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authzid', 'client_auth_authid',
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
+		values: setting_types.STRING,
+		text: `
+The password to be used for authenticating as a client to a remote service. This
+is the password belonging to the authentication identity
+[[setting,client_auth_authid]]. For the \`OAUTHBEARER\` and \`XOAUTH2\`
+mechanisms this is the bearer token. The \`ANONYMOUS\` and \`EXTERNAL\`
+mechanisms don't use it.
+
+The password is required for all the other mechanisms. Its existence is
+checked already when the client is created (e.g. when the namespace is initialized for imapc),
+not only when connecting.`
+	},
+
+	client_auth_mechanism: {
+		added: {
+			settings_client_auth_added: false
+		},
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth', 'client_auth_authzid', 'client_auth_authid',
+			   'client_auth_password', '[[link,client_auth]]' ],
+		values: setting_types.STRING,
+		text: `
+The authentication mechanism (sometimes called scheme) to be used for
+authenticating as a client to a remote service. Currently, this is always a SASL
+mechanism.
+
+Supported mechanisms are:
+
+ * ANONYMOUS
+ * CRAM-MD5
+ * DIGEST-MD5
+ * EXTERNAL
+ * LOGIN
+ * OAUTHBEARER
+ * PLAIN
+ * SCRAM-SHA-1
+ * SCRAM-SHA-1-PLUS
+ * SCRAM-SHA-256
+ * SCRAM-SHA-256-PLUS
+ * XOAUTH2
+
+Note that [[setting,client_auth_password]] is ignored for \`ANONYMOUS\` and
+\`EXTERNAL\` mechanisms. For \`OAUTHBEARER\` and \`XOAUTH2\`
+[[setting,client_auth_password]] should be a bearer token.
+
+Normally this setting is not set directly, but through the name of a
+[[setting,client_auth]] filter. The mechanism is then used only if the server
+also advertises it:
+
+\`\`\`[dovecot.conf]
+imapc {
+  host = 127.0.0.1
+  port = 993
+  ssl = imaps
+
+  # Authentication fails if the server doesn't announce SCRAM-SHA-256 support
+  client_auth SCRAM-SHA-256 {
+    authzid = owner-user
+    password = frop
+  }
+}
+\`\`\`
+
+When a non-PLUS SCRAM mechanism is configured and the server advertises the
+corresponding \`-PLUS\` variant, the client automatically uses channel binding
+if the connection is TLS encrypted and channel binding is available. See
+[[link,client_auth_channel_binding]].
+
+If no mechanism is configured, the PLAIN mechanism is used by default. For IMAP
+and POP3 the basic login commands are used instead in that case, if possible
+(LOGIN for IMAP and USER + PASS for POP3), so SASL support is not required from
+the server. If the server doesn't advertise PLAIN, the first mechanism
+advertised by the server that Dovecot supports and that uses a password is
+used. However, if the authentication [[setting,client_auth_authid]] and
+authorization [[setting,client_auth_authzid]] identities are both also
+unconfigured, no authentication is configured at all and the connection fails
+with an "Authentication not configured" error.
+
+Example:
+\`\`\`[dovecot.conf]
+imapc {
+  host = 127.0.0.1
+  port = 993
+  ssl = imaps
+
+  # Will authenticate using IMAP LOGIN command, or use PLAIN mechanism if LOGIN
+  # command is disabled.
+  client_auth_authzid = owner-user
+  client_auth_password = frop
+}
+\`\`\`
+
+If \`client_auth_mechanism\` is set directly, without any [[setting,client_auth]]
+filter block in that context (e.g. inside a surrounding [[setting,imapc]] or
+[[setting,pop3c]] filter block), the indicated mechanism is used blindly;
+server support is not checked.
+
+Example:
+\`\`\`[dovecot.conf]
+imapc {
+  host = 127.0.0.1
+  port = 993
+  ssl = imaps
+
+  # PLAIN mechanism will be used without consulting server capabilities
+  client_auth_mechanism = PLAIN
+  client_auth_authid = master-user
+  client_auth_authzid = owner-user
+  client_auth_password = frop
+}
+\`\`\``
+	},
+
 	fs: {
 		tags: [ 'fs' ],
 		values: setting_types.NAMED_LIST_FILTER,
@@ -6352,12 +6576,13 @@ for HAProxy are aborted immediately.`
 
 	hostname: {
 		default: '\\<system\'s real hostname@domain.tld\\>',
-		tags: [ 'submission' ],
+		tags: [ 'submission', 'smtp_client', 'lmtp_client' ],
 		values: setting_types.STRING,
 		text: `
 The hostname to be used in email messages sent out by the local delivery
-agent (such as the Message-ID: header), in LMTP replies, and as the
-hostname advertised by submission SMTP service.`
+agent (such as the Message-ID: header), in LMTP replies, as the
+hostname advertised by submission SMTP service, and in the EHLO/LHLO command
+of the outgoing SMTP and LMTP connections.`
 	},
 
 	http_client_auto_redirect: {
@@ -7201,6 +7426,30 @@ Variables allowed:
 The port is used with the URLAUTH extension in IMAP operation.`
 	},
 
+	imapc: {
+		tags: [ 'imapc', 'client-auth' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,imapc]]', 'client_auth', 'client_auth_authzid',
+			   'client_auth_authid', 'client_auth_password',
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
+		text: `
+This settings filter provides a scope for settings for imapc.
+
+The filter is needed for configuring the generic [[setting,client_auth]] and
+\`ssl_client_*\` settings for imapc specifically, since the same settings are
+used also by other clients.
+
+Example:
+\`\`\`[dovecot.conf]
+imapc {
+  host = imap.example.com
+  ssl = imaps
+  client_auth_authzid = %{user}
+  client_auth_password = secret
+}
+\`\`\``
+	},
+
 	imapc_cmd_timeout: {
 		default: '5 mins',
 		tags: [ 'imapc' ],
@@ -7418,6 +7667,11 @@ imapc_list_prefix = INBOX
 	},
 
 	imapc_master_user: {
+		removed: {
+			settings_imapc_credentials_renamed: `
+Renamed to [[setting,client_auth_authid]] inside the [[setting,imapc]]
+filter, i.e. \`imapc/client_auth_authid\`.`
+		},
 		tags: [ 'imapc' ],
 		seealso: [ 'imapc_password', 'imapc_user' ],
 		values: setting_types.STRING,
@@ -7459,6 +7713,11 @@ This setting is used to limit maximum memory usage.`
 	},
 
 	imapc_password: {
+		removed: {
+			settings_imapc_credentials_renamed: `
+Renamed to [[setting,client_auth_password]] inside the [[setting,imapc]]
+filter, i.e. \`imapc/client_auth_password\`.`
+		},
 		tags: [ 'imapc' ],
 		seealso: [ 'imapc_master_user', 'imapc_user', 'imapc_sasl_mechanisms' ],
 		values: setting_types.STRING,
@@ -7486,6 +7745,13 @@ If using master users, this setting will be the password of the master user.`
 	},
 
 	imapc_sasl_mechanisms: {
+		deprecated: {
+			settings_imapc_sasl_mechanisms_deprecated: `
+The setting is obsolete, and kept only for backwards compatibility. Each
+listed mechanism is translated into a [[setting,client_auth]] filter in the
+listed order, so existing configurations keep working. New configurations
+should use [[setting,client_auth]] directly.`
+		},
 		default: 'plain',
 		tags: [ 'imapc' ],
 		values: setting_types.BOOLLIST,
@@ -7555,6 +7821,11 @@ Only used if [[setting,imapc_ssl]] is enabled.`
 	},
 
 	imapc_user: {
+		removed: {
+			settings_imapc_credentials_renamed: `
+Renamed to [[setting,client_auth_authzid]] inside the [[setting,imapc]]
+filter, i.e. \`imapc/client_auth_authzid\`.`
+		},
 		tags: [ 'imapc', 'imapc-auth' ],
 		seealso: [ 'imapc_master_user', 'imapc_password', 'imapc_sasl_mechanisms' ],
 		values: setting_types.STRING,
@@ -7796,6 +8067,132 @@ Alias for [[setting,inet_listener_listen]].`
 Controls if "Received:" header should be added to delivered mails.`
 	},
 
+	lmtp_client_command_timeout: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: '5 mins',
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_connect_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for LMTP commands sent to the remote server. The timeout is reset
+every time more data is being sent or received.
+
+The \`lmtp_client_*\` settings configure Dovecot's outgoing LMTP connections.
+They are used inside the [[setting,lmtp_proxy]] filter, where the default is
+\`125 secs\`.`
+	},
+
+	lmtp_client_connect_timeout: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: '30 secs',
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_command_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for connecting to the remote LMTP server, including the TLS handshake.
+
+Inside the [[setting,lmtp_proxy]] filter the default is \`125 secs\`.`
+	},
+
+	lmtp_client_host: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_port', 'lmtp_client_ssl' ],
+		values: setting_types.STRING,
+		text: `
+Host name or IP address of the remote LMTP server. The LMTP proxy gets the
+host from the passdb lookup (see [[link,authentication_proxies]]), so this is
+normally not set.`
+	},
+
+	lmtp_client_peer_trusted: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: 'no',
+		tags: [ 'lmtp_client' ],
+		values: setting_types.BOOLEAN,
+		text: `
+Whether the remote LMTP server is trusted. If enabled, the original client's
+connection information is forwarded to the remote server with the
+(Postfix-specific) XCLIENT command, if the remote server advertises support
+for it.
+
+Inside the [[setting,lmtp_proxy]] filter the default is \`yes\`.`
+	},
+
+	lmtp_client_port: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: 24,
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_host', 'lmtp_client_ssl' ],
+		values: setting_types.IN_PORT,
+		text: `
+Port of the remote LMTP server.
+
+Inside the [[setting,lmtp_proxy]] filter the default is the port that the
+local LMTP server received the connection on (\`%{local_port}\`), so that
+proxying to the same port on the backend doesn't need any configuration.
+The passdb lookup can override it.`
+	},
+
+	lmtp_client_rawlog_dir: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		tags: [ 'lmtp_client' ],
+		seealso: [ '[[link,rawlog]]' ],
+		values: setting_types.PATH_DIR,
+		text: `
+Write protocol logs of the outgoing LMTP connections to this directory for
+debugging.
+
+[[variable,mail-service-user]] can be used. However, because LMTP session
+starts without a user, all user-specific variables expand to empty.`
+	},
+
+	lmtp_client_source_ip: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		tags: [ 'lmtp_client' ],
+		values: setting_types.STRING,
+		text: `
+Local IP address to use as the source address of the outgoing LMTP
+connections. If empty, the kernel chooses the address.`
+	},
+
+	lmtp_client_ssl: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: 'no',
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'ssl_client_require_valid_cert', '[[link,ssl_configuration]]' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'no', 'lmtps', 'starttls' ],
+		text: `
+Whether to use TLS for the connection to the remote LMTP server.
+
+| Value | Description |
+| ----- | ----------- |
+| \`no\` | No TLS |
+| \`lmtps\` | Connect using TLS immediately (implicit TLS) |
+| \`starttls\` | Use the STARTTLS command to switch to TLS |
+
+The connection uses the \`ssl_client_*\` settings, which can be set inside the
+same filter to apply to this client only. The passdb lookup can override this
+setting for the LMTP proxy, see [[link,authentication_proxies]].`
+	},
+
 	lmtp_client_workarounds: {
 		tags: [ 'lmtp' ],
 		values: setting_types.BOOLLIST,
@@ -7833,18 +8230,71 @@ Options:
 :   No address (always used for messages with multiple recipients)`
 	},
 
+	lmtp_local: {
+		added: {
+			settings_lmtp_local_added: false
+		},
+		tags: [ 'lmtp' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'lmtp_proxy' ],
+		text: `
+Filter for settings that apply only to local LMTP deliveries, as opposed to
+proxied ones (see [[setting,lmtp_proxy]]). For example the
+[[setting,mail_submit]] settings used for sending bounces can be placed
+here.`
+	},
+
 	lmtp_proxy: {
+		changed: {
+			settings_lmtp_proxy_renamed: `
+\`lmtp_proxy\` used to be a boolean setting. It is now a filter, and the
+boolean is [[setting,lmtp_proxy_enabled]]. The old \`lmtp_proxy = yes\` still
+works with an older [[setting,dovecot_config_version]].`
+		},
+		tags: [ 'lmtp', 'lmtp_client' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'lmtp_proxy_enabled', 'lmtp_local',
+			   '[[link,authentication_proxies]]' ],
+		text: `
+Filter for the LMTP proxying settings: the generic \`lmtp_client_*\` settings
+of the connection to the backend, and [[setting,lmtp_proxy_enabled]].
+
+Inside this filter the defaults are the port of the incoming LMTP connection
+for [[setting,lmtp_client_port]], [[setting,lmtp_client_peer_trusted,yes]],
+and \`125 secs\` for both [[setting,lmtp_client_connect_timeout]] and
+[[setting,lmtp_client_command_timeout]].
+
+Example:
+\`\`\`[dovecot.conf]
+lmtp_proxy_enabled = yes
+lmtp_proxy {
+  lmtp_client_rawlog_dir = /var/log/dovecot/lmtp-proxy-rawlog
+}
+\`\`\``
+	},
+
+	lmtp_proxy_enabled: {
+		added: {
+			settings_lmtp_proxy_renamed: false
+		},
 		default: 'no',
-		seealso: [ '[[link,authentication_proxies]]' ],
+		seealso: [ 'lmtp_proxy', '[[link,authentication_proxies]]' ],
 		tags: [ 'lmtp' ],
 		values: setting_types.BOOLEAN,
 		text: `
 If yes, LMTP sessions perform a passdb lookup to see if the user should be
 proxied. The user is proxied only if the \`proxy\` extra field is returned.
-The proxy destination is determined via returned passdb extra fields.`
+The proxy destination is determined via returned passdb extra fields.
+
+Renamed from \`lmtp_proxy\`, which is now the [[setting,lmtp_proxy]] filter.`
 	},
 
 	lmtp_proxy_rawlog_dir: {
+		removed: {
+			settings_lmtp_proxy_renamed: `
+Renamed to [[setting,lmtp_client_rawlog_dir]] inside the
+[[setting,lmtp_proxy]] filter.`
+		},
 		seealso: [ '[[link,rawlog]]' ],
 		tags: [ 'lmtp' ],
 		values: setting_types.STRING,
@@ -8778,6 +9228,63 @@ The IMAP reply returned to the client is:
 \`\`\`
 NO [LIMIT] Requested sort would have taken too long.
 \`\`\``
+	},
+
+	mail_submit: {
+		added: {
+			settings_mail_submit_added: false
+		},
+		tags: [ 'mail_submit', 'lda', 'lmtp', 'client-auth' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'mail_submit_timeout', 'smtp_client_host', 'execute',
+			   'client_auth', '[[link,client_auth]]' ],
+		text: `
+Filter for configuring how Dovecot submits outgoing mails: bounces and
+forwards from [[link,lda]] and [[link,lmtp]], Sieve redirects, vacation
+replies and notifications, and so on.
+
+By default the mails are given to the local sendmail binary, which is
+configured as an [[setting,execute]] block named \`sendmail\` inside this
+filter:
+
+\`\`\`[dovecot.conf]
+mail_submit {
+  execute sendmail {
+    driver = fork
+    fork_path = /usr/sbin/sendmail
+  }
+}
+\`\`\`
+
+If [[setting,smtp_client_host]] is set inside this filter, the mails are sent
+via SMTP instead, using the generic \`smtp_client_*\` settings. The connection
+can be authenticated with the [[setting,client_auth]] settings and secured
+with the \`ssl_client_*\` settings:
+
+\`\`\`[dovecot.conf]
+mail_submit {
+  smtp_client_host = mta.example.com
+  smtp_client_port = 587
+  smtp_client_ssl = starttls
+  client_auth_authzid = dovecot
+  client_auth_password = secret
+}
+\`\`\`
+
+Inside this filter the defaults are [[setting,smtp_client_port,25]] and
+[[setting,smtp_client_ssl,no]].`
+	},
+
+	mail_submit_timeout: {
+		changed: {
+			settings_submission_host_renamed: `
+Renamed from \`submission_timeout\`.`
+		},
+		default: '30 secs',
+		tags: [ 'mail_submit', 'lda', 'lmtp' ],
+		seealso: [ 'mail_submit' ],
+		values: setting_types.TIME,
+		text: `Timeout for submitting outgoing messages.`
 	},
 
 	mail_temp_dir: {
@@ -10890,6 +11397,31 @@ in uppercase) and with [[variable,global]]:
 | \`%{guid}\` | Dovecot GUID for the message |`
 	},
 
+	pop3c: {
+		tags: [ 'pop3c', 'client-auth' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,pop3c]]', 'client_auth', 'client_auth_authzid',
+			   'client_auth_authid', 'client_auth_password',
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
+		text: `
+This settings filter provides a scope for settings for pop3c.
+
+The filter is needed for configuring the generic [[setting,client_auth]] and
+\`ssl_client_*\` settings for pop3c specifically, since the same settings are
+used also by other clients.
+
+Example:
+\`\`\`[dovecot.conf]
+pop3c {
+  host = pop3.example.com
+  ssl = pop3s
+  port = 995
+  client_auth_authzid = %{user}
+  client_auth_password = secret
+}
+\`\`\``
+	},
+
 	pop3c_features: {
 		tags: [ 'pop3c' ],
 		values: setting_types.BOOLLIST,
@@ -10909,6 +11441,11 @@ Workarounds:
 	},
 
 	pop3c_master_user: {
+		removed: {
+			settings_pop3c_credentials_renamed: `
+Renamed to [[setting,client_auth_authid]] inside the [[setting,pop3c]]
+filter, i.e. \`pop3c/client_auth_authid\`.`
+		},
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_password', 'pop3c_user' ],
 		values: setting_types.STRING,
@@ -10929,6 +11466,11 @@ pop3c_password = masteruser-secret
 	},
 
 	pop3c_password: {
+		removed: {
+			settings_pop3c_credentials_renamed: `
+Renamed to [[setting,client_auth_password]] inside the [[setting,pop3c]]
+filter, i.e. \`pop3c/client_auth_password\`.`
+		},
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_master_user', 'pop3c_user' ],
 		values: setting_types.STRING,
@@ -10980,6 +11522,11 @@ Use TLS to connect to the remote POP3 server.
 	},
 
 	pop3c_ssl_verify: {
+		removed: {
+			settings_pop3c_ssl_verify_renamed: `
+Renamed to [[setting,ssl_client_require_valid_cert]] inside the
+[[setting,pop3c]] filter, i.e. \`pop3c/ssl_client_require_valid_cert\`.`
+		},
 		default: 'yes',
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_ssl' ],
@@ -10994,6 +11541,12 @@ Only used if [[setting,pop3c_ssl]] is enabled.`
 	},
 
 	pop3c_user: {
+		removed: {
+			settings_pop3c_credentials_renamed: `
+Renamed to [[setting,client_auth_authzid]] inside the [[setting,pop3c]]
+filter, i.e. \`pop3c/client_auth_authzid\`. Note that the default changed too, see
+[[setting,client_auth_authzid]].`
+		},
 		default: '%{user}',
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_master_user', 'pop3c_password' ],
@@ -11126,12 +11679,23 @@ See [[setting,rejection_reason]] for the list of variables that can be used.`
 	},
 
 	sendmail_path: {
+		deprecated: {
+			settings_sendmail_path_deprecated: `
+Replaced by an [[setting,execute]] block named \`sendmail\` inside the
+[[setting,mail_submit]] filter. The setting still works: its value is
+translated into the [[setting,execute_fork_path]] and
+[[setting,execute_args]] settings of that block.`
+		},
 		default: '/usr/sbin/sendmail',
+		tags: [ 'mail_submit', 'lda', 'lmtp' ],
+		seealso: [ 'mail_submit' ],
 		values: setting_types.STRING,
 		text: `
-The binary to use for sending email.
+The binary to use for sending email. Arguments can be given after the path,
+separated by spaces.
 
-Used only if [[setting,submission_host]] is not set.`
+Used only if [[setting,smtp_client_host]] is not set inside the
+[[setting,mail_submit]] filter.`
 	},
 
 	service: {
@@ -11479,6 +12043,128 @@ needs \`KillMode=mixed\` or \`KillMode=process\`.
 :::`
 	},
 
+	smtp_client_command_timeout: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: '5 mins',
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_connect_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for SMTP commands sent to the remote server. The timeout is reset
+every time more data is being sent or received.
+
+The \`smtp_client_*\` settings configure Dovecot's outgoing SMTP connections.
+They are used inside the [[setting,submission_relay]] and
+[[setting,mail_submit]] filters.`
+	},
+
+	smtp_client_connect_timeout: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: '30 secs',
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_command_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for connecting to the remote SMTP server, including the TLS handshake
+and authentication.`
+	},
+
+	smtp_client_host: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_port', 'smtp_client_ssl' ],
+		values: setting_types.STRING,
+		text: `
+Host name or IP address of the remote SMTP server. The port is configured
+separately with [[setting,smtp_client_port]].
+
+Inside the [[setting,submission_relay]] filter this is required. Inside the
+[[setting,mail_submit]] filter setting it switches from executing the sendmail
+binary to sending via SMTP.
+
+[[variable,mail-user]] can be used.`
+	},
+
+	smtp_client_peer_trusted: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: 'no',
+		tags: [ 'smtp_client' ],
+		values: setting_types.BOOLEAN,
+		text: `
+Whether the remote SMTP server is trusted. If enabled, the original client's
+connection information is forwarded to the remote server with the
+(Postfix-specific) XCLIENT command, if the remote server advertises support
+for it.`
+	},
+
+	smtp_client_port: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: 25,
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_host', 'smtp_client_ssl' ],
+		values: setting_types.IN_PORT,
+		text: `
+Port of the remote SMTP server.`
+	},
+
+	smtp_client_rawlog_dir: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		tags: [ 'smtp_client' ],
+		seealso: [ '[[link,rawlog]]' ],
+		values: setting_types.PATH_DIR,
+		text: `
+Write protocol logs of the outgoing SMTP connections to this directory for
+debugging.
+
+[[variable,mail-user]] can be used.`
+	},
+
+	smtp_client_source_ip: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		tags: [ 'smtp_client' ],
+		values: setting_types.STRING,
+		text: `
+Local IP address to use as the source address of the outgoing SMTP
+connections. If empty, the kernel chooses the address.`
+	},
+
+	smtp_client_ssl: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: 'no',
+		tags: [ 'smtp_client' ],
+		seealso: [ 'ssl_client_require_valid_cert', '[[link,ssl_configuration]]' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'no', 'smtps', 'submissions', 'starttls' ],
+		text: `
+Whether to use TLS for the connection to the remote SMTP server.
+
+| Value | Description |
+| ----- | ----------- |
+| \`no\` | No TLS |
+| \`smtps\` | Connect using TLS immediately (implicit TLS) |
+| \`submissions\` | Same as \`smtps\`, the name used by [[rfc,8314]] |
+| \`starttls\` | Use the STARTTLS command to switch to TLS |
+
+The connection uses the \`ssl_client_*\` settings, which can be set inside the
+same filter to apply to this client only.`
+	},
+
 	sql_driver: {
 		values: setting_types.STRING,
 		text: `
@@ -11786,7 +12472,10 @@ ssl_server_dh_file = /path/to/dh.pem
 		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.BOOLEAN,
 		text: `
-Require a valid certificate when connecting to external SSL services?`
+Require a valid certificate when connecting to external SSL services?
+
+To change this for a single client only, set it inside that client's filter,
+e.g. [[setting,imapc]], [[setting,pop3c]] or [[setting,submission_relay]].`
 	},
 
 	ssl_server_key_file: {
@@ -11990,6 +12679,13 @@ Supported workaround identifiers are:
 	},
 
 	submission_host: {
+		removed: {
+			settings_submission_host_renamed: `
+Renamed to [[setting,smtp_client_host]] inside the [[setting,mail_submit]]
+filter. With an older [[setting,dovecot_config_version]] the old name is
+still accepted, but a \`host:port\` value is not: the port must be given
+separately with [[setting,smtp_client_port]].`
+		},
 		tags: [ 'submission' ],
 		values: setting_types.URL,
 		text: `
@@ -12038,7 +12734,50 @@ unknown limit exists there, which will be passed back to the client.`
 Maximum number of recipients accepted per connection.`
 	},
 
+	submission_relay: {
+		added: {
+			settings_submission_relay_renamed: false
+		},
+		tags: [ 'submission_relay', 'client-auth' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,submission_server]]', 'smtp_client_host',
+			   'client_auth', '[[link,client_auth]]' ],
+		text: `
+Filter for the settings of the connection from the [[link,submission_server]]
+to the relay MTA. The connection is configured with the generic
+\`smtp_client_*\`, [[setting,client_auth]] and \`ssl_client_*\` settings
+placed inside this filter. [[setting,smtp_client_host]] is required to
+provide the submission service.
+
+Inside this filter the defaults are [[setting,smtp_client_port,25]],
+[[setting,smtp_client_connect_timeout,30 secs]] and
+[[setting,smtp_client_command_timeout,5 mins]].
+
+Example:
+\`\`\`[dovecot.conf]
+submission_relay {
+  smtp_client_host = mta.example.com
+  smtp_client_port = 587
+  smtp_client_ssl = starttls
+  smtp_client_peer_trusted = yes
+
+  client_auth_authzid = submission-relay
+  client_auth_password = secret
+  # Prefer SCRAM-SHA-256, use PLAIN if the MTA doesn't advertise it
+  client_auth SCRAM-SHA-256 {
+  }
+  client_auth PLAIN {
+  }
+}
+\`\`\``
+	},
+
 	submission_relay_command_timeout: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_command_timeout]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: '5mins',
 		tags: [ 'submission_relay' ],
 		values: setting_types.TIME_MSECS,
@@ -12049,6 +12788,11 @@ The timeout is reset every time more data is being sent or received.`
 	},
 
 	submission_relay_connect_timeout: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_connect_timeout]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: '30secs',
 		tags: [ 'submission_relay' ],
 		values: setting_types.TIME_MSECS,
@@ -12058,6 +12802,11 @@ server.`
 	},
 
 	submission_relay_host: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_host]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		values: setting_types.STRING,
 		text: `
@@ -12065,6 +12814,11 @@ Host of the relay server (REQUIRED to provide the submission service).`
 	},
 
 	submission_relay_master_user: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,client_auth_authid]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		values: setting_types.STRING,
 		text: `
@@ -12073,6 +12827,10 @@ required.`
 	},
 
 	submission_relay_max_idle_time: {
+		deprecated: {
+			settings_submission_relay_renamed: `
+The setting never had any effect. It is still accepted, but ignored.`
+		},
 		default: '29mins',
 		tags: [ 'submission_relay' ],
 		values: setting_types.TIME,
@@ -12080,6 +12838,11 @@ required.`
 	},
 
 	submission_relay_password: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,client_auth_password]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		values: setting_types.STRING,
 		text: `
@@ -12087,6 +12850,11 @@ Password for authentication to the relay MTA if authentication is required.`
 	},
 
 	submission_relay_port: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_port]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: 25,
 		tags: [ 'submission_relay' ],
 		values: setting_types.IN_PORT,
@@ -12098,6 +12866,11 @@ Port for the submission relay server.`
 		changed: {
 			settings_path_types_added: `Setting type changed.`,
 		},
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_rawlog_dir]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		seealso: [ '[[link,rawlog]]' ],
 		values: setting_types.PATH_DIR,
@@ -12108,6 +12881,11 @@ Write protocol logs for relay connection to this directory for debugging.
 	},
 
 	submission_relay_ssl: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_ssl]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: 'no',
 		tags: [ 'submission_relay' ],
 		values: setting_types.ENUM,
@@ -12128,6 +12906,11 @@ Available values:
 	},
 
 	submission_relay_ssl_verify: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,ssl_client_require_valid_cert]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: 'yes',
 		tags: [ 'submission_relay' ],
 		values: setting_types.BOOLEAN,
@@ -12136,6 +12919,11 @@ If enabled, TLS certificate of the relay server must be verified.`
 	},
 
 	submission_relay_trusted: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_peer_trusted]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: 'no',
 		tags: [ 'submission_relay' ],
 		values: setting_types.BOOLEAN,
@@ -12147,6 +12935,11 @@ relay server (only if enabled).`
 	},
 
 	submission_relay_user: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,client_auth_authzid]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		values: setting_types.STRING,
 		text: `
@@ -12154,6 +12947,11 @@ User name for authentication to the relay MTA if authentication is required.`
 	},
 
 	submission_ssl: {
+		removed: {
+			settings_submission_host_renamed: `
+Renamed to [[setting,smtp_client_ssl]] inside the [[setting,mail_submit]]
+filter.`
+		},
 		default: 'no',
 		seealso: [ 'submission_host' ],
 		values: setting_types.STRING,
@@ -12174,6 +12972,10 @@ Available values:
 	},
 
 	submission_timeout: {
+		removed: {
+			settings_submission_host_renamed: `
+Renamed to [[setting,mail_submit_timeout]].`
+		},
 		default: '30secs',
 		seealso: [ 'submission_host' ],
 		values: setting_types.TIME,

@@ -75,12 +75,19 @@ passdb sql {
 }
 ```
 
-## `submission_host`
+## `mail_submit`
 
-`submission_host = smtp-out.example.com:25`
+```doveconf[dovecot.conf]
+mail_submit {
+  smtp_client_host = smtp-out.example.com
+  smtp_client_port = 25
+}
+```
 
 SMTP server which is used for sending email rejects, Sieve forwards,
-vacations, etc.
+vacations, etc. See [[setting,mail_submit]] for the details, including how
+to authenticate to the SMTP server.
 
-Alternatively, `sendmail_path` setting can be used to send mails using the
-sendmail binary.
+Without [[setting,smtp_client_host]] the mails are sent using the local
+sendmail binary. [[changed,settings_submission_host_renamed]] Previously this
+was configured with the `submission_host` and `sendmail_path` settings.
