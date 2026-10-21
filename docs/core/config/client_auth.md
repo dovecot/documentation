@@ -23,6 +23,8 @@ itself a client that logs into another server:
 | [[link,imapc]] mailbox format | [[setting,imapc]] | Also used for migrations and shared mailboxes between backends. |
 | [[link,pop3c]] mailbox format | [[setting,pop3c]] | |
 | [[link,auth_imap,passdb imap]] | [[setting,imapc]] inside the `passdb` | The password given by the user is used as [[setting,client_auth_password]] automatically. |
+| [[link,submission_server]] relay | [[setting,submission_relay]] | Logging into the relay MTA. |
+| [[setting,mail_submit]] via SMTP | [[setting,mail_submit]] | Bounces, Sieve redirects and other mails submitted by Dovecot. |
 
 All of them use the same `client_auth_*` settings and the same SASL client
 implementation, which this page describes. The settings are placed inside the
@@ -69,7 +71,8 @@ imapc {
 
 Inside the [[setting,imapc]] and [[setting,pop3c]] filters
 [[setting,client_auth_authzid]] defaults to `%{owner_user}`: the logged in
-user, or the owner of a [[link,shared_mailboxes,shared namespace]].
+user, or the owner of a [[link,shared_mailboxes,shared namespace]]. The other
+clients have no default identity.
 
 The existence of the password is checked already when the client is
 created, so a missing [[setting,client_auth_password]] for a mechanism that
