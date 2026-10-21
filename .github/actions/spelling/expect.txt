@@ -29,9 +29,11 @@ atimes
 auid
 Aup
 AUTHENTICATIONFAILED
+authid
 authpriv
 authtok
 authuser
+authzid
 autocreate
 autocreated
 Autocreation
@@ -76,6 +78,7 @@ bzlib
 CACERTDIR
 CANTCREAT
 CApath
+CBinding
 cdb
 certbot
 changetype
