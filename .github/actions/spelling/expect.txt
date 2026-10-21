@@ -313,7 +313,6 @@ inthread
 invol
 IOERR
 ioloop
-IPADDR
 ipairs
 ipt
 iredmail
@@ -919,6 +918,7 @@ Xes
 xfs
 xoauth
 XRCPTFORWARD
+xtext
 xuidl
 yescrypt
 yourldap
