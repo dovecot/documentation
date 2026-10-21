@@ -14,32 +14,60 @@ There are two ways to do LDAP authentication in [[link,passdb,passdb]]:
 
 LDAP can be used as [userdb ldap](#ldap-userdb).
 
+[[changed,settings_ldap_client_changed]] Dovecot has its own LDAP client
+instead of using the OpenLDAP libraries. The `ldap_*` connection settings were
+renamed to [[setting,ldap_client_uris,ldap_client_*]] and
+[[setting,client_auth_authid,client_auth_*]]. See
+[[link,upgrading-2.4-to-2.4]] for the list.
+
 ## Connecting
 
-The LDAP server(s) endpoints must be specified as ldap URIs:
+The LDAP server(s) endpoints must be specified as LDAP URIs:
 
-* [[setting,ldap_uris]]: A space separated list of LDAP URIs to connect to.
+* [[setting,ldap_client_uris]]: A space separated list of LDAP URIs to connect
+  to. `ldap://`, `ldaps://` and `ldapi://` (UNIX socket) are supported.
 
-If multiple LDAP servers are specified, it's decided by the LDAP library how
-the server connections are handled. Typically the first working server is used,
-and it's never disconnected from. So there is no load balancing or automatic
-reconnecting to the "primary" server.
+If multiple LDAP servers are specified, a new connection tries them in the
+listed order, so the first working server is always used. A connection that
+was ready and is lost is not moved to another server, but the next request
+connects again starting from the first one. There is no load balancing.
+
+Dovecot has its own LDAP client. It doesn't use OpenLDAP libraries, so
+`/etc/ldap/ldap.conf` and the `LDAP*` environment variables aren't read. All
+the configuration is in `dovecot.conf`.
 
 ### Connection Authentication
 
-If LDAP server requires authentication, set:
+If the LDAP server requires authentication, set it in the
+[[setting,ldap_client]] block:
 
- * [[setting,ldap_auth_dn]]
- * [[setting,ldap_auth_dn_password]]
- * [[setting,ldap_auth_sasl_mechanisms]] can be set to list of SASL mechanisms
-   to authenticate with. Note that this is used only for the initial connection
-   authentication, not for any subsequent [authentication binds](#authentication-binds).
+ * [[setting,client_auth_authid]]: The DN to bind as, or the SASL
+   authentication ID if [[setting,client_auth_mechanism]] is set.
+ * [[setting,client_auth_password]]: The password.
+ * [[setting,client_auth_mechanism]]: The SASL mechanism to use. By default a
+   simple bind is used. Only one mechanism can be given, not a list.
+ * [[setting,client_auth_authzid]]: The SASL authorization ID.
+
+Note that these are used only for the bind after connecting, not for any
+subsequent [authentication binds](#authentication-binds).
+
+::: code-group
+```doveconf[dovecot.conf]
+ldap_client_uris = ldap://ldap.example.org
+
+ldap_client {
+  client_auth_authid = cn=admin,dc=example,dc=org
+  client_auth_password = secret
+}
+```
+:::
 
 ### Worker Processes
 
 If [[setting,passdb_use_worker,no]] / [[setting,userdb_use_worker,no]]
 (default for passdb ldap), all LDAP lookups are performed by the auth master
-process. Each LDAP connection can keep up to 8 requests pipelined. For small
+process. Each LDAP connection can keep up to 8 requests pipelined (see
+[[setting,ldap_client_max_outstanding_requests]]). For small
 systems this is sufficient and uses less resources, but it may become a
 bottleneck if there are a lot of queries.
 
@@ -76,48 +104,106 @@ userdb ldap {
 ```
 :::
 
+The binds that verify users' passwords ([[setting,passdb_ldap_bind,yes]]) use
+connections of their own, at most
+[[setting,ldap_client_max_auth_bind_connections]] at a time.
+
+### Timeouts and Retries
+
+Requests are limited by the following settings:
+
+| Setting | Meaning |
+| ------- | ------- |
+| [[setting,ldap_client_connect_timeout]] | Connecting to a server address, including the TLS handshake. |
+| [[setting,ldap_client_request_timeout]] | One attempt of a request. `20s` by default for passdb and userdb ldap. |
+| [[setting,ldap_client_request_absolute_timeout]] | The whole request with its attempts and queue time. |
+| [[setting,ldap_client_max_request_retries]] | How many times a request is sent again after a lost connection or a timeout. |
+
+Searches are sent again if the connection is lost or the server doesn't
+answer in time. The bind of a user is sent again only if it got no answer
+from the server. If your LDAP server locks accounts out after failed binds,
+a wrong password can be counted twice, so consider lowering
+[[setting,ldap_client_max_request_retries]].
+
+[[setting,userdb_ldap_iterate_filter,User iteration]] (e.g.
+`doveadm user '*'`) isn't limited by
+[[setting,ldap_client_request_absolute_timeout]].
+
+Firewalls and NAT devices can drop idle connections without telling either
+end. Set [[setting,ldap_client_max_idle_time]] below the idle limit of the
+network (e.g. `5 mins` is a good start for Active Directory, Azure or NAT) so
+that Dovecot closes the idle connections itself.
+
 ### SSL/TLS
 
-You can enable TLS in two alternative ways:
+Use TLS to protect the passwords and the LDAP data. You can enable TLS in two
+alternative ways:
 
-* Connect to ldaps port (636) by using "ldaps" protocol, e.g. `ldap_uris =
-  ldaps://secure.domain.org`
+* Connect to ldaps port (636) by using "ldaps" protocol, e.g.
+  `ldap_client_uris = ldaps://secure.domain.org`
 * Connect to ldap port (389) and use STARTTLS command. Use
-  [[setting,ldap_starttls,yes]] to enable this.
+  [[setting,ldap_client_starttls,yes]] to enable this.
 
-See the [[link,ssl_configuration]] settings for how to configure TLS.
-
-The default LDAP settings are read (by OpenLDAP) from
-`/etc/ldap/ldap.conf`. These are used by Dovecot, unless overridden by the
-Dovecot configuration. Note that if either [[setting,ssl_client_ca_file]]
-or [[setting,ssl_client_ca_dir]] is set, neither default is used from
-`ldap.conf`.
-
-Not all of Dovecot SSL settings are supported by the LDAP library. Below is
-the list of supported settings:
+See the [[link,ssl_configuration]] settings for how to configure TLS. The
+server certificate is verified with [[setting,ssl_client_ca_file]] /
+[[setting,ssl_client_ca_dir]] (the system CA store by default).
 
 <SettingsComponent tag="ssl-ldap" level="3" />
 
 #### Custom Certs
 
 If you need to connect to ldaps secured against a custom certificate of
-authority (CA), you will need to install the custom CA on your system.
+authority (CA), point [[setting,ssl_client_ca_file]] to the CA certificate
+file:
 
-For OpenLDAP, by default, the CA must be installed under the directory
-specified in the `TLS_CACERTDIR` option found under `/etc/openldap/ldap.conf`
-(default value is `/etc/openldap/certs`).
+```doveconf[dovecot.conf]
+ssl_client_ca_file = /etc/ssl/certs/my-ldap-ca.pem
+```
 
-After copying the CA, you'll need to run "c_rehash ." inside the directory,
-this will create a symlink pointing to the CA.
-
-You can test the CA installation with this command:
+You can test the CA with this command:
 
 ```sh
 $ openssl s_client -connect yourldap.example.org:636 \
-      -CApath /etc/openldap/certs -showcerts
+      -CAfile /etc/ssl/certs/my-ldap-ca.pem -showcerts
 ```
 
 This should report "Verify return code: 0 (ok)".
+
+### Client Certificate Authentication
+
+To authenticate with a TLS client certificate, set
+[[setting,ssl_client_cert_file]] and [[setting,ssl_client_key_file]], and use
+the SASL `EXTERNAL` mechanism with StartTLS:
+
+::: code-group
+```doveconf[dovecot.conf]
+ldap_client_uris = ldap://ldap.example.org
+ldap_client_starttls = yes
+ssl_client_cert_file = /etc/dovecot/ldap-client.pem
+ssl_client_key_file = /etc/dovecot/ldap-client.key
+
+ldap_client {
+  client_auth_mechanism = EXTERNAL
+}
+```
+:::
+
+With `EXTERNAL`, [[setting,client_auth_authzid]] (or, if it is empty,
+[[setting,client_auth_authid]]) is sent to the server as it is as the
+authorization ID, so it must be in the format that the server expects (RFC 4513
+`dn:<DN>` or `u:<id>`). If both are empty, the server derives the identity from
+the certificate.
+
+StartTLS with `EXTERNAL` works with OpenLDAP slapd, Active Directory and
+389 Directory Server. With `ldaps://`, slapd needs the `EXTERNAL` bind, but
+Active Directory refuses it and logs the certificate in during the TLS
+handshake instead: add the `implicit-external-auth` workaround, see
+[Active Directory](#active-directory). 389 Directory Server accepts both.
+
+### Workarounds
+
+[[setting,ldap_client_workarounds]] has workarounds for server quirks, mainly
+for Active Directory and for the SCRAM channel binding of OpenLDAP.
 
 ## LDAP Settings
 
@@ -170,8 +256,8 @@ access to attribute=userPassword
 ```
 :::
 
-Replace `<dovecot's dn>` with the DN you specified in [[setting,ldap_auth_dn]]
-in `dovecot.conf`'s ldap settings.
+Replace `<dovecot's dn>` with the DN you specified in
+[[setting,client_auth_authid]] in `dovecot.conf`'s ldap settings.
 
 Alternatively, you can:
 
@@ -209,6 +295,10 @@ The two important settings in password lookups are:
 - [[setting,passdb_fields]] specifies a list of attributes that are returned and
   how to produce the returned value.
 
+The filter must be in parentheses, e.g. `(uid=%{user})`. The outer parentheses
+can be left out if the filter is a single item, like `uid=%{user}`, but not
+with `&` or `|` combinations.
+
 Usually the LDAP attribute names aren't the same as
 [[link,passdb,the field names that Dovecot uses internally]]. You must
 create a mapping between them to get the wanted results. This
@@ -218,9 +308,12 @@ expression can include ldap specific variables and other variables too.
 For example:
 ::: code-group
 ```doveconf[dovecot.conf]
-ldap_uris = ldap://ldap.example.org
-ldap_auth_dn = cn=admin,dc=example,dc=org
-ldap_auth_dn_password = secret
+ldap_client_uris = ldap://ldap.example.org
+ldap_client_starttls = yes
+ldap_client {
+  client_auth_authid = cn=admin,dc=example,dc=org
+  client_auth_password = secret
+}
 ldap_base = dc=example,dc=org
 
 passdb ldap {
@@ -268,9 +361,12 @@ A typical configuration would look like:
 
 ::: code-group
 ```doveconf[dovecot.conf]
-ldap_uris = ldap://ldap.example.org
-ldap_auth_dn = cn=admin,dc=example,dc=org
-ldap_auth_dn_password = secret
+ldap_client_uris = ldap://ldap.example.org
+ldap_client_starttls = yes
+ldap_client {
+  client_auth_authid = cn=admin,dc=example,dc=org
+  client_auth_password = secret
+}
 ldap_base = dc=example,dc=org
 
 passdb ldap {
@@ -315,9 +411,12 @@ Example:
 
 ::: code-group
 ```doveconf[dovecot.conf]
-ldap_uris = ldap://ldap.example.org
-ldap_auth_dn = cn=admin,dc=example,dc=org
-ldap_auth_dn_password = secret
+ldap_client_uris = ldap://ldap.example.org
+ldap_client_starttls = yes
+ldap_client {
+  client_auth_authid = cn=admin,dc=example,dc=org
+  client_auth_password = secret
+}
 ldap_base = dc=example,dc=org
 
 passdb ldap {
@@ -350,9 +449,12 @@ If you're using DN template, there is no LDAP lookup that returns fields, so
 
 ::: code-group
 ```doveconf[dovecot.conf]
-ldap_uris = ldap://ldap.example.org
-ldap_auth_dn = cn=admin,dc=example,dc=org
-ldap_auth_dn_password = secret
+ldap_client_uris = ldap://ldap.example.org
+ldap_client_starttls = yes
+ldap_client {
+  client_auth_authid = cn=admin,dc=example,dc=org
+  client_auth_password = secret
+}
 ldap_base = dc=example,dc=org
 
 passdb ldap {
@@ -371,7 +473,7 @@ single UID and GID, and you don't need any other user-specific fields, you
 should use [[link,userdb_static]] instead to avoid an unnecessary LDAP lookup.
 You can also use [[link,auth_prefetch]] to avoid the userdb LDAP lookup.
 
-Userdb lookups are always done using the [[setting,ldap_auth_dn]]
+Userdb lookups are always done using the [[setting,client_auth_authid]]
 bind. It's not possible to do the lookup using the user's DN (remember
 that e.g. [[link,lda]] or [[link,lmtp]] needs to do userdb lookups
 without knowing the user's password).
@@ -385,9 +487,12 @@ them globally with [[setting,mail_uid]] and [[setting,mail_gid]] settings instea
 returning them from LDAP.
 
 ```doveconf[dovecot.conf]
-ldap_uris = ldap://ldap.example.org
-ldap_auth_dn = cn=admin,dc=example,dc=org
-ldap_auth_dn_password = secret
+ldap_client_uris = ldap://ldap.example.org
+ldap_client_starttls = yes
+ldap_client {
+  client_auth_authid = cn=admin,dc=example,dc=org
+  client_auth_password = secret
+}
 ldap_base = dc=example,dc=org
 
 userdb ldap {
@@ -467,9 +572,12 @@ Example: Give the user a class attribute, which defines the quota:
 
 ::: code-group
 ```doveconf[dovecot.conf]
-ldap_uris = ldap://ldap.example.org
-ldap_auth_dn = cn=admin,dc=example,dc=org
-ldap_auth_dn_password = secret
+ldap_client_uris = ldap://ldap.example.org
+ldap_client_starttls = yes
+ldap_client {
+  client_auth_authid = cn=admin,dc=example,dc=org
+  client_auth_password = secret
+}
 ldap_base = dc=example,dc=org
 
 userdb ldap-user {
@@ -491,3 +599,61 @@ userdb ldap-class {
 }
 ```
 :::
+
+## Active Directory
+
+Active Directory (AD) refuses binds on plain LDAP connections that have no
+integrity protection, and Dovecot's LDAP client doesn't support SASL security
+layers. Therefore use TLS: either `ldaps://` (port 636, or 3269 for the global
+catalog) or [[setting,ldap_client_starttls,yes]] with `ldap://`. See also
+[[link,active_directory]].
+
+Simple bind with a service account (the user principal name can be used as the
+bind identity):
+
+::: code-group
+```doveconf[dovecot.conf]
+ldap_client_uris = ldaps://ad.example.com
+ldap_client_max_idle_time = 5 mins
+ldap_client {
+  client_auth_authid = dovecot@example.com
+  client_auth_password = secret
+}
+ldap_base = dc=example,dc=com
+```
+:::
+
+Set [[setting,ldap_client_max_idle_time]] below the idle limit of the network
+between Dovecot and AD, so that connections aren't silently dropped.
+
+Other ways to authenticate to AD:
+
+ * `client_auth_mechanism = GSSAPI` or `GSS-SPNEGO` use the default
+   Kerberos credentials of the Dovecot process (for example the default client
+   keytab, see `KRB5_CLIENT_KTNAME`); [[setting,client_auth_authid]] and
+   [[setting,client_auth_password]] are not used. Over TLS they send the
+   `tls-server-end-point` channel binding, which AD can require. Without TLS,
+   `GSSAPI` provides no integrity or confidentiality after the bind, because
+   the client negotiates no security layer, so use TLS.
+ * `client_auth_mechanism = EXTERNAL` uses the TLS client certificate
+   ([[setting,ssl_client_cert_file]] and [[setting,ssl_client_key_file]]). With
+   StartTLS it works as it does with other LDAP servers. With `ldaps://` AD
+   logs the certificate in during the TLS handshake and refuses an `EXTERNAL`
+   bind, so add the `implicit-external-auth` workaround. No bind is then sent
+   and [[setting,client_auth_authzid]] is ignored:
+
+::: code-group
+```doveconf[dovecot.conf]
+ldap_client_uris = ldaps://ad.example.com
+ldap_client_workarounds = implicit-external-auth
+ldap_client {
+  client_auth_mechanism = EXTERNAL
+}
+ssl_client_cert_file = /etc/dovecot/ldap-client.pem
+ssl_client_key_file = /etc/dovecot/ldap-client.key
+```
+:::
+
+If AD doesn't accept the certificate, the connection stays anonymous and the
+searches are refused. The error then notes that the connection may be
+anonymous.

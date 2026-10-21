@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: Active Directory LDAP
+dovecotlinks:
+  active_directory: Active Directory LDAP
 ---
 
 # Authentication Against Active Directory
@@ -8,6 +10,9 @@ title: Active Directory LDAP
 When connecting to AD, you may need to use port 3268. Then again, not all LDAP
 fields are available in port 3268. Use whatever works. See:
 https://technet.microsoft.com/en-us/library/cc978012.aspx.
+
+See also [[link,auth_ldap,the LDAP documentation]] for the Active Directory
+specific connection options (TLS requirement, GSSAPI, client certificates).
 
 # LDAP Driver Configuration
 
@@ -27,9 +32,11 @@ The most important settings are:
 
 ::: code-group
 ```doveconf[dovecot.conf]
-  ldap_uris = ldap://ldap.example.com
-  ldap_auth_dn = cn=admin,dc=example,dc=com
-  ldap_auth_dn_password = secret
+  ldap_client_uris = ldaps://ldap.example.com
+  ldap_client {
+    client_auth_authid = cn=admin,dc=example,dc=com
+    client_auth_password = secret
+  }
   ldap_base = dc=example,dc=com
 ```
 :::
