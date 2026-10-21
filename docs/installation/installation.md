@@ -351,8 +351,8 @@ You can also build this as a plugin.
 
 ##### `--with-ldap(=plugin)`
 
-Build with LDAP support (requires `openldap-devel`, `libldap2-dev` or
-similar package). You can also build this as a plugin.
+Build with LDAP support. You can also build this as a plugin. Dovecot has its
+own LDAP client, so OpenLDAP libraries are not needed.
 
 ##### `--with-gssapi(=plugin)`
 
