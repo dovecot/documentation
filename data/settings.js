@@ -12380,44 +12380,446 @@ If enabled, protocol-level SSL errors are logged. Same as
 If enabled, ignore version mismatches between different Dovecot versions.`
 	},
 
-	ldap_auth_dn: {
+
+
+
+
+	ldap_client: {
 		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client_uris', 'client_auth_mechanism', '[[link,auth_ldap]]' ],
+		values: setting_types.NAMED_FILTER,
+		text: `
+Named filter for the settings of the LDAP bind that is done when connecting
+to the LDAP server: [[setting,client_auth_authid]],
+[[setting,client_auth_password]], [[setting,client_auth_authzid]] and
+[[setting,client_auth_mechanism]].
+
+\`\`\`doveconf
+passdb ldap {
+  ldap_client_uris = ldap://ldap.example.org
+  ldap_client {
+    client_auth_authid = cn=dovecot,dc=example,dc=org
+    client_auth_password = secret
+  }
+}
+\`\`\``
+	},
+
+	client_auth_authid: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client', 'client_auth_password', 'client_auth_mechanism' ],
 		values: setting_types.STRING,
 		text: `
-Specify the Distinguished Name (the username used to login to the LDAP server).
+Identity that Dovecot uses when it binds to the LDAP server after connecting.
+Inside [[setting,ldap_client]] this replaces \`ldap_auth_dn\`.
 
-Leave it commented out to bind anonymously (useful with [[setting,passdb_ldap_bind,yes]]).
+Without [[setting,client_auth_mechanism]] this is the DN of a simple bind, and
+[[setting,client_auth_password]] is its password. Leave it empty to bind
+anonymously, which is useful with [[setting,passdb_ldap_bind,yes]].
 
-Example: \`ldap_auth_dn = uid=dov-read,dc=example,dc=com,dc=.\``
+With a SASL mechanism this is the SASL authentication ID instead of a DN.
+\`GSSAPI\` and \`GSS-SPNEGO\` ignore it. \`EXTERNAL\` sends it as the
+authorization ID if [[setting,client_auth_authzid]] is empty.
+
+Example: \`client_auth_authid = uid=dov-read,dc=example,dc=com\``
+	},
+
+	client_auth_password: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client', 'client_auth_authid', 'client_auth_mechanism' ],
+		values: setting_types.STRING,
+		text: `
+Password for [[setting,client_auth_authid]]. Inside [[setting,ldap_client]]
+this replaces \`ldap_auth_dn_password\`. With \`OAUTHBEARER\` this is the
+bearer token.`
+	},
+
+	client_auth_authzid: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client', 'client_auth_authid', 'client_auth_mechanism' ],
+		values: setting_types.STRING,
+		text: `
+SASL authorization ID, i.e. the identity that is used after
+[[setting,client_auth_authid]] has been authenticated. Inside
+[[setting,ldap_client]] this replaces \`ldap_auth_sasl_authz_id\`. Normally
+you want to keep this empty.
+
+It is not used with a simple bind. It is ignored with the
+\`implicit-external-auth\` workaround of [[setting,ldap_client_workarounds]].`
+	},
+
+	client_auth_mechanism: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client', 'client_auth_authid', 'ldap_client_workarounds' ],
+		values: setting_types.STRING,
+		text: `
+Name of the SASL mechanism to use for the bind. Inside
+[[setting,ldap_client]] this replaces \`ldap_auth_sasl_mechanisms\`. If it is
+empty, a simple bind is used.
+
+Only one mechanism can be given, not a list: Dovecot doesn't read the
+mechanisms that the server supports before binding. A list is an error.
+
+The mechanisms are those of Dovecot's SASL client, for example \`EXTERNAL\`,
+\`PLAIN\`, \`SCRAM-SHA-256\`, \`SCRAM-SHA-256-PLUS\`, \`OAUTHBEARER\`,
+\`GSSAPI\` and \`GSS-SPNEGO\`. Mechanisms that were available only via Cyrus
+SASL, such as \`NTLM\`, are no longer available.
+
+The connection never has a SASL security layer, so use TLS
+([[setting,ldap_client_starttls]] or \`ldaps://\`) to protect it. \`GSSAPI\`
+negotiates no protection, and \`GSSAPI\` and \`GSS-SPNEGO\` send the
+\`tls-server-end-point\` channel binding when TLS is used. The \`-PLUS\`
+mechanisms need TLS. The Kerberos service is \`ldap\` and the host of the URI
+is used as it is, without resolving it to a canonical name.
+
+This is used only for the bind after connecting, not for the authentication
+binds of users ([[setting,passdb_ldap_bind,yes]]), which are always simple
+binds.`
+	},
+
+	ldap_client_uris: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client_starttls' ],
+		values: setting_types.STRING,
+		text: `
+Space separated list of LDAP URIs to connect to. Replaces \`ldap_uris\`.
+
+ * \`ldap://host[:port]\`
+ * \`ldaps://host[:port]\`: TLS from the start of the connection
+ * \`ldapi://path\`: UNIX socket. The path is percent-encoded, e.g.
+   \`ldapi://%2Fvar%2Frun%2Fslapd%2Fldapi\`. An empty path (\`ldapi:///\`) means
+   \`/var/run/slapd/ldapi\`.
+
+Anything after the host is ignored.
+
+A new connection tries the URIs in the order they are listed, so the first one
+is used whenever it works. A URI is given up on if connecting to it fails, the
+TLS handshake or the certificate verification fails, StartTLS is refused, or
+the server answers the bind with busy or unavailable. A connection that was
+ready and is lost is not moved to another URI, but the next request connects
+again from the first URI. There is no load balancing.
+
+Example: \`ldap_client_uris = ldaps://ldap1.example.org ldaps://ldap2.example.org\``
+	},
+
+	ldap_client_starttls: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client_uris' ],
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		text: `
+Upgrade the connection to TLS with StartTLS before binding. Replaces
+\`ldap_starttls\`. This can't be used with \`ldaps://\` or \`ldapi://\` URIs.
+
+The TLS settings are the \`ssl_client_*\` settings, see
+[[link,ssl_configuration]].`
+	},
+
+	ldap_client_connect_timeout: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		default: '5s',
+		values: setting_types.TIME_MSECS,
+		text: `
+How long connecting to each IP address of a host may take, including the TLS
+handshake of \`ldaps://\` and the StartTLS upgrade, but not the DNS lookup.
+\`infinite\` waits until the operating system gives up. 0 is not allowed.`
+	},
+
+	ldap_client_request_timeout: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client_request_absolute_timeout', 'ldap_client_max_request_retries' ],
+		default: {
+			value: '30s',
+			text: 'For `passdb ldap` and `userdb ldap` the default is `20s`.',
+		},
+		values: setting_types.TIME_MSECS,
+		text: `
+How long a single attempt of a search or a bind may take, from sending it to
+the server until its result. Replaces \`ldap_timeout\`. A request that waits
+in the queue, e.g. because of [[setting,ldap_client_max_outstanding_requests]],
+isn't timed out by this.
+
+A request that times out is sent again, if
+[[setting,ldap_client_max_request_retries]] and
+[[setting,ldap_client_request_absolute_timeout]] allow it. Otherwise it fails.
+\`infinite\` disables the timeout of attempts.
+
+0 is not allowed. Previously \`ldap_timeout = 0\` meant no timeout: use
+\`infinite\` for that.`
+	},
+
+	ldap_client_request_absolute_timeout: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client_request_timeout', 'ldap_client_max_request_retries' ],
+		default: '60s',
+		values: setting_types.TIME_MSECS,
+		text: `
+How long a search or a bind of a user may take in total, from submitting it,
+including the time it waits in the queue and all of its attempts. When it has
+passed, the request fails and isn't sent again. \`infinite\` means no limit, so
+that only [[setting,ldap_client_max_request_retries]] limits the request.
+0 is not allowed.
+
+[[setting,userdb_ldap_iterate_filter,User iteration]] (e.g.
+\`doveadm user '*'\`) isn't limited by this, only by
+[[setting,ldap_client_request_timeout]] for each page of results.`
+	},
+
+	ldap_client_max_request_retries: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client_request_timeout', 'ldap_client_request_absolute_timeout' ],
+		default: 3,
+		values: setting_types.UINT,
+		text: `
+How many times a request is sent again if the connection is lost or the
+request times out while it waits for the response. The request is sent on a new
+connection, so the URIs are tried in order. This also limits how many
+connections in a row can be lost while connecting (TLS handshake, StartTLS and
+the bind after connecting).
+
+\`0\` means that nothing is sent again. \`unlimited\` means no limit: only
+[[setting,ldap_client_request_absolute_timeout]] ends the retries.
+
+A search is sent again only if it hasn't given any results yet. The bind of a
+user is sent again only if it got no result. An LDAP server that locks out an
+account after failed binds can count a wrong password again each time the bind
+is sent again, so the bind of a wrong password may count twice. Use a low value
+to lower that risk.`
+	},
+
+	ldap_client_max_idle_time: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		default: 'infinite',
+		values: setting_types.TIME,
+		text: `
+Disconnect from the LDAP server after the connection has had no requests and no
+traffic for this long. Replaces \`ldap_max_idle_time\`. The next request
+connects again. \`infinite\` never disconnects. \`0\` disconnects as soon as
+there are no requests; previously 0 meant never, and it is now converted to
+\`infinite\` for old [[setting,dovecot_config_version]].
+
+Networks, firewalls and NAT devices can drop idle connections without telling
+either end, and the next request notices only when it times out. Set this lower
+than the idle limit of the network, e.g. \`5 mins\` with Active Directory,
+Azure or NAT.`
+	},
+
+	ldap_client_max_outstanding_requests: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		default: {
+			value: '100',
+			text: 'For `passdb ldap` and `userdb ldap` the default is `8`.',
+		},
+		values: setting_types.UINT,
+		text: `
+Maximum number of requests that wait for a response from the server on a
+connection at the same time. The other requests wait in a queue. 0 is not
+allowed.`
+	},
+
+	ldap_client_max_message_size: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		default: '1M',
+		values: setting_types.SIZE,
+		text: `
+Largest LDAP message accepted from the server. A decoded message can take up to
+8 times as much memory as its size. 0 is not allowed.`
+	},
+
+	ldap_client_max_auth_bind_connections: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'passdb_ldap_bind' ],
+		default: 4,
+		values: setting_types.UINT,
+		text: `
+Maximum number of connections that are used at the same time for the binds that
+verify the passwords of users ([[setting,passdb_ldap_bind,yes]]), in addition to
+the connection of the other requests. The other binds wait in the queue. User
+binds use connections of their own, so the identity of the connection of the
+searches stays the same. 0 is not allowed.`
+	},
+
+	ldap_client_workarounds: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'client_auth_mechanism' ],
+		default: '',
+		values: setting_types.BOOLLIST,
+		text: `
+Space separated list of workarounds for LDAP server quirks.
+
+| Workaround | Description |
+| ---------- | ----------- |
+| \`openldap-channel-binding-tls-unique\` | OpenLDAP and Cyrus SASL servers use the channel binding name \`ldap\` with the SCRAM \`-PLUS\` mechanisms. Use the \`tls-unique\` channel binding. It fails with TLS 1.3. |
+| \`openldap-channel-binding-tls-server-end-point\` | Same as above, but use the \`tls-server-end-point\` channel binding. OpenLDAP uses it with \`olcSaslCBinding: tls-endpoint\`. |
+| \`implicit-external-auth\` | With \`ldaps://\` and [[setting,client_auth_mechanism,EXTERNAL]] no SASL bind is sent. Active Directory logs in the TLS client certificate during the TLS handshake of \`ldaps://\` and refuses SASL \`EXTERNAL\` there. [[setting,client_auth_authzid]] is ignored. StartTLS and other mechanisms aren't affected. |
+
+At most one of the \`openldap-channel-binding\` workarounds can be used.`
+	},
+
+	ldap_auth_dn: {
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,client_auth_authid]].`
+		},
+		values: setting_types.STRING,
+		text: `
+Renamed to [[setting,client_auth_authid]].`
 	},
 
 	ldap_auth_dn_password: {
-		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,client_auth_password]].`
+		},
 		values: setting_types.STRING,
 		text: `
-Password for LDAP server. Used if [[setting,ldap_auth_dn]] is specified.`
+Renamed to [[setting,client_auth_password]].`
 	},
 
 	ldap_auth_sasl_authz_id: {
-		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,client_auth_authzid]].`
+		},
 		values: setting_types.STRING,
 		text: `
-SASL authorization ID, ie. the [[setting,ldap_auth_dn_password]] is for this "master user", but the
-[[setting,ldap_auth_dn]] is still the logged in user. Normally you want to keep this empty.`
+Renamed to [[setting,client_auth_authzid]].`
 	},
 
 	ldap_auth_sasl_mechanisms: {
-		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,client_auth_mechanism]]. Only one mechanism can be given: a list is an error.`
+		},
 		values: setting_types.BOOLLIST,
 		text: `
-List of SASL mechanism names to use.`
+Renamed to [[setting,client_auth_mechanism]]. Only one mechanism can be given: a list is an error.`
+	},
+
+	ldap_uris: {
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,ldap_client_uris]].`
+		},
+		values: setting_types.STRING,
+		text: `
+Renamed to [[setting,ldap_client_uris]].`
+	},
+
+	ldap_starttls: {
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,ldap_client_starttls]].`
+		},
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		text: `
+Renamed to [[setting,ldap_client_starttls]].`
+	},
+
+	ldap_max_idle_time: {
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,ldap_client_max_idle_time]]. \`0\` became \`infinite\`.`
+		},
+		default: 0,
+		values: setting_types.TIME,
+		text: `
+Renamed to [[setting,ldap_client_max_idle_time]]. \`0\` became \`infinite\`.`
+	},
+
+	ldap_timeout: {
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,ldap_client_request_timeout]]. \`0\` became \`infinite\`.`
+		},
+		default: 0,
+		values: setting_types.TIME,
+		text: `
+Renamed to [[setting,ldap_client_request_timeout]].`
+	},
+
+	ldap_version: {
+		deprecated: {
+			settings_ldap_client_changed: `
+The setting has no effect and is accepted only for backwards compatibility.
+Remove it.`
+		},
+		default: 3,
+		values: setting_types.UINT,
+		text: `
+The setting has no effect.`
+	},
+
+	ldap_debug_level: {
+		deprecated: {
+			settings_ldap_client_changed: `
+The setting has no effect and is accepted only for backwards compatibility.
+Remove it.`
+		},
+		default: 0,
+		values: setting_types.UINT,
+		text: `
+The setting has no effect.`
 	},
 
 	ldap_auth_sasl_realm: {
-		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
+		deprecated: {
+			settings_ldap_client_changed: `
+The setting has no effect and is accepted only for backwards compatibility.
+Remove it.`
+		},
 		values: setting_types.STRING,
 		text: `
-SASL realm to use.`
+The setting has no effect.`
 	},
 
 	ldap_base: {
@@ -12447,17 +12849,6 @@ By default all the databases have the same \`""\`(empty string) default connecti
 and as such share the connections.`
 	},
 
-	ldap_debug_level: {
-		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
-		default: 0,
-		values: setting_types.UINT,
-		text: `
-LDAP library debug level as specified by \`LDAP_DEBUG_*\` in \`ldap_log.h\`.
-
-Value \`-1\` means everything.
-
-You may need to recompile OpenLDAP with debugging enabled to get enough output.`
-	},
 
 	ldap_deref: {
 		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
@@ -12477,14 +12868,6 @@ The ldap filter to use to find the ldap entry.
 This setting is required for ldap [[setting,dict_map]]`
 	},
 
-	ldap_max_idle_time: {
-		tags: [ 'dict-ldap' ],
-		values: setting_types.TIME,
-		default: 0,
-		text: `
-Disconnect from LDAP server after connection has been idle for this many seconds.`
-	},
-
 	ldap_scope: {
 		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
 		default: 'subtree',
@@ -12495,35 +12878,7 @@ This specifies the search scope.`
 	},
 
 
-	ldap_starttls: {
-		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
-		default: 'no',
-		values: setting_types.BOOLEAN,
-		text: `
-Set to \`yes\` to use TLS to connect to the LDAP server.`
-	},
 
-	ldap_uris: {
-		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
-		values: setting_types.STRING,
-		text: `
-LDAP URIs to use.
-
-Configure this setting to specify what LDAP
-server(s) to connect to.
-
-The URIs are in syntax \`protocol://host:port\`.
-
-Example: \`ldap_uris = ldaps://secure.domain.org\``
-	},
-
-	ldap_version: {
-		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
-		default: 3,
-		values: setting_types.UINT,
-		text: `
-LDAP protocol version to use. Likely \`2\` or \`3\`.`
-	},
 
 	passdb_ldap_bind: {
 		tags: [ 'auth-ldap' ],

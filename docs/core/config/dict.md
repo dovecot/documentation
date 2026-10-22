@@ -69,7 +69,8 @@ support.
 
 Note that the LDAP driver must be used via [`proxy`](#proxy).
 
-See [[link,auth_ldap]].
+See [[link,auth_ldap]] for the connection settings, TLS, and the Active Directory
+specific notes. The `ldap_client_*` and `client_auth_*` settings are the same.
 
 #### Configuration
 
@@ -78,12 +79,14 @@ See [[link,auth_ldap]].
 dict_server {
   dict ldap {
     driver = ldap
-    ldap_uris = ldap://{{LDAPHOST}}
-    ldap_auth_dn = uid=testadmin,cn=users,dc=dovecot,dc=net
-    ldap_auth_dn_password = testadmin
-    ldap_timeout_secs = 5
+    ldap_client_uris = ldap://{{LDAPHOST}}
+    ldap_client_starttls = yes
+    ldap_client_request_timeout = 5s
+    ldap_client {
+      client_auth_authid = uid=testadmin,cn=users,dc=dovecot,dc=net
+      client_auth_password = testadmin
+    }
     ldap_base = dc=dovecot,dc=net
-    ldap_starttls = no
     ssl_client_require_valid_cert = no
 
     dict_map priv/test/home {

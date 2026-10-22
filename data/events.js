@@ -914,6 +914,68 @@ DNS request sent by DNS client library to DNS worker process has been
 finished.`
 	},
 
+	/* LDAP client
+	 *
+	 * Events emitted by Dovecot's internal asynchronous LDAP client
+	 * library. */
+
+	ldap_connection_handshake_finished: {
+		root: 'ldap-client',
+		inherit: 'ldap_connection',
+		added: {
+			events_ldap_client_added: false,
+		},
+		fields: {
+			bind_dn: `DN of the configured service account bind. Not set for anonymous connections.`,
+			ldap_result_code: `LDAP result code of the bind response (integer), if one was received.`,
+			error: `Human readable error, if the handshake failed.`,
+		},
+		text: `
+LDAP connection handshake has finished: the connection is established, the
+TLS handshake (with \`ldaps://\` or StartTLS) is done and the service account
+bind has succeeded. Requests are sent only after this. Also sent when the
+connection fails before that, including connect failures.
+
+The duration covers connecting to the server address, not the DNS lookup.`
+	},
+
+	ldap_connection_finished: {
+		root: 'ldap-client',
+		inherit: 'ldap_connection',
+		added: {
+			events_ldap_client_added: false,
+		},
+		fields: {
+			net_in_bytes: `Amount of LDAP data read, in bytes (decrypted with TLS).`,
+			net_out_bytes: `Amount of LDAP data written, in bytes (before encryption with TLS).`,
+			error: `Human readable reason, if the connection was closed because of an error.`,
+		},
+		text: `LDAP connection was closed.`
+	},
+
+	ldap_lookup_finished: {
+		root: 'ldap-client',
+		added: {
+			events_ldap_client_added: false,
+		},
+		fields: {
+			message_id: `LDAP message ID of the search request.`,
+			ldap_base: `Search base DN.`,
+			ldap_scope: `Search scope: \`base\`, \`one\` or \`sub\`.`,
+			ldap_filter: `Search filter.`,
+			ldap_result_code: `LDAP result code (integer), if a search result or a failed bind response was received.`,
+			entries: `Number of entries received.`,
+			references: `Number of search result references received. They are not followed.`,
+			error: `Human readable error, if the search failed. This includes timeouts, aborts, disconnects and the client being deinitialized.`,
+		},
+		text: `
+LDAP search request has finished, successfully or not.
+
+The duration covers the time from submitting the request, including any time
+spent waiting for a connection. This event is useful to track and monitor the
+LDAP servers.`
+	},
+
 	/* SQL
 	 *
 	 * Events emitted by Dovecot's internal SQL library.
@@ -1748,6 +1810,14 @@ Reason string for purging the cache file:
 			redirects: `Number of redirects done while processing request.`,
 			status_code: `HTTP result status code (integer).`,
 			target:	`Request path with parameters, e.g. \`/path/?delimiter=%2F&prefix=test%2F\`.`,
+		}
+	},
+
+	ldap_connection: {
+		inherit: 'server_connection_common',
+		fields: {
+			ldap_uri: `LDAP server URI the connection was made to.`,
+			tls: `TLS use: \`none\`, \`ldaps\` or \`starttls\`.`,
 		}
 	},
 

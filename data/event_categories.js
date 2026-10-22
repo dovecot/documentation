@@ -87,6 +87,11 @@ export const categories = {
 		description: `dovecot-lda process`
 	},
 
+	'ldap-client': {
+		category: 'root',
+		description: `Asynchronous LDAP client library`
+	},
+
 	'local-delivery': {
 		category: 'root',
 		description: `LDA/LMTP local delivery`

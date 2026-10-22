@@ -513,6 +513,12 @@ Depending on how Pigeonhole was configured and compiled (refer to
 INSTALL file for more information), LDAP support may only be available
 when a plugin called `sieve_storage_ldap` is loaded.
 
+The connection to the LDAP server is configured with the same
+[[setting,ldap_client_uris,ldap_client_*]] and
+[[setting,client_auth_authid,client_auth_*]] settings as the
+[[link,auth_ldap,LDAP authentication]], including TLS. Only search and read
+access is required.
+
 #### Configuration
 
 The `ldap` storage driver supports all settings described in
@@ -580,14 +586,17 @@ sieve_script personal {
   # search and read access is required.
 
   # Space separated list of LDAP URIs to use.
-  ldap_uris = ldap://localhost
+  ldap_client_uris = ldap://localhost
 
-  # Distinguished Name - the username used to login to the LDAP server.
-  # Leave it commented out to bind anonymously.
-  ldap_auth_dn = cn=sieve,ou=Programs,dc=example,dc=org
+  # Use StartTLS to connect to the LDAP server. Not for ldaps://.
+  #ldap_client_starttls = no
 
-  # Password for LDAP server, if dn is specified.
-  ldap_auth_dn_password = secret
+  # Distinguished Name and its password to bind with. Leave out to bind
+  # anonymously.
+  ldap_client {
+    client_auth_authid = cn=sieve,ou=Programs,dc=example,dc=org
+    client_auth_password = secret
+  }
 
   # LDAP base
   ldap_base = dc=mail,dc=example,dc=org
@@ -598,7 +607,7 @@ sieve_script personal {
   # Search scope: base, onelevel, subtree
   ldap_scope = subtree
 
-  # Filter for user lookup. Some variables can be used:
+  # Filter for script lookup. Some variables can be used:
   #   %{user}      - username
   #   %{user | username}      - user part in user@domain, same as %{user} if there's no domain
   #   %{user | domain}      - domain part in user@domain, empty if there's no domain

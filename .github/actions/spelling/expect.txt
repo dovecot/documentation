@@ -29,9 +29,11 @@ atimes
 auid
 Aup
 AUTHENTICATIONFAILED
+authid
 authpriv
 authtok
 authuser
+authzid
 autocreate
 autocreated
 Autocreation
@@ -76,6 +78,7 @@ bzlib
 CACERTDIR
 CANTCREAT
 CApath
+CBinding
 cdb
 certbot
 changetype
@@ -344,6 +347,7 @@ kludgy
 kmail
 krb
 ktadd
+KTNAME
 ktpass
 ktrace
 KTY
@@ -367,6 +371,7 @@ lgdb
 LHLO
 LIBADD
 libanonymous
+libasn
 libbzip
 libcrammd
 libcs
@@ -522,6 +527,7 @@ newmail
 Newsgroups
 newtok
 NEXTUID
+nfinish
 nfsmount
 ngrams
 ngrep
