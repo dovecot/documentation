@@ -350,12 +350,25 @@ guarantees that two backend servers don't attempt to modify the same user's
 mailbox at the same time (which might cause problems).
 
 ::: warning [[changed,doveadm_mailbox_commands_user]]
-All mail commands require providing `-u`, `-F` or `-A` parameter.
+All mail commands require providing `-u` or `-F` parameter.
 
 `USER` environment variable is no longer supported.
 
 This will always be subject to user database lookup and requires access to
 auth userdb socket.
+:::
+
+::: warning [[removed,doveadm_all_users_removed]]
+The `-A` parameter and wildcards in the `-u` parameter were removed. To run
+a mail command for multiple users, give the list of users with `-F`. `-F -`
+reads the list from stdin, so all users can be processed with:
+
+```sh
+doveadm user '*' | doveadm mailbox list -F -
+```
+
+If the user listing fails, the mail command still processes the users listed
+so far and exits successfully, unless the shell's `pipefail` option is used.
 :::
 
 ### doveadm fetch

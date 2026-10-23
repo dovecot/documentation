@@ -31,6 +31,7 @@ export const updates = {
 	dcrypt_same_cipher_algo_added: '2.4.0',
 	dict_protocol_non_atomic_added: '2.4.6',
 	dict_protocol_v4: '2.4.0',
+	doveadm_all_users_removed: '2.4.6',
 	doveadm_ex_expired_code: '2.4.0',
 	doveadm_mailbox_commands_user: '2.4.0',
 	doveadm_who_ps_added: '2.4.6',

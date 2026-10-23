@@ -340,7 +340,7 @@ end
 ```
 
 If you also want to be able to list users, so that you could use
-`doveadm cmd -A`:
+`doveadm user '*'` (e.g. `doveadm user '*' | doveadm cmd -F -`):
 
 ```lua:line-numbers
 local database = "/path/to/file"
