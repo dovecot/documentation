@@ -10,10 +10,6 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **search**
   [**-S** *socket_path*]
-  **-A** *search_query*
-
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **search**
-  [**-S** *socket_path*]
   **-F** *file* *search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **search**
@@ -30,20 +26,18 @@ The **search** command is used to find matching messages.
 [[man,doveadm]] will print the mailbox's guid and the message's uid
 for each match.
 
-When used with the **-A** or **-u** *wildcard* options,
+When used with the **-F** option,
 [[man,doveadm]] will print the fields **username**, **mailbox-guid**
 and **uid** for each matching message.
 
-In the first form, [[man,doveadm]] will executed the **search** action
-will be performed for all users.
+In the first form, the command will be performed for all users listed in
+the given *file*. To execute the **search** action for all users, use e.g.
+`doveadm user '*' | doveadm search -F - search_query`.
 
-In the second form, the command will be performed for all users listed in
-the given *file*.
-
-In the third form, the command will be performed for the user contained in the
+In the second form, the command will be performed for the user contained in the
 *USER* environment variable.
 
-In the last form, only matching mails of the given *user*(s) will be
+In the last form, only matching mails of the given *user* will be
 searched.
 
 <!-- @include: include/global-options-formatter.inc -->
@@ -52,8 +46,6 @@ This command uses by default the output formatter **flow** (without the
 *key*=prefix).
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 

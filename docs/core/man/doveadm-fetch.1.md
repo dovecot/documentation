@@ -10,10 +10,6 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **fetch**
   [**-S** *socket_path*]
-  **-A** *fields* *search_query*
-
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **fetch**
-  [**-S** *socket_path*]
   **-F** *file* *fields* *search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **fetch**
@@ -37,8 +33,6 @@ messages one at a time, see [[man,doveadm-search]].
 This command uses by default the output formatter **pager**.
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 

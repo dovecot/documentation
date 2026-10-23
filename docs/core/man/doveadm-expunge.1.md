@@ -11,11 +11,6 @@ dovecotComponent: core
 **doveadm** [*GLOBAL OPTIONS*] **expunge**
   [**-S** *socket_path*]
   [**-d**]
-  **-A** *search_query*
-
-**doveadm** [*GLOBAL OPTIONS*] **expunge**
-  [**-S** *socket_path*]
-  [**-d**]
   **-F** *file* *search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] **expunge**
@@ -35,22 +30,19 @@ query. It is typically used to expunge old mails from users' Trash
 and/or Spam mailboxes. To test which messages a given search query would
 match, you can use *doveadm fetch* or *doveadm search* commands.
 
-In the first form, the command will be performed for all users.
+In the first form, [[man,doveadm]] will expunge messages of the users
+listed in the given *file*. To expunge messages of all users, use e.g.
+`doveadm user '*' | doveadm expunge -F - search_query`.
 
-In the second form, [[man,doveadm]] will expunge messages of the users
-listed in the given *file*.
-
-In the third form, the command will be performed for the user contained in the
+In the second form, the command will be performed for the user contained in the
 *USER* environment variable.
 
-In the final form, only matching mails of the given *user* (s) will be
+In the final form, only matching mails of the given *user* will be
 expunged.
 
 <!-- @include: include/global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 **-d**
 :   Delete the mailbox if it is empty after expunging.

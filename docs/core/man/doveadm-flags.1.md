@@ -10,10 +10,6 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] **flags**
   [**-S** *socket_path*]
-  **-A** *command flags* *search_query*
-
-**doveadm** [*GLOBAL OPTIONS*] **flags**
-  [**-S** *socket_path*]
   **-F** *file* *command flags* *search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] **flags**
@@ -31,8 +27,6 @@ This command is used to manipulate flags of messages.
 <!-- @include: include/global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 
@@ -62,7 +56,7 @@ This command is used to manipulate flags of messages.
 ### flags add
 
 **doveadm** [*GLOBAL OPTIONS*] flags add
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *flags search_query*
 
@@ -72,7 +66,7 @@ This command is used to extend the current set of flags with the given
 ### flags remove
 
 **doveadm** [*GLOBAL OPTIONS*] flags remove
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *flags search_query*
 
@@ -82,7 +76,7 @@ this command.
 ### flags replace
 
 **doveadm** [*GLOBAL OPTIONS*] flags replace
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   *flags search_query*
 

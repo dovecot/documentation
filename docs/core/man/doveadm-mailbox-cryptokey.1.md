@@ -31,8 +31,6 @@ active.
 
 ## OPTIONS
 
-<!-- @include: include/option-A.inc -->
-
 <!-- @include: include/option-F-file.inc -->
 
 <!-- @include: include/option-no-userdb-lookup.inc -->

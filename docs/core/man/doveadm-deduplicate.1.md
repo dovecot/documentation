@@ -9,7 +9,7 @@ dovecotComponent: core
 ## SYNOPSIS
 
 **doveadm** [*GLOBAL OPTIONS*] **deduplicate**
-  [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
+  [**-u** *user* | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
   [**-m**]
   *search_query*
@@ -27,8 +27,6 @@ Deduplication across multiple mailboxes is not supported.
 <!-- @include: include/global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 

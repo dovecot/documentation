@@ -184,7 +184,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -258,7 +258,7 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -670,7 +670,7 @@ The synchronized destination. See [[man,doveadm-sync]] for options.`
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -1549,7 +1549,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -1602,7 +1602,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -1645,7 +1645,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -1688,7 +1688,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2071,7 +2071,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2150,7 +2150,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2298,7 +2298,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2341,7 +2341,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2376,7 +2376,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2411,7 +2411,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2480,7 +2480,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2538,7 +2538,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2591,7 +2591,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2673,7 +2673,7 @@ errors (it is the same checking done by the xapian-check command with the
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2732,7 +2732,7 @@ to secure it.
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2777,7 +2777,7 @@ to secure it.
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2842,7 +2842,7 @@ to secure it.
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2919,7 +2919,7 @@ to secure it.
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -2966,7 +2966,7 @@ to secure it.
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -3071,7 +3071,7 @@ to secure it.
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -3134,7 +3134,7 @@ to secure it.
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -3206,7 +3206,7 @@ to secure it.
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -3668,7 +3668,7 @@ returned.`,
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -3717,7 +3717,7 @@ returned.`,
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -3811,7 +3811,7 @@ reload uses the configured setting again.`,
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -3999,7 +3999,7 @@ listed once per generation.`,
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -4024,7 +4024,7 @@ listed once per generation.`,
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
@@ -4343,7 +4343,7 @@ listed once per generation.`,
 			fields: {
 				username: {
 					/* Sticky: doveadm-mail.c prepends a username column when the
-					 * command is run against multiple users (-A, wildcard, or user file). */
+					 * command is run against multiple users (user file). */
 					type: doveadm_response_types.STRING,
 					description: `Username. Included when the command is run against multiple users.`,
 					dynamic: true
