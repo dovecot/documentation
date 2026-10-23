@@ -2,12 +2,6 @@
 
 **doveadm** [*GLOBAL OPTIONS*] **move**
   [**-S** *socket_path*]
-  **-A** **destination**
-  [**user** *source_user*]
-  *search_query*
-
-**doveadm** [*GLOBAL OPTIONS*] **move**
-  [**-S** *socket_path*]
   **-F** *file* **destination**
   [**user** *source_user*]
   *search_query*
@@ -24,12 +18,6 @@
   [**user** *source_user*]
   *search_query*
 
-
-**doveadm** [*GLOBAL OPTIONS*] **copy**
-  [**-S** *socket_path*]
-  **-A** **destination**
-  [**user** *source_user*]
-  *search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] **copy**
   [**-S** *socket_path*]
@@ -59,22 +47,17 @@ messages are moved into the *destination* mailbox.
 copied messages will not be expunged after copying.
 
 In the first form, [[man,doveadm]] will iterate over all users, found
-in the configured *user_db* (s), and move or copy each user's messages,
-matching the given *search_query*, into the user's *destination*
-mailbox.
-
-In the second form, [[man,doveadm]] will iterate over all users, found
 in the given *file*, and move or copy each user's messages, matching the
-given *search_query*, into the user's *destination* mailbox.
+given *search_query*, into the user's *destination* mailbox. To do this
+for all users found in the configured *user_db* (s), use e.g.
+`doveadm user '*' | doveadm move -F - destination search_query`.
 
-In the third form, matching mails will be moved or copied only for
-given *user*(s).
+In the last form, matching mails will be moved or copied only for
+the given *user*.
 
 <!-- @include: ./global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: ./option-A.inc -->
 
 <!-- @include: ./option-F-file.inc -->
 

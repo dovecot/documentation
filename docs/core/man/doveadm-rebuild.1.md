@@ -10,10 +10,6 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **rebuild** \<command\>
   [**-S** *socket_path*]
-  **-A** *search_query*
-
-**doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **rebuild** \<command\>
-  [**-S** *socket_path*]
   **-F** *file* *search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] [**-f** *formatter*] **rebuild** \<command\>
@@ -29,20 +25,18 @@ dovecotComponent: core
 The **rebuild attachments** command is used to rebuilds attachment
 presence. [[man,doveadm]] will print the message's uid for each match.
 
-When used with the **-A** or **-u** *wildcard* options,
+When used with the **-F** option,
 [[man,doveadm]] will print the fields **username** and **uid** for
 each matching message.
 
-In the first form, [[man,doveadm]] will execute the **rebuild** action for
-all users.
+In the first form, the command will be performed for all users listed in
+the given *file*. To execute the **rebuild** action for all users, use e.g.
+`doveadm user '*' | doveadm rebuild attachments -F - search_query`.
 
-In the second form, the command will be performed for all users listed in
-the given *file*.
-
-In the third form, the command will be performed for the user contained in the
+In the second form, the command will be performed for the user contained in the
 *USER* environment variable.
 
-In the last form, only matching mails of the given *user* (s) will be
+In the last form, only matching mails of the given *user* will be
 rebuilt
 
 <!-- @include: include/global-options-formatter.inc -->
@@ -51,8 +45,6 @@ This command uses by default the output formatter **flow** (without the
 *key* = prefix).
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 

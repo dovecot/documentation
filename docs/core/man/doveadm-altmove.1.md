@@ -11,11 +11,6 @@ dovecotComponent: core
 **doveadm** [*GLOBAL OPTIONS*] **altmove**
   [**-r**]
   [**-S** *socket_path*]
-  **-A** *search_query*
-
-**doveadm** [*GLOBAL OPTIONS*] **altmove**
-  [**-r**]
-  [**-S** *socket_path*]
   **-F** *file search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] **altmove**
@@ -34,22 +29,19 @@ This command can be used with sdbox or mdbox storage to move mails to
 alternative storage path when *mail_alt_path* is specified for the mail
 location.
 
-In the first form, [[man,doveadm]] will execute the **altmove** for all users.
+In the first form, the command will be performed for all users listed in
+the given *file*. To execute the **altmove** for all users, use e.g.
+`doveadm user '*' | doveadm altmove -F - search_query`.
 
-In the second form, the command will be performed for all users listed in
-the given *file*.
-
-In the third form, the command will be performed for the user contained in the
+In the second form, the command will be performed for the user contained in the
 *USER* environment variable.
 
-In the last form, only matching mails of the given *user*(s) will be
+In the last form, only matching mails of the given *user* will be
 moved to the alternative storage.
 
 <!-- @include: include/global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 

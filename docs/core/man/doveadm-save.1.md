@@ -10,15 +10,6 @@ dovecotComponent: core
 
 **doveadm** [*GLOBAL OPTIONS*] **save**
   [**-S** *socket_path*]
-  **-A**
-  [*-m* *mailbox*]
-  [*-U* *uid*]
-  [*-g* *guid*]
-  [*-r* *received-date*]
-  [*mail-file*]
-
-**doveadm** [*GLOBAL OPTIONS*] **save**
-  [**-S** *socket_path*]
   **-F** *file*
   [*-m* *mailbox*]
   [*-U* *uid*]
@@ -53,8 +44,6 @@ quota is enforced.
 <!-- @include: include/global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 

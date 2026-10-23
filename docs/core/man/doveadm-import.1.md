@@ -12,13 +12,6 @@ dovecotComponent: core
   [**-S** *socket_path*]
   [**-U** *source_user*]
   [**-s**]
-  **-A**
-  *source_mail_driver*:*source_mail_path* *dest_parent* *search_query*
-
-**doveadm** [*GLOBAL OPTIONS*] **import**
-  [**-S** *socket_path*]
-  [**-U** *source_user*]
-  [**-s**]
   **-F** *file* *source_mail_driver*:*source_mail_path* *dest_parent* *search_query*
 
 **doveadm** [*GLOBAL OPTIONS*] **import**
@@ -37,18 +30,15 @@ level if *dest_parent* is empty (""). The *search_query* can be used to
 restrict which mailboxes or messages are imported. By default the import
 is done in destination user's context, you can use -U to change this.
 
-In the first form, the mails will be imported for all users.
+In the first form, the mails will be imported for all users listed in
+the given *file*. To import the mails for all users, use e.g.
+`doveadm user '*' | doveadm import -F - source_mail_driver:source_mail_path dest_parent search_query`.
 
-In the second form, the mails will be imported for all users listed in
-the given *file*.
-
-In the final form, the mails will be imported only for given *user* (s).
+In the final form, the mails will be imported only for the given *user*.
 
 <!-- @include: include/global-options.inc -->
 
 ## OPTIONS
-
-<!-- @include: include/option-A.inc -->
 
 <!-- @include: include/option-F-file.inc -->
 
