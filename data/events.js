@@ -810,6 +810,15 @@ IMAP command is completed.
 This event is useful to track individual command usage, debug specific
 sessions, and/or detect broken clients.
 
+[[added,imap_hibernate_commands_added]] The imap-hibernate process also
+sends this event for the IDLE (finished by DONE), NOOP, CHECK and LOGOUT
+commands it answers itself (see [[link,imap_hibernation_commands]]). These
+events have the \`imap-hibernate\` category. \`running_usecs\` and
+\`lock_wait_usecs\` are always 0 for them.
+
+When an IDLE command is hibernated, the imap process sends this event for it
+without \`tagged_reply_state\` and \`tagged_reply\`.
+
 ::: tip
 This event is currently not sent for pre-login IMAP commands.
 :::`
