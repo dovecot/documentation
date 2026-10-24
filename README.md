@@ -368,6 +368,19 @@ The tag_name must be defined in `data/updates.js`.
 
 Example: `[[changed,tag_name]]`
 
+#### Wildcard Includes
+
+***Syntax: `<!-- @include: dir/prefix-*.inc -->`***
+
+Includes all files matching the `*` wildcard, sorted by name. The wildcard is
+supported only in the filename. Matching no files is a build error.
+
+This is used by the upgrading pages, so that each change can add its own
+include file without modifying the same lines in the page. E.g. the 2.4.6
+notes are split into `include/2.4.6-list-*.inc` files containing list items
+and `include/2.4.6-section-*.inc` files that start with a heading, since a
+list item included after a section would be shown as part of that section.
+
 ### Other Markdown Extensions
 
 #### TODO Container
