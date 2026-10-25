@@ -76,6 +76,7 @@ bzlib
 CACERTDIR
 CANTCREAT
 CApath
+CCNAME
 cdb
 certbot
 changetype
@@ -187,6 +188,7 @@ eddsa
 editheader
 edprivkey
 edpubkey
+edu
 egid
 EID
 Eing
@@ -343,6 +345,7 @@ kludgy
 kmail
 krb
 ktadd
+KTNAME
 ktpass
 ktrace
 KTY
