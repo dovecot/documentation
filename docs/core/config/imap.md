@@ -9,6 +9,9 @@ dovecotlinks:
   imap_hibernation_nonidle:
     hash: hibernating-connections-without-idle
     text: Hibernating Connections Without IDLE
+  imap_hibernation_commands:
+    hash: commands-handled-by-imap-hibernate
+    text: Commands Handled by imap-hibernate
   imap_search_nesting_limit:
     hash: search-query-nesting-limit
     text: Search Query Nesting Limit
@@ -74,6 +77,10 @@ service imap-hibernate {
 ### Hibernating Connections Without IDLE
 
 <!-- @include: include/imap_hibernation_nonidle.inc -->
+
+### Commands Handled by imap-hibernate
+
+<!-- @include: include/imap_hibernation_commands.inc -->
 
 ## Search Query Nesting Limit
 

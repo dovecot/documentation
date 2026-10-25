@@ -43,6 +43,7 @@ export const updates = {
 	fs_crypt_require_encryption_keys: '2.4.0',
 	fts_flatcurve: '2.4.0',
 	fts_language_catalan_added: '2.4.6',
+	imap_hibernate_commands_added: '2.4.6',
 	imap_hibernate_nonidle_added: '2.4.6',
 	imap_search_nesting_limit_added: '2.4.6',
 	imapc_features_no_acl: '2.4.0',
