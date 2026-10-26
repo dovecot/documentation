@@ -99,6 +99,10 @@ This enables cross-realm and on-behalf authentication.
 
 See [[link,passdb_extra_fields]].
 
+GSS-SPNEGO carries no authorization identity, so `k5principals` and mapping a
+principal to another login work only with GSSAPI. With GSS-SPNEGO the
+authenticated principal is the user.
+
 ### Testing
 
 You need an GSSAPI capable client, such as Thunderbird, running on a

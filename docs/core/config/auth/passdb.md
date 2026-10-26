@@ -437,6 +437,9 @@ If using [[setting,auth_mechanisms,gssapi]], may contain Kerberos v5 principals
 allowed to map to the current user, bypassing the internal call to
 `krb5_kuserok()`. The database must support credentials lookup.
 
+Only GSSAPI uses this field. GSS-SPNEGO carries no authorization identity, so
+the field is ignored.
+
 #### `delay_until=<UNIX timestamp>[+<max random secs>]`
 
 Delay login until this time.
