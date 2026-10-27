@@ -266,7 +266,8 @@ These still need to be enabled with [[setting,mail_utf8_extensions]].
 
 ##### `--enable-experimental-imap4rev2`
 
-Enables support for IMAPrev2.
+Enables support for IMAP4rev2.
+This still needs to be enabled with [[setting,imap4rev2_enable]].
 
 #### FTS Options
 
