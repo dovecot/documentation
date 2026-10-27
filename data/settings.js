@@ -6253,7 +6253,17 @@ longer craft Message-IDs whose hashes deliberately collide. Existing v1 index
 files are deleted and rebuilt in the v2 format when the mailbox is next
 opened for threading. Older Dovecot versions don't understand the v2 format
 and rebuild the index in the v1 format, so keep this setting at the old
-version until a rollback is no longer possible.`
+version until a rollback is no longer possible.
+
+[[changed,settings_dovecot_storage_version_mime_parts_v2_changed]] The
+\`mime.parts.v2\` and \`imap.bodystructure.utf8\` cache fields are written
+(see [[link,mail_cache]]). Below this version the legacy \`mime.parts\` and
+\`imap.bodystructure\` fields are written exactly as before, so a rollback
+stays possible, but sessions with \`UTF8=ACCEPT\` enabled parse messages
+containing \`message/global\` parts again on every \`BODYSTRUCTURE\` fetch.
+Older Dovecot versions don't know the new fields and parse such mails again,
+so keep this setting at the old version until a rollback is no longer
+possible.`
 	},
 
 	dsync_alt_char: {
