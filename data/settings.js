@@ -8657,6 +8657,9 @@ Options:
     cost. This means that either both \`mime.parts\` and
     \`imap.bodystructure\` has to be in cache already, or if mail body is
     opened in any case.
+    [[changed,imap_utf8_message_global_added]] A session with \`UTF8=ACCEPT\`
+    enabled resolves the MIME parts from the cache on fetch, so it may add
+    the keywords where an IMAP4rev1 session did not.
 
 \`add-flags no-flags-on-fetch\`
 :   Flags are added during save, but not during fetch. This option will
@@ -9147,7 +9150,18 @@ This can be overridden via the \`uid\` [[link,userdb_fields,userdb field]].`
 		text: `
 If Dovecot has been compiled with --enable-experimental-mail-utf8 configure option,
 this setting can be used to enable the feature. Settings this to \`yes\` will
-enable SMTPUTF8 for LMTP and Submission sessions, and UTF8=ACCEPT for IMAP sessions.`
+enable SMTPUTF8 for LMTP and Submission sessions, and UTF8=ACCEPT for IMAP sessions.
+
+[[added,imap_utf8_message_global_added]] IMAP sessions that have enabled
+\`UTF8=ACCEPT\` (or \`IMAP4rev2\`) get \`ENVELOPE\`, \`BODY\` and
+\`BODYSTRUCTURE\` with UTF-8 in quoted strings, and \`message/global\` parts
+are reported like \`message/rfc822\`: \`BODYSTRUCTURE\` includes their
+envelope and body structure, and \`BODY[n]\` section fetches descend into
+them. Other sessions see a \`message/global\` part as a flat MIME part and get
+\`NIL\` for sections inside it. The UTF-8 form of \`ENVELOPE\` is never
+cached but generated from the cached headers, and \`BODY\` is derived from
+the cached \`BODYSTRUCTURE\`. See [[link,mail_cache]] for the
+\`mime.parts.v2\` and \`imap.bodystructure.utf8\` cache fields.`
 	},
 
 	mail_vsize_bg_after_count: {
