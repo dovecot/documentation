@@ -162,6 +162,7 @@ export const updates = {
 	events_imap_id_received_internal_added: '2.4.3',
 	events_invalid_credentials_added: '2.4.5',
 	events_login_aborted_added: '2.4.0',
+	events_mail_cache_purge_finished_superseded_fields_dropped_added: '2.4.6',
 	events_mail_storage_service_user_service_added: '2.4.0',
 	events_mail_metadata_accessed_added: '2.4.0',
 	events_net_in_bytes_changed: '2.4.0',
