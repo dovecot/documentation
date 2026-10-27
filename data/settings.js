@@ -7128,6 +7128,25 @@ defaults.`
 Directory for writing raw log data for debugging purposes.`
 	},
 
+	imap4rev2_enable: {
+		tags: [ 'imap' ],
+		added: {
+			settings_imap4rev2_enable_added: false
+		},
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		seealso: [ 'mail_utf8_extensions' ],
+		text: `
+If Dovecot has been compiled with --enable-experimental-imap4rev2 configure
+option, this setting advertises the \`IMAP4rev2\` capability and lets clients
+enable it with \`ENABLE IMAP4rev2\`. Requires
+[[setting,mail_utf8_extensions,yes]].
+
+Enabling \`IMAP4rev2\` also enables \`QRESYNC\` and \`UTF8=ACCEPT\` for the
+session, so the \`UTF8=ACCEPT\` behaviour described in
+[[setting,mail_utf8_extensions]] applies to it.`
+	},
+
 	imap_capability: {
 		tags: [ 'imap' ],
 		values: setting_types.BOOLLIST,
