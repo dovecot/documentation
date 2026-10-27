@@ -8627,6 +8627,10 @@ For example if using [[setting,mail_access_groups,mail]]:
 The fields specified here are always added to cache when saving mails, even
 if the client never accesses these fields.
 
+[[added,mail_cache_utf8_fields_added]] Listing \`mime.parts\` covers also
+\`mime.parts.v2\` and listing \`imap.bodystructure\` covers also
+\`imap.bodystructure.utf8\`.
+
 See [[link,mail_cache]] for details and for the list of fields.`
 	},
 
@@ -8774,6 +8778,10 @@ flags hdr.date hdr.subject hdr.from hdr.sender hdr.reply-to hdr.to hdr.cc hdr.bc
 The default list of fields that are added to cache if no other caching
 decisions exist yet. This setting is used only when creating the initial
 INBOX for the user. Other folders get their defaults from the INBOX.
+
+[[added,mail_cache_utf8_fields_added]] The decision of \`mime.parts\` applies
+also to \`mime.parts.v2\` and the decision of \`imap.bodystructure\` also to
+\`imap.bodystructure.utf8\`, so only the legacy names need to be listed.
 
 See [[link,mail_cache]] for details and for the list of fields.`
 	},
@@ -8940,6 +8948,10 @@ List of fields that should never be cached.
 This should generally never include anything other than \`imap.envelope\`,
 which isn't needed because it can be generated from the cached header
 fields.
+
+[[added,mail_cache_utf8_fields_added]] Listing \`mime.parts\` covers also
+\`mime.parts.v2\` and listing \`imap.bodystructure\` covers also
+\`imap.bodystructure.utf8\`.
 
 See [[link,mail_cache]] for details and for the list of fields.`
 	},
