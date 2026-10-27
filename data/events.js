@@ -583,6 +583,12 @@ for 30 days.`
 		fields: {
 			file_size: `Size of the new cache file.`,
 			max_uid: `IMAP UID of the last mail in the cache file.`,
+			superseded_fields_dropped: {
+				added: {
+					events_mail_cache_purge_finished_superseded_fields_dropped_added: false,
+				},
+				text: `Number of per-mail field entries dropped because the mail also had the field's superseding field (e.g. a legacy \`mime.parts\` entry dropped because \`mime.parts.v2\` is present).`,
+			},
 		},
 	},
 
