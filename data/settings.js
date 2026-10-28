@@ -7528,7 +7528,7 @@ name. For example \`no-sort\`, \`no-sort=display\` or \`no-quota\`.
         :::
 
 :   \`gmail-migration\`
-    :   Enable GMail-specific migration. Use IMAP \`X-GM-MSGID\` as POP3 UIDL.
+    :   Enable Gmail-specific migration. Use IMAP \`X-GM-MSGID\` as POP3 UIDL.
         Add \`$GMailHaveLabels\` keyword to mails that have \`X-GM-LABELS\`
         except for \`\Muted\` keyword (to be used for migrating only archived
         emails in \`All Mails\`). Add [[setting,pop3_deleted_flag]] to
@@ -7558,7 +7558,7 @@ name. For example \`no-sort\`, \`no-sort=display\` or \`no-quota\`.
 	preserved as the new imapc connection's session ID prefix.
 
 :   \`throttle:<INIT>:<MAX>:<SHRINK>\`
-    :   When receiving [THROTTLED] response (from GMail), throttling is
+    :   When receiving [THROTTLED] response (from Gmail), throttling is
         applied.
 
         **INIT** = initial throttling msecs (default: 50 ms), afterwards each
