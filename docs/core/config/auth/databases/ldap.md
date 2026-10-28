@@ -133,6 +133,11 @@ The following variables can be used inside the [[setting,passdb]] / [[setting,us
 | `%{ldap_multi:attrName}` | [[added,ldap_multi_added]] Fetches a multi-valued attribute and outputs the values separated by tabs, with each value "tab-escaped". Use the `list` [[link,settings_variables_filters,filter]] to further convert it to a wanted value. For example: `mail_access_groups = %{ldap_multi:userGroups \| list \| default('mail')}` |
 | `%{ldap:dn}` | Retrieves the Distinguished Name of the entry. |
 
+Dovecot requests only the attributes referenced by `%{ldap:...}` variables.
+In the debug log, values of attributes whose name looks like a credential
+(for example `userPassword`, `pwdChangedTime` or `sshPublicKey`) are shown as
+`<hidden>` unless [[setting,auth_debug_passwords,yes]] is set.
+
 ## Password Lookups
 
 Advantages over [Authentication Binds](#authentication-binds):
