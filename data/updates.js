@@ -109,6 +109,7 @@ export const updates = {
 	settings_fts_autoindex_direct_changed: '2.4.6',
 	settings_list_key_variables_changed: '2.4.5',
 	settings_listen_renamed: '2.4.6',
+	settings_oauth2_allow_missing_username_added: '2.4.6',
 	settings_oauth2_url_access_token_changed: '2.4.6',
 	settings_path_types_added: '2.4.6',
 	settings_path_types_confined: '2.4.6',

@@ -10585,6 +10585,34 @@ needed. You only need this if the username that comes from authentication will
 not otherwise match with [[setting,oauth2_username_attribute]] value.`
 	},
 
+	oauth2_allow_missing_username: {
+		tags: [ 'oauth2' ],
+		added: {
+			settings_oauth2_allow_missing_username_added: false
+		},
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ 'oauth2_username_attribute' ],
+		text: `
+If enabled, an \`OAUTHBEARER\` login whose GS2 header has no username (an
+empty authzid, which [[rfc,7628,3.1]] allows) is accepted, and the username is
+taken from the token's [[setting,oauth2_username_attribute]] field instead.
+This is for clients that only have a bearer token and don't know the username,
+such as HTTP clients using \`Authorization: Bearer\`.
+
+If disabled, such a login fails with \`Missing username\`.
+
+The username from the token goes through
+[[setting,oauth2_username_validation_format]] and then
+[[setting,auth_username_format]] once. The result is not compared with
+anything, because the client sent no username to compare it with. So a format
+that drops part of the name, such as \`%{user | username}\`, can map the
+tokens of different users to the same user.
+
+This also works with [[setting,oauth2_use_worker_with_mech]]. \`XOAUTH2\`
+logins always need a username.`
+	},
+
 	oauth2_active_attribute: {
 		tags: [ 'oauth2' ],
 		values: setting_types.STRING,
