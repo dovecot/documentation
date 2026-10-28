@@ -253,7 +253,7 @@ work/*
 ```
 :::
 
-Create a GMail-style conversation view for INBOX which shows all threads
+Create a Gmail-style conversation view for INBOX which shows all threads
 that have messages in INBOX, but shows all messages in the thread regardless
 of in what mailbox they physically exist in:
 

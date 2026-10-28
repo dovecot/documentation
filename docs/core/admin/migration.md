@@ -399,13 +399,13 @@ on the various SSL/TLS related flags.
 Google has very limited support for username/password authentication, so you
 might have to use OAUTH2 or some other mechanism for logging in.
 
-### GMail Migration Feature
+### Gmail Migration Feature
 
 There is a [[setting,imapc_features,gmail-migration]] setting that helps
-with GMail migration. It will:
+with Gmail migration. It will:
 
 * Set the [[setting,pop3_deleted_flag]] to mails that no longer exist in POP3.
-* Return POP3 UIDL in GMail format so dsync can preserve it.
+* Return POP3 UIDL in Gmail format so dsync can preserve it.
 * Add a new `$GmailHaveLabels` keyword to archived mails in the `\All`
   mailbox, which means those mails are not archived. You probably don't want
   to migrate these mails.
