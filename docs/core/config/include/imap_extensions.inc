@@ -97,3 +97,8 @@ Set [[setting,mailbox_list_index,yes]].
 ### URLAUTH:
 
 Set [[setting,imap_urlauth_host]] and [[setting,mail_attribute]].
+
+[[changed,imap_utf8_message_global_added]] `URLFETCH` returns
+`BODYPARTSTRUCTURE` in the UTF-8 form, with `message/global` parts reported
+like `message/rfc822`, for sessions that have enabled `UTF8=ACCEPT`. See
+[[setting,mail_utf8_extensions]].

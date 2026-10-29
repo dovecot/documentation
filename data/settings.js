@@ -6253,7 +6253,17 @@ longer craft Message-IDs whose hashes deliberately collide. Existing v1 index
 files are deleted and rebuilt in the v2 format when the mailbox is next
 opened for threading. Older Dovecot versions don't understand the v2 format
 and rebuild the index in the v1 format, so keep this setting at the old
-version until a rollback is no longer possible.`
+version until a rollback is no longer possible.
+
+[[changed,settings_dovecot_storage_version_mime_parts_v2_changed]] The
+\`mime.parts.v2\` and \`imap.bodystructure.utf8\` cache fields are written
+(see [[link,mail_cache]]). Below this version the legacy \`mime.parts\` and
+\`imap.bodystructure\` fields are written exactly as before, so a rollback
+stays possible, but sessions with \`UTF8=ACCEPT\` enabled parse messages
+containing \`message/global\` parts again on every \`BODYSTRUCTURE\` fetch.
+Older Dovecot versions don't know the new fields and parse such mails again,
+so keep this setting at the old version until a rollback is no longer
+possible.`
 	},
 
 	dsync_alt_char: {
@@ -7126,6 +7136,25 @@ defaults.`
 		values: setting_types.PATH_DIR,
 		text: `
 Directory for writing raw log data for debugging purposes.`
+	},
+
+	imap4rev2_enable: {
+		tags: [ 'imap' ],
+		added: {
+			settings_imap4rev2_enable_added: false
+		},
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		seealso: [ 'mail_utf8_extensions' ],
+		text: `
+If Dovecot has been compiled with --enable-experimental-imap4rev2 configure
+option, this setting advertises the \`IMAP4rev2\` capability and lets clients
+enable it with \`ENABLE IMAP4rev2\`. Requires
+[[setting,mail_utf8_extensions,yes]].
+
+Enabling \`IMAP4rev2\` also enables \`QRESYNC\` and \`UTF8=ACCEPT\` for the
+session, so the \`UTF8=ACCEPT\` behaviour described in
+[[setting,mail_utf8_extensions]] applies to it.`
 	},
 
 	imap_capability: {
@@ -8598,6 +8627,10 @@ For example if using [[setting,mail_access_groups,mail]]:
 The fields specified here are always added to cache when saving mails, even
 if the client never accesses these fields.
 
+[[added,mail_cache_utf8_fields_added]] Listing \`mime.parts\` covers also
+\`mime.parts.v2\` and listing \`imap.bodystructure\` covers also
+\`imap.bodystructure.utf8\`.
+
 See [[link,mail_cache]] for details and for the list of fields.`
 	},
 
@@ -8628,6 +8661,9 @@ Options:
     cost. This means that either both \`mime.parts\` and
     \`imap.bodystructure\` has to be in cache already, or if mail body is
     opened in any case.
+    [[changed,imap_utf8_message_global_added]] A session with \`UTF8=ACCEPT\`
+    enabled resolves the MIME parts from the cache on fetch, so it may add
+    the keywords where an IMAP4rev1 session did not.
 
 \`add-flags no-flags-on-fetch\`
 :   Flags are added during save, but not during fetch. This option will
@@ -8742,6 +8778,10 @@ flags hdr.date hdr.subject hdr.from hdr.sender hdr.reply-to hdr.to hdr.cc hdr.bc
 The default list of fields that are added to cache if no other caching
 decisions exist yet. This setting is used only when creating the initial
 INBOX for the user. Other folders get their defaults from the INBOX.
+
+[[added,mail_cache_utf8_fields_added]] The decision of \`mime.parts\` applies
+also to \`mime.parts.v2\` and the decision of \`imap.bodystructure\` also to
+\`imap.bodystructure.utf8\`, so only the legacy names need to be listed.
 
 See [[link,mail_cache]] for details and for the list of fields.`
 	},
@@ -8908,6 +8948,10 @@ List of fields that should never be cached.
 This should generally never include anything other than \`imap.envelope\`,
 which isn't needed because it can be generated from the cached header
 fields.
+
+[[added,mail_cache_utf8_fields_added]] Listing \`mime.parts\` covers also
+\`mime.parts.v2\` and listing \`imap.bodystructure\` covers also
+\`imap.bodystructure.utf8\`.
 
 See [[link,mail_cache]] for details and for the list of fields.`
 	},
@@ -9118,7 +9162,18 @@ This can be overridden via the \`uid\` [[link,userdb_fields,userdb field]].`
 		text: `
 If Dovecot has been compiled with --enable-experimental-mail-utf8 configure option,
 this setting can be used to enable the feature. Settings this to \`yes\` will
-enable SMTPUTF8 for LMTP and Submission sessions, and UTF8=ACCEPT for IMAP sessions.`
+enable SMTPUTF8 for LMTP and Submission sessions, and UTF8=ACCEPT for IMAP sessions.
+
+[[added,imap_utf8_message_global_added]] IMAP sessions that have enabled
+\`UTF8=ACCEPT\` (or \`IMAP4rev2\`) get \`ENVELOPE\`, \`BODY\` and
+\`BODYSTRUCTURE\` with UTF-8 in quoted strings, and \`message/global\` parts
+are reported like \`message/rfc822\`: \`BODYSTRUCTURE\` includes their
+envelope and body structure, and \`BODY[n]\` section fetches descend into
+them. Other sessions see a \`message/global\` part as a flat MIME part and get
+\`NIL\` for sections inside it. The UTF-8 form of \`ENVELOPE\` is never
+cached but generated from the cached headers, and \`BODY\` is derived from
+the cached \`BODYSTRUCTURE\`. See [[link,mail_cache]] for the
+\`mime.parts.v2\` and \`imap.bodystructure.utf8\` cache fields.`
 	},
 
 	mail_vsize_bg_after_count: {
