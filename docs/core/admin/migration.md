@@ -366,8 +366,7 @@ Even though the quota is duplicated, it doesn't mean that the storage
 usage has to be duplicated. Use the doveadm sync's `-a` parameter to attempt
 to copy mails with the same GUIDs.
 
-A virtual `All Mails` mailbox needs to be configured using the virtual
-plugin. Then you need to give this mailbox as `-a` parameter, e.g.:
+A virtual `All Mails` mailbox needs to be configured using the [[plugin,virtual,virtual plugin]]. Then you need to give this mailbox as `-a` parameter, e.g.:
 
 ```
 doveadm sync -a "Virtual/All Mails" ...
