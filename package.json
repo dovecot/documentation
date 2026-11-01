@@ -2,7 +2,7 @@
   "name": "dovecot-ce-documentation",
   "devDependencies": {
     "@sindresorhus/slugify": "^3.0.0",
-    "camelcase": "^9.0.0",
+    "camelcase": "^10.0.0",
     "clean-deep": "^3.4.0",
     "commander": "^15.0.0",
     "fast-glob": "^3.3.3",
