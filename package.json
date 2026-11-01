@@ -17,7 +17,7 @@
     "remark-gfm": "^4.0.1",
     "remark-man": "^9.0.0",
     "remark-parse": "^11.0.0",
-    "tsx": "^4.23.12",
+    "tsx": "^4.23.15",
     "turndown": "^7.2.4",
     "turndown-plugin-gfm": "^1.0.2",
     "typescript": "^5.9.3",
