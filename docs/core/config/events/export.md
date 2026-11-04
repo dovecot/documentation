@@ -215,6 +215,7 @@ The driver accepts the standard `http_client_*` settings (for example
 | ------- | ---------------- |
 | [[setting,http_client_request_timeout]] | `2s` |
 | [[setting,http_client_request_absolute_timeout]] | `5s` |
+| [[setting,http_client_trace_context]] | `no` |
 
 [[setting,http_client_request_absolute_timeout]] must not be `0`; the
 configuration is rejected otherwise.
@@ -331,6 +332,18 @@ on, with the span id of the sender as the parent of the receiving span:
   request, together with the id of the `login_client` span as the parent.
 * services to the auth process: the `trace_id` and `parent_span_id`
   fields of the auth protocol request. Userdb lookups carry them as well.
+* proxying between Dovecot servers: IMAP `ID` `trace-id` / `parent-span-id`,
+  or `XCLIENT` `TRACE-ID` / `PARENT-SPAN-ID`. The values are accepted only
+  from [[setting,login_trusted_networks]]. See [[link,forwarding_parameters]].
+* HTTP: the W3C `traceparent` header. It is sent when
+  [[setting,http_client_trace_context,yes]] is set, and accepted by HTTP
+  servers (such as the doveadm HTTP API) from
+  [[setting,http_server_trace_context_trusted_networks]].
+
+The parent span id sent to the auth process and in the `traceparent` header
+follows the same rule: a lookup or request made while an IMAP command runs
+(for example the home userdb lookup for a shared namespace) is a child of the
+`imap_command` span.
 
 This ties the events of one mail session, and the work it causes in other
 processes, into one trace.
