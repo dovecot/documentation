@@ -15,6 +15,9 @@ dovecotlinks:
   event_export_opentelemetry:
     hash: opentelemetry
     text: "Event Export: OpenTelemetry"
+  event_export_opentelemetry_logs:
+    hash: log-records
+    text: "Event Export: OpenTelemetry LogRecords"
   stats_sample_by:
     hash: sampling
     text: "Event Export: Sampling"
@@ -64,9 +67,9 @@ Supported Formats:
 
 | Formats | Description |
 | ------- | ----------- |
-| `json` | JSON output. With the [[setting,event_exporter_driver,opentelemetry]] driver this produces OTLP/HTTP+JSON `TracesData` payload (proto3 canonical encoding); with all other drivers, the legacy event-envelope JSON shown below. |
+| `json` | JSON output. With the [[setting,event_exporter_driver,opentelemetry]] driver this produces OTLP/HTTP+JSON `TracesData` (and `LogsData`) payloads (proto3 canonical encoding); with all other drivers, the legacy event-envelope JSON shown below. |
 | `tab-text` | TAB-separated text fields |
-| `protobuf` | OTLP/HTTP+protobuf `TracesData` payload. Only valid with [[setting,event_exporter_driver,opentelemetry]] driver.<br />[[added,settings_event_exporter_opentelemetry_added]] |
+| `protobuf` | OTLP/HTTP+protobuf `TracesData` (and `LogsData`) payloads. Only valid with [[setting,event_exporter_driver,opentelemetry]] driver.<br />[[added,settings_event_exporter_opentelemetry_added]] |
 
 #### Example: JSON
 
@@ -119,7 +122,7 @@ Supported drivers:
 | `http-post` | Send the serialized event as a HTTP POST payload to [[setting,event_exporter_http_post_url]]. The driver defaults to [[setting,http_client_request_absolute_timeout,250 milliseconds]]. |
 | `file` | Send serialized events to a file specified in [[setting,event_exporter_file_path]]<br />[[added,event_export_drivers_file_unix_added]] |
 | `unix` | Send serialised events to a unix socket specified in [[setting,event_exporter_unix_path]]. The [[setting,event_exporter_unix_connect_timeout]] setting is used to specify how long the unix socket connection can take. Default is `250 milliseconds`.<br />[[added,event_export_drivers_file_unix_added]] |
-| `opentelemetry` | Send events as OTLP/HTTP spans to an OpenTelemetry collector at [[setting,event_exporter_opentelemetry_endpoint_url]]. Wire format is selected by [[setting,event_exporter_format]] (`protobuf` or `json`). See [[link,event_export_opentelemetry]].<br />[[added,settings_event_exporter_opentelemetry_added]] |
+| `opentelemetry` | Send spans, and optionally log records, as OTLP/HTTP to an OpenTelemetry collector at [[setting,event_exporter_opentelemetry_endpoint_url]]. Wire format is selected by [[setting,event_exporter_format]] (`protobuf` or `json`). See [[link,event_export_opentelemetry]].<br />[[added,settings_event_exporter_opentelemetry_added]] |
 
 The `drop` driver is useful when one wants to disable the event exporter
 temporarily.  Note that serialization still occurs, but the resulting
@@ -274,7 +277,7 @@ everything else.
 
 Event fields and the category list are sent as span `attributes`, subject to
 [[setting,metric_exporter_include]] and [[setting,metric_fields]]. Fields whose
-name begins with `_` are not sent.
+name begins with `_` are not sent, see [Reserved fields](#reserved-fields).
 
 #### Span timing
 
@@ -335,16 +338,89 @@ all traces show up under a single `Dovecot` service in collector UIs.
 
 ### Batching
 
-Spans are queued and POSTed in batches, one request per
+Spans (and log records) are queued and POSTed in batches, one request per
 batch, rather than one request per event. A batch is sent when it has
 [[setting,event_exporter_opentelemetry_max_export_batch_size]] records or
 when the oldest record has waited for
-[[setting,event_exporter_opentelemetry_schedule_delay]].
+[[setting,event_exporter_opentelemetry_schedule_delay]]. Spans and log
+records are batched separately.
 
 If the collector is too slow, up to
 [[setting,event_exporter_opentelemetry_max_queue_size]] records may wait for
 it. Beyond that the batches are dropped, and an error with the number of
 dropped records is logged.
+
+### Log records
+
+When [[setting,event_exporter_opentelemetry_emit_logs,yes]] is set, the
+exporter additionally sends an OTLP
+[LogRecord](https://opentelemetry.io/docs/specs/otel/logs/data-model/)
+to `<endpoint_url>/v1/logs` for every matched event that carries a
+formatted log message (i.e. events produced by `e_info()`,
+`e_warning()`, `e_error()`, `e_debug()` and friends).
+
+Log records use the wire format selected by
+[[setting,event_exporter_format]]: `protobuf` or `json`, as for spans.
+They are batched like spans.
+
+Each LogRecord carries:
+
+* the `trace_id` of the trace it belongs to, and the `span_id` of the span
+  that was exported for the same event, so the collector can navigate from a
+  log line to its span and vice versa. With
+  [[setting,event_exporter_opentelemetry_emit_spans,no]] the `span_id` is
+  that of the span the event happened in. Events outside of any span carry
+  no `span_id`,
+* a `severityNumber` and `severityText` derived from the dovecot
+  log type (DEBUG=5, INFO=9, WARN=13, ERROR=17, FATAL=21, PANIC=24),
+* `body.stringValue` with the formatted message text from the
+  `e_*()` call site,
+* the event's fields and category list as `attributes`, identical to
+  what the matching span carries.
+
+The exporter ships log records only for events whose corresponding
+metric's `filter` matches. Use the metric filter to scope log
+forwarding to the sessions you want to trace - typically a session
+predicate plus a category restriction:
+
+```doveconf[dovecot.conf]
+event_exporter otlp_logs {
+  driver = opentelemetry
+  format = json
+  event_exporter_opentelemetry_endpoint_url = http://collector.example.com:4318
+  event_exporter_opentelemetry_emit_logs = yes
+}
+
+metric traced_session_logs {
+  exporter = otlp_logs
+  # Pick whichever events should ship as both spans and log records.
+  filter = event=imap_command_finished
+}
+```
+
+Only events logged with `e_*()` have a log record. `imap_command_finished`
+is a debug-level record.
+
+Disable [[setting,event_exporter_opentelemetry_emit_spans,no]]
+together with `emit_logs = yes` to ship log records only.
+
+When the metric filter does not match an event, no log message is
+formatted or transmitted - the wire cost of enabling log records on a
+heavy-traffic service is therefore proportional to the matched
+volume, not the total event volume.
+
+The corresponding ResourceLogs carries the same `service.name`,
+`service.instance.id`, `service.version` and `host.name` attributes as
+ResourceSpans, so collectors group traces and logs under the same
+service.
+
+### Reserved fields
+
+Event fields whose name begins with `_` are reserved for the stats
+process's internal use. `_log_message` and `_log_severity` carry the log
+message and severity to the exporter. These fields are not exported by the
+`json` and `tab-text` formats or as OpenTelemetry attributes, unless they are
+named explicitly in [[setting,metric_fields]].
 
 ### Sampling traces
 

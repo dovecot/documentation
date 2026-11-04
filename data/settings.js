@@ -6405,23 +6405,69 @@ Path to event unix socket with [[setting,event_exporter_driver,unix]].`
 		tags: [ 'event-export' ],
 		values: setting_types.STRING,
 		default: 'http://localhost:4318',
-		seealso: [ '[[link,event_export_opentelemetry]]' ],
+		seealso: [ '[[link,event_export_opentelemetry]]',
+			   'event_exporter_opentelemetry_emit_logs' ],
 		text: `
 Base URL of the OTLP/HTTP collector when using
 [[setting,event_exporter_driver,opentelemetry]]. The exporter POSTs
-spans to \`<endpoint_url>/v1/traces\`. The wire format and
+spans to \`<endpoint_url>/v1/traces\` and (when
+[[setting,event_exporter_opentelemetry_emit_logs]] is enabled) log
+records to \`<endpoint_url>/v1/logs\`. The wire format and
 \`Content-Type\` are selected by [[setting,event_exporter_format]]:
 
 * \`protobuf\` → \`application/x-protobuf\` (OTLP/HTTP+protobuf binary)
 * \`json\` → \`application/json\` (OTLP/HTTP+JSON, proto3 ProtoJSON
   canonical encoding)
 
-Spans are sent in batches, see
+Spans and log records use the same format and are sent in batches, see
 [[setting,event_exporter_opentelemetry_schedule_delay]].
 
 Only OTLP/HTTP is implemented. OTLP/gRPC is not supported; point this
 setting at a collector that accepts OTLP/HTTP (the OpenTelemetry
 Collector, Jaeger v2, Grafana Tempo, etc.).`
+	},
+
+	event_exporter_opentelemetry_emit_spans: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		seealso: [ '[[link,event_export_opentelemetry]]',
+			   'event_exporter_opentelemetry_emit_logs' ],
+		text: `
+When enabled (the default), the exporter emits OTLP Spans to
+\`<endpoint_url>/v1/traces\`. Disable only when you want the exporter to
+ship log records exclusively (set together with
+[[setting,event_exporter_opentelemetry_emit_logs,yes]]).`
+	},
+
+	event_exporter_opentelemetry_emit_logs: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ '[[link,event_export_opentelemetry_logs]]',
+			   'event_exporter_opentelemetry_emit_spans' ],
+		text: `
+When enabled, the exporter emits an OTLP LogRecord to
+\`<endpoint_url>/v1/logs\` for every matched event that carries a
+formatted log message (\`e_info()\`, \`e_warning()\`, \`e_error()\`,
+\`e_debug()\` call sites). The LogRecord shares its \`trace_id\` with the
+trace of the span it belongs to, and its \`span_id\` with that span, so
+collectors link logs and traces.
+
+Log records use the wire format selected by
+[[setting,event_exporter_format]], like spans. Severity is mapped to the OTel
+severity model (DEBUG=5, INFO=9, WARN=13, ERROR=17, FATAL=21,
+PANIC→FATAL4=24).
+
+Enabling this setting opts the stats process into receiving the
+formatted message text from each dovecot service; the wire cost is
+zero when the corresponding metric's filter does not match an event.`
 	},
 
 	event_exporter_opentelemetry_schedule_delay: {
@@ -6433,8 +6479,8 @@ Collector, Jaeger v2, Grafana Tempo, etc.).`
 		default: '5 secs',
 		seealso: [ 'event_exporter_opentelemetry_max_export_batch_size' ],
 		text: `
-Maximum time a span waits in the batch before the batch is
-sent. The delay starts when the first span is added to an empty batch. Must
+Maximum time a span or log record waits in the batch before the batch is
+sent. The delay starts when the first record is added to an empty batch. Must
 not be \`0\`.`
 	},
 
@@ -6448,9 +6494,9 @@ not be \`0\`.`
 		seealso: [ 'event_exporter_opentelemetry_schedule_delay',
 			   'event_exporter_opentelemetry_max_queue_size' ],
 		text: `
-The batch is sent as soon as it contains this many spans,
+The batch is sent as soon as it contains this many spans or log records,
 without waiting for [[setting,event_exporter_opentelemetry_schedule_delay]].
-Must not be \`0\`.`
+Spans and log records are batched separately. Must not be \`0\`.`
 	},
 
 	event_exporter_opentelemetry_max_queue_size: {
