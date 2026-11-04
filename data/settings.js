@@ -5226,11 +5226,18 @@ Passwords are logged as \`<hidden>\`.`
 	},
 
 	auth_debug_passwords: {
+		changed: {
+			settings_auth_debug_passwords_changed: `
+Also hides authentication tokens, and is also used by the imap and
+imap-hibernate processes.`
+		},
 		default: 'no',
 		values: setting_types.BOOLEAN,
 		text: `
-This setting adjusts log verbosity. In the event of password
-mismatches, the passwords and the scheme used are logged so that the
+This setting adjusts log verbosity. If disabled, password fields and
+authentication tokens (e.g. \`auth_token\`) are logged as \`<hidden>\` in
+debug logs. If enabled, they are logged as-is. In the event of password
+mismatches, the passwords and the scheme used are also logged so that the
 problem can be debugged.
 
 Note: You also need to enable [[setting,log_debug,category=auth]].`
