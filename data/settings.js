@@ -6452,23 +6452,69 @@ Path to event unix socket with [[setting,event_exporter_driver,unix]].`
 		tags: [ 'event-export' ],
 		values: setting_types.STRING,
 		default: 'http://localhost:4318',
-		seealso: [ '[[link,event_export_opentelemetry]]' ],
+		seealso: [ '[[link,event_export_opentelemetry]]',
+			   'event_exporter_opentelemetry_emit_logs' ],
 		text: `
 Base URL of the OTLP/HTTP collector when using
 [[setting,event_exporter_driver,opentelemetry]]. The exporter POSTs
-spans to \`<url>/v1/traces\`. The wire format and
+spans to \`<url>/v1/traces\` and (when
+[[setting,event_exporter_opentelemetry_emit_logs]] is enabled) log
+records to \`<url>/v1/logs\`. The wire format and
 \`Content-Type\` are selected by [[setting,event_exporter_format]]:
 
 * \`protobuf\` → \`application/x-protobuf\` (OTLP/HTTP+protobuf binary)
 * \`json\` → \`application/json\` (OTLP/HTTP+JSON, proto3 ProtoJSON
   canonical encoding)
 
-Spans are sent in batches, see
+Spans and log records use the same format and are sent in batches, see
 [[setting,event_exporter_opentelemetry_flush_interval]].
 
 Only OTLP/HTTP is implemented. OTLP/gRPC is not supported; point this
 setting at a collector that accepts OTLP/HTTP (the OpenTelemetry
 Collector, Jaeger v2, Grafana Tempo, etc.).`
+	},
+
+	event_exporter_opentelemetry_emit_spans: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		seealso: [ '[[link,event_export_opentelemetry]]',
+			   'event_exporter_opentelemetry_emit_logs' ],
+		text: `
+When enabled (the default), the exporter emits OTLP Spans to
+\`<url>/v1/traces\`. Disable only when you want the exporter to
+ship log records exclusively (set together with
+[[setting,event_exporter_opentelemetry_emit_logs,yes]]).`
+	},
+
+	event_exporter_opentelemetry_emit_logs: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ '[[link,event_export_opentelemetry_logs]]',
+			   'event_exporter_opentelemetry_emit_spans' ],
+		text: `
+When enabled, the exporter emits an OTLP LogRecord to
+\`<url>/v1/logs\` for every matched event that carries a
+formatted log message (\`e_info()\`, \`e_warning()\`, \`e_error()\`,
+\`e_debug()\` call sites). The LogRecord shares its \`trace_id\` with the
+trace of the span it belongs to, and its \`span_id\` with that span, so
+collectors link logs and traces.
+
+Log records use the wire format selected by
+[[setting,event_exporter_format]], like spans. Severity is mapped to the OTel
+severity model (DEBUG=5, INFO=9, WARN=13, ERROR=17, FATAL=21;
+PANIC is sent as FATAL4=24).
+
+Enabling this setting opts the stats process into receiving the
+formatted message text from each dovecot service; the wire cost is
+zero when the corresponding metric's filter does not match an event.`
 	},
 
 	event_exporter_opentelemetry_flush_interval: {
@@ -6480,9 +6526,9 @@ Collector, Jaeger v2, Grafana Tempo, etc.).`
 		default: '5 secs',
 		seealso: [ 'event_exporter_opentelemetry_flush_count' ],
 		text: `
-Spans are sent at the latest this long after the first one was queued,
-even when [[setting,event_exporter_opentelemetry_flush_count]] has not been
-reached. Must not be \`0\`.`
+Spans and log records are sent at the latest this long after the first one
+was queued, even when [[setting,event_exporter_opentelemetry_flush_count]] has
+not been reached. Must not be \`0\`.`
 	},
 
 	event_exporter_opentelemetry_flush_count: {
@@ -6495,8 +6541,9 @@ reached. Must not be \`0\`.`
 		seealso: [ 'event_exporter_opentelemetry_flush_interval',
 			   'event_exporter_opentelemetry_max_pending_requests' ],
 		text: `
-Spans are sent as soon as this many are queued, without waiting for
-[[setting,event_exporter_opentelemetry_flush_interval]]. Must not be \`0\`.`
+Spans and log records are sent as soon as this many are queued, without
+waiting for [[setting,event_exporter_opentelemetry_flush_interval]]. Spans and
+log records are queued separately. Must not be \`0\`.`
 	},
 
 	event_exporter_opentelemetry_max_pending_requests: {
@@ -6509,8 +6556,9 @@ Spans are sent as soon as this many are queued, without waiting for
 		seealso: [ 'event_exporter_opentelemetry_flush_count' ],
 		text: `
 Maximum number of export requests that can be waiting for the collector's
-response. While this many requests are pending, a further batch is dropped
-and an error is logged with the number of dropped records. Must not be \`0\`.`
+response. Spans and log records share this limit. While this many requests
+are pending, a further batch is dropped and an error is logged with the
+number of dropped records. Must not be \`0\`.`
 	},
 
 	execute: {
