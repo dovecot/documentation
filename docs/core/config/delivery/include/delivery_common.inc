@@ -6,12 +6,13 @@
 * [[setting,hostname]] is used in generated Message-IDs and in
   `Reporting-UA:` header in bounce mails
 
-* [[setting,sendmail_path]] is used to send mails. Note that the default is
-  `/usr/sbin/sendmail`, which doesn't necessarily work the same as
-  `/usr/lib/sendmail`.
+* [[setting,mail_submit]] configures how mails (bounces, Sieve redirects, etc.)
+  are sent. By default the `/usr/sbin/sendmail` binary is executed, which
+  doesn't necessarily work the same as `/usr/lib/sendmail`.
 
-  * Alternatively you can use [[setting,submission_host]] to send mails via
-    the specified SMTP server.
+  * Alternatively you can set [[setting,smtp_client_host]] inside the
+    [[setting,mail_submit]] filter to send mails via the specified SMTP
+    server.
 
 * [[setting,auth_socket_path]] specifies the UNIX socket to auth-userdb
   where LDA can lookup userdb information when `-d` parameter is used.

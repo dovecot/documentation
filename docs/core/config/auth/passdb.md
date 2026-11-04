@@ -393,7 +393,8 @@ ManageSieve). It is ignored with `doveadm`, because the intention is that admin
 could still be able to access a disabled user via `doveadm`.
 
 [[changed,lmtp_nologin_added]] The `nologin` field prevents LMTP access now
-as long as [[setting,lmtp_proxy,yes]]. However, the `reason` field is ignored.
+as long as [[setting,lmtp_proxy_enabled,yes]]. However, the `reason` field is
+ignored.
 :::
 
 ::: info

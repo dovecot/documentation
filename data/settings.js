@@ -90,8 +90,8 @@ next mechanism if the authentication itself fails.
 
 Client authentication settings are expected to be scoped further by settings
 filters for the various protocol clients that need authentication, such as
-[[setting,imapc]] and [[setting,pop3c]]. See [[link,client_auth]] for an
-overview.
+[[setting,imapc]], [[setting,pop3c]], [[setting,submission_relay]] and
+[[setting,mail_submit]]. See [[link,client_auth]] for an overview.
 
 Example:
 \`\`\`[dovecot.conf]
@@ -6583,12 +6583,13 @@ for HAProxy are aborted immediately.`
 
 	hostname: {
 		default: '\\<system\'s real hostname@domain.tld\\>',
-		tags: [ 'submission' ],
+		tags: [ 'submission', 'smtp_client', 'lmtp_client' ],
 		values: setting_types.STRING,
 		text: `
 The hostname to be used in email messages sent out by the local delivery
-agent (such as the Message-ID: header), in LMTP replies, and as the
-hostname advertised by submission SMTP service.`
+agent (such as the Message-ID: header), in LMTP replies, as the
+hostname advertised by submission SMTP service, and in the EHLO/LHLO command
+of the outgoing SMTP and LMTP connections.`
 	},
 
 	http_client_auto_redirect: {
@@ -8073,6 +8074,132 @@ Alias for [[setting,inet_listener_listen]].`
 Controls if "Received:" header should be added to delivered mails.`
 	},
 
+	lmtp_client_command_timeout: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: '5 mins',
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_connect_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for LMTP commands sent to the remote server. The timeout is reset
+every time more data is being sent or received.
+
+The \`lmtp_client_*\` settings configure Dovecot's outgoing LMTP connections.
+They are used inside the [[setting,lmtp_proxy]] filter, where the default is
+\`125 secs\`.`
+	},
+
+	lmtp_client_connect_timeout: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: '30 secs',
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_command_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for connecting to the remote LMTP server, including the TLS handshake.
+
+Inside the [[setting,lmtp_proxy]] filter the default is \`125 secs\`.`
+	},
+
+	lmtp_client_host: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_port', 'lmtp_client_ssl' ],
+		values: setting_types.STRING,
+		text: `
+Host name or IP address of the remote LMTP server. The LMTP proxy gets the
+host from the passdb lookup (see [[link,authentication_proxies]]), so this is
+normally not set.`
+	},
+
+	lmtp_client_peer_trusted: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: 'no',
+		tags: [ 'lmtp_client' ],
+		values: setting_types.BOOLEAN,
+		text: `
+Whether the remote LMTP server is trusted. If enabled, the original client's
+connection information is forwarded to the remote server with the
+(Postfix-specific) XCLIENT command, if the remote server advertises support
+for it.
+
+Inside the [[setting,lmtp_proxy]] filter the default is \`yes\`.`
+	},
+
+	lmtp_client_port: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: 24,
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_host', 'lmtp_client_ssl' ],
+		values: setting_types.IN_PORT,
+		text: `
+Port of the remote LMTP server.
+
+Inside the [[setting,lmtp_proxy]] filter the default is the port that the
+local LMTP server received the connection on (\`%{local_port}\`), so that
+proxying to the same port on the backend doesn't need any configuration.
+The passdb lookup can override it.`
+	},
+
+	lmtp_client_rawlog_dir: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		tags: [ 'lmtp_client' ],
+		seealso: [ '[[link,rawlog]]' ],
+		values: setting_types.PATH_DIR,
+		text: `
+Write protocol logs of the outgoing LMTP connections to this directory for
+debugging.
+
+[[variable,mail-service-user]] can be used. However, because LMTP session
+starts without a user, all user-specific variables expand to empty.`
+	},
+
+	lmtp_client_source_ip: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		tags: [ 'lmtp_client' ],
+		values: setting_types.STRING,
+		text: `
+Local IP address to use as the source address of the outgoing LMTP
+connections. If empty, the kernel chooses the address.`
+	},
+
+	lmtp_client_ssl: {
+		added: {
+			settings_lmtp_client_added: false
+		},
+		default: 'no',
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'ssl_client_require_valid_cert', '[[link,ssl_configuration]]' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'no', 'lmtps', 'starttls' ],
+		text: `
+Whether to use TLS for the connection to the remote LMTP server.
+
+| Value | Description |
+| ----- | ----------- |
+| \`no\` | No TLS |
+| \`lmtps\` | Connect using TLS immediately (implicit TLS) |
+| \`starttls\` | Use the STARTTLS command to switch to TLS |
+
+The connection uses the \`ssl_client_*\` settings, which can be set inside the
+same filter to apply to this client only. The passdb lookup can override this
+setting for the LMTP proxy, see [[link,authentication_proxies]].`
+	},
+
 	lmtp_client_workarounds: {
 		tags: [ 'lmtp' ],
 		values: setting_types.BOOLLIST,
@@ -8110,18 +8237,75 @@ Options:
 :   No address (always used for messages with multiple recipients)`
 	},
 
+	lmtp_local: {
+		added: {
+			settings_lmtp_local_added: false
+		},
+		tags: [ 'lmtp' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'lmtp_proxy' ],
+		text: `
+Filter for settings that apply only to local LMTP deliveries, as opposed to
+proxied ones (see [[setting,lmtp_proxy]]). For example the
+[[setting,mail_submit]] settings used for sending bounces can be placed
+here.`
+	},
+
 	lmtp_proxy: {
+		changed: {
+			settings_lmtp_proxy_renamed: `
+\`lmtp_proxy\` used to be a boolean setting. It is now a filter, and the
+boolean is [[setting,lmtp_proxy_enabled]]. The old \`lmtp_proxy = yes\` still
+works with an older [[setting,dovecot_config_version]].`
+		},
+		tags: [ 'lmtp', 'lmtp_client' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'lmtp_proxy_enabled', 'lmtp_local',
+			   '[[link,authentication_proxies]]' ],
+		text: `
+Filter for the LMTP proxying settings: the generic \`lmtp_client_*\` settings
+of the connection to the backend, and [[setting,lmtp_proxy_enabled]].
+
+Inside this filter the defaults are the port of the incoming LMTP connection
+for [[setting,lmtp_client_port]], [[setting,lmtp_client_peer_trusted,yes]],
+and \`125 secs\` for both [[setting,lmtp_client_connect_timeout]] and
+[[setting,lmtp_client_command_timeout]].
+
+Example:
+\`\`\`[dovecot.conf]
+lmtp_proxy_enabled = yes
+lmtp_proxy {
+  lmtp_client_rawlog_dir = /var/log/dovecot/lmtp-proxy-rawlog
+}
+\`\`\``
+	},
+
+	lmtp_proxy_enabled: {
+		added: {
+			settings_lmtp_proxy_renamed: false
+		},
 		default: 'no',
-		seealso: [ '[[link,authentication_proxies]]' ],
+		seealso: [ 'lmtp_proxy', '[[link,authentication_proxies]]' ],
 		tags: [ 'lmtp' ],
 		values: setting_types.BOOLEAN,
 		text: `
 If yes, LMTP sessions perform a passdb lookup to see if the user should be
 proxied. The user is proxied only if the \`proxy\` extra field is returned.
-The proxy destination is determined via returned passdb extra fields.`
+The proxy destination is determined via returned passdb extra fields.
+
+Renamed from \`lmtp_proxy\`, which is now the [[setting,lmtp_proxy]] filter.
+
+Because the filter name is a prefix of this setting's name, the setting can
+also be written as \`enabled = yes\` inside \`lmtp_proxy { }\`, and
+\`doveconf -n\` prints it that way.`
 	},
 
 	lmtp_proxy_rawlog_dir: {
+		removed: {
+			settings_lmtp_proxy_renamed: `
+Renamed to [[setting,lmtp_client_rawlog_dir]] inside the
+[[setting,lmtp_proxy]] filter.`
+		},
 		seealso: [ '[[link,rawlog]]' ],
 		tags: [ 'lmtp' ],
 		values: setting_types.STRING,
@@ -9058,6 +9242,63 @@ The IMAP reply returned to the client is:
 \`\`\`
 NO [LIMIT] Requested sort would have taken too long.
 \`\`\``
+	},
+
+	mail_submit: {
+		added: {
+			settings_mail_submit_added: false
+		},
+		tags: [ 'mail_submit', 'lda', 'lmtp', 'client-auth' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'mail_submit_timeout', 'smtp_client_host', 'execute',
+			   'client_auth', '[[link,client_auth]]' ],
+		text: `
+Filter for configuring how Dovecot submits outgoing mails: bounces and
+forwards from [[link,lda]] and [[link,lmtp]], Sieve redirects, vacation
+replies and notifications, and so on.
+
+By default the mails are given to the local sendmail binary, which is
+configured as an [[setting,execute]] block named \`sendmail\` inside this
+filter:
+
+\`\`\`[dovecot.conf]
+mail_submit {
+  execute sendmail {
+    driver = fork
+    fork_path = /usr/sbin/sendmail
+  }
+}
+\`\`\`
+
+If [[setting,smtp_client_host]] is set inside this filter, the mails are sent
+via SMTP instead, using the generic \`smtp_client_*\` settings. The connection
+can be authenticated with the [[setting,client_auth]] settings and secured
+with the \`ssl_client_*\` settings:
+
+\`\`\`[dovecot.conf]
+mail_submit {
+  smtp_client_host = mta.example.com
+  smtp_client_port = 587
+  smtp_client_ssl = starttls
+  client_auth_authzid = dovecot
+  client_auth_password = secret
+}
+\`\`\`
+
+Inside this filter the defaults are [[setting,smtp_client_port,25]] and
+[[setting,smtp_client_ssl,no]].`
+	},
+
+	mail_submit_timeout: {
+		changed: {
+			settings_submission_timeout_renamed: `
+Renamed from \`submission_timeout\`.`
+		},
+		default: '30 secs',
+		tags: [ 'mail_submit', 'lda', 'lmtp' ],
+		seealso: [ 'mail_submit' ],
+		values: setting_types.TIME,
+		text: `Timeout for submitting outgoing messages.`
 	},
 
 	mail_temp_dir: {
@@ -11452,12 +11693,24 @@ See [[setting,rejection_reason]] for the list of variables that can be used.`
 	},
 
 	sendmail_path: {
+		deprecated: {
+			settings_sendmail_path_deprecated: `
+Replaced by an [[setting,execute]] block named \`sendmail\` inside the
+[[setting,mail_submit]] filter. With an older
+[[setting,dovecot_config_version]] the setting still works: its value is
+translated into the [[setting,execute_fork_path]] and
+[[setting,execute_args]] settings of that block.`
+		},
 		default: '/usr/sbin/sendmail',
+		tags: [ 'mail_submit', 'lda', 'lmtp' ],
+		seealso: [ 'mail_submit' ],
 		values: setting_types.STRING,
 		text: `
-The binary to use for sending email.
+The binary to use for sending email. Arguments can be given after the path,
+separated by spaces.
 
-Used only if [[setting,submission_host]] is not set.`
+Used only if [[setting,smtp_client_host]] is not set inside the
+[[setting,mail_submit]] filter.`
 	},
 
 	service: {
@@ -11805,6 +12058,128 @@ needs \`KillMode=mixed\` or \`KillMode=process\`.
 :::`
 	},
 
+	smtp_client_command_timeout: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: '5 mins',
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_connect_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for SMTP commands sent to the remote server. The timeout is reset
+every time more data is being sent or received.
+
+The \`smtp_client_*\` settings configure Dovecot's outgoing SMTP connections.
+They are used inside the [[setting,submission_relay]] and
+[[setting,mail_submit]] filters.`
+	},
+
+	smtp_client_connect_timeout: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: '30 secs',
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_command_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for connecting to the remote SMTP server, including the TLS handshake
+and authentication.`
+	},
+
+	smtp_client_host: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_port', 'smtp_client_ssl' ],
+		values: setting_types.STRING,
+		text: `
+Host name or IP address of the remote SMTP server. The port is configured
+separately with [[setting,smtp_client_port]].
+
+Inside the [[setting,submission_relay]] filter this is required. Inside the
+[[setting,mail_submit]] filter setting it switches from executing the sendmail
+binary to sending via SMTP.
+
+[[variable,mail-user]] can be used.`
+	},
+
+	smtp_client_peer_trusted: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: 'no',
+		tags: [ 'smtp_client' ],
+		values: setting_types.BOOLEAN,
+		text: `
+Whether the remote SMTP server is trusted. If enabled, the original client's
+connection information is forwarded to the remote server with the
+(Postfix-specific) XCLIENT command, if the remote server advertises support
+for it.`
+	},
+
+	smtp_client_port: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: 25,
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_host', 'smtp_client_ssl' ],
+		values: setting_types.IN_PORT,
+		text: `
+Port of the remote SMTP server.`
+	},
+
+	smtp_client_rawlog_dir: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		tags: [ 'smtp_client' ],
+		seealso: [ '[[link,rawlog]]' ],
+		values: setting_types.PATH_DIR,
+		text: `
+Write protocol logs of the outgoing SMTP connections to this directory for
+debugging.
+
+[[variable,mail-user]] can be used.`
+	},
+
+	smtp_client_source_ip: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		tags: [ 'smtp_client' ],
+		values: setting_types.STRING,
+		text: `
+Local IP address to use as the source address of the outgoing SMTP
+connections. If empty, the kernel chooses the address.`
+	},
+
+	smtp_client_ssl: {
+		added: {
+			settings_smtp_client_added: false
+		},
+		default: 'no',
+		tags: [ 'smtp_client' ],
+		seealso: [ 'ssl_client_require_valid_cert', '[[link,ssl_configuration]]' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'no', 'smtps', 'submissions', 'starttls' ],
+		text: `
+Whether to use TLS for the connection to the remote SMTP server.
+
+| Value | Description |
+| ----- | ----------- |
+| \`no\` | No TLS |
+| \`smtps\` | Connect using TLS immediately (implicit TLS) |
+| \`submissions\` | Same as \`smtps\`, the name used by [[rfc,8314]] |
+| \`starttls\` | Use the STARTTLS command to switch to TLS |
+
+The connection uses the \`ssl_client_*\` settings, which can be set inside the
+same filter to apply to this client only.`
+	},
+
 	sql_driver: {
 		values: setting_types.STRING,
 		text: `
@@ -12115,7 +12490,7 @@ ssl_server_dh_file = /path/to/dh.pem
 Require a valid certificate when connecting to external SSL services?
 
 To change this for a single client only, set it inside that client's filter,
-e.g. [[setting,imapc]] or [[setting,pop3c]].`
+e.g. [[setting,imapc]], [[setting,pop3c]] or [[setting,submission_relay]].`
 	},
 
 	ssl_server_key_file: {
@@ -12319,6 +12694,13 @@ Supported workaround identifiers are:
 	},
 
 	submission_host: {
+		deprecated: {
+			settings_submission_host_deprecated: `
+Replaced by [[setting,smtp_client_host]] and [[setting,smtp_client_port]]
+inside the [[setting,mail_submit]] filter. With an older
+[[setting,dovecot_config_version]] the setting still works: the
+\`host:port\` value is split into those two settings.`
+		},
 		tags: [ 'submission' ],
 		values: setting_types.URL,
 		text: `
@@ -12367,7 +12749,50 @@ unknown limit exists there, which will be passed back to the client.`
 Maximum number of recipients accepted per connection.`
 	},
 
+	submission_relay: {
+		added: {
+			settings_submission_relay_renamed: false
+		},
+		tags: [ 'submission_relay', 'client-auth' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,submission_server]]', 'smtp_client_host',
+			   'client_auth', '[[link,client_auth]]' ],
+		text: `
+Filter for the settings of the connection from the [[link,submission_server]]
+to the relay MTA. The connection is configured with the generic
+\`smtp_client_*\`, [[setting,client_auth]] and \`ssl_client_*\` settings
+placed inside this filter. [[setting,smtp_client_host]] is required to
+provide the submission service.
+
+Inside this filter the defaults are [[setting,smtp_client_port,25]],
+[[setting,smtp_client_connect_timeout,30 secs]] and
+[[setting,smtp_client_command_timeout,5 mins]].
+
+Example:
+\`\`\`[dovecot.conf]
+submission_relay {
+  smtp_client_host = mta.example.com
+  smtp_client_port = 587
+  smtp_client_ssl = starttls
+  smtp_client_peer_trusted = yes
+
+  client_auth_authzid = submission-relay
+  client_auth_password = secret
+  # Prefer SCRAM-SHA-256, use PLAIN if the MTA doesn't advertise it
+  client_auth SCRAM-SHA-256 {
+  }
+  client_auth PLAIN {
+  }
+}
+\`\`\``
+	},
+
 	submission_relay_command_timeout: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_command_timeout]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: '5mins',
 		tags: [ 'submission_relay' ],
 		values: setting_types.TIME_MSECS,
@@ -12378,6 +12803,11 @@ The timeout is reset every time more data is being sent or received.`
 	},
 
 	submission_relay_connect_timeout: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_connect_timeout]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: '30secs',
 		tags: [ 'submission_relay' ],
 		values: setting_types.TIME_MSECS,
@@ -12387,6 +12817,11 @@ server.`
 	},
 
 	submission_relay_host: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_host]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		values: setting_types.STRING,
 		text: `
@@ -12394,6 +12829,11 @@ Host of the relay server (REQUIRED to provide the submission service).`
 	},
 
 	submission_relay_master_user: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,client_auth_authid]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		values: setting_types.STRING,
 		text: `
@@ -12402,6 +12842,11 @@ required.`
 	},
 
 	submission_relay_max_idle_time: {
+		deprecated: {
+			settings_submission_relay_renamed: `
+The setting never had any effect. With an older
+[[setting,dovecot_config_version]] it is still accepted, but ignored.`
+		},
 		default: '29mins',
 		tags: [ 'submission_relay' ],
 		values: setting_types.TIME,
@@ -12409,6 +12854,11 @@ required.`
 	},
 
 	submission_relay_password: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,client_auth_password]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		values: setting_types.STRING,
 		text: `
@@ -12416,6 +12866,11 @@ Password for authentication to the relay MTA if authentication is required.`
 	},
 
 	submission_relay_port: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_port]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: 25,
 		tags: [ 'submission_relay' ],
 		values: setting_types.IN_PORT,
@@ -12427,6 +12882,11 @@ Port for the submission relay server.`
 		changed: {
 			settings_path_types_added: `Setting type changed.`,
 		},
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_rawlog_dir]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		seealso: [ '[[link,rawlog]]' ],
 		values: setting_types.PATH_DIR,
@@ -12437,6 +12897,11 @@ Write protocol logs for relay connection to this directory for debugging.
 	},
 
 	submission_relay_ssl: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_ssl]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: 'no',
 		tags: [ 'submission_relay' ],
 		values: setting_types.ENUM,
@@ -12457,6 +12922,11 @@ Available values:
 	},
 
 	submission_relay_ssl_verify: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,ssl_client_require_valid_cert]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: 'yes',
 		tags: [ 'submission_relay' ],
 		values: setting_types.BOOLEAN,
@@ -12465,6 +12935,11 @@ If enabled, TLS certificate of the relay server must be verified.`
 	},
 
 	submission_relay_trusted: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,smtp_client_peer_trusted]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: 'no',
 		tags: [ 'submission_relay' ],
 		values: setting_types.BOOLEAN,
@@ -12476,6 +12951,11 @@ relay server (only if enabled).`
 	},
 
 	submission_relay_user: {
+		removed: {
+			settings_submission_relay_renamed: `
+Renamed to [[setting,client_auth_authzid]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		values: setting_types.STRING,
 		text: `
@@ -12483,6 +12963,11 @@ User name for authentication to the relay MTA if authentication is required.`
 	},
 
 	submission_ssl: {
+		removed: {
+			settings_submission_ssl_renamed: `
+Renamed to [[setting,smtp_client_ssl]] inside the [[setting,mail_submit]]
+filter.`
+		},
 		default: 'no',
 		seealso: [ 'submission_host' ],
 		values: setting_types.STRING,
@@ -12503,6 +12988,10 @@ Available values:
 	},
 
 	submission_timeout: {
+		removed: {
+			settings_submission_timeout_renamed: `
+Renamed to [[setting,mail_submit_timeout]].`
+		},
 		default: '30secs',
 		seealso: [ 'submission_host' ],
 		values: setting_types.TIME,
