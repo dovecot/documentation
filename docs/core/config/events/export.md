@@ -322,6 +322,11 @@ on, with the span id of the sender as the parent of the receiving span:
 * proxying between Dovecot servers: IMAP `ID` `x-trace-id` / `x-parent-id`,
   or `XCLIENT` `X-TRACE-ID` / `X-PARENT-ID`. The values are accepted only
   from [[setting,login_trusted_networks]]. See [[link,forwarding_parameters]].
+* HTTP: the W3C `Traceparent:` header. It is sent when
+  [[setting,http_client_trace_context,yes]] is set, and accepted by HTTP
+  servers (such as the doveadm HTTP API) from
+  [[setting,http_server_trace_context_trusted_networks]].
+
 This ties the events of one mail session, and the work it causes in other
 processes, into one trace.
 

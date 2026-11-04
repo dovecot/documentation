@@ -57,6 +57,7 @@ sls
 sni
 spnego
 ssh
+Traceparent
 ubsan
 ubuntu
 Uppercases

@@ -7109,6 +7109,24 @@ connection before trying the next IP in parallel. \`0\` = wait until current
 connection attempt finishes.`
 	},
 
+	http_client_trace_context: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		added: {
+			trace_context_added: false,
+		},
+		seealso: [ '[[link,event_export_opentelemetry]]' ],
+		text: `
+Send a W3C \`Traceparent:\` header with each request, carrying the trace id
+and span id of the event the request was made under. A request that sets its
+own \`Traceparent:\` header keeps it. Requests made under an event that has
+no trace id and span id carry no header.
+
+The header lets the receiving service continue the same trace. It also
+reveals the trace id to the server, so enable it only for servers you trust.`
+	},
+
 	http_client_user_agent: {
 		advanced: true,
 		tags: [ 'http', 'http_client' ],
@@ -7233,6 +7251,23 @@ defaults.`
 		text: `
 The kernel send buffer size for the connection sockets. \`0\` = kernel
 defaults.`
+	},
+
+	http_server_trace_context_trusted_networks: {
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.BOOLLIST,
+		added: {
+			trace_context_added: false,
+		},
+		seealso: [ '[[link,event_export_opentelemetry]]' ],
+		text: `
+List of IP addresses or network ranges in CIDR notation (e.g. \`192.168.0.0/24\`
+or \`2001:db8::/32\`) whose W3C \`Traceparent:\` request header is accepted.
+The request then continues the trace of the header, so the spans of the
+request share the trace id of the caller. Requests from other addresses have
+the header ignored. By default no network is trusted.
+
+An invalid network is rejected when the configuration is loaded.`
 	},
 
 	http_server_rawlog_dir: {

@@ -123,6 +123,7 @@ export const updates = {
 	setting_sqlite_synchronous_added: '2.4.3',
 	setting_sqlite_busy_timeout_added: '2.4.5',
 	ssl_sni_settings_reload_added: '2.4.0',
+	trace_context_added: '2.4.6',
 	weak_password_schemes: '2.4.0',
 	variables_auth_variables_protocol: '2.4.0',
 	variables_login_variables_protocol: '2.4.0',
