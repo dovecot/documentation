@@ -17,13 +17,20 @@ Things to know about hibernating connections without IDLE:
 
 * New mails and flag changes that happened during the hibernation are sent to
   the client before the reply to its next command.
-* If messages were expunged from the selected mailbox during the hibernation,
-  the client is disconnected with
-  `* BYE IMAP session state is inconsistent, please relogin.` The client's
-  next command hasn't started yet when the connection is moved back, so
-  EXPUNGE replies can't be sent and the client's message sequence numbers
-  can't be kept in sync. The
+* [[added,imap_hibernate_ghost_expunges_added]] Messages expunged from the
+  selected mailbox during the hibernation are sent as EXPUNGE or VANISHED
+  replies by the first command that is allowed to send them (e.g. `NOOP`, but
+  not `FETCH`), the same as in a session that was never hibernated. Until
+  then the expunged messages keep their sequence numbers, and fetching their
+  contents returns `NIL` with `OK [EXPUNGEISSUED]`.
+* The client is disconnected with
+  `* BYE IMAP session state is inconsistent, please relogin.` if messages were
+  expunged during the hibernation and either the transaction log no longer
+  reaches back to the start of the hibernation (it was rotated twice), or the
+  selected mailbox is a `virtual` or `imapc` mailbox. The
   [[event,imap_client_unhibernated]] event's `error` field is then
+  `IMAP session state is inconsistent: Mailbox <name>: Couldn't find expunges since hibernation (...)`
+  or
   `IMAP session state is inconsistent: Mailbox <name>: <count> messages expunged during hibernation`,
   which can be used to count how often this happens.
 * The connection is not hibernated while there are expunges that the client
