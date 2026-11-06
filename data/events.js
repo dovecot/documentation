@@ -740,8 +740,11 @@ process depending on which side the error was detected in.
 Reason why the unhibernation failed. Not set when it succeeded.
 
 [[added,imap_hibernate_nonidle_added]] When messages were expunged while a
-client without IDLE running was hibernated, the value is
-\`IMAP session state is inconsistent: Mailbox <name>: <count> messages expunged during hibernation\`.
+client without IDLE running was hibernated and the expunges can't be sent
+later, the value is
+\`IMAP session state is inconsistent: Mailbox <name>: <count> messages expunged during hibernation\`
+or
+\`IMAP session state is inconsistent: Mailbox <name>: Couldn't find expunges since hibernation (...)\`.
 See [[link,imap_hibernation_nonidle]].`,
 			reason: `
 Reason why client was unhibernated:
@@ -809,6 +812,17 @@ IMAP command is completed.
 
 This event is useful to track individual command usage, debug specific
 sessions, and/or detect broken clients.
+
+[[added,imap_hibernate_commands_added]] The imap-hibernate process also
+sends this event for the IDLE (finished by DONE), NOOP, CHECK and LOGOUT
+commands it answers itself (see [[link,imap_hibernation_commands]]). These
+events have the \`imap-hibernate\` category. \`running_usecs\` and
+\`lock_wait_usecs\` are always 0 for them. For IDLE finished by DONE
+\`cmd_input_name\` is always \`IDLE\`, because the IDLE may have been
+started by the imap process.
+
+When an IDLE command is hibernated, the imap process sends this event for it
+without \`tagged_reply_state\` and \`tagged_reply\`.
 
 ::: tip
 This event is currently not sent for pre-login IMAP commands.
