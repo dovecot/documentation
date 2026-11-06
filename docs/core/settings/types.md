@@ -6,9 +6,6 @@ dovecotlinks:
   settings_types_boolean:
     hash: boolean
     text: boolean
-  settings_types_ip:
-    hash: ip-addresses
-    text: IP addresses
   settings_types_size:
     hash: size
     text: size
@@ -91,6 +88,17 @@ available.
 For userdb and `-o` command line parameter overrides only the `~/` prefix is
 expanded, while the rest of the value is used literally, the same way as
 %variables in override values.
+
+[[changed,settings_path_types_confined]]
+
+After the %variables have been expanded an absolute path is normalized: `.`
+and `..` components are resolved, but symbolic links are not. The normalized
+path must still be under the literal part of the value preceding its first
+%variable. For example with `/var/vmail/%{user | domain}/%{user | username}`
+the result has to stay under `/var/vmail/`, otherwise the settings are invalid,
+e.g. the user's login fails. A value beginning with `~/` or a %variable has no
+literal part and is only normalized. Userdb and `-o` overrides are not
+templates and are only normalized.
 
 ## Directory Path
 
@@ -180,15 +188,6 @@ following words:
 
 All of these have the same meaning. Similarly to [Time](#time), the suffixes
 can be shortened to e.g. `ms`.
-
-## IP Addresses
-
-The IP can be IPv4 address like `127.0.0.1`, IPv6 address without brackets
-like `::1`, or with brackets like `[::1]`. The DNS name is looked up once
-during config parsing, e.g. `host.example.com`. If a /block is specified,
-then it's a CIDR address like `1.2.3.0/24`. If a /block isn't specified, then
-it defaults to all bits, i.e. /32 for IPv4 addresses and /128 for IPv6
-addresses.
 
 ## Port Number
 

@@ -1829,12 +1829,22 @@ line feed (LF) characters. This matches the Internet Message Format
 		added: {
 			settings_acl_global_settings_added: false,
 		},
+		changed: {
+			settings_acl_global_settings_changed: `
+These entries are now global ACLs. Previously they were handled like the
+rights in a per-mailbox \`dovecot-acl\` file.`,
+		},
 		plugin: 'acl',
 		values: setting_types.NAMED_FILTER,
 		seealso: [ 'acl_id' ,'acl_rights' ],
 		text: `
 Specifies an ACL entry on global, namespace or mailbox level. The filter name
 refers to the [[setting,acl_id]] setting.
+
+These entries are global ACLs: they override the rights of the same identifier
+in a per-mailbox \`dovecot-acl\` file, they apply also to the mailbox owner,
+users can't change them with the IMAP ACL extension, and they are never copied
+into \`dovecot-acl\` files.
 
 Has two settings:
 
@@ -4849,6 +4859,13 @@ domain (either AD or NT).`
 	},
 
 	auth_username_chars: {
+		changed: {
+			auth_username_dots_rejected: `
+Regardless of this setting, a username is rejected if any of its \`/\` or
+\`@\` delimited components consists solely of dots, e.g. \`..\`. Such a
+component would escape its parent directory when the username is used in a
+path, e.g. in [[setting,mail_path]] or in a dict key.`,
+		},
 		default: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890.-_@',
 		values: setting_types.STRING,
 		text: `
@@ -7202,11 +7219,11 @@ The directory from which you execute commands via doveadm-exec.`
 	},
 
 	listen: {
-		default: '\*, \:\:',
-		values: setting_types.IPADDR,
+		default: '\* \:\:',
+		values: setting_types.BOOLLIST,
 		text: `
-A comma-separated list of IP addresses or hostnames on which external network
-connections will be handled.
+List of IP addresses or hostnames on which external network connections will be
+handled.
 
 \`*\` listens at all IPv4 interfaces, and \`::\` listens at all IPv6
 interfaces.
@@ -7214,7 +7231,7 @@ interfaces.
 Example:
 
 \`\`\`
-listen = 127.0.0.1, 192.168.0.1
+listen = 127.0.0.1 192.168.0.1
 \`\`\`
 
 This setting can be used also inside an [[setting,inet_listener]] to override
@@ -7581,11 +7598,8 @@ doveadm processes.`
 	},
 
 	login_source_ips: {
-		values: setting_types.IPADDR,
+		values: setting_types.BOOLLIST,
 		text: `
-Value Format: List of trusted network ranges, see
-[[link,settings_types_boollist]].
-
 A list of hosts / IP addresses that are used in a round-robin manner for
 the source IP address when the proxy creates TCP connections.
 
@@ -7599,10 +7613,10 @@ login_source_ips {
 	},
 
 	login_trusted_networks: {
-		values: setting_types.IPADDR,
+		values: setting_types.BOOLLIST,
 		text: `
-Value Format: List of trusted network ranges, see
-[[link,settings_types_boollist]].
+List of trusted IP addresses (e.g. \`127.0.0.1\` or \`::1\`) or network
+ranges in CIDR notation (e.g. \`192.168.0.0/24\` or \`2001:db8::/32\`).
 
 This setting is used for a few different purposes, but most importantly it
 allows the client connection to tell the server what the original client's
@@ -7945,8 +7959,11 @@ This can be overridden via the \`gid\` [[link,userdb_fields,userdb field]].`
 	},
 
 	mail_home: {
+		changed: {
+			settings_path_types_confined: `Setting type changed.`,
+		},
 		seealso: [ 'mail_path', '[[link,home_directories_for_virtual_users]]' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 User's home directory. This is used as the root for some of the user-specific
 files and directories. The \`%{home}\` variable expands to this value. Also
