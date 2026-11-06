@@ -378,8 +378,9 @@ namespace inbox {
 }
 ```
 
-If a mailbox has both configured ACLs and a per-mailbox `dovecot-acl` file,
-both are read and the rules are merged.
+[[changed,settings_acl_global_settings_changed]] If a mailbox has both
+configured ACLs and a per-mailbox `dovecot-acl` file, both are read, and the
+configured ACLs override the rights of the same identifier in the file.
 
 Set [[setting,acl_globals_only,yes]] if `dovecot-acl` files are not used at
 all. This skips looking for them and saves disk I/O.
