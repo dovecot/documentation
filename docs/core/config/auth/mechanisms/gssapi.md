@@ -99,6 +99,15 @@ This enables cross-realm and on-behalf authentication.
 
 See [[link,passdb_extra_fields]].
 
+GSS-SPNEGO carries no authorization identity, so `k5principals` and mapping a
+principal to another login work only with GSSAPI. With GSS-SPNEGO the
+authenticated principal is the user.
+
+GSS-SPNEGO login completes as soon as the Kerberos AP-REQ is accepted, without
+the RFC 4752 security layer round trip. Replay protection therefore relies only
+on the Kerberos replay cache of the server. Keep the replay cache enabled; for
+example, do not set `KRB5RCACHETYPE=none` in the Dovecot environment.
+
 ### Testing
 
 You need an GSSAPI capable client, such as Thunderbird, running on a
