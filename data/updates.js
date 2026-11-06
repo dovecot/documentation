@@ -186,6 +186,7 @@ export const updates = {
 
 	settings_acl_global_settings_added: '2.4.0',
 	settings_acl_global_path_removed: '2.4.3',
+	settings_acl_global_settings_changed: '2.4.6',
 	settings_auth_allow_cleartext_added: '2.4.0',
 	settings_auth_allow_weak_schemes_added: '2.4.0',
 	settings_auth_debug_deprecated: '2.4.0',
