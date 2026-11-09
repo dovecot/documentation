@@ -5232,14 +5232,20 @@ user and password database lookups return.`
 	},
 
 	auth_cache_ttl: {
+		changed: {
+			settings_auth_cache_ttl_changed: `
+Expired cache entries are no longer used when the database lookup returns an
+internal failure.`,
+		},
 		default: '1hour',
 		tags: [ 'auth_cache' ],
 		values: setting_types.TIME,
 		text: `
 Time to live for cache entries.
 
-After the TTL expires, the cached record is no longer used, unless the main
-database look-up returns internal failure.
+After the TTL expires, the cached record is no longer used. This is also the
+maximum time a user can keep logging in using the cached data after e.g. the
+user was disabled in the database.
 
 Entries are removed from the cache only when the cache is full and a new
 entry is to be added.`
