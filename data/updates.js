@@ -170,6 +170,7 @@ export const updates = {
 	events_net_out_bytes_changed: '2.4.0',
 	events_pop3_command_finished_added: '2.4.0',
 	events_proxy_dest_connection_limit_added: '2.4.3',
+	events_proxy_session_finished_compression_added: '2.4.6',
 	events_proxy_session_finished_error_code_added: '2.4.0',
 	events_proxy_session_finished_idle_usecs_changed: '2.4.0',
 	events_sieve_script_disabled_added: '2.4.5',
