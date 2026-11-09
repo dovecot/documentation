@@ -15,6 +15,9 @@ dovecotlinks:
   acl_inheritance:
     hash: acl-inheritance-and-default-acls
     text: ACL Inheritance
+  acl_rights_cache:
+    hash: rights-cache
+    text: ACL rights cache
 ---
 
 # ACL: Access Control List Plugin (`acl`)
@@ -385,11 +388,37 @@ configured ACLs override the rights of the same identifier in the file.
 Set [[setting,acl_globals_only,yes]] if `dovecot-acl` files are not used at
 all. This skips looking for them and saves disk I/O.
 
-## List Cache
+## Rights Cache
 
-`dovecot-acl-list` file lists all mailboxes that have `l` rights assigned.
-If you manually add/edit `dovecot-acl` files, you may need to delete the
-`dovecot-acl-list` to get the mailboxes visible.
+[[changed,acl_rights_cache]] The `acl-rights.cache` file in the ACL root
+directory caches all mailboxes' `dovecot-acl` file rights. It replaces the
+earlier `dovecot-acl-list` file: shared mailbox listing uses it to find the
+mailboxes that have `l` rights assigned to a non-owner.
+
+Some mail storages keep the mailboxes in a local cache, where a mailbox's
+files are guaranteed to be available and up to date only while the mailbox is
+open. With them the cached rights are also served when a mailbox's
+`dovecot-acl` file is not locally available, or is older than the cache
+entry. Opening the mailbox reads its `dovecot-acl` file and checks the rights
+again, and `SETACL`, `DELETEACL`, `RENAME` and `CREATE` read it before they
+change anything. `LIST`, `STATUS`, `MYRIGHTS` and `GETACL` answer from the
+cache, so they can show an outdated entry until the mailbox is next opened or
+its ACL is changed. With all other mail storages a missing `dovecot-acl` file
+means that the mailbox has no ACL.
+
+The cache is maintained automatically. The owner's first ACL check or ACL
+change creates it, manually edited `dovecot-acl` files are picked up when they
+are next read, and a missing, deleted or unreadable cache is recreated the
+same way. Mailboxes whose `dovecot-acl` file is not locally available are
+fetched for that when [[setting,acl_sharing_map]] is configured and shows
+that the user has shares, so no shares are lost. With
+[[setting,acl_dict_index,yes]] the dictionary has to provide the reverse
+lookup index for this. `doveadm acl recalc` rebuilds the cache from all
+mailboxes' `dovecot-acl` files and is the way to repair it. With mail
+storages that keep the mailboxes in a local cache it opens every mailbox to
+read its `dovecot-acl` file. Run it also after changing
+[[setting,acl]] settings that grant the `l` right: a mailbox without a
+`dovecot-acl` file is added to the shared mailbox listings only then.
 
 ## Dictionaries
 
