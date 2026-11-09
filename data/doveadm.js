@@ -216,7 +216,9 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		flags: doveadm_flag_types.USER,
 		man: 'doveadm-acl',
 		plugin: 'acl',
-		text: `Ensure shared mailboxes exist in ACL shared dictionary.`
+		text: `Rebuild the user's ACL rights cache from all mailboxes'
+\`dovecot-acl\` files, then make sure the user's shared mailboxes exist in the
+ACL shared dictionary.`
 	},
 
 	'acl remove': {
