@@ -162,8 +162,11 @@ Show all the ACLs for the *mailbox*.
   [**-u** *user* | **-A** | **-F** *file* | **\-\-no-userdb-lookup**]
   [**-S** *socket_path*]
 
-Make sure the *user*'s shared mailboxes exist correctly in the
-*acl_sharing_map*.
+Rebuild the *user*'s ACL rights cache (**acl-rights.cache**) from all
+mailboxes' **dovecot-acl** files, then make sure the *user*'s shared mailboxes
+exist correctly in the *acl_sharing_map*.
+
+<!-- @include: @docs/core/man/include/doveadm-acl-recalc.inc -->
 
 ### acl remove
 
