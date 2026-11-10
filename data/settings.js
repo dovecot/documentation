@@ -5293,9 +5293,20 @@ It is usually neither necessary nor advisable to change the default.`
 		default: 'auth-master',
 		advanced: true,
 		values: setting_types.STRING,
+		changed: {
+			settings_auth_master_socket_path_changed: `
+If the login was authenticated by a different auth process than the one behind
+this socket, the login is finished via the auth process's per-PID socket.`
+		},
 		text: `
 The UNIX socket path to the master authentication server for finishing
 user logins.
+
+If the login was authenticated by a different auth process than the one
+behind this socket, the login is finished via the auth process's per-PID
+socket \`<auth_master_socket_path>-pid/<pid>\`. This happens when a login is in
+progress while the configuration is reloaded. The default auth service has
+the \`auth-master-pid/%{pid}\` listener for this.
 
 It is usually neither necessary nor advisable to change the default.`
 	},

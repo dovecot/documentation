@@ -38,7 +38,10 @@ The code flow usually goes like:
   and sending the authentication reply information to it.
 - The mail process connects to the `auth-master` UNIX socket and finishes
   the authentication request. This includes doing a userdb lookup, which is
-  returned back to the mail process.
+  returned back to the mail process. If the authentication was done by
+  a different auth process than the one behind the `auth-master` socket
+  (e.g. after a configuration reload), the mail process connects instead to
+  that auth process's `auth-master-pid/<pid>` socket.
 
 The authentication is fully asynchronous and it supports handling
 multiple requests in parallel.
