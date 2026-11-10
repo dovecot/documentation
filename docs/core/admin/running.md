@@ -75,7 +75,13 @@ the `-a` parameter.
 Note that the preserved processes keep using the old configuration for as
 long as they live, including the old passdb/userdb and mail settings.
 
-The hibernated IMAP sessions (see [[link,imap_hibernation]]) are the
+The preserved login processes are an exception for the clients that haven't
+logged in yet: right after the reload the login processes switch over to the
+new auth process, so these clients log in with the new passdb/userdb and auth
+settings. Logins that are in progress during the switch fail with a temporary
+error, and the client has to retry them.
+
+The hibernated IMAP sessions (see [[link,imap_hibernation]]) are another
 exception: when such a session wakes up after the reload, it's continued by an
 imap process that uses the new configuration. If the reload changed something
 that the client has already been told - the CAPABILITY, or the namespaces'
