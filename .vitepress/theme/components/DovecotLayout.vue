@@ -7,7 +7,7 @@ import { createMermaidRenderer } from 'vitepress-mermaid-renderer'
 import VersionDropdown from './VersionDropdown.vue'
 import VPDocAsideMeta from './VPDocAsideMeta.vue'
 
-const { site, theme } = useData()
+const { site, theme, page } = useData()
 const { Layout } = DefaultTheme
 
 const initMermaid = () => {
@@ -46,7 +46,7 @@ const latest = site._value.themeConfig.dovecot.base_url + "/latest/"
    <div class="container custom-block warning large">
     <p>
      Note: This is pre-release documentation.<br/>
-     Please access <a :href="latest" target="_blank">{{ latest }}</a> for documentation on released versions.
+     Please access <a :href="latest" target="_blank">{{ latest }}/{{ page.relativePath }}</a> for documentation on released versions.
     </p>
    </div>
   </template>
