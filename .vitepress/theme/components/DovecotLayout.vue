@@ -51,7 +51,7 @@ const latestUrl = computed(() =>
    <div class="container custom-block warning large">
     <p>
      Note: This is pre-release documentation.<br/>
-     Please access <a :href="latest" target="_blank">{{ latestUrl }}</a> for documentation on released versions.
+     Please access <a :href="latestUrl" target="_blank">{{ latestUrl }}</a> for documentation on released versions.
     </p>
    </div>
   </template>
