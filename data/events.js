@@ -1392,6 +1392,12 @@ logged into the backend.`
 			},
 			disconnect_side: `Which side disconnected: \`client\`, \`server\`, \`proxy\`.`,
 			disconnect_reason: `Reason for disconnection (empty = clean disconnect).`,
+			compression: {
+				added: {
+					events_proxy_session_finished_compression_added: false
+				},
+				text: `Compression mechanism enabled by the client (e.g. \`deflate\` for IMAP COMPRESS handled by the proxy). Not set if compression wasn't enabled.`
+			},
 			idle_usecs: {
 				changed: {
 					events_proxy_session_finished_idle_usecs_changed: `This was previously named \`idle_secs\`.`
