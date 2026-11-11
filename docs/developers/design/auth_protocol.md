@@ -71,7 +71,7 @@ to provide the VERSION. Based on that, it may give a different response.
 The rest of the server handshake:
 
 ```
-S: "SPID" TAB <pid>
+S: "SPID" TAB <pid> [TAB proxy_pid=<pid>]
 S: "CUID" TAB <pid>
 S: "COOKIE" TAB <cookie>
 S: "MECH" TAB <name> [TAB <parameters>] (multiple times)
@@ -94,6 +94,11 @@ be ignored.
 
 - SPID can be used by authentication client to tell master which server
   process handled the authentication.
+
+- `proxy_pid` is added to SPID by a process that proxies the connection to
+  the auth server (e.g. cluster). The authentication client tells master the
+  proxy's PID instead of the SPID, so the master finishes the login via the
+  same proxy process.
 
 - CUID is currently useful only for APOP authentication.
 
@@ -201,14 +206,20 @@ The connection starts by both server and master sending handshakes:
 
 ```
 S: "VERSION" TAB <major> TAB <minor>
-S: "SPID" TAB <pid>
+S: "SPID" TAB <pid> [TAB proxy_pid=<pid>]
 M: "VERSION" TAB <major> TAB <minor>
 ```
 
 Auth with client &lt;-&gt; server, both should check that the version numbers
 are valid.
 
-SPID can be used to let master identify the server process.
+SPID can be used to let master identify the server process. If it doesn't
+match the PID that the authentication client sent (or its `proxy_pid`, if the
+connection is proxied), the master connects to the per-PID
+`<auth_master_socket_path>-pid/<pid>` socket of the process that handled the
+authentication and sends the REQUEST there. This happens after a
+configuration reload, when the `auth-master` socket reaches only the new
+auth process.
 
 ### Master Requests
 
