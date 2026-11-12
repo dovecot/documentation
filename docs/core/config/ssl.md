@@ -412,8 +412,8 @@ protocol !smtp {
 You may also force the username to be taken from the certificate by
 setting [[setting,auth_ssl_username_from_cert,yes]].
 
-* The text is looked up from subject DN's specified field using OpenSSL's
-  `X509_NAME_get_text_by_NID()` function.
+* The text is looked up from subject DN's specified field and converted
+  to UTF-8.
 
 * By default the `CommonName` field is used.
 
