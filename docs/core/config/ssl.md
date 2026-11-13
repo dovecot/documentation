@@ -2,6 +2,9 @@
 layout: doc
 title: SSL
 dovecotlinks:
+  ssl_certificate_requirements:
+    hash: certificate-requirements
+    text: SSL certificate requirements
   secured_connections:
     hash: secured-connections
     text: secured connections
@@ -409,8 +412,8 @@ protocol !smtp {
 You may also force the username to be taken from the certificate by
 setting [[setting,auth_ssl_username_from_cert,yes]].
 
-* The text is looked up from subject DN's specified field using OpenSSL's
-  `X509_NAME_get_text_by_NID()` function.
+* The text is looked up from subject DN's specified field and converted
+  to UTF-8.
 
 * By default the `CommonName` field is used.
 
@@ -422,6 +425,235 @@ You may also want to disable the password checking completely. Doing this
 currently circumvents Dovecot's security model so it's not recommended to
 use it, but it is possible by making the passdb allow logins using any
 password (typically requiring `nopassword` extra field to be returned).
+
+## Certificate Requirements
+
+[[added,settings_ssl_cert_requirements_added]]
+
+[[setting,ssl_server_require_client_cert]] restricts which client
+certificates are accepted for incoming connections, and
+[[setting,ssl_client_require_server_cert]] which server certificates are
+accepted for outgoing connections. Both are [[link,settings_syntax_named_filters,
+named list filters]] with the same blocks:
+
+```doveconf[dovecot.conf]
+protocol imap {
+  ssl_server_require_client_cert mail-clients {
+    issuer {
+      O = Example Corp
+      CN = Example Client CA
+    }
+    subject {
+      OU = Mail Clients
+    }
+  }
+}
+```
+
+* The certificate must satisfy at least one block (OR). Within a block every
+  key in `issuer` and `subject` must match (AND).
+* Each key has one value. For "OU is `a` or `b`" use two blocks:
+
+  ```doveconf[dovecot.conf]
+  ssl_server_require_client_cert ou-a {
+    subject {
+      OU = a
+    }
+  }
+  ssl_server_require_client_cert ou-b {
+    subject {
+      OU = b
+    }
+  }
+  ```
+
+* Values are matched exactly against the UTF-8 converted DN values, with only
+  ASCII letters case-folded. No wildcards. This includes `uri` and `email`
+  values, although the path of a URI and the local part of an email address
+  are case-sensitive in general.
+* A key is satisfied if any entry of that attribute matches. For example
+  `OU = a` matches a certificate with `OU=a` and `OU=b`. The
+  [[setting,auth_ssl_username_from_cert]] username uses only the first
+  entry, so it can differ from the one that satisfied the block.
+* Keys are OpenSSL short or long attribute names (`O`, `OU`, `CN`,
+  `commonName`). They are case-sensitive: `o` is an "unknown attribute"
+  error when the TLS context is created.
+* `CN` matches only the subject CN. `name` matches the CN or any `dNSName`
+  subject alternative name, which suits checking a server's hostname. `dns`,
+  `email`, `uri` and `ip` match the corresponding subject alternative name
+  entries. `name`, `dns`, `email`, `uri` and `ip` are subject-only: in `issuer`
+  they fail the configuration check. Their key names are case-insensitive. The
+  X.520 `name` attribute is only reachable by its OID, `2.5.4.41`.
+* The issuer is matched by its DN, so list the full issuer DN. Two CAs with
+  an identical DN can't be told apart.
+* Only `%{...}` variables are expanded in values.
+
+### Incoming Connections
+
+Blocks are checked only in TLS handshakes and, behind HAProxy, in the PROXY
+protocol header, so they constrain TLS clients only. Plaintext connections
+aren't checked, also those from a plaintext HAProxy frontend. For the login
+services use [[setting,ssl,required]], or a client can skip TLS. Other
+services, e.g. LMTP, accept plaintext connections whatever `ssl` is. Blocks
+are ignored in a scope with [[setting,ssl,no]] for direct connections; an SNI
+name that selects such a [[link,settings_connection_filters,local_name]] scope
+fails the handshake.
+Connections from HAProxy are checked even with `ssl = no`.
+
+* [[setting,ssl_server_request_client_cert,yes]] is required for direct TLS.
+  Otherwise creating the TLS context fails with
+  `ssl_server_require_client_cert requires ssl_server_request_client_cert=yes`,
+  including with `any-cert`.
+* A client with no certificate, or a certificate that satisfies no block, is
+  rejected in the TLS handshake.
+* TLS session resumption is disabled where blocks are set.
+* Blocks only inside a [[link,settings_connection_filters,local_name]]
+  filter apply only to clients that send that SNI name. A client sending no
+  SNI name, or another one, is checked with the blocks of the scope it ends
+  up in, possibly none. The client chooses the name, so `local_name` isn't an
+  access boundary: put the blocks outside the filter, or give every reachable
+  name and the no-SNI default a block.
+
+#### HAProxy
+
+HAProxy doesn't pass on the client certificate, so Dovecot checks what HAProxy
+sends in the PROXY protocol v2 header. Every service with an
+`inet_listener` that has `haproxy = yes` enforces
+[[setting,ssl_server_require_client_cert]] this way. The blocks that apply
+to a connection are selected by the `service`, `protocol`,
+[[link,settings_connection_filters,local_name]] (the name HAProxy sends as the
+authority) and local and remote network filters around them. A block outside
+of any filter applies to all HAProxy listeners. When blocks apply:
+
+* Every HAProxy connection must carry the SSL TLV, so use
+  `send-proxy-v2-ssl-cn` on the HAProxy `server` line. A connection without it
+  is rejected: PROXY protocol v1, v2 without the TLV, also plaintext ones, and
+  a `LOCAL` header such as a health check. A `check-send-proxy` health check
+  sends PROXY v1, or a v2 `LOCAL` header without the TLV, unless the `server`
+  line also has `send-proxy-v2-ssl-cn` (or `send-proxy-v2-ssl`). Otherwise
+  HAProxy marks the server down; scope the blocks away from the checks, for
+  example under a `local_name` filter: health checks carry no authority.
+* For a TLS client HAProxy must report a verified certificate: a certificate
+  was sent and HAProxy's verify result is 0. Otherwise the connection is
+  rejected.
+
+There are two ways to get the certificate to Dovecot.
+
+**Distinguished names.** HAProxy sends the subject and issuer DNs in custom
+TLVs, and [[setting,haproxy_ssl_client_cert_subject_tlv]] and
+[[setting,haproxy_ssl_client_cert_issuer_tlv]] tell Dovecot which TLVs they
+are:
+
+```haproxy[haproxy.cfg]
+server s1 10.0.0.1:143 send-proxy-v2 send-proxy-v2-ssl-cn proxy-v2-options authority set-proxy-v2-tlv-fmt(0xE1) %[ssl_c_s_dn(,0,rfc2253)] set-proxy-v2-tlv-fmt(0xE2) %[ssl_c_i_dn(,0,rfc2253)]
+```
+
+```doveconf[dovecot.conf]
+haproxy_ssl_client_cert_subject_tlv = 0xE1
+haproxy_ssl_client_cert_issuer_tlv = 0xE2
+```
+
+* The DNs are matched like a certificate in a native TLS handshake, with these
+  differences: the `dns`, `email`, `uri` and `ip` keys never match, and
+  `name` matches only the CN, because HAProxy sends no subject alternative
+  names. Attributes that HAProxy prints as `#hex` are ignored.
+* Use the `(,0,rfc2253)` form. The default `ssl_c_s_dn` form isn't escaped and
+  is cut at a NUL byte. A wrong entry name, e.g. `(dn)`, gives an empty value,
+  which is rejected.
+* Both TLVs must be set, with different types in the range `0xE0` to `0xEF`.
+  A connection without them is rejected, also a plaintext one.
+* For a TLS client the issuer DN must not be empty. The subject DN may be
+  empty, as for a certificate that has only a subject alternative name.
+* HAProxy drops the TLVs if the header exceeds its `tune.bufsize`. Dovecot
+  rejects such a connection. It also reads at most 1500 bytes of a PROXY
+  header, which a long non-ASCII DN can exceed.
+
+**Common name only.** Without the DN settings only the subject CN is known
+(`send-proxy-v2-ssl-cn`), so only blocks with no `issuer` keys and exactly one
+`subject` key, `CN`, `commonName`, `2.5.4.3` or `name`, are evaluated,
+against that CN. There is no issuer, other attribute or subject alternative
+name to check. If no such block matches, the connection is rejected. A CN with
+a NUL byte or invalid UTF-8 isn't usable and counts as no CN. HAProxy forwards
+the raw bytes of the CN, so one that isn't a UTF8String, such as a BMPString or
+T61String, can't be matched.
+
+For both:
+
+* Blocks inside a [[link,settings_connection_filters,local_name]] filter need
+  `proxy-v2-options authority`, because HAProxy sends the client's SNI name
+  only then. Blocks only under `local_name` are selected by the SNI name on
+  every path, also for direct TLS: a client without a matching SNI name isn't
+  checked against them. Set blocks outside the filter to enforce them
+  regardless of SNI.
+* A HAProxy frontend bound to `unix@` or `abns@` sends PROXY v2 `LOCAL`
+  headers, which carry no client certificate. A TLS client there is rejected,
+  so use TCP binds. Plaintext connections pass, and so does a health check
+  (`check-send-proxy`) whose `LOCAL` header has the SSL TLV.
+
+### Outgoing Connections
+
+* [[setting,ssl_client_require_valid_cert,yes]] is required. Otherwise
+  creating the TLS context fails with `ssl_client_require_server_cert
+  requires ssl_client_require_valid_cert=yes`.
+* A server certificate that satisfies no block fails the connection with
+  `Server certificate does not satisfy any ssl_client_require_server_cert
+  block`.
+* TLS renegotiation is refused on connections with blocks, and a resumed
+  TLS session is rejected.
+* A block that is not inside a filter applies to all outgoing TLS
+  connections, for example proxying to backends with self-signed
+  certificates. Scope it with a filter.
+
+Blocks can be placed inside the filter of the client, including per
+namespace:
+
+```doveconf[dovecot.conf]
+namespace shared {
+  imapc {
+    host = imap.example.com
+    ssl = imaps
+    ssl_client_require_server_cert backend {
+      subject {
+        name = imap.example.com
+      }
+    }
+  }
+}
+```
+
+[[setting,imapc]] and [[setting,pop3c]] connections aren't shared between
+namespaces whose blocks differ.
+
+#### Drivers
+
+These drivers do their own TLS and don't support the setting. They fail if
+blocks apply to them:
+
+* LDAP when TLS is used: an `ldaps://` URI (the scheme is matched
+  case-insensitively) or [[setting,ldap_starttls,yes]]. The auth process
+  fails at startup, other LDAP clients when they are created. With `ldap://`
+  and no StartTLS the blocks are ignored.
+* MySQL, whatever [[setting,mysql_ssl]] is, because the client library may
+  use TLS even with `mysql_ssl = no`.
+* Cassandra unless [[setting,cassandra_ssl,no]].
+* PostgreSQL, unless [[setting,pgsql_parameters]] has `sslmode=disable`, or
+  every host is a unix socket path and `pgsql_parameters` has no `host`,
+  `hostaddr` or `service` key. Invalid `ssl_*` settings don't make
+  PostgreSQL fail.
+
+### Scoping
+
+Blocks inside nested filters (e.g. `local_name`) add to the blocks inherited
+from outer scopes and can't remove them. Re-opening an inherited block's
+name in a nested scope merges the keys into that block. Limitations:
+
+* Re-opening a block without any keys makes `doveconf` fail, although the
+  configuration is valid.
+* Keys that differ only by case in different scopes are caught only at
+  runtime.
+* HTTP services with native TLS, such as the doveadm HTTP API, look up the
+  blocks without the connection's addresses or `local_name`, so blocks inside
+  `local`, `remote` or `local_name` filters don't apply to them.
 
 ## Testing
 
