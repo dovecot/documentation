@@ -191,6 +191,38 @@ checked already when the client is created (e.g. when the namespace is initializ
 not only when connecting.`
 	},
 
+	client_auth_gssapi_channel_binding: {
+		added: {
+			settings_client_auth_added: false
+		},
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth', '[[link,auth_gssapi]]' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		text: `
+Whether the \`GSSAPI\` and \`GSS-SPNEGO\` client mechanisms send a TLS channel
+binding. It is normally set inside the mechanism's [[setting,client_auth]]
+filter, where the prefix is dropped:
+
+\`\`\`[dovecot.conf]
+imapc {
+  client_auth GSSAPI {
+    gssapi_channel_binding = no
+  }
+}
+\`\`\`
+
+If enabled and the connection uses TLS, the [[rfc,5929]]
+\`tls-server-end-point\` channel binding is passed to the Kerberos library. If
+the binding can't be obtained, the authentication fails. This happens with
+certificates whose signature algorithm has no single hash, such as Ed25519 and
+Ed448. Active Directory with \`LdapEnforceChannelBinding=2\` requires the
+binding, while servers that don't check channel bindings ignore it.
+
+Without TLS, no channel binding is sent. If disabled, no channel binding is sent
+at all.`
+	},
+
 	client_auth_mechanism: {
 		added: {
 			settings_client_auth_added: false
@@ -210,6 +242,8 @@ Supported mechanisms are:
  * CRAM-MD5
  * DIGEST-MD5
  * EXTERNAL
+ * GSS-SPNEGO
+ * GSSAPI
  * LOGIN
  * OAUTHBEARER
  * PLAIN
@@ -219,8 +253,11 @@ Supported mechanisms are:
  * SCRAM-SHA-256-PLUS
  * XOAUTH2
 
-Note that [[setting,client_auth_password]] is ignored for \`ANONYMOUS\` and
-\`EXTERNAL\` mechanisms. For \`OAUTHBEARER\` and \`XOAUTH2\`
+Note that [[setting,client_auth_password]] is ignored for \`ANONYMOUS\`,
+\`EXTERNAL\`, \`GSSAPI\` and \`GSS-SPNEGO\` mechanisms. The last two use
+Kerberos credentials instead, and are available only if Dovecot was built with
+GSSAPI support. They are loaded from the \`libdovecot-gssapi\` module when
+configured. See [[link,auth_gssapi]]. For \`OAUTHBEARER\` and \`XOAUTH2\`
 [[setting,client_auth_password]] should be a bearer token.
 
 Normally this setting is not set directly, but through the name of a
@@ -2092,12 +2129,22 @@ line feed (LF) characters. This matches the Internet Message Format
 		added: {
 			settings_acl_global_settings_added: false,
 		},
+		changed: {
+			settings_acl_global_settings_changed: `
+These entries are now global ACLs. Previously they were handled like the
+rights in a per-mailbox \`dovecot-acl\` file.`,
+		},
 		plugin: 'acl',
 		values: setting_types.NAMED_FILTER,
 		seealso: [ 'acl_id' ,'acl_rights' ],
 		text: `
 Specifies an ACL entry on global, namespace or mailbox level. The filter name
 refers to the [[setting,acl_id]] setting.
+
+These entries are global ACLs: they override the rights of the same identifier
+in a per-mailbox \`dovecot-acl\` file, they apply also to the mailbox owner,
+users can't change them with the IMAP ACL extension, and they are never copied
+into \`dovecot-acl\` files.
 
 Has two settings:
 
