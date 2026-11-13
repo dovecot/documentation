@@ -3,9 +3,10 @@
 [[setting,imap_hibernate_nonidle_timeout]] hibernates connections whose last
 command has finished this long ago, even if they are not in IDLE. This helps
 with clients that keep the connection open between commands, such as clients
-that poll with NOOP or STATUS. Any input from the client moves the connection
+that poll with NOOP or STATUS. Input from the client moves the connection
 back to a new imap process, so the timeout should be longer than the clients'
-polling interval.
+polling interval. Some commands are answered by the `imap-hibernate` process
+itself, see [[link,imap_hibernation_commands]].
 
 ```doveconf[dovecot.conf]
 imap_hibernate_timeout = 5s

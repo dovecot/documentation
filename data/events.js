@@ -810,6 +810,17 @@ IMAP command is completed.
 This event is useful to track individual command usage, debug specific
 sessions, and/or detect broken clients.
 
+[[added,imap_hibernate_commands_added]] The imap-hibernate process also
+sends this event for the IDLE (finished by DONE), NOOP, CHECK and LOGOUT
+commands it answers itself (see [[link,imap_hibernation_commands]]). These
+events have the \`imap-hibernate\` category. \`running_usecs\` and
+\`lock_wait_usecs\` are always 0 for them. For IDLE finished by DONE
+\`cmd_input_name\` is always \`IDLE\`, because the IDLE may have been
+started by the imap process.
+
+When an IDLE command is hibernated, the imap process sends this event for it
+without \`tagged_reply_state\` and \`tagged_reply\`.
+
 ::: tip
 This event is currently not sent for pre-login IMAP commands.
 :::`
@@ -1392,6 +1403,12 @@ logged into the backend.`
 			},
 			disconnect_side: `Which side disconnected: \`client\`, \`server\`, \`proxy\`.`,
 			disconnect_reason: `Reason for disconnection (empty = clean disconnect).`,
+			compression: {
+				added: {
+					events_proxy_session_finished_compression_added: false
+				},
+				text: `Compression mechanism enabled by the client (e.g. \`deflate\` for IMAP COMPRESS handled by the proxy). Not set if compression wasn't enabled.`
+			},
 			idle_usecs: {
 				changed: {
 					events_proxy_session_finished_idle_usecs_changed: `This was previously named \`idle_secs\`.`

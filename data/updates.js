@@ -44,6 +44,7 @@ export const updates = {
 	fs_crypt_require_encryption_keys: '2.4.0',
 	fts_flatcurve: '2.4.0',
 	fts_language_catalan_added: '2.4.6',
+	imap_hibernate_commands_added: '2.4.6',
 	imap_hibernate_nonidle_added: '2.4.6',
 	imap_search_nesting_limit_added: '2.4.6',
 	imapc_features_no_acl: '2.4.0',
@@ -171,6 +172,7 @@ export const updates = {
 	events_net_out_bytes_changed: '2.4.0',
 	events_pop3_command_finished_added: '2.4.0',
 	events_proxy_dest_connection_limit_added: '2.4.3',
+	events_proxy_session_finished_compression_added: '2.4.6',
 	events_proxy_session_finished_error_code_added: '2.4.0',
 	events_proxy_session_finished_idle_usecs_changed: '2.4.0',
 	events_sieve_script_disabled_added: '2.4.5',
@@ -187,6 +189,7 @@ export const updates = {
 
 	settings_acl_global_settings_added: '2.4.0',
 	settings_acl_global_path_removed: '2.4.3',
+	settings_acl_global_settings_changed: '2.4.6',
 	settings_auth_allow_cleartext_added: '2.4.0',
 	settings_auth_allow_weak_schemes_added: '2.4.0',
 	settings_auth_debug_deprecated: '2.4.0',
