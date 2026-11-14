@@ -12,6 +12,9 @@ dovecotlinks:
   imap_hibernation_commands:
     hash: commands-handled-by-imap-hibernate
     text: Commands Handled by imap-hibernate
+  imap_hibernation_notifier:
+    hash: mailbox-change-notifications
+    text: Mailbox Change Notifications
   imap_search_nesting_limit:
     hash: search-query-nesting-limit
     text: Search Query Nesting Limit
@@ -73,6 +76,10 @@ service imap-hibernate {
   }
 }
 ```
+
+### Mailbox Change Notifications
+
+<!-- @include: include/imap_hibernation_notifier.inc -->
 
 ### Hibernating Connections Without IDLE
 
