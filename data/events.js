@@ -740,8 +740,11 @@ process depending on which side the error was detected in.
 Reason why the unhibernation failed. Not set when it succeeded.
 
 [[added,imap_hibernate_nonidle_added]] When messages were expunged while a
-client without IDLE running was hibernated, the value is
-\`IMAP session state is inconsistent: Mailbox <name>: <count> messages expunged during hibernation\`.
+client without IDLE running was hibernated and the expunges can't be sent
+later, the value is
+\`IMAP session state is inconsistent: Mailbox <name>: <count> messages expunged during hibernation\`
+or
+\`IMAP session state is inconsistent: Mailbox <name>: Couldn't find expunges since hibernation (...)\`.
 See [[link,imap_hibernation_nonidle]].`,
 			reason: `
 Reason why client was unhibernated:

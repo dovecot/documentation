@@ -10414,6 +10414,68 @@ Once this threshold has been reached, [[setting,mailbox_autoexpunge]]
 processing is done.`
 	},
 
+	mailbox_change_notify: {
+		added: {
+			mailbox_change_notify_added: false,
+		},
+		default: 'yes',
+		seealso: [ 'mailbox_change_notify_fifo_path', 'mailbox_change_notify_socket_path', '[[link,imap_hibernation_notifier]]' ],
+		tags: [ 'imap', 'mailbox' ],
+		values: setting_types.BOOLEAN,
+		text: `
+If enabled, the Dovecot processes send a notification to the \`notifier\`
+service about each mailbox change that is visible to IMAP clients, and IDLE
+connections hibernated by \`imap-hibernate\` are woken up by these
+notifications. See [[link,imap_hibernation_notifier]].
+
+If disabled, the hibernated IDLE connections are woken up by inotify watches
+on the mailbox files instead. This was the only behavior before
+[[added,mailbox_change_notify_added]], and it is expected to be removed in a
+later release.
+
+This must be the same for all the processes, so set it only globally.
+Changing it from \`no\` to \`yes\` requires a restart: the processes that
+already have a mailbox open don't send notifications about it.`
+	},
+
+	mailbox_change_notify_fifo_path: {
+		added: {
+			mailbox_change_notify_added: false,
+		},
+		default: 'notifier',
+		seealso: [ 'mailbox_change_notify', 'mailbox_change_notify_socket_path', '[[link,imap_hibernation_notifier]]' ],
+		tags: [ 'imap', 'mailbox' ],
+		values: setting_types.STRING,
+		text: `
+Path to the \`notifier\` service's FIFO, where the mailbox change
+notifications are written. A relative path is relative to
+[[setting,base_dir]].
+
+The path is expanded with the variables of the mailbox's owner, so it can be
+used to shard the notifier by username, for example
+\`notifier-%{user | sha256 % 4}\`.
+[[setting,mailbox_change_notify_socket_path]] must use the same expression.
+See [[link,imap_hibernation_notifier]].`
+	},
+
+	mailbox_change_notify_socket_path: {
+		added: {
+			mailbox_change_notify_added: false,
+		},
+		default: 'notifier-watch',
+		seealso: [ 'mailbox_change_notify', 'mailbox_change_notify_fifo_path', '[[link,imap_hibernation_notifier]]' ],
+		tags: [ 'imap', 'mailbox' ],
+		values: setting_types.STRING,
+		text: `
+Path to the \`notifier\` service's socket, which \`imap-hibernate\` uses for
+watching the mailboxes of the hibernated connections. A relative path is
+relative to [[setting,base_dir]].
+
+The path is expanded with the variables of the mailbox's owner. It must use
+the same expression as [[setting,mailbox_change_notify_fifo_path]], so that
+both point to the same notifier shard.`
+	},
+
 	mailbox_special_use: {
 		tags: [ 'mailbox' ],
 		changed: {

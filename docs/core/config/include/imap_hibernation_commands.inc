@@ -23,18 +23,23 @@ send pending EXPUNGEs before it.
 
 Things to know:
 
-* A mailbox change is noticed using the same inotify watches that wake up a
-  hibernated IDLE. Any change in the mailbox's index files counts, even if it
-  wouldn't be visible to the client. Changes that are not noticed by inotify
-  (e.g. changes done by another server on shared storage) are not noticed
-  either, so `NOOP` doesn't show them. This is the same limitation that
-  hibernated IDLE has.
+* A mailbox change is noticed the same way that wakes up a hibernated IDLE.
+  With [[setting,mailbox_change_notify]] enabled, these are the notifications
+  that the Dovecot processes send about the changes visible to the client
+  (see [[link,imap_hibernation_notifier]]). Before `imap-hibernate` answers a
+  command, it waits until it has received the notifications that were sent
+  before the command arrived. Changes that send no notification (e.g.
+  changes done by another server on shared storage) are not noticed, so
+  `NOOP` doesn't show them. This is the same limitation that hibernated IDLE
+  has.
+* With [[setting,mailbox_change_notify]] disabled, the changes are noticed by
+  inotify watches instead. Any change in the mailbox's index files then
+  counts, even if it wouldn't be visible to the client.
 * Connections hibernated by [[setting,imap_hibernate_nonidle_timeout]] while a
-  mailbox is selected have no inotify watches, so their `NOOP`, `CHECK` and
+  mailbox is selected don't watch the mailbox, so their `NOOP`, `CHECK` and
   `IDLE` always move the connection back to an imap process.
 * After `DONE` has been answered by `imap-hibernate`, the connection is
-  hibernated without IDLE, so messages expunged before the client's next
-  command cause the relogin described in
+  hibernated without IDLE, the same as described in
   [[link,imap_hibernation_nonidle]]. This is why `DONE` is answered only
   when [[setting,imap_hibernate_nonidle_timeout]] is set.
 * `LOGOUT` answered by `imap-hibernate` doesn't run the

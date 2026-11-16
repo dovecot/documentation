@@ -151,4 +151,5 @@ There are also various other processes commonly used:
 * dns-client: Asynchronous DNS lookups
 * imap-hibernate: IDLEing imap connections can be moved to hibernation processes
 * indexer and indexer-worker: For full text search indexing
+* notifier: Forwards mailbox change notifications to imap-hibernate
 * stats: Tracking statistics
