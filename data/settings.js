@@ -7231,7 +7231,16 @@ The following values are currently supported:
     that LSUB replies with [[setting,mailbox_list_layout,fs]] aren't
     selectable, and users may receive pop-ups with not selectable errors.
     Showing \\Noselect flags for these replies (e.g., in mbox use) causes them
-    to be grayed out.`
+    to be grayed out.
+
+\`empty-literal-as-quoted\` [[added,empty_literal_as_quoted_added]]
+:   Send zero-length FETCH body values (\`BODY[...]\`, \`BINARY[...]\`,
+    \`RFC822\`, \`RFC822.HEADER\`, \`RFC822.TEXT\`) as \`""\` instead of a
+    \`{0}\` literal. iOS Mail stalls for about 90 seconds on a zero-length
+    literal. Non-empty values are still sent as literals.
+
+    Only FETCH is affected. \`URLFETCH\` and \`GETMETADATA\` still send
+    zero-length literals.`
 	},
 
 	imap_compress_on_proxy: {
