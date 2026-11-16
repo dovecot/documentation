@@ -10823,6 +10823,7 @@ A list of valid scopes.`
 		tags: [ 'oauth2' ],
 		values: setting_types.STRING,
 		default: 'email',
+		seealso: [ 'oauth2_username_from_token' ],
 		text: `
 Username attribute in response.`
 	},
@@ -10834,8 +10835,48 @@ Username attribute in response.`
 		seealso: [ 'oauth2_username_attribute' ],
 		text: `
 Normalization for oauth2 provided username, this setting is normally not
-needed. You only need this if the username that comes from authentication will
-not otherwise match with [[setting,oauth2_username_attribute]] value.`
+needed. Without [[setting,oauth2_username_from_token]], you only need this if
+the username that comes from authentication will not otherwise match with
+[[setting,oauth2_username_attribute]] value. With
+[[setting,oauth2_username_from_token]], this setting also normalizes the
+username that is taken from the token.`
+	},
+
+	oauth2_username_from_token: {
+		tags: [ 'oauth2' ],
+		added: {
+			settings_oauth2_username_from_token_added: false
+		},
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ 'oauth2_username_attribute',
+			'oauth2_username_validation_format',
+			'oauth2_use_worker_with_mech' ],
+		text: `
+If enabled, an \`OAUTHBEARER\` login may leave the username out of its GS2
+header (an empty authzid, which [[rfc,7628,3.1]] allows). The username is then
+taken from the token's [[setting,oauth2_username_attribute]] field. This is
+for clients that only have a bearer token and don't know the username.
+
+If the client does send a username, it must still match the username from the
+token. A mismatch fails the login, the same as when this setting is disabled.
+
+If disabled, a login without a username fails with \`Missing username\`.
+
+This applies only to \`OAUTHBEARER\`. \`XOAUTH2\` logins always need
+\`user=\`.
+
+The username from the token goes through
+[[setting,oauth2_username_validation_format]] and then the same checks and
+changes as a username sent by the client. The login fails if the attribute is
+not a JSON string, or if it is empty after
+[[setting,oauth2_username_validation_format]].
+
+When the client sent no username, the result is not compared with anything.
+So a format that drops part of the name, such as \`%{user | username}\`, can
+map the tokens of different users to the same user.
+
+This also works with [[setting,oauth2_use_worker_with_mech]].`
 	},
 
 	oauth2_active_attribute: {
