@@ -4,6 +4,9 @@ title: Overview
 order: 101
 dovecotlinks:
   authentication_proxies: proxy passdb
+  proxy_host:
+    hash: host-s
+    text: "proxy passdb: host Field"
   auth_forward_fields:
     hash: forwarding-fields
     text: forwarding fields
@@ -21,7 +24,7 @@ are two ways to do the authentication on the remote server:
 
 ## Configuration
 
-Proxying is enabled by the `proxy` or `proxy_maybe` extra field.
+Proxying is enabled by the `proxy` extra field.
 Additionally, `host` is also a required field. See below for details on
 them and other optional extra fields.
 
@@ -44,30 +47,65 @@ updated CAPABILITY reply.
 
 ### `proxy`
 
-Enables the proxying.
+Enables the proxying. This field is required to enable proxying.
 
-Either this or `proxy_maybe` is required to enable proxying.
+If the proxy destination is the proxy server itself (same IP, port and
+username), the login fails with `Proxying loops to itself` error.
 
 ### `proxy_maybe`
 
-Enables optional proxying.
+[[removed,proxy_maybe_removed]]
 
-Either this or `proxy` is required to enable proxying.
-
-`proxy_maybe` can be used to implement "automatic proxying" to implement
-a mixed mode of running proxies and backends in the same servers. If the
-proxy destination matches the current connection, the user gets logged in
-normally instead of being proxied. If the same happens with `proxy`, the
-login fails with `Proxying loops` error.
-
-[[setting,auth_proxy_self]] can be used to specify extra IPs that are also
-considered to be the proxy's own IPs.
+This field used to enable optional proxying: the user was logged in locally
+instead of proxied if the destination was the current server. Returning this
+field now fails the authentication with an internal error. Return `proxy`
+only for the users that need to be proxied instead, e.g. by using a
+different passdb query or passdb conditions.
 
 ### `host=<s>`
 
-The destination server's IP address.
+The destination server's IP address or host name.
 
 This field is required.
+
+[[changed,proxy_host_dns_lookup_changed]] If `host` is a host name and
+`hostip` isn't returned, the host name is resolved by the process doing the
+proxying, not by the auth process:
+
+* Login processes (IMAP, POP3, Submission, ManageSieve) do an asynchronous
+  DNS lookup via the `login/dns-client` socket of the `dns-client` service.
+  The results are cached for 10 seconds per login process. The DNS lookup
+  counts towards the [[setting,login_proxy_timeout]] (or `proxy_timeout`). If
+  the lookup fails, the [[event,proxy_session_finished]] event has error code
+  `proxy_dest_host_not_found` or `proxy_dest_host_temp_failed`.
+* LMTP does an asynchronous DNS lookup via the `dns-client` service. A lookup
+  failure is replied to with a temporary error: `451 4.4.0` if the host wasn't
+  found, or `451 4.4.3` for temporary DNS failures.
+* doveadm does a blocking DNS lookup.
+
+If the host name resolves to multiple IPs:
+
+* Login processes and LMTP skip the IPs that would make the proxy loop back
+  to itself (same IP and port, and for login processes also the same
+  username). If no other IP remains, the login fails with `Proxying loops to
+  itself` error.
+* Login processes first try the IPs whose previous connection attempts
+  haven't failed. If the connection fails and it's retried (see
+  [[setting,login_proxy_max_reconnects]]), the next IP is used. If an IP has
+  been down for so long that logins to it would fail immediately (see
+  [`proxy_host_immediate_failure_after`](#proxy-host-immediate-failure-after-time)),
+  the next IP that isn't down is used instead. Note that a connection attempt
+  that times out uses up the whole [[setting,login_proxy_timeout]], so the
+  other IPs are tried only after connection failures that happen faster than
+  that.
+* LMTP uses only the first IP that doesn't loop back. doveadm uses only the
+  first IP.
+
+### `hostip=<s>`
+
+The destination server's IP address, when `host` is a host name. This avoids
+a DNS lookup of the `host`. The `host` is still used e.g. for verifying the
+destination server's SSL certificate.
 
 ### `source_ip=<s>`
 
@@ -101,6 +139,15 @@ This overrides the default [[setting,login_proxy_timeout]].
 
 This setting applies only to proxying via login processes, not to lmtp or
 doveadm processes.
+
+### `proxy_host_immediate_failure_after=<time>`
+
+If connections to the destination IP have been failing for longer than this,
+new logins to it fail immediately while another connection to the same IP is
+still waiting to be established. `0` disables this. The default is 30
+seconds.
+
+This setting applies only to proxying via login processes.
 
 ### `proxy_no_multiplex`
 
@@ -340,43 +387,6 @@ passdb sql {
   query = SELECT NULL AS password, 'Y' as nopassword, host, destuser, 'Y' AS proxy \
     FROM proxy \
     WHERE user = '%{user}'
-}
-```
-
-### `proxy_maybe` with SQL
-
-::: code-group
-```sql[SQL Table]
-CREATE TABLE users (
-    user varchar(255) NOT NULL,
-    domain varchar(255) NOT NULL,
-    password varchar(100) NOT NULL,
-    host varchar(16) NOT NULL,
-    home varchar(100) NOT NULL,
-    PRIMARY KEY (user)
-);
-```
-
-```doveconf[dovecot.conf]
-# user/group who owns the message files:
-mail_uid = vmail
-mail_gid = vmail
-
-auth_mechanisms = plain
-
-sql_driver = mysql
-mysql localhost {
-}
-
-passdb sql {
-  query = SELECT concat(user, '@', domain) AS user, password, host, 'Y' AS proxy_maybe \
-    FROM users \
-    WHERE user = '%{user | username}' AND domain = '%{user | domain}'
-}
-userdb sql {
-  query = SELECT user AS username, domain, home \
-    FROM users \
-    WHERE user = '%{user | username}' AND domain = '%{user | domain}'
 }
 ```
 :::
