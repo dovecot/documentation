@@ -95,11 +95,13 @@ userdb passwd {
 }
 ```
 
-To grant the master user access to all Mailboxes, the `dovecot-acl` file can
-contain:
+To grant the master user access to all mailboxes, add a global ACL to
+`dovecot.conf` (see [[link,acl_global_file]]):
 
-```
-* user=masteruser lr
+```doveconf[dovecot.conf]
+acl user=masteruser {
+  rights = lr
+}
 ```
 
 Where the `passwd.masterusers` file would contain the master usernames and
