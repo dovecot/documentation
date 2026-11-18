@@ -6377,7 +6377,7 @@ Creates a new event exporter. The filter name refers to the
 	event_exporter_driver: {
 		tags: [ 'event-export' ],
 		values: setting_types.ENUM,
-		values_enum: [ 'log', 'file', 'unix', 'http-post', 'drop' ],
+		values_enum: [ 'log', 'file', 'unix', 'http-post', 'drop', 'opentelemetry' ],
 		default: 'log',
 		seealso: [ '[[link,event_export_drivers]]' ],
 		text: `
@@ -6449,6 +6449,122 @@ Timeout when connecting to unix socket with
 		seealso: [ 'event_exporter_unix_connect_timeout' ],
 		text: `
 Path to event unix socket with [[setting,event_exporter_driver,unix]].`
+	},
+
+	event_exporter_opentelemetry_url: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.STRING,
+		default: 'http://localhost:4318',
+		seealso: [ '[[link,event_export_opentelemetry]]',
+			   'event_exporter_opentelemetry_emit_logs' ],
+		text: `
+Base URL of the OTLP/HTTP collector when using
+[[setting,event_exporter_driver,opentelemetry]]. The exporter POSTs
+spans to \`<url>/v1/traces\` and (when
+[[setting,event_exporter_opentelemetry_emit_logs]] is enabled) log
+records to \`<url>/v1/logs\`. The wire format and
+\`Content-Type\` are selected by [[setting,event_exporter_format]]:
+
+* \`protobuf\` → \`application/x-protobuf\` (OTLP/HTTP+protobuf binary)
+* \`json\` → \`application/json\` (OTLP/HTTP+JSON, proto3 ProtoJSON
+  canonical encoding)
+
+Spans and log records use the same format and are sent in batches, see
+[[setting,event_exporter_opentelemetry_flush_interval]].
+
+Only OTLP/HTTP is implemented. OTLP/gRPC is not supported; point this
+setting at a collector that accepts OTLP/HTTP (the OpenTelemetry
+Collector, Jaeger v2, Grafana Tempo, etc.).`
+	},
+
+	event_exporter_opentelemetry_emit_spans: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		seealso: [ '[[link,event_export_opentelemetry]]',
+			   'event_exporter_opentelemetry_emit_logs' ],
+		text: `
+When enabled (the default), the exporter emits OTLP Spans to
+\`<url>/v1/traces\`. Disable only when you want the exporter to
+ship log records exclusively (set together with
+[[setting,event_exporter_opentelemetry_emit_logs,yes]]).`
+	},
+
+	event_exporter_opentelemetry_emit_logs: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		seealso: [ '[[link,event_export_opentelemetry_logs]]',
+			   'event_exporter_opentelemetry_emit_spans' ],
+		text: `
+When enabled, the exporter emits an OTLP LogRecord to
+\`<url>/v1/logs\` for every matched event that carries a
+formatted log message (\`e_info()\`, \`e_warning()\`, \`e_error()\`,
+\`e_debug()\` call sites). The LogRecord shares its \`trace_id\` with the
+trace of the span it belongs to, and its \`span_id\` with that span, so
+collectors link logs and traces.
+
+Log records use the wire format selected by
+[[setting,event_exporter_format]], like spans. Severity is mapped to the OTel
+severity model (DEBUG=5, INFO=9, WARN=13, ERROR=17, FATAL=21;
+PANIC is sent as FATAL4=24).
+
+Enabling this setting opts the stats process into receiving the
+formatted message text from each dovecot service; the wire cost is
+zero when the corresponding metric's filter does not match an event.`
+	},
+
+	event_exporter_opentelemetry_flush_interval: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.TIME_MSECS,
+		default: '5 secs',
+		seealso: [ 'event_exporter_opentelemetry_flush_count' ],
+		text: `
+Spans and log records are sent at the latest this long after the first one
+was queued, even when [[setting,event_exporter_opentelemetry_flush_count]] has
+not been reached. Must not be \`0\`.`
+	},
+
+	event_exporter_opentelemetry_flush_count: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.UINT,
+		default: 512,
+		seealso: [ 'event_exporter_opentelemetry_flush_interval',
+			   'event_exporter_opentelemetry_max_pending_requests' ],
+		text: `
+Spans and log records are sent as soon as this many are queued, without
+waiting for [[setting,event_exporter_opentelemetry_flush_interval]]. Spans and
+log records are queued separately. Must not be \`0\`.`
+	},
+
+	event_exporter_opentelemetry_max_pending_requests: {
+		added: {
+			settings_event_exporter_opentelemetry_added: false,
+		},
+		tags: [ 'event-export' ],
+		values: setting_types.UINT,
+		default: 4,
+		seealso: [ 'event_exporter_opentelemetry_flush_count' ],
+		text: `
+Maximum number of export requests that can be waiting for the collector's
+response. Spans and log records share this limit. While this many requests
+are pending, a further batch is dropped and an error is logged with the
+number of dropped records. Must not be \`0\`.`
 	},
 
 	execute: {
@@ -7046,6 +7162,24 @@ connection before trying the next IP in parallel. \`0\` = wait until current
 connection attempt finishes.`
 	},
 
+	http_client_trace_context: {
+		tags: [ 'http', 'http_client' ],
+		values: setting_types.BOOLEAN,
+		default: 'no',
+		added: {
+			trace_context_added: false,
+		},
+		seealso: [ '[[link,event_export_opentelemetry]]' ],
+		text: `
+Send a W3C \`traceparent\` header with each request, carrying the trace id
+and span id of the event the request was made under. A request that sets its
+own \`traceparent\` header keeps it. Requests made under an event without a
+trace id or a span id carry no header.
+
+The header lets the receiving service continue the same trace. It also
+reveals the trace id to the server, so enable it only for servers you trust.`
+	},
+
 	http_client_user_agent: {
 		advanced: true,
 		tags: [ 'http', 'http_client' ],
@@ -7170,6 +7304,23 @@ defaults.`
 		text: `
 The kernel send buffer size for the connection sockets. \`0\` = kernel
 defaults.`
+	},
+
+	http_server_trace_context_trusted_networks: {
+		tags: [ 'http', 'http-server' ],
+		values: setting_types.BOOLLIST,
+		added: {
+			trace_context_added: false,
+		},
+		seealso: [ '[[link,event_export_opentelemetry]]' ],
+		text: `
+List of IP addresses or network ranges in CIDR notation (e.g. \`192.168.0.0/24\`
+or \`2001:db8::/32\`) whose W3C \`traceparent\` request header is accepted.
+The request then continues the trace of the header, so the spans of the
+request share the trace id of the caller. Requests from other addresses have
+the header ignored. By default no network is trusted.
+
+An invalid network is rejected when the configuration is loaded.`
 	},
 
 	http_server_rawlog_dir: {
@@ -10680,6 +10831,73 @@ includes nothing and the exported event will be empty (i.e. \`{}\` in JSON).`
 		text: `
 Human-readable description of the metric. This is included in the HELP text
 sent to OpenMetrics.`
+	},
+
+	metric_export_sample_by: {
+		added: {
+			settings_metric_export_sample_by_added: false,
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ '[[link,stats_sample_by]]',
+			   'metric_export_sample_by_field',
+			   'metric_export_sample_by_percent' ],
+		text: `
+Defines a [[link,stats_sample_by,sampling rule]] that decides whether an
+event matching this metric is forwarded to the
+[[setting,metric_exporter]]. The filter name is an arbitrary identifier
+for the rule; the actual sampled field is the
+[[setting,metric_export_sample_by_field]] setting inside the block.
+
+Multiple [[setting,metric_export_sample_by]] blocks combine with AND
+semantics: an event is exported only if every rule passes. Sampling is
+deterministic: events that share the same field value are always sampled
+in or out together. Statistics counters are unaffected; sampling applies
+only to exported events.`
+	},
+
+	metric_export_sample_by_field: {
+		added: {
+			settings_metric_export_sample_by_added: false,
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.STRING,
+		seealso: [ '[[link,stats_sample_by]]',
+			   'metric_export_sample_by',
+			   'metric_export_sample_by_percent' ],
+		text: `
+Name of the event field whose value is hashed to make the sampling
+decision. A common choice is \`session\`, which causes every event in
+the same session to be sampled in or out together.
+
+The value \`trace_id\` always uses the trace id of the event; an event field named
+\`trace_id\` is not looked up. Sampling by \`trace_id\` keeps every event of a
+trace together, including events of other systems sharing the trace id (a
+\`traceparent\` header from a trusted network, or IMAP \`ID\` / \`XCLIENT\` from a
+trusted proxy). It also keeps a \`doveadm\` command whole: the command's own
+events have no \`session\` field, so sampling by \`session\` drops them.
+
+An event without the field, or for \`trace_id\` without a trace id, is dropped
+from the export.`
+	},
+
+	metric_export_sample_by_percent: {
+		added: {
+			settings_metric_export_sample_by_added: false,
+		},
+		tags: [ 'metrics' ],
+		values: setting_types.STRING,
+		default: '100',
+		seealso: [ '[[link,stats_sample_by]]',
+			   'metric_export_sample_by',
+			   'metric_export_sample_by_field' ],
+		text: `
+Percentage of distinct field values that are exported. The valid range is
+\`0.001\`..\`100\`; \`0\` is rejected. The default \`100\` exports every event,
+which makes the [[setting,metric_export_sample_by]] block a no-op.
+
+For example, \`percent = 10\` exports approximately 10% of distinct field
+values, and \`percent = 0.5\` exports approximately 0.5%.`
 	},
 
 	oauth2: {
