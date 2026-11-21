@@ -396,6 +396,30 @@ could still be able to access a disabled user via `doveadm`.
 as long as [[setting,lmtp_proxy,yes]]. However, the `reason` field is ignored.
 :::
 
+::: danger
+`nologin` is only enforced by the process that performs the authentication.
+Third party SASL clients that speak the [[link,design_auth_protocol]] directly,
+such as an MTA configured to use Dovecot's authentication socket, are outside
+Dovecot's control, and some of them treat any `OK` reply as a success and
+ignore `nologin` entirely. The user then gets access even though the passdb
+denied it.
+
+Do not rely on `nologin` to block such a service. Make the passdb lookup fail
+instead, for example with a protocol specific `deny` passdb:
+
+```[dovecot.conf]
+protocol smtp {
+  passdb smtp_disabled {
+    driver = sql
+    deny = yes
+    # returns a row only for users whose SMTP access is disabled
+    query = SELECT username FROM users \
+            WHERE username = '%{user}' AND smtp_enabled = FALSE
+  }
+}
+```
+:::
+
 ::: info
 If you want to entirely block the user from logging in (i.e. account is
 suspended), with no IMAP referral information provided, you must ensure that

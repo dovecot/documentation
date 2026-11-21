@@ -186,6 +186,48 @@ C: "CONT" TAB <id> TAB <base64 data>
 
 The `<id>` must match the `<id>` of the AUTH command.
 
+OK parameters may contain:
+
+| Parameters | Description |
+| ---------- | ----------- |
+| `nologin` | The credentials were verified, but the user must NOT be given access. See below. |
+| `proxy` | The auth client is expected to proxy the connection to another server rather than serve the user locally. The user must NOT be given access locally. |
+| `host=<host>` | Login referral: the user should be told to use `<host>` instead. |
+| `reason=<str>` | `<str>` should be sent to the remote user in place of the standard message when the reply is turned into a failure, i.e. together with `nologin`. The same restriction as for FAIL applies: it must NOT give the exact reason for an authentication failure. |
+
+### OK Does Not Mean Access Granted
+
+::: danger
+An OK reply only states that the credentials were verified. It does not state
+that the user is authorized to use the service.
+
+An authentication client MUST refuse access when an OK reply contains
+`nologin` or `proxy`, and MUST NOT rely on the master connection to catch this
+later. For such a reply the auth server drops the request as soon as OK is
+sent, so no `REQUEST` can ever succeed for it, and SMTP AUTH clients do not use
+the master connection at all.
+
+Treat such a reply exactly like FAIL, using `reason=` as the message when it is
+present.
+:::
+
+Only the presence of `nologin` is significant, its value is ignored. `nologin`,
+`nologin=` and `nologin=Y` are all equivalent.
+
+Whether `host=` is also present distinguishes the two cases:
+
+* `nologin` without `host=`: plain denial, the user is not allowed to log in at
+  all.
+* `nologin` with `host=`: login referral, the user should log in on `<host>`
+  instead. See [[link,auth_referral]].
+
+`code=` is a FAIL parameter. A passdb can set it on a reply that also contains
+`nologin`, but it then has no effect: Dovecot's own login processes always
+report such a reply as a login-disabled failure, whatever `code=` says.
+
+These parameters originate from passdb extra fields, see
+[[link,passdb_auth_nologin]] and [[link,passdb_extra_fields]].
+
 FAIL and OK may contain multiple unspecified parameters which
 authentication client may handle specially. The only one specified here
 is `user=<userid>` parameter, which should always be sent if the userid
