@@ -1583,6 +1583,10 @@ The maximum nesting depth for the include tree.`
 		plugin: 'sieve',
 		values: setting_types.STRING,
 		seealso: [ '[[link,sieve_spamtest]]' ],
+		changed: {
+			regex_capture_group_limit: `
+The regular expression can have at most 100 capture groups.`,
+		},
 		text: `
 Value format: \`<header-field> [ ":" <regexp> ]\`
 
@@ -1613,6 +1617,10 @@ This setting can specify a fractional score with a decimal point.`
 		plugin: 'sieve',
 		values: setting_types.STRING,
 		seealso: [ '[[link,sieve_spamtest]]' ],
+		changed: {
+			regex_capture_group_limit: `
+The regular expression can have at most 100 capture groups.`,
+		},
 		text: `
 Value format: \`<header-field> [ ":" <regexp> ]\`
 
@@ -1623,12 +1631,16 @@ If no matching header is found in the message, the spamtest command will
 match against \`0\`.
 
 This is a structured setting. The first part specifies the header field
-name.  Optionally, a POSIX regular expression follows the header field
-name, separated by a colon. Any white space directly following the colon is
-not part of the regular expression. If the regular expression is omitted,
-any header content is accepted and the full header value is used. When a
-regular expression is used, it must specify one match value (inside
-brackets) that yields the desired spam scanner result.
+name.  Optionally, a regular expression in
+[Perl-compatible regular expression syntax](https://www.pcre.org/current/doc/html/pcre2pattern.html)
+follows the header field name, separated by a colon. Any white space
+directly following the colon is not part of the regular expression. If the
+regular expression is omitted, any header content is accepted and the full
+header value is used. When a regular expression is used, it must specify one
+match value (inside brackets) that yields the desired spam scanner result.
+Only the first capture group is read as the match value. The header value
+is matched byte by byte, so a pattern cannot match a non-ASCII character as
+a single character. Matching is case-insensitive for ASCII letters only.
 
 If the header does not match the regular expression or if no value match is
 found, the spamtest test will match against \`0\` during Sieve script
@@ -1818,6 +1830,10 @@ The minimum value for this setting is \`4000 bytes\`.`
 		plugin: 'sieve',
 		values: setting_types.STRING,
 		seealso: [ '[[link,sieve_virustest]]' ],
+		changed: {
+			regex_capture_group_limit: `
+The regular expression can have at most 100 capture groups.`,
+		},
 		text: `
 Value Format: \`<header-field> [ ":" <regexp> ]\`
 
@@ -1848,6 +1864,10 @@ This setting can specify a fractional score with a decimal point.`
 		plugin: 'sieve',
 		values: setting_types.STRING,
 		seealso: [ '[[link,sieve_virustest]]' ],
+		changed: {
+			regex_capture_group_limit: `
+The regular expression can have at most 100 capture groups.`,
+		},
 		text: `
 Value Format: \`<header-field> [ ":" <regexp> ]\`
 
@@ -1858,12 +1878,16 @@ If no matching header is found in the message, the spamtest command will
 match against \`0\`.
 
 This is a structured setting. The first part specifies the header field
-name. Optionally, a POSIX regular expression follows the header field name,
-separated by a colon. Any white space directly following the colon is not
-part of the regular expression. If the regular expression is omitted, any
-header content is accepted and the full header value is used. When a
-regular expression is used, it must specify one match value (inside
-brackets) that yields the desired spam scanner result.
+name. Optionally, a regular expression in
+[Perl-compatible regular expression syntax](https://www.pcre.org/current/doc/html/pcre2pattern.html)
+follows the header field name, separated by a colon. Any white space
+directly following the colon is not part of the regular expression. If the
+regular expression is omitted, any header content is accepted and the full
+header value is used. When a regular expression is used, it must specify one
+match value (inside brackets) that yields the desired spam scanner result.
+Only the first capture group is read as the match value. The header value
+is matched byte by byte, so a pattern cannot match a non-ASCII character as
+a single character. Matching is case-insensitive for ASCII letters only.
 
 If the header does not match the regular expression or if no value match is
 found, the spamtest test will match against \`0\` during Sieve script
