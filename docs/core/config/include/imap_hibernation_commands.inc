@@ -33,8 +33,7 @@ Things to know:
   mailbox is selected have no inotify watches, so their `NOOP`, `CHECK` and
   `IDLE` always move the connection back to an imap process.
 * After `DONE` has been answered by `imap-hibernate`, the connection is
-  hibernated without IDLE, so messages expunged before the client's next
-  command cause the relogin described in
+  hibernated without IDLE, the same as described in
   [[link,imap_hibernation_nonidle]]. This is why `DONE` is answered only
   when [[setting,imap_hibernate_nonidle_timeout]] is set.
 * `LOGOUT` answered by `imap-hibernate` doesn't run the
