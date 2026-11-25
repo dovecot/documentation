@@ -165,7 +165,9 @@ The default Linux configurations are usually quite good. The only things needed
 to check are:
 
 * `/proc/sys/fs/inotify/max_user_watches` and `max_user_instances` need to
-  be large enough to handle all the IDLEing IMAP processes.
+  be large enough to handle all the IDLEing IMAP processes. With
+  [[setting,mailbox_change_notify]] disabled, also each connection
+  hibernated in IDLE by `imap-hibernate` needs an inotify instance.
 
   ```
   fs.inotify.max_user_instances = 65535
