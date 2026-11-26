@@ -99,6 +99,15 @@ This enables cross-realm and on-behalf authentication.
 
 See [[link,passdb_extra_fields]].
 
+GSS-SPNEGO carries no authorization identity, so `k5principals` and mapping a
+principal to another login work only with GSSAPI. With GSS-SPNEGO the
+authenticated principal is the user.
+
+GSS-SPNEGO login completes as soon as the Kerberos AP-REQ is accepted, without
+the RFC 4752 security layer round trip. Replay protection therefore relies only
+on the Kerberos replay cache of the server. Keep the replay cache enabled; for
+example, do not set `KRB5RCACHETYPE=none` in the Dovecot environment.
+
 ### Testing
 
 You need an GSSAPI capable client, such as Thunderbird, running on a
@@ -107,3 +116,21 @@ authentication mechanism and you should be able to log in.
 
 If necessary, you can use [[setting,auth_username_format]] to normalize
 usernames.
+
+## Using GSSAPI as a Client
+
+Dovecot can also authenticate as a GSSAPI or GSS-SPNEGO client, e.g. when
+proxying. See [[link,client_auth]].
+
+ * The Kerberos credentials come from the process's default credential cache
+   (`KRB5CCNAME`) or from the client keytab (`KRB5_CLIENT_KTNAME` or
+   `default_client_keytab_name`, see
+   [MIT Kerberos](https://web.mit.edu/kerberos/krb5-latest/doc/basic/keytab_def.html)).
+   The environment variables must be passed to the process with
+   [[setting,import_environment]].
+ * Proxying with GSSAPI from a login process requires a non-chrooted login
+   service, because a chrooted process can't reach `krb5.conf`, the credential
+   cache or the GSSAPI module.
+ * As a client, GSS-SPNEGO negotiates only Kerberos, never NTLM.
+ * When TLS is used, a channel binding is sent by default. See
+   [[setting,client_auth_gssapi_channel_binding]].

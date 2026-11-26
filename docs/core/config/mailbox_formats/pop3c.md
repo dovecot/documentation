@@ -16,6 +16,9 @@ The remote POP3 mailbox is visible as the INBOX folder on the Dovecot side.
 
 <SettingsComponent tag="pop3c" />
 
+The login to the remote server is configured with the [[link,client_auth]]
+settings inside the [[setting,pop3c]] filter.
+
 ## Configuration Example
 
 Connect using STARTTLS to pop3.example.com:
@@ -27,9 +30,11 @@ mail_path =
 # OR, Store index files locally:
 #mail_path = ~/pop3c
 
-pop3c_host = pop3.example.com
-pop3c_password = secret
-pop3c_port = 110
-pop3c_ssl = starttls
-pop3c_user = user@example.com
+pop3c {
+  host = pop3.example.com
+  port = 110
+  ssl = starttls
+  client_auth_authzid = user@example.com
+  client_auth_password = secret
+}
 ```

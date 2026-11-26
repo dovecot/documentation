@@ -329,8 +329,8 @@ See also:
 | `original_user` | Same as `user`, except using the original username the client sent before any changes by auth process. With master user logins (also with [[setting,auth_master_user_separator]] based logins),this contains only the original master username. |
 | `listener` | Socket listener name as specified in config file, which accepted the client connection. |
 | `owner_user` | For shared storage this is the `user` variable of the owner, otherwise it is the same as `user`.<br />[[added,variables_owner_user_added]] |
-| `passdb:<name>` | Return passdb extra field "name". |
-| `passdb:forward_<name>` | Used by proxies to pass on extra fields to the next hop, see [[link,auth_forward_fields]]. |
+| `passdb:<name>` | Return passdb extra field "name". ASCII control characters and invalid UTF-8 bytes in the value are replaced with `?`. [[changed,login_passdb_variables_sanitized]] |
+| `passdb:forward_<name>` | Used by proxies to pass on extra fields to the next hop, see [[link,auth_forward_fields]]. ASCII control characters and invalid UTF-8 bytes in the value are replaced with `?`. [[changed,login_passdb_variables_sanitized]] |
 
 ## Authentication Variables
 
@@ -371,8 +371,9 @@ See also:
 | `client_id` | If [[setting,imap_id_retain]] is enabled this variable is populated with the client ID request as IMAP arglist. For directly logging the ID see the [[event,imap_id_received]] event. |
 | `passdb:forward_<name>` | Used by proxies to pass on extra fields to the next hop, see [[link,auth_forward_fields]]. |
 | `id` | Internal ID number of the current passdb/userdb. |
-| `token` | Used OAUTH2 token. This is only present in [[setting,oauth2_fields]]. [[added,variables_oauth2]] |
+| `token` | [[deprecated,variables_oauth2_token_deprecated]] Use `access_token` instead. Only present in [[setting,oauth2_fields]]. [[added,variables_oauth2]] |
 | `oauth2:<name>` | Return oauth2 field "name". This is only present in [[setting,oauth2_fields]]. |
+| `access_token` | The OAuth2 bearer token. Only present in [[setting,oauth2_fields]], [[setting,oauth2_tokeninfo_url]] and [[setting,oauth2_introspection_url]]. In the two URL settings all expanded values are URL-escaped, see [[link,auth_oauth2_url_variables]]. [[added,oauth2_access_token_added]] |
 
 ## Conditionals
 
@@ -463,7 +464,9 @@ For best results, you should leave salt and IV management to Dovecot.
 import_environment {
    SECRET_KEY = %{env:SECRET_KEY}
 }
-imapc_password = "%{literal('s=3-?I&-a|,r=10000$e80e6ab3c18c0da69b20bf201eaf6269$') | decrypt(key=env:SECRET_KEY)}"
+imapc {
+  client_auth_password = "%{literal('s=3-?I&-a|,r=10000$e80e6ab3c18c0da69b20bf201eaf6269$') | decrypt(key=env:SECRET_KEY)}"
+}
 ```
 
 Stores imap client password securely so that it can be decrypted only if `SECRET_KEY` environment variable is provided.

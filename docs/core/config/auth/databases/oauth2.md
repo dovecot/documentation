@@ -3,6 +3,9 @@ layout: doc
 title: OAuth2
 dovecotlinks:
   auth_oauth2: OAuth2 Authentication Database
+  auth_oauth2_url_variables:
+    hash: variables-in-urls
+    text: Variables in oauth2 URLs
 ---
 
 # Open Authentication v2.0 Database (`oauth2`)
@@ -53,7 +56,7 @@ Configuration file example for
 
 ```doveconf[dovecot.conf]
 oauth2 {
-  tokeninfo_url = https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=
+  tokeninfo_url = https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=%{access_token}
   introspection_url = https://www.googleapis.com/oauth2/v2/userinfo
   #force_introspection = yes
   username_attribute = email
@@ -87,6 +90,59 @@ oauth2 {
   ssl_client_ca_file = /etc/ssl/certs/ca-certificates.crt
 }
 ```
+
+#### Variables in URLs
+
+[[setting,oauth2_tokeninfo_url]] and [[setting,oauth2_introspection_url]]
+(with `introspection_mode = get`) are [[link,settings_variables]] templates
+that must contain `%{access_token}` in the URL path or query. The token is
+not appended automatically. With `introspection_mode = auth` or `post` the
+introspection URL must not contain it. Other variables are limited to the
+builtin providers, e.g. `%{env:..}`. Without other variables the URL is
+validated when the configuration is read, otherwise after expansion.
+
+Every variable expanded into these URLs is URL-escaped: everything except the
+unreserved characters of [[rfc,3986]] is percent-encoded. A variable that
+provides the scheme, host, port, base URL or several path segments must use
+the `| safe` filter. Without it a variable in the scheme, host or port is
+rejected when the configuration is read, and `/` in a path variable is
+escaped. Variables in the userinfo are escaped and need no `| safe`.
+`| safe` also skips the check that rejects an escaped variable expanding to
+`.` or `..`. `%{access_token}` itself is escaped as well, so do not use
+`| safe` with it. Use `| safe` only for values from trusted sources.
+
+For example, with the base URL in an environment variable:
+
+```doveconf[dovecot.conf]
+oauth2 {
+  tokeninfo_url = %{env:IDP_URL | safe}/tokeninfo?access_token=%{access_token}
+  introspection_mode = get
+  introspection_url = http://idp.example.com:%{env:IDP_PORT | safe}/introspect?token=%{access_token}
+}
+```
+
+These do not work:
+
+* `%{env:IDP_URL}/tokeninfo?...`: rejected when the configuration is read
+  (`%{env:IDP_URL} is part of the URL scheme or host and needs the safe
+  filter`).
+* `%{env:TOKENINFO_URL}%{access_token}`: the token is not in the path or
+  query. Write `%{env:TOKENINFO_BASE | safe}?access_token=%{access_token}`.
+* `http://%{access_token}.example.com/`: rejected with `%{access_token} must
+  be in the URL path or query`.
+
+`%{env:..}` is resolved in the auth process, which only sees the variables
+listed in [[setting,import_environment]].
+
+### Passdb extra fields
+
+The oauth2 passdb sets the following extra fields, available as
+`%{passdb:<name>}`:
+
+| Field | Description |
+| ----- | ----------- |
+| `access_token` | The raw OAuth2 bearer token. [[added,oauth2_access_token_added]] |
+| `token` | [[deprecated,variables_oauth2_token_deprecated]] Alias of `access_token`. |
 
 ### Proxy
 
@@ -127,12 +183,12 @@ If you want to configure proxy to get token and pass it to backend:
 oauth2 {
   client_id = verySecretClientId
   client_secret = verySecretSecret
-  tokeninfo_url = http://localhost:8000/oauth2?oauth=
+  tokeninfo_url = http://localhost:8000/oauth2?oauth=%{access_token}
   introspection_url = http://localhost:8000/introspect
   introspection_mode = post
   username_attribute = username
   fields {
-    pass = %{token}
+    pass = %{access_token}
   }
 }
 

@@ -86,7 +86,10 @@ imapsieve_from Spam {
 }
 
 # Needed to send message to external mail server
-submission_host = 127.0.0.1:587
+mail_submit {
+  smtp_client_host = 127.0.0.1
+  smtp_client_port = 587
+}
 ```
 
 ```[/etc/dovecot/sieve/report-spam.sieve]

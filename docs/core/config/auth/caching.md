@@ -17,10 +17,15 @@ lookups. The following rules apply to using the authentication cache:
     it's assumed that the password has changed and a database lookup
     is done.
 
-- If a database lookup fails because of some internal error, but data
-  still exists in the cache (even if expired), the cached data is used.
-  This allows Dovecot to log in some users even if the database is
-  temporarily down.
+- If a database lookup fails because of some internal error, the lookup
+  fails. Expired cache entries are not used.
+
+  [[changed,settings_auth_cache_ttl_changed]] Older versions used the
+  expired cache entry if the database lookup failed with an internal error.
+  This was meant to allow logins while the database was temporarily down,
+  but it was rarely useful and not worth the security risk: expired entries
+  stay in the cache until they are evicted, so with a large cache stale
+  authentication data could have been used indefinitely.
 
 The authentication cache can be flushed with the
 [[doveadm,auth cache flush]] command.
@@ -33,9 +38,10 @@ the hit/miss counters after reading them.
 ## Settings
 
 ::: tip
-It should be pretty safe to set very high TTLs, because the only field
-that usually can change is the user's password, and Dovecot attempts to
-catch those cases (see the rules above).
+Dovecot attempts to catch password changes (see the rules above), so the
+cache TTL mainly controls how quickly other changes are noticed. For example
+a user that was disabled in the database can still log in using the cached
+data until the cache entry expires.
 :::
 
 <SettingsComponent tag="auth_cache" />

@@ -129,7 +129,7 @@ be used by any push endpoint that implements this API, not just OX App Suite.
 | Name | Required | Type | Description |
 | ---- | -------- | ---- | ----------- |
 | `push_notification_driver` | **YES** | [[link,settings_types_string]] | To identify this settings block the driver should get the value `ox`. |
-| `push_notification_ox_url` | **YES** | [[link,settings_types_string]] | The HTTP end-point (URL + authentication information) to use is configured in the Dovecot configuration file. Contains authentication information needed for Basic Authentication (if any). Example: `http<s> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/preliminary/http-notify/v1/notify"`<br/>For HTTPS endpoints, system CAs are trusted by default, but internal CAs might need further configuration.<br/>For further details on configuring the App Suite endpoint, see: [OX App Suite Push Notification API#Configuration of Dovecot "http-notify" plugin-in][ox-appsuite-push-notification-api-dovecot-configuration] |
+| `push_notification_ox_url` | **YES** | [[link,settings_types_url]] | The HTTP end-point (URL + authentication information) to use is configured in the Dovecot configuration file. Contains authentication information needed for Basic Authentication (if any). Example: `http<s> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port> + "/preliminary/http-notify/v1/notify"`<br/>For HTTPS endpoints, system CAs are trusted by default, but internal CAs might need further configuration.<br/>For further details on configuring the App Suite endpoint, see: [OX App Suite Push Notification API#Configuration of Dovecot "http-notify" plugin-in][ox-appsuite-push-notification-api-dovecot-configuration] |
 | `push_notification_ox_cache_ttl` | NO | [[link,settings_types_time]] | Cache lifetime for the METADATA entry for a user. (DEFAULT: `60 seconds`) |
 | `push_notification_ox_user_from_metadata` | NO | [[link,settings_types_boolean]] | Use the user stored in the METADATA entry instead of the user sent by OX endpoint. (DEFAULT: user returned by endpoint response is used, i.e. `no`) |
 
@@ -152,6 +152,20 @@ testing purposes you can do this yourself:
 ```sh
 doveadm mailbox metadata set -u user@example.com \
     -s "" /private/vendor/vendor.dovecot/http-notify user=11@3
+```
+
+The METADATA value is a TAB-separated list of `key=value` pairs:
+
+| Key | Description |
+| --- | ----------- |
+| `user` | User identifier (required). See `push_notification_ox_user_from_metadata`. |
+| `mailbox` | [[added,push_notification_ox_mailbox]] Mailbox to send notifications for, as the user sees it in IMAP (UTF-8, including any namespace prefix, e.g. `INBOX/Work`). INBOX is case-insensitive. Can be given multiple times. An empty value is ignored. If no `mailbox` key is given, only INBOX is notified. |
+
+Example notifying about both INBOX and `Work`:
+
+```sh
+doveadm mailbox metadata set -u user@example.com -s "" \
+    /private/vendor/vendor.dovecot/http-notify $'user=11@3\tmailbox=INBOX\tmailbox=Work'
 ```
 
 #### Example Payload

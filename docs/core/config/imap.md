@@ -6,6 +6,12 @@ dovecotlinks:
   imap_hibernation:
     hash: imap-hibernation
     text: IMAP Hibernation
+  imap_hibernation_nonidle:
+    hash: hibernating-connections-without-idle
+    text: Hibernating Connections Without IDLE
+  imap_hibernation_commands:
+    hash: commands-handled-by-imap-hibernate
+    text: Commands Handled by imap-hibernate
   imap_search_nesting_limit:
     hash: search-query-nesting-limit
     text: Search Query Nesting Limit
@@ -37,6 +43,12 @@ This is not supported on kqueue based systems currently, such as FreeBSD.
 `imap-hibernate` process. This requires inter-process communication between
 `imap` and `imap-hibernate` process.
 
+A hibernated session survives a configuration reload if
+[[setting,service_shutdown_clients_timeout]] allows it, and it's then
+continued with the new configuration, provided that the new configuration is
+compatible with the session. See [[link,running_reload]] for the changes that
+are incompatible and disconnect the session instead.
+
 ```doveconf[dovecot.conf]
 imap_hibernate_timeout = 5s
 
@@ -61,6 +73,14 @@ service imap-hibernate {
   }
 }
 ```
+
+### Hibernating Connections Without IDLE
+
+<!-- @include: include/imap_hibernation_nonidle.inc -->
+
+### Commands Handled by imap-hibernate
+
+<!-- @include: include/imap_hibernation_commands.inc -->
 
 ## Search Query Nesting Limit
 

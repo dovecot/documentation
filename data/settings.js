@@ -67,6 +67,267 @@ destination IP address belongs to, for instance, a load-balancer rather
 than the server itself.`
 	},
 
+	client_auth: {
+		added: {
+			settings_client_auth_added: false
+		},
+		tags: [ 'client-auth' ],
+		values: setting_types.NAMED_LIST_FILTER,
+		seealso: [ '[[link,client_auth]]', 'client_auth_mechanism',
+			   'client_auth_authzid', 'client_auth_authid',
+			   'client_auth_password' ],
+		text: `
+This settings filter provides a scope for client authentication settings for
+a particular authentication mechanism and declares the availability of that
+mechanism for client authentication. The mechanism will be used if support is
+also indicated by the server. This way, several different mechanisms can be
+configured, each with specific settings.
+
+The filter name refers to the [[setting,client_auth_mechanism]] setting.
+The first configured mechanism that the server also advertises is used, so the
+preferred mechanisms should be configured first. There is no fallback to the
+next mechanism if the authentication itself fails.
+
+Client authentication settings are expected to be scoped further by settings
+filters for the various protocol clients that need authentication, such as
+[[setting,imapc]], [[setting,pop3c]], [[setting,submission_relay]] and
+[[setting,mail_submit]]. See [[link,client_auth]] for an overview.
+
+Example:
+\`\`\`[dovecot.conf]
+mail_driver = imapc
+mail_path =
+imapc {
+  host = 127.0.0.1
+  port = 993
+  ssl = imaps
+
+  client_auth PLAIN {
+    authid = master-user
+    authzid = owner-user
+    password = frop
+  }
+  client_auth OAUTHBEARER {
+    authzid = owner-user
+    password = vF9dft4qmTc2Nvb3RlckBhbHRhdmlzdGEuY29tCg==
+  }
+}
+\`\`\``
+	},
+
+	client_auth_authid: {
+		added: {
+			settings_client_auth_added: false
+		},
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authzid', 'client_auth_password',
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
+		values: setting_types.STRING,
+		text: `
+The authentication identity to be used for authenticating as a client to a
+remote service. This is the identity whose [[setting,client_auth_password]]
+is used. If it is empty, [[setting,client_auth_authzid]] is used as the
+authentication identity as well.
+
+To authenticate as a master user to e.g. an IMAP server but use a separate login
+user, the following configuration should be employed, where the credentials are
+represented by masteruser and masteruser-secret:
+
+\`\`\`[dovecot.conf]
+imapc {
+  client_auth_authid = masteruser
+  client_auth_authzid = %{user}
+  client_auth_password = masteruser-secret
+}
+\`\`\`
+
+[[variable,mail-user]] can be used.`
+	},
+
+	client_auth_authzid: {
+		added: {
+			settings_client_auth_added: false
+		},
+		changed: {
+			settings_pop3c_authzid_default_changed: `
+For pop3c the default used to be \`%{user}\` (the old [[setting,pop3c_user]]
+default). It is now \`%{owner_user}\`, the same as for imapc. This makes a
+difference only for shared namespaces.`
+		},
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authid', 'client_auth_password',
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
+		values: setting_types.STRING,
+		default: {
+			value: '',
+			text: `Inside the [[setting,imapc]] and [[setting,pop3c]] filters the default is \`%{owner_user}\`: the logged in user, or the owner of a shared namespace.`,
+		},
+		text: `
+The authorization identity to be used after authenticating as a client to a
+remote service, i.e. the user whose mails are accessed. If
+[[setting,client_auth_authid]] is empty, this identity is also used for
+authenticating.
+
+[[variable,mail-user]] can be used.`
+	},
+
+	client_auth_password: {
+		added: {
+			settings_client_auth_added: false
+		},
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth_authzid', 'client_auth_authid',
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
+		values: setting_types.STRING,
+		text: `
+The password to be used for authenticating as a client to a remote service. This
+is the password belonging to the authentication identity
+[[setting,client_auth_authid]]. For the \`OAUTHBEARER\` and \`XOAUTH2\`
+mechanisms this is the bearer token. The \`ANONYMOUS\` and \`EXTERNAL\`
+mechanisms don't use it.
+
+The password is required for all the other mechanisms. Its existence is
+checked already when the client is created (e.g. when the namespace is initialized for imapc),
+not only when connecting.`
+	},
+
+	client_auth_gssapi_channel_binding: {
+		added: {
+			settings_client_auth_added: false
+		},
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth', '[[link,auth_gssapi]]' ],
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		text: `
+Whether the \`GSSAPI\` and \`GSS-SPNEGO\` client mechanisms send a TLS channel
+binding. It is normally set inside the mechanism's [[setting,client_auth]]
+filter, where the prefix is dropped:
+
+\`\`\`[dovecot.conf]
+imapc {
+  client_auth GSSAPI {
+    gssapi_channel_binding = no
+  }
+}
+\`\`\`
+
+If enabled and the connection uses TLS, the [[rfc,5929]]
+\`tls-server-end-point\` channel binding is passed to the Kerberos library. If
+the binding can't be obtained, the authentication fails. This happens with
+certificates whose signature algorithm has no single hash, such as Ed25519 and
+Ed448. Active Directory with \`LdapEnforceChannelBinding=2\` requires the
+binding, while servers that don't check channel bindings ignore it.
+
+Without TLS, no channel binding is sent. If disabled, no channel binding is sent
+at all.`
+	},
+
+	client_auth_mechanism: {
+		added: {
+			settings_client_auth_added: false
+		},
+		tags: [ 'client-auth' ],
+		seealso: [ 'client_auth', 'client_auth_authzid', 'client_auth_authid',
+			   'client_auth_password', '[[link,client_auth]]' ],
+		values: setting_types.STRING,
+		text: `
+The authentication mechanism (sometimes called scheme) to be used for
+authenticating as a client to a remote service. Currently, this is always a SASL
+mechanism.
+
+Supported mechanisms are:
+
+ * ANONYMOUS
+ * CRAM-MD5
+ * DIGEST-MD5
+ * EXTERNAL
+ * GSS-SPNEGO
+ * GSSAPI
+ * LOGIN
+ * OAUTHBEARER
+ * PLAIN
+ * SCRAM-SHA-1
+ * SCRAM-SHA-1-PLUS
+ * SCRAM-SHA-256
+ * SCRAM-SHA-256-PLUS
+ * XOAUTH2
+
+Note that [[setting,client_auth_password]] is ignored for \`ANONYMOUS\`,
+\`EXTERNAL\`, \`GSSAPI\` and \`GSS-SPNEGO\` mechanisms. The last two use
+Kerberos credentials instead, and are available only if Dovecot was built with
+GSSAPI support. They are loaded from the \`libdovecot-gssapi\` module when
+configured. See [[link,auth_gssapi]]. For \`OAUTHBEARER\` and \`XOAUTH2\`
+[[setting,client_auth_password]] should be a bearer token.
+
+Normally this setting is not set directly, but through the name of a
+[[setting,client_auth]] filter. The mechanism is then used only if the server
+also advertises it:
+
+\`\`\`[dovecot.conf]
+imapc {
+  host = 127.0.0.1
+  port = 993
+  ssl = imaps
+
+  # Authentication fails if the server doesn't announce SCRAM-SHA-256 support
+  client_auth SCRAM-SHA-256 {
+    authzid = owner-user
+    password = frop
+  }
+}
+\`\`\`
+
+When a non-PLUS SCRAM mechanism is configured and the server advertises the
+corresponding \`-PLUS\` variant, the client automatically uses channel binding
+if the connection is TLS encrypted and channel binding is available. See
+[[link,client_auth_channel_binding]].
+
+If no mechanism is configured, the PLAIN mechanism is used by default. For IMAP
+and POP3 the basic login commands are used instead in that case, if possible
+(LOGIN for IMAP and USER + PASS for POP3), so SASL support is not required from
+the server. If the server doesn't advertise PLAIN, the first mechanism
+advertised by the server that Dovecot supports and that uses a password is
+used. However, if the authentication [[setting,client_auth_authid]] and
+authorization [[setting,client_auth_authzid]] identities are both also
+unconfigured, no authentication is configured at all and the connection fails
+with an "Authentication not configured" error.
+
+Example:
+\`\`\`[dovecot.conf]
+imapc {
+  host = 127.0.0.1
+  port = 993
+  ssl = imaps
+
+  # Will authenticate using IMAP LOGIN command, or use PLAIN mechanism if LOGIN
+  # command is disabled.
+  client_auth_authzid = owner-user
+  client_auth_password = frop
+}
+\`\`\`
+
+If \`client_auth_mechanism\` is set directly, without any [[setting,client_auth]]
+filter block in that context (e.g. inside a surrounding [[setting,imapc]] or
+[[setting,pop3c]] filter block), the indicated mechanism is used blindly;
+server support is not checked.
+
+Example:
+\`\`\`[dovecot.conf]
+imapc {
+  host = 127.0.0.1
+  port = 993
+  ssl = imaps
+
+  # PLAIN mechanism will be used without consulting server capabilities
+  client_auth_mechanism = PLAIN
+  client_auth_authid = master-user
+  client_auth_authzid = owner-user
+  client_auth_password = frop
+}
+\`\`\``
+	},
+
 	fs: {
 		tags: [ 'fs' ],
 		values: setting_types.NAMED_LIST_FILTER,
@@ -236,6 +497,7 @@ Path to proxy-notify pipe.
 	},
 
 	mail_cache_max_header_name_length: {
+		tags: [ 'mail_cache_limits' ],
 		added: {
 			settings_mail_cache_max_header_name_length_added: false
 		},
@@ -267,6 +529,7 @@ Trying to fetch the mail text or the mail headers will properly return only
 	},
 
 	mail_cache_max_headers_count: {
+		tags: [ 'mail_cache_limits' ],
 		added: {
 			settings_mail_cache_max_headers_count_added: false
 		},
@@ -287,6 +550,7 @@ of the specified one, in order to aid the cache to return within the limits.`
 	},
 
 	mail_cache_max_size: {
+		tags: [ 'mail_cache_limits' ],
 		default: '1G',
 		values: setting_types.SIZE,
 		advanced: true,
@@ -349,6 +613,7 @@ Only compress cache file if it is larger than this size.`
 	},
 
 	mail_cache_record_max_size: {
+		tags: [ 'mail_cache_limits' ],
 		default: '64k',
 		values: setting_types.SIZE,
 		advanced: true,
@@ -478,7 +743,7 @@ authenticated session. The following substitutions are available:
 	},
 
 	managesieve_max_compile_errors: {
-		tags: [ 'managesieve', 'sieve' ],
+		tags: [ 'managesieve', 'sieve', 'sieve_limits' ],
 		default: 5,
 		values: setting_types.UINT,
 		advanced: true,
@@ -488,7 +753,7 @@ script upload or script verification.`
 	},
 
 	managesieve_max_line_length: {
-		tags: [ 'managesieve', 'sieve' ],
+		tags: [ 'managesieve', 'sieve', 'sieve_limits' ],
 		default: '64k',
 		values: setting_types.SIZE,
 		advanced: true,
@@ -807,7 +1072,7 @@ The syntax and semantics of this setting are otherwise identical to
 	},
 
 	sieve_max_actions: {
-		tags: [ 'sieve' ],
+		tags: [ 'sieve', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: 32,
 		values: setting_types.UINT,
@@ -827,7 +1092,7 @@ policy limit".`
 	},
 
 	sieve_max_cpu_time: {
-		tags: [ 'sieve' ],
+		tags: [ 'sieve', 'sieve_limits' ],
 		plugin: 'sieve',
 		seealso: [ 'sieve_resource_usage_timeout' ],
 		default: '30s',
@@ -858,7 +1123,7 @@ limit blocked the script permanently until it was recompiled (e.g. via
 	},
 
 	sieve_max_redirects: {
-		tags: [ 'sieve' ],
+		tags: [ 'sieve', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: 4,
 		values: setting_types.UINT,
@@ -885,7 +1150,7 @@ well.`
 			script is added.`
 		},
 		advanced: true,
-		tags: [ 'sieve', 'sieve-enotify' ],
+		tags: [ 'sieve', 'sieve-enotify', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: 10,
 		values: setting_types.UINT,
@@ -911,7 +1176,7 @@ that setting as well.`
 	},
 
 	sieve_resource_usage_timeout: {
-		tags: [ 'sieve' ],
+		tags: [ 'sieve', 'sieve_limits' ],
 		plugin: 'sieve',
 		seealso: [ 'sieve_max_cpu_time' ],
 		default: '1h',
@@ -944,7 +1209,7 @@ An administrator can force an immediate reset by removing the
 	},
 
 	sieve_max_script_size: {
-		tags: [ 'sieve', 'managesieve_quota', ],
+		tags: [ 'sieve', 'managesieve_quota', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: '1M',
 		values: setting_types.SIZE,
@@ -1051,7 +1316,7 @@ this setting is not configured. Options are:
 	},
 
 	sieve_quota_script_count: {
-		tags: [ 'sieve', 'managesieve_quota' ],
+		tags: [ 'sieve', 'managesieve_quota', 'sieve_limits' ],
 		plugin: 'sieve',
 		values: setting_types.UINT,
 		default: 'unlimited',
@@ -1060,7 +1325,7 @@ The maximum number of personal Sieve scripts a single user can have.`
 	},
 
 	sieve_quota_storage_size: {
-		tags: [ 'sieve', 'managesieve_storage' ],
+		tags: [ 'sieve', 'managesieve_storage', 'sieve_limits' ],
 		plugin: 'sieve',
 		values: setting_types.SIZE,
 		default: 'unlimited',
@@ -1179,7 +1444,7 @@ these headers has no effect.`
 	},
 
 	sieve_editheader_max_header_size: {
-		tags: [ 'sieve', 'sieve-editheader' ],
+		tags: [ 'sieve', 'sieve-editheader', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: '2k',
 		values: setting_types.SIZE,
@@ -1234,7 +1499,7 @@ The [[setting,sieve_extlists_list]] filter refers to this setting.`
 	},
 
 	sieve_extlists_list_max_lookup_size: {
-		tags: [ 'sieve', 'sieve-extlists' ],
+		tags: [ 'sieve', 'sieve-extlists', 'sieve_limits' ],
 		plugin: 'sieve',
 		values: setting_types.SIZE,
 		default: '1k',
@@ -1263,7 +1528,7 @@ notifications.`
 			notification is added.`
 		},
 		advanced: true,
-		tags: [ 'sieve', 'sieve-enotify' ],
+		tags: [ 'sieve', 'sieve-enotify', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: 8,
 		values: setting_types.UINT,
@@ -1282,7 +1547,7 @@ specify, counted across the URI and any \`to\`/\`cc\`/\`bcc\` headers.
 			mailto notification is added.`
 		},
 		advanced: true,
-		tags: [ 'sieve', 'sieve-enotify' ],
+		tags: [ 'sieve', 'sieve-enotify', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: 16,
 		values: setting_types.UINT,
@@ -1295,7 +1560,7 @@ may specify in its URI.
 	},
 
 	sieve_include_max_includes: {
-		tags: [ 'sieve', 'sieve-include' ],
+		tags: [ 'sieve', 'sieve-include', 'sieve_limits' ],
 		plugin: 'sieve',
 		values: setting_types.UINT,
 		default: 255,
@@ -1307,7 +1572,7 @@ number of scripts involved in the include tree.`
 	},
 
 	sieve_include_max_nesting_depth: {
-		tags: [ 'sieve', 'sieve-include' ],
+		tags: [ 'sieve', 'sieve-include', 'sieve_limits' ],
 		plugin: 'sieve',
 		values: setting_types.UINT,
 		default: 10,
@@ -1445,7 +1710,7 @@ directly addressed at the recipient.`
 	},
 
 	sieve_vacation_max_period: {
-		tags: [ 'sieve', 'sieve-vacation' ],
+		tags: [ 'sieve', 'sieve-vacation', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: "60d",
 		values: setting_types.TIME,
@@ -1461,7 +1726,7 @@ limit.`
 	},
 
 	sieve_vacation_min_period: {
-		tags: [ 'sieve', 'sieve-vacation' ],
+		tags: [ 'sieve', 'sieve-vacation', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: '1d',
 		values: setting_types.TIME,
@@ -1523,7 +1788,7 @@ make the original SMTP recipient available to Sieve.`
 	},
 
 	sieve_variables_max_scope_count: {
-		tags: [ 'sieve', 'sieve-variables' ],
+		tags: [ 'sieve', 'sieve-variables', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: 255,
 		values: setting_types.UINT,
@@ -1539,7 +1804,7 @@ The minimum value for this setting is \`128\`.`
 	},
 
 	sieve_variables_max_value_size: {
-		tags: [ 'sieve', 'sieve-variables' ],
+		tags: [ 'sieve', 'sieve-variables', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: '4k',
 		values: setting_types.SIZE,
@@ -1654,6 +1919,7 @@ sieve_virustest_text_value {
 	/* imap-filter-sieve plugin */
 
 	imap_filter_sieve_max_redirects: {
+		tags: [ 'sieve_limits' ],
 		added: {
 			settings_imap_filter_sieve_max_redirects_added: `
 Setting to limit the cumulative number of redirects performed by a single
@@ -1794,6 +2060,7 @@ scripts) to execute directly for the \`vnd.dovecot.execute\` extension.`
 	},
 
 	'sieve_pipe_exec_timeout': {
+		tags: [ 'sieve_limits' ],
 		default: '10s',
 		plugin: 'sieve-extprograms',
 		values: setting_types.TIME,
@@ -1803,6 +2070,7 @@ Configures the maximum execution time after which the program run by the
 	},
 
 	'sieve_filter_exec_timeout': {
+		tags: [ 'sieve_limits' ],
 		default: '10s',
 		plugin: 'sieve-extprograms',
 		values: setting_types.TIME,
@@ -1812,6 +2080,7 @@ Configures the maximum execution time after which the program run by the
 	},
 
 	'sieve_execute_exec_timeout': {
+		tags: [ 'sieve_limits' ],
 		default: '10s',
 		plugin: 'sieve-extprograms',
 		values: setting_types.TIME,
@@ -1868,12 +2137,22 @@ line feed (LF) characters. This matches the Internet Message Format
 		added: {
 			settings_acl_global_settings_added: false,
 		},
+		changed: {
+			settings_acl_global_settings_changed: `
+These entries are now global ACLs. Previously they were handled like the
+rights in a per-mailbox \`dovecot-acl\` file.`,
+		},
 		plugin: 'acl',
 		values: setting_types.NAMED_FILTER,
 		seealso: [ 'acl_id' ,'acl_rights' ],
 		text: `
 Specifies an ACL entry on global, namespace or mailbox level. The filter name
 refers to the [[setting,acl_id]] setting.
+
+These entries are global ACLs: they override the rights of the same identifier
+in a per-mailbox \`dovecot-acl\` file, they apply also to the mailbox owner,
+users can't change them with the IMAP ACL extension, and they are never copied
+into \`dovecot-acl\` files.
 
 Has two settings:
 
@@ -2337,6 +2616,7 @@ fts_header_includes {
 	},
 
 	fts_search_timeout: {
+		tags: [ 'fts_limits' ],
 		default: '30s',
 		plugin: 'fts',
 		values: setting_types.TIME,
@@ -2351,6 +2631,7 @@ A value of \`0\` means no timeout.`
 	},
 
 	fts_message_max_size: {
+		tags: [ 'fts_limits' ],
 		default: 'unlimited',
 		added: {
 			settings_fts_message_max_size_added: false,
@@ -2382,10 +2663,10 @@ Basic authentication support (via URL) is added.`
 		},
 		changed: {
 			settings_fts_decoder_tika_url_changed: `
-Renamed from \`fts_tika\`.`
+Renamed from \`fts_tika\`.`,
 		},
 		plugin: 'fts',
-		values: setting_types.STRING,
+		values: setting_types.URL,
 		seealso: [ 'fts_decoder_tika' ],
 		text: `
 URL for [Apache Tika](https://tika.apache.org/) decoder for attachments.
@@ -2569,7 +2850,7 @@ More languages can be obtained from:
 
 	language_tokenizer_address_token_maxlen: {
 		plugin: 'fts',
-		tags: [ 'language-tokenizer-email-address' ],
+		tags: [ 'language-tokenizer-email-address', 'fts_limits' ],
 		values: setting_types.UINT,
 		default: 250,
 		seealso: [ '[[link,fts_tokenization]]' ],
@@ -2595,7 +2876,7 @@ Defines the method for finding word boundaries.
 
 	language_tokenizer_generic_token_maxlen: {
 		plugin: 'fts',
-		tags: [ 'language-tokenizer-generic' ],
+		tags: [ 'language-tokenizer-generic', 'fts_limits' ],
 		values: setting_types.UINT,
 		default: 30,
 		seealso: [ '[[link,fts_tokenization]]' ],
@@ -2660,6 +2941,7 @@ results. The FTS indexes should be recreated in this case.
 	},
 
 	language_tokenizer_kuromoji_token_maxlen: {
+		tags: [ 'fts_limits' ],
 		plugin: 'fts',
 		values: setting_types.UINT,
 		default: 1024,
@@ -2788,7 +3070,7 @@ Controls whether new mails are immediately searchable via Solr.`
 
 	fts_solr_url: {
 		plugin: 'fts-solr',
-		values: setting_types.STRING,
+		values: setting_types.URL,
 		text: `
 Required base URL for Solr.
 
@@ -3881,6 +4163,7 @@ namespace inbox {
 	/* virtual plugin */
 
 	virtual_max_open_mailboxes: {
+		tags: [ 'mail_imap_limits' ],
 		default: 64,
 		plugin: 'virtual',
 		values: setting_types.UINT,
@@ -4471,7 +4754,7 @@ the default.`
 		added: {
 			settings_cassandra_cluster_settings_added: false,
 		},
-		tags: [ 'sql-cassandra' ],
+		tags: [ 'sql-cassandra', 'db_queue_limits' ],
 		values: setting_types.UINT,
 		seealso: [ 'cassandra_io_thread_count', 'cassandra_metrics_path' ],
 		default: 8192,
@@ -4686,7 +4969,7 @@ How long to wait for connection.`
 	},
 
 	mysql_connection_limit: {
-		tags: [ 'sql-mysql' ],
+		tags: [ 'sql-mysql', 'db_queue_limits' ],
 		values: setting_types.UINT,
 		default: 5,
 		text: `
@@ -4791,7 +5074,7 @@ filter name refers to the [[setting,pgsql_host]] setting.`
 	},
 
 	pgsql_connection_limit: {
-		tags: [ 'sql-postgresql' ],
+		tags: [ 'sql-postgresql', 'db_queue_limits' ],
 		values: setting_types.UINT,
 		default: 5,
 		text: `
@@ -4961,14 +5244,20 @@ user and password database lookups return.`
 	},
 
 	auth_cache_ttl: {
+		changed: {
+			settings_auth_cache_ttl_changed: `
+Expired cache entries are no longer used when the database lookup returns an
+internal failure.`,
+		},
 		default: '1hour',
 		tags: [ 'auth_cache' ],
 		values: setting_types.TIME,
 		text: `
 Time to live for cache entries.
 
-After the TTL expires, the cached record is no longer used, unless the main
-database look-up returns internal failure.
+After the TTL expires, the cached record is no longer used. This is also the
+maximum time a user can keep logging in using the cached data after e.g. the
+user was disabled in the database.
 
 Entries are removed from the cache only when the cache is full and a new
 entry is to be added.`
@@ -5025,6 +5314,7 @@ and appending an \`@domain\` element to the username in cleartext logins.`
 	},
 
 	auth_failure_delay: {
+		tags: [ 'auth_limits' ],
 		default: '2secs',
 		values: setting_types.TIME,
 		seealso: [ 'auth_internal_failure_delay' ],
@@ -5053,6 +5343,7 @@ Use \`"$ALL"\` (with the quotation marks) to allow all keytab entries.`
 	},
 
 	auth_internal_failure_delay: {
+		tags: [ 'auth_limits' ],
 		default: '2secs',
 		values: setting_types.TIME_MSECS,
 		added: {
@@ -5251,8 +5542,9 @@ auth_policy_server_api_header = Authorization: Basic d2ZvcmNlOnN1cGVy
 		text: `
 URL of the policy server.
 
-URL is appended with \`?command=allow/report\`. If URL ends with \`&\`, the
-\`?\` is not appended.
+\`command=allow\` or \`command=report\` is added as a query parameter:
+\`?command=\` if the URL has no query, otherwise \`&command=\` unless the
+query already ends in \`&\`.
 
 REQUIRED configuration when you want to use authentication policy.
 
@@ -5346,6 +5638,13 @@ domain (either AD or NT).`
 	},
 
 	auth_username_chars: {
+		changed: {
+			auth_username_dots_rejected: `
+Regardless of this setting, a username is rejected if any of its \`/\` or
+\`@\` delimited components consists solely of dots, e.g. \`..\`. Such a
+component would escape its parent directory when the username is used in a
+path, e.g. in [[setting,mail_path]] or in a dict key.`,
+		},
 		default: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890.-_@',
 		values: setting_types.STRING,
 		text: `
@@ -5459,6 +5758,7 @@ Path to the CDB database file.`
 	},
 
 	default_client_limit: {
+		tags: [ 'process_memory_limits' ],
 		values: setting_types.UINT,
 		default: 1000,
 		text: `
@@ -5507,6 +5807,7 @@ to anything at all.`
 	},
 
 	default_process_limit: {
+		tags: [ 'process_memory_limits' ],
 		values: setting_types.UINT,
 		default: 100,
 		text: `
@@ -5515,6 +5816,7 @@ service-specific configuration.`
 	},
 
 	default_vsz_limit: {
+		tags: [ 'process_memory_limits' ],
 		values: setting_types.SIZE,
 		default: '256 M',
 		text: `
@@ -5592,6 +5894,21 @@ The dict driver to use. Defaults to [[setting,dict_name]].`
 		values: setting_types.STRING,
 		text: `
 Path for the dictionary file.`
+	},
+
+	dict_file_fsync: {
+		advanced: true,
+		tags: [ 'dict', 'dict-file' ],
+		added: {
+			settings_dict_file_fsync_added: false
+		},
+		values: setting_types.BOOLEAN,
+		default: 'yes',
+		text: `
+If enabled, each commit syncs the new dictionary file to disk with
+\`fdatasync()\` before it replaces the old file. Without this, a server crash
+shortly after a commit can leave the dictionary file empty or partially
+written, which loses all of its keys.`
 	},
 
 	dict_proxy_name: {
@@ -6086,9 +6403,11 @@ The event exporter driver to use.`
 
 	event_exporter_http_post_url: {
 		tags: [ 'event-export' ],
-		values: setting_types.STRING,
+		values: setting_types.URL,
 		text: `
-Target URL for [[setting,event_exporter_driver,http-post]].`
+Target URL for [[setting,event_exporter_driver,http-post]]. Required with
+that driver; an empty value is caught only when that driver starts, not
+when the configuration is read.`
 	},
 
 	event_exporter_file_path: {
@@ -6334,12 +6653,13 @@ for HAProxy are aborted immediately.`
 
 	hostname: {
 		default: '\\<system\'s real hostname@domain.tld\\>',
-		tags: [ 'submission' ],
+		tags: [ 'submission', 'smtp_client', 'lmtp_client' ],
 		values: setting_types.STRING,
 		text: `
 The hostname to be used in email messages sent out by the local delivery
-agent (such as the Message-ID: header), in LMTP replies, and as the
-hostname advertised by submission SMTP service.`
+agent (such as the Message-ID: header), in LMTP replies, as the
+hostname advertised by submission SMTP service, and in the EHLO/LHLO command
+of the outgoing SMTP and LMTP connections.`
 	},
 
 	http_client_auto_redirect: {
@@ -6559,7 +6879,7 @@ creating a \`CONNECT\` tunnel through the proxy for the SSL link.`
 
 	http_client_proxy_url: {
 		tags: [ 'http', 'http_client' ],
-		values: setting_types.STRING,
+		values: setting_types.URL,
 		added: {
 			settings_http_client_settings_added: false,
 		},
@@ -6646,7 +6966,7 @@ Maximum number of attempts for a request.`
 	},
 
 	http_client_request_max_redirects: {
-		tags: [ 'http', 'http_client' ],
+		tags: [ 'http', 'http_client', 'http_limits' ],
 		values: setting_types.UINT,
 		default: 0,
 		added: {
@@ -6669,7 +6989,7 @@ Max time to wait for HTTP requests to finish before retrying.`
 
 	http_client_response_hdr_max_field_size: {
 		advanced: true,
-		tags: [ 'http', 'http_client' ],
+		tags: [ 'http', 'http_client', 'http_limits' ],
 		added: {
 			settings_http_client_settings_added: false,
 		},
@@ -6681,7 +7001,7 @@ Response header limit: Max size for an individual field.`
 
 	http_client_response_hdr_max_fields: {
 		advanced: true,
-		tags: [ 'http', 'http_client' ],
+		tags: [ 'http', 'http_client', 'http_limits' ],
 		added: {
 			settings_http_client_settings_added: false,
 		},
@@ -6693,7 +7013,7 @@ Response header limit: Max number of fields.`
 
 	http_client_response_hdr_max_size: {
 		advanced: true,
-		tags: [ 'http', 'http_client' ],
+		tags: [ 'http', 'http_client', 'http_limits' ],
 		added: {
 			settings_http_client_settings_added: false,
 		},
@@ -6789,7 +7109,7 @@ Overwrite the local hostname with http_server_default_host.`
 	},
 
 	http_server_max_idle_time: {
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.TIME_MSECS,
 		default: 0,
 		text: `
@@ -6798,7 +7118,7 @@ Maximum time a connection will idle.`
 
 	http_server_max_payload_size: {
 		advanced: true,
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.SIZE,
 		default: '10G',
 		text: `
@@ -6806,7 +7126,7 @@ Request payload limit: Max size for the request payload.`
 	},
 
 	http_server_max_pipelined_requests: {
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.UINT,
 		default: 1,
 		text: `
@@ -6815,7 +7135,7 @@ Maximum number of pipelined requests per connection.`
 
 	http_server_max_target_length: {
 		advanced: true,
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.SIZE,
 		default: '8k',
 		text: `
@@ -6824,7 +7144,7 @@ Request target limit: Maximum length of the request target.`
 
 	http_server_request_hdr_max_field_size: {
 		advanced: true,
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.SIZE,
 		default: '8k',
 		text: `
@@ -6833,7 +7153,7 @@ Request header limit: Max size for an individual field.`
 
 	http_server_request_hdr_max_fields: {
 		advanced: true,
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.UINT,
 		default: 50,
 		text: `
@@ -6842,7 +7162,7 @@ Request header limit: Max number of fields.`
 
 	http_server_request_hdr_max_size: {
 		advanced: true,
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.SIZE,
 		default: '200k',
 		text: `
@@ -6928,7 +7248,16 @@ The following values are currently supported:
     that LSUB replies with [[setting,mailbox_list_layout,fs]] aren't
     selectable, and users may receive pop-ups with not selectable errors.
     Showing \\Noselect flags for these replies (e.g., in mbox use) causes them
-    to be grayed out.`
+    to be grayed out.
+
+\`empty-literal-as-quoted\` [[added,empty_literal_as_quoted_added]]
+:   Send zero-length FETCH body values (\`BODY[...]\`, \`BINARY[...]\`,
+    \`RFC822\`, \`RFC822.HEADER\`, \`RFC822.TEXT\`) as \`""\` instead of a
+    \`{0}\` literal. iOS Mail stalls for about 90 seconds on a zero-length
+    literal. Non-empty values are still sent as literals.
+
+    Only FETCH is affected. \`URLFETCH\` and \`GETMETADATA\` still send
+    zero-length literals.`
 	},
 
 	imap_compress_on_proxy: {
@@ -6983,6 +7312,7 @@ Behavior when IMAP FETCH fails due to some internal error. Options:
 
 	imap_hibernate_timeout: {
 		default: 0,
+		seealso: [ 'imap_hibernate_nonidle_timeout', '[[link,imap_hibernation]]' ],
 		tags: [ 'imap' ],
 		values: setting_types.TIME,
 		text: `
@@ -6995,6 +7325,32 @@ connection to imap-hibernate process and close the old imap process. This
 saves memory, because connections use very little memory in imap-hibernate
 process. The downside is that recreating the imap process back uses some
 additional system resources.`
+	},
+
+	imap_hibernate_nonidle_timeout: {
+		added: {
+			imap_hibernate_nonidle_added: false,
+		},
+		default: 0,
+		seealso: [ 'imap_hibernate_timeout', '[[link,imap_hibernation_nonidle]]' ],
+		tags: [ 'imap' ],
+		values: setting_types.TIME,
+		text: `
+How long to wait after the client's last command has finished before moving
+the connection to the imap-hibernate process, even though the client is not
+in IDLE state. \`0\` disables this.
+
+Any input from the client moves the connection back to a new imap process.
+Set this above the polling interval of the clients in use, because each
+wake-up recreates an imap process.
+
+If messages are expunged while the connection is hibernated, the client is
+asked to relogin.
+
+[[added,imap_hibernate_commands_added]] This also allows the imap-hibernate
+process to answer DONE, after which the connection stays hibernated without
+IDLE. Some other commands are then also answered without moving the
+connection back to an imap process. See [[link,imap_hibernation_commands]].`
 	},
 
 	imap_id_retain: {
@@ -7071,7 +7427,7 @@ in addition to [[variable,mail-user]] are:
 
 	imap_max_line_length: {
 		default: '64k',
-		tags: [ 'imap' ],
+		tags: [ 'imap', 'mail_imap_limits' ],
 		values: setting_types.SIZE,
 		advanced: true,
 		text: `
@@ -7161,6 +7517,30 @@ Variables allowed:
 The port is used with the URLAUTH extension in IMAP operation.`
 	},
 
+	imapc: {
+		tags: [ 'imapc', 'client-auth' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,imapc]]', 'client_auth', 'client_auth_authzid',
+			   'client_auth_authid', 'client_auth_password',
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
+		text: `
+This settings filter provides a scope for settings for imapc.
+
+The filter is needed for configuring the generic [[setting,client_auth]] and
+\`ssl_client_*\` settings for imapc specifically, since the same settings are
+used also by other clients.
+
+Example:
+\`\`\`[dovecot.conf]
+imapc {
+  host = imap.example.com
+  ssl = imaps
+  client_auth_authzid = %{user}
+  client_auth_password = secret
+}
+\`\`\``
+	},
+
 	imapc_cmd_timeout: {
 		default: '5 mins',
 		tags: [ 'imapc' ],
@@ -7233,7 +7613,7 @@ name. For example \`no-sort\`, \`no-sort=display\` or \`no-quota\`.
         :::
 
 :   \`gmail-migration\`
-    :   Enable GMail-specific migration. Use IMAP \`X-GM-MSGID\` as POP3 UIDL.
+    :   Enable Gmail-specific migration. Use IMAP \`X-GM-MSGID\` as POP3 UIDL.
         Add \`$GMailHaveLabels\` keyword to mails that have \`X-GM-LABELS\`
         except for \`\Muted\` keyword (to be used for migrating only archived
         emails in \`All Mails\`). Add [[setting,pop3_deleted_flag]] to
@@ -7263,7 +7643,7 @@ name. For example \`no-sort\`, \`no-sort=display\` or \`no-quota\`.
 	preserved as the new imapc connection's session ID prefix.
 
 :   \`throttle:<INIT>:<MAX>:<SHRINK>\`
-    :   When receiving [THROTTLED] response (from GMail), throttling is
+    :   When receiving [THROTTLED] response (from Gmail), throttling is
         applied.
 
         **INIT** = initial throttling msecs (default: 50 ms), afterwards each
@@ -7378,6 +7758,11 @@ imapc_list_prefix = INBOX
 	},
 
 	imapc_master_user: {
+		removed: {
+			settings_imapc_credentials_renamed: `
+Renamed to [[setting,client_auth_authid]] inside the [[setting,imapc]]
+filter, i.e. \`imapc/client_auth_authid\`.`
+		},
 		tags: [ 'imapc' ],
 		seealso: [ 'imapc_password', 'imapc_user' ],
 		values: setting_types.STRING,
@@ -7409,7 +7794,7 @@ Dovecot will send either \`NOOP\` or \`DONE\` to the source IMAP server.`
 	},
 
 	imapc_max_line_length: {
-		tags: [ 'imapc' ],
+		tags: [ 'imapc', 'mail_imap_limits' ],
 		values: setting_types.SIZE,
 		default: 'unlimited',
 		text: `
@@ -7419,6 +7804,11 @@ This setting is used to limit maximum memory usage.`
 	},
 
 	imapc_password: {
+		removed: {
+			settings_imapc_credentials_renamed: `
+Renamed to [[setting,client_auth_password]] inside the [[setting,imapc]]
+filter, i.e. \`imapc/client_auth_password\`.`
+		},
 		tags: [ 'imapc' ],
 		seealso: [ 'imapc_master_user', 'imapc_user', 'imapc_sasl_mechanisms' ],
 		values: setting_types.STRING,
@@ -7446,6 +7836,13 @@ If using master users, this setting will be the password of the master user.`
 	},
 
 	imapc_sasl_mechanisms: {
+		deprecated: {
+			settings_imapc_sasl_mechanisms_deprecated: `
+The setting is obsolete, and kept only for backwards compatibility. Each
+listed mechanism is translated into a [[setting,client_auth]] filter in the
+listed order, so existing configurations keep working. New configurations
+should use [[setting,client_auth]] directly.`
+		},
 		default: 'plain',
 		tags: [ 'imapc' ],
 		values: setting_types.BOOLLIST,
@@ -7515,6 +7912,11 @@ Only used if [[setting,imapc_ssl]] is enabled.`
 	},
 
 	imapc_user: {
+		removed: {
+			settings_imapc_credentials_renamed: `
+Renamed to [[setting,client_auth_authzid]] inside the [[setting,imapc]]
+filter, i.e. \`imapc/client_auth_authzid\`.`
+		},
 		tags: [ 'imapc', 'imapc-auth' ],
 		seealso: [ 'imapc_master_user', 'imapc_password', 'imapc_sasl_mechanisms' ],
 		values: setting_types.STRING,
@@ -7756,6 +8158,135 @@ Alias for [[setting,inet_listener_listen]].`
 Controls if "Received:" header should be added to delivered mails.`
 	},
 
+	lmtp_client_command_timeout: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		default: {
+			value: '5 mins',
+			text: `For the LMTP proxy the default is \`125 secs\`.`,
+		},
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_connect_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for LMTP commands sent to the remote server. The timeout is reset
+every time more data is being sent or received.`
+	},
+
+	lmtp_client_connect_timeout: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		default: {
+			value: '30 secs',
+			text: `For the LMTP proxy the default is \`125 secs\`.`,
+		},
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_command_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for connecting to the remote LMTP server, including the TLS handshake.`
+	},
+
+	lmtp_client_host: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_port', 'lmtp_client_ssl' ],
+		values: setting_types.STRING,
+		text: `
+Host name or IP address of the remote LMTP server. The LMTP proxy gets the
+host from the passdb lookup (see [[link,authentication_proxies]]), so this is
+normally not set.`
+	},
+
+	lmtp_client_peer_trusted: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		default: {
+			value: 'no',
+			text: `For the LMTP proxy the default is \`yes\`.`,
+		},
+		tags: [ 'lmtp_client' ],
+		values: setting_types.BOOLEAN,
+		text: `
+Whether the remote LMTP server is trusted. If enabled, the original client's
+connection information is forwarded to the remote server with the
+(Postfix-originated) XCLIENT command, if the remote server advertises support
+for it.`
+	},
+
+	lmtp_client_port: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		default: {
+			value: '24',
+			text: `For the LMTP proxy the default is \`%{local_port}\`.`,
+		},
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'lmtp_client_host', 'lmtp_client_ssl' ],
+		values: setting_types.IN_PORT,
+		text: `
+Port of the remote LMTP server.
+
+The LMTP proxy defaults to the port that the local LMTP server received the
+connection on, so that proxying to the same port on the backend doesn't need
+any configuration. The passdb lookup can override it.`
+	},
+
+	lmtp_client_rawlog_dir: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		tags: [ 'lmtp_client' ],
+		seealso: [ '[[link,rawlog]]' ],
+		values: setting_types.PATH_DIR,
+		text: `
+Write protocol logs of the outgoing LMTP connections to this directory for
+debugging.
+
+[[variable,mail-service-user]] can be used. However, because LMTP session
+starts without a user, all user-specific variables expand to empty.`
+	},
+
+	lmtp_client_source_ip: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		tags: [ 'lmtp_client' ],
+		values: setting_types.STRING,
+		text: `
+Local IP address to use as the source address of the outgoing LMTP
+connections. If empty, the kernel chooses the address.`
+	},
+
+	lmtp_client_ssl: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		default: 'no',
+		tags: [ 'lmtp_client' ],
+		seealso: [ 'ssl_client_require_valid_cert', '[[link,ssl_configuration]]' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'no', 'lmtps', 'starttls' ],
+		text: `
+Whether to use TLS for the connection to the remote LMTP server.
+
+| Value | Description |
+| ----- | ----------- |
+| \`no\` | No TLS |
+| \`lmtps\` | Connect using TLS immediately (implicit TLS) |
+| \`starttls\` | Use the STARTTLS command to switch to TLS |
+
+The connection uses the \`ssl_client_*\` settings, which can be set inside the
+same filter to apply to this client only. The passdb lookup can override this
+setting for the LMTP proxy, see [[link,authentication_proxies]].`
+	},
+
 	lmtp_client_workarounds: {
 		tags: [ 'lmtp' ],
 		values: setting_types.BOOLLIST,
@@ -7795,16 +8326,24 @@ Options:
 
 	lmtp_proxy: {
 		default: 'no',
-		seealso: [ '[[link,authentication_proxies]]' ],
+		seealso: [ 'lmtp_client_rawlog_dir', '[[link,authentication_proxies]]' ],
 		tags: [ 'lmtp' ],
 		values: setting_types.BOOLEAN,
 		text: `
 If yes, LMTP sessions perform a passdb lookup to see if the user should be
 proxied. The user is proxied only if the \`proxy\` extra field is returned.
-The proxy destination is determined via returned passdb extra fields.`
+The proxy destination is determined via returned passdb extra fields.
+
+The connections to the backends are configured with the \`lmtp_client_*\`
+settings. The passdb lookup normally provides the host and optionally the port
+and TLS settings, so the defaults are usually enough.`
 	},
 
 	lmtp_proxy_rawlog_dir: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,lmtp_client_rawlog_dir]].`
+		},
 		seealso: [ '[[link,rawlog]]' ],
 		tags: [ 'lmtp' ],
 		values: setting_types.STRING,
@@ -8214,6 +8753,7 @@ The details of how this setting works depends on the used protocol:
 	},
 
 	login_unauthenticated_client_limit: {
+		tags: [ 'process_memory_limits' ],
 		added: {
 			settings_login_unauthenticated_client_limit_added: false,
 		},
@@ -8510,8 +9050,11 @@ This can be overridden via the \`gid\` [[link,userdb_fields,userdb field]].`
 	},
 
 	mail_home: {
+		changed: {
+			settings_path_types_confined: `Setting type changed.`,
+		},
 		seealso: [ 'mail_path', '[[link,home_directories_for_virtual_users]]' ],
-		values: setting_types.STRING,
+		values: setting_types.PATH_DIR,
 		text: `
 User's home directory. This is used as the root for some of the user-specific
 files and directories. The \`%{home}\` variable expands to this value. Also
@@ -8541,6 +9084,7 @@ You can specify a log prefix for mail processes here.
 	},
 
 	mail_max_keyword_length: {
+		tags: [ 'mail_imap_limits' ],
 		default: 50,
 		values: setting_types.UINT,
 		advanced: true,
@@ -8725,6 +9269,7 @@ This setting determines whether a shared INBOX should be visible as
 	},
 
 	mail_sort_max_read_count: {
+		tags: [ 'mail_imap_limits' ],
 		values: setting_types.UINT,
 		default: 'unlimited',
 		text: `
@@ -8738,6 +9283,63 @@ The IMAP reply returned to the client is:
 \`\`\`
 NO [LIMIT] Requested sort would have taken too long.
 \`\`\``
+	},
+
+	mail_submit: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		tags: [ 'mail_submit', 'lda', 'lmtp', 'client-auth' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ 'mail_submit_timeout', 'smtp_client_host', 'execute',
+			   'client_auth', '[[link,client_auth]]' ],
+		text: `
+Filter for configuring how Dovecot submits outgoing mails: bounces and
+forwards from [[link,lda]] and [[link,lmtp]], Sieve redirects, vacation
+replies and notifications, and so on.
+
+By default the mails are given to the local sendmail binary, which is
+configured as an [[setting,execute]] block named \`sendmail\` inside this
+filter:
+
+\`\`\`[dovecot.conf]
+mail_submit {
+  execute sendmail {
+    driver = fork
+    fork_path = /usr/sbin/sendmail
+  }
+}
+\`\`\`
+
+If [[setting,smtp_client_host]] is set inside this filter, the mails are sent
+via SMTP instead, using the generic \`smtp_client_*\` settings. The connection
+can be authenticated with the [[setting,client_auth]] settings and secured
+with the \`ssl_client_*\` settings:
+
+\`\`\`[dovecot.conf]
+mail_submit {
+  smtp_client_host = mta.example.com
+  smtp_client_port = 587
+  smtp_client_ssl = starttls
+  client_auth_authzid = dovecot
+  client_auth_password = secret
+}
+\`\`\`
+
+Inside this filter the defaults are [[setting,smtp_client_port,25]] and
+[[setting,smtp_client_ssl,no]].`
+	},
+
+	mail_submit_timeout: {
+		changed: {
+			settings_smtp_client_settings_changed: `
+Renamed from \`submission_timeout\`.`
+		},
+		default: '30 secs',
+		tags: [ 'mail_submit', 'lda', 'lmtp' ],
+		seealso: [ 'mail_submit' ],
+		values: setting_types.TIME_MSECS,
+		text: `Timeout for submitting outgoing messages.`
 	},
 
 	mail_temp_dir: {
@@ -9793,12 +10395,23 @@ subscriptions file, unless SUBSCRIBE command is explicitly used for them.`
 		default: 0,
 		seealso: [ 'mailbox_autoexpunge_max_mails' ],
 		tags: [ 'mailbox' ],
+		changed: {
+			settings_mailbox_autoexpunge_hibernation_changed: `
+Autoexpunging is also checked before an IMAP session is hibernated.`
+		},
 		values: setting_types.TIME,
 		text: `
 Expunge all mails in this mailbox whose saved-timestamp is older than this
 value. \`0\` means autoexpunging is disabled.
 
 For IMAP and POP3 this happens after the client is already disconnected.
+
+IMAP sessions may end while they are hibernated (see
+[[link,imap_hibernation]]), so autoexpunging is checked also before the
+session is hibernated. The check is rate limited: it's done again only once
+the next mail is known to expire, or at the latest after the smallest
+autoexpunge value configured for the user's mailboxes (at most 24 hours). This
+applies to the session across multiple hibernations.
 
 For LMTP this happens when the user's mail delivery is finished. Note that
 in case there are multiple recipients, autoexpunging is done only for some
@@ -10116,23 +10729,59 @@ Specifies how long after token expiration it is still accepted. It shouldn't be
 	},
 
 	oauth2_tokeninfo_url: {
+		changed: {
+			settings_oauth2_url_access_token_changed: `
+The token is no longer appended to the URL automatically; the URL must
+contain \`%{access_token}\`, and variables in the URL are now URL-escaped.`,
+		},
 		tags: [ 'oauth2' ],
 		values: setting_types.STRING,
 		text: `
-URL for verifying token validity. Token is appended to the URL.
+URL template for verifying token validity.
 
-Example:
+The URL must contain \`%{access_token}\` in the path or query, i.e. after a
+literal \`/\` or \`?\` that follows the host part. It is replaced with the
+token.
+
+Variables expanded into the URL are URL-escaped; the \`| safe\` filter opts
+out. See [[link,auth_oauth2_url_variables]].
+
+Examples:
 
 \`\`\`[dovecot.conf]
-oauth2_tokeninfo_url = http://endpoint/oauth/tokeninfo?access_token=
+oauth2_tokeninfo_url = http://endpoint/oauth/tokeninfo?access_token=%{access_token}
+oauth2_tokeninfo_url = %{env:IDP_URL | safe}/tokeninfo?access_token=%{access_token}
+oauth2_tokeninfo_url = http://idp.example.com:%{env:IDP_PORT | safe}/tokeninfo?access_token=%{access_token}
 \`\`\``
 	},
 
 	oauth2_introspection_url: {
+		changed: {
+			settings_oauth2_url_access_token_changed: `
+With [[setting,oauth2_introspection_mode]] \`get\` the URL must contain
+\`%{access_token}\`, and variables in the URL are now URL-escaped; with
+\`auth\` or \`post\` it must not contain it.`,
+		},
 		tags: [ 'oauth2' ],
 		values: setting_types.STRING,
 		text: `
-URL for getting more information about token.`
+URL template for getting more information about the token.
+
+With [[setting,oauth2_introspection_mode]] \`get\` the URL must contain
+\`%{access_token}\` in the path or query, i.e. after a literal \`/\` or \`?\`
+that follows the host part. With \`auth\` or \`post\` the token is sent via the
+Authorization header or the POST body instead, and the URL must not contain
+it.
+
+Variables expanded into the URL are URL-escaped; the \`| safe\` filter opts
+out. See [[link,auth_oauth2_url_variables]].
+
+Example:
+
+\`\`\`[dovecot.conf]
+oauth2_introspection_mode = get
+oauth2_introspection_url = %{env:IDP_URL | safe}/introspect?token=%{access_token}
+\`\`\``
 	},
 
 	oauth2_introspection_mode: {
@@ -10158,7 +10807,7 @@ With \`local\` validation, [[setting,oauth2_tokeninfo_url]] is also ignored.
 | Value | Description |
 | --- | --- |
 | \`auth\` | GET request with Bearer authentication. |
-| \`get\` | GET request with token appended to URL. |
+| \`get\` | GET request with the token placed into [[setting,oauth2_introspection_url]] via \`%{access_token}\`. |
 | \`post\` | POST request with token=bearer_token as content. |
 | \`local\` | Attempt to locally validate and decode JWT token. |`
 	},
@@ -10242,16 +10891,25 @@ Valid issuer(s) for the token.`
 
 	oauth2_openid_configuration_url: {
 		tags: [ 'oauth2' ],
-		values: setting_types.STRING,
+		values: setting_types.URL,
 		text: `
-URL to [[rfc,7628]] OpenID Provider Configuration Information schema.`
+URL to [[rfc,7628]] OpenID Provider Configuration Information schema.
+
+If the value has no path, e.g. \`https://id.example.com\`, a trailing \`/\`
+is added when it is returned to clients in OAUTHBEARER and XOAUTH2 failure
+responses.`
 	},
 
 	oauth2_fields: {
 		tags: [ 'oauth2' ],
 		values: setting_types.STRLIST,
 		text: `
-Key-value fields to include in successful authentication.`
+Key-value fields to include in successful authentication.
+
+[[variable,auth]] can be used. \`%{access_token}\` is the raw token.
+
+\`%{token}\` [[deprecated,variables_oauth2_token_deprecated]] is the old name
+of \`%{access_token}\` and logs a warning when used.`
 	},
 
 	oauth2_send_auth_headers: {
@@ -10699,7 +11357,7 @@ message to determine.`
 
 	pop3_lock_session: {
 		default: 'no',
-		tags: [ 'pop3' ],
+		tags: [ 'pop3', 'user_concurrency_limits' ],
 		values: setting_types.BOOLEAN,
 		text: `
 If enabled, only one POP3 session may exist for any single user.`
@@ -10794,6 +11452,31 @@ in uppercase) and with [[variable,global]]:
 | \`%{guid}\` | Dovecot GUID for the message |`
 	},
 
+	pop3c: {
+		tags: [ 'pop3c', 'client-auth' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,pop3c]]', 'client_auth', 'client_auth_authzid',
+			   'client_auth_authid', 'client_auth_password',
+			   'client_auth_mechanism', '[[link,client_auth]]' ],
+		text: `
+This settings filter provides a scope for settings for pop3c.
+
+The filter is needed for configuring the generic [[setting,client_auth]] and
+\`ssl_client_*\` settings for pop3c specifically, since the same settings are
+used also by other clients.
+
+Example:
+\`\`\`[dovecot.conf]
+pop3c {
+  host = pop3.example.com
+  ssl = pop3s
+  port = 995
+  client_auth_authzid = %{user}
+  client_auth_password = secret
+}
+\`\`\``
+	},
+
 	pop3c_features: {
 		tags: [ 'pop3c' ],
 		values: setting_types.BOOLLIST,
@@ -10813,6 +11496,11 @@ Workarounds:
 	},
 
 	pop3c_master_user: {
+		removed: {
+			settings_pop3c_credentials_renamed: `
+Renamed to [[setting,client_auth_authid]] inside the [[setting,pop3c]]
+filter, i.e. \`pop3c/client_auth_authid\`.`
+		},
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_password', 'pop3c_user' ],
 		values: setting_types.STRING,
@@ -10833,6 +11521,11 @@ pop3c_password = masteruser-secret
 	},
 
 	pop3c_password: {
+		removed: {
+			settings_pop3c_credentials_renamed: `
+Renamed to [[setting,client_auth_password]] inside the [[setting,pop3c]]
+filter, i.e. \`pop3c/client_auth_password\`.`
+		},
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_master_user', 'pop3c_user' ],
 		values: setting_types.STRING,
@@ -10884,6 +11577,11 @@ Use TLS to connect to the remote POP3 server.
 	},
 
 	pop3c_ssl_verify: {
+		removed: {
+			settings_pop3c_ssl_verify_renamed: `
+Renamed to [[setting,ssl_client_require_valid_cert]] inside the
+[[setting,pop3c]] filter, i.e. \`pop3c/ssl_client_require_valid_cert\`.`
+		},
 		default: 'yes',
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_ssl' ],
@@ -10898,6 +11596,12 @@ Only used if [[setting,pop3c_ssl]] is enabled.`
 	},
 
 	pop3c_user: {
+		removed: {
+			settings_pop3c_credentials_renamed: `
+Renamed to [[setting,client_auth_authzid]] inside the [[setting,pop3c]]
+filter, i.e. \`pop3c/client_auth_authzid\`. Note that the default changed too, see
+[[setting,client_auth_authzid]].`
+		},
 		default: '%{user}',
 		tags: [ 'pop3c' ],
 		seealso: [ 'pop3c_master_user', 'pop3c_password' ],
@@ -11030,12 +11734,24 @@ See [[setting,rejection_reason]] for the list of variables that can be used.`
 	},
 
 	sendmail_path: {
+		deprecated: {
+			settings_smtp_client_settings_changed: `
+Replaced by an [[setting,execute]] block named \`sendmail\` inside the
+[[setting,mail_submit]] filter. With an older
+[[setting,dovecot_config_version]] the setting still works: its value is
+translated into the [[setting,execute_fork_path]] and
+[[setting,execute_args]] settings of that block.`
+		},
 		default: '/usr/sbin/sendmail',
+		tags: [ 'mail_submit', 'lda', 'lmtp' ],
+		seealso: [ 'mail_submit' ],
 		values: setting_types.STRING,
 		text: `
-The binary to use for sending email.
+The binary to use for sending email. Arguments can be given after the path,
+separated by spaces.
 
-Used only if [[setting,submission_host]] is not set.`
+Used only if [[setting,smtp_client_host]] is not set inside the
+[[setting,mail_submit]] filter.`
 	},
 
 	service: {
@@ -11188,7 +11904,7 @@ is launched.
 	},
 
 	service_process_limit: {
-		tags: [ 'service' ],
+		tags: [ 'service', 'process_memory_limits' ],
 		values: setting_types.UINT,
 		default: '[[setting,default_process_limit]]',
 		text: `
@@ -11202,7 +11918,7 @@ could prevent creation of new processes.`
 	},
 
 	service_client_limit: {
-		tags: [ 'service' ],
+		tags: [ 'service', 'process_memory_limits' ],
 		values: setting_types.UINT,
 		default: '[[setting,default_client_limit]]',
 		text: `
@@ -11276,7 +11992,7 @@ Using \`infinite\` disables the idle-killing.`
 	},
 
 	service_vsz_limit: {
-		tags: [ 'service' ],
+		tags: [ 'service', 'process_memory_limits' ],
 		values: setting_types.SIZE,
 		default: '[[setting,default_vsz_limit]]',
 		text: `
@@ -11381,6 +12097,124 @@ With systemd the default \`KillMode=control-group\` kills the preserved
 processes anyway on \`systemctl restart\`. Preserving them across a restart
 needs \`KillMode=mixed\` or \`KillMode=process\`.
 :::`
+	},
+
+	smtp_client_command_timeout: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		default: '5 mins',
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_connect_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for SMTP commands sent to the remote server. The timeout is reset
+every time more data is being sent or received.`
+	},
+
+	smtp_client_connect_timeout: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		default: '30 secs',
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_command_timeout' ],
+		values: setting_types.TIME_MSECS,
+		text: `
+Timeout for connecting to the remote SMTP server, including the TLS handshake
+and authentication.`
+	},
+
+	smtp_client_host: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_port', 'smtp_client_ssl' ],
+		values: setting_types.STRING,
+		text: `
+Host name or IP address of the remote SMTP server. The port is configured
+separately with [[setting,smtp_client_port]].
+
+Inside the [[setting,submission_relay]] filter this is required. Inside the
+[[setting,mail_submit]] filter setting it switches from executing the sendmail
+binary to sending via SMTP.
+
+[[variable,mail-user]] can be used.`
+	},
+
+	smtp_client_peer_trusted: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		default: 'no',
+		tags: [ 'smtp_client' ],
+		values: setting_types.BOOLEAN,
+		text: `
+Whether the remote SMTP server is trusted. If enabled, the original client's
+connection information is forwarded to the remote server with the
+(Postfix-originated) XCLIENT command, if the remote server advertises support
+for it.`
+	},
+
+	smtp_client_port: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		default: 25,
+		tags: [ 'smtp_client' ],
+		seealso: [ 'smtp_client_host', 'smtp_client_ssl' ],
+		values: setting_types.IN_PORT,
+		text: `
+Port of the remote SMTP server.`
+	},
+
+	smtp_client_rawlog_dir: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		tags: [ 'smtp_client' ],
+		seealso: [ '[[link,rawlog]]' ],
+		values: setting_types.PATH_DIR,
+		text: `
+Write protocol logs of the outgoing SMTP connections to this directory for
+debugging.
+
+[[variable,mail-user]] can be used.`
+	},
+
+	smtp_client_source_ip: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		tags: [ 'smtp_client' ],
+		values: setting_types.STRING,
+		text: `
+Local IP address to use as the source address of the outgoing SMTP
+connections. If empty, the kernel chooses the address.`
+	},
+
+	smtp_client_ssl: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		default: 'no',
+		tags: [ 'smtp_client' ],
+		seealso: [ 'ssl_client_require_valid_cert', '[[link,ssl_configuration]]' ],
+		values: setting_types.ENUM,
+		values_enum: [ 'no', 'smtps', 'submissions', 'starttls' ],
+		text: `
+Whether to use TLS for the connection to the remote SMTP server.
+
+| Value | Description |
+| ----- | ----------- |
+| \`no\` | No TLS |
+| \`smtps\` | Connect using TLS immediately (implicit TLS) |
+| \`submissions\` | Same as \`smtps\`, the name used by [[rfc,8314]] |
+| \`starttls\` | Use the STARTTLS command to switch to TLS |
+
+The connection uses the \`ssl_client_*\` settings, which can be set inside the
+same filter to apply to this client only.`
 	},
 
 	sql_driver: {
@@ -11690,7 +12524,10 @@ ssl_server_dh_file = /path/to/dh.pem
 		tags: [ 'ssl-ldap', 'ssl-cassandra', 'ssl_client', 'sql-mysql' ],
 		values: setting_types.BOOLEAN,
 		text: `
-Require a valid certificate when connecting to external SSL services?`
+Require a valid certificate when connecting to external SSL services?
+
+To change this for a single client only, set it inside that client's filter,
+e.g. [[setting,imapc]], [[setting,pop3c]] or [[setting,submission_relay]].`
 	},
 
 	ssl_server_key_file: {
@@ -11894,6 +12731,13 @@ Supported workaround identifiers are:
 	},
 
 	submission_host: {
+		deprecated: {
+			settings_smtp_client_settings_changed: `
+Replaced by [[setting,smtp_client_host]] and [[setting,smtp_client_port]]
+inside the [[setting,mail_submit]] filter. With an older
+[[setting,dovecot_config_version]] the setting still works: the
+\`host:port\` value is split into those two settings.`
+		},
 		tags: [ 'submission' ],
 		values: setting_types.URL,
 		text: `
@@ -11922,7 +12766,7 @@ Variables supported, including [[variable,mail-user]]:
 
 	submission_max_mail_size: {
 		default: '40M',
-		tags: [ 'submission' ],
+		tags: [ 'submission', 'submission_queue_limits' ],
 		values: setting_types.SIZE,
 		text: `
 The maximum message size accepted for relay.
@@ -11935,14 +12779,57 @@ unknown limit exists there, which will be passed back to the client.`
 	},
 
 	submission_max_recipients: {
-		tags: [ 'submission' ],
+		tags: [ 'submission', 'submission_queue_limits' ],
 		values: setting_types.UINT,
 		default: 'unlimited',
 		text: `
 Maximum number of recipients accepted per connection.`
 	},
 
+	submission_relay: {
+		added: {
+			settings_smtp_client_settings_changed: false
+		},
+		tags: [ 'submission_relay', 'client-auth' ],
+		values: setting_types.NAMED_FILTER,
+		seealso: [ '[[link,submission_server]]', 'smtp_client_host',
+			   'client_auth', '[[link,client_auth]]' ],
+		text: `
+Filter for the settings of the connection from the [[link,submission_server]]
+to the relay MTA. The connection is configured with the generic
+\`smtp_client_*\`, [[setting,client_auth]] and \`ssl_client_*\` settings
+placed inside this filter. [[setting,smtp_client_host]] is required to
+provide the submission service.
+
+Inside this filter the defaults are [[setting,smtp_client_port,25]],
+[[setting,smtp_client_connect_timeout,30 secs]] and
+[[setting,smtp_client_command_timeout,5 mins]].
+
+Example:
+\`\`\`[dovecot.conf]
+submission_relay {
+  smtp_client_host = mta.example.com
+  smtp_client_port = 587
+  smtp_client_ssl = starttls
+  smtp_client_peer_trusted = yes
+
+  client_auth_authzid = submission-relay
+  client_auth_password = secret
+  # Prefer SCRAM-SHA-256, use PLAIN if the MTA doesn't advertise it
+  client_auth SCRAM-SHA-256 {
+  }
+  client_auth PLAIN {
+  }
+}
+\`\`\``
+	},
+
 	submission_relay_command_timeout: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,smtp_client_command_timeout]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: '5mins',
 		tags: [ 'submission_relay' ],
 		values: setting_types.TIME_MSECS,
@@ -11953,6 +12840,11 @@ The timeout is reset every time more data is being sent or received.`
 	},
 
 	submission_relay_connect_timeout: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,smtp_client_connect_timeout]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: '30secs',
 		tags: [ 'submission_relay' ],
 		values: setting_types.TIME_MSECS,
@@ -11962,6 +12854,11 @@ server.`
 	},
 
 	submission_relay_host: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,smtp_client_host]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		values: setting_types.STRING,
 		text: `
@@ -11969,6 +12866,11 @@ Host of the relay server (REQUIRED to provide the submission service).`
 	},
 
 	submission_relay_master_user: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,client_auth_authid]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		values: setting_types.STRING,
 		text: `
@@ -11977,6 +12879,11 @@ required.`
 	},
 
 	submission_relay_max_idle_time: {
+		deprecated: {
+			settings_smtp_client_settings_changed: `
+The setting never had any effect. With an older
+[[setting,dovecot_config_version]] it is still accepted, but ignored.`
+		},
 		default: '29mins',
 		tags: [ 'submission_relay' ],
 		values: setting_types.TIME,
@@ -11984,6 +12891,11 @@ required.`
 	},
 
 	submission_relay_password: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,client_auth_password]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		values: setting_types.STRING,
 		text: `
@@ -11991,6 +12903,11 @@ Password for authentication to the relay MTA if authentication is required.`
 	},
 
 	submission_relay_port: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,smtp_client_port]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: 25,
 		tags: [ 'submission_relay' ],
 		values: setting_types.IN_PORT,
@@ -12002,6 +12919,11 @@ Port for the submission relay server.`
 		changed: {
 			settings_path_types_added: `Setting type changed.`,
 		},
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,smtp_client_rawlog_dir]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		seealso: [ '[[link,rawlog]]' ],
 		values: setting_types.PATH_DIR,
@@ -12012,6 +12934,11 @@ Write protocol logs for relay connection to this directory for debugging.
 	},
 
 	submission_relay_ssl: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,smtp_client_ssl]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: 'no',
 		tags: [ 'submission_relay' ],
 		values: setting_types.ENUM,
@@ -12032,6 +12959,11 @@ Available values:
 	},
 
 	submission_relay_ssl_verify: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,ssl_client_require_valid_cert]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: 'yes',
 		tags: [ 'submission_relay' ],
 		values: setting_types.BOOLEAN,
@@ -12040,6 +12972,11 @@ If enabled, TLS certificate of the relay server must be verified.`
 	},
 
 	submission_relay_trusted: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,smtp_client_peer_trusted]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		default: 'no',
 		tags: [ 'submission_relay' ],
 		values: setting_types.BOOLEAN,
@@ -12051,6 +12988,11 @@ relay server (only if enabled).`
 	},
 
 	submission_relay_user: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,client_auth_authzid]] inside the
+[[setting,submission_relay]] filter.`
+		},
 		tags: [ 'submission_relay' ],
 		values: setting_types.STRING,
 		text: `
@@ -12058,6 +13000,11 @@ User name for authentication to the relay MTA if authentication is required.`
 	},
 
 	submission_ssl: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,smtp_client_ssl]] inside the [[setting,mail_submit]]
+filter.`
+		},
 		default: 'no',
 		seealso: [ 'submission_host' ],
 		values: setting_types.STRING,
@@ -12078,6 +13025,10 @@ Available values:
 	},
 
 	submission_timeout: {
+		removed: {
+			settings_smtp_client_settings_changed: `
+Renamed to [[setting,mail_submit_timeout]].`
+		},
 		default: '30secs',
 		seealso: [ 'submission_host' ],
 		values: setting_types.TIME,
@@ -12380,44 +13331,446 @@ If enabled, protocol-level SSL errors are logged. Same as
 If enabled, ignore version mismatches between different Dovecot versions.`
 	},
 
-	ldap_auth_dn: {
+
+
+
+
+	ldap_client: {
 		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client_uris', 'client_auth_mechanism', '[[link,auth_ldap]]' ],
+		values: setting_types.NAMED_FILTER,
+		text: `
+Named filter for the settings of the LDAP bind that is done when connecting
+to the LDAP server: [[setting,client_auth_authid]],
+[[setting,client_auth_password]], [[setting,client_auth_authzid]] and
+[[setting,client_auth_mechanism]].
+
+\`\`\`doveconf
+passdb ldap {
+  ldap_client_uris = ldap://ldap.example.org
+  ldap_client {
+    client_auth_authid = cn=dovecot,dc=example,dc=org
+    client_auth_password = secret
+  }
+}
+\`\`\``
+	},
+
+	client_auth_authid: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client', 'client_auth_password', 'client_auth_mechanism' ],
 		values: setting_types.STRING,
 		text: `
-Specify the Distinguished Name (the username used to login to the LDAP server).
+Identity that Dovecot uses when it binds to the LDAP server after connecting.
+Inside [[setting,ldap_client]] this replaces \`ldap_auth_dn\`.
 
-Leave it commented out to bind anonymously (useful with [[setting,passdb_ldap_bind,yes]]).
+Without [[setting,client_auth_mechanism]] this is the DN of a simple bind, and
+[[setting,client_auth_password]] is its password. Leave it empty to bind
+anonymously, which is useful with [[setting,passdb_ldap_bind,yes]].
 
-Example: \`ldap_auth_dn = uid=dov-read,dc=example,dc=com,dc=.\``
+With a SASL mechanism this is the SASL authentication ID instead of a DN.
+\`GSSAPI\` and \`GSS-SPNEGO\` ignore it. \`EXTERNAL\` sends it as the
+authorization ID if [[setting,client_auth_authzid]] is empty.
+
+Example: \`client_auth_authid = uid=dov-read,dc=example,dc=com\``
+	},
+
+	client_auth_password: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client', 'client_auth_authid', 'client_auth_mechanism' ],
+		values: setting_types.STRING,
+		text: `
+Password for [[setting,client_auth_authid]]. Inside [[setting,ldap_client]]
+this replaces \`ldap_auth_dn_password\`. With \`OAUTHBEARER\` this is the
+bearer token.`
+	},
+
+	client_auth_authzid: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client', 'client_auth_authid', 'client_auth_mechanism' ],
+		values: setting_types.STRING,
+		text: `
+SASL authorization ID, i.e. the identity that is used after
+[[setting,client_auth_authid]] has been authenticated. Inside
+[[setting,ldap_client]] this replaces \`ldap_auth_sasl_authz_id\`. Normally
+you want to keep this empty.
+
+It is not used with a simple bind. It is ignored with the
+\`implicit-external-auth\` workaround of [[setting,ldap_client_workarounds]].`
+	},
+
+	client_auth_mechanism: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client', 'client_auth_authid', 'ldap_client_workarounds' ],
+		values: setting_types.STRING,
+		text: `
+Name of the SASL mechanism to use for the bind. Inside
+[[setting,ldap_client]] this replaces \`ldap_auth_sasl_mechanisms\`. If it is
+empty, a simple bind is used.
+
+Only one mechanism can be given, not a list: Dovecot doesn't read the
+mechanisms that the server supports before binding. A list is an error.
+
+The mechanisms are those of Dovecot's SASL client, for example \`EXTERNAL\`,
+\`PLAIN\`, \`SCRAM-SHA-256\`, \`SCRAM-SHA-256-PLUS\`, \`OAUTHBEARER\`,
+\`GSSAPI\` and \`GSS-SPNEGO\`. Mechanisms that were available only via Cyrus
+SASL, such as \`NTLM\`, are no longer available.
+
+The connection never has a SASL security layer, so use TLS
+([[setting,ldap_client_starttls]] or \`ldaps://\`) to protect it. \`GSSAPI\`
+negotiates no protection, and \`GSSAPI\` and \`GSS-SPNEGO\` send the
+\`tls-server-end-point\` channel binding when TLS is used. The \`-PLUS\`
+mechanisms need TLS. The Kerberos service is \`ldap\` and the host of the URI
+is used as it is, without resolving it to a canonical name.
+
+This is used only for the bind after connecting, not for the authentication
+binds of users ([[setting,passdb_ldap_bind,yes]]), which are always simple
+binds.`
+	},
+
+	ldap_client_uris: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client_starttls' ],
+		values: setting_types.STRING,
+		text: `
+Space separated list of LDAP URIs to connect to. Replaces \`ldap_uris\`.
+
+ * \`ldap://host[:port]\`
+ * \`ldaps://host[:port]\`: TLS from the start of the connection
+ * \`ldapi://path\`: UNIX socket. The path is percent-encoded, e.g.
+   \`ldapi://%2Fvar%2Frun%2Fslapd%2Fldapi\`. An empty path (\`ldapi:///\`) means
+   \`/var/run/slapd/ldapi\`.
+
+Anything after the host is ignored.
+
+A new connection tries the URIs in the order they are listed, so the first one
+is used whenever it works. A URI is given up on if connecting to it fails, the
+TLS handshake or the certificate verification fails, StartTLS is refused, or
+the server answers the bind with busy or unavailable. A connection that was
+ready and is lost is not moved to another URI, but the next request connects
+again from the first URI. There is no load balancing.
+
+Example: \`ldap_client_uris = ldaps://ldap1.example.org ldaps://ldap2.example.org\``
+	},
+
+	ldap_client_starttls: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client_uris' ],
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		text: `
+Upgrade the connection to TLS with StartTLS before binding. Replaces
+\`ldap_starttls\`. This can't be used with \`ldaps://\` or \`ldapi://\` URIs.
+
+The TLS settings are the \`ssl_client_*\` settings, see
+[[link,ssl_configuration]].`
+	},
+
+	ldap_client_connect_timeout: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		default: '5s',
+		values: setting_types.TIME_MSECS,
+		text: `
+How long connecting to each IP address of a host may take, including the TLS
+handshake of \`ldaps://\` and the StartTLS upgrade, but not the DNS lookup.
+\`infinite\` waits until the operating system gives up. 0 is not allowed.`
+	},
+
+	ldap_client_request_timeout: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client_request_absolute_timeout', 'ldap_client_max_request_retries' ],
+		default: {
+			value: '30s',
+			text: 'For `passdb ldap` and `userdb ldap` the default is `20s`.',
+		},
+		values: setting_types.TIME_MSECS,
+		text: `
+How long a single attempt of a search or a bind may take, from sending it to
+the server until its result. Replaces \`ldap_timeout\`. A request that waits
+in the queue, e.g. because of [[setting,ldap_client_max_outstanding_requests]],
+isn't timed out by this.
+
+A request that times out is sent again, if
+[[setting,ldap_client_max_request_retries]] and
+[[setting,ldap_client_request_absolute_timeout]] allow it. Otherwise it fails.
+\`infinite\` disables the timeout of attempts.
+
+0 is not allowed. Previously \`ldap_timeout = 0\` meant no timeout: use
+\`infinite\` for that.`
+	},
+
+	ldap_client_request_absolute_timeout: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client_request_timeout', 'ldap_client_max_request_retries' ],
+		default: '60s',
+		values: setting_types.TIME_MSECS,
+		text: `
+How long a search or a bind of a user may take in total, from submitting it,
+including the time it waits in the queue and all of its attempts. When it has
+passed, the request fails and isn't sent again. \`infinite\` means no limit, so
+that only [[setting,ldap_client_max_request_retries]] limits the request.
+0 is not allowed.
+
+[[setting,userdb_ldap_iterate_filter,User iteration]] (e.g.
+\`doveadm user '*'\`) isn't limited by this, only by
+[[setting,ldap_client_request_timeout]] for each page of results.`
+	},
+
+	ldap_client_max_request_retries: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'ldap_client_request_timeout', 'ldap_client_request_absolute_timeout' ],
+		default: 3,
+		values: setting_types.UINT,
+		text: `
+How many times a request is sent again if the connection is lost or the
+request times out while it waits for the response. The request is sent on a new
+connection, so the URIs are tried in order. This also limits how many
+connections in a row can be lost while connecting (TLS handshake, StartTLS and
+the bind after connecting).
+
+\`0\` means that nothing is sent again. \`unlimited\` means no limit: only
+[[setting,ldap_client_request_absolute_timeout]] ends the retries.
+
+A search is sent again only if it hasn't given any results yet. The bind of a
+user is sent again only if it got no result. An LDAP server that locks out an
+account after failed binds can count a wrong password again each time the bind
+is sent again, so the bind of a wrong password may count twice. Use a low value
+to lower that risk.`
+	},
+
+	ldap_client_max_idle_time: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		default: 'infinite',
+		values: setting_types.TIME,
+		text: `
+Disconnect from the LDAP server after the connection has had no requests and no
+traffic for this long. Replaces \`ldap_max_idle_time\`. The next request
+connects again. \`infinite\` never disconnects. \`0\` disconnects as soon as
+there are no requests; previously 0 meant never, and it is now converted to
+\`infinite\` for old [[setting,dovecot_config_version]].
+
+Networks, firewalls and NAT devices can drop idle connections without telling
+either end, and the next request notices only when it times out. Set this lower
+than the idle limit of the network, e.g. \`5 mins\` with Active Directory,
+Azure or NAT.`
+	},
+
+	ldap_client_max_outstanding_requests: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		default: {
+			value: '100',
+			text: 'For `passdb ldap` and `userdb ldap` the default is `8`.',
+		},
+		values: setting_types.UINT,
+		text: `
+Maximum number of requests that wait for a response from the server on a
+connection at the same time. The other requests wait in a queue. 0 is not
+allowed.`
+	},
+
+	ldap_client_max_message_size: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		default: '1M',
+		values: setting_types.SIZE,
+		text: `
+Largest LDAP message accepted from the server. A decoded message can take up to
+8 times as much memory as its size. 0 is not allowed.`
+	},
+
+	ldap_client_max_auth_bind_connections: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'passdb_ldap_bind' ],
+		default: 4,
+		values: setting_types.UINT,
+		text: `
+Maximum number of connections that are used at the same time for the binds that
+verify the passwords of users ([[setting,passdb_ldap_bind,yes]]), in addition to
+the connection of the other requests. The other binds wait in the queue. User
+binds use connections of their own, so the identity of the connection of the
+searches stays the same. 0 is not allowed.`
+	},
+
+	ldap_client_workarounds: {
+		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		added: {
+			settings_ldap_client_changed: false,
+		},
+		seealso: [ 'client_auth_mechanism' ],
+		default: '',
+		values: setting_types.BOOLLIST,
+		text: `
+Space separated list of workarounds for LDAP server quirks.
+
+| Workaround | Description |
+| ---------- | ----------- |
+| \`openldap-channel-binding-tls-unique\` | OpenLDAP and Cyrus SASL servers use the channel binding name \`ldap\` with the SCRAM \`-PLUS\` mechanisms. Use the \`tls-unique\` channel binding. It fails with TLS 1.3. |
+| \`openldap-channel-binding-tls-server-end-point\` | Same as above, but use the \`tls-server-end-point\` channel binding. OpenLDAP uses it with \`olcSaslCBinding: tls-endpoint\`. |
+| \`implicit-external-auth\` | With \`ldaps://\` and [[setting,client_auth_mechanism,EXTERNAL]] no SASL bind is sent. Active Directory logs in the TLS client certificate during the TLS handshake of \`ldaps://\` and refuses SASL \`EXTERNAL\` there. [[setting,client_auth_authzid]] is ignored. StartTLS and other mechanisms aren't affected. |
+
+At most one of the \`openldap-channel-binding\` workarounds can be used.`
+	},
+
+	ldap_auth_dn: {
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,client_auth_authid]].`
+		},
+		values: setting_types.STRING,
+		text: `
+Renamed to [[setting,client_auth_authid]].`
 	},
 
 	ldap_auth_dn_password: {
-		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,client_auth_password]].`
+		},
 		values: setting_types.STRING,
 		text: `
-Password for LDAP server. Used if [[setting,ldap_auth_dn]] is specified.`
+Renamed to [[setting,client_auth_password]].`
 	},
 
 	ldap_auth_sasl_authz_id: {
-		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,client_auth_authzid]].`
+		},
 		values: setting_types.STRING,
 		text: `
-SASL authorization ID, ie. the [[setting,ldap_auth_dn_password]] is for this "master user", but the
-[[setting,ldap_auth_dn]] is still the logged in user. Normally you want to keep this empty.`
+Renamed to [[setting,client_auth_authzid]].`
 	},
 
 	ldap_auth_sasl_mechanisms: {
-		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,client_auth_mechanism]]. Only one mechanism can be given: a list is an error.`
+		},
 		values: setting_types.BOOLLIST,
 		text: `
-List of SASL mechanism names to use.`
+Renamed to [[setting,client_auth_mechanism]]. Only one mechanism can be given: a list is an error.`
+	},
+
+	ldap_uris: {
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,ldap_client_uris]].`
+		},
+		values: setting_types.STRING,
+		text: `
+Renamed to [[setting,ldap_client_uris]].`
+	},
+
+	ldap_starttls: {
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,ldap_client_starttls]].`
+		},
+		default: 'no',
+		values: setting_types.BOOLEAN,
+		text: `
+Renamed to [[setting,ldap_client_starttls]].`
+	},
+
+	ldap_max_idle_time: {
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,ldap_client_max_idle_time]]. \`0\` became \`infinite\`.`
+		},
+		default: 0,
+		values: setting_types.TIME,
+		text: `
+Renamed to [[setting,ldap_client_max_idle_time]]. \`0\` became \`infinite\`.`
+	},
+
+	ldap_timeout: {
+		removed: {
+			settings_ldap_client_changed: `
+Renamed to [[setting,ldap_client_request_timeout]]. \`0\` became \`infinite\`.`
+		},
+		default: 0,
+		values: setting_types.TIME,
+		text: `
+Renamed to [[setting,ldap_client_request_timeout]].`
+	},
+
+	ldap_version: {
+		deprecated: {
+			settings_ldap_client_changed: `
+The setting has no effect and is accepted only for backwards compatibility.
+Remove it.`
+		},
+		default: 3,
+		values: setting_types.UINT,
+		text: `
+The setting has no effect.`
+	},
+
+	ldap_debug_level: {
+		deprecated: {
+			settings_ldap_client_changed: `
+The setting has no effect and is accepted only for backwards compatibility.
+Remove it.`
+		},
+		default: 0,
+		values: setting_types.UINT,
+		text: `
+The setting has no effect.`
 	},
 
 	ldap_auth_sasl_realm: {
-		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
+		deprecated: {
+			settings_ldap_client_changed: `
+The setting has no effect and is accepted only for backwards compatibility.
+Remove it.`
+		},
 		values: setting_types.STRING,
 		text: `
-SASL realm to use.`
+The setting has no effect.`
 	},
 
 	ldap_base: {
@@ -12447,17 +13800,6 @@ By default all the databases have the same \`""\`(empty string) default connecti
 and as such share the connections.`
 	},
 
-	ldap_debug_level: {
-		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
-		default: 0,
-		values: setting_types.UINT,
-		text: `
-LDAP library debug level as specified by \`LDAP_DEBUG_*\` in \`ldap_log.h\`.
-
-Value \`-1\` means everything.
-
-You may need to recompile OpenLDAP with debugging enabled to get enough output.`
-	},
 
 	ldap_deref: {
 		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
@@ -12477,14 +13819,6 @@ The ldap filter to use to find the ldap entry.
 This setting is required for ldap [[setting,dict_map]]`
 	},
 
-	ldap_max_idle_time: {
-		tags: [ 'dict-ldap' ],
-		values: setting_types.TIME,
-		default: 0,
-		text: `
-Disconnect from LDAP server after connection has been idle for this many seconds.`
-	},
-
 	ldap_scope: {
 		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
 		default: 'subtree',
@@ -12495,35 +13829,7 @@ This specifies the search scope.`
 	},
 
 
-	ldap_starttls: {
-		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
-		default: 'no',
-		values: setting_types.BOOLEAN,
-		text: `
-Set to \`yes\` to use TLS to connect to the LDAP server.`
-	},
 
-	ldap_uris: {
-		tags: [ 'auth-ldap', 'dict-ldap', 'sieve-storage-ldap' ],
-		values: setting_types.STRING,
-		text: `
-LDAP URIs to use.
-
-Configure this setting to specify what LDAP
-server(s) to connect to.
-
-The URIs are in syntax \`protocol://host:port\`.
-
-Example: \`ldap_uris = ldaps://secure.domain.org\``
-	},
-
-	ldap_version: {
-		tags: [ 'auth-ldap', 'sieve-storage-ldap' ],
-		default: 3,
-		values: setting_types.UINT,
-		text: `
-LDAP protocol version to use. Likely \`2\` or \`3\`.`
-	},
 
 	passdb_ldap_bind: {
 		tags: [ 'auth-ldap' ],

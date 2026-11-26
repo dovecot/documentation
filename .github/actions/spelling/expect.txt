@@ -29,9 +29,11 @@ atimes
 auid
 Aup
 AUTHENTICATIONFAILED
+authid
 authpriv
 authtok
 authuser
+authzid
 autocreate
 autocreated
 Autocreation
@@ -76,6 +78,8 @@ bzlib
 CACERTDIR
 CANTCREAT
 CApath
+CBinding
+CCNAME
 cdb
 certbot
 changetype
@@ -187,6 +191,7 @@ eddsa
 editheader
 edprivkey
 edpubkey
+edu
 egid
 EID
 Eing
@@ -251,6 +256,7 @@ genkey
 genpkey
 gethosterror
 getmail
+GETMETADATA
 getscript
 gitlab
 gitrev
@@ -313,7 +319,6 @@ inthread
 invol
 IOERR
 ioloop
-IPADDR
 ipairs
 ipt
 iredmail
@@ -344,6 +349,7 @@ kludgy
 kmail
 krb
 ktadd
+KTNAME
 ktpass
 ktrace
 KTY
@@ -367,6 +373,7 @@ lgdb
 LHLO
 LIBADD
 libanonymous
+libasn
 libbzip
 libcrammd
 libcs
@@ -522,6 +529,7 @@ newmail
 Newsgroups
 newtok
 NEXTUID
+nfinish
 nfsmount
 ngrams
 ngrep
@@ -535,6 +543,7 @@ nodelay
 NOINFERIORS
 nolock
 nologin
+nonidle
 nonindexable
 nonnull
 nonspacing
@@ -647,6 +656,7 @@ rampup
 randkey
 randomfail
 rawlog
+RCACHETYPE
 rchar
 rdineren
 readdirplus
@@ -655,10 +665,12 @@ realname
 recalc
 RECURSIVEMATCH
 redownloading
+relogin
 remotehost
 remoteprefix
 RENAMESCRIPT
 replicator
+REQ
 reqbody
 rescode
 Resnick
@@ -917,6 +929,7 @@ Xes
 xfs
 xoauth
 XRCPTFORWARD
+xtext
 xuidl
 yescrypt
 yourldap

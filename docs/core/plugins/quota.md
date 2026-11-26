@@ -765,6 +765,10 @@ after some other problems). The quota can be recalculated with
 Dovecot supports quota-status service, which uses Postfix-compatible policy
 server protocol. This allows Postfix to check the quota before mail delivery.
 
+[[changed,quota_status_loads_quota]] The quota-status service loads the
+`quota` plugin automatically, so it doesn't need to be listed in
+[[setting,mail_plugins]].
+
 Example:
 
 ::: code-group

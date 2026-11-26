@@ -6,6 +6,7 @@ import { dovecotMdExtend } from '../lib/markdown.js'
 import { getExcludes, lib_dirname } from '../lib/utility.js'
 import dovecotVitepressInit from '../lib/dovecot_vitepress_init.js'
 import { dovecotVitepressLlmPlugin } from '../lib/vitepress_llm.js'
+import { dovecotIncludeWildcardPlugin } from '../lib/include_wildcard.js'
 import path from 'path'
 import fs from 'fs'
 
@@ -88,6 +89,7 @@ export default defineConfig({
 		plugins: [
 			pagefindPlugin(),
 			dovecotVitepressInit(),
+			dovecotIncludeWildcardPlugin(),
 			dovecotVitepressLlmPlugin({
 				hostname: hostname,
 				ignore: excludes,

@@ -84,6 +84,16 @@ SMTP servers.
 The configuration is similar to [[link,authentication_proxies]], but you'll
 need to tell Dovecot LMTP to issue passdb lookups: [[setting,lmtp_proxy,yes]].
 
+The connections to the backends are configured with the `lmtp_client_*`
+settings. The passdb lookup normally provides the host and optionally the port
+and TLS settings, so the defaults are usually enough:
+
+```doveconf[dovecot.conf]
+lmtp_proxy = yes
+# Write the backend connections' protocol logs for debugging
+#lmtp_client_rawlog_dir = /var/log/dovecot/lmtp-proxy-rawlog
+```
+
 ## Performance
 
 For higher volume sites, it may be desirable to increase the number of

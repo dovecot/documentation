@@ -216,7 +216,9 @@ Applicable to [[link,mdbox]] and [[link,sdbox]] mailbox formats only.
 		flags: doveadm_flag_types.USER,
 		man: 'doveadm-acl',
 		plugin: 'acl',
-		text: `Ensure shared mailboxes exist in ACL shared dictionary.`
+		text: `Rebuild the user's ACL rights cache from all mailboxes'
+\`dovecot-acl\` files, then make sure the user's shared mailboxes exist in the
+ACL shared dictionary.`
 	},
 
 	'acl remove': {
@@ -1452,6 +1454,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 		response: {
 			note: `Prints the expanded search query as a single line (unstructured output).`
 		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-fts',
 		plugin: 'fts',
 		text: `Expand query using FTS.`,
@@ -1464,6 +1467,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 		response: {
 			note: `Prints one line per mailbox with the matching UID sequence ranges (unstructured output).`
 		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-fts',
 		plugin: 'fts',
 		text: `Search mail with FTS plugin.`,
@@ -1473,11 +1477,13 @@ If all messages are desired to be expunged, the "all" query can be used.
 		args: {
 			namespace: {
 				example: '#shared',
+				optional: true,
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Namespace to optimize.`,
 			},
 		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-fts',
 		plugin: 'fts',
 		response: null,
@@ -1488,22 +1494,26 @@ If all messages are desired to be expunged, the "all" query can be used.
 		args: {
 			namespace: {
 				example: '#shared',
+				optional: true,
 				positional: true,
 				type: doveadm_arg_types.STRING,
 				text: `Namespace to rebuild.`,
 			},
 		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-fts',
 		plugin: 'fts',
 		response: null,
 		text: `Rebuild FTS indexes.`,
 	},
 
-	// TODO: Needs to be documented in man page
 	'fts tokenize': {
 		args: {
 			language: {
+				cli: 'l',
+				example: 'fr',
 				type: doveadm_arg_types.STRING,
+				text: `Language of text. If not specified, language is auto-detected.`,
 			},
 			text: {
 				example: `c’est la vie`,
@@ -1521,6 +1531,7 @@ If all messages are desired to be expunged, the "all" query can be used.
 				},
 			},
 		},
+		flags: doveadm_flag_types.USER | doveadm_flag_types.USERFILE,
 		man: 'doveadm-fts',
 		plugin: 'fts',
 		text: `Tokenize a string using FTS.`,

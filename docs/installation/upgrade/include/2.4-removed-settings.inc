@@ -5,6 +5,7 @@
 | `auth_stats` | |
 | `dict_db_config` | Berkeley DB is not supported anymore. |
 | `imap_id_log` | Replaced by the [[event,imap_id_received]] event. |
+| `lazy_expunge_exclude` | Set [[setting,lazy_expunge_mailbox]] empty for the mailbox instead. |
 | `login_access_sockets` | Use [[link,auth_lua]] instead. Dovecot will fail to start if this setting is present in configuration. |
 | `quota_set` | |
 | `sieve_dir` | See [[link,sieve_storage]]. |

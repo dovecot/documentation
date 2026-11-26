@@ -89,7 +89,7 @@ const toggleGroup = (key) => {
           class="version-group"
         >
           <div class="version-row">
-            <a class="link main-link" :href="`/${group.latest}/`">{{ group.latest }}</a>
+            <a class="link main-link" target="_self" :href="`/${group.latest}/`">{{ group.latest }}</a>
             <button
               v-if="group.rest.length > 0"
               class="expand-btn"
@@ -107,6 +107,7 @@ const toggleGroup = (key) => {
               v-for="item in group.rest"
               :key="item.text"
               class="link older-link"
+              target="_self"
               :href="item.link"
             >
               {{ item.text }}
@@ -116,7 +117,7 @@ const toggleGroup = (key) => {
 
         <!-- Static items (2.3, main) -->
         <div v-for="item in groupedVersions.others" :key="item.text" class="version-row">
-          <a class="link main-link" :href="item.link">{{ item.text }}</a>
+          <a class="link main-link" target="_self" :href="item.link">{{ item.text }}</a>
         </div>
       </div>
     </div>
@@ -127,7 +128,7 @@ const toggleGroup = (key) => {
     <div class="version-list">
       <div v-for="group in groupedVersions.groups" :key="group.latest" class="version-group">
         <div class="version-row">
-          <a class="link main-link" :href="`/${group.latest}/`">{{ group.latest }}</a>
+          <a class="link main-link" target="_self" :href="`/${group.latest}/`">{{ group.latest }}</a>
           <button
             v-if="group.rest.length > 0"
             class="expand-btn"
@@ -139,11 +140,11 @@ const toggleGroup = (key) => {
           </button>
         </div>
         <div v-show="openGroups.includes(group.latest)" class="older-versions">
-          <a v-for="item in group.rest" :key="item.text" class="link older-link" :href="item.link">{{ item.text }}</a>
+          <a v-for="item in group.rest" :key="item.text" target="_self" class="link older-link" :href="item.link">{{ item.text }}</a>
         </div>
       </div>
       <div v-for="item in groupedVersions.others" :key="item.text" class="version-row">
-        <a class="link main-link" :href="item.link">{{ item.text }}</a>
+        <a class="link main-link" target="_self" :href="item.link">{{ item.text }}</a>
       </div>
     </div>
   </div>

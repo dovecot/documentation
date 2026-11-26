@@ -39,7 +39,7 @@ jobs:
         done
         mv tars/* .vitepress/dist/
     - name: Deploy to doc.dovecot.org
-      uses: dovecot/rsync-deployments@v2.0.3
+      uses: dovecot/rsync-deployments@v2.0.4
       with:
         FLAGS: -azr --delete
         HOST: doc.dovecot.org
@@ -47,6 +47,7 @@ jobs:
         LOCALPATH: /.vitepress/dist/.
         REMOTEPATH: public_html/${{ github.ref_name }}
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+        KNOWN_HOSTS: ${{ vars.KNOWN_HOSTS }}
       if: env.DEPLOY_KEY
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}

@@ -711,6 +711,15 @@ This event is currently not sent for pre-login POP3 commands.
 		inherit: 'imap_client',
 		fields: {
 			mailbox: `Mailbox name where hibernation was started in.`,
+			reason: {
+				added: {
+					imap_hibernate_nonidle_added: false
+				},
+				text: `
+Why the client was hibernated:
+* \`idle\`: IDLE command was running for [[setting,imap_hibernate_timeout]].
+* \`inactivity\`: No command was running for [[setting,imap_hibernate_nonidle_timeout]].`
+			},
 			error: `Reason why hibernation attempt failed.`,
 		},
 		text: `
@@ -727,11 +736,19 @@ process depending on which side the error was detected in.
 		inherit: 'imap_client',
 		fields: {
 			mailbox: `Mailbox name where hibernation was started in.`,
+			error: `
+Reason why the unhibernation failed. Not set when it succeeded.
+
+[[added,imap_hibernate_nonidle_added]] When messages were expunged while a
+client without IDLE running was hibernated, the value is
+\`IMAP session state is inconsistent: Mailbox <name>: <count> messages expunged during hibernation\`.
+See [[link,imap_hibernation_nonidle]].`,
 			reason: `
 Reason why client was unhibernated:
 * \`idle_done\`: IDLE command was stopped with DONE.
 * \`idle_bad_reply\`: IDLE command was stopped with some other command than DONE.
-* \`mailbox_changes\`: Mailbox change notifications need to be sent to the client.`,
+* \`mailbox_changes\`: Mailbox change notifications need to be sent to the client.
+* \`client_input\`: Client sent input while no IDLE command was running. [[added,imap_hibernate_nonidle_added]]`,
 			hibernation_usecs: `Number of microseconds how long the client was hibernated.`,
 		},
 		text: `
@@ -792,6 +809,17 @@ IMAP command is completed.
 
 This event is useful to track individual command usage, debug specific
 sessions, and/or detect broken clients.
+
+[[added,imap_hibernate_commands_added]] The imap-hibernate process also
+sends this event for the IDLE (finished by DONE), NOOP, CHECK and LOGOUT
+commands it answers itself (see [[link,imap_hibernation_commands]]). These
+events have the \`imap-hibernate\` category. \`running_usecs\` and
+\`lock_wait_usecs\` are always 0 for them. For IDLE finished by DONE
+\`cmd_input_name\` is always \`IDLE\`, because the IDLE may have been
+started by the imap process.
+
+When an IDLE command is hibernated, the imap process sends this event for it
+without \`tagged_reply_state\` and \`tagged_reply\`.
 
 ::: tip
 This event is currently not sent for pre-login IMAP commands.
@@ -912,6 +940,68 @@ This event is useful for logging and tracking mail deliveries.`
 		text: `
 DNS request sent by DNS client library to DNS worker process has been
 finished.`
+	},
+
+	/* LDAP client
+	 *
+	 * Events emitted by Dovecot's internal asynchronous LDAP client
+	 * library. */
+
+	ldap_connection_handshake_finished: {
+		root: 'ldap-client',
+		inherit: 'ldap_connection',
+		added: {
+			events_ldap_client_added: false,
+		},
+		fields: {
+			bind_dn: `DN of the configured service account bind. Not set for anonymous connections.`,
+			ldap_result_code: `LDAP result code of the bind response (integer), if one was received.`,
+			error: `Human readable error, if the handshake failed.`,
+		},
+		text: `
+LDAP connection handshake has finished: the connection is established, the
+TLS handshake (with \`ldaps://\` or StartTLS) is done and the service account
+bind has succeeded. Requests are sent only after this. Also sent when the
+connection fails before that, including connect failures.
+
+The duration covers connecting to the server address, not the DNS lookup.`
+	},
+
+	ldap_connection_finished: {
+		root: 'ldap-client',
+		inherit: 'ldap_connection',
+		added: {
+			events_ldap_client_added: false,
+		},
+		fields: {
+			net_in_bytes: `Amount of LDAP data read, in bytes (decrypted with TLS).`,
+			net_out_bytes: `Amount of LDAP data written, in bytes (before encryption with TLS).`,
+			error: `Human readable reason, if the connection was closed because of an error.`,
+		},
+		text: `LDAP connection was closed.`
+	},
+
+	ldap_lookup_finished: {
+		root: 'ldap-client',
+		added: {
+			events_ldap_client_added: false,
+		},
+		fields: {
+			message_id: `LDAP message ID of the search request.`,
+			ldap_base: `Search base DN.`,
+			ldap_scope: `Search scope: \`base\`, \`one\` or \`sub\`.`,
+			ldap_filter: `Search filter.`,
+			ldap_result_code: `LDAP result code (integer), if a search result or a failed bind response was received.`,
+			entries: `Number of entries received.`,
+			references: `Number of search result references received. They are not followed.`,
+			error: `Human readable error, if the search failed. This includes timeouts, aborts, disconnects and the client being deinitialized.`,
+		},
+		text: `
+LDAP search request has finished, successfully or not.
+
+The duration covers the time from submitting the request, including any time
+spent waiting for a connection. This event is useful to track and monitor the
+LDAP servers.`
 	},
 
 	/* SQL
@@ -1375,6 +1465,12 @@ logged into the backend.`
 			},
 			disconnect_side: `Which side disconnected: \`client\`, \`server\`, \`proxy\`.`,
 			disconnect_reason: `Reason for disconnection (empty = clean disconnect).`,
+			compression: {
+				added: {
+					events_proxy_session_finished_compression_added: false
+				},
+				text: `Compression mechanism enabled by the client (e.g. \`deflate\` for IMAP COMPRESS handled by the proxy). Not set if compression wasn't enabled.`
+			},
 			idle_usecs: {
 				changed: {
 					events_proxy_session_finished_idle_usecs_changed: `This was previously named \`idle_secs\`.`
@@ -1748,6 +1844,14 @@ Reason string for purging the cache file:
 			redirects: `Number of redirects done while processing request.`,
 			status_code: `HTTP result status code (integer).`,
 			target:	`Request path with parameters, e.g. \`/path/?delimiter=%2F&prefix=test%2F\`.`,
+		}
+	},
+
+	ldap_connection: {
+		inherit: 'server_connection_common',
+		fields: {
+			ldap_uri: `LDAP server URI the connection was made to.`,
+			tls: `TLS use: \`none\`, \`ldaps\` or \`starttls\`.`,
 		}
 	},
 

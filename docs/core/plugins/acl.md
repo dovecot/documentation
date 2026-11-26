@@ -15,6 +15,9 @@ dovecotlinks:
   acl_inheritance:
     hash: acl-inheritance-and-default-acls
     text: ACL Inheritance
+  acl_rights_cache:
+    hash: rights-cache
+    text: ACL rights cache
 ---
 
 # ACL: Access Control List Plugin (`acl`)
@@ -250,10 +253,10 @@ Unknown ACL letters are complained about, but unknown named ACLs are ignored.
 Named ACLs are mostly intended for future extensions.
 
 ::: tip
-The file is rather picky about formatting; using a tab (or multiple spaces)
-instead of a space character between fields may not work. If you are having
-problems, make sure to check for tabs, extra spaces and other unwanted
-characters.
+[[changed,acl_whitespace_parsing]] Any whitespace (spaces, tabs) between the
+identifier and the ACLs is accepted, so `user=foo lr` and `user=foo	lr` are
+equivalent. If you are having problems, make sure to check for other unwanted
+characters around the fields.
 :::
 
 ### Examples
@@ -378,17 +381,29 @@ namespace inbox {
 }
 ```
 
-If a mailbox has both configured ACLs and a per-mailbox `dovecot-acl` file,
-both are read and the rules are merged.
+[[changed,settings_acl_global_settings_changed]] If a mailbox has both
+configured ACLs and a per-mailbox `dovecot-acl` file, both are read, and the
+configured ACLs override the rights of the same identifier in the file.
 
 Set [[setting,acl_globals_only,yes]] if `dovecot-acl` files are not used at
 all. This skips looking for them and saves disk I/O.
 
-## List Cache
+## Rights Cache
 
-`dovecot-acl-list` file lists all mailboxes that have `l` rights assigned.
-If you manually add/edit `dovecot-acl` files, you may need to delete the
-`dovecot-acl-list` to get the mailboxes visible.
+[[changed,acl_rights_cache]] The `acl-rights.cache` file in the ACL root
+directory caches all mailboxes' `dovecot-acl` file rights. It replaces the
+earlier `dovecot-acl-list` file: shared mailbox listing uses it to find the
+mailboxes that have `l` rights assigned to a non-owner.
+
+The cache is maintained automatically. The owner's first ACL check or ACL
+change creates it, manually edited `dovecot-acl` files are picked up when they
+are next read, and a missing, deleted or unreadable cache is recreated the
+same way. [[doveadm,acl recalc]] rebuilds the cache from all mailboxes'
+`dovecot-acl` files and is the way to repair it. Run it also after changing
+[[setting,acl]] settings that grant the `l` right: a mailbox without a
+`dovecot-acl` file is added to the shared mailbox listings only then.
+
+<!-- @include: @docs/core/plugins/include/acl-rights-cache.inc -->
 
 ## Dictionaries
 

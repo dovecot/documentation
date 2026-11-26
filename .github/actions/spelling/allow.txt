@@ -1,4 +1,6 @@
 aarch
+authid
+authzid
 APPENDLIMIT
 bitmask
 bitmasks
@@ -8,7 +10,9 @@ DESTPORT
 DOkv
 ede
 fcf
+frop
 fuzzer
+fuzzers
 github
 hardenings
 https
@@ -19,6 +23,8 @@ istreams
 jvm
 JVM
 JVMs
+KMail
+learntype
 lfill
 libcap
 libpcre
@@ -48,4 +54,5 @@ ssh
 ubsan
 ubuntu
 Uppercases
+Websieve
 workarounds
