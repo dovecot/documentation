@@ -78,15 +78,23 @@ IMAP ENVELOPE is used by many clients, which includes:
 | `date.save` | Mail save/copy date (mdbox stores this always in dovecot.index)
 | `size.physical` | Physical message size (line feeds exactly as they are stored in the stored mail). Note that the size is of the mail as plaintext, i.e. after decryption/compression. This is typically used by [[link,quota_driver_fs]] or [[link,quota_driver_maildir]] quota. |
 | `imap.bodystructure` | IMAP BODYSTRUCTURE response, which describes what the message's MIME structure looks like. |
+| `imap.bodystructure.utf8` | [[added,mail_cache_utf8_fields_added]] IMAP BODYSTRUCTURE response in the form sent to sessions that have enabled `UTF8=ACCEPT` or `IMAP4rev2`. Written only for messages that contain a `message/global` part; for other messages the UTF-8 form is the same as `imap.bodystructure`, which is used instead. |
 | `imap.body` | IMAP BODY response. This is the short version of imap.bodystructure, not the message body itself. If imap.bodystructure is cached, this field isn't cached because it can be generated from the imap.bodystructure. |
 | `imap.envelope` | IMAP ENVELOPE response, which contains the From, To, Cc, Bcc, Sender, Reply-To, Date, Subject, Message-ID and In-Reply-To headers in parsed forms. This is typically in the [[setting,mail_never_cache_fields]] because the raw headers are more useful in the cache and the ENVELOPE can be generated from them. |
 | `pop3.uidl` | POP3 UIDL responses. This is useful especially if some of the UIDLs have been migrated from an old system or if [[setting,pop3_reuse_xuidl]] is used. Otherwise Dovecot generates the UIDL in a way that usually doesn't require cache. |
 | `pop3.order` | POP3 messages' order. This is used after migration from another system where the IMAP and POP3 messages' order differs. |
 | `guid` | Internal Dovecot GUID for messages. |
 | `mime.parts` | MIME parts' sizes. |
+| `mime.parts.v2` | [[added,mail_cache_utf8_fields_added]] MIME parts' sizes and flags. Replaces `mime.parts`, which can't describe `message/global` parts. Written only when [[setting,dovecot_storage_version]] allows it; `mime.parts` is written otherwise. Existing `mime.parts` entries are still used, and a cache purge drops them from mails that also have `mime.parts.v2`. |
 | `binary.parts` | MIME parts' sizes after decoding Content-Transfer-Encoding to binary. Used by IMAP BINARY extension. |
 | `body.snippet` | A short snippet of the message body. |
 | `hdr.*` | Message headers listed individually, e.g. `hdr.date`, `hdr.from` |
+
+[[added,mail_cache_utf8_fields_added]] The caching decision of `mime.parts`
+applies also to `mime.parts.v2` and the decision of `imap.bodystructure` also
+to `imap.bodystructure.utf8`. Only the legacy names need to be listed in
+[[setting,mail_cache_fields]], [[setting,mail_always_cache_fields]] and
+[[setting,mail_never_cache_fields]].
 
 ## Cache Decision Algorithm
 
