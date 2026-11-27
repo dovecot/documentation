@@ -65,6 +65,10 @@ Index files can be disabled completely with `mail_index_path=MEMORY`. This is
 not recommended for production use, as the index files will need to be
 generated on every access.
 
+The [[link,sdbox]] and [[link,mdbox]] formats (and the obox format of
+[[link,dovecot_pro]]) need index files and don't support
+`mail_index_path=MEMORY`.
+
 ## Mailbox Root Autodetection
 
 By default the [[setting,mail_driver]] and [[setting,mail_path]] settings are
