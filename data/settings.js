@@ -12748,6 +12748,19 @@ with no \`issuer\` keys and a single \`subject\` \`CN\` or \`name\` key are
 evaluated, against the CN HAProxy forwards. A connection that fails this is
 rejected.
 
+A block inside a [[link,settings_connection_filters,local_name]] filter is
+enforced only for a client that selects that scope, and the client chooses it.
+A client that sends no SNI name, or a name that doesn't match, is checked with
+the blocks of the scope it ends up in, possibly none, and is accepted without
+a certificate if there are none. Names are matched case-insensitively, but a
+trailing dot counts: \`mail.example.com.\` doesn't match
+\`local_name mail.example.com\`. The same scoping applies behind HAProxy, with
+the name it forwards. The blocks of every matching scope add up, so a block
+inside the filter is an extra alternative for that name, never a tighter rule:
+a client there can still satisfy an outer block. Scoping blocks per name works
+only if no block is set outside the filter. A requirement that the client
+can't escape belongs outside any \`local_name\` filter.
+
 Example:
 
 \`\`\`[dovecot.conf]

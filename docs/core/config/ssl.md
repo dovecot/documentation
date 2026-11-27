@@ -510,9 +510,11 @@ Connections from HAProxy are checked even with `ssl = no`.
 * Blocks only inside a [[link,settings_connection_filters,local_name]]
   filter apply only to clients that send that SNI name. A client sending no
   SNI name, or another one, is checked with the blocks of the scope it ends
-  up in, possibly none. The client chooses the name, so `local_name` isn't an
-  access boundary: put the blocks outside the filter, or give every reachable
-  name and the no-SNI default a block.
+  up in, possibly none. A trailing dot makes a name another one:
+  `mail.example.com.` doesn't match `local_name mail.example.com`. The client
+  chooses the name, so `local_name` isn't an access boundary: put the blocks
+  outside the filter, or give every reachable name and the no-SNI default a
+  block.
 
 #### HAProxy
 
