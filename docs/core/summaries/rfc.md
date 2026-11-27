@@ -108,6 +108,10 @@ This is a non-exhaustive list of RFCs that Dovecot implements/supports.
 - Internet Message Access Protocol (IMAP) - SAVEDATE Extension ([[rfc,8514]])
 - IMAP4 Extension: Message Preview Generation ([[rfc,8970]])
 - IMAP Response Code for Command Progress Notification ([[rfc,9585]])
+- IMAP Extension for Object Identifiers, OBJECTID+
+  ([draft-ietf-mailmaint-imap-objectid-bis](https://datatracker.ietf.org/doc/draft-ietf-mailmaint-imap-objectid-bis/)),
+  with [[setting,mail_objectid,yes]]. The OBJECTID capability of
+  [[rfc,8474]] isn't advertised.
 
 ## SMTP/LMTP (Base)
 
