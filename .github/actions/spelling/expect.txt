@@ -253,6 +253,7 @@ genkey
 genpkey
 gethosterror
 getmail
+GETMETADATA
 getscript
 gitlab
 gitrev

@@ -12,6 +12,7 @@ export const updates = {
 	/* Tags used in pages. */
 
 	acl_dict_index_added: '2.4.2',
+	acl_rights_cache: '2.4.6',
 	acl_whitespace_parsing: '2.4.6',
 	argon_2i_schemes: '2.4.0',
 	argon2_password_scheme_added: '2.4.0',
@@ -36,6 +37,7 @@ export const updates = {
 	doveadm_ex_expired_code: '2.4.0',
 	doveadm_mailbox_commands_user: '2.4.0',
 	doveadm_who_ps_added: '2.4.6',
+	empty_literal_as_quoted_added: '2.4.6',
 	extra_fields_default: '2.4.0',
 	extra_fields_empty: '2.4.0',
 	event_export_drivers_file_unix_added: '2.4.0',

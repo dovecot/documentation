@@ -499,6 +499,7 @@ Path to proxy-notify pipe.
 	},
 
 	mail_cache_max_header_name_length: {
+		tags: [ 'mail_cache_limits' ],
 		added: {
 			settings_mail_cache_max_header_name_length_added: false
 		},
@@ -530,6 +531,7 @@ Trying to fetch the mail text or the mail headers will properly return only
 	},
 
 	mail_cache_max_headers_count: {
+		tags: [ 'mail_cache_limits' ],
 		added: {
 			settings_mail_cache_max_headers_count_added: false
 		},
@@ -550,6 +552,7 @@ of the specified one, in order to aid the cache to return within the limits.`
 	},
 
 	mail_cache_max_size: {
+		tags: [ 'mail_cache_limits' ],
 		default: '1G',
 		values: setting_types.SIZE,
 		advanced: true,
@@ -612,6 +615,7 @@ Only compress cache file if it is larger than this size.`
 	},
 
 	mail_cache_record_max_size: {
+		tags: [ 'mail_cache_limits' ],
 		default: '64k',
 		values: setting_types.SIZE,
 		advanced: true,
@@ -741,7 +745,7 @@ authenticated session. The following substitutions are available:
 	},
 
 	managesieve_max_compile_errors: {
-		tags: [ 'managesieve', 'sieve' ],
+		tags: [ 'managesieve', 'sieve', 'sieve_limits' ],
 		default: 5,
 		values: setting_types.UINT,
 		advanced: true,
@@ -751,7 +755,7 @@ script upload or script verification.`
 	},
 
 	managesieve_max_line_length: {
-		tags: [ 'managesieve', 'sieve' ],
+		tags: [ 'managesieve', 'sieve', 'sieve_limits' ],
 		default: '64k',
 		values: setting_types.SIZE,
 		advanced: true,
@@ -1070,7 +1074,7 @@ The syntax and semantics of this setting are otherwise identical to
 	},
 
 	sieve_max_actions: {
-		tags: [ 'sieve' ],
+		tags: [ 'sieve', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: 32,
 		values: setting_types.UINT,
@@ -1090,7 +1094,7 @@ policy limit".`
 	},
 
 	sieve_max_cpu_time: {
-		tags: [ 'sieve' ],
+		tags: [ 'sieve', 'sieve_limits' ],
 		plugin: 'sieve',
 		seealso: [ 'sieve_resource_usage_timeout' ],
 		default: '30s',
@@ -1121,7 +1125,7 @@ limit blocked the script permanently until it was recompiled (e.g. via
 	},
 
 	sieve_max_redirects: {
-		tags: [ 'sieve' ],
+		tags: [ 'sieve', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: 4,
 		values: setting_types.UINT,
@@ -1148,7 +1152,7 @@ well.`
 			script is added.`
 		},
 		advanced: true,
-		tags: [ 'sieve', 'sieve-enotify' ],
+		tags: [ 'sieve', 'sieve-enotify', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: 10,
 		values: setting_types.UINT,
@@ -1174,7 +1178,7 @@ that setting as well.`
 	},
 
 	sieve_resource_usage_timeout: {
-		tags: [ 'sieve' ],
+		tags: [ 'sieve', 'sieve_limits' ],
 		plugin: 'sieve',
 		seealso: [ 'sieve_max_cpu_time' ],
 		default: '1h',
@@ -1207,7 +1211,7 @@ An administrator can force an immediate reset by removing the
 	},
 
 	sieve_max_script_size: {
-		tags: [ 'sieve', 'managesieve_quota', ],
+		tags: [ 'sieve', 'managesieve_quota', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: '1M',
 		values: setting_types.SIZE,
@@ -1314,7 +1318,7 @@ this setting is not configured. Options are:
 	},
 
 	sieve_quota_script_count: {
-		tags: [ 'sieve', 'managesieve_quota' ],
+		tags: [ 'sieve', 'managesieve_quota', 'sieve_limits' ],
 		plugin: 'sieve',
 		values: setting_types.UINT,
 		default: 'unlimited',
@@ -1323,7 +1327,7 @@ The maximum number of personal Sieve scripts a single user can have.`
 	},
 
 	sieve_quota_storage_size: {
-		tags: [ 'sieve', 'managesieve_storage' ],
+		tags: [ 'sieve', 'managesieve_storage', 'sieve_limits' ],
 		plugin: 'sieve',
 		values: setting_types.SIZE,
 		default: 'unlimited',
@@ -1442,7 +1446,7 @@ these headers has no effect.`
 	},
 
 	sieve_editheader_max_header_size: {
-		tags: [ 'sieve', 'sieve-editheader' ],
+		tags: [ 'sieve', 'sieve-editheader', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: '2k',
 		values: setting_types.SIZE,
@@ -1497,7 +1501,7 @@ The [[setting,sieve_extlists_list]] filter refers to this setting.`
 	},
 
 	sieve_extlists_list_max_lookup_size: {
-		tags: [ 'sieve', 'sieve-extlists' ],
+		tags: [ 'sieve', 'sieve-extlists', 'sieve_limits' ],
 		plugin: 'sieve',
 		values: setting_types.SIZE,
 		default: '1k',
@@ -1526,7 +1530,7 @@ notifications.`
 			notification is added.`
 		},
 		advanced: true,
-		tags: [ 'sieve', 'sieve-enotify' ],
+		tags: [ 'sieve', 'sieve-enotify', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: 8,
 		values: setting_types.UINT,
@@ -1545,7 +1549,7 @@ specify, counted across the URI and any \`to\`/\`cc\`/\`bcc\` headers.
 			mailto notification is added.`
 		},
 		advanced: true,
-		tags: [ 'sieve', 'sieve-enotify' ],
+		tags: [ 'sieve', 'sieve-enotify', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: 16,
 		values: setting_types.UINT,
@@ -1558,7 +1562,7 @@ may specify in its URI.
 	},
 
 	sieve_include_max_includes: {
-		tags: [ 'sieve', 'sieve-include' ],
+		tags: [ 'sieve', 'sieve-include', 'sieve_limits' ],
 		plugin: 'sieve',
 		values: setting_types.UINT,
 		default: 255,
@@ -1570,7 +1574,7 @@ number of scripts involved in the include tree.`
 	},
 
 	sieve_include_max_nesting_depth: {
-		tags: [ 'sieve', 'sieve-include' ],
+		tags: [ 'sieve', 'sieve-include', 'sieve_limits' ],
 		plugin: 'sieve',
 		values: setting_types.UINT,
 		default: 10,
@@ -1708,7 +1712,7 @@ directly addressed at the recipient.`
 	},
 
 	sieve_vacation_max_period: {
-		tags: [ 'sieve', 'sieve-vacation' ],
+		tags: [ 'sieve', 'sieve-vacation', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: "60d",
 		values: setting_types.TIME,
@@ -1724,7 +1728,7 @@ limit.`
 	},
 
 	sieve_vacation_min_period: {
-		tags: [ 'sieve', 'sieve-vacation' ],
+		tags: [ 'sieve', 'sieve-vacation', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: '1d',
 		values: setting_types.TIME,
@@ -1786,7 +1790,7 @@ make the original SMTP recipient available to Sieve.`
 	},
 
 	sieve_variables_max_scope_count: {
-		tags: [ 'sieve', 'sieve-variables' ],
+		tags: [ 'sieve', 'sieve-variables', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: 255,
 		values: setting_types.UINT,
@@ -1802,7 +1806,7 @@ The minimum value for this setting is \`128\`.`
 	},
 
 	sieve_variables_max_value_size: {
-		tags: [ 'sieve', 'sieve-variables' ],
+		tags: [ 'sieve', 'sieve-variables', 'sieve_limits' ],
 		plugin: 'sieve',
 		default: '4k',
 		values: setting_types.SIZE,
@@ -1917,6 +1921,7 @@ sieve_virustest_text_value {
 	/* imap-filter-sieve plugin */
 
 	imap_filter_sieve_max_redirects: {
+		tags: [ 'sieve_limits' ],
 		added: {
 			settings_imap_filter_sieve_max_redirects_added: `
 Setting to limit the cumulative number of redirects performed by a single
@@ -2057,6 +2062,7 @@ scripts) to execute directly for the \`vnd.dovecot.execute\` extension.`
 	},
 
 	'sieve_pipe_exec_timeout': {
+		tags: [ 'sieve_limits' ],
 		default: '10s',
 		plugin: 'sieve-extprograms',
 		values: setting_types.TIME,
@@ -2066,6 +2072,7 @@ Configures the maximum execution time after which the program run by the
 	},
 
 	'sieve_filter_exec_timeout': {
+		tags: [ 'sieve_limits' ],
 		default: '10s',
 		plugin: 'sieve-extprograms',
 		values: setting_types.TIME,
@@ -2075,6 +2082,7 @@ Configures the maximum execution time after which the program run by the
 	},
 
 	'sieve_execute_exec_timeout': {
+		tags: [ 'sieve_limits' ],
 		default: '10s',
 		plugin: 'sieve-extprograms',
 		values: setting_types.TIME,
@@ -2610,6 +2618,7 @@ fts_header_includes {
 	},
 
 	fts_search_timeout: {
+		tags: [ 'fts_limits' ],
 		default: '30s',
 		plugin: 'fts',
 		values: setting_types.TIME,
@@ -2624,6 +2633,7 @@ A value of \`0\` means no timeout.`
 	},
 
 	fts_message_max_size: {
+		tags: [ 'fts_limits' ],
 		default: 'unlimited',
 		added: {
 			settings_fts_message_max_size_added: false,
@@ -2842,7 +2852,7 @@ More languages can be obtained from:
 
 	language_tokenizer_address_token_maxlen: {
 		plugin: 'fts',
-		tags: [ 'language-tokenizer-email-address' ],
+		tags: [ 'language-tokenizer-email-address', 'fts_limits' ],
 		values: setting_types.UINT,
 		default: 250,
 		seealso: [ '[[link,fts_tokenization]]' ],
@@ -2868,7 +2878,7 @@ Defines the method for finding word boundaries.
 
 	language_tokenizer_generic_token_maxlen: {
 		plugin: 'fts',
-		tags: [ 'language-tokenizer-generic' ],
+		tags: [ 'language-tokenizer-generic', 'fts_limits' ],
 		values: setting_types.UINT,
 		default: 30,
 		seealso: [ '[[link,fts_tokenization]]' ],
@@ -2933,6 +2943,7 @@ results. The FTS indexes should be recreated in this case.
 	},
 
 	language_tokenizer_kuromoji_token_maxlen: {
+		tags: [ 'fts_limits' ],
 		plugin: 'fts',
 		values: setting_types.UINT,
 		default: 1024,
@@ -4154,6 +4165,7 @@ namespace inbox {
 	/* virtual plugin */
 
 	virtual_max_open_mailboxes: {
+		tags: [ 'mail_imap_limits' ],
 		default: 64,
 		plugin: 'virtual',
 		values: setting_types.UINT,
@@ -4744,7 +4756,7 @@ the default.`
 		added: {
 			settings_cassandra_cluster_settings_added: false,
 		},
-		tags: [ 'sql-cassandra' ],
+		tags: [ 'sql-cassandra', 'db_queue_limits' ],
 		values: setting_types.UINT,
 		seealso: [ 'cassandra_io_thread_count', 'cassandra_metrics_path' ],
 		default: 8192,
@@ -4959,7 +4971,7 @@ How long to wait for connection.`
 	},
 
 	mysql_connection_limit: {
-		tags: [ 'sql-mysql' ],
+		tags: [ 'sql-mysql', 'db_queue_limits' ],
 		values: setting_types.UINT,
 		default: 5,
 		text: `
@@ -5064,7 +5076,7 @@ filter name refers to the [[setting,pgsql_host]] setting.`
 	},
 
 	pgsql_connection_limit: {
-		tags: [ 'sql-postgresql' ],
+		tags: [ 'sql-postgresql', 'db_queue_limits' ],
 		values: setting_types.UINT,
 		default: 5,
 		text: `
@@ -5304,6 +5316,7 @@ and appending an \`@domain\` element to the username in cleartext logins.`
 	},
 
 	auth_failure_delay: {
+		tags: [ 'auth_limits' ],
 		default: '2secs',
 		values: setting_types.TIME,
 		seealso: [ 'auth_internal_failure_delay' ],
@@ -5332,6 +5345,7 @@ Use \`"$ALL"\` (with the quotation marks) to allow all keytab entries.`
 	},
 
 	auth_internal_failure_delay: {
+		tags: [ 'auth_limits' ],
 		default: '2secs',
 		values: setting_types.TIME_MSECS,
 		added: {
@@ -5746,6 +5760,7 @@ Path to the CDB database file.`
 	},
 
 	default_client_limit: {
+		tags: [ 'process_memory_limits' ],
 		values: setting_types.UINT,
 		default: 1000,
 		text: `
@@ -5794,6 +5809,7 @@ to anything at all.`
 	},
 
 	default_process_limit: {
+		tags: [ 'process_memory_limits' ],
 		values: setting_types.UINT,
 		default: 100,
 		text: `
@@ -5802,6 +5818,7 @@ service-specific configuration.`
 	},
 
 	default_vsz_limit: {
+		tags: [ 'process_memory_limits' ],
 		values: setting_types.SIZE,
 		default: '256 M',
 		text: `
@@ -6951,7 +6968,7 @@ Maximum number of attempts for a request.`
 	},
 
 	http_client_request_max_redirects: {
-		tags: [ 'http', 'http_client' ],
+		tags: [ 'http', 'http_client', 'http_limits' ],
 		values: setting_types.UINT,
 		default: 0,
 		added: {
@@ -6974,7 +6991,7 @@ Max time to wait for HTTP requests to finish before retrying.`
 
 	http_client_response_hdr_max_field_size: {
 		advanced: true,
-		tags: [ 'http', 'http_client' ],
+		tags: [ 'http', 'http_client', 'http_limits' ],
 		added: {
 			settings_http_client_settings_added: false,
 		},
@@ -6986,7 +7003,7 @@ Response header limit: Max size for an individual field.`
 
 	http_client_response_hdr_max_fields: {
 		advanced: true,
-		tags: [ 'http', 'http_client' ],
+		tags: [ 'http', 'http_client', 'http_limits' ],
 		added: {
 			settings_http_client_settings_added: false,
 		},
@@ -6998,7 +7015,7 @@ Response header limit: Max number of fields.`
 
 	http_client_response_hdr_max_size: {
 		advanced: true,
-		tags: [ 'http', 'http_client' ],
+		tags: [ 'http', 'http_client', 'http_limits' ],
 		added: {
 			settings_http_client_settings_added: false,
 		},
@@ -7094,7 +7111,7 @@ Overwrite the local hostname with http_server_default_host.`
 	},
 
 	http_server_max_idle_time: {
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.TIME_MSECS,
 		default: 0,
 		text: `
@@ -7103,7 +7120,7 @@ Maximum time a connection will idle.`
 
 	http_server_max_payload_size: {
 		advanced: true,
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.SIZE,
 		default: '10G',
 		text: `
@@ -7111,7 +7128,7 @@ Request payload limit: Max size for the request payload.`
 	},
 
 	http_server_max_pipelined_requests: {
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.UINT,
 		default: 1,
 		text: `
@@ -7120,7 +7137,7 @@ Maximum number of pipelined requests per connection.`
 
 	http_server_max_target_length: {
 		advanced: true,
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.SIZE,
 		default: '8k',
 		text: `
@@ -7129,7 +7146,7 @@ Request target limit: Maximum length of the request target.`
 
 	http_server_request_hdr_max_field_size: {
 		advanced: true,
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.SIZE,
 		default: '8k',
 		text: `
@@ -7138,7 +7155,7 @@ Request header limit: Max size for an individual field.`
 
 	http_server_request_hdr_max_fields: {
 		advanced: true,
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.UINT,
 		default: 50,
 		text: `
@@ -7147,7 +7164,7 @@ Request header limit: Max number of fields.`
 
 	http_server_request_hdr_max_size: {
 		advanced: true,
-		tags: [ 'http', 'http-server' ],
+		tags: [ 'http', 'http-server', 'http_limits' ],
 		values: setting_types.SIZE,
 		default: '200k',
 		text: `
@@ -7233,7 +7250,16 @@ The following values are currently supported:
     that LSUB replies with [[setting,mailbox_list_layout,fs]] aren't
     selectable, and users may receive pop-ups with not selectable errors.
     Showing \\Noselect flags for these replies (e.g., in mbox use) causes them
-    to be grayed out.`
+    to be grayed out.
+
+\`empty-literal-as-quoted\` [[added,empty_literal_as_quoted_added]]
+:   Send zero-length FETCH body values (\`BODY[...]\`, \`BINARY[...]\`,
+    \`RFC822\`, \`RFC822.HEADER\`, \`RFC822.TEXT\`) as \`""\` instead of a
+    \`{0}\` literal. iOS Mail stalls for about 90 seconds on a zero-length
+    literal. Non-empty values are still sent as literals.
+
+    Only FETCH is affected. \`URLFETCH\` and \`GETMETADATA\` still send
+    zero-length literals.`
 	},
 
 	imap_compress_on_proxy: {
@@ -7403,7 +7429,7 @@ in addition to [[variable,mail-user]] are:
 
 	imap_max_line_length: {
 		default: '64k',
-		tags: [ 'imap' ],
+		tags: [ 'imap', 'mail_imap_limits' ],
 		values: setting_types.SIZE,
 		advanced: true,
 		text: `
@@ -7770,7 +7796,7 @@ Dovecot will send either \`NOOP\` or \`DONE\` to the source IMAP server.`
 	},
 
 	imapc_max_line_length: {
-		tags: [ 'imapc' ],
+		tags: [ 'imapc', 'mail_imap_limits' ],
 		values: setting_types.SIZE,
 		default: 'unlimited',
 		text: `
@@ -8729,6 +8755,7 @@ The details of how this setting works depends on the used protocol:
 	},
 
 	login_unauthenticated_client_limit: {
+		tags: [ 'process_memory_limits' ],
 		added: {
 			settings_login_unauthenticated_client_limit_added: false,
 		},
@@ -9059,6 +9086,7 @@ You can specify a log prefix for mail processes here.
 	},
 
 	mail_max_keyword_length: {
+		tags: [ 'mail_imap_limits' ],
 		default: 50,
 		values: setting_types.UINT,
 		advanced: true,
@@ -9243,6 +9271,7 @@ This setting determines whether a shared INBOX should be visible as
 	},
 
 	mail_sort_max_read_count: {
+		tags: [ 'mail_imap_limits' ],
 		values: setting_types.UINT,
 		default: 'unlimited',
 		text: `
@@ -11330,7 +11359,7 @@ message to determine.`
 
 	pop3_lock_session: {
 		default: 'no',
-		tags: [ 'pop3' ],
+		tags: [ 'pop3', 'user_concurrency_limits' ],
 		values: setting_types.BOOLEAN,
 		text: `
 If enabled, only one POP3 session may exist for any single user.`
@@ -11877,7 +11906,7 @@ is launched.
 	},
 
 	service_process_limit: {
-		tags: [ 'service' ],
+		tags: [ 'service', 'process_memory_limits' ],
 		values: setting_types.UINT,
 		default: '[[setting,default_process_limit]]',
 		text: `
@@ -11891,7 +11920,7 @@ could prevent creation of new processes.`
 	},
 
 	service_client_limit: {
-		tags: [ 'service' ],
+		tags: [ 'service', 'process_memory_limits' ],
 		values: setting_types.UINT,
 		default: '[[setting,default_client_limit]]',
 		text: `
@@ -11965,7 +11994,7 @@ Using \`infinite\` disables the idle-killing.`
 	},
 
 	service_vsz_limit: {
-		tags: [ 'service' ],
+		tags: [ 'service', 'process_memory_limits' ],
 		values: setting_types.SIZE,
 		default: '[[setting,default_vsz_limit]]',
 		text: `
@@ -12739,7 +12768,7 @@ Variables supported, including [[variable,mail-user]]:
 
 	submission_max_mail_size: {
 		default: '40M',
-		tags: [ 'submission' ],
+		tags: [ 'submission', 'submission_queue_limits' ],
 		values: setting_types.SIZE,
 		text: `
 The maximum message size accepted for relay.
@@ -12752,7 +12781,7 @@ unknown limit exists there, which will be passed back to the client.`
 	},
 
 	submission_max_recipients: {
-		tags: [ 'submission' ],
+		tags: [ 'submission', 'submission_queue_limits' ],
 		values: setting_types.UINT,
 		default: 'unlimited',
 		text: `
