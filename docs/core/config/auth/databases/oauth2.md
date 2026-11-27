@@ -6,6 +6,9 @@ dovecotlinks:
   auth_oauth2_url_variables:
     hash: variables-in-urls
     text: Variables in oauth2 URLs
+  auth_oauth2_jwt_claims:
+    hash: jwt-claim-names
+    text: JWT claim names in oauth2 fields
 ---
 
 # Open Authentication v2.0 Database (`oauth2`)
@@ -317,6 +320,27 @@ The following algorithms are supported
 There is currently no support for EdDSA algorithms.
 
 ES supports any curve supported by OpenSSL for this purpose.
+
+##### JWT Claim Names
+
+[[changed,auth_oauth2_nested_claims]] The claims of a validated JWT are
+available as `%{oauth2:<name>}` in [[setting,oauth2_fields]] and by name in
+[[setting,oauth2_username_attribute]] and [[setting,oauth2_active_attribute]].
+
+* A top-level claim keeps its name, e.g. `preferred_username` or
+  `https://app.example.com/roles`.
+* A nested claim is named by its path segments joined with `;`, e.g.
+  `realm_access.roles` is `realm_access;roles`. Inside a segment, `;` is
+  written as `%3b` and `%` as `%25`. A top-level claim name containing `;` or
+  `%` is escaped the same way.
+* The values of an array are joined with tabs, whether it contains scalars or
+  objects. `"a":[{"b":"x"},{"b":"y"}]` gives the field `a;b` with the value
+  `x<TAB>y`.
+* A token whose header or claims set has a duplicate member name, or whose
+  claim name contains an ASCII control character, is rejected.
+* A name containing `%` can't be used in `%{oauth2:..}`, because `%` is not
+  valid in a variable name. [[setting,oauth2_username_attribute]] takes it as
+  is.
 
 ### OpenID Discovery
 
