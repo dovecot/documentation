@@ -68,7 +68,7 @@ The interpreter recognizes the following Sieve extensions:
 | `mailbox` ([[rfc,5490,3]]) | **yes** | Provides a mailbox existence check and allows creating mailboxes upon fileinto |
 | `mboxmetadata` ([[rfc,5490]]) | no | Provides access to mailbox METADATA entries |
 | `mime` ([[rfc,5703,4]]) | **yes** | Allows testing parts of structured MIME header fields |
-| `regex` ([Draft](https://tools.ietf.org/html/draft-murchison-sieve-regex-08)) | **yes** | Provides regular expression match support |
+| `regex` ([Draft](https://tools.ietf.org/html/draft-murchison-sieve-regex-08)) | **yes** | Provides regular expression match support. Unlike the draft, which specifies POSIX extended regular expressions, Dovecot uses [Perl-compatible regular expression syntax](https://www.pcre.org/current/doc/html/pcre2pattern.html). |
 | `reject` ([[rfc,5429,2.2]]) | **yes** | Allows rejecting messages with a rejection bounce message |
 | `relational` ([[rfc,5231]]) | **yes** | Provides relational match support |
 | `servermetadata` ([[rfc,5490]]) | no | Provides access to server METADATA entries |

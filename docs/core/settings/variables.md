@@ -129,7 +129,7 @@ Bytes output type indicates that the output will be tagged as binary output. Sub
 | `lookup(name)` | None | String | Lookup var from table. If var is variable, the name is taken from variable's contents. Input is ignored. |
 | `lower` | String | String | Lowercases input. |
 | `md5(rounds=number, salt=string)` | Bytes | Bytes | Alias for hash with method md5. |
-| `regexp(expression, replacement)` | String | String |Performs regular expression replacement using [POSIX Extended Regular Expression syntax](https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html). Supports up to 9 capture groups. |
+| `regexp(expression, replacement)` | String | String | Replaces the first match of the pattern using [Perl-compatible regular expression syntax](https://www.pcre.org/current/doc/html/pcre2pattern.html). In the replacement, `\0` is the whole match and `\1` to `\9` are the first nine capture groups. A group that the pattern does not have, or that did not take part in the match, fails the expansion. A digit after `\0` to `\9` is a literal digit, so groups above 9 cannot be referenced, and a `$` is a literal dollar. [[changed,var_expand_regexp_replacement]] A backslash in a string is written twice, in the pattern as well as in the replacement: `\\d` and `\\1`. The config parser removes one layer of backslash escapes from a setting value in quotes, so there it is written four times: `\\\\1`. In a setting value that is not in quotes and contains `$`, the config parser expands `$SET:` and `$ENV:` words and collapses runs of spaces, so quote a value whose replacement contains `$`. The pattern can have at most 100 capture groups. [[changed,regex_capture_group_limit]] |
 | `reverse` | Any | Any | Reverse input bytes. |
 | `rfill(width, filler)` | Any | Any | Pads value to right with filler until length is width. Default filler is `0`. |
 | `sha1(rounds=number, salt=string)` | Bytes | Bytes | Alias for hash with method sha1. |
@@ -395,8 +395,8 @@ The following operators are supported:
 | `ge` | String greater or equal. |
 | `*` | Wildcard match (mask on value2). |
 | `!*` | Wildcard non-match (mask on value2). |
-| `~` | Regular expression match (pattern on value2, [POSIX Extended Regular Expression syntax](https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html)). |
-| `!~` | String inequality (pattern on value2, [POSIX Extended Regular Expression syntax](https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html)). |
+| `~` | Regular expression match (pattern on value2, [Perl-compatible regular expression syntax](https://www.pcre.org/current/doc/html/pcre2pattern.html)). Backslashes in the pattern are doubled as in `regexp`. The pattern can have at most 100 capture groups. [[changed,regex_capture_group_limit]] |
+| `!~` | Regular expression non-match (pattern on value2, [Perl-compatible regular expression syntax](https://www.pcre.org/current/doc/html/pcre2pattern.html)). Backslashes in the pattern are doubled as in `regexp`. The pattern can have at most 100 capture groups. [[changed,regex_capture_group_limit]] |
 
 Dovecot supports two kinds of conditional filters, the `if` and the `switch `filter.
 The difference is that `if` can be used to do single comparison, and `switch` can do multiple comparisons.
