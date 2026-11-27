@@ -9163,6 +9163,32 @@ perfectly due to the way Linux and BSD kernels work internally. The setting
 exists for now, but it is not a supported way of running Dovecot.`
 	},
 
+	mail_objectid: {
+		added: {
+			settings_mail_objectid_added: false,
+		},
+		default: 'no',
+		seealso: [ 'imap_capability', 'mail_driver' ],
+		values: setting_types.BOOLEAN,
+		text: `
+With \`yes\`, all copies of a mail share their keywords and the
+\`\\Answered\`, \`\\Flagged\`, \`\\Seen\` and \`\\Draft\` flags: changing one of
+them on one copy, in any mailbox of the account, changes it on all the
+copies. \`\\Deleted\` stays per mailbox, and the private flags of a mailbox
+with [[setting,mail_index_private_path]] stay private. Dovecot keeps the
+shared flags in the account's mails table, which is supported by
+[[link,sdbox]], [[link,mdbox]] and the obox format of [[link,dovecot_pro]].
+
+IMAP then advertises the \`OBJECTID+\` capability
+(draft-ietf-mailmaint-imap-objectid-bis). It can be removed with
+\`imap_capability { OBJECTID+ = no }\`.
+
+While \`OBJECTID+\` is advertised, an IMAP session fails if the
+[[setting,mail_driver]] of the INBOX namespace doesn't support the mails
+table, or if its [[setting,mail_index_path]] is \`MEMORY\`, which leaves no
+place for the table. doveadm and dsync are not affected.`
+	},
+
 	mail_plugin_dir: {
 		default: '/usr/lib64/dovecot',
 		seealso: [ 'mail_plugins' ],
